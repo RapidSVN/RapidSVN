@@ -1002,11 +1002,18 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_ACTION_END:
   {
-    UpdateFileList ();
+    unsigned int actionFlags = 
+      (unsigned int)event.GetClientData ();
+    if ((actionFlags & Action::DONT_UPDATE) == 0)
+    {
+      Trace (_("Updating..."));
+      UpdateFileList ();
+    }
+
     Trace (_("Ready\n"));
   }
   break;
-    
+
   case TOKEN_VIEW:
   {
     GetData * pData = static_cast<GetData *>(event.GetClientData ());

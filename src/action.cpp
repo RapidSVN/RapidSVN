@@ -65,6 +65,9 @@ public:
    */
   ActionOptions options;
 
+  /** flags for the action */
+  unsigned int flags;
+
   /**
    * This member variable will take the address 
    * of a trace object allocated in a class 
@@ -95,7 +98,7 @@ public:
   svn::Targets targets;
 
   Data (wxWindow * parnt, const wxString & nam, ActionOptions opts)
-    :  parent (parnt), name (nam), options (opts), 
+    :  parent (parnt), name (nam), options (opts), flags (0),
        tracer (0), ownTracer (false)
   {
   }
@@ -109,6 +112,10 @@ public:
   }
 
 };
+
+
+const unsigned int Action::DONT_UPDATE = 1;
+
 
 Action::Action (wxWindow * parent, const wxString & name, ActionOptions options)
 {
@@ -307,6 +314,19 @@ Action::PostEvent (wxEvent & event)
   wxPostEvent (handler, event);
 }
 
+
+unsigned int 
+Action::GetFlags () const
+{
+  return m->flags;
+}
+
+
+void
+Action::SetFlags (unsigned int flags)
+{
+  m->flags = flags;
+}
 
 /* -----------------------------------------------------------------
  * local variables:

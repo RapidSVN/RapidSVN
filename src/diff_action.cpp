@@ -244,6 +244,7 @@ DiffAction::DiffAction (wxWindow * parent)
   : Action (parent, _("Diff"), actionWithTargets)
 {
   m = new Data (this);
+  SetFlags (DONT_UPDATE);
 }
 
 

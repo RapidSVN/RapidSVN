@@ -47,6 +47,14 @@ class Action
 {
 public:
   /**
+   * if set then no files have changed after this
+   * operation and we dont have to update the filelist
+   *
+   * @see GetFlags
+   */
+  static const unsigned int DONT_UPDATE;
+
+  /**
    * constructor
    *
    * @param parent parent window
@@ -166,6 +174,15 @@ public:
   GetOptions ();
 
 
+  /**
+   * retrieves the flags for this action.
+   *
+   * @see DONT_UPDATE
+   */
+  unsigned int 
+  GetFlags () const;
+
+
   /** set the name of the action */
   void
   SetName (const char * name);
@@ -195,6 +212,13 @@ protected:
    */
   void
   PostEvent (wxEvent & event);
+
+
+  /**
+   * sets the flags for this action
+   */
+  void
+  SetFlags (unsigned int flags);
 
 private:
   struct Data;

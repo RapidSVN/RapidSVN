@@ -161,6 +161,8 @@ SimpleWorker::Perform (Action * action)
     PostStringEvent (TOKEN_ACTION_START, msg, ACTION_EVENT);
   }
 
+  unsigned int actionFlags = 0;
+
   try
   {
     // this cursor stuff has to change...
@@ -175,6 +177,8 @@ SimpleWorker::Perform (Action * action)
     {
       m->result = ACTION_SUCCESS;
     }
+    actionFlags = m->action->GetFlags ();
+
     delete m->action;
     m->action = 0;
     m->state = ACTION_NONE;
@@ -196,7 +200,8 @@ SimpleWorker::Perform (Action * action)
     return false;
   }
 
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
+  PostDataEvent (TOKEN_ACTION_END, (void*)actionFlags, 
+                 ACTION_EVENT);
   return true;
 }
 
