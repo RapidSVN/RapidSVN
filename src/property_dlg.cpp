@@ -376,8 +376,6 @@ public:
         grid->GetProperty (index, name, value);
 
         property.set (name.c_str (), value.c_str ());
-
-        index++;
       }    
     }
     catch (...)
