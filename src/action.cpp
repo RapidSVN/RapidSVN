@@ -35,6 +35,8 @@ ACTION_NAMES [] =
   _("Updated"),       // svn_wc_notify_update_update,
   NULL,               // NOT USED HERE svn_wc_notify_update_completed,
   NULL,               // NOT USED HERE svn_wc_notify_update_external,
+  NULL,               // NOT USED HERE svn_wc_notify_status_completed
+  NULL,               // NOT USED HERE svn_wc_notify_status_external
   _("Modified"),      // svn_wc_notify_commit_modified,
   _("Added"),         // svn_wc_notify_commit_added,
   _("Deleted"),       // svn_wc_notify_commit_deleted,
