@@ -87,7 +87,7 @@ Handling Mime-types
 * Give the user the option for each mime-type to bind it to a specific tool for
 both diffs and editors.  
 
-RPM
+RPM - Done in rev 2841
 * Create an RPM spec file so that you can automatically install the file on
 Linux.  Make sure to remember the depenency on wxGTK and db4.
 
