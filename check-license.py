@@ -6,16 +6,16 @@
 #
 # If the license cannot be found, then the filename is printed to stdout.
 # Typical usage:
-#    $ find . -name "*.[ch]" | xargs check-license.py > bad-files
+#    $ find . -name "*.[ch]pp" | xargs check-license.py > bad-files
 #
 # -C switch is used to change licenses. Typical usage:
-#    $ find . -name "*.[ch]" | xargs check-license.py -C
+#    $ find . -name "*.[ch]pp" | xargs check-license.py -C
 #
 
 OLD_LICENSE = '''\
 /\*
  \* ====================================================================
- \* Copyright \(c\) 2002(, 2003)? The RapidSvn Group.  All rights reserved.
+ \* Copyright \(c\) 2002[,-][ ]?200[34] The RapidSvn Group.  All rights reserved.
  \*
  \* This software is licensed as described in the file LICENSE.txt,
  \* which you should have received as part of this distribution.
@@ -32,7 +32,7 @@ OLD_LICENSE = '''\
 NEW_LICENSE = '''\
 /*
  * ====================================================================
- * Copyright (c) 2002, 2003 The RapidSvn Group.  All rights reserved.
+ * Copyright (c) 2002-2004 The RapidSvn Group.  All rights reserved.
  *
  * This software is licensed as described in the file LICENSE.txt,
  * which you should have received as part of this distribution.
@@ -58,17 +58,12 @@ def change_license(fname):
   s = open(fname).read()
   m = re_OLD.search(s)
   if not m:
-    insert_license(fname)
+    print 'ERROR: missing old license:', fname
   else:
-    s = s[:m.start()] + NEW_LICENSE + s[m.end():]
-    open(fname, 'w').write(s)
-    print 'Changed:', fname
-
-def insert_license(fname):
-  s = open(fname).read()
-  s = NEW_LICENSE + s
-  open(fname, 'w').write(s)
-  print 'Inserted:', fname
+    new_s = s[:m.start()] + NEW_LICENSE + s[m.end():]
+    if s!=new_s:
+        open(fname, 'w').write(new_s)
+        print 'Changed:', fname
 
 if __name__ == '__main__':
   if sys.argv[1] == '-C':
