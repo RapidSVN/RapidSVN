@@ -12,8 +12,7 @@
  */
 
 // wxwindows
-#include "wx/app.h"
-#include "wx/textctrl.h"
+#include "wx/wx.h"
 
 // app
 #include "ids.hpp"
