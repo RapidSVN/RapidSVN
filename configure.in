@@ -184,12 +184,12 @@ else
 	AC_MSG_ERROR([wxWindows is required. Try --with-wx-config.])
 fi
 case $WX_VERSION in
-    [2.3.3])
+    [2.4.[2-9]])
         ;;
-    [2.[4-9].*])
-        ;;
+    [2.[5-9].*])
+	;;
     *)
-        AC_MSG_ERROR([wxWindows = 2.3.3 or >= 2.4.0 required])
+        AC_MSG_ERROR([wxWindows >= 2.4.2 required])
 	AC_MSG_ERROR([Try --with-wx-config.])
         ;;
 esac
