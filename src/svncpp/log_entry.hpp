@@ -29,14 +29,14 @@ namespace svn
     }
 
     LogEntry (const svn_revnum_t revision,
-              const std::string & author,
-              const std::string & date,
-              const std::string & message)
+              const char * author,
+              const char * date,
+              const char * message)
     {
       this->revision = revision;
-      this->author = author;
-      this->date = date;
-      this->message = message;
+      this->author = author == 0 ? "" : author;
+      this->date = date == 0 ? "" : date;
+      this->message = message == 0 ? "" : message;
     }
 
     svn_revnum_t revision;
