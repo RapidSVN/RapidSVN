@@ -21,7 +21,7 @@ Name: main; Description: RapidSVN Application; Types: compact custom full; Flags
 
 [Files]
 Source: "libdb40.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
-Source: "msvcp60.dll"; DestDir: "{sys}\mcvscp60.dll"; CopyMode: onlyifdoesntexist; Flags: sharedfile uninsneveruninstall; Components: main
+Source: "msvcp60.dll"; DestDir: "{app}\bin"; CopyMode: onlyifdoesntexist; Components: main
 Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
 Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; CopyMode: alwaysoverwrite; Components: main
 Source: "..\..\TODO.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: main
