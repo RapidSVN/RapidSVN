@@ -28,6 +28,7 @@
 
 // app
 #include "include.hpp"
+#include "ids.hpp"
 
 #include "svn_file_info.hpp"
 #include "rapidsvn_app.hpp"

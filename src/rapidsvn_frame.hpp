@@ -18,6 +18,7 @@
 #include <wx/splitter.h>
 
 // app
+//#include "ids.h"
 #include "tracer.hpp"
 #include "log_action.hpp"
 
@@ -195,45 +196,6 @@ private:
 DECLARE_EVENT_TABLE ()};
 
 const int ID_TOOLBAR = 500;
-
-/*
- * Menu commands IDs
- */
-enum
-{
-  ID_Quit = 1,
-  ID_About,
-  ID_Refresh,
-  ID_Import,
-  ID_Checkout,
-  ID_Copy,
-  ID_Rename,
-  ID_Combo,
-  ID_Update,
-  ID_Commit,
-  ID_Add,
-  ID_Del,
-  ID_Revert,
-  ID_Log,
-  ID_Info,
-  ID_Resolve,
-  ID_Merge,
-  ID_Contents,
-  ID_Mkdir,
-  ID_Switch,
-  ID_Preferences,
-  ID_Property,
-  ID_AddProject,
-  ID_RemoveProject,
-  ID_MoveTo,
-  ID_CopyTo,
-  ID_RenameHere,
-  ID_CopyHere,
-
-  ACTION_EVENT,                 // this one gets sent from the action threads
-
-  LIST_CTRL = 1000
-};
 
 #endif
 /* -----------------------------------------------------------------
