@@ -1,212 +1,97 @@
-
 #include "status.h"
 
 namespace svn
 {
 
-Status::Status ()
-{
-}
 
-Status::~Status ()
-{
-}
-
-void 
-Status::reset ()
-{
-  versioned = false;
-  youngest = SVN_INVALID_REVNUM;
-}
-
-bool
-Status::isVersioned ()
-{
-  return versioned;
-}
-
-void
-Status::loadPath (const char * path, bool _isdir)
-{
-  const svn_item_t *item;
-
-  filePath = path;
-  isdir = _isdir;
-  
-  reset ();
-
-  Err = svn_client_status (&statushash,
-                           &youngest,
-                           filePath.c_str (),
-                           authenticate (),
-                           0,
-                           1,
-                           0,
-                           0,
-                           pool);
-
-  // Error present if function is not under version control
-  if ((Err != NULL) || (apr_hash_count(statushash) == 0))
+  Status::Status ()
   {
-    versioned = false;
-    return;
+    init (NULL, NULL);
   }
-    
-  /* Convert the unordered hash to an ordered, sorted array */
-  statusarray = apr_hash_sorted_keys (statushash,
-                                      svn_sort_compare_items_as_paths,
-                                      pool);
 
-  // We do not recurse, so only the first entry is interesting to us.
-  item = &APR_ARRAY_IDX (statusarray, 0, const svn_item_t);
-  status = (svn_wc_status_t *) item->value;
-
-  if (!status->entry)  // not under revision control
-    versioned = false;
-  else
-    versioned = true;
-}
-
-unsigned long
-Status::revision ()
-{
-  if(versioned == false)
-    throw EntryNotVersioned ();
-
-  return status->entry->revision;
-}
-  
-unsigned long
-Status::lastChanged ()
-{
-  if(versioned == false)
-    throw EntryNotVersioned ();
-
-  return status->entry->cmt_rev;
-}
-
-const char *
-Status::lastCommitAuthor ()
-{
-  if(versioned == false)
-    throw EntryNotVersioned ();
-
-  return status->entry->cmt_author;
-}
-
-const char *
-Status::statusDescription (svn_wc_status_kind kind)
-{
-  switch (kind)
+  Status::Status (const Status & src)
   {
+    init (src.m_path.c_str (), src.m_status);
+  }
+
+
+  Status::Status (const char *path, svn_wc_status_t * status)
+  {
+    init (path, status);
+  }
+
+  void Status::init (const char *path, const svn_wc_status_t * status)
+  {
+    m_path = path;
+    m_status = status;
+    m_versioned = FALSE;
+    m_isDir = FALSE;
+    m_isCopied = FALSE;
+    m_isLocked = FALSE;
+    m_revision = SVN_INVALID_REVNUM;
+    m_lastChanged = 0;
+    m_lastCommitAuthor = "";
+    m_textType = svn_wc_status_none;
+    m_propType = svn_wc_status_none;
+
+    if (status != NULL)
+    {
+      svn_wc_entry_t *entry = status->entry;
+      m_versioned = status->text_status > svn_wc_status_unversioned;
+      m_textType = status->text_status;
+      m_propType = status->prop_status;
+      m_isCopied = status->copied == 1;
+      m_isLocked = status->locked == 1;
+
+      if (entry != NULL)
+      {
+        m_revision = entry->revision;
+        m_lastChanged = entry->cmt_rev;
+        m_lastCommitAuthor = entry->cmt_author;
+        m_isDir = entry->kind == svn_node_dir;
+      }
+    }
+  }
+
+  Status::~Status ()
+  {
+  }
+
+  const char *Status::statusDescription (svn_wc_status_kind kind)
+  {
+    switch (kind)
+    {
     case svn_wc_status_none:
-      _statusText = "non-svn";
+      return "non-svn";
       break;
     case svn_wc_status_normal:
-      _statusText = "normal";
+      return "normal";
       break;
     case svn_wc_status_added:
-      _statusText = "added";
+      return "added";
       break;
     case svn_wc_status_absent:
-      _statusText = "absent";
+      return "absent";
       break;
     case svn_wc_status_deleted:
-      _statusText = "deleted";
+      return "deleted";
       break;
     case svn_wc_status_replaced:
-      _statusText = "replaced";
+      return "replaced";
       break;
     case svn_wc_status_modified:
-      _statusText = "modified";
+      return "modified";
       break;
     case svn_wc_status_merged:
-      _statusText = "merged";
+      return "merged";
       break;
     case svn_wc_status_conflicted:
-      _statusText = "conflicted";
+      return "conflicted";
       break;
     case svn_wc_status_unversioned:
     default:
-      _statusText = "unversioned";
+      return "unversioned";
       break;
+    }
   }
-  
-  return _statusText.c_str ();
-}
-
-const char *
-Status::textDescription ()
-{
-  _statusText = "";
-  if(versioned == false)
-    return statusDescription (svn_wc_status_unversioned);
-
-  return statusDescription (status->text_status);
-}
-
-svn_wc_status_kind
-Status::textType ()
-{
-  if(!status || !versioned)
-    return svn_wc_status_none;
-  
-  return status->text_status;
-}
-
-const char *
-Status::propDescription ()
-{
-  _statusText = "";
-  if(versioned == false)
-    return statusDescription (svn_wc_status_none);
-
-  return statusDescription (status->prop_status);
-}
-
-svn_wc_status_kind
-Status::propType ()
-{
-  if(!status || !versioned)
-    return svn_wc_status_none;
-  
-  return status->prop_status;
-}
-
-bool
-Status::isCopied ()
-{
-  if(versioned == false)
-    throw EntryNotVersioned ();
-
-  if(status->copied == 1)
-    return true;
-
-  return false;
-}
-
-bool
-Status::isLocked ()
-{
-  if(versioned == false)
-    throw EntryNotVersioned ();
-
-  if(status->locked == 1)
-    return true;
-
-  return false;
-}
-
-const char *
-Status::getPath ()
-{
-  return filePath.c_str();
-}
-
-bool
-Status::isDir ()
-{
-  return isdir;
-}
-
 }

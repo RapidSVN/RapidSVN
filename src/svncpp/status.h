@@ -1,136 +1,149 @@
-
 #ifndef _SVNCPP_STATUS_H_
 #define _SVNCPP_STATUS_H_
 
-#include "auth.h"
-#include "svn_sorts.h"
+#include "svn_types.h"
+#include "svn_wc.h"
 #include <string>
-
-#ifndef _SVNCPP_EXCEPTION_H_
-#include "exception.h"
-#endif
 
 namespace svn
 {
-
 /**
  * Subversion status API.
  */
-class Status : public svn::Auth
-{
-private:
-  apr_hash_t *statushash;
-  svn_revnum_t youngest;
-  apr_array_header_t * statusarray;
-  svn_wc_status_t * status;
-  bool versioned;
-  std::string filePath;
-  std::string _statusText;
-  bool isdir;
-  
-  /**
-   * Reset to all of the default properties.
-   */
-  void reset ();
+  class Status
+  {
+  private:
+    const svn_wc_status_t *m_status;
+    bool m_versioned;
+     std::string m_path;
+    bool m_isDir;
+    bool m_isCopied;
+    bool m_isLocked;
+    unsigned long m_revision;
+    unsigned long m_lastChanged;
+     std::string m_lastCommitAuthor;
+    svn_wc_status_kind m_textType;
+    svn_wc_status_kind m_propType;
 
   /**
    * Returns the description of the status.
    */
-  const char * statusDescription (svn_wc_status_kind kind);
+    const char *statusDescription (svn_wc_status_kind kind);
 
+  public:
+  /**
+   * Initialize structures
+   */
+    void init (const char *path, const svn_wc_status_t * status);
 
-  
-public:
-  Status ();
-  ~Status ();
+     Status ();
 
   /**
-   * Initiaties the status on a path. 
+   * copy constructor
    */
-  void loadPath (const char * path, bool IsDir);
+     Status (const Status & src);
+
+     Status (const char *path, svn_wc_status_t * status = NULL);
+
+    ~Status ();
 
   /**
-   * Returns the file path.
+   * @return path of status entry
    */
-  const char * getPath ();
+    const char *path ()
+    {
+      return m_path.c_str ();
+    }
 
   /**
-   * Returns true if the path is a directory.
+   * @return TRUE if entry is a dir
    */
-  bool isDir ();
-  
+    bool isDir ()
+    {
+      return m_isDir;
+    }
+
   /**
-   * Returns the revision.  
-   * @exception EntryNotVersioned
+   * @return revision if versioned, otherwise SVN_INVALID_REVNUM
    */
-  unsigned long revision ();
+    unsigned long revision ()
+    {
+      return m_revision;
+    }
 
   /**
    * Returns the last time the file was changed revision number.
-   * @exception EntryNotVersioned
    */
-  unsigned long lastChanged ();
+    unsigned long lastChanged ()
+    {
+      return m_lastChanged;
+    }
 
   /**
-   * Returns the last last author to commit to a file.
-   * @exception EntryNotVersioned
+   * @return name of author if versioned, NULL otherwise
    */
-  const char * lastCommitAuthor ();
+    const char *lastCommitAuthor ()
+    {
+      return m_lastCommitAuthor.c_str ();
+    }
 
 
   /**
-   * Returns the file status of the "textual" component. 
+   * @return file status of the "textual" component. 
    */
-  const char * textDescription ();
+    const char *textDescription ()
+    {
+      return statusDescription (m_textType);
+    }
 
   /**
-   * Returns the file status property enum of the "textual" component. 
+   * @return file status property enum of the "textual" component. 
    */
-  svn_wc_status_kind textType ();
+    const svn_wc_status_kind textType ()
+    {
+      return m_textType;
+    }
 
   /**
-   * Returns the file status of the "property" component. 
+   * @return textual file status of the "property" component. 
    */
-  const char * propDescription ();
+    const char *propDescription ()
+    {
+      return statusDescription (m_propType);
+    }
 
   /**
-   * Returns the file status property enum of the "property" component. 
+   * @return file status property enum of the "property" component. 
    */
-  svn_wc_status_kind propType ();
+    const svn_wc_status_kind propType ()
+    {
+      return m_propType;
+    }
 
   /**
-   * Returns whether the file is under version control.
+   * @return TRUE if under version control
    */
-  bool isVersioned ();
+    bool isVersioned ()
+    {
+      return m_versioned;
+    }
 
   /**
-   * Returns true if the file is locked.
-   * @exception EntryNotVersioned
+   * @return TRUE if locked
    */
-  bool isLocked ();
+    bool isLocked ()
+    {
+      return m_isLocked;
+    }
 
   /**
-   * Returns true if the file is copied.
-   * @exception EntryNotVersioned
+   * @return TRUE if copied
    */
-  bool isCopied ();
-};
-
-/**
- * Represents an error triggered when the path set is not versioned.
- */
-class EntryNotVersioned : public Exception
-{
-public:
-  /**
-   * Constructor. 
-   */
-  EntryNotVersioned (std::string message = "") :
-      Exception(message) {};
-
-  /* Destructor */
-  virtual ~EntryNotVersioned () throw () {};
-};
+    bool isCopied ()
+    {
+      return m_isCopied;
+    }
+  };
 
 }
 
