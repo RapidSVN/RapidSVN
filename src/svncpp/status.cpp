@@ -137,6 +137,8 @@ const char *
 Status::textDescription ()
 {
   _statusText = "";
+  if(versioned == false)
+    return statusDescription (svn_wc_status_unversioned);
 
   return statusDescription (status->text_status);
 }
@@ -154,6 +156,8 @@ const char *
 Status::propDescription ()
 {
   _statusText = "";
+  if(versioned == false)
+    return statusDescription (svn_wc_status_none);
 
   return statusDescription (status->prop_status);
 }

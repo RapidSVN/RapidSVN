@@ -176,6 +176,10 @@ SOURCE=.\src\notify.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\preferences_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\rapidsvn.cpp
 # End Source File
 # Begin Source File
@@ -329,6 +333,10 @@ SOURCE=.\src\mkdir_dlg.h
 # Begin Source File
 
 SOURCE=.\src\notify.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\preferences_dlg.h
 # End Source File
 # Begin Source File
 
