@@ -24,7 +24,8 @@
 #include "threaded_worker.hpp"
 #include "tracer.hpp"
 
-struct ThreadedWorker::Data
+
+class ThreadedWorker::Data : public wxThread
 {
 public:
   wxWindow * parent;
@@ -34,6 +35,8 @@ public:
   bool ownContext;
   ActionState state;
   ActionResult result;
+  wxString actionName;
+
 
   /**
    * constructor
@@ -43,6 +46,7 @@ public:
     Init (parent);
   }
 
+
   /**
    * destructor
    */
@@ -50,6 +54,7 @@ public:
   {
     SetContext (0, false);
   }
+
 
   /**
    * initialize values
@@ -64,7 +69,13 @@ public:
     ownContext =false;
     state = ACTION_NONE;
     result = ACTION_NOTHING;
+
+    //if (Create () != wxTHREAD_NO_ERROR)
+    // TODO: error handling
+    Create ();
+    Run();
   }
+
 
   /**
    * set a context. if there is already a context and we
@@ -85,7 +96,134 @@ public:
     context = ctx;
     ownContext = own;
   }
+
+
+  /**
+   * thread execution starts here
+   */
+  virtual void * 
+  Entry()
+  {
+    while (!TestDestroy ())
+    {
+        ExecuteAction ();
+
+        Sleep (0);
+    }
+
+    return 0;
+  }
+
+
+  void
+  DeleteAction ()
+  {
+    PostDataEvent (TOKEN_DELETE_ACTION, (void*)action);
+    action = 0;
+  }
+
+
+  /**
+   * executes the action if there is any
+   */
+  void
+  ExecuteAction ()
+  {
+    if (action == 0)
+      return;
+
+    {
+      wxString msg;
+      msg.Printf (_("Execute: %s"), actionName);
+      PostStringEvent (TOKEN_ACTION_START, msg);
+    }
+
+    unsigned int actionFlags = 0;
+
+    try
+    {
+      // this cursor stuff has to change...
+      wxBusyCursor wait;
+      state = ACTION_RUNNING;
+      if (!action->Perform ())
+        result = ACTION_ERROR;
+      else
+        result = ACTION_SUCCESS;
+      actionFlags = action->GetFlags ();
+      
+      state = ACTION_NONE;
+    }
+    catch (svn::ClientException & e)
+    {
+      wxString msg;
+      msg.Printf (_("Error while performing action: %s"), 
+                  e.message ());
+      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg);
+
+      state = ACTION_NONE;
+      result= ACTION_ERROR;
+      DeleteAction ();
+      return;
+    }
+    catch (...)
+    {
+      wxString msg (_("Error while performing action."));
+      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg);
+
+      state = ACTION_NONE;
+      result= ACTION_ERROR;
+      DeleteAction ();
+      return;
+    }
+
+    PostDataEvent (TOKEN_ACTION_END, (void*) new unsigned int(actionFlags));
+    DeleteAction ();
+  }
+
+
+  /** 
+   * called when the thread exits - whether it terminates normally or is
+   * stopped with Delete() (but not when it is Kill()ed!)
+   */
+  virtual void 
+  OnExit()
+  {
+  }
+
+
+  void
+  PostStringEvent (int code, wxString str)
+  {
+    wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
+    event.SetInt (code);
+    event.SetString (str);
+
+    // send in a thread-safe way
+    wxPostEvent (parent, event);
+  }
+
+
+  void
+  PostDataEvent (int code, void *data)
+  {
+    wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
+    event.SetInt (code);
+    event.SetClientData (data);
+
+    // send in a thread-safe way
+    wxPostEvent (parent, event);
+  }
+
+
+  void
+  Trace (const wxString & message)
+  {
+    if (tracer)
+      tracer->Trace (message);
+  }
+
 };
+
 
 ThreadedWorker::ThreadedWorker (wxWindow * parent)
 {
@@ -94,7 +232,7 @@ ThreadedWorker::ThreadedWorker (wxWindow * parent)
 
 ThreadedWorker::~ThreadedWorker ()
 {
-  delete m;
+  m->Delete ();
 }
 
 void
@@ -116,29 +254,36 @@ ThreadedWorker::GetResult ()
 }
 
 bool
-ThreadedWorker::Perform (Action * action)
+ThreadedWorker::Perform (Action * action_)
 {
+  // is there already a thread running?
+  if (m->action != 0)
+  {
+    m->Trace (_("Internal Error: There is another action running"));
+    return false;
+  }
+
   // is there a context? we need one
   if (m->context == 0)
   {
-    SetContext (new svn::Context (), true);
+    m->Trace (_("Internal Error: no context available"));
+    return false;
   }
 
-  action->SetContext (m->context);
+  action_->SetContext (m->context);
   m->context->reset ();
 
   m->result = ACTION_NOTHING;
-  m->action = action;
   m->state = ACTION_INIT;
 
   try
   {
-    if (!m->action->Prepare ())
+    if (!action_->Prepare ())
     {
       m->result = ACTION_ABORTED;
-      delete m->action;
-      m->action = 0;
       m->state = ACTION_NONE;
+      delete action_;
+
       return true;
     }
   }
@@ -146,100 +291,32 @@ ThreadedWorker::Perform (Action * action)
   {
     wxString msg;
     msg.Printf ( _("Error while preparing action: %s"), e.message () );
-    Trace (msg);
-    return false;
-  }
-  catch (...)
-  {
-    Trace (_("Error while preparing action."));
-    return false;
-  }
+    m->Trace (msg);
 
-  {
-    wxString msg;
-    msg.Printf (_("Execute: %s"), action->GetName ());
-    PostStringEvent (TOKEN_ACTION_START, msg, ACTION_EVENT);
-  }
-
-  unsigned int actionFlags = 0;
-
-  try
-  {
-    // this cursor stuff has to change...
-    wxBusyCursor wait;
-    m->state = ACTION_RUNNING;
-    bool result = m->action->Perform ();
-    if (!result)
-    {
-      m->result = ACTION_ERROR;
-    }
-    else
-    {
-      m->result = ACTION_SUCCESS;
-    }
-    actionFlags = m->action->GetFlags ();
-
-    delete m->action;
-    m->action = 0;
+    m->result = ACTION_ERROR;
     m->state = ACTION_NONE;
-  }
-  catch (svn::ClientException & e)
-  {
-    wxString msg;
-    msg.Printf (_("Error while performing action: %s"), 
-                e.message ());
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
-
+    delete action_;
     return false;
   }
   catch (...)
   {
-    wxString msg (_("Error while performing action."));
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
+    m->Trace (_("Error while preparing action."));
 
+    m->result = ACTION_ERROR;
+    m->state = ACTION_NONE;
+    delete action_;
     return false;
   }
 
-  PostDataEvent (TOKEN_ACTION_END, (void*) new unsigned int(actionFlags), 
-                 ACTION_EVENT);
+  m->actionName = action_->GetName ();
+  m->action = action_;
   return true;
 }
-
+ 
 void
 ThreadedWorker::SetTracer (Tracer * tracer)
 {
   m->tracer = tracer;
-}
-
-void
-ThreadedWorker::Trace (const wxString & message)
-{
-  if (m->tracer)
-  {
-    m->tracer->Trace (message);
-  }
-}
-
-void
-ThreadedWorker::PostStringEvent (int code, wxString str, int event_id)
-{
-  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, event_id);
-  event.SetInt (code);
-  event.SetString (str);
-
-  // send in a thread-safe way
-  wxPostEvent (m->parent, event);
-}
-
-void
-ThreadedWorker::PostDataEvent (int code, void *data, int event_id)
-{
-  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, event_id);
-  event.SetInt (code);
-  event.SetClientData (data);
-
-  // send in a thread-safe way
-  wxPostEvent (m->parent, event);
 }
 
 void

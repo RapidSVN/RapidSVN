@@ -74,11 +74,11 @@ public:
   virtual svn::Context * 
   GetContext () const;
 private:
-  struct Data;
+  class Data;
   Data * m;
 
   /**
-   * private copy constructor
+   * disallow private copy constructor
    */
   ThreadedWorker (const ThreadedWorker &);
 

@@ -602,6 +602,7 @@ END_EVENT_TABLE ()
     m_folder_browser->SetListener (&m->listener);
     m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
   }
+  UpdateCurrentPath ();
 
   // Adapt the menu entries
   for (int col=0; col < FileListCtrl::COL_COUNT; col++)
@@ -1298,6 +1299,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
     Trace (event.GetString ());
     UpdateFileList ();
     Trace (_("Ready\n"));
+    m->SetRunning (false);
     break;
 
   case TOKEN_ACTION_START:
@@ -1333,6 +1335,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       }
 
       Trace (_("Ready\n"));
+      m->SetRunning (false);
     }
     break;
 
@@ -1414,6 +1417,15 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
         action = new MergeAction (this, data);
         Perform (action);
       }
+    }
+    break;
+
+  case TOKEN_DELETE_ACTION:
+    {
+      Action * action = static_cast<Action *>(event.GetClientData ());
+
+      if (action != 0)
+        delete action;
     }
     break;
   }
@@ -1545,9 +1557,8 @@ RapidSvnFrame::Perform (Action * action)
     action->SetTracer (m_logTracer, false);
     m_actionWorker->SetTracer (m_logTracer);
     m_actionWorker->SetContext (m_context, false);
-    m_actionWorker->Perform (action);
-
-    m->SetRunning (false);
+    if (!m_actionWorker->Perform (action))
+      m->SetRunning (false);
   }
   catch (...)
   {

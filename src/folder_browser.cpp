@@ -144,6 +144,7 @@ public:
   wxTreeItemId rootId;
   wxImageList* imageList;
   Bookmarks bookmarks;
+  svn::Context defaultContext;
   
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
     : window (window), listener (0)
@@ -208,36 +209,38 @@ public:
   GetContext () 
   {
     const FolderItemData * data = GetSelection ();
-    if (data == 0)
-      return 0;
-
     svn::Context * context = 0;
 
-    bool ok = true;
-    while (context == 0)
+    if (data == 0)
+      context = &defaultContext;
+    else
     {
-      switch (data->getFolderType ())
+      bool ok = true;
+      while (context == 0)
       {
-      case FOLDER_TYPE_NORMAL:
+        switch (data->getFolderType ())
         {
-          wxTreeItemId id = data->GetId ();
-          wxTreeItemId parentId = treeCtrl->GetItemParent (id);
-          data = GetItemData (parentId);
+        case FOLDER_TYPE_NORMAL:
+          {
+            wxTreeItemId id = data->GetId ();
+            wxTreeItemId parentId = treeCtrl->GetItemParent (id);
+            data = GetItemData (parentId);
+          }
+          break;
+
+        case FOLDER_TYPE_BOOKMARK:
+          context = bookmarks.GetContext (data->getPath ());
+          ok = context != 0;
+
+          break;
+        default:
+          ok = false;
+          break;
         }
-        break;
 
-      case FOLDER_TYPE_BOOKMARK:
-        context = bookmarks.GetContext (data->getPath ());
-        ok = context != 0;
-
-        break;
-      default:
-        ok = false;
-        break;
+        if (!ok)
+          break;
       }
-
-      if (!ok)
-        break;
     }
 
     if (context != 0)
