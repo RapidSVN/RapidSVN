@@ -50,14 +50,7 @@ namespace svn
     /**
      * destructor
      */
-    virtual ~Context ()
-    {
-    }
-
-    /**
-     * constructor with username/password
-     */
-    Context (const char * username, const char * password);
+    virtual ~Context ();
 
     /**
      * set username/password for authentication
@@ -67,72 +60,49 @@ namespace svn
     /**
      * operator to get svn_client_ctx object
      */
-    operator svn_client_ctx_t * () 
-    {
-      return &m_ctx;
-    }
+    operator svn_client_ctx_t * ();
 
-    svn_client_ctx_t * ctx ()
-    {
-      return &m_ctx;
-    }
+    svn_client_ctx_t * ctx ();
 
     /**
      * set log message
      *
      * @param msg
      */
-    void setLogMessage (const char * msg)
-    {
-      m_logMessage = msg;
-    }
+    void setLogMessage (const char * msg);
+
+    /**
+     * get log message
+     *
+     * @return log message
+     */
+    const char * 
+    getLogMessage () const;
+    
+    /**
+     * get username
+     *
+     * @return username
+     */
+    const char * 
+    getUsername () const;
+
+    /**
+     * get password
+     *
+     * @return password
+     */
+    const char *
+    getPassword () const;
 
   private:
-    Pool m_pool;
-    svn_client_ctx_t m_ctx;
-    std::string m_username;
-    std::string m_password;
-    std::string m_logMessage;
+    struct Data;
+    Data * m;
 
     /**
      * disable assignment operator
      */
     Context & operator = (const Context &);
-
-    /**
-     * used by the simple prompt provider to retrieve
-     * username and password
-     *
-     * @param result returned username/password, depending on
-     *               on hide
-     * @param prompt string (unused here)
-     * @param hide 0=username/1=password
-     * @param baton Context
-     * @param pool pool to use
-     * @return error
-     */
-    static svn_error_t *
-    prompt (const char ** result, const char * prompt,
-            svn_boolean_t hide, void *baton,
-            apr_pool_t *pool);
-    
-    static svn_error_t *
-    log_msg (const char **log_msg, 
-             const char **tmp_file,
-             apr_array_header_t *commit_items,
-             void *baton,
-             apr_pool_t *pool);
-
-    static void 
-    notify (void * baton,
-            const char *path,
-            svn_wc_notify_action_t action,
-            svn_node_kind_t kind,
-            const char *mime_type,
-            svn_wc_notify_state_t content_state,
-            svn_wc_notify_state_t prop_state,
-            svn_revnum_t revision);
-
   };
 }
 
