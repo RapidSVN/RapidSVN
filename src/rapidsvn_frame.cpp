@@ -25,22 +25,23 @@
 
 #include "svn_file_info.hpp"
 
-#include "checkout_action.hpp"
-#include "copymove_action.hpp"
-#include "import_action.hpp"
-#include "update_action.hpp"
+// actions
 #include "add_action.hpp"
-#include "delete_action.hpp"
-#include "commit_action.hpp"
-#include "revert_action.hpp"
-#include "resolve_action.hpp"
-#include "copy_action.hpp"
-#include "mkdir_action.hpp"
-#include "merge_action.hpp"
-#include "property_action.hpp"
+#include "checkout_action.hpp"
 #include "cleanup_action.hpp"
+#include "commit_action.hpp"
+#include "delete_action.hpp"
 #include "external_program_action.hpp"
+#include "import_action.hpp"
+#include "merge_action.hpp"
+#include "mkdir_action.hpp"
+#include "move_action.hpp"
+#include "property_action.hpp"
+#include "resolve_action.hpp"
+#include "revert_action.hpp"
+#include "update_action.hpp"
 
+// dialogs
 #include "auth_dlg.hpp"
 #include "report_dlg.hpp"
 #include "preferences.hpp"
@@ -831,13 +832,11 @@ RapidSvnFrame::GetActionTargets () const
 void
 RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 {
-  ActionType lastAction = ACTION_TYPE_NONE;
   Action* action = NULL;
 
   if ((event.m_id >= ID_Verb_Min) && (event.m_id <= ID_Verb_Max))
   {
     action = new ExternalProgramAction (this, event.m_id - ID_Verb_Min, false);
-    lastAction = ACTION_TYPE_EXTERNAL_PROGRAM;
   }
   else
   {
@@ -845,7 +844,6 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
     {
     case ID_Explore:
       action = new ExternalProgramAction (this, -1, true);
-      lastAction = ACTION_TYPE_EXPLORE;
       break;
 
     case ID_Default_Action:
@@ -854,78 +852,69 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
     case ID_Update:
       action = new UpdateAction(this);
-      lastAction = ACTION_TYPE_UPDATE;
       break;
 
     case ID_Commit:
       action = new CommitAction(this);
-      lastAction = ACTION_TYPE_COMMIT;
       break;
 
     case ID_Add:
       action = new AddAction (this);
-      lastAction = ACTION_TYPE_ADD;
       break;
 
     case ID_Import:
       action = new ImportAction (this);
-      lastAction = ACTION_TYPE_IMPORT;
       break;
 
     case ID_Checkout:
       action = new CheckoutAction (this);
-      lastAction = ACTION_TYPE_CHECKOUT;
       break;
 
     case ID_Cleanup:
       action = new CleanupAction (this);
-      lastAction = ACTION_TYPE_CLEANUP;
       break;
 
     case ID_Log:
       action = new LogAction (this);
-      lastAction = ACTION_TYPE_LOG;
       break;
 
     case ID_Revert:
       action = new RevertAction (this);
-      lastAction = ACTION_TYPE_REVERT;
+      break;
+
+    case ID_Resolve:
+      action = new ResolveAction (this);
       break;
 
     case ID_Delete:
       action = new DeleteAction (this);
-      lastAction = ACTION_TYPE_DELETE;
       break;
 
     case ID_Copy:
-      //TODO Make sure there is only one file selected
-      //action = new CopyAction (this);
-      action = new CopyMoveAction (this, true);
-      lastAction = ACTION_TYPE_COPY;
+      action = new MoveAction (this, MOVE_COPY);
       break;
 
     case ID_Move:
-      action = new CopyMoveAction (this, false);
-      lastAction = ACTION_TYPE_MOVE;
+      action = new MoveAction (this, MOVE_MOVE);
       break;
 
     case ID_Mkdir:
       action = new MkdirAction (this, m_currentPath);
-      lastAction = ACTION_TYPE_MKDIR;
       break;
 
     case ID_Merge:
       action = new MergeAction (this);
-      lastAction = ACTION_TYPE_MERGE;
       break;
 
     case ID_Property:
       action = new PropertyAction (this);
-      lastAction = ACTION_TYPE_PROPERTY;
+      break;
+
+    case ID_Rename: 
+      action = new MoveAction (this, MOVE_RENAME);
       break;
 
     case ID_Contents: //TODO
-    case ID_Rename: //TODO
     default:
       m_logTracer->Trace ("Unimplemented action!");
       break;
@@ -933,7 +922,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
   }
 
   if (action)
-    Perform (lastAction, action);
+    Perform (action);
 }
 
 void
@@ -1112,17 +1101,15 @@ RapidSvnFrame::InvokeDefaultAction ()
   }
   else if (file_count == 1)
   {
-    Perform (ACTION_TYPE_EXTERNAL_PROGRAM,
-             new ExternalProgramAction (this, -1, false));
+    Perform (new ExternalProgramAction (this, -1, false));
   }
 
   return true;
 }
 
 void
-RapidSvnFrame::Perform (ActionType type, Action * action)
+RapidSvnFrame::Perform (Action * action)
 {
-  m_lastAction = type;
   action->SetPath (m_currentPath.c_str ());
   action->SetContext (m_context);
   if (action->GetOptions () != actionWithoutTarget)

@@ -126,14 +126,6 @@ SOURCE=.\src\commit_dlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\copy_action.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\copymove_action.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\delete_action.cpp
 # End Source File
 # Begin Source File
@@ -191,6 +183,10 @@ SOURCE=.\src\merge_dlg.cpp
 # Begin Source File
 
 SOURCE=.\src\mkdir_action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\move_action.cpp
 # End Source File
 # Begin Source File
 
@@ -326,14 +322,6 @@ SOURCE=.\src\commit_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\copy_action.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\copymove_action.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\delete_action.hpp
 # End Source File
 # Begin Source File
@@ -399,6 +387,10 @@ SOURCE=.\src\merge_dlg.hpp
 # Begin Source File
 
 SOURCE=.\src\mkdir_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\move_action.hpp
 # End Source File
 # Begin Source File
 

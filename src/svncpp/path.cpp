@@ -84,6 +84,20 @@ namespace svn
     m_path = newPath;
   }
 
+  void
+  Path::split (std::string & dirpath, std::string & basename)
+  {
+    Pool pool;
+
+    const char * cdirpath;
+    const char * cbasename;
+
+    svn_path_split (m_path.c_str (), &cdirpath, &cbasename, pool);
+
+    dirpath = cdirpath;
+    basename = cbasename;
+  }
+
 }
 
 /* -----------------------------------------------------------------

@@ -53,7 +53,7 @@ enum
   //ID_MoveTo,
   ID_Property,
   ID_Rename,
-  ID_RenameHere,
+  //ID_RenameHere,
   ID_Resolve,
   ID_Revert,
   ID_Switch,

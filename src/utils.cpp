@@ -229,7 +229,8 @@ AppendModifyMenu (wxMenu * parentMenu)
   //item->SetBitmap (wxBITMAP (rename));
   parentMenu->Append (item);
 
-  item = new wxMenuItem (parentMenu, ID_RenameHere, _("Re&name..."));
+  item = new wxMenuItem (parentMenu, ID_Rename, _("Re&name..."));
+  parentMenu->Append (item);
   //item->SetBitmap (wxBITMAP (rename));
 
   item = new wxMenuItem (parentMenu, ID_Mkdir, _("Make directory..."));

@@ -92,6 +92,15 @@ namespace svn
      */
     void
     addCompontent (const char * component);
+
+    /**
+     * split path in its components
+     *
+     * @param dirpath directory/path component
+     * @param basename filename
+     */
+    void
+    split (std::string & dirpath, std::string & basename);
   };
 }
 

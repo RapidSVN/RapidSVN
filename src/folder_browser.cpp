@@ -212,10 +212,10 @@ public:
     if ((type==FOLDER_TYPE_PROJECT)||(type==FOLDER_TYPE_NORMAL))
     {
       menu.AppendSeparator ();
-      item = new wxMenuItem (&menu, ID_Update, _("Update"));
+      item = new wxMenuItem (&menu, ID_Update, _("Update..."));
       item->SetBitmap (wxBITMAP (update));
       menu.Append (item);
-      item = new wxMenuItem (&menu, ID_Commit, _("Commit"));
+      item = new wxMenuItem (&menu, ID_Commit, _("Commit..."));
       item->SetBitmap (wxBITMAP (commit));
       menu.Append (item);
     }

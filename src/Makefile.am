@@ -13,8 +13,6 @@ rapidsvn_SOURCES= \
 	cleanup_action.cpp \
 	commit_action.cpp \
 	commit_dlg.cpp \
-	copy_action.cpp \
-	copymove_action.cpp \
 	delete_action.cpp \
 	delete_dlg.cpp \
  	destination_dlg.cpp \
@@ -30,6 +28,7 @@ rapidsvn_SOURCES= \
 	merge_action.cpp \
 	merge_dlg.cpp \
 	mkdir_action.cpp \
+	move_action.cpp \
         preferences.cpp \
 	preferences_dlg.cpp \
 	property_action.cpp \

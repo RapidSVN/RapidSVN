@@ -31,30 +31,6 @@
 
 typedef enum
 {
-  ACTION_TYPE_NONE,
-  ACTION_TYPE_UPDATE,
-  ACTION_TYPE_COMMIT,
-  ACTION_TYPE_CHECKOUT,
-  ACTION_TYPE_IMPORT,
-  ACTION_TYPE_ADD,
-  ACTION_TYPE_DEL,
-  ACTION_TYPE_REVERT,
-  ACTION_TYPE_RESOLVE,
-  ACTION_TYPE_COPY,
-  ACTION_TYPE_MOVE,
-  ACTION_TYPE_MKDIR,
-  ACTION_TYPE_MERGE,
-  ACTION_TYPE_CLEANUP,
-  ACTION_TYPE_PROPERTY,
-  ACTION_TYPE_LOG,
-  ACTION_TYPE_DELETE,
-  ACTION_TYPE_EXPLORE,
-  ACTION_TYPE_EXTERNAL_PROGRAM
-}
-ActionType;
-
-typedef enum
-{
   ACTIVEPANE_FOLDER_BROWSER,
   ACTIVEPANE_FILELIST
 }
@@ -187,7 +163,7 @@ private:
     return m_folder_browser;
   }
 
-  void Perform (ActionType type, Action * action);
+  void Perform (Action * action);
 
   /**
    * returns the visibility of a column in the filelist
@@ -231,7 +207,6 @@ private:
   wxToolBar *m_tbar;
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
-  ActionType m_lastAction;
   wxString m_currentPath;
   wxString m_title;
   svn::Context * m_context;
