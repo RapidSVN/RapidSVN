@@ -200,8 +200,6 @@ public:
   virtual void ReCreateTree ();
 
 protected:
-  static const wxTreeItemId wxINVALID_TREE_ITEM_ID;
-
   virtual void ExpandDir (const wxTreeItemId & parentId);
   virtual void CollapseDir (const wxTreeItemId & parentId);
   virtual const wxTreeItemId AddSection (const wxString & path,

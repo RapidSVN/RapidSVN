@@ -493,8 +493,7 @@ EVT_TREE_ITEM_EXPANDING (-1, PatchedGenericDirCtrl::OnExpandItem)
 EVT_TREE_ITEM_COLLAPSED (-1, PatchedGenericDirCtrl::OnCollapseItem)
 EVT_TREE_BEGIN_LABEL_EDIT (-1, PatchedGenericDirCtrl::OnBeginEditItem)
 EVT_TREE_END_LABEL_EDIT (-1, PatchedGenericDirCtrl::OnEndEditItem)
-EVT_SIZE (PatchedGenericDirCtrl::OnSize) END_EVENT_TABLE () constwxTreeItemId
-     PatchedGenericDirCtrl::wxINVALID_TREE_ITEM_ID (-1);
+EVT_SIZE (PatchedGenericDirCtrl::OnSize) END_EVENT_TABLE () 
 
 PatchedGenericDirCtrl::PatchedGenericDirCtrl (void)
 {
@@ -1308,12 +1307,12 @@ PatchedGenericDirCtrl::AppendItem (const wxTreeItemId & parent,
   }
   else
   {
-    return wxINVALID_TREE_ITEM_ID;
+    return wxTreeItemId((long)0);
   }
 }
 
 //-----------------------------------------------------------------------------
-// PatchedDirFilterListCtrl
+// PatchedDirFilterListctrl
 //-----------------------------------------------------------------------------
 
 IMPLEMENT_CLASS (PatchedDirFilterListCtrl, wxChoice)
