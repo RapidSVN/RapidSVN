@@ -19,11 +19,22 @@ class Client
 {
 protected:
   apr_pool_t * pool;
+  svn_client_revision_t rev;
 
   /**
    * Global error object struct.
    */
   svn_error_t * Err;
+
+  /**
+   * Create a revision template.
+   */
+  svn_client_revision_t * getRevision (long revNumber);
+
+  /**
+   * Creates a target out of a string.
+   */
+  apr_array_header_t * target (const char * path);
 
 public:
   /**

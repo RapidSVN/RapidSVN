@@ -19,4 +19,7 @@ svn ci -m "Initial import" my_repos
 echo "junk data" > my_repos/README.txt
 svn ci -m "changed README.txt" my_repos
 
+echo "more junk" > my_repos/README.txt
+svn ci -m "more changes" my_repos
+
 echo "more junk data" > my_repos/main.cpp

@@ -3,6 +3,7 @@
 #include "svncpp/status.h"
 #include "svncpp/modify.h"
 #include "svncpp/property.h"
+#include "svncpp/log.h"
 #include "test_config.h"
 
 /**
@@ -22,6 +23,7 @@ class SvnCppTestCase : public CppUnit::TestCase
   CPPUNIT_TEST( testMkdir );
   CPPUNIT_TEST( testExport );
   CPPUNIT_TEST( testProperty );
+  CPPUNIT_TEST( testLog );
   CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -58,6 +60,8 @@ protected:
   void testMkdir ();
 
   void testExport ();
+
+  void testLog ();
 };
 
 /**

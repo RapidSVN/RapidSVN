@@ -146,7 +146,7 @@ Status::textDescription ()
 svn_wc_status_kind
 Status::textType ()
 {
-  if(!status)
+  if(!status || !versioned)
     return svn_wc_status_none;
   
   return status->text_status;
@@ -165,7 +165,7 @@ Status::propDescription ()
 svn_wc_status_kind
 Status::propType ()
 {
-  if(!status)
+  if(!status || !versioned)
     return svn_wc_status_none;
   
   return status->prop_status;

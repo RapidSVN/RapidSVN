@@ -12,24 +12,10 @@ namespace svn
 
 Modify::Modify ()
 {
-  memset (&rev, 0, sizeof (rev));
 }
 
 Modify::~Modify ()
 {
-}
-
-svn_client_revision_t *
-Modify::getRevision (long revNumber)
-{
-  if(revNumber == -1)
-    rev.kind = svn_client_revision_unspecified;
-  else
-    rev.kind = svn_client_revision_number;
-
-  rev.value.number = revNumber;
-
-  return &rev;
 }
 
 void
@@ -288,19 +274,6 @@ Modify::merge (const char * path1, long revision1,
 
   if(Err != NULL)
     throw ClientException (Err);
-}
-
-apr_array_header_t *
-Modify::target (const char * path)
-{
-  apr_array_header_t *targets = apr_array_make (pool,
-                                                DEFAULT_ARRAY_SIZE,
-                                                sizeof (const char *));
-
-  const char * target = apr_pstrdup (pool, path);
-  (*((const char **) apr_array_push (targets))) = target;
-
-  return targets;
 }
 
 void *

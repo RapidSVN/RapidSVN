@@ -97,6 +97,10 @@ SOURCE=.\exception.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\log.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\modify.cpp
 # End Source File
 # Begin Source File
@@ -126,6 +130,10 @@ SOURCE=.\client.h
 # Begin Source File
 
 SOURCE=.\exception.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\log.h
 # End Source File
 # Begin Source File
 

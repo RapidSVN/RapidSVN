@@ -9,8 +9,6 @@
 #include "exception.h"
 #endif
 
-#define DEFAULT_ARRAY_SIZE 5
-
 /**
  * Required function for Subversion C API.
  */
@@ -28,22 +26,11 @@ class Modify : public svn::Auth
 {
 private:
   Notify * _notify;
-  svn_client_revision_t rev;
-
-  /**
-   * Create a revision template.
-   */
-  svn_client_revision_t * getRevision (long revNumber);
 
   /**
    * Creates a log message baton.
    */
   void * logMessage (const char * message, char * baseDirectory = NULL);
-
-  /**
-   * Creates a target out of a string.
-   */
-  apr_array_header_t * target (const char * path);
 
   svn_error_t * getLogMessage (const char **log_msg,
                          apr_array_header_t * commit_items,
