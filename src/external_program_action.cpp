@@ -10,6 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+// wx
+#include "wx/filename.h"
+
 // app
 #include "external_program_action.hpp"
 #include "preferences_dlg.hpp"
