@@ -54,7 +54,7 @@ Action::PostDataEvent (int code, void *data, int event_id)
 }
 
 void 
-Action::SetTracer (Tracer * t, bool own = TRUE)
+Action::SetTracer (Tracer * t, bool own)
 {
   m_tracer = t;
   m_ownTracer = own;

@@ -52,12 +52,12 @@ public:
   /**
    * @see ActionWorker
    */
-  virtual const ActionState GetState ();
+  virtual ActionState GetState ();
 
   /**
    * @see ActionWorker
    */
-  virtual const ActionResult GetResult ();
+  virtual ActionResult GetResult ();
 
   /**
    * @see ActionWorker
