@@ -81,6 +81,8 @@ FolderBrowser::ExpandDir (const wxTreeItemId & parentId)
       {
         const size_t count = m_workbenchItems.GetCount ();
         size_t index;
+
+        m_workbenchItems.Sort ();
         for (index = 0; index < count; index++)
         {
           const wxString & item = m_workbenchItems.Item (index);
@@ -123,20 +125,47 @@ FolderBrowser::CollapseDir (const wxTreeItemId & parentId)
   wxGenericDirCtrl::CollapseDir (parentId);
 }
 
+wxArrayString & FolderBrowser::GetWorkbenchItems ()
+{
+  return m_workbenchItems;
+}
 
 void
-FolderBrowser::SetWorkbenchItems (const wxArrayString & workbenchItems)
+FolderBrowser::Refresh ()
 {
-  m_workbenchItems = workbenchItems;
-
   CollapseDir (m_workbenchId);
   ExpandDir (m_workbenchId);
 }
 
-const wxArrayString
-FolderBrowser::GetWorkbenchItems ()
+const bool
+FolderBrowser::RemoveProject (const wxTreeItemId & id)
 {
-  return m_workbenchItems;
+  wxTreeCtrl *treeCtrl = GetTreeCtrl ();
+  wxASSERT (treeCtrl);
+  bool success = FALSE;
+
+  const wxTreeItemId parentId = treeCtrl->GetParent (id);
+
+  if (parentId == m_workbenchId)
+  {
+    const wxDirItemData *itemData =
+      (wxDirItemData *) treeCtrl->GetItemData (id);
+
+    if (itemData)
+    {
+      m_workbenchItems.Remove (itemData->m_path.c_str ());
+    }
+  }
+  return success;
+}
+
+void
+FolderBrowser::AddProject (const wxString & path)
+{
+  if (m_workbenchItems.Index (path) == wxNOT_FOUND)
+  {
+    m_workbenchItems.Add (path);
+  }
 }
 
 

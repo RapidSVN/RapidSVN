@@ -34,10 +34,13 @@ public:
   void OnSelChanged (wxTreeEvent & event);
   void OnKeyDown (wxTreeEvent & event);
 
+  virtual void Refresh ();
   virtual void SetupSections ();
 
-  void SetWorkbenchItems (const wxArrayString & workbenchItems);
-  const wxArrayString GetWorkbenchItems ();
+   wxArrayString & GetWorkbenchItems ();
+
+  const bool RemoveProject (const wxTreeItemId & id);
+  void AddProject (const wxString & path);
 
 protected:
    virtual void ExpandDir (const wxTreeItemId & parentId);
