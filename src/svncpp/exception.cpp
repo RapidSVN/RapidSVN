@@ -11,6 +11,10 @@
  * ====================================================================
  */
 
+// stl
+#include <string>
+
+// svncpp
 #include "exception.hpp"
 
 namespace svn
@@ -19,22 +23,15 @@ namespace svn
   struct Exception::Data
   {
   public:
-    Data (const std::string & message)
-      : m_message (message)
+    std::string message;
+
+    Data (const char * msg)
+      : message (msg)
     {
     }
-
-    const char *
-    message ()
-    {
-      return m_message.c_str ();
-    }
-
-  private:
-    std::string m_message;
   };
    
-  Exception::Exception (const std::string & message)  throw ()
+  Exception::Exception (const char * message)  throw ()
   {
     m = new Data (message);
   }
@@ -45,66 +42,29 @@ namespace svn
   }
 
   const char *
-  Exception::message ()
+  Exception::message () const
   {
-    return m->message ();
+    return m->message.c_str ();
   }
 
-  struct ClientException::Data
-  {
-  public:
-    std::vector<std::string> messages;
-    apr_status_t apr_err;
-
-    Data (svn_error_t * error, const std::string message)
-    {
-      messages.push_back (message);
-
-      if (error == 0)
-      {
-        return;
-      }
-
-      apr_err = error->apr_err;
-
-      // Now add the whole stack of messages
-      svn_error_t * next_error = error;
-      while (next_error != 0)
-      {
-        const char * msg = next_error->message;
-        if (msg != 0)
-        {
-          messages.push_back (msg);
-        }
-
-        next_error = next_error->child;
-      }
-    }
-
-  };
 
   ClientException::ClientException (svn_error_t * error, 
-                                    const std::string message) throw () : 
-    Exception (message)
+                                    const char * msg) throw () : 
+    Exception (msg)
   {
-    m = new Data (error, message);
+    if (error != 0)
+    {
+      //TODO go through the messages in error
+    }
   }
 
   ClientException::~ClientException () throw ()
   {
-    delete m;
   }
 
-  int
-  ClientException::aprError ()
+  ClientException::ClientException (const ClientException & src) throw ()
+    : Exception (src.message ())
   {
-    return m->apr_err;
-  }
-
-  const std::vector<std::string> & 
-  ClientException::messages () const
-  {
-    return m->messages;
   }
 }
 /* -----------------------------------------------------------------

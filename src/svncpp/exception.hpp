@@ -14,11 +14,6 @@
 #ifndef _SVNCPP_EXCEPTION_H_
 #define _SVNCPP_EXCEPTION_H_
 
-// stl
-#include <exception>
-#include <string>
-#include <vector>
-
 // subversion api
 #include "svn_client.h"
 
@@ -28,24 +23,32 @@ namespace svn
   /**
    * Generic exception class.
    */
-  class Exception : public std::exception
+  class Exception
   {
   public:
     /**
      * Constructor.  Assigns the exception reason.
      */
-    Exception (const std::string & message) throw ();
+    Exception (const char * message) throw ();
 
     ~Exception () throw ();
 
     /**
-     * Returns the exception message.
+     * @return the exception message.
      */
-    const char * message ();
+    const char * message () const;
 
-  private:
+  protected:
     struct Data;
     Data * m;
+
+  private:
+
+    Exception (const Exception &) throw ();
+
+    Exception () throw ();
+    
+    Exception & operator = (const Exception &);
   };
 
   /**
@@ -58,23 +61,19 @@ namespace svn
      * Constructor.  Sets the error template and an optional message.
      */
     ClientException (svn_error_t * error, 
-                     const std::string message = "") throw ();
+                     const char * message = "") throw ();
+
+    /** 
+     * Copy constructor
+     */
+    ClientException (const ClientException & src) throw ();
 
     virtual ~ClientException () throw ();
 
-    /**
-     * Returns the APR error id. 
-     */
-    int aprError ();
-
-    /**
-     * Returns the whole stack of error messages
-     */
-    const std::vector<std::string> & 
-    messages () const;
   private:
-    struct Data;
-    Data * m;
+    ClientException () throw ();
+
+    ClientException & operator = (ClientException &);
   };
 
 }
