@@ -624,7 +624,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_info_panel->SetSizer (sizer);
 
   // Read frame position
-  if (pConfig->Read (ConfigMaximized, (int)0) == 1)
+  if (pConfig->Read (ConfigMaximized, (long int)0) == 1)
     Maximize (true);
   else
   {
