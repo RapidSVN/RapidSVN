@@ -49,33 +49,33 @@ LogDlg::InitializeData ()
   wxStaticText * historyLabel = new wxStaticText (this, -1, history);
   logSizer->Add (historyLabel, 0, wxALL, 5);
   logList = new LogList (this, _log);
-  logSizer->Add (logList, 0, wxLEFT);
+  logSizer->Add (logList, 1, wxLEFT);
 
   wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
   wxButton * closeButton = new wxButton (this, ID_Close, "Close");
   wxButton * viewButton = new wxButton (this, ID_View, "View");
   wxButton * getButton = new wxButton (this, ID_Get, "Get");
   wxButton * diffButton = new wxButton (this, ID_Diff, "Diff");
-  buttonSizer->Add (closeButton, 0, wxALL | wxEXPAND, 5);
-  buttonSizer->Add (viewButton, 0, wxALL | wxEXPAND, 5);
-  buttonSizer->Add (getButton, 0, wxALL | wxEXPAND, 5);
-  buttonSizer->Add (diffButton, 0, wxALL | wxEXPAND, 5);
+  buttonSizer->Add (closeButton, 0, wxALL, 5);
+  buttonSizer->Add (viewButton, 0, wxALL, 5);
+  buttonSizer->Add (getButton, 0, wxALL, 5);
+  buttonSizer->Add (diffButton, 0, wxALL, 5);
 
-  topSizer->Add (logSizer, 0, wxALL, 5);
+  topSizer->Add (logSizer, 1, wxALL, 5);
   topSizer->Add (buttonSizer, 0, wxALL, 5);
 
   logMsg = new wxTextCtrl (this, LOG_MSG, _T(""), 
                            wxDefaultPosition, wxSize (420, 110), 
                            wxTE_READONLY | wxTE_MULTILINE );
 
-  mainSizer->Add (topSizer, 0, wxALL, 5);
+  mainSizer->Add (topSizer, 0, wxALL | wxEXPAND, 5);
 
   wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer (
           new wxStaticBox(this, -1, _T("Log Message:")), 
           wxHORIZONTAL);
 
   messageSizer->Add (logMsg, 1, wxALL | wxEXPAND, 2);
-  mainSizer->Add (messageSizer, 0, wxALL, 5);
+  mainSizer->Add (messageSizer, 1, wxALL | wxEXPAND, 5);
 
   SetAutoLayout (true);
   SetSizer (mainSizer);
@@ -98,7 +98,7 @@ LogDlg::setLogMessage (const char * message)
 
 LogList::LogList (wxWindow * parent, svn::Log *log)
            : wxListCtrl (parent, LOG_LIST, wxDefaultPosition, 
-             wxSize(340, 150), wxLC_REPORT),
+             wxSize(365, 150), wxLC_REPORT),
              _log(log)
 {
   InitializeList ();
@@ -119,7 +119,7 @@ LogList::InitializeList ()
 
   SetColumnWidth (0, 65);
   SetColumnWidth (1, 100);
-  SetColumnWidth (2, 150);
+  SetColumnWidth (2, 200);
 
   while(_log->next ())
   {
@@ -129,7 +129,7 @@ LogList::InitializeList ()
     SetItem (index, 2, _T (_log->date ()));
     index++;
   }
-
+ 
 }
 
 void
