@@ -90,13 +90,13 @@ static int IMAGE_INDEX[IMG_INDX_COUNT];
  * Tags for wxConfig file settings, defined here to avoid duplicate
  * hard coded strings.
  */
-static const char ConfigSortColumn[]       = "/FileListCtrl/SortColumn";
-static const char ConfigSortOrder[]        = "/FileListCtrl/SortOrder";
-static const char ConfigColumnWidthFmt[]   = "/FileListCtrl/Column%sWidth";
-static const char ConfigColumnVisibleFmt[] = "/FileListCtrl/Column%sVisible";
-static const char ConfigWithUpdate[]       = "/FileListCtrl/WithUpdate";
-static const char ConfigFlatView[]         = "/FileListCtrl/FlatView";
-static const char ConfigShowUnversioned[]  = "/FileListCtrl/ShowUnversioned";
+static const wxChar ConfigSortColumn[]       = wxT("/FileListCtrl/SortColumn");
+static const wxChar ConfigSortOrder[]        = wxT("/FileListCtrl/SortOrder");
+static const wxChar ConfigColumnWidthFmt[]   = wxT("/FileListCtrl/Column%sWidth");
+static const wxChar ConfigColumnVisibleFmt[] = wxT("/FileListCtrl/Column%sVisible");
+static const wxChar ConfigWithUpdate[]       = wxT("/FileListCtrl/WithUpdate");
+static const wxChar ConfigFlatView[]         = wxT("/FileListCtrl/FlatView");
+static const wxChar ConfigShowUnversioned[]  = wxT("/FileListCtrl/ShowUnversioned");
 
 /**
  * test if the given status entry is a file or
@@ -133,7 +133,7 @@ IsDir (const svn::Status * status)
   }
   
   // unversioned.
-  return wxDirExists (status->path ());
+  return wxDirExists (Utf8ToLocal (status->path ()));
 }
 
 static const int
@@ -242,22 +242,25 @@ Compare (svn_wc_status_kind status1, svn_wc_status_kind status2, bool newer1, bo
 static int
 ComparePaths (const char * p1, const char * p2)
 {
-  wxFileName fn1 (p1);
-  wxFileName fn2 (p2);
+  wxString wxp1 (Utf8ToLocal (p1));
+  wxString wxp2 (Utf8ToLocal (p2));
 
+  wxFileName fn1 (wxp1);
+  wxFileName fn2 (wxp2);
+  
   wxString path1 = fn1.GetPath ();
   wxString path2 = fn2.GetPath ();
 
   int res = 0;
 
   // Is p2 a subdir or entry of p1?
-  if (path1.CmpNoCase (p2) == 0)
+  if (path1.CmpNoCase (wxp2) == 0)
   {
     return -1;
   }
 
   // Is p1 a subdir or entry of p2?
-  if (path2.CmpNoCase (p1) == 0)
+  if (path2.CmpNoCase (wxp1) == 0)
   {
     return 1;
   }
@@ -309,7 +312,10 @@ Compare (const char * s1, const char * s2)
   const char * sv1 = s1 == 0 ? "" : s1;
   const char * sv2 = s2 == 0 ? "" : s2;
   
-  return wxString (sv1).CmpNoCase (sv2);
+  wxString wx1 (Utf8ToLocal (sv1));
+  wxString wx2 (Utf8ToLocal (sv2));
+  
+  return wx1.CmpNoCase (wx2);
 }
 
 /**
@@ -367,7 +373,7 @@ CompareColumn (svn::Status * ps1,
     break;
 
   case FileListCtrl::COL_EXTENSION:
-    res = Compare (wxFileName(ps1->path()).GetExt(), wxFileName(ps2->path()).GetExt());
+    res = wxFileName(Utf8ToLocal (ps1->path())).GetExt().CmpNoCase (wxFileName(Utf8ToLocal (ps2->path())).GetExt());
     break;
 
   case FileListCtrl::COL_CMT_DATE:
@@ -498,7 +504,7 @@ CompareItems (svn::Status * ps1, svn::Status * ps2,
 /**
  * array with column captions
  */
-static const char * 
+static const wxChar * 
 COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
 {
   _("Name"),
@@ -531,29 +537,29 @@ COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
  * Note: these string must not be translatable
  *       so dont enclose them in _( )
  */
-static const char *
+static const wxChar *
 COLUMN_NAMES[FileListCtrl::COL_COUNT] =
 {
-  "Name",
-  "Path",
-  "Revision",
-  "RepRev",
-  "Author",
-  "Status",
-  "PropStatus",
-  "LastChanged",
-  "Extension",
-  "Date",
-  "PropDate",
-  "Checksum",
-  "Url",
-  "Repository",
-  "UUID",
-  "Schedule",
-  "Copied",
-  "ConflictOld",
-  "ConflictNew",
-  "ConflictWork"
+  wxT("Name"),
+  wxT("Path"),
+  wxT("Revision"),
+  wxT("RepRev"),
+  wxT("Author"),
+  wxT("Status"),
+  wxT("PropStatus"),
+  wxT("LastChanged"),
+  wxT("Extension"),
+  wxT("Date"),
+  wxT("PropDate"),
+  wxT("Checksum"),
+  wxT("Url"),
+  wxT("Repository"),
+  wxT("UUID"),
+  wxT("Schedule"),
+  wxT("Copied"),
+  wxT("ConflictOld"),
+  wxT("ConflictNew"),
+  wxT("ConflictWork")
 };
 
 
@@ -583,7 +589,7 @@ public:
   Data ()
     : SortIncreasing (true), SortColumn (COL_NAME), 
       DirtyColumns (true), FlatMode (false), Context (0),
-      Path (""), WithUpdate (false)
+      WithUpdate (false)
   {
     ImageListSmall = new wxImageList (16, 16, TRUE);
 
@@ -807,23 +813,24 @@ FileListCtrl::UpdateFileList (const wxString & path)
 void
 FileListCtrl::UpdateFileList ()
 {
-  const wxString & path = m->Path;
-  const bool isNative (!svn::Url::isValid (m->Path.c_str ()));
+  std::string pathUtf8;
+  LocalToUtf8 (m->Path, pathUtf8);
+  const bool isNative (!svn::Url::isValid (pathUtf8.c_str ()));
   // delete all the items in the list to display the new ones
   DeleteAllItems ();
 
   UpdateColumns ();
 
-  wxLogStatus (_("Listing entries in '%s'"), path.c_str ());
+  wxLogStatus (_("Listing entries in '%s'"), m->Path.c_str ());
 
   // Hide the list to speed up inserting
   Hide ();
-
+  
   svn::Client client (m->Context);
   const svn::StatusEntries statusVector =
-    client.status (path.c_str (), m->FlatMode, true, m->WithUpdate);
+    client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate);
   svn::StatusEntries::const_iterator it;
-  const size_t pathLength = path.Length () + 1;
+  const size_t pathUtf8Length = pathUtf8.length () + 1;
 
   for (it = statusVector.begin (); it != statusVector.end (); it++)
   {
@@ -833,31 +840,34 @@ FileListCtrl::UpdateFileList ()
     int i = GetItemCount ();
 
     // truncate the first part of the path
-    wxString fullPath (status.path ());
-    wxString filename (fullPath.Mid (pathLength));
-    if (filename.Length () == 0)
+    std::string fullPath (status.path ());
+    std::string filename;
+//    wxString fullPath (status.path ());
+//    wxString filename (fullPath.Mid (pathLength));
+    if (fullPath.length () <= pathUtf8Length)
     {
-      values[COL_NAME] = ".";
+      values[COL_NAME] = wxT(".");
     }
     else
     {
-      values[COL_NAME] = wxFileNameFromPath (filename);
+      filename = fullPath.substr (pathUtf8Length);
+      wxString wxstr = Utf8ToLocal (filename);
+      values[COL_NAME] = wxFileNameFromPath (wxstr);
     }
 
+    wxString wxFullPath = Utf8ToLocal (status.path ());
     if (m->ColumnVisible[COL_PATH] || m->ColumnVisible[COL_EXTENSION])
     {
-      svn::Path path (fullPath);
+      svn::Path path (fullPath.c_str ());
       std::string dir, filename, ext;
       path.split (dir, filename, ext);
 
       if (isNative)
-        values[COL_PATH]    = path.native ().c_str ();
+        values[COL_PATH]    = Utf8ToLocal (path.native ().c_str ());
       else
-        values[COL_PATH]    = fullPath;
-      values[COL_EXTENSION] = ext.c_str ();
+        values[COL_PATH]    = wxFullPath;
+      values[COL_EXTENSION] = Utf8ToLocal (ext.c_str ());
     }
-
-    wxString text;
 
     int imageIndex = 0;
     bool newer = 
@@ -898,11 +908,11 @@ FileListCtrl::UpdateFileList ()
     {
       // unversioned entries dont carry dir info
       // with them. must find this out by ourself
-      if (wxDirExists (status.path ()))
+      if (wxDirExists (wxFullPath))
       {
         imageIndex = GetImageIndex (IMG_INDX_FOLDER, -1);
       }
-      else if (wxFileExists (status.path ()))
+      else if (wxFileExists (wxFullPath))
       {
         imageIndex = GetImageIndex (svn_wc_status_unversioned, -1);
       }
@@ -923,24 +933,22 @@ FileListCtrl::UpdateFileList ()
       SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
       // and must delete it in due course.
   
-      text = "";
-  
       if (status.isVersioned ())
       {
         const svn::Entry & entry = status.entry ();
-        values[COL_REV].Printf ("%ld", entry.revision ());
-        values[COL_CMT_REV].Printf ("%ld", entry.cmtRev ());
+        values[COL_REV].Printf (wxT("%ld"), entry.revision ());
+        values[COL_CMT_REV].Printf (wxT("%ld"), entry.cmtRev ());
   
-        values[COL_AUTHOR] = entry.cmtAuthor ();
+        values[COL_AUTHOR] = Utf8ToLocal (entry.cmtAuthor ());
   
         // date formatting
         values[COL_CMT_DATE] = FormatDateTime (entry.cmtDate ());
         values[COL_TEXT_TIME] = FormatDateTime (entry.textTime ());
         values[COL_PROP_TIME] = FormatDateTime (entry.propTime ());
   
-        values[COL_URL] = entry.url ();
-        values[COL_REPOS] = entry.repos ();
-        values[COL_UUID] = entry.uuid ();
+        values[COL_URL] = Utf8ToLocal (entry.url ());
+        values[COL_REPOS] = Utf8ToLocal (entry.repos ());
+        values[COL_UUID] = Utf8ToLocal (entry.uuid ());
         
         wxString schedule;
         switch (entry.schedule ())
@@ -955,22 +963,22 @@ FileListCtrl::UpdateFileList ()
           schedule = _("replace");
           break;
         case svn_wc_schedule_normal:
-          schedule = "";
           break;
         }
         values[COL_SCHEDULE] = schedule;
   
         if (entry.isCopied ())
         {
-          values[COL_COPIED].Printf ("%s, %ld", 
-            entry.copyfromUrl (),
+          wxString tmp (Utf8ToLocal (entry.copyfromUrl()));
+          values[COL_COPIED].Printf (wxT("%s, %ld"), 
+            tmp.c_str (),
             entry.copyfromRev ());
         }
   
-        values[COL_CONFLICT_OLD] = entry.conflictOld ();
-        values[COL_CONFLICT_NEW] = entry.conflictNew ();
-        values[COL_CONFLICT_WRK] = entry.conflictWrk ();
-        values[COL_CHECKSUM] = entry.checksum ();
+        values[COL_CONFLICT_OLD] = Utf8ToLocal (entry.conflictOld ());
+        values[COL_CONFLICT_NEW] = Utf8ToLocal (entry.conflictNew ());
+        values[COL_CONFLICT_WRK] = Utf8ToLocal (entry.conflictWrk ());
+        values[COL_CHECKSUM] = Utf8ToLocal (entry.checksum ());
       }
       switch (status.textStatus ())
       {
@@ -1390,7 +1398,7 @@ FileListCtrl::UpdateColumns ()
     
   while (GetColumnCount () < count)
   {
-    InsertColumn (0, "");
+    InsertColumn (0, wxEmptyString);
   }
 
   // Now set the captions and widths

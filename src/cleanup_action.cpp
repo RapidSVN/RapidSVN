@@ -40,7 +40,7 @@ CleanupAction::Perform ()
   svn::Client client (GetContext ());
   const svn::Path & path = GetPath ();
 
-  wxSetWorkingDirectory (path.c_str ());
+  wxSetWorkingDirectory (Utf8ToLocal (path.c_str ()));
   client.cleanup (path.c_str ());
 
   return true;

@@ -23,7 +23,7 @@ public:
   long code;
 
 public:
-   RapidSvnEx (const wxString & __estr = "", const long __code = -1);
+   RapidSvnEx (const wxString & __estr = wxEmptyString, const long __code = -1);
 
    virtual ~ RapidSvnEx ();
 

@@ -47,6 +47,7 @@ CommitAction::Prepare ()
 
   m_recursive = dlg.GetRecursive ();
   m_message = dlg.GetMessage ();
+  
   return true;
 }
 
@@ -57,7 +58,7 @@ CommitAction::Perform ()
 
   const svn::Targets & targets = GetTargets ();
 
-  wxString messageUtf8 (LocalToUtf8 (m_message));
+  std::string messageUtf8 (LocalToUtf8 (m_message));
 
   svn::Pool pool;
   long revision = 
@@ -65,8 +66,8 @@ CommitAction::Perform ()
                    m_recursive);
   wxString str;
 
-  str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
-                             revision);
+  str = wxString::Format (wxT("%s %" SVN_REVNUM_T_FMT "."),
+                             _("Committed revision"), revision);
   Trace (str);
 
   return true;

@@ -23,7 +23,9 @@
 #include "commit_dlg.hpp"
 #include "utils.hpp"
 
-static const char *
+//TODO: An exact copy lives in action.cpp which is not used, unlike here
+// I suspect we should get rid of one, but I'm not sure which at the  moment...
+static const wxChar *
 ACTION_NAMES [] =
 {
   _("Add"),           // svn_wc_notify_add,
@@ -182,16 +184,15 @@ Listener::contextGetLogin (
   bool & maySave)
 {
   // TODO: show realm
-  AuthDlg dlg (GetParent (), username.c_str () , password.c_str ());
+  wxString LocalUsername (Utf8ToLocal (username));
+  wxString LocalPassword (Utf8ToLocal (password));
+  AuthDlg dlg (GetParent (), LocalUsername, LocalPassword);
 
   bool ok = dlg.ShowModal () == wxID_OK;
   if (ok)
   {
-    wxString usernameUtf8 (LocalToUtf8 (dlg.GetUsername ()));
-    wxString passwordUtf8 (LocalToUtf8 (dlg.GetPassword ()));
-
-    username = usernameUtf8.c_str ();
-    password = passwordUtf8.c_str ();
+    LocalToUtf8 (dlg.GetUsername (), username);
+    LocalToUtf8 (dlg.GetPassword (), password);
   }
 
   return ok;
@@ -208,15 +209,15 @@ Listener::contextNotify (const char *path,
                          svn_revnum_t revision)
 {
   // Map an action to string and trace the action and path
-  const char * actionString = 0;
+  const wxChar * actionString = 0;
 
   if (action >= 0 && action <= MAX_ACTION)
     actionString = ACTION_NAMES [action];
 
   if (actionString != 0)
   {
-    wxString msg;
-    msg.Printf ("%s: %s", actionString, path);
+    wxString msg, wxpath (Utf8ToLocal (path));
+    msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
 
     Trace (msg);
   }
@@ -235,8 +236,7 @@ Listener::contextGetLogMessage (std::string & msg)
   bool ok = dlg.ShowModal () == wxID_OK;
   if (ok)
   {
-    wxString messageUtf8 (LocalToUtf8 (dlg.GetMessage ()));
-    msg = messageUtf8.c_str ();
+    LocalToUtf8 (dlg.GetMessage (), msg);
   }
   return ok;
 }
@@ -260,15 +260,15 @@ bool
 Listener::contextSslClientCertPrompt (std::string & certFile)
 {
   wxString filename = wxFileSelector (
-    _("Select Certificate File"), "", "", "",
-    "*.*", wxOPEN | wxFILE_MUST_EXIST,
+    _("Select Certificate File"), wxT(""), wxT(""), wxT(""),
+    wxT("*.*"), wxOPEN | wxFILE_MUST_EXIST,
     GetParent ());
 
   if (filename.empty ())
     return false;
 
   //TODO
-  certFile = filename.c_str ();
+  LocalToUtf8 (filename, certFile);
   return true;
 }
 
@@ -278,13 +278,14 @@ Listener::contextSslClientCertPwPrompt (std::string & password,
                                         bool & maySave)
 {
   //TODO
-  AuthDlg dlg (GetParent (), "", password.c_str (), 
+  wxString LocalPassword(Utf8ToLocal (password));
+  AuthDlg dlg (GetParent (), wxEmptyString, LocalPassword, 
                AuthDlg::HIDE_USERNAME);
 
   if (dlg.ShowModal () != wxID_OK)
     return false;
 
-  password = dlg.GetPassword ();
+  LocalToUtf8 (dlg.GetPassword (), password);
   return true;
 }
 

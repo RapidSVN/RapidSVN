@@ -66,7 +66,7 @@ static const unsigned int MAXLENGTH_BOOKMARK = 35;
 static bool
 IsValidSeparator (const wxString & sep)
 {
-  return ((sep == "/") || (sep == "\\"));
+  return ((sep == wxT("/")) || (sep == wxT("\\")));
 }
 
 
@@ -117,7 +117,7 @@ public:
   
     if(!id.IsOk())
     {
-      return "";
+      return wxEmptyString;
     }
 
     FolderItemData* data = GetItemData (id);
@@ -222,7 +222,7 @@ public:
 
       if (context != 0)
       {
-        username = context->getUsername ();
+        username = Utf8ToLocal (context->getUsername ());
       }
 
       if (username.length () == 0)
@@ -273,7 +273,7 @@ public:
   
     while (ok)
     {
-      if (filename != svn::Wc::ADM_DIR_NAME)
+      if (filename != Utf8ToLocal (svn::Wc::ADM_DIR_NAME))
         return true;
       ok = dir.GetNext (&filename);
     }
@@ -335,7 +335,8 @@ public:
 
         for(index = 0; index < count; index++)
         {
-          const wxString path (bookmarks.GetBookmark (index));
+          const wxString path
+              (bookmarks.GetBookmark (index));
           FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK, 
                                                     path, path, TRUE);
           wxTreeItemId newId = treeCtrl->AppendItem (parentId, path, 
@@ -354,16 +355,19 @@ public:
       try
       {
         const wxString& parentPath = parentData->getPath ();
+        std::string parentPathUtf8;
+        LocalToUtf8 (parentPath, parentPathUtf8);
 
-        if ( svn::Url::isValid (parentPath) )
+        if ( svn::Url::isValid (parentPathUtf8.c_str ()))
           RefreshRepository (parentPath, parentId);
         else
           RefreshLocal (parentPath, parentId);
       }
       catch (svn::ClientException & e)
       {
+        wxString errtxt (Utf8ToLocal (e.message ()));
         wxLogError(_("Error while refreshing filelist (%s)"),
-                    e.message ());
+                    errtxt.c_str ());
       }
       break;
     }   
@@ -404,24 +408,25 @@ public:
 
     while(ok)
     {
-      if(filename != svn::Wc::ADM_DIR_NAME)
+      if(filename != Utf8ToLocal (svn::Wc::ADM_DIR_NAME))
       {
         parentHasSubdirectories = true;
   
         wxFileName path(parentPath, filename, wxPATH_NATIVE);
         wxString fullPath = path.GetFullPath ();
-        const char * fullPath_c = fullPath.c_str ();
+        std::string fullPathUtf8;
+        LocalToUtf8(fullPath, fullPathUtf8);
         int image = FOLDER_IMAGE_FOLDER;
         int open_image = FOLDER_IMAGE_OPEN_FOLDER;
 
-        if (!svn::Wc::checkWc (fullPath_c))
+        if (!svn::Wc::checkWc (fullPathUtf8.c_str ()))
         {
           image = FOLDER_IMAGE_NONSVN_FOLDER;
           open_image = FOLDER_IMAGE_NONSVN_OPEN_FOLDER;
         }
         else
         {
-          svn::Status status = client.singleStatus (fullPath_c);
+          svn::Status status = client.singleStatus (fullPathUtf8.c_str ());
           if ((status.textStatus () == svn_wc_status_modified) ||
               (status.propStatus () == svn_wc_status_modified))
           {
@@ -459,8 +464,10 @@ public:
   {
     svn::Client client (GetContext ());
     svn::Revision rev (svn::Revision::HEAD);
+    std::string parentPathUtf8;
+    LocalToUtf8(parentPath, parentPathUtf8);
     svn::DirEntries entries = 
-      client.ls (parentPath, rev, false);
+      client.ls (parentPathUtf8.c_str (), rev, false);
     svn::DirEntries::const_iterator it;
 
     //bool parentHasSubdirectories = false;
@@ -470,7 +477,7 @@ public:
       int image = FOLDER_IMAGE_FOLDER;
       int open_image = FOLDER_IMAGE_OPEN_FOLDER;
 
-      wxString fullPath = entry.name ();
+      wxString fullPath = Utf8ToLocal (entry.name ());
       wxString filename (fullPath.Mid (parentPath.Length () + 1));
       //parentHasSubdirectories = true;
       
@@ -515,12 +522,12 @@ public:
       if (!data->isReal ())
         break;
 
-      const svn::Path nodePath (data->getPath ());
+      const svn::Path nodePath (LocalToUtf8(data->getPath ()));
       if (nodePath.length () == 0)
         break;
 
       // first check: full match?
-      if (path.IsSameAs (nodePath.c_str()))
+      if (path.IsSameAs (Utf8ToLocal (nodePath.c_str ())))
       {
         childId = id;
         break;
@@ -530,7 +537,7 @@ public:
       wxString prefix (path.Left (nodePath.length ()));
       wxString sep = path.Mid (nodePath.length (), 1);
 
-      if (prefix.IsSameAs (nodePath.c_str()) &&
+      if (prefix.IsSameAs (Utf8ToLocal (nodePath.c_str ())) &&
            IsValidSeparator (sep))
       {
         childId = id;
@@ -557,7 +564,9 @@ public:
   SelectFolder (const wxString & pathP)
   {
     // Convert the input string to subversion internal representation
-    const wxString path = svn::Path (pathP).c_str();
+    std::string pathPUtf8;
+    LocalToUtf8 (pathP, pathPUtf8);
+    const wxString path = Utf8ToLocal (svn::Path (pathPUtf8).c_str());
 
     wxTreeItemId bookmarkId = GetSelectedBookmarkId ();
 
@@ -584,13 +593,13 @@ public:
       if (!data->isReal ())
         break;
 
-      const svn::Path nodePath (data->getPath ());
+      const svn::Path nodePath (LocalToUtf8 (data->getPath ()));
       if (nodePath.length () == 0)
         break;
 
       // check if @a path and @a nodePath match already
       // in this case we are done
-      if (path.IsSameAs (nodePath.c_str()))
+      if (path.IsSameAs (Utf8ToLocal (nodePath.c_str())))
       {
         success = true;
         break;
@@ -598,7 +607,8 @@ public:
 
       wxString prefix (path.Left (nodePath.length ()));
       wxString sep (path.Mid (nodePath.length (), 1));
-      if ((!prefix.IsSameAs (nodePath.c_str())) || !IsValidSeparator (sep))
+      if ((!prefix.IsSameAs
+          (Utf8ToLocal (nodePath.c_str()))) || !IsValidSeparator (sep))
        break;
 
       if (!data->hasChildren ())
@@ -628,7 +638,7 @@ public:
   }
 
   bool
-  SelectBookmark (const char *bookmarkPath)
+  SelectBookmark (const wxString & bookmarkPath)
   {
     long cookie;
     wxTreeItemId id = treeCtrl->GetFirstChild (rootId, cookie);
@@ -701,7 +711,7 @@ public:
   {
     wxTreeItemId id = GetSelectedBookmarkId ();
 
-    wxString path ("");
+    wxString path;
 
     if (id.IsOk ())
     {
@@ -777,7 +787,7 @@ FolderBrowser::RemoveBookmark ()
     {
       wxString path = data->getPath ();
       m->Delete (id);
-      m->bookmarks.RemoveBookmark (path.c_str ());
+      m->bookmarks.RemoveBookmark (path);
       success = TRUE;
     }
   }
@@ -786,7 +796,7 @@ FolderBrowser::RemoveBookmark ()
 }
 
 void
-FolderBrowser::AddBookmark (const char * path)
+FolderBrowser::AddBookmark (const wxString & path)
 {
   m->bookmarks.AddBookmark (path);
 }
@@ -857,7 +867,7 @@ FolderBrowser::OnContextMenu (wxContextMenuEvent & event)
 }
 
 bool
-FolderBrowser::SelectFolder (const char * path)
+FolderBrowser::SelectFolder (const wxString & path)
 {
   return m->SelectFolder (path);
 }
@@ -868,7 +878,7 @@ FolderBrowser::GetBookmarkCount () const
   return m->bookmarks.Count ();
 }
 
-const char *
+const wxString &
 FolderBrowser::GetBookmark (const size_t index) const
 {
   return m->bookmarks.GetBookmark (index);
@@ -893,7 +903,7 @@ FolderBrowser::GetAuthPerBookmark () const
 }
 
 bool
-FolderBrowser::SelectBookmark (const char * bookmarkPath)
+FolderBrowser::SelectBookmark (const wxString & bookmarkPath)
 {
   return m->SelectBookmark (bookmarkPath);
 }

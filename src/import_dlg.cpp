@@ -50,22 +50,22 @@ public:
     // Row 0:  
     Grid->Add(new wxStaticText(wnd, -1, _("Repository URL")), 0, 
               wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-    wxTextCtrl *Repository = new wxTextCtrl(wnd, -1, "",
+    wxTextCtrl *Repository = new wxTextCtrl(wnd, -1, wxEmptyString,
                                             wxDefaultPosition, wxSize(300, -1), 0,
                                             wxTextValidator(wxFILTER_NONE, &data.Repository));
     Grid->Add(Repository, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
 
-    Grid->Add(new wxStaticText(wnd, -1, ""), 0, 
+    Grid->Add(new wxStaticText(wnd, -1, wxEmptyString), 0, 
               0, 5);
 
     // Row 1:  
     Grid->Add(new wxStaticText(wnd, -1, _("Path")), 0, 
               wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-    wxTextCtrl *Path = new wxTextCtrl(wnd, -1, "",
+    wxTextCtrl *Path = new wxTextCtrl(wnd, -1, wxEmptyString,
                                       wxDefaultPosition, wxSize(300, -1), 0,
                                       wxTextValidator(wxFILTER_NONE, &data.Path));
     Grid->Add(Path, 1, wxLEFT | wxEXPAND, 5);
-    wxButton* BrowseButton = new wxButton(wnd, ID_BUTTON_BROWSE, "...", 
+    wxButton* BrowseButton = new wxButton(wnd, ID_BUTTON_BROWSE, wxT("..."), 
                                           wxPoint(-1,-1), wxSize(20, -1));
     Grid->Add(BrowseButton, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
   
@@ -76,7 +76,7 @@ public:
     wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer(
       new wxStaticBox(wnd, -1, _("Enter log message")), wxHORIZONTAL);
     
-    wxTextCtrl* Log = new wxTextCtrl(wnd, -1, "", wxDefaultPosition, 
+    wxTextCtrl* Log = new wxTextCtrl(wnd, -1, wxEmptyString, wxDefaultPosition, 
                                      wxSize(-1, 50), wxTE_MULTILINE,
                                      wxTextValidator(wxFILTER_NONE, &data.LogMessage));
     

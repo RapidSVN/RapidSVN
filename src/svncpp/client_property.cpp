@@ -16,7 +16,7 @@
 
 // subversion api
 #include "svn_client.h"
-#include "svn_utf.h"
+//#include "svn_utf.h"
 
 // svncpp
 #include "svncpp/client.hpp"
@@ -65,10 +65,10 @@ namespace svn
       svn_client_proplist_item_t *item = 
         ((svn_client_proplist_item_t **)props->elts)[j];
 
-      const char *node_name_native;
+/*      const char *node_name_native;
       svn_utf_cstring_from_utf8_stringbuf (&node_name_native,
                                            item->node_name,
-                                           pool );
+                                           pool );*/
 
       PropertiesMap prop_map;
 
@@ -77,18 +77,18 @@ namespace svn
            hi = apr_hash_next (hi))
       {
         const void *key;
-        const char *key_native;
+//        const char *key_native;
         void *val;
 
         apr_hash_this (hi, &key, NULL, &val);
-        svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
+/*        svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
         const svn_string_t *propval = (const svn_string_t *)val;
-        svn_utf_string_from_utf8 (&propval, propval, pool);
+        svn_utf_string_from_utf8 (&propval, propval, pool); */
 
-        prop_map[ std::string( key_native ) ] = std::string( propval->data );
+        prop_map[ std::string( (const char *)key ) ] = std::string( ((const svn_string_t *)val)->data );
       }
 
-      path_prop_map_list.push_back( PathPropertiesMapEntry( node_name_native,prop_map ) );
+      path_prop_map_list.push_back( PathPropertiesMapEntry( item->node_name->data, prop_map ) );
     }
 
     return path_prop_map_list;
@@ -136,17 +136,18 @@ namespace svn
       PropertiesMap prop_map;
 
       const void *key;
-      const char *key_native;
+//      const char *key_native;
       void *val;
 
       apr_hash_this (hi, &key, NULL, &val);
-      svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
+/*      svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
       const svn_string_t *propval = (const svn_string_t *)val;
-      svn_utf_string_from_utf8 (&propval, propval, pool);
+      svn_utf_string_from_utf8 (&propval, propval, pool); */
 
-      prop_map[ std::string( propName ) ] = std::string( propval->data );
+//        prop_map[ std::string( (const char *)key ) ] = std::string( ((const svn_string_t *)val)->data );
+      prop_map[ std::string( propName ) ] = std::string( ((const svn_string_t *)val)->data );
 
-      path_prop_map_list.push_back( PathPropertiesMapEntry( key_native, prop_map ) );
+      path_prop_map_list.push_back( PathPropertiesMapEntry( (const char *)key, prop_map ) );
     }
 
     return path_prop_map_list;
@@ -174,11 +175,11 @@ namespace svn
       const svn_string_t * propval 
         = svn_string_create ((const char *) propValue, pool);
 
-      const char *pname_utf8;
-      svn_utf_cstring_to_utf8 (&pname_utf8, propName, pool);
+//      const char *pname_utf8;
+  //    svn_utf_cstring_to_utf8 (&pname_utf8, propName, pool);
 
       svn_error_t * error = 
-        svn_client_propset (pname_utf8, propval, path.c_str (),
+        svn_client_propset (propName, propval, path.c_str (),
                             recurse, pool);
       if(error != NULL)
         throw ClientException (error);
@@ -203,11 +204,11 @@ namespace svn
   {
     Pool pool;
 
-    const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, propName, pool);
+//    const char *pname_utf8;
+  //  svn_utf_cstring_to_utf8 (&pname_utf8, propName, pool);
 
     svn_error_t * error = 
-      error = svn_client_propset (pname_utf8, 
+      error = svn_client_propset (propName, 
                                   NULL, // value = NULL
                                   path.c_str (),
                                   recurse,
@@ -215,6 +216,7 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+  
 //--------------------------------------------------------------------------------
 //
 //    revprop functions
@@ -256,15 +258,16 @@ namespace svn
          hi = apr_hash_next (hi))
     {
       const void *key;
-      const char *key_native;
+//      const char *key_native;
       void *val;
 
       apr_hash_this (hi, &key, NULL, &val);
-      svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
+/*      svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
       const svn_string_t *propval = (const svn_string_t *)val;
-      svn_utf_string_from_utf8 (&propval, propval, pool);
+      svn_utf_string_from_utf8 (&propval, propval, pool); */
 
-      prop_map[ std::string( key_native ) ] = std::string( propval->data );
+      prop_map[ std::string( (const char *)key ) ] = std::string( ((const svn_string_t *)val)->data );
+//      prop_map[ std::string( key_native ) ] = std::string( propval->data );
     }
 
     return std::pair<svn_revnum_t,PropertiesMap>( revnum, prop_map );
@@ -306,10 +309,10 @@ namespace svn
     if( propval == NULL )
       return std::pair<svn_revnum_t,std::string>( 0, std::string() );
 
-    const svn_string_t *propval_str;
-    svn_utf_string_from_utf8 (&propval_str, propval, pool);
+/*    const svn_string_t *propval_str;
+    svn_utf_string_from_utf8 (&propval_str, propval, pool); */
 
-    return std::pair<svn_revnum_t,std::string>( revnum, std::string (propval_str->data) );
+    return std::pair<svn_revnum_t,std::string>( revnum, std::string (propval->data) );
   }
 
   /**
@@ -336,12 +339,12 @@ namespace svn
     const svn_string_t * propval 
       = svn_string_create ((const char *) propValue, pool);
 
-    const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, propName, pool);
+/*    const char *pname_utf8;
+    svn_utf_cstring_to_utf8 (&pname_utf8, propName, pool);*/
 
     svn_revnum_t revnum;
     svn_error_t * error = 
-      svn_client_revprop_set (pname_utf8,
+      svn_client_revprop_set (propName,
                               propval,
                               path.c_str (),
                               revision.revision (),
@@ -375,12 +378,12 @@ namespace svn
   {
     Pool pool;
 
-    const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, propName, pool);
+/*    const char *pname_utf8;
+    svn_utf_cstring_to_utf8 (&pname_utf8, propName, pool); */
 
     svn_revnum_t revnum;
     svn_error_t * error = 
-      error = svn_client_revprop_set (pname_utf8, 
+      error = svn_client_revprop_set (propName, 
                                       NULL, // value = NULL
                                       path.c_str (),
                                       revision.revision (),

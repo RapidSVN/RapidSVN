@@ -57,20 +57,24 @@ ViewAction::Perform ()
   wxString path;
 
   if (m_edit)
-    path = GetTarget ().c_str ();
+    path = Utf8ToLocal (GetTarget ().c_str ());
   else
-    path = GetPathAsTempFile (
-      m_data.path.c_str (), m_data.revision).c_str ();
-
+  {
+    std::string pathUtf8 (LocalToUtf8 (m_data.path));
+    path = Utf8ToLocal  (
+        GetPathAsTempFile(svn::Path (pathUtf8.c_str ()),
+            m_data.revision).c_str ());
+  }
+  
   wxString args (prefs.editorArgs);
   TrimString (args);
 
   if (args.Length () == 0)
-    args = "\"" + path + "\"";
+    args = wxT("\"") + path + wxT("\"");
   else
-    args.Replace ("%1", path, true);
+    args.Replace (wxT("%1"), path, true);
 
-  wxString cmd (prefs.editor + " " + args);
+  wxString cmd (prefs.editor + wxT(" ") + args);
   wxExecute (cmd);
 
   return true;

@@ -150,13 +150,13 @@ private:
       wxString rev;
       wxString dateStr (FormatDateTime (entry.date));
 
-      rev.Printf ("%ld", (long) entry.revision);
+      rev.Printf (wxT("%ld"), (long) entry.revision);
 
       //TODO perform date formatting. but dont use
       //subversion but wxDateTime
       //wxString date (entry.date.c_str ());
       InsertItem (index, rev);
-      SetItem (index, 1, entry.author.c_str ());
+      SetItem (index, 1, Utf8ToLocal (entry.author.c_str ()));
       SetItem (index, 2, dateStr);
       index++;
     }
@@ -186,7 +186,7 @@ public:
         wxWindow * wnd,
         const char * path_,
         const svn::LogEntries * entries_)
-    : entries (entries_), path (path_), 
+    : entries (entries_), path (Utf8ToLocal (path_)), 
       parent (parent_), window (wnd)
   {
     // create controls
@@ -196,7 +196,7 @@ public:
 
     m_logList = new LogList (wnd, entries);
 
-    m_logMsg = new wxTextCtrl (wnd, LOG_MSG, "", 
+    m_logMsg = new wxTextCtrl (wnd, LOG_MSG, wxEmptyString, 
                                wxDefaultPosition, wxSize (420, 110), 
                                wxTE_READONLY | wxTE_MULTILINE );
 

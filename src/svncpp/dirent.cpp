@@ -32,8 +32,8 @@ namespace svn
     std::string lastAuthor;
 
     Data ()
-      : name (""), kind (svn_node_unknown), size (0), hasProps(false), 
-        createdRev (0), time (0), lastAuthor ("")
+      : kind (svn_node_unknown), size (0), hasProps(false), 
+        createdRev (0), time (0)
     {
     }
 

@@ -26,10 +26,11 @@
 
 // app
 #include "file_info.hpp"
+#include "utils.hpp"
 
 
 static void
-info_print_time (apr_time_t atime, const char * desc, wxString & str)
+info_print_time (apr_time_t atime, const wxChar * desc, wxString & str)
 {
   apr_time_exp_t extime;
   apr_status_t apr_err;
@@ -37,7 +38,7 @@ info_print_time (apr_time_t atime, const char * desc, wxString & str)
   /* if this returns an error, just don't print anything out */
   apr_err = apr_time_exp_tz (&extime, atime, 0);
   if (!apr_err)
-    str.Printf ("%s: %04lu-%02lu-%02lu %02lu:%02lu GMT", desc,
+    str.Printf (wxT("%s: %04lu-%02lu-%02lu %02lu:%02lu GMT"), desc,
                 (unsigned long) (extime.tm_year + 1900),
                 (unsigned long) (extime.tm_mon + 1),
                 (unsigned long) (extime.tm_mday),
@@ -58,10 +59,10 @@ struct FileInfo::Data
   }
 
   void 
-  addLine (const char * line="")
+  addLine (const wxString & line = wxEmptyString)
   {
     info += line;
-    info += "\n";
+    info += wxT("\n");
   }
 
 
@@ -69,7 +70,7 @@ struct FileInfo::Data
   addInfoForStatus (const svn::Status & status)
   {
     const svn::Entry entry = status.entry ();
-    wxString str;
+    wxString str, tmp;
 
     if (!entry.isValid ())
     {
@@ -80,16 +81,28 @@ struct FileInfo::Data
     svn_boolean_t text_conflict = FALSE;
     svn_boolean_t props_conflict = FALSE;
 
-    str.Printf (_("Name: %s"), entry.name ());
+    tmp = Utf8ToLocal (entry.name ());
+    str.Printf (_("Name: %s"), tmp.c_str ());
     addLine (str);
 
-    str.Printf (_("Url: %s"), entry.url ());
+    tmp = Utf8ToLocal (entry.url ());
+    str.Printf (_("Url: %s"), tmp.c_str ());
     addLine (str);
 
-    str.Printf (_("Repository: %s"), entry.repos () ? entry.repos () : _("<None>"));
+    if (entry.repos ()) {
+      tmp = Utf8ToLocal (entry.repos ());
+    } else {
+      tmp = _("<None>");
+    }
+    str.Printf (_("Repository: %s"),  tmp.c_str ());
     addLine (str);
 
-    str.Printf (_("Repository UUID: %s"), entry.uuid () ? entry.uuid () : _("<None>"));
+    if (entry.uuid ()) {
+      tmp = Utf8ToLocal (entry.uuid ());
+    } else {
+      tmp = _("<None>");
+    }
+    str.Printf (_("Repository UUID: %s"),  tmp.c_str ());
     addLine (str);
 
     str.Printf (_("Revision: %ld"), entry.revision ());
@@ -145,14 +158,16 @@ struct FileInfo::Data
 
     if (entry.isCopied ())
     {
-      str.Printf (_("Copied From Url: %s"), entry.copyfromUrl ());
+      tmp = Utf8ToLocal (entry.copyfromUrl ());
+      str.Printf (_("Copied From Url: %s"), tmp.c_str ());
       addLine (str);
 
       str.Printf (_("Copied From Rev: %ld"), entry.copyfromRev ());
       addLine (str);
     }
 
-    str.Printf (_("Last Changed Author: %s"), entry.cmtAuthor ());
+    tmp = Utf8ToLocal (entry.cmtAuthor ());
+    str.Printf (_("Last Changed Author: %s"), tmp.c_str ());
     addLine (str);
 
     str.Printf (_("Last Changed Rev: %ld"), entry.cmtRev ());
@@ -167,28 +182,37 @@ struct FileInfo::Data
     info_print_time (entry.propTime (), _("Properties Last Updated"), str);
     addLine (str);
 
-    str.Printf (_("Checksum: %s"), entry.checksum () ? entry.checksum () : _("<None>"));
+    if (entry.checksum  ()) {
+      tmp = Utf8ToLocal (entry.checksum ());
+    } else {
+      tmp = _("<None>");
+    }
+    str.Printf (_("Checksum: %s"), tmp.c_str ());
     addLine (str);
 
     if (text_conflict)
     {
+      tmp = Utf8ToLocal (entry.conflictOld ());
       str.Printf (_("Conflict Previous Base File: %s"),
-                  entry.conflictOld ());
+                  tmp.c_str ());
       addLine (str);
 
+      tmp = Utf8ToLocal (entry.conflictWrk ());
       str.Printf (_("Conflict Previous Working File: %s"),
-                  entry.conflictWrk ());
+                  tmp.c_str ());
       addLine (str);
 
+      tmp = Utf8ToLocal (entry.conflictNew ());
       str.Printf (_("Conflict Current Base File: %s"), 
-                  entry.conflictNew ());
+                  tmp.c_str ());
       addLine (str);
     }
 
     if (props_conflict)
     {
+      tmp = Utf8ToLocal (entry.prejfile ());
       str.Printf (_("Conflict Properties File: %s"), 
-                  entry.prejfile ());
+                  tmp.c_str ());
       addLine (str);
     }
   }
@@ -205,7 +229,7 @@ struct FileInfo::Data
       {
         svn::Status status (*it);
 
-        addLine (status.path ());
+        addLine (Utf8ToLocal (status.path ()));
         addInfoForStatus (status);
         addLine ();
       }
@@ -213,7 +237,7 @@ struct FileInfo::Data
     catch (svn::Exception & e)
     {
       addLine (_("Error retrieving status:"));
-      addLine (e.message ());
+      addLine (Utf8ToLocal (e.message ()));
     }
   }
 };
@@ -234,10 +258,10 @@ FileInfo::addPath (const char * path)
   m->targets.push_back (path);
 }
 
-const char *
+const wxString &
 FileInfo::info () const
 {
-  m->info = "";
+  m->info.Clear ();
   svn::Client client (m->context);
 
   std::vector<svn::Path>::const_iterator it;
@@ -248,7 +272,7 @@ FileInfo::info () const
     svn::Status status = client.singleStatus (path.c_str ());
 
     m->createInfoForPath (client, path.c_str ());
-    m->addLine ("");
+    m->addLine ();
   }
 
   return m->info;

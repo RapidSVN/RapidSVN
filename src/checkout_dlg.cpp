@@ -46,23 +46,23 @@ public:
       new wxStaticBox (wnd, 0, _("URL"));
     wxTextValidator valModule (wxFILTER_NONE, &data.RepUrl);
     m_textRepUrl = 
-      new wxTextCtrl (wnd, -1, "", wxDefaultPosition,
+      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
                       wxSize(235, -1), 0, valModule);
     wxStaticBox* destBox = 
       new wxStaticBox (wnd, 0, _("Destination Directory"));
     wxTextValidator valDest (wxFILTER_NONE, &data.DestFolder);
     m_textDest = 
-      new wxTextCtrl (wnd, -1, "", wxDefaultPosition, 
+      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition, 
                       wxSize(205, -1), 0, valDest);
     wxButton* browse = 
-      new wxButton (wnd, ID_BUTTON_BROWSE, "...", 
+      new wxButton (wnd, ID_BUTTON_BROWSE, wxT("..."), 
                    wxDefaultPosition, wxSize(20, -1) );
 
     wxStaticBox* revisionBox = 
       new wxStaticBox (wnd, -1, _("Revision"));
     wxTextValidator valRevision (wxFILTER_NUMERIC, &data.Revision);
     m_textRevision = 
-      new wxTextCtrl (wnd, -1, "", wxDefaultPosition, 
+      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition, 
                       wxSize(50, -1), 0, valRevision);                             
     wxGenericValidator valLatest (&data.UseLatest);
     m_checkUseLatest = 

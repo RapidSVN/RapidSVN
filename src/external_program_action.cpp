@@ -52,7 +52,7 @@ ExternalProgramAction::Perform ()
     path = GetPathAsTempFile(path);
   }
   
-  wxString target_str = path.c_str ();
+  wxString target_str = Utf8ToLocal (path.c_str ());
   wxFileName target = target_str;
 
   // The target we'll pass to the external program
@@ -90,11 +90,11 @@ ExternalProgramAction::Perform ()
       TrimString (args);
 
       if (args.Length () == 0)
-        args = "\"" + target_document + "\"";
+        args = wxT("\"") + target_document + wxT("\"");
       else
-        args.Replace ("%1", target_document, true);
+        args.Replace (wxT("%1"), target_document, true);
     
-      wxExecute (prefs.explorer + " " + args);
+      wxExecute (prefs.explorer + wxT(" ") + args);
     }
   }
   else
@@ -110,11 +110,11 @@ ExternalProgramAction::Perform ()
       TrimString (args);
 
       if (args.Length () == 0)
-        args = "\"" + target_document + "\"";
+        args = wxT("\"") + target_document + wxT("\"");
       else
-        args.Replace ("%1", target_document, true);
+        args.Replace (wxT("%1"), target_document, true);
    
-      wxExecute (prefs.editor + " " + args);
+      wxExecute (prefs.editor + wxT(" ") + args);
     }
   }
 

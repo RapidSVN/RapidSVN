@@ -13,6 +13,8 @@
 #ifndef _RAPIDSVN_UTILS_H_INCLUDED_
 #define _RAPIDSVN_UTILS_H_INCLUDED_
 
+// stl
+#include <string>
 
 // wx
 #include "wx/dynarray.h"
@@ -122,7 +124,7 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status);
  * @return true if valid revision
  */
 bool
-CheckRevision (const char * revstring);
+CheckRevision (const wxString & revstring);
 
 /**
  * Creates an action event with @a token.
@@ -186,7 +188,7 @@ CheckDateTime (const wxString & datestring);
  * @return formatted date/time string
  */
 wxString
-FormatDateTime (apr_time_t date, wxString fmt = "%x %X");
+FormatDateTime (apr_time_t date, wxString fmt = wxT("%x %X"));
 
 
 /**
@@ -233,10 +235,22 @@ StatusDescription (const svn_wc_status_kind kind);
  * @see Utf8ToLocal
  *
  * @param srcLocal string in local encoding
- * @return string in local encoding
+ * @return string in utf8 encoding
  */
-wxString
+std::string
 LocalToUtf8 (const wxString & srcLocal);
+
+/**
+ * converts a string from local encoding (like Ansi on 
+ * Windows) to utf8
+ *
+ * @see Utf8ToLocal
+ *
+ * @param srcLocal string in local encoding
+ * @param dstUtf8 string in utf8 encoding
+ */
+void
+LocalToUtf8 (const wxString & srcLocal, std::string & dstUtf8);
 
 
 /**
@@ -246,10 +260,22 @@ LocalToUtf8 (const wxString & srcLocal);
  * @see LocalToUtf8
  *
  * @param srcUtf8 string in utf8 encoding
- * @return string in utf8 encoding
+ * @return string in local encoding
  */
 wxString
-Utf8ToLocal (const wxString & srcUtf8);
+Utf8ToLocal (const char* srcUtf8);
+
+/**
+ * converts a string from utf to the local encoding 
+ * (like Ansi on Windows)
+ *
+ * @see LocalToUtf8
+ *
+ * @param srcUtf8 string in utf8 encoding
+ * @return string in local encoding
+ */
+wxString
+Utf8ToLocal (const std::string & srcUtf8);
 
 
 #endif

@@ -67,8 +67,10 @@ CheckoutAction::Perform ()
   }
   
   wxSetWorkingDirectory (m_data.DestFolder);
-  client.checkout (m_data.RepUrl.c_str (), 
-                   m_data.DestFolder.c_str (), 
+  std::string DestFolderUtf8;
+  LocalToUtf8 (m_data.DestFolder, DestFolderUtf8);
+  client.checkout (m_data.RepUrl.mb_str (), 
+                   svn::Path (DestFolderUtf8), 
                    revision, m_data.Recursive);
 
   // now post event to add bookmark to bookmarks

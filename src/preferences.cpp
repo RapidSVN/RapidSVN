@@ -21,42 +21,42 @@
 
 // platform dependant constants
 #ifdef _WIN32
-  static const char * DEFAULT_EXPLORER = "explorer.exe";
+  static const wxChar * DEFAULT_EXPLORER = wxT("explorer.exe");
 #else
-  static const char * DEFAULT_EXPLORER = "";
+  static const wxChar * DEFAULT_EXPLORER = wxT("");
 #endif
-static const char * DEFAULT_EDITOR = "";
-static const char * DEFAULT_DIFF_TOOL = "";
+static const wxChar * DEFAULT_EDITOR = wxT("");
+static const wxChar * DEFAULT_DIFF_TOOL = wxT("");
 
 /**
  * Configuration key names
  */
-static const char CONF_EDITOR[] = 
-  "/Preferences/StandardEditor";
-static const char CONF_EDITOR_ALWAYS[] = 
-  "/Preferences/AlwaysStandardEditor";
-static const char CONF_EDITOR_ARGS[] =
-  "/Preferences/StandardEditorArgs";
-static const char CONF_EXPLORER[] = 
-  "/Preferences/StandardFileExplorer";
-static const char CONF_EXPLORER_ALWAYS[] = 
-  "/Preferences/AlwaysStandardFileExplorer";
-static const char CONF_EXPLORER_ARGS[] =
-  "/Preferences/StandardFileExplorerArgs";
-static const char CONF_PURGE_TEMP_FILES[] = 
-  "/Preferences/PurgeTempFiles";
-static const char CONF_AUTH_PER_BOOKMARK[] =
-  "/Preferences/AuthPerBookmark";
-static const char CONF_DIFF_TOOL[] =
-  "/Preferences/DiffTool";
-static const char CONF_DIFF_TOOL_ARGS[] =
-  "/Preferences/DiffToolArgs";
+static const wxChar CONF_EDITOR[] = 
+  wxT("/Preferences/StandardEditor");
+static const wxChar CONF_EDITOR_ALWAYS[] = 
+  wxT("/Preferences/AlwaysStandardEditor");
+static const wxChar CONF_EDITOR_ARGS[] =
+  wxT("/Preferences/StandardEditorArgs");
+static const wxChar CONF_EXPLORER[] = 
+  wxT("/Preferences/StandardFileExplorer");
+static const wxChar CONF_EXPLORER_ALWAYS[] = 
+  wxT("/Preferences/AlwaysStandardFileExplorer");
+static const wxChar CONF_EXPLORER_ARGS[] =
+  wxT("/Preferences/StandardFileExplorerArgs");
+static const wxChar CONF_PURGE_TEMP_FILES[] = 
+  wxT("/Preferences/PurgeTempFiles");
+static const wxChar CONF_AUTH_PER_BOOKMARK[] =
+  wxT("/Preferences/AuthPerBookmark");
+static const wxChar CONF_DIFF_TOOL[] =
+  wxT("/Preferences/DiffTool");
+static const wxChar CONF_DIFF_TOOL_ARGS[] =
+  wxT("/Preferences/DiffToolArgs");
 
 Preferences::Preferences ()
-  : editor (DEFAULT_EDITOR), editorAlways (false), editorArgs (""),
+  : editor (DEFAULT_EDITOR), editorAlways (false), editorArgs (wxEmptyString),
     explorer (DEFAULT_EXPLORER), explorerAlways (false), 
-    explorerArgs (""), diffTool (DEFAULT_DIFF_TOOL), 
-    diffToolArgs (""), purgeTempFiles (true),
+    explorerArgs (wxEmptyString), diffTool (DEFAULT_DIFF_TOOL), 
+    diffToolArgs (wxEmptyString), purgeTempFiles (true),
     authPerBookmark (false)
 {
   Read ();

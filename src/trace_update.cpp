@@ -11,6 +11,9 @@
  * ====================================================================
  */
 
+// wxwindows
+#include "wx/wx.h"
+
 // subversion
 #include "svn_path.h"
 #include "svn_wc.h"
@@ -18,6 +21,7 @@
 // app
 #include "tracer.hpp"
 #include "trace_update.hpp"
+#include "utils.hpp"
 
 /*
  * Baton structures
@@ -150,8 +154,8 @@ add_directory (const char *path,
   eb->changed = TRUE;
 
   {
-    //printf ("A  %s\n", new_db->path);
-    wxString str = wxString::Format ("A  %s", new_db->path);
+    wxString wxpath (Utf8ToLocal (new_db->path));
+    wxString str = wxString::Format (wxT("A  %s"), wxpath.c_str ());
     eb->tracer->Trace (str);
   }
 
@@ -164,7 +168,7 @@ close_directory (void *dir_baton, apr_pool_t *)
 {
   DirBaton *db = (DirBaton *) dir_baton;
   EditBaton *eb = db->edit_baton;
-  char statchar_buf[3] = "_ ";
+  wxChar statchar_buf[3] = wxT("_ ");
 
   if (db->prop_changed)
   {
@@ -187,14 +191,14 @@ close_directory (void *dir_baton, apr_pool_t *)
     }
 
     if (pc)
-      statchar_buf[1] = 'C';
+      statchar_buf[1] = wxT('C');
     else if (merged)
-      statchar_buf[1] = 'G';
+      statchar_buf[1] = wxT('G');
     else
-      statchar_buf[1] = 'U';
+      statchar_buf[1] = wxT('U');
     {
-      //printf ("%s %s\n", statchar_buf, db->path);
-      wxString str = wxString::Format ("%s %s", statchar_buf, db->path);
+      wxString wxpath (Utf8ToLocal (db->path));
+      wxString str = wxString::Format (wxT("%s %s"), statchar_buf, wxpath.c_str ());
       eb->tracer->Trace (str);
     }
 
@@ -240,10 +244,10 @@ close_file (void *file_baton, const char *, apr_pool_t *)
 {
   FileBaton *fb = (FileBaton *) file_baton;
   EditBaton *eb = fb->edit_baton;
-  char statchar_buf[3] = "_ ";
+  wxChar statchar_buf[3] = wxT("_ ");
 
   if (fb->added)
-    statchar_buf[0] = 'A';
+    statchar_buf[0] = wxT('A');
 
   /* We need to check the state of the file now to see if it was
      merged or is in a state of conflict.  Believe it or not, this can
@@ -269,11 +273,11 @@ close_file (void *file_baton, const char *, apr_pool_t *)
           SVN_ERR (svn_wc_text_modified_p (&merged, fb->path, TRUE, adm_access, subpool));
 
         if (tc)
-          statchar_buf[0] = 'C';
+          statchar_buf[0] = wxT('C');
         else if (merged)
-          statchar_buf[0] = 'G';
+          statchar_buf[0] = wxT('G');
         else if (!fb->added)
-          statchar_buf[0] = 'U';
+          statchar_buf[0] = wxT('U');
       }
 
       if (fb->prop_changed)
@@ -282,11 +286,11 @@ close_file (void *file_baton, const char *, apr_pool_t *)
           SVN_ERR (svn_wc_props_modified_p (&merged, fb->path, NULL, subpool));
 
         if (pc)
-          statchar_buf[1] = 'C';
+          statchar_buf[1] = wxT('C');
         else if (merged)
-          statchar_buf[1] = 'G';
+          statchar_buf[1] = wxT('G');
         else if (!fb->added)
-          statchar_buf[1] = 'U';
+          statchar_buf[1] = wxT('U');
       }
     }
 
@@ -295,8 +299,8 @@ close_file (void *file_baton, const char *, apr_pool_t *)
   }
 
   {
-    //printf ("%s %s\n", statchar_buf, fb->path);
-    wxString str = wxString::Format ("%s %s", statchar_buf, fb->path);
+    wxString wxpath (Utf8ToLocal (fb->path));
+    wxString str = wxString::Format (wxT("%s %s"), statchar_buf, wxpath.c_str ());
     eb->tracer->Trace (str);
   }
 
@@ -345,9 +349,9 @@ delete_entry (const char *path,
   eb->changed = TRUE;
 
   {
-    //printf( "D  %s\n", svn_path_join( eb->path, path, pool ) );
+    wxString wxpath (Utf8ToLocal (svn_path_join (eb->path, path, pool)));
     wxString str =
-      wxString::Format ("D  %s", svn_path_join (eb->path, path, pool));
+      wxString::Format (wxT("D  %s"), wxpath.c_str ());
     eb->tracer->Trace (str);
   }
   return SVN_NO_ERROR;
@@ -379,7 +383,7 @@ close_edit (void *edit_baton, apr_pool_t *)
       //  eb->revision );
     {
       wxString str =
-        wxString::Format ("Checked out revision %" SVN_REVNUM_T_FMT ".",
+        wxString::Format (wxT("Checked out revision %" SVN_REVNUM_T_FMT "."),
                           eb->revision);
       eb->tracer->Trace (str);
     }
@@ -390,7 +394,7 @@ close_edit (void *edit_baton, apr_pool_t *)
         //printf( "Updated to revision %" SVN_REVNUM_T_FMT ".\n",
         //  eb->revision );
         wxString str =
-          wxString::Format ("Updated to revision %" SVN_REVNUM_T_FMT ".",
+          wxString::Format (wxT("Updated to revision %" SVN_REVNUM_T_FMT "."),
                             eb->revision);
         eb->tracer->Trace (str);
       }
@@ -399,7 +403,7 @@ close_edit (void *edit_baton, apr_pool_t *)
       {
         //printf( "At revision %" SVN_REVNUM_T_FMT ".\n",
         //  eb->revision );
-        wxString str = wxString::Format ("At revision %" SVN_REVNUM_T_FMT ".",
+        wxString str = wxString::Format (wxT("At revision %" SVN_REVNUM_T_FMT "."),
                                          eb->revision);
         eb->tracer->Trace (str);
       }

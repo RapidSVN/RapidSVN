@@ -112,9 +112,11 @@ public:
   getPath1 (const svn::Path & path)
   {
     if (diffData.useUrl1)
-      return diffData.url1.c_str ();
-    else
-      return path;
+    {
+      std::string url1Utf8 (LocalToUtf8 (diffData.url1));
+      return svn::Path (url1Utf8);
+    }
+    return path;
   }
 
 
@@ -125,7 +127,10 @@ public:
   getPath2 (const svn::Path & path)
   {
     if (diffData.useUrl2)
-      return diffData.url2.c_str ();
+    {
+      std::string url2Utf8 (LocalToUtf8 (diffData.url1));
+      return svn::Path (url2Utf8);
+    }
     else
       return path;
   }
@@ -170,8 +175,8 @@ public:
 
     if (!checkStatus (status))
     {
-      wxString msg;
-      msg.Printf (_("Skipped: %s"), path.c_str ());
+      wxString msg, wxpath (Utf8ToLocal (path.c_str ()));
+      msg.Printf (_("Skipped: %s"), wxpath.c_str());
       Trace (msg);
       return;
     }
@@ -205,21 +210,21 @@ public:
     // prepare command line to execute
     Preferences prefs;
     wxString args (prefs.diffToolArgs);
-    wxString dstFile1Native (dstFile1.native ().c_str ());
-    wxString dstFile2Native (dstFile2.native ().c_str ());
+    wxString dstFile1Native (Utf8ToLocal (dstFile1.native ().c_str ()));
+    wxString dstFile2Native (Utf8ToLocal (dstFile2.native ().c_str ()));
 
     TrimString (args);
 
     if (args.Length () == 0)
-      args.Printf ("\"%s\" \"%s\"", dstFile1Native.c_str (), 
+      args.Printf (wxT("\"%s\" \"%s\""), dstFile1Native.c_str (), 
                    dstFile2Native.c_str ());
     else
     {
-      args.Replace ("%1", dstFile1Native.c_str (), true);
-      args.Replace ("%2", dstFile2Native.c_str (), true);
+      args.Replace (wxT("%1"), dstFile1Native.c_str (), true);
+      args.Replace (wxT("%2"), dstFile2Native.c_str (), true);
     }
 
-    wxString cmd (prefs.diffTool + " " + args);
+    wxString cmd (prefs.diffTool + wxT(" ") + args);
 
     wxString msg;
     msg.Printf (_("Execute diff tool: %s"), cmd.c_str ());

@@ -20,6 +20,7 @@
 
 // app
 #include "merge_action.hpp"
+#include "utils.hpp"
 
 MergeAction::MergeAction (wxWindow * parent)
   : Action (parent, _("Merge"), GetBaseFlags ()),
@@ -46,7 +47,7 @@ MergeAction::Prepare ()
   if (m_calledByLogDlg)
     m_data.Destination = m_data.Path1;
   else
-    m_data.Destination = GetPath().c_str();
+    m_data.Destination = Utf8ToLocal (GetPath().c_str());
 
   MergeDlg dlg (GetParent (), m_calledByLogDlg, m_data);
 
@@ -87,11 +88,15 @@ MergeAction::Perform ()
     return false;
   }
 
-  client.merge (m_data.Path1.c_str (), 
+  std::string Path1Utf8, Path2Utf8, DestinationUtf8;
+  LocalToUtf8(m_data.Path1, Path1Utf8);
+  LocalToUtf8(m_data.Path2, Path2Utf8);
+  LocalToUtf8(m_data.Destination, DestinationUtf8);
+  client.merge (svn::Path (Path1Utf8), 
                 rev1, 
-                m_data.Path2.c_str (), 
+                svn::Path (Path2Utf8), 
                 rev2, 
-                m_data.Destination.c_str (), 
+                svn::Path (DestinationUtf8), 
                 m_data.Force, 
                 m_data.Recursive);
   return true;

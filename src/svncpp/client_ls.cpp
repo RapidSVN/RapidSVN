@@ -18,7 +18,7 @@
 #include "svn_client.h"
 #include "svn_path.h"
 #include "svn_sorts.h"
-#include "svn_utf.h"
+//#include "svn_utf.h"
 
 // svncpp
 #include "svncpp/client.hpp"
@@ -59,7 +59,7 @@ namespace svn
 
     DirEntries entries;
 
-    std::string basePath ("");
+    std::string basePath;
     if (pathOrUrl != 0 && *pathOrUrl != '\0')
     {
       basePath = pathOrUrl;
@@ -68,24 +68,19 @@ namespace svn
 
     for (int i = 0; i < array->nelts; ++i)
     {
-      const char *utf8_entryname;
+      const char *entryname;
       svn_dirent_t *dirent;
       svn_sort__item_t *item;
      
       item = &APR_ARRAY_IDX (array, i, svn_sort__item_t);
 
-      utf8_entryname = static_cast<const char *>(item->key);
+      entryname = static_cast<const char *>(item->key);
 
       dirent = static_cast<svn_dirent_t *> 
-        (apr_hash_get (hash, utf8_entryname, item->klen));
-
-      const char * native_entryname;
-      error = svn_utf_cstring_from_utf8 (
-        &native_entryname, utf8_entryname, pool);      
+        (apr_hash_get (hash, entryname, item->klen));
 
       std::string fullname (basePath);
-      std::string name (native_entryname);
-      fullname += name;
+      fullname += entryname;
 
       entries.push_back (DirEntry (fullname.c_str (), dirent));
     }
@@ -121,22 +116,18 @@ namespace svn
 
     for (int i = 0; i < array->nelts; ++i)
     {
-      const char *utf8_entryname;
+      const char *entryname;
       svn_dirent_t *dirent;
       svn_sort__item_t *item;
      
       item = &APR_ARRAY_IDX (array, i, svn_sort__item_t);
 
-      utf8_entryname = static_cast<const char *>(item->key);
+      entryname = static_cast<const char *>(item->key);
 
       dirent = static_cast<svn_dirent_t *> 
-        (apr_hash_get (hash, utf8_entryname, item->klen));
+        (apr_hash_get (hash, entryname, item->klen));
 
-      const char * native_entryname;
-      error = svn_utf_cstring_from_utf8 (
-        &native_entryname, utf8_entryname, pool);      
-
-      entries.push_back (DirEntry (native_entryname, dirent));
+      entries.push_back (DirEntry (entryname, dirent));
     }
 
     return entries;

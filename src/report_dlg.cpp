@@ -31,7 +31,7 @@ ReportDlg::ReportDlg (wxWindow * parent,
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
     m_str (data)
 {
-  m_text = new wxTextCtrl (this, -1, "",
+  m_text = new wxTextCtrl (this, -1, wxEmptyString,
                          wxDefaultPosition,
                          wxSize (500, 200),
                          wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH);
@@ -43,7 +43,7 @@ ReportDlg::ReportDlg (wxWindow * parent,
   }
   m_text->WriteText (m_str);
 
-  m_button = new wxButton (this, wxID_OK, "OK");
+  m_button = new wxButton (this, wxID_OK, _("OK"));
 
   wxBoxSizer * topsizer = new wxBoxSizer (wxVERTICAL);
 

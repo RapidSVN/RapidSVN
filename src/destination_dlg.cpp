@@ -24,8 +24,8 @@ public:
   wxString destination;
   bool force;
 
-  Data (wxWindow * window, const char * descr, 
-        int flags, const char * dest)
+  Data (wxWindow * window, const wxString & descr, 
+        int flags, const wxString & dest)
     : destination (dest), force (false)
   {
     bool withForce = (flags & WITH_FORCE) != 0;
@@ -41,7 +41,7 @@ public:
     // The destination:
     wxTextValidator val (wxFILTER_NONE, &destination);
     wxTextCtrl * textDest = 
-      new wxTextCtrl (window, -1, "", wxDefaultPosition, 
+      new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition, 
                       wxSize (200, -1), 0, val);
       
     mainSizer->Add (textDest, 0, wxALL | wxEXPAND, 5);
@@ -84,10 +84,10 @@ const int DestinationDlg::WITH_FORCE=1;
 const int DIALOG_FLAGS = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
 
 DestinationDlg::DestinationDlg (wxWindow* parent, 
-                               const char * title,
-                               const char * descr, 
+                               const wxString & title,
+                               const wxString & descr, 
                                const int flags,
-                               const char * dst)
+                               const wxString & dst)
  : wxDialog(parent, -1, title,
             wxDefaultPosition, wxDefaultSize, 
             DIALOG_FLAGS)
@@ -107,9 +107,9 @@ DestinationDlg::~DestinationDlg ()
 }
 
 void
-DestinationDlg::Create (wxWindow* parent, const char * title,
-                        const char * descr, const int flags,
-                        const char * dst)
+DestinationDlg::Create (wxWindow* parent, const wxString & title,
+                        const wxString & descr, const int flags,
+                        const wxString & dst)
 {
   wxDialog::Create (parent, -1, title, wxDefaultPosition,
                     wxDefaultSize, DIALOG_FLAGS);
@@ -117,7 +117,7 @@ DestinationDlg::Create (wxWindow* parent, const char * title,
   m = new Data (this, descr, flags, dst);
 }
 
-const char *
+const wxString &
 DestinationDlg::GetDestination () const
 {
   return m->destination;

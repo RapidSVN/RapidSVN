@@ -134,7 +134,7 @@ public:
 
     {
       wxString msg;
-      msg.Printf (_("Execute: %s"), actionName);
+      msg.Printf (_("Execute: %s"), actionName.c_str ());
       PostStringEvent (TOKEN_ACTION_START, msg);
     }
 
@@ -155,9 +155,9 @@ public:
     }
     catch (svn::ClientException & e)
     {
-      wxString msg;
+      wxString msg, errtxt (Utf8ToLocal (e.message ()));
       msg.Printf (_("Error while performing action: %s"), 
-                  e.message ());
+                  errtxt.c_str ());
       PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg);
 
       state = ACTION_NONE;
@@ -289,8 +289,8 @@ ThreadedWorker::Perform (Action * action_)
   }
   catch (svn::ClientException & e)
   {
-    wxString msg;
-    msg.Printf ( _("Error while preparing action: %s"), e.message () );
+    wxString msg, errtxt (Utf8ToLocal (e.message ()));
+    msg.Printf ( _("Error while preparing action: %s"), errtxt.c_str () );
     m->Trace (msg);
 
     m->result = ACTION_ERROR;

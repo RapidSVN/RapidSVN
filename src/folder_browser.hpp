@@ -31,7 +31,7 @@ public:
   FolderBrowser (wxWindow * parent,  const wxWindowID id = -1,
                  const wxPoint & pos = wxDefaultPosition,
                  const wxSize & size = wxDefaultSize,
-                 const wxString & name = "FolderBrowser");
+                 const wxString & name = wxT("FolderBrowser"));
 
   virtual ~ FolderBrowser ();
 
@@ -45,7 +45,7 @@ public:
   /**
    * add bookmark 
    */
-  void AddBookmark (const char * bookmarkPath);
+  void AddBookmark (const wxString & path);
 
   /**
    * @return bookmark count on bookmarks
@@ -59,7 +59,7 @@ public:
    * @param index zero-based index
    * @return path of the bookmark
    */
-  const char *
+  const wxString &
   GetBookmark (const size_t index) const;
 
   /**
@@ -94,7 +94,7 @@ public:
    * @retval false if entry was not found
    */
   bool
-  SelectFolder (const char * path);
+  SelectFolder (const wxString & path);
 
   /**
    * selects the @a bookmark 
@@ -103,7 +103,7 @@ public:
    * @return true on success
    */
   bool
-  SelectBookmark (const char * bookmarkPath);
+  SelectBookmark (const wxString & bookmarkPath);
 
   /**
    * setting whether there will be one login for all the

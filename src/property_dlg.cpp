@@ -82,7 +82,7 @@ PropertyDlg::ReadFromGrid ()
     {
       const svn::PropertyEntry & entry = *it;
       const char * name = entry.name.c_str ();
-      bool found = FindEntry (name) != -1;
+      bool found = FindEntry (Utf8ToLocal (name)) != -1;
 
       if (!found)
       {
@@ -101,8 +101,11 @@ PropertyDlg::ReadFromGrid ()
       wxString name, value;
 
       GetEntryAtIndex (index, name, value);
+      
+      std::string nameUtf8 (LocalToUtf8 (name));
+      std::string valueUtf8 (LocalToUtf8 (value));
 
-      m->property.set (name.c_str (), value.c_str ());
+      m->property.set (nameUtf8.c_str (), valueUtf8.c_str ());
     }    
   }
   catch (...)
@@ -132,7 +135,8 @@ PropertyDlg::WriteToGrid ()
   {
     const svn::PropertyEntry & entry = *it;
 
-    SetEntry (entry.name.c_str (), entry.value.c_str ());
+    SetEntry (Utf8ToLocal (entry.name.c_str ()),
+        Utf8ToLocal (entry.value.c_str ()));
   
     it++;
   }

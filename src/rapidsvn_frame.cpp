@@ -86,17 +86,17 @@
 static const int NUM_ITEMS = 30;
 
 // List config keys here, to avoid duplicating literal text:
-const static char ConfigLeft[] = "/MainFrame/Left";
-const static char ConfigTop[] = "/MainFrame/Top";
-const static char ConfigWidth[] = "/MainFrame/Width";
-const static char ConfigHeight[] = "/MainFrame/Height";
-const static char ConfigMaximized[] = "/MainFrame/Maximized";
-const static char ConfigSplitterHoriz[] = "/MainFrame/SplitterHoriz";
-const static char ConfigSplitterVert[] = "/MainFrame/SplitterVert";
-const static char ConfigBookmarkFmt[] = "/Bookmarks/Bookmark%ld";
-const static char ConfigBookmarkCount[] = "/Bookmarks/Count";
+const static wxChar ConfigLeft[] = wxT("/MainFrame/Left");
+const static wxChar ConfigTop[] = wxT("/MainFrame/Top");
+const static wxChar ConfigWidth[] = wxT("/MainFrame/Width");
+const static wxChar ConfigHeight[] = wxT("/MainFrame/Height");
+const static wxChar ConfigMaximized[] = wxT("/MainFrame/Maximized");
+const static wxChar ConfigSplitterHoriz[] = wxT("/MainFrame/SplitterHoriz");
+const static wxChar ConfigSplitterVert[] = wxT("/MainFrame/SplitterVert");
+const static wxChar ConfigBookmarkFmt[] = wxT("/Bookmarks/Bookmark%ld");
+const static wxChar ConfigBookmarkCount[] = wxT("/Bookmarks/Count");
 
-const static char TraceMisc[] = "tracemisc";
+const static wxChar TraceMisc[] = wxT("tracemisc");
 
 // Platform specific constants. 
 #ifdef __WXMSW__
@@ -142,11 +142,11 @@ static const int COLUMN_ID_MAP[FileListCtrl::COL_COUNT] =
  * the column headings in FileListCtrl since they dont have
  * shortcuts.
  */
-static const char *
+static const wxChar *
 COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
 {
-  "", // Name is not used here
-  "", // Path is not used here
+  wxT(""), // Name is not used here
+  wxT(""), // Path is not used here
   _("&Revision"),
   _("R&ep. Rev."),
   _("&Author"),
@@ -190,7 +190,7 @@ class LogTracer:public wxTextCtrl, public Tracer
 
 public:
   LogTracer (wxWindow * parent)
-    : wxTextCtrl (parent, -1, "", 
+    : wxTextCtrl (parent, -1, wxEmptyString, 
                   wxPoint (0, 0), wxDefaultSize, 
                   wxTE_MULTILINE | wxTE_READONLY)
   {
@@ -199,7 +199,7 @@ public:
 
   void Trace (const wxString & str)
   {
-    AppendText (str + "\n");
+    AppendText (str + wxT("\n"));
   }
 };
 
@@ -616,7 +616,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                               wxDefaultPosition, wxDefaultSize, 
                               wxTAB_TRAVERSAL | wxCLIP_CHILDREN);
 
-  m_log = new wxTextCtrl (m_horiz_splitter, -1, "",
+  m_log = new wxTextCtrl (m_horiz_splitter, -1, wxEmptyString,
                           wxPoint (0, 0), wxDefaultSize, 
                           wxTE_MULTILINE | wxTE_READONLY);
 
@@ -744,7 +744,7 @@ RapidSvnFrame::~RapidSvnFrame ()
     wxString key;
     key.Printf (ConfigBookmarkFmt, item);
 
-    const char * bookmark = m_folder_browser->GetBookmark (item);
+    const wxString & bookmark = m_folder_browser->GetBookmark (item);
 
     pConfig->Write (key, bookmark);
   }
@@ -776,9 +776,9 @@ RapidSvnFrame::UpdateFileList ()
       }
       catch (svn::ClientException & e)
       {
-        wxString msg;
+        wxString msg, errtxt (Utf8ToLocal (e.message ()));
         msg.Printf (_("Error while updating filelist (%s)"),
-                    e.message ());
+                    errtxt.c_str ());
         Trace (msg);
 
         // probably unversioned resource
@@ -887,8 +887,11 @@ RapidSvnFrame::AddWcBookmark ()
   }
 
   // admin dir?
+  // TODO: Should we have a translated-once constant
+  // rather than keep converting SVN_WC_ADM_DIR_NAME?
   wxFileName fileName (dialog.GetPath ());
-  if ((fileName.GetName () + fileName.GetExt ()) == SVN_WC_ADM_DIR_NAME)
+  if ((fileName.GetName () + fileName.GetExt ()) ==
+      Utf8ToLocal (SVN_WC_ADM_DIR_NAME))
   {
     add = FALSE;
     wxMessageBox (_("You cannot add a subversion "
@@ -955,7 +958,7 @@ RapidSvnFrame::InitFolderBrowser ()
   for (item = 0; item < count; item++)
   {
     key.Printf (ConfigBookmarkFmt, item);
-    if (pConfig->Read (key, &bookmark, ""))
+    if (pConfig->Read (key, &bookmark, wxEmptyString))
     {
       m_folder_browser->AddBookmark (bookmark);
     }
@@ -977,13 +980,16 @@ RapidSvnFrame::GetActionTargets () const
   {
     wxString path = m_folder_browser->GetPath ();
     
-    if (!svn::Url::isValid (path))
+    std::string pathUtf8;
+    LocalToUtf8 (path, pathUtf8);
+    if (!svn::Url::isValid (pathUtf8.c_str ()))
     {
       wxFileName fname (path);
       path = fname.GetFullPath ();
+      LocalToUtf8 (path, pathUtf8);
     }
     
-    return svn::Targets (path.c_str ());
+    return svn::Targets (pathUtf8.c_str ());
   }
   else
   {
@@ -1006,17 +1012,18 @@ RapidSvnFrame::GetSelectionActionFlags () const
     
     flags |= Action::IS_DIR;
     wxString path = m_folder_browser->GetPath ();
-    const char * path_c = path.c_str ();
-    if (*path_c != '\0')
+    std::string pathUtf8;
+    LocalToUtf8 (path, pathUtf8);
+    if (!pathUtf8.empty ())
     {
       flags |= Action::SINGLE_TARGET;
-      if (svn::Url::isValid (path_c))
+      if (svn::Url::isValid (pathUtf8.c_str ()))
       {
         flags |= Action::RESPOSITORY_TYPE;
       }
       else
       {
-        if (svn::Wc::checkWc (path_c))
+        if (svn::Wc::checkWc (pathUtf8.c_str ()))
         {
           flags |= Action::VERSIONED_WC_TYPE;
         }
@@ -1351,7 +1358,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
     case ID_Contents: //TODO
     default:
-      m_logTracer->Trace ("Unimplemented action!");
+      m_logTracer->Trace (_("Unimplemented action!"));
       break;
     }
   }
@@ -1444,7 +1451,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_ADD_BOOKMARK:
     {
-      const char * bookmark = event.GetString ().c_str ();
+      const wxString bookmark = event.GetString ();
 
       m_folder_browser->AddBookmark (bookmark);
       m_folder_browser->Refresh ();
@@ -1539,7 +1546,7 @@ RapidSvnFrame::ShowInfo ()
   }
   catch (svn::ClientException & e)
   {
-    Trace (e.message ());
+    Trace (Utf8ToLocal (e.message ()));
     return;
   }
 
@@ -1586,7 +1593,7 @@ RapidSvnFrame::UpdateCurrentPath ()
 {
   if (m_folder_browser == 0)
   {
-    m_currentPath = "";
+    m_currentPath.Clear ();
     m_context = 0;
   }
   else
@@ -1595,7 +1602,7 @@ RapidSvnFrame::UpdateCurrentPath ()
     m_context = m_folder_browser->GetContext ();
   }
 
-  SetTitle (m_title + ": " + m_currentPath);
+  SetTitle (m_title + wxT(": ") + m_currentPath);
 }
 
 bool
@@ -1615,7 +1622,7 @@ RapidSvnFrame::InvokeDefaultAction ()
   if (selectionActionFlags & Action::IS_DIR)
   {
     // go one folder deeper...
-    m_folder_browser->SelectFolder (targets[0].c_str ());
+    m_folder_browser->SelectFolder (Utf8ToLocal(targets[0].c_str ()));
   }
   else
   {
@@ -1633,7 +1640,9 @@ RapidSvnFrame::Perform (Action * action)
     m->SetRunning (true);
     m->listener.cancel (false);
 
-    action->SetPath (m_currentPath.c_str ());
+    std::string currentPathUtf8;
+    LocalToUtf8(m_currentPath, currentPathUtf8);
+    action->SetPath (svn::Path (currentPathUtf8));
     action->SetContext (m_context);
     if ((action->GetFlags () & Action::WITHOUT_TARGET) == 0)
     {
@@ -1722,7 +1731,7 @@ RapidSvnFrame::UpdateFolderBrowser ()
 {
   wxBusyCursor busy;
 
-  m_currentPath = "";
+  m_currentPath.Clear ();
   UpdateFileList ();
 
   m->SetRunning (true);
@@ -1745,13 +1754,12 @@ RapidSvnFrame::UpdateFolderBrowser ()
 }
 
 void
-RapidSvnFrame::Trace (const char *msg)
+RapidSvnFrame::Trace (wxString msg)
 {
-  if (m_log != 0)
+  if (m_log != NULL)
   {
-    wxString message;
-    message.Printf ("%s\n", msg);
-    m_log->AppendText (message);
+    msg += wxT('\n');
+    m_log->AppendText (msg);
   }
 }
 
@@ -1763,12 +1771,16 @@ RapidSvnFrame::OnLogin (wxCommandEvent & event)
   if (context == 0)
     return;
 
-  AuthDlg dlg (this, context->getUsername ());
+  wxString LocalUsername(Utf8ToLocal (context->getUsername ()));
+  AuthDlg dlg (this, LocalUsername);
   bool ok = dlg.ShowModal () == wxID_OK;
 
   if (ok)
   {
-    context->setLogin (dlg.GetUsername (), dlg.GetPassword ());
+    std::string username, password;
+    LocalToUtf8 (dlg.GetUsername (), username);
+    LocalToUtf8 (dlg.GetPassword (), password);
+    context->setLogin (username.c_str (), password.c_str ());
   }
 }
 

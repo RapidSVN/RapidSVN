@@ -30,7 +30,7 @@ public:
    * @param path path in which the directory is to
    *             be created
    */
-  MkdirAction (wxWindow * parent, const char * path);
+  MkdirAction (wxWindow * parent, const wxString & path);
 
   virtual bool Perform ();
   virtual bool Prepare ();

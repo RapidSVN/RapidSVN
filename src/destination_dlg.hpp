@@ -35,9 +35,9 @@ public:
    * @param flags WITH_FORCE add a force checkbox. See @a GetForce
    * @param dsr default destination
    */
-  DestinationDlg (wxWindow* parent, const char * title,
-                  const char * descr = "", const int flags=0,
-                  const char * dst = "");
+  DestinationDlg (wxWindow* parent, const wxString & title,
+                  const wxString & descr = wxEmptyString, const int flags=0,
+                  const wxString & dst = wxEmptyString);
 
   /**
    * default constructor. Use @a Create to initialize the dialog
@@ -53,16 +53,16 @@ public:
    * initialize instance. See @a DestinationDlg for parameters
    */
   void
-  Create (wxWindow* parent, const char * title,
-          const char * descr = "", const int flags=0,
-          const char * dst = "");
+  Create (wxWindow* parent, const wxString & title,
+          const wxString & descr = wxEmptyString, const int flags=0,
+          const wxString & dst = wxEmptyString);
 
   /**
    * get destination
    *
    * @return destination
    */
-  const char *
+  const wxString &
   GetDestination () const;
 
   /**

@@ -35,13 +35,13 @@ enum
 
 // platform dependant constants
 #ifdef _WIN32
-static const char * EXECUTABLE_WILDCARD = 
+static const wxChar * EXECUTABLE_WILDCARD = 
   _("Executable Files|*.exe;*.com;*.bat|All files (*.*)|*.*");
 
 #else
 // NOTE: (WX 2.4.0) On Motif, neither multiple extensions nor multiple file
 // types are supported (wildcard is limited to a single "*.ext" string)
-static const char * EXECUTABLE_WILDCARD = _("All files|*");
+static const wxChar * EXECUTABLE_WILDCARD = _("All files|*");
 #endif
 
 /* GeneralPanel **************************************************************/
@@ -169,7 +169,7 @@ private:
       // text ctrl
       wxTextValidator val (wxFILTER_NONE, &m_prefs->editor);
       mTextEditor = new wxTextCtrl (
-        this, -1, "", wxDefaultPosition, 
+        this, -1, wxEmptyString, wxDefaultPosition, 
         wxSize (200, -1), 0, val);
 
       // button
@@ -182,7 +182,7 @@ private:
         wxDefaultPosition);
       wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->editorArgs);
       wxTextCtrl * args = new wxTextCtrl (
-        this, -1, "", wxDefaultPosition, 
+        this, -1, wxEmptyString, wxDefaultPosition, 
         wxSize (200, -1), 0, valArgs);
 
       // checkbox
@@ -214,7 +214,7 @@ private:
       // text ctrl
       wxTextValidator valText (wxFILTER_NONE, &m_prefs->explorer);
       mTextExplorer = 
-        new wxTextCtrl (this, -1, "", wxDefaultPosition, 
+        new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition, 
                         wxSize (200, -1), 
                         0, valText);
 
@@ -228,7 +228,7 @@ private:
         wxDefaultPosition);
       wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->explorerArgs);
       wxTextCtrl * args = new wxTextCtrl (
-        this, -1, "", wxDefaultPosition, 
+        this, -1, wxEmptyString, wxDefaultPosition, 
         wxSize (200, -1), 0, valArgs);
 
       // check
@@ -261,7 +261,7 @@ private:
       // text ctrl
       wxTextValidator valText (wxFILTER_NONE, &m_prefs->diffTool);
       mTextDiffTool = 
-        new wxTextCtrl (this, -1, "", wxDefaultPosition, 
+        new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition, 
                         wxSize (200, -1), 
                         0, valText);
 
@@ -275,7 +275,7 @@ private:
         wxDefaultPosition);
       wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->diffToolArgs);
       wxTextCtrl * args = new wxTextCtrl (
-        this, -1, "", wxDefaultPosition, 
+        this, -1, wxEmptyString, wxDefaultPosition, 
         wxSize (200, -1), 0, valArgs);
 
       // position controls
@@ -389,10 +389,10 @@ public:
 
     // buttons
     button_sizer->Add (
-      new wxButton (wnd, wxID_OK, "OK"),
+      new wxButton (wnd, wxID_OK, _("OK")),
       0, wxALL, 10);
     button_sizer->Add (
-      new wxButton (wnd, wxID_CANCEL, "Cancel"),
+      new wxButton (wnd, wxID_CANCEL, _("Cancel")),
       0, wxALL, 10);
 
     // Externals

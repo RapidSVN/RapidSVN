@@ -46,8 +46,8 @@ public:
   /** Constructor */
   DiffData (svn_opt_revision_kind kind = svn::Revision::BASE)
    : compareType (WITH_SAME_REVISION),
-     useUrl1 (false), url1 (""),
-     useUrl2 (false), url2 (""),
+     useUrl1 (false), url1 (wxEmptyString),
+     useUrl2 (false), url2 (wxEmptyString),
      revision1 (kind)
   {
     if (kind != svn::Revision::BASE) 

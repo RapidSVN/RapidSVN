@@ -18,7 +18,7 @@
 #include "svn_auth.h"
 #include "svn_config.h"
 #include "svn_subst.h"
-#include "svn_utf.h"
+//#include "svn_utf.h"
 
 // svncpp
 #include "svncpp/apr.hpp"
@@ -245,7 +245,7 @@ namespace svn
       Data * data;
       SVN_ERR (getData (baton, &data));
 
-      std::string msg ("");
+      std::string msg;
       if (data->logIsSet)
         msg = data->getLogMessage ();
       else
@@ -322,12 +322,14 @@ namespace svn
 
       svn_auth_cred_simple_t* lcred = (svn_auth_cred_simple_t*)
         apr_palloc (pool, sizeof (svn_auth_cred_simple_t));
-      SVN_ERR (svn_utf_cstring_to_utf8 ( 
+/*      SVN_ERR (svn_utf_cstring_to_utf8 ( 
                  &lcred->password,
                  data->getPassword (), pool));
       SVN_ERR (svn_utf_cstring_to_utf8 ( 
                  &lcred->username,
-                 data->getUsername (), pool));
+                 data->getUsername (), pool)); */
+      lcred->password = data->getPassword ();
+      lcred->username = data->getUsername ();
 
       // tell svn if the credentials need to be saved
       lcred->may_save = may_save;
@@ -396,7 +398,7 @@ namespace svn
       Data * data;
       SVN_ERR (getData (baton, &data));
 
-      std::string certFile ("");
+      std::string certFile;
       if (!data->listener->contextSslClientCertPrompt (certFile))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
@@ -404,10 +406,11 @@ namespace svn
         (svn_auth_cred_ssl_client_cert_t*)
         apr_palloc (pool, sizeof (svn_auth_cred_ssl_client_cert_t));
         
-      SVN_ERR (svn_utf_cstring_to_utf8 (
+/*      SVN_ERR (svn_utf_cstring_to_utf8 (
                  &cred_->cert_file,
                  certFile.c_str (),
-                 pool));
+                 pool)); */
+      cred_->cert_file = certFile.c_str ();
 
       *cred = cred_;
 
@@ -428,7 +431,7 @@ namespace svn
       Data * data;
       SVN_ERR (getData (baton, &data));
 
-      std::string password ("");
+      std::string password;
       bool may_save = maySave != 0;
       if (!data->listener->contextSslClientCertPwPrompt (password, realm, may_save))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
@@ -437,11 +440,12 @@ namespace svn
         (svn_auth_cred_ssl_client_cert_pw_t *)
         apr_palloc (pool, sizeof (svn_auth_cred_ssl_client_cert_pw_t));
 
-      SVN_ERR (svn_utf_cstring_to_utf8 (
+/*      SVN_ERR (svn_utf_cstring_to_utf8 (
                  &cred_->password,
                  password.c_str (),
-                 pool));
-
+                 pool)); */
+      cred_->password = password.c_str ();
+      
       cred_->may_save = may_save;
       *cred = cred_;
 

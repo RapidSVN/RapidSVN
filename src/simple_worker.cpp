@@ -23,6 +23,7 @@
 #include "ids.hpp"
 #include "simple_worker.hpp"
 #include "tracer.hpp"
+#include "utils.hpp"
 
 struct SimpleWorker::Data
 {
@@ -144,8 +145,8 @@ SimpleWorker::Perform (Action * action)
   }
   catch (svn::ClientException & e)
   {
-    wxString msg;
-    msg.Printf ( _("Error while preparing action: %s"), e.message () );
+    wxString msg, errtxt (Utf8ToLocal (e.message ()));
+    msg.Printf ( _("Error while preparing action: %s"), errtxt.c_str () );
     Trace (msg);
     return false;
   }
@@ -157,7 +158,7 @@ SimpleWorker::Perform (Action * action)
 
   {
     wxString msg;
-    msg.Printf (_("Execute: %s"), action->GetName ());
+    msg.Printf (_("Execute: %s"), action->GetName ().c_str ());
     PostStringEvent (TOKEN_ACTION_START, msg, ACTION_EVENT);
   }
 
@@ -185,9 +186,9 @@ SimpleWorker::Perform (Action * action)
   }
   catch (svn::ClientException & e)
   {
-    wxString msg;
+    wxString msg, errtxt (Utf8ToLocal (e.message ()));
     msg.Printf (_("Error while performing action: %s"), 
-                e.message ());
+                errtxt.c_str ());
     PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
 
     return false;

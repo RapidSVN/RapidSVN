@@ -96,7 +96,7 @@ AppendMenuItem (
 wxString & UnixPath (wxString & path)
 {
 #ifdef _WIN32
-  path.Replace("\\", "/");
+  path.Replace(wxT("\\"), wxT("/"));
 #endif
   return path;
 }
@@ -122,7 +122,7 @@ bool PostMenuEvent (wxEvtHandler *source, long id)
 wxButton *
 CreateEllipsisButton(wxWindow *parent, long id)
 {
-  const char *ELLIPSIS = "...";
+  const wxChar *ELLIPSIS = wxT("...");
   int ellipsis_width, ellipsis_height;
 
   wxButton *button = new wxButton (parent, id, ELLIPSIS);
@@ -193,7 +193,7 @@ AppendBookmarksMenu (wxMenu * parentMenu)
 }
 
 bool
-CheckRevision (const char * revstring)
+CheckRevision (const wxString & revstring)
 {
   svn_revnum_t revnum;
 
@@ -212,7 +212,7 @@ CreateActionEvent (int token)
 wxMenuItem *
 AppendMenuItem (wxMenu & menu, int id)
 {
-  const char * caption = "";
+  wxString caption;
   wxBitmap bitmap;
 
   switch (id)
@@ -317,7 +317,7 @@ ParseDateTime (const wxString & datestring, apr_time_t & date)
   // (we check only if the complete parsing failed,
   //  not if only the partial string could be parsed)
   wxDateTime dateTime;
-  if (dateTime.ParseFormat (datestring, "%c") ==0)
+  if (dateTime.ParseFormat (datestring, wxT("%c")) ==0)
     return false;
 
   apr_time_ansi_put (&date, dateTime.GetTicks ());
@@ -337,8 +337,10 @@ CheckDateTime (const wxString & datestring)
 wxString
 FormatDateTime (apr_time_t date, wxString fmt)
 {
+  wxString wxstrtime;
+  
   if (date == 0)
-    return "";
+    return wxstrtime;
 
   apr_time_exp_t exp_time;
   char timestr[80];
@@ -349,18 +351,18 @@ FormatDateTime (apr_time_t date, wxString fmt)
     apr_strftime (timestr, &size, sizeof (timestr),
                   "%x %X", &exp_time);
 
-  /* if that failed, just zero out the string and print nothing */
-  if (apr_err)
-    timestr[0] = '\0';
+  /* if that failed, just leave the string empty */
+  if (!apr_err)
+    wxstrtime = wxString::FromAscii(timestr)  ;
 
-  return timestr;
+  return wxstrtime;
 }
 
 
 wxString 
 BeautifyPath (const wxString & path)
 {
-  int pos = path.Find (":");
+  int pos = path.Find (wxT(":"));
 
   if (pos <= 0)
     return path;
@@ -445,29 +447,46 @@ GetWXLocalConv ()
 #endif
 
 wxString
-Utf8ToLocal (const wxString & srcUtf8)
+Utf8ToLocal (const char* srcUtf8)
 {
 #if wxUSE_UNICODE
   wxString dst (srcUtf8, wxConvUTF8);
 #else
-  wxString dst (srcUtf8.wc_str (wxConvUTF8), *GetWXLocalConv ());
+  wxString dst (wxConvUTF8.cMB2WC(srcUtf8), *GetWXLocalConv ());
 #endif
 
   return dst;
 }
 
 wxString
+Utf8ToLocal (const std::string& srcUtf8)
+{
+  return Utf8ToLocal(srcUtf8.c_str());
+}
+
+std::string
 LocalToUtf8 (const wxString & srcLocal)
 {
 #if wxUSE_UNICODE
-  wxString dst (srcLocal.mb_str (wxConvUTF8));
+  std::string dst (srcLocal.mb_str (wxConvUTF8));
 #else
-  wxString dst (srcLocal.wc_str (*GetWXLocalConv ()), wxConvUTF8);
+  wxString wxdst (srcLocal.wc_str (*GetWXLocalConv ()), wxConvUTF8);
+  std::string dst (wxdst.mb_str ());
 #endif
 
   return dst;
 }
 
+void
+LocalToUtf8 (const wxString & srcLocal, std::string & dstUtf8)
+{
+#if wxUSE_UNICODE
+  dstUtf8 = srcLocal.mb_str (wxConvUTF8);
+#else
+  wxString wxdst (srcLocal.wc_str (*GetWXLocalConv ()), wxConvUTF8);
+  dstUtf8 = wxdst.mb_str ();
+#endif
+}
 
 void
 AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
@@ -482,7 +501,7 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
       // We don't want verbs on directories, even though they exist
       bool isADirectory = status->entry ().kind () == svn_node_dir;
       if (!isADirectory)
-        verbList.InitFromDocument ( status->path (), isADirectory );
+        verbList.InitFromDocument (Utf8ToLocal (status->path ()), isADirectory );
 
       if (verbList.GetCount () == 0)
         return;
@@ -497,7 +516,9 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
         wxMenuItem *pItem;
         // TODO: Convert verb names to unicode on the fly if needed (or make
         // verblist follow wxWindows' unicode setting)
-        pItem = new wxMenuItem (menu, ID_Verb_Min + i, verbList.GetName (i));
+        // TODO: Note: I think verbList.GetName is a Windows code-paged char *, not UTF 8, so don't use Utf8ToLocal like elsewhere
+        // Someone will need to put the correct mappings in eventually
+        pItem = new wxMenuItem (menu, ID_Verb_Min + i, wxString::FromAscii (verbList.GetName (i)));
         //pItem->SetBitmap (wxBITMAP (?))
         menu->Append (pItem);
       }

@@ -25,9 +25,10 @@
 #include "svn_version.h"
 #include "version.hpp"
 #include "res/bitmaps/logo.xpm"
+#include "utils.hpp"
 
 AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
-  : wxDialog (parent, -1, "", wxDefaultPosition)
+  : wxDialog (parent, -1, wxEmptyString, wxDefaultPosition)
 {
   wxString title;
   title.Printf (_("About %s"), APPLICATION_NAME);
@@ -35,7 +36,7 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
 
   std::vector<std::string> schemasVector =
     svn::Url::supportedSchemas ();
-  wxString schemasStr ("");
+  wxString schemasStr;
   std::vector<std::string>::const_iterator it;
   bool first = true;
   for (it = schemasVector.begin (); it != schemasVector.end (); it++)
@@ -43,10 +44,10 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
     if (first)
       first = false;
     else
-      schemasStr += "\n";
+      schemasStr += wxT("\n");
     std::string schema = *it;
-    schemasStr += "- ";
-    schemasStr += schema.c_str ();
+    schemasStr += wxT("- ");
+    schemasStr += Utf8ToLocal(schema);
   }
     
 
@@ -58,9 +59,14 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
                   RAPIDSVN_VER_MINOR, 
                   RAPIDSVN_VER_MICRO);
 
+  // TODO: Make these two constants in version.hpp translatable and wxT()'ed respectively.
+  // Until then use the kludge of pretending they're UTF8 to save some silly looking ifdef's
+  wxString strCopyrightMessage (Utf8ToLocal (RAPIDSVN_COPYRIGHT));
+  wxString strVerMilestone (Utf8ToLocal (RAPIDSVN_VER_MILESTONE));
+  
   wxString milestone;
   milestone.Printf (_("Milestone: %s"), 
-                    RAPIDSVN_VER_MILESTONE);
+                    strVerMilestone.c_str ());
 
   wxString subversion;
   subversion.Printf (_("Subversion %d.%d.%d"),
@@ -69,34 +75,34 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
                      SVN_VER_MICRO);
 
   wxString wx;
-  wx.Printf ("wxWindows %d.%d.%d",
+  wx.Printf (_("wxWindows %d.%d.%d"),
              wxMAJOR_VERSION, 
              wxMINOR_VERSION, 
              wxRELEASE_NUMBER);
   
   wxString copy;
-  copy.Printf ("%s\n" // version
+  copy.Printf (wxT("%s\n" // version
                "%s\n" // milestone
                "\n%s\n\n" // copyright
                "%s\n" // for more information
-               "http://rapidsvn.tigris.org",
+               "http://rapidsvn.tigris.org"),
                version.c_str (),
                milestone.c_str (),
-               RAPIDSVN_COPYRIGHT,
+               strCopyrightMessage.c_str (),
                _("For more information see:"));
 
   wxString built;
-  built.Printf ("%s\n" // built with
+  built.Printf (wxT("%s\n" // built with
                 "%s\n" // subversion
                 "\n"
-                "%s", // wxwindows
+                "%s"), // wxwindows
                 _("Built with:"),
                 subversion.c_str (),
                 wx.c_str ());
 
   wxString schemas;
-  schemas.Printf ("%s\n" // "supported url schemas"
-                  "%s", // list of schemas
+  schemas.Printf (wxT("%s\n" // "supported url schemas"
+                  "%s"), // list of schemas
                   _("Supported URL schemas: "),
                   schemasStr.c_str ());
 

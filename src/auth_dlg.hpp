@@ -22,16 +22,16 @@ public:
   static const int HIDE_USERNAME;
 
   AuthDlg (wxWindow * parent, 
-           const char * username = "", 
-           const char * password = "",
+           const wxString & username = wxEmptyString, 
+           const wxString & password = wxEmptyString,
            int flags = 0);
 
   virtual ~AuthDlg ();
 
-  const char * 
+  const wxString & 
   GetUsername () const;
 
-  const char *
+  const wxString &
   GetPassword () const;
 
 private:

@@ -48,7 +48,7 @@ public:
    *
    * @return informational string
    */
-  const char *
+  const wxString &
   info () const;
 
 private:

@@ -23,11 +23,14 @@
 #include "config.hpp"
 #include "tracer.hpp"
 #include "rapidsvn_app.hpp"
+#include "utils.hpp"
 
 // subversion api
 #include "svn_wc.h"
 
-static const char *
+//TODO: This isn't actually used, and an exact copy lives in listener.cpp which is used
+// I suspect we should get rid of one, but I'm not sure which at the  moment...
+static const wxChar *
 ACTION_NAMES [] =
 {
   _("Add"),           // svn_wc_notify_add,
@@ -287,7 +290,7 @@ Action::Prepare ()
 
   if (result)
   {
-    wxSetWorkingDirectory (m->path.c_str ());
+    wxSetWorkingDirectory (Utf8ToLocal(m->path.c_str ()));
   }
 
   return result;
@@ -299,14 +302,14 @@ Action::GetTarget ()
   return m->targets.target ();
 }
 
-const char * 
+const wxString & 
 Action::GetName () const
 {
-  return m->name.c_str ();
+  return m->name;
 }
 
 void
-Action::SetName (const char * name)
+Action::SetName (const wxString & name)
 {
   m->name = name;
 }
@@ -348,18 +351,19 @@ Action::GetPathAsTempFile (const svn::Path & path,
   if (revision.kind () == revision.HEAD)
     revStr = _("HEAD");
   else
-    revStr.Printf ("%" SVN_REVNUM_T_FMT, revision.revnum ());
+    revStr.Printf (wxT("%" SVN_REVNUM_T_FMT), revision.revnum ());
 
-  wxString msg;
+  wxString msg, wxpath (Utf8ToLocal (path.c_str ()));
   msg.Printf (_("Get file %s rev. %s"),
-              path.c_str (), revStr.c_str ());
+              wxpath.c_str (), revStr.c_str ());
   Trace (msg);
 
   svn::Path dstPath ("");
   client.get (dstPath, path, revision);
   
   // Remember this temporary file so we can delete it when the application exits
-  ::wxGetApp ().OptionallyRegisterTempFile (dstPath.c_str ());
+  ::wxGetApp ().OptionallyRegisterTempFile (
+      Utf8ToLocal (dstPath.c_str ()));
   
   return dstPath;
 }

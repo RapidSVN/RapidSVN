@@ -37,7 +37,7 @@ public:
     wxTextCtrl* msg;
     {
       wxTextValidator val (wxFILTER_NONE, &message);
-      msg = new wxTextCtrl (window, -1, "", wxDefaultPosition, 
+      msg = new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition, 
                             msgSize, wxTE_MULTILINE, val);
     }
     wxCheckBox * checkRecursive = NULL;
@@ -106,7 +106,7 @@ CommitDlg::~CommitDlg ()
   delete m;
 }
 
-const char *
+const wxString &
 CommitDlg::GetMessage () const
 {
   return m->message;

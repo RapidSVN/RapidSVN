@@ -58,7 +58,7 @@ public:
       wxStaticBoxSizer * sizer = 
         new wxStaticBoxSizer (box, wxHORIZONTAL);
       wxTextValidator val (wxFILTER_NONE, &data.url);
-      m_textUrl = new wxTextCtrl (window, ID_URL, "",
+      m_textUrl = new wxTextCtrl (window, ID_URL, wxEmptyString,
                                   wxDefaultPosition, 
                                   wxDefaultSize, 0, val);
       sizer->Add (m_textUrl, 1, wxALL | wxEXPAND, 5);
@@ -72,7 +72,7 @@ public:
       wxStaticBoxSizer *revSizer = 
         new wxStaticBoxSizer (box, wxHORIZONTAL);
       wxTextValidator val (wxFILTER_NUMERIC, &data.revision);
-      m_textRevision = new wxTextCtrl (window, ID_REVISION, "",
+      m_textRevision = new wxTextCtrl (window, ID_REVISION, wxEmptyString,
                                        wxDefaultPosition, 
                                        wxDefaultSize, 0, val);
       revSizer->Add (m_textRevision, 1, 
@@ -140,7 +140,9 @@ public:
     }
     if (ok && withUrl ())
     {
-      ok = svn::Url::isValid(m_textUrl->GetValue ());
+      std::string UrlUtf8;
+      LocalToUtf8 (m_textUrl->GetValue (), UrlUtf8);
+      ok = svn::Url::isValid (UrlUtf8.c_str ());
     }
 
     m_buttonOk->Enable (ok);
@@ -176,7 +178,7 @@ const int UpdateDlg::WITH_URL = 1;
 const int UpdateDlg::WITHOUT_RECURSIVE = 2;
 const int UpdateDlg::WITHOUT_REVISION = 4;
 
-UpdateDlg::UpdateDlg (wxWindow* parent, const char * title, int flags, 
+UpdateDlg::UpdateDlg (wxWindow* parent, const wxString & title, int flags, 
                       bool recursive)
   : wxDialog(parent, -1, title,
              wxDefaultPosition, wxDefaultSize,

@@ -24,6 +24,7 @@
 // app
 #include "delete_action.hpp"
 #include "delete_dlg.hpp"
+#include "utils.hpp"
 
 DeleteAction::DeleteAction (wxWindow * parent) 
   : Action (parent, _("Delete"), GetBaseFlags ())
@@ -63,27 +64,28 @@ DeleteAction::Perform ()
     svn::Path path (*it);
     const char * cpath = path.c_str ();
     svn::Status status (client.singleStatus (cpath));
+    wxString wxpath = Utf8ToLocal(cpath);
 
     // if the file is versioned then it will be
     // handled by subversion
     if (status.isVersioned ())
       client.remove (path, m_force);
-    else if (wxDirExists (cpath))
+    else if (wxDirExists (wxpath))
     {
       // we dont want to delete unversioned directories...
       wxString msg;
       msg.Printf (_("Skipping unversioned directory: %s"),
-                  cpath);
+                  wxpath.c_str ());
       Trace (msg);
     }
-    else if (wxFileExists (cpath))
+    else if (wxFileExists (wxpath))
     {
       wxString msg;
       msg.Printf (_("Deleting unversioned file: %s"),
-                  cpath);
+                  wxpath.c_str ());
       Trace (msg);
 
-      wxRemoveFile (cpath);
+      wxRemoveFile (wxpath);
     }
   }
 

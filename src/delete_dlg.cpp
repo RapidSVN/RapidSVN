@@ -35,7 +35,7 @@ public:
     topSizer->Add (label, 0, wxALL, 5);
 
     // The "force" check box:
-    wxCheckBox* check = new wxCheckBox(window, -1, "Force removal",
+    wxCheckBox* check = new wxCheckBox(window, -1, _("Force removal"),
       wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&force));
     

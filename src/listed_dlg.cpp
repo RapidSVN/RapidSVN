@@ -40,10 +40,10 @@ enum
   EDIT_EDIT
 };
 
-static const char * LABEL_EDIT=_("&Edit...");
-static const char * LABEL_VIEW=_("&View...");
-static const char * LABEL_NEW=_("&New...");
-static const char * LABEL_DELETE=_("&Delete...");
+static const wxChar * LABEL_EDIT=_("&Edit...");
+static const wxChar * LABEL_VIEW=_("&View...");
+static const wxChar * LABEL_NEW=_("&New...");
+static const wxChar * LABEL_DELETE=_("&Delete...");
 
 class ListCtrl : public wxListView
 {
@@ -162,7 +162,7 @@ public:
     wxTextCtrl * textName = new wxTextCtrl (this, ID_Name);
 
     wxTextCtrl * textValue = 
-      new wxTextCtrl (this, ID_Value, "", wxDefaultPosition, 
+      new wxTextCtrl (this, ID_Value, wxEmptyString, wxDefaultPosition, 
                       wxSize (300, 100), wxTE_MULTILINE);
 
     wxFlexGridSizer * textSizer = new wxFlexGridSizer (2, 5, 5);
@@ -196,8 +196,6 @@ public:
     m_labelName = labelName;
     m_labelValue = labelValue;
 
-    m_addTitle = "";
-    m_editTitle = "";
     m_mode = EDIT_NEW;
   }
 
@@ -271,8 +269,6 @@ private:
   wxStaticText * m_labelName;
   wxStaticText * m_labelValue;
   wxButton * m_buttonOk;
-  wxString m_addTitle;
-  wxString m_editTitle;
   int m_mode;
 
   void
@@ -319,7 +315,7 @@ public:
   {
     // create controls
     wxStaticBoxSizer *boxSizer = new wxStaticBoxSizer (
-      box = new wxStaticBox (wnd, -1, ""), 
+      box = new wxStaticBox (wnd, -1, wxEmptyString), 
       wxHORIZONTAL);
 
     listCtrl = new ListCtrl (wnd);
@@ -407,7 +403,7 @@ public:
   void
   Edit (int mode)
   {
-    wxString name (""), value (""), title ("");
+    wxString name, value, title;
 
     if (mode != EDIT_EDIT)
       title = addTitle;

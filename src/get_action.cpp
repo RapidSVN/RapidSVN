@@ -40,8 +40,8 @@ GetAction::Perform ()
 {
   svn::Client client (GetContext ());
 
-  wxSetWorkingDirectory (GetPath ().c_str ());
-  client.update (m_data.path.c_str (),
+  wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
+  client.update (svn::Path (LocalToUtf8 (m_data.path)),
                  m_data.revision,
                  false);
 

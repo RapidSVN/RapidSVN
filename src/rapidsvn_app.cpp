@@ -33,8 +33,8 @@ bool RapidSvnApp::OnInit ()
   SetAppName (APPLICATION_NAME);
 
   m_locale.Init ();
-  m_locale.AddCatalogLookupPathPrefix ("locale");
-  m_locale.AddCatalog ("rapidsvn");
+  m_locale.AddCatalogLookupPathPrefix (wxT("locale"));
+  m_locale.AddCatalog (wxT("rapidsvn"));
 
   RapidSvnFrame * frame = new RapidSvnFrame (APPLICATION_NAME, m_locale);
   frame->Show (TRUE);
@@ -56,14 +56,13 @@ RapidSvnApp::OnExit ()
 
 
 void
-RapidSvnApp::OptionallyRegisterTempFile (const char* filename)
+RapidSvnApp::OptionallyRegisterTempFile (const wxString & filename)
 {
   Preferences prefs;
   
   if (prefs.purgeTempFiles)
   {
-    wxString str (filename);
-    m_TempFiles.Add(str);
+    m_TempFiles.Add(filename);
   }
   else
   {

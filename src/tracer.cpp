@@ -28,7 +28,7 @@ void
 TextCtrlTracer::Trace (const wxString & str)
 {
   wxMutexGuiEnter ();
-  m_txtCtrl->AppendText (str + "\n");
+  m_txtCtrl->AppendText (str + wxT("\n"));
   wxMutexGuiLeave ();
 }
 
@@ -60,7 +60,7 @@ ErrorTracer::~ErrorTracer ()
 void
 ErrorTracer::Trace (const wxString & str)
 {
-  m_msgs += str + "\n";
+  m_msgs += str + wxT("\n");
 }
 
 void
@@ -78,7 +78,7 @@ StringTracer::StringTracer (wxString & str)
 void
 StringTracer::Trace (const wxString & str)
 {
-  m_msgs += str + "\n";
+  m_msgs += str + wxT("\n");
 }
 /* -----------------------------------------------------------------
  * local variables:

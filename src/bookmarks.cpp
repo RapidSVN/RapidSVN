@@ -68,15 +68,15 @@ public:
    * @param name full path/url of the bookmark
    */
   void 
-  AddBookmark (const char * name_)
+  AddBookmark (wxString name)
   {
-    wxString name (name_);
-
     TrimString (name);
 
-    if (!svn::Url::isValid (name_))
+    std::string nameUtf8;
+    LocalToUtf8(name, nameUtf8);
+    if (!svn::Url::isValid (nameUtf8.c_str()))
     {
-      wxFileName filename (name_);
+      wxFileName filename (name);
       name = filename.GetFullPath (wxPATH_NATIVE);
     }
 
@@ -91,7 +91,7 @@ public:
   }
 
   bool
-  RemoveBookmark (const char * path)
+  RemoveBookmark (const wxString & path)
   {
     int index = bookmarks.Index (path);
 
@@ -150,7 +150,7 @@ Bookmarks::~Bookmarks ()
 }
 
 void 
-Bookmarks::AddBookmark (const char * name)
+Bookmarks::AddBookmark (const wxString & name)
 {
   m->AddBookmark (name);
 }
@@ -167,11 +167,10 @@ Bookmarks::Clear ()
   m->Clear ();
 }
 
-const char *
+const wxString &
 Bookmarks::GetBookmark (const size_t index) const
 {
-  wxString bookmark = m->bookmarks[index];
-  return bookmark.c_str ();
+  return m->bookmarks[index];
 }
 
 svn::Context *
@@ -185,7 +184,7 @@ Bookmarks::GetContext (const size_t index)
 }
 
 svn::Context *
-Bookmarks::GetContext (const char * path)
+Bookmarks::GetContext (const wxString & path)
 {
   int index = m->bookmarks.Index (path);
 
@@ -196,7 +195,7 @@ Bookmarks::GetContext (const char * path)
 }
 
 bool  
-Bookmarks::RemoveBookmark (const char * path)
+Bookmarks::RemoveBookmark (const wxString & path)
 {
   return m->RemoveBookmark (path);
 }

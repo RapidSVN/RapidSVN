@@ -43,7 +43,7 @@ public:
         new wxStaticText (window, -1, _("User"));
 
       textUser = new wxTextCtrl (
-        window, -1, "", wxDefaultPosition, wxDefaultSize, 0,
+        window, -1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0,
         wxTextValidator (wxFILTER_NONE, &Username));
     }
 
@@ -51,7 +51,7 @@ public:
       new wxStaticText (window, -1, _("Password"));
 
     wxTextCtrl* textPassword = new wxTextCtrl (
-      window, -1, "", wxPoint(-1,-1), 
+      window, -1, wxEmptyString, wxPoint(-1,-1), 
       wxDefaultSize, wxTE_PASSWORD, 
       wxTextValidator (wxFILTER_NONE, &Password));
 
@@ -99,8 +99,9 @@ public:
 
 const int AuthDlg::HIDE_USERNAME = 1;
 
-AuthDlg::AuthDlg (wxWindow* parent, const char * username,
-                  const char * password, int flags)
+// TODO: username & password are not used - why not?
+AuthDlg::AuthDlg (wxWindow* parent, const wxString & username,
+                  const wxString & password, int flags)
 : wxDialog (parent, -1, _("Authentication"),
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
@@ -114,16 +115,16 @@ AuthDlg::~AuthDlg ()
   delete m;
 }
 
-const char * 
+const wxString & 
 AuthDlg::GetUsername () const
 {
-  return m->Username.c_str ();
+  return m->Username;
 }
 
-const char *
+const wxString &
 AuthDlg::GetPassword () const
 {
-  return m->Password.c_str ();
+  return m->Password;
 }
 
 /* -----------------------------------------------------------------

@@ -17,7 +17,7 @@
 // Subversion api
 #include "svn_client.h"
 #include "svn_sorts.h"
-#include "svn_utf.h"
+//#include "svn_utf.h"
 
 // svncpp
 #include "svncpp/client.hpp"
@@ -134,25 +134,19 @@ namespace svn
     {
       const svn_sort__item_t *item;
       const char *filePath;
-      svn_error_t *err;
       svn_wc_status_t *status = NULL;
 
       item = &APR_ARRAY_IDX (statusarray, i, const svn_sort__item_t);
       status = (svn_wc_status_t *) item->value;
 
-      err =
-        svn_utf_cstring_from_utf8 (&filePath, (const char *) item->key, pool);
-      /* no error handling here yet
-         if (err)
-         svn_handle_error (err, stderr, FALSE);
-      */
+      filePath = (const char *) item->key;
 
       entries.push_back (Status (filePath, status));
-
     }
+    
     return entries;
   }
-
+  
   static Status 
   dirEntryToStatus (const char * path, const DirEntry & dirEntry)
   {
@@ -216,7 +210,6 @@ namespace svn
     return entries;
   }
 
-
   StatusEntries 
   Client::status (const char * path,
                   const bool descend,
@@ -231,7 +224,7 @@ namespace svn
       return localStatus (path, descend, get_all, update, 
                           no_ignore, m_context);
   }
-
+  
   static Status
   localSingleStatus (const char * path, Context * context)
   {
@@ -273,9 +266,7 @@ namespace svn
 
     item = &APR_ARRAY_IDX (statusarray, 0, const svn_sort__item_t);
     status = (svn_wc_status_t *) item->value;
-
-    //TODO svn_error_t *err =
-    svn_utf_cstring_from_utf8 (&filePath, (const char *) item->key, pool);
+    filePath = (const char *) item->key;
     
     return Status (filePath, status);
   };

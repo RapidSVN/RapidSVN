@@ -13,7 +13,7 @@
 
 // subversion api
 #include "svn_client.h"
-#include "svn_utf.h"
+//#include "svn_utf.h"
 
 // svncpp
 #include "svncpp/exception.hpp"
@@ -67,10 +67,10 @@ namespace svn
       svn_client_proplist_item_t *item = 
         ((svn_client_proplist_item_t **)props->elts)[j];
 
-      const char *node_name_native;
+/*      const char *node_name_native;
       svn_utf_cstring_from_utf8_stringbuf (&node_name_native,
                                            item->node_name,
-                                           pool );
+                                           pool );*/
 
       apr_hash_index_t *hi;
 
@@ -78,13 +78,13 @@ namespace svn
            hi = apr_hash_next (hi))
       {
         const void *key;
-        const char *key_native;
+//        const char *key_native;
         void *val;
 
         apr_hash_this (hi, &key, NULL, &val);
-        svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
+//        svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
 
-        m_entries.push_back (PropertyEntry (key_native, getValue (key_native).c_str ()));
+        m_entries.push_back (PropertyEntry ((const char *)key, getValue ((const char *)key).c_str ()));
       } 
     }
   }
@@ -123,7 +123,7 @@ namespace svn
        UTF8, so convert to the native format. */
     //TODO we are doing this now all the time
     //if (is_svn_prop)
-    svn_utf_string_from_utf8 (&propval, propval, pool);
+//    svn_utf_string_from_utf8 (&propval, propval, pool);
 
     return propval->data;
   }
@@ -136,11 +136,11 @@ namespace svn
     const svn_string_t * propval 
       = svn_string_create ((const char *) value, pool);
 
-    const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
+//    const char *pname_utf8;
+  //  svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
 
     svn_error_t * error = 
-      svn_client_propset (pname_utf8, propval, m_path.c_str (),
+      svn_client_propset (name, propval, m_path.c_str (),
                           false, pool);
     if(error != NULL)
       throw ClientException (error);
@@ -151,11 +151,11 @@ namespace svn
   {
     Pool pool;
 
-    const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
+//    const char *pname_utf8;
+  //  svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
 
     svn_error_t * error = 
-      error = svn_client_propset (pname_utf8, 
+      error = svn_client_propset (name, 
                                   NULL, // value = NULL
                                   m_path.c_str (),
                                   false, //dont recurse

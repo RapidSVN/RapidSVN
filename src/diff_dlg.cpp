@@ -162,24 +162,24 @@ public:
     {
       mRadioUseDate->SetValue (true);
       mTextDate->SetValue (
-        FormatDateTime (revision.date (), "%c"));
-      mTextRevision->SetValue ("");
+        FormatDateTime (revision.date (), wxT("%c")));
+      mTextRevision->SetValue (wxEmptyString);
       mCheckUseLatest->SetValue (true);
     }
     else
     {
       mRadioUseRevision->SetValue (true);
-      mTextDate->SetValue ("");
+      mTextDate->SetValue (wxEmptyString);
 
       if (revision.kind () == svn_opt_revision_head)
       {
-        mTextRevision->SetValue ("");
+        mTextRevision->SetValue (wxEmptyString);
         mCheckUseLatest->SetValue (true);
       }
       else
       {
         wxString value;
-        value.Printf ("%" SVN_REVNUM_T_FMT, revision.revnum ());
+        value.Printf (wxT("%" SVN_REVNUM_T_FMT), revision.revnum ());
         mTextRevision->SetValue (value);
         mCheckUseLatest->SetValue (false);
       }
@@ -250,7 +250,7 @@ private:
     mRadioUseRevision = new wxRadioButton (
       this, ID_UseRevision, _("Revision:"));
     mRadioUseRevision->SetValue (true);
-    mTextRevision = new wxTextCtrl (this, ID_Revision, "");
+    mTextRevision = new wxTextCtrl (this, ID_Revision, wxEmptyString);
     mCheckUseLatest = new wxCheckBox (
       this, ID_UseLatest, _("Use latest"));
     mCheckUseLatest->SetValue (true);
@@ -265,7 +265,7 @@ private:
     // second row: date
     mRadioUseDate = new wxRadioButton (
       this, ID_UseDate, _("Date:"));
-    mTextDate = new wxTextCtrl (this, ID_Date, "");
+    mTextDate = new wxTextCtrl (this, ID_Date, wxEmptyString);
 
     gridSizer->Add (mRadioUseDate);
     gridSizer->Add (mTextDate);
@@ -274,7 +274,7 @@ private:
     // third row: url
     mCheckUseUrl = new wxCheckBox (
       this, ID_UseUrl, _("Use Url/Path:"));
-    mTextUrl = new wxTextCtrl (this, ID_Url, "");
+    mTextUrl = new wxTextCtrl (this, ID_Url, wxEmptyString);
     mButtonBrowse = CreateEllipsisButton (this, ID_Browse);
     gridSizer->Add (mCheckUseUrl);
     gridSizer->Add (mTextUrl, 0, wxEXPAND);
@@ -505,7 +505,7 @@ private:
         this, -1, _("Compare:"));
 
       mComboCmpType = new wxComboBox (
-        this, ID_CompareType, "", wxDefaultPosition, wxDefaultSize, 
+        this, ID_CompareType, wxEmptyString, wxDefaultPosition, wxDefaultSize, 
         WXSIZEOF (COMPARE_TYPE_LABELS), COMPARE_TYPE_LABELS, 
         wxCB_READONLY);
 

@@ -39,7 +39,7 @@ public:
    * @param recursive default flag for the "recursive" check
    */
   UpdateDlg (wxWindow* parent, 
-             const char * title,
+             const wxString & title,
              int flags = 0,
              bool recursive = true);
 

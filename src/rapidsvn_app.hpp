@@ -20,7 +20,7 @@
 class RapidSvnApp:public wxApp
 {
 public:
-  void OptionallyRegisterTempFile (const char* filename);
+  void OptionallyRegisterTempFile (const wxString & filename);
   void OptionallyPurgeTempFiles ();
   
 protected:

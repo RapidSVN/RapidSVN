@@ -20,6 +20,7 @@
 // app
 #include "import_dlg.hpp"
 #include "import_action.hpp"
+#include "utils.hpp"
 
 ImportAction::ImportAction (wxWindow * parent)
   :Action (parent, _("Import"), GetBaseFlags ())
@@ -50,8 +51,11 @@ bool
 ImportAction::Perform ()
 {
   svn::Client client (GetContext ());
-  client.import (m_data.Path.c_str (), m_data.Repository.c_str (),
-                 m_data.LogMessage.c_str(), m_data.Recursive);
+  std::string PathUtf8 (LocalToUtf8(m_data.Path));
+  std::string RepositoryUtf8 (LocalToUtf8(m_data.Repository));
+  std::string LogMessageUtf8 (LocalToUtf8(m_data.LogMessage));
+  client.import (svn::Path (PathUtf8), RepositoryUtf8.c_str (),
+                 LogMessageUtf8.c_str (), m_data.Recursive);
 
   return true;
 }

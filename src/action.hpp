@@ -261,10 +261,10 @@ public:
 
   /** set the name of the action */
   void
-  SetName (const char * name);
+  SetName (const wxString & name);
 
   /** returns the name of the action */
-  const char * 
+  const wxString & 
   GetName () const;
 
 

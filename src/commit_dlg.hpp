@@ -35,7 +35,7 @@ public:
   /**
    * @return log message
    */
-  const char * 
+  const wxString &
   GetMessage () const;
 
   /**

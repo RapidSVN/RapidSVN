@@ -130,12 +130,12 @@ MergeDlg::InitializeData ()
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
     
   // Row 1:  
-  wxTextCtrl *Path1 = new wxTextCtrl(this, -1, "",
+  wxTextCtrl *Path1 = new wxTextCtrl(this, -1, wxEmptyString,
     wxDefaultPosition, wxSize(300, -1), 0,
     wxTextValidator(wxFILTER_NONE, &m_data.Path1));
   grid->Add(Path1, 1, wxBOTTOM | wxEXPAND, 10);
   
-  wxTextCtrl *Path1Rev = new wxTextCtrl(this, -1, "",
+  wxTextCtrl *Path1Rev = new wxTextCtrl(this, -1, wxEmptyString,
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NUMERIC, &m_data.Path1Rev));
   grid->Add(Path1Rev, 0, wxLEFT, 20);
@@ -147,12 +147,12 @@ MergeDlg::InitializeData ()
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
 
   // Row 3:  
-  wxTextCtrl *Path2 = new wxTextCtrl(this, -1, "",
+  wxTextCtrl *Path2 = new wxTextCtrl(this, -1, wxEmptyString,
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_data.Path2));
   grid->Add(Path2, 1, wxBOTTOM | wxEXPAND, 10);
 
-  wxTextCtrl *Path2Rev = new wxTextCtrl(this, -1, "",
+  wxTextCtrl *Path2Rev = new wxTextCtrl(this, -1, wxEmptyString,
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NUMERIC, &m_data.Path2Rev));
   grid->Add(Path2Rev, 0, wxLEFT, 20);
@@ -162,11 +162,11 @@ MergeDlg::InitializeData ()
     grid->Add(new wxStaticText(this, -1, _("Destination file")), 0, 0, 5);
   else
     grid->Add(new wxStaticText(this, -1, _("Destination path")), 0, 0, 5);
-  grid->Add(new wxStaticText(this, -1, ""), 0, 
+  grid->Add(new wxStaticText(this, -1, wxEmptyString), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
 
   // Row 5:
-  wxTextCtrl *Destination = new wxTextCtrl(this, -1, "",
+  wxTextCtrl *Destination = new wxTextCtrl(this, -1, wxEmptyString,
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_data.Destination));
   grid->Add(Destination, 1, wxBOTTOM | wxEXPAND, 5);
@@ -181,7 +181,7 @@ MergeDlg::InitializeData ()
     Path2Rev->Disable();
   }
 
-  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, "...", 
+  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, wxT("..."), 
     wxPoint(-1,-1), wxSize(20, -1));
   grid->Add(BrowseButton, 0, wxALL, 5);
 

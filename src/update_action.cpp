@@ -66,7 +66,7 @@ UpdateAction::Perform ()
 
   const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
-  wxSetWorkingDirectory (GetPath ().c_str ());
+  wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
   svn::Client client (GetContext ());
   for (it = v.begin(); it != v.end(); it++)
   {

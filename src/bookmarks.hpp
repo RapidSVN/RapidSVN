@@ -39,7 +39,7 @@ public:
    * already exists nothing happens
    */
   void
-  AddBookmark (const char * name);
+  AddBookmark (const wxString & name);
 
   /**
    * return the number of bookmarks in the
@@ -56,7 +56,7 @@ public:
    * @param index 0 based index
    * @return Bookmark name at this index
    */
-  const char *
+  const wxString &
   GetBookmark (const size_t index) const;
 
   /**
@@ -77,7 +77,7 @@ public:
    * @return authentication context
    */
   svn::Context *
-  GetContext (const char * path);
+  GetContext (const wxString & path);
 
   /**
    * remove all bookmarks
@@ -92,7 +92,7 @@ public:
    * @retval true success
    */
   bool
-  RemoveBookmark (const char * path);
+  RemoveBookmark (const wxString & path);
 
   /**
    * setting whether the authenticaion will

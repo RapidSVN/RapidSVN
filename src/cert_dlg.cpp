@@ -16,6 +16,7 @@
 
 // app
 #include "cert_dlg.hpp"
+#include "utils.hpp"
 
 enum
 {
@@ -33,7 +34,7 @@ END_EVENT_TABLE ()
 typedef struct
 {
   wxUint32 failure;
-  const char * descr;
+  const wxChar * descr;
 } FailureEntry;
 
 static const FailureEntry CERT_FAILURES [] =
@@ -66,7 +67,7 @@ CertDlg::CertDlg (wxWindow * parent,
   wxStaticText * labelTitle = new wxStaticText (
     this, -1, _("There were errors validating the server certificate.\nDo you want to trust this certificate?"));
 
-  wxString failureStr ("");
+  wxString failureStr;
 
   const int count = sizeof (CERT_FAILURES)/sizeof (CERT_FAILURES[0]);
   for (int i=0; i < count; i++)
@@ -74,16 +75,16 @@ CertDlg::CertDlg (wxWindow * parent,
     if ((CERT_FAILURES[i].failure & trustData.failures) != 0)
     {
       failureStr += CERT_FAILURES[i].descr;
-      failureStr += "\n";
+      failureStr += wxT("\n");
     }
   }
 
   wxStaticText * labelFailure = new wxStaticText (
     this, -1, failureStr);
 
-  wxString failBoxLabel;
+  wxString failBoxLabel, tmp (Utf8ToLocal (trustData.realm));
   failBoxLabel.Printf (_("Error validating server certificate for '%s':"),
-                       trustData.realm.c_str ());
+                       tmp.c_str ());
   wxStaticBox * failBox = new wxStaticBox (
     this, -1, failBoxLabel);
   wxStaticBoxSizer * failBoxSizer = 
@@ -94,23 +95,23 @@ CertDlg::CertDlg (wxWindow * parent,
   certSizer->Add (new wxStaticText (
     this, -1, _("Hostname:")));
   certSizer->Add (new wxStaticText (
-    this, -1, trustData.hostname.c_str ()));
+    this, -1, Utf8ToLocal (trustData.hostname.c_str ())));
   certSizer->Add (new wxStaticText (
     this, -1, _("Issue:")));
   certSizer->Add (new wxStaticText (
-    this, -1, trustData.issuerDName.c_str ()));
+    this, -1, Utf8ToLocal (trustData.issuerDName.c_str ())));
   certSizer->Add (new wxStaticText (
     this, -1, _("Valid from:")));
   certSizer->Add (new wxStaticText (
-    this, -1, trustData.validFrom.c_str ()));
+    this, -1, Utf8ToLocal (trustData.validFrom.c_str ())));
   certSizer->Add (new wxStaticText (
     this, -1, _("Valid until:")));
   certSizer->Add (new wxStaticText (
-    this, -1, trustData.validUntil.c_str ()));
+    this, -1, Utf8ToLocal (trustData.validUntil.c_str ())));
   certSizer->Add (new wxStaticText (
     this, -1, _("Fingerprint:")));
   certSizer->Add (new wxStaticText (
-    this, -1, trustData.fingerprint.c_str ()));
+    this, -1, Utf8ToLocal (trustData.fingerprint.c_str ())));
 
   wxStaticBox * certBox = new wxStaticBox (
     this, -1, _("Certificate Information:"));

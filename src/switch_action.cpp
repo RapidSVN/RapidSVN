@@ -37,12 +37,12 @@ SwitchAction::Prepare ()
   }
 
   // first try to get the URL for the target
-  wxString url = "";
+  wxString url;
   {
     svn::Path path = GetTarget ();
     svn::Client client (GetContext ());
     svn::Status status (client.singleStatus (path.c_str ()));
-    url = status.entry ().url ();
+    url = Utf8ToLocal (status.entry ().url ());
   }
 
   // create flags for the dialog
@@ -66,7 +66,7 @@ bool
 SwitchAction::Perform ()
 {
   svn::Path path = GetTarget ();
-  const char * url = m_data.url.c_str ();
+  std::string urlUtf8 (LocalToUtf8 (m_data.url));
   svn::Revision revision (svn::Revision::HEAD);
 
   if (!m_data.useLatest)
@@ -78,7 +78,7 @@ SwitchAction::Perform ()
   }
 
   svn::Client client (GetContext ());
-  client.doSwitch (path, url, revision,
+  client.doSwitch (path, urlUtf8.c_str (), revision,
                    m_data.recursive);
 
   return true;

@@ -20,13 +20,14 @@
 // app
 #include "move_action.hpp"
 #include "destination_dlg.hpp"
+#include "utils.hpp"
 
 MoveAction::MoveAction (wxWindow * parent, 
                                 int kind) 
- : Action (parent, "", GetBaseFlags ()),
+ : Action (parent, wxEmptyString, GetBaseFlags ()),
    m_kind (kind)
 {
-  const char * name;
+  wxString name;
   switch (kind)
   {
   case MOVE_MOVE:
@@ -39,7 +40,6 @@ MoveAction::MoveAction (wxWindow * parent,
     name = _("Rename");
     break;
   default:
-    name = "";
     break;
   }
 
@@ -69,7 +69,7 @@ MoveAction::Prepare ()
   }
 
   // create description for the dialog
-  const char * descr;
+  wxString descr;
   switch (m_kind)
   {
   case MOVE_COPY:
@@ -103,7 +103,9 @@ MoveAction::Perform ()
   svn::Client client (GetContext ());
 
   svn::Path srcPath = GetTarget ();
-  svn::Path destPath (m_destination.c_str ());
+  std::string destUtf8;
+  LocalToUtf8 (m_destination, destUtf8);
+  svn::Path destPath (destUtf8);
   svn::Revision unusedRevision;
 
   switch (m_kind)
@@ -122,7 +124,7 @@ MoveAction::Perform ()
       std::string dirpath;
       srcPath.split (dirpath, basename);
       destPath = dirpath.c_str ();
-      destPath.addComponent (m_destination.c_str ());
+      destPath.addComponent (destUtf8);
 
       client.move (srcPath, unusedRevision, destPath, m_force);
     }
