@@ -47,6 +47,9 @@
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
 
+// List config keys here, to avoid duplicating literal text:
+const static char* szBrowserPathKey = "/MainFrame/BrowserPath";
+
 #define wxTraceMisc wxT("tracemisc")
 
 // define this to 1 to use wxToolBarSimple instead of the native one
@@ -140,11 +143,13 @@ wxFrame ((wxFrame *) NULL, -1, title)
                                  pool,
                                  LIST_CTRL, wxDefaultPosition, wxDefaultSize);
 
+  // Set the current browse position:
+  wxString BrowsePosition = pConfig->Read(szBrowserPathKey, wxDirDialogDefaultFolderStr);
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter,
                                         pool,
                                         -1,
-                                        _T("/home/teo/w/rwc-svn"),
+                                        BrowsePosition,
                                         wxDefaultPosition,
                                         wxDefaultSize,
                                         wxDIRCTRL_DIR_ONLY,
@@ -232,7 +237,10 @@ VSvnFrame::~VSvnFrame ()
   pConfig->Write ("/MainFrame/horizsplitsashpos",
                   (long) m_horiz_splitter->GetSashPosition ());
 
-
+  
+  // Save the current browse position:
+  pConfig->Write(szBrowserPathKey, m_folder_browser->GetPath()); 
+  
   // Save the browse combo contents
 
   wxString key;
