@@ -174,10 +174,18 @@ public:
   const char * 
   GetName () const;
 
-protected:
+
+  /**
+   * output message with the tracer
+   */
   void Trace (const wxString & msg);
 
+
+  /**
+   * output error message with the tracer
+   */
   void TraceError (const wxString & msg);
+protected:
 
   /**
    * thread-save method to post an event. The event will
