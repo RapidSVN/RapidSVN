@@ -1,0 +1,37 @@
+rapidsvn (0.1.3.pre2.6331-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Timothee Besset <ttimo@ttimo.net>  Tue,  1 Jul 2003 10:35:48 +0200
+
+rapidsvn (0.1.3.6027-1) unstable; urgency=low
+
+  * New upstream release - 1.3
+
+ -- Timothee Besset <ttimo@ttimo.net>  Fri, 23 May 2003 23:19:38 +0200
+
+rapidsvn (0.1.2.5732-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Timothee Besset <ttimo@ttimo.net>  Fri, 25 Apr 2003 09:08:17 +0200
+
+rapidsvn (0.1.2.5718-1) unstable; urgency=low
+
+  * New upstream release - subversion 0.21
+
+ -- Timothee Besset <ttimo@ttimo.net>  Thu, 24 Apr 2003 09:58:24 +0200
+
+rapidsvn (0.1.2.5561-2) unstable; urgency=low
+
+  * Package reviewed by David Kimdon - misc fixes
+
+ -- Timothee Besset <ttimo@ttimo.net>  Sun,  6 Apr 2003 23:12:53 +0200
+
+rapidsvn (0.1.2.5561-1) unstable; urgency=low
+
+  * Initial Release.
+  * Taken from the svn repository, using repository revision numbers
+
+ -- Timothee Besset <ttimo@ttimo.net>  Sat,  5 Apr 2003 19:22:28 +0200
+
