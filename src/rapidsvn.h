@@ -55,10 +55,11 @@ public:
   void OnSize (wxSizeEvent & event);
 
   // File menu
+  void OnAddProject (wxCommandEvent & event);
+  void OnRemoveProject (wxCommandEvent & event);
   void OnQuit (wxCommandEvent & event);
 
   // View menu
-  void OnBrowse (wxCommandEvent & event);
   void OnPreferences (wxCommandEvent & event);
 
   // Query menu
@@ -86,13 +87,9 @@ public:
   void OnContents (wxCommandEvent & event);
   void OnAbout (wxCommandEvent & event);
 
-  // Combo box on the toolbar
-  void OnCombo (wxCommandEvent & event);
-
   // toolbar administration
   void LayoutChildren ();
   void RecreateToolbar ();
-  void AddBrowseTools ();
   void AddActionTools ();
   void AddInfoTools ();
 
@@ -106,14 +103,15 @@ public:
   // Events from action threads
   void OnActionEvent (wxCommandEvent & event);
 
-  // combobox
-  void InitComboBrowser ();
+  // Folder Browser
+  void InitFolderBrowser ();
+  void AddProject ();
+  void RemoveProject ();
 
   // list control
   void InitFileList ();
 
   // utility functions
-  void BrowseDir ();
 
   void ShowStatus ();
   void ShowLog ();
@@ -156,7 +154,6 @@ private:
   wxTextCtrl *m_log;
   EventTracer *m_logTracer;
 
-  wxComboBox *m_comboBrowse;
   wxToolBar *m_tbar;
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
@@ -181,7 +178,6 @@ enum
   ID_Quit = 1,
   ID_About,
   ID_Refresh,
-  ID_Browse,
   ID_Import,
   ID_Checkout,
   ID_Copy,
@@ -201,6 +197,8 @@ enum
   ID_Mkdir,
   ID_Switch,
   ID_Preferences,
+  ID_AddProject,
+  ID_RemoveProject,
 
   ACTION_EVENT,                 // this one gets sent from the action threads
 

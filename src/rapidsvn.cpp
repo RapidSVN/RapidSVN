@@ -28,7 +28,6 @@
 
 // Toolbars' ids
 #define TOOLBAR_REFRESH  101
-#define TOOLBAR_BROWSE  102
 #define TOOLBAR_ADD   103
 #define TOOLBAR_DEL   104
 #define TOOLBAR_UPDATE  105
@@ -48,7 +47,7 @@
 static const int NUM_ITEMS = 30;
 
 // List config keys here, to avoid duplicating literal text:
-const static char* szBrowserPathKey = "/MainFrame/BrowserPath";
+const static char *szBrowserPathKey = "/MainFrame/BrowserPath";
 
 #define wxTraceMisc wxT("tracemisc")
 
@@ -57,12 +56,13 @@ const static char* szBrowserPathKey = "/MainFrame/BrowserPath";
 
 BEGIN_EVENT_TABLE (VSvnFrame, wxFrame)
 EVT_SIZE (VSvnFrame::OnSize)
+EVT_MENU (ID_AddProject, VSvnFrame::OnAddProject)
+EVT_MENU (ID_RemoveProject, VSvnFrame::OnRemoveProject)
 EVT_MENU (ID_Quit, VSvnFrame::OnQuit)
 EVT_MENU (ID_About, VSvnFrame::OnAbout)
 EVT_MENU (ID_Status, VSvnFrame::OnStatus)
 EVT_MENU (ID_Log, VSvnFrame::OnLog)
 EVT_MENU (ID_Info, VSvnFrame::OnInfo)
-EVT_MENU (ID_Browse, VSvnFrame::OnBrowse)
 EVT_MENU (ID_Checkout, VSvnFrame::OnCheckout)
 EVT_MENU (ID_Import, VSvnFrame::OnImport)
 EVT_MENU (ID_Update, VSvnFrame::OnUpdate)
@@ -80,7 +80,6 @@ EVT_MENU (ID_Preferences, VSvnFrame::OnPreferences)
 EVT_MENU (ACTION_EVENT, VSvnFrame::OnActionEvent)
 EVT_MENU (-1, VSvnFrame::OnToolLeftClick)
 EVT_TOOL_ENTER (ID_TOOLBAR, VSvnFrame::OnToolEnter)
-EVT_COMBOBOX (ID_Combo, VSvnFrame::OnCombo)
 END_EVENT_TABLE ()VSvnFrame::VSvnFrame (const wxString & title):
 wxFrame ((wxFrame *) NULL, -1, title)
 {
@@ -144,7 +143,10 @@ wxFrame ((wxFrame *) NULL, -1, title)
                                  LIST_CTRL, wxDefaultPosition, wxDefaultSize);
 
   // Set the current browse position:
-  wxString BrowsePosition = pConfig->Read(szBrowserPathKey, wxDirDialogDefaultFolderStr);
+  wxString
+    BrowsePosition =
+    pConfig->
+    Read (szBrowserPathKey, wxDirDialogDefaultFolderStr);
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter,
                                         pool,
@@ -153,9 +155,7 @@ wxFrame ((wxFrame *) NULL, -1, title)
                                         wxDefaultPosition,
                                         wxDefaultSize,
                                         wxDIRCTRL_DIR_ONLY,
-                                        _T(""),
-                                        0,
-                                        _T(""));
+                                        _T (""), 0, _T (""));
 
   InitFileList ();
   m_listCtrl->UpdateFileList (m_folder_browser->GetDefaultPath ());
@@ -202,9 +202,9 @@ wxFrame ((wxFrame *) NULL, -1, title)
   m_vert_splitter->SplitVertically (m_folder_browser, m_listCtrl, vpos);
 
   // put the working copy selections in the combo browser
-  InitComboBrowser ();
-  
-  PreferencesDlg::Data.Read(pConfig);
+  InitFolderBrowser ();
+
+  PreferencesDlg::Data.Read (pConfig);
 }
 
 VSvnFrame::~VSvnFrame ()
@@ -237,20 +237,24 @@ VSvnFrame::~VSvnFrame ()
   pConfig->Write ("/MainFrame/horizsplitsashpos",
                   (long) m_horiz_splitter->GetSashPosition ());
 
-  
+
   // Save the current browse position:
-  pConfig->Write(szBrowserPathKey, m_folder_browser->GetPath()); 
-  
-  // Save the browse combo contents
+  pConfig->Write (szBrowserPathKey, m_folder_browser->GetPath ());
+
+  // Save the workbench contents
 
   wxString key;
-  for (x = 0; x < m_comboBrowse->GetCount (); x++)
+  int item;
+  const wxArrayString & workbenchItems =
+    m_folder_browser->GetWorkbenchItems ();
+  const int itemCount = workbenchItems.GetCount ();
+  for (item = 0; item < itemCount; item++)
   {
-    key.Printf (_T ("/MainFrame/wc%d"), x);
-    pConfig->Write (key, m_comboBrowse->GetString (x));
+    key.Printf (_T ("/MainFrame/wc%d"), item);
+    pConfig->Write (key, workbenchItems.Item (item));
   }
 
-  PreferencesDlg::Data.Write(pConfig);
+  PreferencesDlg::Data.Write (pConfig);
 
   apr_pool_destroy (pool);
 }
@@ -262,6 +266,8 @@ VSvnFrame::InitializeMenu ()
   wxMenu *menuFile = new wxMenu;
   wxMenuItem *pItem;
 
+  menuFile->Append (ID_AddProject, "&Add to Workbench...");
+  menuFile->Append (ID_RemoveProject, "&Remove from Workbench...");
   menuFile->AppendSeparator ();
   menuFile->Append (ID_Quit, "E&xit");
 
@@ -269,9 +275,6 @@ VSvnFrame::InitializeMenu ()
   wxMenu *menuView = new wxMenu;
   pItem = new wxMenuItem (menuView, ID_Refresh, _T ("Refresh        F5"));
   pItem->SetBitmap (wxBITMAP (refresh));
-  menuView->Append (pItem);
-
-  pItem = new wxMenuItem (menuView, ID_Browse, _T ("Browse location..."));
   menuView->Append (pItem);
 
   menuView->AppendSeparator ();
@@ -396,6 +399,18 @@ VSvnFrame::InitFileList ()
 }
 
 void
+VSvnFrame::OnAddProject (wxCommandEvent & event)
+{
+  AddProject ();
+}
+
+void
+VSvnFrame::OnRemoveProject (wxCommandEvent & event)
+{
+  RemoveProject ();
+}
+
+void
 VSvnFrame::OnQuit (wxCommandEvent & WXUNUSED (event))
 {
   Close (TRUE);
@@ -411,10 +426,12 @@ VSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 void
 VSvnFrame::OnStatus (wxCommandEvent & WXUNUSED (event))
 {
-  wxString items = m_folder_browser->GetPath () + "\r\n";
-  wxString fullPath;
+  /* doesnt seem to be needed now.
+     wxString items = m_folder_browser->GetPath () + "\r\n";
+     wxString fullPath;
 
-  svn_revnum_t youngest = SVN_INVALID_REVNUM;
+     svn_revnum_t youngest = SVN_INVALID_REVNUM;
+   */
 
   ShowStatus ();
 }
@@ -429,34 +446,6 @@ void
 VSvnFrame::OnLog (wxCommandEvent & WXUNUSED (event))
 {
   ShowLog ();
-}
-
-void
-VSvnFrame::OnBrowse (wxCommandEvent & WXUNUSED (event))
-{
-  BrowseDir ();
-}
-
-void
-VSvnFrame::OnCombo (wxCommandEvent & event)
-{
-  wxFileName fullpath (event.GetString ());
-  wxFileName treepath (wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->
-                       GetPath ());
-
-  // Select tha path only if it is different than the current one
-  // and if it is a valid folder.
-  if (!fullpath.SameAs (treepath) && fullpath.DirExists ())
-  {
-    // If the path is a directory, change the path in the folder browser.
-    // There is no need to call UpdateFileList() as SetPath() will 
-    // trigger a EVT_TREE_SEL_CHANGED message in the fiolder browser.
-
-    wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->SetPath (fullpath.
-                                                              GetFullPath ());
-    wxLogStatus (_T ("Working copy '%s' selected"),
-                 event.GetString ().c_str ());
-  }
 }
 
 void
@@ -588,7 +577,6 @@ VSvnFrame::RecreateToolbar ()
   toolBar = CreateToolBar (style, ID_TOOLBAR);
   toolBar->SetMargins (4, 4);
 
-  AddBrowseTools ();
   AddActionTools ();
   AddInfoTools ();
 
@@ -608,41 +596,6 @@ VSvnFrame::RecreateToolbar ()
   toolBar->Realize ();
 
   toolBar->SetRows (m_toolbar_rows);
-}
-
-void
-VSvnFrame::AddBrowseTools ()
-{
-  wxToolBarBase *toolBar = GetToolBar ();
-
-  // Set toolbar combobox for selecting working copies.
-  // Neither the generic nor Motif native toolbars really support this
-#if (wxUSE_TOOLBAR_NATIVE && !USE_GENERIC_TBAR) && !defined(__WXMOTIF__)
-
-  m_comboBrowse = new wxComboBox (toolBar, ID_Combo, _T (""), wxDefaultPosition, wxSize (180, -1), 0,   // number of strings to initialise the ctrl
-                                  NULL, // an array of string to initialize the ctrl
-                                  wxCB_READONLY);
-  toolBar->AddControl (m_comboBrowse);
-
-#endif // toolbars which don't support controls
-
-  // Set toolbar browse button.
-  toolBar->AddTool (TOOLBAR_BROWSE,
-                    wxBITMAP (browse),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _T ("Browse"), _T ("Browse for working copies"));
-
-  toolBar->AddTool (TOOLBAR_FOLDERUP,
-                    wxBITMAP (folderup),
-                    wxNullBitmap,
-                    FALSE,
-                    -1, -1, (wxObject *) NULL, _T ("Up one level"), _T (""));
-
-  toolBar->AddSeparator ();
 }
 
 void
@@ -770,10 +723,6 @@ VSvnFrame::OnToolLeftClick (wxCommandEvent & event)
     m_listCtrl->UpdateFileList (m_folder_browser->GetPath ());
     break;
 
-  case TOOLBAR_BROWSE:
-    BrowseDir ();
-    break;
-
   case TOOLBAR_STATUS:
     ShowStatus ();
     break;
@@ -826,45 +775,61 @@ VSvnFrame::OnToolLeftClick (wxCommandEvent & event)
 }
 
 void
-VSvnFrame::BrowseDir ()
+VSvnFrame::AddProject ()
 {
-  wxDirDialog dialog (this, "Select a working directory", wxGetHomeDir ());
+  wxDirDialog dialog (this, "Select a directory", wxGetHomeDir ());
 
   if (dialog.ShowModal () == wxID_OK)
   {
-    // add the selected working copy to the browse location combobox
-    m_comboBrowse->Append (dialog.GetPath ());
-    m_comboBrowse->SetValue (dialog.GetPath ());
+    m_folder_browser->AddProject (dialog.GetPath ());
+    m_folder_browser->Refresh ();
 
-    wxLogStatus (_T ("Added working directory '%s'"),
+    wxLogStatus (_T ("Added project to workbench  '%s'"),
                  dialog.GetPath ().c_str ());
   }
 }
 
 void
-VSvnFrame::InitComboBrowser ()
+VSvnFrame::RemoveProject ()
+{
+  wxASSERT (m_folder_browser);
+  wxTreeCtrl *treeCtrl = m_folder_browser->GetTreeCtrl ();
+  wxASSERT (treeCtrl);
+
+  const wxTreeItemId selectionId = treeCtrl->GetSelection ();
+  if (selectionId.IsOk ())
+  {
+    m_folder_browser->RemoveProject (selectionId);
+    m_folder_browser->Refresh ();
+    wxLogStatus (_T ("Removed project from workbench"));
+  }
+}
+
+void
+VSvnFrame::InitFolderBrowser ()
 {
   wxConfigBase *pConfig = wxConfigBase::Get ();
+
+  wxASSERT (m_folder_browser);
 
   int i;
   wxString key;
   wxString val;
-  wxArrayString workbenchItems;
+  wxArrayString & workbenchItems = m_folder_browser->GetWorkbenchItems ();
 
   for (i = 0;; i++)
   {
     key.Printf (_T ("/MainFrame/wc%d"), i);
     if (pConfig->Read (key, &val, _T ("")))
     {
-      m_comboBrowse->Append (val);
-      workbenchItems.Add(val);
+      workbenchItems.Add (val);
     }
-      
+
     else
       break;
   }
 
-  m_folder_browser->SetWorkbenchItems(workbenchItems);
+  m_folder_browser->Refresh ();
 }
 
 void
@@ -1009,18 +974,18 @@ VSvnFrame::ShowLog ()
   apr_array_header_t *targets = m_listCtrl->GetTargets (subpool);
   wxString all;
   svn::Log log;
-  char rev [sizeof(long)*8+1];
+  char rev[sizeof (long) * 8 + 1];
 
   for (int i = 0; i < targets->nelts; i++)
   {
     const char *target = ((const char **) (targets->elts))[i];
 
     log.loadPath (target, -2, 1);
-    if(log.isVersioned ())
+    if (log.isVersioned ())
     {
-      while(log.next ())
+      while (log.next ())
       {
-        sprintf(rev, "%ld", (long) log.revision ()); 
+        sprintf (rev, "%ld", (long) log.revision ());
         all += "--------------------\n";
         all += "Revision: ";
         all += rev;
@@ -1205,8 +1170,8 @@ VSvnFrame::MakeCopy ()
 {
   if (m_listCtrl->GetSelectedItemCount () != 1)
   {
-    wxMessageDialog dlg(this, _T ("You can only copy one file at a time"), 
-                        _T ("Copy error"), wxOK);
+    wxMessageDialog dlg (this, _T ("You can only copy one file at a time"),
+                         _T ("Copy error"), wxOK);
     dlg.ShowModal ();
     return;
   }
@@ -1226,7 +1191,7 @@ VSvnFrame::MakeCopy ()
 void
 VSvnFrame::Rename ()
 {
-  
+
 }
 
 void
@@ -1254,9 +1219,9 @@ VSvnFrame::Contents ()
 void
 VSvnFrame::Preferences ()
 {
-  PreferencesDlg* pDlg = PreferencesDlg::CreateInstance(this);
-  pDlg->ShowModal();
-  pDlg->Close(TRUE);
+  PreferencesDlg *pDlg = PreferencesDlg::CreateInstance (this);
+  pDlg->ShowModal ();
+  pDlg->Close (TRUE);
 }
 
 InfoPanel::InfoPanel (wxWindow * parent):wxPanel (parent, -1)
