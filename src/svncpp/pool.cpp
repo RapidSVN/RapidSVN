@@ -22,7 +22,7 @@
 namespace svn
 {
   Pool::Pool (apr_pool_t * parent)
-    : m_pool (svn_pool_create (parent))
+    : m_parent (parent), m_pool (svn_pool_create (parent))
   {
   }
 
@@ -38,6 +38,16 @@ namespace svn
   Pool::pool () const
   {
     return m_pool;
+  }
+
+  void
+  Pool::renew ()
+  {
+    if (m_pool)
+    {
+      svn_pool_destroy (m_pool);
+    }
+    m_pool = svn_pool_create (m_parent);
   }
 
 

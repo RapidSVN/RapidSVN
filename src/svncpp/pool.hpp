@@ -43,8 +43,20 @@ namespace svn
     apr_pool_t * 
     pool () const;
 
-    //TODO apr_pool_t * operator=(const Pool&);
+    /**
+     * operator to return apr handle to the pool
+     */
+    operator apr_pool_t * () const 
+    {
+      return m_pool;
+    }
+
+    /**
+     * release pool and create a new one
+     */
+    void renew ();
   private:
+    apr_pool_t * m_parent;
     apr_pool_t * m_pool;
 
     Pool& operator=(const Pool&);

@@ -18,6 +18,7 @@
 #include <vector>
 
 // svncpp
+#include "context.hpp"
 #include "path.hpp"
 #include "revision.hpp"
 
@@ -27,6 +28,7 @@
 namespace svn
 {
   // forward declarations
+  class Context;
   class Status;
 
   /**
@@ -34,22 +36,29 @@ namespace svn
    */
   class Client
   {
-  protected:
-    Revision m_revision;
-    Path m_lastPath;
-
-    /**
-     * Global error object struct.
-     */
-    svn_error_t *m_Err;
-
   public:
     /**
      * Initializes the primary memory pool.
      */
-    Client ();
+    Client (Context * context = 0);
 
     virtual ~Client ();
+
+
+    /**
+     * @return returns the Client context
+     */
+    const Context * getContext () const;
+
+    /**
+     * sets the client context
+     * you have to make sure the old context
+     * is de-allocated
+     *
+     * @param context new context to use
+     */
+    void setContext (const Context * context);
+
 
     /**
      * Returns the last destination path submitted. 
@@ -80,6 +89,28 @@ namespace svn
      * @return a Status with Statis.isVersioned = FALSE
      */
     Status singleStatus (const char * path);
+
+  protected:
+    Revision m_revision;
+    Path m_lastPath;
+    Context * m_context;
+
+    /**
+     * Global error object struct.
+     */
+    svn_error_t *m_Err;
+
+  private:
+    /**
+     * disallow assignment operator
+     */
+    Client & operator= (const Client &);
+
+    /**
+     * disallow copy constructor
+     */
+    Client (const Client &);
+
   };
 
 }

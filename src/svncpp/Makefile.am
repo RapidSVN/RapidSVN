@@ -5,6 +5,8 @@ lib_LTLIBRARIES=libsvncpp.la
 libsvncpp_la_SOURCES= \
 	auth.cpp \
 	client.cpp \
+	client_status.cpp \
+	context.cpp \
 	exception.cpp \
 	log.cpp \
 	modify.cpp \
@@ -13,7 +15,6 @@ libsvncpp_la_SOURCES= \
 	pool.cpp \
 	property.cpp \
 	revision.cpp \
-	skeleton.cpp \
 	status.cpp \
 	targets.cpp
 

@@ -312,7 +312,10 @@ FileListCtrl::UpdateFileList (const wxString & path)
 
   std::string stdpath(path.c_str());
 
-  svn::Client client;
+  svn::Context context;
+  context.setLogin ("", "");
+
+  svn::Client client (&context);
   const std::vector<svn::Status> & statusVector =
     client.status (path.c_str (), FALSE);
   std::vector<svn::Status>::const_iterator it;
