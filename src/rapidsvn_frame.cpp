@@ -471,13 +471,13 @@ RapidSvnFrame::UpdateFileList ()
       }
       catch (svn::Exception & e)
       {
-        m_logTracer->Trace (e.message ());
+        Trace (e.message ());
         // probably unversioned resource
         m_listCtrl->Show (FALSE);
       }
       catch (...)
       {
-        m_logTracer->Trace (_("Exception when updating filelist"));
+        Trace (_("Exception when updating filelist"));
       }
     }
     else
@@ -946,36 +946,31 @@ RapidSvnFrame::ShowInfo ()
   svn_error_t *err = NULL;
   bool wasError = false;
 
-  for (i = 0; i < arr.GetCount (); i++)
+  try
   {
-    wxFileName fname (path, m_listCtrl->GetItemText (arr[i]));
-    _path = fname.GetFullPath ();
-    err = svn_get_file_info (UnixPath (_path), subPool.pool(), info);
-
-    if (err)
+    for (i = 0; i < arr.GetCount (); i++)
     {
-      all_info.Empty ();
+      wxFileName fname (path, m_listCtrl->GetItemText (arr[i]));
+      _path = fname.GetFullPath ();
+      err = svn_get_file_info (UnixPath (_path), subPool.pool(), info);
 
-      StringTracer ertr (all_info);
-      handle_svn_error (err, &ertr);
-      wasError = true;
-      break;
+      if (err)
+      {
+        throw new svn::ClientException (err);
+        all_info.Empty ();
+
+      }
+      all_info += info + "\n";
     }
-    all_info += info + "\n";
+  }
+  catch (svn::ClientException & e)
+  {
+    Trace (e.message ());
+    return;
   }
 
-  {
-    int rep_type = NORMAL_REPORT;
-    wxString caption = _("Info");
-    if (wasError)
-    {
-      rep_type = ERROR_REPORT;
-      caption = _("Info error");
-    }
-
-    ReportDlg rdlg (this, caption, all_info, rep_type);
-    rdlg.ShowModal ();
-  }
+  ReportDlg rdlg (this, _("Info"), all_info, NORMAL_REPORT);
+  rdlg.ShowModal ();
 }
 
 void

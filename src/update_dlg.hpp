@@ -53,7 +53,11 @@ private:
   struct Data;
   Data * m;
 
-  void OnUseLatest(wxCommandEvent &event);
+  void 
+  OnUseLatest(wxCommandEvent &event);
+
+  void 
+  OnText (wxCommandEvent & event);
   
   DECLARE_EVENT_TABLE()
 };

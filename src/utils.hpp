@@ -21,8 +21,6 @@ class wxString;
 class Tracer;
 class wxMenu;
 
-#define DEFAULT_ARRAY_SIZE 5
-
 /**
  * Create pseudo-unix paths on windows for use with svn (reverse backslashes,
  * but leave the rest as it is)
@@ -32,28 +30,21 @@ class wxMenu;
  * @param path Native path to convert
  * @return string with all backslashes converted to forward slashes
  */
-wxString & UnixPath (wxString & path);
+wxString & 
+UnixPath (wxString & path);
 
 /**
  * Get a status string describing the given svn status
  */
-void GetStatusText (wxString & str, svn_wc_status_kind st);
+void 
+GetStatusText (wxString & str, svn_wc_status_kind st);
 
 /**
  * Trim whitespace at start and end of string
  * (Convenience function for trimming first left, then right)
  */
-void TrimString (wxString & str);
-
-void *svn_cl__make_log_msg_baton (const char *message,
-                                  const char *base_dir, apr_pool_t * pool);
-
-/**
- * Recursive function to send the error strings to a Tracer
- */
-void handle_svn_error (svn_error_t * err, Tracer * tracer);
-
-svn_error_t *svn_cl__may_need_force (svn_error_t * err);
+void 
+TrimString (wxString & str);
 
 /**
  * Post a menu command event with the given ID. 
@@ -61,26 +52,40 @@ svn_error_t *svn_cl__may_need_force (svn_error_t * err);
  * Used for converting non-command events to command events so they'll move up
  * the GUI hierarchy.
  */
-bool PostMenuEvent (wxEvtHandler *source, long id);
+bool 
+PostMenuEvent (wxEvtHandler *source, long id);
 
 /**
  * Create a correctly sized button with an ellipsis (three dots)
  */
-wxButton *CreateEllipsisButton(wxWindow *parent, long id);
+wxButton *
+CreateEllipsisButton(wxWindow *parent, long id);
 
 /**
  * Append entries for the "Modify" menu
  *
  * @param parentMenu menu that will receive the items
  */
-void AppendModifyMenu (wxMenu * parentMenu);
+void 
+AppendModifyMenu (wxMenu * parentMenu);
 
 /**
  * Append entries for the "Query" menu
  *
  * @param parentMenu menu that will receive the items
  */
-void AppendQueryMenu (wxMenu * parentMenu);
+void 
+AppendQueryMenu (wxMenu * parentMenu);
+
+/**
+ * Checks if the given string contains a valid
+ * revision number
+ *
+ * @param revstring revision string
+ * @return true if valid revision
+ */
+bool
+CheckRevision (const char * revstring);
 
 #endif
 /* -----------------------------------------------------------------

@@ -29,27 +29,33 @@ public:
    */
   CheckoutDlg (wxWindow *parent);
 
-  virtual void InitDialog();
+  /**
+   * destructor
+   */
+  virtual ~CheckoutDlg ();
 
-  void OnOK (wxCommandEvent& event);
-  void OnBrowse (wxCommandEvent & event);
-
+  /**
+   * returns the checkout data
+   */
   const CheckoutData &
-  GetData () const
-  {
-    return m_data;
-  }
+  GetData () const;
 
 private:
-  void InitControls ();
-  void OnUseLatest(wxCommandEvent &event);
-  void EnableControls();
+  /** hide implementation details */
+  struct Data;
+  Data * m;
 
-  CheckoutData m_data;
-  wxCheckBox * m_useLatestCheck;
-  wxTextCtrl * m_revisionText;
-  wxStaticText * m_revisionLabel; 
-  wxTextCtrl * m_destFolderText;
+  void 
+  OnBrowse (wxCommandEvent & event);
+
+  void 
+  OnText (wxCommandEvent & event);
+
+  void 
+  OnUseLatest (wxCommandEvent & event);
+
+  void 
+  InitDialog ();
 
   DECLARE_EVENT_TABLE ()
 };

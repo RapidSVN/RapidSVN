@@ -18,10 +18,12 @@
 // app
 #include "update_dlg.hpp"
 #include "update_data.hpp"
+#include "utils.hpp"
 
 enum
 {
-  ID_USELATEST = 100
+  ID_USELATEST = 100,
+  ID_REVISION
 };
 
 struct UpdateDlg::Data
@@ -30,6 +32,7 @@ private:
   wxTextCtrl * m_textRevision;
   wxCheckBox * m_checkUseLatest;
   wxTextCtrl * m_textUrl;
+  wxButton * m_buttonOk;
 public:
   UpdateData data;
 
@@ -62,7 +65,7 @@ public:
       wxStaticBoxSizer *revSizer = 
         new wxStaticBoxSizer (box, wxHORIZONTAL);
       wxTextValidator val (wxFILTER_NUMERIC, &data.revision);
-      m_textRevision = new wxTextCtrl (window, -1, "",
+      m_textRevision = new wxTextCtrl (window, ID_REVISION, "",
                                        wxDefaultPosition, 
                                        wxDefaultSize, 0, val);
       revSizer->Add (m_textRevision, 1, 
@@ -90,10 +93,9 @@ public:
     }
     
     // The buttons:
-    wxButton * button;
-    button = new wxButton (window, wxID_OK, _("OK" ));
-    buttonSizer->Add (button, 0, wxALL, 10);
-    button = new wxButton (window, wxID_CANCEL, _("Cancel"));
+    m_buttonOk = new wxButton (window, wxID_OK, _("OK" ));
+    buttonSizer->Add (m_buttonOk, 0, wxALL, 10);
+    wxButton * button = new wxButton (window, wxID_CANCEL, _("Cancel"));
     buttonSizer->Add (button, 0, wxALL, 10);
 
     // Add all the sizers to the main sizer
@@ -116,10 +118,24 @@ public:
     m_textRevision->Enable(!m_checkUseLatest->IsChecked());
   }
 
+  void
+  CheckButtons ()
+  {
+    bool ok = true;
+
+    if (!m_checkUseLatest->IsChecked ())
+    {
+      ok = CheckRevision (m_textRevision->GetValue ());
+    }
+
+    m_buttonOk->Enable (true);
+  }
+
 };
 
 BEGIN_EVENT_TABLE (UpdateDlg, wxDialog)
   EVT_CHECKBOX (ID_USELATEST, UpdateDlg::OnUseLatest)
+  EVT_TEXT (ID_REVISION, UpdateDlg::OnText)
 END_EVENT_TABLE ()
 
 const int UpdateDlg::WITH_URL = 1;
@@ -157,6 +173,12 @@ UpdateData &
 UpdateDlg::GetData ()
 {
   return m->data;
+}
+
+void
+UpdateDlg::OnText (wxCommandEvent &)
+{
+  m->CheckButtons ();
 }
 
 /* -----------------------------------------------------------------

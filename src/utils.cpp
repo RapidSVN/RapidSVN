@@ -108,53 +108,6 @@ svn_cl__make_log_msg_baton (const char *message,
   return baton;
 }
 
-void
-handle_svn_error (svn_error_t * err, Tracer * tracer)
-{
-  char buf[200];
-  wxString str;
-
-  /* Is this a Subversion-specific error code? */
-  if ((err->apr_err > APR_OS_START_USEERR)
-      && (err->apr_err <= APR_OS_START_CANONERR))
-  {
-    str.Printf (_("svn_error: #%d : <%s>"), err->apr_err,
-                svn_strerror (err->apr_err, buf, sizeof (buf)));
-    tracer->Trace (str);
-  }
-  /* Otherwise, this must be an APR error code. */
-  else
-  {
-    str.Printf (_("apr_error: #%d : <%s>"),
-                err->apr_err,
-                apr_strerror (err->apr_err, buf, sizeof (buf)));
-    tracer->Trace (str);
-  }
-
-  if (err->message)
-  {
-    str.Printf ("  %s", err->message);
-    tracer->Trace (str);
-  }
-
-  if (err->child)
-    handle_svn_error (err->child, tracer);
-}
-
-svn_error_t *
-svn_cl__may_need_force (svn_error_t * err)
-{
-  if (err
-      && (err->apr_err == SVN_ERR_CLIENT_UNVERSIONED ||
-          err->apr_err == SVN_ERR_CLIENT_MODIFIED))
-  {
-    err = svn_error_quick_wrap (err,
-                                "Check 'Force' to override this restriction");
-  }
-
-  return err;
-}
-
 bool PostMenuEvent (wxEvtHandler *source, long id)
 {
   // This is the way it's done in wxFrame
@@ -251,6 +204,27 @@ AppendQueryMenu (wxMenu * parentMenu)
   parentMenu->Append (item);
 }
 
+bool
+CheckRevision (const char * revstring)
+{
+  wxString value (revstring);
+  bool ok;
+
+  TrimString (value);
+  if (value.Length () <= 0)
+  {
+    ok = false;
+  }
+  else
+  {
+    long revnum;
+    value.ToLong (&revnum);
+
+    ok = revnum >= 0;
+  }
+
+  return ok;
+}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -25,7 +25,7 @@ struct CheckoutData
     Workbench = true;
   }
 
-  wxString ModuleName;
+  wxString RepUrl;
   wxString DestFolder;
   wxString Revision;
   bool Recursive;

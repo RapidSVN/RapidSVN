@@ -57,7 +57,7 @@ CheckoutAction::Perform ()
 
   TrimString(m_data.DestFolder);
   UnixPath(m_data.DestFolder);
-  TrimString(m_data.ModuleName);
+  TrimString(m_data.RepUrl);
   
   long revnum=-1;
   // Did the user request a specific revision?:
@@ -72,7 +72,7 @@ CheckoutAction::Perform ()
 
   svn::Revision revision (revnum);
   wxSetWorkingDirectory (m_data.DestFolder);
-  client.checkout (m_data.ModuleName.c_str (), 
+  client.checkout (m_data.RepUrl.c_str (), 
                    m_data.DestFolder.c_str (), 
                    revision, m_data.Recursive);
  
