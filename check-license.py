@@ -13,6 +13,7 @@
 #
 
 OLD_LICENSE = '''\
+/\*
  \* ====================================================================
  \* Copyright \(c\) 2000 The Apache Software Foundation.  All rights
  \* reserved.
@@ -24,6 +25,7 @@ OLD_LICENSE = '''\
  \* individuals.  For exact contribution history, see the revision
  \* history and logs, available at http://rapidsvn.tigris.org/.
  \* ====================================================================
+ \*/
 '''
 
 # Remember not to do regexp quoting for NEW_LICENSE.  Only OLD_LICENSE
