@@ -42,11 +42,11 @@ Log::loadPath (const char * path, long revisionStart,
   const apr_array_header_t * targets = NULL;
   void * baton = NULL;
   log_message_receiver_baton lb;
-  svn_client_revision_t revEnd;
+  svn_opt_revision_t revEnd;
 
   reset ();
   memset (&revEnd, 0, sizeof (revEnd));
-  revEnd.kind = svn_client_revision_number;
+  revEnd.kind = svn_opt_revision_number;
   revEnd.value.number = revisionEnd;
   
   lb.revision = &_revision;
@@ -61,7 +61,7 @@ Log::loadPath (const char * path, long revisionStart,
                         &revEnd, 
                         0, // not reverse by default
                         1, // strict by default (not showing cp info)
-                        messageReceiver, //log_message_receiver, 
+                        messageReceiver,
                         &lb, pool);
 
   versioned = true;

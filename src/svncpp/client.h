@@ -5,6 +5,7 @@
 #include "apr_general.h"
 #include "svn_pools.h"
 #include "svn_client.h"
+#include "svn_opt.h"
 
 /**
  * SvnCpp namespace.
@@ -19,7 +20,7 @@ class Client
 {
 protected:
   apr_pool_t * pool;
-  svn_client_revision_t rev;
+  svn_opt_revision_t rev;
 
   /**
    * Global error object struct.
@@ -29,7 +30,7 @@ protected:
   /**
    * Create a revision template.
    */
-  svn_client_revision_t * getRevision (long revNumber);
+  svn_opt_revision_t * getRevision (long revNumber);
 
   /**
    * Creates a target out of a string.

@@ -12,6 +12,7 @@ enum
 
 BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)
 EVT_BUTTON (ID_BUTTON_BROWSE, CheckoutDlg::OnBrowse)
+EVT_BUTTON (wxID_OK, CheckoutDlg::OnOK)
 EVT_CHECKBOX (ID_USELATEST, CheckoutDlg::OnUseLatest)
 END_EVENT_TABLE ()
 
@@ -36,8 +37,14 @@ CheckoutDlg::OnOK (wxCommandEvent & event)
 {
   unsigned long rev = 0;
 
+  m_pData->ModuleName = moduleName->GetValue ();
+  m_pData->User = user->GetValue ();
+  m_pData->Password = pass->GetValue ();
+  m_pData->Revision = revision->GetValue ();
+  m_pData->UseLatest = pUseLatest->GetValue ();
+  m_pData->Recursive = recursive->GetValue ();
+
   // Validate the data.
-  
   if (!m_pData->UseLatest)
   {
     TrimString(m_pData->Revision);
@@ -64,7 +71,10 @@ CheckoutDlg::OnBrowse (wxCommandEvent & event)
                       wxGetHomeDir());
 
   if (dialog.ShowModal () == wxID_OK)
+  {
+    destFolder->SetValue (dialog.GetPath ());
     m_pData->DestFolder = dialog.GetPath ();
+  }
 }
 
 /**
@@ -80,7 +90,7 @@ CheckoutDlg::InitializeData ()
   wxStaticBoxSizer *moduleSizer = new wxStaticBoxSizer (
           new wxStaticBox(this, -1, _T("Module to check out (full path)")), 
           wxHORIZONTAL);
-  wxTextCtrl* moduleName = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1),
+  moduleName = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1),
                                wxSize(235, -1));
   moduleSizer->Add (moduleName, 1, wxALL | wxEXPAND, 5);
 
@@ -88,7 +98,7 @@ CheckoutDlg::InitializeData ()
   wxStaticBoxSizer *destSizer = new wxStaticBoxSizer (
           new wxStaticBox(this, 0, _T("Destination Folder")), 
           wxHORIZONTAL);
-  wxTextCtrl* destFolder = new wxTextCtrl (this, -1, _T(""), wxPoint(-1, -1), 
+  destFolder = new wxTextCtrl (this, -1, _T(""), wxPoint(-1, -1), 
                                wxSize(205, -1));
   destSizer->Add (destFolder, 1, wxALL | wxEXPAND, 5);
   destSizer->Add (new wxButton( this, ID_BUTTON_BROWSE, _T("..."), 
@@ -101,11 +111,11 @@ CheckoutDlg::InitializeData ()
           new wxStaticBox(this, -1, _T("Revision")), wxHORIZONTAL);
   pRevisionLabel = new wxStaticText (this, -1, _T("Number"));
   revisionSizer->Add (pRevisionLabel, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  pRevision = new wxTextCtrl (this, -1, _T(""), wxDefaultPosition, 
+  revision = new wxTextCtrl (this, -1, _T(""), wxDefaultPosition, 
     wxSize(50, -1), 0,
     wxTextValidator(wxFILTER_NUMERIC, &m_pData->Revision));                             
                              
-  revisionSizer->Add (pRevision, 1, wxALL | wxEXPAND, 5);
+  revisionSizer->Add (revision, 1, wxALL | wxEXPAND, 5);
   pUseLatest = new wxCheckBox(this, ID_USELATEST, "Use latest",
     wxDefaultPosition, wxDefaultSize, 0,
     wxGenericValidator(&m_pData->UseLatest));
@@ -120,19 +130,19 @@ CheckoutDlg::InitializeData ()
 
   authSizer->Add (new wxStaticText (this, -1, _T("User")), 0, 
                               wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl* pUser = new wxTextCtrl (this, -1, _T(""),
+  user = new wxTextCtrl (this, -1, _T(""),
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_pData->User));
-  authSizer->Add (pUser, 1, 
+  authSizer->Add (user, 1, 
                   wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
 
   authSizer->Add (new wxStaticText (this, -1, _T("Password")), 0,
                            wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  wxTextCtrl* pass = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
+  pass = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
     wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_pData->Password));
   authSizer->Add (pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
  
-  wxCheckBox* recursive = new wxCheckBox (this, -1, _T("Recursive"));
+  recursive = new wxCheckBox (this, -1, _T("Recursive"));
 
   // Button row
   buttonSizer->Add(new wxButton( this, wxID_OK, _T("OK" )), 0, 
@@ -172,6 +182,6 @@ void
 CheckoutDlg::EnableControls()
 {
   pRevisionLabel->Enable(!pUseLatest->IsChecked());
-  pRevision->Enable(!pUseLatest->IsChecked());
+  revision->Enable(!pUseLatest->IsChecked());
 }
 

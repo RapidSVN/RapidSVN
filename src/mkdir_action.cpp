@@ -4,10 +4,9 @@
 #include "wx/resource.h"
 #include "utils.h"
 #include "mkdir_dlg.h"
-#include "notify.h"
-#include "auth_baton.h"
 #include "rapidsvn_app.h"
 #include "mkdir_action.h"
+#include "svn_notify.h"
 
 MkdirAction::MkdirAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr):ActionThread (frame,
               __pool)
@@ -41,6 +40,7 @@ MkdirAction::Perform ()
     if (mkDlg->ShowModal () == ID_BUTTON_OK)
     {
       target = mkDlg->target->GetValue ();
+      UnixPath (target);
       TrimString (target);
       logMsg = mkDlg->logMsg->GetValue ();
       user = mkDlg->user->GetValue ();
@@ -64,38 +64,24 @@ MkdirAction::Perform ()
 void *
 MkdirAction::Entry ()
 {
-  AuthBaton auth_baton (pool, user, pass);
+  svn::Modify modify;
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
 
-  svn_wc_notify_func_t notify_func = NULL;
-  void *notify_baton = NULL;
+  modify.username (user);
+  modify.password (user);
 
-  svn_error_t *err = NULL;
-  svn_client_commit_info_t *commit_info = NULL;
-
-  svn_cl__get_notifier (&notify_func, &notify_baton,
-                        FALSE, FALSE, GetTracer (), pool);
-
-  err = svn_client_mkdir (&commit_info,
-                          target.c_str (),
-                          auth_baton.auth_obj,
-                          &svn_cl__get_log_message,
-                          svn_cl__make_log_msg_baton (logMsg.c_str (), NULL,
-                                                      pool), notify_func,
-                          notify_baton, pool);
-
-  if (err)
+  try
   {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
+    modify.mkdir (target, logMsg);
   }
-  else if (commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
+  catch (svn::ClientException &e)
   {
-    wxString str =
-      wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
-                        commit_info->revision);
-    GetTracer ()->Trace (str);
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                     ACTION_EVENT);
+    GetTracer ()->Trace ("Mkdir failed:");
+    GetTracer ()->Trace (e.description ());
   }
-
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
 
   return NULL;
 }

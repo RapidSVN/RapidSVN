@@ -6,23 +6,23 @@
 class MergeAction:public ActionThread
 {
 private:
-  void GetNotifier (svn_wc_notify_func_t * notify_func_p,
-                    void **notify_baton_p, svn_boolean_t is_checkout,
-                    svn_boolean_t suppress_final_line, apr_pool_t * pool);
-
   wxString path1;
   wxString path2;
 
-  svn_client_revision_t rev_start;
-  svn_client_revision_t rev_end;
+  /**
+   * Gets the revision from a string.
+   */
+  long getRevision (wxString & str);
 
-  svn_client_revision_t rev_second;
+  long rev1;
+  long rev_end;
+  long rev2;
 
   wxString user;
   wxString pass;
 
-  svn_boolean_t recursive;
-  svn_boolean_t force;
+  bool recursive;
+  bool force;
 
 public:
    MergeAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr);

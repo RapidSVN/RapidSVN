@@ -82,13 +82,6 @@ svn_cl__make_log_msg_baton (const char *message,
 }
 
 void
-revision_from_number (svn_client_revision_t * rev, unsigned long nr)
-{
-  rev->kind = svn_client_revision_number;
-  rev->value.number = nr;
-}
-
-void
 handle_svn_error (svn_error_t * err, Tracer * tracer)
 {
   char buf[200];

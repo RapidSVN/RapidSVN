@@ -100,10 +100,6 @@ SOURCE=.\src\add_action.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\auth_baton.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\checkout_action.cpp
 # End Source File
 # Begin Source File
@@ -169,10 +165,6 @@ SOURCE=.\src\mkdir_action.cpp
 # Begin Source File
 
 SOURCE=.\src\mkdir_dlg.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\notify.cpp
 # End Source File
 # Begin Source File
 
@@ -245,10 +237,6 @@ SOURCE=.\src\action_thread.h
 # Begin Source File
 
 SOURCE=.\src\add_action.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\auth_baton.h
 # End Source File
 # Begin Source File
 
@@ -325,10 +313,6 @@ SOURCE=.\src\mkdir_action.h
 # Begin Source File
 
 SOURCE=.\src\mkdir_dlg.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\notify.h
 # End Source File
 # Begin Source File
 

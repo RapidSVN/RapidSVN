@@ -74,7 +74,7 @@ SvnCppTestCase::testCheckout ()
 
   CPPUNIT_ASSERT (status.isVersioned ());
   CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status.revision ());
 }
 
 void

@@ -1,29 +1,16 @@
+
+#include "svncpp/modify.h"
 #include "include.h"
 #include "wx/resource.h"
 #include "merge_dlg.h"
-#include "auth_baton.h"
 #include "tracer.h"
 #include "trace_update.h"
 #include "rapidsvn_app.h"
 #include "merge_action.h"
+#include "svn_notify.h"
 
-static void
-GetRevFromString (svn_client_revision_t * rev, wxString str)
-{
-  unsigned long nr;
-  TrimString (str);
-
-  rev->kind = svn_client_revision_unspecified;
-  if (!str.IsEmpty ())
-  {
-    rev->kind = svn_client_revision_number;
-    str.ToULong (&nr, 10);
-    rev->value.number = nr;
-  }
-}
-
-MergeAction::MergeAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr):ActionThread (frame,
-              __pool)
+MergeAction::MergeAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr)
+            : ActionThread (frame, __pool)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
 }
@@ -55,9 +42,9 @@ MergeAction::Perform ()
       path2 = mrgDlg->path2->GetValue ();
       TrimString (path2);
 
-      GetRevFromString (&rev_start, mrgDlg->rev_start->GetValue ());
-      GetRevFromString (&rev_end, mrgDlg->rev_end->GetValue ());
-      GetRevFromString (&rev_second, mrgDlg->rev_second->GetValue ());
+      rev1 = getRevision (mrgDlg->rev_start->GetValue ());
+      rev_end = getRevision (mrgDlg->rev_end->GetValue ());
+      rev2 = getRevision (mrgDlg->rev_second->GetValue ());
 
       user = mrgDlg->user->GetValue ();
       pass = mrgDlg->pass->GetValue ();
@@ -81,28 +68,17 @@ MergeAction::Perform ()
 void *
 MergeAction::Entry ()
 {
-  AuthBaton auth_baton (pool, user, pass);
+  svn::Modify modify;
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
 
-  //const svn_delta_editor_t *trace_editor = NULL;
-  svn_wc_notify_func_t trace_editor = NULL;     // brm
-  //svn_wc_notify_action_t *trace_editor = NULL;
-
-  void *trace_edit_baton = NULL;
-
-  const char *parent_dir = NULL;
-  const char *entry = NULL;
-  svn_boolean_t using_alternate_syntax = FALSE;
-  svn_error_t *err = NULL;
+  modify.username (user.c_str ());
+  modify.password (pass.c_str ());
 
   wxString targetPath =
     wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ();
 
-  const char *sourcepath1 = NULL;
-  const char *sourcepath2 = NULL;
   const char *targetpath = ".";
-
-  svn_client_revision_t start_revision;
-  svn_client_revision_t end_revision;
 
   // Set current working directory to point to the path
   // in the folder browser (the path where the merge will be 
@@ -116,86 +92,40 @@ MergeAction::Entry ()
   }
 
 
-  sourcepath1 = path1.c_str ();
-
-  if (rev_start.kind == svn_client_revision_unspecified)
+  try
   {
-    start_revision.kind = svn_client_revision_head;
-
-    if (rev_second.kind == svn_client_revision_unspecified)
-      end_revision.kind = svn_client_revision_head;
-    else
-    {
-      end_revision.kind = rev_second.kind;
-      end_revision.value.number = rev_second.value.number;
-    }
-
-    // path2 should be specified if rev_start.kind 
-    // is unspecified
-    sourcepath2 = path2.c_str ();
+    modify.merge (path1.c_str (), rev1, path2.c_str (), rev2, 
+                  targetPath, force, recursive);
   }
-  else
+  catch (svn::ClientException &e)
   {
-    start_revision.kind = rev_start.kind;
-    start_revision.value.number = rev_start.value.number;
-
-    if (rev_end.kind == svn_client_revision_unspecified)
-    {
-      sourcepath2 = path2.c_str ();
-
-      if (rev_second.kind == svn_client_revision_unspecified)
-        end_revision.kind = svn_client_revision_head;
-      else
-      {
-        end_revision.kind = rev_second.kind;
-        end_revision.value.number = rev_second.value.number;
-      }
-    }
-    else
-    {
-      // use path1 if rev_end.kind is unspecified
-      sourcepath2 = path1.c_str ();
-
-      end_revision.kind = rev_end.kind;
-      end_revision.value.number = rev_end.value.number;
-    }
-  }
-
-  err =
-    svn_wc_get_actual_target (targetPath.c_str (), &parent_dir, &entry, pool);
-  if (err)
-  {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
-    return NULL;
-  }
-
-  err = svn_client_merge (trace_editor, trace_edit_baton, auth_baton.auth_obj, sourcepath1, &start_revision, sourcepath2, &end_revision, targetpath, !recursive,        // non-recursive
-                          force, pool);
-
-  if (err)
-    err = svn_cl__may_need_force (err);
-
-  if (err)
-  {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                     ACTION_EVENT);
+    GetTracer ()->Trace ("Merge failed:");
+    GetTracer ()->Trace (e.description ());
   }
 
   return NULL;
 }
 
+long 
+MergeAction::getRevision (wxString & str)
+{
+  unsigned long rev;
+  TrimString (str);
+
+  if (!str.IsEmpty ())
+  {
+    str.ToULong (&rev, 10);
+    return rev;
+  }
+
+  return -2; // head
+}
 
 MergeAction::~MergeAction ()
 {
 #if defined(__WXMSW__)
   delete Merge_Dialog;
 #endif
-}
-
-void
-MergeAction::GetNotifier (svn_wc_notify_func_t * notify_func_p,
-                          void **notify_baton_p, svn_boolean_t is_checkout,
-                          svn_boolean_t suppress_final_line,
-                          apr_pool_t * pool)
-{
-
 }

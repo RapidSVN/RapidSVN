@@ -23,9 +23,6 @@ void TrimString (wxString & str);
 void *svn_cl__make_log_msg_baton (const char *message,
                                   const char *base_dir, apr_pool_t * pool);
 
-void revision_from_number (svn_client_revision_t * rev, unsigned long nr);
-
-
 /**
 * Recursive function to send the error strings to a Tracer
 */

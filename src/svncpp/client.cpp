@@ -16,23 +16,23 @@ Client::~Client ()
   svn_pool_destroy (pool);
 }
 
-svn_client_revision_t *
+svn_opt_revision_t *
 Client::getRevision (long revNumber)
 {
   rev.value.number = 0;
   rev.value.date = 0;
-  rev.kind = svn_client_revision_unspecified;
+  rev.kind = svn_opt_revision_unspecified;
 
   switch(revNumber)
   {
     case -1:
-      rev.kind = svn_client_revision_unspecified;
+      rev.kind = svn_opt_revision_unspecified;
       break;
     case -2:
-      rev.kind = svn_client_revision_head;
+      rev.kind = svn_opt_revision_head;
       break;
     default:
-      rev.kind = svn_client_revision_number;
+      rev.kind = svn_opt_revision_number;
       rev.value.number = revNumber;
       break;
   }

@@ -28,10 +28,15 @@ private:
   void OnUseLatest(wxCommandEvent &event);
   void EnableControls();
 
-  sData* m_pData;
-  wxCheckBox* pUseLatest;
-  wxStaticText* pRevisionLabel; 
-  wxTextCtrl* pRevision;
+  sData * m_pData;
+  wxCheckBox * pUseLatest;
+  wxTextCtrl * destFolder;
+  wxTextCtrl * revision;
+  wxTextCtrl * moduleName;
+  wxTextCtrl * user;
+  wxTextCtrl * pass;
+  wxCheckBox * recursive;
+  wxStaticText * pRevisionLabel; 
 
   DECLARE_EVENT_TABLE ()
 };
