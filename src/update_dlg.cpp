@@ -47,12 +47,12 @@ UpdateDlg::InitializeData ()
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NUMERIC, &m_pData->Revision));
   revSizer->Add (pRevision, 1, 
-    wxLEFT | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
+    wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
 
   pUseLatest = new wxCheckBox(this, ID_USELATEST, "Use latest",
     wxDefaultPosition, wxDefaultSize, 0,
     wxGenericValidator(&m_pData->UseLatest));
-  revSizer->Add (pUseLatest, 0, wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
+  revSizer->Add (pUseLatest, 0, wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   topSizer->Add(revSizer, 1, wxALL, 5);
   
@@ -67,13 +67,13 @@ UpdateDlg::InitializeData ()
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_pData->User));
   authSizer->Add (pUser, 1, 
-    wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
+    wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
 
   authSizer->Add(new wxStaticText (this, -1, _T("Password")), 0,
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
   wxTextCtrl* pass = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
     wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_pData->Password));
-  authSizer->Add(pass, 1, wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
+  authSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
   
   middleSizer->Add(authSizer, 1, wxALL, 5);
 
@@ -93,8 +93,6 @@ UpdateDlg::InitializeData ()
 
   mainSizer->SetSizeHints(this);
   mainSizer->Fit(this);
-  
-  EnableControls();
 }
 
 void

@@ -10,10 +10,9 @@
 CheckoutAction::CheckoutAction (wxFrame * frame, apr_pool_t * __pool, 
                                 Tracer * tr):ActionThread (frame, __pool)
 {
-  thisframe = frame;
+  m_pFrame = frame;
   SetTracer (tr, FALSE);        // do not own the tracer
-  revnum = 0;
-  rev_specified = false;
+  m_pFrame = frame;
 }
 
 void
@@ -21,39 +20,18 @@ CheckoutAction::Perform ()
 {
   ////////////////////////////////////////////////////////////
   // Here we are in the main thread.
-  CheckoutDlg *coDlg = new CheckoutDlg(thisframe);
+  CheckoutDlg *coDlg = new CheckoutDlg(m_pFrame, &Data);
 
-  if (coDlg->ShowModal () != ID_BUTTON_OK)
-    return;
-
-  destinationFolder = coDlg->destFolder->GetValue ();
-  TrimString (destinationFolder);
-  UnixPath (destinationFolder);
-  moduleName = coDlg->moduleName->GetValue ();
-  TrimString (moduleName);
-  user = coDlg->user->GetValue ();
-  pass = coDlg->pass->GetValue ();
-  recursive = coDlg->recursive->GetValue ();
-
-  // get revision number from dialog
-  // #### TODO: check errors
-  wxString tmpstr = coDlg->revision->GetValue ();
-  TrimString (tmpstr);
-  if (tmpstr.IsEmpty ())
-    rev_specified = false;
-  else
+  if (coDlg->ShowModal () == wxID_OK)
   {
-    rev_specified = true;
-    tmpstr.ToULong (&revnum, 10);
+    // #### TODO: check errors and throw an exception
+    // create the thread
+    Create ();
+
+    // here we start the action thread
+    Run ();
   }
-
-  // #### TODO: check errors and throw an exception
-  // create the thread
-  Create ();
-
-  // here we start the action thread
-  Run ();
-
+  
   // destroy the dialog
   coDlg->Close (TRUE);
 }
@@ -61,27 +39,40 @@ CheckoutAction::Perform ()
 void *
 CheckoutAction::Entry ()
 {
-  AuthBaton auth_baton (pool, user, pass);
+  AuthBaton auth_baton (pool, Data.User, Data.Password);
   svn_client_revision_t rev;
 
   svn_wc_notify_func_t notify_func = NULL;
   void *notify_baton = NULL;
+
+  TrimString(Data.DestFolder);
+  UnixPath(Data.DestFolder);
+  TrimString(Data.ModuleName);
+  
+  long revnum = -1;
+  // Did the user request a specific revision?:
+  if (!Data.UseLatest)
+  {
+    TrimString(Data.Revision);
+    if (!Data.Revision.IsEmpty ())
+      Data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
+  }
 
   memset (&rev, 0, sizeof (rev));
 
   svn_cl__get_notifier (&notify_func, &notify_baton,
                         TRUE, FALSE, GetTracer (), pool);
 
-  if (rev_specified)
+  if (!Data.UseLatest)
     revision_from_number (&rev, revnum);
 
   svn_error_t *err = svn_client_checkout (notify_func,
                                           notify_baton,
                                           auth_baton.auth_obj,
-                                          moduleName.c_str (),
-                                          destinationFolder.c_str (),
+                                          Data.ModuleName.c_str (),
+                                          Data.DestFolder.c_str (),
                                           &rev,
-                                          recursive,
+                                          Data.Recursive,
                                           NULL,
                                           pool);
 
@@ -89,6 +80,6 @@ CheckoutAction::Entry ()
   {
     PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
   }
-
+  
   return NULL;
 }

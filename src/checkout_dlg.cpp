@@ -2,43 +2,55 @@
 #include "rapidsvn_app.h"
 #include "checkout_dlg.h"
 #include "wx/sizer.h"
+#include <wx/valgen.h>
+
+enum
+{
+  ID_USELATEST = 100,
+  ID_BUTTON_BROWSE,
+};
 
 BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)
-EVT_BUTTON (ID_BUTTON_OK, CheckoutDlg::OnOk)
-EVT_BUTTON (ID_BUTTON_CANCEL, CheckoutDlg::OnCancel)
-EVT_BUTTON (ID_BUTTON_BROWSE, CheckoutDlg::OnBrowse) END_EVENT_TABLE ()
+EVT_BUTTON (ID_BUTTON_BROWSE, CheckoutDlg::OnBrowse)
+EVT_CHECKBOX (ID_USELATEST, CheckoutDlg::OnUseLatest)
+END_EVENT_TABLE ()
 
-CheckoutDlg::CheckoutDlg (wxWindow * parent)
-           : wxDialog (parent, -1, "Checkout module", wxDefaultPosition, 
-             wxDefaultSize, wxDEFAULT_DIALOG_STYLE )
+CheckoutDlg::sData::sData()
+{
+  // Default values go here:
+  UseLatest = true;
+  Recursive = true;
+}
+
+CheckoutDlg::CheckoutDlg (wxWindow * parent, sData* pData)
+           : wxDialog (parent, -1, "Check out module", wxDefaultPosition, 
+             wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
+             m_pData(pData)
 {
   InitializeData ();
+  CentreOnParent();
 }
 
 void
-CheckoutDlg::OnOk (wxCommandEvent & WXUNUSED (event))
+CheckoutDlg::OnOK (wxCommandEvent & event)
 {
-  wxString val;
   unsigned long rev = 0;
 
-  val = revision->GetValue ();
-  TrimString (val);
-
-  if (!val.ToULong (&rev, 10) && rev < 0)
+  // Validate the data.
+  
+  if (!m_pData->UseLatest)
   {
-    // could not convert revision to a number
-    wxMessageBox (_T ("Revision must be an unsigned number!"),
-                  _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
-    return;
+    TrimString(m_pData->Revision);
+    if (!m_pData->Revision.ToULong (&rev, 10))
+    {
+      // could not convert revision to a number
+      wxMessageBox (_T ("Revision must be an unsigned number!"),
+                    _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+      return;
+    }
   }
 
-  EndModal (ID_BUTTON_OK);
-}
-
-void
-CheckoutDlg::OnCancel (wxCommandEvent & WXUNUSED (event))
-{
-  EndModal (ID_BUTTON_CANCEL);
+  wxDialog::OnOK(event);
 }
 
 /**
@@ -52,7 +64,7 @@ CheckoutDlg::OnBrowse (wxCommandEvent & event)
                       wxGetHomeDir());
 
   if (dialog.ShowModal () == wxID_OK)
-    destFolder->SetValue (dialog.GetPath ());
+    m_pData->DestFolder = dialog.GetPath ();
 }
 
 /**
@@ -66,63 +78,74 @@ CheckoutDlg::InitializeData ()
 
   // Module row
   wxStaticBoxSizer *moduleSizer = new wxStaticBoxSizer (
-          new wxStaticBox(this, -1, _T("Module to checkout (full path)")), 
+          new wxStaticBox(this, -1, _T("Module to check out (full path)")), 
           wxHORIZONTAL);
-  moduleName = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1),
+  wxTextCtrl* moduleName = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1),
                                wxSize(235, -1));
-  moduleSizer->Add (moduleName, 0, wxALL, 5);
+  moduleSizer->Add (moduleName, 1, wxALL | wxEXPAND, 5);
 
   // Destination row
   wxStaticBoxSizer *destSizer = new wxStaticBoxSizer (
           new wxStaticBox(this, 0, _T("Destination Folder")), 
           wxHORIZONTAL);
-  destFolder = new wxTextCtrl (this, -1, _T(""), wxPoint(-1, -1), 
+  wxTextCtrl* destFolder = new wxTextCtrl (this, -1, _T(""), wxPoint(-1, -1), 
                                wxSize(205, -1));
-  destSizer->Add (destFolder, 0, wxALL, 5);
+  destSizer->Add (destFolder, 1, wxALL | wxEXPAND, 5);
   destSizer->Add (new wxButton( this, ID_BUTTON_BROWSE, _T("..."), 
                                wxPoint(-1,-1), wxSize(20, -1) ),
                                0, wxALL, 5);
 
-  // Re* row
+  // Revision row
   wxBoxSizer *reSizer = new wxBoxSizer (wxHORIZONTAL);
   wxStaticBoxSizer *revisionSizer = new wxStaticBoxSizer (
           new wxStaticBox(this, -1, _T("Revision")), wxHORIZONTAL);
-  revision = new wxTextCtrl (this, -1, _T(""), wxPoint(-1, -1), 
-                             wxSize(50, -1));
-  revisionSizer->Add (revision, 0, wxALL, 0);
+  pRevisionLabel = new wxStaticText (this, -1, _T("Number"));
+  revisionSizer->Add (pRevisionLabel, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
+  pRevision = new wxTextCtrl (this, -1, _T(""), wxDefaultPosition, 
+    wxSize(50, -1), 0,
+    wxTextValidator(wxFILTER_NUMERIC, &m_pData->Revision));                             
+                             
+  revisionSizer->Add (pRevision, 1, wxALL | wxEXPAND, 5);
+  pUseLatest = new wxCheckBox(this, ID_USELATEST, "Use latest",
+    wxDefaultPosition, wxDefaultSize, 0,
+    wxGenericValidator(&m_pData->UseLatest));
+  revisionSizer->Add (pUseLatest, 0, wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
-  recursive = new wxCheckBox (this, -1, _T("Recursive"));
-  recursive->SetValue (true);
 
-  reSizer->Add (revisionSizer, 0, wxALL, 0);
-  reSizer->Add (recursive, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 10);
+  reSizer->Add (revisionSizer, 1, wxALL | wxEXPAND, 0);
 
   // Authentication row
   wxStaticBoxSizer *authSizer = new wxStaticBoxSizer (
           new wxStaticBox(this, -1, _T("Authentication")), wxHORIZONTAL);
 
-  authSizer->Add (new wxStaticText (this, -1, _T("User ")), 0, 
+  authSizer->Add (new wxStaticText (this, -1, _T("User")), 0, 
                               wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  authSizer->Add (user = new wxTextCtrl (this, -1, _T("")), 0, 
-                  wxLEFT | wxALIGN_CENTER_VERTICAL, 3);
+  wxTextCtrl* pUser = new wxTextCtrl (this, -1, _T(""),
+    wxDefaultPosition, wxDefaultSize, 0,
+    wxTextValidator(wxFILTER_NONE, &m_pData->User));
+  authSizer->Add (pUser, 1, 
+                  wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
 
-  authSizer->Add (new wxStaticText (this, -1, _T("Pass ")), 0,
+  authSizer->Add (new wxStaticText (this, -1, _T("Password")), 0,
                            wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  pass = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
-                         wxDefaultSize, wxTE_PASSWORD);
-  authSizer->Add (pass, 0, wxRIGHT | wxALIGN_CENTER_VERTICAL, 5 );
+  wxTextCtrl* pass = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
+    wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_pData->Password));
+  authSizer->Add (pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
  
+  wxCheckBox* recursive = new wxCheckBox (this, -1, _T("Recursive"));
+
   // Button row
-  buttonSizer->Add(new wxButton( this, ID_BUTTON_OK, _T("OK" )), 0, 
+  buttonSizer->Add(new wxButton( this, wxID_OK, _T("OK" )), 0, 
                    wxALL, 10);
-  buttonSizer->Add(new wxButton( this, ID_BUTTON_CANCEL, _T("Cancel")), 0, 
+  buttonSizer->Add(new wxButton( this, wxID_CANCEL, _T("Cancel")), 0, 
                    wxALL, 10);
 
   // Add all sizers to main sizer
-  mainSizer->Add (moduleSizer, 0, wxALL, 5);
-  mainSizer->Add (destSizer, 0, wxALL, 5);
-  mainSizer->Add (reSizer, 0, wxALL, 5);
-  mainSizer->Add (authSizer, 0, wxALL, 5);
+  mainSizer->Add (moduleSizer, 0, wxALL | wxEXPAND, 5);
+  mainSizer->Add (destSizer, 0, wxALL | wxEXPAND, 5);
+  mainSizer->Add (reSizer, 0, wxALL | wxEXPAND, 5);
+  mainSizer->Add (authSizer, 0, wxALL | wxEXPAND, 5);
+  mainSizer->Add (recursive, 0, wxALL | wxCENTER, 5);
   mainSizer->Add (buttonSizer, 0, wxALL | wxCENTER, 5);
 
   SetAutoLayout(true);
@@ -131,3 +154,24 @@ CheckoutDlg::InitializeData ()
   mainSizer->SetSizeHints(this);
   mainSizer->Fit(this);
 }
+
+void
+CheckoutDlg::InitDialog()
+{
+  wxDialog::InitDialog();
+  EnableControls();
+}
+
+void 
+CheckoutDlg::OnUseLatest(wxCommandEvent &)
+{
+  CheckoutDlg::EnableControls();
+}
+
+void 
+CheckoutDlg::EnableControls()
+{
+  pRevisionLabel->Enable(!pUseLatest->IsChecked());
+  pRevision->Enable(!pUseLatest->IsChecked());
+}
+

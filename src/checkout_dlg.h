@@ -1,29 +1,39 @@
 #ifndef _CHECKOUT_DLG_H_INCLUDED_
 #define _CHECKOUT_DLG_H_INCLUDED_
 
-#include "res/checkout.h"
-
 class CheckoutDlg : public wxDialog
 {
-
 public:
-  wxTextCtrl *moduleName;
-  wxTextCtrl *destFolder;
-  wxTextCtrl *user;
-  wxTextCtrl *pass;
-  wxTextCtrl *revision;
-  wxCheckBox *recursive;
-  CheckoutDlg (wxWindow *parent);
+  struct sData 
+  {
+    sData();
+    
+    wxString ModuleName;
+    wxString DestFolder;
+    wxString User;
+    wxString Password;
+    wxString Revision;
+    bool Recursive;
+    bool UseLatest;
+  };
 
-public:
-  void OnOk (wxCommandEvent & event);
-  void OnCancel (wxCommandEvent & event);
+  CheckoutDlg (wxWindow *parent, sData* pData);
+  virtual void InitDialog();
+
+  void OnOK (wxCommandEvent& event);
   void OnBrowse (wxCommandEvent & event);
 
-  void InitializeData ();
-
 private:
- DECLARE_EVENT_TABLE ()};
+  void InitializeData ();
+  void OnUseLatest(wxCommandEvent &event);
+  void EnableControls();
 
+  sData* m_pData;
+  wxCheckBox* pUseLatest;
+  wxStaticText* pRevisionLabel; 
+  wxTextCtrl* pRevision;
+
+  DECLARE_EVENT_TABLE ()
+};
 
 #endif

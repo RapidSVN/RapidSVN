@@ -53,13 +53,13 @@ CommitDlg::InitializeData ()
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_pData->User));
   authSizer->Add (pUser, 1, 
-    wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
+    wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
 
   authSizer->Add(new wxStaticText (this, -1, _T("Password")), 0,
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
   wxTextCtrl* pass = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
     wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_pData->Password));
-  authSizer->Add(pass, 1, wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
+  authSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
   
   middleSizer->Add(authSizer, 1, wxALL | wxEXPAND, 5);
 

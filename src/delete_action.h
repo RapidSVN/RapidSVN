@@ -2,14 +2,13 @@
 #define _DELETE_ACTION_H_INCLUDED_
 
 #include "action_thread.h"
+#include "delete_dlg.h"
 
 class DeleteAction:public ActionThread
 {
 private:
-  wxString user;
-  wxString pass;
-  wxString logMsg;
-  bool force;
+  DeleteDlg::sData Data;
+  wxFrame *m_pFrame;
 
   apr_array_header_t *targets;
 
