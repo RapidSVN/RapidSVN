@@ -38,6 +38,7 @@ enum
 
   ID_File_Min,
   ID_Add,
+  ID_AddRecursive,
   ID_Checkout,
   ID_Cleanup,
   ID_Copy,

@@ -22,11 +22,21 @@
 class AddAction:public Action
 {
 public:
-  AddAction (wxWindow * parent);
+  /**
+   * Constructor
+   *
+   * @param parent parent window
+   * @param recursive if true, add files/directories recursive
+   */
+  AddAction (wxWindow * parent, bool recursive=false);
   virtual ~AddAction ();
 
   virtual bool Prepare ();
   virtual bool Perform ();
+
+private:
+  struct Data;
+  Data * m;
 };
 
 #endif

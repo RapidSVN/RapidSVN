@@ -181,6 +181,7 @@ AppendModifyMenu (wxMenu * parentMenu)
 
   AppendMenuItem (parentMenu, ID_Add, _("&Add"),
                   wxBITMAP (add));
+  AppendMenuItem (parentMenu, ID_AddRecursive, _("Add r&ecursive"));
   AppendMenuItem (parentMenu, ID_Delete, _("&Delete"),
                   wxBITMAP (delete));
 

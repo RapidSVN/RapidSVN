@@ -21,13 +21,26 @@
 #include "ids.hpp"
 #include "add_action.hpp"
 
-AddAction::AddAction (wxWindow * parent)
-  : Action (parent, _("Add"), actionWithTargets)
+struct AddAction::Data
+{
+public:
+  bool recursive;
+
+  Data (bool recursive_)
+    : recursive (recursive_)
+  {
+  }
+};
+
+AddAction::AddAction (wxWindow * parent, bool recursive)
+  : Action (parent, _("Add"), actionWithTargets),
+    m (new Data (recursive))
 {
 }
 
 AddAction::~AddAction ()
 {
+  delete m;
 }
 
 bool
@@ -49,7 +62,7 @@ AddAction::Perform ()
   {
     const svn::Path & path = *it;
 
-    client.add (path.c_str (), false);
+    client.add (path.c_str (), m->recursive);
   }
 
   return true;

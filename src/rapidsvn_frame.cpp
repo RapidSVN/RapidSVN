@@ -896,6 +896,10 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
       action = new AddAction (this);
       break;
 
+    case ID_AddRecursive:
+      action = new AddAction (this, true);
+      break;
+
     case ID_Import:
       action = new ImportAction (this);
       break;
