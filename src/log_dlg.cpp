@@ -118,7 +118,7 @@ void
 LogDlg::InitializeData ()
 {
   wxString history;
-  history.Printf(_T("History: %ld revisions"), m_entries->size ());
+  history.Printf(_T("History: %d revisions"), m_entries->size ());
 
   wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
   wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
