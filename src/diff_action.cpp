@@ -229,11 +229,11 @@ public:
     wxString argv;
     wxString dstFile1Native (dstFile1.native ().c_str ());
     wxString dstFile2Native (dstFile2.native ().c_str ());
-    argv.Printf ("\"%s\" \"%s\" \"%s\"", prefs.diffTool, 
+    argv.Printf ("\"%s\" \"%s\" \"%s\"", prefs.diffTool.c_str (), 
                  dstFile1Native.c_str (), dstFile2Native.c_str ());
 
     wxString msg;
-    msg.Printf (_("Execute diff tool: %s"), argv);
+    msg.Printf (_("Execute diff tool: %s"), argv.c_str ());
     Trace (msg);
     wxExecute (argv);
   }
