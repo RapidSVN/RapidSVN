@@ -31,6 +31,11 @@ namespace svn
   struct Context::Data
   {
   public:
+    /** The usage of Apr makes sure Apr is initialized
+     * before any use of apr functions.
+     */
+    Apr apr;
+
     ContextListener * listener;
     bool logIsSet;
     int promptCounter;
@@ -40,9 +45,6 @@ namespace svn
     std::string password;
     std::string logMessage;
     std::string configDir;
-
-    /** The usage of Apr makes sure Apr is initialized */
-    Apr apr;
 
     /**
      * translate native c-string to utf8 
