@@ -131,6 +131,7 @@ public:
   void OnFolderBrowserSelChanged (wxTreeEvent & event);
   void OnFolderBrowserKeyDown (wxTreeEvent & event);
 
+  void UpdateCurrentPath ();
 
   // list control
   void UpdateFileList ();
@@ -188,6 +189,8 @@ private:
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
   ActionType lastAction;
+  wxString m_currentPath;
+  wxString m_title;
 
 DECLARE_EVENT_TABLE ()};
 

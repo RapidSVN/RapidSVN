@@ -45,22 +45,22 @@ public:
                const wxString & name = wxEmptyString,
                const bool hasChildren = FALSE);
     
-  const int getFolderType ()
+  const int getFolderType () const
   {
     return m_folderType;
   }
 
-  const wxString& getPath ()
+  const wxString& getPath () const 
   {
     return m_path;
   }
 
-  const wxString& getName ()
+  const wxString& getName () const
   {
     return m_name;
   }
 
-  const bool hasChildren ()
+  const bool hasChildren () const
   {
     return m_hasChildren;
   }

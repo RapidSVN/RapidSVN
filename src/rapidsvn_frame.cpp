@@ -131,6 +131,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   apr_initialize ();
   m_folder_browser = NULL;
   m_listCtrl = NULL;
+  m_title = title;
 
   // enable trace
   wxLog::AddTraceMask (wxTraceMisc);
@@ -399,11 +400,9 @@ RapidSvnFrame::UpdateFileList ()
 {
   if (m_listCtrl && m_folder_browser)
   {
-    const wxString & path = m_folder_browser->GetPath ();
-
-    if (path.length () > 0)
+    if (m_currentPath.length () > 0)
     {
-      m_listCtrl->UpdateFileList (path);
+      m_listCtrl->UpdateFileList (m_currentPath);
       m_listCtrl->Show (TRUE);
     }
     else
@@ -753,7 +752,7 @@ RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
   switch (event.GetId ())
   {
   case TOOLBAR_REFRESH:
-    m_listCtrl->UpdateFileList (m_folder_browser->GetPath ());
+    UpdateFileList ();
     break;
 
   case TOOLBAR_INFO:
@@ -785,8 +784,10 @@ RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
     MakeResolve ();
     break;
 
+  /*TODO remove this
   case TOOLBAR_FOLDERUP:
     {
+      
       wxString gigi;
       int x;
       wxFileName path (m_folder_browser->GetPath ());
@@ -797,6 +798,7 @@ RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
       //m_folder_browser->SetPath( path.GetFullPath() );
     }
     break;
+  */
   }
 }
 
@@ -952,7 +954,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
           lastAction == ACTION_TYPE_REVERT ||
           lastAction == ACTION_TYPE_RESOLVE)
       {
-        m_listCtrl->UpdateFileList (m_folder_browser->GetPath ());
+        UpdateFileList ();
       }
     }
     break;
@@ -1154,6 +1156,7 @@ void
 RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 {
 //  ((wxTreeCtrl*)event.m_eventObject)->Refresh( false, NULL );
+  UpdateCurrentPath ();
   UpdateFileList ();
 }
 
@@ -1176,6 +1179,17 @@ RapidSvnFrame::Preferences ()
   PreferencesDlg *pDlg = PreferencesDlg::CreateInstance (this);
   pDlg->ShowModal ();
   pDlg->Close (TRUE);
+}
+
+void
+RapidSvnFrame::UpdateCurrentPath ()
+{
+  if( m_folder_browser)
+  {
+    m_currentPath = m_folder_browser->GetPath ();
+  }
+
+  SetTitle (m_title + ": " + m_currentPath);
 }
 
 InfoPanel::InfoPanel (wxWindow * parent):wxPanel (parent, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxCLIP_CHILDREN)

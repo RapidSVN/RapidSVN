@@ -49,8 +49,7 @@ const unsigned int FolderBrowser::MAXLENGTH_PROJECT = 25;
 FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
                               const wxPoint & pos, const wxSize & size,
                               const wxString & name)
-  : wxControl (parent, id, pos, size, wxCLIP_CHILDREN, wxDefaultValidator, name),
-    m_pool(NULL)
+  : wxControl (parent, id, pos, size, wxCLIP_CHILDREN, wxDefaultValidator, name)
 {
   m_imageList = new wxImageList (16, 16, TRUE);
   m_imageList->Add (wxIcon (computer_xpm));
@@ -208,7 +207,7 @@ FolderBrowser::OnExpandItem (wxTreeEvent & event)
                 parentId, filename, 
                 FOLDER_IMAGE_FOLDER, 
                 FOLDER_IMAGE_FOLDER, data);
-            m_treeCtrl->SetItemHasChildren (newId, hasSubdirectories(fullPath.GetFullPath()) );
+            m_treeCtrl->SetItemHasChildren (newId, HasSubdirectories(fullPath.GetFullPath()) );
             m_treeCtrl->SetItemImage (newId, FOLDER_IMAGE_OPEN_FOLDER,  
                                       wxTreeItemIcon_Expanded);
           }
@@ -259,8 +258,9 @@ FolderBrowser::OnItemRightClk (wxTreeEvent & event)
   }
 }
 
+const
 wxString 
-FolderBrowser::GetPath ()
+FolderBrowser::GetPath () const
 {
   const wxTreeItemId id = m_treeCtrl->GetSelection ();
   
@@ -275,14 +275,24 @@ FolderBrowser::GetPath ()
   }
 }
 
-void 
-FolderBrowser::SetPath (const wxString& path)
+const FolderItemData *
+FolderBrowser::GetSelection () const
 {
-  //TODO 
+  const wxTreeItemId id = m_treeCtrl->GetSelection ();
+  
+  if(!id.IsOk())
+  {
+    return NULL;
+  }
+  else
+  {
+    FolderItemData* data = (FolderItemData*)m_treeCtrl->GetItemData (id);
+    return data;
+  }
 }
 
 bool
-FolderBrowser::hasSubdirectories (const wxString & path)
+FolderBrowser::HasSubdirectories (const wxString & path)
 {
   wxString filename;
 
@@ -309,17 +319,21 @@ FolderBrowser::hasSubdirectories (const wxString & path)
 void
 FolderBrowser::ShowMenu (long index, wxPoint & pt)
 {
-  wxFileName filepath (GetPath ());
-  wxMenu popup_menu;
-  wxString path = filepath.GetFullPath ();
+  const FolderItemData * data = GetSelection ();
+  if (data)
+  {
+    wxFileName filepath (data->getPath ());
+    wxMenu popup_menu;
+    wxString path = filepath.GetFullPath ();
 
-  buildMenu (popup_menu, UnixPath (path));
+    BuildMenu (popup_menu, UnixPath (path));
 
-  PopupMenu (&popup_menu, pt);
+    PopupMenu (&popup_menu, pt);
+  }
 }
 
 void
-FolderBrowser::buildMenu (wxMenu & menu, const wxString & path)
+FolderBrowser::BuildMenu (wxMenu & menu, const wxString & path)
 {
   wxMenuItem *pItem;
 

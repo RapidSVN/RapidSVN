@@ -13,6 +13,9 @@
 #ifndef _TRACER_H_INCLUDED_
 #define _TRACER_H_INCLUDED_
 
+// wx
+#include "wx/textctrl.h"
+
 /**
 * The Tracer class is an interface used for
 * traceing inside functions as svn_client_checkout, 

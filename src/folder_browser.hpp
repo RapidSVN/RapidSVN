@@ -15,12 +15,9 @@
 
 #include "unique_array_string.hpp"
 #include "wx/treectrl.h"
-#include "svncpp/pool.hpp"
 
-static const wxString FolderBrowserNameStr;
-
-class UniqueArrayString;
 class wxImageList;
+class FolderItemData;
 
 class FolderBrowser:public wxControl
 {
@@ -28,7 +25,7 @@ public:
   FolderBrowser (wxWindow * parent,  const wxWindowID id = -1,
                  const wxPoint & pos = wxDefaultPosition,
                  const wxSize & size = wxDefaultSize,
-                 const wxString & name = FolderBrowserNameStr);
+                 const wxString & name = "FolderBrowser");
 
   virtual ~ FolderBrowser ();
 
@@ -38,11 +35,24 @@ public:
 
   const bool RemoveProject ();
   void AddProject (const wxString & projectPath);
-  wxString GetPath ();
-  void SetPath(const wxString& path);
+
+  /**
+   * returns the path of the current selection
+   * if nothing is selected, an empty string
+   * is returned
+   */
+  const wxString GetPath () const;
+
+  /**
+   * returns the "context" of the current selection.
+   * returns NULL if nothing is selected
+   *
+   * @return context of selection
+   */
+  const FolderItemData * GetSelection () const;
+  
 
 private:
-  svn::Pool m_pool;
   wxTreeCtrl* m_treeCtrl;
   wxTreeItemId m_rootId;
   wxImageList* m_imageList;
@@ -56,8 +66,8 @@ private:
   void OnItemRightClk (wxTreeEvent & event);
 
   void ShowMenu (long index, wxPoint & pt);
-  void buildMenu (wxMenu & menu, const wxString & path);
-  bool hasSubdirectories (const wxString & path);
+  void BuildMenu (wxMenu & menu, const wxString & path);
+  bool HasSubdirectories (const wxString & path);
   void Delete (const wxTreeItemId & id);
   void DeleteAllItems ();
 

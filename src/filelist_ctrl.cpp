@@ -422,6 +422,10 @@ FileListCtrl::OnKeyDown (wxKeyEvent & event)
 void
 FileListCtrl::OnItemActivated (wxListEvent & event)
 {
+  //TODO do we really need this
+  //TODO if the answer is yes, then find a way to
+  //TODO eliminate the way calls are passed DEEP
+  /*
   wxString name = GetItemText (event.GetIndex ());
   wxFileName fullpath (m_path, name);
 
@@ -434,6 +438,7 @@ FileListCtrl::OnItemActivated (wxListEvent & event)
     wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->SetPath (fullpath.
                                                               GetFullPath ());
   }
+  */
 }
 
 void
