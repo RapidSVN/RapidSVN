@@ -71,9 +71,7 @@ namespace svn
       return;
 
     svn_error_t * error =
-      svn_client_checkout (Notify::notify,
-                           (void *) m_notify,
-                           url, destPath.c_str (),
+      svn_client_checkout (url, destPath.c_str (),
                            revision.revision (),
                            recurse,
                            context (apr_pool),
@@ -100,8 +98,6 @@ namespace svn
       svn_client_delete (&commit_info, path.c_str (), 
                          NULL, // wx_adm_access
                          force,
-                         NULL, NULL, //no log message function/baton
-                         Notify::notify, (void *) m_notify, 
                          context (apr_pool),
                          apr_pool);
     if(error != NULL)
@@ -115,8 +111,10 @@ namespace svn
     apr_pool_t * apr_pool = subPool.pool ();
 
     svn_error_t * error =
-      svn_client_revert (path.c_str (), recurse, Notify::notify, 
-                         (void *) m_notify, apr_pool);
+      svn_client_revert (path.c_str (), 
+                         recurse, 
+                         context (apr_pool),
+                         apr_pool);
 
     if(error != NULL)
       throw ClientException (error);
@@ -131,8 +129,7 @@ namespace svn
     svn_error_t * error =
       svn_client_add (path.c_str (), 
                       recurse, 
-                      Notify::notify, 
-                      (void *) m_notify, 
+                      context (apr_pool),
                       apr_pool);
 
     if(error != NULL)
@@ -149,8 +146,6 @@ namespace svn
       svn_client_update (path.c_str (),
                          revision.revision (),
                          recurse,
-                         Notify::notify,
-                         (void *) m_notify,
                          context (apr_pool),
                          apr_pool);
     if(error != NULL)
@@ -166,15 +161,15 @@ namespace svn
     svn_client_commit_info_t *commit_info = NULL;
     log_msg_baton baton (message);
 
+    svn_client_ctx_t * ctx = context (apr_pool);
+    ctx->log_msg_func = &get_log_message;
+    ctx->log_msg_baton = &baton;
+
     svn_error_t * error =
       svn_client_commit (&commit_info, 
-                         Notify::notify, 
-                         (void *) m_notify, 
                          targets.array (subPool), 
-                         &get_log_message, 
-                         &baton, 
                          !recurse, 
-                         context (apr_pool),
+                         ctx,
                          apr_pool);
     if (error != NULL)
       throw ClientException (error);
@@ -200,10 +195,6 @@ namespace svn
                        srcRevision.revision (),
                        destPath.c_str (),
                        NULL, // wc_adm_access
-                       NULL, // log_msg_func
-                       NULL, // log_msg_baton
-                       Notify::notify, 
-                       (void *) m_notify,
                        context (apr_pool),
                        apr_pool);
   
@@ -227,10 +218,6 @@ namespace svn
                        srcRevision.revision (),
                        destPath.c_str (),
                        force,
-                       NULL, // log_msg_func
-                       NULL, // log_msg_baton
-                       Notify::notify,
-                       (void *) m_notify,
                        context (apr_pool),
                        apr_pool);
 
@@ -245,16 +232,13 @@ namespace svn
     apr_pool_t * apr_pool = subPool.pool ();
     svn_client_commit_info_t *commit_info = NULL;
     log_msg_baton baton (message);
+    svn_client_ctx_t * ctx = context (apr_pool);
+    ctx->log_msg_func = &get_log_message;
+    ctx->log_msg_baton = &baton;
 
     svn_error_t * error =  
-      svn_client_mkdir (&commit_info,
-                        path.c_str (),
-                        &get_log_message,
-                        &baton,
-                        Notify::notify,
-                        (void *) m_notify,
-                        context (apr_pool),
-                        apr_pool);
+      svn_client_mkdir (&commit_info, path.c_str (),
+                        ctx, apr_pool);
 
     if(error != NULL)
       throw ClientException (error);
@@ -281,9 +265,8 @@ namespace svn
 
     svn_error_t * error =  
       svn_client_resolve (path.c_str (),
-                          Notify::notify,
-                          (void *) m_notify,
                           recurse,
+                          context (apr_pool),
                           apr_pool);
 
     if(error != NULL)
@@ -302,8 +285,6 @@ namespace svn
                          destPath.c_str (),
                          const_cast<svn_opt_revision_t*>
                          (revision.revision ()),
-                         Notify::notify,
-                         (void *) m_notify,
                          context (apr_pool),
                          apr_pool);
 
@@ -325,8 +306,6 @@ namespace svn
                          url,
                          revision.revision (),
                          recurse,
-                         Notify::notify,
-                         (void *) m_notify,
                          context (apr_pool),
                          apr_pool);
     
@@ -345,18 +324,17 @@ namespace svn
     apr_pool_t * apr_pool = subPool.pool ();
     svn_client_commit_info_t *commit_info = NULL;
     log_msg_baton baton (message);
+    svn_client_ctx_t * ctx = context (apr_pool);
+    ctx->log_msg_func = &get_log_message;
+    ctx->log_msg_baton = &baton;
 
     svn_error_t * error =  
       svn_client_import (&commit_info,
-                         Notify::notify,
-                         (void *) m_notify,
                          path.c_str (),
                          url,
                          newEntry.c_str (),
-                         &get_log_message,
-                         &baton,
                          !recurse,
-                         context (apr_pool),
+                         ctx,
                          apr_pool);
 
     if(error != NULL)
@@ -372,9 +350,7 @@ namespace svn
     apr_pool_t * apr_pool = subPool.pool ();
 
     svn_error_t * error =  
-      svn_client_merge (Notify::notify,
-                        (void *) m_notify,
-                        path1.c_str (),
+      svn_client_merge (path1.c_str (),
                         revision1.revision (),
                         path2.c_str (),
                         revision2.revision (),
@@ -387,6 +363,16 @@ namespace svn
 
     if(error != NULL)
       throw ClientException (error);
+  }
+
+  svn_client_ctx_t * 
+  Modify::context (const Pool & pool)
+  {
+    svn_client_ctx_t * ctx = Auth::context (pool);
+    ctx->notify_func = Notify::notify;
+    ctx->notify_baton = (void *) m_notify;
+
+    return ctx;
   }
 
 //TODO this doesnt seem to do anything

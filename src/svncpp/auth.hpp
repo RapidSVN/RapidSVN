@@ -33,6 +33,8 @@ namespace svn
   private:
     std::string m_username;
     std::string m_password;
+    svn_client_auth_baton_t m_auth_baton;
+    svn_client_ctx_t m_ctx;
 
   public:
     Auth ();
@@ -54,7 +56,8 @@ namespace svn
      * @param pool pool to use for allocation
      * @return client context
      */
-    svn_client_ctx_t * context (const Pool & pool);
+    virtual svn_client_ctx_t * 
+    context (const Pool & pool);
   };
 }
 

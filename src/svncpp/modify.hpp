@@ -191,6 +191,15 @@ namespace svn
     void merge (const Path & path1, const Revision & revision1, 
                 const Path & path2, const Revision & revision2,
                 const Path & localPath, bool force, bool recurse);
+
+    /**
+     * returns a client context for authentication
+     *
+     * @param pool pool to use for allocation
+     * @return client context
+     */
+    virtual svn_client_ctx_t * 
+    context (const Pool & pool);
   };
 
 }

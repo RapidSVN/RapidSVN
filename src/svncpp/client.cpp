@@ -62,7 +62,6 @@ namespace svn
       true,         // get all
       false,        //update
       false,        //no_ignore,
-      NULL, NULL,   //notify func, notify baton
       NULL,         //client ctx
       apr_pool);
 
@@ -116,7 +115,6 @@ namespace svn
       true,         // get all
       false,        //update
       false,        //no_ignore,
-      NULL, NULL,   //notify func, notify baton
       NULL,         //client ctx
       apr_pool);
 

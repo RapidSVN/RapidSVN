@@ -45,20 +45,22 @@ namespace svn
   svn_client_ctx_t * 
   Auth::context (const Pool & pool)
   {
-    apr_pool_t * p = pool.pool ();
-    svn_client_auth_baton_t * baton =
-      (svn_client_auth_baton_t *)
-      apr_pcalloc (p, sizeof (svn_client_auth_baton_t));
-    baton->username = svn_string_create (m_username.c_str (), p)->data;
-    baton->password = svn_string_create (m_password.c_str (), p)->data;
+    svn_client_auth_baton_t * baton = & m_auth_baton;
+    baton->username = m_username.c_str ();
+    baton->password = m_password.c_str ();
     baton->prompt_callback = NULL;
     baton->prompt_baton = NULL;
     baton->store_auth_info = 1;
-    baton->got_new_auth_info = 1;
 
-    svn_client_ctx_t * ctx =
-      svn_client_ctx_create (p);
-    svn_client_ctx_set_auth_baton (ctx, baton);
+    svn_client_ctx_t * ctx = & m_ctx;
+    ctx->old_auth_baton = baton;
+    ctx->auth_baton = NULL;
+    ctx->prompt_func = NULL;
+    ctx->prompt_baton = NULL;
+    ctx->notify_func = NULL;
+    ctx->notify_baton = NULL;
+    ctx->log_msg_func = NULL;
+    ctx->log_msg_baton = NULL;
 
     return ctx;
   }
