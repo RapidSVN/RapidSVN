@@ -14,11 +14,14 @@
 // wxwindows
 #include "wx/wx.h"
 
+// svncpp
+#include "svncpp/url.hpp"
+
 // app
 #include "about_dlg.hpp"
-#include "res/bitmaps/logo.xpm"
 #include "svn_version.h"
 #include "version.hpp"
+#include "res/bitmaps/logo.xpm"
 
 AboutDlg::AboutDlg (wxWindow * parent)
   : wxDialog (parent, -1, "", wxDefaultPosition)
@@ -26,6 +29,23 @@ AboutDlg::AboutDlg (wxWindow * parent)
   wxString title;
   title.Printf (_("About %s"), APPLICATION_NAME);
   SetTitle (title);
+
+  std::vector<std::string> schemasVector =
+    svn::Url::supportedSchemas ();
+  wxString schemasStr ("");
+  std::vector<std::string>::const_iterator it;
+  bool first = true;
+  for (it = schemasVector.begin (); it != schemasVector.end (); it++)
+  {
+    if (first)
+      first = false;
+    else
+      schemasStr += "\n";
+    std::string schema = *it;
+    schemasStr += "- ";
+    schemasStr += schema.c_str ();
+  }
+    
 
   // format string
   wxString version;
@@ -51,39 +71,50 @@ AboutDlg::AboutDlg (wxWindow * parent)
              wxMINOR_VERSION, 
              wxRELEASE_NUMBER);
   
-  wxString msg;
-  msg.Printf ("%s\n"
-              "%s\n"
-              "\n%s\n\n"
-              "%s\n"
-              "http://rapidsvn.tigris.org\n"
-              "\n"
-              "\n%s\n"
-              "%s\n"
-              "%s",
-              version.c_str (),
-              milestone.c_str (),
-              RAPIDSVN_COPYRIGHT,
-              _("For more information see:"),
-              _("Built with:"),
-              subversion.c_str (),
-              wx.c_str ());
+  wxString copy;
+  copy.Printf ("%s\n" // version
+               "%s\n" // milestone
+               "\n%s\n\n" // copyright
+               "%s\n" // for more information
+               "http://rapidsvn.tigris.org\n",
+               version.c_str (),
+               milestone.c_str (),
+               RAPIDSVN_COPYRIGHT,
+               _("For more information see:"));
+
+  wxString built;
+  built.Printf ("%s\n" // built with
+                "%s\n" // subversion
+                "\n"
+                "%s", // wxwindows
+                _("Built with:"),
+                subversion.c_str (),
+                wx.c_str ());
+
+  wxString schemas;
+  schemas.Printf ("%s\n" // "supported url schemas"
+                  "%s", // list of schemas
+                  _("Supported URL schemas: "),
+                  schemasStr.c_str ());
 
   // create controls
-
-  wxStaticText * label = new wxStaticText (this, -1, msg);
+  wxStaticText * labelCopy = new wxStaticText (this, -1, copy);
+  wxStaticText * labelBuilt = new wxStaticText (this, -1, built);
+  wxStaticText * labelSchemas = new wxStaticText (this, -1, schemas);
   wxStaticBitmap * logo = 
     new wxStaticBitmap (this, -1, wxBitmap (logo_xpm));
 
   wxButton * button = new wxButton (this, wxID_OK, _("OK"));
 
   // position controls
-  wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
-  topSizer->Add (logo, 0, wxALL, 20);
-  topSizer->Add (label, 1, wxALL | wxEXPAND, 20);
+  wxFlexGridSizer * topSizer = new wxFlexGridSizer (2, 20, 10);
+  topSizer->Add (logo, 0);
+  topSizer->Add (labelCopy, 1, wxEXPAND);
+  topSizer->Add (labelBuilt, 0);
+  topSizer->Add (labelSchemas, 0);
 
   wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-  mainSizer->Add (topSizer);
+  mainSizer->Add (topSizer, 0, wxALL, 20);
   mainSizer->Add (button, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
   SetAutoLayout(true);

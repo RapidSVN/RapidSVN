@@ -14,17 +14,40 @@
 #ifndef _SVNCPP_URL_H_
 #define _SVNCPP_URL_H_
 
+// stl
+#include <string>
+#include <vector>
+
 namespace svn
 {
   class Url
   {
   public:
+    /** Constructor */
     Url ();
 
+    /** Destructor */
     virtual ~Url ();
 
+    /**
+     * Checks if @a url is valid
+     *
+     * Example of a valid URL:
+     *   http://svn.collab.net/repos/svn
+     * Example of an invalid URL:
+     *   /home/foo/bar
+     */
     static bool
     isValid (const char * url);
+
+    /**
+     * returns a vector with url schemas that are
+     * supported by svn 
+     *
+     * @return vector with entries like "file:", "http:"
+     */
+    static std::vector<std::string>
+    supportedSchemas ();
   };
 }
 
