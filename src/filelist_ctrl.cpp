@@ -1074,26 +1074,16 @@ FileListCtrl::GetTargets () const
 
   for (i = 0; i < arr.GetCount (); i++)
   {
-    wxFileName fname (m->Path, GetItemText (arr[i]));
-    wxString path = fname.GetFullPath ();
+    const int index = arr.Item (i);
+    svn::Status * status = (svn::Status*)GetItemData (index);
 
-    v.push_back (path.c_str ());
+    if (status == 0)
+      continue;
+
+    v.push_back (status->path ());
   }
 
   return svn::Targets (v);
-}
-
-void
-FileListCtrl::GetFullUnixPath (long index, wxString & fullpath)
-{
-  fullpath.Empty ();
-
-  if (index < 0)
-    return;
-
-  wxFileName fname (m->Path, GetItemText (index));
-  fullpath = fname.GetFullPath ();
-  UnixPath (fullpath);
 }
 
 void

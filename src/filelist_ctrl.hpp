@@ -138,8 +138,6 @@ private:
   Data * m;
 
   // utility methods
-  void GetFullUnixPath (long index, wxString & fullpath);
-
   void ShowMenu (long index, wxPoint & pt);
   void buildMenu (wxMenu & menu, const wxString & path);
   void DeleteItem( long item );

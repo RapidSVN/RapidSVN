@@ -1034,18 +1034,18 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 void
 RapidSvnFrame::ShowInfo ()
 {
-  IndexArray arr = m_listCtrl->GetSelectedItems ();
-  size_t i;
-  wxString path = m_currentPath;
   FileInfo fileInfo (m_context);
 
   try
   {
-    for (i = 0; i < arr.GetCount (); i++)
+    svn::Targets targets = m_listCtrl->GetTargets ();
+    std::vector<svn::Path> vector = targets.targets ();
+    std::vector<svn::Path>::const_iterator it;
+
+    for (it = vector.begin (); it != vector.end (); it++)
     {
-      wxFileName fname (path, m_listCtrl->GetItemText (arr[i]));
-      wxString fullPath = fname.GetFullPath ();
-      fileInfo.addPath (fullPath.c_str ());
+      svn::Path path = *it;
+      fileInfo.addPath (path.c_str ());
     }
 
     wxString info = fileInfo.info ();
