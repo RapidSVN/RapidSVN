@@ -11,12 +11,17 @@
  * ====================================================================
  */
 
-// svncpp includes
+// svncpp 
 #include "path.hpp"
 #include "pool.hpp"
 
-//subversion includes
+// subversion api
 #include "svn_path.h"
+
+
+// apr api
+#include "apr_file_io.h"
+
 
 namespace svn
 {
@@ -73,7 +78,7 @@ namespace svn
   }
 
   void
-  Path::addCompontent (const char * component)
+  Path::addComponent (const char * component)
   {
     Pool pool;
 
@@ -84,8 +89,16 @@ namespace svn
     m_path = newPath;
   }
 
+
+  void 
+  Path::addComponent (const std::string & component)
+  {
+    addComponent (component.c_str ());
+  }
+
+
   void
-  Path::split (std::string & dirpath, std::string & basename)
+  Path::split (std::string & dirpath, std::string & basename) const
   {
     Pool pool;
 
@@ -96,6 +109,57 @@ namespace svn
 
     dirpath = cdirpath;
     basename = cbasename;
+  }
+
+
+  void
+  Path::split (std::string & dir, std::string & filename, std::string & ext) const
+  {
+    std::string basename;
+
+    // first split path into dir and filename+ext
+    split (dir, basename);
+
+    // next search for last .
+    size_t pos = basename.find_last_of (".");
+    if (pos == std::string::npos)
+    {
+      filename = basename;
+      ext = "";
+    }
+    else
+    {
+      filename = basename.substr (0, pos);
+      ext = basename.substr (pos);
+    }
+  }
+
+
+  Path
+  Path::getTempDir ()
+  {
+    const char * tempdir;
+    Pool pool;
+
+    apr_temp_dir_get (&tempdir, pool);
+
+    return tempdir;
+  }
+
+
+  size_t 
+  Path::length () const
+  {
+    return m_path.length ();
+  }
+
+
+  std::string
+  Path::native () const
+  {
+    Pool pool;
+
+    return svn_path_local_style (m_path.c_str (), pool);
   }
 
 }

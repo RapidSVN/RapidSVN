@@ -85,13 +85,24 @@ namespace svn
     bool 
     isset() const;
 
+
     /**
      * adds a new URL component to the path
      *
      * @param component new component to add
      */
     void
-    addCompontent (const char * component);
+    addComponent (const char * component);
+
+
+    /**
+     * adds a new URL component to the path
+     *
+     * @param component new component to add
+     */
+    void
+    addComponent (const std::string & component);
+
 
     /**
      * split path in its components
@@ -100,7 +111,36 @@ namespace svn
      * @param basename filename
      */
     void
-    split (std::string & dirpath, std::string & basename);
+    split (std::string & dirpath, std::string & basename) const;
+
+
+    /**
+     * split path in its components including
+     * file extension
+     *
+     * @param dir directory component
+     * @param filename filename
+     * @param ext extension (including leading dot ".")
+     */
+    void
+    split (std::string & dir, std::string & filename, std::string & ext) const;
+
+
+    /**
+     * returns the temporary directory
+     */
+    static Path
+    getTempDir ();
+
+
+    /** return the length of the path-string */
+    size_t 
+    length () const;
+
+
+    /** returns the path with native separators */
+    std::string
+    native () const;
   };
 }
 
