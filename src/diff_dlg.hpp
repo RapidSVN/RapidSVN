@@ -45,8 +45,8 @@ public:
   /**
    * returns the data the user has entered
    */
-  const DiffData &
-  GetData ();
+  const DiffData
+  GetData () const;
 
 private:
   /** hide implementation details */

@@ -12,8 +12,9 @@
  */
 
 // wxwindows
+#include "wx/wx.h"
 #include "wx/sizer.h"
-#include <wx/valgen.h>
+#include "wx/valgen.h"
 
 // app
 #include "diff_data.hpp"
@@ -103,7 +104,7 @@ public:
         valid = CheckRevision (mTextRevision->GetValue ());
     }
     else 
-      valid = mTextDate->GetValue ().Trim ().Length () > 0;
+      valid = CheckDateTime (mTextDate->GetValue ());
 
     if (valid)
       if (mCheckUseUrl->GetValue ())
@@ -113,22 +114,41 @@ public:
   }
 
 
-  const DiffData::Revision &
-  GetRevision () 
+  const svn::Revision 
+  GetRevision () const
   {
-    mRevision.Init ();
-    mRevision.useRevnum = mRadioUseRevision->GetValue ();
-    if (mRevision.useRevnum)
-      mRevision.revnum = mTextRevision->GetValue ();
+    if (mRadioUseRevision->GetValue ())
+    {
+      if (mCheckUseLatest->GetValue ())
+        return svn::Revision (svn::Revision::HEAD);
+      else
+      {
+        svn_revnum_t revnum;
+        ParseRevision (mTextRevision->GetValue (), revnum);
+        return svn::Revision (revnum);
+      }
+    }
     else
-      mRevision.date = mTextDate->GetValue ();
+    {
+      apr_time_t time=0;
 
-    mRevision.useUrl = mCheckUseUrl->GetValue ();
-    if (mRevision.useUrl)
-      mRevision.url = mTextUrl->GetValue ();
+      ParseDateTime (mTextDate->GetValue (), time);
+      return svn::Revision (time);
+    }
+  }
 
-    // @todo Use validators
-    return mRevision;
+
+  bool 
+  GetUseUrl () const
+  {
+    return mCheckUseUrl->GetValue ();
+  }
+
+
+  const wxString 
+  GetUrl () const
+  {
+    return mTextUrl->GetValue ();
   }
 
 private:
@@ -158,9 +178,6 @@ private:
 
   /** browse button if the user wants to search for a local file */
   wxButton * mButtonBrowse;
-
-
-  DiffData::Revision mRevision;
 
 
   /** Initialize and position the controls for the panel */
@@ -306,7 +323,6 @@ public:
   wxComboBox * mComboCmpType;
   RevisionPanel * mRevisionOne;
   RevisionPanel * mRevisionTwo;
-  DiffData mDiffData;
 
   /** Constructor */
   Data (wxWindow * parent)
@@ -317,11 +333,31 @@ public:
   }
 
 
-  const DiffData &
+  const DiffData
   GetDiffData () const
   {
-    return mDiffData;
+    int sel = mComboCmpType->GetSelection ();
+    DiffData diffData;
+
+    switch (sel)
+    {
+    case 0:
+      diffData.compareType = DiffData::CMP_WC_WITH_SAME_REV;
+      break;
+
+    case 1:
+      diffData.compareType = DiffData::CMP_WC_WITH_DIFFERENT_REV;
+      diffData.revision1 = mRevisionOne->GetRevision ();
+      break;
+
+    default:
+      diffData.compareType = DiffData::CMP_TWO_REV;
+      diffData.revision1 = mRevisionOne->GetRevision ();
+      diffData.revision2 = mRevisionTwo->GetRevision ();
+    }
+    return diffData;
   }
+
 
 private:
   wxWindow * mParent;
@@ -418,31 +454,6 @@ private:
   }
 
 
-  void 
-  OnOK (wxCommandEvent & event)
-  {
-    int sel = mComboCmpType->GetSelection ();
-
-    switch (sel)
-    {
-    case 0:
-      mDiffData.compareType = DiffData::CMP_WC_WITH_SAME_REV;
-      break;
-
-    case 1:
-      mDiffData.compareType = DiffData::CMP_WC_WITH_DIFFERENT_REV;
-      mDiffData.revision1 = mRevisionOne->GetRevision ();
-      break;
-
-    default:
-      mDiffData.compareType = DiffData::CMP_TWO_REV;
-      mDiffData.revision1 = mRevisionOne->GetRevision ();
-      mDiffData.revision2 = mRevisionTwo->GetRevision ();
-    }
-
-    event.Skip ();
-  }
-
 private:
   DECLARE_EVENT_TABLE ()
 };
@@ -450,7 +461,6 @@ private:
 
 BEGIN_EVENT_TABLE (DiffDlg::Data, wxPanel)
   EVT_COMBOBOX (ID_CompareType, Data::OnCommand)
-  EVT_BUTTON (wxID_OK, Data::OnOK)
   EVENT_UPDATE (-1, Data::OnCommand)
 END_EVENT_TABLE ()
 
@@ -480,8 +490,8 @@ DiffDlg::~DiffDlg ()
 }
 
 
-const DiffData &
-DiffDlg::GetData () 
+const DiffData
+DiffDlg::GetData () const
 {
   return m->GetDiffData ();
 }
