@@ -109,6 +109,10 @@ SOURCE=.\notify.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\path.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\pool.cpp
 # End Source File
 # Begin Source File
@@ -117,7 +121,19 @@ SOURCE=.\property.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\revision.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\skeleton.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\status.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\targets.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"

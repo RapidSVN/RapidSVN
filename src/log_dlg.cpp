@@ -20,7 +20,6 @@
 #include "svncpp/notify.hpp"
 
 // app
-#include "include.hpp"
 #include "rapidsvn_app.hpp"
 #include "log_dlg.hpp"
 

@@ -272,6 +272,10 @@ SOURCE=.\src\checkout_action.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\checkout_data.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\checkout_dlg.hpp
 # End Source File
 # Begin Source File
@@ -312,7 +316,15 @@ SOURCE=.\src\folder_browser.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\folder_item_data.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\icons.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\ids.hpp
 # End Source File
 # Begin Source File
 
@@ -408,6 +420,10 @@ SOURCE=.\src\tracer.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\unique_array_string.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\update_action.hpp
 # End Source File
 # Begin Source File
@@ -417,6 +433,10 @@ SOURCE=.\src\update_dlg.hpp
 # Begin Source File
 
 SOURCE=.\src\utils.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\version.hpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -714,6 +734,10 @@ SOURCE=.\wx\msw\watch1.cur
 # Begin Source File
 
 SOURCE=.\res\checkout.wxr
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\Makefile.in
 # End Source File
 # End Target
 # End Project

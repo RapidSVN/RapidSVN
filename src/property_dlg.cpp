@@ -18,7 +18,6 @@
 #include "svncpp/exception.hpp"
 
 // app
-#include "include.hpp"
 #include "rapidsvn_app.hpp"
 #include "property_dlg.hpp"
 

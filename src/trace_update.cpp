@@ -261,7 +261,7 @@ close_file (void *file_baton, apr_pool_t *)
       if (fb->text_changed)
       {
         if (!tc)
-          SVN_ERR (svn_wc_text_modified_p (&merged, fb->path, adm_access, subpool));
+          SVN_ERR (svn_wc_text_modified_p (&merged, fb->path, TRUE, adm_access, subpool));
 
         if (tc)
           statchar_buf[0] = 'C';
