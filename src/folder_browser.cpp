@@ -410,10 +410,9 @@ public:
                      const wxTreeItemId & parentId)
   {
     svn::Client client (GetContext ());
-    svn::Revision revision (svn::Revision::HEAD);
+    svn::Revision rev (svn::Revision::HEAD);
     svn::DirEntries entries = 
-      client.ls (parentPath, const_cast<struct svn_opt_revision_t *>(
-        revision.revision ()), false);
+      client.ls (parentPath, rev, false);
     svn::DirEntries::const_iterator it;
 
     //bool parentHasSubdirectories = false;
