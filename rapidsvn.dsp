@@ -383,6 +383,10 @@ SOURCE=.\src\diff_action.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\diff_data.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\diff_dlg.hpp
 # End Source File
 # Begin Source File
