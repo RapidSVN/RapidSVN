@@ -59,15 +59,6 @@ namespace svn
     Targets (const char * target );
 
     /**
-     * Constructor from an APR hash containing
-     * char *.
-     *
-     * @param hash APR hash
-     * @param pool Pool needed for conversions
-     */
-    Targets (const apr_hash_t * hash, const Pool pool);
-
-    /**
      * Copy Constructor
      *
      * @param targets Source
