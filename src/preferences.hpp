@@ -42,6 +42,11 @@ public:
    */
   bool editorAlways;
 
+  /**
+   * arguments to pass to the editor
+   */
+  wxString editorArgs;
+
   /** 
    * location of the executable that will be 
    * used for exploring folders
@@ -54,9 +59,19 @@ public:
   bool explorerAlways;
 
   /**
+   * arguments to pass to the explorer
+   */
+  wxString explorerArgs;
+
+  /**
    * location of the diff-tool executable
    */
   wxString diffTool;
+
+  /**
+   * arguments to pass to the diff tool
+   */
+  wxString diffToolArgs;
 
   /** 
    * delete all temporary files made by the program upon exit

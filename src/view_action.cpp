@@ -62,8 +62,16 @@ ViewAction::Perform ()
     path = GetPathAsTempFile (
       m_data.path.c_str (), m_data.revision).c_str ();
 
-  wxString argv (prefs.editor + " \"" + path + "\"");
-  wxExecute (argv);
+  wxString args (prefs.editorArgs);
+  TrimString (args);
+
+  if (args.Length () == 0)
+    args = "\"" + path + "\"";
+  else
+    args.Replace ("%1", path, true);
+
+  wxString cmd (prefs.editor + " " + args);
+  wxExecute (cmd);
 
   return true;
 }

@@ -164,18 +164,27 @@ private:
       new wxStaticBox (this, -1, _("Standard editor:"));
 
     wxStaticBoxSizer * sizerEditor = 
-      new wxStaticBoxSizer (boxEditor, wxHORIZONTAL);
+      new wxStaticBoxSizer (boxEditor, wxVERTICAL);
     {
       // text ctrl
-      wxTextValidator valText (wxFILTER_NONE, 
-                      & m_prefs->editor);
-      mTextEditor = new wxTextCtrl (this, -1, "", 
-                                      wxDefaultPosition, 
-                                      wxSize (200, -1), 
-                                      0, valText);
+      wxTextValidator val (wxFILTER_NONE, &m_prefs->editor);
+      mTextEditor = new wxTextCtrl (
+        this, -1, "", wxDefaultPosition, 
+        wxSize (200, -1), 0, val);
+
       // button
       wxButton * button = 
         CreateEllipsisButton(this, ID_StandardEditorLookup);
+
+      // arguments
+      wxStaticText * labelArgs = new wxStaticText (
+        this, -1, _("Program arguments (%1=selected file):"), 
+        wxDefaultPosition);
+      wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->editorArgs);
+      wxTextCtrl * args = new wxTextCtrl (
+        this, -1, "", wxDefaultPosition, 
+        wxSize (200, -1), 0, valArgs);
+
       // checkbox
       wxGenericValidator valCheck (&m_prefs->editorAlways);
       wxCheckBox * check =
@@ -189,8 +198,10 @@ private:
                   wxALIGN_CENTER | wxEXPAND | wxALL, 5);
       sizer->AddGrowableCol (0);
       sizer->Add (button, 0, wxALIGN_CENTER);
-      sizer->Add (check, 1, wxALL | wxEXPAND, 5);
       sizerEditor->Add (sizer, 1, wxEXPAND);
+      sizerEditor->Add (labelArgs, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
+      sizerEditor->Add (args, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
+      sizerEditor->Add (check, 1, wxALL | wxEXPAND, 5);
     }
 
     // Standard File Explorer
@@ -198,7 +209,7 @@ private:
       new wxStaticBox (this, -1, _("Standard file explorer:"));
 
     wxStaticBoxSizer * sizerExplorer =
-      new wxStaticBoxSizer (boxExplorer, wxHORIZONTAL);
+      new wxStaticBoxSizer (boxExplorer, wxVERTICAL);
     {
       // text ctrl
       wxTextValidator valText (wxFILTER_NONE, &m_prefs->explorer);
@@ -210,6 +221,15 @@ private:
       // button
       wxButton * button = 
         CreateEllipsisButton(this, ID_StandardExplorerLookup);
+
+      // arguments
+      wxStaticText * labelArgs = new wxStaticText (
+        this, -1, _("Program arguments (%1=selected directory):"), 
+        wxDefaultPosition);
+      wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->explorerArgs);
+      wxTextCtrl * args = new wxTextCtrl (
+        this, -1, "", wxDefaultPosition, 
+        wxSize (200, -1), 0, valArgs);
 
       // check
       wxGenericValidator valCheck (&m_prefs->explorerAlways);
@@ -224,9 +244,10 @@ private:
                   wxALIGN_CENTER | wxEXPAND | wxALL, 5);
       sizer->AddGrowableCol (0);
       sizer->Add (button, 0, wxALIGN_CENTER);
-      sizer->Add (check, 1, 
-                  wxEXPAND | wxALL, 5);
       sizerExplorer->Add (sizer, 1, wxEXPAND);
+      sizerExplorer->Add (labelArgs, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
+      sizerExplorer->Add (args, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
+      sizerExplorer->Add (check, 1, wxEXPAND | wxALL, 5);
     }
 
 
@@ -235,7 +256,7 @@ private:
       new wxStaticBox (this, -1, _("Diff tool:"));
 
     wxStaticBoxSizer * sizerDiffTool =
-      new wxStaticBoxSizer (boxDiffTool, wxHORIZONTAL);
+      new wxStaticBoxSizer (boxDiffTool, wxVERTICAL);
     {
       // text ctrl
       wxTextValidator valText (wxFILTER_NONE, &m_prefs->diffTool);
@@ -248,6 +269,15 @@ private:
       wxButton * button = 
         CreateEllipsisButton(this, ID_DiffToolLookup);
 
+      // arguments
+      wxStaticText * labelArgs = new wxStaticText (
+        this, -1, _("Program arguments (%1=file1, %2=file2):"), 
+        wxDefaultPosition);
+      wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->diffToolArgs);
+      wxTextCtrl * args = new wxTextCtrl (
+        this, -1, "", wxDefaultPosition, 
+        wxSize (200, -1), 0, valArgs);
+
       // position controls
       wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
       sizer->Add (mTextDiffTool, 1, 
@@ -255,6 +285,8 @@ private:
       sizer->AddGrowableCol (0);
       sizer->Add (button, 0, wxALIGN_CENTER);
       sizerDiffTool->Add (sizer, 1, wxEXPAND);
+      sizerDiffTool->Add (labelArgs, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
+      sizerDiffTool->Add (args, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
     }
 
 
@@ -278,28 +310,6 @@ private:
   DECLARE_EVENT_TABLE ()
 };
 
-/**
- * External settings page for the preferences dialog.
- * Just an example - replace in due course with
- * a real page.
- */
-class ExternalsPanel : public wxPanel
-{
-public:
-  /**
-   * Create a properly initialised instance of an ExternalsPanel.
-   * @param parent the parent windows
-   * @return the instance created.
-   */
-  static ExternalsPanel* Create(wxWindow* parent);
-  
-private:
-  ExternalsPanel(wxWindow* parent); // Call Create please.
-  void InitializeData ();
-  
-  DECLARE_EVENT_TABLE ()
-};
-
 
 BEGIN_EVENT_TABLE (ProgramsPanel, wxPanel)
   EVT_BUTTON (ID_StandardEditorLookup, 
@@ -309,36 +319,6 @@ BEGIN_EVENT_TABLE (ProgramsPanel, wxPanel)
   EVT_BUTTON (ID_DiffToolLookup,
   ProgramsPanel::OnDiffToolLookup)
 END_EVENT_TABLE ()
-
-/* ExternalsPanel *********************************************************/
-
-BEGIN_EVENT_TABLE (ExternalsPanel, wxPanel)
-END_EVENT_TABLE ()
-
-ExternalsPanel*
-ExternalsPanel::Create (wxWindow* parent)
-{
-  ExternalsPanel* p = new ExternalsPanel (parent);
-  p->InitializeData ();
-  return p;
-}
-
-ExternalsPanel::ExternalsPanel (wxWindow* parent)
-  : wxPanel (parent) 
-{
-}
-
-void
-ExternalsPanel::InitializeData ()
-{
-  wxBoxSizer *panelsizer = new wxBoxSizer (wxVERTICAL);
-  panelsizer->Add (
-    new wxStaticText (this, -1, _("External settings go here.")),
-    1, wxEXPAND | wxALL, 10);
-
-  SetSizer (panelsizer);
-  SetAutoLayout (TRUE);
-}
 
 /* AuthPanel **************************************************************/
 class AuthPanel : public wxPanel
@@ -394,25 +374,26 @@ public:
     wxBoxSizer *topsizer = new wxBoxSizer (wxVERTICAL);
     wxBoxSizer *button_sizer = new wxBoxSizer (wxHORIZONTAL);
 
+    notebook = new wxNotebook (wnd, -1, wxDefaultPosition, wxDefaultSize); 
+    wxNotebookSizer *nbs = new wxNotebookSizer (notebook);
+  
+    // Add the pages
+    GeneralPanel *generalPanel = new GeneralPanel (notebook, prefs);
+    notebook->AddPage (generalPanel, _("&General"));
+    
+    ProgramsPanel *programsPanel = new ProgramsPanel (notebook, prefs);
+    notebook->AddPage (programsPanel, _("&Programs"));
+
+    AuthPanel * authPanel = new AuthPanel (notebook, prefs);
+    notebook->AddPage (authPanel, _("&Authentication"));
+
+    // buttons
     button_sizer->Add (
       new wxButton (wnd, wxID_OK, "OK"),
       0, wxALL, 10);
     button_sizer->Add (
       new wxButton (wnd, wxID_CANCEL, "Cancel"),
       0, wxALL, 10);
-
-    notebook = new wxNotebook (wnd, -1, wxDefaultPosition, wxDefaultSize); 
-    wxNotebookSizer *nbs = new wxNotebookSizer (notebook);
-  
-    // Add the pages
-    GeneralPanel *generalPanel = new GeneralPanel (notebook, prefs);
-    notebook->AddPage (generalPanel, _("General"));
-    
-    ProgramsPanel *programsPanel = new ProgramsPanel (notebook, prefs);
-    notebook->AddPage (programsPanel, _("Programs"));
-
-    AuthPanel * authPanel = new AuthPanel (notebook, prefs);
-    notebook->AddPage (authPanel, _("Authentication"));
 
     // Externals
     // no useful entries in here yet

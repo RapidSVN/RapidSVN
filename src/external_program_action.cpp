@@ -21,13 +21,17 @@
 // app
 #include "external_program_action.hpp"
 #include "preferences.hpp"
+#include "utils.hpp"
 #include "verblist.hpp"
 
-ExternalProgramAction::ExternalProgramAction (wxWindow * parent, long verb_id, 
-  bool treat_as_folder) : Action (parent, _("Execute"), GetBaseFlags ()), 
-  m_verb_id (verb_id), m_treat_as_folder (treat_as_folder)
+
+ExternalProgramAction::ExternalProgramAction (
+  wxWindow * parent, long verb_id, bool treat_as_folder) 
+ : Action (parent, _("Execute"), GetBaseFlags ()), 
+   m_verb_id (verb_id), m_treat_as_folder (treat_as_folder)
 {
 }
+
 
 bool
 ExternalProgramAction::Prepare ()
@@ -82,9 +86,15 @@ ExternalProgramAction::Perform ()
     }
     else
     {
-      wxString argv = prefs.explorer + " \"" + target_document + "\"";
+      wxString args (prefs.explorerArgs);
+      TrimString (args);
+
+      if (args.Length () == 0)
+        args = "\"" + target_document + "\"";
+      else
+        args.Replace ("%1", target_document, true);
     
-      wxExecute (argv);
+      wxExecute (prefs.explorer + " " + args);
     }
   }
   else
@@ -96,9 +106,15 @@ ExternalProgramAction::Perform ()
     }
     else
     {
-      wxString argv = prefs.editor + " \"" + target_document + "\"";
-      
-      wxExecute (argv);
+      wxString args (prefs.editorArgs);
+      TrimString (args);
+
+      if (args.Length () == 0)
+        args = "\"" + target_document + "\"";
+      else
+        args.Replace ("%1", target_document, true);
+   
+      wxExecute (prefs.editor + " " + args);
     }
   }
 

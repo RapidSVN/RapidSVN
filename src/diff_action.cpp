@@ -202,17 +202,29 @@ public:
       return;
     }
 
+    // prepare command line to execute
     Preferences prefs;
-    wxString argv;
+    wxString args (prefs.diffToolArgs);
     wxString dstFile1Native (dstFile1.native ().c_str ());
     wxString dstFile2Native (dstFile2.native ().c_str ());
-    argv.Printf ("\"%s\" \"%s\" \"%s\"", prefs.diffTool.c_str (), 
-                 dstFile1Native.c_str (), dstFile2Native.c_str ());
+
+    TrimString (args);
+
+    if (args.Length () == 0)
+      args.Printf ("\"%s\" \"%s\"", dstFile1Native.c_str (), 
+                   dstFile2Native.c_str ());
+    else
+    {
+      args.Replace ("%1", dstFile1Native.c_str (), true);
+      args.Replace ("%2", dstFile2Native.c_str (), true);
+    }
+
+    wxString cmd (prefs.diffTool + " " + args);
 
     wxString msg;
-    msg.Printf (_("Execute diff tool: %s"), argv.c_str ());
+    msg.Printf (_("Execute diff tool: %s"), cmd.c_str ());
     Trace (msg);
-    wxExecute (argv);
+    wxExecute (cmd);
   }
 };
 
