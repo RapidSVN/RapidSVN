@@ -11,6 +11,7 @@
 MkdirAction::MkdirAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr):ActionThread (frame,
               __pool)
 {
+  thisframe = frame;
   SetTracer (tr, FALSE);        // do not own the tracer
 }
 
@@ -20,41 +21,20 @@ MkdirAction::Perform ()
   ////////////////////////////////////////////////////////////
   // Here we are in the main thread.
 
-#if defined(__WXMSW__)
-  // Load the .wxr 'file' from a .rc resource, under Windows.
-  Mkdir_Dialog = wxLoadUserResource ("Mkdir_Dialog", "WXRDATA");
-  // All resources in the file (only one in this case) get parsed
-  // by this call.
-  wxResourceParseString (Mkdir_Dialog);
-#else
-  // Simply parse the data pointed to by the variable Import_Dialog.
-  wxResourceParseData (Mkdir_Dialog);
-#endif
+  MkdirDlg *mkDlg = new MkdirDlg(thisframe, &Data);
 
-  MkdirDlg *mkDlg = new MkdirDlg;
-
-  if (mkDlg->LoadFromResource (mainFrame, "Mkdir_Dialog"))
+  if (mkDlg->ShowModal () == wxID_OK)
   {
-    mkDlg->InitializeData ();
+    UnixPath (Data.Target);
+    TrimString (Data.Target);
+    
+    // #### TODO: check errors and throw an exception
+    // create the thread
+    Create ();
 
-    if (mkDlg->ShowModal () == ID_BUTTON_OK)
-    {
-      target = mkDlg->target->GetValue ();
-      UnixPath (target);
-      TrimString (target);
-      logMsg = mkDlg->logMsg->GetValue ();
-      user = mkDlg->user->GetValue ();
-      pass = mkDlg->pass->GetValue ();
-
-      // #### TODO: check errors and throw an exception
-      // create the thread
-      Create ();
-
-      // here we start the action thread
-      Run ();
-
-      ////////////////////////////////////////////////////////////
-    }
+    // here we start the action thread
+    Run ();
+     ////////////////////////////////////////////////////////////
   }
 
   // destroy the dialog
@@ -67,13 +47,12 @@ MkdirAction::Entry ()
   svn::Modify modify;
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
-
-  modify.username (user);
-  modify.password (user);
+  modify.username (Data.User);
+  modify.password (Data.Password);
 
   try
   {
-    modify.mkdir (target, logMsg);
+    modify.mkdir (Data.Target, Data.LogMessage);
   }
   catch (svn::ClientException &e)
   {
@@ -82,6 +61,5 @@ MkdirAction::Entry ()
     GetTracer ()->Trace ("Mkdir failed:");
     GetTracer ()->Trace (e.description ());
   }
-
   return NULL;
 }
