@@ -74,13 +74,14 @@ Property::previous ()
 void
 Property::loadPath (const char * path)
 {
-  filePath = path;
   svn_error_t * error = NULL;
   apr_array_header_t * props;
+  lastPath = path;
+  internalPath (lastPath);
 
   reset ();
   Err = svn_client_proplist (&props,
-                             filePath.c_str (), 
+                             lastPath.c_str (), 
                              false /* recurse */,
                              pool);
   versioned = true;
@@ -157,7 +158,7 @@ Property::set (const char * name, const char * value, bool recurse)
 
   svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
 
-  error = svn_client_propset (pname_utf8, propval, filePath.c_str (),
+  error = svn_client_propset (pname_utf8, propval, lastPath.c_str (),
                               recurse, pool);
   if(error != NULL)
     throw ClientException (error);
@@ -170,7 +171,7 @@ Property::remove (const char * name, bool recurse)
   svn_error_t * error = NULL;
   svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
 
-  error = svn_client_propset (pname_utf8, NULL, filePath.c_str (),
+  error = svn_client_propset (pname_utf8, NULL, lastPath.c_str (),
                             recurse, pool);
   if(error != NULL)
     throw ClientException (error);

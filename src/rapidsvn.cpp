@@ -860,7 +860,8 @@ VSvnFrame::MakeUpdate ()
   {
     wxFileName fname (m_folder_browser->GetPath ());
     wxString path = fname.GetFullPath ();
-    const char *target = apr_pstrdup (aux_pool, UnixPath (path));
+    //const char *target = apr_pstrdup (aux_pool, UnixPath (path));
+    const char *target = apr_pstrdup (aux_pool, path);
     (*((const char **) apr_array_push (targets))) = target;
   }
   else
@@ -989,7 +990,7 @@ VSvnFrame::ShowLog ()
   apr_array_header_t *targets = m_listCtrl->GetTargets (subpool);
   const char *target;
 
-  if(targets->elts > 0)
+  if(targets->nelts > 0)
   {
     target = ((const char **) (targets->elts))[0];
     m_logAction = new LogAction (this, subpool, m_logTracer, target);

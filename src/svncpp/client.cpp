@@ -58,7 +58,7 @@ Client::target (const char * path)
 const char *
 Client::getLastPath ()
 {
-  return targetPath.c_str ();
+  return lastPath.c_str ();
 }
 
 void

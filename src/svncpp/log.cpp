@@ -43,6 +43,8 @@ Log::loadPath (const char * path, long revisionStart,
   void * baton = NULL;
   log_message_receiver_baton lb;
   svn_opt_revision_t revEnd;
+  lastPath = path;
+  internalPath (lastPath);
 
   reset ();
   memset (&revEnd, 0, sizeof (revEnd));
@@ -56,7 +58,7 @@ Log::loadPath (const char * path, long revisionStart,
   lb.size = &size;
   lb.first_call = true;
 
-  Err = svn_client_log (authenticate (), target (path), 
+  Err = svn_client_log (authenticate (), target (lastPath.c_str ()), 
                         getRevision (revisionStart), 
                         &revEnd, 
                         0, // not reverse by default

@@ -22,17 +22,12 @@ class Client
 protected:
   apr_pool_t * pool;
   svn_opt_revision_t rev;
-  std::string targetPath;
+  std::string lastPath;
 
   /**
    * Global error object struct.
    */
   svn_error_t * Err;
-
-  /**
-   * Returns the last path submitted.
-   */
-  const char * getLastPath ();
 
   /**
    * Convert the path to the Subversion format.
@@ -56,6 +51,13 @@ public:
   Client ();
 
   ~Client ();
+
+
+  /**
+   * Returns the last destination path submitted. The path 
+   * is returned in Subversion path format.
+   */
+  const char * getLastPath ();
 };
 
 }

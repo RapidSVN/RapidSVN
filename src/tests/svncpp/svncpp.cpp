@@ -66,7 +66,8 @@ SvnCppTestCase::testCheckout ()
   }
   catch (svn::ClientException &e)
   {
-    CPPUNIT_ASSERT (strlen(e.source ()) < 1);
+    CPPUNIT_ASSERT_MESSAGE (e.description (),
+                            strlen(e.description ()) < 1);
   }
 
   svn::Status status;

@@ -25,7 +25,6 @@ namespace svn
 class Property : public svn::Client
 {
 private:
-  std::string filePath;
   int size;
   int cursor;
   bool versioned;
