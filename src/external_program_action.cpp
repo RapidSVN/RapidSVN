@@ -68,7 +68,7 @@ ExternalProgramAction::Perform ()
   }
 
   // Get verbs from the OS
-  verb_list.InitFromDocument (target_document);
+  verb_list.InitFromDocument (target_document, m_treat_as_folder);
 
   // An explicit verb was chose that is not available
   if ((m_verb_id >= 0) && ((size_t)m_verb_id > verb_list.GetCount()))

@@ -438,7 +438,10 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
     {
       VerbList verbList;
 
-      verbList.InitFromDocument (status->path ());
+      // We don't want verbs on directories, even though they exist
+      bool isADirectory = status->entry ().kind () == svn_node_dir;
+      if (!isADirectory)
+        verbList.InitFromDocument ( status->path (), isADirectory );
 
       if (verbList.GetCount () == 0)
         return;

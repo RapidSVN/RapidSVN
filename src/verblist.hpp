@@ -36,11 +36,12 @@ public:
 #endif //_WIN32
 
   /**
-   * Assemble list of verbs based on the given document
+   * Assemble list of verbs based on the given document which can be a folder
+   * or a file.
    *
    * @throw std::exception on unexpected errors
    */
-  void InitFromDocument (const wxString &document_path);
+  void InitFromDocument (const wxString &document_path, bool isAFolder);
 
   /**
    * @return Number of verbs in list

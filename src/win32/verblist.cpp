@@ -386,7 +386,7 @@ VerbList::~VerbList()
   delete m;
 }
 
-void VerbList::InitFromDocument (const wxString &document_path)
+void VerbList::InitFromDocument (const wxString &document_path, bool isAFolder)
 {
   RegKey ext_key;
   wxString extension_key_name;
@@ -408,8 +408,7 @@ void VerbList::InitFromDocument (const wxString &document_path)
   // Make sure list is empty
   m->verb_list.clear ();
 
-  // Special treatment for folders
-  if (wxDirExists (m->document_path.GetFullPath ()))
+  if (isAFolder)
   {
     progid_key_name = "Folder";
   }

@@ -16,7 +16,7 @@
 
 /****************************************************************************/
 
-void VerbList::InitFromDocument (const wxString &)
+void VerbList::InitFromDocument (const wxString &, bool isAFolder)
 {
 }
 
