@@ -45,7 +45,7 @@ rapidsvn_SOURCES= \
 	update_dlg.cpp \
 	utils.cpp
 
-rapidsvn_LDFLAGS=-L$(SVN_LIB) -Lsvncpp
+rapidsvn_LDFLAGS=-Lsvncpp -L$(SVN_LIB)
 rapidsvn_LDADD= -lsvncpp \
 	-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
 	-laprutil-0 -lapr-0 -lneon $(APR_LIBS) \
