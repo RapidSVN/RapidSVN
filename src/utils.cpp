@@ -37,13 +37,25 @@
 #include "res/bitmaps/add_wc_bookmark.xpm"
 #include "res/bitmaps/remove_bookmark.xpm"
 
+/** configuration options */
+
+/**
+ * Some wxWindows released have know bugs with menu entries
+ * with bitmaps. wxWindows 2.4.1 doesnt fire events when
+ * using menu items with bitmaps attached.
+ * Set this option to "false" if you encounter this.
+ * Default: true
+ */
+static const bool UseBitmapMenus = true;
+
 static wxMenuItem *
 CreateMenuItem (
   wxMenu * parentMenu, int id, const wxString & text, 
   const wxBitmap & bitmap) 
 {
   wxMenuItem * item = new wxMenuItem (parentMenu, id, text);
-  item->SetBitmap (bitmap);
+  if(UseBitmapMenus)
+    item->SetBitmap (bitmap);
   return item;
 }
 
