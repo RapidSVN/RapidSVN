@@ -61,6 +61,13 @@ public:
   unsigned long lastChanged ();
 
   /**
+   * Returns the last last author to commit to a file.
+   * @exception EntryNotVersioned
+   */
+  const char * lastCommitAuthor ();
+
+
+  /**
    * Returns the file status of the "textual" component. 
    */
   const char * textDescription ();

@@ -2,7 +2,6 @@
 #define _VSVN_UTILS_H_INCLUDED_
 
 #include "tracer.h"
-#include "svn_file_status.h"
 
 #define DEFAULT_ARRAY_SIZE 5
 
@@ -32,8 +31,7 @@ void revision_from_number (svn_client_revision_t * rev, unsigned long nr);
 */
 void handle_svn_error (svn_error_t * err, Tracer * tracer);
 
-void MakeStatusLine (const SvnFileStatus & st, const wxString & path,
-                     wxString & line);
+void statusString (const wxString & path, wxString & line);
 
 svn_error_t *svn_cl__may_need_force (svn_error_t * err);
 

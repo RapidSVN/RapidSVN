@@ -84,6 +84,15 @@ Status::lastChanged ()
 }
 
 const char *
+Status::lastCommitAuthor ()
+{
+  if(versioned == false)
+    throw EntryNotVersioned ();
+
+  return status->entry->cmt_author;
+}
+
+const char *
 Status::statusDescription (svn_wc_status_kind kind)
 {
   switch (kind)
@@ -152,8 +161,8 @@ Status::propDescription ()
 svn_wc_status_kind
 Status::propType ()
 {
-  if(versioned == false)
-    throw EntryNotVersioned ();
+  if(!status)
+    return svn_wc_status_none;
   
   return status->prop_status;
 }

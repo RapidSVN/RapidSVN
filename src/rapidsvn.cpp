@@ -4,7 +4,6 @@
 #include <wx/resource.h>
 #include "wx/filename.h"
 
-#include "svn_file_status.h"
 #include "svn_file_info.h"
 #include "svn_file_log.h"
 
@@ -959,17 +958,13 @@ VSvnFrame::ShowStatus ()
   wxString all_status;
   wxString line;
   wxString _path;
-  SvnFileStatus file_status (pool);
-  AuthBaton auth_baton (pool);
 
   for (i = 0; i < arr.GetCount (); i++)
   {
     wxFileName fname (path, m_listCtrl->GetItemText (arr[i]));
     _path = fname.GetFullPath ();
-    if(!file_status.retrieveStatus (UnixPath (_path), auth_baton))
-      continue;
 
-    MakeStatusLine (file_status, fname.GetFullPath (), line);
+    statusString (fname.GetFullPath (), line);
     if (!line.IsEmpty ())
       all_status += line + _T ("\n");
   }

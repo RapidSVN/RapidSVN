@@ -28,7 +28,6 @@ OBJECTS=action_thread.o \
 		revert_action.o \
 		svn_file_info.o \
 		svn_file_log.o \
-		svn_file_status.o \
 		svn_notify.o \
 		trace_commit.o \
 		trace_update.o \

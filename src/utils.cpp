@@ -1,3 +1,5 @@
+
+#include "svncpp/status.h"
 #include "include.h"
 #include "utils.h"
 
@@ -120,21 +122,22 @@ handle_svn_error (svn_error_t * err, Tracer * tracer)
 }
 
 void
-MakeStatusLine (const SvnFileStatus & st, const wxString & path,
-                wxString & line)
+statusString (const wxString & path, wxString & line)
 {
+  svn::Status status;
   wxChar text_statuschar;
   wxChar prop_statuschar;
+  wxString newPath = path;
 
   wxString str_status;
   wxString str_rev;
   wxString last_committed;
 
   line.Empty ();
-  if (!st.getStatus ())
-    return;
 
-  switch (st.getFileStatus ())
+  status.loadPath (UnixPath (newPath));
+
+  switch (status.textType ())
   {
   case svn_wc_status_none:
     text_statuschar = ' ';
@@ -169,7 +172,7 @@ MakeStatusLine (const SvnFileStatus & st, const wxString & path,
     break;
   }
 
-  switch (st.getFilePropStatus ())
+  switch (status.propType ())
   {
   case svn_wc_status_none:
     prop_statuschar = ' ';
@@ -204,23 +207,20 @@ MakeStatusLine (const SvnFileStatus & st, const wxString & path,
     break;
   }
 
-  str_status.Printf ("%c%c%c%c",
-                     text_statuschar,
-                     prop_statuschar,
-                     st.getStatus ()->locked ? 'L' : ' ',
-                     st.getStatus ()->copied ? '+' : ' ');
+  str_status.Printf ("%c%c", text_statuschar, prop_statuschar);
 
-  svn_revnum_t local_rev = st.getRevision ();
-
-  if (st.getStatus ()->entry)
+  if (status.isVersioned ())
   {
     wxString revbuf;
     const char *revstr = revbuf;
     const char *author;
 
-    author = st.getStatus ()->entry->cmt_author;
-    if (SVN_IS_VALID_REVNUM (st.getLastChange ()))
-      revbuf.Printf ("%" SVN_REVNUM_T_FMT, st.getStatus ()->entry->cmt_rev);
+    str_status.Printf ("%c%c", status.isLocked () ? 'L' : ' ',
+                       status.isCopied () ? '+' : ' ');
+
+    author = status.lastCommitAuthor ();
+    if (status.isVersioned ())
+      revbuf.Printf ("%" SVN_REVNUM_T_FMT, status.lastChanged () );
     else
       revstr = "    ? ";
 
@@ -234,14 +234,12 @@ MakeStatusLine (const SvnFileStatus & st, const wxString & path,
     last_committed = _T ("                    ");
 
   /* Determine the appropriate local revision string. */
-  if (!st.getStatus ()->entry)
-    str_rev = _T ("      ");
-  else if (local_rev == SVN_INVALID_REVNUM)
+  if (!status.isVersioned ())
     str_rev = _T ("  ?   ");
-  else if (st.getStatus ()->copied)
+  else if (status.isCopied ())
     str_rev = _T ("     -");
   else
-    str_rev.Printf ("%6ld", local_rev);
+    str_rev.Printf ("%6ld", status.revision ());
 
   /* One Printf to rule them all, one Printf to bind them..." */
   line = str_status + _T ("   ") +

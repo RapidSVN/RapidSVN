@@ -118,16 +118,7 @@ FileListCtrl::UpdateFileList (const wxString & path)
     name = wxFileNameFromPath (f);
     wxString text;
 
-    try
-    {
-      status.loadPath (UnixPath (f));
-    }
-    catch (svn::ClientException &e)
-    {
-      text = "Status load failed: " + f;
-      InsertItem (i, text);
-      continue;
-    }
+    status.loadPath (UnixPath (f));
 
     // in the parent directory
     if (name == ".." || name == SVN_WC_ADM_DIR_NAME)
