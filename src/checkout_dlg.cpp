@@ -42,29 +42,31 @@ public:
   Data (wxWindow * wnd)
   {
     // create controls
+    wxStaticBox* urlBox =
+      new wxStaticBox (wnd, 0, _("URL"));
     wxTextValidator valModule (wxFILTER_NONE, &data.RepUrl);
     m_textRepUrl = 
-      new wxTextCtrl (wnd, -1, "", wxPoint(-1,-1),
+      new wxTextCtrl (wnd, -1, "", wxDefaultPosition,
                       wxSize(235, -1), 0, valModule);
     wxStaticBox* destBox = 
-      new wxStaticBox(wnd, 0, _("Destination Directory"));
+      new wxStaticBox (wnd, 0, _("Destination Directory"));
     wxTextValidator valDest (wxFILTER_NONE, &data.DestFolder);
     m_textDest = 
       new wxTextCtrl (wnd, -1, "", wxDefaultPosition, 
                       wxSize(205, -1), 0, valDest);
     wxButton* browse = 
-      new wxButton(wnd, ID_BUTTON_BROWSE, "...", 
+      new wxButton (wnd, ID_BUTTON_BROWSE, "...", 
                    wxDefaultPosition, wxSize(20, -1) );
 
     wxStaticBox* revisionBox = 
-      new wxStaticBox(wnd, -1, _("Revision"));
+      new wxStaticBox (wnd, -1, _("Revision"));
     wxTextValidator valRevision (wxFILTER_NUMERIC, &data.Revision);
     m_textRevision = 
       new wxTextCtrl (wnd, -1, "", wxDefaultPosition, 
                       wxSize(50, -1), 0, valRevision);                             
     wxGenericValidator valLatest (&data.UseLatest);
     m_checkUseLatest = 
-      new wxCheckBox(wnd, ID_USELATEST, _("Use latest"),
+      new wxCheckBox (wnd, ID_USELATEST, _("Use latest"),
                      wxDefaultPosition, wxDefaultSize, 0, valLatest);
     wxCheckBox* recursive = 
       new wxCheckBox (wnd, -1, _("Recursive"),
@@ -79,11 +81,10 @@ public:
     wxButton* cancel = new wxButton( wnd, wxID_CANCEL, _("Cancel"));
 
     // place controls
-    // Module row
-    wxStaticBoxSizer *moduleSizer = new wxStaticBoxSizer (
-            new wxStaticBox(wnd, -1, _("URL")), 
-            wxHORIZONTAL);
-    moduleSizer->Add (m_textRepUrl, 1, wxALL | wxEXPAND, 5);
+    // URL row
+    wxStaticBoxSizer *urlSizer = 
+      new wxStaticBoxSizer (urlBox, wxHORIZONTAL);
+    urlSizer->Add (m_textRepUrl, 1, wxALL | wxEXPAND, 5);
 
     // Destination row
     wxStaticBoxSizer *destSizer = 
@@ -112,7 +113,7 @@ public:
 
     // Add all sizers to main sizer
     wxBoxSizer *mainSizer    = new wxBoxSizer (wxVERTICAL);
-    mainSizer->Add (moduleSizer, 0, wxALL | wxEXPAND, 5);
+    mainSizer->Add (urlSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (destSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (reSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (extrasSizer, 0, wxALL | wxCENTER, 5);
