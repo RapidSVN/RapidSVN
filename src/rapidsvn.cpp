@@ -89,6 +89,8 @@ wxFrame ((wxFrame *) NULL, -1, title)
   // apr stuff
   apr_initialize ();
   pool = svn_pool_create (NULL);
+  m_folder_browser = NULL;
+  m_listCtrl = NULL;
 
   // enable trace
   wxLog::AddTraceMask (wxTraceMisc);

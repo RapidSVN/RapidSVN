@@ -1294,8 +1294,8 @@ PatchedGenericDirCtrl::OnSize (wxSizeEvent & WXUNUSED (event))
 wxTreeItemId
 PatchedGenericDirCtrl::AppendItem (const wxTreeItemId & parent,
                                    const wxString & text,
-                                   int image = -1, int selectedImage = -1,
-                                   wxTreeItemData * data = NULL)
+                                   int image, int selectedImage,
+                                   wxTreeItemData * data)
 {
   wxTreeCtrl *treeCtrl = GetTreeCtrl ();
 
