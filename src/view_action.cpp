@@ -19,14 +19,24 @@
 #include "svncpp/path.hpp"
 
 // app
-#include "view_action.hpp"
-#include "tviewer.hpp"
+#include "exceptions.hpp"
+#include "preferences.hpp"
 #include "utils.hpp"
+#include "view_action.hpp"
 
-ViewAction::ViewAction (wxWindow * parent, const GetData & data)
-  : Action (parent, _("View"), GetBaseFlags ()),
-    m_data (data)
+ViewAction::ViewAction (wxWindow * parent, 
+                        const GetData & data)
+  : Action (parent, _("View"), GetViewFlags ()),
+    m_edit (false), m_data (data)
 {
+}
+
+
+ViewAction::ViewAction (wxWindow * parent)
+  : Action (parent, _("Edit"), GetEditFlags ()),
+    m_edit (true)
+{
+
 }
 
 bool
@@ -38,19 +48,22 @@ ViewAction::Prepare ()
 bool
 ViewAction::Perform ()
 {
-  wxSetWorkingDirectory (GetPath ().c_str ());
+  Preferences prefs;
 
-  svn::Path path (m_data.path.c_str ());
-  svn::Client client (GetContext ());
-  std::string text = client.cat (path, m_data.revision);
+  if (prefs.editor.Length () == 0)
+    throw RapidSvnEx (
+      _("The Editor is not configured. Please check Edit->Preferences>Programs"));
 
-  wxString title;
-  title.Printf (_("View %s Revision %ld"),
-                path.c_str (),
-                m_data.revision.revnum ());
-  TextViewer * viewer = new TextViewer (title);
-  viewer->SetText (text.c_str ());
-  viewer->Show (true);
+  wxString path;
+
+  if (m_edit)
+    path = GetTarget ().c_str ();
+  else
+    path = GetPathAsTempFile (
+      m_data.path.c_str (), m_data.revision).c_str ();
+
+  wxString argv (prefs.editor + " \"" + path + "\"");
+  wxExecute (argv);
 
   return true;
 }

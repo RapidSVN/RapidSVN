@@ -35,22 +35,42 @@ public:
    * in @a data will be used
    *
    * @param parent parent window
+   * @param title title of the action
    * @param data update data
    */
-  ViewAction (wxWindow * parent, const GetData & data);
+  ViewAction (wxWindow * parent,
+              const GetData & data);
+
+  /**
+   * Constructor. 
+   * An editor for the target will be called.
+   */
+  ViewAction (wxWindow * parent);
+
 
   virtual bool Perform ();
   virtual bool Prepare ();
 
   /**
    * Describe which targets the action can perform upon
+   * when viewing a file
    */
-  static unsigned int GetBaseFlags ()
+  static unsigned int GetViewFlags ()
   {
     return DONT_UPDATE|WITHOUT_TARGET;
   }
 
+  /**
+   * Describe which targets the action can perform upon
+   * when editing a file
+   */
+  static unsigned int GetEditFlags ()
+  {
+    return SINGLE_TARGET|UPDATE_LATER|VERSIONED_WC_TYPE;
+  }
+
 private:
+  bool m_edit;
   GetData m_data;
 };
 

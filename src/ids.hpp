@@ -64,6 +64,7 @@ enum
   ID_Revert,
   ID_Switch,
   ID_Update,
+  ID_Edit,
   ID_File_Max,
 
   // Reserve space for 16 file verbs (I've never seen any files with more)

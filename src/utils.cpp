@@ -136,6 +136,9 @@ CreateEllipsisButton(wxWindow *parent, long id)
 void 
 AppendModifyMenu (wxMenu * parentMenu)
 {
+  AppendMenuItem (*parentMenu, ID_Edit);
+
+  parentMenu->AppendSeparator ();
   AppendMenuItem (*parentMenu, ID_Update);
   AppendMenuItem (*parentMenu, ID_Commit);
 
@@ -210,6 +213,10 @@ AppendMenuItem (wxMenu & menu, int id)
 
   switch (id)
   {
+  case ID_Edit:
+    caption = _("&Edit...\tF3");
+    break;
+
   case ID_AddWcBookmark:
     caption = _("&Add Existing Working Copy...");
     bitmap = wxBitmap (add_wc_bookmark_xpm);

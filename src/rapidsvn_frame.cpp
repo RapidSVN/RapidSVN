@@ -1156,6 +1156,10 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       baseActionFlags = Action::SINGLE_TARGET|Action::MULTIPLE_TARGETS|Action::RESPOSITORY_TYPE|Action::VERSIONED_WC_TYPE|Action::UNVERSIONED_WC_TYPE;
       break;
 
+    case ID_Edit:
+      baseActionFlags = ViewAction::GetEditFlags ();
+      break;
+
     case ID_Contents: //TODO
     default:
       // If unrecognised, by default return true
@@ -1328,6 +1332,10 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
     case ID_Diff:
       action = new DiffAction (this);
+      break;
+
+    case ID_Edit:
+      action = new ViewAction (this);
       break;
 
     case ID_CreateRepository:
