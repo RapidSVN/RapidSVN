@@ -14,6 +14,10 @@
 #ifndef _SVNCPP_CLIENT_H_
 #define _SVNCPP_CLIENT_H_
 
+#if defined( _MSC_VER) && _MSC_VER <= 1200
+#pragma warning( disable: 4786 )// debug symbol truncated
+#endif
+
 // stl
 #include <vector>
 #include <utility>
