@@ -1,3 +1,10 @@
+rapidsvn (0.1.3.6496-1) unstable; urgency=low
+
+  * New upstream release - subversion 0.25
+  Debian package code is now checked in to the rapidsvn tree
+
+ -- Timothee Besset <ttimo@ttimo.net>  Thu, 17 Jul 2003 11:42:36 +0200
+
 rapidsvn (0.1.3.pre2.6331-1) unstable; urgency=low
 
   * New upstream release

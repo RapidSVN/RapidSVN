@@ -2,12 +2,12 @@ Source: rapidsvn
 Section: x11
 Priority: optional
 Maintainer: Timothee Besset <ttimo@ttimo.net>
-Build-Depends: debhelper (>> 4.0.0), libsvn0-dev (>= 0.24.2), libwxgtk2.4-dev (>= 2.4.0.3), xsltproc (>= 1.0.30), docbook-xsl (>= 1.60.1)
+Build-Depends: debhelper (>= 4.1.52), libsvn0-dev (>= 0.25), libwxgtk2.4-dev (>= 2.4.0.8), xsltproc (>= 1.0.30), docbook-xsl (>= 1.60.1)
 Standards-Version: 3.5.8
 
 Package: rapidsvn
 Architecture: any
-Depends: ${shlib:Depends}, libsvn0 (>= 0.24.2), libwxgtk2.4 (>= 2.4.0.3)
+Depends: ${shlib:Depends}, libsvn0 (>= 0.25), libwxgtk2.4 (>= 2.4.0.8)
 Description: GUI client for subversion
  Graphical client for the subversion revision control system.
  This client uses wxWindow for it's UI
