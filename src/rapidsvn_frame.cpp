@@ -24,7 +24,7 @@
 #include "report_dlg.h"
 #include "preferences_dlg.h"
 
-#include "rapidsvn.h"
+#include "rapidsvn_frame.h"
 #include "wx/version.h"
 #include "svn_version.h"
 #include "version.h"
@@ -57,36 +57,36 @@ const static char *szBrowserPathKey = "/MainFrame/BrowserPath";
 // define this to 1 to use wxToolBarSimple instead of the native one
 #define USE_GENERIC_TBAR 0
 
-BEGIN_EVENT_TABLE (VSvnFrame, wxFrame)
-EVT_SIZE (VSvnFrame::OnSize)
-EVT_MENU (ID_AddProject, VSvnFrame::OnAddProject)
-EVT_MENU (ID_RemoveProject, VSvnFrame::OnRemoveProject)
-EVT_MENU (ID_Quit, VSvnFrame::OnQuit)
-EVT_MENU (ID_About, VSvnFrame::OnAbout)
-EVT_MENU (ID_Status, VSvnFrame::OnStatus)
-EVT_MENU (ID_Log, VSvnFrame::OnLog)
-EVT_MENU (ID_Info, VSvnFrame::OnInfo)
-EVT_MENU (ID_Checkout, VSvnFrame::OnCheckout)
-EVT_MENU (ID_Import, VSvnFrame::OnImport)
-EVT_MENU (ID_Update, VSvnFrame::OnUpdate)
-EVT_MENU (ID_Add, VSvnFrame::OnAdd)
-EVT_MENU (ID_Del, VSvnFrame::OnDelete)
-EVT_MENU (ID_Commit, VSvnFrame::OnCommit)
-EVT_MENU (ID_Revert, VSvnFrame::OnRevert)
-EVT_MENU (ID_Copy, VSvnFrame::OnCopy)
-EVT_MENU (ID_Rename, VSvnFrame::OnRename)
-EVT_MENU (ID_Resolve, VSvnFrame::OnResolve)
-EVT_MENU (ID_Mkdir, VSvnFrame::OnMkdir)
-EVT_MENU (ID_Merge, VSvnFrame::OnMerge)
-EVT_MENU (ID_Contents, VSvnFrame::OnContents)
-EVT_MENU (ID_Preferences, VSvnFrame::OnPreferences)
-EVT_MENU (ACTION_EVENT, VSvnFrame::OnActionEvent)
-EVT_MENU (-1, VSvnFrame::OnToolLeftClick)
-EVT_TOOL_ENTER (ID_TOOLBAR, VSvnFrame::OnToolEnter)
-EVT_TREE_SEL_CHANGED (-1, VSvnFrame::OnFolderBrowserSelChanged)
-EVT_TREE_KEY_DOWN (-1, VSvnFrame::OnFolderBrowserKeyDown) END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
+EVT_SIZE (RapidSvnFrame::OnSize)
+EVT_MENU (ID_AddProject, RapidSvnFrame::OnAddProject)
+EVT_MENU (ID_RemoveProject, RapidSvnFrame::OnRemoveProject)
+EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
+EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
+EVT_MENU (ID_Status, RapidSvnFrame::OnStatus)
+EVT_MENU (ID_Log, RapidSvnFrame::OnLog)
+EVT_MENU (ID_Info, RapidSvnFrame::OnInfo)
+EVT_MENU (ID_Checkout, RapidSvnFrame::OnCheckout)
+EVT_MENU (ID_Import, RapidSvnFrame::OnImport)
+EVT_MENU (ID_Update, RapidSvnFrame::OnUpdate)
+EVT_MENU (ID_Add, RapidSvnFrame::OnAdd)
+EVT_MENU (ID_Del, RapidSvnFrame::OnDelete)
+EVT_MENU (ID_Commit, RapidSvnFrame::OnCommit)
+EVT_MENU (ID_Revert, RapidSvnFrame::OnRevert)
+EVT_MENU (ID_Copy, RapidSvnFrame::OnCopy)
+EVT_MENU (ID_Rename, RapidSvnFrame::OnRename)
+EVT_MENU (ID_Resolve, RapidSvnFrame::OnResolve)
+EVT_MENU (ID_Mkdir, RapidSvnFrame::OnMkdir)
+EVT_MENU (ID_Merge, RapidSvnFrame::OnMerge)
+EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
+EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
+EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
+EVT_MENU (-1, RapidSvnFrame::OnToolLeftClick)
+EVT_TOOL_ENTER (ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
+EVT_TREE_SEL_CHANGED (-1, RapidSvnFrame::OnFolderBrowserSelChanged)
+EVT_TREE_KEY_DOWN (-1, RapidSvnFrame::OnFolderBrowserKeyDown) END_EVENT_TABLE ()
 /** class implementation **/
-  VSvnFrame::VSvnFrame (const wxString & title):
+  RapidSvnFrame::RapidSvnFrame (const wxString & title):
 wxFrame ((wxFrame *) NULL, -1, title)
 {
   // apr stuff
@@ -204,7 +204,7 @@ wxFrame ((wxFrame *) NULL, -1, title)
   PreferencesDlg::Data.Read (pConfig);
 }
 
-VSvnFrame::~VSvnFrame ()
+RapidSvnFrame::~RapidSvnFrame ()
 {
   wxConfigBase *pConfig = wxConfigBase::Get ();
   if (pConfig == NULL)
@@ -256,7 +256,7 @@ VSvnFrame::~VSvnFrame ()
 }
 
 void
-VSvnFrame::InitializeMenu ()
+RapidSvnFrame::InitializeMenu ()
 {
   // File menu
   wxMenu *menuFile = new wxMenu;
@@ -367,7 +367,7 @@ VSvnFrame::InitializeMenu ()
 }
 
 void
-VSvnFrame::InitFileList ()
+RapidSvnFrame::InitFileList ()
 {
   wxListItem itemCol;
   itemCol.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_IMAGE;
@@ -395,7 +395,7 @@ VSvnFrame::InitFileList ()
 }
 
 void
-VSvnFrame::UpdateFileList ()
+RapidSvnFrame::UpdateFileList ()
 {
   if (m_listCtrl && m_folder_browser)
   {
@@ -414,25 +414,25 @@ VSvnFrame::UpdateFileList ()
 }
 
 void
-VSvnFrame::OnAddProject (wxCommandEvent & event)
+RapidSvnFrame::OnAddProject (wxCommandEvent & event)
 {
   AddProject ();
 }
 
 void
-VSvnFrame::OnRemoveProject (wxCommandEvent & event)
+RapidSvnFrame::OnRemoveProject (wxCommandEvent & event)
 {
   RemoveProject ();
 }
 
 void
-VSvnFrame::OnQuit (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnQuit (wxCommandEvent & WXUNUSED (event))
 {
   Close (TRUE);
 }
 
 void
-VSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
   wxString msg;
 
@@ -450,7 +450,7 @@ VSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 }
 
 void
-VSvnFrame::OnStatus (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnStatus (wxCommandEvent & WXUNUSED (event))
 {
   /* doesnt seem to be needed now.
      wxString items = m_folder_browser->GetPath () + "\r\n";
@@ -463,19 +463,19 @@ VSvnFrame::OnStatus (wxCommandEvent & WXUNUSED (event))
 }
 
 void
-VSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
 {
   ShowInfo ();
 }
 
 void
-VSvnFrame::OnLog (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnLog (wxCommandEvent & WXUNUSED (event))
 {
   ShowLog ();
 }
 
 void
-VSvnFrame::OnImport (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnImport (wxCommandEvent & WXUNUSED (event))
 {
   lastAction = ACTION_TYPE_IMPORT;
   ImportAction *imp_act = new ImportAction (this, pool, m_logTracer);
@@ -483,7 +483,7 @@ VSvnFrame::OnImport (wxCommandEvent & WXUNUSED (event))
 }
 
 void
-VSvnFrame::OnCheckout (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnCheckout (wxCommandEvent & WXUNUSED (event))
 {
   lastAction = ACTION_TYPE_CHECKOUT;
   CheckoutAction *co_act = new CheckoutAction (this, pool, m_logTracer);
@@ -491,73 +491,73 @@ VSvnFrame::OnCheckout (wxCommandEvent & WXUNUSED (event))
 }
 
 void
-VSvnFrame::OnAdd (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnAdd (wxCommandEvent & WXUNUSED (event))
 {
   AddEntries ();
 }
 
 void
-VSvnFrame::OnDelete (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnDelete (wxCommandEvent & WXUNUSED (event))
 {
   DelEntries ();
 }
 
 void
-VSvnFrame::OnCommit (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnCommit (wxCommandEvent & WXUNUSED (event))
 {
   MakeCommit ();
 }
 
 void
-VSvnFrame::OnRevert (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnRevert (wxCommandEvent & WXUNUSED (event))
 {
   MakeRevert ();
 }
 
 void
-VSvnFrame::OnResolve (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnResolve (wxCommandEvent & WXUNUSED (event))
 {
   MakeResolve ();
 }
 
 void
-VSvnFrame::OnCopy (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnCopy (wxCommandEvent & WXUNUSED (event))
 {
   MakeCopy ();
 }
 
 void
-VSvnFrame::OnRename (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnRename (wxCommandEvent & WXUNUSED (event))
 {
   Rename ();
 }
 
 void
-VSvnFrame::OnMkdir (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnMkdir (wxCommandEvent & WXUNUSED (event))
 {
   Mkdir ();
 }
 
 void
-VSvnFrame::OnMerge (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnMerge (wxCommandEvent & WXUNUSED (event))
 {
   Merge ();
 }
 
 void
-VSvnFrame::OnContents (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnContents (wxCommandEvent & WXUNUSED (event))
 {
   Contents ();
 }
 
 void
-VSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
 {
   Preferences ();
 }
 
 void
-VSvnFrame::LayoutChildren ()
+RapidSvnFrame::LayoutChildren ()
 {
   wxSize size = GetClientSize ();
 
@@ -576,7 +576,7 @@ VSvnFrame::LayoutChildren ()
 }
 
 void
-VSvnFrame::OnSize (wxSizeEvent & event)
+RapidSvnFrame::OnSize (wxSizeEvent & event)
 {
   if (m_tbar)
   {
@@ -589,7 +589,7 @@ VSvnFrame::OnSize (wxSizeEvent & event)
 }
 
 void
-VSvnFrame::RecreateToolbar ()
+RapidSvnFrame::RecreateToolbar ()
 {
   // delete the old toolbar
   wxToolBarBase *toolBar = GetToolBar ();
@@ -625,7 +625,7 @@ VSvnFrame::RecreateToolbar ()
 }
 
 void
-VSvnFrame::AddActionTools ()
+RapidSvnFrame::AddActionTools ()
 {
   wxToolBarBase *toolBar = GetToolBar ();
 
@@ -697,7 +697,7 @@ VSvnFrame::AddActionTools ()
 }
 
 void
-VSvnFrame::AddInfoTools ()
+RapidSvnFrame::AddInfoTools ()
 {
   wxToolBarBase *toolBar = GetToolBar ();
 
@@ -736,12 +736,12 @@ VSvnFrame::AddInfoTools ()
 }
 
 void
-VSvnFrame::OnToolEnter (wxCommandEvent & event)
+RapidSvnFrame::OnToolEnter (wxCommandEvent & event)
 {
 }
 
 void
-VSvnFrame::OnToolLeftClick (wxCommandEvent & event)
+RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
 {
   switch (event.GetId ())
   {
@@ -801,7 +801,7 @@ VSvnFrame::OnToolLeftClick (wxCommandEvent & event)
 }
 
 void
-VSvnFrame::AddProject ()
+RapidSvnFrame::AddProject ()
 {
   wxDirDialog dialog (this, "Select a directory", wxGetHomeDir ());
   bool add = TRUE;
@@ -828,7 +828,7 @@ VSvnFrame::AddProject ()
 }
 
 void
-VSvnFrame::RemoveProject ()
+RapidSvnFrame::RemoveProject ()
 {
   wxASSERT (m_folder_browser);
   wxTreeCtrl *treeCtrl = m_folder_browser->GetTreeCtrl ();
@@ -844,7 +844,7 @@ VSvnFrame::RemoveProject ()
 }
 
 void
-VSvnFrame::InitFolderBrowser ()
+RapidSvnFrame::InitFolderBrowser ()
 {
   wxConfigBase *pConfig = wxConfigBase::Get ();
 
@@ -871,7 +871,7 @@ VSvnFrame::InitFolderBrowser ()
 }
 
 void
-VSvnFrame::MakeUpdate ()
+RapidSvnFrame::MakeUpdate ()
 {
   aux_pool = svn_pool_create (pool);
   apr_array_header_t *targets = apr_array_make (aux_pool,
@@ -898,7 +898,7 @@ VSvnFrame::MakeUpdate ()
 }
 
 void
-VSvnFrame::MakeCommit ()
+RapidSvnFrame::MakeCommit ()
 {
   aux_pool = svn_pool_create (pool);
   apr_array_header_t *targets = apr_array_make (aux_pool,
@@ -924,13 +924,13 @@ VSvnFrame::MakeCommit ()
 }
 
 void
-VSvnFrame::OnUpdate (wxCommandEvent & event)
+RapidSvnFrame::OnUpdate (wxCommandEvent & event)
 {
   MakeUpdate ();
 }
 
 void
-VSvnFrame::OnActionEvent (wxCommandEvent & event)
+RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 {
   switch (event.GetInt ())
   {
@@ -980,7 +980,7 @@ VSvnFrame::OnActionEvent (wxCommandEvent & event)
 }
 
 void
-VSvnFrame::ShowStatus ()
+RapidSvnFrame::ShowStatus ()
 {
   IndexArray arr = m_listCtrl->GetSelectedItems ();
   size_t i;
@@ -1007,7 +1007,7 @@ VSvnFrame::ShowStatus ()
 }
 
 void
-VSvnFrame::ShowLog ()
+RapidSvnFrame::ShowLog ()
 {
   apr_pool_t *subpool = svn_pool_create (pool);
   apr_array_header_t *targets = m_listCtrl->GetTargets (subpool);
@@ -1024,7 +1024,7 @@ VSvnFrame::ShowLog ()
 }
 
 void
-VSvnFrame::ShowInfo ()
+RapidSvnFrame::ShowInfo ()
 {
   IndexArray arr = m_listCtrl->GetSelectedItems ();
   size_t i;
@@ -1071,7 +1071,7 @@ VSvnFrame::ShowInfo ()
 }
 
 void
-VSvnFrame::AddEntries ()
+RapidSvnFrame::AddEntries ()
 {
   if (m_listCtrl->GetSelectedItemCount () == 0)
     return;
@@ -1090,7 +1090,7 @@ VSvnFrame::AddEntries ()
 }
 
 void
-VSvnFrame::MakeRevert ()
+RapidSvnFrame::MakeRevert ()
 {
   wxMessageDialog sure_dlg (this,
                             _T
@@ -1125,7 +1125,7 @@ VSvnFrame::MakeRevert ()
 }
 
 void
-VSvnFrame::MakeResolve ()
+RapidSvnFrame::MakeResolve ()
 {
   aux_pool = svn_pool_create (pool);
   apr_array_header_t *targets = apr_array_make (aux_pool,
@@ -1153,7 +1153,7 @@ VSvnFrame::MakeResolve ()
 }
 
 void
-VSvnFrame::DelEntries ()
+RapidSvnFrame::DelEntries ()
 {
   if (m_listCtrl->GetSelectedItemCount () == 0)
     return;
@@ -1172,7 +1172,7 @@ VSvnFrame::DelEntries ()
 }
 
 void
-VSvnFrame::MakeCopy ()
+RapidSvnFrame::MakeCopy ()
 {
   if (m_listCtrl->GetSelectedItemCount () != 1)
   {
@@ -1195,13 +1195,13 @@ VSvnFrame::MakeCopy ()
 }
 
 void
-VSvnFrame::Rename ()
+RapidSvnFrame::Rename ()
 {
 
 }
 
 void
-VSvnFrame::Mkdir ()
+RapidSvnFrame::Mkdir ()
 {
   lastAction = ACTION_TYPE_MKDIR;
   MkdirAction *mk_act = new MkdirAction (this, pool, m_logTracer);
@@ -1209,7 +1209,7 @@ VSvnFrame::Mkdir ()
 }
 
 void
-VSvnFrame::Merge ()
+RapidSvnFrame::Merge ()
 {
   lastAction = ACTION_TYPE_MERGE;
   MergeAction *mrg_act = new MergeAction (this, pool, m_logTracer);
@@ -1217,19 +1217,19 @@ VSvnFrame::Merge ()
 }
 
 void
-VSvnFrame::Contents ()
+RapidSvnFrame::Contents ()
 {
   return;
 }
 
 void
-VSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
+RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 {
   UpdateFileList ();
 }
 
 void
-VSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
+RapidSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
 {
   if (event.GetKeyEvent ().GetKeyCode () == WXK_F5)
   {
@@ -1242,7 +1242,7 @@ VSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
 }
 
 void
-VSvnFrame::Preferences ()
+RapidSvnFrame::Preferences ()
 {
   PreferencesDlg *pDlg = PreferencesDlg::CreateInstance (this);
   pDlg->ShowModal ();

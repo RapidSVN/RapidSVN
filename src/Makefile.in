@@ -36,7 +36,7 @@ OBJECTS=action_thread.o \
 		update_action.o \
 		update_dlg.o \
 		utils.o \
-		rapidsvn.o \
+		rapidsvn_frame.o \
 		rapidsvn_app.o \
 		svncpp/auth.o \
 		svncpp/client.o \

@@ -4,23 +4,23 @@
 #include "filelist_ctrl.h"
 #include "folder_browser.h"
 #include "utils.h"
-#include "rapidsvn.h"
+#include "rapidsvn_frame.h"
 
-class VSvnFrame;
+class RapidSvnFrame;
 
-class VsvnApp:public wxApp
+class RapidSvnApp:public wxApp
 {
   virtual bool OnInit ();
   virtual int OnExit ();
 
 public:
-   VSvnFrame * appFrame;
+   RapidSvnFrame * appFrame;
 
-  VSvnFrame *GetAppFrame ()
+  RapidSvnFrame *GetAppFrame ()
   {
     return appFrame;
   }
 };
 
-DECLARE_APP (VsvnApp)
+DECLARE_APP (RapidSvnApp)
 #endif

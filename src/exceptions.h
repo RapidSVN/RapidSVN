@@ -1,23 +1,23 @@
 #ifndef _EXCEPTIONS_H_INCLUDED_
 #define _EXCEPTIONS_H_INCLUDED_
 
-class VSvnEx
+class RapidSvnEx
 {
 public:
   wxString estr;
   long code;
 
 public:
-   VSvnEx (const wxString & __estr = "", const long __code = -1);
+   RapidSvnEx (const wxString & __estr = "", const long __code = -1);
 
-   virtual ~ VSvnEx ();
+   virtual ~ RapidSvnEx ();
 
-   VSvnEx (const VSvnEx & rhs)
+   RapidSvnEx (const RapidSvnEx & rhs)
   {
     *this = rhs;
   }
 
-  VSvnEx & operator = (const VSvnEx & rhs);
+  RapidSvnEx & operator = (const RapidSvnEx & rhs);
 
   void what (const wxString & __estr);
 

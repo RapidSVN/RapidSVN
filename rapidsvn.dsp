@@ -184,7 +184,7 @@ SOURCE=.\src\preferences_dlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\rapidsvn.cpp
+SOURCE=.\src\rapidsvn_frame.cpp
 # End Source File
 # Begin Source File
 
@@ -344,7 +344,7 @@ SOURCE=.\src\preferences_dlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\rapidsvn.h
+SOURCE=.\src\rapidsvn_frame.h
 # End Source File
 # Begin Source File
 

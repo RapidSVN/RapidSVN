@@ -1,8 +1,8 @@
 #include "include.h"
 #include "rapidsvn_app.h"
 
-IMPLEMENT_APP (VsvnApp)
-     bool VsvnApp::OnInit ()
+IMPLEMENT_APP (RapidSvnApp)
+     bool RapidSvnApp::OnInit ()
 {
   // application and vendor name are used by wxConfig to construct the name
   // of the config file/registry key and must be set before the first call
@@ -11,7 +11,7 @@ IMPLEMENT_APP (VsvnApp)
   SetVendorName (APPLICATION_NAME);
   SetAppName (APPLICATION_NAME);
 
-  appFrame = new VSvnFrame (APPLICATION_NAME);
+  appFrame = new RapidSvnFrame (APPLICATION_NAME);
   appFrame->Show (TRUE);
   SetTopWindow (appFrame);
 
@@ -19,7 +19,7 @@ IMPLEMENT_APP (VsvnApp)
 }
 
 int
-VsvnApp::OnExit ()
+RapidSvnApp::OnExit ()
 {
   // destroy application configuration object
   delete wxConfigBase::Set ((wxConfigBase *) NULL);

@@ -1,5 +1,5 @@
-#ifndef _VSVN_FRAME_HEADER_H_INCLUDED_
-#define _VSVN_FRAME_HEADER_H_INCLUDED_
+#ifndef _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
+#define _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
 
 #include <wx/toolbar.h>
 #include <wx/splitter.h>
@@ -26,7 +26,7 @@ typedef enum
 }
 ActionType;
 
-class VSvnFrame;
+class RapidSvnFrame;
 
 /**
 * Panel holding the splitter with the folder browser
@@ -46,11 +46,11 @@ public:
   void Trace (const wxString & str);
 };
 
-class VSvnFrame:public wxFrame
+class RapidSvnFrame:public wxFrame
 {
 public:
-  VSvnFrame (const wxString & title);
-  ~VSvnFrame ();
+  RapidSvnFrame (const wxString & title);
+  ~RapidSvnFrame ();
 
   void OnSize (wxSizeEvent & event);
 

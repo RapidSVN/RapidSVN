@@ -1,17 +1,17 @@
 #include "include.h"
 #include "exceptions.h"
 
-VSvnEx::VSvnEx (const wxString & __estr, const long __code)
+RapidSvnEx::RapidSvnEx (const wxString & __estr, const long __code)
 {
   code = __code;
   what (__estr);
 }
 
-VSvnEx::~VSvnEx ()
+RapidSvnEx::~RapidSvnEx ()
 {
 }
 
-VSvnEx & VSvnEx::operator = (const VSvnEx & rhs)
+RapidSvnEx & RapidSvnEx::operator = (const RapidSvnEx & rhs)
 {
   if (this == &rhs)
     return *this;
@@ -23,7 +23,7 @@ VSvnEx & VSvnEx::operator = (const VSvnEx & rhs)
 }
 
 void
-VSvnEx::what (const wxString & __what)
+RapidSvnEx::what (const wxString & __what)
 {
   estr.Printf (_T ("%s  code: %ld"), __what.c_str (), code);
 }
