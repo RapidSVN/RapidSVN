@@ -13,8 +13,13 @@
 #ifndef _ACTION_THREAD_H_INCLUDED_
 #define _ACTION_THREAD_H_INCLUDED_
 
-#include "tracer.hpp"
+
+// svncpp
 #include "svncpp/pool.hpp"
+
+// app
+#include "ids.hpp"
+#include "tracer.hpp"
 
 /**
 * An action thread class is used as a base class
