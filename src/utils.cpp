@@ -199,10 +199,10 @@ AppendModifyMenu (wxMenu * parentMenu)
 
   parentMenu->AppendSeparator ();
   
-  AppendMenuItem (parentMenu, ID_Copy, _("&Copy...\tCTRL-C"));
-  AppendMenuItem (parentMenu, ID_Move, _("M&ove...\tCTRL-O"));
+  AppendMenuItem (parentMenu, ID_Copy, _("&Copy...\tF5"));
+  AppendMenuItem (parentMenu, ID_Move, _("M&ove...\tF6"));
   AppendMenuItem (parentMenu, ID_Rename, _("Re&name...\tCTRL-N"));
-  AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory..."));
+  AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory...\tF7"));
 }
 
 void 
@@ -267,12 +267,12 @@ AppendMenuItem (wxMenu & menu, int id)
     break;
 
   case ID_Update:
-    caption = _("Update...\tCTRL-U");
+    caption = _("&Update...\tCTRL-U");
     bitmap = wxBitmap (update_xpm);
     break;
 
   case ID_Commit:
-    caption = _("Commit...\tCTRL-M");
+    caption = _("Co&mmit...\tCTRL-M");
     bitmap = wxBitmap (commit_xpm);
     break;
 
@@ -281,11 +281,11 @@ AppendMenuItem (wxMenu & menu, int id)
     break;
 
   case ID_Refresh:
-    caption = _("Refresh\tF5");
+    caption = _("Refresh\tCTRL-R");
     break;
 
   case ID_RefreshWithUpdate:
-    caption = _("Refresh (with Update)\tCTRL+F5");
+    caption = _("Refresh (with Update)");
     break;
 
   case ID_Preferences:
