@@ -21,7 +21,7 @@
 #include "rapidsvn_app.h"
 
 #include "res/bitmaps/computer.xpm"
-#include "res/bitmaps/folder.xpm"
+#include "res/bitmaps/versioned_folder.xpm"
 #include "res/bitmaps/open_folder.xpm"
 #include "res/bitmaps/update.xpm"
 #include "res/bitmaps/commit.xpm"
@@ -55,7 +55,7 @@ FolderBrowser::FolderBrowser (wxWindow * parent,
 
   m_imageList = new wxImageList (16, 16, TRUE);
   m_imageList->Add (wxIcon (computer_xpm));
-  m_imageList->Add (wxIcon (folder_xpm));
+  m_imageList->Add (wxIcon (versioned_folder_xpm));
   m_imageList->Add (wxIcon (open_folder_xpm));
 
   m_treeCtrl = new wxTreeCtrl (this, -1, pos, size, 
