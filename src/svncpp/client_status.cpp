@@ -154,16 +154,21 @@ namespace svn
   }
 
   static Status 
-  dirEntryToStatus (const DirEntry & dirEntry)
+  dirEntryToStatus (const char * path, const DirEntry & dirEntry)
   {
     Pool pool;
 
     svn_wc_entry_t * e =
       static_cast<svn_wc_entry_t *> (
         apr_pcalloc (pool, sizeof (svn_wc_entry_t)));
+
+    std::string url (path);
+    url += "/";
+    url += dirEntry.name ();
+
     e->name = dirEntry.name ();
     e->revision = dirEntry.createdRev ();
-    e->url = dirEntry.name ();
+    e->url = url.c_str ();
     e->kind = dirEntry.kind ();
     e->schedule = svn_wc_schedule_normal;
     e->text_time = dirEntry.time ();
@@ -183,7 +188,7 @@ namespace svn
     s->repos_text_status = svn_wc_status_normal;
     s->repos_prop_status = svn_wc_status_normal;
 
-    return Status (dirEntry.name (), s);
+    return Status (url.c_str (), s);
   }
 
   static StatusEntries
@@ -196,7 +201,7 @@ namespace svn
                 Context * context)
   {
     Revision rev (Revision::HEAD);
-    DirEntries dirEntries = client->ls (path, rev, descend);
+    DirEntries dirEntries = client->list (path, rev, descend);
     DirEntries::const_iterator it;
     
     StatusEntries entries;
@@ -205,7 +210,7 @@ namespace svn
     {
       const DirEntry & dirEntry = *it;
 
-      entries.push_back (dirEntryToStatus (dirEntry));
+      entries.push_back (dirEntryToStatus (path, dirEntry));
     }
 
     return entries;
@@ -280,12 +285,12 @@ namespace svn
   {
     Revision rev (Revision::HEAD);
 
-    DirEntries dirEntries = client->ls (path, rev, false);
+    DirEntries dirEntries = client->list (path, rev, false);
 
     if (dirEntries.size () == 0)
       return Status ();
     else
-      return dirEntryToStatus (dirEntries [0]);
+      return dirEntryToStatus (path, dirEntries [0]);
   }
 
   Status 
