@@ -14,10 +14,17 @@
 #ifndef _SVNCPP_CLIENT_H_
 #define _SVNCPP_CLIENT_H_
 
-#if defined( _MSC_VER) && _MSC_VER <= 1200
-#pragma warning( disable: 4786 )// debug symbol truncated
-#pragma warning( disable: 4290 )// C++ exception specification ignored 
+
+// Ignore MSVC 6 compiler warning: debug symbol truncated
+#if defined (_MSC_VER) && _MSC_VER <= 1200
+#pragma warning (disable: 4786)
 #endif
+
+// Ignore MSVC 7 compiler warning: C++ exception specification
+#if defined (_MSC_VER) && _MSCVER > 1200 && _MSCVER <= 1310
+#pragma warning (disable: 4290)
+#endif
+
 
 // stl
 #include <vector>
@@ -33,9 +40,6 @@
 #include "log_entry.hpp"
 #include "annotate_line.hpp"
 
-#ifdef WIN32
-#pragma warning( disable: 4290 )// C++ exception specification ignored 
-#endif
 
 /**
  * SvnCpp namespace.
