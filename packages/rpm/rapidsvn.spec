@@ -10,6 +10,7 @@ Group: Utilities/System
 URL: http://rapidsvn.tigris.org
 Source0: %{name}-%{version}-%{release}.tar.gz
 Patch0: rapidsvn.include.patch
+Patch1: apr.patch
 Packager: David Summers <david@summersoft.fay.ar.us>
 Requires: apache-libapr >= %{apache_version}
 Requires: apache-libapr-utils >= %{apache_version}
@@ -57,7 +58,11 @@ ${AUTOCONF}
 
 %patch0 -p0
 
-./configure --with-apr-config=/usr/local/apache2/bin/apr-config
+./configure \
+	--with-apr-config=/usr/local/apache2/bin/apr-config \
+	--disable-no-exceptions
+
+%patch1 -p0
 
 %build
 cd src
