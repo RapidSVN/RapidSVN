@@ -84,7 +84,6 @@ namespace svn
         svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
         const svn_string_t *propval = (const svn_string_t *)val;
         svn_utf_string_from_utf8 (&propval, propval, pool);
-        const char *prop_val_str = propval->data;
 
         prop_map[ std::string( key_native ) ] = std::string( propval->data );
       }
@@ -144,7 +143,6 @@ namespace svn
       svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
       const svn_string_t *propval = (const svn_string_t *)val;
       svn_utf_string_from_utf8 (&propval, propval, pool);
-      const char *prop_val_str = propval->data;
 
       prop_map[ std::string( propName ) ] = std::string( propval->data );
 
@@ -265,7 +263,6 @@ namespace svn
       svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
       const svn_string_t *propval = (const svn_string_t *)val;
       svn_utf_string_from_utf8 (&propval, propval, pool);
-      const char *prop_val_str = propval->data;
 
       prop_map[ std::string( key_native ) ] = std::string( propval->data );
     }

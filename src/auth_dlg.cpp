@@ -30,8 +30,8 @@ public:
 
   Data (wxWindow * window, int flags)
   {
-    wxStaticText * labelUser;
-    wxTextCtrl * textUser;
+    wxStaticText * labelUser=0;
+    wxTextCtrl * textUser=0;
     const bool showUser = (flags & HIDE_USERNAME) == 0;
 
     // create controls first

@@ -46,11 +46,6 @@ static const char CONF_AUTH_PER_BOOKMARK[] =
 static const char CONF_DIFF_TOOL[] =
   "/Preferences/DiffTool";
 
-/**
- * The Preferences singleton
- */
-static Preferences * m_preferences;
-
 Preferences::Preferences ()
   : editor (DEFAULT_EDITOR), editorAlways (false), 
     explorer (DEFAULT_EXPLORER), explorerAlways (false),

@@ -556,8 +556,6 @@ public:
     wxTreeItemId id = treeCtrl->GetFirstChild (parentId, cookie);
     wxTreeItemId childId;
 
-    bool success = false;
-
     while (id.IsOk ())
     {
       const FolderItemData * data = GetItemData (id);

@@ -179,7 +179,7 @@ namespace svn
     const char *try_dirs[] = { "/tmp", "/usr/tmp", "/var/tmp" };
     const char *try_envs[] = { "TMP", "TEMP", "TMPDIR" };
     char *cwd;
-    int i;
+    size_t i;
 
     /* Our goal is to find a temporary directory suitable for writing
        into.  We'll only pay the price once if we're successful -- we

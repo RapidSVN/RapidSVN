@@ -97,7 +97,7 @@ ProportionalSplitterWindow::OnSize (wxSizeEvent & event)
     m_old_length_tot = new_length_tot;
 
     // Make the nescessary adjustments
-    SetSashPosition (new_length[0] - GetBorderSize ());
+    SetSashPosition ((int)new_length[0] - GetBorderSize ());
   }
 }
 

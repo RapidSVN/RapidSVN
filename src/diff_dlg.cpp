@@ -412,10 +412,6 @@ public:
 
     switch (diffData.compareType)
     {
-    case DiffData::WITH_SAME_REVISION:
-      // nothing special
-      break;
-
     case DiffData::WITH_DIFFERENT_REVISION:
       diffData.revision1 = mRevisionOne->GetRevision ();
       break;
@@ -424,6 +420,9 @@ public:
       diffData.revision1 = mRevisionOne->GetRevision ();
       diffData.revision2 = mRevisionTwo->GetRevision ();
       break;
+    case DiffData::WITH_SAME_REVISION:
+    default:
+      // nothing special
     }
     return diffData;
   }
@@ -567,6 +566,9 @@ private:
     case DiffData::TWO_REVISIONS:
       one = two = true;
       break;
+
+    default:
+      one = two = false;
     }
     mRevisionOne->Enable (one);
     mRevisionTwo->Enable (two);
