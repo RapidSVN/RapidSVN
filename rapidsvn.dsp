@@ -132,6 +132,10 @@ SOURCE=.\src\exceptions.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\file_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\filelist_ctrl.cpp
 # End Source File
 # Begin Source File
@@ -293,6 +297,10 @@ SOURCE=.\src\delete_dlg.h
 # Begin Source File
 
 SOURCE=.\src\exceptions.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\file_action.h
 # End Source File
 # Begin Source File
 

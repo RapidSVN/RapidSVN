@@ -488,6 +488,10 @@ FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
   pItem = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
   pItem->SetBitmap (wxBITMAP (commit));
   menu.Append (pItem);
+  pItem = new wxMenuItem (&menu, ID_CopyTo, _T ("Copy"));
+  menu.Append (pItem);
+  pItem = new wxMenuItem (&menu, ID_MoveTo, _T ("Move"));
+  menu.Append (pItem);
 
   menu.AppendSeparator ();
 
@@ -500,6 +504,8 @@ FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
 
   menu.AppendSeparator ();
 
+  pItem = new wxMenuItem (&menu, ID_RenameHere, _T ("Rename"));
+  menu.Append (pItem);
   pItem = new wxMenuItem (&menu, ID_Info, _T ("Info"));
   pItem->SetBitmap (wxBITMAP (info));
   menu.Append (pItem);

@@ -248,7 +248,7 @@ close_file (void *file_baton, apr_pool_t *)
     const svn_wc_entry_t *entry;
     svn_boolean_t merged, tc, pc;
     apr_pool_t *subpool = svn_pool_create (eb->pool);
-    const char *pdir = svn_path_remove_component_nts (fb->path, subpool);
+    const char *pdir = svn_path_dirname (fb->path, subpool);
     svn_wc_adm_access_t *adm_access;
 
     SVN_ERR (svn_wc_adm_probe_open (&adm_access, NULL, fb->path, FALSE,

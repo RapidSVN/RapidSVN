@@ -344,6 +344,7 @@ Modify::logMessage (const char * message, char * baseDirectory)
 
 svn_error_t *
 svn_cl__get_log_message (const char **log_msg,
+                         const char **tmp_file,
                          apr_array_header_t * commit_items,
                          void *baton, apr_pool_t * pool)
 {

@@ -19,7 +19,6 @@ ActionThread::ActionThread (wxFrame * frame, apr_pool_t * __pool):wxThread ()
 {
   tracer = NULL;
   ownTracer = FALSE;
-  mainFrame->SetCursor(wxCURSOR_ARROWWAIT);
 }
 
 ActionThread::~ActionThread ()
@@ -29,7 +28,6 @@ ActionThread::~ActionThread ()
   // and this class deletes it.
   if (tracer && ownTracer)
     delete tracer;
-  mainFrame->SetCursor(wxCURSOR_ARROW);
 }
 
 void

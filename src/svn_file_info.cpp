@@ -83,7 +83,7 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
     info += _T ("Node Kind: file\n");
     {
       const char *dir_name;
-      svn_path_split_nts (path.c_str (), &dir_name, NULL, pool);
+      svn_path_split (path.c_str (), &dir_name, NULL, pool);
       SVN_ERR (svn_wc_conflicted_p (&text_conflict, &props_conflict,
                                     dir_name, entry, pool));
     }

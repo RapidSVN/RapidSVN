@@ -14,9 +14,10 @@
 #define _UPDATE_ACTION_H_INCLUDED_
 
 #include "action_thread.h"
+#include "file_action.h"
 #include "update_dlg.h"
 
-class UpdateAction:public ActionThread
+class UpdateAction:public FileAction
 {
 private:
   UpdateDlg::sData Data;
@@ -25,11 +26,9 @@ private:
   wxFrame *m_pFrame;
 
 public:
-  UpdateAction (wxFrame * frame, apr_pool_t * __pool,
-                 Tracer * tr, apr_array_header_t * trgts);
-
+  UpdateAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * targets);
   void Perform ();
-  void *Entry ();
+  bool PerformUI ();
 };
 
 #endif

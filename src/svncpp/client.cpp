@@ -80,9 +80,8 @@ namespace svn
   void 
   Client::internalPath (std::string & path)
   {
-    svn_stringbuf_t *buf = svn_stringbuf_create (path.c_str (), m_pool);
-    svn_path_internal_style (buf);
-    path = buf->data;
+    const char *str = svn_path_internal_style (path.c_str (), m_pool);
+    path = str;
   }
 
   std::vector < Status * >

@@ -13,10 +13,10 @@
 #ifndef _COMMIT_ACTION_H_INCLUDED_
 #define _COMMIT_ACTION_H_INCLUDED_
 
-#include "action_thread.h"
+#include "file_action.h"
 #include "commit_dlg.h"
 
-class CommitAction:public ActionThread
+class CommitAction:public FileAction
 {
 private:
   CommitDlg::sData Data;
@@ -25,11 +25,9 @@ private:
   apr_array_header_t *targets;
 
 public:
-   CommitAction (wxFrame * frame, apr_pool_t * __pool,
-                 Tracer * tr, apr_array_header_t * trgts);
-
+  CommitAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * targets);
   void Perform ();
-  void *Entry ();
+  bool PerformUI ();
 };
 
 #endif

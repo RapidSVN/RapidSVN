@@ -56,6 +56,7 @@ private:
 
   void ShowMenu (long index, wxPoint & pt);
   void buildMenu (wxMenu & menu, const wxString & path);
+  bool hasSubdirectories (const wxString & path);
 
   DECLARE_EVENT_TABLE ()
 

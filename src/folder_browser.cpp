@@ -49,12 +49,10 @@ FolderBrowser::FolderBrowser (wxWindow * parent,
                               const wxPoint & pos,
                               const wxSize & size,
                               const wxString & name)
-  : wxControl (parent, id, pos, size, 0, wxDefaultValidator, name)
+  : wxControl (parent, id, pos, size, wxCLIP_CHILDREN, wxDefaultValidator, name)
 {
   m_pool = pool;
 
-  SetBackgroundColour (wxSystemSettings::GetColour (wxSYS_COLOUR_3DFACE));
- 
   m_imageList = new wxImageList (16, 16, TRUE);
   m_imageList->Add (wxIcon (computer_xpm));
   m_imageList->Add (wxIcon (folder_xpm));
@@ -179,11 +177,14 @@ FolderBrowser::OnExpandItem (wxTreeEvent & event)
 
       bool ok = dir.GetFirst(&filename, wxEmptyString, 
                              wxDIR_DIRS);
+      bool parentHasSubdirectories = false;
 
       while(ok)
       {
         if(filename != SVN_WC_ADM_DIR_NAME)
         {
+			parentHasSubdirectories = true;
+
             wxFileName fullPath(parentPath, filename, wxPATH_NATIVE);
 
             FolderItemData * data = 
@@ -196,13 +197,18 @@ FolderBrowser::OnExpandItem (wxTreeEvent & event)
                 parentId, filename, 
                 FOLDER_IMAGE_FOLDER, 
                 FOLDER_IMAGE_FOLDER, data);
-            m_treeCtrl->SetItemHasChildren (newId, TRUE);
+            m_treeCtrl->SetItemHasChildren (newId, hasSubdirectories(fullPath.GetFullPath()) );
             m_treeCtrl->SetItemImage (newId, FOLDER_IMAGE_OPEN_FOLDER,  
                                       wxTreeItemIcon_Expanded);
         }
 
         ok = dir.GetNext (&filename);
       }
+
+	  // If no subdirectories, don't show the expander
+	  if (!parentHasSubdirectories)
+		  m_treeCtrl->SetItemHasChildren(parentId, FALSE);
+
     }
     }
     break;
@@ -262,6 +268,31 @@ void
 FolderBrowser::SetPath (const wxString& path)
 {
   //TODO 
+}
+
+bool
+FolderBrowser::hasSubdirectories (const wxString & path)
+{
+	wxString filename;
+
+    wxDir dir (path);
+
+	bool ok = dir.GetFirst(&filename, wxEmptyString, 
+							wxDIR_DIRS);
+    if(!dir.IsOpened ())
+		return false;
+
+	if (!ok)
+		return false;
+
+	while (ok)
+	{
+		if (filename != SVN_WC_ADM_DIR_NAME)
+			return true;
+		ok = dir.GetNext (&filename);
+	}
+
+	return false;
 }
 
 void

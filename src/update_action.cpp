@@ -18,7 +18,7 @@
 #include "update_action.h"
 #include "svn_notify.h"
 
-UpdateAction::UpdateAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):ActionThread (frame, __pool),
+UpdateAction::UpdateAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):FileAction (frame, __pool),
   targets
   (trgts)
 {
@@ -26,32 +26,20 @@ UpdateAction::UpdateAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, a
   m_pFrame = frame;
 }
 
-void
-UpdateAction::Perform ()
+bool
+UpdateAction::PerformUI ()
 {
-  ////////////////////////////////////////////////////////////
-  // Here we are in the main thread.
-
   UpdateDlg *upDlg = new UpdateDlg(m_pFrame, &Data);
 
-  if (upDlg->ShowModal () == wxID_OK)
-  {
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
-
-    ////////////////////////////////////////////////////////////
-  }
-
+  int retval = upDlg->ShowModal ();
   // destroy the dialog
   upDlg->Close (TRUE);
+
+  return (retval == wxID_OK);
 }
 
-void *
-UpdateAction::Entry ()
+void
+UpdateAction::Perform ()
 {
   svn::Modify modify;
   SvnNotify notify (GetTracer ());
@@ -87,8 +75,6 @@ UpdateAction::Entry ()
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-
-  return NULL;
 }
 /* -----------------------------------------------------------------
  * local variables:

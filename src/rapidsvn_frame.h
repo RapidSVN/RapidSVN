@@ -89,12 +89,15 @@ public:
   void OnMerge (wxCommandEvent & event);
 
   // Modify menu
-  void OnUpdate (wxCommandEvent & event);
+  void OnFileCommand (wxCommandEvent & event);
   void OnAdd (wxCommandEvent & event);
   void OnDelete (wxCommandEvent & event);
-  void OnCommit (wxCommandEvent & event);
   void OnRevert (wxCommandEvent & event);
   void OnResolve (wxCommandEvent & event);
+  void OnCopyTo (wxCommandEvent & event);
+  void OnMoveTo (wxCommandEvent & event);
+  void OnRenameHere (wxCommandEvent & event);
+  void OnCopyHere (wxCommandEvent & event);
 
   // Help menu
   void OnContents (wxCommandEvent & event);
@@ -131,10 +134,10 @@ public:
   void ShowLog ();
   void ShowInfo ();
 
-  void MakeUpdate ();
+  apr_array_header_t * GetActionTargets();
+
   void AddEntries ();
   void DelEntries ();
-  void MakeCommit ();
   void MakeRevert ();
   void MakeResolve ();
   void Properties ();
@@ -145,7 +148,6 @@ public:
   void Merge ();
   void Contents ();
   void Preferences ();
-
 
   FileListCtrl *GetFileList ()
   {
@@ -222,6 +224,10 @@ enum
   ID_Property,
   ID_AddProject,
   ID_RemoveProject,
+  ID_MoveTo,
+  ID_CopyTo,
+  ID_RenameHere,
+  ID_CopyHere,
 
   ACTION_EVENT,                 // this one gets sent from the action threads
 

@@ -20,38 +20,26 @@
 
 CommitAction::CommitAction (wxFrame * frame, apr_pool_t * __pool, 
                             Tracer * tr, apr_array_header_t * trgts)
-                            : ActionThread (frame, __pool), targets (trgts)
+                            : FileAction (frame, __pool), targets (trgts)
 {
   thisframe = frame;
   SetTracer (tr, FALSE);        // do not own the tracer
 }
 
-void
-CommitAction::Perform ()
+bool
+CommitAction::PerformUI ()
 {
-  ////////////////////////////////////////////////////////////
-  // Here we are in the main thread.
-
   CommitDlg *ciDlg = new CommitDlg(thisframe, &Data);
 
-  if (ciDlg->ShowModal () == wxID_OK)
-  {
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
-
-    ////////////////////////////////////////////////////////////
-  }
-
+  int retval = ciDlg->ShowModal ();
   // destroy the dialog
   ciDlg->Close (TRUE);
+
+  return (retval == wxID_OK);
 }
 
-void *
-CommitAction::Entry ()
+void
+CommitAction::Perform ()
 {
   svn::Modify modify;
   SvnNotify notify (GetTracer ());
@@ -91,8 +79,6 @@ CommitAction::Entry ()
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-
-  return NULL;
 }
 /* -----------------------------------------------------------------
  * local variables:
