@@ -37,16 +37,16 @@ public:
    */
   LogDlg (wxWindow * parent, const svn::LogEntries * entries);
 
+  /**
+   * destructor
+   */
   virtual ~LogDlg ();
 
 private:
-  const svn::LogEntries * m_entries;
-  LogList * m_logList;
-  wxTextCtrl * m_logMsg;
+  /** hide implementation details */
+  struct Data;
+  Data * m;
 
-  void InitializeData ();
-  void GetRevision (const svn_revnum_t revision);
-  void OnClose (wxCommandEvent & event);
   void OnGet (wxCommandEvent & event);
   void OnSelected(wxListEvent& event);
   

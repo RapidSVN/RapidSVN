@@ -228,8 +228,9 @@ public:
 
     // Help Menu
     wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append (ID_Contents, _("&Contents"));
-    menuHelp->AppendSeparator ();
+    //dont lie about not existant help!
+    //menuHelp->Append (ID_Contents, _("&Contents"));
+    //menuHelp->AppendSeparator ();
     menuHelp->Append (ID_About, _("&About..."));
 
     // Create the menu bar and append the menus

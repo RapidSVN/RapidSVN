@@ -21,8 +21,7 @@
 
 enum
 {
-  ID_Close = 1,
-  ID_View,
+  ID_View = 1,
   ID_Get,
   ID_Diff,
   LOG_LIST,
@@ -30,7 +29,6 @@ enum
 };
 
 BEGIN_EVENT_TABLE (LogDlg, wxDialog)
-  EVT_BUTTON             (ID_Close, LogDlg::OnClose)
   EVT_BUTTON             (ID_Get,   LogDlg::OnGet)
   EVT_LIST_ITEM_SELECTED (LOG_LIST, LogDlg::OnSelected)
 END_EVENT_TABLE ()
@@ -79,6 +77,7 @@ private:
       const svn::LogEntry & entry = *it;
       wxString rev;
       rev.Printf("%ld", (long) entry.revision);
+
       //TODO perform date formatting. but dont use
       //subversion but wxDateTime
       //wxString date (entry.date.c_str ());
@@ -92,151 +91,187 @@ private:
   
 };
 
+struct LogDlg::Data
+{
+  LogList * m_logList;
+  wxTextCtrl * m_logMsg;
+  wxButton * m_buttonView;
+  wxButton * m_buttonGet;
+  wxButton * m_buttonDiff;
+
+private:
+public:
+  const svn::LogEntries * entries;
+  wxWindow * window;
+
+  Data (wxWindow * wnd, const svn::LogEntries * entries_)
+    : entries (entries_), window (wnd)
+  {
+    // create controls
+    wxString history;
+    history.Printf(_("History: %d revisions"), entries->size ());
+    wxStaticText * historyLabel = new wxStaticText (wnd, -1, history);
+
+    m_logList = new LogList (wnd, entries);
+
+    m_logMsg = new wxTextCtrl (wnd, LOG_MSG, "", 
+                               wxDefaultPosition, wxSize (420, 110), 
+                               wxTE_READONLY | wxTE_MULTILINE );
+
+    wxButton * buttonClose = new wxButton (wnd, wxID_OK, _("Close"));
+    m_buttonView = new wxButton (wnd, ID_View, _("View"));
+    m_buttonGet = new wxButton (wnd, ID_Get, _("Get"));
+    m_buttonDiff = new wxButton (wnd, ID_Diff, _("Diff"));
+
+    // View/Get/Diff disabled for Alpha 3 Milestone
+    m_buttonView->Enable (false);
+    m_buttonGet->Enable (false);
+    m_buttonDiff->Enable (false);
+
+    // position controls
+
+    wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);
+    logSizer->Add (historyLabel, 0, wxALL, 5);
+    logSizer->Add (m_logList, 1, wxLEFT);
+
+    wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
+    buttonSizer->Add (buttonClose, 0, wxALL, 5);
+    buttonSizer->Add (m_buttonView, 0, wxALL, 5);
+    buttonSizer->Add (m_buttonGet, 0, wxALL, 5);
+    buttonSizer->Add (m_buttonDiff, 0, wxALL, 5);
+
+    wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
+    topSizer->Add (logSizer, 1, wxALL, 5);
+    topSizer->Add (buttonSizer, 0, wxALL, 5);
+
+
+    wxStaticBox * boxMessage = 
+      new wxStaticBox(wnd, -1, _("Log Message:"));
+    wxStaticBoxSizer *messageSizer = 
+      new wxStaticBoxSizer (boxMessage, wxHORIZONTAL);
+    messageSizer->Add (m_logMsg, 1, wxALL | wxEXPAND, 2);
+
+    wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
+    mainSizer->Add (topSizer, 0, wxALL | wxEXPAND, 5);
+    mainSizer->Add (messageSizer, 1, wxALL | wxEXPAND, 5);
+
+    wnd->SetAutoLayout (true);
+    wnd->SetSizer (mainSizer);
+
+    mainSizer->SetSizeHints (wnd);
+    mainSizer->Fit (wnd);
+  }
+
+  void
+  OnGet ()
+  {
+    int sel = m_logList->GetSelectedItemCount ();
+    wxListItem info;
+
+    if(sel == 0 || sel > 1)
+    {
+      wxMessageDialog dlg (window, _("You must select exactly one revision."),
+                           _("Error"), wxOK);
+      dlg.ShowModal ();
+    }
+    else
+    {
+      long item = -1;
+
+      for (;;)
+      {
+        item = m_logList->GetNextItem (item, wxLIST_NEXT_ALL, 
+                                    wxLIST_STATE_SELECTED);
+        if(item == -1)
+          break;
+
+        info.m_itemId = item;
+        info.m_col = 0;
+        info.m_mask = wxLIST_MASK_TEXT;
+  
+        if(!m_logList->GetItem (info))
+          return;
+        svn_revnum_t revnum;
+        info.m_text.ToLong (&revnum);
+        GetRevision (revnum);
+      }
+    }
+  }
+
+  void
+  GetRevision (const svn_revnum_t revision)
+  {
+  //TODO this has to be checked. Is there duplication of functionality underway?
+  //   svn::Modify modify;
+  //   svn::Notify notify;
+  //   modify.notification (&notify);
+
+  //   try
+  //   {
+  //     modify.update (m_log->getLastPath (), svn::Revision(revision), false);
+  //     wxMessageDialog dlg (this, _("Revision retrieved successfully."),
+  //                          _("Message"), wxOK);
+  //     dlg.ShowModal ();
+  //   }
+  //   catch (svn::ClientException &e)
+  //   {
+  //     wxMessageDialog dlg (this, _("An update error occurred."),
+  //                          _(e.description ()), wxOK);
+  //     dlg.ShowModal ();
+  //   }
+  }
+
+  void
+  OnSelected (long index)
+  {
+    wxString message;
+    const svn::LogEntry & entry = (*entries)[index];
+    message = entry.message.c_str ();
+    message.Trim (false);
+
+    m_logMsg->Show (false);
+    m_logMsg->SetValue (message);
+    m_logMsg->Show (true);
+
+    CheckButtons ();
+  }
+
+  void 
+  CheckButtons ()
+  {
+    int count = m_logList->GetSelectedItemCount ();
+
+    m_buttonGet->Enable (count == 1);
+    m_buttonView->Enable (count == 1);
+    m_buttonDiff->Enable (count == 2);
+  }
+};
+
+
 LogDlg::LogDlg (wxWindow * parent, const svn::LogEntries * entries)
   : wxDialog (parent, -1, _("Log History"), wxDefaultPosition, 
-              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-    m_entries(entries), m_logList (0)
+              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  InitializeData ();
+  m = new Data (this, entries);
+
   CentreOnParent ();
 }
 
 LogDlg::~LogDlg ()
 {
-}
-
-void
-LogDlg::InitializeData ()
-{
-  // create controls
-  wxString history;
-  history.Printf(_("History: %d revisions"), m_entries->size ());
-  wxStaticText * historyLabel = new wxStaticText (this, -1, history);
-
-  m_logList = new LogList (this, m_entries);
-
-  m_logMsg = new wxTextCtrl (this, LOG_MSG, "", 
-                           wxDefaultPosition, wxSize (420, 110), 
-                           wxTE_READONLY | wxTE_MULTILINE );
-
-  wxButton * closeButton = new wxButton (this, ID_Close, _("Close"));
-  wxButton * viewButton = new wxButton (this, ID_View, _("View"));
-  wxButton * getButton = new wxButton (this, ID_Get, _("Get"));
-  wxButton * diffButton = new wxButton (this, ID_Diff, _("Diff"));
-
-  // View/Get/Diff disabled for Alpha 3 Milestone
-  viewButton->Enable (false);
-  getButton->Enable (false);
-  diffButton->Enable (false);
-
-  // position controls
-
-  wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);
-  logSizer->Add (historyLabel, 0, wxALL, 5);
-  logSizer->Add (m_logList, 1, wxLEFT);
-
-  wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
-  buttonSizer->Add (closeButton, 0, wxALL, 5);
-  buttonSizer->Add (viewButton, 0, wxALL, 5);
-  buttonSizer->Add (getButton, 0, wxALL, 5);
-  buttonSizer->Add (diffButton, 0, wxALL, 5);
-
-  wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
-  topSizer->Add (logSizer, 1, wxALL, 5);
-  topSizer->Add (buttonSizer, 0, wxALL, 5);
-
-
-
-  wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer (
-          new wxStaticBox(this, -1, _("Log Message:")), 
-          wxHORIZONTAL);
-  messageSizer->Add (m_logMsg, 1, wxALL | wxEXPAND, 2);
-
-  wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-  mainSizer->Add (topSizer, 0, wxALL | wxEXPAND, 5);
-  mainSizer->Add (messageSizer, 1, wxALL | wxEXPAND, 5);
-
-  SetAutoLayout (true);
-  SetSizer (mainSizer);
-
-  mainSizer->SetSizeHints (this);
-  mainSizer->Fit (this);
-}
-
-void
-LogDlg::OnClose (wxCommandEvent & event)
-{
-  Close (TRUE);
+  delete m;
 }
 
 void
 LogDlg::OnGet (wxCommandEvent & event)
 {
-  int sel = m_logList->GetSelectedItemCount ();
-  wxListItem info;
-
-  if(sel == 0 || sel > 1)
-  {
-    wxMessageDialog dlg (this, _("You must select exactly one revision."),
-                         _("Error"), wxOK);
-    dlg.ShowModal ();
-  }
-  else
-  {
-    long item = -1;
-
-    for (;;)
-    {
-      item = m_logList->GetNextItem (item, wxLIST_NEXT_ALL, 
-                                  wxLIST_STATE_SELECTED);
-      if(item == -1)
-        break;
-
-      info.m_itemId = item;
-      info.m_col = 0;
-      info.m_mask = wxLIST_MASK_TEXT;
-  
-      if(!m_logList->GetItem (info))
-        return;
-      svn_revnum_t revnum;
-      info.m_text.ToLong (&revnum);
-      GetRevision (revnum);
-    }
-  }
-}
-
-
-void
-LogDlg::GetRevision (const svn_revnum_t revision)
-{
-//TODO this has to be checked. Is there duplication of functionality underway?
-//   svn::Modify modify;
-//   svn::Notify notify;
-//   modify.notification (&notify);
-
-//   try
-//   {
-//     modify.update (m_log->getLastPath (), svn::Revision(revision), false);
-//     wxMessageDialog dlg (this, _("Revision retrieved successfully."),
-//                          _("Message"), wxOK);
-//     dlg.ShowModal ();
-//   }
-//   catch (svn::ClientException &e)
-//   {
-//     wxMessageDialog dlg (this, _("An update error occurred."),
-//                          _(e.description ()), wxOK);
-//     dlg.ShowModal ();
-//   }
+  m->OnGet ();
 }
 
 void
 LogDlg::OnSelected (wxListEvent& event)
 {
-  wxString message;
-  const svn::LogEntry & entry = (*m_entries)[event.m_itemIndex];
-  message = entry.message.c_str ();
-  message.Trim (false);
-  m_logMsg->SetValue (message);
+  m->OnSelected (event.m_itemIndex);
 }
 
 /* -----------------------------------------------------------------
