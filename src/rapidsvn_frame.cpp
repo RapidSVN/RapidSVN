@@ -207,7 +207,7 @@ public:
     menuView->AppendSeparator ();
 
     menuView->Append (0, _("Columns"), MenuColumns);
-    menuView->AppendCheckItem (ID_Flat, _("Flat Mode"));
+    menuView->AppendCheckItem (ID_Flat, _("Flat Mode...\tCTRL-F"));
 
     menuView->AppendSeparator ();
     
@@ -215,13 +215,13 @@ public:
 
     // Repository menu
     wxMenu *menuRepos = new wxMenu;
-    menuRepos->Append (ID_Import, _("&Import..."));
-    menuRepos->Append (ID_Checkout, _("&Checkout..."));
+    menuRepos->Append (ID_Import, _("&Import...\tCTRL-I"));
+    menuRepos->Append (ID_Checkout, _("Check&out...\tCTRL-O"));
 
     menuRepos->AppendSeparator ();
 
     menuRepos->Append (ID_Merge, _("Merge..."));
-    menuRepos->Append (ID_Switch, _("Switch..."));
+    menuRepos->Append (ID_Switch, _("Switch...\tCTRL-S"));
 
     // Modify menu
     wxMenu *menuModif = new wxMenu;

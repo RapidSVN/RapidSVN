@@ -174,46 +174,44 @@ CreateEllipsisButton(wxWindow *parent, long id)
 void 
 AppendModifyMenu (wxMenu * parentMenu)
 {
-  AppendMenuItem (parentMenu, ID_Update, _("&Update..."),
-                  wxBITMAP (update));
-  AppendMenuItem (parentMenu, ID_Commit, _("Co&mmit..."),
-                  wxBITMAP (commit));
+  AppendMenuItem (*parentMenu, ID_Update);
+  AppendMenuItem (*parentMenu, ID_Commit);
 
   parentMenu->AppendSeparator ();
 
-  AppendMenuItem (parentMenu, ID_Property, _("&Properties..."),
+  AppendMenuItem (parentMenu, ID_Property, _("&Properties...\tCTRL-P"),
                   wxBITMAP (info));
 
   parentMenu->AppendSeparator ();
 
-  AppendMenuItem (parentMenu, ID_Add, _("&Add"),
+  AppendMenuItem (parentMenu, ID_Add, _("&Add\tCTRL-A"),
                   wxBITMAP (add));
   AppendMenuItem (parentMenu, ID_AddRecursive, _("Add r&ecursive"));
-  AppendMenuItem (parentMenu, ID_Delete, _("&Delete"),
+  AppendMenuItem (parentMenu, ID_Delete, _("&Delete\tDEL"),
                   wxBITMAP (delete));
 
   parentMenu->AppendSeparator ();
 
-  AppendMenuItem (parentMenu, ID_Revert, _("&Revert"),
+  AppendMenuItem (parentMenu, ID_Revert, _("Re&vert\tCTRL-V"),
                   wxBITMAP (revert));
-  AppendMenuItem (parentMenu, ID_Resolve, _("Re&solve conflicts"),
+  AppendMenuItem (parentMenu, ID_Resolve, _("Re&solve conflicts\tCTRL-S"),
                   wxBITMAP (resolve));
 
   parentMenu->AppendSeparator ();
   
-  AppendMenuItem (parentMenu, ID_Copy, _("&Copy..."));
-  AppendMenuItem (parentMenu, ID_Move, _("M&ove..."));
-  AppendMenuItem (parentMenu, ID_Rename, _("Re&name..."));
+  AppendMenuItem (parentMenu, ID_Copy, _("&Copy...\tCTRL-C"));
+  AppendMenuItem (parentMenu, ID_Move, _("M&ove...\tCTRL-O"));
+  AppendMenuItem (parentMenu, ID_Rename, _("Re&name...\tCTRL-N"));
   AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory..."));
 }
 
 void 
 AppendQueryMenu (wxMenu * parentMenu)
 {
-  AppendMenuItem (parentMenu, ID_Log, _("&Log"),
+  AppendMenuItem (parentMenu, ID_Log, _("&Log...\tCTRL-L"),
                   wxBITMAP (log));
   AppendMenuItem (parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
-  AppendMenuItem (parentMenu, ID_Info, _("&Info"),
+  AppendMenuItem (parentMenu, ID_Info, _("&Info...\tCTRL-I"),
                   wxBITMAP (info));
 }
 
@@ -269,17 +267,17 @@ AppendMenuItem (wxMenu & menu, int id)
     break;
 
   case ID_Update:
-    caption = _("Update...");
+    caption = _("Update...\tCTRL-U");
     bitmap = wxBitmap (update_xpm);
     break;
 
   case ID_Commit:
-    caption = _("Commit...");
+    caption = _("Commit...\tCTRL-M");
     bitmap = wxBitmap (commit_xpm);
     break;
 
   case ID_Quit:
-    caption = _("E&xit");
+    caption = _("E&xit\tCTRL-Q");
     break;
 
   case ID_Refresh:
