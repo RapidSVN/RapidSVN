@@ -102,6 +102,7 @@ const static char TraceMisc[] = "tracemisc";
 static const int COLUMN_ID_MAP[FileListCtrl::COL_COUNT] =
 {
   -1, // cannot show/hide name
+  -1, // cannot show/hide path
   ID_Column_Rev,
   ID_Column_Cmt_Rev,
   ID_Column_Author,
@@ -130,6 +131,7 @@ static const char *
 COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
 {
   "", // Name is not used here
+  "", // Path is not used here
   _("&Revision"),
   _("R&ep. Rev."),
   _("&Author"),
@@ -207,6 +209,7 @@ public:
     menuView->AppendSeparator ();
 
     menuView->Append (0, _("Columns"), MenuColumns);
+    menuView->AppendCheckItem (ID_Flat, _("Flat View"));
 
     menuView->AppendSeparator ();
     
@@ -266,6 +269,18 @@ public:
     MenuColumns->Check (id, check);
   }
 
+  bool
+  IsMenuChecked (int id)
+  {
+    return MenuBar->IsChecked (id);
+  }
+
+  void
+  CheckMenu (int id, bool check)
+  {
+    MenuBar->Check (id, check);
+  }
+
 };
 
 BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
@@ -280,6 +295,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
+  EVT_MENU (ID_Flat, RapidSvnFrame::OnFlatView)
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
 
@@ -1160,6 +1176,15 @@ RapidSvnFrame::OnColumn (wxCommandEvent & event)
       break;
     }
   }
+  UpdateFileList ();
+}
+
+void
+RapidSvnFrame::OnFlatView (wxCommandEvent & event)
+{
+  bool checked = m->IsMenuChecked (ID_Flat);
+  //m->CheckMenu (ID_Flat, !checked);
+  m_listCtrl->SetFlat (checked);
   UpdateFileList ();
 }
 

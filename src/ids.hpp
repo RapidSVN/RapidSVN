@@ -32,6 +32,7 @@ enum
   ID_Info,
   ID_Login,
   ID_Logout,
+  ID_Flat,
   //REMOVE ID_Combo,
 
   ID_File_Min,

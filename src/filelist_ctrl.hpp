@@ -41,10 +41,18 @@ class FileListCtrl:public wxListView
 public:
   /**
    * Columns in the filelist
+   *
+   * Note: whenever you make changes in the order
+   *       of the columns, add new columns or
+   *       delete columns make sure to apply
+   *       these changes to the constants
+   *       filelist_ctrl.cpp: COLUMN_CAPTIONS, COLUMN_NAMES
+   *       rapidsvn_frame.cpp: COLUMN_ID_MAP, COLUMN_CAPTIONS
    */
   enum
   {
     COL_NAME = 0,
+    COL_PATH,
     COL_REV,
     COL_CMT_REV,
     COL_AUTHOR,
@@ -102,6 +110,22 @@ public:
    * @param width 
    */
   void SetColumnWidth (const int col, const int width);
+
+  /**
+   * change to either flat or single directory view
+   * in flat view all the subdirectories are listed
+   * as well.
+   *
+   * @param flat
+   */
+  void SetFlat (const bool flat);
+
+  /**
+   * get the "flat" setting
+   *
+   * @return true=flat
+   */
+  bool IsFlat ();
 
   void UpdateFileList ();
   void UpdateFileList (const wxString & path);

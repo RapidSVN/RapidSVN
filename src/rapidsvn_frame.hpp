@@ -84,6 +84,7 @@ private:
   void OnRefresh (wxCommandEvent & event);
   void OnColumn (wxCommandEvent & event);
   void OnColumnReset (wxCommandEvent & event);
+  void OnFlatView (wxCommandEvent & event);
 
   // Query menu
   void OnLog (wxCommandEvent & event);

@@ -79,8 +79,8 @@ int IMAGE_INDEX[N_STATUS_KIND];
  */
 static const char ConfigSortColumn[] = "/FileListCtrl/SortColumn";
 static const char ConfigSortOrder[] = "/FileListCtrl/SortOrder";
-static const char ConfigColumnWidthFmt[] = "/FileListCtrl/Column%dWidth";
-static const char ConfigColumnVisibleFmt[] = "/FileListCtrl/Column%dVisible";
+static const char ConfigColumnWidthFmt[] = "/FileListCtrl/Column%sWidth";
+static const char ConfigColumnVisibleFmt[] = "/FileListCtrl/Column%sVisible";
 
 /**
  * test if the given status entry is a file or
@@ -130,6 +130,7 @@ GetDefaultWidth (int col)
     width = 220;
     break;
   case FileListCtrl::COL_NAME:
+  case FileListCtrl::COL_PATH:
   case FileListCtrl::COL_CMT_DATE:
   case FileListCtrl::COL_TEXT_TIME:
   case FileListCtrl::COL_PROP_TIME:
@@ -148,10 +149,14 @@ GetDefaultWidth (int col)
   return width;
 }
 
+/**
+ * array with column captions
+ */
 static const char * 
 COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
 {
   _("Name"),
+  _("Path"),
   _("Revision"),
   _("Rep. Rev."),
   _("Author"),
@@ -171,6 +176,38 @@ COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
   _("Conflict Work")
 };
 
+/**
+ * array with column names. These names are
+ * used to save and retrieve column specific
+ * preferences.
+ * 
+ * Note: these string must not be translatable
+ *       so dont enclose them in _( )
+ */
+static const char *
+COLUMN_NAMES[FileListCtrl::COL_COUNT] =
+{
+  "Name",
+  "Path",
+  "Revision",
+  "RepRev",
+  "Author",
+  "Status",
+  "PropStatus",
+  "LastChanged",
+  "Date",
+  "PropDate",
+  "Checksum",
+  "Url",
+  "Repository",
+  "UUID",
+  "Schedule",
+  "Copied",
+  "ConflictOld",
+  "ConflictNew",
+  "ConflictWork"
+};
+
 
 
 /**
@@ -183,6 +220,7 @@ public:
   bool SortIncreasing;
   int SortColumn;
   bool DirtyColumns;
+  bool FlatMode;
   wxString Path;
   wxImageList *ImageListSmall;
   bool ColumnVisible[COL_COUNT];
@@ -193,7 +231,7 @@ public:
   /** default constructor */
   Data ()
     : SortIncreasing (true), SortColumn (COL_NAME), 
-      DirtyColumns (true)
+      DirtyColumns (true), FlatMode (false)
   {
     ImageListSmall = new wxImageList (16, 16, TRUE);
 
@@ -345,6 +383,53 @@ public:
       return 0;
   }
 
+  /**
+   * read the preferences for the filelist
+   * in this case the visibilty and width of the columns
+   */
+  void
+  ReadConfig ()
+  {
+      // Get settings from config file:
+    wxConfigBase *config = wxConfigBase::Get ();
+    SortColumn = config->Read (ConfigSortColumn, (long) 0);
+    SortIncreasing = config->Read (ConfigSortOrder, (long) 1) ? true : false;
+
+    int col;
+    for (col = 0; col < COL_COUNT; col++)
+    {
+      wxString key;
+      key.Printf (ConfigColumnVisibleFmt, COLUMN_NAMES[col]);
+      ColumnVisible[col] = config->Read (key, (long) 1) != 0;
+  
+      key.Printf (ConfigColumnWidthFmt, COLUMN_NAMES[col]);
+      long width = (long)GetDefaultWidth (col);
+      ColumnWidth[col] = config->Read (key, width);
+    }
+    ColumnVisible[COL_PATH] = FlatMode;
+  }
+
+  /**
+   * save the preferences for the filelist
+   */
+  void
+  WriteConfig ()
+  {
+    // Write settings to config file:
+    wxConfigBase *config = wxConfigBase::Get ();
+    config->Write (ConfigSortColumn, (long) SortColumn);
+    config->Write (ConfigSortOrder, (long) (SortIncreasing ? 1 : 0));
+    // loop through all the columns
+    for (int col=0; col < COL_COUNT; col++)
+    {
+      wxString key;
+      key.Printf (ConfigColumnWidthFmt, COLUMN_NAMES[col]);
+      config->Write (key, (long) ColumnWidth[col]);
+
+      key.Printf (ConfigColumnVisibleFmt, COLUMN_NAMES[col]);
+      config->Write (key, (long) ColumnVisible[col]);
+    }
+  }
 };  
 
 
@@ -416,44 +501,14 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   // set this file list control to use the image list
   SetImageList (m->ImageListSmall, wxIMAGE_LIST_SMALL);
 
-  // Get settings from config file:
-  wxConfigBase *pConfig = wxConfigBase::Get ();
-  m->SortColumn = pConfig->Read (ConfigSortColumn, (long) 0);
-  m->SortIncreasing = pConfig->Read (ConfigSortOrder, (long) 1) ? true : false;
+  m->ReadConfig ();
 
-  wxListItem itemCol;
-  itemCol.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_IMAGE;
-  itemCol.m_image = -1;
-
-  int col;
-  for (col = 0; col < COL_COUNT; col++)
-  {
-    wxString key;
-    key.Printf (ConfigColumnVisibleFmt, col);
-    m->ColumnVisible[col] = pConfig->Read (key, (long) 1) != 0;
-    
-    key.Printf (ConfigColumnWidthFmt, col);
-    long width = (long)GetDefaultWidth (col);
-    m->ColumnWidth[col] = pConfig->Read (key, width);
-  }
   m->DirtyColumns = true;
 }
 
 FileListCtrl::~FileListCtrl ()
 {
-  // Write settings to config file:
-  wxConfigBase *pConfig = wxConfigBase::Get ();
-  pConfig->Write (ConfigSortColumn, (long) m->SortColumn);
-  pConfig->Write (ConfigSortOrder, (long) (m->SortIncreasing ? 1 : 0));
-  for (int col=0; col < COL_COUNT; col++)
-  {
-    wxString key;
-    key.Printf (ConfigColumnWidthFmt, col);
-    pConfig->Write (key, (long) m->ColumnWidth[col]);
-
-    key.Printf (ConfigColumnVisibleFmt, col);
-    pConfig->Write (key, (long) m->ColumnVisible[col]);
-  }
+  m->WriteConfig ();
 
   DeleteAllItems ();
   delete m;
@@ -476,10 +531,6 @@ FileListCtrl::UpdateFileList ()
 
   UpdateColumns ();
 
-  // cycle through the files and folders in the current path
-  wxFileName fullpath (path, "*");
-  // wxString name;
-
   wxLogStatus (_("Listing entries in '%s'"), path.c_str ());
 
   // Hide the list to speed up inserting
@@ -492,8 +543,9 @@ FileListCtrl::UpdateFileList ()
 
   svn::Client client (&context);
   const svn::StatusEntries statusVector =
-    client.status (path.c_str (), FALSE);
+    client.status (path.c_str (), m->FlatMode);
   svn::StatusEntries::const_iterator it;
+  const size_t pathLength = path.Length () + 1;
 
   for (it = statusVector.begin (); it != statusVector.end (); it++)
   {
@@ -502,13 +554,21 @@ FileListCtrl::UpdateFileList ()
 
     int i = GetItemCount ();
 
-    if ( status.path () == stdpath )
+    // truncate the first part of the path
+    wxString fullPath (status.path ());
+    wxString filename (fullPath.Mid (pathLength));
+    if (filename.Length () == 0)
     {
       values[COL_NAME] = ".";
     }
     else
     {
-      values[COL_NAME] = wxFileNameFromPath (status.path ());
+      values[COL_NAME] = wxFileNameFromPath (filename);
+    }
+    if (m->ColumnVisible[COL_PATH])
+    {
+      wxFileName path (fullPath);
+      values[COL_PATH] = path.GetFullPath ();
     }
 
     wxString text;
@@ -545,6 +605,7 @@ FileListCtrl::UpdateFileList ()
     }
 
     InsertItem (i, values[COL_NAME], imageIndex);
+
 
     // The item data will be used to sort the list:
     SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
@@ -877,6 +938,10 @@ FileListCtrl::ResetColumns ()
       visible = false;
       break;
 
+    case COL_PATH:
+      visible = m->FlatMode;
+      break;
+
     default:
       visible = true;
       break;
@@ -1009,7 +1074,8 @@ FileListCtrl::OnColumnEndDrag (wxListEvent & event)
   {
     if (m->ColumnIndex[col] == index)
     {
-      m->ColumnWidth[col] = GetColumnWidth (col);
+      const wxListItem item = event.GetItem ();
+      m->ColumnWidth[col] = item.GetWidth ();
       break;
     }
   }
@@ -1025,6 +1091,19 @@ FileListCtrl::SetColumnWidth (const int col, const int width)
   {
     wxListCtrl::SetColumnWidth (index, width);
   }
+}
+
+void
+FileListCtrl::SetFlat (const bool flat)
+{
+  m->FlatMode = flat;
+  SetColumnVisible (COL_PATH, flat);
+}
+
+bool
+FileListCtrl::IsFlat ()
+{
+  return m->FlatMode;
 }
 
 /* -----------------------------------------------------------------
