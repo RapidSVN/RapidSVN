@@ -11,11 +11,17 @@
  * ====================================================================
  */
 
+// stl
+#include <vector>
+
+// svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/status.hpp"
+
+// app
 #include "include.hpp"
 #include "utils.hpp"
-#include <vector>
+#include "tracer.hpp"
 
 wxString & UnixPath (wxString & path)
 {
