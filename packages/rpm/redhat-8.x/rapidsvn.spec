@@ -7,17 +7,15 @@ Copyright: BSD
 Group: Utilities/System
 URL: http://rapidsvn.tigris.org
 Source0: %{name}-%{version}-%{release}.tar.gz
-Patch0: rapidsvn.include.patch
 Packager: David Summers <david@summersoft.fay.ar.us>
 Requires: httpd-apr >= %{apache_version}
 Requires: subversion
 #Requires: /sbin/install-info
 BuildPreReq: subversion-devel
 BuildPreReq: wxGTK-devel >= 2.3.3
-BuildPreReq: httpd >= %{apache_version}
 BuildPreReq: httpd-devel >= %{apache_version}
 BuildPreReq: httpd-apr-devel >= %{apache_version}
-BuildPreReq: autoconf253 >= 2.53
+BuildPreReq: autoconf >= 2.53
 BuildPreReq: libtool >= 1.4.2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 Prefix: /usr
@@ -39,23 +37,17 @@ package.
 %prep
 %setup -q
 
-AUTOCONF="autoconf"
-AUTOHEADER="autoheader"
+sh ./autogen.sh
 
-if [ -f /usr/bin/autoconf-2.53 ]; then
-   AUTOCONF="autoconf-2.53"
-   AUTOHEADER="autoheader-2.53"
-fi
-
-export AUTOCONF AUTOHEADER
-
-${AUTOCONF}
-
-%patch0 -p0
-
+# Fix up to include subversion include directory.
+CPPFLAGS="-I/usr/include/subversion-1"
+export CPPFLAGS
 ./configure \
+	--prefix=/usr \
 	--with-wx-config=/usr/bin/wxgtk-2.3-config \
 	--with-apr-config=/usr/bin/apr-config \
+	--with-svn-include=/usr/include \
+	--with-svn-lib=/usr/lib \
 	--disable-no-exceptions
 
 %build
@@ -64,14 +56,13 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/usr/bin
 
-cd src
-cp rapidsvn $RPM_BUILD_ROOT/usr/bin
+make install DESTDIR==$RPM_BUILD_ROOT
 
 %clean
-#rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-/usr/bin/rapidsvn
+/usr/bin/*
+/usr/lib/*

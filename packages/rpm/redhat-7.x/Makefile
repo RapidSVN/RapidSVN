@@ -7,15 +7,17 @@
 ##########################################################################
 
 SPECFILE := rapidsvn.spec
-VERSION_FILE := ../../../configure.in
+VERSION_FILE := ../../../src/version.hpp
 
 RPMDIR := rpms
 
 SVN_TOP_DIR := $(shell pwd)/../../..
 
 NAME := $(shell grep '^Name:' < $(SPECFILE) | sed -e 's/^Name: //')
-SVN_VERSION_MICRO := $(shell grep 'define SVN_VER_MICRO' < $(VERSION_FILE) | (read one two three; echo $$three) )
-VERSION := $(shell grep '^AC_REVISION' $(VERSION_FILE) | sed -e 's/^AC_REVISION(//' -e 's/)//' )
+VERSION_MAJOR := $(shell grep 'RAPIDSVN_VER_MAJOR' < $(VERSION_FILE) | (read one two three; echo $$three) )
+VERSION_MINOR := $(shell grep 'RAPIDSVN_VER_MINOR' < $(VERSION_FILE) | (read one two three; echo $$three) )
+VERSION_MICRO := $(shell grep 'RAPIDSVN_VER_MICRO' < $(VERSION_FILE) | (read one two three; echo $$three) )
+VERSION := $(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_MICRO)
 RELEASE := $(shell svn st -v $(SPECFILE) | cut -b 10- | ( read one two ; echo $$one ) )
 
 SOURCE_RPM_DIR := $(HOME)/$(RPMDIR)/sources/$(NAME)-$(VERSION)-$(RELEASE)
