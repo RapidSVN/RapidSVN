@@ -166,7 +166,6 @@ namespace svn
                        srcPath.c_str (),
                        srcRevision.revision (),
                        destPath.c_str (),
-                       NULL, // wc_adm_access
                        *m_context,
                        pool);
   
@@ -228,14 +227,14 @@ namespace svn
   }
 
   void
-  Client::resolve (const Path & path, bool recurse)
+  Client::resolved (const Path & path, bool recurse)
   {
     Pool pool;
     svn_error_t * error =  
-      svn_client_resolve (path.c_str (),
-                          recurse,
-                          *m_context,
-                          pool);
+      svn_client_resolved (path.c_str (),
+                           recurse,
+                           *m_context,
+                           pool);
 
     if(error != NULL)
       throw ClientException (error);

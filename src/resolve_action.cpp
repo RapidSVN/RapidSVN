@@ -50,7 +50,7 @@ ResolveAction::Perform ()
   {
     const svn::Path & path = *it;
 
-    client.resolve (path.c_str (), false);
+    client.resolved (path.c_str (), false);
   }
 
   return result;
