@@ -269,7 +269,13 @@ For the RapidSVN website we are producing two types of packages:
 
 These are the steps to follow when creating a new release of RapidSVN:
 
-0. Release preparations:
+0. Before Release:
+
+   *  Check the translations (in src/locale). 
+   *  Make sure all the strings for all the translations are 
+      up to date (contact translators)
+
+1. Release preparations:
 
    *  Edit the version numbers in the file "version.xml" and run 
       the Python script check-version.py (from the directory "tools")
@@ -281,7 +287,7 @@ These are the steps to follow when creating a new release of RapidSVN:
    *  Create the version tag by copying (either using svn or RapidSVN):
       "svn cp -m "Version XYZ tag" . https://svn.collab.net/repos/rapidsvn/tags/XYZ
 
-1. Create source tarball (on Linux):
+2. Create source tarball (on Linux):
 
    *  Checkout a fresh working copy of RapidSVN (using
       http://svn.collab.net/repos/rapidsvn/tags/XYZ) from the repository
@@ -304,7 +310,7 @@ These are the steps to follow when creating a new release of RapidSVN:
       to http://www.rapidsvn.org/download and create the necessary links in
       the files/documents section of http://rapidsvn.tigris.org
 
-2. Create Windows installer (on Windows using MSVC 6):
+3. Create Windows installer (on Windows using MSVC 6):
 
    *  Checkout a fresh working copy of RapidSVN (using
       http://svn.collab.net/repos/rapidsvn/tags/XYZ) from the repository
