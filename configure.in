@@ -112,13 +112,13 @@ AC_ARG_WITH(svn-lib,
 AC_MSG_CHECKING([for Subversion libraries])
 SVN_LIB=""
 for VALUE in $SVN_LIBS ; do
-	LIBSVN_RESULT=`find $SVN_LIB -name "libsvn_client-1.*" -maxdepth 1 \( -type f -o -type l \)`
+	LIBSVN_RESULT=`find $VALUE -name "libsvn_client-1.*" -maxdepth 1 \( -type f -o -type l \)`
 	if test -n "$LIBSVN_RESULT"; then
 		SVN_LIB=$VALUE
 		break
 	fi
 done
-if $SVN_LIB ; then
+if test $SVN_LIB ; then
     AC_MSG_RESULT([found])
 else
     AC_MSG_RESULT([not found])
