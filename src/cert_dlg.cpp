@@ -32,7 +32,7 @@ END_EVENT_TABLE ()
 
 typedef struct
 {
-  long failure;
+  wxUint32 failure;
   const char * descr;
 } FailureEntry;
 
@@ -50,9 +50,9 @@ struct CertDlg::Data
 {
 public:
   svn::ContextListener::SslServerTrustAnswer answer;
-  long acceptedFailures;
+  wxUint32 acceptedFailures;
 
-  Data (long acceptedFailures_)
+  Data (wxUint32 acceptedFailures_)
     : answer (svn::ContextListener::DONT_ACCEPT), acceptedFailures (acceptedFailures_)
   {
   }
@@ -172,7 +172,7 @@ CertDlg::Answer () const
 }
 
 
-long
+wxUint32
 CertDlg::AcceptedFailures () const
 {
   return m->acceptedFailures;

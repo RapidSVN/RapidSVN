@@ -105,7 +105,7 @@ namespace svn
     {
     public:
       /** bit coded failures */
-      const int failures;
+      const apr_uint32_t failures;
 
       /** certificate information */
       std::string hostname;
@@ -115,13 +115,14 @@ namespace svn
       std::string issuerDName;
       std::string realm;
 
-      SslServerTrustData (const int failures_ = 0)
+      SslServerTrustData (const apr_uint32_t failures_ = 0)
         : failures (failures_), hostname (""), fingerprint (""),
           validFrom (""), validUntil (""), issuerDName(""),
           realm ("")
       {
       }
     };
+
 
     /**
      * this method is called if there is ssl server
@@ -132,7 +133,7 @@ namespace svn
      */
     virtual SslServerTrustAnswer
     contextSslServerTrustPrompt (const SslServerTrustData & data, 
-                                 long & acceptedFailures) = 0;
+                                 apr_uint32_t & acceptedFailures) = 0;
 
     /**
      * this method is called to retrieve client side

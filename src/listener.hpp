@@ -127,7 +127,7 @@ public:
   virtual svn::ContextListener::SslServerTrustAnswer
   contextSslServerTrustPrompt (
     const svn::ContextListener::SslServerTrustData & data,
-    long & acceptedFailures);
+    apr_uint32_t & acceptedFailures);
 
   /**
    * @see svn::ContextListener

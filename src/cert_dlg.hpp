@@ -36,7 +36,7 @@ public:
   svn::ContextListener::SslServerTrustAnswer 
   Answer () const;
 
-  long
+  wxUint32
   AcceptedFailures () const;
 
 private:

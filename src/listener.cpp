@@ -228,7 +228,7 @@ Listener::contextGetLogMessage (std::string & msg)
 svn::ContextListener::SslServerTrustAnswer
 Listener::contextSslServerTrustPrompt (
   const svn::ContextListener::SslServerTrustData & data,
-  long & acceptedFailures)
+  apr_uint32_t & acceptedFailures)
 {
   CertDlg dlg (GetParent (), data);
 
