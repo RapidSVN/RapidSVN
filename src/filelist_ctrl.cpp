@@ -38,38 +38,37 @@ int IMAGE_INDEX[N_STATUS_KIND];
  * Tags for wxConfig file settings, defined here to avoid duplicate
  * hard coded strings.
  */
-static const char* pSortColumnTag = "/FileListCtrl/SortColumn";
-static const char* pSortOrderTag = "/FileListCtrl/SortOrder";
-static const char* pSortColumn0Width = "/FileListCtrl/Column0Width";
-static const char* pSortColumn1Width = "/FileListCtrl/Column1Width";
-static const char* pSortColumn2Width = "/FileListCtrl/Column2Width";
-static const char* pSortColumn3Width = "/FileListCtrl/Column3Width";
-static const char* pSortColumn4Width = "/FileListCtrl/Column4Width";
+static const char *pSortColumnTag = "/FileListCtrl/SortColumn";
+static const char *pSortOrderTag = "/FileListCtrl/SortOrder";
+static const char *pSortColumn0Width = "/FileListCtrl/Column0Width";
+static const char *pSortColumn1Width = "/FileListCtrl/Column1Width";
+static const char *pSortColumn2Width = "/FileListCtrl/Column2Width";
+static const char *pSortColumn3Width = "/FileListCtrl/Column3Width";
+static const char *pSortColumn4Width = "/FileListCtrl/Column4Width";
 
-static int GetImageIndex(int Index)
-/*
-  A safe wrapper for getting images - avoids array bounds
-  exceptions.
-*/
+/**
+ * A safe wrapper for getting images - avoids array bounds
+ * exceptions.
+ */
+static int
+GetImageIndex (int Index)
 {
   if ((Index >= 0) && (Index <= N_STATUS_KIND))
     return IMAGE_INDEX[Index];
   else
-    return 0;    
+    return 0;
 }
+
+#define _FILELISTCTRL_BEGIN_EVENT_TABLE
 
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
 EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
 EVT_LIST_ITEM_ACTIVATED (-1, FileListCtrl::OnItemActivated)
 EVT_LIST_ITEM_RIGHT_CLICK (LIST_CTRL, FileListCtrl::OnItemRightClk)
-EVT_LIST_COL_CLICK(LIST_CTRL, FileListCtrl::OnColumnLeftClick)
+EVT_LIST_COL_CLICK (LIST_CTRL, FileListCtrl::OnColumnLeftClick)
 END_EVENT_TABLE ()
-
-FileListCtrl::FileListCtrl (wxWindow * parent,
-                                              apr_pool_t * __pool,
-                                              const wxWindowID id,
-                                              const wxPoint & pos,
-                                              const wxSize & size):
+#define _FILELISTCTRL_END_EVENT_TABLE
+FileListCtrl::FileListCtrl (wxWindow * parent, apr_pool_t * __pool, const wxWindowID id, const wxPoint & pos, const wxSize & size):
 wxListCtrl (parent, id, pos, size, wxLC_REPORT)
 {
   pool = __pool;
@@ -114,153 +113,154 @@ wxListCtrl (parent, id, pos, size, wxLC_REPORT)
   SetImageList (m_imageListSmall, wxIMAGE_LIST_SMALL);
 
   m_path.Empty ();
-  
+
   // Get settings from config file:
-  wxConfigBase *pConfig = wxConfigBase::Get();
-  SortColumn = pConfig->Read(pSortColumnTag, (long) 0);
-  SortIncreasing = pConfig->Read(pSortOrderTag, (long) 1)
-    ? true : false;
-  
+  wxConfigBase *pConfig = wxConfigBase::Get ();
+  SortColumn = pConfig->Read (pSortColumnTag, (long) 0);
+  SortIncreasing = pConfig->Read (pSortOrderTag, (long) 1) ? true : false;
+
   wxListItem itemCol;
   itemCol.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_IMAGE;
-  itemCol.m_text = wxT("Name");
+  itemCol.m_text = wxT ("Name");
   itemCol.m_image = -1;
   InsertColumn (0, itemCol);
 
-  itemCol.m_text = wxT("Revision");
+  itemCol.m_text = wxT ("Revision");
   InsertColumn (1, itemCol);
 
-  itemCol.m_text = wxT("Last Changed");
+  itemCol.m_text = wxT ("Last Changed");
   InsertColumn (2, itemCol);
 
-  itemCol.m_text = wxT("Status");
+  itemCol.m_text = wxT ("Status");
   InsertColumn (3, itemCol);
 
-  itemCol.m_text = wxT("Prop Status");
+  itemCol.m_text = wxT ("Prop Status");
   InsertColumn (4, itemCol);
 
-  SetColumnImages();
+  SetColumnImages ();
 
   // Set the column widths stored in the config:
-  SetColumnWidth (0, pConfig->Read(pSortColumn0Width, (long) 150));
-  SetColumnWidth (1, pConfig->Read(pSortColumn1Width, (long) 75));
-  SetColumnWidth (2, pConfig->Read(pSortColumn2Width, (long) 100));
-  SetColumnWidth (3, pConfig->Read(pSortColumn3Width, (long) 75));
-  SetColumnWidth (4, pConfig->Read(pSortColumn4Width, (long) 75));
+  SetColumnWidth (0, pConfig->Read (pSortColumn0Width, (long) 150));
+  SetColumnWidth (1, pConfig->Read (pSortColumn1Width, (long) 75));
+  SetColumnWidth (2, pConfig->Read (pSortColumn2Width, (long) 100));
+  SetColumnWidth (3, pConfig->Read (pSortColumn3Width, (long) 75));
+  SetColumnWidth (4, pConfig->Read (pSortColumn4Width, (long) 75));
 }
 
 FileListCtrl::~FileListCtrl ()
 {
   // Write settings to config file:
-  wxConfigBase *pConfig = wxConfigBase::Get();
-  pConfig->Write(pSortColumnTag, (long) SortColumn);
-  pConfig->Write(pSortOrderTag, (long) (SortIncreasing ? 1 : 0));
-  pConfig->Write(pSortColumn0Width, (long) GetColumnWidth(0));
-  pConfig->Write(pSortColumn1Width, (long) GetColumnWidth(1));
-  pConfig->Write(pSortColumn2Width, (long) GetColumnWidth(2));
-  pConfig->Write(pSortColumn3Width, (long) GetColumnWidth(3));
-  pConfig->Write(pSortColumn4Width, (long) GetColumnWidth(4));
+  wxConfigBase *pConfig = wxConfigBase::Get ();
+  pConfig->Write (pSortColumnTag, (long) SortColumn);
+  pConfig->Write (pSortOrderTag, (long) (SortIncreasing ? 1 : 0));
+  pConfig->Write (pSortColumn0Width, (long) GetColumnWidth (0));
+  pConfig->Write (pSortColumn1Width, (long) GetColumnWidth (1));
+  pConfig->Write (pSortColumn2Width, (long) GetColumnWidth (2));
+  pConfig->Write (pSortColumn3Width, (long) GetColumnWidth (3));
+  pConfig->Write (pSortColumn4Width, (long) GetColumnWidth (4));
 
   delete m_imageListSmall;
 }
 
-int wxCALLBACK FileListCtrl::wxListCompareFunction(
-  long item1, long item2, long sortData)
+int wxCALLBACK
+FileListCtrl::wxListCompareFunction (long item1, long item2, long sortData)
 {
-  svn::Status* ps1 = (svn::Status*) item1;
-  svn::Status* ps2 = (svn::Status*) item2;
-  FileListCtrl* pList = (FileListCtrl*) sortData;
-  
-  if (ps1 && ps2)   // Defensive programming.
-    return CompareItems(ps1, ps2, pList->SortColumn, pList->SortIncreasing);
+  svn::Status * ps1 = (svn::Status *) item1;
+  svn::Status * ps2 = (svn::Status *) item2;
+  FileListCtrl *pList = (FileListCtrl *) sortData;
+
+  if (ps1 && ps2)               // Defensive programming.
+    return CompareItems (ps1, ps2, pList->SortColumn, pList->SortIncreasing);
   else
     return 0;
 }
 
-int wxCALLBACK FileListCtrl::CompareItems(
-  svn::Status* ps1, svn::Status* ps2, int SortColumn, bool SortIncreasing)
+int wxCALLBACK
+FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
+                            int SortColumn, bool SortIncreasing)
 {
   int rc = 0;
   unsigned long r1, r2;
   bool ok1, ok2;
-  
+
   switch (SortColumn)
   {
-    case 0: // Name
-      // Directories always precede files:
-      if (ps1->isDir() && !ps2->isDir())
-        rc = -1;
-      else if (!ps1->isDir() && ps2->isDir())
-        rc = 1;
-      else
-      {
-        rc = wxString(ps1->getPath()).CmpNoCase(ps2->getPath());
-        if (!SortIncreasing)
-          rc = rc * -1; // Reverse the sort order.
-      }
-      break;
-    
-    case 1: // Revision
-    case 2: // Last change
-      ok1 = ok2 = true;
-      
-      switch(SortColumn)
-      {
-        case 1: // Revision
-          try { r1 = ps1->revision(); }
-          catch(svn::EntryNotVersioned&) { ok1 = false; }
-          try { r2 = ps2->revision(); }
-          catch(svn::EntryNotVersioned&) { ok2 = false; }
-          break;
-          
-        case 2: // Last change
-          try { r1 = ps1->lastChanged(); }
-          catch(svn::EntryNotVersioned&) { ok1 = false; }
-          try { r2 = ps2->lastChanged(); }
-          catch(svn::EntryNotVersioned&) { ok2 = false; }
-          break;
-      }
-      
-      // Unversioned always come last.
-      if (ok1 && !ok2)
-        rc = -1;
-      else if (ok2 && !ok1)
-        rc = 1;
-      else if (r1 == r2)
-        rc = 0;
-      else
-      {
-        rc = r1 > r2 ? 1 : -1;
-        if (!SortIncreasing)
-          rc = rc * -1; // Reverse the sort order.
-      } 
+  case 0:                      // Name
+    // Directories always precede files:
+    if (ps1->isDir () && !ps2->isDir ())
+      rc = -1;
+    else if (!ps1->isDir () && ps2->isDir ())
+      rc = 1;
+    else
+    {
+      rc = wxString (ps1->path ()).CmpNoCase (ps2->path ());
+      if (!SortIncreasing)
+        rc = rc * -1;           // Reverse the sort order.
+    }
+    break;
+
+  case 1:                      // Revision
+  case 2:                      // Last change
+    ok1 = ok2 = true;
+
+    switch (SortColumn)
+    {
+    case 1:                    // Revision
+      ok1 = ps1->isVersioned ();
+      r1 = ps1->revision ();
+      ok2 = ps2->isVersioned ();
+      r2 = ps2->revision ();
       break;
 
-    case 3: // Status
-      rc = wxString(ps1->textDescription()).CmpNoCase(ps2->textDescription());
-      if (!SortIncreasing)
-        rc = rc * -1; // Reverse the sort order.
+    case 2:                    // Last change
+      ok1 = ps1->isVersioned ();
+      r1 = ps1->lastChanged ();
+      ok2 = ps2->isVersioned ();
+      r2 = ps2->lastChanged ();
       break;
+    }
 
-    case 4: // Prop status
-      rc = wxString(ps1->propDescription()).CmpNoCase(ps2->propDescription());
+    // Unversioned always come last.
+    if (ok1 && !ok2)
+      rc = -1;
+    else if (ok2 && !ok1)
+      rc = 1;
+    else if (r1 == r2)
+      rc = 0;
+    else
+    {
+      rc = r1 > r2 ? 1 : -1;
       if (!SortIncreasing)
-        rc = rc * -1; // Reverse the sort order.
-      break;
+        rc = rc * -1;           // Reverse the sort order.
+    }
+    break;
+
+  case 3:                      // Status
+    rc =
+      wxString (ps1->textDescription ()).CmpNoCase (ps2->textDescription ());
+    if (!SortIncreasing)
+      rc = rc * -1;             // Reverse the sort order.
+    break;
+
+  case 4:                      // Prop status
+    rc =
+      wxString (ps1->propDescription ()).CmpNoCase (ps2->propDescription ());
+    if (!SortIncreasing)
+      rc = rc * -1;             // Reverse the sort order.
+    break;
   }
 
   // If the items are equal, we revert to a sort on the item name,
   // being careful to avoid recursion.
-  if ((SortColumn != 0) && (rc == 0)) 
-    rc = CompareItems(ps1, ps2, 0, SortIncreasing);
-   
+  if ((SortColumn != 0) && (rc == 0))
+    rc = CompareItems (ps1, ps2, 0, SortIncreasing);
+
   return rc;
 }
 
 void
 FileListCtrl::UpdateFileList (const wxString & path)
 {
-  svn::Status* pStatus = NULL;
   m_path = path;
 
   // delete all the items in the list to display the new ones
@@ -269,46 +269,63 @@ FileListCtrl::UpdateFileList (const wxString & path)
   // cycle through the files and folders in the current path
   wxFileName fullpath (path, wxT ("*"));
   wxString name;
-  wxString f =
-    wxFindFirstFile (fullpath.GetFullPath ().c_str (), wxDIR | wxFILE);
 
   wxLogStatus (_T ("Listing entries in '%s'"), path.c_str ());
 
   // Hide the list to speed up inserting
-  Hide(); 
+  Hide ();
 
-  while (!f.IsEmpty ())
+  svn::Client client;
+  std::vector < svn::Status * >statusVector =
+    client.status (path.c_str (), FALSE);
+  std::vector < svn::Status * >::const_iterator it = statusVector.begin ();
+
+  while (it != statusVector.end ())
   {
-    f = wxFindNextFile ();
-    if (f.IsEmpty ())
-      continue;
+    svn::Status * pStatus = *it;
 
     int i = GetItemCount ();
-    name = wxFileNameFromPath (f);
+    name = wxFileNameFromPath (pStatus->path ());
     wxString text;
+    const char *ctext;
 
-    pStatus = new svn::Status;
-    
-    bool isdir = wxDirExists (f);
-    pStatus->loadPath (UnixPath (f), isdir);
+    pStatus = *it;
+    int imageIndex = 0;
 
-    // in the parent directory
-    if (name == ".." || name == SVN_WC_ADM_DIR_NAME)
-      continue;
-
-    if (isdir)    // a directory
+    if (pStatus->isVersioned ())
     {
-      if (pStatus->isVersioned ())
-        InsertItem (i, name, GetImageIndex(IMG_INDX_VERSIONED_FOLDER));
+      if (pStatus->isDir ())
+      {
+        imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER);
+      }
       else
-        InsertItem (i, name, GetImageIndex(IMG_INDX_FOLDER));
+      {
+        imageIndex = GetImageIndex (pStatus->textType ());
+      }
     }
     else
-      InsertItem (i, name, GetImageIndex(fileStatus (pStatus)));
-      
+    {
+      // unversioned entries dont carry dir info
+      // with them. must find this out by ourself
+      if (wxDirExists (pStatus->path ()))
+      {
+        imageIndex = GetImageIndex (IMG_INDX_FOLDER);
+      }
+      else if (wxFileExists (pStatus->path ()))
+      {
+        imageIndex = GetImageIndex (svn_wc_status_unversioned);
+      }
+      else
+      {
+        imageIndex = svn_wc_status_none;
+      }
+    }
+
+    InsertItem (i, name, imageIndex);
+
     // The item data will be used to sort the list:
-    SetItemData (i, (long) pStatus);  // The control now owns this data
-                                      // and must delete it in due course.
+    SetItemData (i, (long) pStatus);    // The control now owns this data
+    // and must delete it in due course.
 
     if (pStatus->isVersioned ())
       text.Printf (_T ("%ld"), pStatus->revision ());
@@ -324,16 +341,26 @@ FileListCtrl::UpdateFileList (const wxString & path)
 
     SetItem (i, 2, text);
 
-    text = pStatus->textDescription ();
-    SetItem (i, 3, text);
+    ctext = pStatus->textDescription ();
+    if (!ctext)
+    {
+      ctext = "";
+    }
+    SetItem (i, 3, ctext);
 
-    text = pStatus->propDescription ();
-    SetItem (i, 4, text);
+    ctext = pStatus->propDescription ();
+    if (!ctext)
+    {
+      ctext = "";
+    }
+    SetItem (i, 4, ctext);
+
+    it++;
   }
 
-  SortItems(wxListCompareFunction, (long) this);
-  
-  Show();
+  SortItems (wxListCompareFunction, (long) this);
+
+  Show ();
 }
 
 void
@@ -385,7 +412,7 @@ FileListCtrl::OnItemRightClk (wxListEvent & event)
 void
 FileListCtrl::OnColumnLeftClick (wxListEvent & event)
 {
-  int Column = event.GetColumn();
+  int Column = event.GetColumn ();
 
   // A second click on the current sort column reverses the order of sorting.
   if (Column == SortColumn)
@@ -395,33 +422,32 @@ FileListCtrl::OnColumnLeftClick (wxListEvent & event)
     SortColumn = Column;
     SortIncreasing = true;
   }
-  
-  SetColumnImages();  
-  SortItems(wxListCompareFunction, (long) this);
+
+  SetColumnImages ();
+  SortItems (wxListCompareFunction, (long) this);
 }
 
 void
-FileListCtrl::SetColumnImages()
+FileListCtrl::SetColumnImages ()
 {
   // Update the column titles to reflect the sort column.
-  for (int i = 0; i < GetColumnCount(); i++)
+  for (int i = 0; i < GetColumnCount (); i++)
   {
     wxListItem LI;
     LI.m_mask = wxLIST_MASK_IMAGE;
     if (i == SortColumn)
-      LI.m_image = SortIncreasing ? 
-        IMAGE_INDEX[IMG_INDX_SORT_DOWN] : IMAGE_INDEX[IMG_INDX_SORT_UP]; 
+      LI.m_image = SortIncreasing ?
+        IMAGE_INDEX[IMG_INDX_SORT_DOWN] : IMAGE_INDEX[IMG_INDX_SORT_UP];
     else
-      LI.m_image = -1; 
-    SetColumn(i, LI);
+      LI.m_image = -1;
+    SetColumn (i, LI);
   }
 }
 
-svn_wc_status_kind
-FileListCtrl::fileStatus (svn::Status * status)
+svn_wc_status_kind FileListCtrl::fileStatus (svn::Status * status)
 {
-  if(status->textType () != svn_wc_status_none &&
-     status->textType () != svn_wc_status_normal)
+  if (status->textType () != svn_wc_status_none &&
+      status->textType () != svn_wc_status_normal)
     return status->textType ();
 
   return status->propType ();
@@ -532,25 +558,24 @@ FileListCtrl::GetFullUnixPath (long index, wxString & fullpath)
   UnixPath (fullpath);
 }
 
-void 
-FileListCtrl::DeleteAllItems()
+void
+FileListCtrl::DeleteAllItems ()
 {
   // Delete the item data before deleting the items:
-  for (int i = 0; i < GetItemCount(); i++)
+  for (int i = 0; i < GetItemCount (); i++)
   {
-    svn::Status* p = (svn::Status*) GetItemData(i);
+    svn::Status * p = (svn::Status *) GetItemData (i);
     if (p)
       delete p;
   }
-  wxListCtrl::DeleteAllItems();
+  wxListCtrl::DeleteAllItems ();
 }
 
-void 
-FileListCtrl::DeleteItem( long item )
+void
+FileListCtrl::DeleteItem (long item)
 {
-  svn::Status* p = (svn::Status*) GetItemData(item);
+  svn::Status * p = (svn::Status *) GetItemData (item);
   if (p)
     delete p;
-  wxListCtrl::DeleteItem(item);
+  wxListCtrl::DeleteItem (item);
 }
-
