@@ -37,12 +37,14 @@ ImportAction::Prepare ()
     return false;
   }
 
-  ImportDlg dlg (GetParent (), &m_data);
+  ImportDlg dlg (GetParent ());
 
   if (dlg.ShowModal () != wxID_OK)
   {
     return false;
   }
+
+  m_data = dlg.GetData ();
 
   return true;
 }

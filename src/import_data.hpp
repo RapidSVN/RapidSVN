@@ -10,22 +10,24 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _IMPORT_ACTION_H_INCLUDED_
-#define _IMPORT_ACTION_H_INCLUDED_
+#ifndef _IMPORT_DATA_H_INCLUDED_
+#define _IMPORT_DATA_H_INCLUDED_
 
-#include "action.hpp"
-#include "import_data.hpp"
+// wxwindows
+#include "wx/string.h"
 
-class ImportAction:public Action
+/**
+ * this structure is used to configure @a ImportAction
+ */
+struct ImportData
 {
-private:
-  ImportData m_data;
-
-public:
-  ImportAction (wxWindow * parent);
-
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  wxString Repository;
+  wxString Path;
+  wxString NewEntry;
+  wxString LogMessage;
+  bool Recursive;
+  bool TreeType;
+  bool FileType; 
 };
 
 #endif

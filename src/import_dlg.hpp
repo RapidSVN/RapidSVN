@@ -16,28 +16,49 @@
 // wxwindows
 #include "wx/dialog.h"
 
+// forward declarations
+struct ImportData;
+
 class ImportDlg:public wxDialog
 {
 public:
-  struct sData
-  {
-    sData();
-    
-    wxString Repository;
-    wxString Path;
-    wxString NewEntry;
-    wxString LogMessage;
-    bool Recursive;
-    bool TreeType, FileType; 
-  };
-  
-  ImportDlg (wxWindow *parent, sData* pData);
-  void OnOk (wxCommandEvent & event);
-  void OnBrowse (wxCommandEvent & event);
+  /**
+   * Constructor
+   *
+   * @param parent window
+   */
+  ImportDlg (wxWindow *parent);
+
+  /**
+   * Destructor
+   */
+  virtual ~ImportDlg ();
+
+  /**
+   * return the reference to @a ImportData
+   */
+  ImportData &
+  GetData ();
 
 private:  
-  void InitializeData ();
-  sData * m_data;
+  /** hide implementation details */
+  struct Data;
+  Data *m;
+
+  /**
+   * Event handler for OK button 
+   */
+  void OnOk (wxCommandEvent & event);
+  
+  /**
+   * Event handler for Browser button
+   */
+  void OnBrowse (wxCommandEvent & event);
+
+  /**
+   * Event handler for changes in text fields
+   */
+  void OnText (wxCommandEvent & event);
 
   DECLARE_EVENT_TABLE ()
 };
