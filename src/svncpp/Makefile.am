@@ -5,6 +5,7 @@ lib_LTLIBRARIES=libsvncpp.la
 libsvncpp_la_SOURCES= \
 	apr.cpp \
 	client.cpp \
+	client_annotate.cpp \
 	client_cat.cpp \
 	client_diff.cpp \
 	client_ls.cpp \
