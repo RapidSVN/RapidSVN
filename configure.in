@@ -169,12 +169,13 @@ fi
 dnl
 dnl Docbook XSL
 dnl
-DOCBOOK_XSL="/etc/sgml/docbook-xsl"
+dnl DOCBOOK_XSL="/etc/sgml/docbook-xsl"
+DOCBOOK_XSL="/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages"
 AC_ARG_WITH(docbook-xsl,
 [[  --with-docbook-xsl=DIR   Determine the location of the
                            DocBook XSL stylesheets,
                            needed for manpage generation.
-                           Defaults to "/etc/sgml/docbook-xsl".]],
+                           Defaults to "/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages".]],
 [
     if test "$withval" != "yes"; then
         DOCBOOK_XSL=$withval
