@@ -21,7 +21,7 @@ namespace svn
   class AnnotateLine
   {
   public:
-    AnnotateLine (apr_off_t line_no,
+    AnnotateLine (apr_int64_t line_no,
                   svn_revnum_t revision,
                   const char *author,
                   const char *date,
@@ -45,7 +45,7 @@ namespace svn
     {
     }
 
-    apr_off_t 
+    apr_int64_t 
     lineNumber () const
     {
         return m_line_no;
@@ -78,7 +78,7 @@ namespace svn
     }
 
   private:
-    apr_off_t m_line_no;
+    apr_int64_t m_line_no;
     svn_revnum_t m_revision;
     std::string m_author;
     std::string m_date;
