@@ -24,12 +24,6 @@ class Tracer;
 
 #define APPLICATION_NAME _T("RapidSVN")
 
-// Ids used for communication events between threads and frame
-#define TOKEN_BASE     100
-#define TOKEN_INFO     TOKEN_BASE + 1
-#define TOKEN_SVN_INTERNAL_ERROR TOKEN_BASE + 2
-#define TOKEN_VSVN_INTERNAL_ERROR TOKEN_BASE + 3
-#define TOKEN_ACTION_END   TOKEN_BASE + 4
 
 wxString & UnixPath (wxString & path);
 

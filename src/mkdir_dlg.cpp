@@ -10,10 +10,13 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.hpp"
+
+// wxwindows
+#include "wx/wx.h"
+#include "wx/valgen.h"
+
+// app
 #include "mkdir_dlg.hpp"
-#include <wx/sizer.h>
-#include <wx/valgen.h>
 
 BEGIN_EVENT_TABLE (MkdirDlg, wxDialog)
 END_EVENT_TABLE ()

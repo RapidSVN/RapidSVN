@@ -13,21 +13,20 @@
 #ifndef _IMPORT_ACTION_H_INCLUDED_
 #define _IMPORT_ACTION_H_INCLUDED_
 
-#include "action_thread.hpp"
+#include "action.hpp"
 #include "import_dlg.hpp"
 #include "svncpp/pool.hpp"
 
-class ImportAction:public ActionThread
+class ImportAction:public Action
 {
 private:
   ImportDlg::sData m_data;
-  wxFrame *m_pFrame;
 
 public:
-  ImportAction (wxFrame * frame, Tracer * tr);
+  ImportAction (wxWindow * parent, Tracer * tr, const wxString & path);
 
-  void Perform ();
-  void *Entry ();
+  bool Perform ();
+  bool Prepare ();
 };
 
 #endif

@@ -13,16 +13,7 @@
 #ifndef _UPDATE_ACTION_H_INCLUDED_
 #define _UPDATE_ACTION_H_INCLUDED_
 
-// wxwindows
-//#include "wx/frame.h"
-
-//// svncpp
-//#include "svncpp/targets.hpp"
-
 // app
-//#include "action_thread.hpp"
-//REMOVE#include "file_action.hpp"
-//#include "update_dlg.hpp"
 #include "action.hpp"
 #include "update_data.hpp"
 

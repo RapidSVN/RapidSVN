@@ -17,10 +17,10 @@
 #include "svncpp/targets.hpp"
 
 // app
-#include "action_thread.hpp"
+#include "action.hpp"
 #include "delete_dlg.hpp"
 
-class DeleteAction:public ActionThread
+class DeleteAction:public Action
 {
 private:
   DeleteDlg::sData Data;
@@ -29,11 +29,11 @@ private:
   svn::Targets m_targets;
 
 public:
-   DeleteAction (wxFrame * frame, Tracer * tr, 
+   DeleteAction (wxWindow * parent, Tracer * tr, 
                  const svn::Targets & targets);
 
-  void Perform ();
-  void *Entry ();
+  bool Perform ();
+  bool Prepare ();
 };
 
 #endif

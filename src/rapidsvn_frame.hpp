@@ -20,7 +20,6 @@
 #include "wx/splitter.h"
 
 // app
-//#include "ids.h"
 #include "simple_worker.hpp"
 #include "tracer.hpp"
 #include "log_action.hpp"
@@ -44,7 +43,9 @@ typedef enum
   ACTION_TYPE_COPY,
   ACTION_TYPE_MKDIR,
   ACTION_TYPE_MERGE,
-  ACTION_TYPE_CLEANUP
+  ACTION_TYPE_CLEANUP,
+  ACTION_TYPE_PROPERTY,
+  ACTION_TYPE_LOG
 }
 ActionType;
 
@@ -77,6 +78,7 @@ public:
   RapidSvnFrame (const wxString & title);
   virtual ~RapidSvnFrame ();
 
+private:
   void OnSize (wxSizeEvent & event);
 
   // File menu
@@ -176,10 +178,7 @@ public:
     return m_folder_browser;
   }
 
-  LogAction *getLogAction ()
-  {
-    return m_logAction;
-  }
+  void Perform (ActionType type, Action * action);
 
 
 private:
@@ -187,7 +186,6 @@ private:
 
   FolderBrowser * m_folder_browser;
   FileListCtrl *m_listCtrl;
-  LogAction *m_logAction;
 
   wxSplitterWindow *m_horiz_splitter;
   wxSplitterWindow *m_vert_splitter;
@@ -200,11 +198,13 @@ private:
   wxToolBar *m_tbar;
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
-  ActionType lastAction;
+  ActionType m_lastAction;
   wxString m_currentPath;
   wxString m_title;
 
-DECLARE_EVENT_TABLE ()};
+private:
+  DECLARE_EVENT_TABLE ()
+};
 
 const int ID_TOOLBAR = 500;
 

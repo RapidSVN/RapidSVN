@@ -14,21 +14,23 @@
 #define _ADD_ACTION_H_INCLUDED_
 
 // svncpp
+#include "svncpp/path.hpp"
 #include "svncpp/targets.hpp"
 
 // app
-#include "action_thread.hpp"
+#include "action.hpp"
 
-class AddAction:public ActionThread
+class AddAction:public Action
 {
 private:
+  svn::Path m_path;
   svn::Targets m_targets;
 
 public:
-  AddAction (wxFrame * frame, Tracer * tr, const svn::Targets & trgts);
+  AddAction (wxWindow * parent, Tracer * tr, const svn::Path & path, const svn::Targets & trgts);
 
-  void Perform ();
-  void *Entry ();
+  bool Prepare ();
+  bool Perform ();
 };
 
 #endif

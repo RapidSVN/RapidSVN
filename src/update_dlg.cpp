@@ -10,11 +10,13 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-//REMOVE #include "include.hpp"
-#include "update_dlg.hpp"
-//#include <wx/sizer.h>
+
+// wxwindows
 #include "wx/wx.h"
 #include "wx/valgen.h"
+
+// app
+#include "update_dlg.hpp"
 
 enum
 {

@@ -14,9 +14,7 @@
 #define _PREFERENCES_DLG_H_INCLUDED_
 
 // wxwindows
-//REMOVE #include "wx/confbase.h"
 #include "wx/dialog.h"
-//REMOVE #include "wx/notebook.h"
 #include "wx/panel.h"
 
 // forward declarations

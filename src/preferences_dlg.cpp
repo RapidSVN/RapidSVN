@@ -10,13 +10,16 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.hpp"
+
+// wxwindows
+#include "wx/wx.h"
+#include "wx/confbase.h"
+#include "wx/notebook.h"
+#include "wx/valgen.h"
+
+// app
 #include "preferences_dlg.hpp"
 
-#include <wx/notebook.h>
-#include <wx/panel.h>
-#include <wx/resource.h>
-#include <wx/valgen.h>
 
 // List wxConfig key names here:
 static const char* szTextKey = "/Preferences/Text";

@@ -14,12 +14,12 @@
 #define _TRACER_H_INCLUDED_
 
 // wx
-//#include "wx/textctrl.h"
 #include "wx/string.h"
 
 // forward declarations
 class wxFrame;
 class wxTextCtrl;
+class wxWindow;
 
 /**
 * The Tracer class is an interface used for

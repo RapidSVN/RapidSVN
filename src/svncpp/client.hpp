@@ -19,7 +19,6 @@
 
 // svncpp
 #include "context.hpp"
-//#include "notify.hpp"
 #include "path.hpp"
 #include "revision.hpp"
 

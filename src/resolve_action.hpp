@@ -17,18 +17,18 @@
 #include "svncpp/targets.hpp"
 
 // app
-#include "action_thread.hpp"
+#include "action.hpp"
 
-class ResolveAction:public ActionThread
+class ResolveAction:public Action
 {
 private:
   svn::Targets m_targets;
 
 public:
-  ResolveAction (wxFrame * frame, Tracer * tr, const svn::Targets & targets);
+  ResolveAction (wxWindow * parent, Tracer * tr, const svn::Targets & targets);
 
-  void Perform ();
-  void *Entry ();
+  bool Perform ();
+  bool Prepare ();
 };
 
 #endif

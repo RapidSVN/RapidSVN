@@ -16,54 +16,38 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "include.hpp"
-//#include "wx/resource.h"
-#include "utils.hpp"
+#include "ids.hpp"
 #include "mkdir_dlg.hpp"
-#include "rapidsvn_app.hpp"
 #include "mkdir_action.hpp"
 #include "svn_notify.hpp"
 
-MkdirAction::MkdirAction (wxFrame * frame, Tracer * tr)
- : ActionThread (frame)
+MkdirAction::MkdirAction (wxWindow * parent, Tracer * tr)
+ : Action (parent, tr, false)
 {
-  m_thisframe = frame;
-  SetTracer (tr, FALSE);        // do not own the tracer
 }
 
-void
-MkdirAction::Perform ()
+bool
+MkdirAction::Prepare ()
 {
-  ////////////////////////////////////////////////////////////
-  // Here we are in the main thread.
+  MkdirDlg dlg  ( GetParent (), &m_data);
 
-  MkdirDlg *mkDlg = new MkdirDlg(m_thisframe, &m_data);
-
-  if (mkDlg->ShowModal () == wxID_OK)
+  if (dlg.ShowModal () != wxID_OK)
   {
-    UnixPath (m_data.Target);
-    TrimString (m_data.Target);
-    
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
-     ////////////////////////////////////////////////////////////
+    return false;
   }
-
-  // destroy the dialog
-  mkDlg->Close (TRUE);
+  
+  m_data.Target = m_data.Target.Strip(wxString::both);
+  return true;
 }
 
-void *
-MkdirAction::Entry ()
+bool
+MkdirAction::Perform ()
 {
   svn::Context context (m_data.User, m_data.Password);
   svn::Client client (&context);
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
+  bool result = true;
 
   try
   {
@@ -71,12 +55,13 @@ MkdirAction::Entry ()
   }
   catch (svn::ClientException &e)
   {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, e.description (), 
                      ACTION_EVENT);
     GetTracer ()->Trace ("Mkdir failed:");
     GetTracer ()->Trace (e.description ());
+    result = false;
   }
-  return NULL;
+  return result;
 }
 /* -----------------------------------------------------------------
  * local variables:

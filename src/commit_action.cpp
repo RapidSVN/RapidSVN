@@ -18,8 +18,6 @@
 #include "svncpp/targets.hpp"
 
 // app
-//REMOVE #include "include.hpp"
-//REMOVE #include "rapidsvn_app.hpp"
 #include "commit_action.hpp"
 #include "commit_dlg.hpp"
 #include "ids.hpp"

@@ -10,7 +10,11 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.hpp"
+
+// wxwindows
+#include "wx/confbase.h"
+
+//app
 #include "rapidsvn_app.hpp"
 
 IMPLEMENT_APP (RapidSvnApp)

@@ -13,6 +13,9 @@
 #ifndef _MKDIR_DLG_H_INCLUDED_
 #define _MKDIR_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/dialog.h"
+
 class MkdirDlg:public wxDialog
 {
 public:

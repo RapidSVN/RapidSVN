@@ -20,8 +20,6 @@
 // svncpp
 #include "client.hpp"
 #include "exception.hpp"
-//REMOVE #include "modify.hpp"
-//REMOVE #include "notify.hpp"
 #include "pool.hpp"
 #include "targets.hpp"
 

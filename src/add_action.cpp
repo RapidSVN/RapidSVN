@@ -16,37 +16,32 @@
 #include "svncpp/exception.hpp"
 
 // app
-#include "include.hpp"
+#include "ids.hpp"
 #include "tracer.hpp"
-#include "rapidsvn_app.hpp"
 #include "add_action.hpp"
 #include "svn_notify.hpp"
 
-AddAction::AddAction (wxFrame * frame, Tracer * tr, const svn::Targets & targets)
-  : ActionThread (frame), m_targets(targets)
+AddAction::AddAction (wxWindow * parent, Tracer * tr, 
+                      const svn::Path & path, 
+                      const svn::Targets & targets)
+  : Action (parent, tr, false), m_path (path), m_targets (targets)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
 }
 
-void
+bool
+AddAction::Prepare ()
+{
+  // No dialog for Add
+  return true;
+}
+
+bool
 AddAction::Perform ()
-{
-  // No dialog for Add. Just start the thread.
-
-  // #### TODO: check errors and throw an exception
-  // create the thread
-  Create ();
-
-  // here we start the action thread
-  Run ();
-}
-
-void *
-AddAction::Entry ()
 {
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
+  bool result = true;
 
   const std::vector<svn::Path> & v = m_targets.targets ();
   std::vector<svn::Path>::const_iterator it;
@@ -63,13 +58,14 @@ AddAction::Entry ()
     {
       PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
                        ACTION_EVENT);
+      result = false;
     }
 
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
 
-  return NULL;
+  return false;
 }
 /* -----------------------------------------------------------------
  * local variables:

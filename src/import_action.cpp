@@ -16,52 +16,41 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "include.hpp"
+#include "ids.hpp"
 #include "import_dlg.hpp"
 #include "tracer.hpp"
-#include "rapidsvn_app.hpp"
 #include "import_action.hpp"
 #include "svn_notify.hpp"
 
-ImportAction::ImportAction (wxFrame * frame, Tracer * tr)
-  :ActionThread (frame)
+ImportAction::ImportAction (wxWindow * parent, Tracer * tr, 
+                            const wxString & path)
+  :Action (parent, tr, false)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
-  m_pFrame = frame;
+  m_data.Path = path;
 }
 
-void
-ImportAction::Perform ()
+bool
+ImportAction::Prepare ()
 {
-  ImportDlg *impDlg = new ImportDlg(m_pFrame, &m_data);
+  ImportDlg dlg (GetParent (), &m_data);
 
-  if (impDlg->ShowModal () == wxID_OK)
+  if (dlg.ShowModal () != wxID_OK)
   {
-    // If path is not specified, get the current selection from 
-    // the folder browser
-    if (m_data.Path.IsEmpty ())
-      m_data.Path = wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ();
-      
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
+    return false;
   }
 
-  // destroy the dialog
-  impDlg->Close (TRUE);
+  return true;
 }
 
-void *
-ImportAction::Entry ()
+bool
+ImportAction::Perform ()
 {
   svn::Context context (m_data.User, m_data.Password);
   svn::Client client (&context);
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
   const char *the_new_entry = NULL;
+  bool result = true;
 
   // if new entry is empty, the_new_entry must be left NULL.
   if (!m_data.NewEntry.IsEmpty ())
@@ -79,9 +68,10 @@ ImportAction::Entry ()
                      ACTION_EVENT);
     GetTracer ()->Trace ("Import failed:");
     GetTracer ()->Trace (e.description ());
+    result = false;
   }
 
-  return NULL;
+  return result;
 }
 
 /* -----------------------------------------------------------------

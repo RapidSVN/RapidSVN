@@ -13,25 +13,28 @@
 #ifndef _MERGE_DLG_H_INCLUDED_
 #define _MERGE_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/dialog.h"
+
+struct MergeData 
+{
+  MergeData();
+
+  wxString Path1;
+  wxString Path2;
+  wxString Path1Rev;
+  wxString Path2Rev;
+  wxString Destination;
+  wxString User;
+  wxString Password;
+  bool Recursive;
+  bool Force;
+};
+
 class MergeDlg:public wxDialog
 {
 public:
-  struct sData 
-  {
-    sData();
-
-    wxString Path1;
-    wxString Path2;
-    wxString Path1Rev;
-    wxString Path2Rev;
-    wxString Destination;
-    wxString User;
-    wxString Password;
-    bool Recursive;
-    bool Force;
-  };
-  
-  MergeDlg (wxWindow *parent, sData* pData);
+  MergeDlg (wxWindow *parent, MergeData & data);
   void OnOK (wxCommandEvent& event);
   void OnBrowse (wxCommandEvent & event);
 
@@ -39,7 +42,7 @@ private:
   void InitializeData ();
   int TestRev (wxString & val);
   
-  sData * m_pData;
+  MergeData & m_data;
 
   DECLARE_EVENT_TABLE ()
 };

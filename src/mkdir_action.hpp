@@ -13,20 +13,20 @@
 #ifndef _MKDIR_ACTION_H_INCLUDED_
 #define _MKDIR_ACTION_H_INCLUDED_
 
-#include "action_thread.hpp"
+// app
+#include "action.hpp"
 #include "mkdir_dlg.hpp"
 
-class MkdirAction:public ActionThread
+class MkdirAction:public Action
 {
 private:
   MkdirDlg::sData m_data;
-  wxFrame *m_thisframe;
 
 public:
-  MkdirAction (wxFrame * frame, Tracer * tr);
+  MkdirAction (wxWindow * parent, Tracer * tr);
 
-  void Perform ();
-  void *Entry ();
+  bool Perform ();
+  bool Prepare ();
 };
 
 #endif

@@ -16,44 +16,31 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "include.hpp"
 #include "delete_action.hpp"
 #include "delete_dlg.hpp"
+#include "ids.hpp"
 #include "svn_notify.hpp"
-#include "rapidsvn_app.hpp"
 
-DeleteAction::DeleteAction (wxFrame * frame, Tracer * tr, const svn::Targets & targets) 
-  : ActionThread (frame), m_targets (targets)
+DeleteAction::DeleteAction (wxWindow * parent, Tracer * tr, const svn::Targets & targets) 
+  : Action (parent, tr, false), m_targets (targets)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
-  m_pFrame = frame;
 }
 
-void
-DeleteAction::Perform ()
+bool
+DeleteAction::Prepare ()
 {
-  ////////////////////////////////////////////////////////////
-  // Here we are in the main thread.
+  DeleteDlg dlg (GetParent (), &Data);
 
-  DeleteDlg *delDlg = new DeleteDlg(m_pFrame, &Data);
-
-  if (delDlg->ShowModal () == wxID_OK)
+  if (dlg.ShowModal () != wxID_OK)
   {
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
-      ////////////////////////////////////////////////////////////
+    return false;
   }
 
-  // destroy the dialog
-  delDlg->Close (TRUE);
+  return true;
 }
 
-void *
-DeleteAction::Entry ()
+bool
+DeleteAction::Perform ()
 {
   svn::Client client;
   SvnNotify notify (GetTracer ());

@@ -13,7 +13,15 @@
 #ifndef _TRACE_UPDATE_EDITOR_H_INCLUDED_
 #define _TRACE_UPDATE_EDITOR_H_INCLUDED_
 
-#include "tracer.hpp"
+// subversion
+#include "svn_delta.h"
+#include "svn_pools.h"
+#include "svn_types.h"
+
+// app
+
+// forward declarations
+class Tracer;
 
 svn_error_t *get_trace_update_editor (const svn_delta_editor_t ** editor,
                                       void **edit_baton,

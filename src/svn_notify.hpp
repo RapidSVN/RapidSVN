@@ -14,7 +14,11 @@
 #ifndef _SVN_NOTIFY_H_INCLUDED_
 #define _SVN_NOTIFY_H_INCLUDED_
 
+// svncpp
 #include "svncpp/notify.hpp"
+
+// app
+#include "tracer.hpp"
 
 class SvnNotify : public svn::Notify
 {

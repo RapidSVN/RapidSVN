@@ -12,6 +12,7 @@
  */
 
 // wxwindows
+#include "wx/wx.h"
 #include "wx/filename.h"
 
 // svncpp
@@ -19,36 +20,29 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "include.hpp"
-#include "rapidsvn_app.hpp"
-#include "svn_notify.hpp"
 #include "copy_action.hpp"
+#include "ids.hpp"
+#include "svn_notify.hpp"
 
 
-CopyAction::CopyAction (wxFrame * frame, Tracer * tr, 
+CopyAction::CopyAction (wxWindow * parent, Tracer * tr, 
+                        const wxString & path,
                         const svn::Targets & targets )
-  : ActionThread (frame), m_targets(targets)
+  : Action (parent, tr, false), m_path (path), m_targets(targets)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
 }
 
-void
+bool
+CopyAction::Prepare ()
+{
+  // nothing to do here
+  return true;
+}
+
+bool
 CopyAction::Perform ()
 {
-  ////////////////////////////////////////////////////////////
-  // Here we are in the main thread.
-
-  // #### TODO: check errors and throw an exception
-  // create the thread
-  Create ();
-
-  // here we start the action thread
-  Run ();
-}
-
-void *
-CopyAction::Entry ()
-{
+  bool result = true;
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
@@ -57,7 +51,7 @@ CopyAction::Entry ()
   m_dest = DestinationPath (m_src);
 
   if(m_dest.IsEmpty ())
-    return NULL;
+    return false;
 
   try
   {
@@ -73,9 +67,10 @@ CopyAction::Entry ()
                      ACTION_EVENT);
     GetTracer ()->Trace ("Copy failed:");
     GetTracer ()->Trace (e.description ());
+    result = false;
   }
 
-  return NULL;
+  return result;
 }
 
 /**
@@ -86,9 +81,9 @@ CopyAction::DestinationPath (wxString src)
 {
   wxString dest;
   wxFileName file (src);
-  wxDirDialog dialog (wxGetApp ().GetAppFrame (), 
+  wxDirDialog dialog (GetParent (), 
                       _T ("Select a directory to copy to"), 
-                      wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ());
+                      m_path);
 
   if (dialog.ShowModal () != wxID_OK)
     return _T ("");
@@ -97,7 +92,7 @@ CopyAction::DestinationPath (wxString src)
   dest = dialog.GetPath ();
   if(dest.Right (4) == ".svn")
   {
-      wxMessageDialog dlg (wxGetApp ().GetAppFrame (), 
+      wxMessageDialog dlg (GetParent (), 
                            _T ("This is an invalid directory."),
                            _T ("Error"), wxOK);
       dlg.ShowModal ();

@@ -17,11 +17,12 @@
 #include "svncpp/targets.hpp"
 
 // app
-#include "action_thread.hpp"
+#include "action.hpp"
 
-class CopyAction:public ActionThread
+class CopyAction:public Action
 {
 private:
+  wxString m_path;
   wxString m_dest;
   wxString m_src;
   wxString m_logMsg;
@@ -29,11 +30,11 @@ private:
   wxString DestinationPath (wxString src);
 
 public:
-  CopyAction (wxFrame * frame, Tracer * tr, 
-              const svn::Targets & targets);
+  CopyAction (wxWindow * parent, Tracer * tr, 
+              const wxString & path, const svn::Targets & targets);
 
-  void Perform ();
-  void *Entry ();
+  bool Perform ();
+  bool Prepare ();
 };
 
 #endif

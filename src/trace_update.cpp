@@ -10,7 +10,12 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.hpp"
+
+// subversion
+#include "svn_path.h"
+#include "svn_wc.h"
+
+// app
 #include "tracer.hpp"
 #include "trace_update.hpp"
 

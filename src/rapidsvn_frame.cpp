@@ -11,34 +11,20 @@
  * ====================================================================
  */
 
-// stl
-//#include <vector>
-
 // wxwindows
 #include "wx/confbase.h"
 #include "wx/wx.h"
-//REMOVE#include "wx/thread.h"
-//REMOVE#include "wx/utils.h"
-//REMOVE#include "wx/log.h"
-//#include <wx/resource.h>
 #include "wx/filename.h"
-//REMOVE#include "wx/thread.h"
-//REMOVE#include "wx/version.h"
-//REMOVE#include "wx/window.h"
 
 // svncpp
-//#include "svncpp/exception.hpp"
+#include "svncpp/exception.hpp"
 #include "svncpp/log.hpp"
-//#include "svncpp/path.hpp"
 #include "svncpp/targets.hpp"
-//#include "svncpp/utils.hpp"
 
 // app
-//REMOVE #include "include.hpp"
 #include "ids.hpp"
 
 #include "svn_file_info.hpp"
-//REMOVE #include "rapidsvn_app.hpp"
 
 #include "checkout_action.hpp"
 #include "import_action.hpp"
@@ -152,7 +138,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   // call to Get().
   wxConfigBase *pConfig = wxConfigBase::Get ();
 
-  SetIcon (wxICON (aalogo));
+  SetIcon (wxIcon (aalogo_xpm));
 
   // Toolbar
   m_tbar = NULL;
@@ -298,7 +284,7 @@ RapidSvnFrame::InitializeMenu ()
   wxMenu *menuFile = new wxMenu;
   wxMenuItem *pItem;
 
-  menuFile->Append (ID_AddProject, "&Add to Workbench...");
+  menuFile->Append (ID_AddProject, ("&Add to Workbench..."));
   menuFile->Append (ID_RemoveProject, "&Remove from Workbench...");
   menuFile->AppendSeparator ();
   menuFile->Append (ID_Quit, "E&xit");
@@ -424,10 +410,15 @@ RapidSvnFrame::UpdateFileList ()
         m_listCtrl->UpdateFileList (m_currentPath);
         m_listCtrl->Show (TRUE);
       }
-      catch (...)
+      catch (svn::Exception & e)
       {
+        m_logTracer->Trace (e.message ());
         // probably unversioned resource
         m_listCtrl->Show (FALSE);
+      }
+      catch (...)
+      {
+        m_logTracer->Trace (_T("Exception when updating filelist"));
       }
     }
     else
@@ -496,17 +487,15 @@ RapidSvnFrame::OnLog (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnImport (wxCommandEvent & WXUNUSED (event))
 {
-  lastAction = ACTION_TYPE_IMPORT;
-  ImportAction *imp_act = new ImportAction (this, m_logTracer);
-  imp_act->Perform ();
+  ImportAction *action = new ImportAction (this, m_logTracer, m_currentPath);
+  Perform (ACTION_TYPE_IMPORT, action);
 }
 
 void
 RapidSvnFrame::OnCheckout (wxCommandEvent & WXUNUSED (event))
 {
-  lastAction = ACTION_TYPE_CHECKOUT;
   CheckoutAction *action = new CheckoutAction (this, m_logTracer);
-  m_actionWorker.Perform (action);
+  Perform (ACTION_TYPE_CHECKOUT, action);
 }
 
 void
@@ -610,10 +599,9 @@ void
 RapidSvnFrame::OnCleanup (wxCommandEvent & WXUNUSED (event))
 {
   svn::Path path (m_currentPath);
-  lastAction = ACTION_TYPE_CLEANUP;
   CleanupAction * action = 
     new CleanupAction (this, path, m_logTracer);
-  m_actionWorker.Perform (action);
+  Perform (ACTION_TYPE_CLEANUP, action);
 }
 
 
@@ -940,6 +928,7 @@ RapidSvnFrame::GetActionTargets () const
 void
 RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 {
+  ActionType lastAction;
   Action* action = NULL;
   svn::Targets targets = GetActionTargets ();
 
@@ -957,7 +946,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
   if( action )
   {
-    m_actionWorker.Perform (action);
+    Perform (lastAction, action);
   }
 }
 
@@ -995,14 +984,16 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_ACTION_END:
     {
-      if (lastAction == ACTION_TYPE_UPDATE ||
-          lastAction == ACTION_TYPE_ADD ||
-          lastAction == ACTION_TYPE_DEL ||
-          lastAction == ACTION_TYPE_COMMIT ||
-          lastAction == ACTION_TYPE_REVERT ||
-          lastAction == ACTION_TYPE_RESOLVE)
+      switch (m_lastAction)
       {
-        UpdateFileList ();
+        case ACTION_TYPE_UPDATE:
+        case ACTION_TYPE_ADD:
+        case ACTION_TYPE_DEL:
+        case ACTION_TYPE_COMMIT:
+        case ACTION_TYPE_REVERT:
+        case ACTION_TYPE_RESOLVE:
+          UpdateFileList ();
+          break;
       }
     }
     break;
@@ -1020,13 +1011,16 @@ RapidSvnFrame::ShowLog ()
   // TODO: this handles only one target
   //       add more targets
   it=v.begin (); 
-  if (it!=v.end ())
+  if (it==v.end ())
   {
-    const svn::Path & path = *it;
-
-    m_logAction = new LogAction (this, m_logTracer, path.c_str ());
-    m_logAction->Perform ();
+    return;
   }
+
+  const svn::Path & path = *it;
+
+  LogAction * action =
+    new LogAction (this, m_logTracer, path.c_str ());
+  Perform (ACTION_TYPE_LOG, action);
 }
 
 void
@@ -1046,7 +1040,7 @@ RapidSvnFrame::Properties ()
 
   PropertyAction * action = 
     new PropertyAction (this, m_logTracer, path.c_str ());
-  m_actionWorker.Perform (action);
+  Perform (ACTION_TYPE_PROPERTY, action);
 }
 
 void
@@ -1077,7 +1071,7 @@ RapidSvnFrame::ShowInfo ()
       wasError = true;
       break;
     }
-    all_info += info + _T ("\n");
+    all_info += info + "\n";
   }
 
   {
@@ -1103,10 +1097,9 @@ RapidSvnFrame::AddEntries ()
 
   svn::Targets targets = m_listCtrl->GetTargets ();
 
-  lastAction = ACTION_TYPE_ADD;
-
-  AddAction *add_act = new AddAction (this, m_logTracer, targets);
-  add_act->Perform ();
+  AddAction *action = 
+    new AddAction (this, m_logTracer, m_currentPath.c_str (), targets);
+  Perform (ACTION_TYPE_ADD, action);
 }
 
 void
@@ -1122,10 +1115,8 @@ RapidSvnFrame::MakeRevert ()
 
   const svn::Targets targets = GetActionTargets ();
 
-  lastAction = ACTION_TYPE_REVERT;
-
-  RevertAction *add_act = new RevertAction (this, m_logTracer, targets);
-  add_act->Perform ();
+  RevertAction *action = new RevertAction (this, m_logTracer, targets);
+  Perform (ACTION_TYPE_REVERT, action);
 }
 
 void
@@ -1133,11 +1124,9 @@ RapidSvnFrame::MakeResolve ()
 {
   const svn::Targets targets = GetActionTargets ();
 
-  lastAction = ACTION_TYPE_RESOLVE;
-
-  ResolveAction *add_act = 
+  ResolveAction *action = 
     new ResolveAction (this, m_logTracer, targets);
-  add_act->Perform ();
+  Perform (ACTION_TYPE_RESOLVE, action);
 }
 
 void
@@ -1148,10 +1137,8 @@ RapidSvnFrame::DelEntries ()
 
   svn::Targets targets = m_listCtrl->GetTargets ();
 
-  lastAction = ACTION_TYPE_DEL;
-
-  DeleteAction *del_act = new DeleteAction (this, m_logTracer, targets);
-  del_act->Perform ();
+  DeleteAction *action = new DeleteAction (this, m_logTracer, targets);
+  Perform (ACTION_TYPE_DEL, action);
 }
 
 void
@@ -1167,9 +1154,9 @@ RapidSvnFrame::MakeCopy ()
 
   const svn::Targets targets = m_listCtrl->GetTargets ();
 
-  lastAction = ACTION_TYPE_COPY;
-  CopyAction *cp_act = new CopyAction (this, m_logTracer, targets);
-  cp_act->Perform ();
+  CopyAction *action = 
+    new CopyAction (this, m_logTracer, m_currentPath, targets);
+  Perform (ACTION_TYPE_COPY, action);
 }
 
 void
@@ -1181,17 +1168,15 @@ RapidSvnFrame::Rename ()
 void
 RapidSvnFrame::Mkdir ()
 {
-  lastAction = ACTION_TYPE_MKDIR;
-  MkdirAction *mk_act = new MkdirAction (this, m_logTracer);
-  mk_act->Perform ();
+  MkdirAction *action = new MkdirAction (this, m_logTracer);
+  Perform (ACTION_TYPE_MKDIR, action);
 }
 
 void
 RapidSvnFrame::Merge ()
 {
-  lastAction = ACTION_TYPE_MERGE;
-  MergeAction *mrg_act = new MergeAction (this, m_logTracer);
-  mrg_act->Perform ();
+  MergeAction *action = new MergeAction (this, m_logTracer, m_currentPath.c_str ());
+  Perform (ACTION_TYPE_MERGE, action);
 }
 
 void
@@ -1238,6 +1223,13 @@ RapidSvnFrame::UpdateCurrentPath ()
   }
 
   SetTitle (m_title + ": " + m_currentPath);
+}
+
+void
+RapidSvnFrame::Perform (ActionType type, Action * action)
+{
+  m_lastAction = type;
+  m_actionWorker.Perform (action);
 }
 
 InfoPanel::InfoPanel (wxWindow * parent):wxPanel (parent, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxCLIP_CHILDREN)

@@ -18,10 +18,6 @@
 #include "svn_types.h"
 #include "svn_wc.h"
 
-// svncpp
-//REMOVE#include "client.hpp"
-
-
 namespace svn
 {
 

@@ -16,19 +16,13 @@
 #include "wx/confbase.h"
 #include "wx/filename.h"
 #include "wx/imaglist.h"
-/*
-#include "wx/gdicmn.h"
-#include "wx/window.h"
-*/
 
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/targets.hpp"
 
 // app
-//REMOVE #include "include.hpp"
 #include "ids.hpp"
-//REMOVE #include "rapidsvn_app.hpp"
 #include "filelist_ctrl.hpp"
 #include "utils.hpp"
 

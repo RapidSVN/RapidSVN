@@ -17,18 +17,18 @@
 #include "svncpp/targets.hpp"
 
 // app
-#include "action_thread.hpp"
+#include "action.hpp"
 
-class RevertAction:public ActionThread
+class RevertAction:public Action
 {
 private:
   svn::Targets m_targets;
 
 public:
-  RevertAction (wxFrame * frame, Tracer * tr, const svn::Targets & trgts);
+  RevertAction (wxWindow * parent, Tracer * tr, const svn::Targets & trgts);
 
-  void Perform ();
-  void *Entry ();
+  bool Perform ();
+  bool Prepare ();
 };
 
 #endif

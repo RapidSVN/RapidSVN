@@ -17,7 +17,6 @@
 #include "wx/thread.h"
 
 // app
-//#include "action.hpp"
 #include "action_worker.hpp"
 
 // forward declarations

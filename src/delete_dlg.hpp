@@ -13,6 +13,9 @@
 #ifndef _DELETE_DLG_H_INCLUDED_
 #define _DELETE_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/dialog.h"
+
 class DeleteDlg:public wxDialog
 {
 public:

@@ -13,25 +13,25 @@
 #ifndef _MERGE_ACTION_H_INCLUDED_
 #define _MERGE_ACTION_H_INCLUDED_
 
-#include "action_thread.hpp"
+// svncpp
+#include "svncpp/path.hpp"
+
+// app
+#include "action.hpp"
 #include "merge_dlg.hpp"
 
-class MergeAction:public ActionThread
+class MergeAction:public Action
 {
-private:
-  MergeDlg::sData m_data;
-  wxFrame *m_pFrame;
-
-  /**
-   * Gets the revision from a string.
-   */
-  long getRevision (wxString & str);
-
 public:
-   MergeAction (wxFrame * frame, Tracer * tr);
+  MergeAction (wxWindow * frame, Tracer * tr, const svn::Path & path);
 
-  void Perform ();
-  void *Entry ();
+  virtual bool Prepare ();
+  virtual bool Perform ();
+
+private:
+  MergeData m_data;
+  svn::Path m_path;
+
 };
 
 #endif

@@ -39,7 +39,7 @@ public:
 
 private:  
   void InitializeData ();
-  sData * m_pData;
+  sData * m_data;
 
   DECLARE_EVENT_TABLE ()
 };

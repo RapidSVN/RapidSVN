@@ -16,72 +16,60 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "include.hpp"
-#include "merge_dlg.hpp"
-#include "tracer.hpp"
-#include "trace_update.hpp"
-#include "rapidsvn_app.hpp"
+#include "ids.hpp"
 #include "merge_action.hpp"
 #include "svn_notify.hpp"
 
-MergeAction::MergeAction (wxFrame * frame, Tracer * tr)
-            : ActionThread (frame)
+MergeAction::MergeAction (wxWindow * parent, Tracer * tr, 
+                          const svn::Path & path)
+  : Action (parent, tr, false), m_path (path)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
-  m_pFrame = frame;
 }
 
-void
-MergeAction::Perform ()
+bool
+MergeAction::Prepare ()
 {
-  MergeDlg *mrgDlg = new MergeDlg(m_pFrame, &m_data);
+  MergeDlg dlg (GetParent (), m_data);
 
-  if (mrgDlg->ShowModal () == wxID_OK)
-  {
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
+  if (dlg.ShowModal () != wxID_OK)
+  { 
+    return false;
   }
 
-  // destroy the dialog
-  mrgDlg->Close (TRUE);
+  return true;
 }
 
-void *
-MergeAction::Entry ()
+bool
+MergeAction::Perform ()
 {
   svn::Context context (m_data.User.c_str (), m_data.Password.c_str ());
   svn::Client client (&context);
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
-  wxString targetPath =
-    wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ();
-
   // Set current working directory to point to the path
   // in the folder browser (the path where the merge will be 
   // performed)
-  if (!wxSetWorkingDirectory (targetPath))
+  if (!wxSetWorkingDirectory (m_path.c_str ()))
   {
-    PostStringEvent (TOKEN_VSVN_INTERNAL_ERROR,
-                     wxT ("Could not se working directory to ") +
-                     targetPath, ACTION_EVENT);
+    wxString msg;
+    msg.Printf(_T ("Could not set working directory to %s"),
+               m_path.c_str ());
+    PostStringEvent (TOKEN_VSVN_INTERNAL_ERROR, msg, ACTION_EVENT);
     return NULL;
   }
 
 
-  long rev1 = MergeAction::getRevision (m_data.Path1Rev);
-  long rev2 = MergeAction::getRevision (m_data.Path2Rev);
+  //TODO check this
+  long rev1 = 0;//MergeAction::getRevision (m_data.Path1Rev);
+  long rev2 = 0;//MergeAction::getRevision (m_data.Path2Rev);
   try
   {
     client.merge (m_data.Path1.c_str (), 
                   rev1, 
                   m_data.Path2.c_str (), 
                   rev2, 
-                  targetPath.c_str (), 
+                  m_path.c_str (), 
                   m_data.Force, 
                   m_data.Recursive);
   }
@@ -94,21 +82,6 @@ MergeAction::Entry ()
   }
   
   return NULL;
-}
-
-long 
-MergeAction::getRevision (wxString & str)
-{
-  unsigned long rev;
-  TrimString (str);
-
-  if (!str.IsEmpty ())
-  {
-    str.ToULong (&rev, 10);
-    return rev;
-  }
-
-  return -2; // head
 }
 
 /* -----------------------------------------------------------------

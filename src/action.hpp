@@ -13,9 +13,6 @@
 #ifndef _ACTION_H_
 #define _ACTION_H_
 
-// wxwindows
-//#include "wx/window.h"
-
 // forward declarations
 class Tracer;
 class wxString;

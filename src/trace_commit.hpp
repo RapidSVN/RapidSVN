@@ -13,6 +13,12 @@
 #ifndef _TRACE_COMMIT_EDITOR_H_INCLUDED_
 #define _TRACE_COMMIT_EDITOR_H_INCLUDED_
 
+// subversion
+#include "svn_error.h"
+
+// forward declarations
+class Tracer;
+
 /**
 * Constructs an editor that prints out events in a commit. 
 */

@@ -11,41 +11,35 @@
  * ====================================================================
  */
 
+// svncpp
 #include "svncpp/client.hpp"
-#include "include.hpp"
+
+// app
+#include "ids.hpp"
 #include "tracer.hpp"
-#include "rapidsvn_app.hpp"
 #include "revert_action.hpp"
 #include "svn_notify.hpp"
 #include "svncpp/exception.hpp"
 
-RevertAction::RevertAction (wxFrame * frame, Tracer * tr, 
+RevertAction::RevertAction (wxWindow * parent, Tracer * tr, 
                             const svn::Targets & targets)
-  : ActionThread (frame), m_targets(targets)
+  : Action (parent, tr, false), m_targets(targets)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
 }
 
-void
+bool
+RevertAction::Prepare ()
+{
+  return true;
+}
+
+bool
 RevertAction::Perform ()
-{
-  // No dialog for Revert. Just start the thread.
-  // Note: recursion is not enabled by default.
-
-  // #### TODO: check errors and throw an exception
-  // create the thread
-  Create ();
-
-  // here we start the action thread
-  Run ();
-}
-
-void *
-RevertAction::Entry ()
 {
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
+  bool result = true;
 
   const std::vector<svn::Path> & v = m_targets.targets ();
   std::vector<svn::Path>::const_iterator it;
@@ -60,14 +54,15 @@ RevertAction::Entry ()
     }
     catch (svn::ClientException &e)
     {
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, e.description (), 
                        ACTION_EVENT);
+      result = false;
     }
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
 
-  return NULL;
+  return result;
 }
 
 /* -----------------------------------------------------------------

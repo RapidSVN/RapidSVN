@@ -98,10 +98,6 @@ SOURCE=.\src\action.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\action_thread.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\add_action.cpp
 # End Source File
 # Begin Source File
@@ -142,10 +138,6 @@ SOURCE=.\src\exceptions.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\file_action.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\filelist_ctrl.cpp
 # End Source File
 # Begin Source File
@@ -163,10 +155,6 @@ SOURCE=.\src\import_action.cpp
 # Begin Source File
 
 SOURCE=.\src\import_dlg.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\include.cpp
 # End Source File
 # Begin Source File
 
@@ -278,10 +266,6 @@ SOURCE=.\src\action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\action_thread.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\add_action.hpp
 # End Source File
 # Begin Source File
@@ -334,10 +318,6 @@ SOURCE=.\src\exceptions.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\file_action.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\filelist_ctrl.hpp
 # End Source File
 # Begin Source File
@@ -363,10 +343,6 @@ SOURCE=.\src\import_action.hpp
 # Begin Source File
 
 SOURCE=.\src\import_dlg.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\include.hpp
 # End Source File
 # Begin Source File
 

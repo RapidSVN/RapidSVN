@@ -16,39 +16,31 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "include.hpp"
+#include "ids.hpp"
 #include "tracer.hpp"
-#include "rapidsvn_app.hpp"
 #include "resolve_action.hpp"
 #include "svn_notify.hpp"
 
-ResolveAction::ResolveAction (wxFrame * frame, Tracer * tr, 
+ResolveAction::ResolveAction (wxWindow * parent, Tracer * tr, 
                               const svn::Targets & targets)
-  : ActionThread (frame), m_targets (targets)
+  : Action (parent, tr, false), m_targets (targets)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
 }
 
-void
+bool
+ResolveAction::Prepare ()
+{
+  // No dialog for Resolve. 
+  return true;
+}
+
+bool
 ResolveAction::Perform ()
-{
-  // No dialog for Resolve. Just start the thread.
-  // Note: recursion is not enabled by default.
-
-  // #### TODO: check errors and throw an exception
-  // create the thread
-  Create ();
-
-  // here we start the action thread
-  Run ();
-}
-
-void *
-ResolveAction::Entry ()
 {
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
+  bool result = true;
 
   const std::vector<svn::Path> v = m_targets.targets ();
   std::vector<svn::Path>::const_iterator it;
@@ -64,12 +56,13 @@ ResolveAction::Entry ()
     catch (svn::ClientException &e)
     {
       GetTracer ()->Trace (e.description ());
+      result = false;
     }
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
 
-  return NULL;
+  return result;
 }
 /* -----------------------------------------------------------------
  * local variables:
