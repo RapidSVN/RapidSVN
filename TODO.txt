@@ -1,3 +1,82 @@
-RapidSVN TODO
+RapidSVN TODO LIST
 
-* Make svn folders look different than normal folders.
+File Explorer
+* Add to the preferences a default file explorer.
+* When clicking F2 or selecting Explore from a menu (like WinCVS) on a folder
+then open the file explorer in that folder.
+* Double-clicking on a folder should also open up the file manager.
+
+Log
+* The Log functionality on a file will bring up a dialog with a wxListCtrl 
+which is the log viewer pane.  It contains all log entries for that file.  It 
+has three columns: Revision, User, and Date which correspond to each log.
+* Whenever a log item is clicked on it's log message will show up on the log 
+message wxTextCtrl on the bottom.  
+* There will be two buttons on the right.  The first is 'Get version', which 
+when clicked on downloads that version's copy.  The second is Diff.  If exactly 
+two logs are clicked on then this runs a diff between the two copies.  
+* This is the most complex of the items on this list and it is still a little 
+hazy on how it should work so make sure to contact someone before you attack 
+it unless you are especially brave.
+
+Status and Info
+* Make the Status and Info boxes easier to read.
+
+Icon and Logo
+* Create a logo for the project and make it into an ico and xpm.
+
+Revert
+* If there were changes to the file it will ask the user if they really 
+want to revert.  If so then it will delete the file then perform an update to
+restore the file with a pristine copy.
+
+Diff
+* Have the diff program set in the preferences.  By default this is diff.
+* In the pop up menu have a 'Show differences' quick menu.
+* For the log menu have a Diff function that will allow you to select the diff
+between several versions of files just the same way that VSS does.
+
+Password
+* Have the program cache the last username/password pair during program lifetime 
+and use it for each update/commit/etc action.
+
+Preferences and Session Storage
+* Preferences and session need to be stored for each user in the system.  When 
+RapidSVN is closed the program should save exactly where the user was browsing 
+so that it can restore this session when it is run again.
+
+Move and Rename
+* Add this to the Modify menu, not the pop-up.  
+* On a rename this should bring up a dialog with the original name of the file
+or folder.  Then on clicking OK it changes the name of the file.  It will not
+commit the name change to the repository.
+
+Opening Files
+* In the preferences make a default editor or several editors. 
+* When double clicking on a file it should open it up with the default editor.
+It would be nice if it could open up the file with whatever default type the OS
+has for it.  
+* On right-clicking the file give them the option to select the default RapidSVN 
+editor or select the default editor and a select system editor.
+
+File Pane
+* Have the folders listed as the top items in the file browser and the files
+underneath them.  All should still stay in alphabetical order.
+* Hide .svn folders in the menu.
+
+Log Pane
+* In the mean time at least change the pane so that it displays more 
+useful information than A, M, _M and so on.  Have it print 'Added xyz.cpp' 
+instead.
+* Convert this to a context-sensitive pane.  When a file is clicked on it will 
+give the properties of that file along with the last log message attached to it.
+The overhead might be a lot but the effect might be nice.  This does conflict
+somewhat with the idea of the log/history window functionality.
+
+Handling Mime-types
+* Give the user the option for each mime-type to bind it to a specific tool for
+both diffs and editors.  
+
+RPM
+* Create an RPM spec file so that you can automatically install the file on
+Linux.  Make sure to remember the depenency on wxGTK and db4.

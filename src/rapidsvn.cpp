@@ -280,11 +280,11 @@ VSvnFrame::InitializeMenu ()
 
   // Modify menu
   wxMenu *menuModif = new wxMenu;
-  pItem = new wxMenuItem (menuModif, ID_Update, _T ("Update"));
+  pItem = new wxMenuItem (menuModif, ID_Update, _T ("Get latest"));
   pItem->SetBitmap (wxBITMAP (update));
   menuModif->Append (pItem);
 
-  pItem = new wxMenuItem (menuModif, ID_Commit, _T ("Commit"));
+  pItem = new wxMenuItem (menuModif, ID_Commit, _T ("Check in"));
   pItem->SetBitmap (wxBITMAP (commit));
   menuModif->Append (pItem);
 

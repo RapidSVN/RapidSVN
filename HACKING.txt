@@ -1,0 +1,195 @@
+								-*-text-*-
+
+If you are contributing code to the RapidSVN project, please read
+this first.
+
+                     ==========================
+                     HACKER'S GUIDE TO RAPIDSVN
+                     ==========================
+
+TABLE OF CONTENTS
+
+   * Coding style
+   * Documenting
+   * Writing log messages
+
+
+
+Coding style
+============
+
+To understand how things work, read doc/svn-design.{texi,info,ps,pdf},
+and read the header files, which tend to have thoroughly-commented
+data structures.
+
+   char *                                     /* func type on own line */
+   argblarg(char *arg1, int arg2)            /* func name on own line */
+   {                                          /* first brace on own line */
+     if ((some_very_long_condition && arg2)   /* indent 2 cols */
+       || remaining_condition)                /* new line before operator */
+     {                                        /* brace on own line */
+       arg1 = some_func (arg1, arg2);         /* space before opening paren */
+     }                                        /* close brace on own line */
+     else
+     {
+       do                                     /* format do-while like this */
+       {
+         arg1 = another_func (arg1);
+       }
+       while (*arg1);
+     }
+   }
+
+In general, be generous with parentheses even when you're sure about
+the operator precedence, and be willing to add spaces and newlines to
+avoid "code crunch".  Don't worry too much about vertical density;
+it's more important to make code readable than to fit that extra line
+on the screen.
+
+
+
+Documenting
+===================
+
+Every function, whether public or internal, must start out with a
+documentation comment that describes what the function does.  The
+documentation should mention every parameter received by the function,
+every possible return value, and (if not obvious) the conditions under
+which the function could return an error.  Put the parameter names in
+upper case in the doc string, even when they are not upper case in the
+actual declaration, so that they stand out to human readers.
+
+For public or semi-public API functions, the doc string should go
+above the function in the .h file where it is declared; otherwise, it
+goes above the function definition in the .cpp file.
+
+For structure types, document each individual member of the structure
+as well as the structure itself.
+
+Read over the RapidSVN code to get an overview of how this
+documentation looks in practice; in particular, use the .h files in
+RapidSVN/include/ as examples.
+
+
+
+Writing log messages
+====================
+
+Certain guidelines should be adhered to when writing log messages:
+
+Make a log message for every change.  The value of the log becomes
+much less if developers cannot rely on its completeness.  Even if
+you've only changed comments, write a log that says "Doc fix." or
+something.
+
+Use full sentences, not sentence fragments.  Fragments are more often
+ambiguous, and it takes only a few more seconds to write out what you
+mean.  Fragments like "Doc fix", "New file", or "New function" are
+acceptable because they are standard idioms, and all further details
+should appear in the source code.
+
+The log message should name every affected function, variable, macro,
+makefile target, grammar rule, etc, including the names of symbols
+that are being removed in this commit.  This helps people searching
+through the logs later.  Don't hide names in wildcards, because the
+globbed portion may be what someone searches for later.  For example,
+this is bad:
+
+   * twirl.cpp
+     (twirling_baton_*): Removed these obsolete structures.
+     (handle_parser_warning): Pass data directly to callees, instead
+     of storing in twirling_baton_*.
+
+   * twirl.h: Fix indentation.
+
+Later on, when someone is trying to figure out what happened to
+`twirling_baton_fast', they may not find it if they just search for
+"_fast".  A better entry would be:
+
+   * twirl.cpp 
+     (twirling_baton_fast, twirling_baton_slow): Removed these
+     obsolete structures. 
+     (handle_parser_warning): Pass data directly to callees, instead
+     of storing in twirling_baton_*. 
+
+   * twirl.h: Fix indentation.
+
+The wildcard is okay in the description for `handle_parser_warning',
+but only because the two structures were mentioned by full name
+elsewhere in the log entry.
+
+Note how each file gets its own entry, and the changes within a file
+are grouped by symbol, with the symbols are listed in parentheses
+followed by a colon, followed by text describing the change.  Please
+adhere to this format -- not only does consistency aid readability, it
+also allows software to colorize log entries automatically.
+
+If your change is related to a specific issue in the issue tracker,
+then include a string like "issue #N" in the log message.  For
+example, if a patch resolves issue 1729, then the log message might
+be:
+
+   Fix issue #1729:
+
+   * get_editor.cpp
+     (frobnicate_file): Check that file exists first.
+
+For large changes or change groups, group the log entry into
+paragraphs separated by blank lines.  Each paragraph should be a set
+of changes that accomplishes a single goal, and each group should
+start with a sentence or two summarizing the change.  Truly
+independent changes should be made in separate commits, of course.
+
+One should never need the log entries to understand the current code.
+If you find yourself writing a significant explanation in the log, you
+should consider carefully whether your text doesn't actually belong in
+a comment, alongside the code it explains.  Here's an example of doing
+it right:
+
+   (consume_count): If `count' is unreasonable, return 0 and don't
+   advance input pointer.
+
+And then, in `consume_count' in `cplus-dem.cpp':
+
+   while (isdigit ((unsigned char)**type))
+   {
+     count *= 10;
+     count += **type - '0';
+     /* A sanity check.  Otherwise a symbol like
+       `_Utf390_1__1_9223372036854775807__9223372036854775'
+       can cause this function to return a negative value.
+       In this case we just consume until the end of the string.  */
+     if (count > strlen (*type))
+     {
+       *type = save;
+       return 0;
+     }
+
+This is why a new function, for example, needs only a log entry saying
+"New Function" --- all the details should be in the source.
+
+There are some common-sense exceptions to the need to name everything
+that was changed:
+
+   *  If you have made a change which requires trivial changes
+      throughout the rest of the program (e.g., renaming a variable),
+      you needn't name all the functions affected, you can just say
+      "All callers changed".
+
+   *  If you have rewritten a file completely, the reader understands
+      that everything in it has changed, so your log entry may simply
+      give the file name, and say "Rewritten".
+
+   *  If your change was only to one file, or was the same change to
+      multiple files, then there's no need to list their paths in the
+      log message (because "svn log" can show the changed paths for
+      that revision anyway).  Only when you need to describe how the
+      change affected different areas in different ways is it
+      necessary to organize the log message by paths and symbols, as
+      in the examples above.
+
+In general, there is a tension between making entries easy to find by
+searching for identifiers, and wasting time or producing unreadable
+entries by being exhaustive.  Use your best judgment --- and be
+considerate of your fellow developers.  (Also, run "svn log" to see
+how others have been writing their log entries.)

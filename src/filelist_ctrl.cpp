@@ -98,7 +98,7 @@ FileListCtrl::UpdateFileList (const wxString & path)
   DeleteAllItems ();
 
   // cycle through the files and folders in the current path
-  wxFileName fullpath (path, wxT ("*.*"));
+  wxFileName fullpath (path, wxT ("*"));
   wxString name;
   wxString f =
     wxFindFirstFile (fullpath.GetFullPath ().c_str (), wxDIR | wxFILE);
@@ -236,10 +236,10 @@ FileListCtrl::BuildMenu (wxMenu & menu, SvnFileStatus & finfo,
 
   wxMenuItem *pItem;
 
-  pItem = new wxMenuItem (&menu, ID_Update, _T ("Update"));
+  pItem = new wxMenuItem (&menu, ID_Update, _T ("Get latest"));
   pItem->SetBitmap (wxBITMAP (update));
   menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
+  pItem = new wxMenuItem (&menu, ID_Commit, _T ("Check in"));
   pItem->SetBitmap (wxBITMAP (commit));
   menu.Append (pItem);
 
