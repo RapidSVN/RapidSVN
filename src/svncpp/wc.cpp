@@ -15,6 +15,7 @@
 #include "svn_wc.h"
 
 // svncpp
+#include "exception.hpp"
 #include "path.hpp"
 #include "pool.hpp"
 #include "wc.hpp"
@@ -39,6 +40,21 @@ namespace svn
     }
 
     return true;
+  }
+
+  void
+  Wc::ensureAdm (const char * dir, const char * url, const Revision & revision)
+  {
+    Pool pool;
+    Path dirPath (dir);
+    Path urlPath (url);
+
+    svn_error_t * error =
+      svn_wc_ensure_adm (dirPath.c_str (), urlPath.c_str (),
+                         revision.revnum (), pool);
+
+    if(error != NULL)
+      throw ClientException (error);
   }
 }
 

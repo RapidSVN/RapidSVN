@@ -14,6 +14,9 @@
 #ifndef _SVNCPP_WC_HPP_
 #define _SVNCPP_WC_HPP_ 
 
+// svncpp
+#include "revision.hpp"
+
 namespace svn
 {
   /**
@@ -30,6 +33,17 @@ namespace svn
      */
     static bool 
     checkWc (const char * dir);
+
+    /**
+     * ensure that an administrative area exists for @a dir, so that @a dir
+     * is a working copy subdir based on @a url at @a revision.
+     *
+     * @param dir path to a directory
+     * @param url corresponding url
+     * @param revision expected working copy revision
+     */
+    static void
+    ensureAdm (const char * dir, const char * url, const Revision & revision);
 
     static const char * ADM_DIR_NAME;
 

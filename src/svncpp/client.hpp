@@ -81,10 +81,17 @@ namespace svn
      *
      * @param path Path to explore.
      * @param descend Recurse into subdirectories if existant.
+     * @param get_all Return all entries, not just the interesting ones.
+     * @param update Query the repository for updates.
+     * @param no_ignore Disregard default and svn:ignore property ignores.
      * @return vector with Status entries.
      */
     StatusEntries 
-    status (const char * path,  const bool descend = false);
+    status (const char * path,
+            const bool descend = false,
+            const bool get_all = true,
+            const bool update = false,
+            const bool no_ignore = false);
 
     /**
      * Returns the status of a single file in the path.

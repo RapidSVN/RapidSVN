@@ -71,6 +71,7 @@ namespace svn
 
       next = next->child;
     }
+    svn_error_clear (error);
   }
 
   ClientException::~ClientException () throw ()

@@ -44,21 +44,26 @@ namespace svn
   }
 
   StatusEntries 
-  Client::status (const char * path, const bool descend)
+  Client::status (const char * path,
+                  const bool descend,
+                  const bool get_all,
+                  const bool update,
+                  const bool no_ignore)
   {
     svn_error_t *error;
     StatusEntries entries;
     apr_hash_t *status_hash;
+    svn_revnum_t revnum;
     Pool pool;
 
     error = svn_client_status (
       &status_hash, // pointer to hash
-      NULL,         // revnum
+      &revnum,      // revnum
       path,         // path
-      descend, 
-      true,         // get all
-      false,        //update
-      false,        //no_ignore,
+      descend,
+      get_all,
+      update,
+      no_ignore,
       *m_context,    //client ctx
       pool);
 
