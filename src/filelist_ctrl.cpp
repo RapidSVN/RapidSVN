@@ -16,10 +16,26 @@
 #include "wx/filename.h"
 #include "rapidsvn_app.h"
 
-#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__)
-#include "icons.h"
-#include "bitmaps.h"
-#endif
+// Bitmaps
+#include "res/bitmaps/update.xpm"
+#include "res/bitmaps/commit.xpm"
+#include "res/bitmaps/revert.xpm"
+#include "res/bitmaps/resolve.xpm"
+#include "res/bitmaps/info.xpm"
+#include "res/bitmaps/log.xpm"
+#include "res/bitmaps/nonsvn_file.xpm"
+#include "res/bitmaps/normal_file.xpm"
+#include "res/bitmaps/added_file.xpm"
+#include "res/bitmaps/absent_file.xpm"
+#include "res/bitmaps/deleted_file.xpm"
+#include "res/bitmaps/replaced_file.xpm"
+#include "res/bitmaps/modified_file.xpm"
+#include "res/bitmaps/merged_file.xpm"
+#include "res/bitmaps/conflicted_file.xpm"
+#include "res/bitmaps/folder.xpm"
+#include "res/bitmaps/versioned_folder.xpm"
+#include "res/bitmaps/sort_down.xpm"
+#include "res/bitmaps/sort_up.xpm"
 
 /**
  * Number of items in the IMAGE_INDEX table.

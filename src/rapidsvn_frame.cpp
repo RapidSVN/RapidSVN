@@ -42,6 +42,18 @@
 #include "svn_version.h"
 #include "version.h"
 
+// Bitmaps
+#include "res/bitmaps/aalogo.xpm"
+#include "res/bitmaps/refresh.xpm"
+#include "res/bitmaps/update.xpm"
+#include "res/bitmaps/commit.xpm"
+#include "res/bitmaps/add.xpm"
+#include "res/bitmaps/delete.xpm"
+#include "res/bitmaps/revert.xpm"
+#include "res/bitmaps/resolve.xpm"
+#include "res/bitmaps/log.xpm"
+#include "res/bitmaps/info.xpm"
+
 // Toolbars' ids
 #define TOOLBAR_REFRESH  101
 #define TOOLBAR_ADD   103
@@ -54,10 +66,6 @@
 #define TOOLBAR_RESOLVE  111
 #define TOOLBAR_FOLDERUP 112
 
-#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__)
-#include "icons.h"
-#include "bitmaps.h"
-#endif
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
 
@@ -282,10 +290,10 @@ RapidSvnFrame::InitializeMenu ()
   pItem->SetBitmap (wxBITMAP (refresh));
   menuView->Append (pItem);
 
-  menuView->AppendSeparator ();
-
-  pItem = new wxMenuItem (menuView, ID_Preferences, _T ("Preferences"));
-  menuView->Append (pItem);
+  //menuView->AppendSeparator ();
+  //
+  //pItem = new wxMenuItem (menuView, ID_Preferences, _T ("Preferences"));
+  //menuView->Append (pItem);
 
   // Create menu
   wxMenu *menuCreate = new wxMenu;

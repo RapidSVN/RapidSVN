@@ -1,22 +1,7 @@
 #define MINIMAL_QUIT      1
 #define MINIMAL_ABOUT     102
 
-aalogo               ICON    "res/mondrian.ico"
-
-nonsvn_file          ICON    "res/bitmaps/nonsvn_file.ico"
-normal_file          ICON    "res/bitmaps/normal_file.ico"
-added_file           ICON    "res/bitmaps/added_file.ico"
-absent_file          ICON    "res/bitmaps/absent_file.ico"
-deleted_file         ICON    "res/bitmaps/deleted_file.ico"
-replaced_file        ICON    "res/bitmaps/replaced_file.ico"
-modified_file        ICON    "res/bitmaps/modified_file.ico"
-merged_file          ICON    "res/bitmaps/merged_file.ico"
-conflicted_file      ICON    "res/bitmaps/conflicted_file.ico"
-sort_up              ICON    "res/bitmaps/sort_up.ico"
-sort_down            ICON    "res/bitmaps/sort_down.ico"
-
-folder               ICON    "res/bitmaps/folder.ico"
-versioned_folder     ICON    "res/bitmaps/versioned_folder.ico"
+logo               ICON    "res/mondrian.ico"
 
 refresh              BITMAP    "res/bitmaps/refresh.bmp"
 browse               BITMAP    "res/bitmaps/browse.bmp"

@@ -19,41 +19,41 @@ public:
   bool PerformAction();
 
 protected:
-    /**
-    * The main frame of the application
-    */
+  /**
+   * The main frame of the application
+   */
   wxFrame * mainFrame;
 
-    /**
-    * This member variable will take the address 
-    * of a trace object allocated in a class 
-    * derived from ActionThread. It will be used
-    * from the svn_delta_editor callbacks.
-    */
+  /**
+   * This member variable will take the address 
+   * of a trace object allocated in a class 
+   * derived from ActionThread. It will be used
+   * from the svn_delta_editor callbacks.
+   */
   Tracer *tracer;
-
-    /**
-    * If ownTracer is TRUE, then the ActionThread class
-    * is responsible for deleting the tracer.
-    */
+  
+  /**
+   * If ownTracer is TRUE, then the ActionThread class
+   * is responsible for deleting the tracer.
+   */
   bool ownTracer;
-
+  
   apr_pool_t *pool;
   apr_array_header_t *  _targets;
 
-   FileAction (wxFrame * frame, apr_pool_t * __po0l);
-  ~FileAction ();
+  FileAction (wxFrame * frame, apr_pool_t * __po0l);
+  virtual ~FileAction ();
 
   Tracer *GetTracer ()
   {
     return tracer;
   }
 
-    /**
-    * Sets the tracer passed as an argument.
-    * If own is TRUE, then the ActionThread class
-    * is responsible for deleting the tracer.
-    */
+  /**
+   * Sets the tracer passed as an argument.
+   * If own is TRUE, then the ActionThread class
+   * is responsible for deleting the tracer.
+   */
   void SetTracer (Tracer * t, bool own = TRUE)
   {
     tracer = t;
@@ -81,7 +81,7 @@ class FileActionThreadHelper:public wxThread
 {
 public:
   FileActionThreadHelper (wxFrame * mainFrame, FileAction * action);
-  ~FileActionThreadHelper ();
+  virtual ~FileActionThreadHelper ();
 
   void* Entry();
 
