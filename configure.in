@@ -1,7 +1,10 @@
-AC_REVISION(0.1)
 AC_INIT(src/rapidsvn_app.cpp)
+AM_INIT_AUTOMAKE(rapidsvn, 0.1)
 
 AC_PROG_CXX
+AC_PROG_INSTALL
+AC_LIBTOOL_DLOPEN
+AC_PROG_LIBTOOL
 
 dnl
 dnl APR
@@ -75,7 +78,7 @@ AC_ARG_WITH(cppunit-config,
 AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
 
-AC_OUTPUT(src/Makefile)
+AC_OUTPUT(Makefile src/Makefile src/svncpp/Makefile src/res/Makefile)
 
 if test "$CPPUNITCONFIG" ; then
     CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"

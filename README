@@ -117,9 +117,3 @@ BUILDING ON LINUX/UNIX
 * If you get strange segmentation faults after updating or after change
   some of the code: try to rebuild rapidsvn (make clean; make all).
 
-PROJECT CONTRIBUTORS
-
-* Paul Marculescu - original author
-* Brent R. Matzelle - developer and project leader
-* Alexander Mueller - developer and project leader
-* John Mears - developer

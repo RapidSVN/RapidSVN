@@ -1,0 +1,3054 @@
+------------------------------------------------------------------------
+rev 4650:  xela | 2003-01-29 04:31:55 -0500 (Wed, 29 Jan 2003) | 6 lines
+
+Patch contributed by Martin Ayotte.
+
+* src/report_dlg.cpp
+  just make it a little bit bigger for all purposes.
+
+
+------------------------------------------------------------------------
+rev 4649:  xela | 2003-01-29 04:24:27 -0500 (Wed, 29 Jan 2003) | 11 lines
+
+Patch contributed by Martin Ayotte.
+
+* src/svncpp/path.cpp
+  add missing stuff in the 'operator=' method
+
+* src/svncpp/revision.cpp
+  since SVN doesn't like to have 'svn_opt_revision_unspecified' 
+  as a START revision, it should be 'svn_opt_revision_number' 
+  with the default 0 value ...
+   
+
+------------------------------------------------------------------------
+rev 4627:  xela | 2003-01-27 19:56:21 -0500 (Mon, 27 Jan 2003) | 8 lines
+
+Removed "const" from return value
+
+* src/threaded_worker.(cpp|hpp)
+  (ThreadedWorker::GetState)
+  (ThreadedWorker::GetResult)
+  (ThreadedWorker::Perform)
+
+
+------------------------------------------------------------------------
+rev 4626:  xela | 2003-01-27 19:49:58 -0500 (Mon, 27 Jan 2003) | 11 lines
+
+Removed "const" from return value to reflect
+return type of abstract function.
+
+* src/threaded_worker.cpp
+  (ThreaderWorker::GetState,ThreadedWorker::GetResult)
+
+Removed default value from implementation
+
+* src/action.cpp
+  (Action::SetTracer)
+
+------------------------------------------------------------------------
+rev 4625:  xela | 2003-01-27 19:41:14 -0500 (Mon, 27 Jan 2003) | 5 lines
+
+Switched "wx/app.h" with "wx/wx.h"
+
+* src/action.cpp
+  (#include)
+
+------------------------------------------------------------------------
+rev 4624:  xela | 2003-01-27 19:34:18 -0500 (Mon, 27 Jan 2003) | 6 lines
+
+Replaced "wx/app.h" with "wx/wx.h" since we
+received compiler errors on windows.
+
+* src/tracer.cpp 
+  (#include)
+
+------------------------------------------------------------------------
+rev 4623:  xela | 2003-01-27 19:32:33 -0500 (Mon, 27 Jan 2003) | 5 lines
+
+Changed "prompt" to reflect svn api change
+
+* src/svncpp/auth.cpp
+  (prompt)
+
+------------------------------------------------------------------------
+rev 4620:  xela | 2003-01-27 19:09:31 -0500 (Mon, 27 Jan 2003) | 3 lines
+
+Still some rearrangements and cleanouts with 
+headers.
+
+------------------------------------------------------------------------
+rev 4618:  xela | 2003-01-27 18:22:28 -0500 (Mon, 27 Jan 2003) | 5 lines
+
+Try to fix the VC comilation error.
+
+* src/svncpp/auth.cpp
+
+
+------------------------------------------------------------------------
+rev 4617:  xela | 2003-01-27 18:07:57 -0500 (Mon, 27 Jan 2003) | 8 lines
+
+Added options to the popup menu in the folder browser.
+
+* src/folder_browser.(cpp|hpp)
+  (FolderBrowser::BuildMenu): removed
+
+* src/folder_browser.cpp
+  (FolderBrowser::ShowMenu): added options
+
+------------------------------------------------------------------------
+rev 4616:  xela | 2003-01-27 18:01:01 -0500 (Mon, 27 Jan 2003) | 14 lines
+
+Fixed indentation. 
+
+* src/svncpp/auth.(cpp|hpp)
+
+Changed the prompt function to a module
+local function.
+
+* src/svncpp/auth.hpp
+  (prompt): removed declaration
+
+* src/svncpp/auth.cpp
+  (prompt): added forward declaration and
+    changed it to static
+
+------------------------------------------------------------------------
+rev 4615:  xela | 2003-01-27 17:10:18 -0500 (Mon, 27 Jan 2003) | 40 lines
+
+Added cleanup of working dirs.
+
+* src/rapidsvn_frame.(hpp|cpp)
+  (RadidSvnFrame::InitializeMenu): added to new extras menu
+  (RapidSvnFrame::OnCleanup): added
+* src/ids.hpp
+  (ID_Cleanup): added
+* src/cleanup_action.(hpp|cpp): added
+* src/svncpp/utils.(hpp|cpp): added
+
+Migrated Update and Commit to Action/ActionWorker. Redesign
+of the effected classes.
+
+* src/rapidsvn_frame.cpp
+  (RapidSvnFrame::OnFileCommand)
+* src/update_action.(cpp|hpp)
+* src/update_data.hpp: added
+* src/update_dlg.(cpp|hpp)
+* src/commit_action.(cpp|hpp)
+* src/commit_data.hpp: added
+* src/commit_dlg.(cpp|hpp)
+
+Added utility function to Action.
+* src/action.(cpp|hpp)
+  (Action::Trace): added
+
+Cleaned up use of headers. Added forward declarations
+for classes wherever possible.
+
+* src/log_dlg.hpp
+* src/log_dlg.cpp
+* src/rapidsvn_app.hpp
+* src/rapidsvn_frame.hpp
+* src/tracer.hpp
+
+Added new files.
+
+* src/Makefile.in
+ 
+
+------------------------------------------------------------------------
+rev 4594:  xela | 2003-01-26 15:37:20 -0500 (Sun, 26 Jan 2003) | 6 lines
+
+Bugfix: if you wanted to add a dir to the workbench
+and pressed "Cancel" it would still be added.
+
+* src/rapidsvn_frame.cpp
+  (RapidSvnFrame::AddProject)
+
+------------------------------------------------------------------------
+rev 4593:  xela | 2003-01-26 15:10:21 -0500 (Sun, 26 Jan 2003) | 6 lines
+
+Started the major rework of the action design. 
+(Using ActionWorker instead of thread for
+every single operation).
+
+Clean up the code and reduced header dependencies.
+
+------------------------------------------------------------------------
+rev 4592:  bmatzelle | 2003-01-26 13:58:32 -0500 (Sun, 26 Jan 2003) | 11 lines
+
+
+* src/log_dlg.cpp, src/property_dlg.cpp
+  Removed the include.hpp reference that caused cyclical compilation 
+  errors for win32.
+
+* src/svncpp/svncpp.dsp, rapidsvn.dsp
+  Added some new files to the project.
+
+* src/trace_update.cpp (close_file):
+  Updated svn_wc_text_modified_p to the new svn API.
+
+------------------------------------------------------------------------
+rev 4589:  xela | 2003-01-25 17:09:51 -0500 (Sat, 25 Jan 2003) | 3 lines
+
+Removed cyclied header dependencies. Added some
+explicit headers that are needed.
+
+------------------------------------------------------------------------
+rev 4588:  xela | 2003-01-25 16:33:10 -0500 (Sat, 25 Jan 2003) | 3 lines
+
+Fixed error. Removed implementation of an unused constructor.
+
+
+------------------------------------------------------------------------
+rev 4587:  xela | 2003-01-25 16:25:17 -0500 (Sat, 25 Jan 2003) | 6 lines
+
+Fixed compiler error. "std" namespace prefix for the
+vector template
+
+* src/svncpp/client.cpp
+  (Client::status)
+
+------------------------------------------------------------------------
+rev 4585:  xela | 2003-01-25 16:17:41 -0500 (Sat, 25 Jan 2003) | 3 lines
+
+Removed forward declaration of typedef.
+
+
+------------------------------------------------------------------------
+rev 4584:  xela | 2003-01-25 16:10:17 -0500 (Sat, 25 Jan 2003) | 4 lines
+
+Got rid of some more compiler error because of
+forward declarations. So moved included headers
+from the source file to the header.
+
+------------------------------------------------------------------------
+rev 4583:  xela | 2003-01-25 16:02:05 -0500 (Sat, 25 Jan 2003) | 6 lines
+
+Fixed error with forward declaration.
+
+* src/svncpp/pool.(hpp|cpp)
+  (#include "svn_pools.h"): moved from pools.cpp to pools.hpp
+
+
+------------------------------------------------------------------------
+rev 4543:  xela | 2003-01-23 17:25:10 -0500 (Thu, 23 Jan 2003) | 5 lines
+
+Refactored a lot of the checkout functionality.
+This will be the starting point and from this
+on we will continue with all the other actions.
+
+
+------------------------------------------------------------------------
+rev 4542:  xela | 2003-01-23 17:22:33 -0500 (Thu, 23 Jan 2003) | 2 lines
+
+Included tracer header.
+
+------------------------------------------------------------------------
+rev 4541:  xela | 2003-01-23 17:16:41 -0500 (Thu, 23 Jan 2003) | 3 lines
+
+Cleaned up includes. Used forward declarations for less dependencies.
+
+
+------------------------------------------------------------------------
+rev 4540:  xela | 2003-01-23 17:14:54 -0500 (Thu, 23 Jan 2003) | 2 lines
+
+Cleaned up includes.
+
+------------------------------------------------------------------------
+rev 4539:  xela | 2003-01-23 17:13:51 -0500 (Thu, 23 Jan 2003) | 2 lines
+
+Moved the ID enum to a new header.
+
+------------------------------------------------------------------------
+rev 4538:  xela | 2003-01-23 15:42:50 -0500 (Thu, 23 Jan 2003) | 26 lines
+
+Added the current path in the title.
+
+* src/rapidsvn_frame.(cpp|hpp)
+  (m_title,m_currentPath):added
+  (UpdateCurrentPath):added
+
+Added utility function for access.
+
+* src/folder_browser.(cpp|hpp)
+  (GetSelection): added
+
+Cleaned stuff up.
+
+* src/folder_browser.(cpp|hpp)
+  (m_pool): removed
+  (HasSubdirectories): renamed, was "hasSubdirectories"
+  (BuildMenu): renamed, was "buildMenu"
+  (GetPath): changed to const method
+  (SetPath): removed
+
+* src/folder_item_data.hpp
+  changed getters to const method.
+
+  
+
+
+------------------------------------------------------------------------
+rev 4436:  xela | 2003-01-19 06:35:19 -0500 (Sun, 19 Jan 2003) | 6 lines
+
+Fixed memory problems.
+
+* src/svncpp/status.(h|cpp) (Status):
+  removed m_status and introduced a new init
+  method to copy an existing Status instance.
+
+------------------------------------------------------------------------
+rev 4435:  xela | 2003-01-19 04:45:26 -0500 (Sun, 19 Jan 2003) | 3 lines
+
+Added missing files to the Makefile and applied minor
+changes to the code so it compiles again.
+
+------------------------------------------------------------------------
+rev 4151:  xela | 2002-12-17 18:21:10 -0500 (Tue, 17 Dec 2002) | 6 lines
+
+Changed vector<Status*> to vector<Status>.
+
+* src/filelist_ctrl.cpp
+* src/svncpp/client.(cpp|hpp)
+
+
+------------------------------------------------------------------------
+rev 4148:  xela | 2002-12-17 17:39:04 -0500 (Tue, 17 Dec 2002) | 5 lines
+
+Fixed indentation. Changed all methods that are const to const.
+
+* src/svncpp/status.(cpp|hpp)
+
+
+------------------------------------------------------------------------
+rev 4146:  xela | 2002-12-17 15:19:47 -0500 (Tue, 17 Dec 2002) | 11 lines
+
+Removed unnecessary includes.
+Fixed indentation.
+Refactored classes.
+
+Overall handling of pools changed. No hierarchival pools
+but "global" pools. Lifetime is managed through c++
+memory management.
+Paths are managed within the Path class.
+Apr arrays are replaced by the class Targets.
+
+
+------------------------------------------------------------------------
+rev 4145:  xela | 2002-12-17 15:14:30 -0500 (Tue, 17 Dec 2002) | 35 lines
+
+Removed unnecessary includes.
+Fixed indentation.
+Refactored classes.
+
+Overall handling of pools changed. No hierarchival pools
+but "global" pools. Lifetime is managed through c++
+memory management.
+Paths are managed within the Path class.
+
+* src/svncpp/auth.hpp
+
+* src/svncpp/pool.(hpp|cpp)
+  (Pool::Create): removed
+
+* src/svncpp/client.(hpp|cpp)
+  (Client::target): removed
+  (Client::internalPath): removed
+  (Client::getRevision): removed
+
+* src/svncpp/log.(hpp|cpp)
+  (Log): fixed member variable names.
+  (Log::loadPath): use Revision instead of long.
+
+* src/svncpp/property.(hpp|cpp)
+  (Property): fixed member variable names
+
+* src/svncpp/modify.(hpp|cpp)
+  (Modify::*): use Revision instead of long.
+  (svn_cl__get_log_message): changed to static and renamed
+			     to "get_log_message"
+
+  
+
+
+
+------------------------------------------------------------------------
+rev 4143:  xela | 2002-12-17 14:51:05 -0500 (Tue, 17 Dec 2002) | 10 lines
+
+Remodeled classes to make them usable within svncpp
+and repiadsvn.
+
+* src/svncpp/path.hpp
+* src/svncpp/revision.hpp
+* src/svncpp/revision.cpp
+* src/svncpp/targets.hpp
+* src/svncpp/targets.cpp
+
+
+------------------------------------------------------------------------
+rev 4124:  xela | 2002-12-14 09:20:32 -0500 (Sat, 14 Dec 2002) | 3 lines
+
+Added svn:ignore for *.o and *~ files.
+
+
+------------------------------------------------------------------------
+rev 4123:  xela | 2002-12-14 09:16:15 -0500 (Sat, 14 Dec 2002) | 7 lines
+
+Added svn:ignore for editor backup files and .o files
+
+* src/svncpp
+
+Added new classes to encapsulate apr and subversion functions.
+
+
+------------------------------------------------------------------------
+rev 4115:  xela | 2002-12-13 19:01:41 -0500 (Fri, 13 Dec 2002) | 6 lines
+
+Renamed all the headers from .h to .hpp since they
+are C++ and not C.
+
+* rapidsvn.dsp
+
+
+------------------------------------------------------------------------
+rev 4114:  xela | 2002-12-13 18:59:35 -0500 (Fri, 13 Dec 2002) | 14 lines
+
+Renamed all header files from .h to .hpp since we are
+in C++. Adapted all the headers, source files and
+Visual C++ projects files to reflect the changes.
+If it doesnt build on MSWin I am very sorry, since
+I could not test this on my box (Linux).
+
+* src/*.cpp|*.h, src/svncpp/*.cpp|*.h, src/tests/svncpp/*.cpp*.h
+
+Applied the patch contributed by Brandon Ehle to reflect
+subversion API changes.
+
+* src/property.cpp
+
+
+------------------------------------------------------------------------
+rev 3888:  xela | 2002-11-24 18:33:19 -0500 (Sun, 24 Nov 2002) | 4 lines
+
+Added c-mode, so header files will be indented
+as well.
+
+
+------------------------------------------------------------------------
+rev 3887:  xela | 2002-11-24 18:31:02 -0500 (Sun, 24 Nov 2002) | 48 lines
+
+Fixed indentation.
+
+* src/rapidsvn_frame.cpp
+
+Encapsulated all svn pools into svn::Pool.
+Removed pool parameter from constructors for
+Controls, Actions and threads for they will
+have their own, global pools. Fixed the
+naming convention of member variables...
+
+* src/rapidsvn_frame.(cpp|h)
+  (RapidSvnFrame::RapidSvnFrame): changed construction
+    of m_listCtrl,  m_folder_browser.
+  (RapidSvnFrame::OnImport): -> ImportAction
+  (RapidSvnFrame::OnCheckout): -> CheckoutAction
+  (RapidSvnFrame::OnFileCommand): -> UpdateAction, CommitAction
+  (RapidSvnFrame::ShowLog): -> LogAction
+  (RapidSvnFrame::Properties): -> PropertyAction
+  (RapidSvnFrame::AddEntries): -> AddAction
+  (RapidSvnFrame::MakeRevert): -> RevertAction
+  (RapidSvnFrame::MakeResolve): -> ResolveAction
+  (RapidSvnFrame::DelEntries): -> DeleteAction
+  (RapidSvnFrame::MakeCopy): -> CopyAction
+  (RapidSvnFrame::Mkdir): -> MkdirAction
+  (RapidSvnFrame::Merge): -> MergeAction
+* src/delete_action.(cpp|h)
+* src/copy_action.(cpp|h)
+* src/revert_action.(cpp|h)
+* src/import_action.(cpp|h)
+* src/folder_browser.(cpp|h)
+* src/file_action.(cpp|h)
+* src/add_action.(cpp|h)
+* src/merge_action.(cpp|h)
+* src/delete_action.(cpp|h)
+* src/checkout_action.(cpp|h)
+* src/action_thread.(cpp|h)
+* src/mkdir_action.(cpp|h)  
+* src/log_action.(cpp|h)
+* src/folder_browser.(cpp|h)
+* src/update_action.(cpp|h)
+* src/commit_action.(cpp|h)
+* src/resolve_action.(cpp|h)
+* src/property_action.(cpp|h)
+* src/revert_action.(cpp|h)
+
+
+  
+
+------------------------------------------------------------------------
+rev 3886:  xela | 2002-11-24 17:58:39 -0500 (Sun, 24 Nov 2002) | 14 lines
+
+Renamed class member variables to match naming convention.
+
+* src/svncpp/exception.h, src/svncpp/exception.cpp
+  (Exception): m_message
+  (ClientException): m_error
+
+Changed parameter to const.
+
+* src/svncpp/exception.h, src/svncpp/exception.cpp
+  (Exception::Exception): message
+  (ClientException::ClientException): message
+
+
+
+------------------------------------------------------------------------
+rev 3885:  xela | 2002-11-24 17:54:23 -0500 (Sun, 24 Nov 2002) | 6 lines
+
+Refactored Pool for better usability in 
+svncpp and rapidsvn.
+
+* src/svncpp/pool.h, src/svncpp/poll.cpp
+
+
+------------------------------------------------------------------------
+rev 3884:  xela | 2002-11-24 17:52:13 -0500 (Sun, 24 Nov 2002) | 9 lines
+
+Corrected the type of "revision".
+
+* src/svncpp/status.h:
+  (m_revision, revision): changed to "svn_revnum_t"
+
+* src/tests/svncpp/svncpp.cpp:
+  (SvnCppTestCase::test*): changed "unsigned long"
+    to "svn_revnum_t"
+
+------------------------------------------------------------------------
+rev 3883:  xela | 2002-11-24 17:47:43 -0500 (Sun, 24 Nov 2002) | 4 lines
+
+Added stuff to include the unit tests in the configuration.
+Use "--with-cppunit-config" switch.
+
+
+------------------------------------------------------------------------
+rev 3880:  xela | 2002-11-24 12:08:39 -0500 (Sun, 24 Nov 2002) | 4 lines
+
+Add some words about variable naming and mime-type setting.
+
+* HACKING.txt
+
+------------------------------------------------------------------------
+rev 3879:  xela | 2002-11-24 12:00:11 -0500 (Sun, 24 Nov 2002) | 48 lines
+
+Add prefix "m_" to class member variables
+Renamed member variable "pool" to "m_pool" and "aux_pool"
+to "m_aux_pool".
+
+* src/rapidsvn_frame.cpp, src/rapidsvn_frame.h:
+  (RapidSvnFrame::*): renamed "pool" and "aux_pool"
+* src/log_dlg.h, src/log_dlg.cpp:
+  (LogList::*, LogDlg::*): renamed "_log", 
+    "logSizer", "logMsg"
+
+Resolved compiler warnings and added initialisation and
+checking stuff.
+
+* src/rapidsvn_frame.cpp:
+  (RapidSvnFrame::OnFileCommand): initialize action and
+    perform only with valid action.
+
+* src/svncpp/log.h:
+  (messageReceiver): removed prototype.
+  (Log::revision): changed return type to "long"
+* src/svncpp/log.cpp:
+  (messageReceiver): added prototype.
+  (Log::loadPath): removed unused variable "targets".
+  (Log::revision): changed return type to "long"
+* src/svncpp/property.cpp:
+  (Property::loadPath): removed unused variables
+    "error" and "index".  
+* src/svncpp/modify.cpp:
+  (Modify::comit): removed unused variable "revnum".
+
+Add new image that will represent remote repositories.
+
+* src/folder_browser.cpp
+  (FOLDER_IMAGE_EARTH): added
+  (FolderBrowser::FolderBrowser): add image to imagelist
+
+Bugfix for memory hole in folder_browser. ItemData
+is explicitely deleted.
+
+* src/folder_browser.h
+  (FolderBrowser::Delete): added.
+* src/folder_browser.cpp
+  (FolderBrowser::RemoveProject, 
+  FolderBrowser::OnCollapseItem): call local Delete
+  instead of TreeCtrl method
+  (FolderBrowser::Delete): added.
+
+
+------------------------------------------------------------------------
+rev 3878:  xela | 2002-11-24 11:39:18 -0500 (Sun, 24 Nov 2002) | 5 lines
+
+Changed the internal name of the XPM
+
+* src/res/bitmaps/earth.xpm
+  (magick): changed to earth_xpm
+
+------------------------------------------------------------------------
+rev 3877:  xela | 2002-11-24 11:37:02 -0500 (Sun, 24 Nov 2002) | 5 lines
+
+Fixed code after svn_wc API change.
+
+* src/svn_notify.cpp:
+  (SvnNotify::onNotify)
+
+------------------------------------------------------------------------
+rev 3876:  xela | 2002-11-24 10:24:29 -0500 (Sun, 24 Nov 2002) | 2 lines
+
+Added XPM for remote repositories.
+
+------------------------------------------------------------------------
+rev 3875:  xela | 2002-11-24 09:56:19 -0500 (Sun, 24 Nov 2002) | 3 lines
+
+Replaced the dark-gray background color with 
+transparency.
+
+------------------------------------------------------------------------
+rev 3863:  xela | 2002-11-22 17:56:02 -0500 (Fri, 22 Nov 2002) | 10 lines
+
+Some tweaking of the code to make compiler warnings
+go away...
+
+* src/folder_browser.h, src/folder_browser.cpp
+  (MAXLENGTH_PROJECT): change to unsigned int
+
+* src/filelist_ctrl.cpp
+  (FileListCtrl::CompareItems): initialize values
+
+
+------------------------------------------------------------------------
+rev 3862:  xela | 2002-11-22 17:34:35 -0500 (Fri, 22 Nov 2002) | 5 lines
+
+Display a "." in the filelist instead of the name
+of the parent folder (confusing).
+
+* src/filelist_ctrl.cpp (FileListCtrl::UpdateFileList)
+
+------------------------------------------------------------------------
+rev 3861:  xela | 2002-11-22 17:13:21 -0500 (Fri, 22 Nov 2002) | 27 lines
+
+Switched over from ICO to XPM bitmaps. 
+
+* src/rapidsvn_frame.cpp, src/filelist_ctrl.cpp
+  (includes): removed "icons.h" and "bitmaps.h" but
+    added all the needed XPM files.
+* src/bitmaps.h, src/icons.h: delete (obsolete)
+* src/rapidsvn.rc: removed all ICON resources
+  but "logo" (was "aalogo").
+* src/res/bitmaps/*.ico: removed (obsolete)
+
+Removed the menu entry for the Preferences, since
+right now there is no information in it.
+
+* src/rapidsvn_frame.cpp
+  (RapidSvnFrame::InitializeMenu)
+
+Turned on warnings "-Wall" and started removing the warnings
+
+* src/Makefile.in:
+  (CXXFLAGS): added "-Wall"
+
+* src/file_action.h:
+  (FileAction::~FileAction, 
+   FileActionThreadHelp::~FileActionThreadHelper):
+    made destructor virtual
+
+
+------------------------------------------------------------------------
+rev 3860:  xela | 2002-11-22 16:14:00 -0500 (Fri, 22 Nov 2002) | 10 lines
+
+Long project names in the workbench are now
+truncated.
+
+* src/folder_browser.cpp, src/folder_browser.h
+  (FolderBrowser::MAXLENGTH_PROJECT): added
+
+* src/folder_browser.cpp
+  (FolderBrowser::OnExpandItem): truncate long
+  project names.
+
+------------------------------------------------------------------------
+rev 3859:  xela | 2002-11-22 15:35:10 -0500 (Fri, 22 Nov 2002) | 4 lines
+
+Fixed indentation.
+
+* src/folder_browser.cpp
+
+------------------------------------------------------------------------
+rev 3858:  xela | 2002-11-22 15:23:08 -0500 (Fri, 22 Nov 2002) | 5 lines
+
+Fixed the closed folder bitmap.
+
+* src/folder_browser.cpp
+  (includes, FolderBrowser::FolderBrowser)
+
+------------------------------------------------------------------------
+rev 3856:  xela | 2002-11-22 14:22:05 -0500 (Fri, 22 Nov 2002) | 2 lines
+
+And here comes the new bitmap settings.
+
+------------------------------------------------------------------------
+rev 3854:  xela | 2002-11-22 14:17:29 -0500 (Fri, 22 Nov 2002) | 3 lines
+
+Delete the old XPM icons cause they are ugly. They will
+be replaced by the ones that are in alt-bitmaps now
+
+------------------------------------------------------------------------
+rev 3853:  xela | 2002-11-22 13:04:43 -0500 (Fri, 22 Nov 2002) | 4 lines
+
+* src/Makefile.in
+  (OBJECTS): added file_action.o that was introduced
+  with rev. 3838
+
+------------------------------------------------------------------------
+rev 3852:  xela | 2002-11-22 13:00:45 -0500 (Fri, 22 Nov 2002) | 4 lines
+
+* src/svncpp/log.cpp
+  (Log::formatDate): adapted to the api changes in
+  svn_time.h from rev. 3843.
+
+------------------------------------------------------------------------
+rev 3838:  bmatzelle | 2002-11-20 00:52:08 -0500 (Wed, 20 Nov 2002) | 68 lines
+
+
+* rapidsvn.dsp
+  Added file_action.cpp/.h files.
+
+* src/svncpp/client.cpp (internalPath):
+  Updated svn_path_internal_style to match the new API changes.
+
+* src/svn_file_info.cpp (svn_get_file_info):
+  Renamed svn_path_split_nts to svn_path_split.
+
+* src/trace_update.cpp (close_file):
+  Renamed svn_path_remove_component_nts to svn_path_dirname.
+
+* src/svncpp/modify.cpp (svn_cl__get_log_message):
+* src/svncpp/modify.h
+  Updated method to include new tmp_file parameter.
+
+* src/rapidsvn_frame.cpp
+* src/rapidsvn_frame.h
+  (EVT_MENU event table): Moved update and commit to use generic file
+  command handler (OnFileCommand).
+  (RapidSvnFrame): Add wxCLIP_CHILDREN to both splitter's flags to
+  reduce flicker.
+  (InitializeMenu): Added new menu items for copying, moving and renaming
+  (OnCommit, OnUpdate, MakeUpdate, MakeCommit): Removed these functions,
+  moved to OnFileCommand.
+  (OnCopyTo, OnMoveTo, OnRenameHere, OnCopyHere): Added these functions,
+  empty for now.
+  (OnToolLeftClick): Moved update and commit actions to OnFileCommand.
+  (GetActionTargets): Moved the code to determine file targets to this
+  function so it won't be copied everywhere.
+  (OnFileCommand): Moved commit and update to generic file handler.
+  (OnFolderBrowserSelChanged): Added stub for code to fix flicker when
+  switching tree nodes (not implemented yet).
+  (InfoPanel): Changed constructor to add wxCLIP_CHILDREN to reduce
+  flicker.
+
+* src/folder_browser.cpp
+* src/folder_browser.h
+  (FolderBrowser): Changed constructor to add wxCLIP_CHILDREN to reduce
+  flicker.
+  (OnExpandItem): Add tests for subdirectories in children to ensure
+  that the expand boxes are correctly set.
+  (hasSubdirectories): Added function to test for subdirectories for a
+  particular directory.
+
+* src/file_action.cpp
+* src/file_action.h
+  Added these files as a copy of action_thread.cpp, action_thread.h.
+
+* src/action_thread.cpp
+  (ActionThread, ~ActionThread): Removed the code to set the cursor, as
+  this has been move to file_action now.
+
+* src/update_action.cpp
+* src/update_action.h
+  (Entry, Perform): Refactored these to become PerformUI and Perform to
+  work as file_actions.
+
+* src/commit_action.cpp
+* src/commit_action.h
+  (Entry, Perform): Refactored these to become PerformUI and Perform to
+  work as file_actions.
+
+* src/file_list_ctrl.cpp
+  (buildMenu): Added menu items to match the items added to the Modify
+  menu.
+
+------------------------------------------------------------------------
+rev 3777:  xela | 2002-11-13 14:50:21 -0500 (Wed, 13 Nov 2002) | 4 lines
+
+Changed the license. The RapidSvn Group
+(gave ownership to Apache Group by mistake).
+
+
+------------------------------------------------------------------------
+rev 3776:  xela | 2002-11-13 14:36:28 -0500 (Wed, 13 Nov 2002) | 9 lines
+
+Patch contributed by Brandon Ehle:
+Fixes some compile errors with rapidsvn and latest subversion.
+
+* src/svncpp/client.cpp
+  (Client::status, Client::singleStatus): added extra NULL
+  parameters to the svn_client_status call to match the
+  changed subversion api.
+
+
+------------------------------------------------------------------------
+rev 3744:  xela | 2002-11-11 19:09:24 -0500 (Mon, 11 Nov 2002) | 4 lines
+
+Added script to added load statement for the
+emacs script to files.
+
+
+------------------------------------------------------------------------
+rev 3743:  xela | 2002-11-11 19:08:33 -0500 (Mon, 11 Nov 2002) | 5 lines
+
+Added /* and */ for the old license text. Otherwise this
+will create multiple nested comments.
+
+* tools/check-license.py
+
+------------------------------------------------------------------------
+rev 3742:  xela | 2002-11-11 19:06:24 -0500 (Mon, 11 Nov 2002) | 4 lines
+
+Added load statement for rapidsvn-dev.el to all
+cpp and h files.
+
+
+------------------------------------------------------------------------
+rev 3740:  xela | 2002-11-11 18:54:58 -0500 (Mon, 11 Nov 2002) | 3 lines
+
+Added license information to all cpp and h files.
+
+
+------------------------------------------------------------------------
+rev 3739:  xela | 2002-11-11 18:21:24 -0500 (Mon, 11 Nov 2002) | 4 lines
+
+Changed svn:executable property from "yes" to "on"
+
+* tools/beautify.sh
+
+------------------------------------------------------------------------
+rev 3738:  xela | 2002-11-11 18:20:00 -0500 (Mon, 11 Nov 2002) | 2 lines
+
+Added tool to check license (original from subversion)
+
+------------------------------------------------------------------------
+rev 3731:  xela | 2002-11-11 16:05:42 -0500 (Mon, 11 Nov 2002) | 4 lines
+
+Included the Emacs script for coding style.
+
+* src/folder_browser.cpp
+
+------------------------------------------------------------------------
+rev 3730:  xela | 2002-11-11 16:04:06 -0500 (Mon, 11 Nov 2002) | 7 lines
+
+Moved the Emacs script from tools to the main
+project dir. Changed the coding style to bsd.
+
+* rapidsvn-dev.el
+
+
+
+------------------------------------------------------------------------
+rev 3729:  xela | 2002-11-11 15:04:52 -0500 (Mon, 11 Nov 2002) | 5 lines
+
+Took the original svn emacs script and adapted it
+for rapidsvn. Now this means only I everything but
+the code that is responsible for the major mode
+
+
+------------------------------------------------------------------------
+rev 3674:  jmears | 2002-11-06 13:00:40 -0500 (Wed, 06 Nov 2002) | 3 lines
+
+* folder_browser.cpp
+  Added includes for the update and commit icons.
+
+------------------------------------------------------------------------
+rev 3671:  bmatzelle | 2002-11-06 09:29:28 -0500 (Wed, 06 Nov 2002) | 20 lines
+
+
+* src/action_thread.cpp
+  (ActionThread): Sets cursor to show that an operation is being performed.
+  (~ActionThread): Sets cursor back to normal once operation is complete.
+
+* src/folder_browser.cpp (OnItemRightClk, ShowMenu, buildMenu)
+* src/folder_browser.h
+  Added right click context menu for updating and commiting. 
+
+* src/rapidsvn_frame.cpp (MakeUpdate)
+  Added an extra check to see if the active window is not the list control.
+
+* src/svncpp/modify.cpp (merge)
+  Updated to the new API code.
+
+* src/trace_commit.cpp (close_directory, apply_textdelta, close_edit)
+* src/trace_update.cpp
+  Added apr_pool_t to function parameters.
+
+
+------------------------------------------------------------------------
+rev 3582:  bmatzelle | 2002-10-30 16:48:18 -0500 (Wed, 30 Oct 2002) | 9 lines
+
+
+* src/log_dlg.cpp
+* src/log_dlg.h
+  OnGet: Gets the currently selected and valid list item for an update.
+  getRevision: Performs an update to retrieve a selected revision.
+
+* src/svncpp/log.h
+  Now svn::Log inherits svn::Client as public rather than private.
+
+------------------------------------------------------------------------
+rev 3530:  bmatzelle | 2002-10-28 13:04:58 -0500 (Mon, 28 Oct 2002) | 24 lines
+
+
+* rapidsvn.dsp
+  Added folder_item_data.cpp/.h.
+
+* src/folder_browser.cpp
+* src/folder_browser.h
+  Added wx/imaglist.h include to fix Windows build error.
+  Formatted file to RapidSVN standard.
+  Replaced tabs with spaces.
+
+* src/folder_item_data.cpp
+* src/folder_item_data.h
+  Added svn:eol-style native property.
+  Formatted file to RapidSVN standard.
+  Replaced tabs with spaces.
+
+* src/svncpp/pool.cpp
+* src/svncpp/pool.h
+  Added svn:eol-style native property.
+  Formatted file to RapidSVN standard.
+
+* src/svncpp/svncpp.dsp
+  Added pool.cpp/.h.
+
+------------------------------------------------------------------------
+rev 3519:  xela | 2002-10-27 18:07:09 -0500 (Sun, 27 Oct 2002) | 25 lines
+
+Rebuilt FolderBrowser class from ground up. 
+PatchedDirCtrl is not used anymore.
+
+* src/Makefile.in:
+  patched_dirctrlg.o removed
+  folder_item_data.o added
+
+* src/rapidsvn_frame.cpp: changed initialisation of
+  FolderBrowser and removal of projects
+
+* src/patched_dirctrlg.h:
+* src/patched_dirctrlg.cpp:
+  obsolete
+
+* src/folder_browser.h:
+* src:folder_browser.cpp:
+  Rebuilt.
+
+* src/folder_item_data.h:
+* src/folder_item_data.cpp:
+  New helper class FolderItemData for 
+  FolderBrower.
+
+
+
+------------------------------------------------------------------------
+rev 3517:  xela | 2002-10-27 17:31:48 -0500 (Sun, 27 Oct 2002) | 4 lines
+
+Added the open folder bitmap here as well. Fixed
+the computer bitmap mime type as well.
+
+
+------------------------------------------------------------------------
+rev 3515:  xela | 2002-10-27 17:29:24 -0500 (Sun, 27 Oct 2002) | 3 lines
+
+Added a new open folder image. Fixed mime type.
+
+
+------------------------------------------------------------------------
+rev 3513:  david | 2002-10-27 13:48:59 -0500 (Sun, 27 Oct 2002) | 4 lines
+
+ * packages/rpm/redhat-7.x/Makefile,
+   packages/rpm/redhat-8.x/Makefile: Fixed setting of RELEASE variable to track
+      changes in the svn status command output.
+
+------------------------------------------------------------------------
+rev 3512:  xela | 2002-10-27 10:28:08 -0500 (Sun, 27 Oct 2002) | 4 lines
+
+Prohibited copying a Pool object to prevent
+destruction of still-in-use pool 
+(as suggested by Chris Foote).
+
+------------------------------------------------------------------------
+rev 3511:  xela | 2002-10-27 09:36:08 -0500 (Sun, 27 Oct 2002) | 2 lines
+
+Copied the computer icon to the alternate bitmap set as well.
+
+------------------------------------------------------------------------
+rev 3510:  xela | 2002-10-27 09:35:25 -0500 (Sun, 27 Oct 2002) | 2 lines
+
+Added new computer icon.
+
+------------------------------------------------------------------------
+rev 3509:  xela | 2002-10-27 09:14:21 -0500 (Sun, 27 Oct 2002) | 6 lines
+
+Added an alternative set of icons. To check them out,
+just rename bitmaps to bitmaps~ and alt-bitmaps to
+bitmaps (use mv, not svn mv). If these icons are
+accepted they will replace the icons in "bitmaps".
+
+
+------------------------------------------------------------------------
+rev 3506:  xela | 2002-10-26 08:14:19 -0400 (Sat, 26 Oct 2002) | 4 lines
+
+Refactored the class Client. The fields "pool", "rev",
+"lastPath", "Err" got the prefix "m_".
+
+
+------------------------------------------------------------------------
+rev 3505:  xela | 2002-10-26 04:36:03 -0400 (Sat, 26 Oct 2002) | 3 lines
+
+Fixed indentation.
+
+
+------------------------------------------------------------------------
+rev 3504:  xela | 2002-10-26 04:31:24 -0400 (Sat, 26 Oct 2002) | 19 lines
+
+Encapsulated subversion pools in the new class Pool.
+
+* src/Makefile.in
+* src/svncpp/pool.h
+* src/svncpp/pool.cpp
+
+Debugged memory hole in Client::status and Client::singleStatus.
+The reason were allocations in the global pool instead of a
+local sub-pool. Resolved through introduction of the new Pool class.
+
+* src/svncpp/client.cpp (Client::status, Client::singleStatus)
+
+Removed the remark "This class is never directly used" from the
+Client class description, since it is directly used since the
+introduction of the Methode status and singleStatus.
+
+* src/svncpp/client.h
+
+
+------------------------------------------------------------------------
+rev 3478:  bmatzelle | 2002-10-24 09:25:43 -0400 (Thu, 24 Oct 2002) | 7 lines
+
+
+* src/Makefile.in
+  Added property_action.o and property_dlg.o references.
+
+* src/svncpp/modify.cpp
+  Removed the XML references as per the updated API.
+
+------------------------------------------------------------------------
+rev 3473:  bmatzelle | 2002-10-23 23:14:06 -0400 (Wed, 23 Oct 2002) | 26 lines
+
+
+* rapidsvn.dsp
+  Added property_action.cpp/.h and property_dlg.cpp/.h files.
+
+* src/preferences_dlg.cpp
+* src/preferences_dlg.h
+  Removed (non-svn) eol-style property.
+
+* src/property_action.cpp
+* src/property_action.h
+  New files that serve to create the property editor dialog.
+  Set svn:eol-style native property.
+
+* src/property_dlg.cpp
+* src/property_dlg.h
+  New files that serve to view and edit file properties
+  through an easy to use grid interface.
+  Set svn:eol-style native property.
+  (SaveData): Saves all exising properties.
+  (RemoveData): Deletes all properties removed from the grid.
+
+* src/rapidsvn_frame.cpp
+* src/rapidsvn_frame.h
+  (InitializeMenu): Added Query -> Properties to the menu.
+  (OnProperty, Properties): Creates the property action instance.
+
+------------------------------------------------------------------------
+rev 3462:  bmatzelle | 2002-10-23 13:06:12 -0400 (Wed, 23 Oct 2002) | 24 lines
+
+
+* src/svncpp/client.cpp
+* src/svncpp/client.h
+  (status): Switched path input to const char * so that users are not
+  forced to include <string> to use the class.
+  (singleStatus): New simpler method very similar to the previous method of
+  retrieving status for a single file rather than an entire directory.
+  Switched the documentation format back to the Doxygen standard.
+
+* src/svncpp/property.cpp
+* src/svncpp/property.h
+  (beforeFirst): Method for reseting the cursor.
+  (propertyValue): Returns the property value of a given key.
+  (loadPath): Now gathers the property value from propertyValue().
+
+* src/svncpp/status.cpp (init)
+  Now checks if the cmt_author is valid.  New files have no commit author
+  so this previously caused a crash.
+
+* src/tests/svncpp/svncpp.cpp
+* src/tests/svncpp/svncpp.h
+  Changed all methods that use svn::Status to use the new svn::Client 
+  singleStatus method instead.
+
+------------------------------------------------------------------------
+rev 3419:  xela | 2002-10-20 08:34:35 -0400 (Sun, 20 Oct 2002) | 7 lines
+
+Renamed mondrian.xpm to aalogo.xpm to reflect
+the changes in rapidsvn.rc. Renamed AaLogo in
+rapidsvn.rc to aalogo.
+
+Changed a includes referencing this icon.
+
+
+------------------------------------------------------------------------
+rev 3418:  xela | 2002-10-20 08:02:34 -0400 (Sun, 20 Oct 2002) | 5 lines
+
+Added a refresh menu entry.
+
+* src/rapidsvn_frame.h
+* src/rapidsvn_frame.cpp
+
+------------------------------------------------------------------------
+rev 3417:  xela | 2002-10-20 07:56:49 -0400 (Sun, 20 Oct 2002) | 9 lines
+
+Reformatted file. Major change on working copy
+access. Now we dont use file-per-file status
+query on files but on the whole directory.
+Adapted the code to the refactored classes
+Status and Client
+
+* src/filelist_ctrl.cpp
+
+
+------------------------------------------------------------------------
+rev 3416:  xela | 2002-10-20 07:46:54 -0400 (Sun, 20 Oct 2002) | 6 lines
+
+Removed obsolete function statusString
+
+* src/utils.h
+* src/utils.cpp
+
+
+------------------------------------------------------------------------
+rev 3415:  xela | 2002-10-20 07:21:29 -0400 (Sun, 20 Oct 2002) | 14 lines
+
+Refactored a lot of the Status and Client class.
+Formatted the code as well.
+
+* src/svncpp/client.h
+* src/svncpp/client.cpp (Client::status): 
+  new method to retrieve the status of a given
+  path. 
+  
+* src/svncpp/status.h
+* src/svncpp/status.cpp:
+  refactored all of this. No subversion access
+  from this class anymore. Holds only data.
+
+
+------------------------------------------------------------------------
+rev 3409:  david | 2002-10-19 17:42:25 -0400 (Sat, 19 Oct 2002) | 2 lines
+
+ * packages/rpm/redhat-8.x/rapidsvn.spec : Don't need apr.patch any more.
+
+------------------------------------------------------------------------
+rev 3408:  david | 2002-10-19 17:26:35 -0400 (Sat, 19 Oct 2002) | 2 lines
+
+ * packages/rpm/redhat-7.x/rapidsvn.spec : Take out unneeded definitions.
+
+------------------------------------------------------------------------
+rev 3407:  david | 2002-10-19 17:10:22 -0400 (Sat, 19 Oct 2002) | 2 lines
+
+ * packages/rpm/redhat-8.x : Added files to build under RedHat 8.X.
+
+------------------------------------------------------------------------
+rev 3406:  david | 2002-10-19 16:57:37 -0400 (Sat, 19 Oct 2002) | 11 lines
+
+ * packages/rpm/redhat-7.x : I can't build rapidsvn right now because 3403 broke
+      the build.  However, I think the following will work:
+
+ * packages/rpm/redhat-7.x/rapidsvn.spec : Require wxGTK-devel >= 2.3.3.  Added
+      --with-wx-config=/usr/bin/wxgtk-2.3-config as the new 2.3.3 changed to
+      that program.  Took out apr.patch.
+
+  * packages/rpm/redhat-7.x/Makefile : Changes to compile in the new redhat-7.x
+       directory.
+
+
+------------------------------------------------------------------------
+rev 3405:  david | 2002-10-19 16:31:04 -0400 (Sat, 19 Oct 2002) | 5 lines
+
+ * packages/rpm: Created separate directories for redhat-7.x and redhat-8.x and
+      moved all the rpm build files into the redhat-7.x.  Next step is to
+      make sure it builds from the redhat-7.x directory and then copy the files
+      to the redhat-8.x directory and make changes to build on redhat-8.x.
+
+------------------------------------------------------------------------
+rev 3404:  david | 2002-10-19 16:25:23 -0400 (Sat, 19 Oct 2002) | 4 lines
+
+ * packages/rpm/Makefile : Switched from "rpm" command to "rpmbuild" command as
+      RedHat 7.X has rpmbuild and RedHat 8.X can't build with "rpm" but only
+      "rpmbuild".
+
+------------------------------------------------------------------------
+rev 3403:  bmatzelle | 2002-10-19 16:03:03 -0400 (Sat, 19 Oct 2002) | 30 lines
+
+
+* src/filelist_ctrl.cpp
+* src/filelist_ctrl.h
+  (fileStatus): New method that determines what the overall status of a file.
+  (UpdateFileList): Uses the fileStatus method to determine the status icon.
+  (ShowMenu): Removed references to the Status context menu item.
+
+* src/rapidsvn.rc
+  Renamed the mondrian.ico resource to AaLogo so that Windows would use
+  it as the binary icon.  It grabs the first alphabetical icon by default.
+  Removed the status bitmap reference.
+
+* src/rapidsvn_frame.cpp
+* src/rapidsvn_frame.h
+  (RapidSvnFrame): Pointed frame icon at AaLogo.
+  (ShowStatus, OnStatus): Both are deprecated and thus removed.
+  (InitializeMenu): Removed all Status references. 
+
+* src/res/bitmaps/status.bmp
+* src/res/bitmaps/status.xpm
+  The status dialog functionality is now deprecated so these were removed.
+
+* src/svncpp/log.cpp (formatDate)
+  New method to format the output of a Subversion date into a 
+  nice human-readable one.
+
+* src/log_dlg.cpp (InitializeList)
+  Uses the formatDate() method to make the date human-readable.
+
+
+------------------------------------------------------------------------
+rev 3399:  bmatzelle | 2002-10-18 15:10:52 -0400 (Fri, 18 Oct 2002) | 29 lines
+
+
+* src/commit_action.cpp (Entry)
+  Prints out error messages on commit failure.
+
+* src/filelist_ctrl.cpp (buildMenu)
+* src/rapidsvn_frame.cpp (InitializeMenu)
+  Renamed menu items "Get latest" to "Update and "Check in" to "Commit".
+
+* src/svn_notify.cpp (SvnNotify)
+  Made suppress_final_line false so that it prints out the revision information
+  after an event such as an update.
+
+* src/svncpp/auth.h
+  (Auth::isAuthenticatied): Returns true if the user successfully authenticated
+  with the repository server.
+  (prompt): Callback routine for user authentication.
+  Added a private variable for authentication failure notification.
+
+* src/svncpp/auth.cpp
+  (prompt_user_baton): Baton for the callback authentication module.
+  (isAuthenticatied): Returns true if the user successfully authenticated.
+  (authenticate): It now sets the auth baton username, password, and
+  prompt_baton.  
+  (prompt): Callback routine for user authentication.  It doesn't do anything
+  but inform the class that the authentication failed.
+  
+* src/svncpp/log.cpp (loadPath): Removed the un-used baton variable.
+
+
+------------------------------------------------------------------------
+rev 3398:  bmatzelle | 2002-10-18 13:39:23 -0400 (Fri, 18 Oct 2002) | 5 lines
+
+
+* src/checkout_dlg.cpp
+  Changed "Select a destination folder..." to "URL".
+  Added New Folder button to destination checkout folder dialog.
+
+------------------------------------------------------------------------
+rev 3382:  bmatzelle | 2002-10-17 09:33:18 -0400 (Thu, 17 Oct 2002) | 6 lines
+
+
+* src/res/bitmaps/sort_down.ico
+* src/res/bitmaps/sort_up.ico
+  Made the icon background transparent for Windows.
+
+
+------------------------------------------------------------------------
+rev 3375:  jmears | 2002-10-16 15:33:21 -0400 (Wed, 16 Oct 2002) | 28 lines
+
+Added clickable headers for sorting columns.
+
+* sort_up.xpm
+* sort_up.ico
+* sort_down.xpm
+* sort_down.ico
+  New files for column header sorting arrows.
+
+* rapidsvn.rc
+* icons.h
+  Added refernces to the new icons.
+
+* rapidsvn_frame.cpp
+* rapidsvn_frame.h
+  (InitFileList): Moved code for intialising the file list into filelist_ctrl.cpp.
+
+* filelist_ctrl.h
+* filelist_ctrl.cpp
+  (FileListCtrl::FileListCtrl): Loads new icons. Added code moved from InitFileList.
+  Initialises column widths from wxConfig.
+  (FileListCtrl::~FileListCtrl): Writes column widths to wxConfig.
+  (FileListCtrl::wxListCompareFunction, FileListCtrl::CompareItems):
+  New functions to sort items based on any column.
+  (FileListCtrl::SetColumnImages): Adds appropriate icon to column header
+  based on the sort order.
+  
+
+
+------------------------------------------------------------------------
+rev 3373:  bmatzelle | 2002-10-15 22:14:47 -0400 (Tue, 15 Oct 2002) | 15 lines
+
+
+* src/filelist_ctrl.cpp
+* src/filelist_ctrl.h (DeleteAllItems, DeleteItem)
+  Made both methods return type void.
+
+* src/rapidsvn_frame.cpp
+  Formatted the About dialog.
+
+* src/version.h
+  Updated to the Alpha 1 release.
+
+* TODO.txt
+  Updated to reflect the additions to the issue tracker.
+
+
+------------------------------------------------------------------------
+rev 3368:  xela | 2002-10-14 15:29:50 -0400 (Mon, 14 Oct 2002) | 5 lines
+
+Document the actual wxWindows requirement (2.3.3).
+
+* README.txt
+
+
+------------------------------------------------------------------------
+rev 3367:  xela | 2002-10-14 14:57:46 -0400 (Mon, 14 Oct 2002) | 6 lines
+
+Changed the wxWindows version check. We need
+2.3.3 now.
+
+* configure.in
+
+
+------------------------------------------------------------------------
+rev 3366:  jmears | 2002-10-14 13:24:03 -0400 (Mon, 14 Oct 2002) | 22 lines
+
+* filelist_ctrl.h
+  (FileListCtrl): New member functions.
+
+* filelist_ctrl.cpp
+  (FileListCtrl::UpdateFileList): New creates a new status object
+  to store as item data with each list item. Sorts the list
+  items after adding them.
+
+  (wxListCompareFunction): Added, used for sorting columns.
+
+  (FileListCtrl::DeleteItem, FileListCtrl::DeleteAllItems):
+  New functions, delete the item data before deleting the items.
+
+* status.h
+  Added data member for whether this is a directory or not.
+  Added accessor functions for path file and dir flag.
+
+* status.cpp
+  (Status::getPath, Status::isDir): new functions.
+  (Status::loadPath): Additional parameter for dir flag.
+
+* utils.cpp
+------------------------------------------------------------------------
+rev 3359:  xela | 2002-10-13 12:36:41 -0400 (Sun, 13 Oct 2002) | 27 lines
+
+Refactoring class names. VSvnFrame renamed to
+RapidSvnFrame.
+
+* src/rapidsvn.h
+* src/rapidsvn.cpp
+
+Refactored class name. VSvnEx renamed to RapidSvnEx.
+
+* src/exceptions.h
+* src/exceptions.cpp
+
+Refactored class name. VsvnApp renamed to RapidSvnApp.
+
+* src/rapidsvn_app.h
+* src/rapidsvn_app.cpp
+
+Renamed rapidsvn.h to rapidsvn_frame.h and 
+rapidsvn.cpp to rapidsvn_frame.cpp.
+
+* configure.in (AC_INIT)
+* src/Makefile.in (OBJECTS)
+* src/rapidsvn.h: renamed to rapidsvn_frame.h
+* src/rapidsvn.cpp: renamed to frapidsvn_frame.cpp
+* src/rapidsvn_app.h (#include): changed include file
+* rapidsvn.dsp (SOURCE)
+
+
+------------------------------------------------------------------------
+rev 3355:  xela | 2002-10-13 08:14:43 -0400 (Sun, 13 Oct 2002) | 6 lines
+
+Fixed Issue 13: filelist not in sync on startup
+
+* src/rapidsvn.cpp (VSvnFrame::UpdateFileList):
+  hide filelist if non-path item in browser is selected.
+
+
+------------------------------------------------------------------------
+rev 3354:  xela | 2002-10-13 07:52:09 -0400 (Sun, 13 Oct 2002) | 20 lines
+
+Fixed Issue 15: ignore .svn directories.
+
+* folder_browser.cpp (FolderBrowser::AppendItem): 
+  ignore administrative directories
+
+* folder_browser.h (FolderBrowser::AppendItem): added
+
+* rapidsvn.cpp (VSvnFrame:AddProject): error message
+  when user tried to add .svn to the workbench.
+
+Replaced app name as string with constant APPLICATION_NAME.
+
+* rapidsvn.cpp (VsvnFrame::OnAbout)
+
+* rapidsvn_app.cpp (VsvnApp:OnInit)
+
+Some minor formatting issues:
+* rapidsvn.h
+
+
+------------------------------------------------------------------------
+rev 3348:  bmatzelle | 2002-10-10 23:06:10 -0400 (Thu, 10 Oct 2002) | 32 lines
+
+
+* src/rapidsvn.cpp (ShowLog)
+  Fixed a crash bug when no targets are selected.  Removed 
+  UnixPath() call.
+
+* src/svncpp/client.cpp
+* src/svncpp/client.h
+  Renamed targetPath to lastPath.
+  (getLastPath): made this a public method.
+
+* src/svncpp/log.cpp (loadPath)
+  Now this uses the lastPath protected variable and runs 
+  internalPath() on the string.
+
+* src/log_action.cpp
+* src/log_action.h
+* src/log_dlg.cpp
+* src/log_dlg.h
+  Added svn:eol-style native property on all of these files.
+
+* src/svncpp/modify.cpp
+  Now all methods automatically run internalPath() on all
+  incoming path strings.  
+
+* src/svncpp/property.cpp
+* src/svncpp/property.h
+  Replaced all instances of filePath with the lastPath.
+  internalPath() is run on the string.  
+
+* src/tests/svncpp/svncpp.cpp (TestCheckout)
+  Now this test prints more useful debugging information.
+
+------------------------------------------------------------------------
+rev 3339:  jmears | 2002-10-09 13:47:39 -0400 (Wed, 09 Oct 2002) | 8 lines
+
+* log_dlg.cpp
+  (LogDlg::InitializeData): Changed flags in calls to Add so that
+  the dialog can be resized usefully.
+
+  (LogList::LogList): Increased hard coded width of control.
+
+  (LogList::InitializeList): Increased hard coded width of
+  date/time column.
+------------------------------------------------------------------------
+rev 3336:  bmatzelle | 2002-10-08 21:20:48 -0400 (Tue, 08 Oct 2002) | 35 lines
+
+
+* rapidsvn.dsp
+  Added log_action.h/.cpp and log_dlg.h/.cpp
+
+* src/Makefile.in
+  Added log_action.h/.cpp and log_dlg.h/.cpp
+
+* src/rapidsvn.cpp (ShowLog)
+  Now creates a LogAction rather than a report dialog.
+
+* src/rapidsvn.h
+  Added LogAction member variable.
+  (getLogAction): returns the global LogAction variable.
+
+* src/rapidsvn.rc
+  Removed the deprecated .wxr files.
+
+* src/svncpp/client.cpp
+* src/svncpp/client.h
+  (getLastPath): returns the last used path for all client methods. 
+  (internalPat): method converting a path to a Subversion path.
+
+* src/svncpp/log.cpp
+* src/svncpp/log.h
+  (beforeFirst): new method for re-setting the iterator.
+
+* src/log_action.cpp
+* src/log_action.h
+  Handles creating the log dialog.
+
+* src/log_dlg.cpp
+* src/log_dlg.h
+  New log viewer dialog.  
+
+
+------------------------------------------------------------------------
+rev 3327:  jmears | 2002-10-08 05:17:57 -0400 (Tue, 08 Oct 2002) | 2 lines
+
+* Makefile.in
+  "clean" target now removes svncpp/*.o.
+------------------------------------------------------------------------
+rev 3310:  xela | 2002-10-06 11:18:16 -0400 (Sun, 06 Oct 2002) | 12 lines
+
+Added better version info about app and used libraries.
+
+* rapidsvn.cpp (VSvnFrame::OnAbout)
+* version.h: new
+
+Solved problems with duplicate directories in workbench
+
+* unique_array_string: new
+* folder_browser.(h|cpp), rapidsvn.cpp: replaced wxArrayString with UniqueArrayString
+
+
+
+------------------------------------------------------------------------
+rev 3305:  xela | 2002-10-05 12:36:49 -0400 (Sat, 05 Oct 2002) | 2 lines
+
+YASS: yet another screenshot.
+
+------------------------------------------------------------------------
+rev 3304:  bmatzelle | 2002-10-05 12:36:04 -0400 (Sat, 05 Oct 2002) | 7 lines
+
+
+* patched_dirctrlg.cpp (AppendItem)
+  Removed the initializers so that win32 version will compile.
+
+* rapidsvn.cpp (VSvnFrame::VSvnFrame)
+  Initialized browser and list controls to NULL to fix crash.
+
+------------------------------------------------------------------------
+rev 3303:  xela | 2002-10-05 11:41:44 -0400 (Sat, 05 Oct 2002) | 6 lines
+
+Fixed indentation. Fixed MSW bug. (UpdateFileList
+is called prior to InitFileList).
+
+* VSvnFrame::VSvnFrame: changed calling order
+* VSvnFrame::UpdateFileList: added pointer check
+
+------------------------------------------------------------------------
+rev 3302:  xela | 2002-10-05 11:03:30 -0400 (Sat, 05 Oct 2002) | 5 lines
+
+Fixed typo. wxIsDriveAvailable was renamed into
+isDriveAvailable bit the old name was still
+referenced.
+
+
+------------------------------------------------------------------------
+rev 3301:  xela | 2002-10-05 08:36:44 -0400 (Sat, 05 Oct 2002) | 4 lines
+
+Removed coupling from FolderBrowser to the main app.
+We dont want such bad design, do we?
+
+
+------------------------------------------------------------------------
+rev 3300:  xela | 2002-10-05 06:12:32 -0400 (Sat, 05 Oct 2002) | 3 lines
+
+A lot rework to replace the browse location support completely with
+workbench support.
+
+------------------------------------------------------------------------
+rev 3299:  xela | 2002-10-05 06:10:18 -0400 (Sat, 05 Oct 2002) | 16 lines
+
+Removed obsolete methods.
+
+* FolderBrowser::SetWorkbenchItems
+
+Added new functions for workbench support.
+
+* FolderBrowser::Refresh
+* FolderBrowser::RemoveProject
+* FolderBrowser::AddProject
+
+Modified function for better support of Workbench
+
+* FolderBrowser::GetWorkbenchItems: get a non static ref
+* FolderBrowser::ExpandDir: sort items
+
+
+------------------------------------------------------------------------
+rev 3298:  xela | 2002-10-05 06:01:52 -0400 (Sat, 05 Oct 2002) | 5 lines
+
+Removed wxINVALID_TREE_ITEM_ID. Its already implied with
+wxTreeItemId and we dont want to get more and more
+incompatible with the original dirctrlg code.
+
+
+------------------------------------------------------------------------
+rev 3297:  xela | 2002-10-05 02:24:25 -0400 (Sat, 05 Oct 2002) | 3 lines
+
+Added comment for Electric Fence.
+
+
+------------------------------------------------------------------------
+rev 3296:  xela | 2002-10-05 02:22:51 -0400 (Sat, 05 Oct 2002) | 3 lines
+
+Remove files after beautifying.
+
+
+------------------------------------------------------------------------
+rev 3295:  xela | 2002-10-05 02:21:14 -0400 (Sat, 05 Oct 2002) | 5 lines
+
+Fixed indentation. 
+
+* wxINVALID_TREE_ITEM_ID: new member
+* AppendItem: wrapper for the wxTreeCtrl method
+
+------------------------------------------------------------------------
+rev 3294:  xela | 2002-10-05 01:57:27 -0400 (Sat, 05 Oct 2002) | 3 lines
+
+Fixed a typo, added some comment on Linux running and debugging.
+Added John Mears to the list of contributors.
+
+------------------------------------------------------------------------
+rev 3292:  xela | 2002-10-05 00:59:21 -0400 (Sat, 05 Oct 2002) | 4 lines
+
+Added patched_dirctrlg.cpp to the Visual C++ Project while.
+But I am on linux, so somebody else has to give it a try.
+
+
+------------------------------------------------------------------------
+rev 3290:  xela | 2002-10-04 17:33:46 -0400 (Fri, 04 Oct 2002) | 2 lines
+
+Some notes on workbench support.
+
+------------------------------------------------------------------------
+rev 3289:  xela | 2002-10-04 17:29:09 -0400 (Fri, 04 Oct 2002) | 4 lines
+
+Added workbench support. See the file TODO.txt for 
+missing features.
+
+
+------------------------------------------------------------------------
+rev 3288:  xela | 2002-10-04 17:25:32 -0400 (Fri, 04 Oct 2002) | 15 lines
+
+Added new class PatchedGenericDirCtrl as a 
+workaround for needed features (workbench) support.
+
+The original dirctrlg.cpp code (wxWindows 2.3.3) has
+static method declarations which makes it pretty
+impossible to change behaviour by deriving classes.
+
+Hopefully this will be fixed in wxWindows 2.4. Until
+then we are using the duplicated code.
+
+* Makefile.in: added object
+* patched_dirctrlg.h
+* patched_dirctrlg.cpp
+
+
+------------------------------------------------------------------------
+rev 3286:  xela | 2002-10-04 17:18:46 -0400 (Fri, 04 Oct 2002) | 3 lines
+
+Well. The "tr" call isnt needed anymore because of the "-nut" bugfix.
+
+
+------------------------------------------------------------------------
+rev 3285:  xela | 2002-10-04 17:15:53 -0400 (Fri, 04 Oct 2002) | 3 lines
+
+Bugfix. Put the "-nut" arg first place, otherwise it seems to be ignored.
+
+
+------------------------------------------------------------------------
+rev 3284:  jmears | 2002-10-04 16:14:57 -0400 (Fri, 04 Oct 2002) | 21 lines
+
+* merge_dlg.h
+  Corrected name of sentries.
+
+* import_action.h
+  (ImportAction): Now uses data structure instead of individual
+  data members.
+
+* import_action.cpp
+  (ImportAction::Perform): Simplified creation of dialog.
+  (ImportAction::Entry): Access data from data structure instead of
+  individual variables.
+
+* import_dlg.h
+* import_dlg.cpp
+  (ImportDlg): Reworked this dialog to use sizers and wxValidators
+  for data transfer, defined data structure for dialog data.
+
+* import.h
+* import.wxr
+  Deleted, no longer required.
+
+------------------------------------------------------------------------
+rev 3280:  xela | 2002-10-04 09:19:07 -0400 (Fri, 04 Oct 2002) | 6 lines
+
+Error message for wxWindows more detailed (2.3.2 or 2.3.3 needed).
+
+Remove -fno-exceptions from CXXFLAGS (this is wx-config output) using sed.
+
+* configure.in
+
+------------------------------------------------------------------------
+rev 3279:  xela | 2002-10-04 09:10:59 -0400 (Fri, 04 Oct 2002) | 4 lines
+
+Fixed typo.
+
+* merge_action.cpp: MergeAction::Entry
+
+------------------------------------------------------------------------
+rev 3270:  jmears | 2002-10-03 11:46:21 -0400 (Thu, 03 Oct 2002) | 5 lines
+
+* merge_dlg.h
+* merge_dlg.c
+  (MergeDlg, MergeDlg::OnOK, MergeDlg::InitializeData):
+  Added support for a destination field and a browse
+  button, removed second revision for path1.
+------------------------------------------------------------------------
+rev 3266:  jmears | 2002-10-02 16:37:38 -0400 (Wed, 02 Oct 2002) | 28 lines
+
+* checkout_dlg.cpp
+  (CheckoutDlg::InitializeData): Added missing transfer variable for
+  the recursive check box.
+  
+* checkout_action.cpp
+  (CheckoutAction::CheckoutAction): Removed redundant assignment.
+  
+* merge_action.h
+  (MergeAction): Replaced individual data members with a structure
+  defined by MergeDlg.
+
+* merge_action.cpp
+  (MergeAction::Perform): Simplified dialog display.
+  (MergeAction::Entry): Now accesses dialog data from the data structure.
+
+* merge_dlg.h
+  (MergeDlg): Defined a data structure for the dialog data, remove
+  data members for controls.
+
+* merge_dlg.cpp
+  (MergeDlg): Reworked this dialog to use sizer controls for better display
+  under linux, uses wxValidator mechanism for data transfer, accesses
+  dialog data in a structure.
+
+* merge.h
+* merge.wxr
+  Deleted these files, no longer required.
+
+------------------------------------------------------------------------
+rev 3257:  jmears | 2002-10-01 10:34:33 -0400 (Tue, 01 Oct 2002) | 9 lines
+
+* checkout_dlg.h
+  (CheckoutDlg): Removed unnecessary control data members.
+
+* checkout_dlg.cpp
+  (CheckoutDlg::OnOK): Removed data transfer from
+  dialog controls. Added TransferDataFromWindow.
+  (CheckoutDlg::OnBrowse): Added data transfer to and from
+  dialog controls.
+  (CheckoutDlg::InitializeData): Added missing data validators.
+------------------------------------------------------------------------
+rev 3252:  jmears | 2002-09-28 16:55:51 -0400 (Sat, 28 Sep 2002) | 21 lines
+
+* mkdir_action.h
+  (MkdirAction): Replaced data members with a data structure
+  defined in MkdirDlg.
+
+* mkdir_action.cpp
+  (MkdirAction::Perform): Simplified calls to dialog.
+  (MkdirAction::Entry): Now uses data structure.
+
+* mkdir_dlg.h
+  (MkdirDlg): Defines a nested data structure for the data
+  edited by this dialog.
+
+* mkdir_dlg.cpp
+  (MkdirDlg): Reworked this dialog to uses sizers so that it displays
+  well on all platforms, users sxValidator for data transfer, uses
+  a data structure for all data edited by this dialog.
+
+* mkdir.wxr
+* mkdir.h
+  Deleted, no longer required.
+
+------------------------------------------------------------------------
+rev 3251:  jmears | 2002-09-28 14:27:29 -0400 (Sat, 28 Sep 2002) | 12 lines
+
+* trace_update.cpp
+  (close_directory, close_file): changed svn_wc_entry_t *
+  to const svn_wc_entry_t *
+
+* svn_file_info.cpp
+  (svn_get_file_info): changed svn_wc_entry_t *
+  to const svn_wc_entry_t *
+
+* merge_action.cpp
+  (MergeAction::Perform): introduced intermediate variable
+  so that gcc can compile it.
+
+------------------------------------------------------------------------
+rev 3247:  bmatzelle | 2002-09-27 14:02:06 -0400 (Fri, 27 Sep 2002) | 49 lines
+
+
+* rapidsvn.dsp
+  Removed references to notify.cpp/.h and auth_baton.cpp/.h. 
+
+* src/notify.cpp
+* src/notify.h
+  These files are now deprecated because of svn::Notify and 
+  svn_notify so they have been removed.
+
+* src/auth_baton.cpp
+* src/auth_baton.h
+  These files are now deprecated because of svn::Auth so they have 
+  been removed.
+  
+* src/Makefile.in
+  Removed references to notify.cpp/.h and auth_baton.cpp/.h.
+
+* src/checkout_action.cpp (Entry)
+  Implemented the svn::Modify checkout() method. 
+
+* src/checkout_dlg.cpp
+* src/checkout_dlg.h
+  (OnOK, OnBrowse): Now successfully collects all user data.
+  (InitializeData): Made all text controls global for later collection.
+
+* src/merge_action.cpp (Perform): 
+* src/merge_action.h
+  Renamed rev_start to rev1 and rev_second to rev2.  This 
+  will complement the new wxSizer dialog later on.
+  
+* src/mkdir_action.cpp
+  (Perform): Trimmed the target directory.
+  (Entry): Implemented the svn::Modify mkdir() method.
+
+* src/svncpp/client.cpp
+* src/svncpp/client.h
+  Updated getRevision() and rev to the new Subversion API.
+
+* src/svncpp/log.cpp (loadPath): 
+  Updated to the new Subversion API.
+
+* src/tests/svncpp/svncpp.cpp (testCheckout):
+  Changed revision to 3 because of test updats.
+
+* src/utils.cpp (revision_from_number):
+* src/utils.h
+  Removed this deprecated method.
+
+
+------------------------------------------------------------------------
+rev 3246:  jmears | 2002-09-27 12:04:51 -0400 (Fri, 27 Sep 2002) | 3 lines
+
+* rapidsvn.cpp
+  (VSvnFrame::ShowLog): Replaced ltoa with sprintf. Sadly there is no ltoa on linux.
+
+------------------------------------------------------------------------
+rev 3245:  jmears | 2002-09-27 12:03:21 -0400 (Fri, 27 Sep 2002) | 3 lines
+
+* Makefile.in
+  Removed svn_file_log.o
+  Added svncpp/log.o
+------------------------------------------------------------------------
+rev 3234:  bmatzelle | 2002-09-26 14:17:15 -0400 (Thu, 26 Sep 2002) | 33 lines
+
+
+* rapidsvn.cpp (ShowLog):
+  Replaced all svn_file_log code with svn::Log.
+
+* rapidsvn.dsp
+  Removed svn_file_log.cpp and svn_file_log.h.
+
+* src/svn_file_log.cpp
+* src/svn_file_log.h
+  Both files are removed because they have been replaced 
+  by svn::Log.
+
+* src/svncpp/log.h (loadPath):
+  Added some more documentation for effective use of the class.
+
+* src/svncpp/property.cpp
+* src/svncpp/property.h
+  All of these changes were to make svn::Property behave more 
+  like svn::Log.  
+  (loadPath): No longer throws an exception.  Now uses vectors 
+  to store and retrieve data.
+  (isVersioned, first, last, next, previous, reset): All of 
+  these methods were added to mirror svn::Log.
+  (name): New method returns the current property name.
+  (value): New method returns the current property value.
+
+* src/tests/svncpp/svncpp.cpp
+  Changed tests to reflect the altered API.
+
+* src/rapidsvn.rc
+  Removed delete.wxr reference.
+
+
+------------------------------------------------------------------------
+rev 3231:  jmears | 2002-09-26 12:08:53 -0400 (Thu, 26 Sep 2002) | 47 lines
+
+* delete_action.cpp
+  (DeleteAction::Perform): Simplified display of the dialog, use
+  of data structure instead of individual variables.
+  (DeleteAction::Entry): Use
+  of data structure instead of individual variables.
+
+* delete_action.h
+  (DeleteAction): Replaced data members with a single data structure
+  from class DeleteDlg.
+
+* delete_dlg.h
+* delete_dlg.cpp
+  (DeleteDlg): Completely reworked this dialog to use sizers instead of resource,
+  data structure instead of individual variables, wxValidators for
+  transferring data.
+
+* delete.wxr
+* delete.h
+  Deleted, no longer required.
+
+* update_dlg.cpp
+  (UpdateDlg::InitializeData): Minor changes to layout for consistency
+  with other dialogs.
+
+* commit_dlg.cpp
+  (CommitDlg::InitializeData): Minor changes to layout for consistency
+  with other dialogs.
+
+* checkout_dlg.h
+* checkout_dlg.cpp
+  (CheckoutDlg): Reorganised this dialog to use a data structure instead of individual
+  variables, wxValidators for transferring data, like the
+  other dialogs.
+
+* checkout_action.h
+  (CheckoutAction): Replaced data members with a single data structure
+  from class CheckoutDlg.
+
+* checkout_action.cpp
+  (CheckoutAction::Perform): Simplified display of the dialog, use
+  of data structure instead of individual variables.
+  (CheckoutAction::Entry): Use
+  of data structure instead of individual variables.
+
+* checkout.h
+  Deleted, no longer required.
+
+------------------------------------------------------------------------
+rev 3230:  bmatzelle | 2002-09-26 09:33:41 -0400 (Thu, 26 Sep 2002) | 11 lines
+
+
+* src/rapidsvn.rc
+  Removed update and commit dialogs as resources.
+
+* src/svn_file_info.cpp (svn_get_file_info):
+  Added svn_wc_adm_access_t for the updated C API.
+
+* src/trace_update.cpp (close_directory, close_file):
+  Added svn_wc_adm_access_t for the updated C API.
+
+
+------------------------------------------------------------------------
+rev 3223:  jmears | 2002-09-25 16:10:08 -0400 (Wed, 25 Sep 2002) | 19 lines
+
+* update_dlg.cpp
+* update_dlg.h
+  Reworked the update dialog (UpdateDlg) completely to use sizer
+  controls instead of resources, so that it displays well on
+  both windows and linux. Data is transferred via a nested data
+  structure, using wxValidators. Added a check box for "latest
+  revision".
+  
+* update_action.h
+  (UpdateAction): Now stores data in a structure defined by
+  UpdateDlg.
+  
+* update_action.cpp
+  (Perform): Simplified the code displaying the dialog.
+  (Entry): Now access action data in a structure.
+
+* update.wxr
+* update.h
+  Deleted, no longer required.
+------------------------------------------------------------------------
+rev 3220:  jmears | 2002-09-24 14:33:09 -0400 (Tue, 24 Sep 2002) | 18 lines
+
+* commit_dlg.cpp
+* commit_dlg.h
+  Reworked the commit dialog (CommitDlg) completely to use sizer
+  controls instead of resources. The data edited by this dialog
+  is now stored in a data structure and transferred into the
+  dialog using the standard wxValidator mechanism.
+
+* commit_action.h
+  (CommitAction): Now stores data in a structure defined by
+  CommitDlg.
+
+* commit_action.cpp
+  (Perform): Simplified code displaying the commit dialog.
+  (Entry): Now accesses action data in a structure.
+  
+* commit.wxr
+* commit.h
+  Delete these files, they are no longer needed.
+------------------------------------------------------------------------
+rev 3218:  jmears | 2002-09-24 13:35:30 -0400 (Tue, 24 Sep 2002) | 4 lines
+
+* svncpp/status.cpp
+  (loadPath): Added a check for zero items returned from 
+  svn_client_status. This avoids a crash when handling
+  certain special files on unix.
+------------------------------------------------------------------------
+rev 3207:  bmatzelle | 2002-09-22 22:53:38 -0400 (Sun, 22 Sep 2002) | 37 lines
+
+
+* src/svncpp/log.cpp
+* src/svncpp/log.h
+  New class that abstracts the Subversion Log C API.  It works similar
+  to JDBC in that it has standard iterators like next() and last ().
+
+* src/preferences_dlg.cpp
+* src/preferences_dlg.h
+  Added svn:eol-style native.
+
+* src/svncpp/client.cpp
+* src/svncpp/client.h
+  Moved getRevision() and target() from svn::Modify to this class because it 
+  is now used by svn::Log as well.  
+  (getRevision): Now it resets the revision template upon each call to the 
+  method.  Also, if the revNumber is set to -2 then it defaults to the head 
+  of the revision.  
+
+* src/svncpp/modify.cpp
+* src/svncpp/modify.h
+  Moved getRevision() and target() out of class into svn::Client.
+
+* src/svncpp/status.cpp (textType, propType):
+  Fixed crash bug when file is unversioned.
+
+* src/svncpp/svncpp.dsp
+  Added svncpp/log.h and svncpp/log.cpp.
+  
+* src/tests/svncpp/make_repos.bat
+* src/tests/svncpp/make_repos.sh
+  Added an extra check in for the svn::Log tests.
+
+* src/tests/svncpp/svncpp.cpp
+* src/tests/svncpp/svncpp.h
+  Added testLog() for testing the svn::Log class.
+
+
+------------------------------------------------------------------------
+rev 3196:  bmatzelle | 2002-09-20 09:41:08 -0400 (Fri, 20 Sep 2002) | 8 lines
+
+
+* src/svncpp/status.cpp (textDescription, propDescription):
+  Fixed bug where an unversioned file caused a NULL pointer crash.
+
+* rapidsvn.dsp
+  Added src/preferences_dlg.cpp and src/preferences_dlg.h to project.
+
+
+------------------------------------------------------------------------
+rev 3195:  jmears | 2002-09-20 06:30:42 -0400 (Fri, 20 Sep 2002) | 4 lines
+
+* filelist_ctrl.h
+  Changed definition of IndexArray to compile under wxWindows 2.3.2
+  *and* 2.3.3.
+
+------------------------------------------------------------------------
+rev 3194:  jmears | 2002-09-20 05:48:35 -0400 (Fri, 20 Sep 2002) | 5 lines
+
+* preferences_dlg.cpp
+  (PreferencesDlg::SData::Write, PreferencesDlg::SData::Read): Moved 
+  wxConfig key names into variables, to avoid duplication of
+  literal text.
+
+------------------------------------------------------------------------
+rev 3193:  jmears | 2002-09-20 05:27:46 -0400 (Fri, 20 Sep 2002) | 6 lines
+
+* rapidsvn.cpp
+  (VSvnFrame::VSvnFrame): Added code to open the directory browser at
+  the last stored location.
+  (VSvnFrame::~VSvnFrame): Added code to store the directory browser
+  location.
+
+------------------------------------------------------------------------
+rev 3184:  jmears | 2002-09-18 09:05:54 -0400 (Wed, 18 Sep 2002) | 4 lines
+
+* preferences_dlg.cpp
+  (InitializeData): Changed order of calls to SetAutoLayout and Fit
+  so that the dialog displays correctly on Windows.
+
+------------------------------------------------------------------------
+rev 3174:  david | 2002-09-14 18:42:43 -0400 (Sat, 14 Sep 2002) | 6 lines
+
+* packages/rpm/rapidsvn.include.patch : Track changes to src/Makefile.in.
+
+* packages/rpm/apr.patch : APR now uses version 0.
+
+* packages/rpm/rapidsvn.spec : Added --disable-no-exceptions to configure.
+
+------------------------------------------------------------------------
+rev 3173:  david | 2002-09-14 18:42:16 -0400 (Sat, 14 Sep 2002) | 6 lines
+
+* packages/rpm/rapidsvn.include.patch : Track changes to src/Makefile.in.
+
+* packages/rpm/apr.patch : APR now uses version 0.
+
+* packages/rpm/rapidsvn.spec : Added --disable-no-exceptions to configure.
+
+------------------------------------------------------------------------
+rev 3172:  david | 2002-09-14 18:41:55 -0400 (Sat, 14 Sep 2002) | 6 lines
+
+* packages/rpm/rapidsvn.include.patch : Track changes to src/Makefile.in.
+
+* packages/rpm/apr.patch : APR now uses version 0.
+
+* packages/rpm/rapidsvn.spec : Added --disable-no-exceptions to configure.
+
+------------------------------------------------------------------------
+rev 3171:  jmears | 2002-09-14 10:41:02 -0400 (Sat, 14 Sep 2002) | 2 lines
+
+README.txt: fixed typo.
+
+------------------------------------------------------------------------
+rev 3170:  jmears | 2002-09-14 10:00:47 -0400 (Sat, 14 Sep 2002) | 4 lines
+
+* preferences_dlg.cpp
+* preferences_dlg.h
+  Minor source code formating changes.
+
+------------------------------------------------------------------------
+rev 3168:  jmears | 2002-09-13 11:46:31 -0400 (Fri, 13 Sep 2002) | 3 lines
+
+Added wrapper function for accessing array of images - avoids
+an array bounds error crash.
+
+------------------------------------------------------------------------
+rev 3167:  jmears | 2002-09-13 10:33:57 -0400 (Fri, 13 Sep 2002) | 4 lines
+
+Added preference dialog: preferences_dlg.h/cpp.
+Initially this contains sample settings which will be replaced
+with real ones in due course. Settings are stored in the config file.
+
+------------------------------------------------------------------------
+rev 3166:  jmears | 2002-09-13 09:15:24 -0400 (Fri, 13 Sep 2002) | 2 lines
+
+Additional instructions for building wxWindows on linux.
+
+------------------------------------------------------------------------
+rev 3165:  bmatzelle | 2002-09-12 17:22:27 -0400 (Thu, 12 Sep 2002) | 30 lines
+
+
+* src/svncpp/status.cpp
+* src/svncpp/status.h
+  Made propType() return svn_wc_status_none rather than throwing an 
+  exception.
+  Added lastCommitAuthor() method for retrieving the last author to make 
+  a commit on a file.
+
+* src/filelist_ctrl.cpp
+  Removed the try/catch because loadPath() does not throw an exception.
+
+* src/rapidsvn.cpp
+  Removed all references to the deprecated SvnFileStatus class.
+
+* src/svn_file_status.cpp
+* src/svn_file_status.h
+  This class is deprecated so it is now removed.
+
+* rapidsvn.dsp
+  Removed the reference to the deprecated svn_file_status files.
+
+* src/Makefile.in
+  Removed the reference to the deprecated svn_file_status object file.
+  
+* src/utils.cpp
+* src/utils.h
+  Renamed MakeStatusLine() to statusString() and changed all references to
+  the SvnFileStatus to svn::Status.
+
+
+------------------------------------------------------------------------
+rev 3164:  bmatzelle | 2002-09-12 13:57:46 -0400 (Thu, 12 Sep 2002) | 18 lines
+
+
+* src/svncpp/status.h
+* src/svncpp/status.cpp
+  textDescription() and propDescription () now return "unversioned" rather 
+  than throwing an exception if the file is not versioned.
+  textType() and propType() now return svn_wc_status_none rather than 
+  throwing an exception if the file is not versioned.
+
+* src/filelist_ctrl.h
+* src/filelist_ctrl.cpp
+  Changed status code to the SvnCpp API (dare I say it's faster now?).
+  buildMenu() no longer uses a SvnFileStatus parameter.
+  Improved the flow of UpdateFileList().
+
+* src/update_action.cpp
+  Changed update code to the SvnCpp API.
+
+
+------------------------------------------------------------------------
+rev 3162:  bmatzelle | 2002-09-12 00:13:28 -0400 (Thu, 12 Sep 2002) | 32 lines
+
+
+* src/svncpp/modify.h
+* src/svncpp/modify.cpp
+  Changed commit() to return a long representing the revision.  
+
+* src/svn_notify.cpp (SvnNotify, onNotify)
+* src/svn_notify.h
+  Made the conditional variables global and initialized them 
+  in the constructor.
+  
+* src/commit_action.cpp (Entry)
+* src/commit_action.h
+  Converted to to the SvnCpp C++ API.
+  Made recursive boolean.
+
+* src/copy_action.cpp (Entry)
+* src/copy_action.h
+  Converted to to the SvnCpp C++ API.
+  Removed the unused pool.
+
+* src/import_action.cpp (Entry)
+* src/import_action.h
+  Converted to to the SvnCpp C++ API.
+  Made recursive boolean.
+
+The following files were all converted to to the 
+SvnCpp C++ API.
+* src/delete_action.cpp (Entry)
+* src/add_action.cpp (Entry)
+* src/resolve_action.cpp (Entry)
+* src/revert_action.cpp (Entry)
+
+------------------------------------------------------------------------
+rev 3158:  sussman | 2002-09-10 17:33:52 -0400 (Tue, 10 Sep 2002) | 1 line
+
+* Makefile.in:  tweak the list of files to build.
+------------------------------------------------------------------------
+rev 3157:  bmatzelle | 2002-09-10 15:50:04 -0400 (Tue, 10 Sep 2002) | 10 lines
+
+
+* src/svncpp/modify.h
+* src/svncpp/modify.cpp
+  Renamed mirror() to doSwitch() and export() to doExport() because 'switch'
+  and 'export' are reserved in C++.
+
+* src/tests/svncpp/svncpp.cpp
+  Renamed export() to doExport() along with API change.
+
+
+------------------------------------------------------------------------
+rev 3155:  bmatzelle | 2002-09-10 11:06:26 -0400 (Tue, 10 Sep 2002) | 15 lines
+
+
+* src/svncpp/modify.h
+  Added Modify::import() and Modify::merge() methods.
+  Added some more documentation to several methods.
+
+* src/svncpp/modify.cpp
+  Added Modify::import() and Modify::merge() methods.
+
+* doc/svncpp.dox
+  Removed the warning when a parameter is not documented.
+
+* src/tests/svncpp/new_dir
+  This was accidently added so it is now removed.
+
+
+------------------------------------------------------------------------
+rev 3151:  bmatzelle | 2002-09-09 22:48:52 -0400 (Mon, 09 Sep 2002) | 19 lines
+
+
+* src/svncpp/status.h
+* src/svncpp/status.cpp
+  Removed statusText() and statusProp() with textType(), textDescription(), 
+  propType(), and propDescription().
+  Now returns *Description values in lower-case.
+  Added isLocked() and isCopied() methods.
+
+* src/svncpp/modify.h
+* src/svncpp/modify.cpp
+  Added the following subversion client methods: mkdir(), resolve(), 
+  cleanup(), and mirror() (switch).
+
+* src/tests/svncpp/svncpp.h
+* src/tests/svncpp/svncpp.cpp
+  Added tests for Status::textDescription() and Status::textType().
+  Added tests for Modify::mkdir() and Modify::export().
+
+
+------------------------------------------------------------------------
+rev 3131:  bmatzelle | 2002-09-04 17:14:39 -0400 (Wed, 04 Sep 2002) | 15 lines
+
+
+* rapidsvn.dsp
+  Added svn_notify.cpp and svn_notify.h to the project.
+
+* src/svn_notify.h
+* src/svn_notify.cpp
+  SvnNotify class that inherits the svn::Notify class to provide RapidSVN with 
+  its own native handling of internal events from the C API.
+  The eol-style on both files was set to native.
+
+* src/delete_action.cpp
+  Added support for the new SvnNotify class in which all other *_action classes
+  will be converted.
+
+
+------------------------------------------------------------------------
+rev 3127:  bmatzelle | 2002-09-03 23:48:33 -0400 (Tue, 03 Sep 2002) | 41 lines
+
+
+The following changes were made by Tim Kemp with some other modifications 
+made by myself.
+
+* src/svncpp/auth.h
+* src/svncpp/auth.cpp
+  Changed parameters from char * to const char *.
+  Changed member variables to std::string.
+
+* src/svncpp/modify.h
+* src/svncpp/modify.cpp
+  Changed parameters from char * to const char *.
+  notify_func parameters changed to static Notify::notify.
+  notify_baton parameters changed to actual notify instance.
+
+* src/svncpp/notify.h
+* src/svncpp/notify.cpp
+  Added base class for notifications.  Set svn:eol-style to native.
+
+* src/svncpp/property.h
+* src/svncpp/property.cpp
+  Changed parameters from char * to const char *.
+  Changed filePath to std::string.
+
+* src/svncpp/status.h
+* src/svncpp/status.cpp
+  Changed parameters from char * to const char *.
+  Changed filePath to std::string.
+  loadPath() no longer throws exceptions.  Instead it simply sets 
+  versioned to false.
+
+* svncpp.dsp
+  Added notify.h and notify.cpp.
+
+* src/tests/svncpp/svncpp.cpp
+  Altered tests to send in the new notification(&notify) parameter.
+
+* src/tests/svncpp/svncpp.h
+  Added a new svn::Notify notify variable.
+  
+
+------------------------------------------------------------------------
+rev 3097:  bmatzelle | 2002-08-29 12:43:23 -0400 (Thu, 29 Aug 2002) | 65 lines
+
+
+* src/svncpp/exception.h
+  Includes two exception handling classes: Exception, a base exception class, 
+  and ClientException, a Subversion client exception handling class.  
+
+* src/svncpp/exception.cpp
+  Same as the header.
+
+* doc/svncpp.dox
+  Now when CHM documentation is created the file is svncpp.chm.
+
+The following files had the svncpp modify include moved from the header 
+file to the source file because it was causing compile errors with the 
+basic_string include in exception.h.
+* src/commit_action.h
+* src/commit_action.cpp
+* src/copy_action.cpp
+* src/copy_action.h
+* src/delete_action.cpp
+* src/delete_action.h
+* src/import_action.cpp
+* src/import_action.h
+* src/mkdir_action.cpp
+* src/mkdir_action.h
+
+* src/auth_baton.cpp
+  Added the store_auth_info and got_new_auth_info according to the updated
+  Subversion API.
+
+* src/svncpp/auth.h
+  Eliminated the include of the deprecated error.h header.
+
+* src/svncpp/auth.cpp
+  Added the store_auth_info and got_new_auth_info according to the updated
+  Subversion API.
+
+* src/svncpp/client.h
+  Eliminated the getError() method because the Error class is deprecated.
+  
+* src/svncpp/client.cpp
+  Same as header.
+
+In the following files all methods now have exception handling added to them 
+and all returns were changed from bool to void accordingly.
+* src/svncpp/modify.cpp
+* src/svncpp/modify.h
+* src/svncpp/property.cpp
+* src/svncpp/property.h
+* src/svncpp/status.cpp
+* src/svncpp/status.h
+
+* src/svncpp/error.h
+  Removed because it has been replaced by the Exception classes.
+
+* src/svncpp/error.cpp
+  Same as header file.
+
+* src/svncpp/svncpp.dsp
+  Add the exception.* files and removed the error.* files.  Also switched 
+  the run-time library in all builds to multi-threaded DLL.
+
+* src/tests/svncpp/svncpp.cpp
+  Altered all tests to utilize exception handling (try,catch).
+
+
+------------------------------------------------------------------------
+rev 3074:  bmatzelle | 2002-08-26 21:05:57 -0400 (Mon, 26 Aug 2002) | 20 lines
+
+
+Altered the following files to match with the normal Java/C++ convention 
+of a lowercase namespace and mixed case method names. 
+
+* rapidsvn/src/delete_action.cpp
+* rapidsvn/src/svncpp/auth.cpp
+* rapidsvn/src/svncpp/auth.h
+* rapidsvn/src/svncpp/client.cpp
+* rapidsvn/src/svncpp/client.h
+* rapidsvn/src/svncpp/error.cpp
+* rapidsvn/src/svncpp/error.h
+* rapidsvn/src/svncpp/modify.cpp
+* rapidsvn/src/svncpp/modify.h
+* rapidsvn/src/svncpp/property.cpp
+* rapidsvn/src/svncpp/property.h
+* rapidsvn/src/svncpp/status.cpp
+* rapidsvn/src/svncpp/status.h
+* rapidsvn/src/tests/svncpp/svncpp.cpp
+
+
+------------------------------------------------------------------------
+rev 3059:  bmatzelle | 2002-08-25 17:36:35 -0400 (Sun, 25 Aug 2002) | 24 lines
+
+
+Eliminated the Hungarian notation from the following files:
+* rapidsvn/src/svncpp/auth.h
+* rapidsvn/src/svncpp/auth.cpp
+* rapidsvn/src/svncpp/property.h
+* rapidsvn/src/svncpp/property.cpp
+* rapidsvn/src/svncpp/modify.h
+* rapidsvn/src/svncpp/modify.cpp
+* rapidsvn/src/svncpp/status.h
+* rapidsvn/src/svncpp/status.cpp
+
+* rapidsvn/src/svncpp/svncpp.dsp
+  Added build options for Release version.
+  
+* rapidsvn/rapidsvn.dsp
+  Added SvnCpp Release library to Release build.
+
+* rapidsvn/doc/svncpp.dox
+  Added Doxygen configuration file.
+
+* rapidsvn/src/tests/svncpp/svncpp.cpp
+  Fixed a compilation error.  
+  
+
+------------------------------------------------------------------------
+rev 3036:  bmatzelle | 2002-08-22 23:27:25 -0400 (Thu, 22 Aug 2002) | 63 lines
+
+
+The following files encompass the new SvnCpp C++ API.  It is a wrapper library 
+over the existing Subversion C API with plenty of data hiding and that good 
+C++ feel :)  All classes have been documented in Doxygen format.  All documentation 
+is available for viewing and download on the RapidSVN homepage.  All *.h and *.cpp 
+files were given the eol-style native propery.
+
+* rapidsvn/src/svncpp/auth.h
+* rapidsvn/src/svncpp/auth.cpp
+* rapidsvn/src/svncpp/client.h
+* rapidsvn/src/svncpp/client.cpp
+* rapidsvn/src/svncpp/status.h
+* rapidsvn/src/svncpp/status.cpp
+* rapidsvn/src/svncpp/property.h
+* rapidsvn/src/svncpp/property.cpp
+* rapidsvn/src/svncpp/modify.h
+* rapidsvn/src/svncpp/modify.cpp
+* rapidsvn/src/svncpp/error.h
+* rapidsvn/src/svncpp/error.cpp
+* rapidsvn/src/svncpp/svncpp.dsp
+
+The following files were added for unit testing with RapidSVN.  Right now 
+all of the tests are for the SvnCpp classes.  Read the README.txt for more 
+information on using these tests.  All *.h and *.cpp files were given the 
+eol-style native propery, as well as README.txt.
+
+* rapidsvn/src/tests/svncpp/svncpptest.dsw
+* rapidsvn/src/tests/svncpp/svncpptest.dsp
+* rapidsvn/src/tests/svncpp/test_config.ah
+* rapidsvn/src/tests/svncpp/README.txt
+* rapidsvn/src/tests/svncpp/make_repos.bat
+* rapidsvn/src/tests/svncpp/make_repos.sh
+* rapidsvn/src/tests/svncpp/main.cpp
+* rapidsvn/src/tests/svncpp/svncpp.h
+* rapidsvn/src/tests/svncpp/svncpp.cpp
+
+The following header files were modified to incorporate the addition of the 
+SvnCpp C++ API.
+
+* rapidsvn/src/commit_action.h
+* rapidsvn/src/copy_action.h
+* rapidsvn/src/delete_action.h
+* rapidsvn/src/import_action.h
+* rapidsvn/src/mkdir_action.h
+
+* rapidsvn/src/utils.h (svn_cl_get_log_message):
+  This function was removed because it is now re-implemented in the 
+  Svn::Modify class.
+
+* rapidsvn/src/utils.cpp
+  Same as the header log above.
+
+* rapidsvn/src/delete_action.cpp (Entry):
+  This is the first piece of code that uses the SvnCpp code.  
+
+* rapidsvn/rapidsvn.dsw
+  Included the svncpp project to the workspace.  It also now has a 
+  dependency on the svncpp project.
+
+* rapidsvn/rapidsvn.dsp
+  Now includes the svncpp static library.
+
+
+------------------------------------------------------------------------
+rev 2972:  bmatzelle | 2002-08-14 16:15:07 -0400 (Wed, 14 Aug 2002) | 17 lines
+
+
+* rapidsvn/src/copy_action.cpp (Entry):
+  Eliminated 2 un-used variables that were displaying warnings.
+
+* rapidsvn/src/svn_file_status.cpp (retrieveStatus):
+  Made function boolean.  Checks if the pool and apr_pool_t is valid.
+
+* rapidsvn/src/svn_file_status.h (retrieveStatus):
+  Same as source change above.
+
+* rapidsvn/src/filelist_ctrl.cpp (UpdateFileList):
+  If retrieveStatus() fails it displays a load error message rather 
+  than continuing.
+
+* rapidsvn/src/rapidsvn.cpp (ShowStatus):
+  Skips files in which retrieveStatus() fails.
+
+------------------------------------------------------------------------
+rev 2965:  bmatzelle | 2002-08-13 16:23:02 -0400 (Tue, 13 Aug 2002) | 9 lines
+
+
+* rapidsvn/src/rapidsvn.cpp (OnStatus):
+  Removed some code that never was being called.  Removed 
+  svn_cl__make_auth_baton() function as it has been replaced 
+  by AuthBaton class.
+
+* rapidsvn/TODO.txt
+  Added a note on replacing .wxr's with sizers.
+
+------------------------------------------------------------------------
+rev 2954:  bmatzelle | 2002-08-12 17:13:47 -0400 (Mon, 12 Aug 2002) | 15 lines
+
+
+* rapidsvn/src/rapidsvn.rc
+  Removed Checkout_Dialog.
+
+* rapidsvn/src/res/bitmaps/folder.ico
+* rapidsvn/src/res/bitmaps/versioned_folder.ico
+  Reduced images to 256 colors to eliminate first class exception errors.
+  Visually cleaned up the image as well.
+
+* rapidsvn/src/copy_action.cpp (Entry):
+  Added NULL svn_wc_adm_access_t to implement API change.
+
+* rapidsvn/README.txt
+  Fixed autoconf typo.
+
+------------------------------------------------------------------------
+rev 2933:  david | 2002-08-10 15:44:05 -0400 (Sat, 10 Aug 2002) | 2 lines
+
+ * packages/rpm/rapidsvn.spec : Added subversion-devel build requirement.
+
+------------------------------------------------------------------------
+rev 2932:  bmatzelle | 2002-08-10 14:57:13 -0400 (Sat, 10 Aug 2002) | 21 lines
+
+
+This commit includes changes to make the RapidSVN GUI 
+more cross-platform.
+
+* rapidsvn/src/checkout_action.cpp
+  Eliminated resource wxWindows resource loading.
+
+* rapidsvn/src/checkout_dlg.h
+  Removed references to the wxWindows resource file.
+
+* rapidsvn/src/checkout_dlg.cpp (InitializeData):
+  Removed references to wxWindows resource file and replaced 
+  with wxSizer widgets so that GUI controls look the same in
+  any GUI environment regardless of size.
+
+* rapidsvn/src/rapidsvn.cpp (BrowseDir):
+  Now defaults to the user home directory.
+
+* rapidsvn/src/res/checkout.wxr
+  Removed now that it is not needed.
+
+------------------------------------------------------------------------
+rev 2906:  bmatzelle | 2002-08-06 23:02:35 -0400 (Tue, 06 Aug 2002) | 8 lines
+
+
+* rapidsvn/README.txt
+  Added information on building with Linux.
+
+* rapidsvn/src/Makefile.in
+  Removed copy_dlg.cpp as a build requirement.
+
+
+------------------------------------------------------------------------
+rev 2891:  bmatzelle | 2002-08-06 00:31:37 -0400 (Tue, 06 Aug 2002) | 33 lines
+
+
+The following files were removed because they were part of the 
+now obsolete copy functionality:
+
+* rapidsvn/src/copy_dlg.cpp
+* rapidsvn/src/copy_dlg.h
+* rapidsvn/src/res/copy.h
+* rapidsvn/src/res/copy.wxr
+
+* rapidsvn/src/copy_action.cpp (Entry, DestinationPath):
+  Added DestinationPath and Entry code for supporting the Subversion 
+  copy action.  Now it uses a directory dialog to copy on the local
+  machine rather than on the remote repository.
+
+* rapidsvn/src/copy_action.h
+  Added the DestinationPath prototype and removed a bunch of 
+  un-needed variables.
+
+* rapidsvn/src/rapidsvn.cpp (MakeCopy, Rename):
+  Added some functional copy code and a stub for Rename.
+
+* rapidsvn/src/rapidsvn.h
+  Added the prototypes for the copy and rename functionalities.
+
+* rapidsvn/src/rapidsvn.rc
+  Eliminated the reference to the deprecated Copy_Dialog.
+
+* rapidsvn/rapidsvn.dsp
+  Removed the deprecated src/copy_dlg.cpp and src/copy_dlg.h.
+
+* rapidsvn/src/notify.cpp (notify):
+  Made the logging more understandable by change 'A' to 'Added', etc.
+
+------------------------------------------------------------------------
+rev 2875:  xela | 2002-08-04 15:32:44 -0400 (Sun, 04 Aug 2002) | 4 lines
+
+Wrapped lines.
+
+* TODO.txt
+
+------------------------------------------------------------------------
+rev 2858:  bmatzelle | 2002-08-02 14:11:45 -0400 (Fri, 02 Aug 2002) | 13 lines
+
+
+* rapidsvn/packages/rapidsvn.iss
+  Added the Berkeley DB DLL as a required file for the build.
+  
+* rapidsvn/packages/BUILD.txt
+  Added this document to describe how to create a RapidSVN build 
+  with Inno Setup.
+
+* rapidsvn/TODO.txt
+  Added the following new items: Log Search, Property Editor, Progress Meter
+  and Cleanup. Marked Revert as completed and made a note about 
+  Preferences and Session.
+
+------------------------------------------------------------------------
+rev 2848:  david | 2002-08-01 21:28:39 -0400 (Thu, 01 Aug 2002) | 2 lines
+
+ * TODO.txt : Noted that the RPM is now done and operational.
+
+------------------------------------------------------------------------
+rev 2844:  bmatzelle | 2002-08-01 16:32:26 -0400 (Thu, 01 Aug 2002) | 9 lines
+
+
+* rapidsvn/HACKING.txt
+  Added information about documentation format and some common 
+  conventions that developers have to live by to work with multiple OSes.
+  
+* rapidsvn/TODO.txt
+  Added several new TODO items and change 'Move and Rename' to just Rename. 
+  Move is now located in 'Move and Copy'.
+
+------------------------------------------------------------------------
+rev 2842:  david | 2002-08-01 09:17:08 -0400 (Thu, 01 Aug 2002) | 5 lines
+
+ * packages/rpm/rapidsvn.spec : Fixed problem where I forgot to set the 
+      AUTOCONF and AUTOHEADER variables even if it can't find the "special"
+      versions of these programs.
+
+
+------------------------------------------------------------------------
+rev 2841:  david | 2002-08-01 09:12:31 -0400 (Thu, 01 Aug 2002) | 6 lines
+
+ * packages/rpm/ rapidsvn.spec, .rpmmacros, rapidsvn.include.patch, Makefile :
+      First shot at rapidsvn RPM generation.
+
+ * configure.in : Added AC_REVISION macro for RPM version 0.1.
+
+
+------------------------------------------------------------------------
+rev 2839:  bmatzelle | 2002-07-31 22:54:20 -0400 (Wed, 31 Jul 2002) | 20 lines
+
+
+* rapidsvn/src/filelist_ctrl.cpp (UpdateFileList, BuildMenu):
+  Now files without extensions (*) will be found in the file list pane.
+  'Update' and 'Commit' were renamed to 'Get latest' and 'Check in' 
+  respectively on the pop up menu.
+  
+* rapidsvn/src/rapidsvn.cpp (InitializeMenu):
+  'Update' and 'Commit' were renamed to 'Get latest' and 'Check in' 
+  respectively on the Modify menu.
+
+* rapidsvn/TODO.txt
+  Added a bunch of new TODO items.
+
+* rapidsvn/HACKING.txt
+  First draft of a HACKING document for RapidSVN.  Pretty much a condensed 
+  copy of Subversion's hacking document with a few changes.
+
+* rapidsvn/LICENSE.txt
+  Made the eol-style property native.
+
+------------------------------------------------------------------------
+rev 2834:  xela | 2002-07-31 17:45:47 -0400 (Wed, 31 Jul 2002) | 5 lines
+
+Allow multiple targets.
+
+* tools/beautify.sh
+
+
+------------------------------------------------------------------------
+rev 2833:  xela | 2002-07-31 17:43:30 -0400 (Wed, 31 Jul 2002) | 3 lines
+
+Applied indentation style.
+
+
+------------------------------------------------------------------------
+rev 2832:  xela | 2002-07-31 17:22:10 -0400 (Wed, 31 Jul 2002) | 5 lines
+
+Added svn:executable property
+.orig files get deleted after call
+
+* tools/beautify.sh
+
+------------------------------------------------------------------------
+rev 2831:  xela | 2002-07-31 17:08:40 -0400 (Wed, 31 Jul 2002) | 3 lines
+
+New directory containing helper scripts and stuff
+
+
+------------------------------------------------------------------------
+rev 2829:  xela | 2002-07-31 16:20:34 -0400 (Wed, 31 Jul 2002) | 4 lines
+
+One first try of new indentation style.
+
+* src/rapidsvn.cpp
+
+------------------------------------------------------------------------
+rev 2826:  bmatzelle | 2002-07-31 13:26:41 -0400 (Wed, 31 Jul 2002) | 17 lines
+
+
+* rapidsvn/packages
+  New directory for storing install packages.
+
+* rapidsvn/packages/win32
+  New directory for storing win32 install packages.
+
+* rapidsvn/packages/win32/rapidsvn.iss
+  New Inno Setup installer script for RapidSVN.
+
+* rapidsvn/rapidsvn.dsp
+  Eliminated the old Debug Configuration and renamed the Debug DLL 
+  configuration to Debug.
+
+* rapidsvn/src/rapidsvn.rc
+  Replaced all tabs with spaces.
+
+------------------------------------------------------------------------
+rev 2819:  xela | 2002-07-31 08:12:14 -0400 (Wed, 31 Jul 2002) | 5 lines
+
+Patch contributed by TTimo:
+New and final patch below. It's configuring and building fine now..
+
+the src/Makefile should be removed, it is generated from Makefile.in now
+
+------------------------------------------------------------------------
+rev 2818:  xela | 2002-07-31 05:40:29 -0400 (Wed, 31 Jul 2002) | 7 lines
+
+Patch conntributed by TTimo:
+Not working yet. For the compilation itself, the svn include has to come
+in first (otherwise the preprocessor gets confused for some reason I
+can't explain).
+
+* src/Makefile.in
+
+------------------------------------------------------------------------
+rev 2817:  xela | 2002-07-31 04:50:37 -0400 (Wed, 31 Jul 2002) | 5 lines
+
+Recoded the eol-style to match the property svn:eol-style=native
+
+*src/action_thread.h
+
+
+------------------------------------------------------------------------
+rev 2816:  xela | 2002-07-31 04:48:15 -0400 (Wed, 31 Jul 2002) | 5 lines
+
+Set svn:eol-style native
+
+* src/Makefile
+
+
+------------------------------------------------------------------------
+rev 2815:  xela | 2002-07-31 04:46:43 -0400 (Wed, 31 Jul 2002) | 9 lines
+
+Patch contributed by TTimo:
+The autoconf based build system doesn't seem finalized and reliable yet.
+Thanks to Marcellus who sent me his Makefile. I'm attaching a small patch
+to src/bitmaps.h too.
+
+* src/Makefile
+
+* src/bitmaps.h
+
+------------------------------------------------------------------------
+rev 2814:  xela | 2002-07-31 04:44:46 -0400 (Wed, 31 Jul 2002) | 5 lines
+
+Changed the eol-style in the file to match the svn:eol-style property
+
+* src/folder_browser.h
+
+
+------------------------------------------------------------------------
+rev 2813:  xela | 2002-07-31 04:25:12 -0400 (Wed, 31 Jul 2002) | 1 line
+
+Patch from Garrett Roony
+------------------------------------------------------------------------
+rev 2812:  xela | 2002-07-31 04:23:04 -0400 (Wed, 31 Jul 2002) | 1 line
+
+Added Makefile for autoconf
+------------------------------------------------------------------------
+rev 2811:  bmatzelle | 2002-07-30 23:19:17 -0400 (Tue, 30 Jul 2002) | 11 lines
+
+
+* rapidsvn/README.txt
+  Removed the absolute requirement of the MS SDK.  Apparently it is not 
+  always required.
+
+* rapidsvn/rapidsvn.dsp
+  Now project can create win32 Release builds.
+
+* rapidsvn/src/rapidsvn.aps
+  Removed because it is a worthless VC++ file.
+
+------------------------------------------------------------------------
+rev 2806:  bmatzelle | 2002-07-30 19:00:46 -0400 (Tue, 30 Jul 2002) | 10 lines
+
+All the below were converted to svn:eol-style native 
+for portable development.
+
+* rapidsvn/README.txt
+* rapidsvn/TODO.txt
+* rapidsvn/src/*.cpp
+* rapidsvn/src/*.h
+* rapidsvn/src/res/*.wxr
+* rapidsvn/src/res/*.h
+
+------------------------------------------------------------------------
+rev 2795:  bmatzelle | 2002-07-30 11:39:33 -0400 (Tue, 30 Jul 2002) | 7 lines
+
+These were done to make for a clean compile.
+
+* rapidsvn/src/svn_file_status.cpp (retrieveStatus):
+  Updated svn_client_status call to new API.  Defaults to no ignore.
+
+* rapidsvn/src/rapidsvn.cpp (OnStatus):
+  Updated svn_client_status to new API. Defaults to no ignore.
+------------------------------------------------------------------------
+rev 2769:  cmpilato | 2002-07-29 12:49:25 -0400 (Mon, 29 Jul 2002) | 1 line
+
+Fix broken svn:mime-type property values
+------------------------------------------------------------------------
+rev 2768:  xela | 2002-07-29 05:31:07 -0400 (Mon, 29 Jul 2002) | 3 lines
+
+Set the appropriate mimetype:
+xpm=image/x-xpm
+
+------------------------------------------------------------------------
+rev 2767:  xela | 2002-07-29 05:25:04 -0400 (Mon, 29 Jul 2002) | 15 lines
+
+Patch contributed by Peter Johnson:
+Versioned SVN folders are displayed using a different icon.
+
+This is shown in the file list of the right hand pane.
+I have attached the new icons. Sorry, I don't know where XPM bitmaps are
+used and can't test the Unix/Linux build.
+Please uncompress them into rapidsvn/src/res/bitmaps
+
+* rapidsvn/src/filelist_ctrl.cpp
+  (FileListCtrl::UpdateFileList): SVN folders are shown with a different
+icon.
+
+* rapidsvn/src/rapidsvn.rc
+  Added a new folder icon to represent SVN versioned folders.
+
+------------------------------------------------------------------------
+rev 2766:  xela | 2002-07-29 05:08:28 -0400 (Mon, 29 Jul 2002) | 10 lines
+
+Set the appropriate mime-types for images:
+bmp=image/bitmap
+ico=image/x-icon
+xpm=image/x-xpm
+
+New images:
+* versioned_folder.xpm
+* versioned_folder.ico
+
+
+------------------------------------------------------------------------
+rev 2765:  xela | 2002-07-29 04:50:12 -0400 (Mon, 29 Jul 2002) | 5 lines
+
+Patch contributed by Scott Lamb: 
+This is the the start of a configure system for RapidSVN.
+It detects the C++ compiler and configuration of APR and wxWindows. It
+doesn't detect configurations of neon and Subversion yet.
+
+------------------------------------------------------------------------
+rev 2764:  xela | 2002-07-29 04:47:44 -0400 (Mon, 29 Jul 2002) | 5 lines
+
+Added a destructor ~VSvnEx
+
+* exceptions.cpp
+* exceptions.h
+
+------------------------------------------------------------------------
+rev 2763:  xela | 2002-07-29 04:46:23 -0400 (Mon, 29 Jul 2002) | 5 lines
+
+Added a destructor.
+
+*tracer.cpp
+*tracer.h
+
+------------------------------------------------------------------------
+rev 2749:  sussman | 2002-07-27 12:57:20 -0400 (Sat, 27 Jul 2002) | 7 lines
+
+
+Sorry, hope nobody minds I do this:
+
+* rapidsvn_screenshot.png:  set the svn:mime-type property to
+  'image/png', so that this image is viewable directly in web
+  browsers.
+
+------------------------------------------------------------------------
+rev 2738:  bmatzelle | 2002-07-26 13:54:46 -0400 (Fri, 26 Jul 2002) | 1 line
+
+Changed license and added better build instructions
+------------------------------------------------------------------------
+rev 2733:  bmatzelle | 2002-07-26 10:13:20 -0400 (Fri, 26 Jul 2002) | 1 line
+
+Initial check in
+------------------------------------------------------------------------
+rev 2731:  xela | 2002-07-26 08:30:35 -0400 (Fri, 26 Jul 2002) | 1 line
+
+Patch contributed by Garrett Rooney to add initialisation on list
+------------------------------------------------------------------------
+rev 2722:  xela | 2002-07-25 20:15:36 -0400 (Thu, 25 Jul 2002) | 1 line
+
+broken Makefile. Expects to be in the same place like source.
+------------------------------------------------------------------------
+rev 2720:  bmatzelle | 2002-07-25 20:05:50 -0400 (Thu, 25 Jul 2002) | 1 line
+
+Initial check in
+------------------------------------------------------------------------
+rev 2719:  bmatzelle | 2002-07-25 20:04:34 -0400 (Thu, 25 Jul 2002) | 1 line
+
+Initial check in
+------------------------------------------------------------------------
+rev 2718:  xela | 2002-07-25 19:37:16 -0400 (Thu, 25 Jul 2002) | 1 line
+
+first screenshot of rapidsvn (hey this is no fake but the running app)
+------------------------------------------------------------------------
+rev 2717:  gstein | 2002-07-25 19:08:23 -0400 (Thu, 25 Jul 2002) | 6 lines
+
+Set up a /clients area, and initially populate it with dirs for the
+rapidsvn project.
+
+Added bmatzelle to the COMMITTERS file and moved to the top-level.
+Renamed XelaRellum to just xela.
+
+------------------------------------------------------------------------
