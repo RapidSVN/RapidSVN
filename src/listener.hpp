@@ -141,6 +141,13 @@ public:
   virtual bool
   contextSslClientCertPwPrompt (std::string & password);
 
+
+  /**
+   * @see svn::ContextListener
+   */
+  virtual bool
+  contextCancel ();
+
 protected:
   void Trace (const wxString & msg);
 

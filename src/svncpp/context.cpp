@@ -167,6 +167,8 @@ namespace svn
       ctx.log_msg_baton = this;
       ctx.notify_func = onNotify;
       ctx.notify_baton = this;
+      ctx.cancel_func = onCancel;
+      ctx.cancel_baton = this;
     }
 
     void setAuthCache(bool value)
@@ -254,6 +256,24 @@ namespace svn
 
       data->notify (path, action, kind, mime_type, content_state,
                     prop_state, revision);
+    }
+
+    /**
+     * this is the callback function for the subversion
+     * api functions to signal the progress of an action
+     */
+    static svn_error_t * 
+    onCancel (void * baton)
+    {
+      if (baton == 0)
+        return SVN_NO_ERROR;
+
+      Data * data = static_cast <Data *> (baton);
+
+      if( data->cancel () )
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, "cancelled by user");
+      else
+        return SVN_NO_ERROR;
     }
 
     /**
@@ -486,6 +506,24 @@ namespace svn
       {
         listener->contextNotify (path, action, kind, mime_type,
                                  content_state, prop_state, revision);
+      }
+    }
+
+    /**
+     * if the @a listener is set call the method
+     * @a contextCancel
+     */
+    bool 
+    cancel ()
+    {
+      if (listener != 0)
+      {
+        return listener->contextCancel ();
+      }
+      else
+      {
+        // don't cancel if no listener
+        return false;
       }
     }
   };

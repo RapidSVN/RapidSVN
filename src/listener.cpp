@@ -271,6 +271,14 @@ Listener::contextSslClientCertPwPrompt (std::string & password)
 }
 
 
+bool
+Listener::contextCancel ()
+{
+  // nothing in here yet. In the future we might want
+  // to add code that reacts on a STOP button click.
+  return false;
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

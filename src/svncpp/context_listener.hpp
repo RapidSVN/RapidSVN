@@ -75,6 +75,16 @@ namespace svn
                    svn_wc_notify_state_t prop_state,
                    svn_revnum_t revision) = 0;
 
+    /*
+     * this method will be called periodically to allow
+     * the app to cancel long running operations
+     *
+     * @return cancel action?
+     * @retval true cancel
+     */
+    virtual bool
+    contextCancel() = 0;
+
     /**
      * this method will be called to retrieve
      * a log message
