@@ -8,20 +8,19 @@
 
 class VSvnFrame;
 
-class VsvnApp: public wxApp
+class VsvnApp:public wxApp
 {
-	virtual bool OnInit();
-	virtual int OnExit();
+  virtual bool OnInit ();
+  virtual int OnExit ();
 
 public:
-	VSvnFrame		*appFrame;
+   VSvnFrame * appFrame;
 
-	VSvnFrame*		GetAppFrame()
-					{
-						return appFrame;
-					}
+  VSvnFrame *GetAppFrame ()
+  {
+    return appFrame;
+  }
 };
 
-DECLARE_APP(VsvnApp)
-
+DECLARE_APP (VsvnApp)
 #endif

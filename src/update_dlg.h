@@ -4,29 +4,27 @@
 #include "res/update.h"
 
 #if defined(__WXMSW__)
-	static char *Update_Dialog = NULL;
+static char *Update_Dialog = NULL;
 #else
-#	include "res/update.wxr"
+# include "res/update.wxr"
 #endif
 
-class UpdateDlg
-:	public wxDialog
+class UpdateDlg:public wxDialog
 {
 
 public:
-	wxTextCtrl		*user;
-	wxTextCtrl		*pass;
-	wxTextCtrl		*revision;
+  wxTextCtrl * user;
+  wxTextCtrl *pass;
+  wxTextCtrl *revision;
 
 public:
-	void OnOk( wxCommandEvent& event );
-	void OnCancel( wxCommandEvent& event );
-	void OnBrowse( wxCommandEvent& event );
+  void OnOk (wxCommandEvent & event);
+  void OnCancel (wxCommandEvent & event);
+  void OnBrowse (wxCommandEvent & event);
 
-	void InitializeData();
+  void InitializeData ();
 
 private:
-	DECLARE_EVENT_TABLE()
-};
+ DECLARE_EVENT_TABLE ()};
 
 #endif

@@ -11,12 +11,11 @@
  * If don't want a summary line at the end of notifications, set
  * SUPPRESS_FINAL_LINE.
  */
-void svn_cl__get_notifier(  svn_wc_notify_func_t *notify_func_p,
-							void **notify_baton_p,
-							svn_boolean_t is_checkout,
-							svn_boolean_t suppress_final_line,
-							Tracer *tr,
-							apr_pool_t *pool );
+void svn_cl__get_notifier (svn_wc_notify_func_t * notify_func_p,
+                           void **notify_baton_p,
+                           svn_boolean_t is_checkout,
+                           svn_boolean_t suppress_final_line,
+                           Tracer * tr, apr_pool_t * pool);
 
 
 #endif

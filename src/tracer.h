@@ -10,7 +10,7 @@
 class Tracer
 {
 public:
-	virtual void Trace( const wxString& ) = 0;
+  virtual void Trace (const wxString &) = 0;
 };
 
 
@@ -18,62 +18,58 @@ public:
 * A Tracer class for dumping information
 * on a wxTextCtrl, locking the GUI in advance.
 */
-class TextCtrlTracer
-:	public Tracer
+class TextCtrlTracer:public Tracer
 {
 private:
-	wxTextCtrl	*m_txtCtrl;
+  wxTextCtrl * m_txtCtrl;
 public:
-				TextCtrlTracer( wxTextCtrl* ctrl );
+  TextCtrlTracer (wxTextCtrl * ctrl);
 
-	void		Trace( const wxString& );
+  void Trace (const wxString &);
 };
 
 /**
 * A Tracer that sends events to a frame.
 */
-class EventTracer
-:	public Tracer
+class EventTracer:public Tracer
 {
 
 private:
-	wxFrame		*frame;
+  wxFrame * frame;
 
 public:
-				EventTracer( wxFrame* fr );
+  EventTracer (wxFrame * fr);
 
-	void		Trace( const wxString& );
+  void Trace (const wxString &);
 };
 
 /**
 * A Tracer that put all the messages on a message box
 */
 
-class ErrorTracer
-:	public Tracer
+class ErrorTracer:public Tracer
 {
 private:
-	wxString	msgs;
-	wxWindow	*parent;
+  wxString msgs;
+  wxWindow *parent;
 
 public:
-				ErrorTracer( wxWindow *__parent );
+   ErrorTracer (wxWindow * __parent);
 
-	virtual		~ErrorTracer();
+   virtual ~ ErrorTracer ();
 
-	void		Trace( const wxString& );
-	void		ShowErrors();
+  void Trace (const wxString &);
+  void ShowErrors ();
 };
 
-class StringTracer
-:	public Tracer
+class StringTracer:public Tracer
 {
 private:
-	wxString	&msgs;
+  wxString & msgs;
 
 public:
-				StringTracer( wxString& str );
-	void		Trace( const wxString& );
+  StringTracer (wxString & str);
+  void Trace (const wxString &);
 };
 
 #endif

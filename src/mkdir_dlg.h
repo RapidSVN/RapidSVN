@@ -4,29 +4,27 @@
 #include "res/mkdir.h"
 
 #if defined(__WXMSW__)
-	static char *Mkdir_Dialog = NULL;
+static char *Mkdir_Dialog = NULL;
 #else
-#	include "res/mkdir.wxr"
+# include "res/mkdir.wxr"
 #endif
 
-class MkdirDlg
-:	public wxDialog
+class MkdirDlg:public wxDialog
 {
 
 public:
-	wxTextCtrl		*target;
-	wxTextCtrl		*user;
-	wxTextCtrl		*pass;
-	wxTextCtrl		*logMsg;
+  wxTextCtrl * target;
+  wxTextCtrl *user;
+  wxTextCtrl *pass;
+  wxTextCtrl *logMsg;
 
 public:
-	void OnOk( wxCommandEvent& event );
-	void OnCancel( wxCommandEvent& event );
+  void OnOk (wxCommandEvent & event);
+  void OnCancel (wxCommandEvent & event);
 
-	void InitializeData();
+  void InitializeData ();
 
 private:
-	DECLARE_EVENT_TABLE()
-};
+ DECLARE_EVENT_TABLE ()};
 
 #endif

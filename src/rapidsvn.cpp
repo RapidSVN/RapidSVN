@@ -27,18 +27,18 @@
 #include "rapidsvn.h"
 
 // Toolbars' ids
-#define TOOLBAR_REFRESH		101
-#define TOOLBAR_BROWSE		102
-#define TOOLBAR_ADD			103
-#define TOOLBAR_DEL			104
-#define TOOLBAR_UPDATE		105
-#define TOOLBAR_COMMIT		106
-#define TOOLBAR_REVERT		107
-#define TOOLBAR_INFO		108
-#define TOOLBAR_STATUS		109
-#define TOOLBAR_LOG			110
-#define TOOLBAR_RESOLVE		111
-#define TOOLBAR_FOLDERUP	112
+#define TOOLBAR_REFRESH  101
+#define TOOLBAR_BROWSE  102
+#define TOOLBAR_ADD   103
+#define TOOLBAR_DEL   104
+#define TOOLBAR_UPDATE  105
+#define TOOLBAR_COMMIT  106
+#define TOOLBAR_REVERT  107
+#define TOOLBAR_INFO  108
+#define TOOLBAR_STATUS  109
+#define TOOLBAR_LOG   110
+#define TOOLBAR_RESOLVE  111
+#define TOOLBAR_FOLDERUP 112
 
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__)
 #include "icons.h"

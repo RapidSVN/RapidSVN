@@ -6,24 +6,25 @@
 
 #include "tracer.h"
 
-#define SPLITTER_WINDOW			100
+#define SPLITTER_WINDOW   100
 
 
 typedef enum
 {
-	ACTION_TYPE_NONE,
-	ACTION_TYPE_UPDATE,
-	ACTION_TYPE_COMMIT,
-	ACTION_TYPE_CHECKOUT,
-	ACTION_TYPE_IMPORT,
-	ACTION_TYPE_ADD,
-	ACTION_TYPE_DEL,
-	ACTION_TYPE_REVERT,
-	ACTION_TYPE_RESOLVE,
-	ACTION_TYPE_COPY,
-	ACTION_TYPE_MKDIR,
-	ACTION_TYPE_MERGE
-} ActionType;
+  ACTION_TYPE_NONE,
+  ACTION_TYPE_UPDATE,
+  ACTION_TYPE_COMMIT,
+  ACTION_TYPE_CHECKOUT,
+  ACTION_TYPE_IMPORT,
+  ACTION_TYPE_ADD,
+  ACTION_TYPE_DEL,
+  ACTION_TYPE_REVERT,
+  ACTION_TYPE_RESOLVE,
+  ACTION_TYPE_COPY,
+  ACTION_TYPE_MKDIR,
+  ACTION_TYPE_MERGE
+}
+ActionType;
 
 class VSvnFrame;
 
@@ -31,144 +32,140 @@ class VSvnFrame;
 * Panel holding the splitter with the folder browser
 * and the file list.
 */
-class InfoPanel
-:	public wxPanel
+class InfoPanel:public wxPanel
 {
 public:
-	InfoPanel( wxWindow* parent );
+  InfoPanel (wxWindow * parent);
 };
 
-class LogTracer
-:	public wxTextCtrl
-,	public Tracer
+class LogTracer:public wxTextCtrl, public Tracer
 {
 
 public:
-				LogTracer( wxWindow* parent);
-	void		Trace( const wxString& str );
+  LogTracer (wxWindow * parent);
+  void Trace (const wxString & str);
 };
 
-class VSvnFrame: public wxFrame
+class VSvnFrame:public wxFrame
 {
 public:
-	VSvnFrame( const wxString& title );
-	~VSvnFrame();
+  VSvnFrame (const wxString & title);
+  ~VSvnFrame ();
 
-	void OnSize(wxSizeEvent& event);
+  void OnSize (wxSizeEvent & event);
 
-	// File menu
-	void OnQuit( wxCommandEvent& event );
+  // File menu
+  void OnQuit (wxCommandEvent & event);
 
-	// View menu
-	void OnBrowse( wxCommandEvent& event );
+  // View menu
+  void OnBrowse (wxCommandEvent & event);
 
-	// Query menu
-	void OnStatus( wxCommandEvent& event );
-	void OnLog( wxCommandEvent& event );
-	void OnInfo( wxCommandEvent& event );
+  // Query menu
+  void OnStatus (wxCommandEvent & event);
+  void OnLog (wxCommandEvent & event);
+  void OnInfo (wxCommandEvent & event);
 
-	// Create menu
-	void OnCheckout( wxCommandEvent& event );	
-	void OnImport( wxCommandEvent& event );
-	void OnCopy( wxCommandEvent& event );
-	void OnMkdir( wxCommandEvent& event );
-	void OnMerge( wxCommandEvent& event );
+  // Create menu
+  void OnCheckout (wxCommandEvent & event);
+  void OnImport (wxCommandEvent & event);
+  void OnCopy (wxCommandEvent & event);
+  void OnMkdir (wxCommandEvent & event);
+  void OnMerge (wxCommandEvent & event);
 
-	// Modify menu
-	void OnUpdate( wxCommandEvent& event );
-	void OnAdd( wxCommandEvent& event );
-	void OnDelete( wxCommandEvent& event );
-	void OnCommit( wxCommandEvent& event );
-	void OnRevert( wxCommandEvent& event );
-	void OnResolve( wxCommandEvent& event );
+  // Modify menu
+  void OnUpdate (wxCommandEvent & event);
+  void OnAdd (wxCommandEvent & event);
+  void OnDelete (wxCommandEvent & event);
+  void OnCommit (wxCommandEvent & event);
+  void OnRevert (wxCommandEvent & event);
+  void OnResolve (wxCommandEvent & event);
 
-	// Help menu
-	void OnContents( wxCommandEvent& event );
-	void OnAbout( wxCommandEvent& event );
+  // Help menu
+  void OnContents (wxCommandEvent & event);
+  void OnAbout (wxCommandEvent & event);
 
-	// Combo box on the toolbar
-	void OnCombo( wxCommandEvent& event );
-	
-	// toolbar administration
-	void LayoutChildren();
-	void RecreateToolbar();
-	void AddBrowseTools();
-	void AddActionTools();
-	void AddInfoTools();
+  // Combo box on the toolbar
+  void OnCombo (wxCommandEvent & event);
 
-	// menu stuff
-	void InitializeMenu();
+  // toolbar administration
+  void LayoutChildren ();
+  void RecreateToolbar ();
+  void AddBrowseTools ();
+  void AddActionTools ();
+  void AddInfoTools ();
 
-	// toolbar events
-	void OnToolEnter( wxCommandEvent& event );
-	void OnToolLeftClick( wxCommandEvent& event );
+  // menu stuff
+  void InitializeMenu ();
 
-	// Events from action threads
-	void OnActionEvent( wxCommandEvent& event );
+  // toolbar events
+  void OnToolEnter (wxCommandEvent & event);
+  void OnToolLeftClick (wxCommandEvent & event);
 
-	// combobox
-	void InitComboBrowser();
+  // Events from action threads
+  void OnActionEvent (wxCommandEvent & event);
 
-	// list control
-	void InitFileList();
+  // combobox
+  void InitComboBrowser ();
 
-	// utility functions
-	void BrowseDir();
+  // list control
+  void InitFileList ();
 
-	void ShowStatus();
-	void ShowLog();
-	void ShowInfo();
+  // utility functions
+  void BrowseDir ();
 
-	void MakeUpdate();
-	void AddEntries();
-	void DelEntries();
-	void MakeCommit();
-	void MakeRevert();
-	void MakeResolve();
+  void ShowStatus ();
+  void ShowLog ();
+  void ShowInfo ();
 
-	void MakeCopy();
-	void Mkdir();
-	void Merge();
-	void Contents();
+  void MakeUpdate ();
+  void AddEntries ();
+  void DelEntries ();
+  void MakeCommit ();
+  void MakeRevert ();
+  void MakeResolve ();
 
-	FileListCtrl*		GetFileList()
-						{
-							return m_listCtrl;
-						}
+  void MakeCopy ();
+  void Mkdir ();
+  void Merge ();
+  void Contents ();
 
-	FolderBrowser*		GetFolderBrowser()
-						{
-							return m_folder_browser;
-						}
+  FileListCtrl *GetFileList ()
+  {
+    return m_listCtrl;
+  }
+
+  FolderBrowser *GetFolderBrowser ()
+  {
+    return m_folder_browser;
+  }
 
 private:
-	
-	FolderBrowser		*m_folder_browser;
-	FileListCtrl		*m_listCtrl;
 
-	wxSplitterWindow	*m_horiz_splitter;
-	wxSplitterWindow	*m_vert_splitter;
+  FolderBrowser * m_folder_browser;
+  FileListCtrl *m_listCtrl;
 
-	InfoPanel			*m_info_panel;
+  wxSplitterWindow *m_horiz_splitter;
+  wxSplitterWindow *m_vert_splitter;
 
-	wxTextCtrl			*m_log;
-	EventTracer			*m_logTracer;
+  InfoPanel *m_info_panel;
 
-	wxComboBox			*m_comboBrowse;
-	wxToolBar			*m_tbar;
-	size_t				m_toolbar_rows;				// 1 or 2 only (toolbar rows)
+  wxTextCtrl *m_log;
+  EventTracer *m_logTracer;
 
-	ActionType			lastAction;
+  wxComboBox *m_comboBrowse;
+  wxToolBar *m_tbar;
+  size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
-	apr_pool_t			*pool;
-						/**
-						* Used for allocating stuff before some actions,
-						* stuff that will be used in that actions
-						*/
-	apr_pool_t			*aux_pool;
+  ActionType lastAction;
 
-	DECLARE_EVENT_TABLE()
-};
+  apr_pool_t *pool;
+      /**
+      * Used for allocating stuff before some actions,
+      * stuff that will be used in that actions
+      */
+  apr_pool_t *aux_pool;
+
+DECLARE_EVENT_TABLE ()};
 
 const int ID_TOOLBAR = 500;
 
@@ -177,32 +174,32 @@ const int ID_TOOLBAR = 500;
  */
 enum
 {
-	ID_Quit = 1,
-	ID_About,
-	ID_Refresh,
-	ID_Browse,
-	ID_Import,
-	ID_Checkout,
-	ID_Copy,
-	ID_Combo,
-	ID_Update,
-	ID_Commit,
-	ID_Add,
-	ID_Del,
-	ID_Revert,
-	ID_Status,
-	ID_Log,
-	ID_Info,
-	ID_Resolve,
-	ID_Merge,
-	ID_Contents,
-	ID_Mkdir,
-	ID_Switch,
-	ID_Preferences,
+  ID_Quit = 1,
+  ID_About,
+  ID_Refresh,
+  ID_Browse,
+  ID_Import,
+  ID_Checkout,
+  ID_Copy,
+  ID_Combo,
+  ID_Update,
+  ID_Commit,
+  ID_Add,
+  ID_Del,
+  ID_Revert,
+  ID_Status,
+  ID_Log,
+  ID_Info,
+  ID_Resolve,
+  ID_Merge,
+  ID_Contents,
+  ID_Mkdir,
+  ID_Switch,
+  ID_Preferences,
 
-	ACTION_EVENT,		// this one gets sent from the action threads
+  ACTION_EVENT,                 // this one gets sent from the action threads
 
-	LIST_CTRL = 1000
+  LIST_CTRL = 1000
 };
 
 #endif

@@ -4,29 +4,27 @@
 #include "res/delete.h"
 
 #if defined(__WXMSW__)
-	static char *Delete_Dialog = NULL;
+static char *Delete_Dialog = NULL;
 #else
-#	include "res/delete.wxr"
+# include "res/delete.wxr"
 #endif
 
-class DeleteDlg
-:	public wxDialog
+class DeleteDlg:public wxDialog
 {
 
 public:
-	wxTextCtrl		*user;
-	wxTextCtrl		*pass;
-	wxTextCtrl		*logMsg;
-	wxCheckBox		*force;
+  wxTextCtrl * user;
+  wxTextCtrl *pass;
+  wxTextCtrl *logMsg;
+  wxCheckBox *force;
 
 public:
-	void OnOk( wxCommandEvent& event );
-	void OnCancel( wxCommandEvent& event );
+  void OnOk (wxCommandEvent & event);
+  void OnCancel (wxCommandEvent & event);
 
-	void InitializeData();
+  void InitializeData ();
 
 private:
-	DECLARE_EVENT_TABLE()
-};
+ DECLARE_EVENT_TABLE ()};
 
 #endif

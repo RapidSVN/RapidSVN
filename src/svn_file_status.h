@@ -6,30 +6,29 @@
 class SvnFileStatus
 {
 private:
-	svn_wc_status_t		*status;
-	apr_pool_t			*subpool;
-		
+  svn_wc_status_t * status;
+  apr_pool_t *subpool;
+
 public:
-						SvnFileStatus( apr_pool_t *thepool );
-						~SvnFileStatus();
+   SvnFileStatus (apr_pool_t * thepool);
+  ~SvnFileStatus ();
 
-	void				retrieveStatus( const wxString &path, 
-										AuthBaton& auth_baton );
+  void retrieveStatus (const wxString & path, AuthBaton & auth_baton);
 
-	svn_wc_status_kind	getFileStatus() const;
-	svn_wc_status_kind	getFilePropStatus() const;
-	svn_revnum_t		getRevision() const;
-	svn_revnum_t		getLastChange() const;
+  svn_wc_status_kind getFileStatus () const;
+  svn_wc_status_kind getFilePropStatus () const;
+  svn_revnum_t getRevision () const;
+  svn_revnum_t getLastChange () const;
 
-	operator			bool()
-						{
-							return status == NULL;
-						}
+  operator bool ()
+  {
+    return status == NULL;
+  }
 
-	const svn_wc_status_t *getStatus() const
-						{
-							return status;
-						}
+  const svn_wc_status_t *getStatus () const
+  {
+    return status;
+  }
 
 };
 

@@ -4,29 +4,27 @@
 #include "res/commit.h"
 
 #if defined(__WXMSW__)
-	static char *Commit_Dialog = NULL;
+static char *Commit_Dialog = NULL;
 #else
-#	include "res/commit.wxr"
+# include "res/commit.wxr"
 #endif
 
-class CommitDlg
-:	public wxDialog
+class CommitDlg:public wxDialog
 {
 
 public:
-	wxTextCtrl		*user;
-	wxTextCtrl		*pass;
-	wxTextCtrl		*logMsg;
-	wxCheckBox		*recursive;
+  wxTextCtrl * user;
+  wxTextCtrl *pass;
+  wxTextCtrl *logMsg;
+  wxCheckBox *recursive;
 
 public:
-	void OnOk( wxCommandEvent& event );
-	void OnCancel( wxCommandEvent& event );
+  void OnOk (wxCommandEvent & event);
+  void OnCancel (wxCommandEvent & event);
 
-	void InitializeData();
+  void InitializeData ();
 
 private:
-	DECLARE_EVENT_TABLE()
-};
+ DECLARE_EVENT_TABLE ()};
 
 #endif

@@ -3,27 +3,25 @@
 
 enum
 {
-	NORMAL_REPORT,
-	ERROR_REPORT
+  NORMAL_REPORT,
+  ERROR_REPORT
 };
 
-class Report_Dlg
-:	public wxDialog
+class Report_Dlg:public wxDialog
 {
 private:
-	wxButton		*button;
-	wxTextCtrl		*text;
+  wxButton * button;
+  wxTextCtrl *text;
 
-	const wxString	&str;
+  const wxString & str;
 public:
-				Report_Dlg( wxWindow *parent, 
-							const wxString& caption, 
-							const wxString& data, int type = NORMAL_REPORT  );
-				
-	void		OnButton( wxCommandEvent& event );
+   Report_Dlg (wxWindow * parent,
+               const wxString & caption,
+               const wxString & data, int type = NORMAL_REPORT);
+
+  void OnButton (wxCommandEvent & event);
 
 private:
-    DECLARE_EVENT_TABLE()
-};
+ DECLARE_EVENT_TABLE ()};
 
 #endif

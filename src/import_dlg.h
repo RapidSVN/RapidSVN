@@ -14,30 +14,28 @@ static char *Import_Dialog = NULL;
 #endif
 
 
-class ImportDlg
-:	public wxDialog
+class ImportDlg:public wxDialog
 {
 
 public:
-	wxTextCtrl		*reposURL;
-	wxTextCtrl		*path;
-	wxTextCtrl		*new_entry;
-	wxTextCtrl		*logMsg;
-	wxRadioBox		*path_type;
-	wxTextCtrl		*user;
-	wxTextCtrl		*pass;
-	wxCheckBox		*recursive;	
+  wxTextCtrl * reposURL;
+  wxTextCtrl *path;
+  wxTextCtrl *new_entry;
+  wxTextCtrl *logMsg;
+  wxRadioBox *path_type;
+  wxTextCtrl *user;
+  wxTextCtrl *pass;
+  wxCheckBox *recursive;
 
 public:
-	void OnOk( wxCommandEvent& event );
-	void OnCancel( wxCommandEvent& event );
-	void OnBrowse( wxCommandEvent& event );
-	void OnRadio( wxCommandEvent& event );
+  void OnOk (wxCommandEvent & event);
+  void OnCancel (wxCommandEvent & event);
+  void OnBrowse (wxCommandEvent & event);
+  void OnRadio (wxCommandEvent & event);
 
-	void InitializeData();
+  void InitializeData ();
 
 private:
-	DECLARE_EVENT_TABLE()
-};
+ DECLARE_EVENT_TABLE ()};
 
 #endif

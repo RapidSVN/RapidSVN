@@ -3,23 +3,22 @@
 
 #include "action_thread.h"
 
-class DeleteAction
-:	public ActionThread
+class DeleteAction:public ActionThread
 {
 private:
-	wxString		user;
-	wxString		pass;
-	wxString		logMsg;
-	svn_boolean_t	force;
+  wxString user;
+  wxString pass;
+  wxString logMsg;
+  svn_boolean_t force;
 
-	apr_array_header_t	*targets;
+  apr_array_header_t *targets;
 
 public:
-					DeleteAction( wxFrame* frame, apr_pool_t *__pool, 
-								Tracer* tr, apr_array_header_t *trgts );
+   DeleteAction (wxFrame * frame, apr_pool_t * __pool,
+                 Tracer * tr, apr_array_header_t * trgts);
 
-	void			Perform();
-	void*			Entry();
+  void Perform ();
+  void *Entry ();
 };
 
 #endif

@@ -3,18 +3,17 @@
 
 #include "action_thread.h"
 
-class RevertAction
-:	public ActionThread
+class RevertAction:public ActionThread
 {
 private:
-	apr_array_header_t	*targets;
+  apr_array_header_t * targets;
 
 public:
-					RevertAction( wxFrame* frame, apr_pool_t *__pool, 
-								Tracer* tr, apr_array_header_t *trgts );
+  RevertAction (wxFrame * frame, apr_pool_t * __pool,
+                Tracer * tr, apr_array_header_t * trgts);
 
-	void			Perform();
-	void*			Entry();
+  void Perform ();
+  void *Entry ();
 };
 
 #endif

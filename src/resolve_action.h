@@ -3,18 +3,17 @@
 
 #include "action_thread.h"
 
-class ResolveAction
-:	public ActionThread
+class ResolveAction:public ActionThread
 {
 private:
-	apr_array_header_t	*targets;
+  apr_array_header_t * targets;
 
 public:
-					ResolveAction( wxFrame* frame, apr_pool_t *__pool, 
-								Tracer* tr, apr_array_header_t *trgts );
+  ResolveAction (wxFrame * frame, apr_pool_t * __pool,
+                 Tracer * tr, apr_array_header_t * trgts);
 
-	void			Perform();
-	void*			Entry();
+  void Perform ();
+  void *Entry ();
 };
 
 #endif

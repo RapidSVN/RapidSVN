@@ -14,32 +14,30 @@ static char *Merge_Dialog = NULL;
 #endif
 
 
-class MergeDlg
-:	public wxDialog
+class MergeDlg:public wxDialog
 {
 
 public:
-	wxTextCtrl		*path1;
-	wxTextCtrl		*path2;
+  wxTextCtrl * path1;
+  wxTextCtrl *path2;
 
-	wxTextCtrl		*rev_start;
-	wxTextCtrl		*rev_end;
-	
-	wxTextCtrl		*rev_second;
+  wxTextCtrl *rev_start;
+  wxTextCtrl *rev_end;
 
-	wxTextCtrl		*user;
-	wxTextCtrl		*pass;
-	wxCheckBox		*recursive;	
-	wxCheckBox		*force;	
+  wxTextCtrl *rev_second;
+
+  wxTextCtrl *user;
+  wxTextCtrl *pass;
+  wxCheckBox *recursive;
+  wxCheckBox *force;
 
 public:
-	void OnOk( wxCommandEvent& event );
-	void OnCancel( wxCommandEvent& event );
+  void OnOk (wxCommandEvent & event);
+  void OnCancel (wxCommandEvent & event);
 
-	void InitializeData();
+  void InitializeData ();
 
 private:
-	DECLARE_EVENT_TABLE()
-};
+ DECLARE_EVENT_TABLE ()};
 
 #endif

@@ -3,23 +3,22 @@
 
 #include "action_thread.h"
 
-class CommitAction
-:	public ActionThread
+class CommitAction:public ActionThread
 {
 private:
-	wxString		user;
-	wxString		pass;
-	wxString		logMsg;
-	svn_boolean_t	recursive;
+  wxString user;
+  wxString pass;
+  wxString logMsg;
+  svn_boolean_t recursive;
 
-	apr_array_header_t	*targets;
+  apr_array_header_t *targets;
 
 public:
-					CommitAction( wxFrame* frame, apr_pool_t *__pool, 
-								Tracer* tr, apr_array_header_t *trgts );
+   CommitAction (wxFrame * frame, apr_pool_t * __pool,
+                 Tracer * tr, apr_array_header_t * trgts);
 
-	void			Perform();
-	void*			Entry();
+  void Perform ();
+  void *Entry ();
 };
 
 #endif

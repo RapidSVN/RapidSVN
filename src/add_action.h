@@ -3,18 +3,17 @@
 
 #include "action_thread.h"
 
-class AddAction
-:	public ActionThread
+class AddAction:public ActionThread
 {
 private:
-	apr_array_header_t	*targets;
+  apr_array_header_t * targets;
 
 public:
-					AddAction( wxFrame* frame, apr_pool_t *__pool, 
-								Tracer* tr, apr_array_header_t *trgts );
+  AddAction (wxFrame * frame, apr_pool_t * __pool,
+             Tracer * tr, apr_array_header_t * trgts);
 
-	void			Perform();
-	void*			Entry();
+  void Perform ();
+  void *Entry ();
 };
 
 #endif
