@@ -3,6 +3,7 @@ noinst_HEADERS=${wildcard *.hpp}
 lib_LTLIBRARIES=libsvncpp.la
 
 libsvncpp_la_SOURCES= \
+	apr.cpp \
 	client.cpp \
 	client_cat.cpp \
 	client_diff.cpp \

@@ -16,6 +16,7 @@
 #include "wx/filename.h"
 
 // svncpp
+#include "svncpp/apr.hpp"
 #include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/targets.hpp"
@@ -160,6 +161,11 @@ struct RapidSvnFrame::Data
 public:
   wxMenu * MenuColumns;
   wxMenuBar * MenuBar;
+
+  /** 
+   * This instance of @a apr is used to initialize/terminate apr 
+   */
+  svn::Apr apr;
 
   Data ()
     : MenuColumns (0), MenuBar (0)
@@ -310,8 +316,6 @@ END_EVENT_TABLE ()
                wxDEFAULT_FRAME_STYLE)
 {
   m = new Data ();
-  // apr stuff
-  apr_initialize ();
   m_folder_browser = NULL;
   m_listCtrl = NULL;
   m_title = title;

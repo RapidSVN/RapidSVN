@@ -88,7 +88,8 @@ private:
   /**
    * disallow assignment operator
    */
-  ListEditorDlg operator & (const ListEditorDlg &);
+  ListEditorDlg &
+  operator = (const ListEditorDlg &);
 
   void
   CheckButtons ();
