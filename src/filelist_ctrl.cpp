@@ -808,6 +808,7 @@ void
 FileListCtrl::UpdateFileList ()
 {
   const wxString & path = m->Path;
+  const bool isNative (!svn::Url::isValid (m->Path.c_str ()));
   // delete all the items in the list to display the new ones
   DeleteAllItems ();
 
@@ -845,9 +846,15 @@ FileListCtrl::UpdateFileList ()
 
     if (m->ColumnVisible[COL_PATH] || m->ColumnVisible[COL_EXTENSION])
     {
-      wxFileName path (fullPath);
-      values[COL_PATH]      = path.GetFullPath ();
-      values[COL_EXTENSION] = path.GetExt();
+      svn::Path path (fullPath);
+      std::string dir, filename, ext;
+      path.split (dir, filename, ext);
+
+      if (isNative)
+        values[COL_PATH]    = path.native ().c_str ();
+      else
+        values[COL_PATH]    = fullPath;
+      values[COL_EXTENSION] = ext.c_str ();
     }
 
     wxString text;
