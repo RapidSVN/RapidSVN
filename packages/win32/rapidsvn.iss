@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=RapidSVN
-AppVerName=RapidSVN 0.3.0
+AppVerName=RapidSVN 0.4.0
 AppPublisherURL=http://rapidsvn.tigris.org/
 AppSupportURL=http://rapidsvn.tigris.org/
 AppUpdatesURL=http://rapidsvn.tigris.org/
@@ -11,7 +11,7 @@ DefaultDirName={pf}\RapidSVN
 DefaultGroupName=RapidSVN
 LicenseFile=..\..\LICENSE.txt
 InfoBeforeFile=..\..\README
-OutputBaseFilename=RapidSVN-0.3.0
+OutputBaseFilename=RapidSVN-0.4.0
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
@@ -20,7 +20,7 @@ Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "A
 Name: main; Description: RapidSVN Application; Types: compact custom full; Flags: fixed
 
 [Files]
-Source: "libdb40.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
+Source: "libdb42.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
 Source: "msvcp60.dll"; DestDir: "{app}\bin"; CopyMode: onlyifdoesntexist; Components: main
 Source: "libeay32.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
 Source: "ssleay32.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
