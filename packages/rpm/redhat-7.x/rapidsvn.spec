@@ -9,7 +9,7 @@ Source0: %{name}-%{version}-%{release}.tar.gz
 Packager: David Summers <david@summersoft.fay.ar.us>
 Requires: subversion = 0.35.1
 #Requires: /sbin/install-info
-BuildPreReq: subversion-devel = 0.35.1
+BuildPreReq: subversion-devel >= 0.37.0
 BuildPreReq: wxGTK-devel >= 2.3.3
 BuildPreReq: autoconf >= 2.53
 BuildPreReq: libtool >= 1.4.2

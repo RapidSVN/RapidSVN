@@ -14,7 +14,7 @@ BuildPreReq: docbook-style-xsl >= 1.58.1
 BuildPreReq: doxygen
 BuildPreReq: libtool >= 1.4.2
 BuildPreReq: libxslt >= 1.0.27
-BuildPreReq: subversion-devel = 0.35.1
+BuildPreReq: subversion-devel >= 0.37.0
 BuildPreReq: wxGTK-devel >= 2.4.1
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 Prefix: /usr
