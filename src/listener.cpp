@@ -13,6 +13,7 @@
 
 // wxwindows
 #include "wx/wx.h"
+#include "wx/utils.h"
 
 // app
 #include "listener.hpp"
