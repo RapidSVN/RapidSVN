@@ -150,6 +150,217 @@ GetDefaultWidth (int col)
 }
 
 /**
+ * compare two unsigned long numbers
+ *
+ * @param val1 value 1
+ * @param val2 value 2
+ * @return result of comparison
+ * @retval 0 both are equal
+ * @retval 1 rev1 > rev2
+ * @retval -1 rev1 < rev2
+ */
+static int
+Compare (unsigned long rev1, unsigned long rev2)
+{
+  if (rev1 == rev2)
+  {
+    return 0;
+  }
+  return rev1 > rev2 ? 1 : -1;
+}
+
+/**
+ * Compare two strings
+ *
+ * @param s1 string 2
+ * @param s2 string 2
+ * @return < -> -1 / = -> 0 / > -> 1
+ */
+static int
+Compare (const char * s1, const char * s2)
+{
+  const char * sv1 = s1 == 0 ? "" : s1;
+  const char * sv2 = s2 == 0 ? "" : s2;
+  
+  return wxString (sv1).CmpNoCase (sv2);
+}
+
+/**
+ * compare the given @a svn::Status entries
+ *
+ * @param ps1 item to compare
+ * @param ps2 item to compare
+ * @param column to compare
+ * @return -1
+ */
+static int 
+CompareColumn (svn::Status * ps1,
+               svn::Status * ps2,
+               int column)
+{
+  int res = 0;
+  unsigned long r1 = 0, r2 = 0;
+  bool ok1 = ps1->isVersioned ();
+  bool ok2 = ps2->isVersioned ();
+  svn::Entry e1 (ps1->entry ());
+  svn::Entry e2 (ps2->entry ());
+
+  switch (column)
+  {
+  case FileListCtrl::COL_NAME:                     
+    res = Compare (ps1->path (), ps2->path ());
+    break;
+
+  case FileListCtrl::COL_PATH: 
+    res = Compare (ps1->path (), ps2->path ());
+    break;
+
+  case FileListCtrl::COL_REV:     
+    res = Compare (e1.revision (), e2.revision ());
+    break;
+
+  case FileListCtrl::COL_CMT_REV:     
+    res = Compare (e1.cmtRev (), e2.cmtRev ());
+    break;
+
+  case FileListCtrl::COL_AUTHOR:
+    res = Compare (e1.cmtAuthor (), e2.cmtAuthor ());
+    break;
+
+  case FileListCtrl::COL_TEXT_STATUS:
+    res = Compare (ps1->textStatus (), ps2->textStatus ());
+    break;
+
+  case FileListCtrl::COL_PROP_STATUS:
+    res = Compare (ps2->propStatus (), ps2->propStatus ());
+    break;
+
+  case FileListCtrl::COL_CMT_DATE:
+    res = Compare (e1.cmtDate (), e2.cmtDate ());
+    break;
+
+  case FileListCtrl::COL_TEXT_TIME:
+    res = Compare (e1.textTime (), e2.textTime ());
+    break;
+
+  case FileListCtrl::COL_PROP_TIME:
+    res = Compare (e1.propTime (), e2.propTime ());
+    break;
+
+  case FileListCtrl::COL_CHECKSUM:
+    res = Compare (e1.checksum (), e2.checksum ());
+    break;
+
+  case FileListCtrl::COL_URL:
+    res = Compare (e1.url (), e2.url ());
+    break;
+
+  case FileListCtrl::COL_REPOS:
+    res = Compare (e1.url (), e2.url ());
+    break;
+
+  case FileListCtrl::COL_UUID:
+    res = Compare (e1.uuid (), e2.uuid ());
+    break;
+
+  case FileListCtrl::COL_SCHEDULE:
+    res = Compare (e1.schedule (), e2.schedule ());
+    break;
+
+  case FileListCtrl::COL_COPIED:
+    res = Compare (e1.isCopied (), e2.isCopied ());
+    break;
+
+  case FileListCtrl::COL_CONFLICT_OLD:
+    res = Compare (e1.conflictOld (), e2.conflictOld ());
+    break;
+
+  case FileListCtrl::COL_CONFLICT_NEW:
+    res = Compare (e1.conflictNew (), e2.conflictNew ());
+    break;
+
+  case FileListCtrl::COL_CONFLICT_WRK:
+    res = Compare (e1.conflictWrk (), e2.conflictWrk ());
+    break;
+
+  default:
+    res = 0;
+  }
+
+  return res;
+}
+
+/**
+ * check the given @a svn::Status entries and the 
+ * sort settings. Not only the @a SortColumn is
+ * used for comparison but secondary columns as
+ * well so the entries are always sorted in
+ * unique way. Lets say we want to sort for COL_REV and
+ * all the entries have the same revision. We will
+ * use COL_PATH and COL_NAME so the listing will still
+ * be unique.
+ *
+ * @todo check the sort algorithm, especially the
+ *       switch statements...
+ */
+static int
+CompareItems (svn::Status * ps1, svn::Status * ps2,
+              int SortColumn, bool SortIncreasing)
+{
+  int res = 0;
+
+  // Directories always precede files:
+  if (IsDir (ps1) && !IsDir (ps2))
+    res = -1;
+  else if (!IsDir (ps1) && IsDir (ps2))
+    res = 1;
+
+  if (res != 0)
+  {
+    return res;
+  }
+
+  switch (SortColumn)
+  {
+  case FileListCtrl::COL_NAME:                     
+    res = CompareColumn (ps1, ps2, FileListCtrl::COL_NAME);
+    if (res == 0)
+    {
+      res = CompareColumn (ps1, ps2, FileListCtrl::COL_PATH);
+    }
+    break;
+
+  case FileListCtrl::COL_PATH:
+    res = CompareColumn (ps1, ps2, FileListCtrl::COL_PATH);
+    if (res == 0)
+    {
+      res = CompareColumn (ps1, ps2, FileListCtrl::COL_NAME);
+    }
+    break;
+
+  default:
+    res = CompareColumn (ps1, ps2, SortColumn);
+    if (res == 0)
+    {
+      res = CompareColumn (ps1, ps2, FileListCtrl::COL_PATH);
+    }
+    if (res == 0)
+    {
+      res = CompareColumn (ps1, ps2, FileListCtrl::COL_NAME);
+    }
+    break;
+  }
+
+  if (!SortIncreasing)
+  {
+    res = res * -1;
+  }
+
+  return res;
+}
+
+
+/**
  * array with column captions
  */
 static const char * 
@@ -258,113 +469,28 @@ public:
   {
     delete ImageListSmall;
   }
-    
-  /**
-   * check the given @a svn::Status entries and the 
-   * sort settings.
-   *
-   * @todo check the sort algorithm, especially the
-   *       switch statements...
+
+  /** 
+   * get the real column. @a clickedColumn is only the index
+   * of the visible column that got clicked. If there are
+   * invisible columns this translates to something completely different
    */
-  static int
-  CompareItems (svn::Status * ps1, svn::Status * ps2,
-                int SortColumn, bool SortIncreasing)
+  int 
+  GetRealColumn (int clickedColumn)
   {
-    int rc = 0;
-    unsigned long r1 = 0, r2 = 0;
-    bool ok1, ok2;
-    svn::Entry e1 (ps1->entry ());
-    svn::Entry e2 (ps2->entry ());
-    wxString t1, t2;
+    int colIndex;
+    int column = clickedColumn;
 
-    switch (SortColumn)
+    for (colIndex = 0; colIndex <= clickedColumn; colIndex++)
     {
-    case COL_NAME:                     
-      // Directories always precede files:
-      if (IsDir (ps1) && !IsDir (ps2))
-        rc = -1;
-      else if (!IsDir (ps1) && IsDir (ps2))
-        rc = 1;
-      else
+      if (!ColumnVisible[colIndex])
       {
-        rc = wxString (ps1->path ()).CmpNoCase (ps2->path ());
-        if (!SortIncreasing)
-          rc = rc * -1;           // Reverse the sort order.
+        column++;
       }
-      break;
-
-    case COL_REV:     
-    case COL_CMT_DATE:
-    case COL_CMT_REV:
-      ok1 = ok2 = true;
-
-      switch (SortColumn)
-      {
-      case COL_REV:                  
-        ok1 = ps1->isVersioned ();
-        r1 = e1.revision ();
-        ok2 = ps2->isVersioned ();
-        r2 = e2.revision ();
-        break;
-
-      case COL_CMT_REV:
-        ok1 = ps1->isVersioned ();
-        r1 = e1.cmtRev ();
-        ok2 = ps2->isVersioned ();
-        r2 = e2.cmtRev ();
-        break;
-
-      case COL_CMT_DATE:
-        ok1 = ps1->isVersioned ();
-        r1 = e1.cmtDate ();
-        ok2 = ps2->isVersioned ();
-        r2 = e2.cmtDate ();
-        break;
-      }
-
-      // Unversioned always come last.
-      if (ok1 && !ok2)
-        rc = -1;
-      else if (ok2 && !ok1)
-        rc = 1;
-      else if (r1 == r2)
-        rc = 0;
-      else
-      {
-        rc = r1 > r2 ? 1 : -1;
-        if (!SortIncreasing)
-          rc = rc * -1;           // Reverse the sort order.
-      }
-      break;
-
-    case COL_TEXT_STATUS:
-      t1 = _(svn::Status::statusDescription (ps1->textStatus ()));
-      t2 = _(svn::Status::statusDescription (ps2->textStatus ()));
-      rc = wxString (t1).CmpNoCase (t2);
-      if (!SortIncreasing)
-        rc = rc * -1;             // Reverse the sort order.
-      break;
-
-    case COL_PROP_STATUS:
-      t1 = _(svn::Status::statusDescription (ps1->propStatus ()));
-      t2 = _(svn::Status::statusDescription (ps2->propStatus ()));
-      rc = wxString (t1).CmpNoCase (t2);
-      if (!SortIncreasing)
-        rc = rc * -1;             // Reverse the sort order.
-      break;
-    default:
-      //TODO implement all the missing columns
-      break;
     }
 
-    // If the items are equal, we revert to a sort on the item name,
-    // being careful to avoid recursion.
-    if ((SortColumn != 0) && (rc == 0))
-      rc = CompareItems (ps1, ps2, 0, SortIncreasing);
-
-    return rc;
+    return column;
   }
-
 
   /**
    * callback function for @a wxListCtrl::SortColumns
@@ -374,7 +500,7 @@ public:
   {
     svn::Status * ps1 = (svn::Status *) item1;
     svn::Status * ps2 = (svn::Status *) item2;
-    Data *data = (Data *) sortData;
+    Data *data = (Data *) (sortData);
 
     if (ps1 && ps2) 
       return CompareItems (ps1, ps2, data->SortColumn, 
@@ -696,7 +822,7 @@ FileListCtrl::UpdateFileList ()
     }
   }
 
-  SortItems (Data::CompareFunction, (long) this->m);
+  SortItems (Data::CompareFunction, (long)this->m);
 
   Show ();
 
@@ -754,14 +880,17 @@ FileListCtrl::OnItemRightClk (wxListEvent & event)
 void
 FileListCtrl::OnColumnLeftClick (wxListEvent & event)
 {
-  int Column = event.GetColumn ();
+  int clickedColumn = event.GetColumn ();
+
+  // First we have to get the real column
+  int column = m->GetRealColumn (clickedColumn);
 
   // A second click on the current sort column reverses the order of sorting.
-  if (Column == m->SortColumn)
+  if (column == m->SortColumn)
     m->SortIncreasing = !m->SortIncreasing;
   else
   {
-    m->SortColumn = Column;
+    m->SortColumn = column;
     m->SortIncreasing = true;
   }
 
