@@ -35,8 +35,7 @@ LogAction::Prepare ()
     return false;
   }
 
-  svn::Context context;
-  svn::Client client (&context);
+  svn::Client client (GetContext ());
 
   const svn::LogEntries * entries;
   svn::Path target = GetTarget ();
