@@ -98,13 +98,13 @@ namespace svn
     {
       // intialize authentication providers
       // * simple 
-      // * simple prompt 
-      // * ssl server file 
-      // * ssl client file 
-      // * ssl pw file 
-      // * ssl server prompt 
-      // * ssl client prompt
-      // * ssl pw prompt
+      // * username
+      // * simple prompt
+      // * ssl server trust file 
+      // * ssl server trust prompt
+      // * ssl client cert pw file
+      // * ssl client cert pw prompt
+      // * ssl cliebt cert file
       // ===================
       // 8 providers
       apr_array_header_t *providers = 
@@ -134,39 +134,25 @@ namespace svn
         provider;
 
       // add ssl providers
-      svn_client_get_ssl_server_file_provider (&provider, pool);
+      svn_client_get_ssl_server_trust_file_provider (&provider, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
-      svn_client_get_ssl_client_file_provider (&provider, pool);
+      svn_client_get_ssl_server_trust_prompt_provider (
+        &provider, onSslServerTrustPrompt, this, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
-      svn_client_get_ssl_pw_file_provider (&provider, pool);
+      svn_client_get_ssl_client_cert_pw_file_provider (&provider, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
-      svn_client_get_ssl_server_prompt_provider (
-        &provider, 
-        onSslServerPrompt,
-        this,
-        pool);
+      svn_client_get_ssl_client_cert_pw_prompt_provider (
+        &provider, onSslClientCertPwPrompt, this, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
-      svn_client_get_ssl_client_prompt_provider (
-        &provider,
-        onSslClientPrompt,
-        this, 
-        pool);
-      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
-        provider;
-
-      svn_client_get_ssl_pw_prompt_provider (
-        &provider,
-        onSslPwPrompt,
-        this, 
-        pool);
+      svn_client_get_ssl_client_cert_file_provider (&provider, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
@@ -290,33 +276,34 @@ namespace svn
     }
 
     /**
-     * @see svn_auth_ssl_server_prompt_func_t
+     * @see svn_auth_ssl_server_trust_prompt_func_t
      */
     static svn_error_t *
-    onSslServerPrompt (svn_auth_cred_server_ssl_t **cred, 
-                       void *baton, 
-                       int failures,
-                       const svn_auth_ssl_server_cert_info_t *info,
-                       apr_pool_t *pool)
+    onSslServerTrustPrompt (svn_auth_cred_ssl_server_trust_t **cred, 
+                      void *baton, 
+                      int failures,
+                      const svn_auth_ssl_server_cert_info_t *info,
+                      apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
       
-      ContextListener::SslServerPromptData promptData (failures);
-      promptData.hostname = info->hostname;
-      promptData.fingerprint = info->fingerprint;
-      promptData.validFrom = info->valid_from;
-      promptData.validUntil = info->valid_until;
-      promptData.issuerDName = info->issuer_dname;
+      ContextListener::SslServerTrustData trustData (failures);
+      trustData.hostname = info->hostname;
+      trustData.fingerprint = info->fingerprint;
+      trustData.validFrom = info->valid_from;
+      trustData.validUntil = info->valid_until;
+      trustData.issuerDName = info->issuer_dname;
 
-      if (!data->listener->contextSslServerPrompt (promptData))
+      if (!data->listener->contextSslServerTrustPrompt (trustData))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
-      svn_auth_cred_server_ssl_t *cred_ = (svn_auth_cred_server_ssl_t*)
-        apr_palloc (pool, sizeof (svn_auth_cred_server_ssl_t));
+      svn_auth_cred_ssl_server_trust_t *cred_ = 
+        (svn_auth_cred_ssl_server_trust_t*)
+        apr_palloc (pool, sizeof (svn_auth_cred_ssl_server_trust_t));
       
-      cred_->trust_permanently = promptData.trustPermanently;
-      cred_->accepted_failures = promptData.acceptedFailures;
+      cred_->trust_permanently = trustData.trustPermanently;
+      cred_->accepted_failures = trustData.acceptedFailures;
 
       *cred = cred_;
       
@@ -324,22 +311,23 @@ namespace svn
     }
 
     /**
-     * @see svn_auth_ssl_client_prompt_func_t
+     * @see svn_auth_ssl_client_cert_prompt_func_t
      */
     static svn_error_t *
-    onSslClientPrompt (svn_auth_cred_client_ssl_t **cred, 
-                       void *baton, 
-                       apr_pool_t *pool)
+    onSslClientCertPrompt (svn_auth_cred_ssl_client_cert_t **cred, 
+                           void *baton, 
+                           apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
 
       std::string certFile ("");
-      if (!data->listener->contextSslClientPrompt (certFile))
+      if (!data->listener->contextSslClientCertPrompt (certFile))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
-      svn_auth_cred_client_ssl_t *cred_ = (svn_auth_cred_client_ssl_t*)
-        apr_palloc (pool, sizeof (svn_auth_cred_client_ssl_t));
+      svn_auth_cred_ssl_client_cert_t *cred_ = 
+        (svn_auth_cred_ssl_client_cert_t*)
+        apr_palloc (pool, sizeof (svn_auth_cred_ssl_client_cert_t));
         
       SVN_ERR (svn_utf_cstring_to_utf8 (
                  &cred_->cert_file,
@@ -352,23 +340,24 @@ namespace svn
     }
 
     /**
-     * @see svn_auth_ssl_pw_prompt_func_t  
+     * @see svn_auth_ssl_client_cert_pw_prompt_func_t  
      */
     static svn_error_t *
-    onSslPwPrompt (svn_auth_cred_client_ssl_pass_t **cred, 
-                   void *baton, 
-                   apr_pool_t *pool)
+    onSslClientCertPwPrompt (
+      svn_auth_cred_ssl_client_cert_pw_t **cred, 
+      void *baton, 
+      apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
 
       std::string password ("");
-      if (!data->listener->contextSslPwPrompt (password))
+      if (!data->listener->contextSslClientCertPwPrompt (password))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
-      svn_auth_cred_client_ssl_pass_t *cred_ = 
-        (svn_auth_cred_client_ssl_pass_t *)apr_palloc (
-          pool, sizeof (svn_auth_cred_client_ssl_pass_t));
+      svn_auth_cred_ssl_client_cert_pw_t *cred_ = 
+        (svn_auth_cred_ssl_client_cert_pw_t *)
+        apr_palloc (pool, sizeof (svn_auth_cred_ssl_client_cert_pw_t));
 
       SVN_ERR (svn_utf_cstring_to_utf8 (
                  &cred_->password,

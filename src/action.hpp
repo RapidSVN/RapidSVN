@@ -195,20 +195,20 @@ public:
    * @see svn::ContextListener
    */
   virtual bool
-  contextSslServerPrompt (
-    svn::ContextListener::SslServerPromptData & data);
+  contextSslServerTrustPrompt (
+    svn::ContextListener::SslServerTrustData & data);
 
   /**
    * @see svn::ContextListener
    */
   virtual bool
-  contextSslClientPrompt (std::string & certFile);
+  contextSslClientCertPrompt (std::string & certFile);
 
   /**
    * @see svn::ContextListener
    */
   virtual bool
-  contextSslPwPrompt (std::string & password);
+  contextSslClientCertPwPrompt (std::string & password);
 
   /** set the name of the action */
   void

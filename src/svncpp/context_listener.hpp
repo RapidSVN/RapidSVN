@@ -90,9 +90,10 @@ namespace svn
     contextGetLogMessage (std::string & msg) = 0;
 
     /**
-     * @see contextSslServerPrompt
+     * @see contextSslServerTrust
+     * @see svn_auth_cred_ssl_server_trust_t
      */
-    struct SslServerPromptData
+    struct SslServerTrustData
     {
     public:
       /** the following data is requested */
@@ -109,7 +110,7 @@ namespace svn
       std::string validUntil;
       std::string issuerDName;
 
-      SslServerPromptData (const int failures_ = 0)
+      SslServerTrustData (const int failures_ = 0)
         : trustPermanently (false), acceptedFailures (0),
           failures (failures_), hostname (""), fingerprint (""),
           validFrom (""), validUntil (""), issuerDName("")
@@ -118,30 +119,30 @@ namespace svn
     };
 
     /**
-     * this method is called if there is a certificate,
-     * that has to be confirmed by the user
+     * this method is called if there is ssl server
+     * information, that has to be confirmed by the user
      *
      * @param data 
      * @retval false prompt was cancelled
      */
     virtual bool
-    contextSslServerPrompt (SslServerPromptData & data) = 0;
+    contextSslServerTrustPrompt (SslServerTrustData & data) = 0;
 
     /**
      * this method is called to retrieve client side
      * information
      */
     virtual bool 
-    contextSslClientPrompt (std::string & certFile) = 0;
+    contextSslClientCertPrompt (std::string & certFile) = 0;
 
     /**
      * this method is called to retrieve the password
-     * for the certificate
+     * for the client certificate
      *
      * @param password
      */
     virtual bool
-    contextSslPwPrompt (std::string & password) = 0;
+    contextSslClientCertPwPrompt (std::string & password) = 0;
   };
 }
 

@@ -363,8 +363,8 @@ Action::PostEvent (wxEvent & event)
 }
 
 bool
-Action::contextSslServerPrompt (
-  svn::ContextListener::SslServerPromptData & data)
+Action::contextSslServerTrustPrompt (
+  svn::ContextListener::SslServerTrustData & data)
 {
   wxString msg;
   msg.Printf ("%s\n" // question 
@@ -393,7 +393,7 @@ Action::contextSslServerPrompt (
 }
 
 bool
-Action::contextSslClientPrompt (std::string & certFile)
+Action::contextSslClientCertPrompt (std::string & certFile)
 {
   wxString filename = wxFileSelector (
     _("Select Certificate File"), "", "", "",
@@ -409,7 +409,7 @@ Action::contextSslClientPrompt (std::string & certFile)
 }
 
 bool
-Action::contextSslPwPrompt (std::string & password)
+Action::contextSslClientCertPwPrompt (std::string & password)
 {
   //TODO
   AuthDlg dlg (GetParent (), "", password.c_str (), 
