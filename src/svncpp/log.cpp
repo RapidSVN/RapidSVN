@@ -40,7 +40,6 @@ Log::loadPath (const char * path, long revisionStart,
                long revisionEnd)
 {
   const apr_array_header_t * targets = NULL;
-  void * baton = NULL;
   log_message_receiver_baton lb;
   svn_opt_revision_t revEnd;
   lastPath = path;

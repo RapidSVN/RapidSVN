@@ -434,10 +434,10 @@ FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
 {
   wxMenuItem *pItem;
 
-  pItem = new wxMenuItem (&menu, ID_Update, _T ("Get latest"));
+  pItem = new wxMenuItem (&menu, ID_Update, _T ("Update"));
   pItem->SetBitmap (wxBITMAP (update));
   menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Commit, _T ("Check in"));
+  pItem = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
   pItem->SetBitmap (wxBITMAP (commit));
   menu.Append (pItem);
 

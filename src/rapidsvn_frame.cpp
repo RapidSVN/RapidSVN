@@ -293,11 +293,11 @@ RapidSvnFrame::InitializeMenu ()
 
   // Modify menu
   wxMenu *menuModif = new wxMenu;
-  pItem = new wxMenuItem (menuModif, ID_Update, _T ("Get latest"));
+  pItem = new wxMenuItem (menuModif, ID_Update, _T ("Update"));
   pItem->SetBitmap (wxBITMAP (update));
   menuModif->Append (pItem);
 
-  pItem = new wxMenuItem (menuModif, ID_Commit, _T ("Check in"));
+  pItem = new wxMenuItem (menuModif, ID_Commit, _T ("Commit"));
   pItem->SetBitmap (wxBITMAP (commit));
   menuModif->Append (pItem);
 

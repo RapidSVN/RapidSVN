@@ -56,16 +56,25 @@ CommitAction::Entry ()
     try
     {
       revision = modify.commit (target, Data.LogMessage.c_str (), Data.Recursive);
+      wxString str;
 
-      wxString str =
-          wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
-                            revision);
+      if(!modify.isAuthenticated ())
+      {
+        str = "Authentication failed.";
+      }
+      else
+      {
+        str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
+                                revision);
+      }
       GetTracer ()->Trace (str);
     }
     catch (svn::ClientException &e)
     {
       PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
                        ACTION_EVENT);
+      GetTracer ()->Trace ("The commit action failed:");
+      GetTracer ()->Trace (e.description ());
     }
   }
 

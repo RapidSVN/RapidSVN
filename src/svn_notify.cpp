@@ -10,7 +10,7 @@ SvnNotify::SvnNotify (Tracer * tracer) :
   sent_first_txdelta = false;
   received_some_change = false;
   is_checkout = false;
-  suppress_final_line = true;
+  suppress_final_line = false;
 }
 
 SvnNotify::~SvnNotify ()

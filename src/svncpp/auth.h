@@ -17,6 +17,7 @@ private:
   std::string userName;
   std::string passWord;
   svn_client_auth_baton_t * auth_obj;
+  bool failed;
 
 public:
   Auth ();
@@ -31,12 +32,26 @@ public:
    * Sets the password.
    */
   void password (const char * password);
-  
+
   /**
    * Returns an authentication object.
    */
   svn_client_auth_baton_t * authenticate ();
+
+  /**
+   * Returns true if the authentication succeeded.  This should be called 
+   * immediately following an action in which authentication is required
+   * to verify success.
+   */
+  bool isAuthenticated ();
 };
+
+/**
+ * The auth info callback routine. This should be called if
+ * the user is unable to authenticate.
+ */
+svn_error_t * prompt (char **info, const char *prompt, svn_boolean_t hide,
+                      void *baton, apr_pool_t *pool);
 
 }
 
