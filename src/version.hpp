@@ -15,10 +15,13 @@
 
 #define APPLICATION_NAME _("RapidSVN")
 
-#define RAPIDSVN_COPYRIGHT "(C) 2002, 2003 The RapidSvn Group. All rights reserved."
+#define RAPIDSVN_COPYRIGHT "(C) 2002-2004 The RapidSvn Group. All rights reserved."
 
 /* Symbols that define the version number.
- *   XXX FIXME: Modify before each snapshot, milestone or release. 
+ * The numbers are maintained in the file version.xml (in the
+ * main project directory). Before creating a release, you should
+ * run <main project directiry>/tools/check-version.py to make
+ * sure all the places with version information are updated.
  */
 
 /* Version numbers: <major>.<minor>.<micro>-<release> */
