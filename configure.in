@@ -6,7 +6,8 @@ AC_PROG_INSTALL
 AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
 
-CPPFLAGS="$CPPFLAGS -Wall -g -fexceptions"
+abs_srcdir="`cd $srcdir && pwd`"
+CPPFLAGS="$CPPFLAGS -Wall -g -fexceptions -I$abs_srcdir/include"
 CXXFLAGS="$CXXFLAGS -Wall -g -fexceptions"
 
 dnl
@@ -367,6 +368,8 @@ AC_SUBST(TARGET_DOXYGEN)
 AC_OUTPUT(Makefile \
           doc/Makefile \
           doc/manpage/Makefile \
+          include/Makefile \
+          include/svncpp/Makefile \
           src/Makefile \
           src/svncpp/Makefile \
           src/res/Makefile)
