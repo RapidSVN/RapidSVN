@@ -276,3 +276,9 @@ FolderBrowser::buildMenu (wxMenu & menu, const wxString & path)
   pItem->SetBitmap (wxBITMAP (commit));
   menu.Append (pItem);
 }
+
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */
