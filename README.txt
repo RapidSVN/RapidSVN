@@ -42,7 +42,7 @@ BUILDING AND INSTALLING
   following svn command:
   % svn co http://svn.collab.net/repos/svn/clients/rapidsvn/trunk rapidsvn  
 
-* Download the wxWindows 2.3.2 libraries: http://www.wxwindows.org/
+* Download the wxWindows 2.3.3 libraries: http://www.wxwindows.org/
 
   If you are building wxWindows on linux, you will need to specify 
   the --disable-no-exceptions parameter to configure (see 
