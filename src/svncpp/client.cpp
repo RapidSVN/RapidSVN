@@ -44,11 +44,11 @@ namespace svn
   }
 
 
-  vector<Status>
+  std::vector<Status>
   Client::status (const char * path, const bool descend)
   {
     svn_error_t *Err;
-    vector<Status>statusHash;
+    std::vector<Status>statusHash;
     apr_hash_t *status_hash;
     Pool subPool;
 
