@@ -71,6 +71,9 @@ public:
   AddBookmark (const char * name_)
   {
     wxString name (name_);
+
+    TrimString (name);
+
     if (!svn::Url::isValid (name_))
     {
       wxFileName filename (name_);
