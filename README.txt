@@ -107,12 +107,19 @@ BUILDING ON LINUX/UNIX
 
 * Then go to the src/ directory and run 'make'
 
-* If it is build and you get an error like 'could not find something.so' then
+* If it is built and you get an error like 'could not find something.so' then
   you probably need to add the Apache lib directory into /etc/ld.so.conf and
-  then run 'ldconfig'.
+  then run 'ldconfig'. This is especially true for newer versions of APR.
+  If you dont want to touch ld.so.conf you can add the path to the environment
+  variable "LD_LIBRARY_PATH".
+  Example: export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/apr/lib
+
+* If you get strange segmentation faults after updating or after change
+  some of the code: try to rebuild rapidsvn (make clean; make all).
 
 PROJECT CONTRIBUTORS
 
 * Paul Marculescu - original author
 * Brent R. Matzelle - developer and project leader
 * Alexander Mueller - developer and project leader
+* John Mears - developer
