@@ -141,6 +141,7 @@ namespace svn
      * information, that has to be confirmed by the user
      *
      * @param data 
+     * @param acceptedFailures
      * @return @a SslServerTrustAnswer
      */
     virtual SslServerTrustAnswer
@@ -159,6 +160,8 @@ namespace svn
      * for the client certificate
      *
      * @param password
+     * @param realm
+     * @param maySave
      */
     virtual bool
     contextSslClientCertPwPrompt (std::string & password, 

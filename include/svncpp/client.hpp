@@ -40,9 +40,6 @@
 #include "svncpp/annotate_line.hpp"
 
 
-/**
- * SvnCpp namespace.
- */
 namespace svn
 {
   // forward declarations
@@ -229,8 +226,8 @@ namespace svn
      * a @a path
      *
      * @param path path of file or directory
-     * @param revision_start revision to retrieve
-     * @param revision_end revision to retrieve
+     * @param revisionStart revision to retrieve
+     * @param revisionEnd revision to retrieve
      * @return contents of the file
      */
     AnnotatedFile *
@@ -276,6 +273,8 @@ namespace svn
      * Creates a directory directly in a repository or creates a 
      * directory on disk and schedules it for addition. If <i>path</i>
      * is a URL then authentication is usually required, see Auth.
+     * 
+     * @param path
      * @param message log message.
      * @exception ClientException
      */
@@ -444,10 +443,11 @@ namespace svn
      * lists one property in @a path no matter whether local or
      * repository
      *
+     * @param propName
      * @param path
      * @param revision
      * @param recurse
-     * @return PropertiesList
+     * @return PathPropertiesMapList
      */
     PathPropertiesMapList
     propget(const char *propName,

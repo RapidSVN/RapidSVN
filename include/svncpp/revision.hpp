@@ -64,7 +64,7 @@ namespace svn
     /**
      * Constructor
      *
-     * @param datetime DateTime wrapper for apr_time_t
+     * @param dateTime DateTime wrapper for apr_time_t
      */
     Revision (const DateTime dateTime);
 

@@ -40,6 +40,7 @@ namespace svn
      * is a working copy subdir based on @a url at @a revision.
      *
      * @param dir path to a directory
+     * @param uuid
      * @param url corresponding url
      * @param revision expected working copy revision
      */

@@ -26,12 +26,12 @@ namespace svn
   class Pool
   {
   public:
-   /**
+    /**
      * creates a subpool new pool to an existing pool
      *
      * @param parent NULL -> global pool
      */
-    Pool (apr_pool_t * = (apr_pool_t *)0);
+    Pool (apr_pool_t * parent = (apr_pool_t *)0);
 
     virtual ~ Pool ();
 
