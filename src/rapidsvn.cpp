@@ -350,6 +350,12 @@ void VSvnFrame::InitFileList()
 
 	itemCol.m_text = "Prop Status";
 	m_listCtrl->InsertColumn(4, itemCol);
+
+	m_listCtrl->SetColumnWidth(0,150);
+	m_listCtrl->SetColumnWidth(1,75);
+	m_listCtrl->SetColumnWidth(2,75);
+	m_listCtrl->SetColumnWidth(3,75);
+	m_listCtrl->SetColumnWidth(4,75);
 }
 
 void VSvnFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
