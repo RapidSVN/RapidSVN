@@ -10,26 +10,27 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _MKDIR_DLG_H_INCLUDED_
-#define _MKDIR_DLG_H_INCLUDED_
+#ifndef _DESTINATION_DLG_H_INCLUDED_
+#define _DESTINATION_DLG_H_INCLUDED_
 
 // wxwindows
 #include "wx/dialog.h"
 
-class MkdirDlg:public wxDialog
+class DestinationDlg:public wxDialog
 {
 public:
-  MkdirDlg(wxWindow* parent, const char * target);
+  DestinationDlg (wxWindow* parent, const char * title,
+                  const char * descr, const char * dst);
 
-  virtual ~MkdirDlg ();
+  virtual ~DestinationDlg ();
 
-  const char * 
-  GetTarget () const;
+  const char *
+  GetDestination () const;
 
 private:
   struct Data;
   Data * m;
-
+  
   DECLARE_EVENT_TABLE ()
 };
 

@@ -84,6 +84,14 @@ namespace svn
      */
     bool 
     isset() const;
+
+    /**
+     * adds a new URL component to the path
+     *
+     * @param component new component to add
+     */
+    void
+    addCompontent (const char * component);
   };
 }
 

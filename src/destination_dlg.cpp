@@ -16,28 +16,29 @@
 #include "wx/valgen.h"
 
 // app
-#include "delete_dlg.hpp"
+#include "destination_dlg.hpp"
 
-struct DeleteDlg::Data
+struct DestinationDlg::Data
 {
 public:
-  bool force;
+  wxString destination;
 
-  Data (wxWindow * window)
-    : force (false)
+  Data (wxWindow * window, const char * descr, const char * dst)
+    : destination (dst)
   {
     wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
     wxStaticText * label = 
-      new wxStaticText (window, -1, _("Do you want to delete the selected files/directories?"));
+      new wxStaticText (window, -1, descr);
     topSizer->Add (label, 0, wxALL, 5);
 
     // The "force" check box:
-    wxCheckBox* check = new wxCheckBox(window, -1, "Force removal",
-      wxDefaultPosition, wxDefaultSize, 0,
-      wxGenericValidator(&force));
+    wxTextValidator val (wxFILTER_NONE, &destination);
+    wxTextCtrl * textDst = 
+      new wxTextCtrl (window, -1, "", wxDefaultPosition, 
+                      wxSize (200, -1), 0, val);
     
     // The buttons:
     buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0, 
@@ -47,7 +48,7 @@ public:
 
     // Add all the sizers to the main sizer
     mainSizer->Add (topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
-    mainSizer->Add (check, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
+    mainSizer->Add (textDst, 0, wxALL, 5);
     mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
 
     window->SetAutoLayout(true);
@@ -59,26 +60,27 @@ public:
 };
 
 
-BEGIN_EVENT_TABLE (DeleteDlg, wxDialog)
+BEGIN_EVENT_TABLE (DestinationDlg, wxDialog)
 END_EVENT_TABLE ()
 
-DeleteDlg::DeleteDlg(wxWindow* parent)
- : wxDialog(parent, -1, _("Delete"),
+DestinationDlg::DestinationDlg(wxWindow* parent, const char * title,
+                               const char * descr, const char * dst)
+ : wxDialog(parent, -1, title,
             wxDefaultPosition, wxDefaultSize, 
             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data (this);
+  m = new Data (this, descr, dst);
 }
 
-DeleteDlg::~DeleteDlg ()
+DestinationDlg::~DestinationDlg ()
 {
   delete m;
 }
 
-bool
-DeleteDlg::GetForce () const
+const char *
+DestinationDlg::GetDestination () const
 {
-  return m->force;
+  return m->destination;
 }
 
 /* -----------------------------------------------------------------

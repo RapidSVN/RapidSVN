@@ -26,6 +26,7 @@
 #include "svn_file_info.hpp"
 
 #include "checkout_action.hpp"
+#include "copymove_action.hpp"
 #include "import_action.hpp"
 #include "update_action.hpp"
 #include "add_action.hpp"
@@ -202,18 +203,13 @@ public:
 
     // Create menu
     wxMenu *menuCreate = new wxMenu;
-    menuCreate->Append (ID_Import, _("&Import an unversioned file or tree ..."));
-    menuCreate->Append (ID_Checkout, _("&Checkout working copy ..."));
+    menuCreate->Append (ID_Import, _("&Import..."));
+    menuCreate->Append (ID_Checkout, _("&Checkout..."));
 
     menuCreate->AppendSeparator ();
 
-    menuCreate->Append (ID_Mkdir, _("Make a new directory ..."));
-    menuCreate->Append (ID_Copy, _("C&opy remembering history ..."));
-
-    menuCreate->AppendSeparator ();
-
-    menuCreate->Append (ID_Merge, _("Merge differences"));
-    menuCreate->Append (ID_Switch, _("Switch to URL ..."));
+    menuCreate->Append (ID_Merge, _("Merge..."));
+    menuCreate->Append (ID_Switch, _("Switch..."));
 
     // Modify menu
     wxMenu *menuModif = new wxMenu;
@@ -903,12 +899,18 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
     case ID_Copy:
       //TODO Make sure there is only one file selected
-      action = new CopyAction (this);
+      //action = new CopyAction (this);
+      action = new CopyMoveAction (this, true);
       lastAction = ACTION_TYPE_COPY;
       break;
 
+    case ID_Move:
+      action = new CopyMoveAction (this, false);
+      lastAction = ACTION_TYPE_MOVE;
+      break;
+
     case ID_Mkdir:
-      action = new MkdirAction (this);
+      action = new MkdirAction (this, m_currentPath);
       lastAction = ACTION_TYPE_MKDIR;
       break;
 

@@ -294,6 +294,12 @@ Action::GetName () const
   return m->name.c_str ();
 }
 
+void
+Action::SetName (const char * name)
+{
+  m->name = name;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -124,6 +124,11 @@ LogDlg::InitializeData ()
   wxButton * getButton = new wxButton (this, ID_Get, _("Get"));
   wxButton * diffButton = new wxButton (this, ID_Diff, _("Diff"));
 
+  // View/Get/Diff disabled for Alpha 3 Milestone
+  viewButton->Enable (false);
+  getButton->Enable (false);
+  diffButton->Enable (false);
+
   // position controls
 
   wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);

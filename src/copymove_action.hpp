@@ -10,27 +10,33 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _MKDIR_DLG_H_INCLUDED_
-#define _MKDIR_DLG_H_INCLUDED_
+#ifndef _COPYMOVE_ACTION_H_INCLUDED_
+#define _COPYMOVE_ACTION_H_INCLUDED_
 
-// wxwindows
-#include "wx/dialog.h"
+// svncpp
+#include "svncpp/targets.hpp"
 
-class MkdirDlg:public wxDialog
+// app
+#include "action.hpp"
+#include "delete_dlg.hpp"
+
+class CopyMoveAction:public Action
 {
-public:
-  MkdirDlg(wxWindow* parent, const char * target);
-
-  virtual ~MkdirDlg ();
-
-  const char * 
-  GetTarget () const;
-
 private:
-  struct Data;
-  Data * m;
+  bool m_copy;
+  wxString m_destination;
 
-  DECLARE_EVENT_TABLE ()
+public:
+  /**
+   * constructor
+   *
+   * @param parent parent window
+   * @param copy true=copy, false=move
+   */
+  CopyMoveAction (wxWindow * parent, bool copy);
+
+  virtual bool Perform ();
+  virtual bool Prepare ();
 };
 
 #endif

@@ -23,7 +23,8 @@
 class DeleteAction:public Action
 {
 private:
-  DeleteDlg::sData Data;
+  bool m_force;
+
 public:
   DeleteAction (wxWindow * parent);
 

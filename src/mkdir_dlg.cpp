@@ -18,73 +18,92 @@
 // app
 #include "mkdir_dlg.hpp"
 
-BEGIN_EVENT_TABLE (MkdirDlg, wxDialog)
-END_EVENT_TABLE ()
 
-MkdirDlg::sData::sData()
+struct MkdirDlg::Data
 {
-  // Default values go here.
-}
+public:
+  wxWindow * window;
+  wxString target;
 
-MkdirDlg::MkdirDlg(wxWindow* parent, sData* pData)
-: wxDialog(parent, -1, _("Create a new directory under revision control"),
+  Data (wxWindow * wnd, const char * trget)
+    : window (wnd), target (trget)
+  {
+    Initialize ();
+  }
+
+private:
+  void
+  Initialize ()
+  {
+    // Create controls
+    // The target field:
+    wxStaticBox * boxTarget = 
+      new wxStaticBox (window, -1, 
+                      _("New directory or repository URL"));
+    
+    wxTextValidator val (wxFILTER_NONE, &target);
+    wxTextCtrl* textTarget = 
+      new wxTextCtrl(window, -1, "", wxDefaultPosition, 
+                     wxDefaultSize, 0,                   val);
+
+    // The buttons:
+    wxButton * buttonOK = 
+      new wxButton( window, wxID_OK, _("OK" ));
+    wxButton * buttonCancel = 
+      new wxButton( window, wxID_CANCEL, _("Cancel"));
+
+    // Position controls
+    wxStaticBoxSizer *sizerTarget = 
+      new wxStaticBoxSizer (boxTarget, wxHORIZONTAL);
+    sizerTarget->Add(textTarget, 1, wxALL | wxEXPAND, 5);
+
+    wxBoxSizer *targetouterSizer = new wxBoxSizer(wxHORIZONTAL);
+    targetouterSizer->Add(sizerTarget, 1, wxALL | wxEXPAND, 5);
+
+    wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+    buttonSizer->Add(buttonOK, 0, wxALL, 10);
+    buttonSizer->Add(buttonCancel, 0, wxALL, 10);
+
+
+    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+  
+    // Add all the sizers to the main sizer
+    mainSizer->Add (targetouterSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
+    mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
+
+    window->SetAutoLayout(true);
+    window->SetSizer(mainSizer);
+
+    mainSizer->SetSizeHints(window);
+    mainSizer->Fit(window);
+
+  }
+};
+
+MkdirDlg::MkdirDlg(wxWindow* parent, const char * target)
+: wxDialog(parent, -1, _("Make directory"),
   wxDefaultPosition, wxDefaultSize,
-    wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-  m_pData(pData)
+    wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  InitializeData();
+  m = new Data (this, target);
+
   CentreOnParent();
 }
 
-void
-MkdirDlg::InitializeData ()
+MkdirDlg::~MkdirDlg ()
 {
-  wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-  wxBoxSizer *targetouterSizer = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer *logSizer = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-
-    // The target field:
-  wxStaticBoxSizer *targetSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _("New directory or repository URL")), wxHORIZONTAL);
-    
-  wxTextCtrl* Target = new wxTextCtrl(this, -1, "", wxDefaultPosition, 
-    wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NONE, &m_pData->Target));
-    
-  targetSizer->Add(Target, 1, wxALL | wxEXPAND, 5);
-  
-  targetouterSizer->Add(targetSizer, 1, wxALL | wxEXPAND, 5);
-
-  // The message field:
-  wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _("Enter log message")), wxHORIZONTAL);
-    
-  wxTextCtrl* Log = new wxTextCtrl(this, -1, "", wxDefaultPosition, 
-    wxSize(-1, 50), wxTE_MULTILINE,
-    wxTextValidator(wxFILTER_NONE, &m_pData->LogMessage));
-    
-  messageSizer->Add(Log, 1, wxALL | wxEXPAND, 5);
-  
-  logSizer->Add(messageSizer, 1, wxALL | wxEXPAND, 5);
-  
-  // The buttons:
-  buttonSizer->Add(new wxButton( this, wxID_OK, _("OK" )), 0, 
-                   wxALL, 10);
-  buttonSizer->Add(new wxButton( this, wxID_CANCEL, _("Cancel")), 0, 
-                   wxALL, 10);
-
-  // Add all the sizers to the main sizer
-  mainSizer->Add (targetouterSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-  mainSizer->Add (logSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
-  mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
-
-  SetAutoLayout(true);
-  SetSizer(mainSizer);
-
-  mainSizer->SetSizeHints(this);
-  mainSizer->Fit(this);
+  delete m;
 }
+
+const char *
+MkdirDlg::GetTarget () const
+{
+  return m->target.c_str ();
+}
+
+BEGIN_EVENT_TABLE (MkdirDlg, wxDialog)
+END_EVENT_TABLE ()
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

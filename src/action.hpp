@@ -112,25 +112,29 @@ public:
    *
    * @return true=continue/false=cancel
    */
-  virtual bool Prepare ();
+  virtual bool 
+  Prepare ();
    
   /**
    * perform action. if any error occurs, an exception
    * will be thrown.
    */
-  virtual bool Perform () = 0;
+  virtual bool 
+  Perform () = 0;
 
   /**
    * sets the path for the action
    *
    * @param path
    */
-  void SetPath (const svn::Path & path);
+  void 
+  SetPath (const svn::Path & path);
 
   /**
    * @return path
    */
-  const svn::Path & GetPath ();
+  const svn::Path & 
+  GetPath ();
 
   /**
    * sets the targets for the action.
@@ -138,24 +142,28 @@ public:
    *
    * @param targets
    */
-  void SetTargets (const svn::Targets & targets);
+  void 
+  SetTargets (const svn::Targets & targets);
 
   /**
    * @return the targets for this action
    */
-  const svn::Targets & GetTargets ();
+  const svn::Targets & 
+  GetTargets ();
 
   /**
    * @return a single target for this action
    */
-  const svn::Path GetTarget ();
+  const svn::Path 
+  GetTarget ();
 
   /**
    * retrieves the options for the action
    *
    * @return options
    */
-  ActionOptions GetOptions ();
+  ActionOptions 
+  GetOptions ();
 
   /**
    * @see svn::ContextListener
@@ -181,6 +189,10 @@ public:
    */
   virtual bool
   contextGetLogMessage (std::string & msg);
+
+  /** set the name of the action */
+  void
+  SetName (const char * name);
 
   /** returns the name of the action */
   const char * 

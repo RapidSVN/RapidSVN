@@ -18,53 +18,67 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "delete_action.hpp"
-#include "delete_dlg.hpp"
+#include "copymove_action.hpp"
+#include "destination_dlg.hpp"
 #include "ids.hpp"
 #include "svn_notify.hpp"
 
-DeleteAction::DeleteAction (wxWindow * parent) 
-  : Action (parent, _("Delete"), actionWithTargets)
+CopyMoveAction::CopyMoveAction (wxWindow * parent, 
+                                bool copy) 
+ : Action (parent, "", actionWithSingleTarget),
+   m_copy (copy)
 {
+  if (copy)
+  {
+    SetName (_("Copy"));
+  }
+  else
+  {
+    SetName (_("Move"));
+  }
 }
 
 bool
-DeleteAction::Prepare ()
+CopyMoveAction::Prepare ()
 {
   if (!Action::Prepare ())
   {
     return false;
   }
 
-  DeleteDlg dlg (GetParent ());
+  DestinationDlg dlg (GetParent (), GetName (),
+                      _("Select destination:"),
+                      m_destination);
 
   if (dlg.ShowModal () != wxID_OK)
   {
     return false;
   }
 
-  m_force = dlg.GetForce ();
+  m_destination = dlg.GetDestination ();
 
   return true;
 }
 
 bool
-DeleteAction::Perform ()
+CopyMoveAction::Perform ()
 {
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
-  const std::vector<svn::Path> & v = GetTargets ();
-  std::vector<svn::Path>::const_iterator it;
+  svn::Path srcPath = GetTarget ();
+  svn::Path destPath (m_destination.c_str ());
+  svn::Revision unusedRevision;
 
-  for (it = v.begin (); it != v.end (); it++)
+  if (m_copy)
   {
-    const svn::Path & path = *it;
-
-    client.remove (path.c_str (), m_force);
+    client.copy (srcPath, unusedRevision, destPath);
   }
-
+  else
+  {
+    client.move (srcPath, unusedRevision, destPath, false);
+  }
   return true;
 }
 /* -----------------------------------------------------------------

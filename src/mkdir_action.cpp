@@ -23,8 +23,9 @@
 #include "mkdir_action.hpp"
 #include "svn_notify.hpp"
 
-MkdirAction::MkdirAction (wxWindow * parent)
- : Action (parent, _("Mkdir"), actionWithoutTarget)
+MkdirAction::MkdirAction (wxWindow * parent, const char * path)
+ : Action (parent, _("Mkdir"), actionWithoutTarget),
+   m_path (path)
 {
 }
 
@@ -36,14 +37,15 @@ MkdirAction::Prepare ()
     return false;
   }
 
-  MkdirDlg dlg  ( GetParent (), &m_data);
+  MkdirDlg dlg  ( GetParent (), "");
 
   if (dlg.ShowModal () != wxID_OK)
   {
     return false;
   }
-  
-  m_data.Target = m_data.Target.Strip(wxString::both);
+
+  wxString target (dlg.GetTarget ()); 
+  m_target = target.Strip (wxString::both);
   return true;
 }
 
@@ -54,7 +56,13 @@ MkdirAction::Perform ()
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
-  client.mkdir (m_data.Target.c_str (), m_data.LogMessage.c_str ());
+  // add target to path
+  wxString newDir (m_path + m_target);
+
+  svn::Path target (m_path.c_str ());
+  target.addCompontent (m_target.c_str ());
+
+  client.mkdir (target, "");
   return true;
 }
 /* -----------------------------------------------------------------

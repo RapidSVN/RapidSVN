@@ -72,6 +72,18 @@ namespace svn
     return m_path.length () > 0;
   }
 
+  void
+  Path::addCompontent (const char * component)
+  {
+    Pool pool;
+
+    const char * newPath =
+      svn_path_url_add_component (m_path.c_str (),
+                                  component,
+                                  pool);
+    m_path = newPath;
+  }
+
 }
 
 /* -----------------------------------------------------------------

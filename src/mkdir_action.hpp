@@ -20,10 +20,18 @@
 class MkdirAction:public Action
 {
 private:
-  MkdirDlg::sData m_data;
+  wxString m_path;
+  wxString m_target;
 
 public:
-  MkdirAction (wxWindow * parent);
+  /**
+   * make directory action.
+   *
+   * @param parent parent window
+   * @param path path in which the directory is to
+   *             be created
+   */
+  MkdirAction (wxWindow * parent, const char * path);
 
   virtual bool Perform ();
   virtual bool Prepare ();

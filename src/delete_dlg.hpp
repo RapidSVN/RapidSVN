@@ -19,20 +19,16 @@
 class DeleteDlg:public wxDialog
 {
 public:
-  struct sData
-  {
-    sData();
-    
-    wxString LogMessage;
-    bool Force;
-  };
-  
-  DeleteDlg(wxWindow* parent, sData* pData);
+  DeleteDlg(wxWindow* parent);
+
+  virtual ~DeleteDlg ();
+
+  bool
+  GetForce () const;
 
 private:
-  void InitializeData ();
-  
-  sData* m_pData;
+  struct Data;
+  Data * m;
   
   DECLARE_EVENT_TABLE ()
 };

@@ -221,16 +221,19 @@ AppendModifyMenu (wxMenu * parentMenu)
   // Copy and rename menu
   parentMenu->AppendSeparator ();
 
-  item = new wxMenuItem (parentMenu, ID_CopyTo, _("&Copy"));
+  item = new wxMenuItem (parentMenu, ID_Copy, _("&Copy..."));
   //item->SetBitmap (wxBITMAP (copy));
   parentMenu->Append (item);
 
-  item = new wxMenuItem (parentMenu, ID_MoveTo, _("M&ove"));
+  item = new wxMenuItem (parentMenu, ID_Move, _("M&ove..."));
   //item->SetBitmap (wxBITMAP (rename));
   parentMenu->Append (item);
 
-  item = new wxMenuItem (parentMenu, ID_RenameHere, _("Re&name"));
+  item = new wxMenuItem (parentMenu, ID_RenameHere, _("Re&name..."));
   //item->SetBitmap (wxBITMAP (rename));
+
+  item = new wxMenuItem (parentMenu, ID_Mkdir, _("Make directory..."));
+  
   parentMenu->Append (item);
 }
 

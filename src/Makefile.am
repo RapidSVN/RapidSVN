@@ -14,8 +14,10 @@ rapidsvn_SOURCES= \
 	commit_action.cpp \
 	commit_dlg.cpp \
 	copy_action.cpp \
+	copymove_action.cpp \
 	delete_action.cpp \
 	delete_dlg.cpp \
+ 	destination_dlg.cpp \
 	exceptions.cpp \
 	external_program_action.cpp \
 	filelist_ctrl.cpp \

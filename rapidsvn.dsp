@@ -130,11 +130,19 @@ SOURCE=.\src\copy_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\copymove_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\delete_action.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\src\delete_dlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\destination_dlg.cpp
 # End Source File
 # Begin Source File
 
@@ -330,11 +338,19 @@ SOURCE=.\src\copy_action.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\copymove_action.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\delete_action.hpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\src\delete_dlg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\destination_dlg.hpp
 # End Source File
 # Begin Source File
 
