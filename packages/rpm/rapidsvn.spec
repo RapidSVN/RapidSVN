@@ -10,12 +10,12 @@ Group: Utilities/System
 URL: http://rapidsvn.tigris.org
 Source0: %{name}-%{version}-%{release}.tar.gz
 Patch0: rapidsvn.include.patch
-Vendor: Summersoft
 Packager: David Summers <david@summersoft.fay.ar.us>
 Requires: apache-libapr >= %{apache_version}
 Requires: apache-libapr-utils >= %{apache_version}
 Requires: subversion
 #Requires: /sbin/install-info
+BuildPreReq: subversion-devel
 BuildPreReq: wxGTK-devel
 BuildPreReq: apache >= %{apache_version}
 BuildPreReq: apache-devel >= %{apache_version}
