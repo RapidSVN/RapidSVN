@@ -841,7 +841,7 @@ PatchedGenericDirCtrl::ExpandDir (const wxTreeItemId & parentId)
 #if defined(__WINDOWS__) || defined(__DOS__) || defined(__WXPM__)
   // Check if this is a root directory and if so,
   // whether the drive is avaiable.
-  if (!wxIsDriveAvailable (dirName))
+  if (!isDriveAvailable (dirName))
   {
     data->m_isExpanded = FALSE;
     //wxMessageBox(wxT("Sorry, this drive is not available."));
