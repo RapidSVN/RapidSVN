@@ -392,6 +392,9 @@ END_EVENT_TABLE ()
   m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL, 
                                  wxDefaultPosition, wxDefaultSize);
 
+  m->CheckMenu (ID_Flat,              m_listCtrl->IsFlat());
+  m->CheckMenu (ID_RefreshWithUpdate, m_listCtrl->GetWithUpdate());
+
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
   {

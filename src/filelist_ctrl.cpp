@@ -89,10 +89,12 @@ static int IMAGE_INDEX[IMG_INDX_COUNT];
  * Tags for wxConfig file settings, defined here to avoid duplicate
  * hard coded strings.
  */
-static const char ConfigSortColumn[] = "/FileListCtrl/SortColumn";
-static const char ConfigSortOrder[] = "/FileListCtrl/SortOrder";
-static const char ConfigColumnWidthFmt[] = "/FileListCtrl/Column%sWidth";
+static const char ConfigSortColumn[]       = "/FileListCtrl/SortColumn";
+static const char ConfigSortOrder[]        = "/FileListCtrl/SortOrder";
+static const char ConfigColumnWidthFmt[]   = "/FileListCtrl/Column%sWidth";
 static const char ConfigColumnVisibleFmt[] = "/FileListCtrl/Column%sVisible";
+static const char ConfigWithUpdate[]       = "/FileListCtrl/WithUpdate";
+static const char ConfigFlatView[]         = "/FileListCtrl/FlatView";
 
 /**
  * test if the given status entry is a file or
@@ -653,6 +655,9 @@ public:
   {
       // Get settings from config file:
     wxConfigBase *config = wxConfigBase::Get ();
+    config->Read (ConfigWithUpdate, &WithUpdate);
+    config->Read (ConfigFlatView,   &FlatMode);
+    
     SortColumn = config->Read (ConfigSortColumn, (long) 0);
     SortIncreasing = config->Read (ConfigSortOrder, (long) 1) ? true : false;
 
@@ -678,6 +683,9 @@ public:
   {
     // Write settings to config file:
     wxConfigBase *config = wxConfigBase::Get ();
+    config->Write (ConfigWithUpdate, WithUpdate);
+    config->Write (ConfigFlatView,   FlatMode);
+    
     config->Write (ConfigSortColumn, (long) SortColumn);
     config->Write (ConfigSortOrder, (long) (SortIncreasing ? 1 : 0));
     // loop through all the columns
