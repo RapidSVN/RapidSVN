@@ -37,11 +37,11 @@
 
 /* Patch number.
    Modify for every released patch. */
-#define RAPIDSVN_VER_MICRO 0
+#define RAPIDSVN_VER_MICRO 1
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
-#define RAPIDSVN_VER_MILESTONE "0.7.0"
+#define RAPIDSVN_VER_MILESTONE "0.7.1"
 
 #endif
 /* -----------------------------------------------------------------
