@@ -84,7 +84,7 @@ namespace svn
     svn_auth_provider_object_t *wc_provider
       = (svn_auth_provider_object_t *)apr_pcalloc (m_pool, sizeof (*wc_provider));
 
-    svn_wc_get_simple_wc_provider (
+    svn_wc_get_simple_provider (
       &(wc_provider->vtable),
       &(wc_provider->provider_baton), m_pool);
 
@@ -96,16 +96,6 @@ namespace svn
     svn_auth_set_parameter (ab, SVN_AUTH_PARAM_DEFAULT_PASSWORD,
                             m_password.c_str ());
 
-    // support old auth_baton
-    svn_client_auth_baton_t *old_ab 
-      = (svn_client_auth_baton_t *)apr_pcalloc (m_pool, sizeof (*old_ab));
-    old_ab->prompt_callback = NULL;
-    old_ab->prompt_baton = NULL;
-    old_ab->store_auth_info = FALSE;
-    old_ab->username = m_username.c_str ();
-    old_ab->password = m_password.c_str ();
-
-    m_ctx.old_auth_baton = old_ab;
     m_ctx.auth_baton = ab;
     m_ctx.prompt_func = NULL;
     m_ctx.prompt_baton = NULL;
