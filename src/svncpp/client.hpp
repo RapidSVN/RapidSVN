@@ -34,6 +34,7 @@ namespace svn
   class Status;
   class Targets;
   class DirEntry;
+  class ClientException;
 
   typedef std::vector<LogEntry> LogEntries;
   typedef std::vector<Status> StatusEntries;
@@ -86,7 +87,7 @@ namespace svn
             const bool descend = false,
             const bool get_all = true,
             const bool update = false,
-            const bool no_ignore = false);
+            const bool no_ignore = false) throw (ClientException);
 
     /**
      * Returns the status of a single file in the path.
@@ -97,7 +98,7 @@ namespace svn
      * @return a Status with Statis.isVersioned = FALSE
      */
     Status 
-    singleStatus (const char * path);
+    singleStatus (const char * path) throw (ClientException);
 
   /**
      * Executes a revision checkout.
@@ -110,7 +111,7 @@ namespace svn
      */
     void 
     checkout (const char * moduleName, const Path & destPath, 
-              const Revision & revision, bool recurse);
+              const Revision & revision, bool recurse) throw (ClientException);
   
     /**
      * Sets the notification function and baton that the C library 
@@ -120,14 +121,14 @@ namespace svn
      *               checking out each file.
      */
     void 
-    notification (Notify * notify);
+    notification (Notify * notify) throw (ClientException);
 
     /**
      * Sets a single file for deletion.
      * @exception ClientException
      */
     void 
-    remove (const Path & path, bool force);
+    remove (const Path & path, bool force) throw (ClientException);
 
     /**
      * Sets files for deletion.
@@ -137,21 +138,21 @@ namespace svn
      * @exception ClientException
      */
     void 
-    remove (const Targets & targets, bool force);
+    remove (const Targets & targets, bool force) throw (ClientException);
 
     /**
      * Reverts a file to a pristine state.
      * @exception ClientException
      */
     void 
-    revert (const Path & path, bool recurse);
+    revert (const Path & path, bool recurse) throw (ClientException);
 
     /**
      * Adds a file to the repository.
      * @exception ClientException
      */
     void 
-    add (const Path & path, bool recurse);
+    add (const Path & path, bool recurse) throw (ClientException);
 
     /**
      * Updates the file or directory.
@@ -164,7 +165,7 @@ namespace svn
      */
     void 
     update (const Path & path, const Revision & revision, 
-            bool recurse);
+            bool recurse) throw (ClientException);
 
     /**
      * Retrieves the contents for a specific @a revision of
@@ -175,7 +176,7 @@ namespace svn
      * @return contents of the file
      */
     std::string
-    cat (const Path & path, const Revision & revision);
+    cat (const Path & path, const Revision & revision) throw (ClientException);
 
     /**
      * Commits changes to the repository. This usually requires 
@@ -188,7 +189,7 @@ namespace svn
      * @exception ClientException
      */
     svn_revnum_t
-    commit (const Targets & targets, const char * message, bool recurse);
+    commit (const Targets & targets, const char * message, bool recurse) throw (ClientException);
 
     /**
      * Copies a versioned file with the history preserved.
@@ -197,7 +198,7 @@ namespace svn
     void 
     copy (const Path & srcPath, 
           const Revision & srcRevision,
-          const Path & destPath);
+          const Path & destPath) throw (ClientException);
 
     /**
      * Moves or renames a file.
@@ -207,7 +208,7 @@ namespace svn
     move (const Path & srcPath, 
           const Revision & srcRevision, 
           const Path & destPath, 
-          bool force);
+          bool force) throw (ClientException);
 
     /**
      * Creates a directory directly in a repository or creates a 
@@ -217,7 +218,7 @@ namespace svn
      * @exception ClientException
      */
     void 
-    mkdir (const Path & path, const char * message);
+    mkdir (const Path & path, const char * message) throw (ClientException);
 
     /**
      * Recursively cleans up a local directory, finishing any
@@ -226,14 +227,14 @@ namespace svn
      * @exception ClientException
      */
     void 
-    cleanup (const Path & path);
+    cleanup (const Path & path) throw (ClientException);
 
     /**
      * Removes the 'conflicted' state on a file.
      * @exception ClientException
      */
     void 
-    resolved (const Path & path, bool recurse);
+    resolved (const Path & path, bool recurse) throw (ClientException);
 
     /**
      * Exports the contents of either a subversion repository into a 
@@ -247,7 +248,7 @@ namespace svn
      */
     void 
     doExport (const Path & srcPath, const Path & destPath, 
-              const Revision & revision, bool force=false);
+              const Revision & revision, bool force=false) throw (ClientException);
 
     /**
      * Update local copy to mirror a new url. This excapsulates the 
