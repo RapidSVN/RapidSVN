@@ -20,6 +20,7 @@
 
 // apr
 #include "apr_strings.h"
+#include "apr_time.h"
 
 
 // svncpp
@@ -351,6 +352,30 @@ CheckDateTime (const wxString & datestring)
 
   return ParseDateTime (datestring, time);
 }
+
+
+wxString
+FormatDateTime (apr_time_t date, wxString fmt)
+{
+  if (date == 0)
+    return "";
+
+  apr_time_exp_t exp_time;
+  char timestr[80];
+
+  apr_time_exp_lt (&exp_time, date);
+  apr_size_t size;
+  apr_status_t apr_err = 
+    apr_strftime (timestr, &size, sizeof (timestr),
+                  "%x %X", &exp_time);
+
+  /* if that failed, just zero out the string and print nothing */
+  if (apr_err)
+    timestr[0] = '\0';
+
+  return timestr;
+}
+
 
 
 /* -----------------------------------------------------------------

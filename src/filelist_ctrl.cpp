@@ -24,9 +24,6 @@
 #include "wx/imaglist.h"
 
 
-// apr api
-#include "apr_time.h"
-
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/entry.hpp"
@@ -635,32 +632,6 @@ GetImageIndex (int textIndex, int propIndex)
   return image;
 }
 
-/**
- * utility function to format a date
- */
-static wxString
-FormatDate (apr_time_t apr_date)
-{
-  if (apr_date == 0)
-    return "";
-
-  svn::Pool pool;
-  apr_time_exp_t exp_time;
-  char timestr[40];
-
-  apr_time_exp_lt (&exp_time, apr_date);
-  apr_size_t size;
-  apr_status_t apr_err = 
-    apr_strftime (timestr, &size, sizeof (timestr),
-                  "%x %X", &exp_time);
-
-  /* if that failed, just zero out the string and print nothing */
-  if (apr_err)
-    timestr[0] = '\0';
-
-  wxString date (timestr);
-  return date;
-}
 
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
@@ -825,9 +796,9 @@ FileListCtrl::UpdateFileList (bool withUpdate)
       values[COL_AUTHOR] = entry.cmtAuthor ();
 
       // date formatting
-      values[COL_CMT_DATE] = FormatDate (entry.cmtDate ());
-      values[COL_TEXT_TIME] = FormatDate (entry.textTime ());
-      values[COL_PROP_TIME] = FormatDate (entry.propTime ());
+      values[COL_CMT_DATE] = FormatDateTime (entry.cmtDate ());
+      values[COL_TEXT_TIME] = FormatDateTime (entry.textTime ());
+      values[COL_PROP_TIME] = FormatDateTime (entry.propTime ());
 
       values[COL_URL] = entry.url ();
       values[COL_REPOS] = entry.repos ();

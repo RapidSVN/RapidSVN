@@ -150,6 +150,17 @@ bool
 CheckDateTime (const wxString & datestring);
 
 
+/**
+ * Format a date/time value to standard format
+ *
+ * @param data 
+ * @param fmt format string
+ * @return formatted date/time string
+ */
+wxString
+FormatDateTime (apr_time_t date, wxString fmt = "%x %X");
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:
