@@ -160,7 +160,7 @@ public:
     imageList->Add (wxIcon (bookmark_xpm));
 
     treeCtrl = new wxTreeCtrl (window, -1, pos, size, 
-                               wxTR_HAS_BUTTONS);
+                               wxTR_HAS_BUTTONS|wxTR_SINGLE);
     treeCtrl->AssignImageList (imageList);
 
     FolderItemData* data = new FolderItemData (FOLDER_TYPE_BOOKMARKS);
@@ -248,7 +248,7 @@ public:
 
 
   void
-  ShowMenu (long index, wxPoint & pt)
+  ShowMenu (wxPoint & pt)
   {
     const FolderItemData * data = GetSelection ();
     if (!data)
@@ -770,8 +770,9 @@ public:
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
   EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
   EVT_TREE_ITEM_COLLAPSED (-1, FolderBrowser::OnCollapseItem)
-  EVT_TREE_ITEM_RIGHT_CLICK (-1, FolderBrowser::OnItemRightClk)
   EVT_SIZE (FolderBrowser::OnSize) 
+  EVT_TREE_ITEM_RIGHT_CLICK (-1, FolderBrowser::OnItemRightClk)
+  EVT_CONTEXT_MENU (FolderBrowser::OnContextMenu)
 END_EVENT_TABLE () 
 
 FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
@@ -879,15 +880,31 @@ FolderBrowser::OnCollapseItem (wxTreeEvent & event)
 void
 FolderBrowser::OnItemRightClk (wxTreeEvent & event)
 {
-  int flag;
-  wxPoint screenPt = wxGetMousePosition ();
-  wxPoint clientPt = ScreenToClient (screenPt);
+  RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
+  frame->SetActivePane (ACTIVEPANE_FOLDER_BROWSER);
 
-  long index = m->treeCtrl->HitTest (clientPt, flag);
-  if (index >= 0)
+#ifdef __WXGTK__
+  // wxGTK doesn't seem to select an item upon right clicking - try doing it ourselves for now
+  wxPoint clientPt = event.GetPoint ();
+  const wxTreeItemId id = m->treeCtrl->HitTest (clientPt);
+  if (id.IsOk ())
   {
-    m->ShowMenu (index, clientPt);
+    m->treeCtrl->SelectItem (id);
   }
+  // Show the menu now rather than waiting for OnContextMenu,
+  // and so don't Skip().
+  m->ShowMenu (clientPt);
+#else
+  // Let the OnContextMenu handler do the menu on MouseUp
+  event.Skip ();
+#endif
+}
+
+void 
+FolderBrowser::OnContextMenu (wxContextMenuEvent & event)
+{
+  wxPoint clientPt = ScreenToClient (event.GetPosition ());
+  m->ShowMenu (clientPt);
 }
 
 bool

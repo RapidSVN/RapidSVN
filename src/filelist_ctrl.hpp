@@ -173,12 +173,12 @@ private:
   void UpdateColumns ();
 
   // message handlers
-  void OnItemActivated (wxListEvent & event);
   void OnKeyDown (wxKeyEvent & event);
   void OnItemRightClk (wxListEvent & event);
   void OnDoubleClick (wxMouseEvent & event);
   void OnColumnLeftClick (wxListEvent & event);
   void OnColumnEndDrag (wxListEvent & event);
+  void OnContextMenu (wxContextMenuEvent & event);
 
 private:
   DECLARE_EVENT_TABLE ()

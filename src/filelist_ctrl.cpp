@@ -736,10 +736,10 @@ GetImageIndex (int textIndex, int propIndex)
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
   EVT_LEFT_DCLICK (FileListCtrl::OnDoubleClick)
-  EVT_LIST_ITEM_ACTIVATED (-1, FileListCtrl::OnItemActivated)
-  EVT_LIST_ITEM_RIGHT_CLICK (FILELIST_CTRL, FileListCtrl::OnItemRightClk)
   EVT_LIST_COL_CLICK (FILELIST_CTRL, FileListCtrl::OnColumnLeftClick)
   EVT_LIST_COL_END_DRAG (FILELIST_CTRL, FileListCtrl::OnColumnEndDrag)
+  EVT_LIST_ITEM_RIGHT_CLICK (FILELIST_CTRL, FileListCtrl::OnItemRightClk)
+  EVT_CONTEXT_MENU (FileListCtrl::OnContextMenu)
 END_EVENT_TABLE ()
 
 FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id, 
@@ -1030,20 +1030,45 @@ FileListCtrl::OnKeyDown (wxKeyEvent & event)
 }
 
 void
-FileListCtrl::OnItemActivated (wxListEvent & event)
+FileListCtrl::OnItemRightClk (wxListEvent & event)
 {
-  //Unused now
+  RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
+  frame->SetActivePane (ACTIVEPANE_FILELIST);
+
+#ifdef __WXGTK__
+  // wxGTK doesn't seem to correctly select an item upon right clicking - try doing it ourselves for now
+  wxPoint clientPt = event.GetPoint ();
+  int flags;
+  long id = HitTest (clientPt, flags);
+  if (id >= 0)
+  {
+    if (!IsSelected (id))
+    {
+      // Need to unselect all currently selected
+      long sel = GetFirstSelected ();
+      while (sel != -1)
+      {
+        Select (sel, false);
+        sel = GetNextSelected (sel);
+      }
+      // Finally select the one just clicked
+      Select (id);
+    }
+  }
+  // Show the menu now rather than waiting for OnContextMenu,
+  // and so don't Skip ().
+  ShowMenu (clientPt);
+#else
+  // Let the OnContextMenu handler do the menu on MouseUp
+  event.Skip ();
+#endif
 }
 
 void
-FileListCtrl::OnItemRightClk (wxListEvent & event)
+FileListCtrl::OnContextMenu (wxContextMenuEvent & event)
 {
-  wxPoint pt (event.GetPoint ());
-  int flags;
-  bool test = HitTest (pt, flags) >= 0;
-
-  if ((GetSelectedItemCount () > 0) && test)
-    ShowMenu (pt);
+  wxPoint clientPt (ScreenToClient (event.GetPosition ()));
+  ShowMenu (clientPt);
 }
 
 void

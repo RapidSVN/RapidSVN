@@ -157,6 +157,8 @@ private:
   void OnCollapseItem (wxTreeEvent & event);
 
   void OnItemRightClk (wxTreeEvent & event);
+  
+  void OnContextMenu (wxContextMenuEvent & event);
 
 };
 

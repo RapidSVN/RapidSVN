@@ -68,6 +68,12 @@ public:
   /** Allow children to trim their popup menus using the frames logic */
   void TrimDisabledMenuItems (wxMenu & menu);
   
+  /**
+  * Change the active window, if the corresponding event is handled
+  * in one of the sub-windows
+  */
+  void SetActivePane (ActivePane value);
+
 private:
   /** disallow default constructor */
   RapidSvnFrame ();

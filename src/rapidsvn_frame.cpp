@@ -1228,6 +1228,12 @@ RapidSvnFrame::TrimDisabledMenuItems (wxMenu & menu)
 }
 
 void
+RapidSvnFrame::SetActivePane (ActivePane value)
+{
+  m_activePane = value;
+}
+
+void
 RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 {
   Action* action = NULL;
