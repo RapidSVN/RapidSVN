@@ -375,6 +375,27 @@ FormatDateTime (apr_time_t date, wxString fmt)
 }
 
 
+wxString 
+BeautifyPath (const wxString & path)
+{
+  int pos = path.Find (":");
+
+  if (pos <= 0)
+    return path;
+
+  // ok. we do have a dot. So is it an url or
+  // a windows drive?
+  wxString start (path.Left (pos));
+
+  // url or drive letter?
+  if (pos > 1)
+    start = start.Lower ();
+  else
+    start = start.Upper ();
+
+  return start + path.Mid (pos);
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

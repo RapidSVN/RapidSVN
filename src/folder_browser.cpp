@@ -85,24 +85,17 @@ static const unsigned int MAXLENGTH_BOOKMARK = 35;
  * @return beatified path
  */
 static wxString 
-BeautifyPath (const wxString & path)
+TruncatePath (const wxString & path_)
 {
-  if( path.length() <= MAXLENGTH_BOOKMARK )
+  wxString path (BeautifyPath (path_));
+
+  if (path.length() <= MAXLENGTH_BOOKMARK)
     return path;
 
   int pos = path.Find (":");
   wxString newPath;
 
-  if (pos >= 0)
-  {
-    pos += 1;
-    // ok. we do have a dot. So is it an url or
-    // a windows drive?
-    newPath = path.Left (pos);
-
-    if (!svn::Url::isValid (path.c_str ()))
-      newPath = newPath.Upper ();
-  }
+  pos++;
 
   // Now add chars until a different char than
   // / or \ appears
@@ -385,7 +378,7 @@ public:
           const wxString path (bookmarks.GetBookmark (index));
           FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK, 
                                                     path, path, TRUE);
-          wxString label (BeautifyPath (path));
+          wxString label (TruncatePath (path));
           wxTreeItemId newId = treeCtrl->AppendItem (parentId, label, 
                                                      FOLDER_IMAGE_BOOKMARK, 
                                                      FOLDER_IMAGE_BOOKMARK, 

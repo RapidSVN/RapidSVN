@@ -161,6 +161,32 @@ wxString
 FormatDateTime (apr_time_t date, wxString fmt = "%x %X");
 
 
+/**
+ * beautify a path so drive letters (if existing) are uppercase
+ *
+ * Examples:
+ * 1. Local Unix path (leave alone)
+ *    Before:  /home/users/xela/work/rapidsvn/src/svncpp
+ *    After:   /home/users/xela/work/rapidsvn/src/svncpp
+ *
+ * 2. Local Windows path (uppercase drive letter)
+ *    Before:  d:\Documents and Settings\alex\Application Data
+ *    After:   D:\Documents and Settings\alex\Application Data
+ * 
+ * 3. Repository URL (lowercase url schema)
+ *    Before:  https://svn.collab.net/repos/rapidsvn/trunk/src/svncpp
+ *    After:   https://svn.collab.net/repos/rapidsvn/trunk/src/svncpp
+ *
+ * Jobs to do:
+ * - Uppercase Windows drive letters
+ * - Lowecase url schemas
+ *
+ * @param path input path
+ * @return beatified path
+ */
+wxString 
+BeautifyPath (const wxString & path);
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

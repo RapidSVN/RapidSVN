@@ -22,6 +22,7 @@
 
 // app
 #include "bookmarks.hpp"
+#include "utils.hpp"
 
 
 WX_DEFINE_ARRAY (svn::Context *, ContextArray);
@@ -67,23 +68,21 @@ public:
    * @param name full path/url of the bookmark
    */
   void 
-  AddBookmark (const char * name)
+  AddBookmark (const char * name_)
   {
+    wxString name (name_);
+    if (!svn::Url::isValid (name_))
+    {
+      wxFileName filename (name_);
+      name = filename.GetFullPath (wxPATH_NATIVE);
+    }
+
+    name = BeautifyPath (name);
+
     if (bookmarks.Index (name) != wxNOT_FOUND)
       return;
 
-
-    // local path or repository url?
-    if (svn::Url::isValid (name))
-    {
-      bookmarks.Add (name);
-    }
-    else
-    {
-      wxFileName filename (name);
-      bookmarks.Add (filename.GetFullPath (wxPATH_NATIVE));
-    }
-
+    bookmarks.Add (name);
     if (singleContext == 0)
       contexts.Add (CreateContext ());
   }
