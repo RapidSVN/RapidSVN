@@ -23,27 +23,13 @@
  */
 namespace svn
 {
-
-	/** 
-	 * Counter that is used by @a Apr::Apr and @a Apr::~Apr to
-	 * count the number of instances.
-	 */
-
-	static int mAprCount = 0;
-
 	Apr::Apr ()
 	{
-		if (mAprCount == 0)
-			apr_initialize ();
-
-		mAprCount++;
+		apr_initialize ();
 	}
 
 	Apr::~Apr ()
 	{
-		mAprCount--;
-
-		if (mAprCount == 0)
-			apr_terminate ();
+		apr_terminate ();
 	}
 }

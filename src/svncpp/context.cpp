@@ -21,6 +21,7 @@
 #include "svn_utf.h"
 
 // svncpp
+#include "svncpp/apr.hpp"
 #include "svncpp/context.hpp"
 #include "svncpp/context_listener.hpp"
 
@@ -39,6 +40,9 @@ namespace svn
     std::string password;
     std::string logMessage;
     std::string configDir;
+
+    /** The usage of Apr makes sure Apr is initialized */
+    Apr apr;
 
     /**
      * translate native c-string to utf8 
