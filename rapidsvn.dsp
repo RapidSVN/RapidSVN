@@ -266,6 +266,10 @@ SOURCE=.\src\action.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\action_worker.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\add_action.hpp
 # End Source File
 # Begin Source File

@@ -57,14 +57,14 @@ CommitAction::Perform ()
   svn::Client client (&context);
   client.notification (&notify);
 
-  const svn::Targets & targets (GetTargets ());
+  const svn::Targets & targets = GetTargets ();
 
   bool result = false;
   try
   {
     svn::Pool pool;
     long revision = 
-      client.commit (targets.array (pool.pool ()), m_data.LogMessage.c_str (), 
+      client.commit (targets.array (pool), m_data.LogMessage.c_str (), 
                      m_data.Recursive);
     wxString str;
 

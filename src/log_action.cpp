@@ -33,19 +33,12 @@ LogAction::Prepare ()
     return false;
   }
       
-  try
-  {
-    svn::Path target = GetTarget ();
-    svn::Log log (target.c_str (), 
-                  svn::Revision::START, 
-                  svn::Revision::HEAD);
-    LogDlg dlg (GetParent (), log);
-    dlg.ShowModal ();
-  }
-  catch (svn::ClientException & e)
-  {
-    //TODO handle error (e.g. tracer message)
-  }
+  svn::Path target = GetTarget ();
+  svn::Log log (target.c_str (), 
+                svn::Revision::START, 
+                svn::Revision::HEAD);
+  LogDlg dlg (GetParent (), log);
+  dlg.ShowModal ();
 
   return false;
 }
@@ -55,12 +48,6 @@ LogAction::Perform ()
 {
   return true;
 }
-
-// void 
-// LogAction::setLogMessage (const char * message)
-// {
-//   m_logDialog->setLogMessage (message);
-// }
 
 /* -----------------------------------------------------------------
  * local variables:

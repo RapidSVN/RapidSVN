@@ -41,9 +41,9 @@ CleanupAction::Perform ()
   bool result = false;
   try
   {
-    const svn::Path & path (GetPath ());
+    const svn::Path & path = GetPath ();
     wxSetWorkingDirectory (path.c_str ());
-    svn::Client::cleanup (path);
+    svn::Client::cleanup (path.c_str ());
     Trace (_T ("Cleanup of working directory finished"));
     result = true;
   }

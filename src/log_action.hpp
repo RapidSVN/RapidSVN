@@ -31,9 +31,6 @@ public:
    * @see Action
    */
   virtual bool Perform ();
-  void setLogMessage (const char * message);
-
-private:
 };
 
 #endif

@@ -17,7 +17,6 @@
 
 // app
 #include "ids.hpp"
-//REMOVE #include "tracer.hpp"
 #include "add_action.hpp"
 #include "svn_notify.hpp"
 
@@ -44,7 +43,7 @@ AddAction::Perform ()
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
-  const std::vector<svn::Path> & v (GetTargets ());
+  const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
 
   for (it = v.begin (); it != v.end (); it++)
