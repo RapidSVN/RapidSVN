@@ -68,7 +68,8 @@ public:
   RevisionPanel (wxWindow * parent, 
                 wxWindowID id, 
                 const wxString & title)
-   : wxPanel (parent, id, wxDefaultPosition, wxDefaultSize)
+   : wxPanel (parent, id, wxDefaultPosition, wxDefaultSize),
+     mEnableUrl (true)
   {
     InitControls (title);
     CheckControls ();
@@ -151,7 +152,64 @@ public:
     return mTextUrl->GetValue ();
   }
 
+
+  void
+  SetRevision (const svn::Revision & revision)
+  {
+    // set revnum
+    if (revision.kind () == svn_opt_revision_date)
+    {
+      mRadioUseDate->SetValue (true);
+      mTextDate->SetValue (
+        FormatDateTime (revision.date (), "%c"));
+      mTextRevision->SetValue ("");
+      mCheckUseLatest->SetValue (true);
+    }
+    else
+    {
+      mRadioUseRevision->SetValue (true);
+      mTextDate->SetValue ("");
+
+      if (revision.kind () == svn_opt_revision_head)
+      {
+        mTextRevision->SetValue ("");
+        mCheckUseLatest->SetValue (true);
+      }
+      else
+      {
+        wxString value;
+        value.Printf ("%d", revision.revnum ());
+        mTextRevision->SetValue (value);
+        mCheckUseLatest->SetValue (false);
+      }
+    }
+  }
+
+
+  void
+  SetUseUrl (bool value)
+  {
+    mCheckUseUrl->SetValue (value);
+  }
+
+
+  void 
+  SetUrl (const wxString & url)
+  {
+    mTextUrl->SetValue (url);
+  }
+
+
+  void
+  EnableUrl (bool enable)
+  {
+    // @todo 
+  }
+
+
 private:
+  bool mEnableUrl;
+
   /** radio button: if checked use revision */
   wxRadioButton * mRadioUseRevision;
 
@@ -267,14 +325,13 @@ private:
   {
     if (!mCheckUseUrl->GetValue ())
     {
-      mTextUrl->SetValue ("");
       mTextUrl->Enable (false);
       mButtonBrowse->Enable (false);
       return;
     }
 
-    mTextUrl->Enable (true);
-    mButtonBrowse->Enable (true);
+    mTextUrl->Enable (mEnableUrl);
+    mButtonBrowse->Enable (mEnableUrl);
   }
 
 
@@ -312,6 +369,19 @@ BEGIN_EVENT_TABLE (RevisionPanel, wxPanel)
 END_EVENT_TABLE ()
 
 
+static const DiffData::CompareType COMPARE_TYPES [] = {
+  DiffData::WITH_SAME_REVISION, 
+  DiffData::WITH_DIFFERENT_REVISION, 
+  DiffData::TWO_REVISIONS};
+
+static const wxString COMPARE_TYPE_LABELS [] =
+{
+  _("Working copy against same remote revision"),
+  _("Working copy against different remote revision/date"),
+  _("Two revisions/dates against each other")
+};
+
+
 /**
  * This panel contains all the controls relevant for
  * the diff dialog. We are using a separate class to
@@ -336,26 +406,86 @@ public:
   const DiffData
   GetDiffData () const
   {
-    int sel = mComboCmpType->GetSelection ();
     DiffData diffData;
+    diffData.compareType = GetCompareType ();
 
-    switch (sel)
+    switch (diffData.compareType)
     {
-    case 0:
-      diffData.compareType = DiffData::CMP_WC_WITH_SAME_REV;
+    case DiffData::WITH_SAME_REVISION:
+      // nothing special
       break;
 
-    case 1:
-      diffData.compareType = DiffData::CMP_WC_WITH_DIFFERENT_REV;
+    case DiffData::WITH_DIFFERENT_REVISION:
       diffData.revision1 = mRevisionOne->GetRevision ();
       break;
 
-    default:
-      diffData.compareType = DiffData::CMP_TWO_REV;
+    case DiffData::TWO_REVISIONS:
       diffData.revision1 = mRevisionOne->GetRevision ();
       diffData.revision2 = mRevisionTwo->GetRevision ();
+      break;
     }
     return diffData;
+  }
+
+
+  void
+  SetData (const DiffData & diffData)
+  {
+    mRevisionOne->SetRevision (diffData.revision1);
+    mRevisionTwo->SetRevision (diffData.revision2);
+
+    SetCompareType (diffData.compareType);
+  }
+
+
+  void
+  EnableUrl (bool value)
+  {
+    mRevisionOne->EnableUrl (value);
+    mRevisionTwo->EnableUrl (value);
+  }
+
+
+  void
+  AllowCompareTypes (const DiffData::CompareType types [], 
+                     size_t count)
+  {
+    if (count == 0)
+    {
+      AllowCompareTypes ();
+      return;
+    }
+
+    // remember old selection and clear contents
+    DiffData::CompareType oldCompareType = GetCompareType ();
+    mComboCmpType->Clear ();
+
+    // otherwise allow only the types that were passed
+    // as parameters
+    size_t i;
+
+    for (i=0; i<count; i++)
+      AddCompareType (types [i]);
+
+    // try to set old selection
+    SetCompareType (oldCompareType);
+  }
+
+
+  void 
+  AllowCompareTypes ()
+  {
+    // remember old selection and clear contents
+    DiffData::CompareType oldCompareType = GetCompareType ();
+    mComboCmpType->Clear ();
+
+    // fill list
+    AddCompareType (DiffData::WITH_SAME_REVISION);
+    AddCompareType (DiffData::WITH_DIFFERENT_REVISION);
+    AddCompareType (DiffData::TWO_REVISIONS);
+
+    // try to set remembered value
+    SetCompareType (oldCompareType);
   }
 
 
@@ -368,24 +498,18 @@ private:
   {
     // first row: label + combo with selection of options
     wxFlexGridSizer * typeSizer = new wxFlexGridSizer (2, 5, 5);
+    typeSizer->AddGrowableCol (1);
     {
       wxStaticText * label = new wxStaticText (
         this, -1, _("Compare:"));
 
-      const wxString choices [] = {
-        _("Working copy against same remote revision"),
-        _("Working copy against different remote revision/date"),
-        _("Two revisions/dates against each other")
-      };
-
       mComboCmpType = new wxComboBox (
-        this, ID_CompareType, choices [0], 
-        wxDefaultPosition, wxDefaultSize, 
-        WXSIZEOF (choices), choices,
+        this, ID_CompareType, "", wxDefaultPosition, wxDefaultSize, 
+        WXSIZEOF (COMPARE_TYPE_LABELS), COMPARE_TYPE_LABELS, 
         wxCB_READONLY);
 
       typeSizer->Add (label);
-      typeSizer->Add (mComboCmpType);
+      typeSizer->Add (mComboCmpType, 0, wxEXPAND);
     }
 
     // second row: first revision/url
@@ -408,7 +532,7 @@ private:
 
     // create the static box for the diff options
     wxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-    mainSizer->Add (typeSizer);
+    mainSizer->Add (typeSizer, 0, wxEXPAND);
     mainSizer->Add (mRevisionOne, 0, wxEXPAND);
     mainSizer->Add (mRevisionTwo, 0, wxEXPAND);
     mainSizer->Add (buttonSizer, 0, wxALIGN_CENTER);
@@ -418,15 +542,33 @@ private:
 
     mainSizer->SetSizeHints (this);
     mainSizer->Fit (this);
+
+    AllowCompareTypes ();
   }
 
 
   void
   CheckControls ()
   {
-    int sel = mComboCmpType->GetSelection ();
-    mRevisionOne->Enable (sel > 0);
-    mRevisionTwo->Enable (sel > 1);
+    bool one = false;
+    bool two = false;
+
+    switch (GetCompareType ())
+    {
+    case DiffData::WITH_SAME_REVISION:
+      one = two = false;
+      break;
+
+    case DiffData::WITH_DIFFERENT_REVISION:
+      one = true;
+      break;
+
+    case DiffData::TWO_REVISIONS:
+      one = two = true;
+      break;
+    }
+    mRevisionOne->Enable (one);
+    mRevisionTwo->Enable (two);
 
     mButtonOK->Enable (IsValid ());
   }
@@ -444,6 +586,90 @@ private:
       valid &= mRevisionTwo->IsValid ();
 
     return valid;
+  }
+
+
+  /**
+   * Add a compare type to the combo box
+   *
+   * @return success
+   * @retval false @a CompareType entry in @a CompareTypeLabels
+   *               not found
+   */
+  bool
+  AddCompareType (DiffData::CompareType compareType)
+  {
+    bool ok = false;
+    const int c = WXSIZEOF (COMPARE_TYPES);
+    for (int i=0; i < c; i++)
+    {
+      if (COMPARE_TYPES [i] == compareType)
+      {
+        mComboCmpType->Append (COMPARE_TYPE_LABELS [i],
+                               (void*) compareType);
+        ok = true;
+        break;
+      }
+    }
+
+    return ok;
+  }
+
+
+  /**
+   * Get selected @a CompareType
+   *
+   * @retval INVALID_COMPARE_TYPE if nothing was
+   *         selected or invalid result of @a GetClientData
+   */
+  DiffData::CompareType 
+  GetCompareType () const
+  {
+    int sel = mComboCmpType->GetSelection ();
+
+    if (sel < 0)
+      return DiffData::INVALID_COMPARE_TYPE;
+
+    int value = (int)mComboCmpType->GetClientData (sel);
+
+    if ((value <= DiffData::INVALID_COMPARE_TYPE) ||
+        (value >= DiffData::COMPARE_TYPE_COUNT))
+      return DiffData::INVALID_COMPARE_TYPE;
+
+    return (DiffData::CompareType) value;
+  }
+
+
+  /**
+   * Select @a CompareType in the combo-box.
+   * If not found, select first entry in the combo-box
+   *
+   * @return found?
+   * @retval true found!
+   */
+  bool
+  SetCompareType (DiffData::CompareType compareType)
+  {
+    bool found = false;
+
+    const int c = mComboCmpType->GetCount ();
+
+    for (int i=0; i < c; i++)
+    {
+      if (compareType == (int)mComboCmpType->GetClientData (i))
+      {
+        mComboCmpType->SetSelection (i);
+        found = true;
+        break;
+      }
+    }
+
+    if (!found)
+      mComboCmpType->SetSelection (0);
+
+    CheckControls ();
+
+    return found;
   }
 
 
@@ -494,6 +720,35 @@ const DiffData
 DiffDlg::GetData () const
 {
   return m->GetDiffData ();
+}
+
+
+void
+DiffDlg::SetData (const DiffData & diffData)
+{
+  m->SetData (diffData);
+}
+
+
+void
+DiffDlg::EnableUrl (bool value)
+{
+  m->EnableUrl (value);
+}
+
+
+void
+DiffDlg::AllowCompareTypes (const DiffData::CompareType types [], 
+                            size_t count)
+{
+  m->AllowCompareTypes (types, count);
+}
+
+
+void
+DiffDlg::AllowCompareTypes ()
+{
+  m->AllowCompareTypes ();
 }
 
 

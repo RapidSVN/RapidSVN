@@ -48,6 +48,44 @@ public:
   const DiffData
   GetData () const;
 
+
+  /**
+   * sets the diff data
+   */
+  void
+  SetData (const DiffData & diffData);
+
+
+  /**
+   * Enable the entering of URLs
+   *
+   * @param value true=enabled; false=disabled
+   */
+  void
+  EnableUrl (bool value);
+
+
+  /**
+   * Allows only the compare-types in @a types.
+   * If no compare type is allowed (@a count = 0),
+   * then all the compare-types are allowed.
+   *
+   * @see DiffData::CompareType
+   *
+   * @param types Array with valid compare-types
+   * @param count count of entries in @a types
+   */
+  void
+  AllowCompareTypes (const DiffData::CompareType types [], 
+                     size_t count);
+
+  /**
+   * Allow all compare-types
+   */
+  void
+  AllowCompareTypes ();
+
+
 private:
   /** hide implementation details */
   class Data;

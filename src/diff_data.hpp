@@ -25,9 +25,11 @@ public:
 
   typedef enum
   {
-    CMP_WC_WITH_SAME_REV,
-    CMP_WC_WITH_DIFFERENT_REV,
-    CMP_TWO_REV
+    INVALID_COMPARE_TYPE = 0,
+    WITH_SAME_REVISION,
+    WITH_DIFFERENT_REVISION,
+    TWO_REVISIONS,
+    COMPARE_TYPE_COUNT
   } CompareType;
 
   CompareType compareType;
@@ -43,7 +45,7 @@ public:
 
   /** Constructor */
   DiffData ()
-    : compareType (CMP_WC_WITH_SAME_REV),
+    : compareType (WITH_SAME_REVISION),
       useUrl1 (false), url1 (""),
       useUrl2 (false), url2 ("")
   {
