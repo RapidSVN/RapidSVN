@@ -1013,7 +1013,7 @@ VSvnFrame::ShowLog ()
     {
       while(log.next ())
       {
-        ltoa (log.revision (), rev, 10);
+        sprintf(rev, "%ld", (long) log.revision ()); 
         all += "--------------------\n";
         all += "Revision: ";
         all += rev;
