@@ -10,7 +10,7 @@ AppUpdatesURL=http://rapidsvn.tigris.org/
 DefaultDirName={pf}\RapidSVN
 DefaultGroupName=RapidSVN
 LicenseFile=..\..\LICENSE.txt
-InfoBeforeFile=..\..\README.txt
+InfoBeforeFile=..\..\README
 InfoAfterFile=..\..\TODO.txt
 OutputBaseFilename=RapidSVN-alpha
 
@@ -24,7 +24,7 @@ Name: code; Description: Source Code; Types: full compact
 [Files]
 Source: "libdb40.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite
 Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite
-Source: "..\..\TODO"; DestDir: "{app}"; CopyMode: alwaysoverwrite
+Source: "..\..\TODO.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite
 Source: "..\..\README"; DestDir: "{app}"; CopyMode: alwaysoverwrite
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite
 
