@@ -155,8 +155,11 @@ private:
    */
   bool InvokeDefaultAction ();
 
-  // list control
+  /** update the contents of the filelist */
   void UpdateFileList ();
+
+  /** update the contents of the folder browser */
+  void UpdateFolderBrowser ();
 
   // utility functions
   void ShowLog ();
@@ -175,11 +178,6 @@ private:
   void Merge ();
   void Contents ();
   void Preferences ();
-
-//REMOVE  FileListCtrl *GetFileList ()
-//REMOVE  {
-//REMOVE    return m_listCtrl;
-//REMOVE  }
 
   FolderBrowser *GetFolderBrowser ()
   {

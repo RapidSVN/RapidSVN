@@ -486,6 +486,7 @@ RapidSvnFrame::~RapidSvnFrame ()
 void
 RapidSvnFrame::UpdateFileList ()
 {
+  wxBusyCursor busy;
   if (m_listCtrl && m_folder_browser)
   {
     if (m_currentPath.length () > 0)
@@ -578,10 +579,7 @@ RapidSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
 {
-  if (m_folder_browser)
-  {
-    m_folder_browser->Refresh ();
-  }
+  UpdateFolderBrowser ();
   UpdateFileList ();
 }
 
@@ -781,7 +779,7 @@ RapidSvnFrame::AddProject ()
 
   // add
   m_folder_browser->AddProject (dialog.GetPath ());
-  m_folder_browser->Refresh ();
+  UpdateFolderBrowser ();
 
   wxLogStatus (_("Added project to workbench  '%s'"),
                dialog.GetPath ().c_str ());
@@ -822,7 +820,7 @@ RapidSvnFrame::InitFolderBrowser ()
       break;
   }
 
-  m_folder_browser->Refresh ();
+  UpdateFolderBrowser ();
 }
 
 const svn::Targets
@@ -1180,6 +1178,17 @@ RapidSvnFrame::OnColumnReset (wxCommandEvent &)
     }
   }
   UpdateFileList ();
+}
+
+void 
+RapidSvnFrame::UpdateFolderBrowser ()
+{
+  wxBusyCursor busy;
+
+  if (m_folder_browser)
+  {
+    m_folder_browser->Refresh ();
+  }
 }
 
 InfoPanel::InfoPanel (wxWindow * parent)
