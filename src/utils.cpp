@@ -383,13 +383,8 @@ BeautifyPath (const wxString & path)
   // a windows drive?
   wxString start (path.Left (pos));
 
-  // url or drive letter?
-  if (pos > 1)
-    start = start.Lower ();
-  else
-    start = start.Upper ();
-
-  return start + path.Mid (pos);
+  // lowercase the Drive / URL schema part
+  return start.Lower () + path.Mid (pos);
 }
 
 
