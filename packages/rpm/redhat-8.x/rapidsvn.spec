@@ -32,7 +32,18 @@ with the "rpm -Uvh --prefix /your/favorite/path" command. This is useful
 if you don't have root access on your machine but would like to use this
 package.
 
+%package devel
+Group: Utilities/System
+Summary: Development package for RapidSVN developers.
+Requires: rapidsvn
+%description devel
+Development package for RapidSVN developers.
+
 %changelog
+* Sat Nov 20 2004 David Summers <david@summersoft.fay.ar.us> 0.7.0-7013
+- Fixed RPM to build again.
+- Added new rapidsvn-devel package.
+
 * Tue Dec 30 2003 David Summers <david@summersoft.fay.ar.us> 0.5.0-7013
 - Added build pre-requisites for apr-devel, apr-util-devel, and neon-devel.
 
@@ -81,5 +92,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 /usr/bin/*
-/usr/lib/*
+/usr/lib/*so*
 /usr/man/man1/*
+
+%files devel
+/usr/lib/*a
+/usr/include/svncpp
