@@ -52,8 +52,10 @@ fi
 case $wxversion in
     [2.3.3])
         ;;
+    [2.4.0])
+        ;;
     *)
-        AC_MSG_ERROR([wxWindows 2.3.3 required])
+        AC_MSG_ERROR([wxWindows 2.3.3 or 2.4.0 required])
         ;;
 esac
 
