@@ -13,7 +13,7 @@
 
 
 ;;; Rapidsvn C++ conventions
-(if (eq major-mode 'c++-mode)
+(if (member major-mode '(c++-mode c-mode))
     (progn
       (c-add-style "rapidsvn" '("bsd" (c-offsets-alist . ((inextern-lang . 0)))))
       (c-set-style "rapidsvn")
