@@ -52,7 +52,7 @@ CXXFLAGS=@CXXFLAGS@
 .SUFFIXES:	.o .cpp
 
 .cpp.o:
-	$(CXX) -c -g $(CXXFLAGS) $(SVN_INC) -o $@ $<
+	$(CXX) -c -g $(SVN_INC) $(CXXFLAGS) -o $@ $<
 
 all:    $(PROGRAM)
 
