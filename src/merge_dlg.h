@@ -1,5 +1,5 @@
-#ifndef _IMPORT_DLG_H_INCLUDED_
-#define _IMPORT_DLG_H_INCLUDED_
+#ifndef _MERGE_DLG_H_INCLUDED_
+#define _MERGE_DLG_H_INCLUDED_
 
 class MergeDlg:public wxDialog
 {
