@@ -10,33 +10,27 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _CHECKOUT_ACTION_H_INCLUDED_
-#define _CHECKOUT_ACTION_H_INCLUDED_
+#ifndef _CHECKOUT_DATA_H_INCLUDED_
+#define _CHECKOUT_DATA_H_INCLUDED_
 
-// app
-#include "checkout_dlg.hpp"
-#include "action_thread.hpp"
+// wxwindows
+#include "wx/string.h"
 
-class CheckoutAction:public ActionThread
+struct CheckoutData
 {
-public:
-  /**
-   * Constructor
-   *
-   * @param parent parent window
-   * @param tr
-   */
-  CheckoutAction (wxFrame * parent, Tracer * tr);
+  CheckoutData ()
+  {
+    UseLatest = true;
+    Recursive = true;
+  }
 
-  void Perform ();
-
-protected:
-  void *Entry ();
-
-private:
-  CheckoutData m_data;
-  wxFrame *m_parent;
-
+  wxString ModuleName;
+  wxString DestFolder;
+  wxString User;
+  wxString Password;
+  wxString Revision;
+  bool Recursive;
+  bool UseLatest;
 };
 
 #endif

@@ -13,34 +13,39 @@
 #ifndef _CHECKOUT_DLG_H_INCLUDED_
 #define _CHECKOUT_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/wx.h"
+
+// app
+#include "checkout_data.hpp"
+
 class CheckoutDlg : public wxDialog
 {
 public:
-  struct sData 
-  {
-    sData();
-    
-    wxString ModuleName;
-    wxString DestFolder;
-    wxString User;
-    wxString Password;
-    wxString Revision;
-    bool Recursive;
-    bool UseLatest;
-  };
+  /**
+   * Constructor
+   *
+   * @param parent parent window
+   */
+  CheckoutDlg (wxWindow *parent);
 
-  CheckoutDlg (wxWindow *parent, sData* pData);
   virtual void InitDialog();
 
   void OnOK (wxCommandEvent& event);
   void OnBrowse (wxCommandEvent & event);
 
+  const CheckoutData &
+  GetData () const
+  {
+    return m_data;
+  }
+
 private:
-  void InitializeData ();
+  void InitControls ();
   void OnUseLatest(wxCommandEvent &event);
   void EnableControls();
 
-  sData * m_pData;
+  CheckoutData m_data;
   wxCheckBox * pUseLatest;
   wxTextCtrl * revision;
   wxStaticText * pRevisionLabel; 

@@ -16,10 +16,11 @@
 #include "svncpp/modify.hpp"
 
 // app
-#include "include.hpp"
+//#include "include.hpp"
+#include "ids.hpp"
 #include "utils.hpp"
 #include "checkout_dlg.hpp"
-#include "rapidsvn_app.hpp"
+//#include "rapidsvn_app.hpp"
 #include "checkout_action.hpp"
 #include "svn_notify.hpp"
 
@@ -27,7 +28,7 @@ CheckoutAction::CheckoutAction (wxFrame * frame, Tracer * tr)
   : ActionThread (frame)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
-  m_pFrame = frame;
+  m_parent = frame;
 }
 
 void
@@ -35,20 +36,22 @@ CheckoutAction::Perform ()
 {
   ////////////////////////////////////////////////////////////
   // Here we are in the main thread.
-  CheckoutDlg *coDlg = new CheckoutDlg(m_pFrame, &m_data);
-
-  if (coDlg->ShowModal () == wxID_OK)
+  CheckoutDlg dlg (m_parent);
+  if( dlg.ShowModal () != wxID_OK )
   {
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
+    return;
   }
+  m_data = dlg.GetData ();
+
+  // #### TODO: check errors and throw an exception
+  // create the thread
+  Create ();
+
+  // here we start the action thread
+  Run ();
   
   // destroy the dialog
-  coDlg->Close (TRUE);
+  //coDlg->Close (TRUE);
 }
 
 void *
@@ -71,7 +74,9 @@ CheckoutAction::Entry ()
   {
     TrimString(m_data.Revision);
     if (!m_data.Revision.IsEmpty ())
+    {
       m_data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
+    }
   }
 
   try
