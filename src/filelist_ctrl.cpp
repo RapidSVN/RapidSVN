@@ -923,8 +923,8 @@ FileListCtrl::UpdateColumns ()
   // rebuild the index of columns
   int index = 0;
   int count = 0;
-
-  for (int col=0; col < COL_COUNT; col++)
+  int col;
+  for (col=0; col < COL_COUNT; col++)
   {
     if (m->ColumnVisible[col])
     {
@@ -953,7 +953,7 @@ FileListCtrl::UpdateColumns ()
   }
 
   // Now set the captions and widths
-  for (int col=0; col < COL_COUNT; col++)
+  for (col=0; col < COL_COUNT; col++)
   {
     int index = m->ColumnIndex[col];
     if (index != -1)
