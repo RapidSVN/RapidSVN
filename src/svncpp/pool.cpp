@@ -15,7 +15,6 @@
 #define _SVNCPP_POOL_HPP_
 
 #include "pool.hpp"
-#include "svn_pools.h"
 
 /**
  * SvnCpp namespace

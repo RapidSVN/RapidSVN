@@ -14,10 +14,8 @@
 #ifndef _SVNCPP_POOL_H_
 #define _SVNCPP_POOL_H_
 
-/**
- * Forward declarations
- */
-typedef struct apr_pool_t;
+// subversion api
+#include "svn_pools.h"
 
 /**
  * SvnCpp namespace
