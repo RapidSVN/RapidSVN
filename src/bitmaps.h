@@ -13,4 +13,5 @@
 #include "res/bitmaps/revert.xpm"
 #include "res/bitmaps/status.xpm"
 #include "res/bitmaps/update.xpm"
+#include "res/bitmaps/versioned_folder.xpm"
 #endif
