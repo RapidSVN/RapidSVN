@@ -27,12 +27,14 @@ size_t VerbList::GetCount () const
 
 const char *VerbList::GetName (size_t) const
 {
-  throw std::out_of_range("Index out of range");
+  // This should never be called, as GetCount always returns 0
+  throw std::exception();
 }
 
 void VerbList::Launch (size_t) const
 {
-  throw std::out_of_range("Index out of range");
+  // This should never be called, as GetCount always returns 0
+  throw std::exception();
 }
 /* -----------------------------------------------------------------
  * local variables:

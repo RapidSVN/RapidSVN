@@ -16,6 +16,7 @@ rapidsvn_SOURCES= \
 	delete_action.cpp \
 	delete_dlg.cpp \
 	exceptions.cpp \
+	external_program_action.cpp \
 	filelist_ctrl.cpp \
 	folder_browser.cpp \
 	folder_item_data.cpp \
