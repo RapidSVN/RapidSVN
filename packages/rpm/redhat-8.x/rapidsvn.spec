@@ -9,11 +9,14 @@ Source0: %{name}-%{version}-%{release}.tar.gz
 Packager: David Summers <david@summersoft.fay.ar.us>
 Requires: subversion
 #Requires: /sbin/install-info
+BuildPreReq: apr-devel
+BuildPreReq: apr-util-devel
 BuildPreReq: autoconf >= 2.53
 BuildPreReq: docbook-style-xsl >= 1.58.1
 BuildPreReq: doxygen
 BuildPreReq: libtool >= 1.4.2
 BuildPreReq: libxslt >= 1.0.27
+BuildPreReq: neon-devel
 BuildPreReq: subversion-devel >= 0.37.0
 BuildPreReq: wxGTK-devel >= 2.4.1
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
@@ -30,6 +33,9 @@ if you don't have root access on your machine but would like to use this
 package.
 
 %changelog
+* Tue Dec 30 2003 David Summers <david@summersoft.fay.ar.us> 0.5.0-7013
+- Added build pre-requisites for apr-devel, apr-util-devel, and neon-devel.
+
 * Tue Dec 30 2003 David Summers <david@summersoft.fay.ar.us> 0.4.0-6977
 - Took out requirement for httpd and apr as that requirement is handled by
   the requirement for subversion.

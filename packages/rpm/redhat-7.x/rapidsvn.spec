@@ -10,6 +10,8 @@ Packager: David Summers <david@summersoft.fay.ar.us>
 Requires: subversion = 0.35.1
 #Requires: /sbin/install-info
 BuildPreReq: subversion-devel >= 0.37.0
+BuildPreReq: apache-libapr-devel
+BuildPreReq: neon-devel
 BuildPreReq: wxGTK-devel >= 2.3.3
 BuildPreReq: autoconf >= 2.53
 BuildPreReq: libtool >= 1.4.2
@@ -27,6 +29,9 @@ if you don't have root access on your machine but would like to use this
 package.
 
 %changelog
+* Wed Feb 25 2004 David Summers <david@summersoft.fay.ar.us> 0.5.0-7013
+- Added build pre-requisites for apache-libapr-devel and neon-devel.
+
 * Tue Dec 30 2003 David Summers <david@summersoft.fay.ar.us> 0.4.0-6977
 - Took out requirement for httpd and apr as that requirement is handled by
   the requirement for subversion.
