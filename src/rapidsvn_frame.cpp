@@ -419,8 +419,16 @@ RapidSvnFrame::UpdateFileList ()
   {
     if (m_currentPath.length () > 0)
     {
-      m_listCtrl->UpdateFileList (m_currentPath);
-      m_listCtrl->Show (TRUE);
+      try
+      {
+        m_listCtrl->UpdateFileList (m_currentPath);
+        m_listCtrl->Show (TRUE);
+      }
+      catch (...)
+      {
+        // probably unversioned resource
+        m_listCtrl->Show (FALSE);
+      }
     }
     else
     {

@@ -88,10 +88,10 @@ namespace svn
     switch (kind)
     {
     case svn_wc_status_none:
-      return "non-svn";
+      return "";
       break;
     case svn_wc_status_normal:
-      return "normal";
+      return "";
       break;
     case svn_wc_status_added:
       return "added";
