@@ -143,7 +143,7 @@ namespace svn
   Path
   Path::getTempDir ()
   {
-    const char * tempdir;
+    const char * tempdir = "<not set>";
     Pool pool;
 
     apr_temp_dir_get (&tempdir, pool);
