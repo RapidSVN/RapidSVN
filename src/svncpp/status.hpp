@@ -19,6 +19,7 @@
 #include "svn_wc.h"
 
 // svncpp
+#include "entry.hpp"
 #include "pool.hpp"
 
 namespace svn
@@ -62,12 +63,12 @@ namespace svn
 
     /**
      * @return entry for this path
-     * @retval NULL if item is not versioned
+     * @retval entry.isValid () = false item is not versioned
      */
-    const svn_wc_entry_t *
+    const Entry 
     entry () const
     {
-      return m_status->entry;
+      return Entry (m_status->entry);
     }
 
     /**

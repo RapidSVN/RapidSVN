@@ -20,7 +20,7 @@
 namespace svn
 {
   Status::Status (const Status & src)
-    : m_path (0), m_status (0)
+    : m_status (0), m_path (0)
   {
     if( &src != this )
     {
@@ -29,7 +29,7 @@ namespace svn
   }
 
   Status::Status (const char *path, svn_wc_status_t * status)
-    : m_path (0), m_status (0)
+    : m_status (0), m_path (0)
   {
     init (path, status);
   }

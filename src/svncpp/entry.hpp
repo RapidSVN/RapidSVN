@@ -31,16 +31,38 @@ namespace svn
   public:
     /**
      * default constructor. if @a src is set,
-     * copy its contents
+     * copy its contents. 
+     *
+     * If @a src is not set (=0) this will be
+     * a non-versioned entry. This can be checked
+     * later with @a isValid ().
      *
      * @param src another entry to copy from
      */
     Entry (const svn_wc_entry_t * src = 0);
 
     /**
+     * copy constructor
+     */
+    Entry (const Entry & src);
+
+    /**
      * destructor 
      */
     virtual ~Entry ();
+
+    /**
+     * returns whether this is a valid=versioned
+     * entry.    
+     *
+     * @return is entry valid
+     * @retval true valid entry
+     * @retval false invalid or unversioned entry
+     */
+    bool isValid () const
+    {
+      return m_valid;
+    }
 
     /**
      * @return entry's name
@@ -245,12 +267,19 @@ namespace svn
   private:
     svn_wc_entry_t * m_entry;
     Pool m_pool;
+    bool m_valid;
 
     /**
      * disallow assignment operator
      */
     Entry &
     operator = (const Entry &);
+
+    /**
+     * initializes the members
+     */
+    void 
+    init (const svn_wc_entry_t * src);
  };
 
 }

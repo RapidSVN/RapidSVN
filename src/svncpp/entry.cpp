@@ -18,24 +18,38 @@
 namespace svn
 {
   Entry::Entry (const svn_wc_entry_t * src)
-    : m_pool (0), m_entry (0)
+    : m_entry (0), m_pool (0), m_valid (false)
   {
-    // copy the contents of src
-    if (src)
-    {
-      m_entry = svn_wc_entry_dup (src, m_pool);
-    }
-    else
-    {
-      m_entry = (svn_wc_entry_t*)
-        apr_pcalloc (m_pool, sizeof (svn_wc_entry_t));
-    }
+    init (src);
+  }
+
+  Entry::Entry (const Entry & src)
+    : m_entry (0), m_pool (0), m_valid (false)
+  {
+    init (src);
   }
 
   Entry::~Entry ()
   {
     // no need to explicitely de-allocate m_entry
-    // since this will be handle by m_pool
+    // since this will be handled by m_pool
+  }
+
+  void
+  Entry::init (const svn_wc_entry_t * src)
+  {
+    if (src)
+    {
+      // copy the contents of src
+      m_entry = svn_wc_entry_dup (src, m_pool);
+      m_valid = true;
+    }
+    else
+    {
+      // create an empty entry
+      m_entry = (svn_wc_entry_t*)
+        apr_pcalloc (m_pool, sizeof (svn_wc_entry_t));
+    }
   }
 }
 
