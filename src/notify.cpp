@@ -26,7 +26,6 @@ notify (void *baton,
         svn_wc_notify_state_t prop_state, svn_revnum_t revision)
 {
   NotifyBaton *nb = (NotifyBaton *) baton;
-  char statchar_buf[3] = "_ ";
 
   switch (action)
   {
@@ -34,7 +33,7 @@ notify (void *baton,
   case svn_wc_notify_update_delete:
     {
       nb->received_some_change = TRUE;
-      wxString str = wxString::Format ("D  %s", path);
+      wxString str = wxString::Format ("Deleted  %s", path);
       nb->tracer->Trace (str);
     }
     break;
@@ -42,7 +41,7 @@ notify (void *baton,
   case svn_wc_notify_update_add:
     {
       nb->received_some_change = TRUE;
-      wxString str = wxString::Format ("A  %s", path);
+      wxString str = wxString::Format ("Added  %s", path);
       nb->tracer->Trace (str);
     }
     break;
@@ -79,44 +78,47 @@ notify (void *baton,
       if (mime_type
           && (mimeType.Length () > 5) && (mimeType.StartsWith ("text/") != 0))
       {
-        str = wxString::Format ("A  (bin)  %s", path);
+        str = wxString::Format ("Added  (bin)  %s", path);
       }
       else
       {
-        str = wxString::Format ("A         %s", path);
+        str = wxString::Format ("Added         %s", path);
       }
       nb->tracer->Trace (str);
     }
     break;
 
   case svn_wc_notify_update_update:
-    if (kind == svn_node_file)
     {
-      /* Do this only for files, not for dirs, since we don't want
-         to treat directory closings as "change" events. */
-      nb->received_some_change = TRUE;
+      wxString status;
+      if (kind == svn_node_file)
+      {
+        /* Do this only for files, not for dirs, since we don't want
+           to treat directory closings as "change" events. */
+        nb->received_some_change = TRUE;
 
-      if (content_state == svn_wc_notify_state_conflicted)
-        statchar_buf[0] = 'C';
-      else if (content_state == svn_wc_notify_state_merged)
-        statchar_buf[0] = 'G';
-      else if (content_state == svn_wc_notify_state_modified)
-        statchar_buf[0] = 'U';
-    }
+        if (content_state == svn_wc_notify_state_conflicted)
+          status = "Conflict";
+        else if (content_state == svn_wc_notify_state_merged)
+          status = "Merged";
+        else if (content_state == svn_wc_notify_state_modified)
+          status = "Updated";
+      }
 
-    if (prop_state == svn_wc_notify_state_conflicted)
-      statchar_buf[1] = 'C';
-    else if (prop_state == svn_wc_notify_state_merged)
-      statchar_buf[1] = 'G';
-    else if (prop_state == svn_wc_notify_state_modified)
-      statchar_buf[1] = 'U';
+      if (prop_state == svn_wc_notify_state_conflicted)
+        status = "Conflict found";
+      else if (prop_state == svn_wc_notify_state_merged)
+        status = "Merged";
+      else if (prop_state == svn_wc_notify_state_modified)
+        status = "Updated";
 
-    if (!((kind == svn_node_dir)
-          && ((prop_state == svn_wc_notify_state_unknown)
-              || (prop_state == svn_wc_notify_state_unchanged))))
-    {
-      wxString str = wxString::Format ("%s %s", statchar_buf, path);
-      nb->tracer->Trace (str);
+      if (!((kind == svn_node_dir)
+            && ((prop_state == svn_wc_notify_state_unknown)
+                || (prop_state == svn_wc_notify_state_unchanged))))
+      {
+        wxString str = wxString::Format ("%s: %s", status.c_str(), path);
+        nb->tracer->Trace (str);
+      }
     }
 
     break;

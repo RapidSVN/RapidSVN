@@ -124,10 +124,6 @@ SOURCE=.\src\copy_action.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\copy_dlg.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\delete_action.cpp
 # End Source File
 # Begin Source File
@@ -277,10 +273,6 @@ SOURCE=.\src\commit_dlg.h
 # Begin Source File
 
 SOURCE=.\src\copy_action.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\copy_dlg.h
 # End Source File
 # Begin Source File
 

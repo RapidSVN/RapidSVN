@@ -67,8 +67,9 @@ EVT_MENU (ID_Add, VSvnFrame::OnAdd)
 EVT_MENU (ID_Del, VSvnFrame::OnDelete)
 EVT_MENU (ID_Commit, VSvnFrame::OnCommit)
 EVT_MENU (ID_Revert, VSvnFrame::OnRevert)
-EVT_MENU (ID_Resolve, VSvnFrame::OnResolve)
 EVT_MENU (ID_Copy, VSvnFrame::OnCopy)
+EVT_MENU (ID_Rename, VSvnFrame::OnRename)
+EVT_MENU (ID_Resolve, VSvnFrame::OnResolve)
 EVT_MENU (ID_Mkdir, VSvnFrame::OnMkdir)
 EVT_MENU (ID_Merge, VSvnFrame::OnMerge)
 EVT_MENU (ID_Contents, VSvnFrame::OnContents)
@@ -308,6 +309,17 @@ VSvnFrame::InitializeMenu ()
   pItem->SetBitmap (wxBITMAP (resolve));
   menuModif->Append (pItem);
 
+  // Copy and rename menu
+  menuModif->AppendSeparator ();
+
+  pItem = new wxMenuItem (menuModif, ID_Copy, _T ("Copy"));
+  //pItem->SetBitmap (wxBITMAP (copy));
+  menuModif->Append (pItem);
+
+  pItem = new wxMenuItem (menuModif, ID_Rename, _T ("Rename"));
+  //pItem->SetBitmap (wxBITMAP (rename));
+  menuModif->Append (pItem);
+
   // Query menu
   wxMenu *menuQuery = new wxMenu;
   pItem = new wxMenuItem (menuQuery, ID_Status, _T ("Status"));
@@ -538,6 +550,12 @@ void
 VSvnFrame::OnCopy (wxCommandEvent & WXUNUSED (event))
 {
   MakeCopy ();
+}
+
+void
+VSvnFrame::OnRename (wxCommandEvent & WXUNUSED (event))
+{
+  Rename ();
 }
 
 void
@@ -1203,9 +1221,30 @@ VSvnFrame::DelEntries ()
 void
 VSvnFrame::MakeCopy ()
 {
+  if (m_listCtrl->GetSelectedItemCount () != 1)
+  {
+    wxMessageDialog dlg(this, _T ("You can only copy one file at a time"), 
+                        _T ("Copy error"), wxOK);
+    dlg.ShowModal ();
+    return;
+  }
+
+  aux_pool = svn_pool_create (pool);
+  apr_array_header_t *targets = apr_array_make (aux_pool,
+                                                DEFAULT_ARRAY_SIZE,
+                                                sizeof (const char *));
+
+  targets = m_listCtrl->GetTargets (aux_pool);
+
   lastAction = ACTION_TYPE_COPY;
-  CopyAction *cp_act = new CopyAction (this, pool, m_logTracer);
+  CopyAction *cp_act = new CopyAction (this, pool, m_logTracer, targets);
   cp_act->Perform ();
+}
+
+void
+VSvnFrame::Rename ()
+{
+  
 }
 
 void

@@ -69,6 +69,7 @@ public:
   void OnCheckout (wxCommandEvent & event);
   void OnImport (wxCommandEvent & event);
   void OnCopy (wxCommandEvent & event);
+  void OnRename (wxCommandEvent & event);
   void OnMkdir (wxCommandEvent & event);
   void OnMerge (wxCommandEvent & event);
 
@@ -125,6 +126,7 @@ public:
   void MakeResolve ();
 
   void MakeCopy ();
+  void Rename ();
   void Mkdir ();
   void Merge ();
   void Contents ();
@@ -181,6 +183,7 @@ enum
   ID_Import,
   ID_Checkout,
   ID_Copy,
+  ID_Rename,
   ID_Combo,
   ID_Update,
   ID_Commit,
