@@ -1,0 +1,59 @@
+AC_INIT(src/rapidsvn.cpp)
+
+AC_PROG_CXX
+
+dnl
+dnl APR
+dnl
+
+APRCONFIG=apr-config
+AC_ARG_WITH(apr-config,
+[[  --with-apr-config=FILE    Use the given path to apr-config when determining
+                            APR configuration; defaults to "apr-config"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        APRCONFIG=$withval
+    fi
+])
+AC_MSG_CHECKING([for APR])
+if $APRCONFIG --cflags > /dev/null; then
+    AC_MSG_RESULT([found])
+else
+    AC_MSG_RESULT([not found])
+    AC_MSG_ERROR([APR is required. Try --with-apr-config.])
+fi
+CXXFLAGS="$CXXFLAGS `$APRCONFIG --cflags` `$APRCONFIG --cppflags` \
+                    `$APRCONFIG --includes`"
+APR_LIBS="`$APRCONFIG --link-ld --libs`"
+
+dnl
+dnl wxWindows
+dnl
+
+WXCONFIG=wx-config
+AC_ARG_WITH(wx-config,
+[[  --with-wx-config=FILE     Use the given path to wx-config when determining
+                            wxWindows configuration; defaults to "wx-config"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        WXCONFIG=$withval
+    fi
+])
+AC_MSG_CHECKING([wxWindows version])
+if wxversion=`$WXCONFIG --version`; then
+    AC_MSG_RESULT([$wxversion])
+else
+    AC_MSG_RESULT([none found])
+fi
+case $wxversion in
+    [2.3.[23]])
+        ;;
+    *)
+        AC_MSG_ERROR([wxWindows 2.3.2 required])
+        ;;
+esac
+CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags`"
+LDFLAGS="$LDFLAGS `$WXCONFIG --ldflags`"
+WX_LIBS="`$WXCONFIG --libs`"
+
+AC_OUTPUT(src/Makefile)
