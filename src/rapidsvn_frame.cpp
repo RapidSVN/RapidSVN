@@ -185,6 +185,25 @@ CreateActionWorker (wxWindow * parent)
 }
 
 
+class LogTracer:public wxTextCtrl, public Tracer
+{
+
+public:
+  LogTracer (wxWindow * parent)
+    : wxTextCtrl (parent, -1, "", 
+                  wxPoint (0, 0), wxDefaultSize, 
+                  wxTE_MULTILINE | wxTE_READONLY)
+  {
+    SetMaxLength (0);
+  }
+
+  void Trace (const wxString & str)
+  {
+    AppendText (str + "\n");
+  }
+};
+
+
 /**
  * class that hide implementation specific data and methods from
  * the interface
@@ -197,6 +216,7 @@ public:
   Listener listener;
   bool updateAfterActivate;
   bool dontUpdateFilelist;
+  const wxLocale & locale;
 private:
   bool m_running;
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
@@ -209,10 +229,11 @@ public:
    */
   svn::Apr apr;
 
-  Data (wxFrame * parent)
+  Data (wxFrame * parent, const wxLocale & locale_)
     : MenuColumns (0), MenuBar (0), listener (parent),
       updateAfterActivate (false), dontUpdateFilelist (false),
-      m_running (false), m_toolbar_rows (1), m_parent (parent)
+      locale (locale_), m_running (false), m_toolbar_rows (1), 
+      m_parent (parent)
   {
     InitializeMenu ();
   }
@@ -551,11 +572,12 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
 END_EVENT_TABLE ()
 
 /** class implementation **/
-RapidSvnFrame::RapidSvnFrame (const wxString & title)
+RapidSvnFrame::RapidSvnFrame (const wxString & title,
+                              const wxLocale & locale)
   : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize, 
              wxDEFAULT_FRAME_STYLE)
 {
-  m = new Data (this);
+  m = new Data (this, locale);
   m_folder_browser = NULL;
   m_listCtrl = NULL;
   m_title = title;
@@ -590,13 +612,13 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
                                     wxDefaultSize,
                                     SPLITTER_STYLE);
 
+  m_info_panel = new wxPanel (m_horiz_splitter, -1, 
+                              wxDefaultPosition, wxDefaultSize, 
+                              wxTAB_TRAVERSAL | wxCLIP_CHILDREN);
 
-  m_info_panel = new InfoPanel (m_horiz_splitter);
-  m_log = new wxTextCtrl (m_horiz_splitter,
-                          -1,
-                          "",
-                          wxPoint (0, 0),
-                          wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
+  m_log = new wxTextCtrl (m_horiz_splitter, -1, "",
+                          wxPoint (0, 0), wxDefaultSize, 
+                          wxTE_MULTILINE | wxTE_READONLY);
 
   // as much as the widget can stand
   m_log->SetMaxLength (0);
@@ -799,7 +821,7 @@ RapidSvnFrame::OnQuit (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
-  AboutDlg dlg (this);
+  AboutDlg dlg (this, m->locale);
 
   dlg.ShowModal ();
 }
@@ -1767,24 +1789,7 @@ RapidSvnFrame::OnStop (wxCommandEvent & event)
   m->listener.cancel (true);
 }
 
-InfoPanel::InfoPanel (wxWindow * parent)
-  : wxPanel (parent, -1, wxDefaultPosition, wxDefaultSize, 
-             wxTAB_TRAVERSAL | wxCLIP_CHILDREN)
-{
-}
 
-LogTracer::LogTracer (wxWindow * parent)
-  : wxTextCtrl (parent, -1, "", wxPoint (0, 0),
-                wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY)
-{
-  SetMaxLength (0);
-}
-
-void
-LogTracer::Trace (const wxString & str)
-{
-  AppendText (str + "\n");
-}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -26,7 +26,7 @@
 #include "version.hpp"
 #include "res/bitmaps/logo.xpm"
 
-AboutDlg::AboutDlg (wxWindow * parent)
+AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
   : wxDialog (parent, -1, "", wxDefaultPosition)
 {
   wxString title;
@@ -79,7 +79,7 @@ AboutDlg::AboutDlg (wxWindow * parent)
                "%s\n" // milestone
                "\n%s\n\n" // copyright
                "%s\n" // for more information
-               "http://rapidsvn.tigris.org\n",
+               "http://rapidsvn.tigris.org",
                version.c_str (),
                milestone.c_str (),
                RAPIDSVN_COPYRIGHT,
@@ -104,17 +104,44 @@ AboutDlg::AboutDlg (wxWindow * parent)
   wxStaticText * labelCopy = new wxStaticText (this, -1, copy);
   wxStaticText * labelBuilt = new wxStaticText (this, -1, built);
   wxStaticText * labelSchemas = new wxStaticText (this, -1, schemas);
+  wxStaticText * labelTitle = new wxStaticText (
+    this, -1, _("Locale Information:"));
+  wxStaticText * labelLanguageTitle = new wxStaticText (
+    this, -1, _("Language:"));
+  wxStaticText * labelLanguageName = new wxStaticText (
+    this, -1, locale.GetLocale ());
+  wxStaticText * labelSysTitle = new wxStaticText (
+    this, -1, _("System Name:"));
+  wxStaticText * labelSysName = new wxStaticText (
+    this, -1, locale.GetSysName ());
+  wxStaticText * labelCanonicalTitle = new wxStaticText (
+    this, -1, _("CanoncialName:"));
+  wxStaticText * labelCanonicalName = new wxStaticText (
+    this, -1, locale.GetCanonicalName ());
+    
   wxStaticBitmap * logo = 
     new wxStaticBitmap (this, -1, wxBitmap (logo_xpm));
 
   wxButton * button = new wxButton (this, wxID_OK, _("OK"));
 
   // position controls
-  wxFlexGridSizer * topSizer = new wxFlexGridSizer (2, 20, 10);
+  wxFlexGridSizer * topSizer = new wxFlexGridSizer (2, 0, 10);
   topSizer->Add (logo, 0);
   topSizer->Add (labelCopy, 1, wxEXPAND);
+  topSizer->Add (0, 10, wxBottom);
+  topSizer->Add (0, 10, wxBottom);
   topSizer->Add (labelBuilt, 0);
   topSizer->Add (labelSchemas, 0);
+  topSizer->Add (0, 10, wxBottom);
+  topSizer->Add (0, 10, wxBottom);
+  topSizer->Add (labelTitle, 0);
+  topSizer->Add (0, 0);
+  topSizer->Add (labelLanguageTitle, 0);
+  topSizer->Add (labelLanguageName, 0);
+  topSizer->Add (labelSysTitle, 0);
+  topSizer->Add (labelSysName, 0);
+  topSizer->Add (labelCanonicalTitle, 0);
+  topSizer->Add (labelCanonicalName, 0);
 
   wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
   mainSizer->Add (topSizer, 0, wxALL, 20);

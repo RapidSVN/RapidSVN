@@ -41,28 +41,17 @@ ActivePane;
 class svn::Targets;
 class wxFrame;
 
-/**
-* Panel holding the splitter with the folder browser
-* and the file list.
-*/
-class InfoPanel:public wxPanel
-{
-public:
-  InfoPanel (wxWindow * parent);
-};
-
-class LogTracer:public wxTextCtrl, public Tracer
-{
-
-public:
-  LogTracer (wxWindow * parent);
-  void Trace (const wxString & str);
-};
-
 class RapidSvnFrame:public wxFrame
 {
 public:
-  RapidSvnFrame (const wxString & title);
+  /**
+   * Constructor that will be called by the App
+   *
+   * @param title Application title
+   * @param locale The locale that's used by the app
+   */
+  RapidSvnFrame (const wxString & title, 
+                 const wxLocale & locale);
   virtual ~RapidSvnFrame ();
 
   /** Allow children to trim their popup menus using the frames logic */
@@ -220,7 +209,7 @@ private:
   wxSplitterWindow *m_horiz_splitter;
   wxSplitterWindow *m_vert_splitter;
 
-  InfoPanel *m_info_panel;
+  wxPanel *m_info_panel;
 
   wxTextCtrl *m_log;
   EventTracer *m_logTracer;

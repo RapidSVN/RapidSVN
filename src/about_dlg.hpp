@@ -27,8 +27,9 @@ public:
    * constructor
    *
    * @param parent parent window
+   * @param locale locale used by the application
    */
-  AboutDlg (wxWindow * parent);
+  AboutDlg (wxWindow * parent, const wxLocale & locale);
 
   /**
    * destructor

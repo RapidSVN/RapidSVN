@@ -36,7 +36,7 @@ bool RapidSvnApp::OnInit ()
   m_locale.AddCatalogLookupPathPrefix ("locale");
   m_locale.AddCatalog ("rapidsvn");
 
-  RapidSvnFrame * frame = new RapidSvnFrame (APPLICATION_NAME);
+  RapidSvnFrame * frame = new RapidSvnFrame (APPLICATION_NAME, m_locale);
   frame->Show (TRUE);
   SetTopWindow (frame);
 
