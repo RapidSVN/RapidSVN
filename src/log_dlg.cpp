@@ -39,7 +39,7 @@ END_EVENT_TABLE()
 LogDlg::LogDlg (wxWindow * parent, svn::Log *log)
            : wxDialog (parent, -1, "Log History", wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             _log(log)
+             m_log(log)
 {
   InitializeData ();
   CentreOnParent ();
@@ -51,7 +51,7 @@ LogDlg::InitializeData ()
   wxString history;
   char count[sizeof (int) * 8 + 1];
 
-  sprintf (count, "%ld", (long) _log->count ());
+  sprintf (count, "%ld", (long) m_log->count ());
   history = "History: ";
   history += count;
   history += " revisions";
@@ -59,11 +59,11 @@ LogDlg::InitializeData ()
   wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
   wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
 
-  logSizer = new wxBoxSizer (wxVERTICAL);
+  m_logSizer = new wxBoxSizer (wxVERTICAL);
   wxStaticText * historyLabel = new wxStaticText (this, -1, history);
-  logSizer->Add (historyLabel, 0, wxALL, 5);
-  logList = new LogList (this, _log);
-  logSizer->Add (logList, 1, wxLEFT);
+  m_logSizer->Add (historyLabel, 0, wxALL, 5);
+  m_logList = new LogList (this, m_log);
+  m_logSizer->Add (m_logList, 1, wxLEFT);
 
   wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
   wxButton * closeButton = new wxButton (this, ID_Close, "Close");
@@ -75,10 +75,10 @@ LogDlg::InitializeData ()
   buttonSizer->Add (getButton, 0, wxALL, 5);
   buttonSizer->Add (diffButton, 0, wxALL, 5);
 
-  topSizer->Add (logSizer, 1, wxALL, 5);
+  topSizer->Add (m_logSizer, 1, wxALL, 5);
   topSizer->Add (buttonSizer, 0, wxALL, 5);
 
-  logMsg = new wxTextCtrl (this, LOG_MSG, _T(""), 
+  m_logMsg = new wxTextCtrl (this, LOG_MSG, _T(""), 
                            wxDefaultPosition, wxSize (420, 110), 
                            wxTE_READONLY | wxTE_MULTILINE );
 
@@ -88,7 +88,7 @@ LogDlg::InitializeData ()
           new wxStaticBox(this, -1, _T("Log Message:")), 
           wxHORIZONTAL);
 
-  messageSizer->Add (logMsg, 1, wxALL | wxEXPAND, 2);
+  messageSizer->Add (m_logMsg, 1, wxALL | wxEXPAND, 2);
   mainSizer->Add (messageSizer, 1, wxALL | wxEXPAND, 5);
 
   SetAutoLayout (true);
@@ -107,7 +107,7 @@ LogDlg::OnClose (wxCommandEvent & event)
 void
 LogDlg::OnGet (wxCommandEvent & event)
 {
-  int sel = logList->GetSelectedItemCount ();
+  int sel = m_logList->GetSelectedItemCount ();
   wxListItem info;
 
   if(sel == 0 || sel > 1)
@@ -122,7 +122,7 @@ LogDlg::OnGet (wxCommandEvent & event)
 
     for (;;)
     {
-      item = logList->GetNextItem (item, wxLIST_NEXT_ALL, 
+      item = m_logList->GetNextItem (item, wxLIST_NEXT_ALL, 
                                   wxLIST_STATE_SELECTED);
       if(item == -1)
         break;
@@ -131,7 +131,7 @@ LogDlg::OnGet (wxCommandEvent & event)
       info.m_col = 0;
       info.m_mask = wxLIST_MASK_TEXT;
   
-      if(!logList->GetItem (info))
+      if(!m_logList->GetItem (info))
         return;
       getRevision (atol (info.m_text.c_str ()));
     }
@@ -147,7 +147,7 @@ LogDlg::getRevision (long revision)
 
   try
   {
-    modify.update (_log->getLastPath (), revision, false);
+    modify.update (m_log->getLastPath (), revision, false);
     wxMessageDialog dlg (this, _T ("Revision retrieved successfully."),
                          _T ("Message"), wxOK);
     dlg.ShowModal ();
@@ -163,13 +163,13 @@ LogDlg::getRevision (long revision)
 void 
 LogDlg::setLogMessage (const char * message)
 {
-  logMsg->SetValue (_T(message));
+  m_logMsg->SetValue (_T(message));
 }
 
 LogList::LogList (wxWindow * parent, svn::Log *log)
            : wxListCtrl (parent, LOG_LIST, wxDefaultPosition, 
              wxSize(365, 150), wxLC_REPORT),
-             _log(log)
+             m_log(log)
 {
   InitializeList ();
   CentreOnParent ();
@@ -191,12 +191,12 @@ LogList::InitializeList ()
   SetColumnWidth (1, 100);
   SetColumnWidth (2, 200);
 
-  while(_log->next ())
+  while(m_log->next ())
   {
-    sprintf (rev, "%ld", (long) _log->revision ());
+    sprintf (rev, "%ld", (long) m_log->revision ());
     InsertItem (index, _T (rev));
-    SetItem (index, 1, _T (_log->author ()));
-    SetItem (index, 2, _T (_log->formatDate (_log->date (), 
+    SetItem (index, 1, _T (m_log->author ()));
+    SetItem (index, 2, _T (m_log->formatDate (m_log->date (), 
                                              "%a %b %d %H:%M:%S %Y")));
     index++;
   }
@@ -217,12 +217,12 @@ LogList::OnSelected (wxListEvent& event)
     return;
   long rev = atol (info.m_text.c_str ());
 
-  _log->beforeFirst ();
-  while(_log->next ())
+  m_log->beforeFirst ();
+  while(m_log->next ())
   {
-    if(_log->revision () == rev)
+    if(m_log->revision () == rev)
     {
-      message = _log->message ();
+      message = m_log->message ();
       message.Trim (FALSE);
       wxGetApp ().GetAppFrame ()->getLogAction ()->setLogMessage 
                (message.c_str ());

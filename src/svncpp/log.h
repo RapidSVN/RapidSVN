@@ -124,7 +124,7 @@ public:
   /**
    * Returns the revision of the current result set.
    */
-  unsigned long revision ();
+  long revision ();
 
   /**
    * Returns the number of results recieved.
@@ -136,14 +136,6 @@ public:
    */
   bool isVersioned ();
 };
-
-static svn_error_t * messageReceiver (void *baton,
-                                      apr_hash_t * changed_paths,
-                                      svn_revnum_t rev,
-                                      const char *author,
-                                      const char *date, 
-                                      const char *msg, 
-                                      apr_pool_t * pool);
 
 }
 

@@ -184,12 +184,12 @@ private:
 
   ActionType lastAction;
 
-  apr_pool_t *pool;
-      /**
-      * Used for allocating stuff before some actions,
-      * stuff that will be used in that actions
-      */
-  apr_pool_t *aux_pool;
+  apr_pool_t *m_pool;
+  /**
+   * Used for allocating stuff before some actions,
+   * stuff that will be used in that actions
+   */
+  apr_pool_t *m_aux_pool;
 
 DECLARE_EVENT_TABLE ()};
 

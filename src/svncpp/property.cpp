@@ -95,7 +95,6 @@ Property::previous ()
 void
 Property::loadPath (const char * path)
 {
-  svn_error_t * error = NULL;
   apr_array_header_t * props;
   m_lastPath = path;
   internalPath (m_lastPath);
@@ -123,7 +122,6 @@ Property::loadPath (const char * path)
                                          m_pool);
 
     apr_hash_index_t *hi;
-    int index = 0;
 
     for (hi = apr_hash_first (m_pool, item->prop_hash); hi; 
          hi = apr_hash_next (hi))

@@ -22,7 +22,7 @@ public:
   LogList (wxWindow * parent, svn::Log * log);
 
 private:
-  svn::Log * _log;
+  svn::Log * m_log;
   void OnSelected(wxListEvent& event);
   void InitializeList ();
   
@@ -36,10 +36,10 @@ public:
   void setLogMessage (const char * message);
 
 private:
-  svn::Log * _log;
-  LogList * logList;
-  wxBoxSizer * logSizer;
-  wxTextCtrl * logMsg;
+  svn::Log * m_log;
+  LogList * m_logList;
+  wxBoxSizer * m_logSizer;
+  wxTextCtrl * m_logMsg;
 
   void InitializeData ();
   void getRevision (long revision);

@@ -119,7 +119,6 @@ long
 Modify::commit (const char * path, const char * message, bool recurse)
 {
   svn_client_commit_info_t *commit_info = NULL;
-  svn_revnum_t revnum = SVN_INVALID_REVNUM;
   m_lastPath = path;
   internalPath (m_lastPath);
 

@@ -27,6 +27,15 @@ struct log_message_receiver_baton
 
 namespace svn
 {
+  // forward declaration
+  static svn_error_t *
+  messageReceiver (void *baton,
+                   apr_hash_t * changed_paths,
+                   svn_revnum_t rev,
+                   const char *author,
+                   const char *date, 
+                   const char *msg, 
+                   apr_pool_t * pool);
 
 Log::Log()
 {
@@ -53,7 +62,6 @@ void
 Log::loadPath (const char * path, long revisionStart, 
                long revisionEnd)
 {
-  const apr_array_header_t * targets = NULL;
   log_message_receiver_baton lb;
   svn_opt_revision_t revEnd;
   m_lastPath = path;
@@ -184,7 +192,7 @@ Log::author ()
   return _author[cursor].c_str ();
 }
 
-unsigned long
+long
 Log::revision ()
 {
   if(cursor == -1)

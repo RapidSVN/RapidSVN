@@ -25,6 +25,7 @@
 #include "res/bitmaps/open_folder.xpm"
 #include "res/bitmaps/update.xpm"
 #include "res/bitmaps/commit.xpm"
+#include "res/bitmaps/earth.xpm"
 
 //IMPLEMENT_DYNAMIC_CLASS (FolderBrowser, wxControl)
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
@@ -39,6 +40,7 @@ enum
   FOLDER_IMAGE_COMPUTER = 0,
   FOLDER_IMAGE_FOLDER,
   FOLDER_IMAGE_OPEN_FOLDER,
+  FOLDER_IMAGE_EARTH,
   FOLDER_IMAGE_COUNT
 };
 
@@ -58,6 +60,7 @@ FolderBrowser::FolderBrowser (wxWindow * parent,
   m_imageList->Add (wxIcon (computer_xpm));
   m_imageList->Add (wxIcon (versioned_folder_xpm));
   m_imageList->Add (wxIcon (open_folder_xpm));
+  m_imageList->Add (wxIcon (earth_xpm));
 
   m_treeCtrl = new wxTreeCtrl (this, -1, pos, size, 
                    wxTR_HAS_BUTTONS);
@@ -99,7 +102,7 @@ FolderBrowser::RemoveProject ()
     if( data->getFolderType() == FOLDER_TYPE_PROJECT )
     {
       wxString path = data->getPath ();
-      m_treeCtrl->Delete (id);
+      Delete (id);
       m_workbenchItems.Remove (path.c_str ());
       success = TRUE;
     }
@@ -239,7 +242,7 @@ FolderBrowser::OnCollapseItem (wxTreeEvent & event)
 
   while(id.IsOk())
   {
-    m_treeCtrl->Delete (id);
+    Delete (id);
     id=m_treeCtrl->GetFirstChild (parentId, cookie);
   }
 
@@ -330,6 +333,23 @@ FolderBrowser::buildMenu (wxMenu & menu, const wxString & path)
   pItem = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
   pItem->SetBitmap (wxBITMAP (commit));
   menu.Append (pItem);
+}
+
+void
+FolderBrowser::Delete (const wxTreeItemId & id )
+{
+  if( m_treeCtrl )
+  {
+    wxTreeItemData * data = m_treeCtrl->GetItemData(id);
+
+    if( data )
+    {
+      delete data;
+      m_treeCtrl->SetItemData(id, NULL);
+    }
+
+    m_treeCtrl->Delete(id);
+  }
 }
 
 /* -----------------------------------------------------------------
