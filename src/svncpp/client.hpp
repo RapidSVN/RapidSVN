@@ -243,7 +243,7 @@ namespace svn
      * @exception ClientException
      */
     void 
-    resolve (const Path & path, bool recurse);
+    resolved (const Path & path, bool recurse);
 
     /**
      * Exports the contents of either a subversion repository into a 

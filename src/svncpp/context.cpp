@@ -117,7 +117,7 @@ namespace svn
 
       // initialize ctx structure
       memset (&ctx, 0, sizeof (ctx));
-      svn_config_get_config (&ctx.config, pool);
+      svn_config_get_config (&ctx.config, 0, pool);
       ctx.auth_baton = ab;
       ctx.log_msg_func = log_msg;
       ctx.log_msg_baton = this;

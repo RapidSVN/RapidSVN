@@ -11,6 +11,7 @@
  * ====================================================================
  */
 
+// svncpp
 #include "pool.hpp"
 
 /**
@@ -18,8 +19,23 @@
  */
 namespace svn
 {
+  static bool m_initialized = false;
+
+  inline static apr_pool_t * 
+  pool_create (apr_pool_t * parent)
+  {
+    // CAUTION: this is not thread-safe!!!
+    if (!m_initialized)
+    {
+      m_initialized = true;
+      apr_pool_initialize ();
+    }
+
+    return svn_pool_create (parent);
+  }
+
   Pool::Pool (apr_pool_t * parent)
-    : m_parent (parent), m_pool (svn_pool_create (parent))
+    : m_parent (parent), m_pool (pool_create (parent))
   {
   }
 
@@ -44,9 +60,8 @@ namespace svn
     {
       svn_pool_destroy (m_pool);
     }
-    m_pool = svn_pool_create (m_parent);
+    m_pool = pool_create (m_parent);
   }
-
 
 //TODO
 //   apr_pool_t *

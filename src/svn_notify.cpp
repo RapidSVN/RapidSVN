@@ -71,7 +71,7 @@ SvnNotify::onNotify (const char *path,
     }
     break;
 
-  case svn_wc_notify_resolve:
+  case svn_wc_notify_resolved:
     {
       wxString str =
         wxString::Format ("Resolved conflicted state of %s", path);
