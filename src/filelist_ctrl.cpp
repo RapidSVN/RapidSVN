@@ -10,6 +10,10 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+#if defined( _MSC_VER) && _MSC_VER <= 1200
+#pragma warning( disable: 4786 )// debug symbol truncated
+#endif
+
 // stl
 #include <exception>
 
@@ -941,32 +945,12 @@ FileListCtrl::OnItemActivated (wxListEvent & event)
 void
 FileListCtrl::OnItemRightClk (wxListEvent & event)
 {
-  wxPoint clientPt = event.GetPoint ();
+  wxPoint pt (event.GetPoint ());
+  int flags;
+  bool test = HitTest (pt, flags) >= 0;
 
-  // Ensure the item is selected.  This way we ensure that the menu we
-  // get from ShowMenu refers to the item on which the user clicked,
-  // as opposed to whatever happens to be selected.
-
-  int flag;
-  const long index = HitTest (clientPt, flag);
-
-  if (index >= 0)
-  {
-    // Clear all selections
-    const int n = this->GetItemCount();
-
-    for (int i = 0; i < n; i++)
-    {
-      wxListItem info;
-      info.SetId (i);
-      this->GetItem (info);
-      this->SetItemState(i,0,wxLIST_STATE_SELECTED);
-    }
-
-    Select (index);
-
-    ShowMenu (index, clientPt);
-  }
+  if ((GetSelectedItemCount () > 0) && test)
+    ShowMenu (pt);
 }
 
 void
@@ -991,55 +975,53 @@ FileListCtrl::OnColumnLeftClick (wxListEvent & event)
 }
 
 void
-FileListCtrl::ShowMenu (long index, wxPoint & pt)
+FileListCtrl::ShowMenu (wxPoint & pt)
 {
-  wxFileName filepath (m->Path, GetItemText (index));
-  wxMenu popup_menu;
-  wxString path = filepath.GetFullPath ();
+  wxMenu menu;
 
-  buildMenu (popup_menu, UnixPath (path));
-
-  PopupMenu (&popup_menu, pt);
-}
-
-void
-FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
-{
-  VerbList verb_list;
-
-  // modify menu
   AppendModifyMenu (&menu);
-
   menu.AppendSeparator ();
-
-  // query menu
   AppendQueryMenu (&menu);
-  
 
-  // Append file verbs
-  try
+  // if there is exactly one file selected, then
+  // we are going to add filetype specific entries
+  if (GetSelectedItemCount () == 1)
   {
-    verb_list.InitFromDocument (path);
-  }
-  catch (std::exception)
-  {
-    // Failed assembling verbs. 
-    // TODO: Report this error in the status bar?
-  }
+    long item = GetNextItem (-1, wxLIST_NEXT_ALL, 
+                             wxLIST_STATE_SELECTED);
+    svn::Status * status = (svn::Status*)GetItemData (item);
+    VerbList verbList;
 
-  if (verb_list.GetCount ())
-  {
-    menu.AppendSeparator ();
-    for (size_t i = 0; (i < verb_list.GetCount ()) && (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
+    // Append file verbs
+    try
+    {
+      if(status != 0)
+      verbList.InitFromDocument (status->path ());
+    }
+    catch (std::exception)
+    {
+      // Failed assembling verbs. 
+      // TODO: Report this error in the status bar?
+    }
+
+    if (verbList.GetCount () > 0)
+      menu.AppendSeparator ();
+
+    for (size_t i = 0; 
+         (i < verbList.GetCount ()) && 
+         (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
     {
       wxMenuItem *pItem;
       // TODO: Convert verb names to unicode on the fly if needed (or make
       // verblist follow wxWindows' unicode setting)
-      pItem = new wxMenuItem (&menu, ID_Verb_Min + i, verb_list.GetName (i));
+      pItem = new wxMenuItem (&menu, ID_Verb_Min + i, verbList.GetName (i));
       //pItem->SetBitmap (wxBITMAP (?))
       menu.Append (pItem);
     }
   }
+
+
+  PopupMenu (&menu, pt);
 }
 
 const IndexArray 

@@ -138,9 +138,8 @@ private:
   Data * m;
 
   // utility methods
-  void ShowMenu (long index, wxPoint & pt);
-  void buildMenu (wxMenu & menu, const wxString & path);
-  void DeleteItem( long item );
+  void ShowMenu (wxPoint & pt);
+  void DeleteItem (long item);
 
   void SetColumnImages ();
   void UpdateColumns ();
