@@ -25,7 +25,7 @@ public:
   bool recursive;
 
   Data (wxWindow * window)
-    : message (""), recursive (false)
+    : message (""), recursive (true)
   {
     // create controls
     wxStaticBox* msgBox = 
