@@ -65,6 +65,7 @@ CopyAction::Entry ()
                           src.c_str (),
                           &(rev),
                           dest.c_str (),
+                          NULL,
                           auth_baton.auth_obj,
                           &svn_cl__get_log_message,
                           svn_cl__make_log_msg_baton (logMsg.c_str (), 

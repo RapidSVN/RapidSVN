@@ -11,6 +11,26 @@ Currently it compiles under Windows and it does so with Linux but there are a
 few runtime issues that are currently being worked out.  Eventually this 
 should run on the Mac and several other flavors of *NIX.
 
+WHY WXWINDOWS?
+
+Many of you are probably curious why we would choose wxWindows as the platform 
+in which to build this project.  Since the beginning the goal of Subversion 
+was to build a client that would improve source control for operating system 
+platform.  By using the Apache Portable Runtime and a load of #ifdef's this 
+goal has been effectively accomplished.  With RapidSVN we would like to 
+continue this theme.  
+
+In order to get people to transfer over to product to make it easier the 
+program should conform to whatever platform they are using.  wxWindows is the 
+perfect platform for this.  It uses GDI on Windows so the Windows guys never
+even think for a second that they are using a non-Windows tool and GTK for 
+all the Unix guys.  There is even an effort to use QT as well.  This makes 
+the best of both worlds without messing with a person's personal 
+environment.  
+
+For developers wxWindows is great. It is easy to learn and quite powerful for 
+any platform.  It made the choice easy.
+
 BUILDING AND INSTALLING
 
 * The RapidSVN source code is stored in a Subversion repository (of course!) 
@@ -72,7 +92,7 @@ BUILDING ON LINUX/UNIX
 * Download the RapidSVN code.
 
 * Go to the rapidsvn directory and run:
-  autoconfig configure.in > configure
+  autoconf configure.in > configure
   chmod 775 configure
   ./configure --with-apr-config=/path/to/apr-config
 
