@@ -1,4 +1,3 @@
-%define apache_version 2.0.48-0.1
 Summary: A cross-platform GUI for the Subversion concurrent versioning system.
 Name: rapidsvn
 Version: @VERSION@
@@ -8,13 +7,10 @@ Group: Utilities/System
 URL: http://rapidsvn.tigris.org
 Source0: %{name}-%{version}-%{release}.tar.gz
 Packager: David Summers <david@summersoft.fay.ar.us>
-Requires: apache-libapr >= %{apache_version}
-Requires: subversion
+Requires: subversion = 0.35.1
 #Requires: /sbin/install-info
-BuildPreReq: subversion-devel = 0.34.0
+BuildPreReq: subversion-devel = 0.35.1
 BuildPreReq: wxGTK-devel >= 2.3.3
-BuildPreReq: apache-devel >= %{apache_version}
-BuildPreReq: apache-libapr-devel >= %{apache_version}
 BuildPreReq: autoconf >= 2.53
 BuildPreReq: libtool >= 1.4.2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
@@ -31,6 +27,10 @@ if you don't have root access on your machine but would like to use this
 package.
 
 %changelog
+* Tue Dec 30 2003 David Summers <david@summersoft.fay.ar.us> 0.4.0-6977
+- Took out requirement for httpd and apr as that requirement is handled by
+  the requirement for subversion.
+
 * Sat Dec 27 2003 David Summers <david@summersoft.fay.ar.us> 0.4.0-6962
 - Requires subversion-devel-0.34.0.
 - Requires apache-2.0.48.
