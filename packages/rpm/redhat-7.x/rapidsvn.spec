@@ -12,7 +12,7 @@ Requires: subversion = 0.35.1
 BuildPreReq: subversion-devel >= 0.37.0
 BuildPreReq: apache-libapr-devel
 BuildPreReq: neon-devel
-BuildPreReq: wxGTK-devel >= 2.3.3
+BuildPreReq: wxGTK-devel >= 2.4.2
 BuildPreReq: autoconf >= 2.53
 BuildPreReq: libtool >= 1.4.2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
@@ -36,6 +36,10 @@ Requires: rapidsvn
 Development package for RapidSVN developers.
 
 %changelog
+* Sun Jan 16 2005 David Summers <david@summersoft.fay.ar.us> 0.7.0-7137
+- Bring rapidsvn package up-to-date; Require wxGTK-2.4.2 and add
+  config parameters for apr-config and apu-config.
+
 * Sat Nov 20 2004 David Summers <david@summersoft.fay.ar.us> 0.7.0-7013
 - Fixed RPM to build again.
 - Added new rapidsvn-devel package.
@@ -61,8 +65,9 @@ sh ./autogen.sh
 
 ./configure \
 	--prefix=/usr \
-	--with-wx-config=/usr/bin/wxgtk-2.3-config \
+	--with-wx-config=/usr/bin/wxgtk-2.4-config \
 	--with-apr-config=/usr/local/apache2/bin/apr-config \
+	--with-apu-config=/usr/local/apache2/bin/apu-config \
 	--with-svn-include=/usr/include \
 	--with-svn-lib=/usr/lib \
 	--disable-no-exceptions
