@@ -7,6 +7,10 @@
 SvnNotify::SvnNotify (Tracer * tracer) : 
   _tracer(tracer)
 {
+  sent_first_txdelta = false;
+  received_some_change = false;
+  is_checkout = false;
+  suppress_final_line = true;
 }
 
 SvnNotify::~SvnNotify ()
@@ -22,11 +26,6 @@ SvnNotify::onNotify (const char *path,
     svn_wc_notify_state_t prop_state,
     long revision)
 {
-  bool received_some_change = false;
-  bool sent_first_txdelta = false;
-  bool is_checkout = false;
-  bool suppress_final_line = true;
-
   switch (action)
   {
   case svn_wc_notify_delete:

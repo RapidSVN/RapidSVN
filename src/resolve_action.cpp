@@ -1,9 +1,10 @@
+
+#include "svncpp/modify.h"
 #include "include.h"
-#include "utils.h"
 #include "tracer.h"
-#include "notify.h"
 #include "rapidsvn_app.h"
 #include "resolve_action.h"
+#include "svn_notify.h"
 
 ResolveAction::ResolveAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):ActionThread (frame, __pool),
   targets
@@ -29,38 +30,26 @@ ResolveAction::Perform ()
 void *
 ResolveAction::Entry ()
 {
-  int i;
-  svn_error_t *err = NULL;
-  apr_pool_t *subpool;
-  svn_wc_notify_func_t notify_func = NULL;
-  void *notify_baton = NULL;
-  svn_boolean_t recursive = NULL;       // brm
+  svn::Modify modify;
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
 
-  subpool = svn_pool_create (pool);
-
-  svn_cl__get_notifier (&notify_func, &notify_baton,
-                        FALSE, FALSE, GetTracer (), pool);
-
-  for (i = 0; i < targets->nelts; i++)
+  for (int i = 0; i < targets->nelts; i++)
   {
 
     const char *target = ((const char **) (targets->elts))[i];
 
-    err = svn_client_resolve (target,
-                              notify_func, notify_baton, recursive, subpool);
-
-    if (err)
+    try
     {
-      GetTracer ()->Trace (err->message);
-      svn_error_clear_all (err);
+      modify.resolve (target, false);
     }
-
-    svn_pool_clear (subpool);
+    catch (svn::ClientException &e)
+    {
+      GetTracer ()->Trace (e.description ());
+    }
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-
-  svn_pool_destroy (subpool);
 
   return NULL;
 }

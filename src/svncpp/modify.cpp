@@ -108,7 +108,7 @@ Modify::update (const char * path, long revision, bool recurse)
     throw ClientException (Err);
 }
 
-void
+long
 Modify::commit (const char * path, const char * message, bool recurse)
 {
   svn_client_commit_info_t *commit_info = NULL;
@@ -123,6 +123,11 @@ Modify::commit (const char * path, const char * message, bool recurse)
                            pool);
   if(Err != NULL)
     throw ClientException (Err);
+
+  if(commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
+    return commit_info->revision;
+
+  return -1;
 }
 
 void

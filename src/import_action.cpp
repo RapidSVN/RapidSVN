@@ -3,11 +3,10 @@
 #include "include.h"
 #include "wx/resource.h"
 #include "import_dlg.h"
-#include "auth_baton.h"
 #include "tracer.h"
-#include "notify.h"
 #include "rapidsvn_app.h"
 #include "import_action.h"
+#include "svn_notify.h"
 
 ImportAction::ImportAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr):ActionThread (frame,
               __pool)
@@ -69,50 +68,30 @@ ImportAction::Perform ()
 void *
 ImportAction::Entry ()
 {
-  AuthBaton auth_baton (pool, user, pass);
-
-  svn_wc_notify_func_t notify_func = NULL;
-  void *notify_baton = NULL;
+  svn::Modify modify;
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
   const char *the_new_entry = NULL;
-  svn_revnum_t revnum = SVN_INVALID_REVNUM;
-  svn_client_commit_info_t *commit_info = NULL;
 
-  svn_cl__get_notifier (&notify_func, &notify_baton,
-                        FALSE, FALSE, GetTracer (), pool);
-
+  modify.username (user);
+  modify.password (pass);
+  
   // if new entry is empty, the_new_entry must be left NULL.
   if (!new_entry.IsEmpty ())
     the_new_entry = new_entry.c_str ();
 
-  svn_error_t *err = svn_client_import (&commit_info,
-                                        notify_func, notify_baton,
-                                        auth_baton.auth_obj,
-                                        path.c_str (),
-                                        reposURL.c_str (),
-                                        the_new_entry,
-                                        &svn_cl__get_log_message,
-                                        svn_cl__make_log_msg_baton (logMsg.
-                                                                    c_str (),
-                                                                    NULL,
-                                                                    pool),
-                                        NULL,
-                                        revnum,
-                                        !recursive,     // need non-recursive status
-                                        pool);
-
-  if (err == SVN_NO_ERROR)
+  try
   {
-    if (commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
-    {
-      wxString str =
-        wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
-                          commit_info->revision);
-      GetTracer ()->Trace (str);
-    }
+    modify.import (path.c_str (), reposURL.c_str (), the_new_entry,
+                   logMsg.c_str(), recursive);
+    GetTracer ()->Trace ("Import successful.");
   }
-  else
+  catch (svn::ClientException &e)
   {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                     ACTION_EVENT);
+    GetTracer ()->Trace ("Import failed:");
+    GetTracer ()->Trace (e.description ());
   }
 
   return NULL;

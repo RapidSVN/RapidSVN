@@ -2,16 +2,14 @@
 #include "svncpp/modify.h"
 #include "include.h"
 #include "wx/resource.h"
-#include "utils.h"
 #include "commit_dlg.h"
-#include "notify.h"
-#include "auth_baton.h"
 #include "rapidsvn_app.h"
 #include "commit_action.h"
+#include "svn_notify.h"
 
-CommitAction::CommitAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):ActionThread (frame, __pool),
-  targets
-  (trgts)
+CommitAction::CommitAction (wxFrame * frame, apr_pool_t * __pool, 
+                            Tracer * tr, apr_array_header_t * trgts)
+                            : ActionThread (frame, __pool), targets (trgts)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
   recursive = false;
@@ -65,47 +63,32 @@ CommitAction::Perform ()
 void *
 CommitAction::Entry ()
 {
-  AuthBaton auth_baton (pool, user, pass);
+  svn::Modify modify;
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
+  long revision;
 
-  svn_wc_notify_func_t notify_func = NULL;
-  void *notify_baton = NULL;
-  const char *base_dir = NULL;
-  svn_revnum_t revnum = SVN_INVALID_REVNUM;
-  svn_error_t *err = NULL;
-  svn_client_commit_info_t *commit_info = NULL;
+  modify.username (user);
+  modify.password (pass);
 
-  svn_cl__get_notifier (&notify_func, &notify_baton,
-                        FALSE, FALSE, GetTracer (), pool);
-
-  if ((!targets) || (!targets->nelts))
+  for (int i = 0; i < targets->nelts; i++)
   {
-    const char *parent_dir, *base_name;
+    const char *target = ((const char **) (targets->elts))[i];
 
-    err = svn_wc_get_actual_target (base_dir, &parent_dir, &base_name, pool);
-    if (base_name)
-      base_dir = apr_pstrdup (pool, parent_dir);
-  }
+    try
+    {
+      revision = modify.commit (target, logMsg.c_str (), recursive);
 
-  if (err)
-  {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
-    PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-    return NULL;
-  }
-
-  err = svn_client_commit (&commit_info, notify_func, notify_baton, auth_baton.auth_obj, targets, svn_cl__get_log_message, svn_cl__make_log_msg_baton (logMsg.c_str (), base_dir, pool), NULL, revnum, !recursive,      // non-recursive status
-                           pool);
-
-  if (err)
-  {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
-  }
-  else if (commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
-  {
-    wxString str =
-      wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
-                        commit_info->revision);
-    GetTracer ()->Trace (str);
+      wxString str =
+          wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
+                            revision);
+      GetTracer ()->Trace (str);
+    }
+    catch (svn::ClientException &e)
+    {
+      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                       ACTION_EVENT);
+    }
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);

@@ -1,9 +1,10 @@
+
+#include "svncpp/modify.h"
 #include "include.h"
-#include "utils.h"
 #include "tracer.h"
-#include "notify.h"
 #include "rapidsvn_app.h"
 #include "add_action.h"
+#include "svn_notify.h"
 
 AddAction::AddAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):ActionThread (frame, __pool),
   targets
@@ -28,49 +29,27 @@ AddAction::Perform ()
 void *
 AddAction::Entry ()
 {
-  int i;
-  svn_error_t *err = NULL;
-  apr_pool_t *subpool;
+  svn::Modify modify;
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
 
-  svn_wc_notify_func_t notify_func = NULL;
-  void *notify_baton = NULL;
-
-  subpool = svn_pool_create (pool);
-
-  svn_cl__get_notifier (&notify_func, &notify_baton,
-                        TRUE, FALSE, GetTracer (), pool);
-
-  for (i = 0; i < targets->nelts; i++)
+  for (int i = 0; i < targets->nelts; i++)
   {
-
     const char *target = ((const char **) (targets->elts))[i];
 
-    err = svn_client_add (target, 1,    // recursive (should get it from conf)
-                          notify_func, notify_baton, subpool);
-
-    if (err)
+    try
     {
-      if (err->apr_err == SVN_ERR_ENTRY_EXISTS)
-      {
-        GetTracer ()->Trace (err->message);
-        svn_error_clear_all (err);
-      }
-      else
-      {
-        svn_pool_clear (subpool);
-        break;
-      }
+      modify.add (target, false);
     }
-  }
+    catch (svn::ClientException &e)
+    {
+      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                       ACTION_EVENT);
+    }
 
-  if (err)
-  {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-
-  svn_pool_destroy (subpool);
 
   return NULL;
 }

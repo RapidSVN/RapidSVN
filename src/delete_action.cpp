@@ -3,9 +3,7 @@
 #include "include.h"
 #include "delete_action.h"
 #include "wx/resource.h"
-#include "utils.h"
 #include "delete_dlg.h"
-#include "notify.h"
 #include "svn_notify.h"
 #include "rapidsvn_app.h"
 

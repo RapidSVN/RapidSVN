@@ -13,7 +13,7 @@ private:
   wxString logMsg;
   wxString user;
   wxString pass;
-  svn_boolean_t recursive;
+  bool recursive;
 
 public:
    ImportAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr);

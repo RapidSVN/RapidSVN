@@ -11,7 +11,6 @@ private:
   wxString logMsg;
   apr_array_header_t *targets;
   wxString DestinationPath (wxString src);
-  apr_pool_t * pool;
 
 public:
   CopyAction (wxFrame * frame, apr_pool_t * __pool, 

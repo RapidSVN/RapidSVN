@@ -3,10 +3,8 @@
 #include "include.h"
 #include "wx/resource.h"
 #include "wx/filename.h"
-#include "utils.h"
-#include "notify.h"
-#include "auth_baton.h"
 #include "rapidsvn_app.h"
+#include "svn_notify.h"
 #include "copy_action.h"
 
 
@@ -15,7 +13,6 @@ CopyAction::CopyAction (wxFrame * frame, apr_pool_t * __pool,
                         : ActionThread (frame, __pool)
 {
   targets = trgts;
-  pool = __pool;
   
   SetTracer (tr, FALSE);        // do not own the tracer
 }
@@ -37,14 +34,9 @@ CopyAction::Perform ()
 void *
 CopyAction::Entry ()
 {
-  svn_client_revision_t rev;
-  svn_client_commit_info_t *commit_info = NULL;
-  svn_wc_notify_func_t notify_func = NULL;
-  AuthBaton auth_baton (pool, _T (""), _T (""));
-  void *notify_baton = NULL;
-
-  apr_pool_t *subpool;
-  svn_error_t *err = NULL;
+  svn::Modify modify;
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
 
   src = ((const char **) (targets->elts))[0];
   dest = DestinationPath (src);
@@ -52,40 +44,17 @@ CopyAction::Entry ()
   if(dest.IsEmpty ())
     return NULL;
 
-  svn_cl__get_notifier (&notify_func, &notify_baton,
-                        TRUE, FALSE, GetTracer (), pool);
-
-  subpool = svn_pool_create (pool);
-
-  memset (&rev, 0, sizeof (rev));
-  rev.kind = svn_client_revision_unspecified;
-
-
-  err = svn_client_copy (&commit_info,
-                          src.c_str (),
-                          &(rev),
-                          dest.c_str (),
-                          NULL,
-                          auth_baton.auth_obj,
-                          &svn_cl__get_log_message,
-                          svn_cl__make_log_msg_baton (logMsg.c_str (), 
-                                                      NULL, subpool),
-                          notify_func, notify_baton,
-                          subpool);
-
-  if (err)
+  try
   {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
+    modify.copy (src, dest);
+    GetTracer ()->Trace ("Copy successful");
   }
-  else
+  catch (svn::ClientException &e)
   {
-    if (commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
-    {
-      wxString str =
-        wxString::Format ("Renamed revision %" SVN_REVNUM_T_FMT ".",
-                          commit_info->revision);
-      GetTracer ()->Trace (str);
-    }
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                     ACTION_EVENT);
+    GetTracer ()->Trace ("Copy failed:");
+    GetTracer ()->Trace (e.description ());
   }
 
   return NULL;

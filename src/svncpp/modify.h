@@ -105,12 +105,14 @@ public:
   /**
    * Commits changes to the repository. This usually requires 
    * authentication, see Auth.
+   * @return Returns a long representing the revision. It returns a 
+   *         -1 if the revision number is invalid.
    * @param path file to commit.
    * @param message log message.
    * @param recurse whether the operation should be done recursively.
    * @exception ClientException
    */
-  void commit (const char * path, const char * message, bool recurse);
+  long commit (const char * path, const char * message, bool recurse);
 
   /**
    * Copies a versioned file with the history preserved.

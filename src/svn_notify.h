@@ -8,6 +8,10 @@ class SvnNotify : public svn::Notify
 {
 private:
   Tracer * _tracer;
+  bool sent_first_txdelta;
+  bool received_some_change;
+  bool is_checkout;
+  bool suppress_final_line;
 
 public:
   /**

@@ -9,7 +9,7 @@ private:
   wxString user;
   wxString pass;
   wxString logMsg;
-  svn_boolean_t recursive;
+  bool recursive;
 
   apr_array_header_t *targets;
 
