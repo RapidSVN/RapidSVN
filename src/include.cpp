@@ -12,7 +12,8 @@
  */
 // Used to generate precompiled headers
 
-#include "include.h"
+#include "include.hpp"
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

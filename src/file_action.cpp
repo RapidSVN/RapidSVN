@@ -10,8 +10,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  */
 
-#include "include.h"
-#include "file_action.h"
+#include "include.hpp"
+#include "file_action.hpp"
 
 FileAction::FileAction (wxFrame * frame)
     : m_mainFrame (frame)

@@ -11,12 +11,12 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
-#include "tracer.h"
-#include "rapidsvn_app.h"
-#include "add_action.h"
-#include "svn_notify.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
+#include "tracer.hpp"
+#include "rapidsvn_app.hpp"
+#include "add_action.hpp"
+#include "svn_notify.hpp"
 
 AddAction::AddAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets)
   : ActionThread (frame), m_targets(targets)

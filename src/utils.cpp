@@ -11,10 +11,10 @@
  * ====================================================================
  */
 
-#include "svncpp/client.h"
-#include "svncpp/status.h"
-#include "include.h"
-#include "utils.h"
+#include "svncpp/client.hpp"
+#include "svncpp/status.hpp"
+#include "include.hpp"
+#include "utils.hpp"
 #include <vector>
 
 wxString & UnixPath (wxString & path)

@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-#include "svncpp.h"
+#include "svncpp.hpp"
 #include <stdio.h>
 
 CPPUNIT_TEST_SUITE_REGISTRATION( SvnCppTestCase );

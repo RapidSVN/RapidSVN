@@ -10,8 +10,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "report_dlg.h"
+#include "include.hpp"
+#include "report_dlg.hpp"
 
 BEGIN_EVENT_TABLE (Report_Dlg, wxDialog)
 EVT_BUTTON (-1, Report_Dlg::OnButton)

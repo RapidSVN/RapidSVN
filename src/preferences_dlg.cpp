@@ -10,8 +10,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "preferences_dlg.h"
+#include "include.hpp"
+#include "preferences_dlg.hpp"
 
 #include <wx/notebook.h>
 #include <wx/panel.h>

@@ -11,10 +11,10 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
-#include "rapidsvn_app.h"
-#include "log_dlg.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
+#include "rapidsvn_app.hpp"
+#include "log_dlg.hpp"
 #include <wx/valgen.h>
 
 enum

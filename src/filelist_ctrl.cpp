@@ -11,10 +11,10 @@
  * ====================================================================
  */
 
-#include "include.h"
+#include "include.hpp"
 #include "wx/imaglist.h"
 #include "wx/filename.h"
-#include "rapidsvn_app.h"
+#include "rapidsvn_app.hpp"
 
 // Bitmaps
 #include "res/bitmaps/update.xpm"

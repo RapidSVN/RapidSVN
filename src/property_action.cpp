@@ -11,12 +11,12 @@
  * ====================================================================
  */
 
-#include "svncpp/property.h"
-#include "include.h"
+#include "svncpp/property.hpp"
+#include "include.hpp"
 #include "wx/resource.h"
-#include "rapidsvn_app.h"
-#include "property_action.h"
-#include "svn_notify.h"
+#include "rapidsvn_app.hpp"
+#include "property_action.hpp"
+#include "svn_notify.hpp"
 
 
 PropertyAction::PropertyAction (wxFrame * frame, 

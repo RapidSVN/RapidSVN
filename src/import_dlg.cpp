@@ -10,9 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "rapidsvn_app.h"
-#include "import_dlg.h"
+#include "include.hpp"
+#include "rapidsvn_app.hpp"
+#include "import_dlg.hpp"
 #include <wx/valgen.h>
 
 enum

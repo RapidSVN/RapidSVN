@@ -11,15 +11,15 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
 #include "wx/resource.h"
-#include "merge_dlg.h"
-#include "tracer.h"
-#include "trace_update.h"
-#include "rapidsvn_app.h"
-#include "merge_action.h"
-#include "svn_notify.h"
+#include "merge_dlg.hpp"
+#include "tracer.hpp"
+#include "trace_update.hpp"
+#include "rapidsvn_app.hpp"
+#include "merge_action.hpp"
+#include "svn_notify.hpp"
 
 MergeAction::MergeAction (wxFrame * frame, Tracer * tr)
             : ActionThread (frame)

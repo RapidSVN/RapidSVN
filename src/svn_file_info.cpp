@@ -10,9 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
+#include "include.hpp"
 #include "svn_wc.h"
-#include "svn_file_info.h"
+#include "svn_file_info.hpp"
 
 
 static void

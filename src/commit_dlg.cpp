@@ -10,8 +10,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "commit_dlg.h"
+#include "include.hpp"
+#include "commit_dlg.hpp"
 #include <wx/sizer.h>
 #include <wx/valgen.h>
 

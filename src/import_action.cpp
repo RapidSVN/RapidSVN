@@ -11,14 +11,14 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
 #include "wx/resource.h"
-#include "import_dlg.h"
-#include "tracer.h"
-#include "rapidsvn_app.h"
-#include "import_action.h"
-#include "svn_notify.h"
+#include "import_dlg.hpp"
+#include "tracer.hpp"
+#include "rapidsvn_app.hpp"
+#include "import_action.hpp"
+#include "svn_notify.hpp"
 
 ImportAction::ImportAction (wxFrame * frame, Tracer * tr)
   :ActionThread (frame)

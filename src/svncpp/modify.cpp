@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-#include "modify.h"
+#include "modify.hpp"
 
 struct log_msg_baton
 {

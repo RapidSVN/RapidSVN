@@ -10,8 +10,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "rapidsvn_app.h"
+#include "include.hpp"
+#include "rapidsvn_app.hpp"
 
 IMPLEMENT_APP (RapidSvnApp)
      bool RapidSvnApp::OnInit ()

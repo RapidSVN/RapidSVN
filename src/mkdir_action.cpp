@@ -11,14 +11,14 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
 #include "wx/resource.h"
-#include "utils.h"
-#include "mkdir_dlg.h"
-#include "rapidsvn_app.h"
-#include "mkdir_action.h"
-#include "svn_notify.h"
+#include "utils.hpp"
+#include "mkdir_dlg.hpp"
+#include "rapidsvn_app.hpp"
+#include "mkdir_action.hpp"
+#include "svn_notify.hpp"
 
 MkdirAction::MkdirAction (wxFrame * frame, Tracer * tr)
  : ActionThread (frame)

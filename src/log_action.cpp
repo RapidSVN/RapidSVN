@@ -12,12 +12,12 @@
  */
 
 
-//#include "svncpp/log.h"
-#include "include.h"
+//#include "svncpp/log.hpp"
+#include "include.hpp"
 #include "wx/resource.h"
-#include "rapidsvn_app.h"
-#include "log_action.h"
-#include "svn_notify.h"
+#include "rapidsvn_app.hpp"
+#include "log_action.hpp"
+#include "svn_notify.hpp"
 
 LogAction::LogAction (wxFrame * frame, Tracer * tr, const char * target)
   : ActionThread (frame), m_thisframe(frame), m_target(target)

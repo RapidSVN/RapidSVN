@@ -11,14 +11,14 @@
  * ====================================================================
  */
 
-#include "include.h"
-#include "folder_browser.h"
-#include "folder_item_data.h"
+#include "include.hpp"
+#include "folder_browser.hpp"
+#include "folder_item_data.hpp"
 #include "svn_wc.h"
 #include "wx/filename.h"
 #include "wx/dir.h"
 #include "wx/imaglist.h"
-#include "rapidsvn_app.h"
+#include "rapidsvn_app.hpp"
 
 #include "res/bitmaps/computer.xpm"
 #include "res/bitmaps/versioned_folder.xpm"

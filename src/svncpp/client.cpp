@@ -11,8 +11,8 @@
  * ====================================================================
  */
 
-#include "client.h"
-#include "pool.h"
+#include "client.hpp"
+#include "pool.hpp"
 #include "svn_path.h"
 #include "svn_client.h"
 #include "svn_sorts.h"

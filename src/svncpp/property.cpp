@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-#include "property.h"
+#include "property.hpp"
 #include "stdio.h"
 
 namespace svn
@@ -101,9 +101,10 @@ Property::loadPath (const char * path)
 
   reset ();
   m_Err = svn_client_proplist (&props,
-                             m_lastPath.c_str (), 
-                             false /* recurse */,
-                             m_pool);
+                               m_lastPath.c_str (), 
+                               NULL, NULL,
+                               false /* recurse */,
+                               m_pool);
   versioned = true;
   if(m_Err != NULL)
   {
@@ -147,6 +148,7 @@ Property::propertyValue (const char * key)
   apr_hash_index_t *hi;
 
   svn_client_propget (&props, key, m_lastPath.c_str (),
+                      NULL, NULL,
                       false /* recurse */, m_pool);
 
   svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (key);

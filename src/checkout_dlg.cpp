@@ -10,9 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "rapidsvn_app.h"
-#include "checkout_dlg.h"
+#include "include.hpp"
+#include "rapidsvn_app.hpp"
+#include "checkout_dlg.hpp"
 #include "wx/sizer.h"
 #include <wx/valgen.h>
 

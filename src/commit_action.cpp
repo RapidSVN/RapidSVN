@@ -11,12 +11,12 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
 #include "wx/resource.h"
-#include "rapidsvn_app.h"
-#include "commit_action.h"
-#include "svn_notify.h"
+#include "rapidsvn_app.hpp"
+#include "commit_action.hpp"
+#include "svn_notify.hpp"
 
 CommitAction::CommitAction (wxFrame * frame, 
                             Tracer * tr, apr_array_header_t * targets)

@@ -10,8 +10,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "exceptions.h"
+#include "include.hpp"
+#include "exceptions.hpp"
 
 RapidSvnEx::RapidSvnEx (const wxString & __estr, const long __code)
 {

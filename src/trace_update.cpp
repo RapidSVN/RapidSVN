@@ -10,9 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "tracer.h"
-#include "trace_update.h"
+#include "include.hpp"
+#include "tracer.hpp"
+#include "trace_update.hpp"
 
 /*
  * Baton structures

@@ -10,8 +10,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "action_thread.h"
+#include "include.hpp"
+#include "action_thread.hpp"
 
 ActionThread::ActionThread (wxFrame * frame):wxThread ()
   // default creates the thread DETACHED

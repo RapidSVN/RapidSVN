@@ -11,9 +11,9 @@
  * ====================================================================
  */
 
-#include "include.h"
-#include "tracer.h"
-#include "svn_notify.h"
+#include "include.hpp"
+#include "tracer.hpp"
+#include "svn_notify.hpp"
 
 
 SvnNotify::SvnNotify (Tracer * tracer) : 

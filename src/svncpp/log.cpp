@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-#include "log.h"
+#include "log.hpp"
 #include "svn_time.h"
 #include "svn_utf.h"
 

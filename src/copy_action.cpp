@@ -11,13 +11,13 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
 #include "wx/resource.h"
 #include "wx/filename.h"
-#include "rapidsvn_app.h"
-#include "svn_notify.h"
-#include "copy_action.h"
+#include "rapidsvn_app.hpp"
+#include "svn_notify.hpp"
+#include "copy_action.hpp"
 
 
 CopyAction::CopyAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets )

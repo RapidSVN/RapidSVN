@@ -11,10 +11,10 @@
  * ====================================================================
  */
 #ifdef __GNUG__
-#pragma implementation "folder_item_data.h"
+#pragma implementation "folder_item_data.hpp"
 #endif
 
-#include "folder_item_data.h"
+#include "folder_item_data.hpp"
 
 FolderItemData::FolderItemData (const int folderType, const wxString & path, 
                                 const wxString & name, const bool hasChildren)

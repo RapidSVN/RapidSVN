@@ -10,10 +10,10 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "rapidsvn_app.h"
-#include "report_dlg.h"
-#include "tracer.h"
+#include "include.hpp"
+#include "rapidsvn_app.hpp"
+#include "report_dlg.hpp"
+#include "tracer.hpp"
 
 TextCtrlTracer::TextCtrlTracer (wxTextCtrl * ctrl):m_txtCtrl (ctrl)
 {

@@ -10,7 +10,7 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "status.h"
+#include "status.hpp"
 
 namespace svn
 {

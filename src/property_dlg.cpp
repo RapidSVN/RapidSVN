@@ -11,9 +11,9 @@
  * ====================================================================
  */
 
-#include "include.h"
-#include "rapidsvn_app.h"
-#include "property_dlg.h"
+#include "include.hpp"
+#include "rapidsvn_app.hpp"
+#include "property_dlg.hpp"
 #include <wx/valgen.h>
 
 enum

@@ -10,9 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.h"
-#include "tracer.h"
-#include "trace_commit.h"
+#include "include.hpp"
+#include "tracer.hpp"
+#include "trace_commit.hpp"
 
 static const int svn_cl__item_modified = 0;
 static const int svn_cl__item_added = 0;

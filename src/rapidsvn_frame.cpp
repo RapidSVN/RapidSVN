@@ -11,36 +11,36 @@
  * ====================================================================
  */
 
-#include "svncpp/log.h"
-#include "include.h"
+#include "svncpp/log.hpp"
+#include "include.hpp"
 #include <wx/utils.h>
 #include <wx/log.h>
 #include <wx/resource.h>
 #include "wx/filename.h"
 
-#include "svn_file_info.h"
-#include "rapidsvn_app.h"
+#include "svn_file_info.hpp"
+#include "rapidsvn_app.hpp"
 
-#include "checkout_action.h"
-#include "import_action.h"
-#include "update_action.h"
-#include "add_action.h"
-#include "delete_action.h"
-#include "commit_action.h"
-#include "revert_action.h"
-#include "resolve_action.h"
-#include "copy_action.h"
-#include "mkdir_action.h"
-#include "merge_action.h"
-#include "property_action.h"
+#include "checkout_action.hpp"
+#include "import_action.hpp"
+#include "update_action.hpp"
+#include "add_action.hpp"
+#include "delete_action.hpp"
+#include "commit_action.hpp"
+#include "revert_action.hpp"
+#include "resolve_action.hpp"
+#include "copy_action.hpp"
+#include "mkdir_action.hpp"
+#include "merge_action.hpp"
+#include "property_action.hpp"
 
-#include "report_dlg.h"
-#include "preferences_dlg.h"
+#include "report_dlg.hpp"
+#include "preferences_dlg.hpp"
 
-#include "rapidsvn_frame.h"
+#include "rapidsvn_frame.hpp"
 #include "wx/version.h"
 #include "svn_version.h"
-#include "version.h"
+#include "version.hpp"
 
 // Bitmaps
 #include "res/bitmaps/aalogo.xpm"

@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-#include "notify.h"
+#include "notify.hpp"
 
 namespace svn
 {

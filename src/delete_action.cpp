@@ -11,13 +11,13 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
-#include "delete_action.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
+#include "delete_action.hpp"
 #include "wx/resource.h"
-#include "delete_dlg.h"
-#include "svn_notify.h"
-#include "rapidsvn_app.h"
+#include "delete_dlg.hpp"
+#include "svn_notify.hpp"
+#include "rapidsvn_app.hpp"
 
 DeleteAction::DeleteAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets) 
   : ActionThread (frame), m_targets (targets)

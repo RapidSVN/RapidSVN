@@ -100,7 +100,7 @@ SOURCE=.\svncpp.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\svncpp.h
+SOURCE=.\svncpp.hpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"

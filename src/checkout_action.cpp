@@ -11,14 +11,14 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.h"
-#include "include.h"
+#include "svncpp/modify.hpp"
+#include "include.hpp"
 #include "wx/resource.h"
-#include "utils.h"
-#include "checkout_dlg.h"
-#include "rapidsvn_app.h"
-#include "checkout_action.h"
-#include "svn_notify.h"
+#include "utils.hpp"
+#include "checkout_dlg.hpp"
+#include "rapidsvn_app.hpp"
+#include "checkout_action.hpp"
+#include "svn_notify.hpp"
 
 CheckoutAction::CheckoutAction (wxFrame * frame, Tracer * tr)
   : ActionThread (frame)

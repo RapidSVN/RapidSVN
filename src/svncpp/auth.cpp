@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-#include "auth.h"
+#include "auth.hpp"
 #include "svn_utf.h"
 
 struct prompt_user_baton
