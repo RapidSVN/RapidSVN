@@ -1,5 +1,5 @@
 =================================================================
-Copyright (C) 2002, 2003 The RapidSvn Group. All rights reserved.
+Copyright (C) 2002-2004 The RapidSvn Group. All rights reserved.
 
 =================================================================
 The Apache Software License, Version 1.1
