@@ -1,5 +1,5 @@
 AC_INIT(src/rapidsvn_app.cpp)
-AM_INIT_AUTOMAKE(rapidsvn, 0.1.2)
+AM_INIT_AUTOMAKE(rapidsvn, 0.1.3pre2)
 
 AC_PROG_CXX
 AC_PROG_INSTALL
@@ -214,12 +214,83 @@ else
    TARGET_MANPAGE=manpage-no
 fi
 
+dnl
+dnl Doxygen
+dnl 
+DOXYGEN=doxygen
+AC_ARG_WITH(doxygen,
+[[  --with-doxygen=FILE     Use the given path to doxygen.
+                          Used for creating API documentation; 
+                          defaults to "doxygen"]],
+[
+    if test "$withval" != "yes"; then
+        DOXYGEN=$withval
+    fi
+])
+AC_MSG_CHECKING([doxygen])
+if test -z "$DOXYGEN" ; then
+   AC_MSG_RESULT([not used])
+else
+   if doxygenversion=`$DOXYGEN --version` ; then
+      AC_MSG_RESULT([found])
+   else
+      AC_MSG_RESULT([not found])	
+      DOXYGEN=""
+   fi
+fi
+
+dnl
+dnl Dot (Graphviz)
+dnl 
+DOT=dot
+AC_ARG_WITH(dot,
+[[  --with-dot=FILE     Use the given path to dot. 
+                      This tool is needed by doxygen; 
+                      defaults to "dot"]],
+[
+    if test "$withval" != "yes"; then
+        DOT=$withval
+    fi
+])
+AC_MSG_CHECKING([dot])
+if test -z "$DOT" ; then
+   AC_MSG_RESULT([not used])
+else
+   if dotbla=`echo | $DOT` ; then
+      AC_MSG_RESULT([found])
+   else
+      AC_MSG_RESULT([not found])	
+      DOT=""
+   fi
+fi
+
+dnl
+dnl Final check for Doxygen
+dnl
+if test "$DOXYGEN" ; then
+   AC_MSG_CHECKING([doxygen usable])
+   if test -z "$DOT" ; then
+      AC_MSG_RESULT([no (dot needed)])
+      DOXYGEN=""
+   else
+      AC_MSG_RESULT([yes])
+   fi
+fi
+
+if test "$DOXYGEN" ; then
+   TARGET_DOXYGEN="doxygen-yes"
+else 
+   TARGET_DOXYGEN="doxygen-no"
+fi
+
 AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
 AC_SUBST(SVN_LIB)
 AC_SUBST(DOCBOOK_XSL)
 AC_SUBST(XSLTPROC)
 AC_SUBST(TARGET_MANPAGE)
+AC_SUBST(DOXYGEN)
+AC_SUBST(TARGET_DOXYGEN)
 
 AC_OUTPUT(Makefile \
           doc/Makefile doc/manpage/Makefile \

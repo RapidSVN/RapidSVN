@@ -38,7 +38,7 @@
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
-#define RAPIDSVN_VER_MILESTONE "Alpha 2"
+#define RAPIDSVN_VER_MILESTONE "Alpha 3pre2"
 
 #endif
 /* -----------------------------------------------------------------
