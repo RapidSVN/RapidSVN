@@ -6,7 +6,6 @@ bin_PROGRAMS=rapidsvn
 
 rapidsvn_SOURCES= \
 	action.cpp \
-	action_thread.cpp \
 	add_action.cpp \
 	checkout_action.cpp \
 	checkout_dlg.cpp \
@@ -17,13 +16,11 @@ rapidsvn_SOURCES= \
 	delete_action.cpp \
 	delete_dlg.cpp \
 	exceptions.cpp \
-	file_action.cpp \
 	filelist_ctrl.cpp \
 	folder_browser.cpp \
 	folder_item_data.cpp \
 	import_action.cpp \
 	import_dlg.cpp \
-	include.cpp \
 	log_action.cpp \
 	log_dlg.cpp \
 	merge_action.cpp \
