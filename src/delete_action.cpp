@@ -6,12 +6,12 @@
 #include "utils.h"
 #include "delete_dlg.h"
 #include "notify.h"
-//#include "auth_baton.h"
+#include "svn_notify.h"
 #include "rapidsvn_app.h"
 
-DeleteAction::DeleteAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):ActionThread (frame, __pool),
-  targets
-  (trgts)
+DeleteAction::DeleteAction (wxFrame * frame, apr_pool_t * __pool, 
+                            Tracer * tr, apr_array_header_t * trgts) : 
+  ActionThread (frame, __pool), targets (trgts)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
   force = false;
@@ -66,13 +66,9 @@ DeleteAction::Perform ()
 void *
 DeleteAction::Entry ()
 {
-  svn_wc_notify_func_t notify_func = NULL;
-  void *notify_baton = NULL;
-
   svn::Modify modify;
-
-  svn_cl__get_notifier (&notify_func, &notify_baton,
-                        TRUE, FALSE, GetTracer (), pool);
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
 
   for (int i = 0; i < targets->nelts; i++)
   {
@@ -81,13 +77,13 @@ DeleteAction::Entry ()
     try
     {
       modify.remove (target, force);
-      GetTracer ()->Trace ("Deletion successful");
     }
     catch (svn::ClientException &e)
     {
       PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
                        ACTION_EVENT);
-      GetTracer ()->Trace ("Could not delete");
+      GetTracer ()->Trace ("Delete failed:");
+      GetTracer ()->Trace (e.description ());
     }
   }
 
