@@ -61,7 +61,10 @@ CopyAction::Entry ()
 
   try
   {
-    modify.copy (m_src, m_dest);
+    //TODO right now we are copying only HEAD
+    //this should be configurable
+    const svn::Revision head (svn::Revision::HEAD);
+    modify.copy (m_src.c_str (), head, m_dest.c_str ());
     GetTracer ()->Trace ("Copy successful");
   }
   catch (svn::ClientException &e)

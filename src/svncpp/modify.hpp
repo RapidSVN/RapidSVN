@@ -24,25 +24,28 @@ namespace svn
 {
   // forward declarations
   class Notify;
+  class Path;
   class Revision;
   class Targets;
 
   /**
    * Repository modification class.
    */
-  class Modify : public svn::Auth
+  class Modify : public Auth
   {
   private:
     Notify * m_notify;
 
-    /**
-     * Creates a log message baton.
-     */
-    void * logMessage (const char * message, char * baseDirectory = NULL);
+    //REMOVE
+    ///**
+    // * Creates a log message baton.
+    // */
+    //void * logMessage (const char * message, char * baseDirectory = NULL);
 
-    svn_error_t * getLogMessage (const char **log_msg,
-                                 apr_array_header_t * commit_items,
-                                 void *baton, apr_pool_t * pool);
+    //REMOVE
+    //svn_error_t * getLogMessage (const char **log_msg,
+    //                             apr_array_header_t * commit_items,
+    //                             void *baton, apr_pool_t * pool);
 
   public:
     Modify ();
@@ -57,7 +60,7 @@ namespace svn
      * @param recurse whether you want it to checkout files recursively.
      * @exception ClientException
      */
-    void checkout (const char * moduleName, const char *destPath, 
+    void checkout (const char * moduleName, const Path & destPath, 
                    const Revision & revision, bool recurse);
   
     /**
@@ -73,19 +76,19 @@ namespace svn
      * Sets a file for deletion.
      * @exception ClientException
      */
-    void remove (const char * path, bool force);
+    void remove (const Path & path, bool force);
 
     /**
      * Reverts a file to a pristine state.
      * @exception ClientException
      */
-    void revert (const char * path, bool recurse);
+    void revert (const Path & path, bool recurse);
 
     /**
      * Adds a file to the repository.
      * @exception ClientException
      */
-    void add (const char * path, bool recurse);
+    void add (const Path & path, bool recurse);
 
     /**
      * Updates the directory.
@@ -96,7 +99,7 @@ namespace svn
      * @param recurse recursively update.
      * @exception ClientException
      */
-    void update (const char * path, const Revision & revision, 
+    void update (const Path & path, const Revision & revision, 
                  bool recurse);
 
     /**
@@ -116,14 +119,18 @@ namespace svn
      * Copies a versioned file with the history preserved.
      * @exception ClientException
      */
-    void copy (const char * srcPath, const char * destPath);
+    void copy (const Path & srcPath, 
+               const Revision & srcRevision,
+               const Path & destPath);
 
     /**
      * Moves or renames a file.
      * @exception ClientException
      */
-    void move (const char * srcPath, const char * destPath, 
-               const Revision & revision, bool force);
+    void move (const Path & srcPath, 
+               const Revision & srcRevision, 
+               const Path & destPath, 
+               bool force);
 
     /**
      * Creates a directory directly in a repository or creates a 
@@ -132,7 +139,7 @@ namespace svn
      * @param message log message.
      * @exception ClientException
      */
-    void mkdir (const char * path, const char * message);
+    void mkdir (const Path & path, const char * message);
 
     /**
      * Recursively cleans up a local directory, finishing any
@@ -140,13 +147,13 @@ namespace svn
      * @param path a local directory.
      * @exception ClientException
      */
-    void cleanup (const char * path);
+    static void cleanup (const Path & path);
 
     /**
      * Removes the 'conflicted' state on a file.
      * @exception ClientException
      */
-    void resolve (const char * path, bool recurse);
+    void resolve (const Path & path, bool recurse);
 
     /**
      * Exports the contents of either a subversion repository into a 
@@ -155,7 +162,7 @@ namespace svn
      * @exception ClientException
      * @param destPath a destination path that must not already exist.
      */
-    void doExport (const char * srcPath, const char * destPath, 
+    void doExport (const Path & srcPath, const Path & destPath, 
                    const Revision & revision);
 
     /**
@@ -163,7 +170,7 @@ namespace svn
      * svn_client_switch() client method.
      * @exception ClientException
      */
-    void doSwitch (const char * path, const char * url, 
+    void doSwitch (const Path & path, const char * url, 
                    const Revision & revision, bool recurse);
 
     /**
@@ -174,16 +181,16 @@ namespace svn
      *        imported.
      * @exception ClientException
      */
-    void import (const char * path, const char * url, const char * newEntry,
+    void import (const Path & path, const char * url, const Path & newEntry,
                  const char * message, bool recurse);
 
     /**
      * Merge changes from two paths into a new local path.
      * @exception ClientException
      */
-    void merge (const char * path1, const Revision & revision1, 
-                const char * path2, const Revision & revision2,
-                const char * localPath, bool force, bool recurse);
+    void merge (const Path & path1, const Revision & revision1, 
+                const Path & path2, const Revision & revision2,
+                const Path & localPath, bool force, bool recurse);
   };
 
 }

@@ -14,22 +14,27 @@
 #ifndef _LOG_ACTION_H_INCLUDED_
 #define _LOG_ACTION_H_INCLUDED_
 
-#include "action_thread.hpp"
-#include "log_dlg.hpp"
+// app
+#include "action.hpp"
 
-class LogAction : public ActionThread
+class LogAction : public Action
 {
-private:
-  wxFrame *m_thisframe;
-  const char * m_target;
-  LogDlg * m_logDialog;
-
 public:
-  LogAction (wxFrame * frame, Tracer * tr, const char * target);
+  LogAction (wxWindow * parent, Tracer * tr, const char * target);
 
-  void Perform ();
-  void *Entry ();
+  /**
+   * @see Action
+   */
+  virtual bool Prepare ();
+
+  /**
+   * @see Action
+   */
+  virtual bool Perform ();
   void setLogMessage (const char * message);
+
+private:
+  const char * m_target;
 };
 
 #endif

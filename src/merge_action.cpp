@@ -79,8 +79,13 @@ MergeAction::Entry ()
   long rev2 = MergeAction::getRevision (m_data.Path2Rev);
   try
   {
-    modify.merge (m_data.Path1.c_str (), rev1, m_data.Path2.c_str (), rev2, 
-                  targetPath, m_data.Force, m_data.Recursive);
+    modify.merge (m_data.Path1.c_str (), 
+                  rev1, 
+                  m_data.Path2.c_str (), 
+                  rev2, 
+                  targetPath.c_str (), 
+                  m_data.Force, 
+                  m_data.Recursive);
   }
   catch (svn::ClientException &e)
   {

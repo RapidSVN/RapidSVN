@@ -49,7 +49,7 @@ namespace svn
      */
     Client ();
 
-    ~Client ();
+    virtual ~Client ();
 
     /**
      * Returns the last destination path submitted. 
@@ -62,6 +62,8 @@ namespace svn
     /**
      * Enumerates all files/dirs at a given path.
      *
+     * Throws an exception if an error occurs
+     *
      * @param path Path to explore.
      * @param descend Recurse into subdirectories if existant.
      * @return Hash map with Status entries.
@@ -71,6 +73,8 @@ namespace svn
 
     /**
      * Returns the status of a single file in the path.
+     *
+     * Throws an exception if an error occurs
      *
      * @param path File to gather status.
      * @return a Status with Statis.isVersioned = FALSE

@@ -68,7 +68,7 @@ MkdirAction::Entry ()
 
   try
   {
-    modify.mkdir (m_data.Target, m_data.LogMessage);
+    modify.mkdir (m_data.Target.c_str (), m_data.LogMessage.c_str ());
   }
   catch (svn::ClientException &e)
   {

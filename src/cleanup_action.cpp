@@ -16,7 +16,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/utils.hpp"
+#include "svncpp/modify.hpp"
 
 // app
 #include "cleanup_action.hpp"
@@ -43,7 +43,7 @@ CleanupAction::Perform ()
   try
   {
     wxSetWorkingDirectory (m_path.c_str ());
-    svn::Utils::cleanup (m_path);
+    svn::Modify::cleanup (m_path);
     Trace (_T ("Cleanup of working directory finished"));
     result = true;
   }

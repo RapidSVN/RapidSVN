@@ -20,24 +20,19 @@
 // subversion api
 #include "svn_client.h"
 
-// svncpp
-#include "client.hpp"
-#include "pool.hpp"
-
 namespace svn
 {
+  // forward declarations
+  class Pool;
 
   /**
    * Subversion authentication API.
    */
-  class Auth : public svn::Client
+  class Auth
   {
   private:
-    std::string userName;
-    std::string passWord;
-    svn_client_auth_baton_t * auth_obj;
-    bool failed;
-    svn::Pool m_Xpool;
+    std::string m_username;
+    std::string m_password;
 
   public:
     Auth ();
@@ -54,16 +49,12 @@ namespace svn
     void password (const char * password);
 
     /**
-     * Returns an authentication object.
+     * returns a client context for authentication
+     *
+     * @param pool pool to use for allocation
+     * @return client context
      */
-    svn_client_auth_baton_t * authenticate ();
-
-    /**
-     * Returns true if the authentication succeeded.  This should be called 
-     * immediately following an action in which authentication is required
-     * to verify success.
-     */
-    bool isAuthenticated ();
+    svn_client_ctx_t * context (const Pool & pool);
   };
 }
 

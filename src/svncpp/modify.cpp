@@ -11,6 +11,9 @@
  * ====================================================================
  */
 
+// stl
+#include <string>
+
 // subversion api
 #include "svn_client.h"
 
@@ -23,16 +26,26 @@
 
 struct log_msg_baton
 {
-  const char *message;
-  const char *base_dir;
+  log_msg_baton (const std::string & message)
+  {
+    this->message = message;
+  }
+
+  std::string message;
 };
 
-// forward declarations
-static svn_error_t * 
+// static functions
+static svn_error_t *
 get_log_message (const char **log_msg,
-                 const char **tmp_file,
-                 apr_array_header_t * commit_items,
-                 void *baton, apr_pool_t * pool);
+  const char **tmp_file,
+  apr_array_header_t * commit_items,
+  void *baton, apr_pool_t * pool)
+{
+  log_msg_baton *lmb = (log_msg_baton *) baton;
+
+  *log_msg = apr_pstrdup (pool, lmb->message.c_str ());
+  return SVN_NO_ERROR;
+}
 
 namespace svn
 {
@@ -48,27 +61,26 @@ namespace svn
   }
 
   void
-  Modify::checkout (const char * moduleName, const char *destPath, 
+  Modify::checkout (const char * url, const Path & destPath, 
                     const Revision & revision, bool recurse)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-    m_lastPath = destPath;
 
     if(m_notify == NULL)
       return;
 
-    m_Err = svn_client_checkout (Notify::notify,
-                                 (void *) m_notify,
-                                 authenticate (),
-                                 moduleName,
-                                 m_lastPath.c_str (),
-                                 revision.revision (),
-                                 recurse,
-                                 apr_pool);
+    svn_error_t * error =
+      svn_client_checkout (Notify::notify,
+                           (void *) m_notify,
+                           url, destPath.c_str (),
+                           revision.revision (),
+                           recurse,
+                           context (apr_pool),
+                           apr_pool);
 
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
@@ -78,65 +90,71 @@ namespace svn
   }
 
   void
-  Modify::remove (const char * path, bool force)
+  Modify::remove (const Path & path, bool force)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
     svn_client_commit_info_t *commit_info = NULL;
-    m_lastPath = path;
 
-    m_Err = svn_client_delete (&commit_info, m_lastPath.c_str (), NULL, force,
-                               authenticate (),
-                               &get_log_message,
-                               logMessage (NULL),
-                               Notify::notify, (void *) m_notify, apr_pool);
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    svn_error_t * error =
+      svn_client_delete (&commit_info, path.c_str (), 
+                         NULL, // wx_adm_access
+                         force,
+                         NULL, NULL, //no log message function/baton
+                         Notify::notify, (void *) m_notify, 
+                         context (apr_pool),
+                         apr_pool);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::revert (const char * path, bool recurse)
-  {
-    Pool subPool;
-    apr_pool_t * apr_pool = subPool.pool ();
-    m_lastPath = path;
-    m_Err = svn_client_revert (m_lastPath.c_str (), recurse, Notify::notify, 
-                               (void *) m_notify, apr_pool);
-
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
-  }
-
-  void
-  Modify::add (const char * path, bool recurse)
+  Modify::revert (const Path & path, bool recurse)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
 
-    m_lastPath = path;
-    m_Err = svn_client_add (m_lastPath.c_str (), recurse, Notify::notify, 
-                            (void *) m_notify, apr_pool);
+    svn_error_t * error =
+      svn_client_revert (path.c_str (), recurse, Notify::notify, 
+                         (void *) m_notify, apr_pool);
 
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::update (const char * path, const Revision & revision, 
+  Modify::add (const Path & path, bool recurse)
+  {
+    Pool subPool;
+    apr_pool_t * apr_pool = subPool.pool ();
+
+    svn_error_t * error =
+      svn_client_add (path.c_str (), 
+                      recurse, 
+                      Notify::notify, 
+                      (void *) m_notify, 
+                      apr_pool);
+
+    if(error != NULL)
+      throw ClientException (error);
+  }
+
+  void
+  Modify::update (const Path & path, const Revision & revision, 
                   bool recurse)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-    m_lastPath = path;
-    m_Err = svn_client_update (authenticate (),
-                               m_lastPath.c_str (),
-                               revision.revision (),
-                               recurse,
-                               Notify::notify,
-                               (void *) m_notify,
-                               apr_pool);
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    svn_error_t * error =
+      svn_client_update (path.c_str (),
+                         revision.revision (),
+                         recurse,
+                         Notify::notify,
+                         (void *) m_notify,
+                         context (apr_pool),
+                         apr_pool);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   svn_revnum_t
@@ -146,251 +164,248 @@ namespace svn
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
     svn_client_commit_info_t *commit_info = NULL;
-    //m_lastPath = path;
+    log_msg_baton baton (message);
 
-    m_Err = svn_client_commit (&commit_info, Notify::notify, 
-                               (void *) m_notify, 
-                               authenticate (), targets.array (subPool), 
-                               &get_log_message, 
-                               logMessage (message), !recurse, apr_pool);
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    svn_error_t * error =
+      svn_client_commit (&commit_info, 
+                         Notify::notify, 
+                         (void *) m_notify, 
+                         targets.array (subPool), 
+                         &get_log_message, 
+                         &baton, 
+                         !recurse, 
+                         context (apr_pool),
+                         apr_pool);
+    if (error != NULL)
+      throw ClientException (error);
 
-    if(commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
+    if (commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
       return commit_info->revision;
 
     return -1;
   }
 
   void
-  Modify::copy (const char * srcPath, const char * destPath)
+  Modify::copy (const Path & srcPath, 
+                const Revision & srcRevision, 
+                const Path & destPath)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-    Path sourcePath = srcPath;
-    m_lastPath = destPath;
-
     svn_client_commit_info_t *commit_info = NULL;
 
-    m_Err = svn_client_copy (&commit_info,
-                             sourcePath.c_str (),
-                             Revision(Revision::START).revision (),
-                             m_lastPath.c_str (),
-                             NULL,
-                             authenticate (),
-                             &get_log_message,
-                             logMessage (NULL),
-                             Notify::notify, 
-                             (void *) m_notify,
-                             apr_pool);
+    svn_error_t * error = 
+      svn_client_copy (&commit_info,
+                       srcPath.c_str (),
+                       srcRevision.revision (),
+                       destPath.c_str (),
+                       NULL, // wc_adm_access
+                       NULL, // log_msg_func
+                       NULL, // log_msg_baton
+                       Notify::notify, 
+                       (void *) m_notify,
+                       context (apr_pool),
+                       apr_pool);
   
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::move (const char * srcPath, const char * destPath, 
-                const Revision & revision, bool force)
+  Modify::move (const Path & srcPath, 
+                const Revision & srcRevision, 
+                const Path & destPath, 
+                bool force)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
     svn_client_commit_info_t *commit_info = NULL;
-    Path sourcePath = srcPath;
-    m_lastPath = destPath;
 
+    svn_error_t * error =  
+      svn_client_move (&commit_info,
+                       srcPath.c_str (),
+                       srcRevision.revision (),
+                       destPath.c_str (),
+                       force,
+                       NULL, // log_msg_func
+                       NULL, // log_msg_baton
+                       Notify::notify,
+                       (void *) m_notify,
+                       context (apr_pool),
+                       apr_pool);
 
-    m_Err = svn_client_move (&commit_info,
-                             sourcePath.c_str (),
-                             revision.revision (),
-                             m_lastPath.c_str (),
-                             force,
-                             authenticate (),
-                             &get_log_message,
-                             logMessage (NULL),
-                             Notify::notify,
-                             (void *) m_notify,
-                             apr_pool);
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::mkdir (const char * path, const char * message)
+  Modify::mkdir (const Path & path, const char * message)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
     svn_client_commit_info_t *commit_info = NULL;
-    m_lastPath = path;
+    log_msg_baton baton (message);
 
-    m_Err = svn_client_mkdir (&commit_info,
-                              path,
-                              authenticate (),
-                              &get_log_message,
-                              logMessage (message),
-                              Notify::notify,
-                              (void *) m_notify,
-                              apr_pool);
+    svn_error_t * error =  
+      svn_client_mkdir (&commit_info,
+                        path.c_str (),
+                        &get_log_message,
+                        &baton,
+                        Notify::notify,
+                        (void *) m_notify,
+                        context (apr_pool),
+                        apr_pool);
 
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::cleanup (const char * path)
+  Modify::cleanup (const Path & path)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-    m_lastPath = path;
-    m_Err = svn_client_cleanup (m_lastPath.c_str (), apr_pool);
 
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    svn_error_t * error =  
+      svn_client_cleanup (path.c_str (), apr_pool);
+
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::resolve (const char * path, bool recurse)
+  Modify::resolve (const Path & path, bool recurse)
   {
-     Pool subPool;
+    Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-   m_lastPath = path;
-    m_Err = svn_client_resolve (m_lastPath.c_str (),
-                                Notify::notify,
-                                (void *) m_notify,
-                                recurse,
-                                apr_pool);
 
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    svn_error_t * error =  
+      svn_client_resolve (path.c_str (),
+                          Notify::notify,
+                          (void *) m_notify,
+                          recurse,
+                          apr_pool);
+
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::doExport (const char * srcPath, const char * destPath, 
+  Modify::doExport (const Path & srcPath, const Path & destPath, 
                     const Revision & revision)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-    Path sourcePath = srcPath;
-    m_lastPath = destPath;
-    m_Err = svn_client_export (sourcePath.c_str (),
-                               m_lastPath.c_str (),
-                               const_cast<svn_opt_revision_t*>(
-                                 revision.revision ()),
-                               authenticate (),
-                               Notify::notify,
-                               (void *) m_notify,
-                               apr_pool);
 
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    svn_error_t * error =  
+      svn_client_export (srcPath.c_str (),
+                         destPath.c_str (),
+                         const_cast<svn_opt_revision_t*>
+                         (revision.revision ()),
+                         Notify::notify,
+                         (void *) m_notify,
+                         context (apr_pool),
+                         apr_pool);
+
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::doSwitch (const char * path, const char * url, 
-                    const Revision & revision, bool recurse)
+  Modify::doSwitch (const Path & path, 
+                    const char * url, 
+                    const Revision & revision, 
+                    bool recurse)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-    m_lastPath = path;
 
-    m_Err = svn_client_switch (authenticate (),
-                               m_lastPath.c_str (),
-                               url,
-                               revision.revision (),
-                               recurse,
-                               Notify::notify,
-                               (void *) m_notify,
-                               apr_pool);
-
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    svn_error_t * error =  
+      svn_client_switch (path.c_str (),
+                         url,
+                         revision.revision (),
+                         recurse,
+                         Notify::notify,
+                         (void *) m_notify,
+                         context (apr_pool),
+                         apr_pool);
+    
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::import (const char * path, const char * url, const char * newEntry,
-                  const char * message, bool recurse)
+  Modify::import (const Path & path, 
+                  const char * url, 
+                  const Path & newEntry, 
+                  const char * message, 
+                  bool recurse)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-    m_lastPath = path;
     svn_client_commit_info_t *commit_info = NULL;
+    log_msg_baton baton (message);
 
-    m_Err = svn_client_import (&commit_info,
-                               Notify::notify,
-                               (void *) m_notify,
-                               authenticate (),   
-                               m_lastPath.c_str (),
-                               url,
-                               newEntry,
-                               &get_log_message,
-                               logMessage (message),
-                               !recurse,
-                               apr_pool);
+    svn_error_t * error =  
+      svn_client_import (&commit_info,
+                         Notify::notify,
+                         (void *) m_notify,
+                         path.c_str (),
+                         url,
+                         newEntry.c_str (),
+                         &get_log_message,
+                         &baton,
+                         !recurse,
+                         context (apr_pool),
+                         apr_pool);
 
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
   void
-  Modify::merge (const char * path1, const Revision & revision1, 
-                 const char * path2, const Revision & revision2,
-                 const char * localPath, bool force, bool recurse)
+  Modify::merge (const Path & path1, const Revision & revision1, 
+                 const Path & path2, const Revision & revision2,
+                 const Path & localPath, bool force, bool recurse)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-    m_lastPath = localPath;
-    Path srcPath1 = path1;
-    Path srcPath2 = path2;
 
-    m_Err = svn_client_merge (Notify::notify,
-                              (void *) m_notify,
-                              authenticate (),
-                              srcPath1.c_str (),
-                              revision1.revision (),
-                              srcPath2.c_str (),
-                              revision2.revision (),
-                              localPath,
-                              recurse,
-                              force,
-                              FALSE,
-                              apr_pool);
+    svn_error_t * error =  
+      svn_client_merge (Notify::notify,
+                        (void *) m_notify,
+                        path1.c_str (),
+                        revision1.revision (),
+                        path2.c_str (),
+                        revision2.revision (),
+                        localPath.c_str (),
+                        recurse,
+                        force,
+                        FALSE, // dry_run
+                        context (apr_pool),
+                        apr_pool);
 
-    if(m_Err != NULL)
-      throw ClientException (m_Err);
+    if(error != NULL)
+      throw ClientException (error);
   }
 
-  void *
-  Modify::logMessage (const char * message, char * baseDirectory)
-  {
-    Pool subPool;
-    apr_pool_t *apr_pool = subPool.pool ();
-    log_msg_baton *baton = (log_msg_baton *) 
-      apr_palloc (apr_pool, sizeof (*baton));
+//TODO this doesnt seem to do anything
+//   void *
+//   Modify::logMessage (const char * message, const Path & baseDirectory)
+//   {
+//     Pool subPool;
+//     apr_pool_t *apr_pool = subPool.pool ();
+//     log_msg_baton *baton = (log_msg_baton *) 
+//       apr_palloc (apr_pool, sizeof (*baton));
 
-    baton->message = message;
-    baton->base_dir = baseDirectory ? baseDirectory : ".";
+//     baton->message = message;
+//     baton->base_dir = baseDirectory ? baseDirectory : ".";
 
-    return baton;
-  }
+//     return baton;
+//   }
 
 }
 
-
-static svn_error_t *
-get_log_message (const char **log_msg,
-  const char **tmp_file,
-  apr_array_header_t * commit_items,
-  void *baton, apr_pool_t * pool)
-{
-  log_msg_baton *lmb = (log_msg_baton *) baton;
-
-  if (lmb->message)
-  {
-    *log_msg = apr_pstrdup (pool, lmb->message);
-    return SVN_NO_ERROR;
-  }
-
-  return SVN_NO_ERROR;
-}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../../rapidsvn-dev.el")

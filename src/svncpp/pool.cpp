@@ -39,6 +39,18 @@ namespace svn
   {
     return m_pool;
   }
+
+
+//TODO
+//   apr_pool_t *
+//   Pool::operator=(const Pool & pool)
+//   {
+//     return 
+//     if (this == &path)
+//       return *this;
+//     m_path = path.c_str();
+//     return *this;
+//   }
 }
 
 #endif

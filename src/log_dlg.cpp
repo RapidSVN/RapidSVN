@@ -17,12 +17,11 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
+#include "svncpp/log_entry.hpp"
 #include "svncpp/modify.hpp"
 #include "svncpp/notify.hpp"
 
 // app
-//TODO
-#include "rapidsvn_app.hpp"
 #include "log_dlg.hpp"
 
 enum
@@ -44,10 +43,10 @@ BEGIN_EVENT_TABLE (LogList, wxListCtrl)
   EVT_LIST_ITEM_SELECTED (LOG_LIST, LogList::OnSelected)
 END_EVENT_TABLE()
 
-LogDlg::LogDlg (wxWindow * parent, svn::Log *log)
-           : wxDialog (parent, -1, "Log History", wxDefaultPosition, 
-             wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             m_log(log)
+LogDlg::LogDlg (wxWindow * parent, const svn::Log & log)
+  : wxDialog (parent, -1, _T ("Log History"), wxDefaultPosition, 
+              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
+    m_log(log)
 {
   InitializeData ();
   CentreOnParent ();
@@ -59,31 +58,30 @@ LogDlg::InitializeData ()
   wxString history;
   char count[sizeof (int) * 8 + 1];
 
-  sprintf (count, "%ld", (long) m_log->count ());
-  history = "History: ";
-  history += count;
-  history += " revisions";
+  wxString historyFmt (_T("History: %ld revisions"));
+  history.Printf(historyFmt, count);
 
   wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
   wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
 
-  m_logSizer = new wxBoxSizer (wxVERTICAL);
+  wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);
   wxStaticText * historyLabel = new wxStaticText (this, -1, history);
-  m_logSizer->Add (historyLabel, 0, wxALL, 5);
+  logSizer->Add (historyLabel, 0, wxALL, 5);
   m_logList = new LogList (this, m_log);
-  m_logSizer->Add (m_logList, 1, wxLEFT);
+  logSizer->Add (m_logList, 1, wxLEFT);
 
   wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
-  wxButton * closeButton = new wxButton (this, ID_Close, "Close");
-  wxButton * viewButton = new wxButton (this, ID_View, "View");
-  wxButton * getButton = new wxButton (this, ID_Get, "Get");
-  wxButton * diffButton = new wxButton (this, ID_Diff, "Diff");
+  wxButton * closeButton = new wxButton (this, ID_Close, _T("Close"));
+  wxButton * viewButton = new wxButton (this, ID_View, _T("View"));
+  wxButton * getButton = new wxButton (this, ID_Get, _T("Get"));
+  wxButton * diffButton = new wxButton (this, ID_Diff, _T("Diff"));
+
   buttonSizer->Add (closeButton, 0, wxALL, 5);
   buttonSizer->Add (viewButton, 0, wxALL, 5);
   buttonSizer->Add (getButton, 0, wxALL, 5);
   buttonSizer->Add (diffButton, 0, wxALL, 5);
 
-  topSizer->Add (m_logSizer, 1, wxALL, 5);
+  topSizer->Add (logSizer, 1, wxALL, 5);
   topSizer->Add (buttonSizer, 0, wxALL, 5);
 
   m_logMsg = new wxTextCtrl (this, LOG_MSG, _T(""), 
@@ -141,31 +139,35 @@ LogDlg::OnGet (wxCommandEvent & event)
   
       if(!m_logList->GetItem (info))
         return;
-      getRevision (atol (info.m_text.c_str ()));
+      svn_revnum_t revnum;
+      info.m_text.ToLong (&revnum);
+      GetRevision (revnum);
     }
   }
 }
 
-void
-LogDlg::getRevision (const svn_revnum_t revision)
-{
-  svn::Modify modify;
-  svn::Notify notify;
-  modify.notification (&notify);
 
-  try
-  {
-    modify.update (m_log->getLastPath (), svn::Revision(revision), false);
-    wxMessageDialog dlg (this, _T ("Revision retrieved successfully."),
-                         _T ("Message"), wxOK);
-    dlg.ShowModal ();
-  }
-  catch (svn::ClientException &e)
-  {
-    wxMessageDialog dlg (this, _T ("An update error occurred."),
-                         _T (e.description ()), wxOK);
-    dlg.ShowModal ();
-  }
+void
+LogDlg::GetRevision (const svn_revnum_t revision)
+{
+//TODO this has to be checked. Is there duplication of functionality underway?
+//   svn::Modify modify;
+//   svn::Notify notify;
+//   modify.notification (&notify);
+
+//   try
+//   {
+//     modify.update (m_log->getLastPath (), svn::Revision(revision), false);
+//     wxMessageDialog dlg (this, _T ("Revision retrieved successfully."),
+//                          _T ("Message"), wxOK);
+//     dlg.ShowModal ();
+//   }
+//   catch (svn::ClientException &e)
+//   {
+//     wxMessageDialog dlg (this, _T ("An update error occurred."),
+//                          _T (e.description ()), wxOK);
+//     dlg.ShowModal ();
+//   }
 }
 
 void 
@@ -174,10 +176,10 @@ LogDlg::setLogMessage (const char * message)
   m_logMsg->SetValue (_T(message));
 }
 
-LogList::LogList (wxWindow * parent, svn::Log *log)
-           : wxListCtrl (parent, LOG_LIST, wxDefaultPosition, 
-             wxSize(365, 150), wxLC_REPORT),
-             m_log(log)
+LogList::LogList (wxWindow * parent, const svn::Log & log)
+  : wxListCtrl (parent, LOG_LIST, wxDefaultPosition, 
+                wxSize(365, 150), wxLC_REPORT),
+    m_log(log)
 {
   InitializeList ();
   CentreOnParent ();
@@ -186,10 +188,8 @@ LogList::LogList (wxWindow * parent, svn::Log *log)
 void
 LogList::InitializeList ()
 {
-  int index = 0;
-  char rev[sizeof (long) * 8 + 1];
-
   SetSingleStyle (wxLC_REPORT);
+  //const char * dateFormat = "%a %b %d %H:%M:%S %Y";
 
   InsertColumn (0, _T("Revision"));
   InsertColumn (1, _T("User"));
@@ -199,13 +199,20 @@ LogList::InitializeList ()
   SetColumnWidth (1, 100);
   SetColumnWidth (2, 200);
 
-  while(m_log->next ())
+  long index=0;
+  const std::vector<svn::LogEntry> & entries = m_log.entries ();
+  std::vector<svn::LogEntry>::const_iterator it;
+  for (it=entries.begin (); it != entries.end (); it++ )
   {
-    sprintf (rev, "%ld", (long) m_log->revision ());
-    InsertItem (index, _T (rev));
-    SetItem (index, 1, _T (m_log->author ()));
-    SetItem (index, 2, _T (m_log->formatDate (m_log->date (), 
-                                             "%a %b %d %H:%M:%S %Y")));
+    const svn::LogEntry & entry = *it;
+    wxString rev;
+    rev.Printf("%ld", (long) entry.revision);
+    //TODO perform date formatting. but dont use
+    //subversion but wxDateTime
+    //wxString date (entry.date.c_str ());
+    InsertItem (index, rev);
+    SetItem (index, 1, entry.author.c_str ());
+    SetItem (index, 2, entry.date.c_str ());
     index++;
   }
  
@@ -216,27 +223,21 @@ LogList::OnSelected (wxListEvent& event)
 {
   wxListItem info;
   wxString message;
-
+  
   info.m_itemId = event.m_itemIndex;
   info.m_col = 0;
   info.m_mask = wxLIST_MASK_TEXT;
   
   if(!GetItem (info))
     return;
-  long rev = atol (info.m_text.c_str ());
+  //long rev = atol (info.m_text.c_str ());
 
-  m_log->beforeFirst ();
-  while(m_log->next ())
-  {
-    if(m_log->revision () == rev)
-    {
-      message = m_log->message ();
-      message.Trim (FALSE);
-      wxGetApp ().GetAppFrame ()->getLogAction ()->setLogMessage 
-               (message.c_str ());
-      break;
-    }
-  }
+  const svn::LogEntry & entry = m_log.entries ()[event.m_itemIndex];
+  message = entry.message.c_str ();
+  message.Trim (false);
+  //TODO we dont want such, do we?
+  //wxGetApp ().GetAppFrame ()->getLogAction ()->setLogMessage 
+  //(message.c_str ());
 }
 
 /* -----------------------------------------------------------------

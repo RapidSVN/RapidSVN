@@ -12,64 +12,48 @@
  */
 
 // svncpp
+#include "svncpp/exception.hpp"
+#include "svncpp/log.hpp"
 #include "svncpp/revision.hpp"
 
 // app
-#include "include.hpp"
-#include "rapidsvn_app.hpp"
 #include "log_action.hpp"
-#include "svn_notify.hpp"
+#include "log_dlg.hpp"
 
-LogAction::LogAction (wxFrame * frame, Tracer * tr, const char * target)
-  : ActionThread (frame), m_thisframe(frame), m_target(target)
+LogAction::LogAction (wxWindow * parent, Tracer * tr, const char * target)
+  : Action (parent, tr, false), m_target(target)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
 }
 
-void
-LogAction::Perform ()
+bool
+LogAction::Prepare ()
 {
-  ////////////////////////////////////////////////////////////
-  // Here we are in the main thread.
-  svn::Log log;
-
-
-  log.loadPath (m_target, svn::Revision::START, svn::Revision::HEAD);
-
-  if(!log.isVersioned ())
-	  return;
-
-  m_logDialog = new LogDlg(m_thisframe, &log);
-
-  if (m_logDialog->ShowModal () == wxID_OK)
+  try
   {
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
-
-    ////////////////////////////////////////////////////////////
+    svn::Log log (m_target, svn::Revision::START, svn::Revision::HEAD);
+    LogDlg dlg (GetParent (), log);
+    dlg.ShowModal ();
+  }
+  catch (svn::ClientException & e)
+  {
+    //TODO handle error (e.g. tracer message)
   }
 
-  // destroy the dialog
-  m_logDialog->Close (TRUE);
+  return false;
 }
 
-void *
-LogAction::Entry ()
+bool
+LogAction::Perform ()
 {
-  return NULL;
+  return true;
 }
 
-void 
-LogAction::setLogMessage (const char * message)
-{
-  m_logDialog->setLogMessage (message);
-}
+// void 
+// LogAction::setLogMessage (const char * message)
+// {
+//   m_logDialog->setLogMessage (message);
+// }
+
 /* -----------------------------------------------------------------
- * local variables:
- * eval: (load-file "../rapidsvn-dev.el")
- * end:
+ * local variables: eval: (load-file "../rapidsvn-dev.el") end:
  */

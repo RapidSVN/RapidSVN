@@ -11,54 +11,45 @@
  * ====================================================================
  */
 
-#ifndef _SVNCPP_POOL_H_
-#define _SVNCPP_POOL_H_
+#ifndef _SVNCPP_LOG_ENTRY_H_
+#define _SVNCPP_LOG_ENTRY_H_
+
+// stl
+#include <string>
 
 // subversion api
-#include "svn_pools.h"
+#include "svn_types.h"
 
-/**
- * SvnCpp namespace
- */
 namespace svn
 {
-  /**
-   * Class for encapsulation of apr/subversion pools
-   */
-  class Pool
+  struct LogEntry
   {
-  public:
-   /**
-     * creates a subpool new pool to an existing pool
-     *
-     * @param parent NULL -> global pool
-     */
-    Pool (apr_pool_t * = (apr_pool_t *)0);
+    LogEntry ()
+    {
+    }
 
-    virtual ~ Pool ();
+    LogEntry (const svn_revnum_t revision,
+              const std::string & author,
+              const std::string & date,
+              const std::string & message)
+    {
+      this->revision = revision;
+      this->author = author;
+      this->date = date;
+      this->message = message;
+    }
 
-    /**
-     * @return apr handle to the pool
-     */
-    apr_pool_t * 
-    pool () const;
-
-    //TODO apr_pool_t * operator=(const Pool&);
-  private:
-    apr_pool_t * m_pool;
-
-    Pool& operator=(const Pool&);
-
-    Pool (const Pool &);
-
-
+    svn_revnum_t revision;
+    std::string author;
+    std::string date;
+    std::string message;
   };
 }
 
 #endif
-
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */
+

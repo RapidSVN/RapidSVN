@@ -69,15 +69,16 @@ CommitAction::Perform ()
                      m_data.Recursive);
     wxString str;
 
-    if(!modify.isAuthenticated ())
-    {
-      str = "Authentication failed.";
-    }
-    else
-    {
-      str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
-                              revision);
-    }
+//REMOVE DEPRECATED
+//     if(!modify.isAuthenticated ())
+//     {
+//       str = "Authentication failed.";
+//     }
+//     else
+//     {
+    str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
+                               revision);
+//     }
     GetTracer ()->Trace (str);
     result = true;
   }

@@ -11,6 +11,7 @@
  * ====================================================================
  */
 
+#include "svncpp/path.hpp"
 #include "svncpp/property.hpp"
 #include "include.hpp"
 #include "wx/resource.h"

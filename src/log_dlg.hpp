@@ -22,15 +22,15 @@
 #include "svncpp/log.hpp"
 
 //forward declarations
-class wxBoxSizer;
+class wxTextCtrl;
 
 class LogList : public wxListCtrl
 {
 public:
-  LogList (wxWindow * parent, svn::Log * log);
+  LogList (wxWindow * parent, const svn::Log & log);
 
 private:
-  svn::Log * m_log;
+  const svn::Log & m_log;
   void OnSelected(wxListEvent& event);
   void InitializeList ();
   
@@ -40,17 +40,16 @@ private:
 class LogDlg : public wxDialog
 {
 public:
-  LogDlg (wxWindow * parent, svn::Log * log);
+  LogDlg (wxWindow * parent, const svn::Log & log);
   void setLogMessage (const char * message);
 
 private:
-  svn::Log * m_log;
+  const svn::Log & m_log;
   LogList * m_logList;
-  wxBoxSizer * m_logSizer;
   wxTextCtrl * m_logMsg;
 
   void InitializeData ();
-  void getRevision (const svn_revnum_t revision);
+  void GetRevision (const svn_revnum_t revision);
   void OnClose (wxCommandEvent & event);
   void OnGet (wxCommandEvent & event);
   

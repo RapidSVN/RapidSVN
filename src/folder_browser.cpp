@@ -19,6 +19,7 @@
 #include "wx/dir.h"
 #include "wx/imaglist.h"
 #include "rapidsvn_app.hpp"
+#include "ids.hpp"
 
 #include "res/bitmaps/computer.xpm"
 #include "res/bitmaps/versioned_folder.xpm"

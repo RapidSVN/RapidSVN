@@ -54,7 +54,7 @@ CheckoutAction::Perform ()
   UnixPath(m_data.DestFolder);
   TrimString(m_data.ModuleName);
   
-  long revnum = -1;
+  long revnum=-1;
   // Did the user request a specific revision?:
   if (!m_data.UseLatest)
   {
@@ -68,9 +68,11 @@ CheckoutAction::Perform ()
   bool result = true;
   try
   {
+    svn::Revision revision (revnum);
     wxSetWorkingDirectory (m_data.DestFolder);
-    modify.checkout (m_data.ModuleName, m_data.DestFolder, 
-                     revnum, m_data.Recursive);
+    modify.checkout (m_data.ModuleName.c_str (), 
+                     m_data.DestFolder.c_str (), 
+                     revision, m_data.Recursive);
   }
   catch (svn::ClientException &e)
   {

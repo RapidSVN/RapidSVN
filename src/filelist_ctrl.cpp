@@ -16,10 +16,12 @@
 #include "wx/filename.h"
 
 // svncpp
+#include "svncpp/client.hpp"
 #include "svncpp/targets.hpp"
 
 // app
 #include "include.hpp"
+#include "ids.hpp"
 #include "rapidsvn_app.hpp"
 
 // Bitmaps
