@@ -17,7 +17,7 @@ namespace svn
 /**
  * Iterator class for log entries on a file.
  */
-class Log : svn::Auth
+class Log : public svn::Auth
 {
 private:
   std::vector<long> _revision;

@@ -1,4 +1,5 @@
 
+#include "svncpp/modify.h"
 #include "include.h"
 #include "rapidsvn_app.h"
 #include "log_dlg.h"
@@ -16,6 +17,7 @@ enum
 
 BEGIN_EVENT_TABLE (LogDlg, wxDialog)
   EVT_BUTTON    (ID_Close,    LogDlg::OnClose)
+  EVT_BUTTON    (ID_Get,    LogDlg::OnGet)
 END_EVENT_TABLE ()
 
 BEGIN_EVENT_TABLE (LogList, wxListCtrl)
@@ -88,6 +90,62 @@ void
 LogDlg::OnClose (wxCommandEvent & event)
 {
   Close (TRUE);
+}
+
+void
+LogDlg::OnGet (wxCommandEvent & event)
+{
+  int sel = logList->GetSelectedItemCount ();
+  wxListItem info;
+
+  if(sel == 0 || sel > 1)
+  {
+    wxMessageDialog dlg (this, _T ("You must select exactly one revision."),
+                         _T ("Error"), wxOK);
+    dlg.ShowModal ();
+  }
+  else
+  {
+    long item = -1;
+
+    for (;;)
+    {
+      item = logList->GetNextItem (item, wxLIST_NEXT_ALL, 
+                                  wxLIST_STATE_SELECTED);
+      if(item == -1)
+        break;
+
+      info.m_itemId = item;
+      info.m_col = 0;
+      info.m_mask = wxLIST_MASK_TEXT;
+  
+      if(!logList->GetItem (info))
+        return;
+      getRevision (atol (info.m_text.c_str ()));
+    }
+  }
+}
+
+void
+LogDlg::getRevision (long revision)
+{
+  svn::Modify modify;
+  svn::Notify notify;
+  modify.notification (&notify);
+
+  try
+  {
+    modify.update (_log->getLastPath (), revision, false);
+    wxMessageDialog dlg (this, _T ("Revision retrieved successfully."),
+                         _T ("Message"), wxOK);
+    dlg.ShowModal ();
+  }
+  catch (svn::ClientException &e)
+  {
+    wxMessageDialog dlg (this, _T ("An update error occurred."),
+                         _T (e.description ()), wxOK);
+    dlg.ShowModal ();
+  }
 }
 
 void 

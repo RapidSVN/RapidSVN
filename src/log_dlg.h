@@ -30,7 +30,9 @@ private:
   wxTextCtrl * logMsg;
 
   void InitializeData ();
+  void getRevision (long revision);
   void OnClose (wxCommandEvent & event);
+  void OnGet (wxCommandEvent & event);
   
   DECLARE_EVENT_TABLE ()
 };
