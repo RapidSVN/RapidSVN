@@ -291,6 +291,10 @@ AppendMenuItem (wxMenu & menu, int id)
     caption = _("Refresh\tF5");
     break;
 
+  case ID_RefreshWithUpdate:
+    caption = _("Refresh (with Update)\tCTRL+F5");
+    break;
+
   case ID_Preferences:
     caption = _("Preferences...");
     break;

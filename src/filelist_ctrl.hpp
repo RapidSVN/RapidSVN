@@ -127,8 +127,8 @@ public:
    */
   bool IsFlat ();
 
-  void UpdateFileList ();
-  void UpdateFileList (const wxString & path);
+  void UpdateFileList (bool withUpdate=false);
+  void UpdateFileList (const wxString & path, bool withUpdate=false);
   const IndexArray GetSelectedItems () const;
   const svn::Targets GetTargets () const;
 

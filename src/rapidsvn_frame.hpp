@@ -83,6 +83,7 @@ private:
   // View menu
   void OnPreferences (wxCommandEvent & event);
   void OnRefresh (wxCommandEvent & event);
+  void OnRefreshWithUpdate (wxCommandEvent & event);
   void OnColumn (wxCommandEvent & event);
   void OnColumnReset (wxCommandEvent & event);
   void OnFlatView (wxCommandEvent & event);
@@ -138,7 +139,7 @@ private:
   bool InvokeDefaultAction ();
 
   /** update the contents of the filelist */
-  void UpdateFileList ();
+  void UpdateFileList (bool withUpdate=false);
 
   /** update the contents of the folder browser */
   void UpdateFolderBrowser ();

@@ -713,15 +713,15 @@ FileListCtrl::~FileListCtrl ()
 }
 
 void
-FileListCtrl::UpdateFileList (const wxString & path)
+FileListCtrl::UpdateFileList (const wxString & path, bool withUpdate)
 {
   m->Path = path;
 
-  UpdateFileList ();
+  UpdateFileList (withUpdate);
 }
 
 void
-FileListCtrl::UpdateFileList ()
+FileListCtrl::UpdateFileList (bool withUpdate)
 {
   const wxString & path = m->Path;
   // delete all the items in the list to display the new ones
@@ -741,7 +741,7 @@ FileListCtrl::UpdateFileList ()
 
   svn::Client client (&context);
   const svn::StatusEntries statusVector =
-    client.status (path.c_str (), m->FlatMode);
+    client.status (path.c_str (), m->FlatMode, true, withUpdate);
   svn::StatusEntries::const_iterator it;
   const size_t pathLength = path.Length () + 1;
 

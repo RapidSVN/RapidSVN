@@ -198,6 +198,7 @@ public:
     // View menu
     wxMenu *menuView = new wxMenu;
     AppendMenuItem (*menuView, ID_Refresh);
+    AppendMenuItem (*menuView, ID_RefreshWithUpdate);
     menuView->AppendSeparator ();
 
     AppendMenuItem (*menuView, ID_Explore);
@@ -293,6 +294,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
+  EVT_MENU (ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
   EVT_MENU (ID_Flat, RapidSvnFrame::OnFlatView)
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
@@ -474,7 +476,7 @@ RapidSvnFrame::~RapidSvnFrame ()
 }
 
 void
-RapidSvnFrame::UpdateFileList ()
+RapidSvnFrame::UpdateFileList (bool withUpdate)
 {
   wxBusyCursor busy;
   if (m_listCtrl && m_folder_browser)
@@ -483,7 +485,7 @@ RapidSvnFrame::UpdateFileList ()
     {
       try
       {
-        m_listCtrl->UpdateFileList (m_currentPath);
+        m_listCtrl->UpdateFileList (m_currentPath, withUpdate);
         m_listCtrl->Show (TRUE);
       }
       catch (svn::ClientException & e)
@@ -563,6 +565,13 @@ RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
 {
   UpdateFolderBrowser ();
   UpdateFileList ();
+}
+
+void
+RapidSvnFrame::OnRefreshWithUpdate (wxCommandEvent & WXUNUSED (event))
+{
+  UpdateFolderBrowser ();
+  UpdateFileList (true);
 }
 
 void
