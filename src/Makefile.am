@@ -29,6 +29,7 @@ rapidsvn_SOURCES= \
 	merge_dlg.cpp \
 	mkdir_action.cpp \
 	mkdir_dlg.cpp \
+        preferences.cpp \
 	preferences_dlg.cpp \
 	property_action.cpp \
 	property_dlg.cpp \

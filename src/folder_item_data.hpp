@@ -65,6 +65,26 @@ public:
     return m_hasChildren;
   }
 
+  /**
+   * returns true for a REAL directory.
+   * FOLDER_TYPE_WORKBENCH is NOT real.
+   *
+   * @retval true existing folder
+   * @retval false unreal/virtual entry
+   */
+  const bool isReal () const
+  {
+    switch (m_folderType)
+    {
+    case FOLDER_TYPE_PROJECT:
+    case FOLDER_TYPE_NORMAL:
+      return true;
+
+    default:
+      return false;
+    }
+  }
+
 private:
   int m_folderType;
   wxString m_path;

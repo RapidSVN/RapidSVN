@@ -41,6 +41,7 @@
 #include "external_program_action.hpp"
 
 #include "report_dlg.hpp"
+#include "preferences.hpp"
 #include "preferences_dlg.hpp"
 
 #include "rapidsvn_frame.hpp"
@@ -391,8 +392,6 @@ END_EVENT_TABLE ()
 
   // put the working copy selections in the combo browser
   InitFolderBrowser ();
-
-  PreferencesDlg::Data.Read (pConfig);
 }
 
 RapidSvnFrame::~RapidSvnFrame ()
@@ -441,8 +440,6 @@ RapidSvnFrame::~RapidSvnFrame ()
     key.Printf (_(ConfigProjectFmt), item);
     pConfig->Write (key, workbenchItems.Item (item));
   }
-
-  PreferencesDlg::Data.Write (pConfig);
 
   delete m;
 }
@@ -537,7 +534,7 @@ RapidSvnFrame::OnContents (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
 {
-  Preferences ();
+  ShowPreferences ();
 }
 
 void
@@ -1024,11 +1021,12 @@ RapidSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
 }
 
 void
-RapidSvnFrame::Preferences ()
+RapidSvnFrame::ShowPreferences ()
 {
-  PreferencesDlg *pDlg = PreferencesDlg::CreateInstance (this);
-  pDlg->ShowModal ();
-  pDlg->Close (TRUE);
+  Preferences prefs;
+  PreferencesDlg dlg (this, & prefs);
+  dlg.ShowModal ();
+  dlg.Close (TRUE);
 }
 
 void
@@ -1048,31 +1046,32 @@ RapidSvnFrame::InvokeDefaultAction ()
   size_t folder_count = 0, file_count = 0;
   std::vector<svn::Path> targets = GetActionTargets ().targets ();
 
-  if (targets.empty())
-    return false;
-  
-  for (std::vector<svn::Path>::iterator i = targets.begin (); i != targets.end (); i++)
-  {
-    wxFileName path (i->c_str());
-    if (wxDirExists (path.GetFullPath ()))
-      folder_count++;
-    else
-      file_count++;
-  }
+  // the default action will be invoked only for a single file
+  // or folder.
+  // if more or less than one file or folder is selected nothing 
+  // will happen.
 
+  if (targets.size () != 1)
+    return false;
+
+  wxFileName path = targets[0].c_str ();
+  wxString fullPath = path.GetFullPath ();
+  if (wxDirExists (fullPath))
+    folder_count++;
+  else
+    file_count++;
+  
   // We can't decide
   if (folder_count && file_count)
     return false;
 
-  if (folder_count)
+  // We will do anything only if ONE file or folder is selected
+  if (folder_count == 1)
   {
-    // TODO: Select the target in the folder browser, then:
-    /*
-      UpdateCurrentPath ();
-      UpdateFileList ();
-    */
+    // go one folder deeper...
+    m_folder_browser->SelectFolder (fullPath.c_str ());
   }
-  else
+  else if (file_count == 1)
   {
     Perform (ACTION_TYPE_EXTERNAL_PROGRAM,
              new ExternalProgramAction (this, -1, false));

@@ -95,7 +95,7 @@ public:
     }
     else
     {
-      FolderItemData* data = (FolderItemData*)treeCtrl->GetItemData (id);
+      FolderItemData* data = GetItemData (id);
       return data->getPath ();
     }
   }
@@ -111,7 +111,7 @@ public:
     }
     else
     {
-      FolderItemData* data = (FolderItemData*)treeCtrl->GetItemData (id);
+      FolderItemData* data = GetItemData (id);
       return data;
     }
   }
@@ -217,8 +217,7 @@ public:
       rootId = treeCtrl->GetRootItem ();
     }
 
-    FolderItemData* parentData = (FolderItemData*) 
-                                  treeCtrl->GetItemData (parentId);
+    FolderItemData* parentData = GetItemData (parentId);
     if(parentData)
     {
         type = parentData->getFolderType ();
@@ -337,6 +336,68 @@ public:
     treeCtrl->SetItemHasChildren (parentId, TRUE);
   }
 
+  bool
+  SelectFolder (const char * path)
+  {
+    const FolderItemData * data = GetSelection ();
+
+    if (data == 0)
+      return false;
+
+    // is this a realy entry?
+    if (!data->isReal ())
+      return false;
+
+    // make sure the selected tree is open
+    const wxTreeItemId parentId = data->GetId ();
+
+    if (!treeCtrl->IsExpanded(parentId))
+    {
+      treeCtrl->Expand (parentId);
+    }
+
+    // no search through the list of children
+    long cookie;
+    wxTreeItemId id = treeCtrl->GetFirstChild (parentId, cookie);
+
+    bool success = false;
+
+    while (!success)
+    {
+      const FolderItemData * data = GetItemData (id);
+
+      // if data is not set we have an invalid id
+      if (data == 0)
+        break;
+
+      if (data->getPath () == path)
+      {
+        success = true;
+      }
+      else
+      {
+        id = treeCtrl->GetNextChild (parentId, cookie);
+      }
+    }
+
+    if (success)
+    {
+      treeCtrl->SelectItem (id);
+    }
+
+    return success;
+  }
+
+  FolderItemData *
+  GetItemData (const wxTreeItemId & id) const
+  {
+    if (!treeCtrl)
+      return 0;
+
+    return static_cast<FolderItemData *>(treeCtrl->GetItemData (id));
+  }
+
+
 };
 
 const unsigned int FolderBrowser::Data::MAXLENGTH_PROJECT = 25;
@@ -450,6 +511,12 @@ FolderBrowser::OnItemRightClk (wxTreeEvent & event)
   {
     m->ShowMenu (index, clientPt);
   }
+}
+
+bool
+FolderBrowser::SelectFolder (const char * path)
+{
+  return m->SelectFolder (path);
 }
 /* -----------------------------------------------------------------
  * local variables:

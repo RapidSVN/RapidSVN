@@ -50,7 +50,17 @@ public:
    * @return context of selection
    */
   const FolderItemData * GetSelection () const;
-  
+
+  /**
+   * selects @a path in the current folder.
+   * If the tree leaf is closed it will be opened.
+   *
+   * @param path path in the current folder
+   * @retval true on success
+   * @retval false if entry was not found
+   */
+  bool
+  SelectFolder(const char * path);
 
 private:
   struct Data;

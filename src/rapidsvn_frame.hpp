@@ -177,7 +177,7 @@ private:
   void Mkdir ();
   void Merge ();
   void Contents ();
-  void Preferences ();
+  void ShowPreferences ();
 
   FolderBrowser *GetFolderBrowser ()
   {

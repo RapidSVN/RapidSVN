@@ -11,12 +11,13 @@
  * ====================================================================
  */
 // wx
+#include "wx/wx.h"
 #include "wx/filename.h"
 #include "wx/intl.h"
 
 // app
 #include "external_program_action.hpp"
-#include "preferences_dlg.hpp"
+#include "preferences.hpp"
 #include "verblist.hpp"
 
 ExternalProgramAction::ExternalProgramAction (wxWindow * parent, long verb_id, 
@@ -43,6 +44,7 @@ ExternalProgramAction::Perform ()
 
   // The target we'll pass to the external program
   wxString target_document = target.GetFullPath ();
+  Preferences prefs;
 
   if (m_treat_as_folder)
   {
@@ -65,19 +67,13 @@ ExternalProgramAction::Perform ()
   if (m_treat_as_folder)
   {
     if (verb_list.GetCount () && !((m_verb_id == -1) 
-      && PreferencesDlg::Data.m_standard_file_explorer_always))
+      && prefs.explorerAlways))
     {
       verb_list.Launch ((m_verb_id == -1 ? 0 : m_verb_id));      
     }
     else
     {
-      // HACK: Here we're assuming the child process doesn't write to the
-      // strings
-      wxChar *argv[3] = { 
-        (wxChar *)PreferencesDlg::Data.m_standard_file_explorer.c_str (),
-        (wxChar *)target_document.c_str (),
-        NULL
-      };
+      wxString argv = prefs.explorer + " " + target_document;
     
       wxExecute (argv);
     }
@@ -85,19 +81,13 @@ ExternalProgramAction::Perform ()
   else
   {
     if (verb_list.GetCount () && !((m_verb_id == -1) 
-      && PreferencesDlg::Data.m_standard_editor_always))
+      && prefs.editorAlways))
     {
       verb_list.Launch ((m_verb_id == -1 ? 0 : m_verb_id));      
     }
     else
     {
-      // HACK: Here we're assuming the child process doesn't write to the
-      // strings
-      wxChar *argv[3] = { 
-        (wxChar *)PreferencesDlg::Data.m_standard_editor.c_str (),
-        (wxChar *)target_document.c_str (),
-        NULL
-      };
+      wxString argv = prefs.editor + " " + target_document;
       
       wxExecute (argv);
     }

@@ -82,10 +82,6 @@ enum
   ID_Column_Checksum,
   ID_Column_Max,
 
-  // preferences_dlg
-  ID_Preferences_GeneralPanel_StandardEditorLookup,
-  ID_Preferences_GeneralPanel_StandardFileExplorerLookup,
-
   ACTION_EVENT,                 // this one gets sent from the action threads
 // Ids used for communication events between threads and frame
   TOKEN_BASE,
