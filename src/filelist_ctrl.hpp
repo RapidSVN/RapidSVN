@@ -36,7 +36,7 @@ namespace svn
   class Targets;
 }
 
-class FileListCtrl:public wxListCtrl
+class FileListCtrl:public wxListView
 {
 public:
   /**
@@ -107,6 +107,7 @@ public:
   void UpdateFileList (const wxString & path);
   const IndexArray GetSelectedItems () const;
   const svn::Targets GetTargets () const;
+
 private:
   struct Data;
   /** private data for this class */
@@ -126,6 +127,7 @@ private:
   void OnItemActivated (wxListEvent & event);
   void OnKeyDown (wxKeyEvent & event);
   void OnItemRightClk (wxListEvent & event);
+  void OnDoubleClick (wxMouseEvent & event);
   void OnColumnLeftClick (wxListEvent & event);
   void OnColumnEndDrag (wxListEvent & event);
 

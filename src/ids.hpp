@@ -21,6 +21,7 @@
  */
 enum
 {
+  // rapidsvn_frame
   ID_Quit = wxID_HIGHEST,
   ID_About,
   ID_Refresh,
@@ -51,6 +52,11 @@ enum
   ID_CopyHere,
   ID_Cleanup,
   ID_Delete,
+  ID_Default_Action,
+  // Reserve space for 16 file verbs (I've never seen any files with more)
+  ID_Verb_Min,
+  ID_Verb_Max = ID_Verb_Min + 16,
+  ID_Explore,
   ID_Column_Reset,
   ID_Column_Min,
   ID_Column_Rev,
@@ -72,6 +78,11 @@ enum
   ID_Column_ConflictWrk,
   ID_Column_Checksum,
   ID_Column_Max,
+
+  // preferences_dlg
+  ID_Preferences_GeneralPanel_StandardEditorLookup,
+  ID_Preferences_GeneralPanel_StandardFileExplorerLookup,
+
   ACTION_EVENT,                 // this one gets sent from the action threads
 // Ids used for communication events between threads and frame
   TOKEN_BASE,

@@ -138,6 +138,10 @@ SOURCE=.\src\exceptions.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\external_program_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\filelist_ctrl.cpp
 # End Source File
 # Begin Source File
@@ -251,6 +255,10 @@ SOURCE=.\src\update_dlg.cpp
 # Begin Source File
 
 SOURCE=.\src\utils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\verblist_win32.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -447,6 +455,14 @@ SOURCE=.\src\update_dlg.hpp
 # Begin Source File
 
 SOURCE=.\src\utils.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\verblist.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\verblist_win32.hpp
 # End Source File
 # Begin Source File
 

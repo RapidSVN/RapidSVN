@@ -10,7 +10,6 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
 // wxwindows
 #include "wx/confbase.h"
 #include "wx/wx.h"
@@ -38,6 +37,7 @@
 #include "merge_action.hpp"
 #include "property_action.hpp"
 #include "cleanup_action.hpp"
+#include "external_program_action.hpp"
 
 #include "report_dlg.hpp"
 #include "preferences_dlg.hpp"
@@ -182,10 +182,10 @@ public:
 
     menuView->Append (0, _("Columns"), MenuColumns);
 
-    //menuView->AppendSeparator ();
-    //
-    //pItem = new wxMenuItem (menuView, ID_Preferences, _("Preferences"));
-    //menuView->Append (pItem);
+    menuView->AppendSeparator ();
+    
+    pItem = new wxMenuItem (menuView, ID_Preferences, _("Preferences"));
+    menuView->Append (pItem);
 
     // Create menu
     wxMenu *menuCreate = new wxMenu;
@@ -326,6 +326,9 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_RenameHere, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_CopyHere, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Cleanup, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Explore, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Default_Action, RapidSvnFrame::OnFileCommand)
+  EVT_MENU_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
   EVT_MENU_RANGE (ID_Column_Min, ID_Column_Max, RapidSvnFrame::OnColumn)
   EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
@@ -336,9 +339,9 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
 END_EVENT_TABLE ()
 
 /** class implementation **/
-RapidSvnFrame::RapidSvnFrame (const wxString & title)
-  : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize, 
-             wxDEFAULT_FRAME_STYLE)
+  RapidSvnFrame::RapidSvnFrame (const wxString & title)
+    : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize, 
+               wxDEFAULT_FRAME_STYLE)
 {
   m = new Data ();
   // apr stuff
@@ -550,14 +553,14 @@ RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
   wxString msg;
 
   msg.Printf (_("%s Version %d.%d.%d\n"
-                  "Milestone: %s\n"
-                  "\n%s\n\n"
-                  "For more information see:\n"
-                  "http://rapidsvn.tigris.org\n"
-                  "\n"
-                  "\nBuilt with:\n"
-                  "Subversion %d.%d.%d\n"
-                  "wxWindows %d.%d.%d"),
+                "Milestone: %s\n"
+                "\n%s\n\n"
+                "For more information see:\n"
+                "http://rapidsvn.tigris.org\n"
+                "\n"
+                "\nBuilt with:\n"
+                "Subversion %d.%d.%d\n"
+                "wxWindows %d.%d.%d"),
               APPLICATION_NAME,
               RAPIDSVN_VER_MAJOR, RAPIDSVN_VER_MINOR, RAPIDSVN_VER_MICRO,
               RAPIDSVN_VER_MILESTONE,
@@ -865,85 +868,99 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
   ActionType lastAction = ACTION_TYPE_NONE;
   Action* action = NULL;
 
-  switch (event.m_id)
+  if ((event.m_id >= ID_Verb_Min) && (event.m_id <= ID_Verb_Max))
   {
-  case ID_Update:
-    action = new UpdateAction(this);
-    lastAction = ACTION_TYPE_UPDATE;
-    break;
+    action = new ExternalProgramAction (this, event.m_id - ID_Verb_Min, false);
+    lastAction = ACTION_TYPE_EXTERNAL_PROGRAM;
+  }
+  else
+  {
+    switch (event.m_id)
+    {
+    case ID_Explore:
+      action = new ExternalProgramAction (this, -1, true);
+      lastAction = ACTION_TYPE_EXPLORE;
+      break;
 
-  case ID_Commit:
-    action = new CommitAction(this);
-    lastAction = ACTION_TYPE_COMMIT;
-    break;
+    case ID_Default_Action:
+      InvokeDefaultAction();
+      break;
 
-  case ID_Add:
-    action = new AddAction (this);
-    lastAction = ACTION_TYPE_ADD;
-    break;
+    case ID_Update:
+      action = new UpdateAction(this);
+      lastAction = ACTION_TYPE_UPDATE;
+      break;
 
-  case ID_Import:
-    action = new ImportAction (this);
-    lastAction = ACTION_TYPE_IMPORT;
-    break;
+    case ID_Commit:
+      action = new CommitAction(this);
+      lastAction = ACTION_TYPE_COMMIT;
+      break;
 
-  case ID_Checkout:
-    action = new CheckoutAction (this);
-    lastAction = ACTION_TYPE_CHECKOUT;
-    break;
+    case ID_Add:
+      action = new AddAction (this);
+      lastAction = ACTION_TYPE_ADD;
+      break;
 
-  case ID_Cleanup:
-    action = new CleanupAction (this);
-    lastAction = ACTION_TYPE_CLEANUP;
-    break;
+    case ID_Import:
+      action = new ImportAction (this);
+      lastAction = ACTION_TYPE_IMPORT;
+      break;
 
-  case ID_Log:
-    action = new LogAction (this);
-    lastAction = ACTION_TYPE_LOG;
-    break;
+    case ID_Checkout:
+      action = new CheckoutAction (this);
+      lastAction = ACTION_TYPE_CHECKOUT;
+      break;
 
-  case ID_Revert:
-    action = new RevertAction (this);
-    lastAction = ACTION_TYPE_REVERT;
-    break;
+    case ID_Cleanup:
+      action = new CleanupAction (this);
+      lastAction = ACTION_TYPE_CLEANUP;
+      break;
 
-  case ID_Delete:
-    action = new DeleteAction (this);
-    lastAction = ACTION_TYPE_DELETE;
-    break;
+    case ID_Log:
+      action = new LogAction (this);
+      lastAction = ACTION_TYPE_LOG;
+      break;
 
-  case ID_Copy:
-    //TODO Make sure there is only one file selected
-    action = new CopyAction (this);
-    lastAction = ACTION_TYPE_COPY;
-    break;
+    case ID_Revert:
+      action = new RevertAction (this);
+      lastAction = ACTION_TYPE_REVERT;
+      break;
 
-  case ID_Mkdir:
-    action = new MkdirAction (this);
-    lastAction = ACTION_TYPE_MKDIR;
-    break;
+    case ID_Delete:
+      action = new DeleteAction (this);
+      lastAction = ACTION_TYPE_DELETE;
+      break;
 
-  case ID_Merge:
-    action = new MergeAction (this);
-    lastAction = ACTION_TYPE_MERGE;
-    break;
+    case ID_Copy:
+      //TODO Make sure there is only one file selected
+      action = new CopyAction (this);
+      lastAction = ACTION_TYPE_COPY;
+      break;
 
-  case ID_Property:
-    action = new PropertyAction (this);
-    lastAction = ACTION_TYPE_PROPERTY;
+    case ID_Mkdir:
+      action = new MkdirAction (this);
+      lastAction = ACTION_TYPE_MKDIR;
+      break;
 
-  case ID_Contents: //TODO
-  case ID_Rename: //TODO
-  default:
-    m_logTracer->Trace ("Unimplemented action!");
-    break;
+    case ID_Merge:
+      action = new MergeAction (this);
+      lastAction = ACTION_TYPE_MERGE;
+      break;
 
+    case ID_Property:
+      action = new PropertyAction (this);
+      lastAction = ACTION_TYPE_PROPERTY;
+
+    case ID_Contents: //TODO
+    case ID_Rename: //TODO
+    default:
+      m_logTracer->Trace ("Unimplemented action!");
+      break;
+    }
   }
 
-  if( action )
-  {
+  if (action)
     Perform (lastAction, action);
-  }
 }
 
 void
@@ -952,36 +969,36 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   switch (event.GetInt ())
   {
   case TOKEN_INFO:
-    {
-      m_log->AppendText (event.GetString () + "\n");
-    }
-    break;
+  {
+    m_log->AppendText (event.GetString () + "\n");
+  }
+  break;
 
   case TOKEN_SVN_INTERNAL_ERROR:
-    {
-      if (event.GetClientData ())
-      {
-        ErrorTracer err_tr (this);
-
-        handle_svn_error ((svn_error_t *) event.GetClientData (), &err_tr);
-        err_tr.ShowErrors ();
-      }
-    }
-    break;
-
-  case TOKEN_VSVN_INTERNAL_ERROR:
+  {
+    if (event.GetClientData ())
     {
       ErrorTracer err_tr (this);
 
-      err_tr.Trace (event.GetString ());
+      handle_svn_error ((svn_error_t *) event.GetClientData (), &err_tr);
       err_tr.ShowErrors ();
     }
-    break;
+  }
+  break;
+
+  case TOKEN_VSVN_INTERNAL_ERROR:
+  {
+    ErrorTracer err_tr (this);
+
+    err_tr.Trace (event.GetString ());
+    err_tr.ShowErrors ();
+  }
+  break;
 
   case TOKEN_ACTION_END:
-    {
-      // well, why not always update
-      // after an action?
+  {
+    // well, why not always update
+    // after an action?
 //       switch (m_lastAction)
 //       {
 //         case ACTION_TYPE_UPDATE:
@@ -993,9 +1010,9 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 //           UpdateFileList ();
 //           break;
 //       }
-      UpdateFileList ();
-    }
-    break;
+    UpdateFileList ();
+  }
+  break;
   }
 }
 
@@ -1055,14 +1072,24 @@ RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 void
 RapidSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
 {
-  if (event.GetKeyEvent ().GetKeyCode () == WXK_F5)
+  switch (event.GetKeyEvent ().GetKeyCode ())
   {
+  case WXK_F5:
     m_activePane = ACTIVEPANE_FOLDER_BROWSER;
     UpdateFileList ();
-  }
-  else
-  {
+    break;
+
+  case WXK_F2:
+    ProcessCommand (ID_Explore);
+    break;
+
+  case WXK_RETURN:
+    ProcessCommand (ID_Default_Action);
+    break;
+
+  default:
     event.Skip ();
+    break;
   }
 }
 
@@ -1083,6 +1110,45 @@ RapidSvnFrame::UpdateCurrentPath ()
   }
 
   SetTitle (m_title + ": " + m_currentPath);
+}
+
+bool
+RapidSvnFrame::InvokeDefaultAction ()
+{
+  size_t folder_count = 0, file_count = 0;
+  std::vector<svn::Path> targets = GetActionTargets ().targets ();
+
+  if (targets.empty())
+    return false;
+  
+  for (std::vector<svn::Path>::iterator i = targets.begin (); i != targets.end (); i++)
+  {
+    wxFileName path = i->c_str();
+    if (wxDirExists (path.GetFullPath ()))
+      folder_count++;
+    else
+      file_count++;
+  }
+
+  // We can't decide
+  if (folder_count && file_count)
+    return false;
+
+  if (folder_count)
+  {
+    // TODO: Select the target in the folder browser, then:
+    /*
+      UpdateCurrentPath ();
+      UpdateFileList ();
+    */
+  }
+  else
+  {
+    Perform (ACTION_TYPE_EXTERNAL_PROGRAM,
+             new ExternalProgramAction (this, -1, false));
+  }
+
+  return true;
 }
 
 void

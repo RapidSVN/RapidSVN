@@ -10,72 +10,99 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
 // wxwindows
 #include "wx/wx.h"
 #include "wx/confbase.h"
 #include "wx/notebook.h"
 #include "wx/valgen.h"
+#include "wx/filedlg.h"
+#include "wx/button.h"
 
 // app
+#include "ids.hpp"
 #include "preferences_dlg.hpp"
 
+/****************************************************************************/
 
-// List wxConfig key names here:
-static const char* szTextKey = "/Preferences/Text";
-static const char* szEnableXKey = "/Preferences/EnableX";
-static const char* szEnableYKey = "/Preferences/EnableY";
-static const char* szEnable1Key = "/Preferences/Enable1";
-static const char* szEnable2Key = "/Preferences/Enable2";
-static const char* szEnable3Key = "/Preferences/Enable3";
+#ifdef _WIN32
+static const wxChar *EXECUTABLE_WILDCARD = _("Executable Files|*.exe;*.com;*.bat|All files (*.*)|*.*");
+#else
+// NOTE: (WX 2.4.0) On Motif, neither multiple extensions nor multiple file
+// types are supported (wildcard is limited to a single "*.ext" string)
+static const wxChar *EXECUTABLE_WILDCARD = _("");
+#endif
+
+/**
+ * Configuration key names
+ */
+static const char STANDARD_EDITOR_KEY[] = "/Preferences/StandardEditor";
+static const char STANDARD_EDITOR_ALWAYS_KEY[] = "/Preferences/AlwaysStandardEditor";
+static const char STANDARD_FILE_EXPLORER_KEY[] = "/Preferences/StandardFileExplorer";
+static const char STANDARD_FILE_EXPLORER_ALWAYS_KEY[] = "/Preferences/AlwaysStandardFileExplorer";
+/*
 static const char* szChoiceKey = "/Preferences/Choice";
+*/
 
 /* PreferencesDlg::SData ***************************************************/
 
-PreferencesDlg::SData::SData()
+PreferencesDlg::SData::SData ()
 {
-  // Default values which will be used if data could not be 
-  // read from a wxConfig object by Read().
-  Text = _("Default text");
-  EnableX = true;
-  EnableY = false;
-  Enable1 = Enable2 = false;
-  Enable3 = true;
+  // Default values which will be used if data could not be read from a
+  // wxConfig object by Read ().
+  m_standard_editor = _("");
+  m_standard_editor_always = false;
+
+#ifdef _WIN32
+  m_standard_file_explorer = _("explorer.exe");
+#else
+  m_standard_file_explorer = _("");
+#endif
+  m_standard_file_explorer_always = false;
+
+  /*
   Choice = 1;
+  */
 }  
 
 void
-PreferencesDlg::SData::Read(wxConfigBase* pConfig)
+PreferencesDlg::SData::Read (wxConfigBase* pConfig)
 {
   if (pConfig)
   {
-    // If these reads fail, the default values from the 
-    // constructor remain:
-    Text = pConfig->Read(szTextKey, Text);
-    pConfig->Read(szEnableXKey, &EnableX);
-    pConfig->Read(szEnableYKey, &EnableY);
-    pConfig->Read(szEnable1Key, &Enable1);
-    pConfig->Read(szEnable2Key, &Enable2);
-    pConfig->Read(szEnable3Key, &Enable3);
+    // If these reads fail, the default values from the constructor remain
+    m_standard_editor = pConfig->Read (STANDARD_EDITOR_KEY, m_standard_editor);
+    pConfig->Read (STANDARD_EDITOR_ALWAYS_KEY, &m_standard_editor_always);
+    
+    m_standard_file_explorer = pConfig->Read (STANDARD_FILE_EXPLORER_KEY, m_standard_file_explorer);
+    pConfig->Read (STANDARD_FILE_EXPLORER_ALWAYS_KEY, &m_standard_file_explorer_always);
+    
+    /*
     long l = Choice;
-    pConfig->Read(szChoiceKey, (long *) &l);
+    pConfig->Read (szChoiceKey, (long *) &l);
     Choice = l;
+    */
   }
 }
 
 void
-PreferencesDlg::SData::Write(wxConfigBase* pConfig) const
+PreferencesDlg::SData::Write (wxConfigBase* pConfig) const
 {
   if (pConfig)
   {
-    pConfig->Write(szTextKey, Text);
-    pConfig->Write(szEnableXKey, EnableX);
-    pConfig->Write(szEnableYKey, EnableY);
-    pConfig->Write(szEnable1Key, Enable1);
-    pConfig->Write(szEnable2Key, Enable2);
-    pConfig->Write(szEnable3Key, Enable3);
-    pConfig->Write(szChoiceKey, (long) Choice);  
-      // int not supported - an oversight in wxConfig?
+    pConfig->Write (STANDARD_EDITOR_KEY, m_standard_editor);
+    pConfig->Write (STANDARD_EDITOR_ALWAYS_KEY, m_standard_editor_always);
+
+    pConfig->Write (STANDARD_FILE_EXPLORER_KEY, m_standard_file_explorer);
+    pConfig->Write (STANDARD_FILE_EXPLORER_ALWAYS_KEY, m_standard_file_explorer_always);
+    
+    /*
+    pConfig->Write (szEnableYKey, EnableY);
+    pConfig->Write (szEnable1Key, Enable1);
+    pConfig->Write (szEnable2Key, Enable2);
+    pConfig->Write (szEnable3Key, Enable3);
+    pConfig->Write (szChoiceKey, (long) Choice);  
+    // int not supported - an oversight in wxConfig?
+    */
   }
 }
 
@@ -87,19 +114,19 @@ END_EVENT_TABLE ()
 PreferencesDlg::SData PreferencesDlg::Data;
 
 PreferencesDlg*
-PreferencesDlg::CreateInstance(wxWindow* parent)
+PreferencesDlg::CreateInstance (wxWindow* parent)
 {
-  PreferencesDlg* pInstance = new PreferencesDlg(parent);
-  pInstance->InitializeData();
-  pInstance->CentreOnParent(); // Looks more natural.
+  PreferencesDlg* pInstance = new PreferencesDlg (parent);
+  pInstance->InitializeData ();
+  pInstance->CentreOnParent (); // Looks more natural.
   return pInstance;
 }
 
-PreferencesDlg::PreferencesDlg(wxWindow* parent)
-  : wxDialog(parent, -1, _("Preferences"),
+PreferencesDlg::PreferencesDlg (wxWindow* parent)
+  : wxDialog (parent, -1, _("Preferences"),
       wxDefaultPosition, wxDefaultSize,
       wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-    m_pNB(NULL)
+    m_pNB (NULL)
 {
 }
 
@@ -109,56 +136,56 @@ PreferencesDlg::InitializeData ()
   // Create the top-level controls in the dialog.
   // Each page will create its own controls.
  
-  wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-  wxBoxSizer *button_sizer = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer *topsizer = new wxBoxSizer (wxVERTICAL);
+  wxBoxSizer *button_sizer = new wxBoxSizer (wxHORIZONTAL);
 
-  button_sizer->Add(
-    new wxButton(this, wxID_OK, "OK"),
+  button_sizer->Add (
+    new wxButton (this, wxID_OK, "OK"),
     0, wxALL, 10);
-  button_sizer->Add(
-    new wxButton(this, wxID_CANCEL, "Cancel"),
+  button_sizer->Add (
+    new wxButton (this, wxID_CANCEL, "Cancel"),
     0, wxALL, 10);
 
-  m_pNB = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize); 
-  wxNotebookSizer *nbs = new wxNotebookSizer(m_pNB);
+  m_pNB = new wxNotebook (this, -1, wxDefaultPosition, wxDefaultSize); 
+  wxNotebookSizer *nbs = new wxNotebookSizer (m_pNB);
   
-  GeneralPanel *pGeneralPanel = GeneralPanel::Create(m_pNB);
-  m_pNB->AddPage(pGeneralPanel, _("General"));
-  ExternalsPanel *pExternalsPanel = ExternalsPanel::Create(m_pNB);
-  m_pNB->AddPage(pExternalsPanel, _("Externals"));
+  GeneralPanel *pGeneralPanel = GeneralPanel::Create (m_pNB);
+  m_pNB->AddPage (pGeneralPanel, _("General"));
+  ExternalsPanel *pExternalsPanel = ExternalsPanel::Create (m_pNB);
+  m_pNB->AddPage (pExternalsPanel, _("Externals"));
   
-  topsizer->Add(nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 10);
-  topsizer->Add(button_sizer, 0, wxALIGN_CENTER);
+  topsizer->Add (nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 10);
+  topsizer->Add (button_sizer, 0, wxALIGN_CENTER);
 
-// Order is important here:  
-  SetSizer(topsizer);
-  SetAutoLayout(true);  // Must precede call to Fit to work on Windows.
-  topsizer->SetSizeHints(this); 
-  topsizer->Fit(this);
+  // Order is important here:  
+  SetSizer (topsizer);
+  SetAutoLayout (true);  // Must precede call to Fit to work on Windows.
+  topsizer->SetSizeHints (this); 
+  topsizer->Fit (this);
 }
 
 bool
-PreferencesDlg::TransferDataToWindow()
+PreferencesDlg::TransferDataToWindow ()
 {
-  bool b = wxDialog::TransferDataToWindow();
+  bool b = wxDialog::TransferDataToWindow ();
   // Transfer data for every page. This doesn't happen by default.
   if (m_pNB)
   {
-    for (int i = 0; i < m_pNB->GetPageCount(); i++)
-      b = b && m_pNB->GetPage(i)->TransferDataToWindow();
+    for (int i = 0; i < m_pNB->GetPageCount (); i++)
+      b = b && m_pNB->GetPage (i)->TransferDataToWindow ();
   }
   return b;  
 }
 
 bool
-PreferencesDlg::TransferDataFromWindow()
+PreferencesDlg::TransferDataFromWindow ()
 {
-  bool b = wxDialog::TransferDataFromWindow();
+  bool b = wxDialog::TransferDataFromWindow ();
   // Transfer data for every page. This doesn't happen by default.
   if (m_pNB)
   {
-    for (int i = 0; i < m_pNB->GetPageCount(); i++)
-      b = b && m_pNB->GetPage(i)->TransferDataFromWindow();
+    for (int i = 0; i < m_pNB->GetPageCount (); i++)
+      b = b && m_pNB->GetPage (i)->TransferDataFromWindow ();
   }
   return b;  
 }
@@ -166,98 +193,158 @@ PreferencesDlg::TransferDataFromWindow()
 /* GeneralPanel *********************************************************/
 
 BEGIN_EVENT_TABLE (GeneralPanel, wxPanel)
+  EVT_BUTTON (ID_Preferences_GeneralPanel_StandardEditorLookup, 
+    GeneralPanel::OnStandardEditorLookup)
+  EVT_BUTTON (ID_Preferences_GeneralPanel_StandardFileExplorerLookup, 
+    GeneralPanel::OnStandardFileExplorerLookup)
 END_EVENT_TABLE ()
 
 GeneralPanel*
-GeneralPanel::Create(wxWindow* parent)
+GeneralPanel::Create (wxWindow* parent)
 {
-  GeneralPanel* p = new GeneralPanel(parent);
-  p->InitializeData();
+  GeneralPanel* p = new GeneralPanel (parent);
+  p->InitializeData ();
   return p;
 }
 
-GeneralPanel::GeneralPanel(wxWindow* parent)
-  : wxPanel(parent) 
+GeneralPanel::GeneralPanel (wxWindow* parent)
+  : wxPanel (parent) 
 {
 }
 
-void
-GeneralPanel::InitializeData()
+void 
+GeneralPanel::OnStandardEditorLookup (wxCommandEvent & event)
 {
-  wxBoxSizer *panelsizer = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer *leftsizer = new wxBoxSizer(wxVERTICAL);
-  wxBoxSizer *rightsizer = new wxBoxSizer(wxVERTICAL);
-  wxBoxSizer *textsizer = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer *enable1sizer = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer *enable2sizer = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer *whichsizer = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer *picksizer = new wxBoxSizer(wxHORIZONTAL);
-  
-  panelsizer->Add(leftsizer, 1, wxALL | wxALIGN_TOP, 0);
-  panelsizer->Add(rightsizer, 1, wxLEFT | wxALIGN_TOP, 20);
-  
-  leftsizer->Add(textsizer, 1, wxEXPAND | wxALIGN_LEFT);
-  leftsizer->Add(enable1sizer, 1, wxALIGN_LEFT);
-  leftsizer->Add(enable2sizer, 1, wxALIGN_LEFT);
-  leftsizer->Add(
-    new wxStaticText(this, -1,
-      _("(Replace with real preferences in due course)")),
-      0, wxALL | wxALIGN_LEFT, 5);
-    
-  rightsizer->Add(whichsizer, 1, wxALIGN_LEFT);
-  rightsizer->Add(picksizer, 1, wxALIGN_LEFT);
+  wxFileDialog file_dialog (this, _("Select standard editor executable"));
 
-  textsizer->Add(
-    new wxStaticText(this, -1, _("Enter some text:")),
-    0, wxALL | wxALIGN_CENTER, 5);
-  textsizer->Add(
-    new wxTextCtrl(this, -1, _(""), wxDefaultPosition, wxSize(100, -1), 0,
-      wxTextValidator(wxFILTER_ALPHA, &PreferencesDlg::Data.Text)),
-    1, wxALL | wxALIGN_CENTER, 5);
-    
-  enable1sizer->Add(
-    new wxCheckBox(this, -1, _("Enable feature X"),
-      wxDefaultPosition, wxDefaultSize, 0,
-      wxGenericValidator(&PreferencesDlg::Data.EnableX)),
-    0, wxALL | wxALIGN_CENTER, 5);
-    
-  enable2sizer->Add(
-    new wxCheckBox(this, -1, _("Enable feature Y"), 
-      wxDefaultPosition, wxDefaultSize, 0,
-      wxGenericValidator(&PreferencesDlg::Data.EnableY)),
-    0, wxALL | wxALIGN_CENTER, 5);
+  file_dialog.SetStyle (wxHIDE_READONLY | wxOPEN);
+  file_dialog.SetWildcard (EXECUTABLE_WILDCARD);
+  file_dialog.SetPath (m_standard_editor_textctrl->GetValue ());
+
+  if (file_dialog.ShowModal () == wxID_OK)
+    m_standard_editor_textctrl->SetValue (file_dialog.GetPath ());
+}
+
+void 
+GeneralPanel::OnStandardFileExplorerLookup (wxCommandEvent & event)
+{
+  wxFileDialog file_dialog (this, _("Select standard file explorer executable"));
+
+  file_dialog.SetStyle (wxHIDE_READONLY | wxOPEN);
+  file_dialog.SetWildcard (EXECUTABLE_WILDCARD);
+  file_dialog.SetPath (m_standard_file_explorer_textctrl->GetValue ());
+
+  if (file_dialog.ShowModal () == wxID_OK)
+    m_standard_file_explorer_textctrl->SetValue (file_dialog.GetPath ());
+}
+
+void
+GeneralPanel::InitializeData ()
+{
+  wxBoxSizer *panelsizer = new wxBoxSizer (wxHORIZONTAL);
+
+  // Left column
+  wxBoxSizer *leftsizer = new wxBoxSizer (wxVERTICAL);
+  panelsizer->Add (leftsizer, 1, wxALL | wxALIGN_TOP, 0);
+
+  // Standard Editor
+  wxBoxSizer *standard_editor_sizer = new wxBoxSizer (wxHORIZONTAL);
+  leftsizer->Add (standard_editor_sizer, 1, wxEXPAND | wxALIGN_LEFT);
+  standard_editor_sizer->Add (
+    new wxStaticText (this, -1, _("Standard editor:")), 0, wxALL | wxALIGN_CENTER, 5);
   
-  whichsizer->Add(
-    new wxStaticText(this, -1, _("Select one:")),
+  // TODO: File existence validation when the entire string has been entered
+  m_standard_editor_textctrl = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
+    wxSize (100, -1), 0, 
+    wxTextValidator (wxFILTER_NONE, &PreferencesDlg::Data.m_standard_editor));
+  standard_editor_sizer->Add (m_standard_editor_textctrl, 1, wxALL | wxALIGN_CENTER, 5);
+  
+  // TODO: Make the button shrink to fit the ellipsis.
+  standard_editor_sizer->Add (
+    new wxButton (this, ID_Preferences_GeneralPanel_StandardEditorLookup, _("...")), 
+    1, wxALL | wxALIGN_CENTER, 5
+  );
+
+  // Use Standard Editor Always
+  wxBoxSizer *standard_editor_always_sizer = new wxBoxSizer (wxHORIZONTAL);
+  leftsizer->Add (standard_editor_always_sizer, 1, wxALIGN_LEFT);
+  standard_editor_always_sizer->Add ( 
+    new wxCheckBox (
+      this, -1, _("Use always"), wxDefaultPosition, wxDefaultSize, 0, 
+      wxGenericValidator (&PreferencesDlg::Data.m_standard_editor_always)
+    ), 
+    0, wxALL | wxALIGN_CENTER, 5
+  );
+
+  // Standard File Explorer
+  wxBoxSizer *standard_file_explorer_sizer = new wxBoxSizer (wxHORIZONTAL);
+  leftsizer->Add (standard_file_explorer_sizer, 1, wxEXPAND | wxALIGN_LEFT);
+  standard_file_explorer_sizer->Add (
+    new wxStaticText (this, -1, _("Standard file explorer:")), 0, wxALL | wxALIGN_CENTER, 5);
+  
+  // TODO: File existence validation when the entire string has been entered
+  m_standard_file_explorer_textctrl = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
+    wxSize (100, -1), 0, 
+    wxTextValidator (wxFILTER_NONE, &PreferencesDlg::Data.m_standard_file_explorer));
+  standard_file_explorer_sizer->Add (m_standard_file_explorer_textctrl, 1, wxALL | wxALIGN_CENTER, 5);
+  
+  // TODO: Make the button shrink to fit the ellipsis.
+  standard_file_explorer_sizer->Add (
+    new wxButton (this, ID_Preferences_GeneralPanel_StandardFileExplorerLookup, _("...")), 
+    1, wxALL | wxALIGN_CENTER, 5
+  );
+
+  // Use Standard File Explorer Always
+  wxBoxSizer *standard_file_explorer_always_sizer = new wxBoxSizer (wxHORIZONTAL);
+  leftsizer->Add (standard_file_explorer_always_sizer, 1, wxALIGN_LEFT);
+  standard_file_explorer_always_sizer->Add ( 
+    new wxCheckBox (
+      this, -1, _("Use always"), wxDefaultPosition, wxDefaultSize, 0, 
+      wxGenericValidator (&PreferencesDlg::Data.m_standard_file_explorer_always)
+    ), 
+    0, wxALL | wxALIGN_CENTER, 5
+  );
+
+  /*
+  wxBoxSizer *rightsizer = new wxBoxSizer (wxVERTICAL);
+  panelsizer->Add (rightsizer, 1, wxLEFT | wxALIGN_TOP, 20);
+  
+  wxBoxSizer *whichsizer = new wxBoxSizer (wxHORIZONTAL);
+  rightsizer->Add (whichsizer, 1, wxALIGN_LEFT);
+  whichsizer->Add (
+    new wxStaticText (this, -1, _("Select one:")),
     0, wxALL | wxALIGN_CENTER, 5);
-  whichsizer->Add(
-    new wxRadioButton(this, -1, _("1"), wxDefaultPosition, wxDefaultSize, 0,
-      wxGenericValidator(&PreferencesDlg::Data.Enable1)),
+  whichsizer->Add (
+    new wxRadioButton (this, -1, _("1"), wxDefaultPosition, wxDefaultSize, 0,
+      wxGenericValidator (&PreferencesDlg::Data.Enable1)),
     0, wxALL | wxALIGN_CENTER, 5);
-  whichsizer->Add(
-    new wxRadioButton(this, -1, _("2"), wxDefaultPosition, wxDefaultSize, 0,
-      wxGenericValidator(&PreferencesDlg::Data.Enable2)),
+  whichsizer->Add (
+    new wxRadioButton (this, -1, _("2"), wxDefaultPosition, wxDefaultSize, 0,
+      wxGenericValidator (&PreferencesDlg::Data.Enable2)),
     0, wxALL | wxALIGN_CENTER, 5);
-  whichsizer->Add(
-    new wxRadioButton(this, -1, _("3"), wxDefaultPosition, wxDefaultSize, 0,
-      wxGenericValidator(&PreferencesDlg::Data.Enable3)),
+  whichsizer->Add (
+    new wxRadioButton (this, -1, _("3"), wxDefaultPosition, wxDefaultSize, 0,
+      wxGenericValidator (&PreferencesDlg::Data.Enable3)),
     0, wxALL | wxALIGN_CENTER, 5);
     
-  picksizer->Add(
-    new wxStaticText(this, -1, _("Pick one:")),
+  wxBoxSizer *picksizer = new wxBoxSizer (wxHORIZONTAL);
+  rightsizer->Add (picksizer, 1, wxALIGN_LEFT);
+  picksizer->Add (
+    new wxStaticText (this, -1, _("Pick one:")),
     0, wxALL | wxALIGN_CENTER, 5);
-  static wxString s1(_("First option"));
-  static wxString s2(_("Second option"));
-  static wxString s3(_("Third option"));
+  static wxString s1 (_("First option"));
+  static wxString s2 (_("Second option"));
+  static wxString s3 (_("Third option"));
   static wxString ss[] = { s1, s2, s3 };
   
-  picksizer->Add(
-    new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 3, ss, 0,
-      wxGenericValidator(&PreferencesDlg::Data.Choice)),
+  picksizer->Add (
+    new wxChoice (this, -1, wxDefaultPosition, wxDefaultSize, 3, ss, 0,
+      wxGenericValidator (&PreferencesDlg::Data.Choice)),
     0, wxALL | wxALIGN_CENTER, 5);
+  */
     
-  SetSizer(panelsizer);
-  SetAutoLayout(true);
+  SetSizer (panelsizer);
+  SetAutoLayout (true);
 }
 
 /* ExternalsPanel *********************************************************/
@@ -266,28 +353,28 @@ BEGIN_EVENT_TABLE (ExternalsPanel, wxPanel)
 END_EVENT_TABLE ()
 
 ExternalsPanel*
-ExternalsPanel::Create(wxWindow* parent)
+ExternalsPanel::Create (wxWindow* parent)
 {
-  ExternalsPanel* p = new ExternalsPanel(parent);
-  p->InitializeData();
+  ExternalsPanel* p = new ExternalsPanel (parent);
+  p->InitializeData ();
   return p;
 }
 
-ExternalsPanel::ExternalsPanel(wxWindow* parent)
-  : wxPanel(parent) 
+ExternalsPanel::ExternalsPanel (wxWindow* parent)
+  : wxPanel (parent) 
 {
 }
 
 void
-ExternalsPanel::InitializeData()
+ExternalsPanel::InitializeData ()
 {
-  wxBoxSizer *panelsizer = new wxBoxSizer(wxVERTICAL);
-  panelsizer->Add(
+  wxBoxSizer *panelsizer = new wxBoxSizer (wxVERTICAL);
+  panelsizer->Add (
     new wxStaticText (this, -1, _("External settings go here.")),
     1, wxEXPAND | wxALL, 10);
 
-  SetSizer(panelsizer);
-  SetAutoLayout(TRUE);
+  SetSizer (panelsizer);
+  SetAutoLayout (TRUE);
 }
 /* -----------------------------------------------------------------
  * local variables:

@@ -14,6 +14,7 @@
 #define _PREFERENCES_DLG_H_INCLUDED_
 
 // wxwindows
+#include "wx/textctrl.h"
 #include "wx/dialog.h"
 #include "wx/panel.h"
 
@@ -36,8 +37,20 @@ public:
    * @return the instance created.
    */
   static GeneralPanel* Create(wxWindow* parent);
-  
+
+  /**
+   * Called when "browse-button" of Standard Editor field is clicked
+   */
+  void OnStandardEditorLookup (wxCommandEvent & event);
+
+  /**
+   * Called when "browse-button" of Standard File Browser field is clicked
+   */
+  void OnStandardFileExplorerLookup (wxCommandEvent & event);
+
 private:
+  wxTextCtrl *m_standard_editor_textctrl, *m_standard_file_explorer_textctrl;
+
   GeneralPanel(wxWindow* parent); // Call Create please.
   void InitializeData ();
   
@@ -122,12 +135,17 @@ public:
      */
     void Write(wxConfigBase* pConfig) const;
     
-    // Replace this with the real preference data in due course.
-    // Use types supported by wxValidator classes.
-    wxString Text;
-    bool EnableX, EnableY;
-    bool Enable1, Enable2, Enable3;
+    /**
+     * Preference data
+     * Use types supported by wxValidator classes.
+     */
+    wxString m_standard_editor;
+    bool m_standard_editor_always;
+    wxString m_standard_file_explorer;
+    bool m_standard_file_explorer_always;
+    /*
     int Choice;
+    */
   } Data;
 
 private:

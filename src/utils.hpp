@@ -35,11 +35,19 @@ void *svn_cl__make_log_msg_baton (const char *message,
                                   const char *base_dir, apr_pool_t * pool);
 
 /**
-* Recursive function to send the error strings to a Tracer
-*/
+ * Recursive function to send the error strings to a Tracer
+ */
 void handle_svn_error (svn_error_t * err, Tracer * tracer);
 
 svn_error_t *svn_cl__may_need_force (svn_error_t * err);
+
+/**
+ * Post a menu command event with the given ID. 
+ *
+ * Used for converting non-command events to command events so they'll move up
+ * the GUI hierarchy.
+ */
+bool PostMenuEvent (wxControl *source, long id);
 
 #endif
 /* -----------------------------------------------------------------

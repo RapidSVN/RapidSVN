@@ -46,7 +46,9 @@ typedef enum
   ACTION_TYPE_CLEANUP,
   ACTION_TYPE_PROPERTY,
   ACTION_TYPE_LOG,
-  ACTION_TYPE_DELETE
+  ACTION_TYPE_DELETE,
+  ACTION_TYPE_EXPLORE,
+  ACTION_TYPE_EXTERNAL_PROGRAM
 }
 ActionType;
 
@@ -142,6 +144,16 @@ private:
   void OnFileListSelected (wxListEvent & event);
 
   void UpdateCurrentPath ();
+
+  /**
+   * Invoke the default action on the currently selected item(s)
+   *
+   * For folders, this is to open them within RapidSVN. For files, this is to
+   * activate the default external editor.
+   *
+   * @return false if no items were found to invoke default action on
+   */
+  bool InvokeDefaultAction ();
 
   // list control
   void UpdateFileList ();

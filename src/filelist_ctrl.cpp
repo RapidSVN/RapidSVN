@@ -10,6 +10,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+// stl
+#include <exception>
 
 // wxwindows
 #include "wx/wx.h"
@@ -29,6 +31,7 @@
 #include "ids.hpp"
 #include "filelist_ctrl.hpp"
 #include "utils.hpp"
+#include "verblist.hpp"
 
 // Bitmaps
 #include "res/bitmaps/update.xpm"
@@ -385,6 +388,7 @@ FormatDate (apr_time_t apr_date)
 
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
+  EVT_LEFT_DCLICK (FileListCtrl::OnDoubleClick)
   EVT_LIST_ITEM_ACTIVATED (-1, FileListCtrl::OnItemActivated)
   EVT_LIST_ITEM_RIGHT_CLICK (FILELIST_CTRL, FileListCtrl::OnItemRightClk)
   EVT_LIST_COL_CLICK (FILELIST_CTRL, FileListCtrl::OnColumnLeftClick)
@@ -393,7 +397,7 @@ END_EVENT_TABLE ()
 
 FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id, 
                             const wxPoint & pos, const wxSize & size)
-  : wxListCtrl (parent, id, pos, size, wxLC_REPORT)
+  : wxListView (parent, id, pos, size, wxLC_REPORT)
 {
   m = new Data ();
 
@@ -450,10 +454,10 @@ FileListCtrl::~FileListCtrl ()
   for (int col=0; col < COL_COUNT; col++)
   {
     wxString key;
-    key.Printf(ConfigColumnWidthFmt, col);
+    key.Printf (ConfigColumnWidthFmt, col);
     pConfig->Write (key, (long) m->ColumnWidth[col]);
 
-    key.Printf(ConfigColumnVisibleFmt, col);
+    key.Printf (ConfigColumnVisibleFmt, col);
     pConfig->Write (key, (long) m->ColumnVisible[col]);
   }
 
@@ -487,7 +491,7 @@ FileListCtrl::UpdateFileList ()
   // Hide the list to speed up inserting
   Hide ();
 
-  std::string stdpath(path.c_str());
+  std::string stdpath (path.c_str ());
 
   svn::Context context;
   context.setLogin ("", "");
@@ -504,7 +508,7 @@ FileListCtrl::UpdateFileList ()
 
     int i = GetItemCount ();
 
-    if( status.path() == stdpath )
+    if ( status.path () == stdpath )
     {
       values[COL_NAME] = ".";
     }
@@ -588,7 +592,7 @@ FileListCtrl::UpdateFileList ()
 
       if (entry.isCopied ())
       {
-        values[COL_COPIED].Printf("%s, %ld", 
+        values[COL_COPIED].Printf ("%s, %ld", 
                                   entry.copyfromUrl (),
                                   entry.copyfromRev ());
       }
@@ -598,7 +602,7 @@ FileListCtrl::UpdateFileList ()
       values[COL_CONFLICT_WRK] = entry.conflictWrk ();
       values[COL_CHECKSUM] = entry.checksum ();
     }
-    switch(status.textStatus ())
+    switch (status.textStatus ())
     {
     case svn_wc_status_none:
     case svn_wc_status_normal:
@@ -609,7 +613,7 @@ FileListCtrl::UpdateFileList ()
         svn::Status::statusDescription (status.textStatus ());
       break;
     }
-    switch(status.propStatus ())
+    switch (status.propStatus ())
     {
     case svn_wc_status_none:
     case svn_wc_status_normal:
@@ -639,16 +643,40 @@ FileListCtrl::UpdateFileList ()
   Show ();
 }
 
-void
+void 
+FileListCtrl::OnDoubleClick (wxMouseEvent & event)
+{
+  int flag;
+  
+  // Don't post if the click didn't hit anything
+  if (HitTest (ScreenToClient (wxGetMousePosition ()), flag) >= 0)
+    if (!PostMenuEvent (this, ID_Default_Action))
+      event.Skip ();
+}
+
+
+void 
 FileListCtrl::OnKeyDown (wxKeyEvent & event)
 {
-  if (event.GetKeyCode () == WXK_F5)
+  switch (event.GetKeyCode ())
   {
-    UpdateFileList ();
-  }
-  else
-  {
-    event.Skip ();
+    case WXK_F5:
+      UpdateFileList ();
+      break;
+
+    case WXK_F2:
+      if (!PostMenuEvent (this, ID_Explore))
+        event.Skip ();
+      break;
+
+    case WXK_RETURN:
+      if (!PostMenuEvent (this, ID_Default_Action))
+        event.Skip ();
+      break;
+    
+    default:
+      event.Skip ();
+      break;
   }
 }
 
@@ -705,6 +733,7 @@ FileListCtrl::ShowMenu (long index, wxPoint & pt)
 void
 FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
 {
+  VerbList verb_list;
   wxMenuItem *pItem;
 
   pItem = new wxMenuItem (&menu, ID_Update, _("Update"));
@@ -737,6 +766,31 @@ FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
   pItem = new wxMenuItem (&menu, ID_Log, _("Log"));
   pItem->SetBitmap (wxBITMAP (log));
   menu.Append (pItem);
+
+  // Append file verbs
+  try
+  {
+    verb_list.InitFromDocument (path);
+  }
+  catch (std::exception)
+  {
+    // Failed assembling verbs. 
+    // TODO: Report this error in the status bar?
+  }
+
+  if (verb_list.GetCount ())
+  {
+    menu.AppendSeparator ();
+    for (size_t i = 0; (i < verb_list.GetCount ()) && (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
+    {
+      wxMenuItem *pItem;
+      // TODO: Convert verb names to unicode on the fly if needed (or make
+      // verblist follow wxWindows' unicode setting)
+      pItem = new wxMenuItem (&menu, ID_Verb_Min + i, verb_list.GetName (i));
+      //pItem->SetBitmap (wxBITMAP (?))
+      menu.Append (pItem);
+    }
+  }
 }
 
 const IndexArray 
@@ -858,7 +912,7 @@ FileListCtrl::ResetColumns ()
 }
 
 void 
-FileListCtrl::SetColumnImages()
+FileListCtrl::SetColumnImages ()
 {
   // Update the column titles to reflect the sort column.
   for (int col = 0; col < COL_COUNT; col++)
@@ -993,7 +1047,7 @@ FileListCtrl::SetColumnWidth (const int col, const int width)
   int index = m->ColumnIndex[col];
   if (index != -1)
   {
-    wxListCtrl::SetColumnWidth(index, width);
+    wxListCtrl::SetColumnWidth (index, width);
   }
 }
 
