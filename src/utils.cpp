@@ -133,7 +133,7 @@ handle_svn_error (svn_error_t * err, Tracer * tracer)
 
   if (err->message)
   {
-    str.Printf (_("  %s"), err->message);
+    str.Printf ("  %s", err->message);
     tracer->Trace (str);
   }
 
@@ -168,7 +168,7 @@ bool PostMenuEvent (wxEvtHandler *source, long id)
 wxButton *
 CreateEllipsisButton(wxWindow *parent, long id)
 {
-  const char *ELLIPSIS = _("...");
+  const char *ELLIPSIS = "...";
   int ellipsis_width, ellipsis_height;
 
   wxButton *button = new wxButton (parent, id, ELLIPSIS);

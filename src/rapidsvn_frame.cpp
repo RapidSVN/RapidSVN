@@ -330,7 +330,7 @@ END_EVENT_TABLE ()
   m_info_panel = new InfoPanel (m_horiz_splitter);
   m_log = new wxTextCtrl (m_horiz_splitter,
                           -1,
-                          _(""),
+                          "",
                           wxPoint (0, 0),
                           wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
 
@@ -1172,7 +1172,7 @@ LogTracer::LogTracer (wxWindow * parent)
 void
 LogTracer::Trace (const wxString & str)
 {
-  AppendText (str + _("\n"));
+  AppendText (str + "\n");
 }
 /* -----------------------------------------------------------------
  * local variables:

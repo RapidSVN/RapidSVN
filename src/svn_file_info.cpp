@@ -51,7 +51,7 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
 
   SVN_ERR (svn_wc_adm_probe_open (&adm_access, NULL, path.c_str (), FALSE,
                                   FALSE, pool));
-  info = path + _("\n");
+  info = path + "\n";
 
   SVN_ERR (svn_wc_entry (&entry, path.c_str (), adm_access, FALSE, pool));
   if (!entry)
@@ -144,7 +144,7 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
 
     if (SVN_IS_VALID_REVNUM (entry->copyfrom_rev))
     {
-      str.Printf (_("Copied From Rev: %" SVN_REVNUM_T_FMT "\n"),
+      str.Printf (_("Copied From Rev: %ld\n"),
                   entry->copyfrom_rev);
       info += str;
     }
@@ -159,7 +159,7 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
 
   if (SVN_IS_VALID_REVNUM (entry->cmt_rev))
   {
-    str.Printf (_("Last Changed Rev: %" SVN_REVNUM_T_FMT "\n"),
+    str.Printf (_("Last Changed Rev: %ld\n"),
                 entry->cmt_rev);
     info += str;
   }

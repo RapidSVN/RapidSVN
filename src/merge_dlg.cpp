@@ -169,7 +169,7 @@ MergeDlg::InitializeData ()
     wxTextValidator(wxFILTER_NONE, &m_data.Destination));
   grid->Add(Destination, 1, wxBOTTOM | wxEXPAND, 5);
   
-  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, _("..."), 
+  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, "...", 
     wxPoint(-1,-1), wxSize(20, -1));
   grid->Add(BrowseButton, 0, wxALL, 5);
 

@@ -51,7 +51,7 @@ UpdateDlg::InitData ()
   m_revisionLabel = new wxStaticText(this, -1, _("Number")); 
   revSizer->Add(m_revisionLabel, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
    
-  m_revisionText = new wxTextCtrl (this, -1, _(""),
+  m_revisionText = new wxTextCtrl (this, -1, "",
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NUMERIC, &m_data.Revision));
   revSizer->Add (m_revisionText, 1, 

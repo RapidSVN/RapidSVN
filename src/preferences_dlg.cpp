@@ -30,7 +30,7 @@ static const wxChar *EXECUTABLE_WILDCARD = _("Executable Files|*.exe;*.com;*.bat
 #else
 // NOTE: (WX 2.4.0) On Motif, neither multiple extensions nor multiple file
 // types are supported (wildcard is limited to a single "*.ext" string)
-static const wxChar *EXECUTABLE_WILDCARD = _("");
+static const wxChar *EXECUTABLE_WILDCARD = "";
 #endif
 
 /**
@@ -50,13 +50,13 @@ PreferencesDlg::SData::SData ()
 {
   // Default values which will be used if data could not be read from a
   // wxConfig object by Read ().
-  m_standard_editor = _("");
+  m_standard_editor = "";
   m_standard_editor_always = false;
 
 #ifdef _WIN32
   m_standard_file_explorer = _("explorer.exe");
 #else
-  m_standard_file_explorer = _("");
+  m_standard_file_explorer = "";
 #endif
   m_standard_file_explorer_always = false;
 
@@ -257,7 +257,7 @@ GeneralPanel::InitializeData ()
   wxBoxSizer *standard_editor_sizer = new wxBoxSizer (wxHORIZONTAL);
   leftsizer->Add (standard_editor_sizer, 1, wxEXPAND | wxALIGN_LEFT);
   // TODO: File existence validation when the entire string has been entered
-  m_standard_editor_textctrl = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
+  m_standard_editor_textctrl = new wxTextCtrl (this, -1, "", wxDefaultPosition, 
     wxSize (200, -1), 0, 
     wxTextValidator (wxFILTER_NONE, &PreferencesDlg::Data.m_standard_editor));
   standard_editor_sizer->Add (m_standard_editor_textctrl, 1, wxALIGN_CENTER);
@@ -282,7 +282,7 @@ GeneralPanel::InitializeData ()
   wxBoxSizer *standard_file_explorer_sizer = new wxBoxSizer (wxHORIZONTAL);
   leftsizer->Add (standard_file_explorer_sizer, 1, wxEXPAND | wxALIGN_LEFT);
   // TODO: File existence validation when the entire string has been entered
-  m_standard_file_explorer_textctrl = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
+  m_standard_file_explorer_textctrl = new wxTextCtrl (this, -1, "", wxDefaultPosition, 
     wxSize (200, -1), 0, wxTextValidator (wxFILTER_NONE, &PreferencesDlg::Data.m_standard_file_explorer));
   standard_file_explorer_sizer->Add (m_standard_file_explorer_textctrl, 1, wxALL | wxALIGN_CENTER);
   

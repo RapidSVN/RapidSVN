@@ -31,7 +31,7 @@ ReportDlg::ReportDlg (wxWindow * parent,
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
     m_str (data)
 {
-  m_text = new wxTextCtrl (this, -1, _(""),
+  m_text = new wxTextCtrl (this, -1, "",
                          wxDefaultPosition,
                          wxSize (500, 200),
                          wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH);

@@ -115,7 +115,7 @@ LogDlg::InitializeData ()
 
   m_logList = new LogList (this, m_entries);
 
-  m_logMsg = new wxTextCtrl (this, LOG_MSG, _(""), 
+  m_logMsg = new wxTextCtrl (this, LOG_MSG, "", 
                            wxDefaultPosition, wxSize (420, 110), 
                            wxTE_READONLY | wxTE_MULTILINE );
 

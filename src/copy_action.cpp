@@ -73,7 +73,7 @@ CopyAction::DestinationPath (const svn::Path & src)
                       GetPath ().c_str ());
 
   if (dialog.ShowModal () != wxID_OK)
-    return _("");
+    return "";
 
 
   dest = dialog.GetPath ();

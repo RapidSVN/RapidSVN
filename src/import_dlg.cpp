@@ -149,7 +149,7 @@ ImportDlg::InitializeData ()
     wxDefaultPosition, wxSize(300, -1), 0,
     wxTextValidator(wxFILTER_NONE, &m_data->Path));
   Grid->Add(Path, 1, wxLEFT | wxEXPAND, 5);
-  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, _("..."), 
+  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, "...", 
     wxPoint(-1,-1), wxSize(20, -1));
   Grid->Add(BrowseButton, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
   

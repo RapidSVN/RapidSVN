@@ -48,7 +48,7 @@ MkdirDlg::InitializeData ()
   wxStaticBoxSizer *targetSizer = new wxStaticBoxSizer(
     new wxStaticBox(this, -1, _("New directory or repository URL")), wxHORIZONTAL);
     
-  wxTextCtrl* Target = new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
+  wxTextCtrl* Target = new wxTextCtrl(this, -1, "", wxDefaultPosition, 
     wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_pData->Target));
     
@@ -60,7 +60,7 @@ MkdirDlg::InitializeData ()
   wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer(
     new wxStaticBox(this, -1, _("Enter log message")), wxHORIZONTAL);
     
-  wxTextCtrl* Log = new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
+  wxTextCtrl* Log = new wxTextCtrl(this, -1, "", wxDefaultPosition, 
     wxSize(-1, 50), wxTE_MULTILINE,
     wxTextValidator(wxFILTER_NONE, &m_pData->LogMessage));
     

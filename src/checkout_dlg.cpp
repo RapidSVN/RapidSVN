@@ -92,18 +92,18 @@ void
 CheckoutDlg::InitControls ()
 {
   // create controls
-  wxTextCtrl* moduleName = new wxTextCtrl (this, -1, _(""), wxPoint(-1,-1),
+  wxTextCtrl* moduleName = new wxTextCtrl (this, -1, "", wxPoint(-1,-1),
     wxSize(235, -1), 0, wxTextValidator(wxFILTER_NONE, &m_data.ModuleName));
   wxStaticBox* destBox = new wxStaticBox(this, 0, _("Destination Folder"));
-  m_destFolderText = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
+  m_destFolderText = new wxTextCtrl (this, -1, "", wxDefaultPosition, 
     wxSize(205, -1), 0, wxTextValidator(wxFILTER_NONE, &m_data.DestFolder));
-  wxButton* browse = new wxButton(this, ID_BUTTON_BROWSE, _("..."), 
+  wxButton* browse = new wxButton(this, ID_BUTTON_BROWSE, _"...", 
                                   wxPoint(-1,-1), wxSize(20, -1) );
   m_revisionLabel = new wxStaticText (this, -1, _("Number"));
   wxStaticBox* revisionBox = new wxStaticBox(this, -1, _("Revision"));
-  m_revisionText = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
+  m_revisionText = new wxTextCtrl (this, -1, "", wxDefaultPosition, 
     wxSize(50, -1), 0, wxTextValidator(wxFILTER_NUMERIC, &m_data.Revision));                             
-  m_useLatestCheck = new wxCheckBox(this, ID_USELATEST, "Use latest",
+  m_useLatestCheck = new wxCheckBox(this, ID_USELATEST, _("Use latest"),
     wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_data.UseLatest));
   wxCheckBox* recursive = 
     new wxCheckBox (this, -1, _("Recursive"),

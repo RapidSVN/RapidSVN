@@ -28,7 +28,7 @@ void
 TextCtrlTracer::Trace (const wxString & str)
 {
   wxMutexGuiEnter ();
-  m_txtCtrl->AppendText (str + _("\n"));
+  m_txtCtrl->AppendText (str + "\n");
   wxMutexGuiLeave ();
 }
 

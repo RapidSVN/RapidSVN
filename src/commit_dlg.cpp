@@ -39,7 +39,7 @@ CommitDlg::InitializeData ()
   wxSize msgSize (GetCharWidth () * 80, GetCharHeight () * 10);
 
   wxTextCtrl* msg = 
-    new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
+    new wxTextCtrl(this, -1, "", wxDefaultPosition, 
                    msgSize, wxTE_MULTILINE,
                    wxTextValidator(wxFILTER_NONE, &m_data.LogMessage));
   wxCheckBox* recursive  = 
