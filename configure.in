@@ -37,7 +37,7 @@ dnl
 dnl Subversion
 dnl
 
-SVN_INCLUDE="/usr/local/include/subversion-1"
+SVN_INCLUDE="/usr/local/include"
 AC_ARG_WITH(svn-include,
 [[  --with-svn-include=DIR   Use the given path to the subversion headers;
                            defaults to "/usr/local/include"]],
