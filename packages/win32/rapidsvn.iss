@@ -29,11 +29,14 @@ Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; Flags
 Source: "..\..\TODO.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
+Source: "libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "libapriconv.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "libaprutil.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 
 [Icons]
-Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}";
-Name: "{userdesktop}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}"; Tasks: desktopicon
+Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin";
+Name: "{userdesktop}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\bin\rapidsvn.exe"; Description: "Launch RapidSVN"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\bin\rapidsvn.exe"; Description: "Launch RapidSVN"; WorkingDir: "{app}\bin"; Flags: nowait postinstall skipifsilent
 
