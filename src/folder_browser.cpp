@@ -36,10 +36,10 @@ END_EVENT_TABLE ()
 
 enum
 {
-    FOLDER_IMAGE_COMPUTER = 0,
-    FOLDER_IMAGE_FOLDER,
-    FOLDER_IMAGE_OPEN_FOLDER,
-    FOLDER_IMAGE_COUNT
+  FOLDER_IMAGE_COMPUTER = 0,
+  FOLDER_IMAGE_FOLDER,
+  FOLDER_IMAGE_OPEN_FOLDER,
+  FOLDER_IMAGE_COUNT
 };
     
 
@@ -146,74 +146,74 @@ FolderBrowser::OnExpandItem (wxTreeEvent & event)
   {
     case FOLDER_TYPE_WORKBENCH:
     {
-    const int count = m_workbenchItems.GetCount ();
-    int index;
+      const int count = m_workbenchItems.GetCount ();
+      int index;
 
-    for(index = 0; index < count; index++)
-    {
-      const wxString& path = m_workbenchItems.Item (index);
-      FolderItemData* data= new FolderItemData (FOLDER_TYPE_PROJECT, 
-                                                path, path, TRUE);
-      wxTreeItemId newId = m_treeCtrl->AppendItem (parentId, path, 
-                                                   FOLDER_IMAGE_FOLDER, 
-                                                   FOLDER_IMAGE_FOLDER, 
-                                                   data);
+      for(index = 0; index < count; index++)
+      {
+        const wxString& path = m_workbenchItems.Item (index);
+        FolderItemData* data= new FolderItemData (FOLDER_TYPE_PROJECT, 
+                                                  path, path, TRUE);
+        wxTreeItemId newId = m_treeCtrl->AppendItem (parentId, path, 
+                                                     FOLDER_IMAGE_FOLDER, 
+                                                     FOLDER_IMAGE_FOLDER, 
+                                                     data);
         m_treeCtrl->SetItemHasChildren (newId, TRUE);
         m_treeCtrl->SetItemImage (newId, FOLDER_IMAGE_OPEN_FOLDER,  
                                   wxTreeItemIcon_Expanded);
-    }
+      }
     }
     break;
 
     case FOLDER_TYPE_PROJECT:
     case FOLDER_TYPE_NORMAL:
     {
-    const wxString& parentPath = parentData->getPath ();
-    wxDir dir (parentPath);
+      const wxString& parentPath = parentData->getPath ();
+      wxDir dir (parentPath);
 
-    if(dir.IsOpened ())
-    {
-      wxString filename;
-
-      bool ok = dir.GetFirst(&filename, wxEmptyString, 
-                             wxDIR_DIRS);
-      bool parentHasSubdirectories = false;
-
-      while(ok)
+      if(dir.IsOpened ())
       {
-        if(filename != SVN_WC_ADM_DIR_NAME)
+        wxString filename;
+        
+        bool ok = dir.GetFirst(&filename, wxEmptyString, 
+                               wxDIR_DIRS);
+        bool parentHasSubdirectories = false;
+        
+        while(ok)
         {
-			parentHasSubdirectories = true;
-
+          if(filename != SVN_WC_ADM_DIR_NAME)
+          {
+            parentHasSubdirectories = true;
+            
             wxFileName fullPath(parentPath, filename, wxPATH_NATIVE);
-
+            
             FolderItemData * data = 
-            new FolderItemData (FOLDER_TYPE_NORMAL, 
-                                fullPath.GetFullPath(), 
-                                filename, TRUE);
+              new FolderItemData (FOLDER_TYPE_NORMAL, 
+                                  fullPath.GetFullPath(), 
+                                  filename, TRUE);
 
             wxTreeItemId newId = 
-            m_treeCtrl->AppendItem(
+              m_treeCtrl->AppendItem(
                 parentId, filename, 
                 FOLDER_IMAGE_FOLDER, 
                 FOLDER_IMAGE_FOLDER, data);
             m_treeCtrl->SetItemHasChildren (newId, hasSubdirectories(fullPath.GetFullPath()) );
             m_treeCtrl->SetItemImage (newId, FOLDER_IMAGE_OPEN_FOLDER,  
                                       wxTreeItemIcon_Expanded);
+          }
+          
+          ok = dir.GetNext (&filename);
         }
-
-        ok = dir.GetNext (&filename);
+        
+        // If no subdirectories, don't show the expander
+        if (!parentHasSubdirectories)
+          m_treeCtrl->SetItemHasChildren(parentId, FALSE);
+        
       }
-
-	  // If no subdirectories, don't show the expander
-	  if (!parentHasSubdirectories)
-		  m_treeCtrl->SetItemHasChildren(parentId, FALSE);
-
-    }
     }
     break;
   }   
-
+  
   m_treeCtrl->SortChildren (parentId);
 }
 
@@ -273,26 +273,26 @@ FolderBrowser::SetPath (const wxString& path)
 bool
 FolderBrowser::hasSubdirectories (const wxString & path)
 {
-	wxString filename;
+  wxString filename;
 
-    wxDir dir (path);
+  wxDir dir (path);
 
-	bool ok = dir.GetFirst(&filename, wxEmptyString, 
-							wxDIR_DIRS);
-    if(!dir.IsOpened ())
-		return false;
+  bool ok = dir.GetFirst(&filename, wxEmptyString, 
+                           wxDIR_DIRS);
+  if(!dir.IsOpened ())
+    return false;
+  
+  if (!ok)
+    return false;
+  
+  while (ok)
+  {
+    if (filename != SVN_WC_ADM_DIR_NAME)
+      return true;
+    ok = dir.GetNext (&filename);
+  }
 
-	if (!ok)
-		return false;
-
-	while (ok)
-	{
-		if (filename != SVN_WC_ADM_DIR_NAME)
-			return true;
-		ok = dir.GetNext (&filename);
-	}
-
-	return false;
+  return false;
 }
 
 void
