@@ -61,6 +61,7 @@ public:
 
   // View menu
   void OnPreferences (wxCommandEvent & event);
+  void OnRefresh (wxCommandEvent & event);
 
   // Query menu
   void OnLog (wxCommandEvent & event);

@@ -78,11 +78,13 @@ EVT_MENU (ID_Mkdir, RapidSvnFrame::OnMkdir)
 EVT_MENU (ID_Merge, RapidSvnFrame::OnMerge)
 EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
 EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
+EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
 EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
 EVT_MENU (-1, RapidSvnFrame::OnToolLeftClick)
 EVT_TOOL_ENTER (ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
 EVT_TREE_SEL_CHANGED (-1, RapidSvnFrame::OnFolderBrowserSelChanged)
-EVT_TREE_KEY_DOWN (-1, RapidSvnFrame::OnFolderBrowserKeyDown) END_EVENT_TABLE ()
+EVT_TREE_KEY_DOWN (-1,
+                   RapidSvnFrame::OnFolderBrowserKeyDown) END_EVENT_TABLE ()
 /** class implementation **/
   RapidSvnFrame::RapidSvnFrame (const wxString & title):
 wxFrame ((wxFrame *) NULL, -1, title)
@@ -332,7 +334,6 @@ RapidSvnFrame::InitializeMenu ()
 
   // Query menu
   wxMenu *menuQuery = new wxMenu;
-
   pItem = new wxMenuItem (menuQuery, ID_Log, _T ("Log"));
   pItem->SetBitmap (wxBITMAP (log));
   menuQuery->Append (pItem);
@@ -506,6 +507,16 @@ void
 RapidSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
 {
   Preferences ();
+}
+
+void
+RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
+{
+  if (m_folder_browser)
+  {
+    m_folder_browser->Refresh ();
+  }
+  //Preferences ();
 }
 
 void
