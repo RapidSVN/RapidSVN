@@ -12,8 +12,7 @@
  */
 
 // wxwindows
-#include "wx/app.h"
-#include "wx/window.h"
+#include "wx/wx.h"
 
 // app
 #include "action.hpp"
