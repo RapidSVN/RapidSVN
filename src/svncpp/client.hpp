@@ -21,6 +21,7 @@
 #include "context.hpp"
 #include "path.hpp"
 #include "revision.hpp"
+#include "log_entry.hpp"
 
 /**
  * SvnCpp namespace.
@@ -32,6 +33,8 @@ namespace svn
   class Notify;
   class Status;
   class Targets;
+
+  typedef std::vector<LogEntry> LogEntries;
 
   /**
    * Subversion client API.
@@ -232,6 +235,22 @@ namespace svn
     void merge (const Path & path1, const Revision & revision1, 
                 const Path & path2, const Revision & revision2,
                 const Path & localPath, bool force, bool recurse);
+
+    /**
+     * Retrieve log information for the given path
+     * Loads the log messages result set. 
+     *
+     * You can use the constants Revision::START and
+     * Revision::HEAD
+     *
+     * @param path
+     * @param revisionStart
+     * @param revisionEnd        
+     * @return a vector with log entries
+     */
+    const LogEntries *
+    log (const char * path, const Revision & revisionStart, 
+         const Revision & revisionEnd);
 
   protected:
     Revision m_revision;

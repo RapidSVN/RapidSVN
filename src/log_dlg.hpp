@@ -16,35 +16,33 @@
 
 // wxwindows
 #include "wx/dialog.h"
-#include "wx/listctrl.h"
 
-// app
-#include "svncpp/log.hpp"
+// svncpp
+#include "svncpp/client.hpp"
 
 //forward declarations
 class wxTextCtrl;
-
-class LogList : public wxListCtrl
-{
-public:
-  LogList (wxWindow * parent, const svn::Log & log);
-
-private:
-  const svn::Log & m_log;
-  void OnSelected(wxListEvent& event);
-  void InitializeList ();
-  
-  DECLARE_EVENT_TABLE ()
-};
+class LogList;
+class wxListEvent;
 
 class LogDlg : public wxDialog
 {
 public:
-  LogDlg (wxWindow * parent, const svn::Log & log);
+  /**
+   * constructor. the entries are owned and deleted by 
+   * this class
+   *
+   * @param parent parent window
+   * @param entries log entries
+   */
+  LogDlg (wxWindow * parent, const svn::LogEntries * entries);
+
+  virtual ~LogDlg ();
+
   void setLogMessage (const char * message);
 
 private:
-  const svn::Log & m_log;
+  const svn::LogEntries * m_entries;
   LogList * m_logList;
   wxTextCtrl * m_logMsg;
 
@@ -52,6 +50,7 @@ private:
   void GetRevision (const svn_revnum_t revision);
   void OnClose (wxCommandEvent & event);
   void OnGet (wxCommandEvent & event);
+  void OnSelected(wxListEvent& event);
   
   DECLARE_EVENT_TABLE ()
 };

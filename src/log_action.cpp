@@ -12,8 +12,9 @@
  */
 
 // svncpp
-#include "svncpp/exception.hpp"
-#include "svncpp/log.hpp"
+#include "svncpp/client.hpp"
+//#include "svncpp/exception.hpp"
+//#include "svncpp/log.hpp"
 #include "svncpp/revision.hpp"
 
 // app
@@ -32,12 +33,15 @@ LogAction::Prepare ()
   {
     return false;
   }
+
+  svn::Context context;
+  svn::Client client (&context);
       
   svn::Path target = GetTarget ();
-  svn::Log log (target.c_str (), 
-                svn::Revision::START, 
+  const svn::LogEntries * entries = 
+    client.log (target.c_str (), svn::Revision::START, 
                 svn::Revision::HEAD);
-  LogDlg dlg (GetParent (), log);
+  LogDlg dlg (GetParent (), entries);
   dlg.ShowModal ();
 
   return false;

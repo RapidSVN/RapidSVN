@@ -14,11 +14,12 @@
 // wx windows
 #include "wx/wx.h"
 #include "wx/valgen.h"
+#include "wx/listctrl.h"
 
 // svncpp
-#include "svncpp/exception.hpp"
-#include "svncpp/log_entry.hpp"
-#include "svncpp/notify.hpp"
+//#include "svncpp/exception.hpp"
+//#include "svncpp/log_entry.hpp"
+//#include "svncpp/notify.hpp"
 
 // app
 #include "log_dlg.hpp"
@@ -34,39 +35,99 @@ enum
 };
 
 BEGIN_EVENT_TABLE (LogDlg, wxDialog)
-  EVT_BUTTON    (ID_Close,    LogDlg::OnClose)
-  EVT_BUTTON    (ID_Get,    LogDlg::OnGet)
+  EVT_BUTTON             (ID_Close, LogDlg::OnClose)
+  EVT_BUTTON             (ID_Get,   LogDlg::OnGet)
+  EVT_LIST_ITEM_SELECTED (LOG_LIST, LogDlg::OnSelected)
 END_EVENT_TABLE ()
 
-BEGIN_EVENT_TABLE (LogList, wxListCtrl)
-  EVT_LIST_ITEM_SELECTED (LOG_LIST, LogList::OnSelected)
-END_EVENT_TABLE()
+class LogList : public wxListCtrl
+{
+public:
+  LogList (wxWindow * parent, const svn::LogEntries * entries)
+    : wxListCtrl (parent, LOG_LIST, wxDefaultPosition, 
+                  wxSize(365, 150), wxLC_REPORT)
+  {
+    InitializeList (entries);
+    CentreOnParent ();
+  }
 
-LogDlg::LogDlg (wxWindow * parent, const svn::Log & log)
+  virtual ~LogList ()
+  {
+    DeleteAllItems ();
+  }
+
+
+private:
+  //const svn::LogEntries * m_entries;
+
+  void OnSelected(wxListEvent& event);
+  void InitializeList (const svn::LogEntries * entries)
+  {
+    SetSingleStyle (wxLC_REPORT);
+    //const char * dateFormat = "%a %b %d %H:%M:%S %Y";
+
+    InsertColumn (0, _T("Revision"));
+    InsertColumn (1, _T("User"));
+    InsertColumn (2, _T("Date"));
+
+    SetColumnWidth (0, 65);
+    SetColumnWidth (1, 100);
+    SetColumnWidth (2, 200);
+
+    if (entries == 0)
+      return;
+
+    long index=0;
+    svn::LogEntries::const_iterator it;
+    for (it=entries->begin (); it != entries->end (); it++ )
+    {
+      const svn::LogEntry & entry = *it;
+      wxString rev;
+      rev.Printf("%ld", (long) entry.revision);
+      //TODO perform date formatting. but dont use
+      //subversion but wxDateTime
+      //wxString date (entry.date.c_str ());
+      InsertItem (index, rev);
+      SetItem (index, 1, entry.author.c_str ());
+      SetItem (index, 2, entry.date.c_str ());
+      index++;
+    }
+ 
+  }
+  
+};
+
+LogDlg::LogDlg (wxWindow * parent, const svn::LogEntries * entries)
   : wxDialog (parent, -1, _T ("Log History"), wxDefaultPosition, 
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-    m_log(log)
+    m_entries(entries), m_logList (0)
 {
   InitializeData ();
   CentreOnParent ();
+}
+
+LogDlg::~LogDlg ()
+{
+  if (m_entries!=0)
+  {
+    delete m_entries;
+  }
 }
 
 void
 LogDlg::InitializeData ()
 {
   wxString history;
-  char count[sizeof (int) * 8 + 1];
-
-  wxString historyFmt (_T("History: %ld revisions"));
-  history.Printf(historyFmt, count);
+  history.Printf(_T("History: %ld revisions"), m_entries->size ());
 
   wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
   wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
 
   wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);
   wxStaticText * historyLabel = new wxStaticText (this, -1, history);
+
   logSizer->Add (historyLabel, 0, wxALL, 5);
-  m_logList = new LogList (this, m_log);
+  m_logList = new LogList (this, m_entries);
   logSizer->Add (m_logList, 1, wxLEFT);
 
   wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
@@ -175,50 +236,8 @@ LogDlg::setLogMessage (const char * message)
   m_logMsg->SetValue (_T(message));
 }
 
-LogList::LogList (wxWindow * parent, const svn::Log & log)
-  : wxListCtrl (parent, LOG_LIST, wxDefaultPosition, 
-                wxSize(365, 150), wxLC_REPORT),
-    m_log(log)
-{
-  InitializeList ();
-  CentreOnParent ();
-}
-
 void
-LogList::InitializeList ()
-{
-  SetSingleStyle (wxLC_REPORT);
-  //const char * dateFormat = "%a %b %d %H:%M:%S %Y";
-
-  InsertColumn (0, _T("Revision"));
-  InsertColumn (1, _T("User"));
-  InsertColumn (2, _T("Date"));
-
-  SetColumnWidth (0, 65);
-  SetColumnWidth (1, 100);
-  SetColumnWidth (2, 200);
-
-  long index=0;
-  const std::vector<svn::LogEntry> & entries = m_log.entries ();
-  std::vector<svn::LogEntry>::const_iterator it;
-  for (it=entries.begin (); it != entries.end (); it++ )
-  {
-    const svn::LogEntry & entry = *it;
-    wxString rev;
-    rev.Printf("%ld", (long) entry.revision);
-    //TODO perform date formatting. but dont use
-    //subversion but wxDateTime
-    //wxString date (entry.date.c_str ());
-    InsertItem (index, rev);
-    SetItem (index, 1, entry.author.c_str ());
-    SetItem (index, 2, entry.date.c_str ());
-    index++;
-  }
- 
-}
-
-void
-LogList::OnSelected (wxListEvent& event)
+LogDlg::OnSelected (wxListEvent& event)
 {
   wxListItem info;
   wxString message;
@@ -227,13 +246,14 @@ LogList::OnSelected (wxListEvent& event)
   info.m_col = 0;
   info.m_mask = wxLIST_MASK_TEXT;
   
-  if(!GetItem (info))
+  if(!m_logList->GetItem (info))
     return;
   //long rev = atol (info.m_text.c_str ());
 
-  const svn::LogEntry & entry = m_log.entries ()[event.m_itemIndex];
+  const svn::LogEntry & entry = (*m_entries)[event.m_itemIndex];
   message = entry.message.c_str ();
   message.Trim (false);
+  m_logMsg->SetValue (message);
   //TODO we dont want such, do we?
   //wxGetApp ().GetAppFrame ()->getLogAction ()->setLogMessage 
   //(message.c_str ());

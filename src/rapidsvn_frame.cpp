@@ -18,7 +18,6 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/log.hpp"
 #include "svncpp/targets.hpp"
 
 // app

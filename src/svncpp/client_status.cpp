@@ -21,11 +21,28 @@
 #include "exception.hpp"
 #include "pool.hpp"
 #include "status.hpp"
+#include "targets.hpp"
 
 #define DEFAULT_ARRAY_SIZE 5
 
 namespace svn
 {
+  static svn_error_t *
+  logReceiver (void *baton,
+                   apr_hash_t * changed_paths,
+                   svn_revnum_t rev,
+                   const char *author,
+                   const char *date, 
+                   const char *msg, 
+                   apr_pool_t * pool)
+  {
+    LogEntries * entries = 
+      (LogEntries *) baton;
+    entries->push_back ( LogEntry(rev, author, date, msg));
+
+    return NULL;
+  }
+
   std::vector<Status>
   Client::status (const char * path, const bool descend)
   {
@@ -121,6 +138,35 @@ namespace svn
     
     return Status (filePath, status);
   };
+
+  const LogEntries *
+  Client::log (const char * path, const Revision & revisionStart, 
+               const Revision & revisionEnd)
+  {
+    Targets target (path);
+    Pool pool;
+    LogEntries * entries = new LogEntries ();
+    svn_error_t *error;
+    error = svn_client_log (
+      target.array (pool), 
+      revisionStart.revision (), 
+      revisionEnd.revision (), 
+      0, // not reverse by default
+      1, // strict by default (not showing cp info)
+      logReceiver,
+      entries, 
+      *m_context, // client ctx
+      pool);
+
+    if (error != NULL)
+    {
+      delete entries;
+      throw ClientException (error);
+    }
+
+    return entries;
+  }
+
 }
 
 /* -----------------------------------------------------------------
