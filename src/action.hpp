@@ -54,6 +54,20 @@ public:
    */
   static const unsigned int DONT_UPDATE;
 
+
+  /**
+   * if set then the files wont be changed immediately.
+   * To detect this one can set a flag and update later,
+   * when the application gets activated again
+   * (action opened different application, user applied
+   * changes, saved them and comes back to rapidsvn
+   * later -> BOOM, update)
+   *
+   * @remarks Use either @a DONT_UPDATE or @a UPDATE_LATER
+   */
+  static const unsigned int UPDATE_LATER;
+
+
   /**
    * constructor
    *

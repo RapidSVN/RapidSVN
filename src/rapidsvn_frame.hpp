@@ -73,6 +73,7 @@ private:
   RapidSvnFrame (const RapidSvnFrame &);
 
   void OnSize (wxSizeEvent & event);
+  void OnActivate (wxActivateEvent & event);
 
   // File menu
   void OnAddWcBookmark (wxCommandEvent & event);

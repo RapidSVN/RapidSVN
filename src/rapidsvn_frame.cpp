@@ -163,6 +163,7 @@ public:
   wxMenu * MenuColumns;
   wxMenuBar * MenuBar;
   Listener listener;
+  bool updateAfterActivate;
 
   /** 
    * This instance of @a apr is used to initialize/terminate apr 
@@ -170,7 +171,8 @@ public:
   svn::Apr apr;
 
   Data (wxWindow * parent)
-    : MenuColumns (0), MenuBar (0), listener (parent)
+    : MenuColumns (0), MenuBar (0), listener (parent),
+      updateAfterActivate (false)
   {
     InitializeMenu ();
   }
@@ -286,6 +288,7 @@ public:
 
 BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_SIZE (RapidSvnFrame::OnSize)
+  EVT_ACTIVATE (RapidSvnFrame::OnActivate)
   EVT_MENU (ID_AddWcBookmark, RapidSvnFrame::OnAddWcBookmark)
   EVT_MENU (ID_AddRepoBookmark, RapidSvnFrame::OnAddRepoBookmark)
   EVT_MENU (ID_RemoveBookmark, RapidSvnFrame::OnRemoveBookmark)
@@ -610,6 +613,19 @@ RapidSvnFrame::OnSize (wxSizeEvent & event)
     event.Skip ();
   }
 }
+
+
+void 
+RapidSvnFrame::OnActivate (wxActivateEvent & event)
+{
+  if (event.GetActive () && m->updateAfterActivate)
+  {
+    m->updateAfterActivate = false;
+
+    UpdateFileList ();
+  }
+}
+
 
 void
 RapidSvnFrame::RecreateToolbar ()
@@ -1004,7 +1020,15 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   {
     unsigned int actionFlags = 
       (unsigned int)event.GetClientData ();
-    if ((actionFlags & Action::DONT_UPDATE) == 0)
+
+    if ((actionFlags & Action::UPDATE_LATER) != 0)
+    {
+      // dont update immediately but set this
+      // marker to update right after
+      // the next time the app gets activated
+      m->updateAfterActivate = true;
+    }
+    else if ((actionFlags & Action::DONT_UPDATE) == 0)
     {
       Trace (_("Updating..."));
       UpdateFileList ();

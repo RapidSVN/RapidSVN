@@ -115,6 +115,7 @@ public:
 
 
 const unsigned int Action::DONT_UPDATE = 1;
+const unsigned int Action::UPDATE_LATER = 2;
 
 
 Action::Action (wxWindow * parent, const wxString & name, ActionOptions options)
