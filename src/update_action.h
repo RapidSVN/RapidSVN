@@ -2,27 +2,18 @@
 #define _UPDATE_ACTION_H_INCLUDED_
 
 #include "action_thread.h"
+#include "update_dlg.h"
 
 class UpdateAction:public ActionThread
 {
 private:
-  wxString user;
-  wxString pass;
-  unsigned long revnum;
-
-     /**
-     * This is true if the revision edit box
-     * from the dialog was not empty. Otherwise,
-     * it is false, too indicate that the rev passed to
-     * svn_client_checkout must remain unspecified, so the
-     * last revision in the repository should be extracted.
-     */
-  bool rev_specified;
+  UpdateDlg::sData Data;
 
   apr_array_header_t *targets;
+  wxFrame *m_pFrame;
 
 public:
-   UpdateAction (wxFrame * frame, apr_pool_t * __pool,
+  UpdateAction (wxFrame * frame, apr_pool_t * __pool,
                  Tracer * tr, apr_array_header_t * trgts);
 
   void Perform ();

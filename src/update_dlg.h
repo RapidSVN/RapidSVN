@@ -1,30 +1,33 @@
 #ifndef _UPDATE_DLG_H_INCLUDED_
 #define _UPDATE_DLG_H_INCLUDED_
 
-#include "res/update.h"
-
-#if defined(__WXMSW__)
-static char *Update_Dialog = NULL;
-#else
-# include "res/update.wxr"
-#endif
-
 class UpdateDlg:public wxDialog
 {
-
 public:
-  wxTextCtrl * user;
-  wxTextCtrl *pass;
-  wxTextCtrl *revision;
+  struct sData 
+  {
+    sData();
+    
+    wxString User;
+    wxString Password;
+    wxString Revision;
+    bool UseLatest;
+  };
 
-public:
-  void OnOk (wxCommandEvent & event);
-  void OnCancel (wxCommandEvent & event);
-  void OnBrowse (wxCommandEvent & event);
-
-  void InitializeData ();
-
+  UpdateDlg(wxWindow* parent, sData* pData);
+  virtual void InitDialog();
+  
 private:
- DECLARE_EVENT_TABLE ()};
+  void InitializeData();
+  void OnUseLatest(wxCommandEvent &event);
+  void EnableControls();
+
+  sData* m_pData;
+  wxCheckBox* pUseLatest;
+  wxStaticText* pRevisionLabel; 
+  wxTextCtrl* pRevision;
+  
+  DECLARE_EVENT_TABLE()
+};
 
 #endif
