@@ -24,10 +24,6 @@ void TrimString (wxString & str);
 void *svn_cl__make_log_msg_baton (const char *message,
                                   const char *base_dir, apr_pool_t * pool);
 
-svn_error_t *svn_cl__get_log_message (const char **log_msg,
-                                      apr_array_header_t * commit_items,
-                                      void *baton, apr_pool_t * pool);
-
 void revision_from_number (svn_client_revision_t * rev, unsigned long nr);
 
 

@@ -79,22 +79,6 @@ svn_cl__make_log_msg_baton (const char *message,
   return baton;
 }
 
-svn_error_t *
-svn_cl__get_log_message (const char **log_msg,
-                         apr_array_header_t * commit_items,
-                         void *baton, apr_pool_t * pool)
-{
-  log_msg_baton *lmb = (log_msg_baton *) baton;
-
-  if (lmb->message)
-  {
-    *log_msg = apr_pstrdup (pool, lmb->message);
-    return SVN_NO_ERROR;
-  }
-
-  return SVN_NO_ERROR;
-}
-
 void
 revision_from_number (svn_client_revision_t * rev, unsigned long nr)
 {

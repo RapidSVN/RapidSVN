@@ -2,6 +2,7 @@
 #define _DELETE_ACTION_H_INCLUDED_
 
 #include "action_thread.h"
+#include "svncpp/modify.h"
 
 class DeleteAction:public ActionThread
 {
@@ -9,7 +10,7 @@ private:
   wxString user;
   wxString pass;
   wxString logMsg;
-  svn_boolean_t force;
+  bool force;
 
   apr_array_header_t *targets;
 
