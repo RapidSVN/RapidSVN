@@ -97,7 +97,7 @@ CheckoutDlg::InitControls ()
   wxStaticBox* destBox = new wxStaticBox(this, 0, _("Destination Folder"));
   m_destFolderText = new wxTextCtrl (this, -1, "", wxDefaultPosition, 
     wxSize(205, -1), 0, wxTextValidator(wxFILTER_NONE, &m_data.DestFolder));
-  wxButton* browse = new wxButton(this, ID_BUTTON_BROWSE, _"...", 
+  wxButton* browse = new wxButton(this, ID_BUTTON_BROWSE, "...", 
                                   wxPoint(-1,-1), wxSize(20, -1) );
   m_revisionLabel = new wxStaticText (this, -1, _("Number"));
   wxStaticBox* revisionBox = new wxStaticBox(this, -1, _("Revision"));
