@@ -140,6 +140,10 @@ SOURCE=.\src\folder_browser.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\folder_item_data.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\import_action.cpp
 # End Source File
 # Begin Source File
@@ -173,10 +177,6 @@ SOURCE=.\src\mkdir_action.cpp
 # Begin Source File
 
 SOURCE=.\src\mkdir_dlg.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\patched_dirctrlg.cpp
 # End Source File
 # Begin Source File
 
@@ -341,10 +341,6 @@ SOURCE=.\src\mkdir_action.h
 # Begin Source File
 
 SOURCE=.\src\mkdir_dlg.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\patched_dirctrlg.h
 # End Source File
 # Begin Source File
 

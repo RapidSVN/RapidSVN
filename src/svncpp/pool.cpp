@@ -1,3 +1,4 @@
+
 #include "pool.h"
 #include "svn_pools.h"
 
@@ -28,7 +29,7 @@ namespace svn
 
   Pool::~Pool ()
   {
-    if (m_pool)
+    if(m_pool)
     {
       svn_pool_destroy (m_pool);
     }

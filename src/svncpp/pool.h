@@ -1,3 +1,4 @@
+
 #ifndef _SVNCPP_POOL_H_
 #define _SVNCPP_POOL_H_
 
@@ -11,9 +12,9 @@ struct apr_pool_t;
  */
 namespace svn
 {
-    /**
-     * Class for encapsulation of apr/subversion pools
-     */
+  /**
+   * Class for encapsulation of apr/subversion pools
+   */
   class Pool
   {
   public:
@@ -38,8 +39,9 @@ namespace svn
      apr_pool_t * m_pool;
 
      Pool& operator=(const Pool&);
-     Pool(const Pool&);
+     Pool (const Pool&);
   };
 }
 
 #endif
+

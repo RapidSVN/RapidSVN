@@ -10,54 +10,54 @@
 
 enum
 {
-    FOLDER_TYPE_INVALID,
-    FOLDER_TYPE_WORKBENCH,
-    FOLDER_TYPE_PROJECT,
-    FOLDER_TYPE_NORMAL
+  FOLDER_TYPE_INVALID,
+  FOLDER_TYPE_WORKBENCH,
+  FOLDER_TYPE_PROJECT,
+  FOLDER_TYPE_NORMAL
 };
 
-class FolderItemData:public wxTreeItemData
+class FolderItemData : public wxTreeItemData
 {
- public: 
-    FolderItemData(const int folderType,  
-		   const wxString & path = wxEmptyString, 
-		   const wxString & name = wxEmptyString,
-		   const bool hasChildren = FALSE);
+public: 
+  FolderItemData(const int folderType,  
+                 const wxString & path = wxEmptyString, 
+                 const wxString & name = wxEmptyString,
+                 const bool hasChildren = FALSE);
 
-    FolderItemData();
+  FolderItemData ();
 
-    FolderItemData(const FolderItemData& src);	
+  FolderItemData (const FolderItemData& src);   
 
-    void Create(const int folderType,  
-		const wxString & path = wxEmptyString, 
-		const wxString & name = wxEmptyString,
-		const bool hasChildren = FALSE);
+  void Create (const int folderType,  
+               const wxString & path = wxEmptyString, 
+               const wxString & name = wxEmptyString,
+               const bool hasChildren = FALSE);
     
-    const int getFolderType()
-	{
-	    return m_folderType;
-	}
+  const int getFolderType ()
+  {
+    return m_folderType;
+  }
 
-    const wxString& getPath()
-	{
-	    return m_path;
-	}
+  const wxString& getPath ()
+  {
+    return m_path;
+  }
 
-    const wxString& getName()
-	{
-	    return m_name;
-	}
+  const wxString& getName ()
+  {
+    return m_name;
+  }
 
-    const bool hasChildren()
-	{
-	    return m_hasChildren;
-	}
+  const bool hasChildren ()
+  {
+    return m_hasChildren;
+  }
 
- private:
-    int m_folderType;
-    wxString m_path;
-    wxString m_name;
-    bool m_hasChildren;
+private:
+  int m_folderType;
+  wxString m_path;
+  wxString m_name;
+  bool m_hasChildren;
 };
 
 
