@@ -26,7 +26,7 @@ AC_ARG_WITH(apr-config,
 AC_MSG_CHECKING([for APR])
 APR_CONFIG=""
 for VALUE in $APR_CONFIGS ; do
-	if $VALUE --cflags > /dev/null; then
+	if $VALUE --cflags >/dev/null 2>&1; then
 		APR_CONFIG=$VALUE
 		break
 	fi
@@ -58,7 +58,7 @@ AC_ARG_WITH(apu-config,
 AC_MSG_CHECKING([for APR util])
 APU_CONFIG=""
 for VALUE in $APU_CONFIGS ; do
-	if $VALUE --includes > /dev/null; then
+	if $VALUE --includes >/dev/null 2>&1; then
 		APU_CONFIG=$VALUE
 		break
 	fi
@@ -88,7 +88,7 @@ AC_ARG_WITH(neon-config,
 AC_MSG_CHECKING([Neon])
 NEON_CONFIG=""
 for VALUE in $SEARCH ; do
-	if CHECK=`$VALUE --version` >/dev/null ; then
+	if CHECK=`$VALUE --version 2>&1` ; then
 		NEON_CONFIG=$VALUE
 		break
 	fi
@@ -142,7 +142,7 @@ AC_ARG_WITH(svn-lib,
 AC_MSG_CHECKING([for Subversion libraries])
 SVN_LIB=""
 for VALUE in $SVN_LIBS ; do
-	if ls $VALUE/libsvn_client-1.* 1>/dev/null 2>1; then
+	if ls $VALUE/libsvn_client-1.* >/dev/null 2>&1; then
 		SVN_LIB=$VALUE
 		break
 	fi
@@ -171,7 +171,7 @@ AC_ARG_WITH(wx-config,
 AC_MSG_CHECKING([wxWindows version])
 WX_CONFIG=""
 for VALUE in $WX_CONFIGS ; do
-	if WX_VERSION=`$VALUE --version` >/dev/null ; then
+	if WX_VERSION=`$VALUE --version 2>&1` ; then
 		WX_CONFIG=$VALUE
 		break
 	fi
@@ -188,7 +188,7 @@ case $WX_VERSION in
     [2.[5-9].*])
 	;;
     *)
-        AC_MSG_ERROR([wxWindows >= 2.4.2 required])
+        AC_MSG_ERROR([wxWindows >= 2.4.2 required, found version $WX_VERSION])
 	AC_MSG_ERROR([Try --with-wx-config.])
         ;;
 esac
@@ -227,7 +227,7 @@ AC_MSG_CHECKING([xsltproc])
 if test -z "$XSLTPROC" ; then
    AC_MSG_RESULT([not used])
 else
-   if $XSLTPROC --version > /dev/null ; then
+   if $XSLTPROC --version >/dev/null 2>&1 ; then
       AC_MSG_RESULT([found])
    else
       AC_MSG_RESULT([not found])	
@@ -302,7 +302,7 @@ AC_MSG_CHECKING([doxygen])
 if test -z "$DOXYGEN" ; then
    AC_MSG_RESULT([not used])
 else
-   if doxygenversion=`$DOXYGEN --version` ; then
+   if doxygenversion=`$DOXYGEN --version 2>&1` ; then
       AC_MSG_RESULT([found])
    else
       AC_MSG_RESULT([not found])	
@@ -327,7 +327,7 @@ AC_MSG_CHECKING([dot])
 if test -z "$DOT" ; then
    AC_MSG_RESULT([not used])
 else
-   if dotbla=`echo | $DOT` ; then
+   if dotbla=`echo | $DOT 2>/dev/null` ; then
       AC_MSG_RESULT([found])
    else
       AC_MSG_RESULT([not found])	
@@ -339,7 +339,7 @@ dnl
 dnl Final check for Doxygen
 dnl
 if test "$DOXYGEN" ; then
-   AC_MSG_CHECKING([doxygen usable])
+   AC_MSG_CHECKING([if doxygen is usable])
    if test -z "$DOT" ; then
       AC_MSG_RESULT([no (dot needed)])
       DOXYGEN=""

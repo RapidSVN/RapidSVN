@@ -9,4 +9,4 @@ manpage-no:
 manpage-yes: rapidsvn.1
 
 rapidsvn.1:
-	$(MAKEMAN) rapidsvn.xml
+	$(MAKEMAN) $(srcdir)/rapidsvn.xml
