@@ -308,6 +308,10 @@ SOURCE=.\src\commit_action.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\commit_data.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\commit_dlg.hpp
 # End Source File
 # Begin Source File

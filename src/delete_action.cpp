@@ -13,7 +13,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 
 // app
 #include "include.hpp"
@@ -55,9 +55,9 @@ DeleteAction::Perform ()
 void *
 DeleteAction::Entry ()
 {
-  svn::Modify modify;
+  svn::Client client;
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
+  client.notification (&notify);
 
   const std::vector<svn::Path> & v = m_targets.targets ();
   std::vector<svn::Path>::const_iterator it;
@@ -68,7 +68,7 @@ DeleteAction::Entry ()
 
     try
     {
-      modify.remove (path.c_str (), Data.Force);
+      client.remove (path.c_str (), Data.Force);
     }
     catch (svn::ClientException &e)
     {

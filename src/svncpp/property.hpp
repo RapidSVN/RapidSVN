@@ -46,7 +46,7 @@ namespace svn
   class Property 
   {
   public:
-    Property (const Context & context = Context::Anonymous,
+    Property (Context * context = 0,
               const Path & path = "");
 
     virtual ~Property ();
@@ -76,7 +76,7 @@ namespace svn
     void remove (const char * name);
 
   private:
-    Context m_context;
+    Context * m_context;
     Path m_path;
     std::vector<PropertyEntry> m_entries;
 

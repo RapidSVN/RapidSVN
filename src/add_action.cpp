@@ -12,7 +12,7 @@
  */
 
 // svncpp
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 #include "svncpp/exception.hpp"
 
 // app
@@ -44,9 +44,9 @@ AddAction::Perform ()
 void *
 AddAction::Entry ()
 {
-  svn::Modify modify;
+  svn::Client client;
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
+  client.notification (&notify);
 
   const std::vector<svn::Path> & v = m_targets.targets ();
   std::vector<svn::Path>::const_iterator it;
@@ -57,7 +57,7 @@ AddAction::Entry ()
 
     try
     {
-      modify.add (path.c_str (), false);
+      client.add (path.c_str (), false);
     }
     catch (svn::ClientException &e)
     {

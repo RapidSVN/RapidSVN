@@ -13,7 +13,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 
 // app
 #include "include.hpp"
@@ -57,21 +57,19 @@ ImportAction::Perform ()
 void *
 ImportAction::Entry ()
 {
-  svn::Modify modify;
+  svn::Context context (m_data.User, m_data.Password);
+  svn::Client client (&context);
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
+  client.notification (&notify);
   const char *the_new_entry = NULL;
 
-  modify.username (m_data.User);
-  modify.password (m_data.Password);
-  
   // if new entry is empty, the_new_entry must be left NULL.
   if (!m_data.NewEntry.IsEmpty ())
     the_new_entry = m_data.NewEntry.c_str ();
 
   try
   {
-    modify.import (m_data.Path.c_str (), m_data.Repository.c_str (), the_new_entry,
+    client.import (m_data.Path.c_str (), m_data.Repository.c_str (), the_new_entry,
                    m_data.LogMessage.c_str(), m_data.Recursive);
     GetTracer ()->Trace ("Import successful.");
   }

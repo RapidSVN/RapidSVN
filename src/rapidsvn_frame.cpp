@@ -487,7 +487,7 @@ void
 RapidSvnFrame::OnCheckout (wxCommandEvent & WXUNUSED (event))
 {
   lastAction = ACTION_TYPE_CHECKOUT;
-  CheckoutAction *action = new CheckoutAction (this, m_logTracer, false);
+  CheckoutAction *action = new CheckoutAction (this, m_logTracer);
   m_actionWorker.Perform (action);
 }
 
@@ -594,7 +594,7 @@ RapidSvnFrame::OnCleanup (wxCommandEvent & WXUNUSED (event))
   svn::Path path (m_currentPath);
   lastAction = ACTION_TYPE_CLEANUP;
   CleanupAction * action = 
-    new CleanupAction (this, path, m_logTracer, false);
+    new CleanupAction (this, path, m_logTracer);
   m_actionWorker.Perform (action);
 }
 

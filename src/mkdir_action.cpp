@@ -13,7 +13,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 
 // app
 #include "include.hpp"
@@ -60,15 +60,14 @@ MkdirAction::Perform ()
 void *
 MkdirAction::Entry ()
 {
-  svn::Modify modify;
+  svn::Context context (m_data.User, m_data.Password);
+  svn::Client client (&context);
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
-  modify.username (m_data.User);
-  modify.password (m_data.Password);
+  client.notification (&notify);
 
   try
   {
-    modify.mkdir (m_data.Target.c_str (), m_data.LogMessage.c_str ());
+    client.mkdir (m_data.Target.c_str (), m_data.LogMessage.c_str ());
   }
   catch (svn::ClientException &e)
   {

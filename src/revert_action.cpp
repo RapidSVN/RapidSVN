@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 #include "include.hpp"
 #include "tracer.hpp"
 #include "rapidsvn_app.hpp"
@@ -43,9 +43,9 @@ RevertAction::Perform ()
 void *
 RevertAction::Entry ()
 {
-  svn::Modify modify;
+  svn::Client client;
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
+  client.notification (&notify);
 
   const std::vector<svn::Path> & v = m_targets.targets ();
   std::vector<svn::Path>::const_iterator it;
@@ -56,7 +56,7 @@ RevertAction::Entry ()
 
     try
     {
-      modify.revert (path.c_str (), false);
+      client.revert (path.c_str (), false);
     }
     catch (svn::ClientException &e)
     {

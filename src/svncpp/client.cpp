@@ -16,14 +16,29 @@
 
 namespace svn
 {
+  static Context anonymous ;
+
 
   Client::Client (Context * context)
-    : m_context (context)
   {
+    setContext (context);
   }
 
   Client::~Client ()
   {
+  }
+
+  void
+  Client::setContext (Context * context)
+  {
+    if (context != 0)
+    {
+      m_context = context;
+    }
+    else
+    {
+      m_context = &anonymous;
+    }
   }
 
   const char *

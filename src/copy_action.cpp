@@ -16,7 +16,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 
 // app
 #include "include.hpp"
@@ -49,9 +49,9 @@ CopyAction::Perform ()
 void *
 CopyAction::Entry ()
 {
-  svn::Modify modify;
+  svn::Client client;
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
+  client.notification (&notify);
 
   m_src = m_targets.targets ()[0].c_str ();
   m_dest = DestinationPath (m_src);
@@ -64,7 +64,7 @@ CopyAction::Entry ()
     //TODO right now we are copying only HEAD
     //this should be configurable
     const svn::Revision head (svn::Revision::HEAD);
-    modify.copy (m_src.c_str (), head, m_dest.c_str ());
+    client.copy (m_src.c_str (), head, m_dest.c_str ());
     GetTracer ()->Trace ("Copy successful");
   }
   catch (svn::ClientException &e)

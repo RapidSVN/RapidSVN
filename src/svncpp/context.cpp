@@ -20,8 +20,6 @@
 
 namespace svn
 {
-  const Context Context::Anonymous = Context ();
-
   svn_error_t *
   Context::prompt (const char **result, 
                    const char *prompt,
@@ -65,6 +63,12 @@ namespace svn
     : m_pool ()
   {
     setLogin (src.m_username.c_str (), src.m_password.c_str ());
+  }
+
+  Context::Context (const char * username, const char * password)
+    : m_pool ()
+  {
+    setLogin (username, password);
   }
 
   void

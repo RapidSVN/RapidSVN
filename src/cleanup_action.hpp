@@ -25,7 +25,7 @@ class Tracer;
 class CleanupAction : public Action
 {
 public:
-  CleanupAction (wxWindow * parent, svn::Path & path, Tracer * tr, bool owns);
+  CleanupAction (wxWindow * parent, svn::Path & path, Tracer * tr);
   bool Perform ();
   bool Prepare ();
 

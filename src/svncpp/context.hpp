@@ -55,6 +55,11 @@ namespace svn
     }
 
     /**
+     * constructor with username/password
+     */
+    Context (const char * username, const char * password);
+
+    /**
      * set username/password for authentication
      */
     void setLogin (const char * username, const char * password);
@@ -82,7 +87,6 @@ namespace svn
       m_logMessage = msg;
     }
 
-    static const Context Anonymous;
   private:
     Pool m_pool;
     svn_client_ctx_t m_ctx;

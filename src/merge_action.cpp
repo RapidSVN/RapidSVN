@@ -13,7 +13,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 
 // app
 #include "include.hpp"
@@ -53,12 +53,10 @@ MergeAction::Perform ()
 void *
 MergeAction::Entry ()
 {
-  svn::Modify modify;
+  svn::Context context (m_data.User.c_str (), m_data.Password.c_str ());
+  svn::Client client (&context);
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
-
-  modify.username (m_data.User.c_str ());
-  modify.password (m_data.Password.c_str ());
+  client.notification (&notify);
 
   wxString targetPath =
     wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ();
@@ -79,7 +77,7 @@ MergeAction::Entry ()
   long rev2 = MergeAction::getRevision (m_data.Path2Rev);
   try
   {
-    modify.merge (m_data.Path1.c_str (), 
+    client.merge (m_data.Path1.c_str (), 
                   rev1, 
                   m_data.Path2.c_str (), 
                   rev2, 

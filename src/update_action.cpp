@@ -16,7 +16,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 #include "svncpp/path.hpp"
 #include "svncpp/targets.hpp"
 
@@ -53,12 +53,10 @@ UpdateAction::Prepare ()
 bool
 UpdateAction::Perform ()
 {
-  svn::Modify modify;
+  svn::Context context (m_data.User, m_data.Password);
+  svn::Client client (&context);
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
-
-  modify.username (m_data.User);
-  modify.password (m_data.Password);
+  client.notification (&notify);
 
   svn::Revision revision (svn::Revision::HEAD);
   // Did the user request a specific revision?:
@@ -83,7 +81,7 @@ UpdateAction::Perform ()
 
     try
     {
-      modify.update (path.c_str (), revision, true);
+      client.update (path.c_str (), revision, true);
     }
     catch (svn::ClientException &e)
     {

@@ -40,7 +40,7 @@ END_EVENT_TABLE()
 PropertyDlg::PropertyDlg (wxWindow * parent, const char * target)
            : wxDialog (parent, -1, "Property Editor", wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             m_property(svn::Context::Anonymous, target)
+             m_property(NULL, target)
 {
   InitializeData ();
   CentreOnParent ();

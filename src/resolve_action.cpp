@@ -13,7 +13,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 
 // app
 #include "include.hpp"
@@ -46,9 +46,9 @@ ResolveAction::Perform ()
 void *
 ResolveAction::Entry ()
 {
-  svn::Modify modify;
+  svn::Client client;
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
+  client.notification (&notify);
 
   const std::vector<svn::Path> v = m_targets.targets ();
   std::vector<svn::Path>::const_iterator it;
@@ -59,7 +59,7 @@ ResolveAction::Entry ()
 
     try
     {
-      modify.resolve (path.c_str (), false);
+      client.resolve (path.c_str (), false);
     }
     catch (svn::ClientException &e)
     {

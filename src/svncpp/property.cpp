@@ -32,7 +32,7 @@ namespace svn
     this->value = value;
   }
 
-  Property::Property (const Context & context, const Path & path)
+  Property::Property (Context * context, const Path & path)
     : m_context (context), m_path (path)
   {
     list ();
@@ -55,7 +55,7 @@ namespace svn
                            m_path.c_str (), 
                            revision,
                            false, /* recurse */
-                           m_context,
+                           *m_context,
                            pool);
     if(error != NULL)
     {
@@ -101,7 +101,7 @@ namespace svn
                         m_path.c_str (),
                         revision,
                         false, // recurse
-                        m_context.ctx (),
+                        *m_context,
                         pool);
 
     //svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (name);

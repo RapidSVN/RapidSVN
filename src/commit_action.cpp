@@ -13,7 +13,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 #include "svncpp/pool.hpp"
 #include "svncpp/targets.hpp"
 
@@ -51,11 +51,9 @@ bool
 CommitAction::Perform ()
 {
   SvnNotify notify (GetTracer ());
-
-  svn::Modify modify;
-  modify.notification (&notify);
-  modify.username (m_data.User);
-  modify.password (m_data.Password);
+  svn::Context context (m_data.User.c_str(), m_data.Password.c_str());
+  svn::Client client (&context);
+  client.notification (&notify);
 
   svn::Targets targets (m_targets);
 
@@ -65,12 +63,12 @@ CommitAction::Perform ()
     svn::Pool pool;
     wxSetWorkingDirectory (m_path);
     long revision = 
-      modify.commit (targets.array (pool.pool ()), m_data.LogMessage.c_str (), 
+      client.commit (targets.array (pool.pool ()), m_data.LogMessage.c_str (), 
                      m_data.Recursive);
     wxString str;
 
 //REMOVE DEPRECATED
-//     if(!modify.isAuthenticated ())
+//     if(!client.isAuthenticated ())
 //     {
 //       str = "Authentication failed.";
 //     }

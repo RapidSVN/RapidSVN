@@ -27,7 +27,8 @@ public:
    * @param tracer
    * @param own own tracer?
    */
-  CheckoutAction (wxWindow * parent, Tracer * tracer, bool own);
+  CheckoutAction (wxWindow * parent, 
+                  Tracer * tracer);
 
   virtual bool Perform ();
 

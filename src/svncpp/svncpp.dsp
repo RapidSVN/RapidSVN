@@ -85,11 +85,11 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\auth.cpp
+SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\client.cpp
+SOURCE=.\client_modify.cpp
 # End Source File
 # Begin Source File
 
@@ -106,10 +106,6 @@ SOURCE=.\exception.cpp
 # Begin Source File
 
 SOURCE=.\log.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\modify.cpp
 # End Source File
 # Begin Source File
 
@@ -149,10 +145,6 @@ SOURCE=.\targets.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\auth.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\client.hpp
 # End Source File
 # Begin Source File
@@ -170,10 +162,6 @@ SOURCE=.\log.hpp
 # Begin Source File
 
 SOURCE=.\log_entry.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\modify.hpp
 # End Source File
 # Begin Source File
 

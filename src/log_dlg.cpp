@@ -18,7 +18,7 @@
 // svncpp
 #include "svncpp/exception.hpp"
 #include "svncpp/log_entry.hpp"
-#include "svncpp/modify.hpp"
+//REMOVE #include "svncpp/modify.hpp"
 #include "svncpp/notify.hpp"
 
 // app

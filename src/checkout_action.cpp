@@ -13,7 +13,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
-#include "svncpp/modify.hpp"
+#include "svncpp/client.hpp"
 
 // app
 #include "checkout_action.hpp"
@@ -23,8 +23,9 @@
 #include "svn_notify.hpp"
 #include "tracer.hpp"
 
-CheckoutAction::CheckoutAction (wxWindow * parent, Tracer * tracer, bool own)
-  : Action (parent, tracer, own)
+CheckoutAction::CheckoutAction (wxWindow * parent, 
+                                Tracer * tracer)
+  : Action (parent, tracer, false)
 {
 }
 
@@ -43,12 +44,10 @@ CheckoutAction::Prepare ()
 bool
 CheckoutAction::Perform ()
 {
-  svn::Modify modify;
+  svn::Context context (m_data.User, m_data.Password);
+  svn::Client client (&context);
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
-
-  modify.username (m_data.User);
-  modify.password (m_data.Password);
+  client.notification (&notify);
 
   TrimString(m_data.DestFolder);
   UnixPath(m_data.DestFolder);
@@ -70,7 +69,7 @@ CheckoutAction::Perform ()
   {
     svn::Revision revision (revnum);
     wxSetWorkingDirectory (m_data.DestFolder);
-    modify.checkout (m_data.ModuleName.c_str (), 
+    client.checkout (m_data.ModuleName.c_str (), 
                      m_data.DestFolder.c_str (), 
                      revision, m_data.Recursive);
   }
