@@ -43,11 +43,11 @@ namespace svn
     return NULL;
   }
 
-  std::vector<Status>
+  StatusEntries 
   Client::status (const char * path, const bool descend)
   {
     svn_error_t *error;
-    std::vector<Status>statusHash;
+    StatusEntries entries;
     apr_hash_t *status_hash;
     Pool pool;
 
@@ -90,10 +90,10 @@ namespace svn
          svn_handle_error (err, stderr, FALSE);
       */
 
-      statusHash.push_back (Status (filePath, status));
+      entries.push_back (Status (filePath, status));
 
     }
-    return statusHash;
+    return entries;
   }
 
   Status 

@@ -35,6 +35,7 @@ namespace svn
   class Targets;
 
   typedef std::vector<LogEntry> LogEntries;
+  typedef std::vector<Status> StatusEntries;
 
   /**
    * Subversion client API.
@@ -80,9 +81,9 @@ namespace svn
      *
      * @param path Path to explore.
      * @param descend Recurse into subdirectories if existant.
-     * @return Hash map with Status entries.
+     * @return vector with Status entries.
      */
-    std::vector<Status>
+    StatusEntries 
     status (const char * path,  const bool descend = false);
 
     /**

@@ -95,6 +95,14 @@ public:
    */
   static wxString GetColumnCaption (const int col);
 
+  /**
+   * set column width
+   *
+   * @param col column number
+   * @param width 
+   */
+  void SetColumnWidth (const int col, const int width);
+
   void UpdateFileList ();
   void UpdateFileList (const wxString & path);
   const IndexArray GetSelectedItems () const;
@@ -112,12 +120,14 @@ private:
   void DeleteItem( long item );
 
   void SetColumnImages ();
+  void UpdateColumns ();
 
   // message handlers
   void OnItemActivated (wxListEvent & event);
   void OnKeyDown (wxKeyEvent & event);
   void OnItemRightClk (wxListEvent & event);
   void OnColumnLeftClick (wxListEvent & event);
+  void OnColumnEndDrag (wxListEvent & event);
 
 private:
   DECLARE_EVENT_TABLE ()

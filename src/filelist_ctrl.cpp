@@ -185,14 +185,18 @@ struct FileListCtrl::Data
 public:
   bool SortIncreasing;
   int SortColumn;
+  bool DirtyColumns;
   wxString Path;
   wxImageList *ImageListSmall;
   bool ColumnVisible[COL_COUNT];
   wxString ColumnCaption[COL_COUNT];
+  int ColumnIndex[COL_COUNT];
+  int ColumnWidth[COL_COUNT];
 
   /** default constructor */
   Data ()
-    : SortIncreasing (true), SortColumn (COL_NAME)
+    : SortIncreasing (true), SortColumn (COL_NAME), 
+      DirtyColumns (true)
   {
     ImageListSmall = new wxImageList (16, 16, TRUE);
 
@@ -384,6 +388,7 @@ BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_LIST_ITEM_ACTIVATED (-1, FileListCtrl::OnItemActivated)
   EVT_LIST_ITEM_RIGHT_CLICK (FILELIST_CTRL, FileListCtrl::OnItemRightClk)
   EVT_LIST_COL_CLICK (FILELIST_CTRL, FileListCtrl::OnColumnLeftClick)
+  EVT_LIST_COL_END_DRAG (FILELIST_CTRL, FileListCtrl::OnColumnEndDrag)
 END_EVENT_TABLE ()
 
 FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id, 
@@ -428,21 +433,12 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
     wxString key;
     key.Printf (ConfigColumnVisibleFmt, col);
     m->ColumnVisible[col] = pConfig->Read (key, (long) 1) != 0;
-    itemCol.m_text = COLUMN_CAPTIONS[col];
-
-    InsertColumn (col, itemCol);
-  }
-
-  SetColumnImages ();
-
-  // Set the column widths stored in the config:
-  for (col=0; col < COL_COUNT; col++)
-  {
-    wxString key;
+    
     key.Printf (ConfigColumnWidthFmt, col);
     long width = (long)GetDefaultWidth (col);
-    SetColumnWidth (col, pConfig->Read (key, width));
+    m->ColumnWidth[col] = pConfig->Read (key, width);
   }
+  m->DirtyColumns = true;
 }
 
 FileListCtrl::~FileListCtrl ()
@@ -455,7 +451,7 @@ FileListCtrl::~FileListCtrl ()
   {
     wxString key;
     key.Printf(ConfigColumnWidthFmt, col);
-    pConfig->Write (key, (long) GetColumnWidth (col));
+    pConfig->Write (key, (long) m->ColumnWidth[col]);
 
     key.Printf(ConfigColumnVisibleFmt, col);
     pConfig->Write (key, (long) m->ColumnVisible[col]);
@@ -480,9 +476,11 @@ FileListCtrl::UpdateFileList ()
   // delete all the items in the list to display the new ones
   DeleteAllItems ();
 
+  UpdateColumns ();
+
   // cycle through the files and folders in the current path
-  wxFileName fullpath (path, _("*"));
-  wxString name;
+  wxFileName fullpath (path, "*");
+  // wxString name;
 
   wxLogStatus (_("Listing entries in '%s'"), path.c_str ());
 
@@ -495,23 +493,24 @@ FileListCtrl::UpdateFileList ()
   context.setLogin ("", "");
 
   svn::Client client (&context);
-  const std::vector<svn::Status> & statusVector =
+  const svn::StatusEntries statusVector =
     client.status (path.c_str (), FALSE);
-  std::vector<svn::Status>::const_iterator it;
+  svn::StatusEntries::const_iterator it;
 
   for (it = statusVector.begin (); it != statusVector.end (); it++)
   {
     const svn::Status & status = *it;
+    wxString values[COL_COUNT];
 
     int i = GetItemCount ();
 
     if( status.path() == stdpath )
     {
-      name = ".";
+      values[COL_NAME] = ".";
     }
     else
     {
-      name = wxFileNameFromPath (status.path ());
+      values[COL_NAME] = wxFileNameFromPath (status.path ());
     }
 
     wxString text;
@@ -520,7 +519,6 @@ FileListCtrl::UpdateFileList ()
 
     if (status.isVersioned ())
     {
-      //REMOVE const svn::Entry & entry = status.entry ();
       if (IsDir (&status))
       {
         imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER);
@@ -548,48 +546,32 @@ FileListCtrl::UpdateFileList ()
       }
     }
 
-    InsertItem (i, name, imageIndex);
+    InsertItem (i, values[COL_NAME], imageIndex);
 
     // The item data will be used to sort the list:
     SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
     // and must delete it in due course.
 
     text = "";
-    wxString revision;
-    wxString author;
-    wxString cmtDate;
-    wxString cmtRev;
-    wxString textStatus;
-    wxString propStatus;
-    wxString textDate;
-    wxString propDate;
-    wxString url;
-    wxString repos;
-    wxString uuid;
-    wxString schedule;
-    wxString copied;
-    wxString conflictOld;
-    wxString conflictNew;
-    wxString conflictWrk;
-    wxString checksum;
 
     if (status.isVersioned ())
     {
       const svn::Entry & entry = status.entry ();
-      revision.Printf ("%ld", entry.revision ());
-      cmtRev.Printf ("%ld", entry.cmtRev ());
+      values[COL_REV].Printf ("%ld", entry.revision ());
+      values[COL_CMT_REV].Printf ("%ld", entry.cmtRev ());
 
-      author = entry.cmtAuthor ();
+      values[COL_AUTHOR] = entry.cmtAuthor ();
 
       // date formatting
-      cmtDate = FormatDate (entry.cmtDate ());
-      textDate = FormatDate (entry.textTime ());
-      propDate = FormatDate (entry.propTime ());
+      values[COL_CMT_DATE] = FormatDate (entry.cmtDate ());
+      values[COL_TEXT_TIME] = FormatDate (entry.textTime ());
+      values[COL_PROP_TIME] = FormatDate (entry.propTime ());
 
-      url = entry.url ();
-      repos = entry.repos ();
-      uuid = entry.uuid ();
+      values[COL_URL] = entry.url ();
+      values[COL_REPOS] = entry.repos ();
+      values[COL_UUID] = entry.uuid ();
       
+      wxString schedule;
       switch (entry.schedule ())
       {
       case svn_wc_schedule_add:
@@ -602,18 +584,19 @@ FileListCtrl::UpdateFileList ()
         schedule = _("replace");
         break;
       }
+      values[COL_SCHEDULE] = schedule;
 
       if (entry.isCopied ())
       {
-        copied.Printf("%s, %ld", 
-                      entry.copyfromUrl (),
-                      entry.copyfromRev ());
+        values[COL_COPIED].Printf("%s, %ld", 
+                                  entry.copyfromUrl (),
+                                  entry.copyfromRev ());
       }
 
-      conflictOld = entry.conflictOld ();
-      conflictNew = entry.conflictNew ();
-      conflictWrk = entry.conflictWrk ();
-      checksum = entry.checksum ();
+      values[COL_CONFLICT_OLD] = entry.conflictOld ();
+      values[COL_CONFLICT_NEW] = entry.conflictNew ();
+      values[COL_CONFLICT_WRK] = entry.conflictWrk ();
+      values[COL_CHECKSUM] = entry.checksum ();
     }
     switch(status.textStatus ())
     {
@@ -622,7 +605,8 @@ FileListCtrl::UpdateFileList ()
       // empty text for them
       break;
     default:
-      textStatus = svn::Status::statusDescription (status.textStatus ());
+      values[COL_TEXT_STATUS] = 
+        svn::Status::statusDescription (status.textStatus ());
       break;
     }
     switch(status.propStatus ())
@@ -632,28 +616,22 @@ FileListCtrl::UpdateFileList ()
       // empty text
       break;
     default:
-      propStatus = svn::Status::statusDescription (status.propStatus ());
+      values[COL_PROP_STATUS] = 
+        svn::Status::statusDescription (status.propStatus ());
       break;
     }
 
-    SetItem (i, COL_REV, revision);
-    SetItem (i, COL_CMT_REV, cmtRev);
-    SetItem (i, COL_CMT_DATE, cmtDate);
-    SetItem (i, COL_AUTHOR, author);
-    SetItem (i, COL_TEXT_STATUS, textStatus);
-    SetItem (i, COL_PROP_STATUS, propStatus);
-    SetItem (i, COL_TEXT_TIME, textDate);
-    SetItem (i, COL_PROP_TIME, propDate);
-    SetItem (i, COL_CHECKSUM, checksum);
-    SetItem (i, COL_URL, url);
-    SetItem (i, COL_REPOS, repos);
-    SetItem (i, COL_UUID, uuid);
-    SetItem (i, COL_SCHEDULE, schedule);
-    SetItem (i, COL_COPIED, copied);
-    SetItem (i, COL_CONFLICT_OLD, conflictOld);
-    SetItem (i, COL_CONFLICT_NEW, conflictNew);
-    SetItem (i, COL_CONFLICT_WRK, conflictWrk);
-
+    // set the text for all visible items
+    // (ignore column 0 since this is already set with
+    // InsertItem
+    for (int col=1; col<COL_COUNT; col++)
+    {
+      int index = m->ColumnIndex[col];
+      if (index != -1)
+      {
+        SetItem (i, index, values[col]);
+      }
+    }
   }
 
   SortItems (Data::CompareFunction, (long) this->m);
@@ -875,6 +853,7 @@ FileListCtrl::ResetColumns ()
     }
     m->ColumnVisible[col] = visible;
     SetColumnWidth (col, GetDefaultWidth (col));
+    m->DirtyColumns = true;
   }
 }
 
@@ -882,26 +861,44 @@ void
 FileListCtrl::SetColumnImages()
 {
   // Update the column titles to reflect the sort column.
-  for (int i = 0; i < GetColumnCount (); i++)
+  for (int col = 0; col < COL_COUNT; col++)
   {
-    wxListItem LI;
-    LI.m_mask = wxLIST_MASK_IMAGE;
-    if (i == m->SortColumn)
-      LI.m_image = m->SortIncreasing ?
+    int index = m->ColumnIndex[col];
+    if (index == -1)
+      continue;
+
+    wxListItem item;
+    item.m_mask = wxLIST_MASK_IMAGE;
+    if (col == m->SortColumn)
+    {
+      item.m_image = m->SortIncreasing ?
         IMAGE_INDEX[IMG_INDX_SORT_DOWN] : IMAGE_INDEX[IMG_INDX_SORT_UP];
+    }
     else
-      LI.m_image = -1;
-    SetColumn (i, LI);
+    {
+      item.m_image = -1;
+    }
+    SetColumn (index, item);
   }
 }
 
 void
 FileListCtrl::SetColumnVisible (const int col, const bool visible)
 {
+  if (col == COL_NAME)
+    return;
+
   if ((col >= 0) && (col < COL_COUNT))
   {
     m->ColumnVisible[col] = visible;
   }
+
+  if ((col == m->SortColumn) && (visible == false))
+  {
+    m->SortColumn = COL_NAME;
+    m->SortIncreasing = true;
+  }
+  m->DirtyColumns =true;
 }
 
 const bool
@@ -917,6 +914,88 @@ FileListCtrl::GetColumnVisible (const int col)
   }
 }
 
+void
+FileListCtrl::UpdateColumns ()
+{
+  if (!m->DirtyColumns)
+    return;
+
+  // rebuild the index of columns
+  int index = 0;
+  int count = 0;
+
+  for (int col=0; col < COL_COUNT; col++)
+  {
+    if (m->ColumnVisible[col])
+    {
+      m->ColumnIndex[col] = index;
+      index++;
+      count++;
+    }
+    else
+    {
+      m->ColumnIndex[col] = -1;
+    }
+  }
+
+  // delete all items
+  DeleteAllItems ();
+
+  // adapt the column count
+  while (GetColumnCount () > count)
+  {
+    DeleteColumn (0);
+  }
+    
+  while (GetColumnCount () < count)
+  {
+    InsertColumn (0, "");
+  }
+
+  // Now set the captions and widths
+  for (int col=0; col < COL_COUNT; col++)
+  {
+    int index = m->ColumnIndex[col];
+    if (index != -1)
+    {
+      wxListItem item;
+      item.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_WIDTH;
+      item.m_text = COLUMN_CAPTIONS[col];
+      item.m_width = m->ColumnWidth[col];
+      SetColumn (index, item);
+    }
+  }
+
+  SetColumnImages ();
+
+  m->DirtyColumns = false;
+}
+
+void 
+FileListCtrl::OnColumnEndDrag (wxListEvent & event)
+{
+  int index = event.GetColumn ();
+  for (int col=0; col < COL_COUNT; col++)
+  {
+    if (m->ColumnIndex[col] == index)
+    {
+      m->ColumnWidth[col] = GetColumnWidth (col);
+      break;
+    }
+  }
+}
+
+void
+FileListCtrl::SetColumnWidth (const int col, const int width)
+{
+  m->ColumnWidth[col] = width;
+  
+  int index = m->ColumnIndex[col];
+  if (index != -1)
+  {
+    wxListCtrl::SetColumnWidth(index, width);
+  }
+}
 
 /* -----------------------------------------------------------------
  * local variables:

@@ -1118,6 +1118,7 @@ RapidSvnFrame::OnColumn (wxCommandEvent & event)
       break;
     }
   }
+  UpdateFileList ();
 }
 
 void
@@ -1133,6 +1134,7 @@ RapidSvnFrame::OnColumnReset (wxCommandEvent &)
       m->CheckColumn (id, visible);
     }
   }
+  UpdateFileList ();
 }
 
 InfoPanel::InfoPanel (wxWindow * parent)
