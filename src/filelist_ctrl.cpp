@@ -161,6 +161,73 @@ GetDefaultWidth (int col)
   return width;
 }
 
+#define FAKE_SVN_WC_OUT_OF_DATE  ((svn_wc_status_kind)999)
+
+/**
+ * compare two svn_wc_status_kind enums
+ *
+ * @param status1 status value 1
+ * @param status2 status value 2
+ * @param newer1 if item1 is also newer
+ * @param newer2 if item2 is also newer
+ * @return result of comparison
+ * @retval 0 both are equal
+ * @retval 1 status1 > status2
+ * @retval -1 status1 < status2
+ */
+static int
+Compare (svn_wc_status_kind status1, svn_wc_status_kind status2, bool newer1, bool newer2)
+{
+  if (newer1 && status1 == svn_wc_status_normal)
+  {
+    status1 = FAKE_SVN_WC_OUT_OF_DATE;
+  }
+  if (newer2 && status2 == svn_wc_status_normal)
+  {
+    status2 = FAKE_SVN_WC_OUT_OF_DATE;
+  }
+  
+  if (status1 == status2)
+  {
+    return 0;
+  }
+  
+  static svn_wc_status_kind lookup[] = 
+  {
+    svn_wc_status_deleted,
+    svn_wc_status_conflicted,
+    svn_wc_status_added,
+    FAKE_SVN_WC_OUT_OF_DATE,
+    svn_wc_status_missing,
+    svn_wc_status_replaced,
+    svn_wc_status_merged,
+    svn_wc_status_modified,
+    svn_wc_status_normal,
+    svn_wc_status_external,
+    svn_wc_status_ignored,
+    svn_wc_status_incomplete,
+    svn_wc_status_obstructed,
+    svn_wc_status_unversioned,
+    svn_wc_status_none,
+    (svn_wc_status_kind)0
+  };
+  
+  for (svn_wc_status_kind* pkind = lookup; *pkind; ++pkind)
+  {
+    if (*pkind == status1)
+    {
+      return -1;
+    }
+    if (*pkind == status2)
+    {
+      return 1;
+    }
+  }
+  
+  // Unrecognised either
+  return 0;
+}
+
 /**
  * compare two paths
  *
@@ -258,6 +325,13 @@ CompareColumn (svn::Status * ps1,
   svn::Entry e1 (ps1->entry ());
   svn::Entry e2 (ps2->entry ());
 
+  bool newer1 = 
+    (ps1->reposTextStatus () == svn_wc_status_modified) ||
+    (ps1->reposPropStatus () == svn_wc_status_modified);
+  bool newer2 = 
+    (ps2->reposTextStatus () == svn_wc_status_modified) ||
+    (ps2->reposPropStatus () == svn_wc_status_modified);
+  
   switch (column)
   {
   case FileListCtrl::COL_NAME:                     
@@ -281,11 +355,11 @@ CompareColumn (svn::Status * ps1,
     break;
 
   case FileListCtrl::COL_TEXT_STATUS:
-    res = Compare (ps1->textStatus (), ps2->textStatus ());
+    res = Compare (ps1->textStatus (), ps2->textStatus (), newer1, newer2);
     break;
 
   case FileListCtrl::COL_PROP_STATUS:
-    res = Compare (ps2->propStatus (), ps2->propStatus ());
+    res = Compare (ps1->propStatus (), ps2->propStatus (), newer1, newer2);
     break;
 
   case FileListCtrl::COL_CMT_DATE:
@@ -883,7 +957,7 @@ FileListCtrl::UpdateFileList ()
     case svn_wc_status_normal:
       // empty text
       if (newer)
-        values[COL_TEXT_STATUS] = _("out of date");
+        values[COL_PROP_STATUS] = _("out of date");
       break;
     default:
       values[COL_PROP_STATUS] = 
