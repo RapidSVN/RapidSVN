@@ -80,6 +80,7 @@ const static char ConfigHeight[] = "/MainFrame/Height";
 const static char ConfigSplitterHoriz[] = "/MainFrame/SplitterHoriz";
 const static char ConfigSplitterVert[] = "/MainFrame/SplitterVert";
 const static char ConfigProjectFmt[] = "/Workbench/Project%d";
+const static char ConfigProjectCount[] = "/Workbench/Count";
 
 const static char TraceMisc[] = "tracemisc";
 
@@ -445,6 +446,7 @@ RapidSvnFrame::~RapidSvnFrame ()
   // Save the workbench contents
   size_t item;
   const size_t itemCount = m_folder_browser->GetProjectCount ();
+  pConfig->Write (ConfigProjectCount, (long)itemCount);
   for (item = 0; item < itemCount; item++)
   {
     wxString key;
@@ -762,8 +764,9 @@ RapidSvnFrame::InitFolderBrowser ()
   wxString key;
   wxString project;
 
-  int item;
-  for (item = 0;; item++)
+  int item, count;
+  pConfig->Read (ConfigProjectCount, &count, 0);
+  for (item = 0; item < count; item++)
   {
     key.Printf (ConfigProjectFmt, item);
     if (pConfig->Read (key, &project, ""))
