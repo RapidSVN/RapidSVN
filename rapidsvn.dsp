@@ -44,7 +44,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /O2 /I "$(WX)/include" /I "$(WX)/contrib/include" /I "$(SUBVERSION)/apr/include" /I "$(SUBVERSION)/apr-util/include" /I "$(SUBVERSION)/apr-util/xml/expat/lib" /I "$(SUBVERSION)/subversion/include" /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /D "APR_DECLARE_STATIC" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "$(WX)/include" /I "$(WX)/contrib/include" /I "$(SUBVERSION)/apr/include" /I "$(SUBVERSION)/apr-util/include" /I "$(SUBVERSION)/apr-util/xml/expat/lib" /I "$(SUBVERSION)/subversion/include" /D "__WXMSW__" /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /D "APR_DECLARE_STATIC" /D "__WIN95__" /D "__WIN32__" /D "STRICT" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 comctl32.lib wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:windows /machine:I386
+# ADD LINK32 "$(WX)\lib\wxmsw.lib" $(SUBVERSION)\db4-win32\lib\libdb40.lib $(SUBVERSION)\subversion\libsvn_repos\Release\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_fs\Release\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Release\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Release\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra\Release\libsvn_ra.lib advapi32.lib mswsock.lib ws2_32.lib $(SUBVERSION)\neon\libneon.lib $(SUBVERSION)\apr-iconv\LibR\apriconv.lib $(SUBVERSION)\subversion\libsvn_wc\Release\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Release\libsvn_subr.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibR\xml.lib $(SUBVERSION)\subversion\libsvn_client\Release\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_delta\Release\libsvn_delta.lib $(SUBVERSION)\apr\LibR\apr.lib $(SUBVERSION)\apr-util\LibR\aprutil.lib comctl32.lib wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:windows /machine:I386
 
 !ELSEIF  "$(CFG)" == "rapidsvn - Win32 Debug"
 
@@ -702,6 +702,10 @@ SOURCE=.\src\wx\msw\tip.ico
 # Begin Source File
 
 SOURCE=.\wx\msw\tip.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\res\bitmaps\versioned_folder.ico
 # End Source File
 # Begin Source File
 

@@ -39,7 +39,9 @@ BUILDING AND INSTALLING
      /neon (from http://www.webdav.org/neon/)
   /rapidsvn
 
-* If you are running Windows then download the MS Platform SDK from 
+* If you are running Windows and you have dependency problems like a missing 
+  shfolder.lib then your system very likely does not have the necessary files.
+  In this case you can get them by downloading the MS Platform SDK from 
   http://www.microsoft.com/msdownload/platformsdk/sdkupdate/ by
   choosing Core SDK.  Watch out though, because the download is
   enormous, around 400 MB.  It would be best if you just got this from
