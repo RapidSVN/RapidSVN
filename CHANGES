@@ -1,3 +1,30 @@
+Version 0.6.0 (released May 24 2004)
+http://svn.collab.net/repos/rapidsvn/tags/0.6.0
+
+User-visible changes:
+* 180   Configure script failed on Solaris because of "find -maxdepth"
+* 183 	Save preferences "Flat view" and "Refresh with Update"
+* 149 	RapidSVN supported for AMD64
+* 184 	New icon for out-of-date files
+* 186 	Implemented Diff command for the Log dialog.
+* 157 	Fixed: diff could not open file on Linux
+* 145 	Fixed: sort-order for status in file-list
+* 158 	Fixed: crash when adding a bookmark
+* 160 	Fixed: double click on file in repos doesn't work
+* 166 	Fixed: trailing spaces on repository URL not trimmed
+* 177 	Fixed: status for 'out-of-date' files not being displayed
+* 185 	Fixed: Text/Property status display for 'out-of-date' files
+* 148 	Fixed: date display in log dlg
+ 
+
+Developer-visible changes:
+* 164 	Fixed: ls return path wrong for current dir
+* 169 	Fixed: Context inits apr after using apr function
+* 162 	Conform with Subversion 1.0.0
+* 168 	add changed path support to log
+
+
+
 Version 0.5.0 (released February 3 2004)
 http://svn.collab.net/repos/rapidsvn/tags/0.5.0
 
