@@ -14,6 +14,7 @@
 // wxwindows
 #include "wx/wx.h"
 #include "wx/dynarray.h"
+#include "wx/filename.h"
 
 // svncpp
 #include "svncpp/context.hpp"
@@ -60,7 +61,9 @@ public:
 
   /**
    * add a new project, but only if it doesnt
-   * exist yet. Add a new context as well
+   * exist yet. Add a new context as well.
+   *
+   * @param name full path/url of the project
    */
   void 
   AddProject (const char * name)
@@ -68,7 +71,9 @@ public:
     if (projects.Index (name) != wxNOT_FOUND)
       return;
 
-    projects.Add (name);
+
+    wxFileName filename (name);
+    projects.Add (filename.GetFullPath (wxPATH_NATIVE));
 
     if (singleContext == 0)
       contexts.Add (new svn::Context ());
