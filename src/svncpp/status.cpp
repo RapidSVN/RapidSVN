@@ -44,7 +44,7 @@ Status::loadPath (const char * path)
                            pool);
 
   // Error present if function is not under version control
-  if(Err != NULL)
+  if ((Err != NULL) || (apr_hash_count(statushash) == 0))
   {
     versioned = false;
     return;
