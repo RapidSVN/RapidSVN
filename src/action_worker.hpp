@@ -13,9 +13,11 @@
 #ifndef _ACTION_WORKER_H_
 #define _ACTION_WORKER_H_
 
-// declarations
+// forward declarations
 class Action;
 class wxWindow;
+class Tracer;
+
 namespace svn
 {
   class Context;

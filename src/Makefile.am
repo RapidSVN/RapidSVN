@@ -5,6 +5,7 @@ noinst_HEADERS=${wildcard *.hpp}
 bin_PROGRAMS=rapidsvn
 
 rapidsvn_SOURCES= \
+	about_dlg.cpp \
 	action.cpp \
 	add_action.cpp \
 	auth_dlg.cpp \

@@ -18,6 +18,7 @@
 //app
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
+#include "version.hpp"
 
 IMPLEMENT_APP (RapidSvnApp)
 

@@ -10,23 +10,33 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _RAPIDSVN_APP_H_INCLUDED_
-#define _RAPIDSVN_APP_H_INCLUDED_
+#ifndef _ABOUT_DLG_H_INCLUDED_
+#define _ABOUT_DLG_H_INCLUDED_
 
 // wxwindows
-#include "wx/app.h"
-#include "wx/intl.h"
+#include "wx/dialog.h"
 
-class RapidSvnApp:public wxApp
+/**
+ * this is a "about" dialog for rapidsvn. It shows the logo and
+ * some informative text about copyright and versions
+ */
+class AboutDlg : public wxDialog
 {
-protected:
-  virtual bool OnInit ();
-  virtual int OnExit ();
-private:
-  wxLocale m_locale;
+public:
+  /**
+   * constructor
+   *
+   * @param parent parent window
+   */
+  AboutDlg (wxWindow * parent);
+
+  /**
+   * destructor
+   */
+  virtual ~AboutDlg ();
 };
 
-DECLARE_APP (RapidSvnApp)
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

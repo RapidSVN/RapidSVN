@@ -23,8 +23,6 @@ class wxMenu;
 
 #define DEFAULT_ARRAY_SIZE 5
 
-#define APPLICATION_NAME _("RapidSVN")
-
 /**
  * Create pseudo-unix paths on windows for use with svn (reverse backslashes,
  * but leave the rest as it is)

@@ -13,6 +13,7 @@
 #ifndef _RAPIDSVN_VERSION_H_INCLUDED_
 #define _RAPIDSVN_VERSION_H_INCLUDED_
 
+#define APPLICATION_NAME _("RapidSVN")
 
 #define RAPIDSVN_COPYRIGHT "(C) 2002, 2003 The RapidSvn Group. All rights reserved."
 

@@ -43,14 +43,13 @@
 #include "update_action.hpp"
 
 // dialogs
+#include "about_dlg.hpp"
 #include "auth_dlg.hpp"
 #include "report_dlg.hpp"
 #include "preferences.hpp"
 #include "preferences_dlg.hpp"
 
 #include "rapidsvn_frame.hpp"
-#include "svn_version.h"
-#include "version.hpp"
 
 #include "proportional_splitter.hpp"
 
@@ -501,50 +500,9 @@ RapidSvnFrame::OnQuit (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
-  wxString version;
-  version.Printf (_("%s Version %d.%d.%d"),
-                  APPLICATION_NAME,
-                  RAPIDSVN_VER_MAJOR, 
-                  RAPIDSVN_VER_MINOR, 
-                  RAPIDSVN_VER_MICRO);
+  AboutDlg dlg (this);
 
-  wxString milestone;
-  milestone.Printf (_("Milestone: %s"), 
-                    RAPIDSVN_VER_MILESTONE);
-
-  wxString subversion;
-  subversion.Printf ("Subversion %d.%d.%d",
-                     SVN_VER_MAJOR, 
-                     SVN_VER_MINOR, 
-                     SVN_VER_MICRO);
-
-  wxString wx;
-  wx.Printf ("wxWindows %d.%d.%d",
-             wxMAJOR_VERSION, 
-             wxMINOR_VERSION, 
-             wxRELEASE_NUMBER);
-  
-  wxString msg;
-  msg.Printf ("%s\n"
-              "%s\n"
-              "\n%s\n\n"
-              "%s\n"
-              "http://rapidsvn.tigris.org\n"
-              "\n"
-              "\n%s\n"
-              "%s\n"
-              "%s",
-              version.c_str (),
-              milestone.c_str (),
-              RAPIDSVN_COPYRIGHT,
-              _("For more information see:"),
-              _("Built with:"),
-              subversion.c_str (),
-              wx.c_str ());
-
-  wxString title;
-  title.Printf (_("About %s"), APPLICATION_NAME);
-  wxMessageBox (msg, title, wxOK | wxICON_INFORMATION);
+  dlg.ShowModal ();
 }
 
 void
@@ -762,7 +720,7 @@ RapidSvnFrame::AddProject ()
     add = FALSE;
     wxMessageBox (_("You cannot add a subversion "
                     "administrative directory to the workbench!"),
-                  APPLICATION_NAME, wxOK);
+                  _("Error"), wxOK);
     return;
   }
 
