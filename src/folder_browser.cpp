@@ -62,71 +62,6 @@ enum
 
 static const unsigned int MAXLENGTH_BOOKMARK = 35;
 
-/**
- * beautify a path, that is too long, so not everything can be
- * displayed
- *
- * Examples:
- * 1. Local Unix path
- *    Before:  /home/users/xela/work/rapidsvn/src/svncpp
- *    After:   /...ork/rapidsvn/src/svncpp
- *
- * 2. Local Windows path
- *    Before:  d:\Documents and Settings\alex\Application Data
- *    After:   D:\...alex\Application Data
- * 
- * 3. Repository URL
- *    Before:  https://svn.collab.net/repos/rapidsvn/trunk/src/svncpp
- *    After:   https://...apidsvn/trunk/src/svncpp
- *
- * Jobs to do:
- * - Uppercase Windows drive letters
- * - shorten path while preserving root path/url
- *
- * @param path input path
- * @return beatified path
- */
-static wxString 
-TruncatePath (const wxString & path_)
-{
-  wxString path (BeautifyPath (path_));
-
-  if (path.length() <= MAXLENGTH_BOOKMARK)
-    return path;
-
-  size_t pos = path.Find (":");
-  wxString newPath;
-
-  pos++;
-  if (pos > 0)
-    newPath = path.Left (pos);
-
-
-  // Now add chars until a different char than
-  // / or \ appears
-  while (pos < path.Length ())
-  {
-    char c = path.GetChar (pos);
-
-    if ( (c == '/') || (c == '\\'))
-    {
-      newPath += c;
-      pos++;
-    }
-    else
-      break;
-  }
-
-  newPath += "...";
-
-  const int restPos = path.Length () - MAXLENGTH_BOOKMARK + 
-    newPath.Length ();
-
-  newPath += path.Mid (restPos);
-
-  return newPath;
-}
-
 
 static bool
 IsValidSeparator (const wxString & sep)
@@ -403,8 +338,7 @@ public:
           const wxString path (bookmarks.GetBookmark (index));
           FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK, 
                                                     path, path, TRUE);
-          wxString label (TruncatePath (path));
-          wxTreeItemId newId = treeCtrl->AppendItem (parentId, label, 
+          wxTreeItemId newId = treeCtrl->AppendItem (parentId, path, 
                                                      FOLDER_IMAGE_BOOKMARK, 
                                                      FOLDER_IMAGE_BOOKMARK, 
                                                      data);
