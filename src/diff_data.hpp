@@ -10,48 +10,58 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _DIFF_DLG_H_INCLUDED_
-#define _DIFF_DLG_H_INCLUDED_
+#ifndef _DIFF_DATA_H_INCLUDED
+#define _DIFF_DATA_H_INCLUDED
 
-// wxwindows
-#include "wx/wx.h"
+// wx
+#include "wx/string.h"
 
-
-// forward declarations
-struct DiffData;
-
-
-/**
- * Dialog that lets the user enter option for
- * comparing files against different revisions
- * and/or urls
- */
-class DiffDlg : public wxDialog
+struct DiffData
 {
 public:
-  /**
-   * Constructor
-   *
-   * @param parent parent window
-   */
-  DiffDlg (wxWindow *parent);
+  struct Revision
+  {
+    bool useRevnum;
+    wxString revnum;
+    wxString date;
+    bool useUrl;
+    wxString url;
 
-  /**
-   * destructor
-   */
-  virtual ~DiffDlg ();
+    Revision ()
+    {
+      Init ();
+    }
+
+    
+    void
+    Init ()
+    {
+      useRevnum = true;
+      revnum = "";
+      date = "";
+      useUrl = false;
+      url = "";
+    }
+
+  };
 
 
-  /**
-   * returns the data the user has entered
-   */
-  const DiffData &
-  GetData ();
+  typedef enum
+  {
+    CMP_WC_WITH_SAME_REV,
+    CMP_WC_WITH_DIFFERENT_REV,
+    CMP_TWO_REV
+  } CompareType;
 
-private:
-  /** hide implementation details */
-  class Data;
-  Data * m;
+  CompareType compareType;
+  Revision revision1;
+  Revision revision2;
+
+  /** Constructor */
+  DiffData ()
+    : compareType (CMP_WC_WITH_SAME_REV)
+  {
+  }
 };
 
 #endif
