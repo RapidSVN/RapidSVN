@@ -19,8 +19,9 @@
 #include "wx/filename.h"
 #include "wx/imaglist.h"
 
-// subversion api
-#include "svn_time.h"
+
+// apr api
+#include "apr_time.h"
 
 // svncpp
 #include "svncpp/client.hpp"
@@ -636,16 +637,24 @@ GetImageIndex (int textIndex, int propIndex)
 static wxString
 FormatDate (apr_time_t apr_date)
 {
+  if (apr_date == 0)
+    return "";
+
   svn::Pool pool;
-  wxString str = svn_time_to_cstring (apr_date, pool);
-  // use only first 19 chars
-  // 5 year + sep
-  // 3 month + sep
-  // 3 day + sep
-  // 3 h + sep
-  // 3 m + sep
-  // 2 s
-  wxString date = str.Left (19);
+  apr_time_exp_t exp_time;
+  char timestr[40];
+
+  apr_time_exp_lt (&exp_time, apr_date);
+  apr_size_t size;
+  apr_status_t apr_err = 
+    apr_strftime (timestr, &size, sizeof (timestr),
+                  "%x %X", &exp_time);
+
+  /* if that failed, just zero out the string and print nothing */
+  if (apr_err)
+    timestr[0] = '\0';
+
+  wxString date (timestr);
   return date;
 }
 

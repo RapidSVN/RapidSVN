@@ -39,7 +39,7 @@ namespace svn
     Data (const char * _name, svn_dirent_t * dirEntry)
       : name (_name), kind (dirEntry->kind), size (dirEntry->size), 
         hasProps (dirEntry->has_props != 0), 
-        createdRev (dirEntry->created_rev)
+        createdRev (dirEntry->created_rev), time (dirEntry->time)
     {
       lastAuthor = dirEntry->last_author == 0 ? "" : dirEntry->last_author;
     }
