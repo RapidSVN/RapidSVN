@@ -34,11 +34,11 @@
 
 /* Patch number.
    Modify for every released patch. */
-#define RAPIDSVN_VER_MICRO      2
+#define RAPIDSVN_VER_MICRO      3
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
-#define RAPIDSVN_VER_MILESTONE "Alpha 3pre2"
+#define RAPIDSVN_VER_MILESTONE "Alpha 3"
 
 #endif
 /* -----------------------------------------------------------------
