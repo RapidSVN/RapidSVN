@@ -22,6 +22,6 @@
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
-#define RAPIDSVN_VER_MILESTONE "Pre Alpha"
+#define RAPIDSVN_VER_MILESTONE "Alpha 1"
 
 #endif

@@ -436,10 +436,10 @@ RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
   wxString msg;
 
-  msg.Printf (_T ("%s Version %d.%d.%d\n"
-                  "Mileston:e %s\n"
-                  "\nBuilt with\n"
-                  "Subversion %d.%d.%d and\n"
+  msg.Printf (_T ("%s\nVersion %d.%d.%d\n"
+                  "Milestone: %s\n"
+                  "\nBuilt with:\n"
+                  "Subversion %d.%d.%d\n"
                   "wxWindows %d.%d.%d"),
               APPLICATION_NAME,
               RAPIDSVN_VER_MAJOR, RAPIDSVN_VER_MINOR, RAPIDSVN_VER_MICRO,

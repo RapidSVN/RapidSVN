@@ -351,7 +351,7 @@ FileListCtrl::GetFullUnixPath (long index, wxString & fullpath)
   UnixPath (fullpath);
 }
 
-bool 
+void 
 FileListCtrl::DeleteAllItems()
 {
   // Delete the item data before deleting the items:
@@ -364,7 +364,7 @@ FileListCtrl::DeleteAllItems()
   wxListCtrl::DeleteAllItems();
 }
 
-bool 
+void 
 FileListCtrl::DeleteItem( long item )
 {
   svn::Status* p = (svn::Status*) GetItemData(item);

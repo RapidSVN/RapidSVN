@@ -44,8 +44,8 @@ public:
 
   void ShowMenu (long index, wxPoint & pt);
   void buildMenu (wxMenu & menu, const wxString & path);
-  bool DeleteAllItems();
-  bool DeleteItem( long item );
+  void DeleteAllItems();
+  void DeleteItem( long item );
 
   // message handlers
   void OnItemActivated (wxListEvent & event);
