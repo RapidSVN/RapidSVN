@@ -958,7 +958,7 @@ FileListCtrl::UpdateFileList ()
       break;
     case svn_wc_status_normal:
       // empty text 
-      if (newer)
+      if (status.reposTextStatus () == svn_wc_status_modified)
         values[COL_TEXT_STATUS] = _("out of date");
       break;
     default:
@@ -972,7 +972,7 @@ FileListCtrl::UpdateFileList ()
       break;
     case svn_wc_status_normal:
       // empty text
-      if (newer)
+      if (status.reposPropStatus () == svn_wc_status_modified)
         values[COL_PROP_STATUS] = _("out of date");
       break;
     default:
