@@ -38,6 +38,9 @@ namespace svn
                             *m_context, 
                             pool);
 
+    if (error != 0)
+      throw ClientException (error);
+
     return stringbuf->data;
   }
 
