@@ -32,7 +32,7 @@ ReportDlg::ReportDlg (wxWindow * parent,
 {
   m_text = new wxTextCtrl (this, -1, _T (""),
                          wxDefaultPosition,
-                         wxSize (300, 100),
+                         wxSize (500, 200),
                          wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH);
   m_text->SetMaxLength (0);
 
