@@ -14,8 +14,12 @@
 #ifndef _PROPERTY_DLG_H_INCLUDED_
 #define _PROPERTY_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/grid.h"
+#include "wx/dialog.h"
+
+// svncpp
 #include "svncpp/property.hpp"
-#include <wx/grid.h>
 
 class PropertyGrid : public wxGrid
 {

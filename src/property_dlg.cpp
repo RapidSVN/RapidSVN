@@ -12,13 +12,15 @@
  */
 
 // wxwindows
-#include <wx/valgen.h>
+#include "wx/wx.h"
+#include "wx/listctrl.h"
+#include "wx/valgen.h"
 
 // svncpp
 #include "svncpp/exception.hpp"
 
 // app
-#include "rapidsvn_app.hpp"
+//REMOVE #include "rapidsvn_app.hpp"
 #include "property_dlg.hpp"
 
 enum
