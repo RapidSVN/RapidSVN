@@ -1,31 +1,67 @@
 RapidSVN
 
-This is a cross-platform GUI front-end for the Subversion source control system.  It is written in C++ using the wxWindows toolkit and is distributed under the GNU General Public License (GPL).  Originally this program was written by Paul Marculescu <paul@p16.pub.ro>.
+INTRODUCTION
 
-Currently it compiles under Windows and it does so with Linux with a few issues that are currently being worked out. 
+RapidSVN is a cross-platform GUI front-end for the Subversion revision system 
+(http://subversion.tigris.org/) written in C++ using the wxWindows GUI 
+framework. It is distributed under the Apache Software License, Version 1.1.  
+See LICENSE.txt for more details. 
 
-Building
-* Download the source code for the program.
-* Download the following libraries:
-    wxWindows GUI toolkit - http://www.wxwindows.org/
-    Apache Portable Runtime (APR) - http://apr.apache.org/
-    Berkeley DB - http://www.sleepycat.com/
-    Neon - http://www.webdav.org/neon/
-    SVN libraries - http://subversion.tigris.org/project_source.html
-* Download the latest version of subversion with all of the client libraries included.  This can now currently be done by downloading subversion 
+Currently it compiles under Windows and it does so with Linux but there are a 
+few runtime issues that are currently being worked out.  Eventually this 
+should run on the Mac and several other flavors of *NIX.
 
-Download all the files just as the directions of Subversion INSTALL file so you get this directory structure:
+BUILDING AND INSTALLING
 
-/subversion
-   /apr
-   /apr-iconv
-   /apr-util
-   /db4-win32
-   /neon
-/rapidsvn
+* The RapidSVN source code is stored in a Subversion repository (of course!) 
+  so in order to get it code you have to download a svn client from the 
+  Subversion project page:
+  http://subversion.tigris.org/servlets/ProjectDocumentList
 
-* Two environmental variables must be set first: 
-SUBVERSION - SVN libraries root directory
-WX - wxWindows libraries directory
-set WX=C:\Program Files\wx2
-set SUBVERSION=D:\dev\subversion
+* Download the source code for RapidSVN.  You can do this by running the
+  following svn command:
+  % svn co http://svn.collab.net/repos/svn/clients/rapidsvn/trunk rapidsvn  
+
+* Download the wxWindows 2.3.2 libraries: http://www.wxwindows.org/
+
+* Download the latest Subversion source tree.  Here are the directions: 
+  http://subversion.tigris.org/project_source.html
+
+* Once you have Subversion the download all the files just as the directions in 
+  the Subversion INSTALL file so you have the directory structure below. Note: 
+  the db4-win32 directory name is for MS VC++.
+
+  /subversion
+     /apr (apache.org CVS)
+     /apr-iconv (apache.org CVS)
+     /apr-util (apache.org CVS)
+     /db4-win32 (http://www.sleepycat.com/)
+     /neon (from http://www.webdav.org/neon/)
+  /rapidsvn
+
+* If you are running Windows then download the MS Platform SDK from 
+  http://www.microsoft.com/msdownload/platformsdk/sdkupdate/ by
+  choosing Core SDK.  Watch out though, because the download is
+  enormous, around 400 MB.  It would be best if you just got this from
+  an MSDN CD if possible.
+
+  If you have the cvs client installed on your machine then you can download the
+  apr libraries with the following commands:
+  % cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic co apr
+  % cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic co apr-util
+  % cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic co apr-iconv
+
+* Two environmental variables must be set as well: 
+  SUBVERSION - SVN libraries root directory
+  WX - wxWindows libraries directory
+
+  On Windows you can add the following to autoexec.bat or through the 
+  Environmental Variables editor.
+  set WX=C:\Program Files\wx2
+  set SUBVERSION=D:\dev\subversion
+
+PROJECT CONTRIBUTORS
+
+* Paul Marculescu - original author
+* Brent R. Matzelle - developer and project leader
+* Alexander Mueller - developer and project leader
