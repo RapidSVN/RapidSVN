@@ -1,6 +1,6 @@
 SUBDIRS=manpage
 DOXYGEN=@DOXYGEN@
-EXTRA_DIST=svncpp/html/*
+EXTRA_DIST=svncpp.dox svncpp/html/*
 
 all: @TARGET_DOXYGEN@
 
