@@ -190,7 +190,7 @@ namespace svn
                   const bool descend,
                   const bool get_all,
                   const bool update,
-                  const bool no_ignore)
+                  const bool no_ignore) throw (ClientException)
   {
     if (Url::isValid (path))
       return remoteStatus (this, path, descend, get_all, update, 
@@ -254,7 +254,7 @@ namespace svn
   }
 
   Status 
-  Client::singleStatus (const char * path)
+  Client::singleStatus (const char * path) throw (ClientException)
   {
     if (Url::isValid (path))
       return remoteSingleStatus (path, m_context);
@@ -264,7 +264,7 @@ namespace svn
 
   const LogEntries *
   Client::log (const char * path, const Revision & revisionStart, 
-               const Revision & revisionEnd)
+               const Revision & revisionEnd) throw (ClientException)
   {
     Targets target (path);
     Pool pool;

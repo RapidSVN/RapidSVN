@@ -19,6 +19,7 @@
 
 // svncpp
 #include "context.hpp"
+#include "exception.hpp"
 #include "path.hpp"
 #include "revision.hpp"
 #include "log_entry.hpp"
@@ -34,7 +35,6 @@ namespace svn
   class Status;
   class Targets;
   class DirEntry;
-  class ClientException;
 
   typedef std::vector<LogEntry> LogEntries;
   typedef std::vector<Status> StatusEntries;
@@ -111,7 +111,8 @@ namespace svn
      */
     void 
     checkout (const char * moduleName, const Path & destPath, 
-              const Revision & revision, bool recurse) throw (ClientException);
+              const Revision & revision, 
+              bool recurse) throw (ClientException);
   
     /**
      * Sets the notification function and baton that the C library 
@@ -121,7 +122,7 @@ namespace svn
      *               checking out each file.
      */
     void 
-    notification (Notify * notify) throw (ClientException);
+    notification (Notify * notify);
 
     /**
      * Sets a single file for deletion.
@@ -138,7 +139,8 @@ namespace svn
      * @exception ClientException
      */
     void 
-    remove (const Targets & targets, bool force) throw (ClientException);
+    remove (const Targets & targets, 
+            bool force) throw (ClientException);
 
     /**
      * Reverts a file to a pristine state.
@@ -176,7 +178,8 @@ namespace svn
      * @return contents of the file
      */
     std::string
-    cat (const Path & path, const Revision & revision) throw (ClientException);
+    cat (const Path & path, 
+         const Revision & revision) throw (ClientException);
 
     /**
      * Commits changes to the repository. This usually requires 
@@ -189,7 +192,9 @@ namespace svn
      * @exception ClientException
      */
     svn_revnum_t
-    commit (const Targets & targets, const char * message, bool recurse) throw (ClientException);
+    commit (const Targets & targets, 
+            const char * message, 
+            bool recurse) throw (ClientException);
 
     /**
      * Copies a versioned file with the history preserved.
@@ -218,7 +223,8 @@ namespace svn
      * @exception ClientException
      */
     void 
-    mkdir (const Path & path, const char * message) throw (ClientException);
+    mkdir (const Path & path, 
+           const char * message) throw (ClientException);
 
     /**
      * Recursively cleans up a local directory, finishing any
@@ -247,8 +253,10 @@ namespace svn
      * @param force force export
      */
     void 
-    doExport (const Path & srcPath, const Path & destPath, 
-              const Revision & revision, bool force=false) throw (ClientException);
+    doExport (const Path & srcPath, 
+              const Path & destPath, 
+              const Revision & revision, 
+              bool force=false) throw (ClientException);
 
     /**
      * Update local copy to mirror a new url. This excapsulates the 
@@ -257,7 +265,8 @@ namespace svn
      */
     void 
     doSwitch (const Path & path, const char * url, 
-              const Revision & revision, bool recurse);
+              const Revision & revision, 
+              bool recurse) throw (ClientException);
 
     /**
      * Import file or directory PATH into repository directory URL at
@@ -270,7 +279,8 @@ namespace svn
      */
     void 
     import (const Path & path, const char * url,
-            const char * message, bool recurse);
+            const char * message, 
+            bool recurse) throw (ClientException);
 
     /**
      * Merge changes from two paths into a new local path.
@@ -279,7 +289,8 @@ namespace svn
     void 
     merge (const Path & path1, const Revision & revision1, 
            const Path & path2, const Revision & revision2,
-           const Path & localPath, bool force, bool recurse);
+           const Path & localPath, bool force, 
+           bool recurse) throw (ClientException);
 
     /**
      * Retrieve log information for the given path
@@ -296,7 +307,7 @@ namespace svn
      */
     const LogEntries *
     log (const char * path, const Revision & revisionStart, 
-         const Revision & revisionEnd);
+         const Revision & revisionEnd) throw (ClientException);
 
     /**
      * Produce diff output which describes the delta between
@@ -324,7 +335,7 @@ namespace svn
     diff (const Path & tmpPath, const Path & path,
           const Revision & revision1, const Revision & revision2,
           const bool recurse, const bool ignoreAncestry,
-          const bool noDiffDeleted);
+          const bool noDiffDeleted) throw (ClientException);
 
     /**
      * lists entries in @a pathOrUrl no matter whether local or
@@ -337,7 +348,7 @@ namespace svn
     DirEntries
     ls (const char * pathOrUrl,
         svn_opt_revision_t * revision,
-        bool recurse);
+        bool recurse) throw (ClientException);
 
   private:
     Context * m_context;

@@ -65,7 +65,7 @@ namespace svn
   Client::diff (const Path & tmpPath, const Path & path,
                 const Revision & revision1, const Revision & revision2,
                 const bool recurse, const bool ignoreAncestry,
-                const bool noDiffDeleted)
+                const bool noDiffDeleted) throw (ClientException)
   {
     Pool pool;
     svn_error_t * error;

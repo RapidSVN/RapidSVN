@@ -26,8 +26,10 @@
 namespace svn
 {
   void
-  Client::checkout (const char * url, const Path & destPath, 
-                    const Revision & revision, bool recurse)
+  Client::checkout (const char * url, 
+                    const Path & destPath, 
+                    const Revision & revision, 
+                    bool recurse) throw (ClientException)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
@@ -53,7 +55,8 @@ namespace svn
   }
 
   void
-  Client::remove (const Path & path, bool force)
+  Client::remove (const Path & path, 
+                  bool force) throw (ClientException)
   {
     Pool pool;
     Targets targets (path.c_str ());
@@ -70,7 +73,8 @@ namespace svn
   }
 
   void
-  Client::remove (const Targets & targets, bool force)
+  Client::remove (const Targets & targets, 
+                  bool force) throw (ClientException)
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
@@ -86,7 +90,8 @@ namespace svn
   }
 
   void
-  Client::revert (const Path & path, bool recurse)
+  Client::revert (const Path & path, 
+                  bool recurse) throw (ClientException)
   {
     Pool pool;
 
@@ -101,7 +106,8 @@ namespace svn
   }
 
   void
-  Client::add (const Path & path, bool recurse)
+  Client::add (const Path & path, 
+               bool recurse) throw (ClientException)
   {
     Pool pool;
 
@@ -116,8 +122,9 @@ namespace svn
   }
 
   void
-  Client::update (const Path & path, const Revision & revision, 
-                  bool recurse)
+  Client::update (const Path & path, 
+                  const Revision & revision, 
+                  bool recurse) throw (ClientException)
   {
     Pool pool;
     svn_error_t * error =
@@ -132,7 +139,7 @@ namespace svn
 
   svn_revnum_t
   Client::commit (const Targets & targets, const char * message, 
-                  bool recurse)
+                  bool recurse) throw (ClientException)
   {
     Pool pool;
 
@@ -157,7 +164,7 @@ namespace svn
   void
   Client::copy (const Path & srcPath, 
                 const Revision & srcRevision, 
-                const Path & destPath)
+                const Path & destPath) throw (ClientException)
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
@@ -177,7 +184,7 @@ namespace svn
   Client::move (const Path & srcPath, 
                 const Revision & srcRevision, 
                 const Path & destPath, 
-                bool force)
+                bool force) throw (ClientException)
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
@@ -195,7 +202,8 @@ namespace svn
   }
 
   void
-  Client::mkdir (const Path & path, const char * message)
+  Client::mkdir (const Path & path, 
+                 const char * message) throw (ClientException)
   {
     Pool pool;
     m_context->setLogMessage (message);
@@ -214,7 +222,7 @@ namespace svn
   }
 
   void
-  Client::cleanup (const Path & path)
+  Client::cleanup (const Path & path) throw (ClientException)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
@@ -227,7 +235,8 @@ namespace svn
   }
 
   void
-  Client::resolved (const Path & path, bool recurse)
+  Client::resolved (const Path & path, 
+                    bool recurse) throw (ClientException)
   {
     Pool pool;
     svn_error_t * error =  
@@ -241,8 +250,10 @@ namespace svn
   }
 
   void
-  Client::doExport (const Path & srcPath, const Path & destPath, 
-                    const Revision & revision, bool force)
+  Client::doExport (const Path & srcPath, 
+                    const Path & destPath, 
+                    const Revision & revision, 
+                    bool force) throw (ClientException)
   {
     Pool pool;
     svn_error_t * error =  
@@ -262,7 +273,7 @@ namespace svn
   Client::doSwitch (const Path & path, 
                     const char * url, 
                     const Revision & revision, 
-                    bool recurse)
+                    bool recurse) throw (ClientException)
   {
     Pool pool;
     svn_error_t * error =  
@@ -281,7 +292,7 @@ namespace svn
   Client::import (const Path & path, 
                   const char * url, 
                   const char * message, 
-                  bool recurse)
+                  bool recurse) throw (ClientException)
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
@@ -303,7 +314,8 @@ namespace svn
   void
   Client::merge (const Path & path1, const Revision & revision1, 
                  const Path & path2, const Revision & revision2,
-                 const Path & localPath, bool force, bool recurse)
+                 const Path & localPath, bool force, 
+                 bool recurse) throw (ClientException)
   {
     Pool pool;
     svn_error_t * error =  

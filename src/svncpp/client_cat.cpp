@@ -24,7 +24,8 @@
 namespace svn
 {
   std::string
-  Client::cat (const Path & path, const Revision & revision)
+  Client::cat (const Path & path, 
+               const Revision & revision) throw (ClientException)
   {
     Pool pool;
     

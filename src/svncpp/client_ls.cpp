@@ -33,7 +33,7 @@ namespace svn
   DirEntries
   Client::ls (const char * pathOrUrl,
               svn_opt_revision_t * revision,
-              bool recurse)
+              bool recurse) throw (ClientException)
   {
     Pool pool;
 
