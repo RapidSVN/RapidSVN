@@ -256,167 +256,167 @@ SOURCE=.\src\utils.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\src\action_thread.h
+SOURCE=.\src\action_thread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\add_action.h
+SOURCE=.\src\add_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\bitmaps.h
+SOURCE=.\src\bitmaps.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\checkout_action.h
+SOURCE=.\src\checkout_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\checkout_dlg.h
+SOURCE=.\src\checkout_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\commit_action.h
+SOURCE=.\src\commit_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\commit_dlg.h
+SOURCE=.\src\commit_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\copy_action.h
+SOURCE=.\src\copy_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\delete_action.h
+SOURCE=.\src\delete_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\delete_dlg.h
+SOURCE=.\src\delete_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\exceptions.h
+SOURCE=.\src\exceptions.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\file_action.h
+SOURCE=.\src\file_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\filelist_ctrl.h
+SOURCE=.\src\filelist_ctrl.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\folder_browser.h
+SOURCE=.\src\folder_browser.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\icons.h
+SOURCE=.\src\icons.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\import_action.h
+SOURCE=.\src\import_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\import_dlg.h
+SOURCE=.\src\import_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\include.h
+SOURCE=.\src\include.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\log_action.h
+SOURCE=.\src\log_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\log_dlg.h
+SOURCE=.\src\log_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\merge_action.h
+SOURCE=.\src\merge_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\merge_dlg.h
+SOURCE=.\src\merge_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\mkdir_action.h
+SOURCE=.\src\mkdir_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\mkdir_dlg.h
+SOURCE=.\src\mkdir_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\preferences_dlg.h
+SOURCE=.\src\preferences_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\property_action.h
+SOURCE=.\src\property_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\property_dlg.h
+SOURCE=.\src\property_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\rapidsvn_app.h
+SOURCE=.\src\rapidsvn_app.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\rapidsvn_frame.h
+SOURCE=.\src\rapidsvn_frame.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\report_dlg.h
+SOURCE=.\src\report_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\resolve_action.h
+SOURCE=.\src\resolve_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\resource.h
+SOURCE=.\src\resource.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\revert_action.h
+SOURCE=.\src\revert_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\svn_file_info.h
+SOURCE=.\src\svn_file_info.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\svn_notify.h
+SOURCE=.\src\svn_notify.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\trace_commit.h
+SOURCE=.\src\trace_commit.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\trace_update.h
+SOURCE=.\src\trace_update.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\tracer.h
+SOURCE=.\src\tracer.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\update_action.h
+SOURCE=.\src\update_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\update_dlg.h
+SOURCE=.\src\update_dlg.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\utils.h
+SOURCE=.\src\utils.hpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"
