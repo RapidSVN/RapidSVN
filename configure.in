@@ -33,6 +33,26 @@ CPPFLAGS="$CPPFLAGS  `$APRCONFIG --cppflags` `$APRCONFIG --includes`"
 CXXFLAGS="$CXXFLAGS `$APRCONFIG --cflags`"
 APR_LIBS="`$APRCONFIG --link-ld --libs`"
 
+APUCONFIG=apu-config
+AC_ARG_WITH(apu-config,
+[[  --with-apu-config=FILE    Use the given path to apu-config when determining
+                            APR util configuration; defaults to "apu-config"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        APUCONFIG=$withval
+    fi
+])
+AC_MSG_CHECKING([for APR util])
+if $APUCONFIG --includes > /dev/null; then
+    AC_MSG_RESULT([found])
+else
+    AC_MSG_RESULT([not found])
+    AC_MSG_ERROR([APR util is required. Try --with-apu-config.])
+fi
+CPPFLAGS="$CPPFLAGS `$APUCONFIG --includes`"
+APR_LIBS="$APR_LIBS `$APUCONFIG --link-ld --libs`"
+
+
 dnl
 dnl Subversion
 dnl
