@@ -67,6 +67,12 @@ namespace svn
      */
     ClientException (svn_error_t * error) throw ();
 
+
+    /**
+     * Constructor that takes only an apr errorcode
+     */
+    ClientException (apr_status_t status) throw ();
+
     /** 
      * Copy constructor
      */

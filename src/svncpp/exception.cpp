@@ -55,8 +55,8 @@ namespace svn
   }
 
 
-  ClientException::ClientException (svn_error_t * error) throw () : 
-    Exception ("")
+  ClientException::ClientException (svn_error_t * error) throw () 
+    : Exception ("")
   {
     if (error == 0)
       return;
@@ -73,6 +73,14 @@ namespace svn
     }
     svn_error_clear (error);
   }
+
+
+  ClientException::ClientException (apr_status_t status) throw () 
+    : Exception ("")
+  {
+    m->apr_err = status;
+  }
+
 
   ClientException::~ClientException () throw ()
   {
