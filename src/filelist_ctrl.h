@@ -7,7 +7,11 @@
 /**
  * Define an array of indexes of the selected items.
  */
+#ifdef WX_DEFINE_ARRAY_INT
+WX_DEFINE_ARRAY_INT (long, IndexArray);
+#else
 WX_DEFINE_ARRAY (long, IndexArray);
+#endif
 
 class FileListCtrl:public wxListCtrl
 {
