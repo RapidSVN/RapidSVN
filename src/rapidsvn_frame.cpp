@@ -295,18 +295,18 @@ RapidSvnFrame::InitializeMenu ()
 
   // Create menu
   wxMenu *menuCreate = new wxMenu;
-  menuCreate->Append (ID_Import, "&Import an unversioned file or tree ...");
-  menuCreate->Append (ID_Checkout, "&Checkout working copy ...");
+  menuCreate->Append (ID_Import, _T ("&Import an unversioned file or tree ..."));
+  menuCreate->Append (ID_Checkout, _T ("&Checkout working copy ..."));
 
   menuCreate->AppendSeparator ();
 
-  menuCreate->Append (ID_Mkdir, "Make a new directory ...");
-  menuCreate->Append (ID_Copy, "C&opy remembering history ...");
+  menuCreate->Append (ID_Mkdir, _T ("Make a new directory ..."));
+  menuCreate->Append (ID_Copy, _T ("C&opy remembering history ..."));
 
   menuCreate->AppendSeparator ();
 
-  menuCreate->Append (ID_Merge, "Merge differences");
-  menuCreate->Append (ID_Switch, "Switch to URL ...");
+  menuCreate->Append (ID_Merge, _T ("Merge differences"));
+  menuCreate->Append (ID_Switch, _T ("Switch to URL ..."));
 
   // Modify menu
   wxMenu *menuModif = new wxMenu;
@@ -374,9 +374,9 @@ RapidSvnFrame::InitializeMenu ()
 
   // Help Menu
   wxMenu *menuHelp = new wxMenu;
-  menuHelp->Append (ID_Contents, "&Contents");
+  menuHelp->Append (ID_Contents, _T ("&Contents"));
   menuHelp->AppendSeparator ();
-  menuHelp->Append (ID_About, "&About...");
+  menuHelp->Append (ID_About, _T ("&About..."));
 
   // Create the menu bar and append the menus
   wxMenuBar *menuBar = new wxMenuBar;
@@ -550,7 +550,9 @@ RapidSvnFrame::RecreateToolbar ()
                     FALSE,
                     -1,
                     -1,
-                    (wxObject *) NULL, "Refresh", "Refresh the file list");
+                    (wxObject *) NULL, 
+                    _T ("Refresh"), 
+                    _T ("Refresh the file list"));
 
   toolBar->AddSeparator ();
 
@@ -628,7 +630,7 @@ RapidSvnFrame::AddActionTools ()
                     (wxObject *) NULL,
                     _T ("Resolve selected"),
                     _T
-                    (" Remove 'conflicted' state on working copy files or directories)"));
+                    ("Remove 'conflicted' state on working copy files or directories)"));
 
   toolBar->AddSeparator ();
 }
@@ -665,38 +667,6 @@ void
 RapidSvnFrame::OnToolEnter (wxCommandEvent & event)
 {
 }
-
-//REMOVE void
-//REMOVE RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
-//REMOVE {
-//REMOVE   switch (event.GetId ())
-//REMOVE   {
-//REMOVE   case TOOLBAR_REFRESH:
-//REMOVE     UpdateFileList ();
-//REMOVE     break;
-//REMOVE 
-//REMOVE   case TOOLBAR_INFO:
-//REMOVE     ShowInfo ();
-//REMOVE     break;
-//REMOVE 
-//REMOVE   case TOOLBAR_LOG:
-//REMOVE     ShowLog ();
-//REMOVE     break;
-//REMOVE 
-//REMOVE   case TOOLBAR_COMMIT:
-//REMOVE   case TOOLBAR_UPDATE:
-//REMOVE   case TOOLBAR_ADD:
-//REMOVE   case TOOLBAR_DEL:
-//REMOVE   case TOOLBAR_REVERT:
-//REMOVE   case TOOLBAR_RESOLVE:
-//REMOVE     OnFileCommand (event);
-//REMOVE     break;
-//REMOVE 
-//REMOVE     MakeResolve ();
-//REMOVE     break;
-//REMOVE 
-//REMOVE   }
-//REMOVE }
 
 void
 RapidSvnFrame::AddProject ()
@@ -975,7 +945,6 @@ RapidSvnFrame::ShowInfo ()
 void
 RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 {
-//  ((wxTreeCtrl*)event.m_eventObject)->Refresh( false, NULL );
   m_activePane = ACTIVEPANE_FOLDER_BROWSER;
   UpdateCurrentPath ();
   UpdateFileList ();
