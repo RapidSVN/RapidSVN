@@ -37,7 +37,7 @@ public:
     wxTextCtrl* msg;
     {
       wxTextValidator val (wxFILTER_NONE, &message);
-      msg = new wxTextCtrl (window, -1, _(""), wxDefaultPosition, 
+      msg = new wxTextCtrl (window, -1, "", wxDefaultPosition, 
                             msgSize, wxTE_MULTILINE, val);
     }
     wxCheckBox * checkRecursive = NULL;
