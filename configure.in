@@ -13,61 +13,87 @@ dnl
 dnl APR
 dnl
 
-APRCONFIG=apr-config
+APR_CONFIGS="apr-config /usr/local/apr/bin/apr-config"
 AC_ARG_WITH(apr-config,
 [[  --with-apr-config=FILE    Use the given path to apr-config when determining
                             APR configuration; defaults to "apr-config"]],
 [
     if test "$withval" != "yes" -a "$withval" != ""; then
-        APRCONFIG=$withval
+        APR_CONFIGS=$withval
     fi
 ])
 AC_MSG_CHECKING([for APR])
-if $APRCONFIG --cflags > /dev/null; then
+APR_CONFIG=""
+for VALUE in $APR_CONFIGS ; do
+	if $VALUE --cflags > /dev/null; then
+		APR_CONFIG=$VALUE
+		break
+	fi
+done
+test $VALUE && APR_CONFIG=$VALUE
+if test $APR_CONFIG ; then
     AC_MSG_RESULT([found])
 else
     AC_MSG_RESULT([not found])
     AC_MSG_ERROR([APR is required. Try --with-apr-config.])
 fi
-CPPFLAGS="$CPPFLAGS  `$APRCONFIG --cppflags` `$APRCONFIG --includes`"
-CXXFLAGS="$CXXFLAGS `$APRCONFIG --cflags`"
-APR_LIBS="`$APRCONFIG --link-ld --libs`"
+	
+CPPFLAGS="$CPPFLAGS  `$APR_CONFIG --cppflags` `$APR_CONFIG --includes`"
+CXXFLAGS="$CXXFLAGS `$APR_CONFIG --cflags`"
+APR_LIBS="`$APR_CONFIG --link-ld --libs`"
 
-APUCONFIG=apu-config
+dnl
+dnl APR util
+dnl
+
+APU_CONFIGS="apu-config /usr/local/apr/bin/apu-config"
 AC_ARG_WITH(apu-config,
 [[  --with-apu-config=FILE    Use the given path to apu-config when determining
                             APR util configuration; defaults to "apu-config"]],
 [
     if test "$withval" != "yes" -a "$withval" != ""; then
-        APUCONFIG=$withval
+        APU_CONFIGS=$withval
     fi
 ])
 AC_MSG_CHECKING([for APR util])
-if $APUCONFIG --includes > /dev/null; then
+APU_CONFIG=""
+for VALUE in $APU_CONFIGS ; do
+	if $VALUE --includes > /dev/null; then
+		APU_CONFIG=$VALUE
+		break
+	fi
+done
+if test $APU_CONFIG ; then
     AC_MSG_RESULT([found])
 else
     AC_MSG_RESULT([not found])
     AC_MSG_ERROR([APR util is required. Try --with-apu-config.])
 fi
-CPPFLAGS="$CPPFLAGS `$APUCONFIG --includes`"
-APR_LIBS="$APR_LIBS `$APUCONFIG --link-ld --libs`"
+CPPFLAGS="$CPPFLAGS `$APU_CONFIG --includes`"
+APR_LIBS="$APR_LIBS `$APU_CONFIG --link-ld --libs`"
 
 
 dnl
 dnl Subversion
 dnl
 
-SVN_INCLUDE="/usr/local/include"
+SVN_INCLUDES="/usr/local/include /usr/include"
 AC_ARG_WITH(svn-include,
-[[  --with-svn-include=DIR   Use the given path to the subversion headers;
-                           defaults to "/usr/local/include"]],
+[[  --with-svn-include=DIR   Use the given path to the subversion headers.]],
 [
     if test "$withval" != "yes" -a "$withval" != ""; then
-        SVN_INCLUDE=$withval
+        SVN_INCLUDES=$withval
     fi
 ])
 AC_MSG_CHECKING([for Subversion headers])
-if test -f "$SVN_INCLUDE/subversion-1/svn_types.h"; then
+SVN_INCLUDE=""
+for VALUE in $SVN_INCLUDES ; do
+    if test -f $VALUE/subversion-1/svn_types.h ; then
+        SVN_INCLUDE=$VALUE
+        break
+    fi
+done
+if test $SVN_INCLUDE ; then
     AC_MSG_RESULT([found])
 else
     AC_MSG_RESULT([not found])
@@ -75,18 +101,24 @@ else
 fi
 CPPFLAGS="$CPPFLAGS -I$SVN_INCLUDE/subversion-1"
 
-SVN_LIB="/usr/local/lib"
+SVN_LIBS="/usr/local/lib /usr/lib"
 AC_ARG_WITH(svn-lib,
-[[  --with-svn-lib=DIR  Use the given path to the subversion libraries;
-                      defaults to "/usr/local/lib"]],
+[[  --with-svn-lib=DIR  Use the given path to the subversion libraries.]],
 [
     if test "$withval" != "yes" -a "$withval" != ""; then
-        SVN_LIB=$withval
+        SVN_LIBS=$withval
     fi
 ])
 AC_MSG_CHECKING([for Subversion libraries])
-LIBSVN_RESULT=`find $SVN_LIB -name "libsvn_client-1.*" -maxdepth 1 \( -type f -o -type l \)`
-if test -n "$LIBSVN_RESULT"; then
+SVN_LIB=""
+for VALUE in $SVN_LIBS ; do
+	LIBSVN_RESULT=`find $SVN_LIB -name "libsvn_client-1.*" -maxdepth 1 \( -type f -o -type l \)`
+	if test -n "$LIBSVN_RESULT"; then
+		SVN_LIB=$VALUE
+		break
+	fi
+done
+if $SVN_LIB ; then
     AC_MSG_RESULT([found])
 else
     AC_MSG_RESULT([not found])
@@ -97,23 +129,30 @@ dnl
 dnl wxWindows
 dnl
 
-WXCONFIG=wx-config
+WX_CONFIGS="wx-config"
 AC_ARG_WITH(wx-config,
 [[  --with-wx-config=FILE     Use the given path to wx-config when determining
                             wxWindows configuration; defaults to "wx-config"]],
 [
     if test "$withval" != "yes" -a "$withval" != ""; then
-        WXCONFIG=$withval
+        WX_CONFIGS=$withval
     fi
 ])
 AC_MSG_CHECKING([wxWindows version])
-if wxversion=`$WXCONFIG --version`; then
-    AC_MSG_RESULT([$wxversion])
+WX_CONFIG=""
+for VALUE in $WX_CONFIGS ; do
+	if WX_VERSION=`$VALUE --version` >/dev/null ; then
+		WX_CONFIG=$VALUE
+		break
+	fi
+done
+if test $WX_CONFIG ; then	
+	AC_MSG_RESULT([$WX_VERSION])
 else
-    AC_MSG_RESULT([not found])
-    AC_MSG_ERROR([wxWindows is required. Try --with-wx-config.])
+	AC_MSG_RESULT([not found])
+	AC_MSG_ERROR([wxWindows is required. Try --with-wx-config.])
 fi
-case $wxversion in
+case $WX_VERSION in
     [2.3.3])
         ;;
     [2.[4-9].*])
@@ -123,9 +162,9 @@ case $wxversion in
 	AC_MSG_ERROR([Try --with-wx-config.])
         ;;
 esac
-CPPFLAGS="$CPPFLAGS `$WXCONFIG --cppflags`"
-CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
-WX_LIBS="`$WXCONFIG --libs`"
+CPPFLAGS="$CPPFLAGS `$WX_CONFIG --cppflags`"
+CXXFLAGS="$CXXFLAGS `$WX_CONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+WX_LIBS="`$WX_CONFIG --libs`"
 
 dnl
 dnl CppUnit
@@ -158,7 +197,7 @@ AC_MSG_CHECKING([xsltproc])
 if test -z "$XSLTPROC" ; then
    AC_MSG_RESULT([not used])
 else
-   if xsltprocversion=`$XSLTPROC --version` ; then
+   if $XSLTPROC --version > /dev/null ; then
       AC_MSG_RESULT([found])
    else
       AC_MSG_RESULT([not found])	
@@ -295,8 +334,11 @@ AC_SUBST(DOXYGEN)
 AC_SUBST(TARGET_DOXYGEN)
 
 AC_OUTPUT(Makefile \
-          doc/Makefile doc/manpage/Makefile \
-          src/Makefile src/svncpp/Makefile src/res/Makefile)
+          doc/Makefile \
+          doc/manpage/Makefile \
+          src/Makefile \
+          src/svncpp/Makefile \
+          src/res/Makefile)
 
 if test "$CPPUNITCONFIG" ; then
     CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
