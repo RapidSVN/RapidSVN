@@ -849,15 +849,22 @@ VSvnFrame::InitComboBrowser ()
   int i;
   wxString key;
   wxString val;
+  wxArrayString workbenchItems;
 
   for (i = 0;; i++)
   {
     key.Printf (_T ("/MainFrame/wc%d"), i);
     if (pConfig->Read (key, &val, _T ("")))
+    {
       m_comboBrowse->Append (val);
+      workbenchItems.Add(val);
+    }
+      
     else
       break;
   }
+
+  m_folder_browser->SetWorkbenchItems(workbenchItems);
 }
 
 void

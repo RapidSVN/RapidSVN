@@ -1,7 +1,16 @@
 #ifndef _FOLDER_BROWSER_H_INCLUDED_
 #define _FOLDER_BROWSER_H_INCLUDED_
 
-#include <wx/generic/dirctrlg.h>
+//#define FOLDER_BROWSER_USE_GENERIC_DIRCTRL
+
+#ifdef FOLDER_BROWSER_USE_GENERIC_DIRCTRL
+#include "wx/generic/dirctrlg.h"
+#else
+#include "patched_dirctrlg.h"
+#define wxGenericDirCtrl PatchedGenericDirCtrl
+#define wxDirItemData PatchedDirItemData
+#define wxDIRCTRL_DIR_ONLY PATCHED_DIRCTRL_DIR_ONLY
+#endif
 
 class FolderBrowser:public wxGenericDirCtrl
 {
@@ -20,10 +29,24 @@ public:
                  int defaultFilter = 0,
                  const wxString & name = wxTreeCtrlNameStr);
 
+   virtual ~ FolderBrowser ();
+
   void OnSelChanged (wxTreeEvent & event);
   void OnKeyDown (wxTreeEvent & event);
 
+  virtual void SetupSections ();
+
+  void SetWorkbenchItems (const wxArrayString & workbenchItems);
+  const wxArrayString GetWorkbenchItems ();
+
+protected:
+   virtual void ExpandDir (const wxTreeItemId & parentId);
+  virtual void CollapseDir (const wxTreeItemId & parentId);
+
 private:
- DECLARE_EVENT_TABLE ()};
+   DECLARE_EVENT_TABLE () wxTreeItemId m_workbenchId;
+  wxArrayString m_workbenchItems;
+};
+
 
 #endif
