@@ -9,66 +9,40 @@
  * individuals.  For exact contribution history, see the revision
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
+ * @file status.hpp
  */
 #ifndef _SVNCPP_STATUS_HPP_
 #define _SVNCPP_STATUS_HPP_
 
-#include "svn_types.h"
+// subversion api
+//#include "svn_types.h"
 #include "svn_wc.h"
-#include <string>
+
+// svncpp
+#include "pool.hpp"
 
 namespace svn
 {
-/**
- * Subversion status API.
- */
+  /**
+   * Subversion status API. This class wraps around
+   * @a svn_wc_status_t. 
+   *
+   * @see svn_wc.hpp
+   * @see svn_wc_status_t
+   */
   class Status
   {
-  private:
-    bool m_isVersioned;
-    std::string m_path;
-    bool m_isDir;
-    bool m_isCopied;
-    bool m_isLocked;
-    svn_revnum_t m_revision;
-    unsigned long m_lastChanged;
-    std::string m_lastCommitAuthor;
-    svn_wc_status_kind m_textType;
-    svn_wc_status_kind m_propType;
-
-    /**
-     * Returns the description of the status.
-     */
-    const char *
-    statusDescription (const svn_wc_status_kind kind) const;
-
-    /**
-     * Initialize structures
-     *
-     * @param path
-     * @param status if NULL isVersioned will be false
-     */
-    void 
-    init (const char *path, const svn_wc_status_t * status);
-
-    /**
-     * initialize data from another instance
-     *
-     * @param src instance to use
-     */
-    void
-    init (const Status & src);
-
   public:
-
     /**
      * copy constructor
      */
     Status (const Status & src);
 
     /**
-     * Constructor
+     * default constructor
      *
+     * @param path path for this status entry
+     * @param status status entry
      */
     Status (const char *path = NULL, svn_wc_status_t * status = NULL);
 
@@ -83,107 +57,124 @@ namespace svn
     const char *
     path () const
     {
-      return m_path.c_str ();
+      return m_path;
     }
 
     /**
-     * @return TRUE if entry is a dir
+     * @return entry for this path
+     * @retval NULL if item is not versioned
      */
-    const bool 
-    isDir () const
+    const svn_wc_entry_t *
+    entry () const
     {
-      return m_isDir;
-    }
-
-    /**
-     * @return revision if versioned, otherwise SVN_INVALID_REVNUM
-     */
-    const svn_revnum_t 
-    revision () const
-    {
-      return m_revision;
-    }
-
-    /**
-     * Returns the last time the file was changed revision number.
-     */
-    const unsigned long 
-    lastChanged () const
-    {
-      return m_lastChanged;
-    }
-
-    /**
-     * @return name of author if versioned, NULL otherwise
-     */
-    const char *
-    lastCommitAuthor () const
-    {
-      return m_lastCommitAuthor.c_str ();
-    }
-
-    /**
-     * @return file status of the "textual" component. 
-     */
-    const char *
-    textDescription () const
-    {
-      return statusDescription (m_textType);
+      return m_status->entry;
     }
 
     /**
      * @return file status property enum of the "textual" component. 
      */
     const svn_wc_status_kind 
-    textType () const
+    textStatus () const 
     {
-      return m_textType;
-    }
-
-    /**
-     * @return textual file status of the "property" component. 
-     */
-    const char *
-    propDescription () const
-    {
-      return statusDescription (m_propType);
+      return m_status->text_status;
     }
 
     /**
      * @return file status property enum of the "property" component. 
      */
     const svn_wc_status_kind 
-    propType () const
+    propStatus () const 
     {
-      return m_propType;
+      return m_status->prop_status;
     }
 
     /**
-     * @return TRUE if under version control
+     * @retval TRUE if under version control
      */
     const bool 
-    isVersioned () const
+    isVersioned () const 
     {
       return m_isVersioned;
     }
 
     /**
-     * @return TRUE if locked
+     * @retval TRUE if locked
      */
     const bool 
-    isLocked () const
+    isLocked () const 
     {
-      return m_isLocked;
+      return m_status->locked;
     }
 
     /**
-     * @return TRUE if copied
+     * @retval TRUE if copied
      */
     const bool 
-    isCopied () const
+    isCopied () const 
     {
-      return m_isCopied;
+      return m_status->copied;
     }
+
+    /**
+     * @retval TRUE if switched
+     */
+    const bool
+    isSwitched () const 
+    {
+      return m_status->switched;
+    }
+
+    /**
+     * @return the entry's text status in the repository
+     */
+    const svn_wc_status_kind
+    reposTextStatus () const 
+    {
+      return m_status->repos_text_status;
+    }
+
+    /**
+     * @return the entry's prop status in the repository
+     */
+    const svn_wc_status_kind
+    reposPropStatus () 
+    {
+      return m_status->repos_prop_status;
+    }
+
+    /**
+     * @return svn_wc_status_t value
+     */
+    operator svn_wc_status_t * () const 
+    {
+      return m_status;
+    }
+
+    /**
+     * @return the textual description of the status.
+     */
+    const char *
+    statusDescription (const svn_wc_status_kind kind) const;
+
+    /**
+     * assignment operator
+     */
+    Status &
+    operator = (const Status &);
+  private:
+    svn_wc_status_t * m_status;
+    char * m_path;
+    Pool m_pool;
+    bool m_isVersioned;
+
+    /**
+     * Initialize structures
+     *
+     * @param path
+     * @param status if NULL isVersioned will be false
+     */
+    void 
+    init (const char *path, const svn_wc_status_t * status);
   };
 
 }

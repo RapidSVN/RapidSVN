@@ -9,7 +9,10 @@
  * individuals.  For exact contribution history, see the revision
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
+ * @file status.cpp
  */
+
+// svncpp
 #include "status.hpp"
 
 namespace svn
@@ -18,7 +21,7 @@ namespace svn
   {
     if( &src != this )
     {
-      init (src);
+      init (src.m_path, src.m_status);
     }
   }
 
@@ -27,59 +30,34 @@ namespace svn
     init (path, status);
   }
 
-  void Status::init (const char *path, const svn_wc_status_t * status)
-  {
-    m_path = path;
-    m_isVersioned = false;
-    m_isDir = false;
-    m_isCopied = false;
-    m_isLocked = false;
-    m_revision = SVN_INVALID_REVNUM;
-    m_lastChanged = 0;
-    m_lastCommitAuthor = "";
-    m_textType = svn_wc_status_none;
-    m_propType = svn_wc_status_none;
-
-    if (status != NULL)
-    {
-      m_isVersioned = status->text_status > svn_wc_status_unversioned;
-      m_textType = status->text_status;
-      m_propType = status->prop_status;
-      m_isCopied = status->copied == 1;
-      m_isLocked = status->locked == 1;
-
-      svn_wc_entry_t * entry = status->entry;
-      if (entry != NULL)
-      {
-        m_revision = entry->revision;
-        m_lastChanged = entry->cmt_rev;
-        if (entry->cmt_author)
-        { 
-          // if just added then no author
-          m_lastCommitAuthor = entry->cmt_author;
-        }
-        m_isDir = entry->kind == svn_node_dir;
-      }
-    }
-  }
-
-  void
-  Status::init (const Status & src)
-  {
-    m_isVersioned = src.m_isVersioned;
-    m_path = src.m_path;
-    m_isDir = src.m_isDir;
-    m_isCopied = src.m_isCopied;
-    m_isLocked = src.m_isLocked;
-    m_revision = src.m_revision;
-    m_lastChanged = src.m_lastChanged;
-    m_lastCommitAuthor = src.m_lastCommitAuthor;
-    m_textType = src.m_textType;
-    m_propType = src.m_propType;
-  }
-
   Status::~Status ()
   {
+  }
+
+  void Status::init (const char *path, const svn_wc_status_t * status)
+  {
+    m_status = (svn_wc_status_t *)
+      apr_pcalloc (m_pool, sizeof (svn_wc_status_t));
+    if (!status)
+    {
+      m_isVersioned = false;
+    }
+    else
+    {
+      m_isVersioned = status->text_status > svn_wc_status_unversioned;
+      // now duplicate the contents
+      if (status->entry)
+      {
+        m_status->entry = svn_wc_entry_dup (status->entry, m_pool);
+      }
+      m_status->text_status = status->text_status;
+      m_status->prop_status = status->prop_status;
+      m_status->locked = status->locked;
+      m_status->copied = status->copied;
+      m_status->switched = status->switched;
+      m_status->repos_text_status = status->repos_text_status;
+      m_status->repos_prop_status = status->repos_prop_status;
+    }
   }
 
   const char *
@@ -88,10 +66,10 @@ namespace svn
     switch (kind)
     {
     case svn_wc_status_none:
-      return "";
+      return "none";
       break;
     case svn_wc_status_normal:
-      return "";
+      return "normal";
       break;
     case svn_wc_status_added:
       return "added";
@@ -119,6 +97,17 @@ namespace svn
       return "unversioned";
       break;
     }
+
+  }
+
+  Status &
+  Status::operator=(const Status & status)
+  {
+    if (this == &status)
+      return *this;
+
+    init (status.m_path, status.m_status);
+    return *this;
   }
 }
 /* -----------------------------------------------------------------

@@ -19,6 +19,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/entry.hpp"
 #include "svncpp/targets.hpp"
 
 // app
@@ -115,6 +116,46 @@ BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_LIST_ITEM_RIGHT_CLICK (FILELIST_CTRL, FileListCtrl::OnItemRightClk)
   EVT_LIST_COL_CLICK (FILELIST_CTRL, FileListCtrl::OnColumnLeftClick)
 END_EVENT_TABLE ()
+
+/**
+ * test if the given status entry is a file or
+ * directory. if the status entry is unversioned we are
+ * using wx??? to check what this might be.
+ *
+ * @todo when browsing a remote repos this wont be
+ *       possible
+ *
+ * @param status status entry
+ * @retval false is invalid status 
+ */
+static bool 
+isDir (const svn::Status * status)
+{
+  // invalid entry
+  
+  if (!status)
+  {
+    return false;
+  }
+
+  svn_wc_status_t * svn_status = *status;
+  if (!svn_status)
+  {
+    return false;
+  }
+
+  // versioned resource?
+  svn_wc_entry_t * entry = svn_status->entry;
+  if (entry)
+  {
+    return entry->kind == svn_node_dir;
+  }
+  
+  // unversioned.
+  return wxDirExists (status->path ());
+}
+
+  
 
 FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id, 
                             const wxPoint & pos, const wxSize & size)
@@ -266,14 +307,16 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
   int rc = 0;
   unsigned long r1 = 0, r2 = 0;
   bool ok1, ok2;
+  svn::Entry e1 (ps1->entry ());
+  svn::Entry e2 (ps2->entry ());
 
   switch (SortColumn)
   {
   case COL_NAME:                     
     // Directories always precede files:
-    if (ps1->isDir () && !ps2->isDir ())
+    if (isDir (ps1) && !isDir (ps2))
       rc = -1;
-    else if (!ps1->isDir () && ps2->isDir ())
+    else if (!isDir (ps1) && isDir (ps2))
       rc = 1;
     else
     {
@@ -291,16 +334,16 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
     {
     case COL_REV:                  
       ok1 = ps1->isVersioned ();
-      r1 = ps1->revision ();
+      r1 = e1.revision ();
       ok2 = ps2->isVersioned ();
-      r2 = ps2->revision ();
+      r2 = e2.revision ();
       break;
 
     case COL_CMT_DATE:
       ok1 = ps1->isVersioned ();
-      r1 = ps1->lastChanged ();
+      r1 = e1.cmtDate ();
       ok2 = ps2->isVersioned ();
-      r2 = ps2->lastChanged ();
+      r2 = e2.cmtDate ();
       break;
     }
 
@@ -401,7 +444,7 @@ FileListCtrl::UpdateFileList ()
 
     if (status.isVersioned ())
     {
-      if (status.isDir ())
+      if (isDir (&status.isDir))
       {
         imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER);
       }
