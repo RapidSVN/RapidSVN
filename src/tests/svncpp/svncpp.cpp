@@ -30,14 +30,14 @@ SvnCppTestCase::testStatus ()
   CPPUNIT_ASSERT (status->isVersioned ());
   CPPUNIT_ASSERT (strcmp(status->textDescription (), "normal") == 0);
   CPPUNIT_ASSERT_EQUAL (svn_wc_status_normal, status->textType ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status->revision ());
+  CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)3, status->revision ());
   CPPUNIT_ASSERT (status->isLocked () == false);
   CPPUNIT_ASSERT (status->isCopied () == false);
 
   svn::Status * status2 = client.singleStatus ("my_repos/main.cpp");
   CPPUNIT_ASSERT (strcmp(status2->textDescription (), "modified") == 0);
   CPPUNIT_ASSERT_EQUAL (svn_wc_status_modified, status2->textType ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)1, status2->revision ());
+  CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)1, status2->revision ());
 
   try
   {
@@ -86,7 +86,7 @@ SvnCppTestCase::testCheckout ()
 
   CPPUNIT_ASSERT (status->isVersioned ());
   CPPUNIT_ASSERT (strcmp(status->textDescription (), "normal") == 0);
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status->revision ());
+  CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)3, status->revision ());
 }
 
 void
@@ -182,11 +182,11 @@ SvnCppTestCase::testCommit ()
     svn::Status * status = client.singleStatus ("my_repos/svncpp.h");
     CPPUNIT_ASSERT (status->isVersioned ());
     CPPUNIT_ASSERT (strcmp(status->textDescription (), "normal") == 0);
-    CPPUNIT_ASSERT_EQUAL ((unsigned long)4, status->revision ());
+    CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)4, status->revision ());
 
     svn::Status * status2 = client.singleStatus ("my_repos/main.cpp");
     CPPUNIT_ASSERT (strcmp(status2->textDescription (), "normal") == 0);
-    CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status2->revision ());
+    CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)3, status2->revision ());
   }
   catch (svn::ClientException &e)
   {
@@ -208,7 +208,7 @@ SvnCppTestCase::testCopy ()
     svn::Status * status = client.singleStatus ("my_repos/my_dir/main2.cpp");
     CPPUNIT_ASSERT (status->isVersioned ());
     CPPUNIT_ASSERT (strcmp(status->textDescription (), "added") == 0);
-    CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status->revision ());
+    CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)3, status->revision ());
   }
   catch (svn::ClientException &e)
   {
@@ -242,7 +242,7 @@ SvnCppTestCase::testMove ()
     svn::Status * status2 = client.singleStatus ("my_repos/my_dir/svncpp.h");
     CPPUNIT_ASSERT (status2->isVersioned ());
     CPPUNIT_ASSERT (strcmp(status2->textDescription (), "added") == 0);
-    CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status2->revision ());
+    CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)3, status2->revision ());
   }
   catch (svn::ClientException &e)
   {
@@ -348,15 +348,15 @@ SvnCppTestCase::testLog ()
 
   CPPUNIT_ASSERT_EQUAL (3, log.count ());
   CPPUNIT_ASSERT (log.next ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)1, log.revision ());
+  CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)1, log.revision ());
 
   // Test next more than one time.
   CPPUNIT_ASSERT (log.next ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)2, log.revision ());
+  CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)2, log.revision ());
   CPPUNIT_ASSERT (log.previous ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)1, log.revision ());
+  CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)1, log.revision ());
   CPPUNIT_ASSERT (log.last ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, log.revision ());
+  CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)3, log.revision ());
   CPPUNIT_ASSERT (log.next () == false);
 
   // Test message and date
@@ -365,7 +365,7 @@ SvnCppTestCase::testLog ()
 
   // Test first
   CPPUNIT_ASSERT (log.first ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)1, log.revision ());
+  CPPUNIT_ASSERT_EQUAL ((svn_revnum_t)1, log.revision ());
 }
 
 /* -----------------------------------------------------------------

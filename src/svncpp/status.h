@@ -31,7 +31,7 @@ namespace svn
     bool m_isDir;
     bool m_isCopied;
     bool m_isLocked;
-    unsigned long m_revision;
+    svn_revnum_t m_revision;
     unsigned long m_lastChanged;
      std::string m_lastCommitAuthor;
     svn_wc_status_kind m_textType;
@@ -78,7 +78,7 @@ namespace svn
   /**
    * @return revision if versioned, otherwise SVN_INVALID_REVNUM
    */
-    unsigned long revision ()
+    svn_revnum_t revision ()
     {
       return m_revision;
     }
