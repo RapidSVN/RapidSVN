@@ -162,8 +162,8 @@ Log::formatDate (const char * dateText, const char * format)
   struct tm * localTime;
   svn_string_t * str;
 
-  svn_time_from_nts (&timeTemp, dateText, m_pool);
-  date = svn_time_to_human_nts(timeTemp, m_pool);
+  svn_time_from_cstring (&timeTemp, dateText, m_pool);
+  date = svn_time_to_human_cstring(timeTemp, m_pool);
   dateNative = (char *)date;
 
   time = svn_parse_date (dateNative, NULL);
