@@ -72,6 +72,14 @@ const static char ConfigProjectFmt[] = "/Workbench/Project%d";
 
 const static char TraceMisc[] = "tracemisc";
 
+// Platform specific constants. 
+#ifdef __WXMSW__
+  const static int SPLITTER_STYLE = wxSP_FULLSASH | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
+#else
+  const static int SPLITTER_STYLE = wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
+#endif
+
+
 /**
  * map to match columns with menu Ids.
  *
@@ -363,7 +371,7 @@ END_EVENT_TABLE ()
                                            SPLITTER_WINDOW,
                                            wxDefaultPosition,
                                            wxDefaultSize,
-                                           wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
+                                           SPLITTER_STYLE);
 
 
   m_info_panel = new InfoPanel (m_horiz_splitter);
@@ -383,7 +391,7 @@ END_EVENT_TABLE ()
                                           SPLITTER_WINDOW,
                                           wxDefaultPosition,
                                           wxDefaultSize,
-                                          wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
+                                          SPLITTER_STYLE);
 
   // Create the list control to display files
   m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL, 
