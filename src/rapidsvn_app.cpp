@@ -20,7 +20,8 @@
 #include "rapidsvn_frame.hpp"
 
 IMPLEMENT_APP (RapidSvnApp)
-     bool RapidSvnApp::OnInit ()
+
+bool RapidSvnApp::OnInit ()
 {
   // application and vendor name are used by wxConfig to construct the name
   // of the config file/registry key and must be set before the first call
@@ -29,9 +30,9 @@ IMPLEMENT_APP (RapidSvnApp)
   SetVendorName (APPLICATION_NAME);
   SetAppName (APPLICATION_NAME);
 
-  appFrame = new RapidSvnFrame (APPLICATION_NAME);
-  appFrame->Show (TRUE);
-  SetTopWindow (appFrame);
+  RapidSvnFrame * frame = new RapidSvnFrame (APPLICATION_NAME);
+  frame->Show (TRUE);
+  SetTopWindow (frame);
 
   return TRUE;
 }

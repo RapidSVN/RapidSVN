@@ -25,6 +25,17 @@
 #include "utils.hpp"
 #include "tracer.hpp"
 
+// bitmaps
+#include "res/bitmaps/add.xpm"
+#include "res/bitmaps/commit.xpm"
+#include "res/bitmaps/delete.xpm"
+#include "res/bitmaps/info.xpm"
+#include "res/bitmaps/log.xpm"
+#include "res/bitmaps/resolve.xpm"
+#include "res/bitmaps/revert.xpm"
+#include "res/bitmaps/update.xpm"
+
+
 wxString & UnixPath (wxString & path)
 {
 #ifdef _WIN32

@@ -63,6 +63,11 @@ namespace svn
     Targets (const Targets & targets);
 
     /**
+     * Destructor
+     */
+    virtual ~Targets ();
+
+    /**
      * Returns an apr array containing
      * char *.
      *

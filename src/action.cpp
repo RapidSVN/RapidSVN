@@ -64,8 +64,8 @@ public:
 
   svn::Targets targets;
 
-  Data (wxWindow * parent, const wxString & name, ActionOptions options)
-    :  parent (parent), name (name), options (options), 
+  Data (wxWindow * parnt, const wxString & nam, ActionOptions opts)
+    :  parent (parnt), name (nam), options (opts), 
        tracer (0), ownTracer (false)
   {
   }
