@@ -24,8 +24,6 @@
 #include "client.hpp"
 #include "pool.hpp"
 
-typedef struct svn_client_auth_baton_t;
-
 namespace svn
 {
 
