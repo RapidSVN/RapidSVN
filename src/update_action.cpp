@@ -15,7 +15,6 @@
 #include "wx/wx.h"
 
 // svncpp
-#include "svncpp/exception.hpp"
 #include "svncpp/client.hpp"
 #include "svncpp/path.hpp"
 #include "svncpp/targets.hpp"

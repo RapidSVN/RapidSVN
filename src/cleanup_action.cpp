@@ -13,10 +13,8 @@
 
 // wxwindows
 #include "wx/wx.h"
-//#include "wx/filefn.h"
 
 // svncpp
-#include "svncpp/exception.hpp"
 #include "svncpp/client.hpp"
 
 // app

@@ -14,68 +14,68 @@
 #ifndef _SVNCPP_EXCEPTION_H_
 #define _SVNCPP_EXCEPTION_H_
 
+// stl
 #include <exception>
 #include <string>
+#include <vector>
+
+// subversion api
 #include "svn_client.h"
 
 namespace svn
 {
 
-/**
- * Generic exception class.
- */
-class Exception : public std::exception
-{
-private:
-  std::string m_message;
-
-public:
   /**
-   * Constructor.  Assigns the exception reason.
+   * Generic exception class.
    */
-  Exception (const std::string & message) throw ();
+  class Exception : public std::exception
+  {
+  public:
+    /**
+     * Constructor.  Assigns the exception reason.
+     */
+    Exception (const std::string & message) throw ();
 
-  ~Exception () throw ();
+    ~Exception () throw ();
 
-  /**
-   * Returns the exception message.
-   */
-  const char * message ();
+    /**
+     * Returns the exception message.
+     */
+    const char * message ();
 
-};
-
-/**
- * Subversion client exception class.
- */
-class ClientException : public Exception
-{
-private:
-  svn_error_t * m_error;
-
-public:
-  /**
-   * Constructor.  Sets the error template and an optional message.
-   */
-  ClientException (svn_error_t * error, 
-                   const std::string message = "") throw ();
-
-  virtual ~ClientException () throw ();
+  private:
+    struct Data;
+    Data * m;
+  };
 
   /**
-   * Returns the error message. 
+   * Subversion client exception class.
    */
-  const char * description ();
+  class ClientException : public Exception
+  {
+  public:
+    /**
+     * Constructor.  Sets the error template and an optional message.
+     */
+    ClientException (svn_error_t * error, 
+                     const std::string message = "") throw ();
 
-  /**
-   * Returns the error source. 
-   */
-  const char * source ();
+    virtual ~ClientException () throw ();
 
-  /**
-   * Returns the APR error id. 
-   */
-  int aprError ();
-};
+    /**
+     * Returns the APR error id. 
+     */
+    int aprError ();
+
+    /**
+     * Returns the whole stack of error messages
+     */
+    const std::vector<std::string> & 
+    messages () const;
+  private:
+    struct Data;
+    Data * m;
+  };
 
 }
 

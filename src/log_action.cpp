@@ -13,8 +13,6 @@
 
 // svncpp
 #include "svncpp/client.hpp"
-//#include "svncpp/exception.hpp"
-//#include "svncpp/log.hpp"
 #include "svncpp/revision.hpp"
 
 // wxwindows

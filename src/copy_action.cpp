@@ -16,7 +16,6 @@
 #include "wx/filename.h"
 
 // svncpp
-#include "svncpp/exception.hpp"
 #include "svncpp/client.hpp"
 
 // app

@@ -141,11 +141,10 @@ PropertyDlg::SaveData ()
       }
       catch (svn::ClientException &e)
       {
-        wxString msg = "Failed to save property: ";
-        msg += name;
-        msg += ", error: ";
-        msg += e.description ();
-        wxMessageDialog dlg (this, msg, "Error Saving", wxOK);
+        wxString msg;
+        msg.Printf( _("Failed to save property:%s, error: %s"),
+                    name, e.message ());
+        wxMessageDialog dlg (this, msg, _("Error Saving"), wxOK);
         dlg.ShowModal ();
       }
     }
@@ -182,10 +181,9 @@ PropertyDlg::RemoveData ()
       }
       catch (svn::ClientException &e)
       {
-        wxString msg = "Failed to remove property: ";
-        msg += propValue;
-        msg += ", error: ";
-        msg += e.description ();
+        wxString msg;
+        msg.Printf ("Failed to remove property: %s, error: %s",
+                    propValue, e.message ());
         wxMessageDialog dlg (this, msg, "Error Removing", wxOK);
         dlg.ShowModal ();
       }

@@ -13,7 +13,6 @@
 
 // svncpp
 #include "svncpp/client.hpp"
-#include "svncpp/exception.hpp"
 
 // wxwindows
 #include "wx/intl.h"

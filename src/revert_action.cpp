@@ -16,7 +16,6 @@
 
 // svncpp
 #include "svncpp/client.hpp"
-#include "svncpp/exception.hpp"
 
 // app
 #include "ids.hpp"

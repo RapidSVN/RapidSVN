@@ -16,52 +16,96 @@
 namespace svn
 {
 
-// Generic Exception implementation
-Exception::Exception (const std::string & message)  throw () : 
-  m_message(message)
-{
-}
+  struct Exception::Data
+  {
+  public:
+    Data (const std::string & message)
+      : m_message (message)
+    {
+    }
 
-Exception::~Exception () throw ()
-{
-}
+    const char *
+    message ()
+    {
+      return m_message.c_str ();
+    }
 
-const char *
-Exception::message ()
-{
-  return m_message.c_str ();
-}
+  private:
+    std::string m_message;
+  };
+   
+  Exception::Exception (const std::string & message)  throw ()
+  {
+    m = new Data (message);
+  }
 
-// ClientException implementation
+  Exception::~Exception () throw ()
+  {
+    delete m;
+  }
 
-ClientException::ClientException (svn_error_t * error, 
-                                  const std::string message) throw () : 
-  Exception (message), m_error(error)
-{
-}
+  const char *
+  Exception::message ()
+  {
+    return m->message ();
+  }
 
-ClientException::~ClientException () throw ()
-{
-}
+  struct ClientException::Data
+  {
+  public:
+    std::vector<std::string> messages;
+    apr_status_t apr_err;
 
-const char *
-ClientException::description ()
-{
-  return m_error->message;
-}
+    Data (svn_error_t * error, const std::string message)
+    {
+      messages.push_back (message);
 
-const char *
-ClientException::source ()
-{
-  return m_error->file;
-}
+      if (error == 0)
+      {
+        return;
+      }
 
-int
-ClientException::aprError ()
-{
-  return m_error->apr_err;
-}
+      apr_err = error->apr_err;
 
+      // Now add the whole stack of messages
+      svn_error_t * next_error = error;
+      while (next_error != 0)
+      {
+        const char * msg = next_error->message;
+        if (msg != 0)
+        {
+          messages.push_back (msg);
+        }
+
+        next_error = next_error->child;
+      }
+    }
+
+  };
+
+  ClientException::ClientException (svn_error_t * error, 
+                                    const std::string message) throw () : 
+    Exception (message)
+  {
+    m = new Data (error, message);
+  }
+
+  ClientException::~ClientException () throw ()
+  {
+    delete m;
+  }
+
+  int
+  ClientException::aprError ()
+  {
+    return m->apr_err;
+  }
+
+  const std::vector<std::string> & 
+  ClientException::messages () const
+  {
+    return m->messages;
+  }
 }
 /* -----------------------------------------------------------------
  * local variables:

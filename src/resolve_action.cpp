@@ -12,7 +12,6 @@
  */
 
 // svncpp
-#include "svncpp/exception.hpp"
 #include "svncpp/client.hpp"
 
 // wxwindows

@@ -11,9 +11,6 @@
  * ====================================================================
  */
 
-// svncpp
-#include "svncpp/exception.hpp"
-
 // wxwindows
 #include "wx/intl.h"
 
@@ -37,15 +34,8 @@ PropertyAction::Prepare ()
     return false;
   }
 
-  try
-  {
-    PropertyDlg dlg (GetParent (), GetTarget ());
-    dlg.ShowModal ();
-  }
-  catch (svn::Exception &)
-  {
-    //TODO handle this
-  }
+  PropertyDlg dlg (GetParent (), GetTarget ());
+  dlg.ShowModal ();
 
   return false;
 }
