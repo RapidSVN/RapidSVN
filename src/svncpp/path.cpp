@@ -43,10 +43,16 @@ namespace svn
   Path::init (const char * path)
   {
     Pool pool;
-    const char * int_path = 
-      svn_path_internal_style (path, pool.pool () );
+
+    if (path == 0)
+      m_path = "";
+    else
+    {
+      const char * int_path = 
+        svn_path_internal_style (path, pool.pool () );
     
-    m_path = int_path;
+      m_path = int_path;
+    }
   }
 
   const std::string &
