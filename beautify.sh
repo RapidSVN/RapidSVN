@@ -12,6 +12,7 @@ for FILE in $@ ; do
     mv $FILE $FILE.orig
     #now for the style
     $INDENT $FILE.orig -o $FILE
+    rm $FILE.orig
   fi
 done
 
