@@ -48,7 +48,7 @@ CommitAction::Prepare ()
   }
 
   m_recursive = dlg.GetRecursive ();
-  m_recursive = dlg.GetRecursive ();
+  m_message = dlg.GetMessage ();
   return true;
 }
 
