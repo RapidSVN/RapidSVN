@@ -64,6 +64,11 @@ svn_error_t *svn_cl__may_need_force (svn_error_t * err);
  */
 bool PostMenuEvent (wxEvtHandler *source, long id);
 
+/**
+ * Create a correctly sized button with an ellipsis (three dots)
+ */
+wxButton *CreateEllipsisButton(wxWindow *parent, long id);
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

@@ -21,6 +21,7 @@
 // app
 #include "ids.hpp"
 #include "preferences_dlg.hpp"
+#include "utils.hpp"
 
 /****************************************************************************/
 
@@ -154,7 +155,7 @@ PreferencesDlg::InitializeData ()
   ExternalsPanel *pExternalsPanel = ExternalsPanel::Create (m_pNB);
   m_pNB->AddPage (pExternalsPanel, _("Externals"));
   
-  topsizer->Add (nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 10);
+  topsizer->Add (nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 6);
   topsizer->Add (button_sizer, 0, wxALIGN_CENTER);
 
   // Order is important here:  
@@ -245,54 +246,48 @@ GeneralPanel::InitializeData ()
 
   // Left column
   wxBoxSizer *leftsizer = new wxBoxSizer (wxVERTICAL);
-  panelsizer->Add (leftsizer, 1, wxALL | wxALIGN_TOP, 0);
+  panelsizer->Add (leftsizer, 1, wxALL | wxALIGN_TOP, 10);
 
   // Standard Editor
+  wxBoxSizer *standard_editor_label_sizer = new wxBoxSizer (wxHORIZONTAL);
+  leftsizer->Add (standard_editor_label_sizer, 1, wxEXPAND | wxALIGN_LEFT);
+  standard_editor_label_sizer->Add (
+    new wxStaticText (this, -1, _("Standard editor:")), 0, wxALIGN_CENTER);
+
   wxBoxSizer *standard_editor_sizer = new wxBoxSizer (wxHORIZONTAL);
   leftsizer->Add (standard_editor_sizer, 1, wxEXPAND | wxALIGN_LEFT);
-  standard_editor_sizer->Add (
-    new wxStaticText (this, -1, _("Standard editor:")), 0, wxALL | wxALIGN_CENTER, 5);
-  
   // TODO: File existence validation when the entire string has been entered
   m_standard_editor_textctrl = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
-    wxSize (100, -1), 0, 
+    wxSize (200, -1), 0, 
     wxTextValidator (wxFILTER_NONE, &PreferencesDlg::Data.m_standard_editor));
-  standard_editor_sizer->Add (m_standard_editor_textctrl, 1, wxALL | wxALIGN_CENTER, 5);
+  standard_editor_sizer->Add (m_standard_editor_textctrl, 1, wxALIGN_CENTER);
   
-  // TODO: Make the button shrink to fit the ellipsis.
-  standard_editor_sizer->Add (
-    new wxButton (this, ID_Preferences_GeneralPanel_StandardEditorLookup, _("...")), 
-    1, wxALL | wxALIGN_CENTER, 5
-  );
+  standard_editor_sizer->Add (CreateEllipsisButton(this, 
+    ID_Preferences_GeneralPanel_StandardEditorLookup), 0, wxALIGN_CENTER);
 
   // Use Standard Editor Always
   wxBoxSizer *standard_editor_always_sizer = new wxBoxSizer (wxHORIZONTAL);
   leftsizer->Add (standard_editor_always_sizer, 1, wxALIGN_LEFT);
   standard_editor_always_sizer->Add ( 
-    new wxCheckBox (
-      this, -1, _("Use always"), wxDefaultPosition, wxDefaultSize, 0, 
-      wxGenericValidator (&PreferencesDlg::Data.m_standard_editor_always)
-    ), 
-    0, wxALL | wxALIGN_CENTER, 5
-  );
+    new wxCheckBox (this, -1, _("Use always"), wxDefaultPosition, wxDefaultSize, 0, 
+      wxGenericValidator (&PreferencesDlg::Data.m_standard_editor_always)), 
+    0, wxALIGN_CENTER);
 
   // Standard File Explorer
+  wxBoxSizer *standard_file_explorer_label_sizer = new wxBoxSizer (wxHORIZONTAL);
+  leftsizer->Add (standard_file_explorer_label_sizer, 1, wxEXPAND | wxALIGN_LEFT);
+  standard_file_explorer_label_sizer->Add (
+    new wxStaticText (this, -1, _("Standard file explorer:")), 0, wxALIGN_CENTER);
+
   wxBoxSizer *standard_file_explorer_sizer = new wxBoxSizer (wxHORIZONTAL);
   leftsizer->Add (standard_file_explorer_sizer, 1, wxEXPAND | wxALIGN_LEFT);
-  standard_file_explorer_sizer->Add (
-    new wxStaticText (this, -1, _("Standard file explorer:")), 0, wxALL | wxALIGN_CENTER, 5);
-  
   // TODO: File existence validation when the entire string has been entered
   m_standard_file_explorer_textctrl = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
-    wxSize (100, -1), 0, 
-    wxTextValidator (wxFILTER_NONE, &PreferencesDlg::Data.m_standard_file_explorer));
-  standard_file_explorer_sizer->Add (m_standard_file_explorer_textctrl, 1, wxALL | wxALIGN_CENTER, 5);
+    wxSize (200, -1), 0, wxTextValidator (wxFILTER_NONE, &PreferencesDlg::Data.m_standard_file_explorer));
+  standard_file_explorer_sizer->Add (m_standard_file_explorer_textctrl, 1, wxALL | wxALIGN_CENTER);
   
-  // TODO: Make the button shrink to fit the ellipsis.
-  standard_file_explorer_sizer->Add (
-    new wxButton (this, ID_Preferences_GeneralPanel_StandardFileExplorerLookup, _("...")), 
-    1, wxALL | wxALIGN_CENTER, 5
-  );
+  standard_file_explorer_sizer->Add (CreateEllipsisButton(this, 
+    ID_Preferences_GeneralPanel_StandardFileExplorerLookup), 0, wxALIGN_CENTER);
 
   // Use Standard File Explorer Always
   wxBoxSizer *standard_file_explorer_always_sizer = new wxBoxSizer (wxHORIZONTAL);
@@ -302,30 +297,30 @@ GeneralPanel::InitializeData ()
       this, -1, _("Use always"), wxDefaultPosition, wxDefaultSize, 0, 
       wxGenericValidator (&PreferencesDlg::Data.m_standard_file_explorer_always)
     ), 
-    0, wxALL | wxALIGN_CENTER, 5
+    0, wxALIGN_CENTER
   );
 
   /*
   wxBoxSizer *rightsizer = new wxBoxSizer (wxVERTICAL);
-  panelsizer->Add (rightsizer, 1, wxLEFT | wxALIGN_TOP, 20);
+  panelsizer->Add (rightsizer, 1, wxLEFT | wxALIGN_TOP, 10);
   
   wxBoxSizer *whichsizer = new wxBoxSizer (wxHORIZONTAL);
   rightsizer->Add (whichsizer, 1, wxALIGN_LEFT);
   whichsizer->Add (
     new wxStaticText (this, -1, _("Select one:")),
-    0, wxALL | wxALIGN_CENTER, 5);
+    0, wxALIGN_CENTER);
   whichsizer->Add (
     new wxRadioButton (this, -1, _("1"), wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator (&PreferencesDlg::Data.Enable1)),
-    0, wxALL | wxALIGN_CENTER, 5);
+    0, wxALIGN_CENTER);
   whichsizer->Add (
     new wxRadioButton (this, -1, _("2"), wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator (&PreferencesDlg::Data.Enable2)),
-    0, wxALL | wxALIGN_CENTER, 5);
+    0, wxALIGN_CENTER);
   whichsizer->Add (
     new wxRadioButton (this, -1, _("3"), wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator (&PreferencesDlg::Data.Enable3)),
-    0, wxALL | wxALIGN_CENTER, 5);
+    0, wxALIGN_CENTER);
     
   wxBoxSizer *picksizer = new wxBoxSizer (wxHORIZONTAL);
   rightsizer->Add (picksizer, 1, wxALIGN_LEFT);

@@ -153,6 +153,20 @@ bool PostMenuEvent (wxEvtHandler *source, long id)
   return source->ProcessEvent (event);
 }
 
+wxButton *CreateEllipsisButton(wxWindow *parent, long id)
+{
+  const char *ELLIPSIS = _("...");
+  int ellipsis_width, ellipsis_height;
+
+  wxButton *button = new wxButton (parent, id, ELLIPSIS);
+  parent->GetTextExtent(ELLIPSIS, &ellipsis_width, &ellipsis_height);
+
+  // HACK: Should get real button border size from somewhere
+  button->SetSize(wxSize(ellipsis_width + 2 * 3 + 2 * 2, -1));
+
+  return button;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
