@@ -51,7 +51,7 @@ namespace svn
         &(client_provider->provider_baton),
         prompt,
         this,
-        10000000000, // not very nice. should be infinite...
+        100000000, // not very nice. should be infinite...
         pool);
 
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 

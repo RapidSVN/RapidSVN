@@ -19,7 +19,7 @@
 class wxImageList;
 class FolderItemData;
 
-class FolderBrowser:public wxControl
+class FolderBrowser : public wxControl
 {
 public:
   FolderBrowser (wxWindow * parent,  const wxWindowID id = -1,
@@ -53,24 +53,34 @@ public:
   
 
 private:
-  wxTreeCtrl* m_treeCtrl;
-  wxTreeItemId m_rootId;
-  wxImageList* m_imageList;
-  UniqueArrayString m_workbenchItems;
-  
-  static const unsigned int MAXLENGTH_PROJECT;
+  struct Data;
+  Data * m;
+
+  /**
+   * disallow default constructor 
+   */
+  FolderBrowser ();
+
+  /**
+   * disallow copy constructor
+   */
+  FolderBrowser (const FolderBrowser &);
+
+  /**
+   * disallow assignment operator
+   */
+  FolderBrowser & operator = (const FolderBrowser &);
+
+private:
+  DECLARE_EVENT_TABLE ()
+
+  void OnSize (wxSizeEvent & WXUNUSED (event));
 
   void OnExpandItem (wxTreeEvent & event);
+
   void OnCollapseItem (wxTreeEvent & event);
-  void OnSize (wxSizeEvent & event);
+
   void OnItemRightClk (wxTreeEvent & event);
-
-  void ShowMenu (long index, wxPoint & pt);
-  bool HasSubdirectories (const wxString & path);
-  void Delete (const wxTreeItemId & id);
-  void DeleteAllItems ();
-
-  DECLARE_EVENT_TABLE ()
 
 };
 
