@@ -38,6 +38,7 @@ namespace svn
     std::string username;
     std::string password;
     std::string logMessage;
+    std::string configDir;
 
     /**
      * translate native c-string to utf8 
@@ -93,10 +94,18 @@ namespace svn
       return SVN_NO_ERROR;
     }
 
-    Data ()
+    Data (const std::string & configDir_)
       : listener (0), logIsSet (false), 
-        promptCounter (0)
+        promptCounter (0), configDir (configDir_)
     {
+      const char * c_configDir = 0;
+      if( configDir.length () > 0 )
+        c_configDir = configDir.c_str ();
+
+      // make sure the configuration directory exists
+      svn_config_ensure (c_configDir, pool);
+
+
       // intialize authentication providers
       // * simple 
       // * username
@@ -105,9 +114,10 @@ namespace svn
       // * ssl server trust prompt
       // * ssl client cert pw file
       // * ssl client cert pw prompt
-      // * ssl cliebt cert file
+      // * ssl client cert file
       // ===================
       // 8 providers
+
       apr_array_header_t *providers = 
         apr_array_make (pool, 8, 
                         sizeof (svn_auth_provider_object_t *));
@@ -134,13 +144,23 @@ namespace svn
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
-      // add ssl providers
-      svn_client_get_ssl_server_trust_prompt_provider (
-        &provider, onSslServerTrustPrompt, this, pool);
+      // add ssl providers 
+
+      // file first then prompt providers
+      svn_client_get_ssl_server_trust_file_provider (&provider, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
-      svn_client_get_ssl_server_trust_file_provider (&provider, pool);
+      svn_client_get_ssl_client_cert_file_provider (&provider, pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
+
+      svn_client_get_ssl_client_cert_pw_file_provider (&provider, pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
+
+      svn_client_get_ssl_server_trust_prompt_provider (
+        &provider, onSslServerTrustPrompt, this, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
@@ -150,20 +170,15 @@ namespace svn
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
-      svn_client_get_ssl_client_cert_pw_file_provider (&provider, pool);
-      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
-        provider;
-
-      svn_client_get_ssl_client_cert_file_provider (&provider, pool);
-      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
-        provider;
-
       svn_auth_baton_t *ab;
       svn_auth_open (&ab, providers, pool);
 
       // initialize ctx structure
       memset (&ctx, 0, sizeof (ctx));
-      svn_config_get_config (&ctx.config, 0, pool);
+
+      // get the config based on the configDir passed in
+      svn_config_get_config (&ctx.config, c_configDir, pool);
+
       ctx.auth_baton = ab;
       ctx.log_msg_func = onLogMsg;
       ctx.log_msg_baton = this;
@@ -185,7 +200,7 @@ namespace svn
     }
 
     /** @see Context::setLogin */
-    void setLogin (const char * usr, const char *pwd)
+    void setLogin (const char * usr, const char * pwd)
     {
       username = usr;
       password = pwd;
@@ -286,13 +301,14 @@ namespace svn
                     void *baton,
                     const char *realm,
                     const char *username, 
-                    svn_boolean_t may_save,
+                    svn_boolean_t _may_save,
                     apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
 
-      if (!data->retrieveLogin (username, realm, may_save != 0))
+      bool may_save = _may_save != 0;
+      if (!data->retrieveLogin (username, realm, may_save ))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
       svn_auth_cred_simple_t* lcred = (svn_auth_cred_simple_t*)
@@ -304,6 +320,8 @@ namespace svn
                  &lcred->username,
                  data->getUsername (), pool));
 
+      // tell svn if the credentials need to be saved
+      lcred->may_save = may_save;
       *cred = lcred;
 
       return SVN_NO_ERROR;
@@ -395,14 +413,15 @@ namespace svn
       svn_auth_cred_ssl_client_cert_pw_t **cred, 
       void *baton, 
       const char *realm,
-      svn_boolean_t may_save,
+      svn_boolean_t maySave,
       apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
 
       std::string password ("");
-      if (!data->listener->contextSslClientCertPwPrompt (password, realm, may_save != 0))
+      bool may_save = maySave != 0;
+      if (!data->listener->contextSslClientCertPwPrompt (password, realm, may_save))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
       svn_auth_cred_ssl_client_cert_pw_t *cred_ = 
@@ -414,6 +433,7 @@ namespace svn
                  password.c_str (),
                  pool));
 
+      cred_->may_save = may_save;
       *cred = cred_;
 
       return SVN_NO_ERROR;
@@ -480,7 +500,7 @@ namespace svn
     bool
     retrieveLogin (const char * username_,
                    const char * realm,
-                   bool may_save)
+                   bool &may_save)
     {
       bool ok;
 
@@ -536,14 +556,14 @@ namespace svn
     }
   };
 
-  Context::Context ()
+  Context::Context (const std::string &configDir)
   {
-    m = new Data ();
+    m = new Data (configDir);
   }
 
   Context::Context (const Context & src)
   {
-    m = new Data ();
+    m = new Data (src.m->configDir);
     setLogin (src.getUsername (), src.getPassword ());
   }
 

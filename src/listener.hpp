@@ -102,19 +102,19 @@ public:
   contextGetLogin (const std::string & realm,
                    std::string & username, 
                    std::string & password,
-				   bool maySave);
+				           bool & maySave);
 
   /**
    * @see svn::ContextListener
    */
   virtual void
   contextNotify (const char *path,
-          svn_wc_notify_action_t action,
-          svn_node_kind_t kind,
-          const char *mime_type,
-          svn_wc_notify_state_t content_state,
-          svn_wc_notify_state_t prop_state,
-          svn_revnum_t revision);
+                 svn_wc_notify_action_t action,
+                 svn_node_kind_t kind,
+                 const char *mime_type,
+                 svn_wc_notify_state_t content_state,
+                 svn_wc_notify_state_t prop_state,
+                 svn_revnum_t revision);
 
   /**
    * @see svn::ContextListener
@@ -142,7 +142,7 @@ public:
   virtual bool
   contextSslClientCertPwPrompt (std::string & password,
                                 const std::string & realm, 
-                                bool maySave);
+                                bool & maySave);
 
 
   /**

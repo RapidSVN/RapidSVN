@@ -38,9 +38,13 @@ namespace svn
   {
   public:
     /**
-     * default constructor
+     * default constructor 
+     *
+     * @param configDir location where the
+     *                  subversion api stores its
+     *                  configuration
      */
-    Context ();
+    Context (const std::string & configDir="");
 
     /**
      * copy constructor

@@ -169,7 +169,7 @@ Listener::contextGetLogin (
   const std::string & realm,
   std::string & username, 
   std::string & password,
-  bool maySave)
+  bool & maySave)
 {
   // TODO: show realm
   AuthDlg dlg (GetParent (), username.c_str () , password.c_str ());
@@ -192,12 +192,12 @@ Listener::contextGetLogin (
 
 void
 Listener::contextNotify (const char *path,
-        svn_wc_notify_action_t action,
-        svn_node_kind_t kind,
-        const char *mime_type,
-        svn_wc_notify_state_t content_state,
-        svn_wc_notify_state_t prop_state,
-        svn_revnum_t revision)
+                         svn_wc_notify_action_t action,
+                         svn_node_kind_t kind,
+                         const char *mime_type,
+                         svn_wc_notify_state_t content_state,
+                         svn_wc_notify_state_t prop_state,
+                         svn_revnum_t revision)
 {
   // Map an action to string and trace the action and path
   const char * actionString = 0;
@@ -260,7 +260,7 @@ Listener::contextSslClientCertPrompt (std::string & certFile)
 bool
 Listener::contextSslClientCertPwPrompt (std::string & password,
                                         const std::string & realm, 
-                                        bool maySave)
+                                        bool & maySave)
 {
   //TODO
   AuthDlg dlg (GetParent (), "", password.c_str (), 

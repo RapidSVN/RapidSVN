@@ -45,6 +45,7 @@ namespace svn
      * @param username
      * @param realm in which username/password will be used
      * @param password
+     * @param maySave in/out set false to not save
      * @return continue action?
      * @retval true continue
      */
@@ -52,7 +53,7 @@ namespace svn
     contextGetLogin (const std::string & realm,
                      std::string & username, 
                      std::string & password,
-                     bool maySave) = 0;
+                     bool & maySave) = 0;
 
     /** 
      * this method will be called to notify about
@@ -162,7 +163,7 @@ namespace svn
     virtual bool
     contextSslClientCertPwPrompt (std::string & password, 
                                   const std::string & realm, 
-                                  bool maySave) = 0;
+                                  bool & maySave) = 0;
   };
 }
 
