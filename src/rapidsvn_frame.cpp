@@ -367,6 +367,7 @@ END_EVENT_TABLE ()
   m_log->SetMaxLength (0);
 
   m_logTracer = new EventTracer (this);
+  m->Listener.SetTracer (m_logTracer, false);
 
 
   m_vert_splitter = new wxSplitterWindow (m_info_panel,
