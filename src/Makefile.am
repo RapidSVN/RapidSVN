@@ -53,7 +53,6 @@ rapidsvn_SOURCES= \
 	threaded_worker.cpp \
 	tracer.cpp \
 	trace_update.cpp \
-	tviewer.cpp \
 	update_action.cpp \
 	update_dlg.cpp \
 	utils.cpp \
