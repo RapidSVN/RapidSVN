@@ -1,0 +1,48 @@
+static char *Merge_Dialog = "dialog(name = 'Merge_Dialog',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxSYSTEM_MENU',\
+  title = 'Merge differences',\
+  id = 100,\
+  x = 10, y = 20, width = 261, height = 170,\
+  background_colour = 'D4D0C8',\
+  use_dialog_units = 1,\
+  use_system_defaults = 0,\
+  font = [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg'],\
+  control = [20007, wxTextCtrl, '', '0', 'path1', 12, 23, 145, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20009, wxTextCtrl, '', '0', 'path2', 12, 64, 145, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20018, wxStaticBox, 'Authentication', '0', 'staticbox19', 96, 87, 113, 40,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20019, wxStaticText, 'User', '0', 'statictext20', 100, 99, 14, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20020, wxStaticText, 'Pass', '0', 'statictext21', 100, 111, 13, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20021, wxTextCtrl, '', '0', 'user', 116, 97, 84, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20022, wxTextCtrl, '', 'wxCOLOURED | wxTE_PASSWORD', 'pass', 116, 109, 84, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20023, wxButton, 'OK', '0', 'OK_button', 64, 143, 41, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20024, wxButton, 'Cancel', '0', 'Cancel_button', 136, 143, 42, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20025, wxCheckBox, 'Recursive', '0', 'recursive', 8, 91, 41, 6, 0,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20026, wxStaticBox, 'First working copy path or URL', '0', 'staticbox6', 8, 8, 244, 36,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20027, wxTextCtrl, '', '0', 'rev_start', 169, 23, 32, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20028, wxStaticText, 'Start revision', '0', 'statictext8', 167, 15, 34, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20029, wxStaticText, 'End revision', '0', 'statictext9', 208, 15, 33, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20030, wxTextCtrl, '', '0', 'rev_end', 209, 23, 32, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20031, wxStaticBox, 'Second working copy path or URL', '0', 'staticbox11', 8, 50, 200, 34,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20032, wxStaticText, 'Revision', '0', 'statictext12', 173, 56, 23, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20033, wxTextCtrl, '', '0', 'rev_second', 169, 64, 32, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20035, wxCheckBox, 'Force', '0', 'force', 8, 102, 38, 6, 0,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']]).";
+

@@ -1,0 +1,46 @@
+static char *Import_Dialog = "dialog(name = 'Import_Dialog',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxSYSTEM_MENU',\
+  title = 'Import an unversioned file or tree ',\
+  id = 100,\
+  x = 10, y = 20, width = 331, height = 160,\
+  background_colour = 'D4D0C8',\
+  use_dialog_units = 1,\
+  use_system_defaults = 0,\
+  font = [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg'],\
+  control = [20002, wxStaticBox, 'Enter log message', '0', 'staticbox3', 5, 58, 194, 66,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20005, wxTextCtrl, '', 'wxTE_MULTILINE', 'logMsg', 12, 67, 180, 50, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20006, wxStaticText, 'Repository URL', '0', 'statictext7', 5, 14, 42, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20007, wxTextCtrl, '', '0', 'reposURL', 55, 12, 145, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20008, wxStaticText, 'Path', '0', 'statictext9', 36, 27, 12, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20009, wxTextCtrl, '', '0', 'path', 55, 25, 124, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20010, wxStaticText, 'New entry', '0', 'statictext11', 21, 40, 27, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20011, wxButton, '...', '0', 'browse_button', 180, 25, 20, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20013, wxTextCtrl, '', '0', 'new_entry', 55, 38, 68, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20017, wxRadioBox, 'Path type', 'wxRA_SPECIFY_COLS', 'path_type', 208, 9, 44, 29, ['Tree', 'File'], 1,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20018, wxStaticBox, 'Authentication', '0', 'staticbox19', 208, 58, 113, 40,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20019, wxStaticText, 'User', '0', 'statictext20', 212, 70, 14, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20020, wxStaticText, 'Pass', '0', 'statictext21', 212, 82, 13, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20021, wxTextCtrl, '', '0', 'user', 230, 68, 84, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20022, wxTextCtrl, '', 'wxCOLOURED | wxTE_PASSWORD', 'pass', 230, 80, 84, 10, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20023, wxButton, 'OK', '0', 'OK_button', 104, 134, 42, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20024, wxButton, 'Cancel', '0', 'Cancel_button', 177, 134, 42, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']],\
+  control = [20025, wxCheckBox, 'Recursive', '0', 'recursive', 208, 43, 38, 6, 0,\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Shell Dlg']]).";
+

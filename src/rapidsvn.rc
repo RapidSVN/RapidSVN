@@ -1,0 +1,41 @@
+#define MINIMAL_QUIT 	1
+#define MINIMAL_ABOUT 	102
+
+mondrian			ICON	"res/mondrian.ico"
+
+nonsvn_file			ICON	"res/bitmaps/nonsvn_file.ico"
+normal_file			ICON	"res/bitmaps/normal_file.ico"
+added_file			ICON	"res/bitmaps/added_file.ico"
+absent_file			ICON	"res/bitmaps/absent_file.ico"
+deleted_file		ICON	"res/bitmaps/deleted_file.ico"
+replaced_file		ICON	"res/bitmaps/replaced_file.ico"
+modified_file		ICON	"res/bitmaps/modified_file.ico"
+merged_file			ICON	"res/bitmaps/merged_file.ico"
+conflicted_file		ICON	"res/bitmaps/conflicted_file.ico"
+
+folder				ICON	"res/bitmaps/folder.ico"
+
+
+refresh				BITMAP	"res/bitmaps/refresh.bmp"
+browse				BITMAP	"res/bitmaps/browse.bmp"
+add					BITMAP	"res/bitmaps/add.bmp"
+delete					BITMAP	"res/bitmaps/delete.bmp"
+update				BITMAP	"res/bitmaps/update.bmp"
+commit				BITMAP	"res/bitmaps/commit.bmp"
+revert				BITMAP	"res/bitmaps/revert.bmp"
+info				BITMAP	"res/bitmaps/info.bmp"
+status				BITMAP	"res/bitmaps/status.bmp"
+log					BITMAP	"res/bitmaps/log.bmp"
+resolve				BITMAP	"res/bitmaps/resolve.bmp"
+folderup			BITMAP	"res/bitmaps/folderup.bmp"
+
+#include "wx/msw/wx.rc"
+
+Checkout_Dialog		WXRDATA "res/checkout.wxr"
+Import_Dialog		WXRDATA "res/import.wxr"
+Update_Dialog		WXRDATA "res/update.wxr"
+Delete_Dialog		WXRDATA "res/delete.wxr"
+Commit_Dialog		WXRDATA "res/commit.wxr"
+Copy_Dialog			WXRDATA "res/copy.wxr"
+Mkdir_Dialog		WXRDATA "res/mkdir.wxr"
+Merge_Dialog		WXRDATA "res/merge.wxr"
