@@ -47,6 +47,7 @@ enum
   ID_Commit,
   ID_Default_Action,
   ID_Delete,
+  ID_Diff,
   ID_Explore,
   ID_Import,
   ID_Log,

@@ -32,6 +32,7 @@
 #include "cleanup_action.hpp"
 #include "commit_action.hpp"
 #include "delete_action.hpp"
+#include "diff_action.hpp"
 #include "external_program_action.hpp"
 #include "get_action.hpp"
 #include "import_action.hpp"
@@ -954,6 +955,10 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
     case ID_Switch:
       action = new SwitchAction (this);
+      break;
+
+    case ID_Diff:
+      action = new DiffAction (this);
       break;
 
     case ID_Contents: //TODO

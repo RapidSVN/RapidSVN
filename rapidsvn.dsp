@@ -151,6 +151,14 @@ SOURCE=.\src\destination_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\diff_action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\diff_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\exceptions.cpp
 # End Source File
 # Begin Source File
@@ -368,6 +376,14 @@ SOURCE=.\src\delete_dlg.hpp
 # Begin Source File
 
 SOURCE=.\src\destination_dlg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\diff_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\diff_dlg.hpp
 # End Source File
 # Begin Source File
 

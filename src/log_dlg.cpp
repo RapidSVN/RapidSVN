@@ -26,7 +26,6 @@ enum
 {
   ID_View = 1,
   ID_Get,
-  ID_Diff,
   LOG_LIST,
   LOG_MSG
 };

@@ -205,6 +205,7 @@ AppendQueryMenu (wxMenu * parentMenu)
 {
   AppendMenuItem (parentMenu, ID_Log, _("&Log"),
                   wxBITMAP (log));
+  AppendMenuItem (parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
   AppendMenuItem (parentMenu, ID_Info, _("&Info"),
                   wxBITMAP (info));
 }
