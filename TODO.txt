@@ -1,5 +1,13 @@
 RapidSVN TODO LIST
 
+TODO STATUS CLEANUP
+* There are a couple of todo items that seem
+  to be completed.
+* Remove completed items (they should be
+  extractable from the ChangeLog ... anybody
+  tried this yet)
+
+
 TODO ITEM NOTES
 * All of the functions below only change data on the client side.  
   All changes must be committed for them to take affect.  No
@@ -148,3 +156,8 @@ Replace wxWindows resources dialogs with sizers
 * The existing .wxr files work correctly only on Windows.  On environments like
   GTK+ the windows and controls are very small.  Replace all of these dialogs 
   with wxSizer objects.  An example of this conversion is checkout_dlg.cpp.
+
+Workbench support
+* remove the browse location combo. 
+* Add dialogs to manage projects/locations in the workbench
+
