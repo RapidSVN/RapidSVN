@@ -1,103 +1,58 @@
 #include "include.h"
 #include "folder_browser.h"
+#include "folder_item_data.h"
 #include "svn_wc.h"
+#include "wx/filename.h"
+#include "wx/dir.h"
 
-FolderBrowser::FolderBrowser (wxWindow * wnd,
-                              apr_pool_t * __pool,
+#include "res/bitmaps/computer.xpm"
+#include "res/bitmaps/folder.xpm"
+#include "res/bitmaps/open_folder.xpm"
+
+//IMPLEMENT_DYNAMIC_CLASS (FolderBrowser, wxControl)
+BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
+EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
+EVT_TREE_ITEM_COLLAPSED (-1, FolderBrowser::OnCollapseItem)
+EVT_SIZE (FolderBrowser::OnSize) 
+END_EVENT_TABLE () 
+
+enum
+{
+    FOLDER_IMAGE_COMPUTER = 0,
+    FOLDER_IMAGE_FOLDER,
+    FOLDER_IMAGE_OPEN_FOLDER,
+    FOLDER_IMAGE_COUNT
+};
+    
+
+FolderBrowser::FolderBrowser (wxWindow * parent,
+                              apr_pool_t *pool,
                               const wxWindowID id,
-                              const wxString & dir,
                               const wxPoint & pos,
                               const wxSize & size,
-                              long style,
-                              const wxString & filter,
-                              int defaultFilter, const wxString & name):
-wxGenericDirCtrl (wnd, id, dir, pos, size, style, filter, defaultFilter, name)
+                              const wxString & name)
+  : wxControl (parent, id, pos, size, 0, wxDefaultValidator, name)
 {
-  pool = __pool;
+  m_pool = pool;
 
-  wxTreeCtrl *treeCtrl = GetTreeCtrl ();
+  SetBackgroundColour (wxSystemSettings::GetColour (wxSYS_COLOUR_3DFACE));
+ 
+  m_imageList = new wxImageList (16, 16, TRUE);
+  m_imageList->Add( wxIcon ( computer_xpm ) );
+  m_imageList->Add( wxIcon ( folder_xpm ) );
+  m_imageList->Add( wxIcon ( open_folder_xpm ) );
 
-  if (treeCtrl)
-  {
-    wxTreeItemId rootId = treeCtrl->GetRootItem ();
-    CollapseDir (rootId);
-    ExpandDir (rootId);
-  }
+  m_treeCtrl = new wxTreeCtrl (this, -1, pos, size, 
+			       wxTR_HAS_BUTTONS);
+  m_treeCtrl->AssignImageList(m_imageList);
+
+  FolderItemData* data = new FolderItemData(FOLDER_TYPE_WORKBENCH);
+  m_rootId = m_treeCtrl->AddRoot(_("Workbench"), FOLDER_IMAGE_COMPUTER, FOLDER_IMAGE_COMPUTER, data);
+  m_treeCtrl->SetItemHasChildren(m_rootId, TRUE);
 }
 
 FolderBrowser::~FolderBrowser ()
 {
-}
-
-void
-FolderBrowser::SetupSections ()
-{
-  wxTreeCtrl *treeCtrl = GetTreeCtrl ();
-
-  if (treeCtrl)
-  {
-    m_workbenchId = AddSection ("", wxT ("Workbench"), 3);
-  }
-}
-
-
-void
-FolderBrowser::ExpandDir (const wxTreeItemId & parentId)
-{
-  if (parentId == m_workbenchId)
-  {
-    wxTreeCtrl *treeCtrl = GetTreeCtrl ();
-
-    if (treeCtrl)
-    {
-      const size_t childCount = treeCtrl->GetChildrenCount (parentId, FALSE);
-
-      if (childCount == 0)
-      {
-        const size_t count = m_workbenchItems.GetCount ();
-        size_t index;
-
-        m_workbenchItems.Sort ();
-        for (index = 0; index < count; index++)
-        {
-          const wxString & item = m_workbenchItems.Item (index);
-          PatchedDirItemData *itemData =
-            new PatchedDirItemData (item, item, TRUE);
-          const wxTreeItemId & itemId =
-            treeCtrl->AppendItem (parentId, item, 0, -1, itemData);
-          treeCtrl->SetItemHasChildren (itemId);
-        }
-      }
-    }
-  }
-  else
-  {
-    PatchedGenericDirCtrl::ExpandDir (parentId);
-  }
-}
-
-
-void
-FolderBrowser::CollapseDir (const wxTreeItemId & parentId)
-{
-  wxTreeCtrl *treeCtrl = GetTreeCtrl ();
-  wxTreeItemId child;
-
-  PatchedDirItemData *data =
-    (PatchedDirItemData *) treeCtrl->GetItemData (parentId);
-
-  if (data)
-  {
-    data->m_isExpanded = FALSE;
-    long cookie;
-    child = treeCtrl->GetFirstChild (parentId, cookie);
-    while (child.IsOk ())
-    {
-      treeCtrl->Delete (child);
-      child = treeCtrl->GetFirstChild (parentId, cookie);
-    }
-  }
-  wxGenericDirCtrl::CollapseDir (parentId);
 }
 
 UniqueArrayString & FolderBrowser::GetWorkbenchItems ()
@@ -108,29 +63,31 @@ UniqueArrayString & FolderBrowser::GetWorkbenchItems ()
 void
 FolderBrowser::Refresh ()
 {
-  CollapseDir (m_workbenchId);
-  ExpandDir (m_workbenchId);
+    m_treeCtrl->Collapse(m_rootId);
+    m_treeCtrl->Expand(m_rootId);
 }
 
 const bool
-FolderBrowser::RemoveProject (const wxTreeItemId & id)
+FolderBrowser::RemoveProject ()
 {
-  wxTreeCtrl *treeCtrl = GetTreeCtrl ();
-  wxASSERT (treeCtrl);
   bool success = FALSE;
 
-  const wxTreeItemId parentId = treeCtrl->GetParent (id);
+  wxTreeItemId id = m_treeCtrl->GetSelection();
 
-  if (parentId == m_workbenchId)
+  if( id.IsOk() )
   {
-    const wxDirItemData *itemData =
-      (wxDirItemData *) treeCtrl->GetItemData (id);
+      FolderItemData* data=(FolderItemData*)
+	  m_treeCtrl->GetItemData(id);
 
-    if (itemData)
-    {
-      m_workbenchItems.Remove (itemData->m_path.c_str ());
-    }
+      if( data->getFolderType() == FOLDER_TYPE_PROJECT )
+      {
+	  wxString path = data->getPath();
+	  m_treeCtrl->Delete(id);
+	  m_workbenchItems.Remove(path.c_str());
+	  success = TRUE;
+      }
   }
+
   return success;
 }
 
@@ -138,30 +95,139 @@ void
 FolderBrowser::AddProject (const wxString & path)
 {
   m_workbenchItems.Add (path);
+  //TODO Refresh();
 }
 
-wxTreeItemId
-  FolderBrowser::AppendItem (const wxTreeItemId & parent,
-                             const wxString & text, int image,
-                             int selectedImage, wxTreeItemData * data)
+void
+FolderBrowser::OnSize(wxSizeEvent & WXUNUSED (event))
 {
-  bool add = TRUE;
-  wxTreeItemId treeItemId;
-  wxDirItemData *dirData = static_cast < wxDirItemData * >(data);
-
-  if (dirData != NULL)
-  {
-    if ((dirData->m_isDir) && (dirData->m_name == SVN_WC_ADM_DIR_NAME))
+    if( m_treeCtrl )
     {
-      add = FALSE;
+	wxSize size = GetClientSize();
+	m_treeCtrl->SetSize(0, 0, size.x, size.y);
     }
-  }
+}
 
-  if (add)
+void
+FolderBrowser::OnExpandItem (wxTreeEvent & event)
+{
+  wxTreeItemId parentId = event.GetItem ();
+  int type = FOLDER_TYPE_INVALID;
+
+  if (m_rootId == 0)
   {
-    treeItemId =
-      wxGenericDirCtrl::AppendItem (parent, text, image, selectedImage, data);
+    m_rootId = m_treeCtrl->GetRootItem ();
   }
 
-  return treeItemId;
+  FolderItemData* parentData=(FolderItemData*)m_treeCtrl->GetItemData(parentId);
+  if( parentData )
+  {
+      type = parentData->getFolderType();
+  }
+
+  switch( type )
+  {
+      case FOLDER_TYPE_WORKBENCH:
+      {
+	  const int count = m_workbenchItems.GetCount();
+	  int index;
+
+	  for( index = 0; index < count; index++ )
+	  {
+	      const wxString& path = m_workbenchItems.Item(index);
+	      FolderItemData* data= new FolderItemData(FOLDER_TYPE_PROJECT, 
+							     path, path, TRUE);
+	      wxTreeItemId newId =
+		  m_treeCtrl->AppendItem(parentId, path, 
+					 FOLDER_IMAGE_FOLDER, 
+					 FOLDER_IMAGE_FOLDER, data);
+	      m_treeCtrl->SetItemHasChildren(newId, TRUE);
+	      m_treeCtrl->SetItemImage(newId, FOLDER_IMAGE_OPEN_FOLDER,  wxTreeItemIcon_Expanded);
+	  }
+      }
+      break;
+
+      case FOLDER_TYPE_PROJECT:
+      case FOLDER_TYPE_NORMAL:
+      {
+	  const wxString& parentPath = parentData->getPath();
+	  wxDir dir(parentPath);
+
+	  if( dir.IsOpened() )
+	  {
+	      wxString filename;
+
+	      bool ok = dir.GetFirst(&filename, wxEmptyString, 
+				     wxDIR_DIRS);
+
+	      while(ok)
+	      {
+		  if( filename != SVN_WC_ADM_DIR_NAME )
+		  {
+		      wxFileName fullPath(parentPath, 
+					  filename, wxPATH_NATIVE);
+
+		      FolderItemData * data = 
+			  new FolderItemData(FOLDER_TYPE_NORMAL, 
+					     fullPath.GetFullPath(), 
+					     filename, TRUE);
+
+		      wxTreeItemId newId = 
+			  m_treeCtrl->AppendItem(
+			      parentId, filename, 
+			      FOLDER_IMAGE_FOLDER, 
+			      FOLDER_IMAGE_FOLDER, data);
+		      m_treeCtrl->SetItemHasChildren(newId, TRUE);
+		      m_treeCtrl->SetItemImage(newId, FOLDER_IMAGE_OPEN_FOLDER,  wxTreeItemIcon_Expanded);
+		  }
+
+		  ok = dir.GetNext(&filename);
+	      }
+	  }
+      }
+      break;
+  }	  
+
+  m_treeCtrl->SortChildren(parentId);
+		  
+}
+
+void
+FolderBrowser::OnCollapseItem (wxTreeEvent & event)
+{
+  wxTreeItemId parentId = event.GetItem ();
+
+  long cookie;
+  wxTreeItemId id=m_treeCtrl->GetFirstChild(parentId, cookie);
+
+  while( id.IsOk() )
+  {
+      m_treeCtrl->Delete(id);
+      id=m_treeCtrl->GetFirstChild(parentId, cookie);
+  }
+
+  m_treeCtrl->SetItemHasChildren(parentId, TRUE);
+}
+  
+wxString 
+FolderBrowser::GetPath()
+{
+    const wxTreeItemId id = m_treeCtrl->GetSelection();
+    
+    if( !id.IsOk() )
+    {
+	return "";
+    }
+    else
+    {
+	FolderItemData* data = (FolderItemData*)
+	    m_treeCtrl->GetItemData(id);
+	return data->getPath();
+    }
+}
+
+void 
+FolderBrowser::SetPath(const wxString& path)
+{
+    //TODO 
 }

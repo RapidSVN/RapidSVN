@@ -1,56 +1,54 @@
 #ifndef _FOLDER_BROWSER_H_INCLUDED_
 #define _FOLDER_BROWSER_H_INCLUDED_
 
-//#define FOLDER_BROWSER_USE_GENERIC_DIRCTRL
-
-#ifdef FOLDER_BROWSER_USE_GENERIC_DIRCTRL
-#include "wx/generic/dirctrlg.h"
-#else
-#include "patched_dirctrlg.h"
-#define wxGenericDirCtrl PatchedGenericDirCtrl
-#define wxDirItemData PatchedDirItemData
-#define wxDIRCTRL_DIR_ONLY PATCHED_DIRCTRL_DIR_ONLY
-#endif
-
 #include "unique_array_string.h"
+//#include "wx/wx.h"
+#include "wx/treectrl.h"
 
-class FolderBrowser:public wxGenericDirCtrl
+static const wxString FolderBrowserNameStr;
+
+class UniqueArrayString;
+//class wxTreeItemId;
+//class wxTreeCtrl;
+class wxImageList;
+
+class FolderBrowser:public wxControl
 {
 private:
-  apr_pool_t * pool;
+  apr_pool_t * m_pool;
 
 public:
-  FolderBrowser (wxWindow * wnd,
-                 apr_pool_t * __pool,
+  FolderBrowser (wxWindow * parent,
+                 apr_pool_t * pool,
                  const wxWindowID id = -1,
-                 const wxString & dir = wxDirDialogDefaultFolderStr,
                  const wxPoint & pos = wxDefaultPosition,
                  const wxSize & size = wxDefaultSize,
-                 long style = wxDIRCTRL_DIR_ONLY,
-                 const wxString & filter = wxEmptyString,
-                 int defaultFilter = 0,
-                 const wxString & name = wxTreeCtrlNameStr);
+                 const wxString & name = FolderBrowserNameStr);
 
-   virtual ~ FolderBrowser ();
+  virtual ~ FolderBrowser ();
 
   virtual void Refresh ();
-  virtual void SetupSections ();
 
-   UniqueArrayString & GetWorkbenchItems ();
+  UniqueArrayString & GetWorkbenchItems ();
 
-  const bool RemoveProject (const wxTreeItemId & id);
-  void AddProject (const wxString & path);
+  const bool RemoveProject ();
+  void AddProject (const wxString & projectPath);
+  wxString GetPath();
+  void SetPath(const wxString& path);
 
-protected:
-   virtual void ExpandDir (const wxTreeItemId & parentId);
-  virtual void CollapseDir (const wxTreeItemId & parentId);
-  virtual wxTreeItemId AppendItem (const wxTreeItemId & parent,
-                                   const wxString & text,
-                                   int image = -1, int selectedImage = -1,
-                                   wxTreeItemData * data = NULL);
 private:
-   wxTreeItemId m_workbenchId;
-  UniqueArrayString m_workbenchItems;
+   wxTreeCtrl* m_treeCtrl;
+   wxTreeItemId m_rootId;
+   wxImageList* m_imageList;
+   UniqueArrayString m_workbenchItems;
+
+   void OnExpandItem (wxTreeEvent & event);
+   void OnCollapseItem (wxTreeEvent & event);
+   void OnSize (wxSizeEvent & event);
+
+private:
+   DECLARE_EVENT_TABLE ()
+
 };
 
 

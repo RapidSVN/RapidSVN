@@ -14,6 +14,7 @@ OBJECTS=action_thread.o \
 		exceptions.o \
 		filelist_ctrl.o \
 		folder_browser.o \
+		folder_item_data.o \
 		import_action.o \
 		import_dlg.o \
 		include.o \
@@ -24,7 +25,6 @@ OBJECTS=action_thread.o \
 		mkdir_action.o \
 		mkdir_dlg.o \
 		preferences_dlg.o \
-		patched_dirctrlg.o \
 		property_action.o \
 		property_dlg.o \
 		report_dlg.o \

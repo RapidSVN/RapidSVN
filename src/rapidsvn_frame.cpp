@@ -156,14 +156,7 @@ wxFrame ((wxFrame *) NULL, -1, title)
     pConfig->Read (szBrowserPathKey, wxDirDialogDefaultFolderStr);
 
   // Create the browse control
-  m_folder_browser = new FolderBrowser (m_vert_splitter,
-                                        pool,
-                                        -1,
-                                        BrowsePosition,
-                                        wxDefaultPosition,
-                                        wxDefaultSize,
-                                        wxDIRCTRL_DIR_ONLY,
-                                        _T (""), 0, _T (""));
+  m_folder_browser = new FolderBrowser (m_vert_splitter, pool);
 
   UpdateFileList ();
 
@@ -792,14 +785,8 @@ void
 RapidSvnFrame::RemoveProject ()
 {
   wxASSERT (m_folder_browser);
-  wxTreeCtrl *treeCtrl = m_folder_browser->GetTreeCtrl ();
-  wxASSERT (treeCtrl);
-
-  const wxTreeItemId selectionId = treeCtrl->GetSelection ();
-  if (selectionId.IsOk ())
+  if( m_folder_browser->RemoveProject() )
   {
-    m_folder_browser->RemoveProject (selectionId);
-    m_folder_browser->Refresh ();
     wxLogStatus (_T ("Removed project from workbench"));
   }
 }
