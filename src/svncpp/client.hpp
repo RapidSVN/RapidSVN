@@ -118,7 +118,7 @@ namespace svn
      * @param recurse whether you want it to checkout files recursively.
      * @exception ClientException
      */
-    void 
+    svn_revnum_t
     checkout (const char * moduleName, const Path & destPath, 
               const Revision & revision, 
               bool recurse) throw (ClientException);
@@ -172,7 +172,7 @@ namespace svn
      * @param recurse recursively update.
      * @exception ClientException
      */
-    void 
+    svn_revnum_t 
     update (const Path & path, const Revision & revision, 
             bool recurse) throw (ClientException);
 
@@ -262,7 +262,7 @@ namespace svn
      * @param revision revision to use for the export
      * @param force force export
      */
-    void 
+    svn_revnum_t
     doExport (const Path & srcPath, 
               const Path & destPath, 
               const Revision & revision, 
@@ -273,7 +273,7 @@ namespace svn
      * svn_client_switch() client method.
      * @exception ClientException
      */
-    void 
+    svn_revnum_t
     doSwitch (const Path & path, const char * url, 
               const Revision & revision, 
               bool recurse) throw (ClientException);

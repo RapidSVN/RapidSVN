@@ -43,7 +43,8 @@ namespace svn
      * @param revision expected working copy revision
      */
     static void
-    ensureAdm (const char * dir, const char * url, const Revision & revision);
+    ensureAdm (const char * dir, const char * uuid, 
+               const char * url, const Revision & revision);
 
     static const char * ADM_DIR_NAME;
 

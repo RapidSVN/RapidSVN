@@ -28,7 +28,7 @@
 
 namespace svn
 {
-  void
+  svn_revnum_t
   Client::checkout (const char * url, 
                     const Path & destPath, 
                     const Revision & revision, 
@@ -37,8 +37,10 @@ namespace svn
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
 
+    svn_revnum_t revnum = 0;
     svn_error_t * error =
-      svn_client_checkout (url, destPath.c_str (),
+      svn_client_checkout (&revnum,
+                           url, destPath.c_str (),
                            revision.revision (),
                            recurse,
                            *m_context,
@@ -46,6 +48,7 @@ namespace svn
 
     if(error != NULL)
       throw ClientException (error);
+    return revnum;
   }
 
   void
@@ -115,20 +118,23 @@ namespace svn
       throw ClientException (error);
   }
 
-  void
+  svn_revnum_t
   Client::update (const Path & path, 
                   const Revision & revision, 
                   bool recurse) throw (ClientException)
   {
     Pool pool;
+    svn_revnum_t revnum = 0;
     svn_error_t * error =
-      svn_client_update (path.c_str (),
+      svn_client_update (&revnum,
+                         path.c_str (),
                          revision.revision (),
                          recurse,
                          *m_context,
                          pool);
     if(error != NULL)
       throw ClientException (error);
+    return revnum;
   }
 
   svn_revnum_t
@@ -261,15 +267,17 @@ namespace svn
       throw ClientException (error);
   }
 
-  void
+  svn_revnum_t
   Client::doExport (const Path & srcPath, 
                     const Path & destPath, 
                     const Revision & revision, 
                     bool force) throw (ClientException)
   {
     Pool pool;
+    svn_revnum_t revnum = 0;
     svn_error_t * error =  
-      svn_client_export (srcPath.c_str (),
+      svn_client_export (&revnum,
+                         srcPath.c_str (),
                          destPath.c_str (),
                          const_cast<svn_opt_revision_t*>
                          (revision.revision ()),
@@ -279,17 +287,20 @@ namespace svn
 
     if(error != NULL)
       throw ClientException (error);
+    return revnum;
   }
 
-  void
+  svn_revnum_t
   Client::doSwitch (const Path & path, 
                     const char * url, 
                     const Revision & revision, 
                     bool recurse) throw (ClientException)
   {
     Pool pool;
+    svn_revnum_t revnum = 0;
     svn_error_t * error =  
-      svn_client_switch (path.c_str (),
+      svn_client_switch (&revnum,
+                         path.c_str (),
                          url,
                          revision.revision (),
                          recurse,
@@ -298,6 +309,7 @@ namespace svn
     
     if(error != NULL)
       throw ClientException (error);
+    return revnum;
   }
 
   void

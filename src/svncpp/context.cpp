@@ -291,7 +291,8 @@ namespace svn
      */
     static svn_error_t *
     onSslServerTrustPrompt (svn_auth_cred_ssl_server_trust_t **cred, 
-                            void *baton, 
+                            void *baton,
+                            const char *realm,
                             int failures,
                             const svn_auth_ssl_server_cert_info_t *info,
                             apr_pool_t *pool)

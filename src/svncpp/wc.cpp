@@ -43,7 +43,8 @@ namespace svn
   }
 
   void
-  Wc::ensureAdm (const char * dir, const char * url, const Revision & revision)
+  Wc::ensureAdm (const char * dir, const char *uuid, 
+                 const char * url, const Revision & revision)
   {
     Pool pool;
     Path dirPath (dir);
@@ -51,7 +52,7 @@ namespace svn
 
     svn_error_t * error =
       svn_wc_ensure_adm (dirPath.c_str (),    // path 
-                         0,                   // UUID 
+                         uuid,                // UUID 
                          urlPath.c_str (),    // url
                          revision.revnum (),  // revision
                          pool);
