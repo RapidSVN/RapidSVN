@@ -20,6 +20,7 @@ rapidsvn_SOURCES= \
 	exceptions.cpp \
 	external_program_action.cpp \
 	filelist_ctrl.cpp \
+	file_info.cpp \
 	folder_browser.cpp \
 	folder_item_data.cpp \
 	get_action.cpp \
@@ -42,7 +43,6 @@ rapidsvn_SOURCES= \
 	resolve_action.cpp \
 	revert_action.cpp \
 	simple_worker.cpp \
-	svn_file_info.cpp \
 	svn_notify.cpp \
 	switch_action.cpp \
 	tracer.cpp \

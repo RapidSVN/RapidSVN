@@ -23,7 +23,7 @@
 // app
 #include "ids.hpp"
 
-#include "svn_file_info.hpp"
+#include "file_info.hpp"
 
 // actions
 #include "add_action.hpp"
@@ -1012,29 +1012,22 @@ RapidSvnFrame::ShowInfo ()
 {
   IndexArray arr = m_listCtrl->GetSelectedItems ();
   size_t i;
-  wxString path = m_folder_browser->GetPath ();
-  wxString all_info;
-  wxString info;
-  wxString _path;
-  svn::Pool subPool;
-  svn_error_t *err = NULL;
+  wxString path = m_currentPath;
+  FileInfo fileInfo (m_context);
 
   try
   {
     for (i = 0; i < arr.GetCount (); i++)
     {
       wxFileName fname (path, m_listCtrl->GetItemText (arr[i]));
-      _path = fname.GetFullPath ();
-      err = svn_get_file_info (UnixPath (_path), subPool.pool(), info);
-
-      if (err)
-      {
-        throw new svn::ClientException (err);
-        all_info.Empty ();
-
-      }
-      all_info += info + "\n";
+      wxString fullPath = fname.GetFullPath ();
+      fileInfo.addPath (fullPath.c_str ());
     }
+
+    wxString info = fileInfo.info ();
+
+    ReportDlg dlg (this, _("Info"), info, NORMAL_REPORT);
+    dlg.ShowModal ();
   }
   catch (svn::ClientException & e)
   {
@@ -1042,8 +1035,6 @@ RapidSvnFrame::ShowInfo ()
     return;
   }
 
-  ReportDlg rdlg (this, _("Info"), all_info, NORMAL_REPORT);
-  rdlg.ShowModal ();
 }
 
 void

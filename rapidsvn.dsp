@@ -150,6 +150,10 @@ SOURCE=.\src\external_program_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\file_info.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\filelist_ctrl.cpp
 # End Source File
 # Begin Source File
@@ -243,10 +247,6 @@ SOURCE=.\src\revert_action.cpp
 # Begin Source File
 
 SOURCE=.\src\simple_worker.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\svn_file_info.cpp
 # End Source File
 # Begin Source File
 
@@ -362,6 +362,10 @@ SOURCE=.\src\external_program_action.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\file_info.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\filelist_ctrl.hpp
 # End Source File
 # Begin Source File
@@ -471,10 +475,6 @@ SOURCE=.\src\simple_worker.hpp
 # Begin Source File
 
 SOURCE=.\src\svncpp\status.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\svn_file_info.hpp
 # End Source File
 # Begin Source File
 
