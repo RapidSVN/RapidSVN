@@ -60,6 +60,9 @@ namespace svn
   Path& 
   Path::operator=(const Path & path)
   {
+    if (this == &path)
+      return *this;
+    m_path = path.c_str();
     return *this;
   }
 
