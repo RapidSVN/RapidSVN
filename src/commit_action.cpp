@@ -47,7 +47,8 @@ CommitAction::Prepare ()
     return false;
   }
 
-  m_data = dlg.GetData ();
+  m_recursive = dlg.GetRecursive ();
+  m_recursive = dlg.GetRecursive ();
   return true;
 }
 
@@ -62,8 +63,8 @@ CommitAction::Perform ()
 
   svn::Pool pool;
   long revision = 
-    client.commit (targets.array (pool), m_data.LogMessage.c_str (), 
-                   m_data.Recursive);
+    client.commit (targets.array (pool), m_message.c_str (), 
+                   m_recursive);
   wxString str;
 
   str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",

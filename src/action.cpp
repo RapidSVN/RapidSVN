@@ -19,6 +19,32 @@
 #include "tracer.hpp"
 #include "auth_dlg.hpp"
 
+static const char *
+ACTION_NAMES [] =
+{
+  _("Add......."),           // svn_wc_notify_add,
+  _("Copy......"),          // svn_wc_notify_copy,
+  _("Delete...."),        // svn_wc_notify_delete,
+  _("Restore..."),       // svn_wc_notify_restore,
+  _("Revert...."),        // svn_wc_notify_revert,
+  NULL ,              // NOT USED HERE svn_wc_notify_failed_revert,
+  _("Resolve..."),       // svn_wc_notify_resolve,
+  NULL,               // NOT USED HERE svn_wc_notify_status,
+  _("Skip......"),          // NOT USED HERE svn_wc_notify_skip,
+  _("Deleted..."),       // svn_wc_notify_update_delete,
+  _("Added....."),         // svn_wc_notify_update_add,
+  _("Updated..."),       // svn_wc_notify_update_update,
+  NULL,               // NOT USED HERE svn_wc_notify_update_completed,
+  NULL,               // NOT USED HERE svn_wc_notify_update_external,
+  _("Modified.."),      // svn_wc_notify_commit_modified,
+  _("Added....."),         // svn_wc_notify_commit_added,
+  _("Deleted..."),       // svn_wc_notify_commit_deleted,
+  _("Replaced.."),      // svn_wc_notify_commit_replaced,
+  NULL                // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
+};
+const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
+
+
 struct Action::Data
 {
 public:
@@ -276,6 +302,20 @@ Action::contextNotify (const char *path,
         svn_wc_notify_state_t prop_state,
         svn_revnum_t revision)
 {
+  // Map an action to string and trace the action and path
+  const char * actionString = 0;
+
+  if (action >= 0 && action <= MAX_ACTION)
+    actionString = ACTION_NAMES [action];
+
+  if (actionString != 0)
+  {
+    wxString msg;
+    msg.Printf ("%s: %s", actionString, path);
+
+    Trace (msg);
+  }
+
   // Implement code to generate usefule messages that can be 
   // transmitted with "Trace"
   wxSafeYield ();

@@ -16,9 +16,6 @@
 // wxwindows
 #include "wx/dialog.h"
 
-// app
-#include "commit_data.hpp"
-
 // forward declarations
 class CommitDlg : public wxDialog
 {
@@ -31,15 +28,26 @@ public:
   CommitDlg(wxWindow* parent);
 
   /**
-   * @return data
+   * destructor
    */
-  const CommitData &
-  GetData () const;
+  virtual ~CommitDlg ();
+
+  /**
+   * @return log message
+   */
+  const char * 
+  GetMessage () const;
+
+  /**
+   * @return recursive setting
+   */
+  bool
+  GetRecursive () const;
 
 private:
-  void InitializeData ();
-  
-  CommitData m_data;
+  /** hide implementation details */
+  struct Data;
+  Data * m;
   
   DECLARE_EVENT_TABLE ()
 };

@@ -15,7 +15,6 @@
 
 // app
 #include "action.hpp"
-#include "commit_data.hpp"
 
 // forward declarations
 namespace svn
@@ -33,7 +32,8 @@ public:
   virtual bool Prepare ();
 
 private:
-  CommitData m_data;
+  bool m_recursive;
+  wxString m_message;
 
   // hide default and copy constructor
   CommitAction ();

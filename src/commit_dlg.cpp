@@ -18,69 +18,100 @@
 // app
 #include "commit_dlg.hpp"
 
+struct CommitDlg::Data
+{
+public:
+  wxString message;
+  bool recursive;
+
+  Data (wxWindow * window)
+    : message (""), recursive (false)
+  {
+    // create controls
+    wxStaticBox* msgBox = 
+      new wxStaticBox(window, -1, _("Enter log message"));
+
+    wxSize msgSize (window->GetCharWidth () * 80, 
+                    window->GetCharHeight () * 10);
+
+    wxTextCtrl* msg;
+    {
+      wxTextValidator val (wxFILTER_NONE, &message);
+      msg = new wxTextCtrl (window, -1, "", wxDefaultPosition, 
+                            msgSize, wxTE_MULTILINE, val);
+    }
+    wxCheckBox * checkRecursive;
+    {
+      wxGenericValidator val (&recursive);
+      checkRecursive = 
+        new wxCheckBox (window, -1, "Recursive",
+                        wxDefaultPosition, wxDefaultSize, 0,
+                        val);
+    }
+    wxButton* ok = 
+      new wxButton (window, wxID_OK, _("OK" ));
+    wxButton* cancel = 
+      new wxButton (window, wxID_CANCEL, _("Cancel"));
+
+    // position controls
+    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+
+    // The message field:
+    wxStaticBoxSizer *msgSizer = 
+      new wxStaticBoxSizer (msgBox, wxHORIZONTAL);
+    msgSizer->Add (msg, 1, wxALL | wxEXPAND, 5);
+  
+    // The buttons:
+    wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
+    buttonSizer->Add (checkRecursive, 1, 
+                      wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 
+                      10);
+    buttonSizer->Add (ok, 0, wxALL, 10);
+    buttonSizer->Add (cancel, 0, wxALL, 10);
+
+    wxBoxSizer *topSizer = new wxBoxSizer (wxHORIZONTAL);
+    topSizer->Add (msgSizer, 1, wxALL | wxEXPAND, 5);
+
+    // Add all the sizers to the main sizer
+    mainSizer->Add (topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
+    mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
+
+    window->SetAutoLayout (true);
+    window->SetSizer (mainSizer);
+
+    mainSizer->SetSizeHints (window);
+    mainSizer->Fit (window);
+  }
+};
+
+
 BEGIN_EVENT_TABLE (CommitDlg, wxDialog)
 END_EVENT_TABLE ()
 
-CommitDlg::CommitDlg(wxWindow* parent)
-  : wxDialog(parent, -1, _("Commit changes to repository"),
+CommitDlg::CommitDlg (wxWindow* parent)
+  : wxDialog(parent, -1, _("Commit"),
              wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  InitializeData();
-  CentreOnParent();
+  m = new Data (this);
+  CentreOnParent ();
 }
 
-void
-CommitDlg::InitializeData ()
+CommitDlg::~CommitDlg ()
 {
-  // create controls
-  wxStaticBox* msgBox = new wxStaticBox(this, -1, _("Enter log message"));
-
-  wxSize msgSize (GetCharWidth () * 80, GetCharHeight () * 10);
-
-  wxTextCtrl* msg = 
-    new wxTextCtrl(this, -1, "", wxDefaultPosition, 
-                   msgSize, wxTE_MULTILINE,
-                   wxTextValidator(wxFILTER_NONE, &m_data.LogMessage));
-  wxCheckBox* recursive  = 
-    new wxCheckBox(this, -1, "Recursive",
-                   wxDefaultPosition, wxDefaultSize, 0,
-                   wxGenericValidator(&m_data.Recursive));
-  wxButton* ok =  new wxButton( this, wxID_OK, _("OK" ));
-  wxButton* cancel = new wxButton( this, wxID_CANCEL, _("Cancel"));
-
-  // position controls
-  wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-
-  // The message field:
-  wxStaticBoxSizer *msgSizer = 
-    new wxStaticBoxSizer(msgBox, wxHORIZONTAL);
-  msgSizer->Add(msg, 1, wxALL | wxEXPAND, 5);
-  
-  // The buttons:
-  wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-  buttonSizer->Add(recursive, 1, wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 10);
-  buttonSizer->Add(ok, 0, wxALL, 10);
-  buttonSizer->Add(cancel, 0, wxALL, 10);
-
-  wxBoxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
-  topSizer->Add(msgSizer, 1, wxALL | wxEXPAND, 5);
-
-  // Add all the sizers to the main sizer
-  mainSizer->Add (topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
-  mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-
-  SetAutoLayout(true);
-  SetSizer(mainSizer);
-
-  mainSizer->SetSizeHints(this);
-  mainSizer->Fit(this);
+  delete m;
 }
 
-const CommitData &
-CommitDlg::GetData () const
+const char *
+CommitDlg::GetMessage () const
 {
-  return m_data;
+  return m->message;
+}
+
+bool
+CommitDlg::GetRecursive () const
+{
+  return m->recursive;
 }
 
 /* -----------------------------------------------------------------

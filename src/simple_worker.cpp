@@ -158,7 +158,7 @@ SimpleWorker::Perform (Action * action)
 
   {
     wxString msg;
-    msg.Printf (_("Executing action: %s"), action->GetName ());
+    msg.Printf (_("Execute: %s"), action->GetName ());
     PostStringEvent (TOKEN_ACTION_START, msg, ACTION_EVENT);
   }
 
