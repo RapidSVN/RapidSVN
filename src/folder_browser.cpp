@@ -19,6 +19,7 @@
 #include "wx/filename.h"
 #include "wx/dir.h"
 #include "wx/imaglist.h"
+#include "wx/treectrl.h"
 
 // app
 #include "folder_browser.hpp"

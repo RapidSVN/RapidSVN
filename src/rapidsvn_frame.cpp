@@ -62,12 +62,186 @@
 static const int NUM_ITEMS = 30;
 
 // List config keys here, to avoid duplicating literal text:
-const static char *szBrowserPathKey = "/MainFrame/BrowserPath";
+const static char ConfigBrowserPath[] = "/MainFrame/BrowserPath";
+const static char ConfigLeft[] = "/MainFrame/Left";
+const static char ConfigTop[] = "/MainFrame/Top";
+const static char ConfigWidth[] = "/MainFrame/Width";
+const static char ConfigHeight[] = "/MainFrame/Height";
+const static char ConfigSplitterHoriz[] = "/MainFrame/SplitterHoriz";
+const static char ConfigSplitterVert[] = "/MainFrame/SplitterVert";
+const static char ConfigProjectFmt[] = "/Workbench/Project%d";
 
-#define wxTraceMisc _("tracemisc")
+const static char TraceMisc[] = "tracemisc";
 
-// define this to 1 to use wxToolBarSimple instead of the native one
-#define USE_GENERIC_TBAR 0
+//REMOVE // define this to 1 to use wxToolBarSimple instead of the native one
+//REMOVE #define USE_GENERIC_TBAR 0
+
+/**
+ * class that hide implementation specific data and methods from
+ * the interface
+ */
+struct RapidSvnFrame::Data
+{
+public:
+  wxMenu * MenuColumns;
+  wxMenuBar * MenuBar;
+
+  Data ()
+    : MenuColumns (0), MenuBar (0)
+  {
+    InitializeMenu ();
+  }
+
+  void
+  RapidSvnFrame::Data::InitializeMenu ()
+  {
+    // File menu
+    wxMenu *menuFile = new wxMenu;
+    wxMenuItem *pItem;
+
+    menuFile->Append (ID_AddProject, _("&Add to Workbench..."));
+    menuFile->Append (ID_RemoveProject, _("&Remove from Workbench..."));
+    menuFile->AppendSeparator ();
+    menuFile->Append (ID_Quit, _("E&xit"));
+
+    // Columns menu
+    MenuColumns = new wxMenu;
+    MenuColumns->Append (ID_Column_Reset, _T("Reset Columns"));
+
+    MenuColumns->AppendSeparator ();
+
+    MenuColumns->AppendCheckItem (ID_Column_Rev, _("&Revision"));
+    MenuColumns->AppendCheckItem (ID_Column_Cmt_Rev, _("Re&pository Revision"));
+    MenuColumns->AppendCheckItem (ID_Column_Author, _("&Author"));
+    MenuColumns->AppendCheckItem (ID_Column_Text_Status, _("&Status"));
+    MenuColumns->AppendCheckItem (ID_Column_Prop_Status, _("&Property Status"));
+    MenuColumns->AppendCheckItem (ID_Column_Cmt_Date, _("Repository &Date"));
+    MenuColumns->AppendCheckItem (ID_Column_Text_Time, _("File &Changed"));
+    MenuColumns->AppendCheckItem (ID_Column_Prop_Time, _("Property C&hanged"));
+
+    // View menu
+    wxMenu *menuView = new wxMenu;
+    pItem = new wxMenuItem (menuView, ID_Refresh, _("Refresh        F5"));
+    pItem->SetBitmap (wxBITMAP (refresh));
+    menuView->Append (pItem);
+
+    menuView->AppendSeparator ();
+
+    menuView->Append (0, _("Columns"), MenuColumns);
+
+    //menuView->AppendSeparator ();
+    //
+    //pItem = new wxMenuItem (menuView, ID_Preferences, _("Preferences"));
+    //menuView->Append (pItem);
+
+    // Create menu
+    wxMenu *menuCreate = new wxMenu;
+    menuCreate->Append (ID_Import, _("&Import an unversioned file or tree ..."));
+    menuCreate->Append (ID_Checkout, _("&Checkout working copy ..."));
+
+    menuCreate->AppendSeparator ();
+
+    menuCreate->Append (ID_Mkdir, _("Make a new directory ..."));
+    menuCreate->Append (ID_Copy, _("C&opy remembering history ..."));
+
+    menuCreate->AppendSeparator ();
+
+    menuCreate->Append (ID_Merge, _("Merge differences"));
+    menuCreate->Append (ID_Switch, _("Switch to URL ..."));
+
+    // Modify menu
+    wxMenu *menuModif = new wxMenu;
+    pItem = new wxMenuItem (menuModif, ID_Update, _("Update"));
+    pItem->SetBitmap (wxBITMAP (update));
+    menuModif->Append (pItem);
+
+    pItem = new wxMenuItem (menuModif, ID_Commit, _("Commit"));
+    pItem->SetBitmap (wxBITMAP (commit));
+    menuModif->Append (pItem);
+
+    menuModif->AppendSeparator ();
+
+    pItem = new wxMenuItem (menuModif, ID_Add, _("Add"));
+    pItem->SetBitmap (wxBITMAP (add));
+    menuModif->Append (pItem);
+
+    pItem = new wxMenuItem (menuModif, ID_Del, _("Remove"));
+    pItem->SetBitmap (wxBITMAP (delete));
+    menuModif->Append (pItem);
+
+    menuModif->AppendSeparator ();
+
+    pItem = new wxMenuItem (menuModif, ID_Revert, _("Revert"));
+    pItem->SetBitmap (wxBITMAP (revert));
+    menuModif->Append (pItem);
+
+    pItem = new wxMenuItem (menuModif, ID_Resolve, _("Resolve conflicts"));
+    pItem->SetBitmap (wxBITMAP (resolve));
+    menuModif->Append (pItem);
+
+    // Copy and rename menu
+    menuModif->AppendSeparator ();
+
+    pItem = new wxMenuItem (menuModif, ID_CopyTo, _("Copy"));
+    //pItem->SetBitmap (wxBITMAP (copy));
+    menuModif->Append (pItem);
+
+    pItem = new wxMenuItem (menuModif, ID_MoveTo, _("Move"));
+    //pItem->SetBitmap (wxBITMAP (rename));
+    menuModif->Append (pItem);
+
+    pItem = new wxMenuItem (menuModif, ID_RenameHere, _("Rename"));
+    //pItem->SetBitmap (wxBITMAP (rename));
+    menuModif->Append (pItem);
+
+    // Query menu
+    wxMenu *menuQuery = new wxMenu;
+    pItem = new wxMenuItem (menuQuery, ID_Log, _("Log"));
+    pItem->SetBitmap (wxBITMAP (log));
+    menuQuery->Append (pItem);
+
+    pItem = new wxMenuItem (menuQuery, ID_Info, _("Info"));
+    pItem->SetBitmap (wxBITMAP (info));
+    menuQuery->Append (pItem);
+
+    pItem = new wxMenuItem (menuQuery, ID_Property, _("Properties"));
+    pItem->SetBitmap (wxBITMAP (info));
+    menuQuery->Append (pItem);
+
+    // Extras menu
+    wxMenu *menuExtras = new wxMenu;
+    pItem = new wxMenuItem (menuExtras, ID_Cleanup, _("Cleanup"));
+    menuExtras->Append (pItem);
+
+    // Help Menu
+    wxMenu *menuHelp = new wxMenu;
+    menuHelp->Append (ID_Contents, _("&Contents"));
+    menuHelp->AppendSeparator ();
+    menuHelp->Append (ID_About, _("&About..."));
+
+    // Create the menu bar and append the menus
+    MenuBar = new wxMenuBar;
+    MenuBar->Append (menuFile, _("&File"));
+    MenuBar->Append (menuView, _("&View"));
+    MenuBar->Append (menuCreate, _("&Create"));
+    MenuBar->Append (menuModif, _("&Modify"));
+    MenuBar->Append (menuQuery, _("&Query"));
+    MenuBar->Append (menuExtras, _("&Extras"));
+    MenuBar->Append (menuHelp, _("&Help"));
+  }
+
+  bool 
+  IsColumnChecked (int id)
+  {
+    return MenuColumns->IsChecked (id);
+  }
+
+  void 
+  CheckColumn (int id, bool check)
+  {
+    //MenuColumns->Check (id, check);
+  }
+};
 
 BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_SIZE (RapidSvnFrame::OnSize)
@@ -98,6 +272,8 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_RenameHere, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_CopyHere, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Cleanup, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
+  EVT_MENU_RANGE (ID_Column_Min, ID_Column_Max, RapidSvnFrame::OnColumn)
   EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
   EVT_TOOL_ENTER (ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
   EVT_TREE_SEL_CHANGED (-1, RapidSvnFrame::OnFolderBrowserSelChanged)
@@ -110,6 +286,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize, 
              wxDEFAULT_FRAME_STYLE)
 {
+  m = new Data ();
   // apr stuff
   apr_initialize ();
   m_folder_browser = NULL;
@@ -120,7 +297,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
   // enable trace
-  wxLog::AddTraceMask (wxTraceMisc);
+  wxLog::AddTraceMask (TraceMisc);
 
   // Retrieve a pointer to the application configuration object.
   // If the object is not created, it will be created upon the first
@@ -135,7 +312,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   // toolbar rows
   m_toolbar_rows = 1;
 
-  InitializeMenu ();
+  SetMenuBar (m->MenuBar);
   CreateStatusBar ();
 
   // Create the toolbar
@@ -171,10 +348,6 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL, 
                                  wxDefaultPosition, wxDefaultSize);
 
-  // Set the current browse position:
-  wxString BrowsePosition =
-    pConfig->Read (szBrowserPathKey, wxDirDialogDefaultFolderStr);
-
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
 
@@ -186,25 +359,18 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_info_panel->SetAutoLayout (true);
   m_info_panel->SetSizer (sizer);
 
-
-  int x, y;
-  int w, h;
-
-  pConfig->SetPath ("/MainFrame");
-
-  // The second parameter is a default value in case the entry was not found.
-  x = pConfig->Read ("posx", 50);
-  y = pConfig->Read ("posy", 50);
-  w = pConfig->Read ("width", 806);
-  h = pConfig->Read ("height", 480);
+  // Read frame position
+  int x = pConfig->Read (ConfigLeft, 50);
+  int y = pConfig->Read (ConfigTop, 50);
+  int w = pConfig->Read (ConfigWidth, 806);
+  int h = pConfig->Read (ConfigHeight, 480);
 
   Move (x, y);
   SetClientSize (w, h);
 
   // Get sash position for every splitter from configuration.
-  int vpos, hpos;
-  vpos = pConfig->Read ("/MainFrame/vertsplitsashpos", w / 3);
-  hpos = pConfig->Read ("/MainFrame/horizsplitsashpos", (3 * h) / 4);
+  int vpos = pConfig->Read (ConfigSplitterVert, w / 3);
+  int hpos = pConfig->Read (ConfigSplitterHoriz, (3 * h) / 4);
 
   // Set sash position for every splitter.
   // Note: to not revert the order of Split calls, as the panels will be messed up.
@@ -237,157 +403,33 @@ RapidSvnFrame::~RapidSvnFrame ()
   GetClientSize (&w, &h);
   GetPosition (&x, &y);
 
-  pConfig->Write ("/MainFrame/posx", (long) x);
-  pConfig->Write ("/MainFrame/posy", (long) y);
-  pConfig->Write ("/MainFrame/width", (long) w);
-  pConfig->Write ("/MainFrame/height", (long) h);
+  pConfig->Write (ConfigLeft, (long) x);
+  pConfig->Write (ConfigTop, (long) y);
+  pConfig->Write (ConfigWidth, (long) w);
+  pConfig->Write (ConfigHeight, (long) h);
 
 
-  // Save splitters sash positions
-
-  pConfig->Write ("/MainFrame/vertsplitsashpos",
+  // Save splitter positions
+  pConfig->Write (ConfigSplitterVert,
                   (long) m_vert_splitter->GetSashPosition ());
-  pConfig->Write ("/MainFrame/horizsplitsashpos",
+  pConfig->Write (ConfigSplitterHoriz,
                   (long) m_horiz_splitter->GetSashPosition ());
 
 
-  // Save the current browse position:
-  pConfig->Write (szBrowserPathKey, m_folder_browser->GetPath ());
-
   // Save the workbench contents
-
   wxString key;
   size_t item;
   UniqueArrayString & workbenchItems = m_folder_browser->GetWorkbenchItems ();
   const size_t itemCount = workbenchItems.GetCount ();
   for (item = 0; item < itemCount; item++)
   {
-    key.Printf (_("/MainFrame/wc%d"), item);
+    key.Printf (_(ConfigProjectFmt), item);
     pConfig->Write (key, workbenchItems.Item (item));
   }
 
   PreferencesDlg::Data.Write (pConfig);
-}
 
-void
-RapidSvnFrame::InitializeMenu ()
-{
-  // File menu
-  wxMenu *menuFile = new wxMenu;
-  wxMenuItem *pItem;
-
-  menuFile->Append (ID_AddProject, ("&Add to Workbench..."));
-  menuFile->Append (ID_RemoveProject, "&Remove from Workbench...");
-  menuFile->AppendSeparator ();
-  menuFile->Append (ID_Quit, "E&xit");
-
-  // View menu
-  wxMenu *menuView = new wxMenu;
-  pItem = new wxMenuItem (menuView, ID_Refresh, _("Refresh        F5"));
-  pItem->SetBitmap (wxBITMAP (refresh));
-  menuView->Append (pItem);
-
-  //menuView->AppendSeparator ();
-  //
-  //pItem = new wxMenuItem (menuView, ID_Preferences, _("Preferences"));
-  //menuView->Append (pItem);
-
-  // Create menu
-  wxMenu *menuCreate = new wxMenu;
-  menuCreate->Append (ID_Import, _("&Import an unversioned file or tree ..."));
-  menuCreate->Append (ID_Checkout, _("&Checkout working copy ..."));
-
-  menuCreate->AppendSeparator ();
-
-  menuCreate->Append (ID_Mkdir, _("Make a new directory ..."));
-  menuCreate->Append (ID_Copy, _("C&opy remembering history ..."));
-
-  menuCreate->AppendSeparator ();
-
-  menuCreate->Append (ID_Merge, _("Merge differences"));
-  menuCreate->Append (ID_Switch, _("Switch to URL ..."));
-
-  // Modify menu
-  wxMenu *menuModif = new wxMenu;
-  pItem = new wxMenuItem (menuModif, ID_Update, _("Update"));
-  pItem->SetBitmap (wxBITMAP (update));
-  menuModif->Append (pItem);
-
-  pItem = new wxMenuItem (menuModif, ID_Commit, _("Commit"));
-  pItem->SetBitmap (wxBITMAP (commit));
-  menuModif->Append (pItem);
-
-  menuModif->AppendSeparator ();
-
-  pItem = new wxMenuItem (menuModif, ID_Add, _("Add"));
-  pItem->SetBitmap (wxBITMAP (add));
-  menuModif->Append (pItem);
-
-  pItem = new wxMenuItem (menuModif, ID_Del, _("Remove"));
-  pItem->SetBitmap (wxBITMAP (delete));
-  menuModif->Append (pItem);
-
-  menuModif->AppendSeparator ();
-
-  pItem = new wxMenuItem (menuModif, ID_Revert, _("Revert"));
-  pItem->SetBitmap (wxBITMAP (revert));
-  menuModif->Append (pItem);
-
-  pItem = new wxMenuItem (menuModif, ID_Resolve, _("Resolve conflicts"));
-  pItem->SetBitmap (wxBITMAP (resolve));
-  menuModif->Append (pItem);
-
-  // Copy and rename menu
-  menuModif->AppendSeparator ();
-
-  pItem = new wxMenuItem (menuModif, ID_CopyTo, _("Copy"));
-  //pItem->SetBitmap (wxBITMAP (copy));
-  menuModif->Append (pItem);
-
-  pItem = new wxMenuItem (menuModif, ID_MoveTo, _("Move"));
-  //pItem->SetBitmap (wxBITMAP (rename));
-  menuModif->Append (pItem);
-
-  pItem = new wxMenuItem (menuModif, ID_RenameHere, _("Rename"));
-  //pItem->SetBitmap (wxBITMAP (rename));
-  menuModif->Append (pItem);
-
-  // Query menu
-  wxMenu *menuQuery = new wxMenu;
-  pItem = new wxMenuItem (menuQuery, ID_Log, _("Log"));
-  pItem->SetBitmap (wxBITMAP (log));
-  menuQuery->Append (pItem);
-
-  pItem = new wxMenuItem (menuQuery, ID_Info, _("Info"));
-  pItem->SetBitmap (wxBITMAP (info));
-  menuQuery->Append (pItem);
-
-  pItem = new wxMenuItem (menuQuery, ID_Property, _("Properties"));
-  pItem->SetBitmap (wxBITMAP (info));
-  menuQuery->Append (pItem);
-
-  // Extras menu
-  wxMenu *menuExtras = new wxMenu;
-  pItem = new wxMenuItem (menuExtras, ID_Cleanup, _("Cleanup"));
-  menuExtras->Append (pItem);
-
-  // Help Menu
-  wxMenu *menuHelp = new wxMenu;
-  menuHelp->Append (ID_Contents, _("&Contents"));
-  menuHelp->AppendSeparator ();
-  menuHelp->Append (ID_About, _("&About..."));
-
-  // Create the menu bar and append the menus
-  wxMenuBar *menuBar = new wxMenuBar;
-  menuBar->Append (menuFile, _("&File"));
-  menuBar->Append (menuView, _("&View"));
-  menuBar->Append (menuCreate, _("&Create"));
-  menuBar->Append (menuModif, _("&Modify"));
-  menuBar->Append (menuQuery, _("&Query"));
-  menuBar->Append (menuExtras, _("&Extras"));
-  menuBar->Append (menuHelp, _("&Help"));
-
-  SetMenuBar (menuBar);
+  delete m;
 }
 
 void
@@ -666,7 +708,7 @@ RapidSvnFrame::OnToolEnter (wxCommandEvent & event)
 void
 RapidSvnFrame::AddProject ()
 {
-  wxDirDialog dialog (this, "Select a directory", wxGetHomeDir ());
+  wxDirDialog dialog (this, _("Select a directory"), wxGetHomeDir ());
   bool add = TRUE;
 
   // select dir dialog
@@ -680,7 +722,8 @@ RapidSvnFrame::AddProject ()
   if ((fileName.GetName () + fileName.GetExt ()) == SVN_WC_ADM_DIR_NAME)
   {
     add = FALSE;
-    wxMessageBox (_("You cannot add a subversion administrative directory to the workbench!"),
+    wxMessageBox (_("You cannot add a subversion "
+                    "administrative directory to the workbench!"),
                   APPLICATION_NAME, wxOK);
     return;
   }
@@ -713,12 +756,13 @@ RapidSvnFrame::InitFolderBrowser ()
   int i;
   wxString key;
   wxString val;
-  UniqueArrayString & workbenchItems = m_folder_browser->GetWorkbenchItems ();
+  UniqueArrayString & workbenchItems = 
+    m_folder_browser->GetWorkbenchItems ();
 
   for (i = 0;; i++)
   {
-    key.Printf (_("/MainFrame/wc%d"), i);
-    if (pConfig->Read (key, &val, _("")))
+    key.Printf (ConfigProjectFmt, i);
+    if (pConfig->Read (key, &val, ""))
     {
       workbenchItems.Add (val);
     }
@@ -827,7 +871,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
   case ID_Contents: //TODO
   case ID_Rename: //TODO
   default:
-    m_logTracer->Trace (_("Unimplemented action!"));
+    m_logTracer->Trace ("Unimplemented action!");
     break;
 
   }
@@ -998,6 +1042,19 @@ RapidSvnFrame::OnFileListSelected (wxListEvent & event)
   m_activePane = ACTIVEPANE_FILELIST;
 }
 
+void 
+RapidSvnFrame::OnColumn (wxCommandEvent & event)
+{
+  bool checked = m->IsColumnChecked(event.m_id);
+  m->CheckColumn(event.m_id, !checked);
+}
+
+void
+RapidSvnFrame::OnColumnReset (wxCommandEvent &)
+{
+  m_listCtrl->ResetColumns ();
+}
+
 InfoPanel::InfoPanel (wxWindow * parent)
   : wxPanel (parent, -1, wxDefaultPosition, wxDefaultSize, 
              wxTAB_TRAVERSAL | wxCLIP_CHILDREN)
@@ -1005,7 +1062,7 @@ InfoPanel::InfoPanel (wxWindow * parent)
 }
 
 LogTracer::LogTracer (wxWindow * parent)
-  : wxTextCtrl (parent, -1, _(""), wxPoint (0, 0),
+  : wxTextCtrl (parent, -1, "", wxPoint (0, 0),
                 wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY)
 {
   SetMaxLength (0);

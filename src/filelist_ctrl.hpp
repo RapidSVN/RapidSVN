@@ -13,8 +13,11 @@
 #ifndef _FILE_LIST_CONROL_H_INCLUDED_
 #define _FILE_LIST_CONROL_H_INCLUDED_
 
+// wxwindows
 #include "wx/listctrl.h"
 #include "wx/dynarray.h"
+
+// svncpp
 #include "svncpp/status.hpp"
 #include "svncpp/pool.hpp"
 
@@ -35,37 +38,71 @@ namespace svn
 
 class FileListCtrl:public wxListCtrl
 {
-private:
-  svn::Pool  m_pool;
-  wxImageList *m_imageListSmall;
-  wxString m_path;
-
-  int SortColumn;
-  bool SortIncreasing;
-
-  static int wxCALLBACK FileListCtrl::wxListCompareFunction(
-    long item1, long item2, long sortData);
-  static int wxCALLBACK FileListCtrl::CompareItems(
-    svn::Status* ps1, svn::Status* ps2, int SortColumn, bool SortIncreasing);
-  void SetColumnImages();
-
 public:
+  /**
+   * Columns in the filelist
+   */
+  enum
+  {
+    COL_NAME = 0,
+    COL_REV,
+    COL_CMT_REV,
+    COL_AUTHOR,
+    COL_TEXT_STATUS,
+    COL_PROP_STATUS,
+    COL_CMT_DATE,
+    COL_TEXT_TIME,
+    COL_PROP_TIME,
+    COL_COUNT
+  } FileListColumns;
+
+
   FileListCtrl (wxWindow * parent, const wxWindowID id,
                 const wxPoint & pos, const wxSize & size);
 
   virtual ~FileListCtrl ();
 
-  // utility methods
+  void ResetColumns ();
+  void DeleteAllItems();
+
+  /**
+   * set visibility of column
+   *
+   * @param col column number
+   * @param visible 
+   */
+  void SetColumnVisible (const int col, const bool visible);
+
+  /**
+   * @param col column number
+   * @retval true column visible
+   * @retval false invisible
+   */
+  const bool GetColumnVisible (const int col);
+
+  /**
+   * @param col column number
+   * @return returns name of the column
+   */
+  static wxString GetColumnCaption (const int col);
+
   void UpdateFileList ();
   void UpdateFileList (const wxString & path);
   const IndexArray GetSelectedItems () const;
   const svn::Targets GetTargets () const;
+private:
+  struct Data;
+  /** private data for this class */
+  Data * m;
+
+  // utility methods
   void GetFullUnixPath (long index, wxString & fullpath);
 
   void ShowMenu (long index, wxPoint & pt);
   void buildMenu (wxMenu & menu, const wxString & path);
-  void DeleteAllItems();
   void DeleteItem( long item );
+
+  void SetColumnImages ();
 
   // message handlers
   void OnItemActivated (wxListEvent & event);
@@ -74,7 +111,8 @@ public:
   void OnColumnLeftClick (wxListEvent & event);
 
 private:
- DECLARE_EVENT_TABLE ()};
+  DECLARE_EVENT_TABLE ()
+};
 
 #endif
 /* -----------------------------------------------------------------

@@ -87,6 +87,12 @@ public:
   virtual ~RapidSvnFrame ();
 
 private:
+  /** disallow default constructor */
+  RapidSvnFrame ();
+
+  /** disallow copy constructor */
+  RapidSvnFrame (const RapidSvnFrame &);
+
   void OnSize (wxSizeEvent & event);
 
   // File menu
@@ -97,6 +103,8 @@ private:
   // View menu
   void OnPreferences (wxCommandEvent & event);
   void OnRefresh (wxCommandEvent & event);
+  void OnColumn (wxCommandEvent & event);
+  void OnColumnReset (wxCommandEvent & event);
 
   // Query menu
   void OnLog (wxCommandEvent & event);
@@ -117,9 +125,6 @@ private:
   void RecreateToolbar ();
   void AddActionTools ();
   void AddInfoTools ();
-
-  // menu stuff
-  void InitializeMenu ();
 
   // toolbar events
   void OnToolEnter (wxCommandEvent & event);
@@ -145,7 +150,8 @@ private:
   void ShowLog ();
   void ShowInfo ();
 
-  const svn::Targets GetActionTargets() const;
+  const svn::Targets 
+  GetActionTargets() const;
 
   void DelEntries ();
   void MakeRevert ();
@@ -170,8 +176,32 @@ private:
 
   void Perform (ActionType type, Action * action);
 
+  /**
+   * returns the visibility of a column in the filelist
+   *
+   * @param col column index
+   * @return visibility
+   * @retval true=visible
+   */
+  const int
+  GetColumnVisible (const int col) const;
+
+  /**
+   * sets the visibility of a column in the filelist
+   * the column menu entry is checked/unchecked as well
+   *
+   * @param col column index
+   * @param visible true=visible
+   */
+  void 
+  SetColumnVisible (const int col, const bool visible);
 
 private:
+  struct Data;
+
+  /** hide implementation data */
+  Data * m;
+
   ActionWorker * m_actionWorker;
 
   FolderBrowser * m_folder_browser;

@@ -51,6 +51,17 @@ enum
   ID_CopyHere,
   ID_Cleanup,
   ID_Delete,
+  ID_Column_Reset,
+  ID_Column_Min,
+  ID_Column_Rev,
+  ID_Column_Cmt_Rev,
+  ID_Column_Author,
+  ID_Column_Text_Status,
+  ID_Column_Prop_Status,
+  ID_Column_Cmt_Date,
+  ID_Column_Text_Time,
+  ID_Column_Prop_Time,
+  ID_Column_Max,
   ACTION_EVENT,                 // this one gets sent from the action threads
 // Ids used for communication events between threads and frame
   TOKEN_BASE,
