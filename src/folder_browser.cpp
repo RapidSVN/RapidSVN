@@ -13,6 +13,9 @@
 
 // svncpp
 #include "svncpp/context.hpp"
+#include "svncpp/client.hpp"
+#include "svncpp/dirent.hpp"
+#include "svncpp/url.hpp"
 #include "svncpp/wc.hpp"
 
 // wxwindows
@@ -319,57 +322,11 @@ public:
       case FOLDER_TYPE_NORMAL:
       {
         const wxString& parentPath = parentData->getPath ();
-        wxDir dir (parentPath);
 
-        if(dir.IsOpened ())
-        {
-          wxString filename;
-    
-          bool ok = dir.GetFirst(&filename, wxEmptyString, 
-                                 wxDIR_DIRS);
-          bool parentHasSubdirectories = false;
-    
-          while(ok)
-          {
-            if(filename != svn::Wc::ADM_DIR_NAME)
-            {
-              parentHasSubdirectories = true;
-        
-              wxFileName path(parentPath, filename, wxPATH_NATIVE);
-              wxString fullPath = path.GetFullPath ();
-              const char * fullPath_c = fullPath.c_str ();
-              int image = FOLDER_IMAGE_FOLDER;
-              int open_image = FOLDER_IMAGE_OPEN_FOLDER;
-
-              if (!svn::Wc::checkWc (fullPath_c))
-              {
-                image = FOLDER_IMAGE_NONSVN_FOLDER;
-                open_image = FOLDER_IMAGE_NONSVN_OPEN_FOLDER;
-              }
-        
-              FolderItemData * data = 
-                new FolderItemData (FOLDER_TYPE_NORMAL, 
-                                    fullPath, 
-                                    filename, TRUE);
-
-              wxTreeItemId newId = 
-                treeCtrl->AppendItem(
-                  parentId, filename, 
-                  image, image, data);
-              treeCtrl->SetItemHasChildren (
-                newId, HasSubdirectories(fullPath) );
-              treeCtrl->SetItemImage (newId, open_image,  
-                                        wxTreeItemIcon_Expanded);
-            }
-      
-            ok = dir.GetNext (&filename);
-          }
-    
-          // If no subdirectories, don't show the expander
-          if (!parentHasSubdirectories)
-            treeCtrl->SetItemHasChildren(parentId, FALSE);
-    
-        }
+        if ( svn::Url::isValid (parentPath) )
+          RefreshRepository (parentPath, parentId);
+        else
+          RefreshLocal (parentPath, parentId);
       }
       break;
     }   
@@ -392,6 +349,102 @@ public:
     }
 
     treeCtrl->SetItemHasChildren (parentId, TRUE);
+  }
+
+  void
+  RefreshLocal (const wxString & parentPath, 
+                const wxTreeItemId & parentId)
+  {
+    wxDir dir (parentPath);
+    if(!dir.IsOpened ())
+      return;
+
+    wxString filename;
+    bool ok = dir.GetFirst(&filename, wxEmptyString, 
+                           wxDIR_DIRS);
+    bool parentHasSubdirectories = false;
+
+    while(ok)
+    {
+      if(filename != svn::Wc::ADM_DIR_NAME)
+      {
+        parentHasSubdirectories = true;
+  
+        wxFileName path(parentPath, filename, wxPATH_NATIVE);
+        wxString fullPath = path.GetFullPath ();
+        const char * fullPath_c = fullPath.c_str ();
+        int image = FOLDER_IMAGE_FOLDER;
+        int open_image = FOLDER_IMAGE_OPEN_FOLDER;
+
+        if (!svn::Wc::checkWc (fullPath_c))
+        {
+          image = FOLDER_IMAGE_NONSVN_FOLDER;
+          open_image = FOLDER_IMAGE_NONSVN_OPEN_FOLDER;
+        }
+  
+        FolderItemData * data = 
+          new FolderItemData (FOLDER_TYPE_NORMAL, 
+                              fullPath, 
+                              filename, TRUE);
+
+        wxTreeItemId newId = 
+          treeCtrl->AppendItem(
+            parentId, filename, 
+            image, image, data);
+        treeCtrl->SetItemHasChildren (
+          newId, HasSubdirectories(fullPath) );
+        treeCtrl->SetItemImage (newId, open_image,  
+                                wxTreeItemIcon_Expanded);
+      }
+
+      ok = dir.GetNext (&filename);
+    }
+
+    // If no subdirectories, don't show the expander
+    if (!parentHasSubdirectories)
+      treeCtrl->SetItemHasChildren(parentId, FALSE);
+  }
+
+  void
+  RefreshRepository (const wxString & parentPath, 
+                     const wxTreeItemId & parentId)
+  {
+    svn::Client client (GetContext ());
+    svn::Revision revision (svn::Revision::HEAD);
+    svn::DirEntries entries = 
+      client.ls (parentPath, const_cast<struct svn_opt_revision_t *>(
+        revision.revision ()), false);
+    svn::DirEntries::const_iterator it;
+
+    //bool parentHasSubdirectories = false;
+    for (it = entries.begin (); it != entries.end (); it++)
+    {
+      svn::DirEntry entry = *it;
+      int image = FOLDER_IMAGE_FOLDER;
+      int open_image = FOLDER_IMAGE_OPEN_FOLDER;
+
+      wxString fullPath = entry.name ();
+      wxString filename (fullPath.Mid (parentPath.Length () + 1));
+      //parentHasSubdirectories = true;
+      
+      if (entry.kind () != svn_node_dir)
+        continue;
+
+      FolderItemData * data = 
+        new FolderItemData (FOLDER_TYPE_NORMAL, 
+                            fullPath, 
+                            filename, TRUE);
+
+      wxTreeItemId newId = 
+        treeCtrl->AppendItem(
+          parentId, filename, 
+          image, image, data);
+      treeCtrl->SetItemHasChildren (
+        newId, true );
+      treeCtrl->SetItemImage (newId, open_image,  
+                                wxTreeItemIcon_Expanded);
+      
+    }
   }
 
   bool
