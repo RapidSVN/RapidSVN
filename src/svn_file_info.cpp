@@ -28,10 +28,13 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
   wxString str;
   svn_boolean_t text_conflict = FALSE;
   svn_boolean_t props_conflict = FALSE;
+  svn_wc_adm_access_t *adm_access;
 
+  SVN_ERR (svn_wc_adm_probe_open (&adm_access, NULL, path.c_str (), FALSE,
+                                  FALSE, pool));
   info = path + _T ("\n");
 
-  SVN_ERR (svn_wc_entry (&entry, path.c_str (), FALSE, pool));
+  SVN_ERR (svn_wc_entry (&entry, path.c_str (), adm_access, FALSE, pool));
   if (!entry)
   {
     info += _T ("(Not a versioned resource)\n");

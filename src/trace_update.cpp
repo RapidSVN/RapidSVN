@@ -155,12 +155,19 @@ close_directory (void *dir_baton)
     svn_wc_entry_t *entry;
     svn_boolean_t merged, tc, pc;
     apr_pool_t *subpool = svn_pool_create (eb->pool);
+    svn_wc_adm_access_t *adm_access;
 
-    SVN_ERR (svn_wc_entry (&entry, db->path, FALSE, subpool));
+    SVN_ERR (svn_wc_adm_probe_open (&adm_access, NULL, db->path, FALSE,
+                                    FALSE, subpool));
+
+    SVN_ERR (svn_wc_entry (&entry, db->path, adm_access, FALSE, subpool));
     SVN_ERR (svn_wc_conflicted_p (&tc, &pc, db->path, entry, subpool));
 
     if (!pc)
-      SVN_ERR (svn_wc_props_modified_p (&merged, db->path, subpool));
+    {
+      SVN_ERR (svn_wc_props_modified_p (&merged, db->path, 
+                                        adm_access, subpool));
+    }
 
     if (pc)
       statchar_buf[1] = 'C';
@@ -230,16 +237,19 @@ close_file (void *file_baton)
     svn_boolean_t merged, tc, pc;
     apr_pool_t *subpool = svn_pool_create (eb->pool);
     const char *pdir = svn_path_remove_component_nts (fb->path, subpool);
+    svn_wc_adm_access_t *adm_access;
 
+    SVN_ERR (svn_wc_adm_probe_open (&adm_access, NULL, fb->path, FALSE,
+                                    FALSE, subpool));
 
-    SVN_ERR (svn_wc_entry (&entry, fb->path, FALSE, subpool));
+    SVN_ERR (svn_wc_entry (&entry, fb->path, adm_access, FALSE, subpool));
     if (entry)
     {
       SVN_ERR (svn_wc_conflicted_p (&tc, &pc, pdir, entry, subpool));
       if (fb->text_changed)
       {
         if (!tc)
-          SVN_ERR (svn_wc_text_modified_p (&merged, fb->path, subpool));
+          SVN_ERR (svn_wc_text_modified_p (&merged, fb->path, adm_access, subpool));
 
         if (tc)
           statchar_buf[0] = 'C';
@@ -252,7 +262,7 @@ close_file (void *file_baton)
       if (fb->prop_changed)
       {
         if (!pc)
-          SVN_ERR (svn_wc_props_modified_p (&merged, fb->path, subpool));
+          SVN_ERR (svn_wc_props_modified_p (&merged, fb->path, NULL, subpool));
 
         if (pc)
           statchar_buf[1] = 'C';
