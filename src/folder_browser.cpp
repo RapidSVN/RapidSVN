@@ -395,6 +395,7 @@ public:
 
       case FOLDER_TYPE_BOOKMARK:
       case FOLDER_TYPE_NORMAL:
+      try
       {
         const wxString& parentPath = parentData->getPath ();
 
@@ -402,6 +403,11 @@ public:
           RefreshRepository (parentPath, parentId);
         else
           RefreshLocal (parentPath, parentId);
+      }
+      catch (svn::ClientException & e)
+      {
+        wxLogError(_("Error while refreshing filelist (%s)"),
+                    e.message ());
       }
       break;
     }   

@@ -15,6 +15,9 @@
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
+// svncpp
+#include "svncpp/url.hpp"
+
 // app
 #include "update_dlg.hpp"
 #include "update_data.hpp"
@@ -23,7 +26,8 @@
 enum
 {
   ID_USELATEST = 100,
-  ID_REVISION
+  ID_REVISION,
+  ID_URL
 };
 
 struct UpdateDlg::Data
@@ -54,7 +58,7 @@ public:
       wxStaticBoxSizer * sizer = 
         new wxStaticBoxSizer (box, wxHORIZONTAL);
       wxTextValidator val (wxFILTER_NONE, &data.url);
-      m_textUrl = new wxTextCtrl (window, -1, "",
+      m_textUrl = new wxTextCtrl (window, ID_URL, "",
                                   wxDefaultPosition, 
                                   wxDefaultSize, 0, val);
       sizer->Add (m_textUrl, 1, wxALL | wxEXPAND, 5);
@@ -134,8 +138,12 @@ public:
         ok = CheckRevision (m_textRevision->GetValue ());
       }
     }
+    if (ok && withUrl ())
+    {
+      ok = svn::Url::isValid(m_textUrl->GetValue ());
+    }
 
-    m_buttonOk->Enable (true);
+    m_buttonOk->Enable (ok);
   }
 
   bool 
@@ -160,6 +168,7 @@ public:
 
 BEGIN_EVENT_TABLE (UpdateDlg, wxDialog)
   EVT_CHECKBOX (ID_USELATEST, UpdateDlg::OnUseLatest)
+  EVT_TEXT (ID_URL, UpdateDlg::OnText)
   EVT_TEXT (ID_REVISION, UpdateDlg::OnText)
 END_EVENT_TABLE ()
 
@@ -187,12 +196,14 @@ UpdateDlg::InitDialog()
 {
   wxDialog::InitDialog();
   m->EnableControls();
+  m->CheckButtons ();
 }
 
 void 
 UpdateDlg::OnUseLatest(wxCommandEvent &)
 {
   m->EnableControls();
+  m->CheckButtons ();
 }
 
 UpdateData &
