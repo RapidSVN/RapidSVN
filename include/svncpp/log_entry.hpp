@@ -16,13 +16,32 @@
 
 // stl
 #include <string>
+#include <list>
 
 // subversion api
 #include "svn_types.h"
 
-
 namespace svn
 {
+
+  struct LogChangePathEntry
+  {
+    LogChangePathEntry (const char *path_,
+                        char action_,
+                        const char *copyFromPath_,
+                        const svn_revnum_t copyFromRevision_)
+    : path( path_ )
+    , action( action_ )
+    , copyFromPath( copyFromPath_ != NULL ? copyFromPath_ : "" )
+    , copyFromRevision( copyFromRevision_ )
+    {
+    }
+
+    std::string path;
+    char action;
+    std::string copyFromPath;
+    svn_revnum_t copyFromRevision;
+  };
   struct LogEntry
   {
     LogEntry ()
@@ -44,6 +63,7 @@ namespace svn
     std::string author;
     std::string date;
     std::string message;
+    std::list<LogChangePathEntry> changedPaths;
   };
 }
 

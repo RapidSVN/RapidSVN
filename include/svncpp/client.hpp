@@ -374,12 +374,16 @@ namespace svn
      *
      * @param path
      * @param revisionStart
-     * @param revisionEnd        
+     * @param revisionEnd
+     * @param discoverChangedPaths
+     * @param strictNodeHistory
      * @return a vector with log entries
      */
     const LogEntries *
     log (const char * path, const Revision & revisionStart, 
-         const Revision & revisionEnd) throw (ClientException);
+         const Revision & revisionEnd,
+         bool discoverChangedPaths=false, 
+         bool strictNodeHistory=true) throw (ClientException);
 
     /**
      * Produce diff output which describes the delta between

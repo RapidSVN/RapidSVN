@@ -33,7 +33,7 @@ namespace svn
 {
   static svn_error_t *
   logReceiver (void *baton,
-                   apr_hash_t * changed_paths,
+                   apr_hash_t * changedPaths,
                    svn_revnum_t rev,
                    const char *author,
                    const char *date, 
@@ -42,7 +42,29 @@ namespace svn
   {
     LogEntries * entries = 
       (LogEntries *) baton;
-    entries->insert (entries->begin (), LogEntry(rev, author, date, msg));
+    entries->insert (entries->begin (), LogEntry (rev, author, date, msg));
+    if (changedPaths != NULL)
+    {
+      LogEntry &entry = entries->front ();
+
+      for (apr_hash_index_t *hi = apr_hash_first (pool, changedPaths);
+           hi != NULL;
+           hi = apr_hash_next (hi))
+      {
+        char *path;
+        void *val;
+        apr_hash_this (hi, (const void **) &path, NULL, &val);
+
+        svn_log_changed_path_t *log_item = reinterpret_cast<svn_log_changed_path_t *> (val);
+        
+        entry.changedPaths.push_back (
+              LogChangePathEntry (path,
+                                  log_item->action,
+                                  log_item->copyfrom_path,
+                                  log_item->copyfrom_rev) );
+
+      }
+    }
 
     return NULL;
   }
@@ -277,7 +299,8 @@ namespace svn
 
   const LogEntries *
   Client::log (const char * path, const Revision & revisionStart, 
-               const Revision & revisionEnd) throw (ClientException)
+               const Revision & revisionEnd, bool discoverChangedPaths,
+               bool strictNodeHistory ) throw (ClientException)
   {
     Targets target (path);
     Pool pool;
@@ -287,8 +310,8 @@ namespace svn
       target.array (pool), 
       revisionStart.revision (), 
       revisionEnd.revision (), 
-      0, // not reverse by default
-      1, // strict by default (not showing cp info)
+      discoverChangedPaths ? 1 : 0,
+      strictNodeHistory ? 1 : 0,
       logReceiver,
       entries, 
       *m_context, // client ctx
