@@ -1,6 +1,4 @@
 %define apache_version 2.0.40-0.8
-%define neon_version 0.21.3
-%define apache_dir /usr/local/apache2
 Summary: A cross-platform GUI for the Subversion concurrent versioning system.
 Name: rapidsvn
 Version: @VERSION@
