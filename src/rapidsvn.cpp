@@ -81,13 +81,9 @@ EVT_MENU (ACTION_EVENT, VSvnFrame::OnActionEvent)
 EVT_MENU (-1, VSvnFrame::OnToolLeftClick)
 EVT_TOOL_ENTER (ID_TOOLBAR, VSvnFrame::OnToolEnter)
 EVT_TREE_SEL_CHANGED (-1, VSvnFrame::OnFolderBrowserSelChanged)
-EVT_TREE_KEY_DOWN (-1, VSvnFrame::OnFolderBrowserKeyDown) 
-END_EVENT_TABLE ()
-
-
+EVT_TREE_KEY_DOWN (-1, VSvnFrame::OnFolderBrowserKeyDown) END_EVENT_TABLE ()
 /** class implementation **/
-
-VSvnFrame::VSvnFrame (const wxString & title):
+  VSvnFrame::VSvnFrame (const wxString & title):
 wxFrame ((wxFrame *) NULL, -1, title)
 {
   // apr stuff
@@ -100,9 +96,7 @@ wxFrame ((wxFrame *) NULL, -1, title)
   // Retrieve a pointer to the application configuration object.
   // If the object is not created, it will be created upon the first
   // call to Get().
-  wxConfigBase *
-    pConfig =
-    wxConfigBase::Get ();
+  wxConfigBase *pConfig = wxConfigBase::Get ();
 
   SetIcon (wxICON (mondrian));
 
@@ -152,8 +146,10 @@ wxFrame ((wxFrame *) NULL, -1, title)
   // Set the current browse position:
   wxString
     BrowsePosition =
-    pConfig->
-    Read (szBrowserPathKey, wxDirDialogDefaultFolderStr);
+    pConfig->Read (szBrowserPathKey, wxDirDialogDefaultFolderStr);
+
+  InitFileList ();
+
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter,
                                         pool,
@@ -164,26 +160,17 @@ wxFrame ((wxFrame *) NULL, -1, title)
                                         wxDIRCTRL_DIR_ONLY,
                                         _T (""), 0, _T (""));
 
-  InitFileList ();
-  m_listCtrl->UpdateFileList (m_folder_browser->GetDefaultPath ());
+  UpdateFileList ();
 
-
-  wxSizer *
-    sizer =
-    new
-    wxBoxSizer (wxVERTICAL);
+  wxSizer *sizer = new wxBoxSizer (wxVERTICAL);
   sizer->Add (m_vert_splitter, 1, wxEXPAND);
 
   m_info_panel->SetAutoLayout (true);
   m_info_panel->SetSizer (sizer);
 
 
-  int
-    x,
-    y;
-  int
-    w,
-    h;
+  int x, y;
+  int w, h;
 
   pConfig->SetPath ("/MainFrame");
 
@@ -197,9 +184,7 @@ wxFrame ((wxFrame *) NULL, -1, title)
   SetClientSize (w, h);
 
   // Get sash position for every splitter from configuration.
-  int
-    vpos,
-    hpos;
+  int vpos, hpos;
   vpos = pConfig->Read ("/MainFrame/vertsplitsashpos", w / 3);
   hpos = pConfig->Read ("/MainFrame/horizsplitsashpos", (3 * h) / 4);
 
@@ -408,8 +393,10 @@ VSvnFrame::InitFileList ()
 void
 VSvnFrame::UpdateFileList ()
 {
-    // F5 was pressed, force a refresh
-    m_listCtrl->UpdateFileList( m_folder_browser->GetPath() );
+  if (m_listCtrl && m_folder_browser)
+  {
+    m_listCtrl->UpdateFileList (m_folder_browser->GetPath ());
+  }
 }
 
 void
@@ -1233,15 +1220,15 @@ VSvnFrame::Contents ()
 void
 VSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 {
-    UpdateFileList();
+  UpdateFileList ();
 }
-  
-void 
+
+void
 VSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
 {
   if (event.GetKeyEvent ().GetKeyCode () == WXK_F5)
   {
-      UpdateFileList();
+    UpdateFileList ();
   }
   else
   {
