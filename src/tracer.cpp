@@ -10,10 +10,16 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.hpp"
-#include "rapidsvn_app.hpp"
+
+// wxwindows
+#include "wx/app.h"
+#include "wx/textctrl.h"
+
+// app
+#include "ids.hpp"
 #include "report_dlg.hpp"
 #include "tracer.hpp"
+#include "utils.hpp"
 
 TextCtrlTracer::TextCtrlTracer (wxTextCtrl * ctrl):m_txtCtrl (ctrl)
 {
@@ -28,7 +34,8 @@ TextCtrlTracer::Trace (const wxString & str)
 }
 
 
-EventTracer::EventTracer (wxFrame * fr):frame (fr)
+EventTracer::EventTracer (wxFrame * fr)
+  : m_frame (fr)
 {
 }
 
@@ -40,10 +47,11 @@ EventTracer::Trace (const wxString & str)
   event.SetString (str);
 
   // send in a thread-safe way
-  wxPostEvent (frame, event);
+  wxPostEvent (m_frame, event);
 }
 
-ErrorTracer::ErrorTracer (wxWindow * __parent):parent (__parent)
+ErrorTracer::ErrorTracer (wxWindow * parent)
+  : m_parent (parent)
 {
 }
 
@@ -54,24 +62,25 @@ ErrorTracer::~ErrorTracer ()
 void
 ErrorTracer::Trace (const wxString & str)
 {
-  msgs += str + _T ("\n");
+  m_msgs += str + "\n";
 }
 
 void
 ErrorTracer::ShowErrors ()
 {
-  Report_Dlg rdlg (parent, _T ("Error"), msgs, ERROR_REPORT);
+  ReportDlg rdlg (m_parent, _T ("Error"), m_msgs, ERROR_REPORT);
   rdlg.ShowModal ();
 }
 
-StringTracer::StringTracer (wxString & str):msgs (str)
+StringTracer::StringTracer (wxString & str)
+  : m_msgs (str)
 {
 }
 
 void
 StringTracer::Trace (const wxString & str)
 {
-  msgs += str + _T ("\n");
+  m_msgs += str + "\n";
 }
 /* -----------------------------------------------------------------
  * local variables:

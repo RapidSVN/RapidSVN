@@ -13,28 +13,35 @@
 #ifndef _REPORT_DLG_H_INCLUDED_
 #define _REPORT_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/dialog.h"
+
 enum
 {
   NORMAL_REPORT,
   ERROR_REPORT
 };
 
-class Report_Dlg:public wxDialog
-{
-private:
-  wxButton * button;
-  wxTextCtrl *text;
+// forward declarations
+class wxButton;
+class wxTextCtrl;
 
-  const wxString & str;
+class ReportDlg:public wxDialog
+{
 public:
-   Report_Dlg (wxWindow * parent,
+   ReportDlg (wxWindow * parent,
                const wxString & caption,
                const wxString & data, int type = NORMAL_REPORT);
 
   void OnButton (wxCommandEvent & event);
 
 private:
- DECLARE_EVENT_TABLE ()};
+  wxButton *m_button;
+  wxTextCtrl *m_text;
+
+  const wxString & m_str;
+ DECLARE_EVENT_TABLE ()
+};
 
 #endif
 /* -----------------------------------------------------------------

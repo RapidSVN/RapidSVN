@@ -133,6 +133,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_folder_browser = NULL;
   m_listCtrl = NULL;
   m_title = title;
+  m_actionWorker.Create (this);
 
   // enable trace
   wxLog::AddTraceMask (wxTraceMisc);
@@ -473,8 +474,8 @@ void
 RapidSvnFrame::OnCheckout (wxCommandEvent & WXUNUSED (event))
 {
   lastAction = ACTION_TYPE_CHECKOUT;
-  CheckoutAction *co_act = new CheckoutAction (this, m_logTracer);
-  co_act->Perform ();
+  CheckoutAction *action = new CheckoutAction (this, m_logTracer, false);
+  m_actionWorker.Perform (action);
 }
 
 void
@@ -1042,7 +1043,7 @@ RapidSvnFrame::ShowInfo ()
       caption = _T ("Info error");
     }
 
-    Report_Dlg rdlg (this, caption, all_info, rep_type);
+    ReportDlg rdlg (this, caption, all_info, rep_type);
     rdlg.ShowModal ();
   }
 }

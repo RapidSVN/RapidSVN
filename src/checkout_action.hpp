@@ -14,29 +14,27 @@
 #define _CHECKOUT_ACTION_H_INCLUDED_
 
 // app
-#include "checkout_dlg.hpp"
-#include "action_thread.hpp"
+#include "action.hpp"
+#include "checkout_data.hpp"
 
-class CheckoutAction:public ActionThread
+class CheckoutAction:public Action
 {
 public:
   /**
    * Constructor
    *
    * @param parent parent window
-   * @param tr
+   * @param tracer
+   * @param own own tracer?
    */
-  CheckoutAction (wxFrame * parent, Tracer * tr);
+  CheckoutAction (wxWindow * parent, Tracer * tracer, bool own);
 
-  void Perform ();
+  virtual bool Perform ();
 
-protected:
-  void *Entry ();
+  virtual bool Prepare ();
 
 private:
   CheckoutData m_data;
-  wxFrame *m_parent;
-
 };
 
 #endif

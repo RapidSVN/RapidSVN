@@ -19,6 +19,7 @@
 
 // app
 //#include "ids.h"
+#include "simple_worker.hpp"
 #include "tracer.hpp"
 #include "log_action.hpp"
 #include "filelist_ctrl.hpp"
@@ -176,6 +177,7 @@ public:
 
 
 private:
+  SimpleWorker m_actionWorker;
 
   FolderBrowser * m_folder_browser;
   FileListCtrl *m_listCtrl;

@@ -2,7 +2,8 @@ PROGRAM=rapidsvn
 
 CXX=@CXX@
 
-OBJECTS=action_thread.o \
+OBJECTS=action.o \
+		action_thread.o \
 		add_action.o \
 		checkout_action.o \
 		checkout_dlg.o \
@@ -31,6 +32,7 @@ OBJECTS=action_thread.o \
 		report_dlg.o \
 		resolve_action.o \
 		revert_action.o \
+		simple_worker.o \
 		svn_file_info.o \
 		svn_notify.o \
 		trace_commit.o \

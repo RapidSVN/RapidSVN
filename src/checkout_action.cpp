@@ -16,46 +16,32 @@
 #include "svncpp/modify.hpp"
 
 // app
-//#include "include.hpp"
+#include "checkout_action.hpp"
+#include "checkout_dlg.hpp"
 #include "ids.hpp"
 #include "utils.hpp"
-#include "checkout_dlg.hpp"
-//#include "rapidsvn_app.hpp"
-#include "checkout_action.hpp"
 #include "svn_notify.hpp"
+#include "tracer.hpp"
 
-CheckoutAction::CheckoutAction (wxFrame * frame, Tracer * tr)
-  : ActionThread (frame)
+CheckoutAction::CheckoutAction (wxWindow * parent, Tracer * tracer, bool own)
+  : Action (parent, tracer, own)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
-  m_parent = frame;
 }
 
-void
-CheckoutAction::Perform ()
+bool
+CheckoutAction::Prepare ()
 {
-  ////////////////////////////////////////////////////////////
-  // Here we are in the main thread.
-  CheckoutDlg dlg (m_parent);
+  CheckoutDlg dlg (GetParent ());
   if( dlg.ShowModal () != wxID_OK )
   {
-    return;
+    return false;
   }
   m_data = dlg.GetData ();
-
-  // #### TODO: check errors and throw an exception
-  // create the thread
-  Create ();
-
-  // here we start the action thread
-  Run ();
-  
-  // destroy the dialog
-  //coDlg->Close (TRUE);
+  return true;
 }
 
-void *
-CheckoutAction::Entry ()
+bool
+CheckoutAction::Perform ()
 {
   svn::Modify modify;
   SvnNotify notify (GetTracer ());
@@ -79,8 +65,10 @@ CheckoutAction::Entry ()
     }
   }
 
+  bool result = true;
   try
   {
+    wxSetWorkingDirectory (m_data.DestFolder);
     modify.checkout (m_data.ModuleName, m_data.DestFolder, 
                      revnum, m_data.Recursive);
   }
@@ -90,9 +78,10 @@ CheckoutAction::Entry ()
                        ACTION_EVENT);
       GetTracer ()->Trace ("Checkout failed:");
       GetTracer ()->Trace (e.description ());
+      result = false;
   }
  
-  return NULL;
+  return result;
 }
 /* -----------------------------------------------------------------
  * local variables:

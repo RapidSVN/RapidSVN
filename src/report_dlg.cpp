@@ -10,48 +10,50 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#include "include.hpp"
+
+// wxwindows
+#include "wx/textctrl.h"
+#include "wx/button.h"
+#include "wx/sizer.h"
+
+// app
 #include "report_dlg.hpp"
 
-BEGIN_EVENT_TABLE (Report_Dlg, wxDialog)
-EVT_BUTTON (-1, Report_Dlg::OnButton)
-END_EVENT_TABLE ()Report_Dlg::Report_Dlg (wxWindow * parent,
-                                          const wxString & caption,
-                                          const wxString & data, int type):
-wxDialog (parent, -1, caption, wxDefaultPosition, wxDefaultSize,
-          wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-str (data)
+BEGIN_EVENT_TABLE (ReportDlg, wxDialog)
+EVT_BUTTON (-1, ReportDlg::OnButton)
+END_EVENT_TABLE ()
+
+ReportDlg::ReportDlg (wxWindow * parent,
+                      const wxString & caption,
+                      const wxString & data, int type)
+  : wxDialog (parent, -1, caption, wxDefaultPosition, wxDefaultSize,
+              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
+    m_str (data)
 {
-  text = new wxTextCtrl (this, -1, _T (""),
+  m_text = new wxTextCtrl (this, -1, _T (""),
                          wxDefaultPosition,
                          wxSize (300, 100),
                          wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH);
-  text->SetMaxLength (0);
+  m_text->SetMaxLength (0);
 
   if (type == ERROR_REPORT)
   {
-    text->SetDefaultStyle (wxTextAttr (*wxRED));
+    m_text->SetDefaultStyle (wxTextAttr (*wxRED));
   }
-  text->WriteText (str);
+  m_text->WriteText (m_str);
 
-  button = new wxButton (this, wxID_OK, "OK");
+  m_button = new wxButton (this, wxID_OK, "OK");
 
-  wxBoxSizer *
-    topsizer =
-    new
-    wxBoxSizer (wxVERTICAL);
+  wxBoxSizer * topsizer = new wxBoxSizer (wxVERTICAL);
 
-  topsizer->Add (text, 1,       // make vertically stretchable
+  topsizer->Add (m_text, 1,       // make vertically stretchable
                  wxEXPAND |     // make horizontally stretchable
                  wxALL,         // and make border all around
                  5);            // set border width to 10
 
-  wxBoxSizer *
-    button_sizer =
-    new
-    wxBoxSizer (wxHORIZONTAL);
+  wxBoxSizer * button_sizer = new wxBoxSizer (wxHORIZONTAL);
 
-  button_sizer->Add (button, 0, // make horizontally unstretchable
+  button_sizer->Add (m_button, 0, // make horizontally unstretchable
                      wxALL,     // make border all around (implicit top alignment)
                      5);        // set border width to 10
 
@@ -67,7 +69,7 @@ str (data)
 }
 
 void
-Report_Dlg::OnButton (wxCommandEvent & event)
+ReportDlg::OnButton (wxCommandEvent & event)
 {
   event.Skip ();
 }

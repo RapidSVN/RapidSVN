@@ -46,10 +46,10 @@ private:
   void EnableControls();
 
   CheckoutData m_data;
-  wxCheckBox * pUseLatest;
-  wxTextCtrl * revision;
-  wxStaticText * pRevisionLabel; 
-  wxTextCtrl * destFolder;
+  wxCheckBox * m_useLatestCheck;
+  wxTextCtrl * m_revisionText;
+  wxStaticText * m_revisionLabel; 
+  wxTextCtrl * m_destFolderText;
 
   DECLARE_EVENT_TABLE ()
 };

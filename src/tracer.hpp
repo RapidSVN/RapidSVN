@@ -14,7 +14,10 @@
 #define _TRACER_H_INCLUDED_
 
 // wx
-#include "wx/textctrl.h"
+//#include "wx/textctrl.h"
+
+// forward declarations
+class wxTextCtrl;
 
 /**
 * The Tracer class is an interface used for
@@ -50,7 +53,7 @@ class EventTracer:public Tracer
 {
 
 private:
-  wxFrame * frame;
+  wxFrame * m_frame;
 
 public:
   EventTracer (wxFrame * fr);
@@ -65,11 +68,11 @@ public:
 class ErrorTracer:public Tracer
 {
 private:
-  wxString msgs;
-  wxWindow *parent;
+  wxString m_msgs;
+  wxWindow *m_parent;
 
 public:
-   ErrorTracer (wxWindow * __parent);
+   ErrorTracer (wxWindow * parent);
 
    virtual ~ ErrorTracer ();
 
@@ -80,7 +83,7 @@ public:
 class StringTracer:public Tracer
 {
 private:
-  wxString & msgs;
+  wxString & m_msgs;
 
 public:
   StringTracer (wxString & str);
