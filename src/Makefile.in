@@ -29,6 +29,7 @@ OBJECTS=action_thread.o \
 		svn_file_info.o \
 		svn_file_log.o \
 		svn_file_status.o \
+		svn_notify.o \
 		trace_commit.o \
 		trace_update.o \
 		tracer.o \
@@ -40,7 +41,8 @@ OBJECTS=action_thread.o \
 		svncpp/auth.o \
 		svncpp/client.o \
 		svncpp/property.o \
-		svncpp/error.o \
+		svncpp/exception.o \
+		svncpp/notify.o \
 		svncpp/modify.o \
 		svncpp/status.o
 
@@ -50,7 +52,7 @@ LIBS=-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
 		$(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(APR_LIBS) \
 		$(WX_LIBS)
 SVN_INC=-I/usr/local/include/subversion-1
-CXXFLAGS=@CXXFLAGS@
+CXXFLAGS=@CXXFLAGS@ -fexceptions
 
 # implementation
 
