@@ -20,7 +20,7 @@
 #include "wx/splitter.h"
 
 // app
-#include "simple_worker.hpp"
+#include "action_worker.hpp"
 #include "tracer.hpp"
 #include "log_action.hpp"
 #include "filelist_ctrl.hpp"

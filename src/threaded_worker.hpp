@@ -13,30 +13,20 @@
 #ifndef _THREADED_WORKER_H_
 #define _THREADED_WORKER_H_
 
-// wxwindows
-#include "wx/thread.h"
-
 // app
 #include "action_worker.hpp"
 
 // forward declarations
-class Action;
 class wxWindow;
+class Action;
 
-/**
- * this is the threaded implementation of the
- * class ActionWorker. For a documentation of
- * the common methods take a look at ActionWorker
- *
- * @see ActionWorker
- */
-class ThreadedWorker : public wxThread, ActionWorker
+class ThreadedWorker : public ActionWorker
 {
 public:
   /**
-   * default constructor. 
+   * default constructor.
    */
-  ThreadedWorker ();
+  ThreadedWorker (wxWindow * parent = 0);
 
   /**
    * destructor
@@ -46,37 +36,82 @@ public:
   /**
    * @see ActionWorker
    */
-  virtual void Create (wxWindow * parent);
+  virtual void 
+  Create (wxWindow * parent);
 
   /**
    * @see ActionWorker
    */
-  virtual ActionState GetState ();
+  virtual ActionState 
+  GetState ();
 
   /**
    * @see ActionWorker
    */
-  virtual ActionResult GetResult ();
+  virtual ActionResult 
+  GetResult ();
 
   /**
    * @see ActionWorker
    */
-  virtual bool Perform (Action * action);
+  virtual void SetTracer (Tracer * tr);
 
-protected:
-  virtual void * Entry ();
-  
+  /**
+   * @see ActionWorker
+   */
+  virtual bool 
+  Perform (Action * action);
+
+  /**
+   * @see ActionWorker
+   */
+  virtual void
+  SetContext (svn::Context * context, bool own = false);
+
+  /**
+   * @see ActionWorker
+   */
+  virtual svn::Context * 
+  GetContext () const;
 private:
-  Action * m_action;
-  ActionState m_state;
-  ActionResult m_result;
-  wxWindow * m_parent;
-  wxMutex m_mutex;
+  struct Data;
+  Data * m;
 
   /**
    * private copy constructor
    */
   ThreadedWorker (const ThreadedWorker &);
+
+  /**
+   * sends a message to the tracer. This is
+   * a utility function that checks m_tracer
+   * before tracing
+   *
+   * @param message to send
+   */
+  void Trace (const wxString & message);
+
+  /**
+   * Posts a string event. This is used the
+   * completion of an action or an error
+   * 
+   * @param code event code
+   * @param str string
+   * @param event_id
+   */
+  void
+  PostStringEvent (int code, wxString str, int event_id);
+
+  /**
+   * Posts a data event. This call is thread-safe
+   *
+   * @param code
+   * @param data
+   * @param event_id
+   */
+  void
+  PostDataEvent (int code, void * data, int event_id);
+
 };
 
 #endif

@@ -50,6 +50,7 @@ rapidsvn_SOURCES= \
 	revert_action.cpp \
 	simple_worker.cpp \
 	switch_action.cpp \
+	threaded_worker.cpp \
 	tracer.cpp \
 	trace_update.cpp \
 	tviewer.cpp \

@@ -24,10 +24,17 @@
 #include "svncpp/wc.hpp"
 
 // app
+#include "config.hpp"
 #include "diff_data.hpp"
 #include "ids.hpp"
 #include "file_info.hpp"
 #include "listener.hpp"
+
+#ifdef USE_SIMPLE_WORKER
+#include "simple_worker.hpp"
+#else
+#include "threaded_worker.hpp"
+#endif
 
 // actions
 #include "add_action.hpp"
@@ -159,106 +166,19 @@ COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
 
 
 /**
- * Local helper function to add action tools to @a toolbar
+ * Local helper function to create the action worker
  *
- * @param toolbar
+ * @param parent
+ * @return new action worker instance
  */
-static void
-AddActionTools (wxToolBarBase *toolBar)
+ActionWorker *
+CreateActionWorker (wxWindow * parent)
 {
-  toolBar->AddTool (ID_Add,
-                    wxBitmap (add_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Add selected"),
-                    _("Put files and directories under revision control"));
-
-  toolBar->AddTool (ID_Delete,
-                    wxBitmap (delete_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Delete selected"),
-                    _("Delete files and directories from version control"));
-
-  toolBar->AddTool (ID_Update,
-                    wxBitmap (update_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Update selected"),
-                    _("Bring changes from the repository into the working copy"));
-
-  toolBar->AddTool (ID_Commit,
-                    wxBitmap (commit_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Commit selected"),
-                    _("Send changes from your working copy to the repository"));
-
-  toolBar->AddTool (ID_Revert,
-                    wxBitmap (revert_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Revert selected"),
-                    _("Restore pristine working copy file (undo all local edits)"));
-
-  toolBar->AddTool (ID_Resolve,
-                    wxBitmap (resolve_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Resolve selected"),
-                    _("Remove 'conflicted' state on working copy files or directories)"));
-
-  toolBar->AddSeparator ();
-}
-
-
-/**
- * helper function to add info tools to the @a toolbar
- *
- * @param toolbar
- */
-static void
-AddInfoTools (wxToolBarBase * toolBar)
-{
-  toolBar->AddTool (ID_Info,
-                    wxBitmap (info_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Info selected"),
-                    _("Display info about selected entries"));
-
-  toolBar->AddTool (ID_Log,
-                    wxBitmap (log_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Log selected"),
-                    _("Show the log messages for a set entries"));
-
-  toolBar->AddSeparator ();
+#ifdef USE_SIMPLE_WORKER
+  return new SimpleWorker (parent);
+#else
+  return new ThreadedWorker (parent);
+#endif
 }
 
 
@@ -616,7 +536,7 @@ END_EVENT_TABLE ()
   m_folder_browser = NULL;
   m_listCtrl = NULL;
   m_title = title;
-  m_actionWorker = new SimpleWorker (this);
+  m_actionWorker = CreateActionWorker (this);
   m_context = 0;
   m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
