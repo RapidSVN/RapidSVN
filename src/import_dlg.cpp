@@ -25,8 +25,8 @@ enum
 };
 
 BEGIN_EVENT_TABLE (ImportDlg, wxDialog)
-EVT_BUTTON (wxID_OK, ImportDlg::OnOk)
-EVT_BUTTON (ID_BUTTON_BROWSE, ImportDlg::OnBrowse)
+  EVT_BUTTON (wxID_OK, ImportDlg::OnOk)
+  EVT_BUTTON (ID_BUTTON_BROWSE, ImportDlg::OnBrowse)
 END_EVENT_TABLE ()
 
 ImportDlg::sData::sData()
@@ -38,9 +38,10 @@ ImportDlg::sData::sData()
 }
 
 ImportDlg::ImportDlg (wxWindow * parent, sData* pData)
-           : wxDialog (parent, -1, "Import an unversioned file or tree", wxDefaultPosition, 
-             wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             m_data(pData)
+  : wxDialog (parent, -1, "Import an unversioned file or tree", 
+              wxDefaultPosition, 
+              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
+    m_data(pData)
 {
   InitializeData ();
   CentreOnParent();
@@ -58,8 +59,6 @@ ImportDlg::OnOk (wxCommandEvent &event)
   TrimString (m_data->Path);
   TrimString (m_data->NewEntry);
   TrimString (m_data->LogMessage);
-  TrimString (m_data->User);
-  TrimString (m_data->Password);
   
   if (m_data->Repository.IsEmpty ())
   {
@@ -136,17 +135,17 @@ ImportDlg::InitializeData ()
   // Row 0:  
   Grid->Add(new wxStaticText(this, -1, _("Repository URL")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl *Repository = new wxTextCtrl(this, -1, _(""),
+  wxTextCtrl *Repository = new wxTextCtrl(this, -1, "",
     wxDefaultPosition, wxSize(300, -1), 0,
     wxTextValidator(wxFILTER_NONE, &m_data->Repository));
   Grid->Add(Repository, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
-  Grid->Add(new wxStaticText(this, -1, _("")), 0, 
+  Grid->Add(new wxStaticText(this, -1, ""), 0, 
     0, 5);
 
   // Row 1:  
   Grid->Add(new wxStaticText(this, -1, _("Path")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl *Path = new wxTextCtrl(this, -1, _(""),
+  wxTextCtrl *Path = new wxTextCtrl(this, -1, "",
     wxDefaultPosition, wxSize(300, -1), 0,
     wxTextValidator(wxFILTER_NONE, &m_data->Path));
   Grid->Add(Path, 1, wxLEFT | wxEXPAND, 5);
@@ -157,11 +156,11 @@ ImportDlg::InitializeData ()
   // Row 2:  
   Grid->Add(new wxStaticText(this, -1, _("New entry")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl *NewEntry = new wxTextCtrl(this, -1, _(""),
+  wxTextCtrl *NewEntry = new wxTextCtrl(this, -1, "",
     wxDefaultPosition, wxSize(300, -1), 0,
     wxTextValidator(wxFILTER_NONE, &m_data->NewEntry));
   Grid->Add(NewEntry, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
-  Grid->Add(new wxStaticText(this, -1, _("")), 0, 
+  Grid->Add(new wxStaticText(this, -1, ""), 0, 
     0, 5);
 
   mainSizer->Add(Grid, 0, wxALL | wxEXPAND, 5);
@@ -171,7 +170,7 @@ ImportDlg::InitializeData ()
   wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer(
     new wxStaticBox(this, -1, _("Enter log message")), wxHORIZONTAL);
     
-  wxTextCtrl* Log = new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
+  wxTextCtrl* Log = new wxTextCtrl(this, -1, "", wxDefaultPosition, 
     wxSize(-1, 50), wxTE_MULTILINE,
     wxTextValidator(wxFILTER_NONE, &m_data->LogMessage));
     
@@ -199,25 +198,6 @@ ImportDlg::InitializeData ()
     0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
   mainSizer->Add(SundrySizer, 0, wxALL | wxCENTER, 5);
-
-  // Authentication row:
-  wxStaticBoxSizer *AuthSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _("Authentication")), wxHORIZONTAL);
-
-  AuthSizer->Add(new wxStaticText(this, -1, _("User")), 0, 
-    wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl* user = new wxTextCtrl(this, -1, _(""),
-    wxDefaultPosition, wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NONE, &m_data->User));
-  AuthSizer->Add(user, 1, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-
-  AuthSizer->Add(new wxStaticText(this, -1, _("Password")), 0,
-    wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  wxTextCtrl* pass = new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
-    wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_data->Password));
-  AuthSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
-
-  mainSizer->Add(AuthSizer, 0, wxALL | wxEXPAND, 5);
 
   // Button row
   wxBoxSizer *ButtonSizer = new wxBoxSizer(wxHORIZONTAL);

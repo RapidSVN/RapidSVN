@@ -27,8 +27,6 @@ public:
     wxString Path;
     wxString NewEntry;
     wxString LogMessage;
-    wxString User;
-    wxString Password;
     bool Recursive;
     bool TreeType, FileType; 
   };

@@ -27,8 +27,6 @@ struct CheckoutData
 
   wxString ModuleName;
   wxString DestFolder;
-  wxString User;
-  wxString Password;
   wxString Revision;
   bool Recursive;
   bool UseLatest;
