@@ -16,7 +16,6 @@
 FileAction::FileAction (wxFrame * frame)
     : m_mainFrame (frame)
 {
-  m_pool.Create(NULL);
   m_tracer = NULL;
   m_ownTracer = FALSE;
 }

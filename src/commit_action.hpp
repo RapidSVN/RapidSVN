@@ -13,8 +13,15 @@
 #ifndef _COMMIT_ACTION_H_INCLUDED_
 #define _COMMIT_ACTION_H_INCLUDED_
 
+// app
 #include "file_action.hpp"
 #include "commit_dlg.hpp"
+
+// forward declarations
+namespace svn
+{
+  class Targets;
+}
 
 class CommitAction:public FileAction
 {
@@ -22,11 +29,14 @@ private:
   CommitDlg::sData m_data;
   wxFrame *m_thisframe;
 
-  apr_array_header_t *m_targets;
+  svn::Targets m_targets;
 
+  // hide default and copy constructor
+  CommitAction ();
+  CommitAction (const CommitAction &);
 public:
-  CommitAction (wxFrame * frame, 
-                Tracer * tr, apr_array_header_t * targets);
+  CommitAction (wxFrame * frame, Tracer * tr, 
+                const svn::Targets & targets);
   void Perform ();
   bool PerformUI ();
 };

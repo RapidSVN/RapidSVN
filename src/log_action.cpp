@@ -11,10 +11,11 @@
  * ====================================================================
  */
 
+// svncpp
+#include "svncpp/revision.hpp"
 
-//#include "svncpp/log.hpp"
+// app
 #include "include.hpp"
-#include "wx/resource.h"
 #include "rapidsvn_app.hpp"
 #include "log_action.hpp"
 #include "svn_notify.hpp"
@@ -32,7 +33,8 @@ LogAction::Perform ()
   // Here we are in the main thread.
   svn::Log log;
 
-  log.loadPath (m_target, -2, 1);
+
+  log.loadPath (m_target, svn::Revision::START, svn::Revision::HEAD);
 
   if(!log.isVersioned ())
 	  return;

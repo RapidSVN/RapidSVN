@@ -11,15 +11,18 @@
  * ====================================================================
  */
 
+// svncpp
+#include "svncpp/exception.hpp"
 #include "svncpp/modify.hpp"
+
+// app
 #include "include.hpp"
 #include "delete_action.hpp"
-#include "wx/resource.h"
 #include "delete_dlg.hpp"
 #include "svn_notify.hpp"
 #include "rapidsvn_app.hpp"
 
-DeleteAction::DeleteAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets) 
+DeleteAction::DeleteAction (wxFrame * frame, Tracer * tr, const svn::Targets & targets) 
   : ActionThread (frame), m_targets (targets)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
@@ -56,13 +59,16 @@ DeleteAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  for (int i = 0; i < m_targets->nelts; i++)
+  const std::vector<svn::Path> & v = m_targets.targets ();
+  std::vector<svn::Path>::const_iterator it;
+
+  for (it = v.begin (); it != v.end (); it++)
   {
-    const char *target = ((const char **) (m_targets->elts))[i];
+    const svn::Path & path = *it;
 
     try
     {
-      modify.remove (target, Data.Force);
+      modify.remove (path.c_str (), Data.Force);
     }
     catch (svn::ClientException &e)
     {

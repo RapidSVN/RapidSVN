@@ -17,7 +17,6 @@ ActionThread::ActionThread (wxFrame * frame):wxThread ()
   // default creates the thread DETACHED
   , m_mainFrame (frame)
 {
-  m_pool.Create(NULL);
   m_tracer = NULL;
   m_ownTracer = FALSE;
 }

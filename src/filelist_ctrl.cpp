@@ -11,9 +11,15 @@
  * ====================================================================
  */
 
-#include "include.hpp"
+// wxwindows
 #include "wx/imaglist.h"
 #include "wx/filename.h"
+
+// svncpp
+#include "svncpp/targets.hpp"
+
+// app
+#include "include.hpp"
 #include "rapidsvn_app.hpp"
 
 // Bitmaps
@@ -540,10 +546,11 @@ FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
   menu.Append (pItem);
 }
 
-const IndexArray &
-FileListCtrl::GetSelectedItems ()
+const IndexArray 
+FileListCtrl::GetSelectedItems () const
 {
   int sel = GetSelectedItemCount ();
+  IndexArray indx_arr;
 
   if (sel <= 0)
     indx_arr.Clear ();
@@ -567,27 +574,25 @@ FileListCtrl::GetSelectedItems ()
   return indx_arr;
 }
 
-apr_array_header_t *
-FileListCtrl::GetTargets (svn::Pool & pool)
+const svn::Targets 
+FileListCtrl::GetTargets () const
 {
   IndexArray arr = GetSelectedItems ();
   size_t i;
-  apr_array_header_t *targets = 
-    apr_array_make (pool.pool(),
-                    DEFAULT_ARRAY_SIZE,
-                    sizeof (const char *));
+
+
+  std::vector<svn::Path> v;
+  v.reserve (arr.GetCount ());
 
   for (i = 0; i < arr.GetCount (); i++)
   {
     wxFileName fname (m_path, GetItemText (arr[i]));
     wxString path = fname.GetFullPath ();
-    const char *target = 
-      apr_pstrdup (pool.pool(), UnixPath (path));
 
-    (*((const char **) apr_array_push (targets))) = target;
+    v.push_back (path.c_str ());
   }
 
-  return targets;
+  return svn::Targets (v);
 }
 
 void

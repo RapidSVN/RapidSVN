@@ -11,11 +11,18 @@
  * ====================================================================
  */
 
+// wx windows
+#include <wx/valgen.h>
+
+// svncpp
+#include "svncpp/exception.hpp"
 #include "svncpp/modify.hpp"
+#include "svncpp/notify.hpp"
+
+// app
 #include "include.hpp"
 #include "rapidsvn_app.hpp"
 #include "log_dlg.hpp"
-#include <wx/valgen.h>
 
 enum
 {
@@ -139,7 +146,7 @@ LogDlg::OnGet (wxCommandEvent & event)
 }
 
 void
-LogDlg::getRevision (long revision)
+LogDlg::getRevision (const svn_revnum_t revision)
 {
   svn::Modify modify;
   svn::Notify notify;
@@ -147,7 +154,7 @@ LogDlg::getRevision (long revision)
 
   try
   {
-    modify.update (m_log->getLastPath (), revision, false);
+    modify.update (m_log->getLastPath (), svn::Revision(revision), false);
     wxMessageDialog dlg (this, _T ("Revision retrieved successfully."),
                          _T ("Message"), wxOK);
     dlg.ShowModal ();

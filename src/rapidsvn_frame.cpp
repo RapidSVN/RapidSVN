@@ -11,12 +11,23 @@
  * ====================================================================
  */
 
-#include "svncpp/log.hpp"
-#include "include.hpp"
+// stl
+//#include <vector>
+
+// wxwindows
 #include <wx/utils.h>
 #include <wx/log.h>
-#include <wx/resource.h>
+//#include <wx/resource.h>
 #include "wx/filename.h"
+#include "wx/version.h"
+
+// svncpp
+#include "svncpp/log.hpp"
+//#include "svncpp/path.hpp"
+#include "svncpp/targets.hpp"
+
+// app
+#include "include.hpp"
 
 #include "svn_file_info.hpp"
 #include "rapidsvn_app.hpp"
@@ -38,7 +49,6 @@
 #include "preferences_dlg.hpp"
 
 #include "rapidsvn_frame.hpp"
-#include "wx/version.h"
 #include "svn_version.h"
 #include "version.hpp"
 
@@ -119,7 +129,6 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
 {
   // apr stuff
   apr_initialize ();
-  m_pool.Create(NULL);
   m_folder_browser = NULL;
   m_listCtrl = NULL;
 
@@ -855,16 +864,11 @@ RapidSvnFrame::InitFolderBrowser ()
   m_folder_browser->Refresh ();
 }
 
-apr_array_header_t *
-RapidSvnFrame::GetActionTargets ()
+const svn::Targets
+RapidSvnFrame::GetActionTargets () const
 {
-  svn::Pool localPool(m_pool);
-
   wxWindow* activeWindow = FindFocus();
-  apr_array_header_t *targets = 
-    apr_array_make (localPool.pool(),
-                    DEFAULT_ARRAY_SIZE,
-                    sizeof (const char *));
+
 
   //is there nothing selected in the list control, 
   //or is the active window *not* the list control?
@@ -872,24 +876,22 @@ RapidSvnFrame::GetActionTargets ()
   {
     //yes, so build the file list from the folder browser
     wxFileName fname (m_folder_browser->GetPath ());
+
     wxString path = fname.GetFullPath ();
-    const char *target = apr_pstrdup (localPool.pool(), path);
-    (*((const char **) apr_array_push (targets))) = target;
+    return svn::Targets (path.c_str ());
   }
   else
   {
     //no, build the file list from the list control
-    targets = m_listCtrl->GetTargets (localPool);
+    return m_listCtrl->GetTargets ();
   }
-
-  return targets;
 }
 
 void
 RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 {
   FileAction* action = NULL;
-  apr_array_header_t* targets = GetActionTargets ();
+  svn::Targets targets = GetActionTargets ();
 
   switch (event.m_id)
   {
@@ -960,15 +962,19 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 void
 RapidSvnFrame::ShowLog ()
 {
-  svn::Pool localPool(m_pool);
-  apr_array_header_t *targets = 
-    m_listCtrl->GetTargets (localPool);
-  const char *target;
+  svn::Targets targets = m_listCtrl->GetTargets ();
 
-  if (targets->nelts > 0)
+  const std::vector<svn::Path> & v = targets.targets ();
+  std::vector<svn::Path>::const_iterator it;
+
+  // TODO: this handles only one target
+  //       add more targets
+  it=v.begin (); 
+  if (it!=v.end ())
   {
-    target = ((const char **) (targets->elts))[0];
-    m_logAction = new LogAction (this, m_logTracer, target);
+    const svn::Path & path = *it;
+
+    m_logAction = new LogAction (this, m_logTracer, path.c_str ());
     m_logAction->Perform ();
   }
 }
@@ -976,16 +982,19 @@ RapidSvnFrame::ShowLog ()
 void
 RapidSvnFrame::Properties ()
 {
-  svn::Pool localPool(m_pool);
+  svn::Pool localPool;
 
-  apr_array_header_t *targets = m_listCtrl->GetTargets (localPool);
-  const char *target;
+  svn::Targets targets = m_listCtrl->GetTargets ();
+  const std::vector<svn::Path> & v = targets.targets ();
+  std::vector<svn::Path>::const_iterator it = v.begin ();
 
-  if (targets->nelts > 0)
+  // TODO: this handles only one target!
+  if (it!=v.end ())
   {
-    target = ((const char **) (targets->elts))[0];
+    const svn::Path & path = *it;
+
     PropertyAction * propAction = 
-      new PropertyAction (this, m_logTracer, target);
+      new PropertyAction (this, m_logTracer, path.c_str ());
     propAction->Perform ();
   }
 }
@@ -999,7 +1008,7 @@ RapidSvnFrame::ShowInfo ()
   wxString all_info;
   wxString info;
   wxString _path;
-  svn::Pool subPool(m_pool);
+  svn::Pool subPool;
   svn_error_t *err = NULL;
   bool wasError = false;
 
@@ -1041,12 +1050,8 @@ RapidSvnFrame::AddEntries ()
   if (m_listCtrl->GetSelectedItemCount () == 0)
     return;
 
-  svn::Pool localPool(m_pool);
-  apr_array_header_t *targets = apr_array_make (localPool.pool(),
-                                                DEFAULT_ARRAY_SIZE,
-                                                sizeof (const char *));
 
-  targets = m_listCtrl->GetTargets (localPool);
+  svn::Targets targets = m_listCtrl->GetTargets ();
 
   lastAction = ACTION_TYPE_ADD;
 
@@ -1065,25 +1070,7 @@ RapidSvnFrame::MakeRevert ()
   if (sure_dlg.ShowModal () != wxID_YES)
     return;
 
-  svn::Pool localPool(m_pool);
-
-  apr_array_header_t *targets = 
-    apr_array_make (localPool.pool(),
-                    DEFAULT_ARRAY_SIZE,
-                    sizeof (const char *));
-
-  if (m_listCtrl->GetSelectedItemCount () <= 0)
-    // nothing selected in the file list
-  {
-    wxFileName fname (m_folder_browser->GetPath ());
-    wxString path = fname.GetFullPath ();
-    const char *target = apr_pstrdup (localPool.pool(), UnixPath (path));
-    (*((const char **) apr_array_push (targets))) = target;
-  }
-  else
-  {
-    targets = m_listCtrl->GetTargets (localPool);
-  }
+  const svn::Targets targets = GetActionTargets ();
 
   lastAction = ACTION_TYPE_REVERT;
 
@@ -1094,24 +1081,7 @@ RapidSvnFrame::MakeRevert ()
 void
 RapidSvnFrame::MakeResolve ()
 {
-  svn::Pool localPool(m_pool);
-  apr_array_header_t *targets = 
-    apr_array_make (localPool.pool(),
-                    DEFAULT_ARRAY_SIZE,
-                    sizeof (const char *));
-
-  if (m_listCtrl->GetSelectedItemCount () <= 0)
-    // nothing selected in the file list
-  {
-    wxFileName fname (m_folder_browser->GetPath ());
-    wxString path = fname.GetFullPath ();
-    const char *target = apr_pstrdup (localPool.pool(), UnixPath (path));
-    (*((const char **) apr_array_push (targets))) = target;
-  }
-  else
-  {
-    targets = m_listCtrl->GetTargets (localPool);
-  }
+  const svn::Targets targets = GetActionTargets ();
 
   lastAction = ACTION_TYPE_RESOLVE;
 
@@ -1126,13 +1096,7 @@ RapidSvnFrame::DelEntries ()
   if (m_listCtrl->GetSelectedItemCount () == 0)
     return;
 
-  svn::Pool localPool(m_pool);
-  apr_array_header_t *targets = 
-    apr_array_make (localPool.pool(),
-                    DEFAULT_ARRAY_SIZE,
-                    sizeof (const char *));
-
-  targets = m_listCtrl->GetTargets (localPool);
+  svn::Targets targets = m_listCtrl->GetTargets ();
 
   lastAction = ACTION_TYPE_DEL;
 
@@ -1151,13 +1115,7 @@ RapidSvnFrame::MakeCopy ()
     return;
   }
 
-  svn::Pool localPool(m_pool);
-
-  apr_array_header_t *targets = apr_array_make (localPool.pool(),
-                                                DEFAULT_ARRAY_SIZE,
-                                                sizeof (const char *));
-
-  targets = m_listCtrl->GetTargets (localPool);
+  const svn::Targets targets = m_listCtrl->GetTargets ();
 
   lastAction = ACTION_TYPE_COPY;
   CopyAction *cp_act = new CopyAction (this, m_logTracer, targets);

@@ -11,14 +11,19 @@
  * ====================================================================
  */
 
+// svncpp
+#include "svncpp/exception.hpp"
 #include "svncpp/modify.hpp"
+
+// app
 #include "include.hpp"
 #include "tracer.hpp"
 #include "rapidsvn_app.hpp"
 #include "resolve_action.hpp"
 #include "svn_notify.hpp"
 
-ResolveAction::ResolveAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets)
+ResolveAction::ResolveAction (wxFrame * frame, Tracer * tr, 
+                              const svn::Targets & targets)
   : ActionThread (frame), m_targets (targets)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
@@ -45,14 +50,16 @@ ResolveAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  for (int i = 0; i < m_targets->nelts; i++)
-  {
+  const std::vector<svn::Path> v = m_targets.targets ();
+  std::vector<svn::Path>::const_iterator it;
 
-    const char *target = ((const char **) (m_targets->elts))[i];
+  for (it = v.begin (); it != v.end (); it++)
+  {
+    const svn::Path & path = *it;
 
     try
     {
-      modify.resolve (target, false);
+      modify.resolve (path.c_str (), false);
     }
     catch (svn::ClientException &e)
     {

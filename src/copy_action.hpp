@@ -13,6 +13,10 @@
 #ifndef _COPY_ACTION_H_INCLUDED_
 #define _COPY_ACTION_H_INCLUDED_
 
+// svncpp
+#include "svncpp/targets.hpp"
+
+// app
 #include "action_thread.hpp"
 
 class CopyAction:public ActionThread
@@ -21,11 +25,12 @@ private:
   wxString m_dest;
   wxString m_src;
   wxString m_logMsg;
-  apr_array_header_t *m_targets;
+  svn::Targets m_targets;
   wxString DestinationPath (wxString src);
 
 public:
-  CopyAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets);
+  CopyAction (wxFrame * frame, Tracer * tr, 
+              const svn::Targets & targets);
 
   void Perform ();
   void *Entry ();

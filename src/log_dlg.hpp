@@ -42,7 +42,7 @@ private:
   wxTextCtrl * m_logMsg;
 
   void InitializeData ();
-  void getRevision (long revision);
+  void getRevision (const svn_revnum_t revision);
   void OnClose (wxCommandEvent & event);
   void OnGet (wxCommandEvent & event);
   

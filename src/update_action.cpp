@@ -11,15 +11,20 @@
  * ====================================================================
  */
 
+// svncpp
+#include "svncpp/exception.hpp"
 #include "svncpp/modify.hpp"
+#include "svncpp/path.hpp"
+//#include "svncpp/targets.hpp"
+
+// app
 #include "include.hpp"
-#include "wx/resource.h"
 #include "rapidsvn_app.hpp"
 #include "update_action.hpp"
 #include "svn_notify.hpp"
 
 UpdateAction::UpdateAction (wxFrame * frame, 
-                            Tracer * tr, apr_array_header_t * targets)
+                            Tracer * tr, const svn::Targets & targets)
   : FileAction (frame), m_targets (targets)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
@@ -48,22 +53,28 @@ UpdateAction::Perform ()
   modify.username (m_data.User);
   modify.password (m_data.Password);
 
-  long revnum = -1;
+  svn::Revision revision (svn::Revision::HEAD);
   // Did the user request a specific revision?:
   if (!m_data.UseLatest)
   {
     TrimString(m_data.Revision);
     if (!m_data.Revision.IsEmpty ())
+    {
+      svn_revnum_t revnum;
       m_data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
+      revision = svn::Revision (revnum);
+    }
   }
   
-  for (int i = 0; i < m_targets->nelts; i++)
+  const std::vector<svn::Path> & v = m_targets.targets ();
+  std::vector<svn::Path>::const_iterator it;
+  for (it = v.begin(); it != v.end(); it++)
   {
-    const char *target = ((const char **) (m_targets->elts))[i];
+    const svn::Path & path = *it;
 
     try
     {
-      modify.update (target, revnum, true);
+      modify.update (path.c_str (), revision, true);
     }
     catch (svn::ClientException &e)
     {

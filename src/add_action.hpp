@@ -13,15 +13,19 @@
 #ifndef _ADD_ACTION_H_INCLUDED_
 #define _ADD_ACTION_H_INCLUDED_
 
+// svncpp
+#include "svncpp/targets.hpp"
+
+// app
 #include "action_thread.hpp"
 
 class AddAction:public ActionThread
 {
 private:
-  apr_array_header_t * m_targets;
+  svn::Targets m_targets;
 
 public:
-  AddAction (wxFrame * frame, Tracer * tr, apr_array_header_t * trgts);
+  AddAction (wxFrame * frame, Tracer * tr, const svn::Targets & trgts);
 
   void Perform ();
   void *Entry ();

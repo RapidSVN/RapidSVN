@@ -13,6 +13,10 @@
 #ifndef _DELETE_ACTION_H_INCLUDED_
 #define _DELETE_ACTION_H_INCLUDED_
 
+// svncpp
+#include "svncpp/targets.hpp"
+
+// app
 #include "action_thread.hpp"
 #include "delete_dlg.hpp"
 
@@ -22,10 +26,11 @@ private:
   DeleteDlg::sData Data;
   wxFrame *m_pFrame;
 
-  apr_array_header_t *m_targets;
+  svn::Targets m_targets;
 
 public:
-   DeleteAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets);
+   DeleteAction (wxFrame * frame, Tracer * tr, 
+                 const svn::Targets & targets);
 
   void Perform ();
   void *Entry ();

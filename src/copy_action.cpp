@@ -11,16 +11,22 @@
  * ====================================================================
  */
 
-#include "svncpp/modify.hpp"
-#include "include.hpp"
-#include "wx/resource.h"
+// wxwindows
 #include "wx/filename.h"
+
+// svncpp
+#include "svncpp/exception.hpp"
+#include "svncpp/modify.hpp"
+
+// app
+#include "include.hpp"
 #include "rapidsvn_app.hpp"
 #include "svn_notify.hpp"
 #include "copy_action.hpp"
 
 
-CopyAction::CopyAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets )
+CopyAction::CopyAction (wxFrame * frame, Tracer * tr, 
+                        const svn::Targets & targets )
   : ActionThread (frame), m_targets(targets)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
@@ -47,7 +53,7 @@ CopyAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  m_src = ((const char **) (m_targets->elts))[0];
+  m_src = m_targets.targets ()[0].c_str ();
   m_dest = DestinationPath (m_src);
 
   if(m_dest.IsEmpty ())

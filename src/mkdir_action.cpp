@@ -11,9 +11,13 @@
  * ====================================================================
  */
 
+// svncpp
+#include "svncpp/exception.hpp"
 #include "svncpp/modify.hpp"
+
+// app
 #include "include.hpp"
-#include "wx/resource.h"
+//#include "wx/resource.h"
 #include "utils.hpp"
 #include "mkdir_dlg.hpp"
 #include "rapidsvn_app.hpp"

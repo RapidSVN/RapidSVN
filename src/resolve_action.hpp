@@ -13,15 +13,19 @@
 #ifndef _RESOLVE_ACTION_H_INCLUDED_
 #define _RESOLVE_ACTION_H_INCLUDED_
 
+// svncpp
+#include "svncpp/targets.hpp"
+
+// app
 #include "action_thread.hpp"
 
 class ResolveAction:public ActionThread
 {
 private:
-  apr_array_header_t * m_targets;
+  svn::Targets m_targets;
 
 public:
-  ResolveAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets);
+  ResolveAction (wxFrame * frame, Tracer * tr, const svn::Targets & targets);
 
   void Perform ();
   void *Entry ();

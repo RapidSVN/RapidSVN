@@ -13,15 +13,19 @@
 #ifndef _REVERT_ACTION_H_INCLUDED_
 #define _REVERT_ACTION_H_INCLUDED_
 
+// svncpp
+#include "svncpp/targets.hpp"
+
+// app
 #include "action_thread.hpp"
 
 class RevertAction:public ActionThread
 {
 private:
-  apr_array_header_t * m_targets;
+  svn::Targets m_targets;
 
 public:
-  RevertAction (wxFrame * frame, Tracer * tr, apr_array_header_t * trgts);
+  RevertAction (wxFrame * frame, Tracer * tr, const svn::Targets & trgts);
 
   void Perform ();
   void *Entry ();

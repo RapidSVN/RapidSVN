@@ -27,6 +27,12 @@ WX_DEFINE_ARRAY_INT (long, IndexArray);
 WX_DEFINE_ARRAY (long, IndexArray);
 #endif
 
+// forward declarations
+namespace svn
+{
+  class Targets;
+}
+
 class FileListCtrl:public wxListCtrl
 {
 private:
@@ -34,12 +40,6 @@ private:
   wxImageList *m_imageListSmall;
   wxString m_path;
 
-  /**
-   * An array that holds indexes of the currently
-   * selected items in the file list.
-   */
-  IndexArray indx_arr;
-  
   int SortColumn;
   bool SortIncreasing;
 
@@ -63,8 +63,8 @@ public:
 
   // utility methods
   void UpdateFileList (const wxString & path);
-  const IndexArray & GetSelectedItems ();
-  apr_array_header_t *GetTargets (svn::Pool & pool);
+  const IndexArray GetSelectedItems () const;
+  const svn::Targets GetTargets () const;
   void GetFullUnixPath (long index, wxString & fullpath);
 
   void ShowMenu (long index, wxPoint & pt);

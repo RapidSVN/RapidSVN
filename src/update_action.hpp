@@ -13,21 +13,27 @@
 #ifndef _UPDATE_ACTION_H_INCLUDED_
 #define _UPDATE_ACTION_H_INCLUDED_
 
-#include "action_thread.hpp"
+// wxwindows
+//#include "wx/frame.h"
+
+// svncpp
+#include "svncpp/targets.hpp"
+
+// app
+//#include "action_thread.hpp"
 #include "file_action.hpp"
 #include "update_dlg.hpp"
-#include "svncpp/pool.hpp"
 
 class UpdateAction:public FileAction
 {
 private:
   UpdateDlg::sData m_data;
 
-  apr_array_header_t *m_targets;
+  svn::Targets m_targets;
   wxFrame *m_pFrame;
 
 public:
-  UpdateAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets);
+  UpdateAction (wxFrame * frame, Tracer * tr, const svn::Targets & targets);
   void Perform ();
   bool PerformUI ();
 };

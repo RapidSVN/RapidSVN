@@ -13,9 +13,11 @@
 #ifndef _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
 #define _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
 
+// wxwindows
 #include <wx/toolbar.h>
 #include <wx/splitter.h>
 
+// app
 #include "tracer.hpp"
 #include "log_action.hpp"
 
@@ -38,7 +40,10 @@ typedef enum
 }
 ActionType;
 
+
+// forward declarations
 class RapidSvnFrame;
+class svn::Targets;
 
 /**
 * Panel holding the splitter with the folder browser
@@ -134,7 +139,7 @@ public:
   void ShowLog ();
   void ShowInfo ();
 
-  apr_array_header_t * GetActionTargets();
+  const svn::Targets GetActionTargets() const;
 
   void AddEntries ();
   void DelEntries ();
@@ -183,8 +188,6 @@ private:
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
   ActionType lastAction;
-
-  svn::Pool m_pool;
 
 DECLARE_EVENT_TABLE ()};
 

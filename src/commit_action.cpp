@@ -11,15 +11,20 @@
  * ====================================================================
  */
 
+// svncpp
+#include "svncpp/exception.hpp"
 #include "svncpp/modify.hpp"
+#include "svncpp/pool.hpp"
+#include "svncpp/targets.hpp"
+
+// app
 #include "include.hpp"
-#include "wx/resource.h"
 #include "rapidsvn_app.hpp"
 #include "commit_action.hpp"
 #include "svn_notify.hpp"
 
 CommitAction::CommitAction (wxFrame * frame, 
-                            Tracer * tr, apr_array_header_t * targets)
+                            Tracer * tr, const svn::Targets & targets)
   : FileAction (frame), m_targets (targets)
 {
   m_thisframe = frame;
@@ -45,44 +50,37 @@ CommitAction::Perform ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
   long revision;
+  svn::Pool pool(NULL);
 
   modify.username (m_data.User);
   modify.password (m_data.Password);
 
-  // Caution: we cannot do a commit for every single
-  // file. the commit has to be called ONCE.
-  // Otherwise it would not be an atomic commit anymore
-  // and the revision numbers would be increased for
-  // every single file!!!!!!!
-  throw svn::Exception("NOT IMPLEMENTED YET!!!");
+  svn::Targets targets (m_targets);
 
-  for (int i = 0; i < m_targets->nelts; i++)
+  try
   {
-    const char *target = ((const char **) (m_targets->elts))[i];
+    revision = 
+      modify.commit (targets.array (pool.pool ()), m_data.LogMessage.c_str (), 
+                     m_data.Recursive);
+    wxString str;
 
-    try
+    if(!modify.isAuthenticated ())
     {
-      revision = modify.commit (target, m_data.LogMessage.c_str (), m_data.Recursive);
-      wxString str;
-
-      if(!modify.isAuthenticated ())
-      {
-        str = "Authentication failed.";
-      }
-      else
-      {
-        str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
-                                revision);
-      }
-      GetTracer ()->Trace (str);
+      str = "Authentication failed.";
     }
-    catch (svn::ClientException &e)
+    else
     {
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
-                       ACTION_EVENT);
-      GetTracer ()->Trace ("The commit action failed:");
-      GetTracer ()->Trace (e.description ());
+      str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
+                              revision);
     }
+    GetTracer ()->Trace (str);
+  }
+  catch (svn::ClientException &e)
+  {
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                     ACTION_EVENT);
+    GetTracer ()->Trace ("The commit action failed:");
+    GetTracer ()->Trace (e.description ());
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
