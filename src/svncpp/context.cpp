@@ -60,6 +60,12 @@ namespace svn
       *(svn_auth_provider_object_t **)apr_array_push (providers) =
         provider;
 
+      svn_client_get_username_provider (
+        &provider,
+        pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) =
+        provider;
+
       svn_client_get_simple_prompt_provider (
         &provider,
         prompt,
