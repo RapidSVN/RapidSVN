@@ -254,10 +254,6 @@ SOURCE=.\src\simple_worker.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\svn_notify.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\switch_action.cpp
 # End Source File
 # Begin Source File

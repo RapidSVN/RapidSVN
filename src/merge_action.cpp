@@ -18,9 +18,7 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "ids.hpp"
 #include "merge_action.hpp"
-#include "svn_notify.hpp"
 
 MergeAction::MergeAction (wxWindow * parent)
   : Action (parent, _("Merge"), actionWithoutTarget)
@@ -49,8 +47,6 @@ bool
 MergeAction::Perform ()
 {
   svn::Client client (GetContext ());
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
 
   // Set current working directory to point to the path
   // in the folder browser (the path where the merge will be 

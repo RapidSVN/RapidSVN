@@ -19,8 +19,6 @@
 #include "checkout_dlg.hpp"
 #include "ids.hpp"
 #include "utils.hpp"
-#include "svn_notify.hpp"
-#include "tracer.hpp"
 
 CheckoutAction::CheckoutAction (wxWindow * parent)
   : Action (parent, _("Checkout"), actionWithoutTarget)
@@ -52,8 +50,6 @@ CheckoutAction::Perform ()
   context.setListener (this);
 
   svn::Client client (&context);
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
 
   TrimString(m_data.DestFolder);
   UnixPath(m_data.DestFolder);

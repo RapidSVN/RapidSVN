@@ -19,11 +19,8 @@
 #include "svncpp/path.hpp"
 
 // app
-#include "ids.hpp"
 #include "view_action.hpp"
-#include "svn_notify.hpp"
 #include "tviewer.hpp"
-#include "tracer.hpp"
 #include "utils.hpp"
 
 ViewAction::ViewAction (wxWindow * parent, const GetData & data)
@@ -41,13 +38,10 @@ ViewAction::Prepare ()
 bool
 ViewAction::Perform ()
 {
-  svn::Client client (GetContext ());
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
-
   wxSetWorkingDirectory (GetPath ().c_str ());
 
   svn::Path path (m_data.path.c_str ());
+  svn::Client client (GetContext ());
   std::string text = client.cat (path, m_data.revision);
 
   wxString title;

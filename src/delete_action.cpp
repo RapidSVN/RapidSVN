@@ -20,8 +20,6 @@
 // app
 #include "delete_action.hpp"
 #include "delete_dlg.hpp"
-#include "ids.hpp"
-#include "svn_notify.hpp"
 
 DeleteAction::DeleteAction (wxWindow * parent) 
   : Action (parent, _("Delete"), actionWithTargets)
@@ -52,8 +50,6 @@ bool
 DeleteAction::Perform ()
 {
   svn::Client client;
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
 
   client.remove (GetTargets (), m_force);
 

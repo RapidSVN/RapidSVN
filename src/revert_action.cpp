@@ -18,10 +18,7 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "ids.hpp"
-#include "tracer.hpp"
 #include "revert_action.hpp"
-#include "svn_notify.hpp"
 
 RevertAction::RevertAction (wxWindow * parent)
   : Action (parent, _("Revert"), actionWithTargets)
@@ -51,14 +48,10 @@ RevertAction::Prepare ()
 bool
 RevertAction::Perform ()
 {
-  svn::Client client;
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
-  bool result = true;
-
   const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
 
+  svn::Client client;
   for (it = v.begin (); it != v.end (); it++)
   {
     const svn::Path & path = *it;
@@ -66,7 +59,7 @@ RevertAction::Perform ()
     client.revert (path.c_str (), false);
   }
 
-  return result;
+  return true;
 }
 
 /* -----------------------------------------------------------------

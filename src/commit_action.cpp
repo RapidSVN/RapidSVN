@@ -23,8 +23,6 @@
 #include "commit_action.hpp"
 #include "commit_dlg.hpp"
 #include "ids.hpp"
-#include "svn_notify.hpp"
-#include "tracer.hpp"
 #include "utils.hpp"
 
 CommitAction::CommitAction (wxWindow * parent)
@@ -55,9 +53,7 @@ CommitAction::Prepare ()
 bool
 CommitAction::Perform ()
 {
-  SvnNotify notify (GetTracer ());
   svn::Client client (GetContext ());
-  client.notification (&notify);
 
   const svn::Targets & targets = GetTargets ();
 

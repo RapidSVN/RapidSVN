@@ -20,11 +20,8 @@
 #include "svncpp/targets.hpp"
 
 // app
-#include "ids.hpp"
 #include "update_action.hpp"
 #include "update_dlg.hpp"
-#include "svn_notify.hpp"
-#include "tracer.hpp"
 #include "utils.hpp"
 
 UpdateAction::UpdateAction (wxWindow * parent)
@@ -54,10 +51,6 @@ UpdateAction::Prepare ()
 bool
 UpdateAction::Perform ()
 {
-  svn::Client client (GetContext ());
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
-
   svn::Revision revision (svn::Revision::HEAD);
   // Did the user request a specific revision?:
   if (!m_data.useLatest)
@@ -71,10 +64,10 @@ UpdateAction::Perform ()
     }
   }
 
-  bool result = true;
   const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
   wxSetWorkingDirectory (GetPath ().c_str ());
+  svn::Client client (GetContext ());
   for (it = v.begin(); it != v.end(); it++)
   {
     const svn::Path & path = *it;
@@ -82,7 +75,7 @@ UpdateAction::Perform ()
     client.update (path.c_str (), revision, m_data.recursive);
   }
 
-  return result;
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:

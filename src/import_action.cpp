@@ -18,11 +18,8 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "ids.hpp"
 #include "import_dlg.hpp"
-#include "tracer.hpp"
 #include "import_action.hpp"
-#include "svn_notify.hpp"
 
 ImportAction::ImportAction (wxWindow * parent)
   :Action (parent, _("Import"), actionWithoutTarget)
@@ -53,9 +50,6 @@ bool
 ImportAction::Perform ()
 {
   svn::Client client (GetContext ());
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
-
   client.import (m_data.Path.c_str (), m_data.Repository.c_str (),
                  m_data.LogMessage.c_str(), m_data.Recursive);
 

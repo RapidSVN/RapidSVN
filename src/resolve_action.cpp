@@ -18,10 +18,7 @@
 #include "wx/intl.h"
 
 // app
-#include "ids.hpp"
-#include "tracer.hpp"
 #include "resolve_action.hpp"
-#include "svn_notify.hpp"
 
 ResolveAction::ResolveAction (wxWindow * parent)
   : Action (parent, _("Resolve"), actionWithTargets)
@@ -38,14 +35,10 @@ ResolveAction::Prepare ()
 bool
 ResolveAction::Perform ()
 {
-  svn::Client client;
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
-  bool result = true;
-
   const std::vector<svn::Path> v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
 
+  svn::Client client;
   for (it = v.begin (); it != v.end (); it++)
   {
     const svn::Path & path = *it;
@@ -53,7 +46,7 @@ ResolveAction::Perform ()
     client.resolved (path.c_str (), false);
   }
 
-  return result;
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:

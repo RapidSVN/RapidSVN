@@ -125,10 +125,6 @@ SOURCE=.\exception.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\notify.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\path.cpp
 # End Source File
 # Begin Source File
@@ -190,10 +186,6 @@ SOURCE=.\exception.hpp
 # Begin Source File
 
 SOURCE=.\log_entry.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\notify.hpp
 # End Source File
 # Begin Source File
 

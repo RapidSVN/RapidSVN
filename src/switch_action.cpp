@@ -19,8 +19,6 @@
 #include "svncpp/status.hpp"
 
 // app
-#include "ids.hpp"
-#include "svn_notify.hpp"
 #include "switch_action.hpp"
 #include "update_dlg.hpp"
 #include "utils.hpp"
@@ -67,10 +65,6 @@ SwitchAction::Prepare ()
 bool
 SwitchAction::Perform ()
 {
-  svn::Client client (GetContext ());
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
-
   svn::Path path = GetTarget ();
   const char * url = m_data.url.c_str ();
   svn::Revision revision (svn::Revision::HEAD);
@@ -83,6 +77,7 @@ SwitchAction::Perform ()
     revision = revnum;
   }
 
+  svn::Client client (GetContext ());
   client.doSwitch (path, url, revision,
                    m_data.recursive);
 

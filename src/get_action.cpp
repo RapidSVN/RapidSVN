@@ -21,8 +21,6 @@
 // app
 #include "ids.hpp"
 #include "get_action.hpp"
-#include "svn_notify.hpp"
-#include "tracer.hpp"
 #include "utils.hpp"
 
 GetAction::GetAction (wxWindow * parent, const GetData & data)
@@ -41,8 +39,6 @@ bool
 GetAction::Perform ()
 {
   svn::Client client (GetContext ());
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
 
   wxSetWorkingDirectory (GetPath ().c_str ());
   client.update (m_data.path.c_str (),

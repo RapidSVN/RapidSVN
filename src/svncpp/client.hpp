@@ -31,7 +31,6 @@ namespace svn
 {
   // forward declarations
   class Context;
-  class Notify;
   class Status;
   class Targets;
   class DirEntry;
@@ -114,16 +113,6 @@ namespace svn
               const Revision & revision, 
               bool recurse) throw (ClientException);
   
-    /**
-     * Sets the notification function and baton that the C library 
-     * uses to send processing information back to the calling program.
-     * This must be called before calling the other methods in this class.
-     * @param notify function that the SVN library should call when 
-     *               checking out each file.
-     */
-    void 
-    notification (Notify * notify);
-
     /**
      * Sets a single file for deletion.
      * @exception ClientException
@@ -352,7 +341,6 @@ namespace svn
 
   private:
     Context * m_context;
-    Notify * m_notify;
 
     /**
      * disallow assignment operator

@@ -18,10 +18,8 @@
 #include "wx/intl.h"
 
 // app
-#include "ids.hpp"
 #include "destination_dlg.hpp"
 #include "mkdir_action.hpp"
-#include "svn_notify.hpp"
 
 MkdirAction::MkdirAction (wxWindow * parent, const char * path)
  : Action (parent, _("Mkdir"), actionWithoutTarget),
@@ -54,8 +52,6 @@ bool
 MkdirAction::Perform ()
 {
   svn::Client client (GetContext ());
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
 
   // add target to path
   wxString newDir (m_path + m_target);

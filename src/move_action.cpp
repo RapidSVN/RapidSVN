@@ -20,8 +20,6 @@
 // app
 #include "move_action.hpp"
 #include "destination_dlg.hpp"
-#include "ids.hpp"
-#include "svn_notify.hpp"
 
 MoveAction::MoveAction (wxWindow * parent, 
                                 int kind) 
@@ -95,8 +93,6 @@ bool
 MoveAction::Perform ()
 {
   svn::Client client;
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
 
   svn::Path srcPath = GetTarget ();
   svn::Path destPath (m_destination.c_str ());

@@ -34,9 +34,6 @@ namespace svn
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
 
-    if(m_notify == NULL)
-      return;
-
     svn_error_t * error =
       svn_client_checkout (url, destPath.c_str (),
                            revision.revision (),
@@ -46,12 +43,6 @@ namespace svn
 
     if(error != NULL)
       throw ClientException (error);
-  }
-
-  void
-  Client::notification (Notify * notify)
-  {
-    m_notify = notify;
   }
 
   void

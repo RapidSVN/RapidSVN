@@ -20,7 +20,6 @@
 // app
 #include "ids.hpp"
 #include "add_action.hpp"
-#include "svn_notify.hpp"
 
 AddAction::AddAction (wxWindow * parent)
   : Action (parent, _("Add"), actionWithTargets)
@@ -42,8 +41,6 @@ bool
 AddAction::Perform ()
 {
   svn::Client client;
-  SvnNotify notify (GetTracer ());
-  client.notification (&notify);
 
   const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;

@@ -13,7 +13,6 @@ libsvncpp_la_SOURCES= \
 	dirent.cpp \
 	exception.cpp \
 	entry.cpp \
-	notify.cpp \
 	path.cpp \
 	pool.cpp \
 	property.cpp \
