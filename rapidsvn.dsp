@@ -184,7 +184,11 @@ SOURCE=.\src\preferences_dlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\rapidsvn_frame.cpp
+SOURCE=.\src\property_action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\property_dlg.cpp
 # End Source File
 # Begin Source File
 
@@ -193,6 +197,10 @@ SOURCE=.\src\rapidsvn.rc
 # Begin Source File
 
 SOURCE=.\src\rapidsvn_app.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\rapidsvn_frame.cpp
 # End Source File
 # Begin Source File
 
@@ -344,11 +352,19 @@ SOURCE=.\src\preferences_dlg.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\rapidsvn_frame.h
+SOURCE=.\src\property_action.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\property_dlg.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\src\rapidsvn_app.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\rapidsvn_frame.h
 # End Source File
 # Begin Source File
 

@@ -20,6 +20,7 @@
 #include "copy_action.h"
 #include "mkdir_action.h"
 #include "merge_action.h"
+#include "property_action.h"
 
 #include "report_dlg.h"
 #include "preferences_dlg.h"
@@ -74,6 +75,7 @@ EVT_MENU (ID_Revert, RapidSvnFrame::OnRevert)
 EVT_MENU (ID_Copy, RapidSvnFrame::OnCopy)
 EVT_MENU (ID_Rename, RapidSvnFrame::OnRename)
 EVT_MENU (ID_Resolve, RapidSvnFrame::OnResolve)
+EVT_MENU (ID_Property, RapidSvnFrame::OnProperties)
 EVT_MENU (ID_Mkdir, RapidSvnFrame::OnMkdir)
 EVT_MENU (ID_Merge, RapidSvnFrame::OnMerge)
 EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
@@ -342,6 +344,10 @@ RapidSvnFrame::InitializeMenu ()
   pItem->SetBitmap (wxBITMAP (info));
   menuQuery->Append (pItem);
 
+  pItem = new wxMenuItem (menuQuery, ID_Property, _T ("Properties"));
+  pItem->SetBitmap (wxBITMAP (info));
+  menuQuery->Append (pItem);
+
   // Help Menu
   wxMenu *menuHelp = new wxMenu;
   menuHelp->Append (ID_Contents, "&Contents");
@@ -508,6 +514,13 @@ RapidSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
 {
   Preferences ();
 }
+
+void
+RapidSvnFrame::OnProperties (wxCommandEvent & WXUNUSED (event))
+{
+  Properties ();
+}
+
 
 void
 RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
@@ -939,6 +952,24 @@ RapidSvnFrame::ShowLog ()
     target = ((const char **) (targets->elts))[0];
     m_logAction = new LogAction (this, subpool, m_logTracer, target);
     m_logAction->Perform ();
+  }
+
+  svn_pool_destroy (subpool);
+}
+
+void
+RapidSvnFrame::Properties ()
+{
+  apr_pool_t *subpool = svn_pool_create (pool);
+  apr_array_header_t *targets = m_listCtrl->GetTargets (subpool);
+  const char *target;
+
+  if (targets->nelts > 0)
+  {
+    target = ((const char **) (targets->elts))[0];
+    PropertyAction * propAction = new PropertyAction (this, subpool, 
+                                                      m_logTracer, target);
+    propAction->Perform ();
   }
 
   svn_pool_destroy (subpool);

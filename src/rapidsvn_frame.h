@@ -66,6 +66,7 @@ public:
   // Query menu
   void OnLog (wxCommandEvent & event);
   void OnInfo (wxCommandEvent & event);
+  void OnProperties (wxCommandEvent & event);
 
   // Create menu
   void OnCheckout (wxCommandEvent & event);
@@ -124,6 +125,7 @@ public:
   void MakeCommit ();
   void MakeRevert ();
   void MakeResolve ();
+  void Properties ();
 
   void MakeCopy ();
   void Rename ();
@@ -205,6 +207,7 @@ enum
   ID_Mkdir,
   ID_Switch,
   ID_Preferences,
+  ID_Property,
   ID_AddProject,
   ID_RemoveProject,
 
