@@ -209,14 +209,14 @@ public:
     AppendMenuItem (*menuView, ID_Preferences);
 
     // Create menu
-    wxMenu *menuCreate = new wxMenu;
-    menuCreate->Append (ID_Import, _("&Import..."));
-    menuCreate->Append (ID_Checkout, _("&Checkout..."));
+    wxMenu *menuRepos = new wxMenu;
+    menuRepos->Append (ID_Import, _("&Import..."));
+    menuRepos->Append (ID_Checkout, _("&Checkout..."));
 
-    menuCreate->AppendSeparator ();
+    menuRepos->AppendSeparator ();
 
-    menuCreate->Append (ID_Merge, _("Merge..."));
-    menuCreate->Append (ID_Switch, _("Switch..."));
+    menuRepos->Append (ID_Merge, _("Merge..."));
+    menuRepos->Append (ID_Switch, _("Switch..."));
 
     // Modify menu
     wxMenu *menuModif = new wxMenu;
@@ -241,7 +241,7 @@ public:
     MenuBar = new wxMenuBar;
     MenuBar->Append (menuFile, _("&File"));
     MenuBar->Append (menuView, _("&View"));
-    MenuBar->Append (menuCreate, _("&Create"));
+    MenuBar->Append (menuRepos, _("&Repository"));
     MenuBar->Append (menuModif, _("&Modify"));
     MenuBar->Append (menuQuery, _("&Query"));
     MenuBar->Append (menuExtras, _("&Extras"));
