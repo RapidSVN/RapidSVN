@@ -20,6 +20,7 @@
 // svncpp 
 #include "svncpp/path.hpp"
 #include "svncpp/pool.hpp"
+#include "svncpp/url.hpp"
 
 
 namespace svn
@@ -87,11 +88,24 @@ namespace svn
   {
     Pool pool;
 
-    const char * newPath =
-      svn_path_url_add_component (m_path.c_str (),
-                                  component,
-                                  pool);
-    m_path = newPath;
+    if (Url::isValid (m_path.c_str ()))
+    {
+      const char * newPath =
+        svn_path_url_add_component (m_path.c_str (),
+                                    component,
+                                    pool);
+      m_path = newPath;
+    }
+    else
+    {
+      svn_stringbuf_t * pathStringbuf = 
+        svn_stringbuf_create (m_path.c_str (), pool);
+
+      svn_path_add_component (pathStringbuf,
+                              component);
+
+      m_path = pathStringbuf->data;
+    }
   }
 
 
