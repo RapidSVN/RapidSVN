@@ -62,7 +62,7 @@ MergeAction::Entry ()
   }
 
 
-  long rev1 = MergeAction::getRevision (Data.Path1Rev1);
+  long rev1 = MergeAction::getRevision (Data.Path1Rev);
   long rev2 = MergeAction::getRevision (Data.Path2Rev);
   try
   {
