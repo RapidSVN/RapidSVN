@@ -18,6 +18,8 @@
 #include "svn_types.h"
 #include "svn_opt.h"
 
+// svncpp
+#include "datetime.hpp"
 
 namespace svn
 {
@@ -62,9 +64,9 @@ namespace svn
     /**
      * Constructor
      *
-     * @param date 
+     * @param datetime DateTime wrapper for apr_time_t
      */
-    Revision (const apr_time_t date);
+    Revision (const DateTime dateTime);
 
     /**
      * Copy constructor

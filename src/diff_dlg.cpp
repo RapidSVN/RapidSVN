@@ -134,7 +134,8 @@ public:
       apr_time_t time=0;
 
       ParseDateTime (mTextDate->GetValue (), time);
-      return svn::Revision (time);
+      svn::DateTime datetime(time);
+      return svn::Revision (datetime);
     }
   }
 
@@ -178,7 +179,7 @@ public:
       else
       {
         wxString value;
-        value.Printf ("%d", revision.revnum ());
+        value.Printf ("%" SVN_REVNUM_T_FMT, revision.revnum ());
         mTextRevision->SetValue (value);
         mCheckUseLatest->SetValue (false);
       }

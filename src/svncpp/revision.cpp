@@ -37,10 +37,10 @@ namespace svn
     m_revision.value.number = 0;
   }
 
-  Revision::Revision (const apr_time_t date)
+  Revision::Revision (const DateTime dateTime)
   {
     m_revision.kind = svn_opt_revision_date;
-    m_revision.value.date = date;
+    m_revision.value.date = dateTime.GetAPRTimeT();
   }
 
   Revision::Revision (const Revision & revision)

@@ -77,7 +77,7 @@ public:
     if (revision.kind () == revision.HEAD)
       revStr = _("HEAD");
     else
-      revStr.Printf ("%d", revision.revnum ());
+      revStr.Printf ("%" SVN_REVNUM_T_FMT, revision.revnum ());
 
     wxString msg;
     msg.Printf (_("Get file %s rev. %s"),

@@ -96,7 +96,7 @@ namespace svn
       if (revision.kind () == revision.HEAD)
         strcpy (revstring, "HEAD");
       else
-        sprintf (revstring, "%d", revision.revnum ());
+        sprintf (revstring, "%" SVN_REVNUM_T_FMT, revision.revnum ());
       filename += "-";
       filename += revstring;
 

@@ -81,7 +81,7 @@ const static char ConfigWidth[] = "/MainFrame/Width";
 const static char ConfigHeight[] = "/MainFrame/Height";
 const static char ConfigSplitterHoriz[] = "/MainFrame/SplitterHoriz";
 const static char ConfigSplitterVert[] = "/MainFrame/SplitterVert";
-const static char ConfigBookmarkFmt[] = "/Bookmarks/Bookmark%d";
+const static char ConfigBookmarkFmt[] = "/Bookmarks/Bookmark%ld";
 const static char ConfigBookmarkCount[] = "/Bookmarks/Count";
 
 const static char TraceMisc[] = "tracemisc";
@@ -467,9 +467,9 @@ RapidSvnFrame::~RapidSvnFrame ()
 
 
   // Save the bookmarks contents
-  size_t item;
-  const size_t itemCount = m_folder_browser->GetBookmarkCount ();
-  pConfig->Write (ConfigBookmarkCount, (long)itemCount);
+  long item;
+  const long itemCount = m_folder_browser->GetBookmarkCount ();
+  pConfig->Write (ConfigBookmarkCount, itemCount);
   for (item = 0; item < itemCount; item++)
   {
     wxString key;
@@ -838,7 +838,7 @@ RapidSvnFrame::InitFolderBrowser ()
   wxString key;
   wxString bookmark;
 
-  int item, count;
+  long item, count;
   pConfig->Read (ConfigBookmarkCount, &count, 0);
   for (item = 0; item < count; item++)
   {

@@ -125,6 +125,10 @@ SOURCE=.\context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\datetime.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\dirent.cpp
 # End Source File
 # Begin Source File
@@ -190,6 +194,10 @@ SOURCE=..\..\include\svncpp\context.hpp
 # Begin Source File
 
 SOURCE=..\..\include\svncpp\context_listener.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\include\svncpp\datetime.hpp
 # End Source File
 # Begin Source File
 

@@ -13,6 +13,7 @@ libsvncpp_la_SOURCES= \
 	client_property.cpp \
 	client_status.cpp \
 	context.cpp \
+	datetime.cpp \
 	dirent.cpp \
 	exception.cpp \
 	entry.cpp \
