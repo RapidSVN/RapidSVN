@@ -1,5 +1,4 @@
 
-#include "svncpp/status.h"
 #include "include.h"
 #include "wx/imaglist.h"
 #include "wx/filename.h"
@@ -24,6 +23,8 @@
 
 #define IMG_INDX_FOLDER   N_START_EXTRA_IMGS
 #define IMG_INDX_VERSIONED_FOLDER (N_START_EXTRA_IMGS + 1)
+#define IMG_INDX_SORT_DOWN (N_START_EXTRA_IMGS + 2)
+#define IMG_INDX_SORT_UP (N_START_EXTRA_IMGS + 3)
 
 /**
  * This table holds information about image index in a image list.
@@ -32,6 +33,18 @@
  * a valid value which represents an index in the image list.
  */
 int IMAGE_INDEX[N_STATUS_KIND];
+
+/**
+ * Tags for wxConfig file settings, defined here to avoid duplicate
+ * hard coded strings.
+ */
+static const char* pSortColumnTag = "/FileListCtrl/SortColumn";
+static const char* pSortOrderTag = "/FileListCtrl/SortOrder";
+static const char* pSortColumn0Width = "/FileListCtrl/Column0Width";
+static const char* pSortColumn1Width = "/FileListCtrl/Column1Width";
+static const char* pSortColumn2Width = "/FileListCtrl/Column2Width";
+static const char* pSortColumn3Width = "/FileListCtrl/Column3Width";
+static const char* pSortColumn4Width = "/FileListCtrl/Column4Width";
 
 static int GetImageIndex(int Index)
 /*
@@ -49,7 +62,10 @@ BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
 EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
 EVT_LIST_ITEM_ACTIVATED (-1, FileListCtrl::OnItemActivated)
 EVT_LIST_ITEM_RIGHT_CLICK (LIST_CTRL, FileListCtrl::OnItemRightClk)
-END_EVENT_TABLE ()FileListCtrl::FileListCtrl (wxWindow * parent,
+EVT_LIST_COL_CLICK(LIST_CTRL, FileListCtrl::OnColumnLeftClick)
+END_EVENT_TABLE ()
+
+FileListCtrl::FileListCtrl (wxWindow * parent,
                                               apr_pool_t * __pool,
                                               const wxWindowID id,
                                               const wxPoint & pos,
@@ -73,6 +89,9 @@ wxListCtrl (parent, id, pos, size, wxLC_REPORT)
   m_imageListSmall->Add (wxICON (folder));
   m_imageListSmall->Add (wxICON (versioned_folder));
 
+  m_imageListSmall->Add (wxICON (sort_down));
+  m_imageListSmall->Add (wxICON (sort_up));
+
   // set the indexes
   IMAGE_INDEX[svn_wc_status_none] = 0;
   IMAGE_INDEX[svn_wc_status_unversioned] = 0;
@@ -88,34 +107,154 @@ wxListCtrl (parent, id, pos, size, wxLC_REPORT)
   IMAGE_INDEX[IMG_INDX_FOLDER] = 9;
   IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER] = 10;
 
+  IMAGE_INDEX[IMG_INDX_SORT_DOWN] = 11;
+  IMAGE_INDEX[IMG_INDX_SORT_UP] = 12;
+
   // set this file list control to use the image list
   SetImageList (m_imageListSmall, wxIMAGE_LIST_SMALL);
 
   m_path.Empty ();
+  
+  // Get settings from config file:
+  wxConfigBase *pConfig = wxConfigBase::Get();
+  SortColumn = pConfig->Read(pSortColumnTag, (long) 0);
+  SortIncreasing = pConfig->Read(pSortOrderTag, (long) 1)
+    ? true : false;
+  
+  wxListItem itemCol;
+  itemCol.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_IMAGE;
+  itemCol.m_text = wxT("Name");
+  itemCol.m_image = -1;
+  InsertColumn (0, itemCol);
+
+  itemCol.m_text = wxT("Revision");
+  InsertColumn (1, itemCol);
+
+  itemCol.m_text = wxT("Last Changed");
+  InsertColumn (2, itemCol);
+
+  itemCol.m_text = wxT("Status");
+  InsertColumn (3, itemCol);
+
+  itemCol.m_text = wxT("Prop Status");
+  InsertColumn (4, itemCol);
+
+  SetColumnImages();
+
+  // Set the column widths stored in the config:
+  SetColumnWidth (0, pConfig->Read(pSortColumn0Width, (long) 150));
+  SetColumnWidth (1, pConfig->Read(pSortColumn1Width, (long) 75));
+  SetColumnWidth (2, pConfig->Read(pSortColumn2Width, (long) 100));
+  SetColumnWidth (3, pConfig->Read(pSortColumn3Width, (long) 75));
+  SetColumnWidth (4, pConfig->Read(pSortColumn4Width, (long) 75));
 }
 
 FileListCtrl::~FileListCtrl ()
 {
+  // Write settings to config file:
+  wxConfigBase *pConfig = wxConfigBase::Get();
+  pConfig->Write(pSortColumnTag, (long) SortColumn);
+  pConfig->Write(pSortOrderTag, (long) (SortIncreasing ? 1 : 0));
+  pConfig->Write(pSortColumn0Width, (long) GetColumnWidth(0));
+  pConfig->Write(pSortColumn1Width, (long) GetColumnWidth(1));
+  pConfig->Write(pSortColumn2Width, (long) GetColumnWidth(2));
+  pConfig->Write(pSortColumn3Width, (long) GetColumnWidth(3));
+  pConfig->Write(pSortColumn4Width, (long) GetColumnWidth(4));
+
   delete m_imageListSmall;
 }
 
-static int wxCALLBACK wxListCompareFunction(long item1, long item2, long sortData)
+int wxCALLBACK FileListCtrl::wxListCompareFunction(
+  long item1, long item2, long sortData)
 {
   svn::Status* ps1 = (svn::Status*) item1;
   svn::Status* ps2 = (svn::Status*) item2;
+  FileListCtrl* pList = (FileListCtrl*) sortData;
   
   if (ps1 && ps2)   // Defensive programming.
-  {
-    // Directories precede files:
-    if (ps1->isDir() && !ps2->isDir())
-      return -1;
-    else if (!ps1->isDir() && ps2->isDir())
-      return 1;
-    else
-      return wxString(ps1->getPath()).CmpNoCase(ps2->getPath());
-  }
+    return CompareItems(ps1, ps2, pList->SortColumn, pList->SortIncreasing);
   else
     return 0;
+}
+
+int wxCALLBACK FileListCtrl::CompareItems(
+  svn::Status* ps1, svn::Status* ps2, int SortColumn, bool SortIncreasing)
+{
+  int rc = 0;
+  unsigned long r1, r2;
+  bool ok1, ok2;
+  
+  switch (SortColumn)
+  {
+    case 0: // Name
+      // Directories always precede files:
+      if (ps1->isDir() && !ps2->isDir())
+        rc = -1;
+      else if (!ps1->isDir() && ps2->isDir())
+        rc = 1;
+      else
+      {
+        rc = wxString(ps1->getPath()).CmpNoCase(ps2->getPath());
+        if (!SortIncreasing)
+          rc = rc * -1; // Reverse the sort order.
+      }
+      break;
+    
+    case 1: // Revision
+    case 2: // Last change
+      ok1 = ok2 = true;
+      
+      switch(SortColumn)
+      {
+        case 1: // Revision
+          try { r1 = ps1->revision(); }
+          catch(svn::EntryNotVersioned&) { ok1 = false; }
+          try { r2 = ps2->revision(); }
+          catch(svn::EntryNotVersioned&) { ok2 = false; }
+          break;
+          
+        case 2: // Last change
+          try { r1 = ps1->lastChanged(); }
+          catch(svn::EntryNotVersioned&) { ok1 = false; }
+          try { r2 = ps2->lastChanged(); }
+          catch(svn::EntryNotVersioned&) { ok2 = false; }
+          break;
+      }
+      
+      // Unversioned always come last.
+      if (ok1 && !ok2)
+        rc = -1;
+      else if (ok2 && !ok1)
+        rc = 1;
+      else if (r1 == r2)
+        rc = 0;
+      else
+      {
+        rc = r1 > r2 ? 1 : -1;
+        if (!SortIncreasing)
+          rc = rc * -1; // Reverse the sort order.
+      } 
+      break;
+
+    case 3: // Status
+      rc = wxString(ps1->textDescription()).CmpNoCase(ps2->textDescription());
+      if (!SortIncreasing)
+        rc = rc * -1; // Reverse the sort order.
+      break;
+
+    case 4: // Prop status
+      rc = wxString(ps1->propDescription()).CmpNoCase(ps2->propDescription());
+      if (!SortIncreasing)
+        rc = rc * -1; // Reverse the sort order.
+      break;
+  }
+
+  // If the items are equal, we revert to a sort on the item name,
+  // being careful to avoid recursion.
+  if ((SortColumn != 0) && (rc == 0)) 
+    rc = CompareItems(ps1, ps2, 0, SortIncreasing);
+   
+  return rc;
 }
 
 void
@@ -192,7 +331,7 @@ FileListCtrl::UpdateFileList (const wxString & path)
     SetItem (i, 4, text);
   }
 
-  SortItems(wxListCompareFunction, 0);
+  SortItems(wxListCompareFunction, (long) this);
   
   Show();
 }
@@ -240,6 +379,41 @@ FileListCtrl::OnItemRightClk (wxListEvent & event)
   if (index >= 0)
   {
     ShowMenu (index, clientPt);
+  }
+}
+
+void
+FileListCtrl::OnColumnLeftClick (wxListEvent & event)
+{
+  int Column = event.GetColumn();
+
+  // A second click on the current sort column reverses the order of sorting.
+  if (Column == SortColumn)
+    SortIncreasing = !SortIncreasing;
+  else
+  {
+    SortColumn = Column;
+    SortIncreasing = true;
+  }
+  
+  SetColumnImages();  
+  SortItems(wxListCompareFunction, (long) this);
+}
+
+void
+FileListCtrl::SetColumnImages()
+{
+  // Update the column titles to reflect the sort column.
+  for (int i = 0; i < GetColumnCount(); i++)
+  {
+    wxListItem LI;
+    LI.m_mask = wxLIST_MASK_IMAGE;
+    if (i == SortColumn)
+      LI.m_image = SortIncreasing ? 
+        IMAGE_INDEX[IMG_INDX_SORT_DOWN] : IMAGE_INDEX[IMG_INDX_SORT_UP]; 
+    else
+      LI.m_image = -1; 
+    SetColumn(i, LI);
   }
 }
 

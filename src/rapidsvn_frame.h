@@ -112,7 +112,6 @@ public:
 
 
   // list control
-  void InitFileList ();
   void UpdateFileList ();
 
   // utility functions

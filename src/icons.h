@@ -12,4 +12,6 @@
 #include "res/bitmaps/normal_file.xpm"
 #include "res/bitmaps/replaced_file.xpm"
 #include "res/bitmaps/template.xpm"
+#include "res/bitmaps/sort_down.xpm"
+#include "res/bitmaps/sort_up.xpm"
 #endif

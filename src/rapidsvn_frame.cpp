@@ -153,8 +153,6 @@ wxFrame ((wxFrame *) NULL, -1, title)
     BrowsePosition =
     pConfig->Read (szBrowserPathKey, wxDirDialogDefaultFolderStr);
 
-  InitFileList ();
-
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter,
                                         pool,
@@ -364,34 +362,6 @@ RapidSvnFrame::InitializeMenu ()
   menuBar->Append (menuHelp, "&Help");
 
   SetMenuBar (menuBar);
-}
-
-void
-RapidSvnFrame::InitFileList ()
-{
-  wxListItem itemCol;
-  itemCol.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_IMAGE;
-  itemCol.m_text = wxT ("Name");
-  itemCol.m_image = -1;
-  m_listCtrl->InsertColumn (0, itemCol);
-
-  itemCol.m_text = "Revision";
-  m_listCtrl->InsertColumn (1, itemCol);
-
-  itemCol.m_text = "Last changed";
-  m_listCtrl->InsertColumn (2, itemCol);
-
-  itemCol.m_text = "Status";
-  m_listCtrl->InsertColumn (3, itemCol);
-
-  itemCol.m_text = "Prop Status";
-  m_listCtrl->InsertColumn (4, itemCol);
-
-  m_listCtrl->SetColumnWidth (0, 150);
-  m_listCtrl->SetColumnWidth (1, 75);
-  m_listCtrl->SetColumnWidth (2, 75);
-  m_listCtrl->SetColumnWidth (3, 75);
-  m_listCtrl->SetColumnWidth (4, 75);
 }
 
 void

@@ -3,6 +3,7 @@
 
 #include "wx/listctrl.h"
 #include "wx/dynarray.h"
+#include "svncpp/status.h"
 
 /**
  * Define an array of indexes of the selected items.
@@ -27,6 +28,15 @@ private:
       * selected items in the file list.
       */
   IndexArray indx_arr;
+  
+  int SortColumn;
+  bool SortIncreasing;
+
+  static int wxCALLBACK FileListCtrl::wxListCompareFunction(
+    long item1, long item2, long sortData);
+  static int wxCALLBACK FileListCtrl::CompareItems(
+    svn::Status* ps1, svn::Status* ps2, int SortColumn, bool SortIncreasing);
+  void SetColumnImages();
 
 public:
    FileListCtrl (wxWindow * parent,
@@ -51,6 +61,7 @@ public:
   void OnItemActivated (wxListEvent & event);
   void OnKeyDown (wxKeyEvent & event);
   void OnItemRightClk (wxListEvent & event);
+  void OnColumnLeftClick (wxListEvent & event);
 
 private:
  DECLARE_EVENT_TABLE ()};
