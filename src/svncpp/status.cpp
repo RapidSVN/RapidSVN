@@ -47,7 +47,8 @@ namespace svn
       {
         m_revision = entry->revision;
         m_lastChanged = entry->cmt_rev;
-        m_lastCommitAuthor = entry->cmt_author;
+        if(entry->cmt_author) // if just added then no author
+          m_lastCommitAuthor = entry->cmt_author;
         m_isDir = entry->kind == svn_node_dir;
       }
     }

@@ -51,6 +51,15 @@ Property::first ()
   return true;
 }
 
+void
+Property::beforeFirst ()
+{
+  if(count () < 1)
+    return;
+
+  cursor = -1;
+}
+
 bool
 Property::next ()
 {
@@ -110,17 +119,46 @@ Property::loadPath (const char * path)
       const void *key;
       const char *key_native;
       void *val;
-      const svn_string_t *propval;
 
       apr_hash_this (hi, &key, NULL, &val);
-      propval = (svn_string_t *)val;
       svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
 
       propName.push_back (key_native);
-      propValue.push_back (propval->data);
+      propValue.push_back (propertyValue (key_native));
       size++;
     } 
   }
+}
+
+const char *
+Property::propertyValue (const char * key)
+{
+  apr_hash_t *props;
+  apr_hash_index_t *hi;
+
+  svn_client_propget (&props, key, lastPath.c_str (),
+                      false /* recurse */, pool);
+
+  svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (key);
+
+  for (hi = apr_hash_first (pool, props); hi; hi = apr_hash_next (hi))
+  {
+    const void *key;
+    void *val;
+    const svn_string_t *propval;
+  
+    apr_hash_this (hi, &key, NULL, &val);
+    propval = (const svn_string_t *)val;
+  
+    /* If this is a special Subversion property, it is stored as
+       UTF8, so convert to the native format. */
+    if (is_svn_prop)
+      svn_utf_string_from_utf8 (&propval, propval, pool);
+  
+    return propval->data;
+  }
+
+  return NULL;
 }
 
 bool

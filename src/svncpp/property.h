@@ -32,6 +32,7 @@ private:
   std::vector<std::string> propValue;
 
   void reset ();
+  const char * propertyValue (const char * key);
 
   /**
    * Returns whether or not the property is a special Subversion property.
@@ -75,6 +76,11 @@ public:
    * @returns true if the cursor is in the result set.
    */
   bool first ();
+
+  /**
+   * Moves to the cursor before first row in the log result set.
+   */
+  void beforeFirst ();
 
   /**
    * Returns true if the file called in loadPath is versioned.

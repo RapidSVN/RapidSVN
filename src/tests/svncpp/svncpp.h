@@ -40,9 +40,6 @@ protected:
 
   void testCheckout ();
 
-  /**
-   * Tests both the delete and revert functionality.
-   */
   void testDeleteRevert ();
 
   void testAdd ();

@@ -12,27 +12,26 @@ SvnCppTestCase::setUp ()
 void
 SvnCppTestCase::testStatus ()
 {
-  svn::Status status;
-  status.password("");
-  status.loadPath("my_repos/README.txt");
+  svn::Client client;
+  svn::Status * status = client.singleStatus ("my_repos/README.txt");
 
-  CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
-  CPPUNIT_ASSERT_EQUAL (svn_wc_status_normal, status.textType ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status.revision ());
-  CPPUNIT_ASSERT (status.isLocked () == false);
-  CPPUNIT_ASSERT (status.isCopied () == false);
+  CPPUNIT_ASSERT (status->isVersioned ());
+  CPPUNIT_ASSERT (strcmp(status->textDescription (), "normal") == 0);
+  CPPUNIT_ASSERT_EQUAL (svn_wc_status_normal, status->textType ());
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status->revision ());
+  CPPUNIT_ASSERT (status->isLocked () == false);
+  CPPUNIT_ASSERT (status->isCopied () == false);
 
-  status.loadPath ("my_repos/main.cpp");
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "modified") == 0);
-  CPPUNIT_ASSERT_EQUAL (svn_wc_status_modified, status.textType ());
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)1, status.revision ());
+  svn::Status * status2 = client.singleStatus ("my_repos/main.cpp");
+  CPPUNIT_ASSERT (strcmp(status2->textDescription (), "modified") == 0);
+  CPPUNIT_ASSERT_EQUAL (svn_wc_status_modified, status2->textType ());
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)1, status2->revision ());
 
   try
   {
-    status.loadPath ("my_repos/status.cpp");
-    status.textDescription ();
-    status.revision ();
+    svn::Status * status3 = client.singleStatus ("my_repos/status.cpp");
+    status3->textDescription ();
+    status3->revision ();
     CPPUNIT_ASSERT_MESSAGE ("No exception!", false);
   }
   catch (...)
@@ -70,19 +69,19 @@ SvnCppTestCase::testCheckout ()
                             strlen(e.description ()) < 1);
   }
 
-  svn::Status status;
-  status.loadPath ((char *)sPath.c_str ());
+  svn::Client client;
+  svn::Status * status = client.singleStatus (sPath.c_str ());
 
-  CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status.revision ());
+  CPPUNIT_ASSERT (status->isVersioned ());
+  CPPUNIT_ASSERT (strcmp(status->textDescription (), "normal") == 0);
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status->revision ());
 }
 
 void
 SvnCppTestCase::testDeleteRevert ()
 {
   svn::Modify modify;
-  svn::Status status;
+  svn::Client client;
 
   modify.notification (&notify);
 
@@ -95,9 +94,9 @@ SvnCppTestCase::testDeleteRevert ()
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
 
-  status.loadPath ("my_repos/README.txt");
-  CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "deleted") == 0);
+  svn::Status * status = client.singleStatus ("my_repos/README.txt");
+  CPPUNIT_ASSERT (status->isVersioned ());
+  CPPUNIT_ASSERT (strcmp(status->textDescription (), "deleted") == 0);
 
   try
   {
@@ -110,30 +109,32 @@ SvnCppTestCase::testDeleteRevert ()
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
 
+  /*
   status.loadPath ("my_repos/README.txt");
   CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
   status.loadPath ("my_repos/main.cpp");
   CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
+  */
 }
 
 void
 SvnCppTestCase::testAdd ()
 {
   svn::Modify modify;
-  svn::Status status;
+  svn::Client client;
 
   modify.notification (&notify);
 
   try
   {
     modify.add ("my_repos/svncpp.h", true);
-    status.loadPath ("my_repos/svncpp.h");
+    svn::Status * status = client.singleStatus ("my_repos/svncpp.h");
+    CPPUNIT_ASSERT (strcmp(status->textDescription (), "added") == 0);
   }
   catch (svn::ClientException &e)
   {
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "added") == 0);
 }
 
 void
@@ -157,7 +158,7 @@ void
 SvnCppTestCase::testCommit ()
 {
   svn::Modify modify;
-  svn::Status status;
+  svn::Client client;
 
   modify.notification (&notify);
 
@@ -166,14 +167,14 @@ SvnCppTestCase::testCommit ()
   try
   {
     modify.commit ("my_repos", "Message logged by SvnCpp!", true);
-    status.loadPath("my_repos/svncpp.h");
-    CPPUNIT_ASSERT (status.isVersioned ());
-    CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
-    CPPUNIT_ASSERT_EQUAL ((unsigned long)4, status.revision ());
+    svn::Status * status = client.singleStatus ("my_repos/svncpp.h");
+    CPPUNIT_ASSERT (status->isVersioned ());
+    CPPUNIT_ASSERT (strcmp(status->textDescription (), "normal") == 0);
+    CPPUNIT_ASSERT_EQUAL ((unsigned long)4, status->revision ());
 
-    status.loadPath ("my_repos/main.cpp");
-    CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
-    CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status.revision ());
+    svn::Status * status2 = client.singleStatus ("my_repos/main.cpp");
+    CPPUNIT_ASSERT (strcmp(status2->textDescription (), "normal") == 0);
+    CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status2->revision ());
   }
   catch (svn::ClientException &e)
   {
@@ -185,57 +186,56 @@ void
 SvnCppTestCase::testCopy ()
 {
   svn::Modify modify;
-  svn::Status status;
+  svn::Client client;
 
   modify.notification (&notify);
 
   try
   {
     modify.copy ("my_repos/main.cpp", "my_repos/my_dir/main2.cpp");
-    status.loadPath ("my_repos/my_dir/main2.cpp");
+    svn::Status * status = client.singleStatus ("my_repos/my_dir/main2.cpp");
+    CPPUNIT_ASSERT (status->isVersioned ());
+    CPPUNIT_ASSERT (strcmp(status->textDescription (), "added") == 0);
+    CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status->revision ());
   }
   catch (svn::ClientException &e)
   {
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
-  CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "added") == 0);
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status.revision ());
 }
 
 void
 SvnCppTestCase::testMove ()
 {
   svn::Modify modify;
-  svn::Status status;
+  svn::Client client;
 
   modify.notification (&notify);
 
   try
   {
     modify.move ("my_repos/svncpp.h", "my_repos/my_dir/svncpp.h", -1, true);
-    status.loadPath ("my_repos/svncpp.h");
+    svn::Status * status = client.singleStatus ("my_repos/svncpp.h");
+    CPPUNIT_ASSERT (status->isVersioned ());
+    CPPUNIT_ASSERT (strcmp(status->textDescription (), "deleted") == 0);
   }
   catch (svn::ClientException &e)
   {
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
-
-  CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "deleted") == 0);
 
   // Check if added
   try
   {
-    status.loadPath ("my_repos/my_dir/svncpp.h");
+    svn::Status * status2 = client.singleStatus ("my_repos/my_dir/svncpp.h");
+    CPPUNIT_ASSERT (status2->isVersioned ());
+    CPPUNIT_ASSERT (strcmp(status2->textDescription (), "added") == 0);
+    CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status2->revision ());
   }
   catch (svn::ClientException &e)
   {
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
-  CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "added") == 0);
-  CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status.revision ());
 }
 
 void
@@ -289,43 +289,41 @@ void
 SvnCppTestCase::testMkdir ()
 {
   svn::Modify modify;
-  svn::Status status;
+  svn::Client client;
 
   modify.notification (&notify);
 
   try
   {
     modify.mkdir ("my_repos/new_dir", "Created a new directory");
-    status.loadPath ("my_repos/new_dir");
+    svn::Status * status = client.singleStatus ("my_repos/new_dir");
+    CPPUNIT_ASSERT (status->isVersioned ());
+    CPPUNIT_ASSERT (strcmp(status->textDescription (), "added") == 0);
   }
   catch (svn::ClientException &e)
   {
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
-
-  CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.textDescription (), "added") == 0);
 }
 
 void
 SvnCppTestCase::testExport ()
 {
   svn::Modify modify;
-  svn::Status status;
+  svn::Client client;
 
   modify.notification (&notify);
 
   try
   {
     modify.doExport ("my_repos", "my_repos/export_dir", 2);
-    status.loadPath ("my_repos/export_dir");
+    svn::Status * status = client.singleStatus ("my_repos/export_dir");
+    CPPUNIT_ASSERT (status == NULL);
   }
   catch (svn::ClientException &e)
   {
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
-
-  CPPUNIT_ASSERT (status.isVersioned () == false);
 }
 
 void

@@ -15,60 +15,68 @@
  */
 namespace svn
 {
-/**
- * Subversion client API.  This class is never directly used.
- */
+  /**
+   * Subversion client API.  This class is never directly used.
+   */
   class Client
   {
   protected:
     apr_pool_t * pool;
     svn_opt_revision_t rev;
-     std::string lastPath;
+    std::string lastPath;
 
-  /**
-   * Global error object struct.
-   */
+    /**
+     * Global error object struct.
+     */
     svn_error_t *Err;
 
-  /**
-   * Convert the path to the Subversion format.
-   */
+    /**
+     * Convert the path to the Subversion format.
+     */
     void internalPath (std::string & path);
 
-  /**
-   * Create a revision template.
-   */
+    /**
+     * Create a revision template.
+     */
     svn_opt_revision_t *getRevision (long revNumber);
 
-  /**
-   * Creates a target out of a string.
-   */
+    /**
+     * Creates a target out of a string.
+     */
     apr_array_header_t *target (const char *path);
 
   public:
-  /**
-   * Initializes the primary memory pool.
-   */
+    /**
+     * Initializes the primary memory pool.
+     */
      Client ();
 
     ~Client ();
 
 
-  /**
-   * Returns the last destination path submitted. The path 
-   * is returned in Subversion path format.
-   */
+    /**
+     * Returns the last destination path submitted. The path 
+     * is returned in Subversion path format.
+     */
     const char *getLastPath ();
 
-  /**
-   * enumerates all files/dirs at a given path
-   *
-   * @param path Path do explore
-   * @param descend recurse into subdirectories if existant
-   * @return hash map with Status entries
-   */
-     std::vector < Status * >status (const std::string & path,
-                                     const bool descend = FALSE);
+    /**
+     * Enumerates all files/dirs at a given path.
+     *
+     * @param path Path to explore.
+     * @param descend Recurse into subdirectories if existant.
+     * @return Hash map with Status entries.
+     */
+     std::vector < Status * >status (const char * path,
+                                     const bool descend = false);
+
+    /**
+     * Returns the status of a single file in the path.
+     *
+     * @param path File to gather status.
+     * @return NULL if the path is not versioned.
+     */
+     Status * singleStatus (const char * path);
   };
 
 }
