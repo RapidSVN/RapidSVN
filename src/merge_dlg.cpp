@@ -53,10 +53,10 @@ MergeDlg::TestRev (wxString & val)
   return 0;
 }
 
-MergeDlg::MergeDlg (wxWindow * parent, MergeData & data)
+MergeDlg::MergeDlg (wxWindow * parent, bool calledByLogDlg, MergeData & data)
            : wxDialog (parent, -1, _("Merge revisions"), wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             m_data(data)
+             m_data(data), m_calledByLogDlg (calledByLogDlg)
 {
   InitializeData ();
   CentreOnParent();
@@ -158,8 +158,10 @@ MergeDlg::InitializeData ()
   grid->Add(Path2Rev, 0, wxLEFT, 20);
 
   // Row 4:
-  grid->Add(new wxStaticText(this, -1, _("Destination path")), 0, 
-    0, 5);
+  if (m_calledByLogDlg)
+    grid->Add(new wxStaticText(this, -1, _("Destination file")), 0, 0, 5);
+  else
+    grid->Add(new wxStaticText(this, -1, _("Destination path")), 0, 0, 5);
   grid->Add(new wxStaticText(this, -1, ""), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
 
@@ -168,7 +170,17 @@ MergeDlg::InitializeData ()
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_data.Destination));
   grid->Add(Destination, 1, wxBOTTOM | wxEXPAND, 5);
-  
+
+  // If called by the log dialogue, the source path and revision is
+  // already given by the selected entries
+  if (m_calledByLogDlg)
+  {
+    Path1->Disable();
+    Path2->Disable();
+    Path1Rev->Disable();
+    Path2Rev->Disable();
+  }
+
   wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, "...", 
     wxPoint(-1,-1), wxSize(20, -1));
   grid->Add(BrowseButton, 0, wxALL, 5);

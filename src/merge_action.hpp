@@ -25,6 +25,15 @@ class MergeAction:public Action
 public:
   MergeAction (wxWindow * frame);
 
+  /**
+   * Constructor, that takes read configured @a MergeData
+   * so dialog will be displayed with given data
+   *
+   * @param parent parent window
+   * @param data merge data
+   */
+  MergeAction (wxWindow * frame, MergeData & data);
+
   virtual bool Prepare ();
   virtual bool Perform ();
 
@@ -38,6 +47,7 @@ public:
 
 private:
   MergeData m_data;
+  bool m_calledByLogDlg;
 };
 
 #endif

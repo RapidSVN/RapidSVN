@@ -80,6 +80,12 @@ private:
    */
   void OnDiff (wxCommandEvent & event);
   
+  /**
+   * Event handler for the "Merge" button
+   * @param event
+   */
+  void OnMerge (wxCommandEvent & event);
+
   DECLARE_EVENT_TABLE ()
 };
 

@@ -19,6 +19,7 @@
 // app
 #include "diff_data.hpp"
 #include "get_data.hpp"
+#include "merge_dlg.hpp"
 #include "ids.hpp"
 #include "log_dlg.hpp"
 #include "utils.hpp"
@@ -171,6 +172,7 @@ struct LogDlg::Data
   wxButton * m_buttonView;
   wxButton * m_buttonGet;
   wxButton * m_buttonDiff;
+  wxButton * m_buttonMerge;
 
 private:
 public:
@@ -199,14 +201,16 @@ public:
                                wxTE_READONLY | wxTE_MULTILINE );
 
     wxButton * buttonClose = new wxButton (wnd, wxID_OK, _("Close"));
-    m_buttonView = new wxButton (wnd, ID_View, _("View"));
-    m_buttonGet = new wxButton (wnd, ID_Get, _("Get"));
-    m_buttonDiff = new wxButton (wnd, ID_Diff, _("Diff"));
+    m_buttonView  = new wxButton (wnd, ID_View,  _("View"));
+    m_buttonGet   = new wxButton (wnd, ID_Get,   _("Get"));
+    m_buttonDiff  = new wxButton (wnd, ID_Diff,  _("Diff"));
+    m_buttonMerge = new wxButton (wnd, ID_Merge, _("Merge"));
 
     // View/Get/Diff disabled for Alpha 3 Milestone
-    m_buttonView->Enable (false);
-    m_buttonGet->Enable (false);
-    m_buttonDiff->Enable (false);
+    m_buttonView ->Enable (false);
+    m_buttonGet  ->Enable (false);
+    m_buttonDiff ->Enable (false);
+    m_buttonMerge->Enable (false);
 
     // position controls
 
@@ -215,10 +219,11 @@ public:
     logSizer->Add (m_logList, 1, wxLEFT);
 
     wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
-    buttonSizer->Add (buttonClose, 0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add (m_buttonView, 0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add (m_buttonGet, 0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add (m_buttonDiff, 0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (buttonClose,   0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (m_buttonView,  0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (m_buttonGet,   0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (m_buttonDiff,  0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (m_buttonMerge, 0, wxALL | wxEXPAND, 5);
 
     wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
     topSizer->Add (logSizer, 1, wxALL, 5);
@@ -322,22 +327,57 @@ public:
     wxPostEvent (parent, event);
   }
 
+  void
+  OnMerge ()
+  {
+    RevnumArray array (m_logList->GetSelectedRevisions ());
+
+    if (array.Count () != 2)
+    {
+      wxMessageBox (_("Invalid selection. Exactly two revisions needed for merge."),
+                    _("Error"), wxOK | wxICON_ERROR, parent);
+      return;
+    }
+
+    wxBusyCursor busy;
+
+    wxCommandEvent event (CreateActionEvent (TOKEN_MERGE));
+    MergeData * data = new MergeData ();
+    data->Path1 = path;
+    data->Path2 = path;
+    if (array[0] > array[1])
+    {
+      data->Path1Rev << array[1];
+      data->Path2Rev << array[0];
+    }
+    else
+    {
+      data->Path1Rev << array[0];
+      data->Path2Rev << array[1];
+    }
+
+    event.SetClientData (data);
+
+    wxPostEvent (parent, event);
+  }
 
   void 
   CheckButtons ()
   {
     int count = m_logList->GetSelectedItemCount ();
 
-    m_buttonGet->Enable (count == 1);
-    m_buttonView->Enable (count == 1);
-    m_buttonDiff->Enable (count == 2);
+    m_buttonGet  ->Enable (count == 1);
+    m_buttonView ->Enable (count == 1);
+    m_buttonDiff ->Enable (count == 2);
+    m_buttonMerge->Enable (count == 2);
   }
 };
 
 BEGIN_EVENT_TABLE (LogDlg, wxDialog)
-  EVT_BUTTON (ID_Get, LogDlg::OnGet)
-  EVT_BUTTON (ID_View, LogDlg::OnView)
-  EVT_BUTTON (ID_Diff, LogDlg::OnDiff)
+  EVT_BUTTON (ID_Get,   LogDlg::OnGet)
+  EVT_BUTTON (ID_View,  LogDlg::OnView)
+  EVT_BUTTON (ID_Diff,  LogDlg::OnDiff)
+  EVT_BUTTON (ID_Merge, LogDlg::OnMerge)
   EVT_LIST_ITEM_SELECTED (LOG_LIST, LogDlg::OnSelected)
 END_EVENT_TABLE ()
 
@@ -382,6 +422,11 @@ LogDlg::OnDiff (wxCommandEvent & event)
   m->OnDiff ();
 }
 
+void
+LogDlg::OnMerge (wxCommandEvent & event)
+{
+  m->OnMerge ();
+}
 
 /* -----------------------------------------------------------------
  * local variables:

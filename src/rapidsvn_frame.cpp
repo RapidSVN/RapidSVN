@@ -1336,6 +1336,22 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
     }
     break;
 
+  case TOKEN_MERGE:
+    {
+      MergeData * pData = static_cast<MergeData *>(event.GetClientData ());
+
+      if (pData != 0)
+      {
+        // copy and delete data
+        MergeData data (*pData);
+        delete pData;
+        Action * action;
+
+        action = new MergeAction (this, data);
+        Perform (action);
+      }
+    }
+    break;
   }
 }
 

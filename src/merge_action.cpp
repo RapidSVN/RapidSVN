@@ -13,6 +13,7 @@
 
 // wxwindows
 #include "wx/wx.h"
+#include "wx/filename.h"
 
 // svncpp
 #include "svncpp/client.hpp"
@@ -21,7 +22,14 @@
 #include "merge_action.hpp"
 
 MergeAction::MergeAction (wxWindow * parent)
-  : Action (parent, _("Merge"), GetBaseFlags ())
+  : Action (parent, _("Merge"), GetBaseFlags ()),
+    m_calledByLogDlg (false)
+{
+}
+
+MergeAction::MergeAction (wxWindow * parent, MergeData & data)
+  : Action (parent, _("Merge"), GetBaseFlags ()), m_data (data),
+    m_calledByLogDlg (true)
 {
 }
 
@@ -33,7 +41,14 @@ MergeAction::Prepare ()
     return false;
   }
 
-  MergeDlg dlg (GetParent (), m_data);
+  // Set default Destination to the selected path in the folder browser
+  // or, if called by the log dialogue, to the source path
+  if (m_calledByLogDlg)
+    m_data.Destination = m_data.Path1;
+  else
+    m_data.Destination = GetPath().c_str();
+
+  MergeDlg dlg (GetParent (), m_calledByLogDlg, m_data);
 
   if (dlg.ShowModal () != wxID_OK)
   { 
@@ -48,29 +63,35 @@ MergeAction::Perform ()
 {
   svn::Client client (GetContext ());
 
-  // Set current working directory to point to the path
-  // in the folder browser (the path where the merge will be 
-  // performed)
-  wxString path (GetPath ().c_str ());
-  if (!wxSetWorkingDirectory (path))
+  // Set current working directory to the path where the
+  // merge will be performed. If Destination is a file and not a
+  // directory, only the directory part should be used
+  wxFileName path (m_data.Destination);
+  if (!wxSetWorkingDirectory (path.GetPath (wxPATH_GET_VOLUME)))
   {
     wxString msg;
     msg.Printf(_("Could not set working directory to %s"),
-               path.c_str ());
+               path.GetPath (wxPATH_GET_VOLUME).c_str ());
     TraceError (msg);
     //PostStringEvent (TOKEN_VSVN_INTERNAL_ERROR, msg, ACTION_EVENT);
     return false;
   }
 
+  svn_revnum_t rev1 = 0;
+  svn_revnum_t rev2 = 0;
 
-  //TODO check this
-  long rev1 = 0;//MergeAction::getRevision (m_data.Path1Rev);
-  long rev2 = 0;//MergeAction::getRevision (m_data.Path2Rev);
+  if (!m_data.Path1Rev.ToLong (&rev1) || !m_data.Path2Rev.ToLong (&rev2))
+  {
+    wxString msg = _("Invalid revision number detected");
+    TraceError (msg);
+    return false;
+  }
+
   client.merge (m_data.Path1.c_str (), 
                 rev1, 
                 m_data.Path2.c_str (), 
                 rev2, 
-                path.c_str (), 
+                m_data.Destination.c_str (), 
                 m_data.Force, 
                 m_data.Recursive);
   return true;

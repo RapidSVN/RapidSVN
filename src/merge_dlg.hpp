@@ -32,7 +32,7 @@ struct MergeData
 class MergeDlg:public wxDialog
 {
 public:
-  MergeDlg (wxWindow *parent, MergeData & data);
+  MergeDlg (wxWindow *parent, bool calledByLogDlg, MergeData & data);
   void OnOK (wxCommandEvent& event);
   void OnBrowse (wxCommandEvent & event);
 
@@ -41,6 +41,7 @@ private:
   int TestRev (wxString & val);
   
   MergeData & m_data;
+  bool m_calledByLogDlg;
 
   DECLARE_EVENT_TABLE ()
 };
