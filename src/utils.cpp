@@ -37,6 +37,41 @@
 #include "res/bitmaps/add_wc_bookmark.xpm"
 #include "res/bitmaps/remove_bookmark.xpm"
 
+static wxMenuItem *
+CreateMenuItem (
+  wxMenu * parentMenu, int id, const wxString & text, 
+  const wxBitmap & bitmap) 
+{
+  wxMenuItem * item = new wxMenuItem (parentMenu, id, text);
+  item->SetBitmap (bitmap);
+  return item;
+}
+
+static wxMenuItem * 
+CreateMenuItem (
+  wxMenu * parentMenu, int id, const wxString & text) 
+{
+  return new wxMenuItem (parentMenu, id, text);
+}
+
+static wxMenuItem *
+AppendMenuItem (
+  wxMenu * parentMenu, int id, const wxString & text, 
+  const wxBitmap & bitmap) 
+{
+  wxMenuItem * item = CreateMenuItem (parentMenu, id, text, bitmap);
+  parentMenu->Append (item);
+  return item;
+}
+
+static wxMenuItem *
+AppendMenuItem (
+  wxMenu * parentMenu, int id, const wxString & text) 
+{
+  wxMenuItem * item = CreateMenuItem (parentMenu, id, text);
+  parentMenu->Append (item);
+  return item;
+}
 
 wxString & UnixPath (wxString & path)
 {
@@ -120,72 +155,45 @@ CreateEllipsisButton(wxWindow *parent, long id)
 void 
 AppendModifyMenu (wxMenu * parentMenu)
 {
-  wxMenuItem * item;
-  item = new wxMenuItem (parentMenu, ID_Update, _("&Update..."));
-  item->SetBitmap (wxBITMAP (update));
-  parentMenu->Append (item);
-
-  item = new wxMenuItem (parentMenu, ID_Commit, _("Co&mmit..."));
-  item->SetBitmap (wxBITMAP (commit));
-  parentMenu->Append (item);
+  AppendMenuItem (parentMenu, ID_Update, _("&Update..."),
+                  wxBITMAP (update));
+  AppendMenuItem (parentMenu, ID_Commit, _("Co&mmit..."),
+                  wxBITMAP (commit));
 
   parentMenu->AppendSeparator ();
 
-  item = new wxMenuItem (parentMenu, ID_Property, _("&Properties..."));
-  item->SetBitmap (wxBITMAP (info));
-  parentMenu->Append (item);
+  AppendMenuItem (parentMenu, ID_Property, _("&Properties..."),
+                  wxBITMAP (info));
 
   parentMenu->AppendSeparator ();
 
-  item = new wxMenuItem (parentMenu, ID_Add, _("&Add"));
-  item->SetBitmap (wxBITMAP (add));
-  parentMenu->Append (item);
-
-  item = new wxMenuItem (parentMenu, ID_Delete, _("&Delete"));
-  item->SetBitmap (wxBITMAP (delete));
-  parentMenu->Append (item);
+  AppendMenuItem (parentMenu, ID_Add, _("&Add"),
+                  wxBITMAP (add));
+  AppendMenuItem (parentMenu, ID_Delete, _("&Delete"),
+                  wxBITMAP (delete));
 
   parentMenu->AppendSeparator ();
 
-  item = new wxMenuItem (parentMenu, ID_Revert, _("&Revert"));
-  item->SetBitmap (wxBITMAP (revert));
-  parentMenu->Append (item);
+  AppendMenuItem (parentMenu, ID_Revert, _("&Revert"),
+                  wxBITMAP (revert));
+  AppendMenuItem (parentMenu, ID_Resolve, _("Re&solve conflicts"),
+                  wxBITMAP (resolve));
 
-  item = new wxMenuItem (parentMenu, ID_Resolve, _("Re&solve conflicts"));
-  item->SetBitmap (wxBITMAP (resolve));
-  parentMenu->Append (item);
-
-  // Copy and rename menu
   parentMenu->AppendSeparator ();
-
-  item = new wxMenuItem (parentMenu, ID_Copy, _("&Copy..."));
-  //item->SetBitmap (wxBITMAP (copy));
-  parentMenu->Append (item);
-
-  item = new wxMenuItem (parentMenu, ID_Move, _("M&ove..."));
-  //item->SetBitmap (wxBITMAP (rename));
-  parentMenu->Append (item);
-
-  item = new wxMenuItem (parentMenu, ID_Rename, _("Re&name..."));
-  parentMenu->Append (item);
-  //item->SetBitmap (wxBITMAP (rename));
-
-  item = new wxMenuItem (parentMenu, ID_Mkdir, _("Make directory..."));
   
-  parentMenu->Append (item);
+  AppendMenuItem (parentMenu, ID_Copy, _("&Copy..."));
+  AppendMenuItem (parentMenu, ID_Move, _("M&ove..."));
+  AppendMenuItem (parentMenu, ID_Rename, _("Re&name..."));
+  AppendMenuItem (parentMenu, ID_Mkdir, _("Make directory..."));
 }
 
 void 
 AppendQueryMenu (wxMenu * parentMenu)
 {
-  wxMenuItem * item;
-  item = new wxMenuItem (parentMenu, ID_Log, _("&Log"));
-  item->SetBitmap (wxBITMAP (log));
-  parentMenu->Append (item);
-
-  item = new wxMenuItem (parentMenu, ID_Info, _("&Info"));
-  item->SetBitmap (wxBITMAP (info));
-  parentMenu->Append (item);
+  AppendMenuItem (parentMenu, ID_Log, _("&Log"),
+                  wxBITMAP (log));
+  AppendMenuItem (parentMenu, ID_Info, _("&Info"),
+                  wxBITMAP (info));
 }
 
 void
@@ -230,7 +238,7 @@ CreateActionEvent (int token)
 wxMenuItem *
 AppendMenuItem (wxMenu & menu, int id)
 {
-  const char * caption;
+  const char * caption = "";
   wxBitmap bitmap;
 
   switch (id)
@@ -285,9 +293,7 @@ AppendMenuItem (wxMenu & menu, int id)
   case ID_Explore:
     caption = _("Explore...\tF2");
   }
-  wxMenuItem * item = new wxMenuItem (&menu, id, caption);
-  item->SetBitmap (bitmap);
-  menu.Append (item);
+  wxMenuItem * item = AppendMenuItem (&menu, id, caption, bitmap);
 
   return item;
 }
