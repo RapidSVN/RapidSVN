@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # ====================================================================
-# Copyright (c) 2002, 2003 The RapidSvn Group.  All rights reserved.
+# Copyright (c) 2002-2004 The RapidSvn Group.  All rights reserved.
 #
 # This software is licensed as described in the file LICENSE.txt,
 # which you should have received as part of this distribution.
@@ -39,6 +39,7 @@ CONFIGURE_IN_FILE = "../configure.in"
 VERSION_HPP_FILE = "../src/version.hpp"
 RAPIDSVN_ISS_FILE = "../packages/win32/rapidsvn.iss"
 DEBIAN_FILES_FILE = "../packages/debian/files"
+RAPIDSVN_RC_FILE = "../src/rapidsvn.rc"
 
 class Version:
     def __init__(self, filename):
@@ -108,6 +109,21 @@ class VersionChecker:
         replace(fname, "OutputBaseFilename=[^\n]*", \
                 "OutputBaseFilename=RapidSVN-%s" % (self.version.milestone),
                 "OutputBaseFilename")
+                
+    def checkRapidsvnRc(self):
+        fname = RAPIDSVN_RC_FILE
+        replace(fname, "#define VERSION_MAJOR.*", 
+                "#define VERSION_MAJOR %s" % (self.version.major),
+                "VERSION_MAJOR")
+        replace(fname, "#define VERSION_MINOR.*",
+                "#define VERSION_MINOR %s" % (self.version.minor),
+                "VERSION_MINOR")
+        replace(fname, "#define VERSION_MICRO.*",
+                "#define VERSION_MICRO %s" % (self.version.micro),
+                "VERSION_MICRO")
+        replace(fname, "#define VERSION_STRING.*",
+                "#define VERSION_STRING \"%s\\0\"" % (self.version.milestone),
+                "VERSION_STRING")
 
     def checkDebianFiles(self):
         fname = DEBIAN_FILES_FILE
@@ -126,6 +142,7 @@ class VersionChecker:
         self.checkVersionHpp()
         self.checkRapidsvnIss()
         self.checkDebianFiles()
+        self.checkRapidsvnRc()
 
 if __name__ == "__main__":
     vc = VersionChecker()

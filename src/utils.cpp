@@ -142,22 +142,22 @@ AppendModifyMenu (wxMenu * parentMenu)
   parentMenu->AppendSeparator ();
 
   AppendMenuItem (parentMenu, ID_Property, _("&Properties...\tCTRL-P"),
-                  wxBITMAP (info));
+                  wxBitmap (info_xpm));
 
   parentMenu->AppendSeparator ();
 
   AppendMenuItem (parentMenu, ID_Add, _("&Add\tCTRL-A"),
-                  wxBITMAP (add));
+                  wxBitmap (add_xpm));
   AppendMenuItem (parentMenu, ID_AddRecursive, _("Add r&ecursive"));
   AppendMenuItem (parentMenu, ID_Delete, _("&Delete\tDEL"),
-                  wxBITMAP (delete));
+                  wxBitmap (delete_xpm));
 
   parentMenu->AppendSeparator ();
 
   AppendMenuItem (parentMenu, ID_Revert, _("Re&vert\tCTRL-V"),
-                  wxBITMAP (revert));
+                  wxBitmap (revert_xpm));
   AppendMenuItem (parentMenu, ID_Resolve, _("Re&solve conflicts\tCTRL-S"),
-                  wxBITMAP (resolve));
+                  wxBitmap (resolve_xpm));
 
   parentMenu->AppendSeparator ();
   
@@ -171,10 +171,10 @@ void
 AppendQueryMenu (wxMenu * parentMenu)
 {
   AppendMenuItem (parentMenu, ID_Log, _("&Log...\tCTRL-L"),
-                  wxBITMAP (log));
+                  wxBitmap (log_xpm));
   AppendMenuItem (parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
   AppendMenuItem (parentMenu, ID_Info, _("&Info...\tCTRL-I"),
-                  wxBITMAP (info));
+                  wxBitmap (info_xpm));
 }
 
 void

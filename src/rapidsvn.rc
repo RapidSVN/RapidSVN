@@ -1,8 +1,66 @@
-#define MINIMAL_QUIT      1
-#define MINIMAL_ABOUT     102
+/*
+ * ====================================================================
+ * Copyright (c) 2002, 2003 The RapidSvn Group.  All rights reserved.
+ *
+ * This software is licensed as described in the file LICENSE.txt,
+ * which you should have received as part of this distribution.
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals.  For exact contribution history, see the revision
+ * history and logs, available at http://rapidsvn.tigris.org/.
+ * ====================================================================
+ */
 
-logo               ICON    "res/svn.ico"
+logo ICON    "res/svn.ico"
 
+#include "wx/msw/wx.rc"
+
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 5
+#define VERSION_MICRO 0
+
+#define VERSION_STRING "0.5.0\0"
+
+#ifndef _DEBUG
+#  define VERSION_FILEFLAGS 0x0L
+#else  /* _DEBUG */
+#  define VERSION_FILEFLAGS VS_FF_DEBUG
+#endif /* _DEBUG */
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION VERSION_MAJOR,VERSION_MINOR,VERSION_MICRO,0
+ PRODUCTVERSION VERSION_MAJOR,VERSION_MINOR,VERSION_MICRO
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS VERSION_FILEFLAGS
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "The RapidSvn Group\0"
+            VALUE "FileDescription", "RapidSvn\0"
+            VALUE "FileVersion", VERSION_STRING
+            VALUE "ProductVersion", VERSION_STRING
+            VALUE "InternalName", "RAPIDSVN\0"
+            VALUE "LegalCopyright", "(c) Copyright 2002-2004 The RapidSvn Group\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "rapidsvn.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "RapidSvn\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+/*
 refresh              BITMAP    "res/bitmaps/refresh.bmp"
 browse               BITMAP    "res/bitmaps/browse.bmp"
 add                  BITMAP    "res/bitmaps/add.bmp"
@@ -14,6 +72,5 @@ info                 BITMAP    "res/bitmaps/info.bmp"
 log                  BITMAP    "res/bitmaps/log.bmp"
 resolve              BITMAP    "res/bitmaps/resolve.bmp"
 folderup             BITMAP    "res/bitmaps/folderup.bmp"
-
-#include "wx/msw/wx.rc"
+*/
 

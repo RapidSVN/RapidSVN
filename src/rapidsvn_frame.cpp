@@ -650,7 +650,7 @@ RapidSvnFrame::RecreateToolbar ()
 
   // Set toolbar refresh button.
   toolBar->AddTool (ID_Refresh,
-                    wxBITMAP (refresh),
+                    wxBitmap (refresh_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
@@ -674,7 +674,7 @@ RapidSvnFrame::AddActionTools ()
   wxToolBarBase *toolBar = GetToolBar ();
 
   toolBar->AddTool (ID_Add,
-                    wxBITMAP (add),
+                    wxBitmap (add_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
@@ -684,7 +684,7 @@ RapidSvnFrame::AddActionTools ()
                     _("Put files and directories under revision control"));
 
   toolBar->AddTool (ID_Delete,
-                    wxBITMAP (delete),
+                    wxBitmap (delete_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
@@ -694,7 +694,7 @@ RapidSvnFrame::AddActionTools ()
                     _("Delete files and directories from version control"));
 
   toolBar->AddTool (ID_Update,
-                    wxBITMAP (update),
+                    wxBitmap (update_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
@@ -704,7 +704,7 @@ RapidSvnFrame::AddActionTools ()
                     _("Bring changes from the repository into the working copy"));
 
   toolBar->AddTool (ID_Commit,
-                    wxBITMAP (commit),
+                    wxBitmap (commit_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
@@ -714,7 +714,7 @@ RapidSvnFrame::AddActionTools ()
                     _("Send changes from your working copy to the repository"));
 
   toolBar->AddTool (ID_Revert,
-                    wxBITMAP (revert),
+                    wxBitmap (revert_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
@@ -724,7 +724,7 @@ RapidSvnFrame::AddActionTools ()
                     _("Restore pristine working copy file (undo all local edits)"));
 
   toolBar->AddTool (ID_Resolve,
-                    wxBITMAP (resolve),
+                    wxBitmap (resolve_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
@@ -742,7 +742,7 @@ RapidSvnFrame::AddInfoTools ()
   wxToolBarBase *toolBar = GetToolBar ();
 
   toolBar->AddTool (ID_Info,
-                    wxBITMAP (info),
+                    wxBitmap (info_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
@@ -752,7 +752,7 @@ RapidSvnFrame::AddInfoTools ()
                     _("Display info about selected entries"));
 
   toolBar->AddTool (ID_Log,
-                    wxBITMAP (log),
+                    wxBitmap (log_xpm),
                     wxNullBitmap,
                     FALSE,
                     -1,
