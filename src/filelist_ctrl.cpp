@@ -208,7 +208,7 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   SetColumnImages ();
 
   // Set the column widths stored in the config:
-  for (int col=0; col < COL_COUNT; col++)
+  for (col=0; col < COL_COUNT; col++)
   {
     wxString key;
     key.Printf (pSortColumnWidth, col);
@@ -689,6 +689,7 @@ FileListCtrl::DeleteAllItems ()
     if (p)
     {
       delete p;
+      SetItemData (i, 0);
     }
   }
   wxListCtrl::DeleteAllItems ();
