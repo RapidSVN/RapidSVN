@@ -28,8 +28,6 @@ void *svn_cl__make_log_msg_baton (const char *message,
 */
 void handle_svn_error (svn_error_t * err, Tracer * tracer);
 
-void statusString (const wxString & path, wxString & line);
-
 svn_error_t *svn_cl__may_need_force (svn_error_t * err);
 
 #endif
