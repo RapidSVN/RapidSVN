@@ -20,7 +20,7 @@
 #endif
 
 // Ignore MSVC 7 compiler warning: C++ exception specification
-#if defined (_MSC_VER) && _MSCVER > 1200 && _MSCVER <= 1310
+#if defined (_MSC_VER) && _MSC_VER > 1200 && _MSC_VER <= 1310
 #pragma warning (disable: 4290)
 #endif
 
