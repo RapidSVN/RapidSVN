@@ -1,0 +1,39 @@
+Version 0.4.0 (released December 5 2003)
+http://svn.collab.net/repos/rapidsvn/tags/0.4.0
+
+User-visible changes:
+* 93	ui	Renamed workspace to "Bookmarks"
+* 94	ui	Renamed menu "Create" to "Repository"
+* 96	ui	Created icons for bookmarks
+* 97	ui	Supported URL schemes are listed in the About box
+* 98	ui	Created "Bookmarks" menu
+* 100	ui	Beautified long bookmarks in Folder Browser
+* 114	ui	Modified folders dont dont have appropriate icons
+* 120	svncpp	Added support to enable/disable authentication caching
+* 122	docs	Updated info in README
+
+
+Developer-visible changes:
+* 91	config	Search for --with-<option> in several places
+* 92	src	Store version number in one single file
+* 109	svncpp	Improved compatibility with SWIG
+* 124	config	Added detection of neon to configure script
+* 125	svncpp	Added support for "relocate"
+  		Added support for multiple targets for "mkdir"
+* 136	svncpp	Patch to conform with subversion 0.34.0
+ 
+ 
+Bugfixes for the following errors:
+* 89	ui	Property editor "forgets" last entry in list.
+* 90	src	Committing fails if there is an umlaut in the log message
+* 101	packages	RapidSVN Installer doesnt install SSL libs
+* 102	svncpp	Items in subdirectories not handled properly in "flat" view mode
+* 104	src	Opening files with name containing spaces failes
+* 110	svncpp	client.hpp defined mkdir with no implementation
+* 121	config	Build system broken due to a libtool bug
+* 123	ui	No menu events with wxGTK 2.4.1
+* 133	svncpp	retrieveLogin crash on NULL username
+* 134	svncpp	Fix for svn_client_status crash
+* 116	svncpp	reposPropStatus() is not const
+* 118	svncpp	Client::cat does not check error
+ 
