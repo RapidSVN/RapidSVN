@@ -27,6 +27,7 @@ void SvnFileStatus::retrieveStatus( const wxString &path, AuthBaton& auth_baton 
 										0,
 										1,
 										0,
+										0,
 										subpool );
 
 	if( err != NULL )

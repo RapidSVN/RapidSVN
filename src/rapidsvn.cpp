@@ -285,7 +285,7 @@ void VSvnFrame::InitializeMenu()
 	pItem->SetBitmap( wxBITMAP(add) );
 	menuModif->Append( pItem );
 
-	pItem = new wxMenuItem( menuModif, ID_Del, _T("Remove from version control") );
+	pItem = new wxMenuItem( menuModif, ID_Del, _T("Remove") );
 	pItem->SetBitmap( wxBITMAP(delete) );
 	menuModif->Append( pItem );
 
@@ -422,6 +422,7 @@ void VSvnFrame::OnStatus(wxCommandEvent& WXUNUSED(event))
 											target->data, 
 											auth_baton,
 											1,
+											0,
 											0,
 											0,
 											pool );
