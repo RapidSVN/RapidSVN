@@ -65,14 +65,6 @@ namespace svn
      */
     bool isAuthenticated ();
   };
-
-  /**
-   * The auth info callback routine. This should be called if
-   * the user is unable to authenticate.
-   */
-  svn_error_t * prompt (char **info, const char *prompt, svn_boolean_t hide,
-                        void *baton, apr_pool_t *pool);
-
 }
 
 #endif

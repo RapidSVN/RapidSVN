@@ -25,66 +25,74 @@ struct prompt_user_baton
 namespace svn
 {
 
-Auth::Auth ()
-{
-  auth_obj = (svn_client_auth_baton_t *) 
-    apr_pcalloc (m_Xpool.pool(), sizeof (*auth_obj));
+  /**
+   * The auth info callback routine. This should be called if
+   * the user is unable to authenticate.
+   */
+  static svn_error_t * 
+  prompt (char **info, const char *prompt, svn_boolean_t hide,
+          void *baton, apr_pool_t *pool);
 
-  auth_obj->prompt_callback = prompt;
-  auth_obj->prompt_baton = NULL;
-  auth_obj->store_auth_info = true;
-  auth_obj->got_new_auth_info = true;
-}
+  Auth::Auth ()
+  {
+    auth_obj = (svn_client_auth_baton_t *) 
+      apr_pcalloc (m_Xpool.pool(), sizeof (*auth_obj));
 
-Auth::~Auth ()
-{
-  failed = false;
-}
+    auth_obj->prompt_callback = prompt;
+    auth_obj->prompt_baton = NULL;
+    auth_obj->store_auth_info = true;
+    auth_obj->got_new_auth_info = true;
+  }
 
-void
-Auth::username (const char *username)
-{
-  userName = username;
-}
+  Auth::~Auth ()
+  {
+    failed = false;
+  }
 
-void
-Auth::password (const char *password)
-{
-  passWord = password;
-}
+  void
+  Auth::username (const char *username)
+  {
+    userName = username;
+  }
 
-bool
-Auth::isAuthenticated ()
-{
-  return !failed;
-}
+  void
+  Auth::password (const char *password)
+  {
+    passWord = password;
+  }
 
-svn_client_auth_baton_t *
-Auth::authenticate ()
-{
-  auth_obj->username = userName.c_str ();
-  auth_obj->password = passWord.c_str ();
-  prompt_user_baton pub;
-  pub.failed = &failed;
-  auth_obj->prompt_baton = &pub;
+  bool
+  Auth::isAuthenticated ()
+  {
+    return !failed;
+  }
 
-  return auth_obj;
-}
+  svn_client_auth_baton_t *
+  Auth::authenticate ()
+  {
+    auth_obj->username = userName.c_str ();
+    auth_obj->password = passWord.c_str ();
+    prompt_user_baton pub;
+    pub.failed = &failed;
+    auth_obj->prompt_baton = &pub;
 
-svn_error_t *
-prompt (char **info, const char *prompt, svn_boolean_t hide,
-        void *baton, apr_pool_t *pool)
-{
-  prompt_user_baton *pub = (prompt_user_baton*) baton;
-  svn_stringbuf_t *strbuf = svn_stringbuf_create ("", pool);
+    return auth_obj;
+  }
 
-  *pub->failed = true;
+  static svn_error_t *
+  prompt (char **info, const char *prompt, svn_boolean_t hide,
+          void *baton, apr_pool_t *pool)
+  {
+    prompt_user_baton *pub = (prompt_user_baton*) baton;
+    svn_stringbuf_t *strbuf = svn_stringbuf_create ("", pool);
 
-  svn_utf_cstring_to_utf8 ((const char **)info, strbuf->data,
-                            NULL, pool);
+    *pub->failed = true;
 
-  return SVN_NO_ERROR;
-}
+    svn_utf_cstring_to_utf8 ((const char **)info, strbuf->data,
+                             NULL, pool);
+
+    return SVN_NO_ERROR;
+  }
 
 }
 
