@@ -19,11 +19,18 @@
 
 class RapidSvnApp:public wxApp
 {
+public:
+  void RegisterTempFile (const char* filename);
+  void PurgeTempFiles ();
+  
 protected:
   virtual bool OnInit ();
   virtual int OnExit ();
+  
 private:
   wxLocale m_locale;
+  
+  wxArrayString m_TempFiles;
 };
 
 DECLARE_APP (RapidSvnApp)

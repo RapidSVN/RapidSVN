@@ -58,6 +58,11 @@ public:
    */
   wxString diffTool;
 
+  /** 
+   * delete all temporary files made by the program upon exit
+   */
+  bool purgeTempFiles;
+
   /**
    * remember passwords for each bookmark (vs. the 
    * same passwords for all bookmarks)

@@ -19,6 +19,7 @@
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
 #include "version.hpp"
+#include "preferences.hpp"
 
 IMPLEMENT_APP (RapidSvnApp)
 
@@ -45,11 +46,46 @@ bool RapidSvnApp::OnInit ()
 int
 RapidSvnApp::OnExit ()
 {
+  PurgeTempFiles ();
+  
   // destroy application configuration object
   delete wxConfigBase::Set ((wxConfigBase *) NULL);
 
   return 0;
 }
+
+
+void
+RapidSvnApp::RegisterTempFile (const char* filename)
+{
+  Preferences prefs;
+  
+  if (prefs.purgeTempFiles)
+  {
+    wxString str (filename);
+    m_TempFiles.Add(str);
+  }
+  else
+  {
+    m_TempFiles.Clear ();
+  }
+}
+  
+void
+RapidSvnApp::PurgeTempFiles ()
+{
+  Preferences prefs;
+  
+  if (prefs.purgeTempFiles)
+  {
+    for (size_t i = 0; i < m_TempFiles.GetCount (); ++i)
+    {
+      ::wxRemoveFile (m_TempFiles.Item (i));
+    }
+  }
+  m_TempFiles.Clear ();
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -21,6 +21,7 @@
 // app
 #include "action.hpp"
 #include "tracer.hpp"
+#include "rapidsvn_app.hpp"
 
 // subversion api
 #include "svn_wc.h"
@@ -344,6 +345,10 @@ Action::GetPathAsTempFile (const svn::Path & path,
 
   svn::Path dstPath ("");
   client.get (dstPath, path, revision);
+  
+  // Remember this temporary file so we can delete it when the application exits
+  ::wxGetApp ().RegisterTempFile (dstPath.c_str ());
+  
   return dstPath;
 }
 

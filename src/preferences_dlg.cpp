@@ -229,6 +229,26 @@ private:
       sizerDiffTool->Add (sizer, 1, wxEXPAND);
     }
 
+
+    // Temporary Files
+    wxStaticBox * boxTempFiles =
+      new wxStaticBox (this, -1, _("Temporary Files:"));
+
+    wxStaticBoxSizer * sizerTempFiles =
+      new wxStaticBoxSizer (boxTempFiles, wxHORIZONTAL);
+    {
+      // check
+      wxGenericValidator valCheck (&m_prefs->purgeTempFiles);
+      wxCheckBox * check = 
+        new wxCheckBox (this, -1, _("Purge on program exit"), 
+                        wxDefaultPosition, 
+                        wxDefaultSize, 0, valCheck);
+
+
+      // position control
+      sizerTempFiles->Add (check, 0, wxALIGN_CENTER);
+    }
+
     // Position main elements
     wxBoxSizer *panelsizer = new wxBoxSizer (wxHORIZONTAL);
 
@@ -241,6 +261,8 @@ private:
     leftsizer->Add (sizerExplorer, 0, wxEXPAND);
     leftsizer->Add (5, 5);
     leftsizer->Add (sizerDiffTool, 0, wxEXPAND);
+    leftsizer->Add (5, 5);
+    leftsizer->Add (sizerTempFiles, 0, wxEXPAND);
 
     SetSizer (panelsizer);
     SetAutoLayout (true);
