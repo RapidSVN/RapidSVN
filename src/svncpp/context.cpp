@@ -96,6 +96,7 @@ namespace svn
     svn_auth_set_parameter (ab, SVN_AUTH_PARAM_DEFAULT_PASSWORD,
                             m_password.c_str ());
 
+    m_ctx.config = 0;
     m_ctx.auth_baton = ab;
     m_ctx.prompt_func = NULL;
     m_ctx.prompt_baton = NULL;
