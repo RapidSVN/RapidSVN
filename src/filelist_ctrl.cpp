@@ -198,20 +198,20 @@ Compare (svn_wc_status_kind status1, svn_wc_status_kind status2, bool newer1, bo
   
   static svn_wc_status_kind lookup[] = 
   {
-    svn_wc_status_deleted,
-    svn_wc_status_conflicted,
-    svn_wc_status_added,
-    FAKE_SVN_WC_OUT_OF_DATE,
-    svn_wc_status_missing,
-    svn_wc_status_replaced,
-    svn_wc_status_merged,
-    svn_wc_status_modified,
-    svn_wc_status_normal,
     svn_wc_status_external,
     svn_wc_status_ignored,
     svn_wc_status_incomplete,
     svn_wc_status_obstructed,
     svn_wc_status_unversioned,
+    svn_wc_status_deleted,
+    svn_wc_status_conflicted,
+    svn_wc_status_added,
+    svn_wc_status_missing,
+    svn_wc_status_replaced,
+    svn_wc_status_merged,
+    svn_wc_status_modified,
+    FAKE_SVN_WC_OUT_OF_DATE,
+    svn_wc_status_normal,
     svn_wc_status_none,
     (svn_wc_status_kind)0
   };
