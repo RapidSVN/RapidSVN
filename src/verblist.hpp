@@ -13,52 +13,57 @@
 #ifndef _VERBLIST_HPP_INCLUDED_
 #define _VERBLIST_HPP_INCLUDED_
 
-#include "wx/filename.h"
+#include "wx/string.h"
+
+/*
+#ifdef _WIN32
+#endif //_WIN32
+*/
 
 /**
- * IVerbList abstracts a list of editors/handlers for a given file, with the
+ * VerbList abstracts a list of editors/handlers for a given file, with the
  * default one listed first.
- *
- * First version by jorgenhs@netcom.no.
- *
- * NOTE: All exceptions thrown by the methods of this interface must be
- * portable
- *
- * Declared as struct (not class) to avoid "public:" label
  */
-struct IVerbList
+class VerbList
 {
+public:
+#ifdef _WIN32
+  /**
+   * Construct an empty verb list
+   */
+  VerbList();  
+  ~VerbList();  
+#endif //_WIN32
+
   /**
    * Assemble list of verbs based on the given document
    *
    * @throw std::exception on unexpected errors
    */
-  virtual void InitFromDocument (const wxString &document_path) = 0;
+  void InitFromDocument (const wxString &document_path);
 
   /**
    * @return Number of verbs in list
    */
-  virtual size_t GetCount() const = 0;
+  size_t GetCount() const;
 
   /**
    * @return Name of verb with the given index
    */
-  virtual const char *GetName(size_t index) const = 0;
+  const char *GetName(size_t index) const;
 
   /**
    * Launches the verb with the given index on the document on which the verb
    * list is based
    */
-  virtual void Launch(size_t index) const = 0;
-};
+  void Launch(size_t index) const;
 
-/**
- * Include implementation based on platform
- */
+// No data yet used for non-windows platforms
 #ifdef _WIN32
-#include "verblist_win32.hpp"
-#else
-#include "verblist_stubbed.hpp"
-#endif
+private:
+  struct Data;
+  Data *m;
+#endif //_WIN32
+};
 
 #endif // _VERBLIST_HPP_INCLUDED_
