@@ -16,35 +16,12 @@
 // wx
 #include "wx/string.h"
 
+// svncpp
+#include "svncpp/revision.hpp"
+
 struct DiffData
 {
 public:
-  struct Revision
-  {
-    bool useRevnum;
-    wxString revnum;
-    wxString date;
-    bool useUrl;
-    wxString url;
-
-    Revision ()
-    {
-      Init ();
-    }
-
-    
-    void
-    Init ()
-    {
-      useRevnum = true;
-      revnum = "";
-      date = "";
-      useUrl = false;
-      url = "";
-    }
-
-  };
-
 
   typedef enum
   {
@@ -54,12 +31,21 @@ public:
   } CompareType;
 
   CompareType compareType;
-  Revision revision1;
-  Revision revision2;
+
+  bool useUrl1;
+  wxString url1;
+
+  bool useUrl2;
+  wxString url2;
+
+  svn::Revision revision1;
+  svn::Revision revision2;
 
   /** Constructor */
   DiffData ()
-    : compareType (CMP_WC_WITH_SAME_REV)
+    : compareType (CMP_WC_WITH_SAME_REV),
+      useUrl1 (false), url1 (""),
+      useUrl2 (false), url2 ("")
   {
   }
 };
