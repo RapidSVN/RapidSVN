@@ -9,7 +9,6 @@ libsvncpp_la_SOURCES= \
 	context.cpp \
 	exception.cpp \
 	entry.cpp \
-	log.cpp \
 	notify.cpp \
 	path.cpp \
 	pool.cpp \
