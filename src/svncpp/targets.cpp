@@ -19,7 +19,6 @@
 
 // apr api
 #include "apr_pools.h"
-#include "apr_tables.h"
 #include "apr_strings.h"
 
 // svncpp

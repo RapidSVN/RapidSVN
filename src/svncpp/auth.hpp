@@ -18,7 +18,7 @@
 #include <string>
 
 // subversion api
-
+#include "svn_client.h"
 
 // svncpp
 #include "client.hpp"

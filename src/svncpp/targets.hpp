@@ -17,9 +17,8 @@
 // stl
 #include <vector>
 
-// forward declarations
-typedef struct apr_array_header_t;
-typedef struct apr_hash_t;
+// apr api
+#include "apr_tables.h"
 
 namespace svn
 {

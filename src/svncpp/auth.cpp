@@ -13,7 +13,6 @@
 
 // subversion api
 #include "svn_utf.h"
-#include "svn_client.h"
 
 // svncpp
 #include "auth.hpp"
