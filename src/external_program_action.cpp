@@ -73,7 +73,7 @@ ExternalProgramAction::Perform ()
     }
     else
     {
-      wxString argv = prefs.explorer + " " + target_document;
+      wxString argv = prefs.explorer + " \"" + target_document + "\"";
     
       wxExecute (argv);
     }
@@ -87,7 +87,7 @@ ExternalProgramAction::Perform ()
     }
     else
     {
-      wxString argv = prefs.editor + " " + target_document;
+      wxString argv = prefs.editor + " \"" + target_document + "\"";
       
       wxExecute (argv);
     }
