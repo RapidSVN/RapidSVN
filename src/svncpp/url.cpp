@@ -13,26 +13,18 @@
 
 // stl
 #include <string>
-#include <vector>
-
-// subversion api
-#include "svn_ra.h"
 
 // svncpp
-#include "pool.hpp"
 #include "url.hpp"
 
 namespace svn
 {
-  static const int SCHEMA_COUNT=5;
+  static const int SCHEME_COUNT=5;
   static const char * 
-  VALID_SCHEMAS [SCHEMA_COUNT] =
+  VALID_SCHEMES [SCHEME_COUNT] =
   {
     "http:", "https:", "svn:", "svn+ssh:", "file:"
   };
-
-  static bool mSchemasInitialized = false;
-  std::vector<std::string> mSchemas;
 
   Url::Url () {}
 
@@ -42,12 +34,12 @@ namespace svn
   Url::isValid (const char * url)
   {
     std::string urlTest (url);
-    for (int index=0; index < SCHEMA_COUNT; index++)
+    for (int index=0; index < SCHEME_COUNT; index++)
     {
-      std::string schema = VALID_SCHEMAS[index];
-      std::string urlComp = urlTest.substr (0, schema.length ());
+      std::string scheme = VALID_SCHEMES[index];
+      std::string urlComp = urlTest.substr (0, scheme.length ());
 
-      if (schema == urlComp)
+      if (scheme == urlComp)
       {
         return true;
       }
@@ -56,63 +48,6 @@ namespace svn
     return false;
   }
 
-  /**
-   * the implementation of the function that pull the supported
-   * url schemas out of the ra layer it rather dirty now since
-   * we are lacking a higher level of abstraction
-   */
-  std::vector<std::string>
-  Url::supportedSchemas ()
-  {
-    if (mSchemasInitialized)
-      return mSchemas;
-
-    mSchemasInitialized = true;
-    Pool pool;
-    void * ra_baton;
-
-    svn_error_t * error = 
-      svn_ra_init_ra_libs (&ra_baton, pool);
-    if (error)
-      return mSchemas;
-
-    svn_stringbuf_t *descr;
-    error = 
-      svn_ra_print_ra_libraries (&descr, ra_baton, pool);
-    if (error)
-      return mSchemas;
-
-    // schemas are in the following form:
-    // <schema>:<whitespace><description>\n...
-    // find the fírst :
-    std::string descriptions (descr->data);
-    size_t pos=0;
-    const size_t not_found = std::string::npos;
-    do
-    {
-      const std::string tokenStart ("handles '");
-      const std::string tokenEnd ("' schema");
-      pos = descriptions.find (tokenStart, pos);
-      if (pos == not_found)
-        break;
-
-      pos += tokenStart.length ();
-
-      size_t posEnd = descriptions.find (tokenEnd, pos);
-      if (posEnd == not_found)
-        break;
-
-      // found
-      std::string schema (descriptions.substr (pos, posEnd-pos) + ":");
-      mSchemas.push_back (schema);
-
-      // forward to the next newline
-      pos = posEnd + tokenEnd.length ();
-    }
-    while (pos != not_found);
-
-    return mSchemas;
-  }
 }
 
 /* -----------------------------------------------------------------

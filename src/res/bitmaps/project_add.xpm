@@ -1,5 +1,5 @@
 /* XPM */
-static char * add_wc_bookmark_xpm[] = {
+static char * project_add_xpm[] = {
 "16 16 8 1",
 " 	c None",
 ".	c #007F00",

@@ -10,58 +10,58 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _BOOKMARKS_H_
-#define _BOOKMARKS_H_
+#ifndef _WORKBENCH_H_
+#define _WORKBENCH_H_
 
 // forward declarations
-class Bookmark;
+class Project;
 namespace svn
 {
   class Context;
 };
 
-class Bookmarks
+class Workbench
 {
 public:
   /**
    * default constructor
    */
-  Bookmarks ();
+  Workbench ();
 
   /**
    * destructor
    */
-  virtual ~Bookmarks ();
+  virtual ~Workbench ();
 
   /**
-   * add a bookmark to the bookmarks. The list
-   * of bookmarks is unique. So if the bookmark
+   * add a project to the workbench. The list
+   * of projects is unique. So if the project
    * already exists nothing happens
    */
   void
-  AddBookmark (const char * name);
+  AddProject (const char * name);
 
   /**
-   * return the number of bookmarks in the
-   * bookmarks
+   * return the number of projects in the
+   * workbench
    *
-   * @return number of bookmarks
+   * @return number of projects
    */
   const size_t
   Count () const;
 
   /**
-   * return the bookmark at the @a index
+   * return the project at the @a index
    *
    * @param index 0 based index
-   * @return Bookmark name at this index
+   * @return Project name at this index
    */
   const char *
-  GetBookmark (const size_t index) const;
+  GetProject (const size_t index) const;
 
   /**
    * returns the authentication context
-   * of the bookmark at @a index.
+   * of the project at @a index.
    *
    * @param index 0-based index
    * @return authentication context
@@ -73,36 +73,36 @@ public:
    * returns the authentication context
    * for the given @a path
    *
-   * @param path to the bookmark
+   * @param path to the project
    * @return authentication context
    */
   svn::Context *
   GetContext (const char * path);
 
   /**
-   * remove all bookmarks
+   * remove all projects from the workbench
    */
   void
   Clear ();
 
   /**
-   * remove bookmark with given @a path
+   * remove project with given @a path
    *
-   * @param path bookmark path
+   * @param path project path
    * @retval true success
    */
   bool
-  RemoveBookmark (const char * path);
+  RemoveProject (const char * path);
 
   /**
    * setting whether the authenticaion will
-   * be remembered for each bookmark
+   * be remembered for each project
    */
   void
-  SetAuthPerBookmark (const bool value);
+  SetAuthPerProject (const bool value);
 
   const bool
-  GetAuthPerBookmark () const;
+  GetAuthPerProject () const;
 
 private:
   /**
@@ -114,13 +114,13 @@ private:
   /** 
    * disallow copy constructor
    */
-  Bookmarks (const Bookmarks &);
+  Workbench (const Workbench &);
 
   /**
    * disallow assignment operator
    */
-  const Bookmarks &
-  operator = (const Bookmarks &);
+  const Workbench &
+  operator = (const Workbench &);
 };
 
 #endif

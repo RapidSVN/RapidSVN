@@ -21,17 +21,17 @@
 #include "svncpp/url.hpp"
 
 // app
-#include "bookmarks.hpp"
+#include "workbench.hpp"
 
 
 WX_DEFINE_ARRAY (svn::Context *, ContextArray);
 
-struct Bookmarks::Data 
+struct Workbench::Data 
 {
 public:
   svn::Context * singleContext;
   ContextArray contexts;
-  wxArrayString bookmarks;
+  wxArrayString projects;
 
   /**
    * constructor
@@ -50,38 +50,38 @@ public:
   }
 
   /**
-   * remove all bookmarks.
+   * remove all projects from the workbench.
    * all of the memory is released as well
    */
   void Clear ()
   {
-    bookmarks.Clear ();
+    projects.Clear ();
 
     ClearContexts ();
   }
 
   /**
-   * add a new bookmark, but only if it doesnt
+   * add a new project, but only if it doesnt
    * exist yet. Add a new context as well.
    *
-   * @param name full path/url of the bookmark
+   * @param name full path/url of the project
    */
   void 
-  AddBookmark (const char * name)
+  AddProject (const char * name)
   {
-    if (bookmarks.Index (name) != wxNOT_FOUND)
+    if (projects.Index (name) != wxNOT_FOUND)
       return;
 
 
     // local path or repository url?
     if (svn::Url::isValid (name))
     {
-      bookmarks.Add (name);
+      projects.Add (name);
     }
     else
     {
       wxFileName filename (name);
-      bookmarks.Add (filename.GetFullPath (wxPATH_NATIVE));
+      projects.Add (filename.GetFullPath (wxPATH_NATIVE));
     }
 
     if (singleContext == 0)
@@ -89,14 +89,14 @@ public:
   }
 
   bool
-  RemoveBookmark (const char * path)
+  RemoveProject (const char * path)
   {
-    int index = bookmarks.Index (path);
+    int index = projects.Index (path);
 
     if (index == wxNOT_FOUND)
       return false;
 
-    bookmarks.RemoveAt (index);
+    projects.RemoveAt (index);
 
     svn::Context * context = contexts.Item (index);
     if (context != 0)
@@ -123,43 +123,43 @@ public:
   }
 };
 
-Bookmarks::Bookmarks ()
+Workbench::Workbench ()
 {
   m = new Data ();
 }
 
-Bookmarks::~Bookmarks ()
+Workbench::~Workbench ()
 {
   delete m;
 }
 
 void 
-Bookmarks::AddBookmark (const char * name)
+Workbench::AddProject (const char * name)
 {
-  m->AddBookmark (name);
+  m->AddProject (name);
 }
 
 const size_t
-Bookmarks::Count () const
+Workbench::Count () const
 {
-  return m->bookmarks.Count ();
+  return m->projects.Count ();
 }
 
 void
-Bookmarks::Clear ()
+Workbench::Clear ()
 {
   m->Clear ();
 }
 
 const char *
-Bookmarks::GetBookmark (const size_t index) const
+Workbench::GetProject (const size_t index) const
 {
-  wxString bookmark = m->bookmarks[index];
-  return bookmark.c_str ();
+  wxString project = m->projects[index];
+  return project.c_str ();
 }
 
 svn::Context *
-Bookmarks::GetContext (const size_t index)
+Workbench::GetContext (const size_t index)
 {
   if (m->singleContext != 0)
     return m->singleContext;
@@ -169,9 +169,9 @@ Bookmarks::GetContext (const size_t index)
 }
 
 svn::Context *
-Bookmarks::GetContext (const char * path)
+Workbench::GetContext (const char * path)
 {
-  int index = m->bookmarks.Index (path);
+  int index = m->projects.Index (path);
 
   if (index == wxNOT_FOUND)
     return 0;
@@ -180,21 +180,21 @@ Bookmarks::GetContext (const char * path)
 }
 
 bool  
-Bookmarks::RemoveBookmark (const char * path)
+Workbench::RemoveProject (const char * path)
 {
-  return m->RemoveBookmark (path);
+  return m->RemoveProject (path);
 }
 
 void
-Bookmarks::SetAuthPerBookmark (const bool perBookmark)
+Workbench::SetAuthPerProject (const bool perProject)
 {
-  bool oldPerBookmark = m->singleContext != 0;
+  bool oldPerProject = m->singleContext != 0;
 
   // has anything changed?
-  if (perBookmark == oldPerBookmark)
+  if (perProject == oldPerProject)
     return;
 
-  if (!perBookmark)
+  if (!perProject)
   {
     // one Context for all
     m->ClearContexts ();
@@ -202,8 +202,8 @@ Bookmarks::SetAuthPerBookmark (const bool perBookmark)
   }
   else
   {
-    // each bookmarks has its own Context
-    const size_t count = m->bookmarks.Count ();
+    // each projects has its own Context
+    const size_t count = m->projects.Count ();
 
     if (m->singleContext != 0)
     {
@@ -219,7 +219,7 @@ Bookmarks::SetAuthPerBookmark (const bool perBookmark)
 }
 
 const bool
-Bookmarks::GetAuthPerBookmark () const
+Workbench::GetAuthPerProject () const
 {
   return m->singleContext == 0;
 }

@@ -79,8 +79,8 @@ const static char ConfigWidth[] = "/MainFrame/Width";
 const static char ConfigHeight[] = "/MainFrame/Height";
 const static char ConfigSplitterHoriz[] = "/MainFrame/SplitterHoriz";
 const static char ConfigSplitterVert[] = "/MainFrame/SplitterVert";
-const static char ConfigBookmarkFmt[] = "/Bookmarks/Bookmark%d";
-const static char ConfigBookmarkCount[] = "/Bookmarks/Count";
+const static char ConfigProjectFmt[] = "/Workbench/Project%d";
+const static char ConfigProjectCount[] = "/Workbench/Count";
 
 const static char TraceMisc[] = "tracemisc";
 
@@ -172,7 +172,11 @@ public:
   {
     // File menu
     wxMenu *menuFile = new wxMenu;
-    //menuFile->AppendSeparator ();
+
+    AppendMenuItem (*menuFile, ID_AddProject);
+    AppendMenuItem (*menuFile, ID_AddRepository);
+    AppendMenuItem (*menuFile, ID_RemoveProject);
+    menuFile->AppendSeparator ();
     AppendMenuItem (*menuFile, ID_Quit);
 
     // Columns menu
@@ -204,15 +208,15 @@ public:
     
     AppendMenuItem (*menuView, ID_Preferences);
 
-    // Repository menu
-    wxMenu *menuRepos = new wxMenu;
-    menuRepos->Append (ID_Import, _("&Import..."));
-    menuRepos->Append (ID_Checkout, _("&Checkout..."));
+    // Create menu
+    wxMenu *menuCreate = new wxMenu;
+    menuCreate->Append (ID_Import, _("&Import..."));
+    menuCreate->Append (ID_Checkout, _("&Checkout..."));
 
-    menuRepos->AppendSeparator ();
+    menuCreate->AppendSeparator ();
 
-    menuRepos->Append (ID_Merge, _("Merge..."));
-    menuRepos->Append (ID_Switch, _("Switch..."));
+    menuCreate->Append (ID_Merge, _("Merge..."));
+    menuCreate->Append (ID_Switch, _("Switch..."));
 
     // Modify menu
     wxMenu *menuModif = new wxMenu;
@@ -221,10 +225,6 @@ public:
     // Query menu
     wxMenu *menuQuery = new wxMenu;
     AppendQueryMenu (menuQuery);
-
-    // Bookmarks menu
-    wxMenu *menuBookmarks = new wxMenu;
-    AppendBookmarksMenu (menuBookmarks);
 
     // Extras menu
     wxMenu *menuExtras = new wxMenu;
@@ -241,10 +241,9 @@ public:
     MenuBar = new wxMenuBar;
     MenuBar->Append (menuFile, _("&File"));
     MenuBar->Append (menuView, _("&View"));
-    MenuBar->Append (menuRepos, _("&Repository"));
+    MenuBar->Append (menuCreate, _("&Create"));
     MenuBar->Append (menuModif, _("&Modify"));
     MenuBar->Append (menuQuery, _("&Query"));
-    MenuBar->Append (menuBookmarks, _("&Bookmarks"));
     MenuBar->Append (menuExtras, _("&Extras"));
     MenuBar->Append (menuHelp, _("&Help"));
   }
@@ -277,9 +276,9 @@ public:
 
 BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_SIZE (RapidSvnFrame::OnSize)
-  EVT_MENU (ID_AddWcBookmark, RapidSvnFrame::OnAddWcBookmark)
-  EVT_MENU (ID_AddRepoBookmark, RapidSvnFrame::OnAddRepoBookmark)
-  EVT_MENU (ID_RemoveBookmark, RapidSvnFrame::OnRemoveBookmark)
+  EVT_MENU (ID_AddProject, RapidSvnFrame::OnAddProject)
+  EVT_MENU (ID_AddRepository, RapidSvnFrame::OnAddRepository)
+  EVT_MENU (ID_RemoveProject, RapidSvnFrame::OnRemoveProject)
   EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
   EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
   EVT_MENU (ID_Info, RapidSvnFrame::OnInfo)
@@ -376,7 +375,7 @@ END_EVENT_TABLE ()
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
   {
     Preferences prefs;
-    m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
+    m_folder_browser->SetAuthPerProject (prefs.authPerProject);
   }
 
   // Adapt the menu entries
@@ -452,18 +451,18 @@ RapidSvnFrame::~RapidSvnFrame ()
                   (long) m_horiz_splitter->GetSashPosition ());
 
 
-  // Save the bookmarks contents
+  // Save the workbench contents
   size_t item;
-  const size_t itemCount = m_folder_browser->GetBookmarkCount ();
-  pConfig->Write (ConfigBookmarkCount, (long)itemCount);
+  const size_t itemCount = m_folder_browser->GetProjectCount ();
+  pConfig->Write (ConfigProjectCount, (long)itemCount);
   for (item = 0; item < itemCount; item++)
   {
     wxString key;
-    key.Printf (ConfigBookmarkFmt, item);
+    key.Printf (ConfigProjectFmt, item);
 
-    const char * bookmark = m_folder_browser->GetBookmark (item);
+    const char * project = m_folder_browser->GetProject (item);
 
-    pConfig->Write (key, bookmark);
+    pConfig->Write (key, project);
   }
 
   delete m;
@@ -505,21 +504,21 @@ RapidSvnFrame::UpdateFileList ()
 }
 
 void
-RapidSvnFrame::OnAddWcBookmark (wxCommandEvent & event)
+RapidSvnFrame::OnAddProject (wxCommandEvent & event)
 {
-  AddWcBookmark ();
+  AddProject ();
 }
 
 void
-RapidSvnFrame::OnAddRepoBookmark (wxCommandEvent & event)
+RapidSvnFrame::OnAddRepository (wxCommandEvent & event)
 {
-  AddRepoBookmark ();
+  AddRepository ();
 }
 
 void
-RapidSvnFrame::OnRemoveBookmark (wxCommandEvent & event)
+RapidSvnFrame::OnRemoveProject (wxCommandEvent & event)
 {
-  RemoveBookmark ();
+  RemoveProject ();
 }
 
 void
@@ -733,7 +732,7 @@ RapidSvnFrame::OnToolEnter (wxCommandEvent & event)
 }
 
 void
-RapidSvnFrame::AddWcBookmark ()
+RapidSvnFrame::AddProject ()
 {
   wxDirDialog dialog (this, _("Select a directory"), wxGetHomeDir ());
   bool add = TRUE;
@@ -750,21 +749,21 @@ RapidSvnFrame::AddWcBookmark ()
   {
     add = FALSE;
     wxMessageBox (_("You cannot add a subversion "
-                    "administrative directory to the bookmarks!"),
+                    "administrative directory to the workbench!"),
                   _("Error"), wxOK);
     return;
   }
 
   // add
-  m_folder_browser->AddBookmark (dialog.GetPath ());
+  m_folder_browser->AddProject (dialog.GetPath ());
   UpdateFolderBrowser ();
 
-  wxLogStatus (_("Added working copy to bookmarks '%s'"),
+  wxLogStatus (_("Added project to workbench '%s'"),
                dialog.GetPath ().c_str ());
 }
 
 void
-RapidSvnFrame::AddRepoBookmark ()
+RapidSvnFrame::AddRepository ()
 {
   const int flags = 
     UpdateDlg::WITH_URL | 
@@ -779,22 +778,22 @@ RapidSvnFrame::AddRepoBookmark ()
 
   // add
   wxString url = dialog.GetData ().url;
-  m_folder_browser->AddBookmark (url);
+  m_folder_browser->AddProject (url);
   UpdateFolderBrowser ();
 
-  wxLogStatus (_("Added repository to bookmarks '%s'"),
+  wxLogStatus (_("Added repository to workbench '%s'"),
                url.c_str ());
 }
 
 
 
 void
-RapidSvnFrame::RemoveBookmark ()
+RapidSvnFrame::RemoveProject ()
 {
   wxASSERT (m_folder_browser);
-  if( m_folder_browser->RemoveBookmark() )
+  if( m_folder_browser->RemoveProject() )
   {
-    wxLogStatus (_("Removed bookmark"));
+    wxLogStatus (_("Removed project from workbench"));
   }
 }
 
@@ -806,16 +805,16 @@ RapidSvnFrame::InitFolderBrowser ()
   wxASSERT (m_folder_browser);
 
   wxString key;
-  wxString bookmark;
+  wxString project;
 
   int item, count;
-  pConfig->Read (ConfigBookmarkCount, &count, 0);
+  pConfig->Read (ConfigProjectCount, &count, 0);
   for (item = 0; item < count; item++)
   {
-    key.Printf (ConfigBookmarkFmt, item);
-    if (pConfig->Read (key, &bookmark, ""))
+    key.Printf (ConfigProjectFmt, item);
+    if (pConfig->Read (key, &project, ""))
     {
-      m_folder_browser->AddBookmark (bookmark);
+      m_folder_browser->AddProject (project);
     }
 
     else
@@ -999,13 +998,13 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   }
   break;
 
-  case TOKEN_ADD_BOOKMARK:
+  case TOKEN_ADD_PROJECT:
   {
-    const char * bookmark = event.GetString ().c_str ();
+    const char * project = event.GetString ().c_str ();
 
-    m_folder_browser->AddBookmark (bookmark);
+    m_folder_browser->AddProject (project);
     m_folder_browser->Refresh ();
-    m_folder_browser->SelectBookmark (bookmark);
+    m_folder_browser->SelectProject (project);
   }
   break;
 
@@ -1093,7 +1092,7 @@ RapidSvnFrame::ShowPreferences ()
 
   if (ok)
   {
-    m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
+    m_folder_browser->SetAuthPerProject (prefs.authPerProject);
   }
 }
 

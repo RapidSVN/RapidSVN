@@ -9,7 +9,6 @@ rapidsvn_SOURCES= \
 	action.cpp \
 	add_action.cpp \
 	auth_dlg.cpp \
-	bookmarks.cpp \
 	checkout_action.cpp \
 	checkout_dlg.cpp \
 	cleanup_action.cpp \
@@ -53,7 +52,8 @@ rapidsvn_SOURCES= \
 	update_dlg.cpp \
 	utils.cpp \
         verblist.cpp \
-	view_action.cpp 
+	view_action.cpp \
+	workbench.cpp
 
 rapidsvn_LDFLAGS=-Lsvncpp -L$(SVN_LIB)
 rapidsvn_LDADD= -lsvncpp \

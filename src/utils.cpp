@@ -34,8 +34,8 @@
 #include "res/bitmaps/resolve.xpm"
 #include "res/bitmaps/revert.xpm"
 #include "res/bitmaps/update.xpm"
-#include "res/bitmaps/add_wc_bookmark.xpm"
-#include "res/bitmaps/remove_bookmark.xpm"
+#include "res/bitmaps/project_add.xpm"
+#include "res/bitmaps/project_remove.xpm"
 
 
 wxString & UnixPath (wxString & path)
@@ -188,14 +188,6 @@ AppendQueryMenu (wxMenu * parentMenu)
   parentMenu->Append (item);
 }
 
-void
-AppendBookmarksMenu (wxMenu * parentMenu)
-{
-  AppendMenuItem (*parentMenu, ID_AddWcBookmark);
-  AppendMenuItem (*parentMenu, ID_AddRepoBookmark);
-  AppendMenuItem (*parentMenu, ID_RemoveBookmark);
-}
-
 bool
 CheckRevision (const char * revstring)
 {
@@ -235,18 +227,18 @@ AppendMenuItem (wxMenu & menu, int id)
 
   switch (id)
   {
-  case ID_AddWcBookmark:
-    caption = _("&Add Working Copy...");
-    bitmap = wxBitmap (add_wc_bookmark_xpm);
+  case ID_AddProject:
+    caption = _("&Add to Workbench...");
+    bitmap = wxBitmap (project_add_xpm);
     break;
 
-  case ID_AddRepoBookmark:
-    caption = _("Add &Repository...");
+  case ID_AddRepository:
+    caption = _("Add &Repository to Workbench...");
     break;
   
-  case ID_RemoveBookmark:
-    caption = _("&Remove Bookmark...");
-    bitmap = wxBitmap (remove_bookmark_xpm);
+  case ID_RemoveProject:
+    caption = _("&Remove from Workbench...");
+    bitmap = wxBitmap (project_remove_xpm);
     break;
 
   case ID_Login:

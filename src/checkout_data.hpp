@@ -22,7 +22,7 @@ struct CheckoutData
   {
     UseLatest = true;
     Recursive = true;
-    Bookmarks = true;
+    Workbench = true;
   }
 
   wxString RepUrl;
@@ -30,7 +30,7 @@ struct CheckoutData
   wxString Revision;
   bool Recursive;
   bool UseLatest;
-  bool Bookmarks;
+  bool Workbench;
 };
 
 #endif

@@ -1,5 +1,5 @@
 /* XPM */
-static char * remove_bookmark_xpm[] = {
+static char * project_remove_xpm[] = {
 "16 16 8 1",
 " 	c None",
 ".	c #808080",

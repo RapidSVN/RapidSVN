@@ -30,7 +30,7 @@
 #include "folder_item_data.hpp"
 #include "ids.hpp"
 #include "utils.hpp"
-#include "bookmarks.hpp"
+#include "workbench.hpp"
 
 // bitmaps
 #include "res/bitmaps/computer.xpm"
@@ -58,9 +58,9 @@ public:
   wxTreeItemId rootId;
   wxImageList* imageList;
   wxWindow * window;
-  Bookmarks bookmarks;
+  Workbench workbench;
   
-  static const unsigned int MAXLENGTH_BOOKMARK;
+  static const unsigned int MAXLENGTH_PROJECT;
 
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
     : window (window)
@@ -77,8 +77,8 @@ public:
                                wxTR_HAS_BUTTONS);
     treeCtrl->AssignImageList (imageList);
 
-    FolderItemData* data = new FolderItemData (FOLDER_TYPE_BOOKMARKS);
-    rootId = treeCtrl->AddRoot (_("Bookmarks"), FOLDER_IMAGE_COMPUTER, 
+    FolderItemData* data = new FolderItemData (FOLDER_TYPE_WORKBENCH);
+    rootId = treeCtrl->AddRoot (_("Workbench"), FOLDER_IMAGE_COMPUTER, 
                                     FOLDER_IMAGE_COMPUTER, data);
     treeCtrl->SetItemHasChildren (rootId, TRUE);
   }
@@ -142,8 +142,8 @@ public:
         }
         break;
 
-      case FOLDER_TYPE_BOOKMARK:
-        context = bookmarks.GetContext (data->getPath ());
+      case FOLDER_TYPE_PROJECT:
+        context = workbench.GetContext (data->getPath ());
         ok = context != 0;
 
         break;
@@ -172,12 +172,12 @@ public:
     wxMenu menu;
     int type =  data->getFolderType ();
 
-    AppendMenuItem (menu, ID_AddWcBookmark);
-    AppendMenuItem (menu, ID_AddRepoBookmark);
+    AppendMenuItem (menu, ID_AddProject);
+    AppendMenuItem (menu, ID_AddRepository);
 
-    if (type==FOLDER_TYPE_BOOKMARK)
+    if (type==FOLDER_TYPE_PROJECT)
     {
-      AppendMenuItem (menu, ID_RemoveBookmark);
+      AppendMenuItem (menu, ID_RemoveProject);
       menu.AppendSeparator ();
       AppendMenuItem (menu, ID_Login);
 
@@ -205,7 +205,7 @@ public:
       menu.Append (item);
     }
 
-    if ((type==FOLDER_TYPE_BOOKMARK)||(type==FOLDER_TYPE_NORMAL))
+    if ((type==FOLDER_TYPE_PROJECT)||(type==FOLDER_TYPE_NORMAL))
     {
       menu.AppendSeparator ();
       AppendMenuItem (menu, ID_Update);
@@ -286,25 +286,25 @@ public:
 
     switch(type)
     {
-      case FOLDER_TYPE_BOOKMARKS:
+      case FOLDER_TYPE_WORKBENCH:
       {
-        const int count = bookmarks.Count ();
+        const int count = workbench.Count ();
         int index;
 
         for(index = 0; index < count; index++)
         {
-          const wxString path (bookmarks.GetBookmark (index));
-          FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK, 
+          const wxString path (workbench.GetProject (index));
+          FolderItemData* data= new FolderItemData (FOLDER_TYPE_PROJECT, 
                                                     path, path, TRUE);
           wxString label;
     
-          if( path.length() < Data::MAXLENGTH_BOOKMARK )
+          if( path.length() < Data::MAXLENGTH_PROJECT )
           {
             label = path;
           }
           else
           {
-            label = "..." + path.Right(Data::MAXLENGTH_BOOKMARK );
+            label = "..." + path.Right(Data::MAXLENGTH_PROJECT );
           }
 
           wxTreeItemId newId = treeCtrl->AppendItem (parentId, label, 
@@ -318,7 +318,7 @@ public:
       }
       break;
 
-      case FOLDER_TYPE_BOOKMARK:
+      case FOLDER_TYPE_PROJECT:
       case FOLDER_TYPE_NORMAL:
       {
         const wxString& parentPath = parentData->getPath ();
@@ -508,7 +508,7 @@ public:
   }
 
   bool
-  SelectBookmark (const char *bookmarkPath)
+  SelectProject (const char *projectPath)
   {
     long cookie;
     wxTreeItemId id = treeCtrl->GetFirstChild (rootId, cookie);
@@ -524,10 +524,10 @@ public:
       if (data == 0)
         break;
 
-      // bookmark match?
-      if (data->getPath () == bookmarkPath)
+      // project match?
+      if (data->getPath () == projectPath)
       {
-        // select bookmark
+        // select project
         success = true;
         treeCtrl->SelectItem (id);
       }
@@ -542,7 +542,7 @@ public:
   }
 };
 
-const unsigned int FolderBrowser::Data::MAXLENGTH_BOOKMARK = 25;
+const unsigned int FolderBrowser::Data::MAXLENGTH_PROJECT = 25;
 
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
   EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
@@ -572,7 +572,7 @@ FolderBrowser::Refresh ()
 }
 
 const bool
-FolderBrowser::RemoveBookmark ()
+FolderBrowser::RemoveProject ()
 {
   bool success = FALSE;
 
@@ -582,11 +582,11 @@ FolderBrowser::RemoveBookmark ()
   {
     FolderItemData* data = (FolderItemData*) m->treeCtrl->GetItemData (id);
 
-    if( data->getFolderType() == FOLDER_TYPE_BOOKMARK )
+    if( data->getFolderType() == FOLDER_TYPE_PROJECT )
     {
       wxString path = data->getPath ();
       m->Delete (id);
-      m->bookmarks.RemoveBookmark (path.c_str ());
+      m->workbench.RemoveProject (path.c_str ());
       success = TRUE;
     }
   }
@@ -595,9 +595,9 @@ FolderBrowser::RemoveBookmark ()
 }
 
 void
-FolderBrowser::AddBookmark (const char * path)
+FolderBrowser::AddProject (const char * path)
 {
-  m->bookmarks.AddBookmark (path);
+  m->workbench.AddProject (path);
 }
 
 const
@@ -656,15 +656,15 @@ FolderBrowser::SelectFolder (const char * path)
 }
 
 const size_t
-FolderBrowser::GetBookmarkCount () const
+FolderBrowser::GetProjectCount () const
 {
-  return m->bookmarks.Count ();
+  return m->workbench.Count ();
 }
 
 const char *
-FolderBrowser::GetBookmark (const size_t index) const
+FolderBrowser::GetProject (const size_t index) const
 {
-  return m->bookmarks.GetBookmark (index);
+  return m->workbench.GetProject (index);
 }
 
 svn::Context * 
@@ -674,24 +674,24 @@ FolderBrowser::GetContext ()
 }
 
 void
-FolderBrowser::SetAuthPerBookmark (const bool value)
+FolderBrowser::SetAuthPerProject (const bool value)
 {
-  m->bookmarks.SetAuthPerBookmark (value);
+  m->workbench.SetAuthPerProject (value);
 }
 
 /**
- * @return auth per bookmark setting
+ * @return auth per project setting
  */
 const bool 
-FolderBrowser::GetAuthPerBookmark () const
+FolderBrowser::GetAuthPerProject () const
 {
-  return m->bookmarks.GetAuthPerBookmark ();
+  return m->workbench.GetAuthPerProject ();
 }
 
 bool
-FolderBrowser::SelectBookmark (const char * bookmarkPath)
+FolderBrowser::SelectProject (const char * projectPath)
 {
-  return m->SelectBookmark (bookmarkPath);
+  return m->SelectProject (projectPath);
 }
 
 

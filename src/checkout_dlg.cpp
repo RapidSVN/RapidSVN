@@ -70,10 +70,10 @@ public:
       new wxCheckBox (wnd, -1, _("Recursive"),
                       wxDefaultPosition, wxDefaultSize, 0, 
                       wxGenericValidator(&data.Recursive));
-    wxCheckBox* bookmarks = 
-      new wxCheckBox (wnd, -1, _("Add to bookmarks"),
+    wxCheckBox* workbench = 
+      new wxCheckBox (wnd, -1, _("Add to workbench"),
                       wxDefaultPosition, wxDefaultSize, 0,
-                      wxGenericValidator(&data.Bookmarks));
+                      wxGenericValidator(&data.Workbench));
 
     m_buttonOk = new wxButton( wnd, wxID_OK, _("OK" ));
     wxButton* cancel = new wxButton( wnd, wxID_CANCEL, _("Cancel"));
@@ -107,7 +107,7 @@ public:
 
     // Extras sizer
     wxBoxSizer *extrasSizer = new wxBoxSizer (wxHORIZONTAL);
-    extrasSizer->Add(bookmarks, 0, wxALL | wxCENTER, 5);
+    extrasSizer->Add(workbench, 0, wxALL | wxCENTER, 5);
     extrasSizer->Add(recursive, 0, wxALL | wxCENTER, 5);
 
     // Add all sizers to main sizer
