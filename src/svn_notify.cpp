@@ -112,7 +112,7 @@ SvnNotify::onNotify (const char *path,
           status = "Conflict";
         else if (content_state == svn_wc_notify_state_merged)
           status = "Merged";
-        else if (content_state == svn_wc_notify_state_modified)
+        else if (content_state == svn_wc_notify_state_changed)
           status = "Updated";
       }
 
@@ -120,7 +120,7 @@ SvnNotify::onNotify (const char *path,
         status = "Conflict found";
       else if (prop_state == svn_wc_notify_state_merged)
         status = "Merged";
-      else if (prop_state == svn_wc_notify_state_modified)
+      else if (prop_state == svn_wc_notify_state_changed)
         status = "Updated";
 
       if (!((kind == svn_node_dir)
