@@ -294,7 +294,7 @@ SvnCppTestCase::testExport ()
 
   try
   {
-    modify.export ("my_repos", "my_repos/export_dir", 2);
+    modify.doExport ("my_repos", "my_repos/export_dir", 2);
     status.loadPath ("my_repos/export_dir");
   }
   catch (svn::ClientException &e)

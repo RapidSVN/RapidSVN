@@ -208,7 +208,8 @@ Modify::resolve (const char * path, bool recurse)
 }
 
 void
-Modify::export (const char * srcPath, const char * destPath, long revision)
+Modify::doExport (const char * srcPath, const char * destPath, 
+                  long revision)
 {
   Err = svn_client_export (srcPath,
                            destPath,
@@ -223,8 +224,8 @@ Modify::export (const char * srcPath, const char * destPath, long revision)
 }
 
 void
-Modify::mirror (const char * path, const char * url, 
-               long revision, bool recurse)
+Modify::doSwitch (const char * path, const char * url, 
+                  long revision, bool recurse)
 {
   Err = svn_client_switch (authenticate (),
                            path,

@@ -155,15 +155,16 @@ public:
    * @exception ClientException
    * @param destPath a destination path that must not already exist.
    */
-  void export (const char * srcPath, const char * destPath, long revision);
+  void doExport (const char * srcPath, const char * destPath, 
+                 long revision);
 
   /**
-   * Update locate copy to mirror a new url. This excapsulates the 
+   * Update local copy to mirror a new url. This excapsulates the 
    * svn_client_switch() client method.
    * @exception ClientException
    */
-  void mirror (const char * path, const char * url, 
-               long revision, bool recurse);
+  void doSwitch (const char * path, const char * url, 
+                 long revision, bool recurse);
 
   /**
    * Import file or directory PATH into repository directory URL at
