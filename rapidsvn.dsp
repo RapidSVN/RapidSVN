@@ -282,11 +282,11 @@ SOURCE=.\src\utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\view_action.cpp
+SOURCE=.\src\win32\verblist.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\win32\verblist.cpp
+SOURCE=.\src\view_action.cpp
 # End Source File
 # Begin Source File
 
@@ -378,7 +378,7 @@ SOURCE=.\src\get_action.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\get_data.cpp
+SOURCE=.\src\get_data.hpp
 # End Source File
 # Begin Source File
 
@@ -523,6 +523,10 @@ SOURCE=.\src\verblist_win32.hpp
 # Begin Source File
 
 SOURCE=.\src\version.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\view_action.hpp
 # End Source File
 # Begin Source File
 
