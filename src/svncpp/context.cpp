@@ -40,9 +40,16 @@ namespace svn
     {
       // intialize authentication providers
       apr_array_header_t *providers = 
-        apr_array_make (pool, 1, 
+        apr_array_make (pool, 2, 
                         sizeof (svn_auth_provider_object_t *));
       svn_auth_provider_object_t *provider;
+
+      svn_client_get_simple_provider (
+        &provider,
+        pool);
+
+      *(svn_auth_provider_object_t **)apr_array_push (providers) =
+        provider;
 
       svn_client_get_simple_prompt_provider (
         &provider,
