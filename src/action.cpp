@@ -22,24 +22,23 @@
 static const char *
 ACTION_NAMES [] =
 {
-  _("Add......."),           // svn_wc_notify_add,
-  _("Copy......"),          // svn_wc_notify_copy,
-  _("Delete...."),        // svn_wc_notify_delete,
-  _("Restore..."),       // svn_wc_notify_restore,
-  _("Revert...."),        // svn_wc_notify_revert,
+  _("Add"),           // svn_wc_notify_add,
+  _("Copy"),          // svn_wc_notify_copy,
+  _("Delete"),        // svn_wc_notify_delete,
+  _("Restore"),       // svn_wc_notify_restore,
+  _("Revert"),        // svn_wc_notify_revert,
   NULL ,              // NOT USED HERE svn_wc_notify_failed_revert,
-  _("Resolve..."),       // svn_wc_notify_resolve,
-  NULL,               // NOT USED HERE svn_wc_notify_status,
-  _("Skip......"),          // NOT USED HERE svn_wc_notify_skip,
-  _("Deleted..."),       // svn_wc_notify_update_delete,
-  _("Added....."),         // svn_wc_notify_update_add,
-  _("Updated..."),       // svn_wc_notify_update_update,
+  _("Resolved"),      // svn_wc_notify_resolved,
+  _("Skip"),          // NOT USED HERE svn_wc_notify_skip,
+  _("Deleted"),       // svn_wc_notify_update_delete,
+  _("Added"),         // svn_wc_notify_update_add,
+  _("Updated"),       // svn_wc_notify_update_update,
   NULL,               // NOT USED HERE svn_wc_notify_update_completed,
   NULL,               // NOT USED HERE svn_wc_notify_update_external,
-  _("Modified.."),      // svn_wc_notify_commit_modified,
-  _("Added....."),         // svn_wc_notify_commit_added,
-  _("Deleted..."),       // svn_wc_notify_commit_deleted,
-  _("Replaced.."),      // svn_wc_notify_commit_replaced,
+  _("Modified"),      // svn_wc_notify_commit_modified,
+  _("Added"),         // svn_wc_notify_commit_added,
+  _("Deleted"),       // svn_wc_notify_commit_deleted,
+  _("Replaced"),      // svn_wc_notify_commit_replaced,
   NULL                // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
 };
 const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
