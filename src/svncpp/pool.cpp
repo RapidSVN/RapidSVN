@@ -6,35 +6,34 @@
  */
 namespace svn
 {
-    Pool::Pool()
-    {
-	m_pool = svn_pool_create(NULL);
-    }
+  Pool::Pool ()
+  {
+    m_pool = svn_pool_create (NULL);
+  }
 
-    Pool::Pool(apr_pool_t* parent)
-    {
-	m_pool = svn_pool_create(parent);
-    }
+  Pool::Pool (apr_pool_t * parent)
+  {
+    m_pool = svn_pool_create (parent);
+  }
 
-    Pool::Pool(Pool* pool)
+  Pool::Pool (Pool * pool)
+  {
+    if (pool != this)
     {
-	if( pool != this )
-	{
-	    m_pool = pool->pool();
-	}
+      m_pool = pool->pool ();
     }
+  }
 
-    Pool::~Pool()
+  Pool::~Pool ()
+  {
+    if (m_pool)
     {
-	if( m_pool )
-	{
-	    svn_pool_destroy(m_pool);
-	}
+      svn_pool_destroy (m_pool);
     }
+  }
 
-    apr_pool_t *
-    Pool::pool()
-    {
-	return m_pool;
-    }
+  apr_pool_t *Pool::pool ()
+  {
+    return m_pool;
+  }
 }

@@ -14,34 +14,34 @@ namespace svn
     /**
      * Class for encapsulation of apr/subversion pools
      */
-    class Pool
-	{
-	public:
-	    /**
+  class Pool
+  {
+  public:
+            /**
 	     * creates a new pool
 	     */
-	    Pool();
+    Pool ();
 
-	    /**
+            /**
 	     * creates a new pool to an existing pool
 	     */
-	    Pool(apr_pool_t * parent);
+    Pool (apr_pool_t * parent);
 
-	    /**
+            /**
 	     * copy constructor
 	     */
-	    Pool(Pool* pool);
+    Pool (Pool * pool);
 
-	    virtual ~Pool();
+    virtual ~ Pool ();
 
-	    /**
+            /**
 	     * returns the handle to the pool
 	     */
-	    apr_pool_t * pool();
-		
-	private:
-	    apr_pool_t * m_pool;
-	};
+    apr_pool_t *pool ();
+
+  private:
+     apr_pool_t * m_pool;
+  };
 }
-	    
+
 #endif
