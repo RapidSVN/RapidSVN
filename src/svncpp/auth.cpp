@@ -22,16 +22,17 @@ struct prompt_user_baton
   bool * failed;
 };
 
+/**
+ * The auth info callback routine. This should be called if
+ * the user is unable to authenticate.
+ */
+static svn_error_t * 
+prompt (char **info, const char *prompt, svn_boolean_t hide,
+        void *baton, apr_pool_t *pool);
+
 namespace svn
 {
 
-  /**
-   * The auth info callback routine. This should be called if
-   * the user is unable to authenticate.
-   */
-  static svn_error_t * 
-  prompt (char **info, const char *prompt, svn_boolean_t hide,
-          void *baton, apr_pool_t *pool);
 
   Auth::Auth ()
   {
@@ -79,21 +80,21 @@ namespace svn
     return auth_obj;
   }
 
-  static svn_error_t *
-  prompt (char **info, const char *prompt, svn_boolean_t hide,
-          void *baton, apr_pool_t *pool)
-  {
-    prompt_user_baton *pub = (prompt_user_baton*) baton;
-    svn_stringbuf_t *strbuf = svn_stringbuf_create ("", pool);
+}
 
-    *pub->failed = true;
+static svn_error_t *
+prompt (char **info, const char *prompt, svn_boolean_t hide,
+        void *baton, apr_pool_t *pool)
+{
+  prompt_user_baton *pub = (prompt_user_baton*) baton;
+  svn_stringbuf_t *strbuf = svn_stringbuf_create ("", pool);
 
-    svn_utf_cstring_to_utf8 ((const char **)info, strbuf->data,
-                             NULL, pool);
+  *pub->failed = true;
 
-    return SVN_NO_ERROR;
-  }
+  svn_utf_cstring_to_utf8 ((const char **)info, strbuf->data,
+                           NULL, pool);
 
+  return SVN_NO_ERROR;
 }
 
 /* -----------------------------------------------------------------
