@@ -50,10 +50,10 @@ case $wxversion in
     [2.3.[23]])
         ;;
     *)
-        AC_MSG_ERROR([wxWindows 2.3.2 required])
+        AC_MSG_ERROR([wxWindows 2.3.2 / 2.3.3 required])
         ;;
 esac
-CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags`"
+CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
 WX_LIBS="`$WXCONFIG --libs`"
 
 AC_SUBST(APR_LIBS)
