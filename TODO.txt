@@ -1,0 +1,3 @@
+RapidSVN TODO
+
+* Make svn folders look different than normal folders.
