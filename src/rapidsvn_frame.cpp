@@ -810,25 +810,29 @@ RapidSvnFrame::AddProject ()
   wxDirDialog dialog (this, "Select a directory", wxGetHomeDir ());
   bool add = TRUE;
 
-  if (dialog.ShowModal () == wxID_OK)
+  // select dir dialog
+  if (dialog.ShowModal () != wxID_OK)
   {
-    wxFileName fileName (dialog.GetPath ());
-    if ((fileName.GetName () + fileName.GetExt ()) == SVN_WC_ADM_DIR_NAME)
-    {
-      add = FALSE;
-      wxMessageBox (_T
-                    ("You cannot add a subversion administrative directory to the workbench!"),
-                    APPLICATION_NAME, wxOK);
-    }
+    return;
   }
-  if (add)
-  {
-    m_folder_browser->AddProject (dialog.GetPath ());
-    m_folder_browser->Refresh ();
 
-    wxLogStatus (_T ("Added project to workbench  '%s'"),
-                 dialog.GetPath ().c_str ());
+  // admin dir?
+  wxFileName fileName (dialog.GetPath ());
+  if ((fileName.GetName () + fileName.GetExt ()) == SVN_WC_ADM_DIR_NAME)
+  {
+    add = FALSE;
+    wxMessageBox (_T
+                  ("You cannot add a subversion administrative directory to the workbench!"),
+                  APPLICATION_NAME, wxOK);
+    return;
   }
+
+  // add
+  m_folder_browser->AddProject (dialog.GetPath ());
+  m_folder_browser->Refresh ();
+
+  wxLogStatus (_T ("Added project to workbench  '%s'"),
+               dialog.GetPath ().c_str ());
 }
 
 void
