@@ -22,6 +22,7 @@ Name: main; Description: Application files; Types: full compact custom; Flags: f
 Name: code; Description: Source Code; Types: full compact
 
 [Files]
+Source: "libdb40.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite
 Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite
 Source: "..\..\TODO.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite
 Source: "..\..\README.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite

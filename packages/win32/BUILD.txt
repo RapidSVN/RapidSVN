@@ -1,0 +1,11 @@
+BUILD INSTRUCTIONS
+
+* This installer was built with Inno Setup 3 which can be downloaded here:
+  http://www.jrsoftware.org/isinfo.php
+
+* To create the installer build the Release version of RapidSVN, 
+  open the rapidsvn.iss from the packages/win32 directory, then 
+  click Compile.
+
+* Note: The Release binary of the Berkeley DB must be located in the 
+  packages/win32 directory.

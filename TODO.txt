@@ -1,5 +1,10 @@
 RapidSVN TODO LIST
 
+TODO ITEM NOTES
+* All of the functions below only change data on the client side.  All changes 
+must be committed for them to take affect.  No functionalities are to be added 
+that directly change the respository on the server.
+
 File Explorer
 * Add to the preferences a default file explorer.
 * When clicking F2 or selecting Explore from a menu (like WinCVS) on a folder
@@ -29,7 +34,7 @@ Status and Info
 Icon and Logo
 * Create a logo for the project and make it into an ico and xpm.
 
-Revert
+Revert - completed
 * If there were changes to the file it will ask the user if they really 
 want to revert.  If so then it will delete the file then perform an update to
 restore the file with a pristine copy.
@@ -48,6 +53,9 @@ Preferences and Session Storage
 * Preferences and session need to be stored for each user in the system.  When 
 RapidSVN is closed the program should save exactly where the user was browsing 
 so that it can restore this session when it is run again.
+* This code can be borrowed from Subversion, which uses INI files.  Create 
+a .rapidsvn directory in the user's home directory and store session and 
+preferences information there.
 
 Rename
 * Add this to the Modify menu, not the pop-up.  
@@ -104,3 +112,24 @@ Developer Documentation
 have an easier time figuring out how to hack the project.  Even further down 
 the road create a cookbook that describes in greater detail how to add their 
 own functionality.
+
+Log Search
+* Add this to the Query menu.  This will bring up a window similar to that of 
+the Log TODO that will search all entries for a given log tree and bring 
+back revisions that fit the query.
+
+Property Editor
+* In the Query menu add a Edit Properties option that brings up all properties
+and allows a user to add, edit, and delete properties.  Upon clicking OK or 
+Apply the properties are all set to be commited later.  
+
+Cleanup
+* In the Modify menu add a Cleanup function that does the same thing as 
+'svn cleanup'.  Note: the word Cleanup is rather vague.  I would suggest 
+changing it to something easier to understand.
+
+Progress Meter
+* Add a progress meter added to the bottom right of the status bar.  This will
+move at least when a directory is being browsed.  This operation can take a 
+long time to complete, which may give the user the false sense that the 
+program is frozen.
