@@ -613,7 +613,8 @@ GetImageIndex (int textIndex, int propIndex)
   int image = 0;
   if ((textIndex >= 0) && (textIndex <= N_STATUS_KIND))
   {
-    if ( (textIndex == svn_wc_status_normal) && (propIndex != -1) )
+    if ( (textIndex == svn_wc_status_normal) && 
+         (propIndex > svn_wc_status_normal) )
     {
       if ( (propIndex >= 0) && (propIndex <= N_STATUS_KIND) )
       {
