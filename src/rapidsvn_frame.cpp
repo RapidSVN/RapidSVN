@@ -936,7 +936,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
     
   case TOKEN_VIEW:
   {
-    GetData * pData (static_cast<GetData *>(event.GetClientData ()));
+    GetData * pData = static_cast<GetData *>(event.GetClientData ());
     
     if (pData != 0)
     {
@@ -964,7 +964,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_GET:
   {
-    GetData * pData (static_cast<GetData *>(event.GetClientData ())); 
+    GetData * pData = static_cast<GetData *>(event.GetClientData ()); 
     
     if (pData != 0)
     {
