@@ -870,7 +870,7 @@ FileListCtrl::UpdateFileList ()
       break;
     default:
       values[COL_TEXT_STATUS] = 
-        svn::Status::statusDescription (status.textStatus ());
+        StatusDescription (status.textStatus ());
       break;
     }
     switch (status.propStatus ())
@@ -881,7 +881,7 @@ FileListCtrl::UpdateFileList ()
       break;
     default:
       values[COL_PROP_STATUS] = 
-        svn::Status::statusDescription (status.propStatus ());
+        StatusDescription (status.propStatus ());
       break;
     }
 

@@ -152,12 +152,6 @@ namespace svn
     }
 
     /**
-     * @return the textual description of the status.
-     */
-    static const char *
-    statusDescription (const svn_wc_status_kind kind);
-
-    /**
      * assignment operator
      */
     Status &

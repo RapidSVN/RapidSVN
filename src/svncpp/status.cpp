@@ -73,46 +73,6 @@ namespace svn
     }
   }
 
-  const char *
-  Status::statusDescription (const svn_wc_status_kind kind)
-  {
-    switch (kind)
-    {
-    case svn_wc_status_none:
-      return "none";
-      break;
-    case svn_wc_status_normal:
-      return "normal";
-      break;
-    case svn_wc_status_added:
-      return "added";
-      break;
-    case svn_wc_status_missing:
-      return "missing";
-      break;
-    case svn_wc_status_deleted:
-      return "deleted";
-      break;
-    case svn_wc_status_replaced:
-      return "replaced";
-      break;
-    case svn_wc_status_modified:
-      return "modified";
-      break;
-    case svn_wc_status_merged:
-      return "merged";
-      break;
-    case svn_wc_status_conflicted:
-      return "conflicted";
-      break;
-    case svn_wc_status_unversioned:
-    default:
-      return "unversioned";
-      break;
-    }
-
-  }
-
   Status &
   Status::operator=(const Status & status)
   {

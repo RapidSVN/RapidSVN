@@ -187,6 +187,17 @@ FormatDateTime (apr_time_t date, wxString fmt = "%x %X");
 wxString 
 BeautifyPath (const wxString & path);
 
+
+/**
+ * creates a textual description for a status value 
+ *
+ * @param kind
+ * @return brief textual description
+ */
+wxString
+StatusDescription (const svn_wc_status_kind kind);
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

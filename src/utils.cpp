@@ -388,6 +388,47 @@ BeautifyPath (const wxString & path)
 }
 
 
+wxString
+StatusDescription (const svn_wc_status_kind kind)
+{
+  switch (kind)
+  {
+  case svn_wc_status_none:
+    return _("none");
+    break;
+  case svn_wc_status_normal:
+    return _("normal");
+    break;
+  case svn_wc_status_added:
+    return _("added");
+    break;
+  case svn_wc_status_missing:
+    return _("missing");
+    break;
+  case svn_wc_status_deleted:
+    return _("deleted");
+    break;
+  case svn_wc_status_replaced:
+    return _("replaced");
+    break;
+  case svn_wc_status_modified:
+    return _("modified");
+    break;
+  case svn_wc_status_merged:
+    return _("merged");
+    break;
+  case svn_wc_status_conflicted:
+    return _("conflicted");
+    break;
+  case svn_wc_status_unversioned:
+  default:
+    return _("unversioned");
+    break;
+  }
+}
+
+
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
