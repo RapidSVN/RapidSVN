@@ -1,7 +1,7 @@
 #define MINIMAL_QUIT      1
 #define MINIMAL_ABOUT     102
 
-logo               ICON    "res/mondrian.ico"
+logo               ICON    "res/svn.ico"
 
 refresh              BITMAP    "res/bitmaps/refresh.bmp"
 browse               BITMAP    "res/bitmaps/browse.bmp"
