@@ -496,23 +496,46 @@ RapidSvnFrame::OnQuit (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
-  wxString msg;
+  wxString version;
+  version.Printf (_("%s Version %d.%d.%d"),
+                  APPLICATION_NAME,
+                  RAPIDSVN_VER_MAJOR, 
+                  RAPIDSVN_VER_MINOR, 
+                  RAPIDSVN_VER_MICRO);
 
-  msg.Printf (_("%s Version %d.%d.%d\n"
-                "Milestone: %s\n"
-                "\n%s\n\n"
-                "For more information see:\n"
-                "http://rapidsvn.tigris.org\n"
-                "\n"
-                "\nBuilt with:\n"
-                "Subversion %d.%d.%d\n"
-                "wxWindows %d.%d.%d"),
-              APPLICATION_NAME,
-              RAPIDSVN_VER_MAJOR, RAPIDSVN_VER_MINOR, RAPIDSVN_VER_MICRO,
-              RAPIDSVN_VER_MILESTONE,
+  wxString milestone;
+  milestone.Printf (_("Milestone: %s"), 
+                    RAPIDSVN_VER_MILESTONE);
+
+  wxString subversion;
+  subversion.Printf ("Subversion %d.%d.%d",
+                     SVN_VER_MAJOR, 
+                     SVN_VER_MINOR, 
+                     SVN_VER_MICRO);
+
+  wxString wx;
+  wx.Printf ("wxWindows %d.%d.%d",
+             wxMAJOR_VERSION, 
+             wxMINOR_VERSION, 
+             wxRELEASE_NUMBER);
+  
+  wxString msg;
+  msg.Printf ("%s\n"
+              "%s\n"
+              "\n%s\n\n"
+              "%s\n"
+              "http://rapidsvn.tigris.org\n"
+              "\n"
+              "\n%s\n"
+              "%s\n"
+              "%s",
+              version.c_str (),
+              milestone.c_str (),
               RAPIDSVN_COPYRIGHT,
-              SVN_VER_MAJOR, SVN_VER_MINOR, SVN_VER_MICRO,
-              wxMAJOR_VERSION, wxMINOR_VERSION, wxRELEASE_NUMBER);
+              _("For more information see:"),
+              _("Built with:"),
+              subversion.c_str (),
+              wx.c_str ());
 
   wxString title;
   title.Printf (_("About %s"), APPLICATION_NAME);
@@ -1054,7 +1077,7 @@ RapidSvnFrame::InvokeDefaultAction ()
   if (targets.size () != 1)
     return false;
 
-  wxFileName path = targets[0].c_str ();
+  wxFileName path (targets[0].c_str ());
   wxString fullPath = path.GetFullPath ();
   if (wxDirExists (fullPath))
     folder_count++;
