@@ -48,7 +48,7 @@
 #include "version.hpp"
 
 // Bitmaps
-#include "res/bitmaps/aalogo.xpm"
+#include "res/bitmaps/svn.xpm"
 #include "res/bitmaps/refresh.xpm"
 #include "res/bitmaps/update.xpm"
 #include "res/bitmaps/commit.xpm"
@@ -128,7 +128,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   // call to Get().
   wxConfigBase *pConfig = wxConfigBase::Get ();
 
-  SetIcon (wxIcon (aalogo_xpm));
+  SetIcon (wxIcon (svn_xpm));
 
   // Toolbar
   m_tbar = NULL;
