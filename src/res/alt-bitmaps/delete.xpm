@@ -1,0 +1,29 @@
+/* XPM */
+static char *delete_xpm[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 7 1",
+"  c red",
+". c #ceafae",
+"X c #cdb0af",
+"o c #c1bfbf",
+"O c #d1acab",
+"+ c #e29794",
+"@ c #c0c0c0",
+/* pixels */
+"@@@@@@@@@@@@@@@@",
+"XXXXX@@@@@@@@@@@",
+"+   XX@@@@XXX @@",
+"+    XX@@XX  X@@",
+"OO    XXXX  XX@@",
+"@OOO   ++  XX@@@",
+"@@@OO     XX@@@@",
+"@@@@O+   +X@@@@@",
+"@@@OO     XX@@@@",
+"@@OO   ++  XX@@@",
+"@OO   ....  X@@@",
+"OO   ..@@.. X@@@",
+"+    .@@@@.. @@@",
+"+   ..@@@@@@oXX@",
+"OO ..@@@@@@@. X@",
+"@O+.@@@@@@@@.+X@"
+};
