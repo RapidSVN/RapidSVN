@@ -20,9 +20,6 @@
 
 namespace svn
 {
-  static Context anonymous ;
-
-
   Client::Client (Context * context)
   {
     setContext (context);
@@ -41,14 +38,7 @@ namespace svn
   void
   Client::setContext (Context * context)
   {
-    if (context != 0)
-    {
-      m_context = context;
-    }
-    else
-    {
-      m_context = &anonymous;
-    }
+    m_context = context;
   }
 }
 /* -----------------------------------------------------------------
