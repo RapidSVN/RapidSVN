@@ -103,7 +103,7 @@ wxFrame ((wxFrame *) NULL, -1, title)
   // call to Get().
   wxConfigBase *pConfig = wxConfigBase::Get ();
 
-  SetIcon (wxICON (AaLogo));
+  SetIcon (wxICON (aalogo));
 
   // Toolbar
   m_tbar = NULL;
