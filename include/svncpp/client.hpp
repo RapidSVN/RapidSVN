@@ -142,8 +142,8 @@ namespace svn
      * @exception ClientException
      */
     void 
-    relocate (const char *from_url, const char *to_url,
-              const Path & path, bool recurse) throw (ClientException);
+    relocate (const Path & path, const char *from_url,
+              const char *to_url, bool recurse) throw (ClientException);
 
     /**
      * Sets a single file for deletion.
