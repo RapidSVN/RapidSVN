@@ -123,7 +123,7 @@ msgstr "Revision"
 
 #: checkout_dlg.cpp:106
 msgid "Use latest"
-msgstr "Neueste verwenden"
+msgstr "Aktuellste"
 
 #: checkout_dlg.cpp:109
 #: import_dlg.cpp:184
@@ -328,246 +328,246 @@ msgstr ""
 
 #: import_dlg.cpp:108
 msgid "Select a directory to import"
-msgstr ""
+msgstr "Wählen Sie ein Verzeichnis für den Import"
 
 #: import_dlg.cpp:117
 msgid "Select a file to import"
-msgstr ""
+msgstr "Wählen Sie eine Datei für den Import"
 
 #: import_dlg.cpp:136
 msgid "Repository URL"
-msgstr ""
+msgstr "Repository URL"
 
 #: import_dlg.cpp:146
 msgid "Path"
-msgstr ""
+msgstr "Pfad"
 
 #: import_dlg.cpp:157
 msgid "New entry"
-msgstr ""
+msgstr "Neuer Eintrag"
 
 #: import_dlg.cpp:188
 msgid "Path type:"
-msgstr ""
+msgstr "Pfad Typ:"
 
 #: import_dlg.cpp:192
 msgid "Tree"
-msgstr ""
+msgstr "Baum"
 
 #: import_dlg.cpp:196
 msgid "File"
-msgstr ""
+msgstr "Datei"
 
 #: log_action.cpp:26
 msgid "Log"
-msgstr ""
+msgstr "Log"
 
 #: log_dlg.cpp:96
 msgid "Log History"
-msgstr ""
+msgstr "Log Historie"
 
 #: log_dlg.cpp:113
 #, c-format
 msgid "History: %d revisions"
-msgstr ""
+msgstr "Historie: %d Revisionen"
 
 #: log_dlg.cpp:122
 msgid "Close"
-msgstr ""
+msgstr "Schliessen"
 
 #: log_dlg.cpp:123
 msgid "View"
-msgstr ""
+msgstr "Ansehen"
 
 #: log_dlg.cpp:124
 msgid "Get"
-msgstr ""
+msgstr "Holen"
 
 #: log_dlg.cpp:125
 msgid "Diff"
-msgstr ""
+msgstr "Vergleichen"
 
 #: log_dlg.cpp:146
 msgid "Log Message:"
-msgstr ""
+msgstr "Log Meldung:"
 
 #: log_dlg.cpp:175
 msgid "You must select exactly one revision."
-msgstr ""
+msgstr "Sie müssen genau eine Revision auswählen."
 
 #: merge_action.cpp:26
 #: merge_dlg.cpp:121
 msgid "Merge"
-msgstr ""
+msgstr "Zusammenführen"
 
 #: merge_action.cpp:62
 #, c-format
 msgid "Could not set working directory to %s"
-msgstr ""
+msgstr "Konnte das Arbeitsverzeichnis %s nicht setzen"
 
 #: merge_dlg.cpp:57
 msgid "Merge revisions"
-msgstr ""
+msgstr "Revisionen zusammenführen"
 
 #: merge_dlg.cpp:86
 msgid "First path or URL is required for merge!"
-msgstr ""
+msgstr "Erster Pfad oder URL wird benötigt für Zusammenführen"
 
 #: merge_dlg.cpp:102
 msgid "Second path or URL is required for merge!"
-msgstr ""
+msgstr "Zweiter Pfad oder URL wird benötigt für Zusammenführen"
 
 #: merge_dlg.cpp:127
 msgid "First working copy or URL"
-msgstr ""
+msgstr "Erste Arbeitskopie oder URL"
 
 #: merge_dlg.cpp:144
 msgid "Second working copy or URL"
-msgstr ""
+msgstr "Zweite Arbeitskopie oder URL"
 
 #: merge_dlg.cpp:161
 msgid "Destination path"
-msgstr ""
+msgstr "Zielverzeichnis"
 
 #: merge_dlg.cpp:183
 msgid "Force"
-msgstr ""
+msgstr "Erzwingen"
 
 #: merge_dlg.cpp:215
 msgid "Select a destination folder to merge to"
-msgstr ""
+msgstr "Wählen Sie ein Verzeichnis in das zusammengeführt werden soll"
 
 #: mkdir_action.cpp:27
 msgid "Mkdir"
-msgstr ""
+msgstr "Erzeuge Verzeichnis"
 
 #: mkdir_dlg.cpp:30
 msgid "Create a new directory under revision control"
-msgstr ""
+msgstr "Erzeuge neues Verzeichnis unter Versionkontrolle"
 
 #: mkdir_dlg.cpp:49
 msgid "New directory or repository URL"
-msgstr ""
+msgstr "Neues Verzeichnis oder Repository URL"
 
 #: preferences_dlg.cpp:29
 msgid "Executable Files|*.exe;*.com;*.bat|All files (*.*)|*.*"
-msgstr ""
+msgstr "Anwendungen|*.exe;*.com;*.bat|Alle Dateien (*.*)|*.*"
 
 #: preferences_dlg.cpp:57
 msgid "explorer.exe"
-msgstr ""
+msgstr "explorer.exe"
 
 #: preferences_dlg.cpp:127
 #: rapidsvn_frame.cpp:198
 msgid "Preferences"
-msgstr ""
+msgstr "Einstellungen"
 
 #: preferences_dlg.cpp:154
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: preferences_dlg.cpp:156
 msgid "Externals"
-msgstr ""
+msgstr "Extern"
 
 #: preferences_dlg.cpp:219
 msgid "Select standard editor executable"
-msgstr ""
+msgstr "Wählen Sie den Standard Editor"
 
 #: preferences_dlg.cpp:232
 msgid "Select standard file explorer executable"
-msgstr ""
+msgstr "Wählen Sie den Standard Explorer"
 
 #: preferences_dlg.cpp:255
 msgid "Standard editor:"
-msgstr ""
+msgstr "Standard Editor:"
 
 #: preferences_dlg.cpp:272
 #: preferences_dlg.cpp:297
 msgid "Use always"
-msgstr ""
+msgstr "Immer verwenden"
 
 #: preferences_dlg.cpp:280
 msgid "Standard file explorer:"
-msgstr ""
+msgstr "Standard Explorer:"
 
 #: preferences_dlg.cpp:368
 msgid "External settings go here."
-msgstr ""
+msgstr "Einstellungen für externe Anwendungen."
 
 #: property_action.cpp:25
 msgid "Property"
-msgstr ""
+msgstr "Eigenschaft"
 
 #: property_dlg.cpp:67
 #: property_dlg.cpp:158
 msgid "Value"
-msgstr ""
+msgstr "Wert"
 
 #: property_dlg.cpp:211
 msgid "New Property"
-msgstr ""
+msgstr "Neue Eigenschaft"
 
 #: property_dlg.cpp:214
 msgid "Edit Property"
-msgstr ""
+msgstr "Eigenschaft Bearbeiten"
 
 #: property_dlg.cpp:299
 msgid "Properties"
-msgstr ""
+msgstr "Eigenschaften"
 
 #: property_dlg.cpp:306
 msgid "&New..."
-msgstr ""
+msgstr "&Neu..."
 
 #: property_dlg.cpp:307
 msgid "&Edit..."
-msgstr ""
+msgstr "&Bearbeiten..."
 
 #: property_dlg.cpp:309
 #: utils.cpp:207
 msgid "&Delete"
-msgstr ""
+msgstr "&Löschen"
 
 #: property_dlg.cpp:385
 msgid "Error setting the property values"
-msgstr ""
+msgstr "Fehler beim Setzen der Werte für Eigenschaften"
 
 #: property_dlg.cpp:494
 msgid "Property Editor"
-msgstr ""
+msgstr "Eigenschaften Editor"
 
 #: rapidsvn_frame.cpp:124
 msgid "&Revision"
-msgstr ""
+msgstr "&Revision"
 
 #: rapidsvn_frame.cpp:125
 msgid "R&ep. Rev."
-msgstr ""
+msgstr "R&ep. Rev."
 
 #: rapidsvn_frame.cpp:126
 msgid "&Author"
-msgstr ""
+msgstr "&Autor"
 
 #: rapidsvn_frame.cpp:127
 msgid "&Status"
-msgstr ""
+msgstr "&Status"
 
 #: rapidsvn_frame.cpp:128
 msgid "&Prop Status"
-msgstr ""
+msgstr "Ei&genschaft Status"
 
 #: rapidsvn_frame.cpp:129
 msgid "&Last Changed"
-msgstr ""
+msgstr "&Zuletzt Geändert"
 
 #: rapidsvn_frame.cpp:130
 msgid "&Date"
-msgstr ""
+msgstr "&Datum"
 
 #: rapidsvn_frame.cpp:131
 msgid "Pr&op Date"
-msgstr ""
+msgstr "Eigenschaft Datum"
 
 #: rapidsvn_frame.cpp:169
 msgid "E&xit"
@@ -575,39 +575,39 @@ msgstr "&Beenden"
 
 #: rapidsvn_frame.cpp:188
 msgid "Refresh        F5"
-msgstr ""
+msgstr "Aktualisieren     F5"
 
 #: rapidsvn_frame.cpp:194
 msgid "Columns"
-msgstr ""
+msgstr "Spalten"
 
 #: rapidsvn_frame.cpp:203
 msgid "&Import an unversioned file or tree ..."
-msgstr ""
+msgstr "&Importieren..."
 
 #: rapidsvn_frame.cpp:204
 msgid "&Checkout working copy ..."
-msgstr ""
+msgstr "Arbeitskopie aus&checken..."
 
 #: rapidsvn_frame.cpp:208
 msgid "Make a new directory ..."
-msgstr ""
+msgstr "Neues Verzeichnis erstellen..."
 
 #: rapidsvn_frame.cpp:209
 msgid "C&opy remembering history ..."
-msgstr ""
+msgstr "&Kopieren..."
 
 #: rapidsvn_frame.cpp:213
 msgid "Merge differences"
-msgstr ""
+msgstr "&Zusammenführen"
 
 #: rapidsvn_frame.cpp:214
 msgid "Switch to URL ..."
-msgstr ""
+msgstr "Umstellen auf URL..."
 
 #: rapidsvn_frame.cpp:231
 msgid "&Contents"
-msgstr ""
+msgstr "&Inhalt"
 
 #: rapidsvn_frame.cpp:233
 msgid "&About..."
@@ -615,31 +615,31 @@ msgstr "&Über..."
 
 #: rapidsvn_frame.cpp:237
 msgid "&File"
-msgstr ""
+msgstr "&Datei"
 
 #: rapidsvn_frame.cpp:238
 msgid "&View"
-msgstr ""
+msgstr "&Ansicht"
 
 #: rapidsvn_frame.cpp:239
 msgid "&Create"
-msgstr ""
+msgstr "&Erzeugen"
 
 #: rapidsvn_frame.cpp:240
 msgid "&Modify"
-msgstr ""
+msgstr "&Bearbeiten"
 
 #: rapidsvn_frame.cpp:241
 msgid "&Query"
-msgstr ""
+msgstr "Ab&frage"
 
 #: rapidsvn_frame.cpp:242
 msgid "&Extras"
-msgstr ""
+msgstr "&Extras"
 
 #: rapidsvn_frame.cpp:243
 msgid "&Help"
-msgstr ""
+msgstr "&Hilfe"
 
 #: rapidsvn_frame.cpp:471
 msgid "Exception when updating filelist"
@@ -648,12 +648,12 @@ msgstr ""
 #: rapidsvn_frame.cpp:504
 #, c-format
 msgid "%s Version %d.%d.%d\n"
-msgstr ""
+msgstr "%s Version %d.%d.%d\n"
 
 #: rapidsvn_frame.cpp:505
 #, c-format
 msgid "Milestone: %s\n"
-msgstr ""
+msgstr "Meilenstein: %s\n"
 
 #: rapidsvn_frame.cpp:506
 #, c-format
@@ -661,11 +661,11 @@ msgid ""
 "\n"
 "%s\n"
 "\n"
-msgstr ""
+msgstr "\n%s\n\n"
 
 #: rapidsvn_frame.cpp:507
 msgid "For more information see:\n"
-msgstr ""
+msgstr "Für mehr Informationen siehe:\n"
 
 #: rapidsvn_frame.cpp:508
 msgid "http://rapidsvn.tigris.org\n"
@@ -673,13 +673,13 @@ msgstr ""
 
 #: rapidsvn_frame.cpp:509
 msgid "\n"
-msgstr ""
+msgstr "\n"
 
 #: rapidsvn_frame.cpp:510
 msgid ""
 "\n"
 "Built with:\n"
-msgstr ""
+msgstr "\nErzeugt mit:\n"
 
 #: rapidsvn_frame.cpp:511
 #, c-format
@@ -694,83 +694,83 @@ msgstr ""
 #: rapidsvn_frame.cpp:521
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Über %s"
 
 #: rapidsvn_frame.cpp:608
 msgid "Refresh"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: rapidsvn_frame.cpp:609
 msgid "Refresh the file list"
-msgstr ""
+msgstr "Dateiliste aktualisieren"
 
 #: rapidsvn_frame.cpp:632
 msgid "Add selected"
-msgstr ""
+msgstr "Ausgewählte hinzufügen"
 
 #: rapidsvn_frame.cpp:633
 msgid "Put files and directories under revision control"
-msgstr ""
+msgstr "Stelle Dateien und Verzeichnisse unter Versionskontrolle"
 
 #: rapidsvn_frame.cpp:642
 msgid "Delete selected"
-msgstr ""
+msgstr "Lösche ausgewählte"
 
 #: rapidsvn_frame.cpp:643
 msgid "Delete files and directories from version control"
-msgstr ""
+msgstr "Lösche Dateien und Verzeichnis aus Versionskontrolle"
 
 #: rapidsvn_frame.cpp:652
 msgid "Update selected"
-msgstr ""
+msgstr "Ausgewählte updaten"
 
 #: rapidsvn_frame.cpp:653
 msgid "Bring changes from the repository into the working copy"
-msgstr ""
+msgstr "Übertrage Änderungen aus dem Repository in die Arbeitskopie"
 
 #: rapidsvn_frame.cpp:662
 msgid "Commit selected"
-msgstr ""
+msgstr "Ausgewählte committen"
 
 #: rapidsvn_frame.cpp:663
 msgid "Send changes from your working copy to the repository"
-msgstr ""
+msgstr "Änderngen in der Arbeitskopie and Repository übertragen"
 
 #: rapidsvn_frame.cpp:672
 msgid "Revert selected"
-msgstr ""
+msgstr "Ausgewählte wiederherstellen"
 
 #: rapidsvn_frame.cpp:673
 msgid "Restore pristine working copy file (undo all local edits)"
-msgstr ""
+msgstr "Lokale Änderungen rückgängig machen"
 
 #: rapidsvn_frame.cpp:682
 msgid "Resolve selected"
-msgstr ""
+msgstr "Konflikte auflösen"
 
 #: rapidsvn_frame.cpp:683
 msgid "Remove 'conflicted' state on working copy files or directories)"
-msgstr ""
+msgstr "Entfernt den 'Konflikt' Status der ausgewählten Dateien oder Verzeichnisse"
 
 #: rapidsvn_frame.cpp:700
 msgid "Info selected"
-msgstr ""
+msgstr "Info über ausgewählte"
 
 #: rapidsvn_frame.cpp:701
 msgid "Display info about selected entries"
-msgstr ""
+msgstr "Zeige Informationen über die ausgewählten Einträge an"
 
 #: rapidsvn_frame.cpp:710
 msgid "Log selected"
-msgstr ""
+msgstr "Log für ausgewählte"
 
 #: rapidsvn_frame.cpp:711
 msgid "Show the log messages for a set entries"
-msgstr ""
+msgstr "Zeigt die Log Meldungen für ausgewählte Dateien oder Verzeichnisse an"
 
 #: rapidsvn_frame.cpp:724
 msgid "Select a directory"
-msgstr ""
+msgstr "Wähle ein Verzeichnis"
 
 #: rapidsvn_frame.cpp:738
 msgid "You cannot add a subversion "
@@ -783,60 +783,60 @@ msgstr ""
 #: rapidsvn_frame.cpp:748
 #, c-format
 msgid "Added project to workbench  '%s'"
-msgstr ""
+msgstr "Projekt '%s' zu Arbeitsbereich hinzugefügt"
 
 #: rapidsvn_frame.cpp:758
 msgid "Removed project from workbench"
-msgstr ""
+msgstr "Projekt aus Arbeitsbereich entfernt"
 
 #: rapidsvn_frame.cpp:929
 #: rapidsvn_frame.cpp:943
 msgid "Ready\n"
-msgstr ""
+msgstr "Bereit\n"
 
 #: rapidsvn_frame.cpp:982
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 #: rapidsvn_frame.cpp:986
 msgid "Info error"
-msgstr ""
+msgstr "Info Fehler"
 
 #: resolve_action.cpp:27
 msgid "Resolve"
-msgstr ""
+msgstr "Auflösen"
 
 #: revert_action.cpp:27
 #: revert_action.cpp:41
 msgid "Revert"
-msgstr ""
+msgstr "Rückgängig"
 
 #: revert_action.cpp:40
 msgid "Do you want to revert local changes?"
-msgstr ""
+msgstr "Wollen Sie die lokalen Änderungen rückgängig machen?"
 
 #: simple_worker.cpp:149
 #, c-format
 msgid "Error while preparing action: %s"
-msgstr ""
+msgstr "Fehler beim Vorbereiten der Aktion: %s"
 
 #: simple_worker.cpp:155
 msgid "Error while preparing action."
-msgstr ""
+msgstr "Fehler beim Vorbereiten der Aktion."
 
 #: simple_worker.cpp:161
 #, c-format
 msgid "Executing action: %s"
-msgstr ""
+msgstr "Aktion ausführen: %s"
 
 #: simple_worker.cpp:186
 #, c-format
 msgid "Error while performing action: %s"
-msgstr ""
+msgstr "Fehler beim Ausführen der Aktion: %s"
 
 #: simple_worker.cpp:194
 msgid "Error while performing action."
-msgstr ""
+msgstr "Fehler beim Ausführen der Aktion"
 
 #: svn_file_info.cpp:34
 #, c-format
@@ -845,7 +845,7 @@ msgstr ""
 
 #: svn_file_info.cpp:59
 msgid "(Not a versioned resource)\n"
-msgstr ""
+msgstr "(Keine versionierte Ressource)\n"
 
 #: svn_file_info.cpp:65
 #, c-format
@@ -943,11 +943,11 @@ msgstr ""
 
 #: trace_commit.cpp:272
 msgid "Transmitting file data ..."
-msgstr ""
+msgstr "Daten übertragen..."
 
 #: trace_commit.cpp:374
 msgid "Done!"
-msgstr ""
+msgstr "Fertig!"
 
 #: utils.cpp:53
 msgid "Non-svn"
@@ -959,35 +959,35 @@ msgstr ""
 
 #: utils.cpp:59
 msgid "Added"
-msgstr ""
+msgstr "Hinzugefügt"
 
 #: utils.cpp:62
 msgid "Absent"
-msgstr ""
+msgstr "Fehlt"
 
 #: utils.cpp:65
 msgid "Deleted"
-msgstr ""
+msgstr "Gelöscht"
 
 #: utils.cpp:68
 msgid "Replaced"
-msgstr ""
+msgstr "Ersetzt"
 
 #: utils.cpp:71
 msgid "Modified"
-msgstr ""
+msgstr "Geändert"
 
 #: utils.cpp:74
 msgid "Merged"
-msgstr ""
+msgstr "Zusammengeführt"
 
 #: utils.cpp:77
 msgid "Conflicted"
-msgstr ""
+msgstr "Konflikt"
 
 #: utils.cpp:81
 msgid "Unversioned"
-msgstr ""
+msgstr "Unversioniert"
 
 #: utils.cpp:121
 #, c-format
@@ -1001,45 +1001,45 @@ msgstr ""
 
 #: utils.cpp:187
 msgid "&Update"
-msgstr ""
+msgstr "&Update"
 
 #: utils.cpp:191
 msgid "Co&mmit"
-msgstr ""
+msgstr "Co&mmit"
 
 #: utils.cpp:197
 msgid "&Properties"
-msgstr ""
+msgstr "&Eigenschaften"
 
 #: utils.cpp:203
 msgid "&Add"
-msgstr ""
+msgstr "Hin&zufügen"
 
 #: utils.cpp:213
 msgid "&Revert"
-msgstr ""
+msgstr "&Rückgängig"
 
 #: utils.cpp:217
 msgid "Re&solve conflicts"
-msgstr ""
+msgstr "Konflikte Auf&lösen"
 
 #: utils.cpp:224
 msgid "&Copy"
-msgstr ""
+msgstr "&Kopieren"
 
 #: utils.cpp:228
 msgid "M&ove"
-msgstr ""
+msgstr "&Verschieben"
 
 #: utils.cpp:232
 msgid "Re&name"
-msgstr ""
+msgstr "&Umbenennen"
 
 #: utils.cpp:241
 msgid "&Log"
-msgstr ""
+msgstr "&Log"
 
 #: utils.cpp:245
 msgid "&Info"
-msgstr ""
+msgstr "&Info"
 
