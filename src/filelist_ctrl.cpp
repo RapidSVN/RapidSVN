@@ -78,11 +78,23 @@ int IMAGE_INDEX[N_STATUS_KIND];
  */
 static const char *pSortColumnTag = "/FileListCtrl/SortColumn";
 static const char *pSortOrderTag = "/FileListCtrl/SortOrder";
-static const char *pSortColumn0Width = "/FileListCtrl/Column0Width";
-static const char *pSortColumn1Width = "/FileListCtrl/Column1Width";
-static const char *pSortColumn2Width = "/FileListCtrl/Column2Width";
-static const char *pSortColumn3Width = "/FileListCtrl/Column3Width";
-static const char *pSortColumn4Width = "/FileListCtrl/Column4Width";
+static const char *pSortColumnWidth = "/FileListCtrl/Column%dWidth";
+
+/**
+ * Columns in the filelist
+ */
+enum
+{
+  COL_NAME = 0,
+  COL_REV,
+  COL_CMT_DATE,
+  COL_AUTHOR,
+  COL_TEXT_STATUS,
+  COL_PROP_STATUS,
+  COL_DATE,
+  COL_PROP_DATE,
+  COL_COUNT
+};
 
 /**
  * A safe wrapper for getting images - avoids array bounds
@@ -158,30 +170,63 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
 
   wxListItem itemCol;
   itemCol.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_IMAGE;
-  itemCol.m_text = wxT ("Name");
   itemCol.m_image = -1;
-  InsertColumn (0, itemCol);
 
-  itemCol.m_text = wxT ("Revision");
-  InsertColumn (1, itemCol);
-
-  itemCol.m_text = wxT ("Last Changed");
-  InsertColumn (2, itemCol);
-
-  itemCol.m_text = wxT ("Status");
-  InsertColumn (3, itemCol);
-
-  itemCol.m_text = wxT ("Prop Status");
-  InsertColumn (4, itemCol);
+  int col;
+  for (col = 0; col < COL_COUNT; col++)
+  {
+    switch (col)
+    {
+    case COL_NAME:
+      itemCol.m_text = wxT ("Name");
+      break;
+    case COL_REV:
+      itemCol.m_text = _T ("Revision");
+      break;
+    case COL_CMT_DATE:
+      itemCol.m_text = _T ("Last Changed");
+      break;
+    case COL_AUTHOR:
+      itemCol.m_text = _T ("Author");
+      break;
+    case COL_TEXT_STATUS:
+      itemCol.m_text = _T ("Status");
+      break;
+    case COL_PROP_STATUS:
+      itemCol.m_text = _T ("Prop Status");
+      break;
+    case COL_DATE:
+      itemCol.m_text = _T ("Date");
+      break;
+    case COL_PROP_DATE:
+      itemCol.m_text = _T ("Prop Date");
+      break;
+    }
+    InsertColumn (col, itemCol);
+  }
 
   SetColumnImages ();
 
   // Set the column widths stored in the config:
-  SetColumnWidth (0, pConfig->Read (pSortColumn0Width, (long) 150));
-  SetColumnWidth (1, pConfig->Read (pSortColumn1Width, (long) 75));
-  SetColumnWidth (2, pConfig->Read (pSortColumn2Width, (long) 100));
-  SetColumnWidth (3, pConfig->Read (pSortColumn3Width, (long) 75));
-  SetColumnWidth (4, pConfig->Read (pSortColumn4Width, (long) 75));
+  for (int col=0; col < COL_COUNT; col++)
+  {
+    wxString key;
+    key.Printf (pSortColumnWidth, col);
+    long width;
+    switch (col)
+    {
+    case COL_NAME:
+      width = 150;
+      break;
+    case COL_AUTHOR:
+      width = 100;
+      break;
+    default:
+      width = 75;
+      break;
+    }
+    SetColumnWidth (col, pConfig->Read (key, width));
+  }
 }
 
 FileListCtrl::~FileListCtrl ()
@@ -190,11 +235,12 @@ FileListCtrl::~FileListCtrl ()
   wxConfigBase *pConfig = wxConfigBase::Get ();
   pConfig->Write (pSortColumnTag, (long) SortColumn);
   pConfig->Write (pSortOrderTag, (long) (SortIncreasing ? 1 : 0));
-  pConfig->Write (pSortColumn0Width, (long) GetColumnWidth (0));
-  pConfig->Write (pSortColumn1Width, (long) GetColumnWidth (1));
-  pConfig->Write (pSortColumn2Width, (long) GetColumnWidth (2));
-  pConfig->Write (pSortColumn3Width, (long) GetColumnWidth (3));
-  pConfig->Write (pSortColumn4Width, (long) GetColumnWidth (4));
+  for (int col=0; col < COL_COUNT; col++)
+  {
+    wxString key;
+    key.Printf(pSortColumnWidth, col);
+    pConfig->Write (key, (long) GetColumnWidth (col));
+  }
 
   DeleteAllItems ();
   delete m_imageListSmall;
@@ -223,7 +269,7 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
 
   switch (SortColumn)
   {
-  case 0:                      // Name
+  case COL_NAME:                     
     // Directories always precede files:
     if (ps1->isDir () && !ps2->isDir ())
       rc = -1;
@@ -237,20 +283,20 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
     }
     break;
 
-  case 1:                      // Revision
-  case 2:                      // Last change
+  case COL_REV:     
+  case COL_CMT_DATE:
     ok1 = ok2 = true;
 
     switch (SortColumn)
     {
-    case 1:                    // Revision
+    case COL_REV:                  
       ok1 = ps1->isVersioned ();
       r1 = ps1->revision ();
       ok2 = ps2->isVersioned ();
       r2 = ps2->revision ();
       break;
 
-    case 2:                    // Last change
+    case COL_CMT_DATE:
       ok1 = ps1->isVersioned ();
       r1 = ps1->lastChanged ();
       ok2 = ps2->isVersioned ();
@@ -273,18 +319,21 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
     }
     break;
 
-  case 3:                      // Status
+  case COL_TEXT_STATUS:
     rc =
       wxString (ps1->textDescription ()).CmpNoCase (ps2->textDescription ());
     if (!SortIncreasing)
       rc = rc * -1;             // Reverse the sort order.
     break;
 
-  case 4:                      // Prop status
+  case COL_PROP_STATUS:
     rc =
       wxString (ps1->propDescription ()).CmpNoCase (ps2->propDescription ());
     if (!SortIncreasing)
       rc = rc * -1;             // Reverse the sort order.
+    break;
+  default:
+    //TODO implement all the missing columns
     break;
   }
 
@@ -390,28 +439,35 @@ FileListCtrl::UpdateFileList ()
     {
       text.Printf ("%ld", status.revision ());
     }
-    SetItem (i, 1, text);
+    SetItem (i, COL_REV, text);
+
+    ctext = status.lastCommitAuthor ();
+    if (!ctext)
+    {
+      ctext = "";
+    }
+    SetItem (i, COL_AUTHOR, ctext);
 
     text = "";
     if (status.isVersioned ())
     {
       text.Printf ("%ld", status.lastChanged ());
     }
-    SetItem (i, 2, text);
+    SetItem (i, COL_CMT_DATE, text);
 
     ctext = status.textDescription ();
     if (!ctext)
     {
       ctext = "";
     }
-    SetItem (i, 3, _T (ctext));
+    SetItem (i, COL_TEXT_STATUS, _T (ctext));
 
     ctext = status.propDescription ();
     if (!ctext)
     {
       ctext = "";
     }
-    SetItem (i, 4, _T (ctext));
+    SetItem (i, COL_PROP_STATUS, _T (ctext));
   }
 
   SortItems (wxListCompareFunction, (long) this);
