@@ -46,7 +46,7 @@
  * Set this option to "false" if you encounter this.
  * Default: true
  */
-static const bool UseBitmapMenus = true;
+static const bool UseBitmapMenus = false;
 
 static wxMenuItem *
 CreateMenuItem (
@@ -196,7 +196,7 @@ AppendModifyMenu (wxMenu * parentMenu)
   AppendMenuItem (parentMenu, ID_Copy, _("&Copy..."));
   AppendMenuItem (parentMenu, ID_Move, _("M&ove..."));
   AppendMenuItem (parentMenu, ID_Rename, _("Re&name..."));
-  AppendMenuItem (parentMenu, ID_Mkdir, _("Make directory..."));
+  AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory..."));
 }
 
 void 
