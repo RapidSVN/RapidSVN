@@ -11,44 +11,27 @@
  * ====================================================================
  */
 
-// svncpp
-#include "client.hpp"
+#ifndef _SVNCPP_URL_H_
+#define _SVNCPP_URL_H_
 
 namespace svn
 {
-  static Context anonymous ;
-
-
-  Client::Client (Context * context)
+  class Url
   {
-    setContext (context);
-  }
+  public:
+    Url ();
 
-  Client::~Client ()
-  {
-  }
+    virtual ~Url ();
 
-  const Context *
-  Client::getContext () const
-  {
-    return m_context;
-  }
-
-  void
-  Client::setContext (Context * context)
-  {
-    if (context != 0)
-    {
-      m_context = context;
-    }
-    else
-    {
-      m_context = &anonymous;
-    }
-  }
+    static bool
+    isValid (const char * url);
+  };
 }
+
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */
+

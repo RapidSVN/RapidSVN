@@ -33,11 +33,13 @@ private:
   wxCheckBox * m_checkUseLatest;
   wxTextCtrl * m_textUrl;
   wxButton * m_buttonOk;
+  const int m_flags;
 public:
   UpdateData data;
 
   Data (wxWindow * window, int flags, bool recursive)
-    : m_textRevision (0), m_checkUseLatest (0), m_textUrl (0)
+    : m_textRevision (0), m_checkUseLatest (0), m_textUrl (0),
+      m_buttonOk (0), m_flags (flags)
   {
     data.recursive = recursive;
 
@@ -46,7 +48,7 @@ public:
     wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
 
     // The URL fields:
-    if (flags & WITH_URL)
+    if (withUrl ())
     {
       wxStaticBox * box = new wxStaticBox (window, -1, _("URL"));
       wxStaticBoxSizer * sizer = 
@@ -60,6 +62,7 @@ public:
     }
 
     // The revision fields:
+    if (withRevision ())
     {
       wxStaticBox * box = new wxStaticBox (window, -1, _("Revision"));
       wxStaticBoxSizer *revSizer = 
@@ -82,7 +85,7 @@ public:
     }
 
     // The recursive checkbox
-    if ((flags & WITHOUT_RECURSIVE) == 0)
+    if (withRecursive ())
     {
       wxGenericValidator val (&data.recursive);
       wxCheckBox * checkRecursive = 
@@ -115,7 +118,8 @@ public:
   void 
   EnableControls()
   {
-    m_textRevision->Enable(!m_checkUseLatest->IsChecked());
+    if (withRevision ())
+      m_textRevision->Enable(!m_checkUseLatest->IsChecked());
   }
 
   void
@@ -123,12 +127,33 @@ public:
   {
     bool ok = true;
 
-    if (!m_checkUseLatest->IsChecked ())
+    if (withRevision ())
     {
-      ok = CheckRevision (m_textRevision->GetValue ());
+      if (!m_checkUseLatest->IsChecked ())
+      {
+        ok = CheckRevision (m_textRevision->GetValue ());
+      }
     }
 
     m_buttonOk->Enable (true);
+  }
+
+  bool 
+  withRevision ()
+  {
+    return (m_flags & WITHOUT_REVISION) == 0;
+  }
+
+  bool
+  withUrl ()
+  {
+    return (m_flags & WITH_URL) != 0;
+  }
+
+  bool
+  withRecursive ()
+  {
+    return (m_flags & WITHOUT_RECURSIVE) == 0;
   }
 
 };
@@ -140,6 +165,7 @@ END_EVENT_TABLE ()
 
 const int UpdateDlg::WITH_URL = 1;
 const int UpdateDlg::WITHOUT_RECURSIVE = 2;
+const int UpdateDlg::WITHOUT_REVISION = 4;
 
 UpdateDlg::UpdateDlg (wxWindow* parent, const char * title, int flags, 
                       bool recursive)

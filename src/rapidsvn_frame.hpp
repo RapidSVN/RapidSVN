@@ -76,6 +76,7 @@ private:
 
   // File menu
   void OnAddProject (wxCommandEvent & event);
+  void OnAddRepository (wxCommandEvent & event);
   void OnRemoveProject (wxCommandEvent & event);
   void OnQuit (wxCommandEvent & event);
 
@@ -116,6 +117,7 @@ private:
   // Folder Browser
   void InitFolderBrowser ();
   void AddProject ();
+  void AddRepository ();
   void RemoveProject ();
   void OnFolderBrowserSelChanged (wxTreeEvent & event);
   void OnFolderBrowserKeyDown (wxTreeEvent & event);

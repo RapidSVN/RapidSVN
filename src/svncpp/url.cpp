@@ -11,42 +11,45 @@
  * ====================================================================
  */
 
+// stl
+#include <string>
+
 // svncpp
-#include "client.hpp"
+#include "url.hpp"
 
 namespace svn
 {
-  static Context anonymous ;
-
-
-  Client::Client (Context * context)
+  static const int SCHEME_COUNT=5;
+  static const char * 
+  VALID_SCHEMES [SCHEME_COUNT] =
   {
-    setContext (context);
-  }
+    "http:", "https:", "svn:", "svn+ssh:", "file:"
+  };
 
-  Client::~Client ()
-  {
-  }
+  Url::Url () {}
 
-  const Context *
-  Client::getContext () const
-  {
-    return m_context;
-  }
+  Url::~Url () {}
 
-  void
-  Client::setContext (Context * context)
+  bool
+  Url::isValid (const char * url)
   {
-    if (context != 0)
+    std::string urlTest (url);
+    for (int index=0; index < SCHEME_COUNT-1; index++)
     {
-      m_context = context;
+      std::string scheme = VALID_SCHEMES[index];
+      std::string urlComp = urlTest.substr (0, scheme.length ());
+
+      if (scheme == urlComp)
+      {
+        return true;
+      }
     }
-    else
-    {
-      m_context = &anonymous;
-    }
+
+    return false;
   }
+
 }
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../../rapidsvn-dev.el")

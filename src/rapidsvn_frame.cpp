@@ -50,9 +50,11 @@
 #include "report_dlg.hpp"
 #include "preferences.hpp"
 #include "preferences_dlg.hpp"
+#include "update_dlg.hpp"
 
 #include "rapidsvn_frame.hpp"
 
+// controls
 #include "proportional_splitter.hpp"
 
 // Bitmaps
@@ -66,8 +68,6 @@
 #include "res/bitmaps/resolve.xpm"
 #include "res/bitmaps/log.xpm"
 #include "res/bitmaps/info.xpm"
-#include "res/bitmaps/project_add.xpm"
-#include "res/bitmaps/project_remove.xpm"
 
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
@@ -172,23 +172,16 @@ public:
   {
     // File menu
     wxMenu *menuFile = new wxMenu;
-    wxMenuItem *pItem;
 
-    pItem = new wxMenuItem (menuFile, ID_AddProject, 
-                            _("&Add to Workbench..."));
-    pItem->SetBitmap (wxBitmap (project_add_xpm));
-    menuFile->Append (pItem);
-    pItem = new wxMenuItem (menuFile, ID_RemoveProject, 
-                            _("&Remove from Workbench..."));
-    pItem->SetBitmap (wxBitmap (project_remove_xpm));
-    menuFile->Append (pItem);
+    AppendMenuItem (*menuFile, ID_AddProject);
+    AppendMenuItem (*menuFile, ID_AddRepository);
+    AppendMenuItem (*menuFile, ID_RemoveProject);
     menuFile->AppendSeparator ();
-    menuFile->Append (ID_Quit, _("E&xit"));
+    AppendMenuItem (*menuFile, ID_Quit);
 
     // Columns menu
     MenuColumns = new wxMenu;
-    MenuColumns->Append (ID_Column_Reset, _T("Reset Columns"));
-
+    AppendMenuItem (*MenuColumns, ID_Column_Reset);
     MenuColumns->AppendSeparator ();
 
     for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
@@ -202,14 +195,10 @@ public:
 
     // View menu
     wxMenu *menuView = new wxMenu;
-    pItem = new wxMenuItem (menuView, ID_Refresh, _("Refresh\tF5"));
-    pItem->SetBitmap (wxBITMAP (refresh));
-    menuView->Append (pItem);
-
+    AppendMenuItem (*menuView, ID_Refresh);
     menuView->AppendSeparator ();
 
-    menuView->AppendCheckItem (ID_Explore, _("Explore...\tF2"));
-
+    AppendMenuItem (*menuView, ID_Explore);
     menuView->AppendSeparator ();
 
     menuView->Append (0, _("Columns"), MenuColumns);
@@ -217,8 +206,7 @@ public:
 
     menuView->AppendSeparator ();
     
-    pItem = new wxMenuItem (menuView, ID_Preferences, _("Preferences..."));
-    menuView->Append (pItem);
+    AppendMenuItem (*menuView, ID_Preferences);
 
     // Create menu
     wxMenu *menuCreate = new wxMenu;
@@ -240,8 +228,7 @@ public:
 
     // Extras menu
     wxMenu *menuExtras = new wxMenu;
-    pItem = new wxMenuItem (menuExtras, ID_Cleanup, _("Cleanup"));
-    menuExtras->Append (pItem);
+    AppendMenuItem (*menuExtras, ID_Cleanup);
 
     // Help Menu
     wxMenu *menuHelp = new wxMenu;
@@ -290,6 +277,7 @@ public:
 BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_SIZE (RapidSvnFrame::OnSize)
   EVT_MENU (ID_AddProject, RapidSvnFrame::OnAddProject)
+  EVT_MENU (ID_AddRepository, RapidSvnFrame::OnAddRepository)
   EVT_MENU (ID_RemoveProject, RapidSvnFrame::OnRemoveProject)
   EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
   EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
@@ -493,15 +481,19 @@ RapidSvnFrame::UpdateFileList ()
         m_listCtrl->UpdateFileList (m_currentPath);
         m_listCtrl->Show (TRUE);
       }
-      catch (svn::Exception & e)
+      catch (svn::ClientException & e)
       {
-        Trace (e.message ());
+        wxString msg;
+        msg.Printf (_("Error while updating filelist (%s)"),
+                    e.message ());
+        Trace (msg);
+
         // probably unversioned resource
         m_listCtrl->Show (FALSE);
       }
       catch (...)
       {
-        Trace (_("Exception when updating filelist"));
+        Trace (_("Error while updating filelist"));
       }
     }
     else
@@ -515,6 +507,12 @@ void
 RapidSvnFrame::OnAddProject (wxCommandEvent & event)
 {
   AddProject ();
+}
+
+void
+RapidSvnFrame::OnAddRepository (wxCommandEvent & event)
+{
+  AddRepository ();
 }
 
 void
@@ -760,9 +758,34 @@ RapidSvnFrame::AddProject ()
   m_folder_browser->AddProject (dialog.GetPath ());
   UpdateFolderBrowser ();
 
-  wxLogStatus (_("Added project to workbench  '%s'"),
+  wxLogStatus (_("Added project to workbench '%s'"),
                dialog.GetPath ().c_str ());
 }
+
+void
+RapidSvnFrame::AddRepository ()
+{
+  const int flags = 
+    UpdateDlg::WITH_URL | 
+    UpdateDlg::WITHOUT_RECURSIVE | 
+    UpdateDlg::WITHOUT_REVISION;
+  UpdateDlg dialog (this, _("Repository URL"), flags);
+
+  if (dialog.ShowModal () != wxID_OK)
+  {
+    return;
+  }
+
+  // add
+  wxString url = dialog.GetData ().url;
+  m_folder_browser->AddProject (url);
+  UpdateFolderBrowser ();
+
+  wxLogStatus (_("Added repository to workbench '%s'"),
+               url.c_str ());
+}
+
+
 
 void
 RapidSvnFrame::RemoveProject ()

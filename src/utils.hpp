@@ -60,7 +60,7 @@ PostMenuEvent (wxEvtHandler *source, long id);
  * Create a correctly sized button with an ellipsis (three dots)
  */
 wxButton *
-CreateEllipsisButton(wxWindow *parent, long id);
+CreateEllipsisButton (wxWindow *parent, long id);
 
 /**
  * Append entries for the "Modify" menu
@@ -95,6 +95,16 @@ CheckRevision (const char * revstring);
  */
 wxCommandEvent 
 CreateActionEvent (int token);
+
+/**
+ * Creates a menu item for @a id (with whistles and bells, uh,
+ * bitmaps)
+ *
+ * @param menu menu where the new item will be appended
+ * @param id menu item to create
+ */
+wxMenuItem *
+AppendMenuItem (wxMenu & menu, int id);
 
 #endif
 /* -----------------------------------------------------------------

@@ -28,6 +28,9 @@ public:
   /** show dialog with URL line */
   static const int WITH_URL;
 
+  /** show dialog without revision information */
+  static const int WITHOUT_REVISION;
+
   /**
    * constructor
    *

@@ -26,6 +26,7 @@
 #include "folder_browser.hpp"
 #include "folder_item_data.hpp"
 #include "ids.hpp"
+#include "utils.hpp"
 #include "workbench.hpp"
 
 // bitmaps
@@ -34,11 +35,7 @@
 #include "res/bitmaps/open_folder.xpm"
 #include "res/bitmaps/folder.xpm"
 #include "res/bitmaps/nonsvn_open_folder.xpm"
-#include "res/bitmaps/update.xpm"
-#include "res/bitmaps/commit.xpm"
 #include "res/bitmaps/earth.xpm"
-#include "res/bitmaps/project_add.xpm"
-#include "res/bitmaps/project_remove.xpm"
 
 enum
 {
@@ -170,58 +167,46 @@ public:
 
     // create menu
     wxMenu menu;
-    wxMenuItem *item;
     int type =  data->getFolderType ();
 
-    item = new wxMenuItem (&menu, ID_AddProject, _("&Add to Workbench..."));
-    item->SetBitmap (wxBitmap (project_add_xpm));
-    menu.Append (item);
+    AppendMenuItem (menu, ID_AddProject);
+    AppendMenuItem (menu, ID_AddRepository);
 
     if (type==FOLDER_TYPE_PROJECT)
     {
-      item = new wxMenuItem (&menu, ID_RemoveProject, _("&Remove from Workbench..."));
-      item->SetBitmap (wxBitmap (project_remove_xpm));
-      menu.Append (item);
-
+      AppendMenuItem (menu, ID_RemoveProject);
       menu.AppendSeparator ();
-      item = new wxMenuItem (&menu, ID_Login, _("Login..."));
-      menu.Append (item);
+      AppendMenuItem (menu, ID_Login);
 
+      wxString label;
+      wxString username;
+      bool enabled = false;
+
+      if (context != 0)
       {
-        wxString label;
-        wxString username;
-        bool enabled = false;
-
-        if (context != 0)
-        {
-          username = context->getUsername ();
-        }
-
-        if (username.length () == 0)
-        {
-          label = _("Logout");
-        }
-        else
-        {
-          enabled = true;
-          label.Printf (_("Logout '%s'"), username.c_str ());
-        }
-
-        item = new wxMenuItem (&menu, ID_Logout, label);
-        item->Enable (enabled);
+        username = context->getUsername ();
       }
+
+      if (username.length () == 0)
+      {
+        label = _("Logout");
+      }
+      else
+      {
+        enabled = true;
+        label.Printf (_("Logout '%s'"), username.c_str ());
+      }
+
+      wxMenuItem * item = new wxMenuItem (&menu, ID_Logout, label);
+      item->Enable (enabled);
       menu.Append (item);
     }
 
     if ((type==FOLDER_TYPE_PROJECT)||(type==FOLDER_TYPE_NORMAL))
     {
       menu.AppendSeparator ();
-      item = new wxMenuItem (&menu, ID_Update, _("Update..."));
-      item->SetBitmap (wxBITMAP (update));
-      menu.Append (item);
-      item = new wxMenuItem (&menu, ID_Commit, _("Commit..."));
-      item->SetBitmap (wxBITMAP (commit));
-      menu.Append (item);
+      AppendMenuItem (menu, ID_Update);
+      AppendMenuItem (menu, ID_Commit);
     }
     // show menu
     window->PopupMenu (&menu, pt);
@@ -561,7 +546,6 @@ void
 FolderBrowser::AddProject (const char * path)
 {
   m->workbench.AddProject (path);
-  //TODO Refresh();
 }
 
 const

@@ -18,12 +18,12 @@
 
 // svncpp
 #include "client.hpp"
+#include "dirent.hpp"
 #include "exception.hpp"
 #include "pool.hpp"
 #include "status.hpp"
 #include "targets.hpp"
-
-#define DEFAULT_ARRAY_SIZE 5
+#include "url.hpp"
 
 namespace svn
 {
@@ -43,12 +43,13 @@ namespace svn
     return NULL;
   }
 
-  StatusEntries 
-  Client::status (const char * path,
-                  const bool descend,
-                  const bool get_all,
-                  const bool update,
-                  const bool no_ignore)
+  static StatusEntries
+  localStatus (const char * path,
+               const bool descend,
+               const bool get_all,
+               const bool update,
+               const bool no_ignore,
+               Context * context)
   {
     svn_error_t *error;
     StatusEntries entries;
@@ -64,7 +65,7 @@ namespace svn
       get_all,
       update,
       no_ignore,
-      *m_context,    //client ctx
+      *context,    //client ctx
       pool);
 
     if (error!=NULL)
@@ -101,13 +102,86 @@ namespace svn
     return entries;
   }
 
-  Status 
-  Client::singleStatus (const char * path)
+  static Status 
+  dirEntryToStatus (const DirEntry & dirEntry)
+  {
+    Pool pool;
+
+    svn_wc_entry_t * e =
+      static_cast<svn_wc_entry_t *> (
+        apr_pcalloc (pool, sizeof (svn_wc_entry_t)));
+    e->name = dirEntry.name ();
+    e->revision = dirEntry.createdRev ();
+    e->url = dirEntry.name ();
+    e->kind = dirEntry.kind ();
+    e->schedule = svn_wc_schedule_normal;
+    e->text_time = dirEntry.time ();
+    e->prop_time = dirEntry.time ();
+    e->cmt_rev = dirEntry.createdRev ();
+    e->cmt_date = dirEntry.time ();
+    e->cmt_author = dirEntry.lastAuthor ();
+
+    svn_wc_status_t * s =
+      static_cast<svn_wc_status_t *> (
+        apr_pcalloc (pool, sizeof (svn_wc_status_t)));
+    s->entry = e;
+    s->text_status = svn_wc_status_normal;
+    s->prop_status = svn_wc_status_normal;
+    s->locked = 0;
+    s->switched = 0;
+    s->repos_text_status = svn_wc_status_normal;
+    s->repos_prop_status = svn_wc_status_normal;
+
+    return Status (dirEntry.name (), s);
+  }
+
+  static StatusEntries
+  remoteStatus (Client * client,
+                const char * path,
+                const bool descend,
+                const bool get_all,
+                const bool update,
+                const bool no_ignore,
+                Context * context)
+  {
+    Revision rev (Revision::HEAD);
+    DirEntries dirEntries = client->ls (path, rev, descend);
+    DirEntries::const_iterator it;
+    
+    StatusEntries entries;
+
+    for (it = dirEntries.begin (); it != dirEntries.end (); it++)
+    {
+      const DirEntry & dirEntry = *it;
+
+      entries.push_back (dirEntryToStatus (dirEntry));
+    }
+
+    return entries;
+  }
+
+
+  StatusEntries 
+  Client::status (const char * path,
+                  const bool descend,
+                  const bool get_all,
+                  const bool update,
+                  const bool no_ignore)
+  {
+    if (Url::isValid (path))
+      return remoteStatus (this, path, descend, get_all, update, 
+                           no_ignore, m_context);
+    else
+      return localStatus (path, descend, get_all, update, 
+                          no_ignore, m_context);
+  }
+
+  static Status
+  localSingleStatus (const char * path, Context * context)
   {
     svn_error_t *error;
     apr_hash_t *status_hash;
-    Pool subPool;
-    apr_pool_t * apr_pool = subPool.pool ();
+    Pool pool;
 
     error = svn_client_status (
       &status_hash, // pointer to hash
@@ -117,8 +191,8 @@ namespace svn
       true,         // get all
       false,        //update
       false,        //no_ignore,
-      *m_context,   //client ctx
-      apr_pool);
+      *context,   //client ctx
+      pool);
 
     if (error != NULL)
     {
@@ -127,7 +201,7 @@ namespace svn
     
     apr_array_header_t *statusarray = 
       apr_hash_sorted_keys (status_hash, svn_sort_compare_items_as_paths,
-                            apr_pool);
+                            pool);
     const svn_item_t *item;
     const char *filePath;
     svn_wc_status_t *status = NULL;
@@ -136,13 +210,26 @@ namespace svn
     status = (svn_wc_status_t *) item->value;
 
     //TODO svn_error_t *err =
-    svn_utf_cstring_from_utf8 (&filePath, (const char *) item->key, apr_pool);
-    // no error handling here yet
-    //   if (err)
-    //   svn_handle_error (err, stderr, FALSE);
+    svn_utf_cstring_from_utf8 (&filePath, (const char *) item->key, pool);
     
     return Status (filePath, status);
   };
+
+  static Status
+  remoteSingleStatus (const char * path, Context * context)
+  {
+    // TODO!!!
+    return Status ();
+  }
+
+  Status 
+  Client::singleStatus (const char * path)
+  {
+    if (Url::isValid (path))
+      return remoteSingleStatus (path, m_context);
+    else
+      return localSingleStatus (path, m_context);
+  }
 
   const LogEntries *
   Client::log (const char * path, const Revision & revisionStart, 

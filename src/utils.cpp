@@ -34,6 +34,8 @@
 #include "res/bitmaps/resolve.xpm"
 #include "res/bitmaps/revert.xpm"
 #include "res/bitmaps/update.xpm"
+#include "res/bitmaps/project_add.xpm"
+#include "res/bitmaps/project_remove.xpm"
 
 
 wxString & UnixPath (wxString & path)
@@ -88,24 +90,6 @@ TrimString (wxString & str)
 {
   str.Trim (TRUE);
   str.Trim (FALSE);
-}
-
-struct log_msg_baton
-{
-  const char *message;
-  const char *base_dir;
-};
-
-void *
-svn_cl__make_log_msg_baton (const char *message,
-                            const char *base_dir, apr_pool_t * pool)
-{
-  log_msg_baton *baton = (log_msg_baton *) apr_palloc (pool, sizeof (*baton));
-
-  baton->message = message;
-  baton->base_dir = base_dir ? base_dir : ".";
-
-  return baton;
 }
 
 bool PostMenuEvent (wxEvtHandler *source, long id)
@@ -234,6 +218,72 @@ CreateActionEvent (int token)
   
   return event;
 }
+
+wxMenuItem *
+AppendMenuItem (wxMenu & menu, int id)
+{
+  const char * caption;
+  wxBitmap bitmap;
+
+  switch (id)
+  {
+  case ID_AddProject:
+    caption = _("&Add to Workbench...");
+    bitmap = wxBitmap (project_add_xpm);
+    break;
+
+  case ID_AddRepository:
+    caption = _("Add &Repository to Workbench...");
+    break;
+  
+  case ID_RemoveProject:
+    caption = _("&Remove from Workbench...");
+    bitmap = wxBitmap (project_remove_xpm);
+    break;
+
+  case ID_Login:
+    caption =  _("Login...");
+    break;
+
+  case ID_Update:
+    caption = _("Update...");
+    bitmap = wxBitmap (update_xpm);
+    break;
+
+  case ID_Commit:
+    caption = _("Commit...");
+    bitmap = wxBitmap (commit_xpm);
+    break;
+
+  case ID_Quit:
+    caption = _("E&xit");
+    break;
+
+  case ID_Refresh:
+    caption = _("Refresh\tF5");
+    break;
+
+  case ID_Preferences:
+    caption = _("Preferences...");
+    break;
+
+  case ID_Cleanup:
+    caption = _("Cleanup");
+    break;
+
+  case ID_Column_Reset:
+    caption = _("Reset Columns");
+    break;
+  case ID_Explore:
+    caption = _("Explore...\tF2");
+  }
+  wxMenuItem * item = new wxMenuItem (&menu, id, caption);
+  item->SetBitmap (bitmap);
+  menu.Append (item);
+
+  return item;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

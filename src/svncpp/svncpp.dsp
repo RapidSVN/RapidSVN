@@ -97,6 +97,10 @@ SOURCE=.\client_diff.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\client_ls.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\client_modify.cpp
 # End Source File
 # Begin Source File
@@ -106,6 +110,10 @@ SOURCE=.\client_status.cpp
 # Begin Source File
 
 SOURCE=.\context.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\dirent.cpp
 # End Source File
 # Begin Source File
 
@@ -145,6 +153,10 @@ SOURCE=.\targets.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\url.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\wc.cpp
 # End Source File
 # End Group
@@ -162,6 +174,10 @@ SOURCE=.\context.hpp
 # Begin Source File
 
 SOURCE=.\context_listener.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\dirent.hpp
 # End Source File
 # Begin Source File
 
@@ -202,6 +218,10 @@ SOURCE=.\status.hpp
 # Begin Source File
 
 SOURCE=.\targets.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\url.hpp
 # End Source File
 # Begin Source File
 

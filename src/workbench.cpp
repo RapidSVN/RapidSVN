@@ -18,6 +18,7 @@
 
 // svncpp
 #include "svncpp/context.hpp"
+#include "svncpp/url.hpp"
 
 // app
 #include "workbench.hpp"
@@ -72,8 +73,16 @@ public:
       return;
 
 
-    wxFileName filename (name);
-    projects.Add (filename.GetFullPath (wxPATH_NATIVE));
+    // local path or repository url?
+    if (svn::Url::isValid (name))
+    {
+      projects.Add (name);
+    }
+    else
+    {
+      wxFileName filename (name);
+      projects.Add (filename.GetFullPath (wxPATH_NATIVE));
+    }
 
     if (singleContext == 0)
       contexts.Add (new svn::Context ());

@@ -33,9 +33,11 @@ namespace svn
   class Notify;
   class Status;
   class Targets;
+  class DirEntry;
 
   typedef std::vector<LogEntry> LogEntries;
   typedef std::vector<Status> StatusEntries;
+  typedef std::vector<DirEntry> DirEntries;
 
   /**
    * Subversion client API.
@@ -54,7 +56,8 @@ namespace svn
     /**
      * @return returns the Client context
      */
-    const Context * getContext () const;
+    const Context * 
+    getContext () const;
 
     /**
      * sets the client context
@@ -63,16 +66,8 @@ namespace svn
      *
      * @param context new context to use
      */
-    void setContext (Context * context = NULL);
-
-
-    /**
-     * Returns the last destination path submitted. 
-     *
-     * @return path in Subversion format.
-     */
-    const char *
-    getLastPath ();
+    void 
+    setContext (Context * context = NULL);
 
     /**
      * Enumerates all files/dirs at a given path.
@@ -101,7 +96,8 @@ namespace svn
      * @param path File to gather status.
      * @return a Status with Statis.isVersioned = FALSE
      */
-    Status singleStatus (const char * path);
+    Status 
+    singleStatus (const char * path);
 
   /**
      * Executes a revision checkout.
@@ -112,8 +108,9 @@ namespace svn
      * @param recurse whether you want it to checkout files recursively.
      * @exception ClientException
      */
-    void checkout (const char * moduleName, const Path & destPath, 
-                   const Revision & revision, bool recurse);
+    void 
+    checkout (const char * moduleName, const Path & destPath, 
+              const Revision & revision, bool recurse);
   
     /**
      * Sets the notification function and baton that the C library 
@@ -122,13 +119,15 @@ namespace svn
      * @param notify function that the SVN library should call when 
      *               checking out each file.
      */
-    void notification (Notify * notify);
+    void 
+    notification (Notify * notify);
 
     /**
      * Sets a single file for deletion.
      * @exception ClientException
      */
-    void remove (const Path & path, bool force);
+    void 
+    remove (const Path & path, bool force);
 
     /**
      * Sets files for deletion.
@@ -137,19 +136,22 @@ namespace svn
      * @param force force if files are locally modified
      * @exception ClientException
      */
-    void remove (const Targets & targets, bool force);
+    void 
+    remove (const Targets & targets, bool force);
 
     /**
      * Reverts a file to a pristine state.
      * @exception ClientException
      */
-    void revert (const Path & path, bool recurse);
+    void 
+    revert (const Path & path, bool recurse);
 
     /**
      * Adds a file to the repository.
      * @exception ClientException
      */
-    void add (const Path & path, bool recurse);
+    void 
+    add (const Path & path, bool recurse);
 
     /**
      * Updates the file or directory.
@@ -160,8 +162,9 @@ namespace svn
      * @param recurse recursively update.
      * @exception ClientException
      */
-    void update (const Path & path, const Revision & revision, 
-                 bool recurse);
+    void 
+    update (const Path & path, const Revision & revision, 
+            bool recurse);
 
     /**
      * Retrieves the contents for a specific @a revision of
@@ -191,18 +194,20 @@ namespace svn
      * Copies a versioned file with the history preserved.
      * @exception ClientException
      */
-    void copy (const Path & srcPath, 
-               const Revision & srcRevision,
-               const Path & destPath);
+    void 
+    copy (const Path & srcPath, 
+          const Revision & srcRevision,
+          const Path & destPath);
 
     /**
      * Moves or renames a file.
      * @exception ClientException
      */
-    void move (const Path & srcPath, 
-               const Revision & srcRevision, 
-               const Path & destPath, 
-               bool force);
+    void 
+    move (const Path & srcPath, 
+          const Revision & srcRevision, 
+          const Path & destPath, 
+          bool force);
 
     /**
      * Creates a directory directly in a repository or creates a 
@@ -211,7 +216,8 @@ namespace svn
      * @param message log message.
      * @exception ClientException
      */
-    void mkdir (const Path & path, const char * message);
+    void 
+    mkdir (const Path & path, const char * message);
 
     /**
      * Create multiple directories.
@@ -220,7 +226,8 @@ namespace svn
      * @param path new directory
      * @param message
      */
-    void mkdir (const Targets & targets, const char * message);
+    void 
+    mkdir (const Targets & targets, const char * message);
 
     /**
      * Recursively cleans up a local directory, finishing any
@@ -228,13 +235,15 @@ namespace svn
      * @param path a local directory.
      * @exception ClientException
      */
-    void cleanup (const Path & path);
+    void 
+    cleanup (const Path & path);
 
     /**
      * Removes the 'conflicted' state on a file.
      * @exception ClientException
      */
-    void resolve (const Path & path, bool recurse);
+    void 
+    resolve (const Path & path, bool recurse);
 
     /**
      * Exports the contents of either a subversion repository into a 
@@ -246,16 +255,18 @@ namespace svn
      * @param revision revision to use for the export
      * @param force force export
      */
-    void doExport (const Path & srcPath, const Path & destPath, 
-                   const Revision & revision, bool force=false);
+    void 
+    doExport (const Path & srcPath, const Path & destPath, 
+              const Revision & revision, bool force=false);
 
     /**
      * Update local copy to mirror a new url. This excapsulates the 
      * svn_client_switch() client method.
      * @exception ClientException
      */
-    void doSwitch (const Path & path, const char * url, 
-                   const Revision & revision, bool recurse);
+    void 
+    doSwitch (const Path & path, const char * url, 
+              const Revision & revision, bool recurse);
 
     /**
      * Import file or directory PATH into repository directory URL at
@@ -266,16 +277,18 @@ namespace svn
      * @param recurse
      * @exception ClientException
      */
-    void import (const Path & path, const char * url,
-                 const char * message, bool recurse);
+    void 
+    import (const Path & path, const char * url,
+            const char * message, bool recurse);
 
     /**
      * Merge changes from two paths into a new local path.
      * @exception ClientException
      */
-    void merge (const Path & path1, const Revision & revision1, 
-                const Path & path2, const Revision & revision2,
-                const Path & localPath, bool force, bool recurse);
+    void 
+    merge (const Path & path1, const Revision & revision1, 
+           const Path & path2, const Revision & revision2,
+           const Path & localPath, bool force, bool recurse);
 
     /**
      * Retrieve log information for the given path
@@ -322,17 +335,21 @@ namespace svn
           const bool recurse, const bool ignoreAncestry,
           const bool noDiffDeleted);
 
-  protected:
-    Revision m_revision;
-    Path m_lastPath;
-    Context * m_context;
-
     /**
-     * Global error object struct.
+     * lists entries in @a pathOrUrl no matter whether local or
+     * repository
+     *
+     * @param pathOrUrl
+     * @param revision
+     * @param recurse
      */
-    svn_error_t *m_Err;
+    DirEntries
+    ls (const char * pathOrUrl,
+        svn_opt_revision_t * revision,
+        bool recurse);
 
   private:
+    Context * m_context;
     Notify * m_notify;
 
     /**

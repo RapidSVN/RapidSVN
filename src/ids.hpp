@@ -28,6 +28,7 @@ enum
   ID_Contents,
   ID_Preferences,
   ID_AddProject,
+  ID_AddRepository,
   ID_RemoveProject,
   ID_Info,
   ID_Login,
