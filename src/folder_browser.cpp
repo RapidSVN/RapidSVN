@@ -81,6 +81,7 @@ FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
 
 FolderBrowser::~FolderBrowser ()
 {
+  DeleteAllItems ();
 }
 
 UniqueArrayString & FolderBrowser::GetWorkbenchItems ()
@@ -389,6 +390,17 @@ FolderBrowser::Delete (const wxTreeItemId & id )
     }
 
     m_treeCtrl->Delete(id);
+  }
+}
+
+void
+FolderBrowser::DeleteAllItems ()
+{
+  if (m_treeCtrl)
+  {
+    // this deletes all children and
+    // all of the itemdata
+    m_treeCtrl->Collapse (m_rootId);
   }
 }
 

@@ -196,6 +196,7 @@ FileListCtrl::~FileListCtrl ()
   pConfig->Write (pSortColumn3Width, (long) GetColumnWidth (3));
   pConfig->Write (pSortColumn4Width, (long) GetColumnWidth (4));
 
+  DeleteAllItems ();
   delete m_imageListSmall;
 }
 

@@ -56,10 +56,10 @@ private:
 
 
 public:
-   FileListCtrl (wxWindow * parent, const wxWindowID id,
-                 const wxPoint & pos, const wxSize & size);
+  FileListCtrl (wxWindow * parent, const wxWindowID id,
+                const wxPoint & pos, const wxSize & size);
 
-  ~FileListCtrl ();
+  virtual ~FileListCtrl ();
 
   // utility methods
   void UpdateFileList ();
