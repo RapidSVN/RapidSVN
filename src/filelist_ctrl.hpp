@@ -62,6 +62,7 @@ public:
   ~FileListCtrl ();
 
   // utility methods
+  void UpdateFileList ();
   void UpdateFileList (const wxString & path);
   const IndexArray GetSelectedItems () const;
   const svn::Targets GetTargets () const;

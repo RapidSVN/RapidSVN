@@ -1,24 +1,24 @@
 # Microsoft Developer Studio Project File - Name="svncpp" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
-# ** DO NOT EDIT **
+# ** NICHT BEARBEITEN **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
 CFG=svncpp - Win32 Debug
-!MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE use the Export Makefile command and run
+!MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
+!MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
 !MESSAGE 
 !MESSAGE NMAKE /f "svncpp.mak".
 !MESSAGE 
-!MESSAGE You can specify a configuration when running NMAKE
-!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
+!MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
 !MESSAGE 
 !MESSAGE NMAKE /f "svncpp.mak" CFG="svncpp - Win32 Debug"
 !MESSAGE 
-!MESSAGE Possible choices for configuration are:
+!MESSAGE Für die Konfiguration stehen zur Auswahl:
 !MESSAGE 
-!MESSAGE "svncpp - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "svncpp - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "svncpp - Win32 Release" (basierend auf  "Win32 (x86) Static Library")
+!MESSAGE "svncpp - Win32 Debug" (basierend auf  "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -93,6 +93,14 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\client_status.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\context.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\exception.cpp
 # End Source File
 # Begin Source File
@@ -141,7 +149,7 @@ SOURCE=.\targets.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\auth.h
+SOURCE=.\auth.hpp
 # End Source File
 # Begin Source File
 
@@ -149,31 +157,55 @@ SOURCE=.\client.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\exception.h
+SOURCE=.\client.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\log.h
+SOURCE=.\context.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\modify.h
+SOURCE=.\exception.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\notify.h
+SOURCE=.\log.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\pool.h
+SOURCE=.\log_entry.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\property.h
+SOURCE=.\modify.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\status.h
+SOURCE=.\notify.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\path.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\pool.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\property.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\revision.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\status.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\targets.hpp
 # End Source File
 # End Group
 # End Target

@@ -13,6 +13,10 @@
 #ifndef _PREFERENCES_DLG_H_INCLUDED_
 #define _PREFERENCES_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/confbase.h"
+#include "wx/notebook.h"
+
 /* Panels for the preferences dialog. */
 
 /**

@@ -12,17 +12,25 @@
  */
 
 // wxwindows
-#include "wx/imaglist.h"
+#include "wx/wx.h"
+#include "wx/confbase.h"
 #include "wx/filename.h"
+#include "wx/imaglist.h"
+/*
+#include "wx/gdicmn.h"
+#include "wx/window.h"
+*/
 
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/targets.hpp"
 
 // app
-#include "include.hpp"
+//REMOVE #include "include.hpp"
 #include "ids.hpp"
-#include "rapidsvn_app.hpp"
+//REMOVE #include "rapidsvn_app.hpp"
+#include "filelist_ctrl.hpp"
+#include "utils.hpp"
 
 // Bitmaps
 #include "res/bitmaps/update.xpm"
@@ -298,6 +306,13 @@ FileListCtrl::UpdateFileList (const wxString & path)
 {
   m_path = path;
 
+  UpdateFileList ();
+}
+
+void
+FileListCtrl::UpdateFileList ()
+{
+  const wxString & path = m_path;
   // delete all the items in the list to display the new ones
   DeleteAllItems ();
 
@@ -414,9 +429,7 @@ FileListCtrl::OnKeyDown (wxKeyEvent & event)
 {
   if (event.GetKeyCode () == WXK_F5)
   {
-    // F5 was pressed, force a refresh
-    UpdateFileList (wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->
-                    GetPath ());
+    UpdateFileList ();
   }
   else
   {
@@ -610,8 +623,7 @@ FileListCtrl::GetFullUnixPath (long index, wxString & fullpath)
   if (index < 0)
     return;
 
-  wxFileName fname (wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->
-                    GetPath (), GetItemText (index));
+  wxFileName fname (m_path, GetItemText (index));
   fullpath = fname.GetFullPath ();
   UnixPath (fullpath);
 }

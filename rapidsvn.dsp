@@ -1,24 +1,24 @@
 # Microsoft Developer Studio Project File - Name="rapidsvn" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
-# ** DO NOT EDIT **
+# ** NICHT BEARBEITEN **
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
 CFG=rapidsvn - Win32 Debug
-!MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE use the Export Makefile command and run
+!MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
+!MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
 !MESSAGE 
 !MESSAGE NMAKE /f "rapidsvn.mak".
 !MESSAGE 
-!MESSAGE You can specify a configuration when running NMAKE
-!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
+!MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
 !MESSAGE 
 !MESSAGE NMAKE /f "rapidsvn.mak" CFG="rapidsvn - Win32 Debug"
 !MESSAGE 
-!MESSAGE Possible choices for configuration are:
+!MESSAGE Für die Konfiguration stehen zur Auswahl:
 !MESSAGE 
-!MESSAGE "rapidsvn - Win32 Release" (based on "Win32 (x86) Application")
-!MESSAGE "rapidsvn - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "rapidsvn - Win32 Release" (basierend auf  "Win32 (x86) Application")
+!MESSAGE "rapidsvn - Win32 Debug" (basierend auf  "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 src\svncpp\Release\svncpp.lib "$(WX)\lib\wxmsw.lib" $(SUBVERSION)\db4-win32\lib\libdb40.lib $(SUBVERSION)\subversion\libsvn_repos\Release\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_fs\Release\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Release\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Release\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra\Release\libsvn_ra.lib advapi32.lib mswsock.lib ws2_32.lib $(SUBVERSION)\neon\libneon.lib $(SUBVERSION)\apr-iconv\LibR\apriconv.lib $(SUBVERSION)\subversion\libsvn_wc\Release\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Release\libsvn_subr.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibR\xml.lib $(SUBVERSION)\subversion\libsvn_client\Release\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_delta\Release\libsvn_delta.lib $(SUBVERSION)\apr\LibR\apr.lib $(SUBVERSION)\apr-util\LibR\aprutil.lib comctl32.lib wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:windows /machine:I386
+# ADD LINK32 src\svncpp\Release\svncpp.lib $(SUBVERSION)\subversion\libsvn_auth\Debug\libsvn_auth.lib $(SUBVERSION)\db4-win32\lib\libdb40.lib $(SUBVERSION)\subversion\libsvn_repos\Release\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_fs\Release\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Release\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Release\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra_svn\Release\libsvn_ra_svn.lib $(SUBVERSION)\subversion\libsvn_ra\Release\libsvn_ra.lib advapi32.lib $(SUBVERSION)\neon\libneon.lib $(SUBVERSION)\apr-iconv\LibR\apriconv.lib $(SUBVERSION)\subversion\libsvn_wc\Release\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Release\libsvn_subr.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibR\xml.lib $(SUBVERSION)\subversion\libsvn_client\Release\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_delta\Release\libsvn_delta.lib $(SUBVERSION)\apr\LibR\apr.lib $(SUBVERSION)\apr-util\LibR\aprutil.lib "$(WX)\lib\wxmsw.lib" mswsock.lib ws2_32.lib comctl32.lib wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:windows /machine:I386
 
 !ELSEIF  "$(CFG)" == "rapidsvn - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 src\svncpp\Debug\svncpp.lib $(SUBVERSION)\db4-win32\lib\libdb40d.lib $(SUBVERSION)\subversion\libsvn_repos\Debug\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_fs\Debug\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Debug\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Debug\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra\Debug\libsvn_ra.lib advapi32.lib mswsock.lib ws2_32.lib $(SUBVERSION)\neon\libneonD.lib $(SUBVERSION)\apr-iconv\LibD\apriconv.lib $(SUBVERSION)\subversion\libsvn_wc\Debug\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Debug\libsvn_subr.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibD\xml.lib $(SUBVERSION)\subversion\libsvn_client\Debug\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_delta\Debug\libsvn_delta.lib $(SUBVERSION)\apr\LibD\apr.lib $(SUBVERSION)\apr-util\LibD\aprutil.lib rpcrt4.lib winmm.lib "$(WX)\lib\wxmswd.lib" comctl32.lib wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib:"libcd.lib" /nodefaultlib:"libcid.lib" /pdbtype:sept /libpath:"../../lib" /libpath:"../../contrib/lib"
+# ADD LINK32 src\svncpp\Debug\svncpp.lib $(SUBVERSION)\subversion\libsvn_auth\Debug\libsvn_auth.lib $(SUBVERSION)\db4-win32\lib\libdb40.lib $(SUBVERSION)\subversion\libsvn_repos\Debug\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_fs\Debug\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Debug\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Debug\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra_svn\Debug\libsvn_ra_svn.lib $(SUBVERSION)\subversion\libsvn_ra\Debug\libsvn_ra.lib advapi32.lib $(SUBVERSION)\neon\libneond.lib $(SUBVERSION)\apr-iconv\LibD\apriconv.lib $(SUBVERSION)\subversion\libsvn_wc\Debug\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Debug\libsvn_subr.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibD\xml.lib $(SUBVERSION)\subversion\libsvn_client\Debug\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_delta\Debug\libsvn_delta.lib $(SUBVERSION)\apr\LibD\apr.lib $(SUBVERSION)\apr-util\LibD\aprutil.lib "$(WX)\lib\wxmswd.lib" kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../lib" /libpath:"../../contrib/lib"
 
 !ENDIF 
 
@@ -90,6 +90,10 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=.\src\action.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\src\action_thread.cpp
@@ -105,6 +109,10 @@ SOURCE=.\src\checkout_action.cpp
 # Begin Source File
 
 SOURCE=.\src\checkout_dlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\cleanup_action.cpp
 # End Source File
 # Begin Source File
 
@@ -220,6 +228,14 @@ SOURCE=.\src\revert_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\simple_worker.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\svncpp\status.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\svn_file_info.cpp
 # End Source File
 # Begin Source File
@@ -256,6 +272,10 @@ SOURCE=.\src\utils.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\src\action.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\action_thread.hpp
 # End Source File
 # Begin Source File
@@ -277,6 +297,10 @@ SOURCE=.\src\checkout_data.hpp
 # Begin Source File
 
 SOURCE=.\src\checkout_dlg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\cleanup_action.hpp
 # End Source File
 # Begin Source File
 
@@ -397,6 +421,14 @@ SOURCE=.\src\resource.hpp
 # Begin Source File
 
 SOURCE=.\src\revert_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\simple_worker.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\svncpp\status.hpp
 # End Source File
 # Begin Source File
 
@@ -689,6 +721,10 @@ SOURCE=.\res\bitmaps\replaced_file.ico
 # Begin Source File
 
 SOURCE=.\src\res\bitmaps\replaced_file.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\wx\msw\rightarr.cur
 # End Source File
 # Begin Source File
 

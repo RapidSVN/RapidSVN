@@ -13,6 +13,9 @@
 #ifndef _IMPORT_DLG_H_INCLUDED_
 #define _IMPORT_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/dialog.h"
+
 class ImportDlg:public wxDialog
 {
 public:

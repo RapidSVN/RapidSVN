@@ -15,11 +15,14 @@
 //#include <vector>
 
 // wxwindows
-#include <wx/utils.h>
-#include <wx/log.h>
+#include "wx/thread.h"
+#include "wx/utils.h"
+#include "wx/log.h"
 //#include <wx/resource.h>
 #include "wx/filename.h"
+#include "wx/thread.h"
 #include "wx/version.h"
+#include "wx/window.h"
 
 // svncpp
 //#include "svncpp/exception.hpp"
@@ -29,7 +32,7 @@
 //#include "svncpp/utils.hpp"
 
 // app
-#include "include.hpp"
+//REMOVE #include "include.hpp"
 #include "ids.hpp"
 
 #include "svn_file_info.hpp"
