@@ -80,7 +80,14 @@ EVT_MENU (ID_Preferences, VSvnFrame::OnPreferences)
 EVT_MENU (ACTION_EVENT, VSvnFrame::OnActionEvent)
 EVT_MENU (-1, VSvnFrame::OnToolLeftClick)
 EVT_TOOL_ENTER (ID_TOOLBAR, VSvnFrame::OnToolEnter)
-END_EVENT_TABLE ()VSvnFrame::VSvnFrame (const wxString & title):
+EVT_TREE_SEL_CHANGED (-1, VSvnFrame::OnFolderBrowserSelChanged)
+EVT_TREE_KEY_DOWN (-1, VSvnFrame::OnFolderBrowserKeyDown) 
+END_EVENT_TABLE ()
+
+
+/** class implementation **/
+
+VSvnFrame::VSvnFrame (const wxString & title):
 wxFrame ((wxFrame *) NULL, -1, title)
 {
   // apr stuff
@@ -396,6 +403,13 @@ VSvnFrame::InitFileList ()
   m_listCtrl->SetColumnWidth (2, 75);
   m_listCtrl->SetColumnWidth (3, 75);
   m_listCtrl->SetColumnWidth (4, 75);
+}
+
+void
+VSvnFrame::UpdateFileList ()
+{
+    // F5 was pressed, force a refresh
+    m_listCtrl->UpdateFileList( m_folder_browser->GetPath() );
 }
 
 void
@@ -1214,6 +1228,25 @@ void
 VSvnFrame::Contents ()
 {
   return;
+}
+
+void
+VSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
+{
+    UpdateFileList();
+}
+  
+void 
+VSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
+{
+  if (event.GetKeyEvent ().GetKeyCode () == WXK_F5)
+  {
+      UpdateFileList();
+  }
+  else
+  {
+    event.Skip ();
+  }
 }
 
 void

@@ -31,9 +31,6 @@ public:
 
    virtual ~ FolderBrowser ();
 
-  void OnSelChanged (wxTreeEvent & event);
-  void OnKeyDown (wxTreeEvent & event);
-
   virtual void Refresh ();
   virtual void SetupSections ();
 
@@ -47,7 +44,7 @@ protected:
   virtual void CollapseDir (const wxTreeItemId & parentId);
 
 private:
-   DECLARE_EVENT_TABLE () wxTreeItemId m_workbenchId;
+  wxTreeItemId m_workbenchId;
   wxArrayString m_workbenchItems;
 };
 

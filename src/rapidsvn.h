@@ -107,9 +107,13 @@ public:
   void InitFolderBrowser ();
   void AddProject ();
   void RemoveProject ();
+  void OnFolderBrowserSelChanged (wxTreeEvent & event);
+  void OnFolderBrowserKeyDown (wxTreeEvent & event);
+
 
   // list control
   void InitFileList ();
+  void UpdateFileList ();
 
   // utility functions
 
@@ -131,6 +135,7 @@ public:
   void Contents ();
   void Preferences ();
 
+  
   FileListCtrl *GetFileList ()
   {
     return m_listCtrl;
@@ -140,6 +145,7 @@ public:
   {
     return m_folder_browser;
   }
+
 
 private:
 
