@@ -12,7 +12,7 @@ DefaultGroupName=RapidSVN
 LicenseFile=..\..\LICENSE.txt
 InfoBeforeFile=..\..\README
 InfoAfterFile=..\..\TODO.txt
-OutputBaseFilename=RapidSVN-alpha
+OutputBaseFilename=RapidSVN-0.1.2
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
