@@ -121,16 +121,14 @@ SimpleWorker::Perform (Action * action)
     msg.Printf (_("Error while performing action: %s"), 
                 e.message ());
     PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
-    //TODO thread safe? 
-    //Trace (msg);
+
     return false;
   }
   catch (...)
   {
     wxString msg (_("Error while performing action."));
     PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
-    //TODO thread safe?
-    //Trace ();
+
     return false;
   }
 

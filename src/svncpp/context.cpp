@@ -45,9 +45,12 @@ namespace svn
         (svn_auth_provider_object_t *)apr_pcalloc (
           pool, sizeof (*client_provider));
 
-      svn_client_get_simple_provider (
+      svn_client_get_simple_prompt_provider (
         &(client_provider->vtable),
-        &(client_provider->provider_baton), 
+        &(client_provider->provider_baton),
+        prompt,
+        this,
+        1, // 1 retry
         pool);
 
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 

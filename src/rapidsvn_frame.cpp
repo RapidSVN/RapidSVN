@@ -920,7 +920,6 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   case TOKEN_SVN_INTERNAL_ERROR:
   case TOKEN_INTERNAL_ERROR:
   {
-    Trace (_("Error:"));
     Trace (event.GetString ());
     UpdateFileList ();
     Trace (_("Ready\n"));
