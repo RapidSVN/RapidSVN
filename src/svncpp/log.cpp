@@ -11,9 +11,15 @@
  * ====================================================================
  */
 
-#include "log.hpp"
+// subversion api
+#include "svn_client.h"
 #include "svn_time.h"
 #include "svn_utf.h"
+
+// svncpp
+#include "log.hpp"
+#include "pool.hpp"
+#include "targets.hpp"
 
 struct log_message_receiver_baton
 {
@@ -52,40 +58,39 @@ Log::reset ()
   cursor = -1;
   size = 0;
   versioned = false;
-  _revision.clear ();
-  _author.clear ();
-  _date.clear ();
-  _message.clear ();
+  m_revision.clear ();
+  m_author.clear ();
+  m_date.clear ();
+  m_message.clear ();
 }
 
 void
-Log::loadPath (const char * path, long revisionStart, 
-               long revisionEnd)
+Log::loadPath (const char * path, const Revision & revisionStart, 
+               const Revision & revisionEnd)
 {
   log_message_receiver_baton lb;
-  svn_opt_revision_t revEnd;
   m_lastPath = path;
-  internalPath (m_lastPath);
 
   reset ();
-  memset (&revEnd, 0, sizeof (revEnd));
-  revEnd.kind = svn_opt_revision_number;
-  revEnd.value.number = revisionEnd;
   
-  lb.revision = &_revision;
-  lb.author = &_author;
-  lb.date = &_date;
-  lb.message = &_message;
+  lb.revision = &m_revision;
+  lb.author = &m_author;
+  lb.date = &m_date;
+  lb.message = &m_message;
   lb.size = &size;
   lb.first_call = true;
 
-  m_Err = svn_client_log (authenticate (), target (m_lastPath.c_str ()), 
-                        getRevision (revisionStart), 
-                        &revEnd, 
+  Targets target (m_lastPath.c_str () );
+  Pool pool;
+  apr_pool_t *apr_pool = pool.pool ();
+
+  m_Err = svn_client_log (authenticate (), target.array (apr_pool), 
+                        revisionStart.revision (), 
+                        revisionEnd.revision (), 
                         0, // not reverse by default
                         1, // strict by default (not showing cp info)
                         messageReceiver,
-                        &lb, m_pool);
+                        &lb, apr_pool);
 
   versioned = true;
   if(m_Err != NULL)
@@ -147,7 +152,7 @@ Log::message ()
   if(cursor == -1)
     return NULL;
 
-  return _message[cursor].c_str ();
+  return m_message[cursor].c_str ();
 }
 
 const char *
@@ -156,7 +161,7 @@ Log::date ()
   if(cursor == -1)
     return NULL;
 
-  return _date[cursor].c_str ();
+  return m_date[cursor].c_str ();
 }
 
 const char *
@@ -169,16 +174,18 @@ Log::formatDate (const char * dateText, const char * format)
   char buffer[40];
   struct tm * localTime;
   svn_string_t * str;
+  Pool subPool;
+  apr_pool_t *apr_pool = subPool.pool();
 
-  svn_time_from_cstring (&timeTemp, dateText, m_pool);
-  date = svn_time_to_human_cstring(timeTemp, m_pool);
+  svn_time_from_cstring (&timeTemp, dateText, apr_pool);
+  date = svn_time_to_human_cstring(timeTemp, apr_pool);
   dateNative = (char *)date;
 
   time = svn_parse_date (dateNative, NULL);
   localTime = localtime (&time);
 
   strftime (buffer, 40, format, localTime);
-  str = svn_string_create (buffer, m_pool);
+  str = svn_string_create (buffer, apr_pool);
 
   return str->data;
 }
@@ -189,7 +196,7 @@ Log::author ()
   if(cursor == -1)
     return NULL;
 
-  return _author[cursor].c_str ();
+  return m_author[cursor].c_str ();
 }
 
 long
@@ -198,7 +205,7 @@ Log::revision ()
   if(cursor == -1)
     return 0;
 
-  return _revision[cursor];
+  return m_revision[cursor];
 }
 
 int

@@ -17,7 +17,7 @@
 /**
  * Forward declarations
  */
-struct apr_pool_t;
+typedef struct apr_pool_t;
 
 /**
  * SvnCpp namespace
@@ -30,47 +30,28 @@ namespace svn
   class Pool
   {
   public:
-    /**
-     * creates new instance, but no pool.
-     * You will have to call "Create" next.
-     */
-    Pool ();
-
-    /**
+   /**
      * creates a subpool new pool to an existing pool
+     *
+     * @param parent NULL -> global pool
      */
-    Pool (apr_pool_t * parent);
+    Pool (apr_pool_t * = (apr_pool_t *)0);
 
     virtual ~ Pool ();
 
     /**
-     * copy constructor create a new subpool to
-     * the existing pool
+     * @return apr handle to the pool
      */
-    Pool (Pool&);
-
-    /**
-     * returns the handle to the pool
-     */
-    apr_pool_t *pool ();
-
-    /**
-     * create a new pool
-     *
-     * @param parent NULL: parent pool. If NULL this
-     *               creates a global pool, otherwise
-     *               a subpool
-     */
-    void Create (apr_pool_t * parent);
-
-    /**
-     * create a subpool to the existing pool
-     */
-    void Create (Pool & parent);
+    apr_pool_t * 
+    pool () const;
 
   private:
     apr_pool_t * m_pool;
+
     Pool& operator=(const Pool&);
+
+    Pool (const Pool &);
+
   };
 }
 

@@ -14,7 +14,13 @@
 #ifndef _SVNCPP_NOTIFY_H_
 #define _SVNCPP_NOTIFY_H_
 
+// subversion api
+#include "svn_types.h"
+#include "svn_wc.h"
+
+// svncpp
 #include "client.hpp"
+
 
 namespace svn
 {
@@ -54,7 +60,7 @@ public:
     const char *mime_type,
     svn_wc_notify_state_t content_state,
     svn_wc_notify_state_t prop_state,
-    long revision); 
+    svn_revnum_t revision); 
   
   /** 
    * notification function passed as svn_wc_notify_func_t

@@ -11,6 +11,9 @@
  * ====================================================================
  */
 
+#ifndef _SVNCPP_POOL_HPP_
+#define _SVNCPP_POOL_HPP_
+
 #include "pool.hpp"
 #include "svn_pools.h"
 
@@ -19,38 +22,9 @@
  */
 namespace svn
 {
-  Pool::Pool ()
-    : m_pool(NULL)
-  {
-  }
-
   Pool::Pool (apr_pool_t * parent)
-    : m_pool(NULL)
+    : m_pool (svn_pool_create (parent))
   {
-    Create(parent);
-  }
-
-  Pool::Pool (Pool & parent)
-    : m_pool(NULL)
-  {
-    Create(parent);
-  }
-
-  void
-  Pool::Create (apr_pool_t * parent)
-  {
-    if( m_pool )
-    {
-      svn_pool_destroy (m_pool);
-    }
-
-    m_pool = svn_pool_create (parent);
-  }
-
-  void
-  Pool::Create (Pool & parent)
-  {
-    Create( parent.pool() );
   }
 
   Pool::~Pool ()
@@ -61,11 +35,14 @@ namespace svn
     }
   }
 
-  apr_pool_t *Pool::pool ()
+  apr_pool_t *
+  Pool::pool () const
   {
     return m_pool;
   }
 }
+
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../../rapidsvn-dev.el")

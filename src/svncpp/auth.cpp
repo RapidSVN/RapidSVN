@@ -11,8 +11,12 @@
  * ====================================================================
  */
 
-#include "auth.hpp"
+// subversion api
 #include "svn_utf.h"
+#include "svn_client.h"
+
+// svncpp
+#include "auth.hpp"
 
 struct prompt_user_baton
 {
@@ -24,8 +28,8 @@ namespace svn
 
 Auth::Auth ()
 {
-  auth_obj = (svn_client_auth_baton_t *) apr_pcalloc 
-             (m_pool, sizeof (*auth_obj));
+  auth_obj = (svn_client_auth_baton_t *) 
+    apr_pcalloc (m_Xpool.pool(), sizeof (*auth_obj));
 
   auth_obj->prompt_callback = prompt;
   auth_obj->prompt_baton = NULL;

@@ -19,14 +19,12 @@
 #pragma warning(disable: 4786)
 #endif
 
-#include "client.hpp"
-#include "svn_utf.h"
+// stl 
 #include <vector>
 #include <string>
 
-#ifndef _SVNCPP_EXCEPTION_H_
-#include "exception.hpp"
-#endif
+// svncpp
+#include "client.hpp"
 
 namespace svn
 {
@@ -37,11 +35,11 @@ namespace svn
 class Property : public svn::Client
 {
 private:
-  int size;
-  int cursor;
-  bool versioned;
-  std::vector<std::string> propName;
-  std::vector<std::string> propValue;
+  int m_size;
+  int m_cursor;
+  bool m_versioned;
+  std::vector<std::string> m_propNames;
+  std::vector<std::string> m_propValues;
 
   void reset ();
   const char * propertyValue (const char * key);

@@ -19,123 +19,131 @@
 #pragma warning(disable: 4786)
 #endif
 
-#include "auth.hpp"
+// stl
 #include <vector>
 #include <string>
 
+// svncpp
+#include "auth.hpp"
+
 namespace svn
 {
-
-/**
- * Iterator class for log entries on a file.
- */
-class Log : public svn::Auth
-{
-private:
-  std::vector<long> _revision;
-  std::vector<std::string> _author;
-  std::vector<std::string> _date;
-  std::vector<std::string> _message;
-  bool versioned;
+  // forward declarations
+  class Revision;
 
   /**
-   * Resets all of the global variables.
+   * Iterator class for log entries on a file.
    */
-  void reset ();
+  class Log : public svn::Auth
+  {
+  private:
+    std::vector<long> m_revision;
+    std::vector<std::string> m_author;
+    std::vector<std::string> m_date;
+    std::vector<std::string> m_message;
+    bool versioned;
 
-  /**
-   * Records where the iterator is currently set to.
-   */
-  int cursor;
+    /**
+     * Resets all of the global variables.
+     */
+    void reset ();
 
-  /**
-   * Number of elements in the result set.
-   */
-  int size;
+    /**
+     * Records where the iterator is currently set to.
+     */
+    int cursor;
 
-public:
-  Log();
-  ~Log();
+    /**
+     * Number of elements in the result set.
+     */
+    int size;
 
-  /**
-   * Loads the log messages result set, clearing old result sets. 
-   * This usually requires authentication, see Auth. 
-   * @param revisionStart if set to -2 then the revision will start 
-   *                      at the revision head.
-   * @param revisionEnd if revisionStart is set to -2 and this is set 
-   *                    to 1 then it will retrieve all log messages.
-   *                        
-   */
-  void loadPath (const char * path, long revisionStart, 
-                 long revisionEnd);
+  public:
+    Log();
+    ~Log();
 
-  /**
-   * Moves to the next row in the log result set.
-   * @returns true if the cursor is in the result set.
-   */
-  bool next ();
+    /**
+     * Loads the log messages result set, clearing old result sets. 
+     * This usually requires authentication. 
+     * You can use the constants Revision::START and
+     * Revision::HEAD
+     *
+     * @see Auth
+     *
+     * @param path
+     * @param revisionStart
+     * @param revisionEnd                    
+     */
+    void loadPath (const char * path, const Revision & revisionStart, 
+                   const Revision & revisionEnd);
 
-  /**
-   * Moves to the previous row in the log result set.
-   * @returns true if the cursor is in the result set.
-   */
-  bool previous ();
+    /**
+     * Moves to the next row in the log result set.
+     * @returns true if the cursor is in the result set.
+     */
+    bool next ();
 
-  /**
-   * Moves to the last row in the log result set.
-   * @returns true if the cursor is in the result set.
-   */
-  bool last ();
+    /**
+     * Moves to the previous row in the log result set.
+     * @returns true if the cursor is in the result set.
+     */
+    bool previous ();
 
-  /**
-   * Moves to the first row in the log result set.
-   * @returns true if the cursor is in the result set.
-   */
-  bool first ();
+    /**
+     * Moves to the last row in the log result set.
+     * @returns true if the cursor is in the result set.
+     */
+    bool last ();
 
-  /**
-   * Moves to the cursor before first row in the log result set.
-   */
-  void beforeFirst ();
+    /**
+     * Moves to the first row in the log result set.
+     * @returns true if the cursor is in the result set.
+     */
+    bool first ();
 
-  /**
-   * Returns the log message of the current result set.
-   */
-  const char * message ();
+    /**
+     * Moves to the cursor before first row in the log result set.
+     */
+    void beforeFirst ();
 
-  /**
-   * Returns the log date of the current result set.
-   */
-  const char * date ();
+    /**
+     * Returns the log message of the current result set.
+     */
+    const char * message ();
 
-  /**
-   * Formats the output of a Subversion date.
-   * @param dateText Subversion date text. Takes the result of the 
-   *                 date() method.
-   * @param format template for formatting the returned date.
-   */
-  const char * formatDate (const char * dateText, const char * format);
+    /**
+     * Returns the log date of the current result set.
+     */
+    const char * date ();
 
-  /**
-   * Returns the log author of the current result set.
-   */
-  const char * author ();
+    /**
+     * Formats the output of a Subversion date.
+     * @param dateText Subversion date text. Takes the result of the 
+     *                 date() method.
+     * @param format template for formatting the returned date.
+     */
+    const char * formatDate (const char * dateText, const char * format);
 
-  /**
-   * Returns the revision of the current result set.
-   */
-  long revision ();
+    /**
+     * Returns the log author of the current result set.
+     */
+    const char * author ();
 
-  /**
-   * Returns the number of results recieved.
-   */
-  int count ();
+    /**
+     * Returns the revision of the current result set.
+     */
+    svn_revnum_t revision ();
 
-  /**
-   * Returns true if the file is versioned.
-   */
-  bool isVersioned ();
-};
+    /**
+     * Returns the number of results recieved.
+     */
+    int count ();
+
+    /**
+     * Returns true if the file is versioned.
+     */
+    bool isVersioned ();
+  };
 
 }
 
