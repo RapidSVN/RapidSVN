@@ -739,38 +739,15 @@ void
 FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
 {
   VerbList verb_list;
-  wxMenuItem *pItem;
 
-  pItem = new wxMenuItem (&menu, ID_Update, _("Update"));
-  pItem->SetBitmap (wxBITMAP (update));
-  menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Commit, _("Commit"));
-  pItem->SetBitmap (wxBITMAP (commit));
-  menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_CopyTo, _("Copy"));
-  menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_MoveTo, _("Move"));
-  menu.Append (pItem);
+  // modify menu
+  AppendModifyMenu (&menu);
 
   menu.AppendSeparator ();
 
-  pItem = new wxMenuItem (&menu, ID_Revert, _("Revert"));
-  pItem->SetBitmap (wxBITMAP (revert));
-  menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Resolve, _("Resolve"));
-  pItem->SetBitmap (wxBITMAP (resolve));
-  menu.Append (pItem);
-
-  menu.AppendSeparator ();
-
-  pItem = new wxMenuItem (&menu, ID_RenameHere, _("Rename"));
-  menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Info, _("Info"));
-  pItem->SetBitmap (wxBITMAP (info));
-  menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Log, _("Log"));
-  pItem->SetBitmap (wxBITMAP (log));
-  menu.Append (pItem);
+  // query menu
+  AppendQueryMenu (&menu);
+  
 
   // Append file verbs
   try

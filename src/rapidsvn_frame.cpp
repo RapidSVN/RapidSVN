@@ -214,64 +214,11 @@ public:
 
     // Modify menu
     wxMenu *menuModif = new wxMenu;
-    pItem = new wxMenuItem (menuModif, ID_Update, _("Update"));
-    pItem->SetBitmap (wxBITMAP (update));
-    menuModif->Append (pItem);
-
-    pItem = new wxMenuItem (menuModif, ID_Commit, _("Commit"));
-    pItem->SetBitmap (wxBITMAP (commit));
-    menuModif->Append (pItem);
-
-    menuModif->AppendSeparator ();
-
-    pItem = new wxMenuItem (menuModif, ID_Property, _("Properties"));
-    pItem->SetBitmap (wxBITMAP (info));
-    menuModif->Append (pItem);
-
-    menuModif->AppendSeparator ();
-
-    pItem = new wxMenuItem (menuModif, ID_Add, _("Add"));
-    pItem->SetBitmap (wxBITMAP (add));
-    menuModif->Append (pItem);
-
-    pItem = new wxMenuItem (menuModif, ID_Delete, _("Delete"));
-    pItem->SetBitmap (wxBITMAP (delete));
-    menuModif->Append (pItem);
-
-    menuModif->AppendSeparator ();
-
-    pItem = new wxMenuItem (menuModif, ID_Revert, _("Revert"));
-    pItem->SetBitmap (wxBITMAP (revert));
-    menuModif->Append (pItem);
-
-    pItem = new wxMenuItem (menuModif, ID_Resolve, _("Resolve conflicts"));
-    pItem->SetBitmap (wxBITMAP (resolve));
-    menuModif->Append (pItem);
-
-    // Copy and rename menu
-    menuModif->AppendSeparator ();
-
-    pItem = new wxMenuItem (menuModif, ID_CopyTo, _("Copy"));
-    //pItem->SetBitmap (wxBITMAP (copy));
-    menuModif->Append (pItem);
-
-    pItem = new wxMenuItem (menuModif, ID_MoveTo, _("Move"));
-    //pItem->SetBitmap (wxBITMAP (rename));
-    menuModif->Append (pItem);
-
-    pItem = new wxMenuItem (menuModif, ID_RenameHere, _("Rename"));
-    //pItem->SetBitmap (wxBITMAP (rename));
-    menuModif->Append (pItem);
+    AppendModifyMenu (menuModif);
 
     // Query menu
     wxMenu *menuQuery = new wxMenu;
-    pItem = new wxMenuItem (menuQuery, ID_Log, _("Log"));
-    pItem->SetBitmap (wxBITMAP (log));
-    menuQuery->Append (pItem);
-
-    pItem = new wxMenuItem (menuQuery, ID_Info, _("Info"));
-    pItem->SetBitmap (wxBITMAP (info));
-    menuQuery->Append (pItem);
+    AppendQueryMenu (menuQuery);
 
     // Extras menu
     wxMenu *menuExtras = new wxMenu;

@@ -19,6 +19,7 @@
 // forward declarations
 class wxString;
 class Tracer;
+class wxMenu;
 
 #define DEFAULT_ARRAY_SIZE 5
 
@@ -68,6 +69,20 @@ bool PostMenuEvent (wxEvtHandler *source, long id);
  * Create a correctly sized button with an ellipsis (three dots)
  */
 wxButton *CreateEllipsisButton(wxWindow *parent, long id);
+
+/**
+ * Append entries for the "Modify" menu
+ *
+ * @param parentMenu menu that will receive the items
+ */
+void AppendModifyMenu (wxMenu * parentMenu);
+
+/**
+ * Append entries for the "Query" menu
+ *
+ * @param parentMenu menu that will receive the items
+ */
+void AppendQueryMenu (wxMenu * parentMenu);
 
 #endif
 /* -----------------------------------------------------------------
