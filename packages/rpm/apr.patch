@@ -1,0 +1,11 @@
+--- src/Makefile	2002/09/14 22:44:49	1.1
++++ src/Makefile	2002/09/14 22:45:12
+@@ -46,7 +46,7 @@
+ 		svncpp/modify.o \
+ 		svncpp/status.o
+ 
+-APR_LIBS= -L/usr/local/apache2/lib -lapr -lm -lcrypt -lnsl  -ldl
++APR_LIBS= -L/usr/local/apache2/lib -lapr-0 -lm -lcrypt -lnsl  -ldl
+ WX_LIBS=-lwx_gtk-2.3
+ LIBS=-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
+ 		$(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(APR_LIBS) \
