@@ -18,7 +18,7 @@ BuildPreReq: libtool >= 1.4.2
 BuildPreReq: libxslt >= 1.0.27
 BuildPreReq: neon-devel
 BuildPreReq: subversion-devel >= 0.37.0
-BuildPreReq: wxGTK-devel >= 2.4.1
+BuildPreReq: wxGTK-devel >= 2.4.2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 Prefix: /usr
 %description
