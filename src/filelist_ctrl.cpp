@@ -1,3 +1,5 @@
+
+#include "svncpp/status.h"
 #include "include.h"
 #include "wx/imaglist.h"
 #include "wx/filename.h"
@@ -89,10 +91,8 @@ FileListCtrl::~FileListCtrl ()
 void
 FileListCtrl::UpdateFileList (const wxString & path)
 {
+  svn::Status status;
   m_path = path;
-
-  AuthBaton auth_baton (pool);
-  SvnFileStatus file_info (pool);
 
   // delete all the items in the list to display the new ones
   DeleteAllItems ();
@@ -106,62 +106,65 @@ FileListCtrl::UpdateFileList (const wxString & path)
   wxLogStatus (_T ("Listing entries in '%s'"), path.c_str ());
 
   // Hide the list to speed up inserting
-  //this->Hide(); 
+  this->Hide(); 
 
   while (!f.IsEmpty ())
   {
-
     f = wxFindNextFile ();
-    if (!f.IsEmpty ())
+    if (f.IsEmpty ())
+      continue;
+
+    int i = GetItemCount ();
+    name = wxFileNameFromPath (f);
+    wxString text;
+
+    try
     {
-      int i = GetItemCount ();
-      name = wxFileNameFromPath (f);
-      wxString text;
-
-      // get svn status information
-      if(!file_info.retrieveStatus (UnixPath (f), auth_baton))
-      {
-        text = "Status load failed: " + f;
-        InsertItem (i, text);
-        continue;
-      }
-
-      if (name != ".." && name != SVN_WC_ADM_DIR_NAME)  // not the parent directory
-      {
-        if (wxDirExists (f))    // a directory
-        {
-          if (SVN_IS_VALID_REVNUM (file_info.getRevision ()))
-            InsertItem (i, name, IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER]);
-          else
-            InsertItem (i, name, IMAGE_INDEX[IMG_INDX_FOLDER]);
-        }
-        else
-          InsertItem (i, name, IMAGE_INDEX[file_info.getFileStatus ()]);
-
-        if (SVN_IS_VALID_REVNUM (file_info.getRevision ()))
-          text.Printf (_T ("%ld"), file_info.getRevision ());
-        else
-          text = _T (" ");
-
-        SetItem (i, 1, text);
-
-        if (SVN_IS_VALID_REVNUM (file_info.getLastChange ()))
-          text.Printf (_T ("%ld"), file_info.getLastChange ());
-        else
-          text = _T (" ");
-
-        SetItem (i, 2, text);
-
-        GetStatusText (text, file_info.getFileStatus ());
-        SetItem (i, 3, text);
-
-        GetStatusText (text, file_info.getFilePropStatus ());
-        SetItem (i, 4, text);
-      }
+      status.loadPath (UnixPath (f));
     }
+    catch (svn::ClientException &e)
+    {
+      text = "Status load failed: " + f;
+      InsertItem (i, text);
+      continue;
+    }
+
+    // in the parent directory
+    if (name == ".." || name == SVN_WC_ADM_DIR_NAME)
+      continue;
+
+    if (wxDirExists (f))    // a directory
+    {
+      if (status.isVersioned ())
+        InsertItem (i, name, IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER]);
+      else
+        InsertItem (i, name, IMAGE_INDEX[IMG_INDX_FOLDER]);
+    }
+    else
+      InsertItem (i, name, IMAGE_INDEX[status.textType ()]);
+
+    if (status.isVersioned ())
+      text.Printf (_T ("%ld"), status.revision ());
+    else
+      text = _T (" ");
+
+    SetItem (i, 1, text);
+
+    if (status.isVersioned ())
+      text.Printf (_T ("%ld"), status.lastChanged ());
+    else
+      text = _T (" ");
+
+    SetItem (i, 2, text);
+
+    text = status.textDescription ();
+    SetItem (i, 3, text);
+
+    text = status.propDescription ();
+    SetItem (i, 4, text);
   }
 
-  //this->Show();
+  this->Show();
 }
 
 void
@@ -214,26 +217,17 @@ void
 FileListCtrl::ShowMenu (long index, wxPoint & pt)
 {
   wxFileName filepath (m_path, GetItemText (index));
-  SvnFileStatus fileinfo (pool);
   wxMenu popup_menu;
   wxString path = filepath.GetFullPath ();
 
-  BuildMenu (popup_menu, fileinfo, UnixPath (path));
+  buildMenu (popup_menu, UnixPath (path));
 
   PopupMenu (&popup_menu, pt);
 }
 
 void
-FileListCtrl::BuildMenu (wxMenu & menu, SvnFileStatus & finfo,
-                         const wxString & path)
+FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
 {
-  // #### TODO: se ia info pentru fisieru respectiv si se genereaza meniu in fct 
-  // de ce-i cu el acolo( replaced, modified etc)
-  // ### TODO: use general info for a repository
-  //AuthBaton  auth_baton( pool );
-
-  //finfo.retrieveStatus( auth_baton );
-
   wxMenuItem *pItem;
 
   pItem = new wxMenuItem (&menu, ID_Update, _T ("Get latest"));

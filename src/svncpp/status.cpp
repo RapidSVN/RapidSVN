@@ -129,17 +129,14 @@ Status::textDescription ()
 {
   _statusText = "";
 
-  if(versioned == false)
-    throw EntryNotVersioned ();
-
   return statusDescription (status->text_status);
 }
 
 svn_wc_status_kind
 Status::textType ()
 {
-  if(versioned == false)
-    throw EntryNotVersioned ();
+  if(!status)
+    return svn_wc_status_none;
   
   return status->text_status;
 }
@@ -148,9 +145,6 @@ const char *
 Status::propDescription ()
 {
   _statusText = "";
-
-  if(versioned == false)
-    throw EntryNotVersioned ();
 
   return statusDescription (status->prop_status);
 }

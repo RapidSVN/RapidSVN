@@ -1,17 +1,18 @@
+
+#include "svncpp/modify.h"
 #include "include.h"
 #include "wx/resource.h"
 #include "rapidsvn_app.h"
-#include "notify.h"
-#include "auth_baton.h"
 #include "update_dlg.h"
 #include "update_action.h"
+#include "svn_notify.h"
 
 UpdateAction::UpdateAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):ActionThread (frame, __pool),
   targets
   (trgts)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
-  revnum = 0;
+  revnum = -1;
   rev_specified = false;
 }
 
@@ -74,43 +75,28 @@ UpdateAction::Perform ()
 void *
 UpdateAction::Entry ()
 {
-  AuthBaton auth_baton (pool, user, pass);
-  svn_client_revision_t rev;
-  int i;
+  svn::Modify modify;
+  SvnNotify notify (GetTracer ());
+  modify.notification (&notify);
 
-  svn_wc_notify_func_t notify_func = NULL;
-  void *notify_baton = NULL;
-  svn_error_t *err = NULL;
+  modify.username (user);
+  modify.password (pass);
 
-  memset (&rev, 0, sizeof (rev));
-
-  svn_cl__get_notifier (&notify_func, &notify_baton,
-                        TRUE, FALSE, GetTracer (), pool);
-
-  if (rev_specified)
-    revision_from_number (&rev, revnum);
-
-  for (i = 0; i < targets->nelts; i++)
+  for (int i = 0; i < targets->nelts; i++)
   {
     const char *target = ((const char **) (targets->elts))[i];
-    const char *parent_dir, *entry;
 
-    err = svn_wc_get_actual_target (target, &parent_dir, &entry, pool);
-    if (err)
-      break;
-
-    err = svn_client_update (auth_baton.auth_obj,
-                             target,
-                             NULL,
-                             &(rev), TRUE, notify_func, notify_baton, pool);
-
-    if (err)
-      break;
-  }
-
-  if (err)
-  {
-    PostDataEvent (TOKEN_SVN_INTERNAL_ERROR, err, ACTION_EVENT);
+    try
+    {
+      modify.update (target, revnum, true);
+    }
+    catch (svn::ClientException &e)
+    {
+      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                       ACTION_EVENT);
+      GetTracer ()->Trace ("Update failed:");
+      GetTracer ()->Trace (e.description ());
+    }
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);

@@ -3,7 +3,6 @@
 
 #include "wx/listctrl.h"
 #include "wx/dynarray.h"
-#include "svn_file_status.h"
 
 /**
  * Define an array of indexes of the selected items.
@@ -40,8 +39,7 @@ public:
   void GetFullUnixPath (long index, wxString & fullpath);
 
   void ShowMenu (long index, wxPoint & pt);
-  void BuildMenu (wxMenu & menu, SvnFileStatus & finfo,
-                  const wxString & path);
+  void buildMenu (wxMenu & menu, const wxString & path);
 
   // message handlers
   void OnItemActivated (wxListEvent & event);

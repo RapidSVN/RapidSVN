@@ -62,25 +62,21 @@ public:
 
   /**
    * Returns the file status of the "textual" component. 
-   * @exception EntryNotVersioned
    */
   const char * textDescription ();
 
   /**
    * Returns the file status property enum of the "textual" component. 
-   * @exception EntryNotVersioned
    */
   svn_wc_status_kind textType ();
 
   /**
    * Returns the file status of the "property" component. 
-   * @exception EntryNotVersioned
    */
   const char * propDescription ();
 
   /**
    * Returns the file status property enum of the "property" component. 
-   * @exception EntryNotVersioned
    */
   svn_wc_status_kind propType ();
 
