@@ -365,6 +365,10 @@ CompareColumn (svn::Status * ps1,
     res = Compare (ps1->propStatus (), ps2->propStatus (), newer1, newer2);
     break;
 
+  case FileListCtrl::COL_EXTENSION:
+    res = Compare (wxFileName(ps1->path()).GetExt(), wxFileName(ps2->path()).GetExt());
+    break;
+
   case FileListCtrl::COL_CMT_DATE:
     res = Compare (e1.cmtDate (), e2.cmtDate ());
     break;
@@ -504,6 +508,7 @@ COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
   _("Status"),
   _("Prop Status"),
   _("Last Changed"),
+  _("Extension"),
   _("Date"),
   _("Prop Date"),
   _("Checksum"),
@@ -536,6 +541,7 @@ COLUMN_NAMES[FileListCtrl::COL_COUNT] =
   "Status",
   "PropStatus",
   "LastChanged",
+  "Extension",
   "Date",
   "PropDate",
   "Checksum",
@@ -808,8 +814,6 @@ FileListCtrl::UpdateFileList ()
   // Hide the list to speed up inserting
   Hide ();
 
-  std::string stdpath (path.c_str ());
-
   svn::Client client (m->Context);
   const svn::StatusEntries statusVector =
     client.status (path.c_str (), m->FlatMode, true, m->WithUpdate);
@@ -834,10 +838,12 @@ FileListCtrl::UpdateFileList ()
     {
       values[COL_NAME] = wxFileNameFromPath (filename);
     }
-    if (m->ColumnVisible[COL_PATH])
+
+    if (m->ColumnVisible[COL_PATH] || m->ColumnVisible[COL_EXTENSION])
     {
       wxFileName path (fullPath);
-      values[COL_PATH] = path.GetFullPath ();
+      values[COL_PATH]      = path.GetFullPath ();
+      values[COL_EXTENSION] = path.GetExt();
     }
 
     wxString text;
@@ -1258,6 +1264,7 @@ FileListCtrl::ResetColumns ()
     case COL_CONFLICT_OLD:
     case COL_CONFLICT_NEW:
     case COL_CONFLICT_WRK:
+    case COL_EXTENSION:
       visible = false;
       break;
 

@@ -79,6 +79,7 @@ enum
   ID_Column_Text_Status,
   ID_Column_Prop_Status,
   ID_Column_Cmt_Date,
+  ID_Column_Extension,
   ID_Column_Text_Time,
   ID_Column_Prop_Time,
   ID_Column_Url,
