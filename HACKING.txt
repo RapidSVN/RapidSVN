@@ -48,6 +48,34 @@ on the screen.
 
 
 
+Naming conventions
+==================
+
+Do not use variable prefixes like used with the Hungarian Notation
+naming style. Instead, try to give the variable a short but
+appropriate name. Dont use variable names like "foo3" since people
+always will have to lookup the meaning of the variable.
+
+Class variables and module local variable get the prefix "m_".
+
+Here is an example (with inline code).
+
+*** foo.h ***
+
+class Foo
+{
+  int m_myMember;
+
+  Foo(int intitialFoo)
+  {
+    int bar = initialFoo * 2;
+
+    m_myMember = bar;
+  }
+}
+
+
+
 Documenting
 ===================
 
@@ -217,3 +245,9 @@ In addition to the standards above, RapidSVN uses these conventions:
       arrive with the line endings native to that OS.  Here is how you 
       add the property:
       % svn propset eol-style native new_file.cpp
+
+   *  If you add images to the project make sure you apply the correct
+      mime-type property. 
+      Example for a XPM:
+      % svn propset svn:mime-type image/x-xpm
+     
