@@ -20,6 +20,7 @@
 #include "cert_dlg.hpp"
 #include "tracer.hpp"
 #include "auth_dlg.hpp"
+#include "commit_dlg.hpp"
 
 static const char *
 ACTION_NAMES [] =
@@ -222,8 +223,17 @@ Listener::contextNotify (const char *path,
 bool
 Listener::contextGetLogMessage (std::string & msg)
 {
-  // Implement code to ask for a log message
-  return false;
+  CommitDlg dlg (GetParent (), true);
+  
+  bool ok = dlg.ShowModal () == wxID_OK;
+  if (ok)
+  {
+    // WORKAROUND: CONVERT TO UTF8
+    wxString messageNative (dlg.GetMessage ());
+    wxString messageUtf8 (messageNative.mb_str (wxConvUTF8));
+    msg = messageUtf8.c_str ();
+  }
+  return ok;
 }
 
 

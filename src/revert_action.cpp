@@ -49,7 +49,7 @@ RevertAction::Prepare ()
 bool
 RevertAction::Perform ()
 {
-  svn::Client client;
+  svn::Client client (GetContext ());
   client.revert (GetTargets (), false);
 
   return true;

@@ -24,12 +24,12 @@ public:
   wxString message;
   bool recursive;
 
-  Data (wxWindow * window)
-    : message (""), recursive (true)
+  Data (wxWindow * window, bool unexpectedCommit)
+    : recursive (true)
   {
     // create controls
     wxStaticBox* msgBox = 
-      new wxStaticBox(window, -1, _("Enter log message"));
+      new wxStaticBox(window, -1, unexpectedCommit ? _("This action has resulted in a Commit - please enter a log message") : _("Enter log message"));
 
     wxSize msgSize (window->GetCharWidth () * 80, 
                     window->GetCharHeight () * 10);
@@ -37,14 +37,15 @@ public:
     wxTextCtrl* msg;
     {
       wxTextValidator val (wxFILTER_NONE, &message);
-      msg = new wxTextCtrl (window, -1, "", wxDefaultPosition, 
+      msg = new wxTextCtrl (window, -1, _(""), wxDefaultPosition, 
                             msgSize, wxTE_MULTILINE, val);
     }
-    wxCheckBox * checkRecursive;
+    wxCheckBox * checkRecursive = NULL;
+    if (!unexpectedCommit)
     {
       wxGenericValidator val (&recursive);
       checkRecursive = 
-        new wxCheckBox (window, -1, "Recursive",
+        new wxCheckBox (window, -1, _("Recursive"),
                         wxDefaultPosition, wxDefaultSize, 0,
                         val);
     }
@@ -63,9 +64,12 @@ public:
   
     // The buttons:
     wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
-    buttonSizer->Add (checkRecursive, 1, 
-                      wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 
-                      10);
+    if (!unexpectedCommit)
+    {
+      buttonSizer->Add (checkRecursive, 1, 
+                        wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 
+                        10);
+    }
     buttonSizer->Add (ok, 0, wxALL, 10);
     buttonSizer->Add (cancel, 0, wxALL, 10);
 
@@ -88,12 +92,12 @@ public:
 BEGIN_EVENT_TABLE (CommitDlg, wxDialog)
 END_EVENT_TABLE ()
 
-CommitDlg::CommitDlg (wxWindow* parent)
-  : wxDialog(parent, -1, _("Commit"),
+CommitDlg::CommitDlg (wxWindow* parent, bool unexpectedCommit)
+  : wxDialog(parent, -1, unexpectedCommit ? _("Commit Log Message") : _("Commit"),
              wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data (this);
+  m = new Data (this, unexpectedCommit);
   CentreOnParent ();
 }
 

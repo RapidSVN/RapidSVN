@@ -53,7 +53,7 @@ AddAction::Prepare ()
 bool
 AddAction::Perform ()
 {
-  svn::Client client;
+  svn::Client client (GetContext ());
 
   const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;

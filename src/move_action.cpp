@@ -100,7 +100,7 @@ MoveAction::Prepare ()
 bool
 MoveAction::Perform ()
 {
-  svn::Client client;
+  svn::Client client (GetContext ());
 
   svn::Path srcPath = GetTarget ();
   svn::Path destPath (m_destination.c_str ());

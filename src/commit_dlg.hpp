@@ -25,7 +25,7 @@ public:
    *
    * @param parent parent window
    */
-  CommitDlg(wxWindow* parent);
+  CommitDlg(wxWindow* parent, bool unexpectedCommit = false);
 
   /**
    * destructor
