@@ -21,14 +21,14 @@ namespace svn
   class Client
   {
   protected:
-    apr_pool_t * pool;
-    svn_opt_revision_t rev;
-    std::string lastPath;
+    apr_pool_t * m_pool;
+    svn_opt_revision_t m_rev;
+    std::string m_lastPath;
 
     /**
      * Global error object struct.
      */
-    svn_error_t *Err;
+    svn_error_t *m_Err;
 
     /**
      * Convert the path to the Subversion format.

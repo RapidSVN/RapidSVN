@@ -13,47 +13,47 @@ namespace svn
 
   Client::Client ()
   {
-    pool = svn_pool_create (NULL);
-    memset (&rev, 0, sizeof (rev));
+    m_pool = svn_pool_create (NULL);
+    memset (&m_rev, 0, sizeof (m_rev));
   }
 
   Client::~Client ()
   {
-    svn_pool_destroy (pool);
+    svn_pool_destroy (m_pool);
   }
 
   svn_opt_revision_t *
   Client::getRevision (long revNumber)
   {
-    rev.value.number = 0;
-    rev.value.date = 0;
-    rev.kind = svn_opt_revision_unspecified;
+    m_rev.value.number = 0;
+    m_rev.value.date = 0;
+    m_rev.kind = svn_opt_revision_unspecified;
 
     switch (revNumber)
     {
     case -1:
-      rev.kind = svn_opt_revision_unspecified;
+      m_rev.kind = svn_opt_revision_unspecified;
       break;
     case -2:
-      rev.kind = svn_opt_revision_head;
+      m_rev.kind = svn_opt_revision_head;
       break;
     default:
-      rev.kind = svn_opt_revision_number;
-      rev.value.number = revNumber;
+      m_rev.kind = svn_opt_revision_number;
+      m_rev.value.number = revNumber;
       break;
     }
 
-    return &rev;
+    return &m_rev;
   }
 
   apr_array_header_t *
   Client::target (const char *path)
   {
-    apr_array_header_t *targets = apr_array_make (pool,
+    apr_array_header_t *targets = apr_array_make (m_pool,
                                                   DEFAULT_ARRAY_SIZE,
                                                   sizeof (const char *));
 
-    const char *target = apr_pstrdup (pool, path);
+    const char *target = apr_pstrdup (m_pool, path);
     (*((const char **) apr_array_push (targets))) = target;
 
     return targets;
@@ -62,13 +62,13 @@ namespace svn
   const char *
   Client::getLastPath ()
   {
-    return lastPath.c_str ();
+    return m_lastPath.c_str ();
   }
 
   void 
   Client::internalPath (std::string & path)
   {
-    svn_stringbuf_t *buf = svn_stringbuf_create (path.c_str (), pool);
+    svn_stringbuf_t *buf = svn_stringbuf_create (path.c_str (), m_pool);
     svn_path_internal_style (buf);
     path = buf->data;
   }
@@ -79,7 +79,7 @@ namespace svn
     svn_error_t *Err;
     std::vector < Status * >statusHash;
     apr_hash_t *status_hash;
-    Pool subPool(pool);
+    Pool subPool(m_pool);
 
     Err = svn_client_status (&status_hash, NULL, path, NULL, descend, TRUE,
                              FALSE,     //update
@@ -123,7 +123,7 @@ namespace svn
     svn_error_t *Err;
     Status * result;
     apr_hash_t *status_hash;
-    Pool subPool(pool);
+    Pool subPool(m_pool);
 
     Err = svn_client_status (&status_hash, NULL, path, NULL, false, true,
                              false,     //update

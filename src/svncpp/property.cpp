@@ -85,16 +85,16 @@ Property::loadPath (const char * path)
 {
   svn_error_t * error = NULL;
   apr_array_header_t * props;
-  lastPath = path;
-  internalPath (lastPath);
+  m_lastPath = path;
+  internalPath (m_lastPath);
 
   reset ();
-  Err = svn_client_proplist (&props,
-                             lastPath.c_str (), 
+  m_Err = svn_client_proplist (&props,
+                             m_lastPath.c_str (), 
                              false /* recurse */,
-                             pool);
+                             m_pool);
   versioned = true;
-  if(Err != NULL)
+  if(m_Err != NULL)
   {
     versioned = false;
     return;
@@ -108,12 +108,12 @@ Property::loadPath (const char * path)
     const char *node_name_native;
     svn_utf_cstring_from_utf8_stringbuf (&node_name_native,
                                          item->node_name,
-                                         pool);
+                                         m_pool);
 
     apr_hash_index_t *hi;
     int index = 0;
 
-    for (hi = apr_hash_first (pool, item->prop_hash); hi; 
+    for (hi = apr_hash_first (m_pool, item->prop_hash); hi; 
          hi = apr_hash_next (hi))
     {
       const void *key;
@@ -121,7 +121,7 @@ Property::loadPath (const char * path)
       void *val;
 
       apr_hash_this (hi, &key, NULL, &val);
-      svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
+      svn_utf_cstring_from_utf8 (&key_native, (char *)key, m_pool);
 
       propName.push_back (key_native);
       propValue.push_back (propertyValue (key_native));
@@ -136,12 +136,12 @@ Property::propertyValue (const char * key)
   apr_hash_t *props;
   apr_hash_index_t *hi;
 
-  svn_client_propget (&props, key, lastPath.c_str (),
-                      false /* recurse */, pool);
+  svn_client_propget (&props, key, m_lastPath.c_str (),
+                      false /* recurse */, m_pool);
 
   svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (key);
 
-  for (hi = apr_hash_first (pool, props); hi; hi = apr_hash_next (hi))
+  for (hi = apr_hash_first (m_pool, props); hi; hi = apr_hash_next (hi))
   {
     const void *key;
     void *val;
@@ -153,7 +153,7 @@ Property::propertyValue (const char * key)
     /* If this is a special Subversion property, it is stored as
        UTF8, so convert to the native format. */
     if (is_svn_prop)
-      svn_utf_string_from_utf8 (&propval, propval, pool);
+      svn_utf_string_from_utf8 (&propval, propval, m_pool);
   
     return propval->data;
   }
@@ -192,12 +192,12 @@ Property::set (const char * name, const char * value, bool recurse)
   const svn_string_t *propval = NULL;
   svn_error_t * error = NULL;
 
-  propval = svn_string_create ((const char *) value, pool);
+  propval = svn_string_create ((const char *) value, m_pool);
 
-  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
+  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, m_pool);
 
-  error = svn_client_propset (pname_utf8, propval, lastPath.c_str (),
-                              recurse, pool);
+  error = svn_client_propset (pname_utf8, propval, m_lastPath.c_str (),
+                              recurse, m_pool);
   if(error != NULL)
     throw ClientException (error);
 }
@@ -207,10 +207,10 @@ Property::remove (const char * name, bool recurse)
 {
   const char *pname_utf8;
   svn_error_t * error = NULL;
-  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
+  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, m_pool);
 
-  error = svn_client_propset (pname_utf8, NULL, lastPath.c_str (),
-                            recurse, pool);
+  error = svn_client_propset (pname_utf8, NULL, m_lastPath.c_str (),
+                            recurse, m_pool);
   if(error != NULL)
     throw ClientException (error);
 }
@@ -220,7 +220,7 @@ Property::isSvnProperty (const char * name)
 {
   const char *pname_utf8;
 
-  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
+  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, m_pool);
   svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (pname_utf8);
 
   return is_svn_prop;

@@ -22,23 +22,23 @@ void
 Modify::checkout (const char * moduleName, const char *destPath, 
                   long revision, bool recurse)
 {
-  lastPath = destPath;
-  internalPath (lastPath);
+  m_lastPath = destPath;
+  internalPath (m_lastPath);
 
   if(_notify == NULL)
     return;
 
-  Err = svn_client_checkout (Notify::notify,
+  m_Err = svn_client_checkout (Notify::notify,
                              (void *) _notify,
                              authenticate (),
                              moduleName,
-                             lastPath.c_str (),
+                             m_lastPath.c_str (),
                              getRevision (revision),
                              recurse,
-                             pool);
+                             m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
@@ -51,56 +51,56 @@ void
 Modify::remove (const char * path, bool force)
 {
   svn_client_commit_info_t *commit_info = NULL;
-  lastPath = path;
-  internalPath (lastPath);
+  m_lastPath = path;
+  internalPath (m_lastPath);
 
-  Err = svn_client_delete (&commit_info, lastPath.c_str (), NULL, force,
+  m_Err = svn_client_delete (&commit_info, m_lastPath.c_str (), NULL, force,
                            authenticate (),
                            &svn_cl__get_log_message,
                            logMessage (NULL),
-                           Notify::notify, (void *) _notify, pool);
-  if(Err != NULL)
-    throw ClientException (Err);
+                           Notify::notify, (void *) _notify, m_pool);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
 Modify::revert (const char * path, bool recurse)
 {
-  lastPath = path;
-  internalPath (lastPath);
-  Err = svn_client_revert (lastPath.c_str (), recurse, Notify::notify, 
-                           (void *) _notify, pool);
+  m_lastPath = path;
+  internalPath (m_lastPath);
+  m_Err = svn_client_revert (m_lastPath.c_str (), recurse, Notify::notify, 
+                           (void *) _notify, m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
 Modify::add (const char * path, bool recurse)
 {
-  lastPath = path;
-  internalPath (lastPath);
-  Err = svn_client_add (lastPath.c_str (), recurse, Notify::notify, 
-                        (void *) _notify, pool);
+  m_lastPath = path;
+  internalPath (m_lastPath);
+  m_Err = svn_client_add (m_lastPath.c_str (), recurse, Notify::notify, 
+                        (void *) _notify, m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
 Modify::update (const char * path, long revision, bool recurse)
 {
-  lastPath = path;
-  internalPath (lastPath);
-  Err = svn_client_update (authenticate (),
-                           lastPath.c_str (),
+  m_lastPath = path;
+  internalPath (m_lastPath);
+  m_Err = svn_client_update (authenticate (),
+                           m_lastPath.c_str (),
                            getRevision (revision),
                            recurse,
                            Notify::notify,
                            (void *) _notify,
-                           pool);
-  if(Err != NULL)
-    throw ClientException (Err);
+                           m_pool);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 long
@@ -108,16 +108,16 @@ Modify::commit (const char * path, const char * message, bool recurse)
 {
   svn_client_commit_info_t *commit_info = NULL;
   svn_revnum_t revnum = SVN_INVALID_REVNUM;
-  lastPath = path;
-  internalPath (lastPath);
+  m_lastPath = path;
+  internalPath (m_lastPath);
 
-  Err = svn_client_commit (&commit_info, Notify::notify, 
+  m_Err = svn_client_commit (&commit_info, Notify::notify, 
                            (void *) _notify, 
-                           authenticate (), target (lastPath.c_str ()), 
+                           authenticate (), target (m_lastPath.c_str ()), 
                            &svn_cl__get_log_message, 
-                           logMessage (message), !recurse, pool);
-  if(Err != NULL)
-    throw ClientException (Err);
+                           logMessage (message), !recurse, m_pool);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 
   if(commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
     return commit_info->revision;
@@ -129,26 +129,26 @@ void
 Modify::copy (const char * srcPath, const char * destPath)
 {
   std::string sourcePath = srcPath;
-  lastPath = destPath;
+  m_lastPath = destPath;
 
   internalPath (sourcePath);
-  internalPath (lastPath);
+  internalPath (m_lastPath);
   svn_client_commit_info_t *commit_info = NULL;
 
-  Err = svn_client_copy (&commit_info,
+  m_Err = svn_client_copy (&commit_info,
                          sourcePath.c_str (),
                          getRevision (-1),
-                         lastPath.c_str (),
+                         m_lastPath.c_str (),
                          NULL,
                          authenticate (),
                          &svn_cl__get_log_message,
                          logMessage (NULL),
                          Notify::notify, 
                          (void *) _notify,
-                         pool);
+                         m_pool);
   
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
@@ -157,70 +157,70 @@ Modify::move (const char * srcPath, const char * destPath,
 {
   svn_client_commit_info_t *commit_info = NULL;
   std::string sourcePath = srcPath;
-  lastPath = destPath;
+  m_lastPath = destPath;
 
   internalPath (sourcePath);
-  internalPath (lastPath);
+  internalPath (m_lastPath);
 
-  Err = svn_client_move (&commit_info,
+  m_Err = svn_client_move (&commit_info,
                          sourcePath.c_str (),
                          getRevision (-1),
-                         lastPath.c_str (),
+                         m_lastPath.c_str (),
                          force,
                          authenticate (),
                          &svn_cl__get_log_message,
                          logMessage (NULL),
                          Notify::notify,
                          (void *) _notify,
-                         pool);
-  if(Err != NULL)
-    throw ClientException (Err);
+                         m_pool);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
 Modify::mkdir (const char * path, const char * message)
 {
   svn_client_commit_info_t *commit_info = NULL;
-  lastPath = path;
-  internalPath (lastPath);
+  m_lastPath = path;
+  internalPath (m_lastPath);
 
-  Err = svn_client_mkdir (&commit_info,
+  m_Err = svn_client_mkdir (&commit_info,
                           path,
                           authenticate (),
                           &svn_cl__get_log_message,
                           logMessage (message),
                           Notify::notify,
                           (void *) _notify,
-                          pool);
+                          m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
 Modify::cleanup (const char * path)
 {
-  lastPath = path;
-  internalPath (lastPath);
-  Err = svn_client_cleanup (lastPath.c_str (), pool);
+  m_lastPath = path;
+  internalPath (m_lastPath);
+  m_Err = svn_client_cleanup (m_lastPath.c_str (), m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
 Modify::resolve (const char * path, bool recurse)
 {
-  lastPath = path;
-  internalPath (lastPath);
-  Err = svn_client_resolve (lastPath.c_str (),
+  m_lastPath = path;
+  internalPath (m_lastPath);
+  m_Err = svn_client_resolve (m_lastPath.c_str (),
                             Notify::notify,
                             (void *) _notify,
                             recurse,
-                            pool);
+                            m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
@@ -228,62 +228,62 @@ Modify::doExport (const char * srcPath, const char * destPath,
                   long revision)
 {
   std::string sourcePath = srcPath;
-  lastPath = destPath;
+  m_lastPath = destPath;
   internalPath (sourcePath);
-  internalPath (lastPath);
-  Err = svn_client_export (sourcePath.c_str (),
-                           lastPath.c_str (),
+  internalPath (m_lastPath);
+  m_Err = svn_client_export (sourcePath.c_str (),
+                           m_lastPath.c_str (),
                            getRevision (revision),
                            authenticate (),
                            Notify::notify,
                            (void *) _notify,
-                           pool);
+                           m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
 Modify::doSwitch (const char * path, const char * url, 
                   long revision, bool recurse)
 {
-  lastPath = path;
-  internalPath (lastPath);
-  Err = svn_client_switch (authenticate (),
-                           lastPath.c_str (),
+  m_lastPath = path;
+  internalPath (m_lastPath);
+  m_Err = svn_client_switch (authenticate (),
+                           m_lastPath.c_str (),
                            url,
                            getRevision (revision),
                            recurse,
                            Notify::notify,
                            (void *) _notify,
-                           pool);
+                           m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
 Modify::import (const char * path, const char * url, const char * newEntry,
                 const char * message, bool recurse)
 {
-  lastPath = path;
-  internalPath (lastPath);
+  m_lastPath = path;
+  internalPath (m_lastPath);
   svn_client_commit_info_t *commit_info = NULL;
 
-  Err = svn_client_import (&commit_info,
+  m_Err = svn_client_import (&commit_info,
                            Notify::notify,
                            (void *) _notify,
                            authenticate (),   
-                           lastPath.c_str (),
+                           m_lastPath.c_str (),
                            url,
                            newEntry,
                            &svn_cl__get_log_message,
                            logMessage (message),
                            !recurse,
-                           pool);
+                           m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void
@@ -291,15 +291,15 @@ Modify::merge (const char * path1, long revision1,
                const char * path2, long revision2,
                const char * localPath, bool force, bool recurse)
 {
-  lastPath = localPath;
+  m_lastPath = localPath;
   std::string srcPath1 = path1;
   std::string srcPath2 = path2;
 
-  internalPath (lastPath);
+  internalPath (m_lastPath);
   internalPath (srcPath1);
   internalPath (srcPath2);
 
-  Err = svn_client_merge (Notify::notify,
+  m_Err = svn_client_merge (Notify::notify,
                           (void *) _notify,
                           authenticate (),
                           srcPath1.c_str (),
@@ -309,17 +309,17 @@ Modify::merge (const char * path1, long revision1,
                           localPath,
                           recurse,
                           force,
-                          pool);
+                          m_pool);
 
-  if(Err != NULL)
-    throw ClientException (Err);
+  if(m_Err != NULL)
+    throw ClientException (m_Err);
 }
 
 void *
 Modify::logMessage (const char * message, char * baseDirectory)
 {
   log_msg_baton *baton = (log_msg_baton *) 
-                         apr_palloc (pool, sizeof (*baton));
+                         apr_palloc (m_pool, sizeof (*baton));
 
   baton->message = message;
   baton->base_dir = baseDirectory ? baseDirectory : ".";

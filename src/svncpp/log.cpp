@@ -44,8 +44,8 @@ Log::loadPath (const char * path, long revisionStart,
   const apr_array_header_t * targets = NULL;
   log_message_receiver_baton lb;
   svn_opt_revision_t revEnd;
-  lastPath = path;
-  internalPath (lastPath);
+  m_lastPath = path;
+  internalPath (m_lastPath);
 
   reset ();
   memset (&revEnd, 0, sizeof (revEnd));
@@ -59,16 +59,16 @@ Log::loadPath (const char * path, long revisionStart,
   lb.size = &size;
   lb.first_call = true;
 
-  Err = svn_client_log (authenticate (), target (lastPath.c_str ()), 
+  m_Err = svn_client_log (authenticate (), target (m_lastPath.c_str ()), 
                         getRevision (revisionStart), 
                         &revEnd, 
                         0, // not reverse by default
                         1, // strict by default (not showing cp info)
                         messageReceiver,
-                        &lb, pool);
+                        &lb, m_pool);
 
   versioned = true;
-  if(Err != NULL)
+  if(m_Err != NULL)
     versioned = false;
 }
 
@@ -150,15 +150,15 @@ Log::formatDate (const char * dateText, const char * format)
   struct tm * localTime;
   svn_string_t * str;
 
-  svn_time_from_nts (&timeTemp, dateText, pool);
-  date = svn_time_to_human_nts(timeTemp, pool);
+  svn_time_from_nts (&timeTemp, dateText, m_pool);
+  date = svn_time_to_human_nts(timeTemp, m_pool);
   dateNative = (char *)date;
 
   time = svn_parse_date (dateNative, NULL);
   localTime = localtime (&time);
 
   strftime (buffer, 40, format, localTime);
-  str = svn_string_create (buffer, pool);
+  str = svn_string_create (buffer, m_pool);
 
   return str->data;
 }

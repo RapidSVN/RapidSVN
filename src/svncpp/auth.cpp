@@ -13,7 +13,7 @@ namespace svn
 Auth::Auth ()
 {
   auth_obj = (svn_client_auth_baton_t *) apr_pcalloc 
-             (pool, sizeof (*auth_obj));
+             (m_pool, sizeof (*auth_obj));
 
   auth_obj->prompt_callback = prompt;
   auth_obj->prompt_baton = NULL;
