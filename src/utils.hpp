@@ -71,6 +71,14 @@ void
 AppendModifyMenu (wxMenu * parentMenu);
 
 /**
+ * Append entries for the "Repository" menu
+ *
+ * @param parentMenu menu that will receive the items
+ */
+void
+AppendBookmarksMenu (wxMenu * parentMenu);
+
+/**
  * Append entries for the "Query" menu
  *
  * @param parentMenu menu that will receive the items

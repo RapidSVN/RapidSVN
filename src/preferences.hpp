@@ -36,7 +36,7 @@ public:
   wxString explorer;
   bool editorAlways;
   bool explorerAlways;
-  bool authPerProject;
+  bool authPerBookmark;
 
 private:
   void Read ();

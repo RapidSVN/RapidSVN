@@ -39,8 +39,8 @@ static const char CONF_EXPLORER[] =
   "/Preferences/StandardFileExplorer";
 static const char CONF_EXPLORER_ALWAYS[] = 
   "/Preferences/AlwaysStandardFileExplorer";
-static const char CONF_AUTH_PER_PROJECT[] =
-  "/Preferences/AuthPerProject";
+static const char CONF_AUTH_PER_BOOKMARK[] =
+  "/Preferences/AuthPerBookmark";
 
 /**
  * The Preferences singleton
@@ -50,7 +50,7 @@ static Preferences * m_preferences;
 Preferences::Preferences ()
   : editor (DEFAULT_EDITOR), explorer (DEFAULT_EXPLORER),
     editorAlways (false), explorerAlways (false),
-    authPerProject (false)
+    authPerBookmark (false)
 {
   Read ();
 }
@@ -72,7 +72,7 @@ Preferences::Read ()
   explorer = config->Read (CONF_EXPLORER, explorer);
   config->Read (CONF_EXPLORER_ALWAYS, &explorerAlways);
 
-  config->Read (CONF_AUTH_PER_PROJECT, &authPerProject);
+  config->Read (CONF_AUTH_PER_BOOKMARK, &authPerBookmark);
 }
 
 void Preferences::Write () const
@@ -85,7 +85,7 @@ void Preferences::Write () const
   config->Write (CONF_EXPLORER, explorer);
   config->Write (CONF_EXPLORER_ALWAYS, explorerAlways);
 
-  config->Write (CONF_AUTH_PER_PROJECT, authPerProject);
+  config->Write (CONF_AUTH_PER_BOOKMARK, authPerBookmark);
 }
 
 /* -----------------------------------------------------------------

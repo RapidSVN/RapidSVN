@@ -36,32 +36,30 @@ public:
 
   virtual void Refresh ();
 
-  //UniqueArrayString & GetWorkbenchItems ();
-
   /**
-   * remove the selected project from the project
+   * remove the selected bookmark from bookmarks
    */
-  const bool RemoveProject ();
+  const bool RemoveBookmark ();
 
   /**
-   * add project 
+   * add bookmark 
    */
-  void AddProject (const char * projectPath);
+  void AddBookmark (const char * bookmarkPath);
 
   /**
-   * @return project count on workbench
+   * @return bookmark count on bookmarks
    */
   const size_t 
-  GetProjectCount () const;
+  GetBookmarkCount () const;
 
   /**
-   * get the path of the project at @a index
+   * get the path of the bookmark at @a index
    *
    * @param index zero-based index
-   * @return path of the project
+   * @return path of the bookmark
    */
   const char *
-  GetProject (const size_t index) const;
+  GetBookmark (const size_t index) const;
 
   /**
    * returns the path of the current selection
@@ -82,7 +80,7 @@ public:
    * return the authentication context of the current selection
    *
    * @return authentication context
-   * @retval NULL if Workbench is selected
+   * @retval NULL if Bookmarks is selected
    */
   svn::Context * GetContext ();
 
@@ -98,28 +96,28 @@ public:
   SelectFolder (const char * path);
 
   /**
-   * selects the @a project in the workbench
+   * selects the @a bookmark 
    *
-   * @param projectPath project path
+   * @param bookmarkPath bookmark path
    * @return true on success
    */
   bool
-  SelectProject (const char * projectPath);
+  SelectBookmark (const char * bookmarkPath);
 
   /**
    * setting whether there will be one login for all the
-   * projects in the workbench 
+   * bookmakrs
    *   or
-   * each project in the workbench remembers its own login
+   * each bookmark in the bookmarks list remembers its own login
    */
   void
-  SetAuthPerProject (const bool value);
+  SetAuthPerBookmark (const bool value);
 
   /**
-   * @return auth per project setting
+   * @return auth per bookmark setting
    */
   const bool 
-  GetAuthPerProject () const;
+  GetAuthPerBookmark () const;
 
 private:
   struct Data;

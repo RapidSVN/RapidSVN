@@ -75,9 +75,9 @@ private:
   void OnSize (wxSizeEvent & event);
 
   // File menu
-  void OnAddProject (wxCommandEvent & event);
-  void OnAddRepository (wxCommandEvent & event);
-  void OnRemoveProject (wxCommandEvent & event);
+  void OnAddWcBookmark (wxCommandEvent & event);
+  void OnAddRepoBookmark (wxCommandEvent & event);
+  void OnRemoveBookmark (wxCommandEvent & event);
   void OnQuit (wxCommandEvent & event);
 
   // View menu
@@ -116,9 +116,9 @@ private:
 
   // Folder Browser
   void InitFolderBrowser ();
-  void AddProject ();
-  void AddRepository ();
-  void RemoveProject ();
+  void AddWcBookmark ();
+  void AddRepoBookmark ();
+  void RemoveBookmark ();
   void OnFolderBrowserSelChanged (wxTreeEvent & event);
   void OnFolderBrowserKeyDown (wxTreeEvent & event);
   void OnFileListSelected (wxListEvent & event);

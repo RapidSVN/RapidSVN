@@ -261,10 +261,10 @@ public:
   {
     wxBoxSizer * mainsizer = new wxBoxSizer (wxVERTICAL);
     {
-      wxGenericValidator valCheck (&m_prefs->authPerProject);
+      wxGenericValidator valCheck (&m_prefs->authPerBookmark);
       wxCheckBox * check = 
         new wxCheckBox (this, -1, 
-                        _("Different login for each project in the Workbench"), 
+                        _("Different login for each bookmark in the bookmarks list"), 
                         wxDefaultPosition, 
                         wxDefaultSize, 0, valCheck);
       mainsizer->Add (20, 20);

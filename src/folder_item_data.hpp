@@ -20,8 +20,8 @@
 enum
 {
   FOLDER_TYPE_INVALID,
-  FOLDER_TYPE_WORKBENCH,
-  FOLDER_TYPE_PROJECT,
+  FOLDER_TYPE_BOOKMARKS,
+  FOLDER_TYPE_BOOKMARK,
   FOLDER_TYPE_NORMAL
 };
 
@@ -90,7 +90,7 @@ public:
 
   /**
    * returns true for a REAL directory.
-   * FOLDER_TYPE_WORKBENCH is NOT real.
+   * FOLDER_TYPE_BOOKMARKS is NOT real.
    *
    * @retval true existing folder
    * @retval false unreal/virtual entry
@@ -99,7 +99,7 @@ public:
   {
     switch (m_folderType)
     {
-    case FOLDER_TYPE_PROJECT:
+    case FOLDER_TYPE_BOOKMARK:
     case FOLDER_TYPE_NORMAL:
       return true;
 

@@ -110,6 +110,10 @@ SOURCE=.\src\auth_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\bookmarks.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\checkout_action.cpp
 # End Source File
 # Begin Source File
@@ -288,10 +292,6 @@ SOURCE=.\src\win32\verblist.cpp
 
 SOURCE=.\src\view_action.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\src\workbench.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -315,6 +315,10 @@ SOURCE=.\src\add_action.hpp
 # Begin Source File
 
 SOURCE=.\src\auth_dlg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\bookmarks.hpp
 # End Source File
 # Begin Source File
 
@@ -527,10 +531,6 @@ SOURCE=.\src\version.hpp
 # Begin Source File
 
 SOURCE=.\src\view_action.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\workbench.hpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"

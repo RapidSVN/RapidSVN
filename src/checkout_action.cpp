@@ -79,10 +79,10 @@ CheckoutAction::Perform ()
                    m_data.DestFolder.c_str (), 
                    revision, m_data.Recursive);
 
-  // now post event to add project to workbench
-  if (m_data.Workbench)
+  // now post event to add bookmark to bookmarks
+  if (m_data.Bookmarks)
   {
-    wxCommandEvent event = CreateActionEvent (TOKEN_ADD_PROJECT);
+    wxCommandEvent event = CreateActionEvent (TOKEN_ADD_BOOKMARK);
     event.SetString (m_data.DestFolder);
 
     PostEvent (event);
