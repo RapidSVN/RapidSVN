@@ -39,7 +39,6 @@ else
 fi
 	
 CPPFLAGS="$CPPFLAGS  `$APR_CONFIG --cppflags` `$APR_CONFIG --includes`"
-CXXFLAGS="$CXXFLAGS `$APR_CONFIG --cflags`"
 APR_LIBS="`$APR_CONFIG --link-ld --libs`"
 
 dnl
@@ -71,6 +70,36 @@ else
 fi
 CPPFLAGS="$CPPFLAGS `$APU_CONFIG --includes`"
 APR_LIBS="$APR_LIBS `$APU_CONFIG --link-ld --libs`"
+
+
+dnl
+dnl Neon
+dnl
+SEARCH="neon-config"
+AC_ARG_WITH(neon-config,
+[[  --with-neon-config=FILE     Use the given path to neon-config when determining
+                            Neon configuration; defaults to "neon-config"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        SEARCH=$withval
+    fi
+])
+AC_MSG_CHECKING([Neon])
+NEON_CONFIG=""
+for VALUE in $SEARCH ; do
+	if CHECK=`$VALUE --version` >/dev/null ; then
+		NEON_CONFIG=$VALUE
+		break
+	fi
+done
+if test $NEON_CONFIG ; then	
+	AC_MSG_RESULT([found])
+else
+	AC_MSG_RESULT([not found])
+	AC_MSG_ERROR([Neon is required. Try --with-neon-config.])
+fi
+CPPFLAGS="$CPPFLAGS `$NEON_CONFIG --cflags`"
+NEON_LIBS="`$NEON_CONFIG --libs`"
 
 
 dnl
@@ -125,7 +154,7 @@ else
     AC_MSG_ERROR([Subversion libraries are required. Try --with-svn-lib.])
 fi
 SVN_LIBS="-L$SVN_LIB -lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1"
-   
+
 dnl
 dnl wxWindows
 dnl
@@ -328,6 +357,7 @@ fi
 AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
 AC_SUBST(SVN_LIBS)
+AC_SUBST(NEON_LIBS)
 AC_SUBST(DOCBOOK_XSL)
 AC_SUBST(XSLTPROC)
 AC_SUBST(TARGET_MANPAGE)

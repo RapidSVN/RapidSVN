@@ -57,6 +57,7 @@ rapidsvn_SOURCES= \
 rapidsvn_LDFLAGS=-Lsvncpp
 rapidsvn_LDADD= -lsvncpp \
 	$(SVN_LIBS) \
-	-lneon $(APR_LIBS) \
+	$(NEON_LIBS) \
+	$(APR_LIBS) \
 	$(WX_LIBS)
 rapidsvn_DEPENDENCIES=svncpp/libsvncpp.la
