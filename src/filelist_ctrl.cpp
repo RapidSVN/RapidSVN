@@ -33,6 +33,17 @@
  */
 int IMAGE_INDEX[N_STATUS_KIND];
 
+static int GetImageIndex(int Index)
+/*
+  A safe wrapper for getting images - avoids array bounds
+  exceptions.
+*/
+{
+  if ((Index >= 0) && (Index <= N_STATUS_KIND))
+    return IMAGE_INDEX[Index];
+  else
+    return 0;    
+}
 
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
 EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
@@ -127,12 +138,12 @@ FileListCtrl::UpdateFileList (const wxString & path)
     if (wxDirExists (f))    // a directory
     {
       if (status.isVersioned ())
-        InsertItem (i, name, IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER]);
+        InsertItem (i, name, GetImageIndex(IMG_INDX_VERSIONED_FOLDER));
       else
-        InsertItem (i, name, IMAGE_INDEX[IMG_INDX_FOLDER]);
+        InsertItem (i, name, GetImageIndex(IMG_INDX_FOLDER));
     }
     else
-      InsertItem (i, name, IMAGE_INDEX[status.textType ()]);
+      InsertItem (i, name, GetImageIndex(status.textType ()));
 
     if (status.isVersioned ())
       text.Printf (_T ("%ld"), status.revision ());
