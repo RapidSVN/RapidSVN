@@ -15,15 +15,16 @@
 
 #include "action_thread.h"
 #include "import_dlg.h"
+#include "svncpp/pool.h"
 
 class ImportAction:public ActionThread
 {
 private:
-  ImportDlg::sData Data;
+  ImportDlg::sData m_data;
   wxFrame *m_pFrame;
 
 public:
-  ImportAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr);
+  ImportAction (wxFrame * frame, Tracer * tr);
 
   void Perform ();
   void *Entry ();

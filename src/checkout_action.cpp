@@ -20,8 +20,8 @@
 #include "checkout_action.h"
 #include "svn_notify.h"
 
-CheckoutAction::CheckoutAction (wxFrame * frame, apr_pool_t * __pool, 
-                                Tracer * tr):ActionThread (frame, __pool)
+CheckoutAction::CheckoutAction (wxFrame * frame, Tracer * tr)
+  : ActionThread (frame)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
   m_pFrame = frame;
@@ -32,7 +32,7 @@ CheckoutAction::Perform ()
 {
   ////////////////////////////////////////////////////////////
   // Here we are in the main thread.
-  CheckoutDlg *coDlg = new CheckoutDlg(m_pFrame, &Data);
+  CheckoutDlg *coDlg = new CheckoutDlg(m_pFrame, &m_data);
 
   if (coDlg->ShowModal () == wxID_OK)
   {
@@ -55,26 +55,26 @@ CheckoutAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  modify.username (Data.User);
-  modify.password (Data.Password);
+  modify.username (m_data.User);
+  modify.password (m_data.Password);
 
-  TrimString(Data.DestFolder);
-  UnixPath(Data.DestFolder);
-  TrimString(Data.ModuleName);
+  TrimString(m_data.DestFolder);
+  UnixPath(m_data.DestFolder);
+  TrimString(m_data.ModuleName);
   
   long revnum = -1;
   // Did the user request a specific revision?:
-  if (!Data.UseLatest)
+  if (!m_data.UseLatest)
   {
-    TrimString(Data.Revision);
-    if (!Data.Revision.IsEmpty ())
-      Data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
+    TrimString(m_data.Revision);
+    if (!m_data.Revision.IsEmpty ())
+      m_data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
   }
 
   try
   {
-    modify.checkout (Data.ModuleName, Data.DestFolder, 
-                     revnum, Data.Recursive);
+    modify.checkout (m_data.ModuleName, m_data.DestFolder, 
+                     revnum, m_data.Recursive);
   }
   catch (svn::ClientException &e)
   {

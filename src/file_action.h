@@ -1,7 +1,20 @@
+/*
+ * ====================================================================
+ * Copyright (c) 2002 The RapidSvn Group.  All rights reserved.
+ *
+ * This software is licensed as described in the file LICENSE.txt,
+ * which you should have received as part of this distribution.
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals.  For exact contribution history, see the revision
+ * history and logs, available at http://rapidsvn.tigris.org/.
+ * ====================================================================
+ */
 #ifndef _FILE_ACTION_THREAD_H_INCLUDED_
 #define _FILE_ACTION_THREAD_H_INCLUDED_
 
 #include "tracer.h"
+#include "svncpp/pool.h"
 
 /**
 * An action thread class is used as a base class
@@ -22,7 +35,7 @@ protected:
   /**
    * The main frame of the application
    */
-  wxFrame * mainFrame;
+  wxFrame * m_mainFrame;
 
   /**
    * This member variable will take the address 
@@ -30,23 +43,23 @@ protected:
    * derived from ActionThread. It will be used
    * from the svn_delta_editor callbacks.
    */
-  Tracer *tracer;
+  Tracer *m_tracer;
   
   /**
    * If ownTracer is TRUE, then the ActionThread class
    * is responsible for deleting the tracer.
    */
-  bool ownTracer;
-  
-  apr_pool_t *pool;
-  apr_array_header_t *  _targets;
+  bool m_ownTracer;
 
-  FileAction (wxFrame * frame, apr_pool_t * __po0l);
+  svn::Pool m_pool;
+  apr_array_header_t *  m_targets;
+
+  FileAction (wxFrame * frame);
   virtual ~FileAction ();
 
   Tracer *GetTracer ()
   {
-    return tracer;
+    return m_tracer;
   }
 
   /**
@@ -56,7 +69,7 @@ protected:
    */
   void SetTracer (Tracer * t, bool own = TRUE)
   {
-    tracer = t;
+    m_tracer = t;
   }
 
   void PostStringEvent (int code, wxString str, int event_id);
@@ -86,8 +99,15 @@ public:
   void* Entry();
 
 protected:
-  FileAction *  _action;
-  wxFrame *     _mainFrame;
+  FileAction *  m_action;
+  wxFrame *     m_mainFrame;
 };
 
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */
+
+

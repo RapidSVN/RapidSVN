@@ -87,19 +87,18 @@ GetImageIndex (int Index)
     return 0;
 }
 
-#define _FILELISTCTRL_BEGIN_EVENT_TABLE
-
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
-EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
-EVT_LIST_ITEM_ACTIVATED (-1, FileListCtrl::OnItemActivated)
-EVT_LIST_ITEM_RIGHT_CLICK (LIST_CTRL, FileListCtrl::OnItemRightClk)
-EVT_LIST_COL_CLICK (LIST_CTRL, FileListCtrl::OnColumnLeftClick)
+  EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
+  EVT_LIST_ITEM_ACTIVATED (-1, FileListCtrl::OnItemActivated)
+  EVT_LIST_ITEM_RIGHT_CLICK (LIST_CTRL, FileListCtrl::OnItemRightClk)
+  EVT_LIST_COL_CLICK (LIST_CTRL, FileListCtrl::OnColumnLeftClick)
 END_EVENT_TABLE ()
-#define _FILELISTCTRL_END_EVENT_TABLE
-FileListCtrl::FileListCtrl (wxWindow * parent, apr_pool_t * __pool, const wxWindowID id, const wxPoint & pos, const wxSize & size):
-wxListCtrl (parent, id, pos, size, wxLC_REPORT)
+
+FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id, 
+                            const wxPoint & pos, const wxSize & size)
+  : wxListCtrl (parent, id, pos, size, wxLC_REPORT),
+    m_pool(NULL)
 {
-  pool = __pool;
   m_imageListSmall = new wxImageList (16, 16, TRUE);
 
   // add images to image list
@@ -569,19 +568,21 @@ FileListCtrl::GetSelectedItems ()
 }
 
 apr_array_header_t *
-FileListCtrl::GetTargets (apr_pool_t * pool)
+FileListCtrl::GetTargets (svn::Pool & pool)
 {
   IndexArray arr = GetSelectedItems ();
   size_t i;
-  apr_array_header_t *targets = apr_array_make (pool,
-                                                DEFAULT_ARRAY_SIZE,
-                                                sizeof (const char *));
+  apr_array_header_t *targets = 
+    apr_array_make (pool.pool(),
+                    DEFAULT_ARRAY_SIZE,
+                    sizeof (const char *));
 
   for (i = 0; i < arr.GetCount (); i++)
   {
     wxFileName fname (m_path, GetItemText (arr[i]));
     wxString path = fname.GetFullPath ();
-    const char *target = apr_pstrdup (pool, UnixPath (path));
+    const char *target = 
+      apr_pstrdup (pool.pool(), UnixPath (path));
 
     (*((const char **) apr_array_push (targets))) = target;
   }

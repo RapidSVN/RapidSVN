@@ -22,11 +22,10 @@ private:
   DeleteDlg::sData Data;
   wxFrame *m_pFrame;
 
-  apr_array_header_t *targets;
+  apr_array_header_t *m_targets;
 
 public:
-   DeleteAction (wxFrame * frame, apr_pool_t * __pool,
-                 Tracer * tr, apr_array_header_t * trgts);
+   DeleteAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets);
 
   void Perform ();
   void *Entry ();

@@ -1,11 +1,24 @@
+/*
+ * ====================================================================
+ * Copyright (c) 2002 The RapidSvn Group.  All rights reserved.
+ *
+ * This software is licensed as described in the file LICENSE.txt,
+ * which you should have received as part of this distribution.
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals.  For exact contribution history, see the revision
+ * history and logs, available at http://rapidsvn.tigris.org/.
+ */
+
 #include "include.h"
 #include "file_action.h"
 
-FileAction::FileAction (wxFrame * frame, apr_pool_t * __pool)
-:mainFrame (frame), pool (__pool)
+FileAction::FileAction (wxFrame * frame)
+    : m_mainFrame (frame)
 {
-  tracer = NULL;
-  ownTracer = FALSE;
+  m_pool.Create(NULL);
+  m_tracer = NULL;
+  m_ownTracer = FALSE;
 }
 
 FileAction::~FileAction ()
@@ -20,7 +33,7 @@ FileAction::PostStringEvent (int code, wxString str, int event_id)
   event.SetString (str);
 
   // send in a thread-safe way
-  wxPostEvent (mainFrame, event);
+  wxPostEvent (m_mainFrame, event);
 
 }
 
@@ -32,7 +45,7 @@ FileAction::PostDataEvent (int code, void *data, int event_id)
   event.SetClientData (data);
 
   // send in a thread-safe way
-  wxPostEvent (mainFrame, event);
+  wxPostEvent (m_mainFrame, event);
 
 }
 
@@ -51,7 +64,8 @@ FileAction::PerformAction()
   }
 
   //user didn't cancel UI, create a new thread helper
-  FileActionThreadHelper * helper = new FileActionThreadHelper(mainFrame, this);
+  FileActionThreadHelper * helper = 
+    new FileActionThreadHelper(m_mainFrame, this);
   
   //let it go
   helper->Create();
@@ -64,25 +78,32 @@ FileAction::PerformAction()
 /**
 * Create a detatched thread for the file action helper.
 */
-FileActionThreadHelper::FileActionThreadHelper(wxFrame * mainFrame, FileAction * action)
+FileActionThreadHelper::FileActionThreadHelper (wxFrame * mainFrame, 
+                                                FileAction * action)
 :wxThread ()
 {
-  _action = action;
-  _mainFrame = mainFrame;
-  _mainFrame->SetCursor(wxCURSOR_ARROWWAIT);
+  m_action = action;
+  m_mainFrame = mainFrame;
+  m_mainFrame->SetCursor(wxCURSOR_ARROWWAIT);
 }
 
 FileActionThreadHelper::~FileActionThreadHelper ()
 {
-  delete _action;
-  _mainFrame->SetCursor(wxCURSOR_ARROW);
+  delete m_action;
+  m_mainFrame->SetCursor(wxCURSOR_ARROW);
 }
 
 void *
 FileActionThreadHelper::Entry ()
 {
   //perform the action
-  _action->Perform ();
+  m_action->Perform ();
 
   return NULL;
 }
+
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

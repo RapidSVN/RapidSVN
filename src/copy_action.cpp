@@ -20,12 +20,9 @@
 #include "copy_action.h"
 
 
-CopyAction::CopyAction (wxFrame * frame, apr_pool_t * __pool, 
-                        Tracer * tr, apr_array_header_t * trgts )
-                        : ActionThread (frame, __pool)
+CopyAction::CopyAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets )
+  : ActionThread (frame), m_targets(targets)
 {
-  targets = trgts;
-  
   SetTracer (tr, FALSE);        // do not own the tracer
 }
 
@@ -50,15 +47,15 @@ CopyAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  src = ((const char **) (targets->elts))[0];
-  dest = DestinationPath (src);
+  m_src = ((const char **) (m_targets->elts))[0];
+  m_dest = DestinationPath (m_src);
 
-  if(dest.IsEmpty ())
+  if(m_dest.IsEmpty ())
     return NULL;
 
   try
   {
-    modify.copy (src, dest);
+    modify.copy (m_src, m_dest);
     GetTracer ()->Trace ("Copy successful");
   }
   catch (svn::ClientException &e)

@@ -20,8 +20,8 @@
 #include "import_action.h"
 #include "svn_notify.h"
 
-ImportAction::ImportAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr):ActionThread (frame,
-              __pool)
+ImportAction::ImportAction (wxFrame * frame, Tracer * tr)
+  :ActionThread (frame)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
   m_pFrame = frame;
@@ -30,14 +30,14 @@ ImportAction::ImportAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr):A
 void
 ImportAction::Perform ()
 {
-  ImportDlg *impDlg = new ImportDlg(m_pFrame, &Data);
+  ImportDlg *impDlg = new ImportDlg(m_pFrame, &m_data);
 
   if (impDlg->ShowModal () == wxID_OK)
   {
     // If path is not specified, get the current selection from 
     // the folder browser
-    if (Data.Path.IsEmpty ())
-      Data.Path = wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ();
+    if (m_data.Path.IsEmpty ())
+      m_data.Path = wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ();
       
     // #### TODO: check errors and throw an exception
     // create the thread
@@ -59,17 +59,17 @@ ImportAction::Entry ()
   modify.notification (&notify);
   const char *the_new_entry = NULL;
 
-  modify.username (Data.User);
-  modify.password (Data.Password);
+  modify.username (m_data.User);
+  modify.password (m_data.Password);
   
   // if new entry is empty, the_new_entry must be left NULL.
-  if (!Data.NewEntry.IsEmpty ())
-    the_new_entry = Data.NewEntry.c_str ();
+  if (!m_data.NewEntry.IsEmpty ())
+    the_new_entry = m_data.NewEntry.c_str ();
 
   try
   {
-    modify.import (Data.Path.c_str (), Data.Repository.c_str (), the_new_entry,
-                   Data.LogMessage.c_str(), Data.Recursive);
+    modify.import (m_data.Path.c_str (), m_data.Repository.c_str (), the_new_entry,
+                   m_data.LogMessage.c_str(), m_data.Recursive);
     GetTracer ()->Trace ("Import successful.");
   }
   catch (svn::ClientException &e)

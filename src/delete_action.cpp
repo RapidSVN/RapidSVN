@@ -19,9 +19,8 @@
 #include "svn_notify.h"
 #include "rapidsvn_app.h"
 
-DeleteAction::DeleteAction (wxFrame * frame, apr_pool_t * __pool, 
-                            Tracer * tr, apr_array_header_t * trgts) : 
-  ActionThread (frame, __pool), targets (trgts)
+DeleteAction::DeleteAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets) 
+  : ActionThread (frame), m_targets (targets)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
   m_pFrame = frame;
@@ -57,9 +56,9 @@ DeleteAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  for (int i = 0; i < targets->nelts; i++)
+  for (int i = 0; i < m_targets->nelts; i++)
   {
-    const char *target = ((const char **) (targets->elts))[i];
+    const char *target = ((const char **) (m_targets->elts))[i];
 
     try
     {

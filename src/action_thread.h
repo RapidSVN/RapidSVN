@@ -14,6 +14,7 @@
 #define _ACTION_THREAD_H_INCLUDED_
 
 #include "tracer.h"
+#include "svncpp/pool.h"
 
 /**
 * An action thread class is used as a base class
@@ -24,54 +25,54 @@
 */
 class ActionThread:public wxThread
 {
-protected:
-    /**
-    * The main frame of the application
-    */
-  wxFrame * mainFrame;
+ protected:
+  /**
+   * The main frame of the application
+   */
+  wxFrame * m_mainFrame;
+    
+  /**
+   * This member variable will take the address 
+   * of a trace object allocated in a class 
+   * derived from ActionThread. It will be used
+   * from the svn_delta_editor callbacks.
+   */
+  Tracer * m_tracer;
+    
+  /**
+   * If ownTracer is TRUE, then the ActionThread class
+   * is responsible for deleting the tracer.
+   */
+  bool m_ownTracer;
+    
+  svn::Pool m_pool;
 
-    /**
-    * This member variable will take the address 
-    * of a trace object allocated in a class 
-    * derived from ActionThread. It will be used
-    * from the svn_delta_editor callbacks.
-    */
-  Tracer *tracer;
-
-    /**
-    * If ownTracer is TRUE, then the ActionThread class
-    * is responsible for deleting the tracer.
-    */
-  bool ownTracer;
-
-  apr_pool_t *pool;
-
-   ActionThread (wxFrame * frame, apr_pool_t * __po0l);
+  ActionThread (wxFrame * frame);
   ~ActionThread ();
 
   Tracer *GetTracer ()
   {
-    return tracer;
+    return m_tracer;
   }
 
-    /**
-    * Sets the tracer passed as an argument.
-    * If own is TRUE, then the ActionThread class
-    * is responsible for deleting the tracer.
-    */
+  /**
+   * Sets the tracer passed as an argument.
+   * If own is TRUE, then the ActionThread class
+   * is responsible for deleting the tracer.
+   */
   void SetTracer (Tracer * t, bool own = TRUE)
   {
-    tracer = t;
+    m_tracer = t;
   }
 
   void PostStringEvent (int code, wxString str, int event_id);
   void PostDataEvent (int code, void *data, int event_id);
 
-    /**
-    * Abstract method to be defined 
-    * in every action class, accordingly 
-    * with the class type.
-    */
+  /**
+   * Abstract method to be defined 
+   * in every action class, accordingly 
+   * with the class type.
+   */
   virtual void Perform () = 0;
 
 };

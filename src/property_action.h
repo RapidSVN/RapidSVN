@@ -25,8 +25,7 @@ private:
   PropertyDlg * propDialog;
 
 public:
-  PropertyAction (wxFrame * frame, apr_pool_t * __pool,
-                  Tracer * tr, const char * target);
+  PropertyAction (wxFrame * frame,Tracer * tr, const char * target);
 
   void Perform ();
   void *Entry ();

@@ -19,9 +19,9 @@
 #include "svn_notify.h"
 
 
-PropertyAction::PropertyAction (wxFrame * frame, apr_pool_t * __pool, 
+PropertyAction::PropertyAction (wxFrame * frame, 
                       Tracer * tr, const char * target)
-                      : ActionThread (frame, __pool), _target(target)
+  : ActionThread (frame), _target(target)
 {
   thisframe = frame;
   SetTracer (tr, FALSE);        // do not own the tracer

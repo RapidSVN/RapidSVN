@@ -20,10 +20,10 @@
 #include "mkdir_action.h"
 #include "svn_notify.h"
 
-MkdirAction::MkdirAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr):ActionThread (frame,
-              __pool)
+MkdirAction::MkdirAction (wxFrame * frame, Tracer * tr)
+ : ActionThread (frame)
 {
-  thisframe = frame;
+  m_thisframe = frame;
   SetTracer (tr, FALSE);        // do not own the tracer
 }
 
@@ -33,12 +33,12 @@ MkdirAction::Perform ()
   ////////////////////////////////////////////////////////////
   // Here we are in the main thread.
 
-  MkdirDlg *mkDlg = new MkdirDlg(thisframe, &Data);
+  MkdirDlg *mkDlg = new MkdirDlg(m_thisframe, &m_data);
 
   if (mkDlg->ShowModal () == wxID_OK)
   {
-    UnixPath (Data.Target);
-    TrimString (Data.Target);
+    UnixPath (m_data.Target);
+    TrimString (m_data.Target);
     
     // #### TODO: check errors and throw an exception
     // create the thread
@@ -59,12 +59,12 @@ MkdirAction::Entry ()
   svn::Modify modify;
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
-  modify.username (Data.User);
-  modify.password (Data.Password);
+  modify.username (m_data.User);
+  modify.password (m_data.Password);
 
   try
   {
-    modify.mkdir (Data.Target, Data.LogMessage);
+    modify.mkdir (m_data.Target, m_data.LogMessage);
   }
   catch (svn::ClientException &e)
   {

@@ -18,15 +18,14 @@
 class CopyAction:public ActionThread
 {
 private:
-  wxString dest;
-  wxString src;
-  wxString logMsg;
-  apr_array_header_t *targets;
+  wxString m_dest;
+  wxString m_src;
+  wxString m_logMsg;
+  apr_array_header_t *m_targets;
   wxString DestinationPath (wxString src);
 
 public:
-  CopyAction (wxFrame * frame, apr_pool_t * __pool, 
-               Tracer * tr, apr_array_header_t * trgts);
+  CopyAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets);
 
   void Perform ();
   void *Entry ();

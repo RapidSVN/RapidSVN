@@ -19,11 +19,11 @@
 class MkdirAction:public ActionThread
 {
 private:
-  MkdirDlg::sData Data;
-  wxFrame *thisframe;
+  MkdirDlg::sData m_data;
+  wxFrame *m_thisframe;
 
 public:
-  MkdirAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr);
+  MkdirAction (wxFrame * frame, Tracer * tr);
 
   void Perform ();
   void *Entry ();

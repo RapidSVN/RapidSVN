@@ -13,12 +13,13 @@
 #include "include.h"
 #include "action_thread.h"
 
-ActionThread::ActionThread (wxFrame * frame, apr_pool_t * __pool):wxThread ()
+ActionThread::ActionThread (wxFrame * frame):wxThread ()
   // default creates the thread DETACHED
-  , mainFrame (frame), pool (__pool)
+  , m_mainFrame (frame)
 {
-  tracer = NULL;
-  ownTracer = FALSE;
+  m_pool.Create(NULL);
+  m_tracer = NULL;
+  m_ownTracer = FALSE;
 }
 
 ActionThread::~ActionThread ()
@@ -26,8 +27,10 @@ ActionThread::~ActionThread ()
   // The derived classes allocate a tracer, 
   // set ActionThread::tracer to point to it
   // and this class deletes it.
-  if (tracer && ownTracer)
-    delete tracer;
+  if (m_tracer && m_ownTracer)
+  {
+    delete m_tracer;
+  }
 }
 
 void
@@ -38,7 +41,7 @@ ActionThread::PostStringEvent (int code, wxString str, int event_id)
   event.SetString (str);
 
   // send in a thread-safe way
-  wxPostEvent (mainFrame, event);
+  wxPostEvent (m_mainFrame, event);
 
 }
 
@@ -50,7 +53,7 @@ ActionThread::PostDataEvent (int code, void *data, int event_id)
   event.SetClientData (data);
 
   // send in a thread-safe way
-  wxPostEvent (mainFrame, event);
+  wxPostEvent (m_mainFrame, event);
 
 }
 /* -----------------------------------------------------------------

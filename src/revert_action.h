@@ -18,11 +18,10 @@
 class RevertAction:public ActionThread
 {
 private:
-  apr_array_header_t * targets;
+  apr_array_header_t * m_targets;
 
 public:
-  RevertAction (wxFrame * frame, apr_pool_t * __pool,
-                Tracer * tr, apr_array_header_t * trgts);
+  RevertAction (wxFrame * frame, Tracer * tr, apr_array_header_t * trgts);
 
   void Perform ();
   void *Entry ();

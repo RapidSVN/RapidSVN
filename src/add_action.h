@@ -18,11 +18,10 @@
 class AddAction:public ActionThread
 {
 private:
-  apr_array_header_t * targets;
+  apr_array_header_t * m_targets;
 
 public:
-  AddAction (wxFrame * frame, apr_pool_t * __pool,
-             Tracer * tr, apr_array_header_t * trgts);
+  AddAction (wxFrame * frame, Tracer * tr, apr_array_header_t * trgts);
 
   void Perform ();
   void *Entry ();

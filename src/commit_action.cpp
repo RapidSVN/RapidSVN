@@ -18,18 +18,18 @@
 #include "commit_action.h"
 #include "svn_notify.h"
 
-CommitAction::CommitAction (wxFrame * frame, apr_pool_t * __pool, 
-                            Tracer * tr, apr_array_header_t * trgts)
-                            : FileAction (frame, __pool), targets (trgts)
+CommitAction::CommitAction (wxFrame * frame, 
+                            Tracer * tr, apr_array_header_t * targets)
+  : FileAction (frame), m_targets (targets)
 {
-  thisframe = frame;
+  m_thisframe = frame;
   SetTracer (tr, FALSE);        // do not own the tracer
 }
 
 bool
 CommitAction::PerformUI ()
 {
-  CommitDlg *ciDlg = new CommitDlg(thisframe, &Data);
+  CommitDlg *ciDlg = new CommitDlg(m_thisframe, &m_data);
 
   int retval = ciDlg->ShowModal ();
   // destroy the dialog
@@ -46,16 +46,23 @@ CommitAction::Perform ()
   modify.notification (&notify);
   long revision;
 
-  modify.username (Data.User);
-  modify.password (Data.Password);
+  modify.username (m_data.User);
+  modify.password (m_data.Password);
 
-  for (int i = 0; i < targets->nelts; i++)
+  // Caution: we cannot do a commit for every single
+  // file. the commit has to be called ONCE.
+  // Otherwise it would not be an atomic commit anymore
+  // and the revision numbers would be increased for
+  // every single file!!!!!!!
+  throw svn::Exception("NOT IMPLEMENTED YET!!!");
+
+  for (int i = 0; i < m_targets->nelts; i++)
   {
-    const char *target = ((const char **) (targets->elts))[i];
+    const char *target = ((const char **) (m_targets->elts))[i];
 
     try
     {
-      revision = modify.commit (target, Data.LogMessage.c_str (), Data.Recursive);
+      revision = modify.commit (target, m_data.LogMessage.c_str (), m_data.Recursive);
       wxString str;
 
       if(!modify.isAuthenticated ())

@@ -15,6 +15,7 @@
 
 #include "unique_array_string.h"
 #include "wx/treectrl.h"
+#include "svncpp/pool.h"
 
 static const wxString FolderBrowserNameStr;
 
@@ -24,9 +25,7 @@ class wxImageList;
 class FolderBrowser:public wxControl
 {
 public:
-  FolderBrowser (wxWindow * parent,
-                 apr_pool_t * pool,
-                 const wxWindowID id = -1,
+  FolderBrowser (wxWindow * parent,  const wxWindowID id = -1,
                  const wxPoint & pos = wxDefaultPosition,
                  const wxSize & size = wxDefaultSize,
                  const wxString & name = FolderBrowserNameStr);
@@ -43,7 +42,7 @@ public:
   void SetPath(const wxString& path);
 
 private:
-  apr_pool_t * m_pool;
+  svn::Pool m_pool;
   wxTreeCtrl* m_treeCtrl;
   wxTreeItemId m_rootId;
   wxImageList* m_imageList;

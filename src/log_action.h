@@ -20,13 +20,12 @@
 class LogAction : public ActionThread
 {
 private:
-  wxFrame *thisframe;
-  const char * _target;
-  LogDlg *  logDialog;
+  wxFrame *m_thisframe;
+  const char * m_target;
+  LogDlg * m_logDialog;
 
 public:
-  LogAction (wxFrame * frame, apr_pool_t * __pool,
-             Tracer * tr, const char * target);
+  LogAction (wxFrame * frame, Tracer * tr, const char * target);
 
   void Perform ();
   void *Entry ();

@@ -21,8 +21,8 @@
 #include "merge_action.h"
 #include "svn_notify.h"
 
-MergeAction::MergeAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr)
-            : ActionThread (frame, __pool)
+MergeAction::MergeAction (wxFrame * frame, Tracer * tr)
+            : ActionThread (frame)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
   m_pFrame = frame;
@@ -31,7 +31,7 @@ MergeAction::MergeAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr)
 void
 MergeAction::Perform ()
 {
-  MergeDlg *mrgDlg = new MergeDlg(m_pFrame, &Data);
+  MergeDlg *mrgDlg = new MergeDlg(m_pFrame, &m_data);
 
   if (mrgDlg->ShowModal () == wxID_OK)
   {
@@ -54,13 +54,11 @@ MergeAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  modify.username (Data.User.c_str ());
-  modify.password (Data.Password.c_str ());
+  modify.username (m_data.User.c_str ());
+  modify.password (m_data.Password.c_str ());
 
   wxString targetPath =
     wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ();
-
-  const char *targetpath = ".";
 
   // Set current working directory to point to the path
   // in the folder browser (the path where the merge will be 
@@ -74,12 +72,12 @@ MergeAction::Entry ()
   }
 
 
-  long rev1 = MergeAction::getRevision (Data.Path1Rev);
-  long rev2 = MergeAction::getRevision (Data.Path2Rev);
+  long rev1 = MergeAction::getRevision (m_data.Path1Rev);
+  long rev2 = MergeAction::getRevision (m_data.Path2Rev);
   try
   {
-    modify.merge (Data.Path1.c_str (), rev1, Data.Path2.c_str (), rev2, 
-                  targetPath, Data.Force, Data.Recursive);
+    modify.merge (m_data.Path1.c_str (), rev1, m_data.Path2.c_str (), rev2, 
+                  targetPath, m_data.Force, m_data.Recursive);
   }
   catch (svn::ClientException &e)
   {

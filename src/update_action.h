@@ -16,17 +16,18 @@
 #include "action_thread.h"
 #include "file_action.h"
 #include "update_dlg.h"
+#include "svncpp/pool.h"
 
 class UpdateAction:public FileAction
 {
 private:
-  UpdateDlg::sData Data;
+  UpdateDlg::sData m_data;
 
-  apr_array_header_t *targets;
+  apr_array_header_t *m_targets;
   wxFrame *m_pFrame;
 
 public:
-  UpdateAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * targets);
+  UpdateAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets);
   void Perform ();
   bool PerformUI ();
 };

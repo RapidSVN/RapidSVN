@@ -19,11 +19,11 @@
 class CheckoutAction:public ActionThread
 {
 private:
-  CheckoutDlg::sData Data;
+  CheckoutDlg::sData m_data;
   wxFrame *m_pFrame;
 
 public:
-   CheckoutAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr);
+   CheckoutAction (wxFrame * frame, Tracer * tr);
 
   void Perform ();
   void *Entry ();

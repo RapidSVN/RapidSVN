@@ -46,16 +46,12 @@ enum
 
 const unsigned int FolderBrowser::MAXLENGTH_PROJECT = 25;
 
-FolderBrowser::FolderBrowser (wxWindow * parent,
-                              apr_pool_t *pool,
-                              const wxWindowID id,
-                              const wxPoint & pos,
-                              const wxSize & size,
+FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
+                              const wxPoint & pos, const wxSize & size,
                               const wxString & name)
-  : wxControl (parent, id, pos, size, wxCLIP_CHILDREN, wxDefaultValidator, name)
+  : wxControl (parent, id, pos, size, wxCLIP_CHILDREN, wxDefaultValidator, name),
+    m_pool(NULL)
 {
-  m_pool = pool;
-
   m_imageList = new wxImageList (16, 16, TRUE);
   m_imageList->Add (wxIcon (computer_xpm));
   m_imageList->Add (wxIcon (versioned_folder_xpm));

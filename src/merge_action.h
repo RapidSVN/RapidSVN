@@ -19,7 +19,7 @@
 class MergeAction:public ActionThread
 {
 private:
-  MergeDlg::sData Data;
+  MergeDlg::sData m_data;
   wxFrame *m_pFrame;
 
   /**
@@ -28,7 +28,7 @@ private:
   long getRevision (wxString & str);
 
 public:
-   MergeAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr);
+   MergeAction (wxFrame * frame, Tracer * tr);
 
   void Perform ();
   void *Entry ();

@@ -19,13 +19,14 @@
 class CommitAction:public FileAction
 {
 private:
-  CommitDlg::sData Data;
-  wxFrame *thisframe;
+  CommitDlg::sData m_data;
+  wxFrame *m_thisframe;
 
-  apr_array_header_t *targets;
+  apr_array_header_t *m_targets;
 
 public:
-  CommitAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * targets);
+  CommitAction (wxFrame * frame, 
+                Tracer * tr, apr_array_header_t * targets);
   void Perform ();
   bool PerformUI ();
 };

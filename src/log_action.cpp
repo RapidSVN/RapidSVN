@@ -19,11 +19,9 @@
 #include "log_action.h"
 #include "svn_notify.h"
 
-LogAction::LogAction (wxFrame * frame, apr_pool_t * __pool, 
-                      Tracer * tr, const char * target)
-                      : ActionThread (frame, __pool), _target(target)
+LogAction::LogAction (wxFrame * frame, Tracer * tr, const char * target)
+  : ActionThread (frame), m_thisframe(frame), m_target(target)
 {
-  thisframe = frame;
   SetTracer (tr, FALSE);        // do not own the tracer
 }
 
@@ -34,14 +32,14 @@ LogAction::Perform ()
   // Here we are in the main thread.
   svn::Log log;
 
-  log.loadPath (_target, -2, 1);
+  log.loadPath (m_target, -2, 1);
 
   if(!log.isVersioned ())
 	  return;
 
-  logDialog = new LogDlg(thisframe, &log);
+  m_logDialog = new LogDlg(m_thisframe, &log);
 
-  if (logDialog->ShowModal () == wxID_OK)
+  if (m_logDialog->ShowModal () == wxID_OK)
   {
     // #### TODO: check errors and throw an exception
     // create the thread
@@ -54,7 +52,7 @@ LogAction::Perform ()
   }
 
   // destroy the dialog
-  logDialog->Close (TRUE);
+  m_logDialog->Close (TRUE);
 }
 
 void *
@@ -66,7 +64,7 @@ LogAction::Entry ()
 void 
 LogAction::setLogMessage (const char * message)
 {
-  logDialog->setLogMessage (message);
+  m_logDialog->setLogMessage (message);
 }
 /* -----------------------------------------------------------------
  * local variables:

@@ -18,9 +18,9 @@
 #include "update_action.h"
 #include "svn_notify.h"
 
-UpdateAction::UpdateAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):FileAction (frame, __pool),
-  targets
-  (trgts)
+UpdateAction::UpdateAction (wxFrame * frame, 
+                            Tracer * tr, apr_array_header_t * targets)
+  : FileAction (frame), m_targets (targets)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
   m_pFrame = frame;
@@ -29,7 +29,7 @@ UpdateAction::UpdateAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, a
 bool
 UpdateAction::PerformUI ()
 {
-  UpdateDlg *upDlg = new UpdateDlg(m_pFrame, &Data);
+  UpdateDlg *upDlg = new UpdateDlg(m_pFrame, &m_data);
 
   int retval = upDlg->ShowModal ();
   // destroy the dialog
@@ -45,21 +45,21 @@ UpdateAction::Perform ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  modify.username (Data.User);
-  modify.password (Data.Password);
+  modify.username (m_data.User);
+  modify.password (m_data.Password);
 
   long revnum = -1;
   // Did the user request a specific revision?:
-  if (!Data.UseLatest)
+  if (!m_data.UseLatest)
   {
-    TrimString(Data.Revision);
-    if (!Data.Revision.IsEmpty ())
-      Data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
+    TrimString(m_data.Revision);
+    if (!m_data.Revision.IsEmpty ())
+      m_data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
   }
   
-  for (int i = 0; i < targets->nelts; i++)
+  for (int i = 0; i < m_targets->nelts; i++)
   {
-    const char *target = ((const char **) (targets->elts))[i];
+    const char *target = ((const char **) (m_targets->elts))[i];
 
     try
     {

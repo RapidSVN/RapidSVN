@@ -16,6 +16,7 @@
 #include "wx/listctrl.h"
 #include "wx/dynarray.h"
 #include "svncpp/status.h"
+#include "svncpp/pool.h"
 
 /**
  * Define an array of indexes of the selected items.
@@ -29,7 +30,7 @@ WX_DEFINE_ARRAY (long, IndexArray);
 class FileListCtrl:public wxListCtrl
 {
 private:
-  apr_pool_t * pool;
+  svn::Pool  m_pool;
   wxImageList *m_imageListSmall;
   wxString m_path;
 
@@ -55,9 +56,7 @@ private:
 
 
 public:
-   FileListCtrl (wxWindow * parent,
-                 apr_pool_t * __pool,
-                 const wxWindowID id,
+   FileListCtrl (wxWindow * parent, const wxWindowID id,
                  const wxPoint & pos, const wxSize & size);
 
   ~FileListCtrl ();
@@ -65,7 +64,7 @@ public:
   // utility methods
   void UpdateFileList (const wxString & path);
   const IndexArray & GetSelectedItems ();
-  apr_array_header_t *GetTargets (apr_pool_t * pool);
+  apr_array_header_t *GetTargets (svn::Pool & pool);
   void GetFullUnixPath (long index, wxString & fullpath);
 
   void ShowMenu (long index, wxPoint & pt);

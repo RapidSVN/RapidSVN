@@ -18,9 +18,8 @@
 #include "resolve_action.h"
 #include "svn_notify.h"
 
-ResolveAction::ResolveAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):ActionThread (frame, __pool),
-  targets
-  (trgts)
+ResolveAction::ResolveAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets)
+  : ActionThread (frame), m_targets (targets)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
 }
@@ -46,10 +45,10 @@ ResolveAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  for (int i = 0; i < targets->nelts; i++)
+  for (int i = 0; i < m_targets->nelts; i++)
   {
 
-    const char *target = ((const char **) (targets->elts))[i];
+    const char *target = ((const char **) (m_targets->elts))[i];
 
     try
     {

@@ -18,11 +18,10 @@
 class ResolveAction:public ActionThread
 {
 private:
-  apr_array_header_t * targets;
+  apr_array_header_t * m_targets;
 
 public:
-  ResolveAction (wxFrame * frame, apr_pool_t * __pool,
-                 Tracer * tr, apr_array_header_t * trgts);
+  ResolveAction (wxFrame * frame, Tracer * tr, apr_array_header_t * targets);
 
   void Perform ();
   void *Entry ();
