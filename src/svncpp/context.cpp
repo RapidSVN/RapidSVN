@@ -42,20 +42,17 @@ namespace svn
       apr_array_header_t *providers = 
         apr_array_make (pool, 1, 
                         sizeof (svn_auth_provider_object_t *));
-      svn_auth_provider_object_t *client_provider = 
-        (svn_auth_provider_object_t *)apr_pcalloc (
-          pool, sizeof (*client_provider));
+      svn_auth_provider_object_t *provider;
 
       svn_client_get_simple_prompt_provider (
-        &(client_provider->vtable),
-        &(client_provider->provider_baton),
+        &provider,
         prompt,
         this,
         100000000, // not very nice. should be infinite...
         pool);
 
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
-        client_provider;
+        provider;
 
       svn_auth_baton_t *ab;
       svn_auth_open (&ab, providers, pool);
