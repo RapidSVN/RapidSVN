@@ -220,16 +220,6 @@ namespace svn
     mkdir (const Path & path, const char * message);
 
     /**
-     * Create multiple directories.
-     *
-     * @see mkdir (const Path&, const char*)
-     * @param path new directory
-     * @param message
-     */
-    void 
-    mkdir (const Targets & targets, const char * message);
-
-    /**
      * Recursively cleans up a local directory, finishing any
      * incomplete operations, removing lockfiles, etc.
      * @param path a local directory.
