@@ -75,6 +75,7 @@ namespace svn
     StatusEntries entries;
     apr_hash_t *status_hash;
     svn_revnum_t revnum;
+    Revision rev (Revision::HEAD);
     Pool pool;
     StatusEntriesBaton baton;
 
@@ -85,7 +86,7 @@ namespace svn
     error = svn_client_status (
       &revnum,      // revnum
       path,         // path
-      0,
+      rev,
       StatusEntriesFunc, // status func
       &baton,        // status baton
       descend,
@@ -210,15 +211,17 @@ namespace svn
     apr_hash_t *status_hash;
     Pool pool;
     StatusEntriesBaton baton;
+    svn_revnum_t revnum;
+    Revision rev (Revision::HEAD);
 
     status_hash = apr_hash_make( pool );
     baton.hash = status_hash;
     baton.pool = pool;
 
     error = svn_client_status (
-      0,      // revnum
+      &revnum,      // revnum
       path,         // path
-      0,
+      rev,
       StatusEntriesFunc, // status func
       &baton,        // status baton
       false,
