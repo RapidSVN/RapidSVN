@@ -90,6 +90,7 @@ const static char ConfigLeft[] = "/MainFrame/Left";
 const static char ConfigTop[] = "/MainFrame/Top";
 const static char ConfigWidth[] = "/MainFrame/Width";
 const static char ConfigHeight[] = "/MainFrame/Height";
+const static char ConfigMaximized[] = "/MainFrame/Maximized";
 const static char ConfigSplitterHoriz[] = "/MainFrame/SplitterHoriz";
 const static char ConfigSplitterVert[] = "/MainFrame/SplitterVert";
 const static char ConfigBookmarkFmt[] = "/Bookmarks/Bookmark%ld";
@@ -528,9 +529,9 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
 END_EVENT_TABLE ()
 
 /** class implementation **/
-  RapidSvnFrame::RapidSvnFrame (const wxString & title)
-    : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize, 
-               wxDEFAULT_FRAME_STYLE)
+RapidSvnFrame::RapidSvnFrame (const wxString & title)
+  : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize, 
+             wxDEFAULT_FRAME_STYLE)
 {
   m = new Data (this);
   m_folder_browser = NULL;
@@ -623,15 +624,22 @@ END_EVENT_TABLE ()
   m_info_panel->SetSizer (sizer);
 
   // Read frame position
-  int x = pConfig->Read (ConfigLeft, 50);
-  int y = pConfig->Read (ConfigTop, 50);
-  int w = pConfig->Read (ConfigWidth, 806);
-  int h = pConfig->Read (ConfigHeight, 480);
+  if (pConfig->Read (ConfigMaximized, (int)0) == 1)
+    Maximize (true);
+  else
+  {
+    int x = pConfig->Read (ConfigLeft, 50);
+    int y = pConfig->Read (ConfigTop, 50);
+    int w = pConfig->Read (ConfigWidth, 806);
+    int h = pConfig->Read (ConfigHeight, 480);
 
-  Move (x, y);
-  SetClientSize (w, h);
+    Move (x, y);
+    SetClientSize (w, h);
+  }
 
   // Get sash position for every splitter from configuration.
+  int w,h;
+  GetSize (&w, &h);
   int vpos = pConfig->Read (ConfigSplitterVert, w / 3);
   int hpos = pConfig->Read (ConfigSplitterHoriz, (3 * h) / 4);
 
@@ -657,17 +665,22 @@ RapidSvnFrame::~RapidSvnFrame ()
     delete m_actionWorker;
 
   // Save frame size and position.
+  if (IsMaximized ())
+    pConfig->Write (ConfigMaximized, 1);
+  else
+  {
+    int x, y;
+    int w, h;
 
-  int x, y;
-  int w, h;
+    GetClientSize (&w, &h);
+    GetPosition (&x, &y);
 
-  GetClientSize (&w, &h);
-  GetPosition (&x, &y);
-
-  pConfig->Write (ConfigLeft, (long) x);
-  pConfig->Write (ConfigTop, (long) y);
-  pConfig->Write (ConfigWidth, (long) w);
-  pConfig->Write (ConfigHeight, (long) h);
+    pConfig->Write (ConfigMaximized, 0);
+    pConfig->Write (ConfigLeft, (long) x);
+    pConfig->Write (ConfigTop, (long) y);
+    pConfig->Write (ConfigWidth, (long) w);
+    pConfig->Write (ConfigHeight, (long) h);
+  }
 
 
   // Save splitter positions
