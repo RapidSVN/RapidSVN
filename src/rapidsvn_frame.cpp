@@ -218,10 +218,22 @@ public:
   void
   InitializeMenu ()
   {
+
+    // the following code places the menu items in their correct
+    // places on MacOSX:
+#ifdef __WXMAC__
+    wxApp::s_macAboutMenuItemId = ID_About;
+    wxApp::s_macPreferencesMenuItemId = ID_Preferences;
+    wxApp::s_macHelpMenuTitleName = _("&Help");
+#endif
+
     // File menu
     wxMenu *menuFile = new wxMenu;
+    // Quit menu item is not necessary on MacOSX:
+#ifndef __WXMAC__
     //menuFile->AppendSeparator ();
     AppendMenuItem (*menuFile, ID_Quit);
+#endif
 
     // Columns menu
     MenuColumns = new wxMenu;
@@ -250,8 +262,11 @@ public:
     menuView->AppendCheckItem (ID_Flat, _("Flat Mode"));
     menuView->AppendCheckItem (ID_RefreshWithUpdate, _("Refresh with Update"));
 
+    // Preferences menu item goes to its own place on MacOSX,
+    // so no separator is necessary.
+#ifndef __WXMAC__
     menuView->AppendSeparator ();
-    
+#endif
     AppendMenuItem (*menuView, ID_Preferences);
 
     // Repository menu
@@ -290,7 +305,10 @@ public:
 
     // Create the menu bar and append the menus
     MenuBar = new wxMenuBar;
-    MenuBar->Append (menuFile, _("&File"));
+    // Under wxMac the menu might be empty, so
+    // don't show it:
+    if (menuFile->GetMenuItemCount()>0) 
+      MenuBar->Append (menuFile, _("&File"));
     MenuBar->Append (menuView, _("&View"));
     MenuBar->Append (menuRepos, _("&Repository"));
     MenuBar->Append (menuModif, _("&Modify"));
@@ -815,6 +833,11 @@ RapidSvnFrame::OnActivate (wxActivateEvent & event)
 
     UpdateFileList ();
   }
+
+  // wxMac needs this, otherwise the menu doesn't show:
+#ifdef __WXMAC__
+  event.Skip();
+#endif
 }
 
 

@@ -359,9 +359,11 @@ public:
   {
     if (treeCtrl)
     {
-      // this deletes all children and
-      // all of the itemdata
+        // this deletes all children and
+        // all of the itemdata
+#ifndef __WXMAC__ //wxMac crashes here
       treeCtrl->Collapse (rootId);
+#endif
     }
   }
 
