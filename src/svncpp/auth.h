@@ -14,8 +14,8 @@ namespace Svn
 class Auth : public Svn::Client
 {
 private:
-  char * sUsername;
-  char * sPassword;
+  char * userName;
+  char * passWord;
   svn_client_auth_baton_t * auth_obj;
 
 public:

@@ -18,8 +18,8 @@ private:
   svn_revnum_t youngest;
   apr_array_header_t * statusarray;
   svn_wc_status_t * status;
-  bool bVersioned;
-  char * sPath;
+  bool versioned;
+  char * filePath;
   
   /**
    * Reset to all of the default properties.
@@ -34,7 +34,7 @@ public:
    * Initiaties the status on a path. Returns false if the file is 
    * not under version control.
    */
-  bool LoadPath (char * sFilePath);
+  bool LoadPath (char * path);
   
   /**
    * Returns the revision.  Returns -1 on failure.

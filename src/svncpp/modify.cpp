@@ -64,11 +64,11 @@ Modify::Notification (svn_wc_notify_func_t function, void * baton)
 }
 
 bool
-Modify::Delete (const char * sPath, bool force)
+Modify::Delete (const char * path, bool force)
 {
   svn_client_commit_info_t *commit_info = NULL;
 
-  Err = svn_client_delete (&commit_info, sPath, NULL, force,
+  Err = svn_client_delete (&commit_info, path, NULL, force,
                            Authenticate (),
                            &svn_cl__get_log_message,
                            LogMessage (NULL),
@@ -80,9 +80,9 @@ Modify::Delete (const char * sPath, bool force)
 }
 
 bool
-Modify::Revert (const char * sPath, bool recurse)
+Modify::Revert (const char * path, bool recurse)
 {
-  Err = svn_client_revert (sPath, recurse, notify_func, 
+  Err = svn_client_revert (path, recurse, notify_func, 
                            notify_baton, pool);
 
   if(Err != NULL)
@@ -92,9 +92,9 @@ Modify::Revert (const char * sPath, bool recurse)
 }
 
 bool
-Modify::Add (char * sPath, bool recurse)
+Modify::Add (char * path, bool recurse)
 {
-  Err = svn_client_add (sPath, recurse, notify_func, 
+  Err = svn_client_add (path, recurse, notify_func, 
                         notify_baton, pool);
 
   if(Err != NULL)
@@ -104,10 +104,10 @@ Modify::Add (char * sPath, bool recurse)
 }
 
 bool
-Modify::Update (char * sPath, long revision, bool recurse)
+Modify::Update (char * path, long revision, bool recurse)
 {
   Err = svn_client_update (Authenticate (),
-                           sPath,
+                           path,
                            NULL,
                            Revision (revision),
                            recurse,
@@ -121,16 +121,16 @@ Modify::Update (char * sPath, long revision, bool recurse)
 }
 
 bool
-Modify::Commit (char * sPath, char * sLogMessage, bool recurse)
+Modify::Commit (char * path, char * logMessage, bool recurse)
 {
   svn_client_commit_info_t *commit_info = NULL;
   svn_revnum_t revnum = SVN_INVALID_REVNUM;
 
   Err = svn_client_commit (&commit_info, notify_func, 
                            notify_baton, 
-                           Authenticate (), Target (sPath), 
+                           Authenticate (), Target (path), 
                            &svn_cl__get_log_message, 
-                           LogMessage (sLogMessage), NULL, revnum, 
+                           LogMessage (logMessage), NULL, revnum, 
                            !recurse,
                            pool);
   if(Err != NULL)
@@ -140,14 +140,14 @@ Modify::Commit (char * sPath, char * sLogMessage, bool recurse)
 }
 
 bool
-Modify::Copy (char * sPath, char * sDestPath)
+Modify::Copy (char * srcPath, char * destPath)
 {
   svn_client_commit_info_t *commit_info = NULL;
 
   Err = svn_client_copy (&commit_info,
-                         sPath,
+                         srcPath,
                          Revision (-1),
-                         sDestPath,
+                         destPath,
                          NULL,
                          Authenticate (),
                          &svn_cl__get_log_message,
@@ -163,14 +163,14 @@ Modify::Copy (char * sPath, char * sDestPath)
 }
 
 bool
-Modify::Move (char * sPath, char * sDestPath, long revision, bool force)
+Modify::Move (char * srcPath, char * destPath, long revision, bool force)
 {
   svn_client_commit_info_t *commit_info = NULL;
 
   Err = svn_client_move (&commit_info,
-                         sPath,
+                         srcPath,
                          Revision (-1),
-                         sDestPath,
+                         destPath,
                          force,
                          Authenticate (),
                          &svn_cl__get_log_message,
@@ -185,25 +185,25 @@ Modify::Move (char * sPath, char * sDestPath, long revision, bool force)
 }
 
 apr_array_header_t *
-Modify::Target (char * sTarget)
+Modify::Target (char * path)
 {
   apr_array_header_t *targets = apr_array_make (pool,
                                                 DEFAULT_ARRAY_SIZE,
                                                 sizeof (const char *));
 
-  const char * target = apr_pstrdup (pool, sTarget);
+  const char * target = apr_pstrdup (pool, path);
   (*((const char **) apr_array_push (targets))) = target;
 
   return targets;
 }
 
 void *
-Modify::LogMessage (char * sMessage, char * baseDirectory)
+Modify::LogMessage (char * message, char * baseDirectory)
 {
   log_msg_baton *baton = (log_msg_baton *) 
                          apr_palloc (pool, sizeof (*baton));
 
-  baton->message = sMessage;
+  baton->message = message;
   baton->base_dir = baseDirectory ? baseDirectory : ".";
 
   return baton;

@@ -20,13 +20,13 @@ Auth::~Auth ()
 void
 Auth::Username (char *username)
 {
-  sUsername = username;
+  userName = username;
 }
 
 void
 Auth::Password (char *password)
 {
-  sPassword = password;
+  passWord = password;
 }
 
 svn_client_auth_baton_t *

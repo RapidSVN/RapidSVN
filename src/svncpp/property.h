@@ -15,15 +15,15 @@ class Property : public Svn::Client
 {
 private:
   apr_array_header_t * props;
-  char * sTarget;
-  int nPropCount;
-  int nCurrentProp;
-  const char * sProperty;
+  char * filePath;
+  int propCount;
+  int currentProp;
+  const char * propName;
 
   /**
    * Returns whether or not the property is a special Subversion property.
    */
-  svn_boolean_t IsSvnProperty (char * sName);
+  svn_boolean_t IsSvnProperty (char * name);
 
   /**
    * Loads the initial data for the property list.
@@ -43,23 +43,23 @@ public:
    * Loads the file, verifies that it is valid, and records the 
    * property count.
    */
-  bool LoadPath (char * sPath);
+  bool LoadPath (char * path);
 
   /**
    * Sets or adds a property with a new value.
    */
-  bool Set (char * sName, char * sValue, bool recurse);
+  bool Set (char * path, char * value, bool recurse);
 
   /**
    * Returns the value of a property.
    * was not found.
    */
-  const char * GetValue (char * sName);
+  const char * GetValue (char * name);
 
   /**
    * Deletes a property.  
    */
-  bool Delete (char * sName, bool recurse);
+  bool Delete (char * name, bool recurse);
 
   /**
    * Returns the next property name in the list.  Returns 

@@ -33,12 +33,12 @@ private:
   /**
    * Creates a log message baton.
    */
-  void * LogMessage (char * sMessage, char * baseDirectory = NULL);
+  void * LogMessage (char * message, char * baseDirectory = NULL);
 
   /**
    * Creates a target out of a string.
    */
-  apr_array_header_t * Target (char * sTarget);
+  apr_array_header_t * Target (char * path);
 
   svn_error_t * GetLogMessage (const char **log_msg,
                          apr_array_header_t * commit_items,
@@ -72,44 +72,44 @@ public:
   /**
    * Sets a file for deletion.
    */
-  bool Delete (const char * sPath, bool force);
+  bool Delete (const char * path, bool force);
 
   /**
    * Reverts a file to a pristine state.
    */
-  bool Revert (const char * sPath, bool recurse);
+  bool Revert (const char * path, bool recurse);
 
   /**
    * Adds a file to the repository.
    */
-  bool Add (char * sPath, bool recurse);
+  bool Add (char * path, bool recurse);
 
   /**
    * Updates the directory.
-   * @param sPath target file.
+   * @param path target file.
    * @param revision the revision number to checkout. If the number is -1
    *                 then it will checkout the latest revision.
    * @param recurse recursively update.
    */
-  bool Update (char * sPath, long revision, bool recurse);
+  bool Update (char * path, long revision, bool recurse);
 
   /**
    * Commits changes to the repository.
-   * @param sPath file to commit.
-   * @param sLogMessage log message that accompanies check in.
+   * @param path file to commit.
+   * @param logMessage log message that accompanies check in.
    * @param recurse whether the operation should be done recursively. 
    */
-  bool Commit (char * sPath, char * sLogMessage, bool recurse);
+  bool Commit (char * path, char * logMessage, bool recurse);
 
   /**
    * Copies a versioned file with the history preserved.
    */
-  bool Copy (char * sPath, char * sDestPath);
+  bool Copy (char * path, char * destPath);
 
   /**
    * Moves or renames a file.
    */
-  bool Move (char * sPath, char * sDestPath, long revision, bool force);
+  bool Move (char * path, char * destPath, long revision, bool force);
 };
 
 }

@@ -8,9 +8,9 @@ namespace Svn
 Property::Property ()
 {
   props = NULL;
-  nPropCount = 0;
-  nCurrentProp = 0;
-  sProperty = NULL;
+  propCount = 0;
+  currentProp = 0;
+  propName = NULL;
 }
 
 Property::~Property ()
@@ -20,13 +20,13 @@ Property::~Property ()
 int
 Property::Count ()
 {
-  return nPropCount;
+  return propCount;
 }
 
 bool
-Property::LoadPath (char * sPath)
+Property::LoadPath (char * path)
 {
-  sTarget = sPath;
+  filePath = path;
 
   if(!LoadProperties ())
     return false;
@@ -38,13 +38,13 @@ bool
 Property::LoadProperties ()
 {
   Err = svn_client_proplist (&props,
-                             sTarget, 
+                             filePath, 
                              false /* recurse */,
                              pool);
   if(Err != NULL)
     return false;
 
-  nPropCount = 0;
+  propCount = 0;
 
   for (int j = 0; j < props->nelts; ++j)
   {
@@ -61,7 +61,7 @@ Property::LoadProperties ()
     for (hi = apr_hash_first (pool, item->prop_hash); hi; 
          hi = apr_hash_next (hi))
     {
-      nPropCount++;
+      propCount++;
     } 
   }
 
@@ -74,7 +74,7 @@ Property::NextProperty ()
   if(props == NULL)
     return NULL;
 
-  if(nCurrentProp >= nPropCount)
+  if(currentProp >= propCount)
     return NULL;
 
   for (int j = 0; j < props->nelts; ++j)
@@ -96,7 +96,7 @@ Property::NextProperty ()
       const void *key;
       const char *key_native;
 
-      if(index != nCurrentProp)
+      if(index != currentProp)
       {
         index++;
         continue;
@@ -105,29 +105,29 @@ Property::NextProperty ()
       apr_hash_this (hi, &key, NULL, NULL);
       svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
 
-      sProperty = key_native;
-      nCurrentProp++;
+      propName = key_native;
+      currentProp++;
     } 
   }
 
-  return sProperty;
+  return propName;
 }
 
 void
 Property::Reset ()
 {
-  nCurrentProp = 0;
+  currentProp = 0;
 }
 
 const char *
-Property::GetValue (char * sName)
+Property::GetValue (char * name)
 {
   apr_hash_t *prop;
   apr_hash_index_t *hi;
 
   Err = svn_client_propget (&prop,
-                            sName,
-                            sTarget,
+                            name,
+                            filePath,
                             false /* recurse */,
                             pool);
 
@@ -145,7 +145,7 @@ Property::GetValue (char * sName)
 
     /* If this is a special Subversion property, it is stored as
        UTF8, so convert to the native format. */
-    if (IsSvnProperty (sName))
+    if (IsSvnProperty (name))
       Err = svn_utf_string_from_utf8 (&propval, propval, pool);
 
     return propval->data;
@@ -155,15 +155,15 @@ Property::GetValue (char * sName)
 }
 
 bool
-Property::Set (char * sName, char * sValue, bool recurse)
+Property::Set (char * name, char * value, bool recurse)
 {
   const char *pname_utf8;
   const svn_string_t *propval = NULL;
-  propval = svn_string_create ((const char *) sValue, pool);
+  propval = svn_string_create ((const char *) value, pool);
 
-  svn_utf_cstring_to_utf8 (&pname_utf8, sName, NULL, pool);
+  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
 
-  Err = svn_client_propset (pname_utf8, propval, sTarget,
+  Err = svn_client_propset (pname_utf8, propval, filePath,
                             recurse, pool);
   if(Err != NULL)
     return false;
@@ -174,12 +174,12 @@ Property::Set (char * sName, char * sValue, bool recurse)
 }
 
 bool 
-Property::Delete (char * sName, bool recurse)
+Property::Delete (char * name, bool recurse)
 {
   const char *pname_utf8;
-  svn_utf_cstring_to_utf8 (&pname_utf8, sName, NULL, pool);
+  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
 
-  Err = svn_client_propset (pname_utf8, NULL, sTarget,
+  Err = svn_client_propset (pname_utf8, NULL, filePath,
                             recurse, pool);
   if(Err != NULL)
     return false;
@@ -190,11 +190,11 @@ Property::Delete (char * sName, bool recurse)
 }
 
 svn_boolean_t
-Property::IsSvnProperty (char * sName)
+Property::IsSvnProperty (char * name)
 {
   const char *pname_utf8;
 
-  svn_utf_cstring_to_utf8 (&pname_utf8, sName, NULL, pool);
+  svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
   svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (pname_utf8);
 
   return is_svn_prop;

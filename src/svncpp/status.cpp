@@ -15,35 +15,33 @@ Status::~Status ()
 void 
 Status::Reset ()
 {
-  bVersioned = false;
-  status = NULL;
+  versioned = false;
   youngest = SVN_INVALID_REVNUM;
-  svn_revnum_t youngest = SVN_INVALID_REVNUM;  
 }
 
 bool
 Status::IsVersioned ()
 {
-  return bVersioned;
+  return versioned;
 }
 
 bool
-Status::LoadPath (char * sFilePath)
+Status::LoadPath (char * path)
 {
   const svn_item_t *item;
 
-  sPath = sFilePath;
+  filePath = path;
   Reset ();
 
   Err = svn_client_status (&statushash,
-                                        &youngest,
-                                        sPath,
-                                        Authenticate (),
-                                        0,
-                                        1,
-                                        0,
-                                        0,
-                                        pool);
+                           &youngest,
+                           filePath,
+                           Authenticate (),
+                           0,
+                           1,
+                           0,
+                           0,
+                           pool);
 
   // Error present if function is not under version control
   if(Err != NULL)
@@ -62,7 +60,7 @@ Status::LoadPath (char * sFilePath)
   if (!status->entry)           // not under revision control
     return false;
   
-  bVersioned = true;
+  versioned = true;
 
   return true;
 }
@@ -70,7 +68,7 @@ Status::LoadPath (char * sFilePath)
 long
 Status::Revision ()
 {
-  if(bVersioned == false)
+  if(versioned == false)
     return -1;
 
   return status->entry->revision;
@@ -79,7 +77,7 @@ Status::Revision ()
 long
 Status::LastChanged ()
 {
-  if(bVersioned == false)
+  if(versioned == false)
     return -1;
 
   return status->entry->cmt_rev;
@@ -88,47 +86,47 @@ Status::LastChanged ()
 char *
 Status::StatusText ()
 {
-  char * sStatus = NULL;
+  char * statusText = NULL;
   
-  if(bVersioned == false)
+  if(versioned == false)
     return NULL;
 
   switch (status->text_status)
   {
     case svn_wc_status_none:
-      sStatus = "Non-svn";
+      statusText = "Non-svn";
       break;
     case svn_wc_status_normal:
-      sStatus = "Normal";
+      statusText = "Normal";
       break;
     case svn_wc_status_added:
-      sStatus = "Added";
+      statusText = "Added";
       break;
     case svn_wc_status_absent:
-      sStatus = "Absent";
+      statusText = "Absent";
       break;
     case svn_wc_status_deleted:
-      sStatus = "Deleted";
+      statusText = "Deleted";
       break;
     case svn_wc_status_replaced:
-      sStatus = "Replaced";
+      statusText = "Replaced";
       break;
     case svn_wc_status_modified:
-      sStatus = "Modified";
+      statusText = "Modified";
       break;
     case svn_wc_status_merged:
-      sStatus = "Merged";
+      statusText = "Merged";
       break;
     case svn_wc_status_conflicted:
-      sStatus = "Conflicted";
+      statusText = "Conflicted";
       break;
     case svn_wc_status_unversioned:
     default:
-      sStatus = "Unversioned";
+      statusText = "Unversioned";
       break;
   }
   
-  return sStatus;
+  return statusText;
 }
 
 char *

@@ -56,6 +56,7 @@ SvnCppTestCase::testDeleteRevert ()
 {
   Svn::Modify modify;
   Svn::Status status;
+  Svn::Error error;
 
   CPPUNIT_ASSERT (modify.Delete ("my_repos/README.txt", false));
 
@@ -65,8 +66,8 @@ SvnCppTestCase::testDeleteRevert ()
 
   // Test with forcing
   CPPUNIT_ASSERT (modify.Delete ("my_repos/main.cpp", true));
-  Svn::Error Err (modify.GetError ());
-  CPPUNIT_ASSERT (Err.AprError () == -1);
+  error.SetError (modify.GetError ());
+  CPPUNIT_ASSERT (error.AprError () == -1);
 
   // Test revert
   CPPUNIT_ASSERT (modify.Revert ("my_repos/README.txt", false));
