@@ -56,11 +56,28 @@ namespace svn
   Client::remove (const Path & path, bool force)
   {
     Pool pool;
+    Targets targets (path.c_str ());
     svn_client_commit_info_t *commit_info = NULL;
 
     svn_error_t * error =
       svn_client_delete (&commit_info, 
-                         path.c_str (), 
+                         const_cast<apr_array_header_t*> (targets.array (pool)), 
+                         force,
+                         *m_context,
+                         pool);
+    if(error != NULL)
+      throw ClientException (error);
+  }
+
+  void
+  Client::remove (const Targets & targets, bool force)
+  {
+    Pool pool;
+    svn_client_commit_info_t *commit_info = NULL;
+
+    svn_error_t * error =
+      svn_client_delete (&commit_info, 
+                         const_cast<apr_array_header_t*> (targets.array (pool)), 
                          force,
                          *m_context,
                          pool);
@@ -184,9 +201,13 @@ namespace svn
     Pool pool;
     m_context->setLogMessage (message);
 
+    Targets targets (path.c_str ());
+
     svn_client_commit_info_t *commit_info = NULL;
     svn_error_t * error =  
-      svn_client_mkdir (&commit_info, path.c_str (),
+      svn_client_mkdir (&commit_info, 
+                        const_cast<apr_array_header_t*> 
+                        (targets.array (pool)),
                         *m_context, pool);
 
     if(error != NULL)

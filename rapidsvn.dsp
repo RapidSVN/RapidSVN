@@ -258,10 +258,6 @@ SOURCE=.\src\switch_action.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\trace_commit.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\trace_update.cpp
 # End Source File
 # Begin Source File
@@ -487,10 +483,6 @@ SOURCE=.\src\svn_notify.hpp
 # Begin Source File
 
 SOURCE=.\src\switch_action.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\trace_commit.hpp
 # End Source File
 # Begin Source File
 

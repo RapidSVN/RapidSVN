@@ -16,7 +16,7 @@ rapidsvn_SOURCES= \
 	commit_dlg.cpp \
 	delete_action.cpp \
 	delete_dlg.cpp \
- 	destination_dlg.cpp \
+	destination_dlg.cpp \
 	exceptions.cpp \
 	external_program_action.cpp \
 	filelist_ctrl.cpp \
@@ -45,7 +45,6 @@ rapidsvn_SOURCES= \
 	svn_file_info.cpp \
 	svn_notify.cpp \
 	switch_action.cpp \
-	trace_commit.cpp \
 	tracer.cpp \
 	trace_update.cpp \
 	tviewer.cpp \
@@ -62,4 +61,3 @@ rapidsvn_LDADD= -lsvncpp \
 	-lneon $(APR_LIBS) \
 	$(WX_LIBS)
 rapidsvn_DEPENDENCIES=svncpp/libsvncpp.la
-

@@ -118,10 +118,19 @@ namespace svn
     void notification (Notify * notify);
 
     /**
-     * Sets a file for deletion.
+     * Sets a single file for deletion.
      * @exception ClientException
      */
     void remove (const Path & path, bool force);
+
+    /**
+     * Sets files for deletion.
+     *
+     * @param targets targets to delete
+     * @param force force if files are locally modified
+     * @exception ClientException
+     */
+    void remove (const Targets & targets, bool force);
 
     /**
      * Reverts a file to a pristine state.
@@ -196,6 +205,15 @@ namespace svn
      * @exception ClientException
      */
     void mkdir (const Path & path, const char * message);
+
+    /**
+     * Create multiple directories.
+     *
+     * @see mkdir (const Path&, const char*)
+     * @param path new directory
+     * @param message
+     */
+    void mkdir (const Targets & targets, const char * message);
 
     /**
      * Recursively cleans up a local directory, finishing any

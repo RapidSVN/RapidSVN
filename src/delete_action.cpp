@@ -55,15 +55,7 @@ DeleteAction::Perform ()
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
-  const std::vector<svn::Path> & v = GetTargets ();
-  std::vector<svn::Path>::const_iterator it;
-
-  for (it = v.begin (); it != v.end (); it++)
-  {
-    const svn::Path & path = *it;
-
-    client.remove (path.c_str (), m_force);
-  }
+  client.remove (GetTargets (), m_force);
 
   return true;
 }
