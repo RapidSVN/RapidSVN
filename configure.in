@@ -55,4 +55,7 @@ esac
 CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags`"
 WX_LIBS="`$WXCONFIG --libs`"
 
+AC_SUBST(APR_LIBS)
+AC_SUBST(WX_LIBS)
+
 AC_OUTPUT(src/Makefile)
