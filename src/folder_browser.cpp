@@ -42,7 +42,7 @@ enum
   FOLDER_IMAGE_COUNT
 };
 
-const int FolderBrowser::MAXLENGTH_PROJECT = 25;
+const unsigned int FolderBrowser::MAXLENGTH_PROJECT = 25;
 
 FolderBrowser::FolderBrowser (wxWindow * parent,
                               apr_pool_t *pool,

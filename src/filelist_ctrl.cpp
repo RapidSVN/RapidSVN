@@ -208,7 +208,7 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
                             int SortColumn, bool SortIncreasing)
 {
   int rc = 0;
-  unsigned long r1, r2;
+  unsigned long r1 = 0, r2 = 0;
   bool ok1, ok2;
 
   switch (SortColumn)
