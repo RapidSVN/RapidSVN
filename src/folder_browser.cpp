@@ -11,19 +11,26 @@
  * ====================================================================
  */
 
-#include "include.hpp"
-#include "folder_browser.hpp"
-#include "folder_item_data.hpp"
-#include "svn_wc.h"
+// svncpp
+#include "svncpp/wc.hpp"
+
+// wxwindows
+#include "wx/wx.h"
 #include "wx/filename.h"
 #include "wx/dir.h"
 #include "wx/imaglist.h"
-#include "rapidsvn_app.hpp"
+
+// app
+#include "folder_browser.hpp"
+#include "folder_item_data.hpp"
 #include "ids.hpp"
 
+// bitmaps
 #include "res/bitmaps/computer.xpm"
 #include "res/bitmaps/versioned_folder.xpm"
 #include "res/bitmaps/open_folder.xpm"
+#include "res/bitmaps/folder.xpm"
+#include "res/bitmaps/nonsvn_open_folder.xpm"
 #include "res/bitmaps/update.xpm"
 #include "res/bitmaps/commit.xpm"
 #include "res/bitmaps/earth.xpm"
@@ -41,6 +48,8 @@ enum
   FOLDER_IMAGE_COMPUTER = 0,
   FOLDER_IMAGE_FOLDER,
   FOLDER_IMAGE_OPEN_FOLDER,
+  FOLDER_IMAGE_NONSVN_FOLDER,
+  FOLDER_IMAGE_NONSVN_OPEN_FOLDER,
   FOLDER_IMAGE_EARTH,
   FOLDER_IMAGE_COUNT
 };
@@ -56,6 +65,8 @@ FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
   m_imageList->Add (wxIcon (computer_xpm));
   m_imageList->Add (wxIcon (versioned_folder_xpm));
   m_imageList->Add (wxIcon (open_folder_xpm));
+  m_imageList->Add (wxIcon (folder_xpm));
+  m_imageList->Add (wxIcon (nonsvn_open_folder_xpm));
   m_imageList->Add (wxIcon (earth_xpm));
 
   m_treeCtrl = new wxTreeCtrl (this, -1, pos, size, 
@@ -192,24 +203,34 @@ FolderBrowser::OnExpandItem (wxTreeEvent & event)
         
         while(ok)
         {
-          if(filename != SVN_WC_ADM_DIR_NAME)
+          if(filename != svn::Wc::ADM_DIR_NAME)
           {
             parentHasSubdirectories = true;
             
-            wxFileName fullPath(parentPath, filename, wxPATH_NATIVE);
+            wxFileName path(parentPath, filename, wxPATH_NATIVE);
+            wxString fullPath = path.GetFullPath ();
+            const char * fullPath_c = fullPath.c_str ();
+            int image = FOLDER_IMAGE_FOLDER;
+            int open_image = FOLDER_IMAGE_OPEN_FOLDER;
+
+            if (!svn::Wc::checkWc (fullPath_c))
+            {
+              image = FOLDER_IMAGE_NONSVN_FOLDER;
+              open_image = FOLDER_IMAGE_NONSVN_OPEN_FOLDER;
+            }
             
             FolderItemData * data = 
               new FolderItemData (FOLDER_TYPE_NORMAL, 
-                                  fullPath.GetFullPath(), 
+                                  fullPath, 
                                   filename, TRUE);
 
             wxTreeItemId newId = 
               m_treeCtrl->AppendItem(
                 parentId, filename, 
-                FOLDER_IMAGE_FOLDER, 
-                FOLDER_IMAGE_FOLDER, data);
-            m_treeCtrl->SetItemHasChildren (newId, HasSubdirectories(fullPath.GetFullPath()) );
-            m_treeCtrl->SetItemImage (newId, FOLDER_IMAGE_OPEN_FOLDER,  
+                image, image, data);
+            m_treeCtrl->SetItemHasChildren (
+              newId, HasSubdirectories(fullPath) );
+            m_treeCtrl->SetItemImage (newId, open_image,  
                                       wxTreeItemIcon_Expanded);
           }
           
@@ -309,7 +330,7 @@ FolderBrowser::HasSubdirectories (const wxString & path)
   
   while (ok)
   {
-    if (filename != SVN_WC_ADM_DIR_NAME)
+    if (filename != svn::Wc::ADM_DIR_NAME)
       return true;
     ok = dir.GetNext (&filename);
   }

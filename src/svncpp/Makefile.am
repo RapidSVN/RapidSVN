@@ -15,5 +15,6 @@ libsvncpp_la_SOURCES= \
 	property.cpp \
 	revision.cpp \
 	status.cpp \
-	targets.cpp
+	targets.cpp \
+	wc.cpp
 

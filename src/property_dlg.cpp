@@ -30,15 +30,15 @@ enum
 };
 
 BEGIN_EVENT_TABLE (PropertyDlg, wxDialog)
-  EVT_BUTTON    (ID_OK,    PropertyDlg::OnOK)
-  EVT_BUTTON    (ID_Cancel,    PropertyDlg::OnClose)
+  EVT_BUTTON (ID_OK, PropertyDlg::OnOK)
+  EVT_BUTTON (ID_Cancel, PropertyDlg::OnClose)
 END_EVENT_TABLE ()
 
 BEGIN_EVENT_TABLE (PropertyGrid, wxGrid)
 END_EVENT_TABLE()
 
 PropertyDlg::PropertyDlg (wxWindow * parent, const char * target)
-           : wxDialog (parent, -1, "Property Editor", wxDefaultPosition, 
+           : wxDialog (parent, -1, _T("Property Editor"), wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
              m_property(NULL, target)
 {
@@ -49,8 +49,7 @@ PropertyDlg::PropertyDlg (wxWindow * parent, const char * target)
 void
 PropertyDlg::InitializeData ()
 {
-  wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-
+  // create controls
   wxStaticBoxSizer *boxSizer = new wxStaticBoxSizer (
         new wxStaticBox(this, -1, _T("Properties")), 
         wxHORIZONTAL);
@@ -59,22 +58,25 @@ PropertyDlg::InitializeData ()
   propGrid->CreateGrid (1, 2);
   propGrid->SetGridLineColour (wxColour ("black"));
 
-  propGrid->SetColLabelValue (0, "Name");
-  propGrid->SetColLabelValue (1, "Value");
+  propGrid->SetColLabelValue (0, _T("Name"));
+  propGrid->SetColLabelValue (1, _T("Value"));
   propGrid->SetColSize (0, 120);
   propGrid->SetColSize (1, 120);
   propGrid->FillList ();
   propGrid->Show ();
 
   wxBoxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
-  wxButton * okButton = new wxButton (this, ID_OK, "OK");
-  wxButton * cancelButton = new wxButton (this, ID_Cancel, "Cancel");
+  wxButton * okButton = new wxButton (this, ID_OK, _T("OK"));
+  wxButton * cancelButton = new wxButton (this, ID_Cancel, _T("Cancel"));
   buttonSizer->Add (okButton, 0, wxALL, 5);
   buttonSizer->Add (cancelButton, 0, wxALL, 5);
 
+  wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
+
   boxSizer->Add (propGrid, 1, wxALL | wxEXPAND, 2);
-  mainSizer->Add (boxSizer, 0, wxALL | wxCENTER , 5);
-  mainSizer->Add (buttonSizer, 1, wxALL | wxCENTER , 5);
+
+  mainSizer->Add (boxSizer, 1, wxALL | wxCENTER | wxEXPAND , 5);
+  mainSizer->Add (buttonSizer, 0, wxALL | wxCENTER , 5);
 
   SetAutoLayout (true);
   SetSizer (mainSizer);
