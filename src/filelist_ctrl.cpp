@@ -1070,6 +1070,7 @@ FileListCtrl::OnColumnEndDrag (wxListEvent & event)
       break;
     }
   }
+  event.Skip ();
 }
 
 void

@@ -213,7 +213,7 @@ public:
     menuView->AppendSeparator ();
 
     menuView->Append (0, _("Columns"), MenuColumns);
-    menuView->AppendCheckItem (ID_Flat, _("Flat View"));
+    menuView->AppendCheckItem (ID_Flat, _("Flat Mode"));
 
     menuView->AppendSeparator ();
     
