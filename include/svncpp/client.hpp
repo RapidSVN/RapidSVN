@@ -416,14 +416,44 @@ namespace svn
      * lists entries in @a pathOrUrl no matter whether local or
      * repository
      *
+     * @remark Please do not use the method anymore. Since it
+     *         tries to return entries with absolute paths
+     *         it has to add @a pathOrUrl to the beginning of
+     *         the enrties. This works fine if @a pathOrUrl 
+     *         points to a directory. But if it point to a file
+     *         "file:///foo/bar.txt", the path of the returned 
+     *         entry will be "file:///foo/bar.txt/bar.txt".
+     *         Please use @a list instead.
+     *
+     * @deprecated
+     *
+     * @see list
+     *
      * @param pathOrUrl
      * @param revision
      * @param recurse
+     * @return a vector of directory entries, each
+     *         with an absolute path
      */
     DirEntries
     ls (const char * pathOrUrl,
         svn_opt_revision_t * revision,
         bool recurse) throw (ClientException);
+
+    /**
+     * lists entries in @a pathOrUrl no matter whether local or
+     * repository
+     *
+     * @param pathOrUrl
+     * @param revision
+     * @param recurse
+     * @return a vector of directory entries, each with
+     *         a relative path (only filename)
+     */
+    DirEntries
+    list (const char * pathOrUrl,
+          svn_opt_revision_t * revision,
+          bool recurse) throw (ClientException);
 
     /**
      * lists properties in @a path no matter whether local or
