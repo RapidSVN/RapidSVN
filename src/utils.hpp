@@ -62,7 +62,7 @@ svn_error_t *svn_cl__may_need_force (svn_error_t * err);
  * Used for converting non-command events to command events so they'll move up
  * the GUI hierarchy.
  */
-bool PostMenuEvent (wxControl *source, long id);
+bool PostMenuEvent (wxEvtHandler *source, long id);
 
 #endif
 /* -----------------------------------------------------------------

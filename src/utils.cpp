@@ -143,14 +143,14 @@ svn_cl__may_need_force (svn_error_t * err)
   return err;
 }
 
-bool PostMenuEvent (wxControl *source, long id)
+bool PostMenuEvent (wxEvtHandler *source, long id)
 {
   // This is the way it's done in wxFrame
   wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, id);
   
   event.SetEventObject (source);
   
-  return source->ProcessCommand (event);
+  return source->ProcessEvent (event);
 }
 
 /* -----------------------------------------------------------------
