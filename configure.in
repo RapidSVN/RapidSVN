@@ -34,26 +34,41 @@ dnl
 dnl Subversion
 dnl
 
-SVNCONFIG=svn-config
-AC_ARG_WITH(svn-config,
-[[  --with-svn-config=FILE    Use the given path to svn-config when determining
-                            Subversion configuration; defaults to "svn-config"]],
+SVN_INCLUDE="/usr/local/include/subversion-1"
+AC_ARG_WITH(svn-include,
+[[  --with-svn-include=DIR   Use the given path to the subversion headers;
+                           defaults to "/usr/local/include"]],
 [
     if test "$withval" != "yes" -a "$withval" != ""; then
-        SVNCONFIG=$withval
+        SVN_INCLUDE=$withval
     fi
 ])
-AC_MSG_CHECKING([for Subversion])
-if $SVNCONFIG --cflags > /dev/null; then
+AC_MSG_CHECKING([for Subversion headers])
+if test -f "$SVN_INCLUDE/subversion-1/svn_types.h"; then
     AC_MSG_RESULT([found])
 else
     AC_MSG_RESULT([not found])
-    AC_MSG_ERROR([Subversion is required. Try --with-svn-config.])
+    AC_MSG_ERROR([Subversion headers are required. Try --with-svn-include.])
 fi
-CPPFLAGS="$CPPFLAGS `$SVNCONFIG --cppflags` `$SVNCONFIG --includes`"
-CXXFLAGS="$CXXFLAGS `$SVNCONFIG --cflags`"
-SVN_LIBS="`$SVNCONFIG --libs`"
+CPPFLAGS="$CPPFLAGS -I$SVN_INCLUDE/subversion-1"
 
+SVN_LIB="/usr/local/lib"
+AC_ARG_WITH(svn-lib,
+[[  --with-svn-lib=DIR  Use the given path to the subversion libraries;
+                      defaults to "/usr/local/lib"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        SVN_LIB=$withval
+    fi
+])
+AC_MSG_CHECKING([for Subversion libraries])
+if test -f "$SVN_LIB/libsvn_client-1.so"; then
+    AC_MSG_RESULT([found])
+else
+    AC_MSG_RESULT([not found])
+    AC_MSG_ERROR([Subversion libraries are required. Try --with-svn-lib.])
+fi
+   
 dnl
 dnl wxWindows
 dnl
@@ -105,6 +120,7 @@ AC_ARG_WITH(cppunit-config,
 
 AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
+AC_SUBST(SVN_LIB)
 
 AC_OUTPUT(Makefile src/Makefile src/svncpp/Makefile src/res/Makefile)
 

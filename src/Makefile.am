@@ -49,6 +49,7 @@ rapidsvn_SOURCES= \
 	utils.cpp
 
 rapidsvn_LDADD=-dlopen svncpp/libsvncpp.la \
+	-L$(SVN_LIB) \
 	-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
 	$(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(APR_LIBS) \
 	$(WX_LIBS)
