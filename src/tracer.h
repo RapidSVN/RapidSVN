@@ -58,6 +58,9 @@ private:
 
 public:
 				ErrorTracer( wxWindow *__parent );
+
+	virtual		~ErrorTracer();
+
 	void		Trace( const wxString& );
 	void		ShowErrors();
 };

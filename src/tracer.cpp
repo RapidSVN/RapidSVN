@@ -36,6 +36,10 @@ ErrorTracer::ErrorTracer( wxWindow *__parent )
 {
 }
 
+ErrorTracer::~ErrorTracer()
+{
+}
+
 void ErrorTracer::Trace( const wxString& str )
 {
 	msgs += str + _T("\n");
