@@ -64,6 +64,8 @@
 #include "res/bitmaps/resolve.xpm"
 #include "res/bitmaps/log.xpm"
 #include "res/bitmaps/info.xpm"
+#include "res/bitmaps/project_add.xpm"
+#include "res/bitmaps/project_remove.xpm"
 
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
@@ -167,8 +169,14 @@ public:
     wxMenu *menuFile = new wxMenu;
     wxMenuItem *pItem;
 
-    menuFile->Append (ID_AddProject, _("&Add to Workbench..."));
-    menuFile->Append (ID_RemoveProject, _("&Remove from Workbench..."));
+    pItem = new wxMenuItem (menuFile, ID_AddProject, 
+                            _("&Add to Workbench..."));
+    pItem->SetBitmap (wxBitmap (project_add_xpm));
+    menuFile->Append (pItem);
+    pItem = new wxMenuItem (menuFile, ID_RemoveProject, 
+                            _("&Remove from Workbench..."));
+    pItem->SetBitmap (wxBitmap (project_remove_xpm));
+    menuFile->Append (pItem);
     menuFile->AppendSeparator ();
     menuFile->Append (ID_Quit, _("E&xit"));
 

@@ -37,6 +37,8 @@
 #include "res/bitmaps/update.xpm"
 #include "res/bitmaps/commit.xpm"
 #include "res/bitmaps/earth.xpm"
+#include "res/bitmaps/project_add.xpm"
+#include "res/bitmaps/project_remove.xpm"
 
 enum
 {
@@ -172,11 +174,13 @@ public:
     int type =  data->getFolderType ();
 
     item = new wxMenuItem (&menu, ID_AddProject, _("&Add to Workbench..."));
+    item->SetBitmap (wxBitmap (project_add_xpm));
     menu.Append (item);
 
     if (type==FOLDER_TYPE_PROJECT)
     {
       item = new wxMenuItem (&menu, ID_RemoveProject, _("&Remove from Workbench..."));
+      item->SetBitmap (wxBitmap (project_remove_xpm));
       menu.Append (item);
 
       menu.AppendSeparator ();
