@@ -587,6 +587,9 @@ FileListCtrl::UpdateFileList ()
       case svn_wc_schedule_replace:
         schedule = _("replace");
         break;
+      case svn_wc_schedule_normal:
+        schedule = "";
+        break;
       }
       values[COL_SCHEDULE] = schedule;
 

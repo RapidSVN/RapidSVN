@@ -269,9 +269,9 @@ namespace svn
             loginIsSet = true;
           }
         }
-
-        return ok;
       }
+
+      return ok;
     }
 
     /**

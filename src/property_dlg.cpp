@@ -143,7 +143,7 @@ PropertyDlg::SaveData ()
       {
         wxString msg;
         msg.Printf( _("Failed to save property:%s, error: %s"),
-                    name, e.message ());
+                    name.c_str (), e.message ());
         wxMessageDialog dlg (this, msg, _("Error Saving"), wxOK);
         dlg.ShowModal ();
       }
@@ -183,7 +183,7 @@ PropertyDlg::RemoveData ()
       {
         wxString msg;
         msg.Printf ("Failed to remove property: %s, error: %s",
-                    propValue, e.message ());
+                    propValue.c_str (), e.message ());
         wxMessageDialog dlg (this, msg, "Error Removing", wxOK);
         dlg.ShowModal ();
       }
