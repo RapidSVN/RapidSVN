@@ -2,14 +2,13 @@
 #define _COMMIT_ACTION_H_INCLUDED_
 
 #include "action_thread.h"
+#include "commit_dlg.h"
 
 class CommitAction:public ActionThread
 {
 private:
-  wxString user;
-  wxString pass;
-  wxString logMsg;
-  bool recursive;
+  CommitDlg::sData Data;
+  wxFrame *thisframe;
 
   apr_array_header_t *targets;
 
