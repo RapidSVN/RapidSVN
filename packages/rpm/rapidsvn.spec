@@ -43,11 +43,15 @@ package.
 %prep
 %setup -q
 
+AUTOCONF="autoconf"
+AUTOHEADER="autoheader"
+
 if [ -f /usr/bin/autoconf-2.53 ]; then
    AUTOCONF="autoconf-2.53"
    AUTOHEADER="autoheader-2.53"
-   export AUTOCONF AUTOHEADER
 fi
+
+export AUTOCONF AUTOHEADER
 
 ${AUTOCONF}
 
