@@ -19,6 +19,7 @@
 
 // forward declarations
 typedef struct apr_array_header_t;
+typedef struct apr_hash_t;
 
 namespace svn
 {
@@ -35,15 +36,59 @@ namespace svn
     std::vector<Path> m_targets;
 
   public:
-    Targets(const std::vector<Path> & targets);
+    /** 
+     * Constructor
+     *
+     * @param targets vector of paths
+     */
+    Targets (const std::vector<Path> & targets);
     
-    Targets(const apr_array_header_t * targets);
+    /**
+     * Constructor from an APR array containing
+     * char *.
+     *
+     * @param targets APR array header
+     */
+    Targets (const apr_array_header_t * targets);
 
-    Targets(const Targets & targets);
+    /**
+     * Constructor. Initializes list with just
+     * one entry
+     *
+     * @param target
+     */
+    Targets (const char * target );
 
+    /**
+     * Constructor from an APR hash containing
+     * char *.
+     *
+     * @param hash APR hash
+     * @param pool Pool needed for conversions
+     */
+    Targets (const apr_hash_t * hash, const Pool pool);
+
+    /**
+     * Copy Constructor
+     *
+     * @param targets Source
+     */
+    Targets (const Targets & targets);
+
+    /**
+     * Returns an apr array containing
+     * char *.
+     *
+     * @param pool Pool used for conversion
+     */
     const apr_array_header_t *
-    array(const Pool pool) const;
+    array (const Pool & pool) const;
 
+    /**
+     * Returns a vector of paths
+     *
+     * @return vector of paths
+     */
     const std::vector<Path> &
     targets() const;
   };

@@ -41,7 +41,7 @@ namespace svn
      *
      * @param path Path string
      */
-    Path (const std::string & path);
+    Path (const std::string & path = "");
     
     /**
      * Constructor

@@ -18,10 +18,6 @@
 #include "svn_types.h"
 #include "svn_opt.h"
 
-// forward declarations
-//typedef struct svn_opt_revision_t;
-//typedef struct svn_revnum_t;
-
 namespace svn
 {
   /**
@@ -35,15 +31,18 @@ namespace svn
     svn_opt_revision_t m_revision;
 
     void
-    init (const svn_opt_revision_t revision);
+    init (const svn_opt_revision_t * revision);
 
   public:
+    static const svn_opt_revision_kind START;
+    static const svn_opt_revision_kind HEAD;
+
     /**
      * Constructor
      *
      * @param revision revision information
      */
-    Revision (const svn_opt_revision_t revision);
+    Revision (const svn_opt_revision_t * revision);
 
     /**
      * Constructor
@@ -57,7 +56,7 @@ namespace svn
      *
      * @param kind
      */
-    Revision (const svn_opt_revision_kind kind);
+    Revision (const svn_opt_revision_kind kind = svn_opt_revision_unspecified);
 
     /**
      * Constructor
@@ -76,7 +75,7 @@ namespace svn
     /**
      * @return revision information
      */
-    const svn_opt_revision_t 
+    const svn_opt_revision_t *
     revision () const;
 
     /**

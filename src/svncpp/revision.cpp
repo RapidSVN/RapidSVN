@@ -15,7 +15,10 @@
 
 namespace svn
 {
-  Revision::Revision (const svn_opt_revision_t revision)
+  const svn_opt_revision_kind Revision::START = svn_opt_revision_unspecified;
+  const svn_opt_revision_kind Revision::HEAD = svn_opt_revision_head;
+
+  Revision::Revision (const svn_opt_revision_t * revision)
   {
     init (revision);
   }
@@ -44,33 +47,40 @@ namespace svn
   }
 
   void
-  Revision::init (const svn_opt_revision_t revision)
+  Revision::init (const svn_opt_revision_t * revision)
   {
-    m_revision.kind = revision.kind;
-
-    // m_revision.value is a union so we are not
-    // allowed to set number if we want to use date
-    // and vice versa
-
-    switch( revision.kind )
+    if( !revision )
     {
-    case svn_opt_revision_number:
-      m_revision.value.number = revision.value.number;
-      break;
+      m_revision.kind = svn_opt_revision_unspecified;
+    }
+    else
+    {
+      m_revision.kind = revision->kind;
 
-    case svn_opt_revision_date:
-      m_revision.value.date = revision.value.date;
-      break;
+      // m_revision.value is a union so we are not
+      // allowed to set number if we want to use date
+      // and vice versa
 
-    default:
-      m_revision.value.number = 0;
+      switch( revision->kind )
+      {
+      case svn_opt_revision_number:
+        m_revision.value.number = revision->value.number;
+        break;
+
+      case svn_opt_revision_date:
+        m_revision.value.date = revision->value.date;
+        break;
+
+      default:
+        m_revision.value.number = 0;
+      }
     }
   }
 
-  const svn_opt_revision_t
+  const svn_opt_revision_t *
   Revision::revision () const
   {
-    return m_revision;
+    return &m_revision;
   }
 
   const svn_revnum_t

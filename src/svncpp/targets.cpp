@@ -15,6 +15,12 @@
 #include <vector>
 
 // subversion api
+#include "svn_types.h"
+
+// apr api
+#include "apr_pools.h"
+#include "apr_tables.h"
+#include "apr_strings.h"
 
 // svncpp
 #include "targets.hpp"
@@ -23,32 +29,65 @@
 
 namespace svn
 {
-    Targets::Targets(const std::vector<Path> & targets)
+  Targets::Targets (const std::vector<Path> & targets)
+  {
+    m_targets = targets;
+  }
+  
+  Targets::Targets (const apr_array_header_t * apr_targets)
+  {
+    int i;
+    
+    m_targets.clear ();
+    m_targets.reserve (apr_targets->nelts);
+    
+    for (i = 0; i < apr_targets->nelts; i++)
     {
-      m_targets = targets;
+      const char ** target = 
+        &APR_ARRAY_IDX (apr_targets, i, const char *);
+      
+      m_targets.push_back (Path (*target));
+    }
+  }
+  
+  Targets::Targets (const Targets & targets)
+  {
+    m_targets = targets.targets ();
+  }
+  
+  Targets::Targets (const char * target)
+  {
+    m_targets.push_back (target);
+  }
+
+  const apr_array_header_t *
+  Targets::array (const Pool & pool) const
+  {
+    std::vector<Path>::const_iterator it;
+    
+    apr_pool_t *apr_pool = pool.pool ();
+    apr_array_header_t *apr_targets = 
+      apr_array_make (apr_pool,
+                      m_targets.size(),
+                      sizeof (const char *));
+    
+    for (it = m_targets.begin (); it != m_targets.end (); it++)
+    {
+      const Path &path = *it;
+      const char * target =
+        apr_pstrdup (apr_pool, path.c_str());
+      
+      (*((const char **) apr_array_push (apr_targets))) = target;
     }
     
-    Targets::Targets(const apr_array_header_t * targets)
-    {
-      // TODO
-    }
-
-    Targets::Targets(const Targets & targets)
-    {
-      m_targets = targets.targets ();
-    }
-
-    const apr_array_header_t *
-    Targets::array(const Pool pool) const
-    {
-      //TODO
-    }
-
-    const std::vector<Path> &
-    Targets::targets() const
-    {
-      return m_targets;
-    }
+    return apr_targets;
+  }
+  
+  const std::vector<Path> &
+  Targets::targets () const
+  {
+    return m_targets;
+  }
 }
 
 /* -----------------------------------------------------------------
