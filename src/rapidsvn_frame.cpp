@@ -162,7 +162,7 @@ struct RapidSvnFrame::Data
 public:
   wxMenu * MenuColumns;
   wxMenuBar * MenuBar;
-  Listener Listener;
+  Listener listener;
 
   /** 
    * This instance of @a apr is used to initialize/terminate apr 
@@ -170,7 +170,7 @@ public:
   svn::Apr apr;
 
   Data (wxWindow * parent)
-    : MenuColumns (0), MenuBar (0), Listener (parent)
+    : MenuColumns (0), MenuBar (0), listener (parent)
   {
     InitializeMenu ();
   }
@@ -368,7 +368,7 @@ END_EVENT_TABLE ()
   m_log->SetMaxLength (0);
 
   m_logTracer = new EventTracer (this);
-  m->Listener.SetTracer (m_logTracer, false);
+  m->listener.SetTracer (m_logTracer, false);
 
 
   m_vert_splitter = new wxSplitterWindow (m_info_panel,
@@ -385,7 +385,7 @@ END_EVENT_TABLE ()
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
   {
     Preferences prefs;
-    m_folder_browser->SetListener (&m->Listener);
+    m_folder_browser->SetListener (&m->listener);
     m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
   }
 
