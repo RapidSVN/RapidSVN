@@ -50,7 +50,7 @@ check_release :
 	@echo "Making $(NAME)-$(VERSION)-$(RELEASE) (S)RPM..."
 
 build_rpm_files : build_srpm_files
-	cd $(SOURCE_RPM_DIR); rpm -ba $(SPECFILE)
+	cd $(SOURCE_RPM_DIR); rpmbuild -ba $(SPECFILE)
 
 build_srpm_files : $(HOME)/.rpmmacros $(HOME)/$(RPMDIR) rapidsvn.spec
 	rm -rf $(SOURCE_RPM_DIR)
