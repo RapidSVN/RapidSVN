@@ -16,12 +16,13 @@
 struct UpdateData
 {
   UpdateData()
+    : useLatest (true), recursive (true)
   {
-    UseLatest = true;
   }
     
-  wxString Revision;
-  bool UseLatest;
+  wxString revision;
+  bool useLatest;
+  bool recursive;
 };
 
 #endif

@@ -60,13 +60,13 @@ UpdateAction::Perform ()
 
   svn::Revision revision (svn::Revision::HEAD);
   // Did the user request a specific revision?:
-  if (!m_data.UseLatest)
+  if (!m_data.useLatest)
   {
-    TrimString(m_data.Revision);
-    if (!m_data.Revision.IsEmpty ())
+    TrimString(m_data.revision);
+    if (!m_data.revision.IsEmpty ())
     {
       svn_revnum_t revnum;
-      m_data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
+      m_data.revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
       revision = svn::Revision (revnum);
     }
   }
@@ -79,7 +79,7 @@ UpdateAction::Perform ()
   {
     const svn::Path & path = *it;
 
-    client.update (path.c_str (), revision, true);
+    client.update (path.c_str (), revision, m_data.recursive);
   }
 
   return result;

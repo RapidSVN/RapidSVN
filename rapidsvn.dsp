@@ -474,6 +474,10 @@ SOURCE=.\src\update_action.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\update_data.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\update_dlg.hpp
 # End Source File
 # Begin Source File

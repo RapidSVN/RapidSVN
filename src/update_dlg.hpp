@@ -16,31 +16,39 @@
 // wxwindows
 #include "wx/dialog.h"
 
-// app
-#include "update_data.hpp"
-
 // forward declarations
-class wxCheckBox;
-class wxStaticText;
-class wxTextCtrl;
+struct UpdateData;
 
 class UpdateDlg:public wxDialog
 {
 public:
-  UpdateDlg (wxWindow* parent);
+  /** show dialog with URL line */
+  static const int WITH_URL;
+
+  /**
+   * constructor
+   *
+   * @param parent parent window
+   * @param flags flags for the window (@a WITH_URL)
+   * @param recursive default flag for the "recursive" check
+   */
+  UpdateDlg (wxWindow* parent, int flags = 0,
+             bool recursive = true);
+
+  /**
+   * destructor
+   */
+  virtual ~UpdateDlg ();
   
   const UpdateData &
   GetData () const;
-private:
-  void InitData();
-  void InitDialog();
-  void OnUseLatest(wxCommandEvent &event);
-  void EnableControls();
 
-  UpdateData m_data;
-  wxCheckBox* m_useLatestCheck;
-  wxStaticText* m_revisionLabel; 
-  wxTextCtrl* m_revisionText;
+  void InitDialog ();
+private:
+  struct Data;
+  Data * m;
+
+  void OnUseLatest(wxCommandEvent &event);
   
   DECLARE_EVENT_TABLE()
 };
