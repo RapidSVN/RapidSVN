@@ -294,6 +294,7 @@ namespace svn
                         revision2.revision (),
                         localPath.c_str (),
                         recurse,
+                        FALSE, // ignore_ancestry
                         force,
                         FALSE, // dry_run
                         *m_context,
