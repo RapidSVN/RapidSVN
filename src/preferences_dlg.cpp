@@ -379,13 +379,13 @@ public:
   
     // Add the pages
     GeneralPanel *generalPanel = new GeneralPanel (notebook, prefs);
-    notebook->AddPage (generalPanel, _("&General"));
+    notebook->AddPage (generalPanel, _("General"));
     
     ProgramsPanel *programsPanel = new ProgramsPanel (notebook, prefs);
-    notebook->AddPage (programsPanel, _("&Programs"));
+    notebook->AddPage (programsPanel, _("Programs"));
 
     AuthPanel * authPanel = new AuthPanel (notebook, prefs);
-    notebook->AddPage (authPanel, _("&Authentication"));
+    notebook->AddPage (authPanel, _("Authentication"));
 
     // buttons
     button_sizer->Add (
