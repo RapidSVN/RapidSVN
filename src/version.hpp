@@ -13,6 +13,9 @@
 #ifndef _RAPIDSVN_VERSION_H_INCLUDED_
 #define _RAPIDSVN_VERSION_H_INCLUDED_
 
+
+#define RAPIDSVN_COPYRIGHT "(C) 2002 The RapidSvn Group. All rights reserved."
+
 /* Symbols that define the version number.
  *   XXX FIXME: Modify before each snapshot, milestone or release. 
  */
@@ -26,7 +29,7 @@
 /* Minor version number.
    Modify when new functionality is added or new interfaces are
    defined, but all changes are backward compatible. */
-#define RAPIDSVN_VER_MINOR      0
+#define RAPIDSVN_VER_MINOR      1
 
 /* Patch number.
    Modify for every released patch. */

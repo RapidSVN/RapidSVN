@@ -450,17 +450,25 @@ RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
   wxString msg;
 
-  msg.Printf (_T ("%s\nVersion %d.%d.%d\n"
+  msg.Printf (_T ("%s Version %d.%d.%d\n"
                   "Milestone: %s\n"
+                  "\n%s\n\n"
+                  "For more information see:\n"
+                  "http://rapidsvn.tigris.org\n"
+                  "\n"
                   "\nBuilt with:\n"
                   "Subversion %d.%d.%d\n"
                   "wxWindows %d.%d.%d"),
               APPLICATION_NAME,
               RAPIDSVN_VER_MAJOR, RAPIDSVN_VER_MINOR, RAPIDSVN_VER_MICRO,
               RAPIDSVN_VER_MILESTONE,
+              RAPIDSVN_COPYRIGHT,
               SVN_VER_MAJOR, SVN_VER_MINOR, SVN_VER_MICRO,
               wxMAJOR_VERSION, wxMINOR_VERSION, wxRELEASE_NUMBER);
-  wxMessageBox (msg, "About RapidSVN", wxOK | wxICON_INFORMATION);
+
+  wxString title;
+  title.Printf (_T ("About %s"), APPLICATION_NAME);
+  wxMessageBox (msg, title, wxOK | wxICON_INFORMATION);
 }
 
 void
