@@ -1,4 +1,3 @@
-								-*-text-*-
 
 If you are contributing code to the RapidSVN project, please read
 this first.
@@ -12,6 +11,7 @@ TABLE OF CONTENTS
    * Coding style
    * Documenting
    * Writing log messages
+   * Other conventions
 
 
 
@@ -23,7 +23,7 @@ and read the header files, which tend to have thoroughly-commented
 data structures.
 
    char *                                     /* func type on own line */
-   argblarg(char *arg1, int arg2)            /* func name on own line */
+   argblarg(char *arg1, int arg2)             /* func name on own line */
    {                                          /* first brace on own line */
      if ((some_very_long_condition && arg2)   /* indent 2 cols */
        || remaining_condition)                /* new line before operator */
@@ -52,23 +52,26 @@ Documenting
 ===================
 
 Every function, whether public or internal, must start out with a
-documentation comment that describes what the function does.  The
-documentation should mention every parameter received by the function,
-every possible return value, and (if not obvious) the conditions under
-which the function could return an error.  Put the parameter names in
-upper case in the doc string, even when they are not upper case in the
-actual declaration, so that they stand out to human readers.
+documentation comment that describes what the function does.  The documentation 
+format that we choose is the Doxygen format:
 
-For public or semi-public API functions, the doc string should go
-above the function in the .h file where it is declared; otherwise, it
-goes above the function definition in the .cpp file.
+http://www.stack.nl/~dimitri/doxygen/
 
-For structure types, document each individual member of the structure
-as well as the structure itself.
+Example:
+
+/**
+ * Multiplies 2 numbers together.
+ * @param nNumber1 first number
+ * @param nNumber2 second number
+ * @return the multiplied number
+ */
+int
+MultiplyMe(int nNumber1, int nNumber2)
+{
+}
 
 Read over the RapidSVN code to get an overview of how this
-documentation looks in practice; in particular, use the .h files in
-RapidSVN/include/ as examples.
+documentation looks in practice.
 
 
 
@@ -193,3 +196,24 @@ searching for identifiers, and wasting time or producing unreadable
 entries by being exhaustive.  Use your best judgment --- and be
 considerate of your fellow developers.  (Also, run "svn log" to see
 how others have been writing their log entries.)
+
+
+
+Other conventions
+=================
+
+In addition to the standards above, RapidSVN uses these conventions:
+
+   *  Use only spaces for indenting code, never tabs.  Tab display
+      width is not standardized enough, and anyway it's easier to
+      manually adjust indentation that uses spaces.
+
+   *  Stay within 80 columns, the width of a minimal standard display
+      window.
+   
+   *  If you add any files to the project that might be opened on more 
+      than one operating system then give the file the native eol-style 
+      property.  This ensures that all files downloaded via svn 
+      arrive with the line endings native to that OS.  Here is how you 
+      add the property:
+      % svn propset eol-style native new_file.cpp

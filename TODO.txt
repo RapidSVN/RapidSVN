@@ -19,6 +19,10 @@ two logs are clicked on then this runs a diff between the two copies.
 hazy on how it should work so make sure to contact someone before you attack 
 it unless you are especially brave.
 
+Build Instructions
+* Right now the build instructions in README.txt are very Windows oriented.  
+It would be nice if someone could add some instructions for Unix/Linux too.
+
 Status and Info
 * Make the Status and Info boxes easier to read.
 
@@ -45,11 +49,17 @@ Preferences and Session Storage
 RapidSVN is closed the program should save exactly where the user was browsing 
 so that it can restore this session when it is run again.
 
-Move and Rename
+Rename
 * Add this to the Modify menu, not the pop-up.  
 * On a rename this should bring up a dialog with the original name of the file
 or folder.  Then on clicking OK it changes the name of the file.  It will not
 commit the name change to the repository.
+
+Move and Copy
+* Add these to the Modify menu, not the pop-up.  
+* Should bring up a directory dialog where you can choose where to move or 
+copy the file to, defaulting at the current directory.  Make sure that it is a 
+valid repository and not the same directory.
 
 Opening Files
 * In the preferences make a default editor or several editors. 
@@ -80,3 +90,17 @@ both diffs and editors.
 RPM
 * Create an RPM spec file so that you can automatically install the file on
 Linux.  Make sure to remember the depenency on wxGTK and db4.
+
+Abstract Subversion client code
+* Abstract the client code so that programs like Tortoise can use the RapidSVN 
+libraries rather than the ordinary C libraries.
+
+User Documentation
+* So far we have zero user documenation.  Possibly the WinCVS documenation can 
+be adapted to RapidSVN.
+
+Developer Documentation
+* Diagram the source code structure of the project so that developers will 
+have an easier time figuring out how to hack the project.  Even further down 
+the road create a cookbook that describes in greater detail how to add their 
+own functionality.
