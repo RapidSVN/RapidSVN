@@ -826,7 +826,8 @@ RapidSvnFrame::MakeUpdate ()
                                                 DEFAULT_ARRAY_SIZE,
                                                 sizeof (const char *));
 
-  if (m_listCtrl->GetSelectedItemCount () <= 0)
+  wxWindow* activeWindow = FindFocus();
+  if (m_listCtrl->GetSelectedItemCount () <= 0 || activeWindow != m_listCtrl)
     // nothing selected in the file list
   {
     wxFileName fname (m_folder_browser->GetPath ());

@@ -40,6 +40,10 @@ private:
   void OnExpandItem (wxTreeEvent & event);
   void OnCollapseItem (wxTreeEvent & event);
   void OnSize (wxSizeEvent & event);
+  void OnItemRightClk (wxTreeEvent & event);
+
+  void ShowMenu (long index, wxPoint & pt);
+  void buildMenu (wxMenu & menu, const wxString & path);
 
   DECLARE_EVENT_TABLE ()
 

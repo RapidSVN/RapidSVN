@@ -6,6 +6,7 @@
 #include "wx/filename.h"
 #include "wx/dir.h"
 #include "wx/imaglist.h"
+#include "rapidsvn_app.h"
 
 #include "res/bitmaps/computer.xpm"
 #include "res/bitmaps/folder.xpm"
@@ -15,6 +16,7 @@
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
   EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
   EVT_TREE_ITEM_COLLAPSED (-1, FolderBrowser::OnCollapseItem)
+  EVT_TREE_ITEM_RIGHT_CLICK (-1, FolderBrowser::OnItemRightClk)
   EVT_SIZE (FolderBrowser::OnSize) 
 END_EVENT_TABLE () 
 
@@ -212,6 +214,20 @@ FolderBrowser::OnCollapseItem (wxTreeEvent & event)
   m_treeCtrl->SetItemHasChildren (parentId, TRUE);
 }
   
+void
+FolderBrowser::OnItemRightClk (wxTreeEvent & event)
+{
+  int flag;
+  wxPoint screenPt = wxGetMousePosition ();
+  wxPoint clientPt = ScreenToClient (screenPt);
+
+  long index = m_treeCtrl->HitTest (clientPt, flag);
+  if (index >= 0)
+  {
+    ShowMenu (index, clientPt);
+  }
+}
+
 wxString 
 FolderBrowser::GetPath ()
 {
@@ -232,4 +248,29 @@ void
 FolderBrowser::SetPath (const wxString& path)
 {
   //TODO 
+}
+
+void
+FolderBrowser::ShowMenu (long index, wxPoint & pt)
+{
+  wxFileName filepath (GetPath ());
+  wxMenu popup_menu;
+  wxString path = filepath.GetFullPath ();
+
+  buildMenu (popup_menu, UnixPath (path));
+
+  PopupMenu (&popup_menu, pt);
+}
+
+void
+FolderBrowser::buildMenu (wxMenu & menu, const wxString & path)
+{
+  wxMenuItem *pItem;
+
+  pItem = new wxMenuItem (&menu, ID_Update, _T ("Update"));
+  pItem->SetBitmap (wxBITMAP (update));
+  menu.Append (pItem);
+  pItem = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
+  pItem->SetBitmap (wxBITMAP (commit));
+  menu.Append (pItem);
 }

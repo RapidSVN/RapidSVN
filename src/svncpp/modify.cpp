@@ -309,6 +309,7 @@ Modify::merge (const char * path1, long revision1,
                           localPath,
                           recurse,
                           force,
+                          FALSE,
                           m_pool);
 
   if(m_Err != NULL)

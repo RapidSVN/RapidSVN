@@ -174,7 +174,7 @@ open_directory (const char *path,
 
 
 static svn_error_t *
-close_directory (void *dir_baton)
+close_directory (void *dir_baton, apr_pool_t *)
 {
   DirBaton *db = (DirBaton *) dir_baton;
   DirBaton *pb = db->parent_dir_baton;
@@ -240,7 +240,7 @@ close_directory (void *dir_baton)
 
 
 static svn_error_t *
-apply_textdelta (void *file_baton,
+apply_textdelta (void *file_baton,apr_pool_t *,
                  svn_txdelta_window_handler_t * handler, void **handler_baton)
 {
   FileBaton *fb = (FileBaton *) file_baton;
@@ -345,7 +345,7 @@ change_dir_prop (void *dir_baton,
 
 
 static svn_error_t *
-close_edit (void *edit_baton)
+close_edit (void *edit_baton, apr_pool_t*)
 {
   EditBaton *eb = (EditBaton *) edit_baton;
 
