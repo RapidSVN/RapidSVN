@@ -16,6 +16,7 @@
 
 // app
 #include "action.hpp"
+#include "cert_dlg.hpp"
 #include "tracer.hpp"
 #include "auth_dlg.hpp"
 
@@ -362,35 +363,20 @@ Action::PostEvent (wxEvent & event)
   wxPostEvent (handler, event);
 }
 
-bool
+
+svn::ContextListener::SslServerTrustAnswer
 Action::contextSslServerTrustPrompt (
-  svn::ContextListener::SslServerTrustData & data)
+  const svn::ContextListener::SslServerTrustData & data,
+  long & acceptedFailures)
 {
-  wxString msg;
-  msg.Printf ("%s\n" // question 
-              "%s: %s\n" // hostname
-              "%s: %s\n" // issuer
-              "%s: %s\n" // valid from
-              "%s: %s\n" // valid until
-              "%s: %s", // fingerprint
-              _("Do you want to trust this certificate permanently?"),
-              _("Hostname"), data.hostname.c_str (),
-              _("Issuer"), data.issuerDName.c_str (),
-              _("Valid from"), data.validFrom.c_str (),
-              _("Valid until"), data.validUntil.c_str (),
-              _("Fingerprint"), data.fingerprint.c_str ());
+  CertDlg dlg (GetParent (), data);
 
-  int answer = wxMessageBox (msg, _("SSL Certificate"), 
-                             wxYES_NO | wxCENTRE | wxICON_QUESTION,
-                             GetParent ());
+  dlg.ShowModal ();
+  acceptedFailures = dlg.AcceptedFailures ();
 
-  if (answer != wxYES)
-    return false;
-  
-  // Yes! Trust permanently
-  data.trustPermanently = true;
-  return true;
+  return dlg.Answer ();  
 }
+
 
 bool
 Action::contextSslClientCertPrompt (std::string & certFile)

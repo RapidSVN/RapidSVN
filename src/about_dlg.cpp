@@ -60,7 +60,7 @@ AboutDlg::AboutDlg (wxWindow * parent)
                     RAPIDSVN_VER_MILESTONE);
 
   wxString subversion;
-  subversion.Printf ("Subversion %d.%d.%d",
+  subversion.Printf (_("Subversion %d.%d.%d"),
                      SVN_VER_MAJOR, 
                      SVN_VER_MINOR, 
                      SVN_VER_MICRO);

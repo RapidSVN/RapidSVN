@@ -194,9 +194,10 @@ public:
   /**
    * @see svn::ContextListener
    */
-  virtual bool
+  virtual svn::ContextListener::SslServerTrustAnswer
   contextSslServerTrustPrompt (
-    svn::ContextListener::SslServerTrustData & data);
+    const svn::ContextListener::SslServerTrustData & data,
+    long & acceptedFailures);
 
   /**
    * @see svn::ContextListener

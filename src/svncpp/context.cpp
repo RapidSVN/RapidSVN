@@ -134,21 +134,21 @@ namespace svn
         provider;
 
       // add ssl providers
-      svn_client_get_ssl_server_trust_file_provider (&provider, pool);
-      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
-        provider;
-
       svn_client_get_ssl_server_trust_prompt_provider (
         &provider, onSslServerTrustPrompt, this, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
-      svn_client_get_ssl_client_cert_pw_file_provider (&provider, pool);
+      svn_client_get_ssl_server_trust_file_provider (&provider, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
       svn_client_get_ssl_client_cert_pw_prompt_provider (
         &provider, onSslClientCertPwPrompt, this, pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
+
+      svn_client_get_ssl_client_cert_pw_file_provider (&provider, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
@@ -301,23 +301,34 @@ namespace svn
       SVN_ERR (getData (baton, &data));
       
       ContextListener::SslServerTrustData trustData (failures);
+      if (realm != NULL)
+        trustData.realm = realm;
       trustData.hostname = info->hostname;
       trustData.fingerprint = info->fingerprint;
       trustData.validFrom = info->valid_from;
       trustData.validUntil = info->valid_until;
       trustData.issuerDName = info->issuer_dname;
 
-      if (!data->listener->contextSslServerTrustPrompt (trustData))
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
+      long acceptedFailures;
+      ContextListener::SslServerTrustAnswer answer =
+        data->listener->contextSslServerTrustPrompt (
+          trustData, acceptedFailures);
 
-      svn_auth_cred_ssl_server_trust_t *cred_ = 
-        (svn_auth_cred_ssl_server_trust_t*)
-        apr_palloc (pool, sizeof (svn_auth_cred_ssl_server_trust_t));
+      if(answer == ContextListener::DONT_ACCEPT)
+        *cred = NULL;
+      else
+      {
+        svn_auth_cred_ssl_server_trust_t *cred_ = 
+          (svn_auth_cred_ssl_server_trust_t*)
+          apr_palloc (pool, sizeof (svn_auth_cred_ssl_server_trust_t));
       
-      cred_->trust_permanently = trustData.trustPermanently;
-      cred_->accepted_failures = trustData.acceptedFailures;
-
-      *cred = cred_;
+        if (answer == ContextListener::ACCEPT_PERMANENTLY)
+        {
+          cred_->trust_permanently = 1;
+          cred_->accepted_failures = acceptedFailures;
+        }
+        *cred = cred_;
+      }
       
       return SVN_NO_ERROR;
     }

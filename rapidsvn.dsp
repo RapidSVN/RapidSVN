@@ -114,6 +114,10 @@ SOURCE=.\src\bookmarks.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\cert_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\checkout_action.cpp
 # End Source File
 # Begin Source File
@@ -319,6 +323,10 @@ SOURCE=.\src\auth_dlg.hpp
 # Begin Source File
 
 SOURCE=.\src\bookmarks.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\cert_dlg.hpp
 # End Source File
 # Begin Source File
 

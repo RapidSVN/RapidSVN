@@ -10,6 +10,7 @@ rapidsvn_SOURCES= \
 	add_action.cpp \
 	auth_dlg.cpp \
 	bookmarks.cpp \
+	cert_dlg.cpp \
 	checkout_action.cpp \
 	checkout_dlg.cpp \
 	cleanup_action.cpp \

@@ -89,6 +89,14 @@ namespace svn
     virtual bool
     contextGetLogMessage (std::string & msg) = 0;
 
+    typedef enum
+    {
+      DONT_ACCEPT = 0,
+      ACCEPT_TEMPORARILY,
+      ACCEPT_PERMANENTLY
+    } SslServerTrustAnswer;
+
+
     /**
      * @see contextSslServerTrust
      * @see svn_auth_cred_ssl_server_trust_t
@@ -96,11 +104,7 @@ namespace svn
     struct SslServerTrustData
     {
     public:
-      /** the following data is requested */
-      bool trustPermanently;
-      int acceptedFailures;
-
-      /** failure count */
+      /** bit coded failures */
       const int failures;
 
       /** certificate information */
@@ -109,11 +113,12 @@ namespace svn
       std::string validFrom;
       std::string validUntil;
       std::string issuerDName;
+      std::string realm;
 
       SslServerTrustData (const int failures_ = 0)
-        : trustPermanently (false), acceptedFailures (0),
-          failures (failures_), hostname (""), fingerprint (""),
-          validFrom (""), validUntil (""), issuerDName("")
+        : failures (failures_), hostname (""), fingerprint (""),
+          validFrom (""), validUntil (""), issuerDName(""),
+          realm ("")
       {
       }
     };
@@ -123,10 +128,11 @@ namespace svn
      * information, that has to be confirmed by the user
      *
      * @param data 
-     * @retval false prompt was cancelled
+     * @return @a SslServerTrustAnswer
      */
-    virtual bool
-    contextSslServerTrustPrompt (SslServerTrustData & data) = 0;
+    virtual SslServerTrustAnswer
+    contextSslServerTrustPrompt (const SslServerTrustData & data, 
+                                 long & acceptedFailures) = 0;
 
     /**
      * this method is called to retrieve client side
