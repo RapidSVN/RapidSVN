@@ -608,12 +608,25 @@ public:
  * exceptions.
  */
 static int
-GetImageIndex (int Index)
+GetImageIndex (int textIndex, int propIndex)
 {
-  if ((Index >= 0) && (Index <= N_STATUS_KIND))
-    return IMAGE_INDEX[Index];
-  else
-    return 0;
+  int image = 0;
+  if ((textIndex >= 0) && (textIndex <= N_STATUS_KIND))
+  {
+    if ( (textIndex == svn_wc_status_normal) && (propIndex != -1) )
+    {
+      if ( (propIndex >= 0) && (propIndex <= N_STATUS_KIND) )
+      {
+        image = IMAGE_INDEX[propIndex];
+      }
+    }
+    else
+    {
+      image = IMAGE_INDEX[textIndex];
+    }
+  }
+
+  return image;
 }
 
 /**
@@ -749,11 +762,11 @@ FileListCtrl::UpdateFileList ()
     {
       if (IsDir (&status))
       {
-        imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER);
+        imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER, -1);
       }
       else
       {
-        imageIndex = GetImageIndex (status.textStatus ());
+        imageIndex = GetImageIndex (status.textStatus (), status.propStatus ());
       }
     }
     else
@@ -762,11 +775,11 @@ FileListCtrl::UpdateFileList ()
       // with them. must find this out by ourself
       if (wxDirExists (status.path ()))
       {
-        imageIndex = GetImageIndex (IMG_INDX_FOLDER);
+        imageIndex = GetImageIndex (IMG_INDX_FOLDER, -1);
       }
       else if (wxFileExists (status.path ()))
       {
-        imageIndex = GetImageIndex (svn_wc_status_unversioned);
+        imageIndex = GetImageIndex (svn_wc_status_unversioned, -1);
       }
       else
       {
