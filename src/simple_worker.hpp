@@ -62,12 +62,20 @@ public:
   virtual bool 
   Perform (Action * action);
 
+  /**
+   * @see ActionWorker
+   */
+  virtual void
+  SetContext (svn::Context * context, bool own = false);
+
+  /**
+   * @see ActionWorker
+   */
+  virtual svn::Context * 
+  GetContext () const;
 private:
-  Action * m_action;
-  ActionState m_state;
-  ActionResult m_result;
-  wxWindow * m_parent;
-  Tracer * m_tracer;
+  struct Data;
+  Data * m;
 
   /**
    * private copy constructor
@@ -103,6 +111,7 @@ private:
    */
   void
   PostDataEvent (int code, void * data, int event_id);
+
 };
 
 #endif

@@ -101,6 +101,21 @@ public:
    */
   virtual bool 
   Perform (Action * action) = 0;
+
+  /**
+   * Sets the context to use for actions
+   *
+   * @param context
+   * @param own true: this class will own and delete the worker
+   */
+  virtual void
+  SetContext (svn::Context * context, bool own = false) = 0;
+
+  /**
+   * @return the context
+   */
+  virtual svn::Context * 
+  GetContext () const = 0;
 };
 
 #endif

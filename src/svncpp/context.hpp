@@ -63,7 +63,16 @@ namespace svn
      */
     operator svn_client_ctx_t * ();
 
+    /**
+     * return the svn_client_ctx object
+     */
     svn_client_ctx_t * ctx ();
+
+    /**
+     * this will be called at the beginning of an action.
+     * the log message will be reset.
+     */
+    void reset ();
 
     /**
      * set log message

@@ -16,6 +16,7 @@
 #include "wx/filename.h"
 
 // svncpp
+#include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/targets.hpp"
 
@@ -293,7 +294,7 @@ END_EVENT_TABLE ()
   m_listCtrl = NULL;
   m_title = title;
   m_actionWorker = new SimpleWorker (this);
-  m_context = NULL;
+  m_context = new svn::Context ();
   m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
   // enable trace
@@ -405,6 +406,9 @@ RapidSvnFrame::~RapidSvnFrame ()
 
   if (m_actionWorker)
     delete m_actionWorker;
+
+  if (m_context)
+    delete m_context;
 
   // Save frame size and position.
 
@@ -1089,6 +1093,7 @@ RapidSvnFrame::Perform (ActionType type, Action * action)
   }
   action->SetTracer (m_logTracer, false);
   m_actionWorker->SetTracer (m_logTracer);
+  m_actionWorker->SetContext (m_context, false);
   m_actionWorker->Perform (action);
 }
 

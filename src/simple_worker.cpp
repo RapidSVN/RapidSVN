@@ -24,57 +24,122 @@
 #include "simple_worker.hpp"
 #include "tracer.hpp"
 
-SimpleWorker::SimpleWorker (wxWindow * parent)
-  : m_action (0), m_state (ACTION_NONE), 
-    m_result (ACTION_NOTHING), m_parent (parent), m_tracer (0)
+struct SimpleWorker::Data
 {
+public:
+  wxWindow * parent;
+  svn::Context * context;
+  Action * action;
+  Tracer * tracer;
+  bool ownContext;
+  ActionState state;
+  ActionResult result;
+
+  /**
+   * constructor
+   */
+  Data (wxWindow * parent)
+  {
+    Init (parent);
+  }
+
+  /**
+   * destructor
+   */
+  virtual ~Data ()
+  {
+    SetContext (0, false);
+  }
+
+  /**
+   * initialize values
+   */
+  void
+  Init (wxWindow * parent)
+  {
+    this->parent = parent;
+    context = 0;
+    action = 0;
+    tracer = 0;
+    ownContext =false;
+    state = ACTION_NONE;
+    result = ACTION_NOTHING;
+  }
+
+  /**
+   * set a context. if there is already a context and we
+   * own this context, delete it
+   *
+   * @param ctx new context
+   * @param own own new context
+   */
+  void
+  SetContext (svn::Context * ctx, bool own)
+  {
+    if (own && (ownContext != 0))
+    {
+      delete context;
+      context = 0;
+    }
+
+    context = ctx;
+    ownContext = own;
+  }
+};
+
+SimpleWorker::SimpleWorker (wxWindow * parent)
+{
+  m = new Data (parent);
 }
 
 SimpleWorker::~SimpleWorker ()
 {
+  delete m;
 }
 
 void
 SimpleWorker::Create (wxWindow * parent)
 {
-  m_action = 0;
-  m_state  = ACTION_NONE;
-  m_result = ACTION_NOTHING;
-  m_parent = parent;
-  m_tracer = 0;
+  m->Init (parent);
 }
 
 ActionState 
 SimpleWorker::GetState ()
 {
-  return m_state;
+  return m->state;
 }
 
 ActionResult
 SimpleWorker::GetResult ()
 {
-  return m_result;
+  return m->result;
 }
 
 bool
 SimpleWorker::Perform (Action * action)
 {
-  svn::Context context;
-  action->SetContext (&context);
-  context.setListener (action);
+  // is there a context? we need one
+  if (m->context == 0)
+  {
+    SetContext (new svn::Context (), true);
+  }
 
-  m_result = ACTION_NOTHING;
-  m_action = action;
-  m_state = ACTION_INIT;
+  action->SetContext (m->context);
+  m->context->reset ();
+  m->context->setListener (action);
+
+  m->result = ACTION_NOTHING;
+  m->action = action;
+  m->state = ACTION_INIT;
 
   try
   {
-    if (!m_action->Prepare ())
+    if (!m->action->Prepare ())
     {
-      m_result = ACTION_ABORTED;
-      delete m_action;
-      m_action = 0;
-      m_state = ACTION_NONE;
+      m->result = ACTION_ABORTED;
+      delete m->action;
+      m->action = 0;
+      m->state = ACTION_NONE;
       return true;
     }
   }
@@ -101,19 +166,19 @@ SimpleWorker::Perform (Action * action)
   {
     // this cursor stuff has to change...
     wxBusyCursor wait;
-    m_state = ACTION_RUNNING;
-    bool result = m_action->Perform ();
+    m->state = ACTION_RUNNING;
+    bool result = m->action->Perform ();
     if (!result)
     {
-      m_result = ACTION_ERROR;
+      m->result = ACTION_ERROR;
     }
     else
     {
-      m_result = ACTION_SUCCESS;
+      m->result = ACTION_SUCCESS;
     }
-    delete m_action;
-    m_action = 0;
-    m_state = ACTION_NONE;
+    delete m->action;
+    m->action = 0;
+    m->state = ACTION_NONE;
   }
   catch (svn::ClientException & e)
   {
@@ -139,15 +204,15 @@ SimpleWorker::Perform (Action * action)
 void
 SimpleWorker::SetTracer (Tracer * tracer)
 {
-  m_tracer = tracer;
+  m->tracer = tracer;
 }
 
 void
 SimpleWorker::Trace (const wxString & message)
 {
-  if (m_tracer)
+  if (m->tracer)
   {
-    m_tracer->Trace (message);
+    m->tracer->Trace (message);
   }
 }
 
@@ -159,7 +224,7 @@ SimpleWorker::PostStringEvent (int code, wxString str, int event_id)
   event.SetString (str);
 
   // send in a thread-safe way
-  wxPostEvent (m_parent, event);
+  wxPostEvent (m->parent, event);
 }
 
 void
@@ -170,7 +235,19 @@ SimpleWorker::PostDataEvent (int code, void *data, int event_id)
   event.SetClientData (data);
 
   // send in a thread-safe way
-  wxPostEvent (m_parent, event);
+  wxPostEvent (m->parent, event);
+}
+
+void
+SimpleWorker::SetContext (svn::Context * context, bool own)
+{
+  m->SetContext (context, own);
+}
+
+svn::Context * 
+SimpleWorker::GetContext () const
+{
+  return m->context;
 }
 
 /* -----------------------------------------------------------------

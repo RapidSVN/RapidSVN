@@ -26,8 +26,8 @@ namespace svn
   {
   public:
     ContextListener * listener;
-    bool loginIsSet;
     bool logIsSet;
+    int promptCounter;
     Pool pool;
     svn_client_ctx_t ctx;
     std::string username;
@@ -35,7 +35,8 @@ namespace svn
     std::string logMessage;
 
     Data ()
-      : listener (0), loginIsSet (false), logIsSet (false)
+      : listener (0), logIsSet (false), 
+        promptCounter (0)
     {
       // intialize authentication providers
       apr_array_header_t *providers = 
@@ -50,7 +51,7 @@ namespace svn
         &(client_provider->provider_baton),
         prompt,
         this,
-        1, // 1 retry
+        10000000000, // not very nice. should be infinite...
         pool);
 
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
@@ -58,8 +59,6 @@ namespace svn
 
       svn_auth_baton_t *ab;
       svn_auth_open (&ab, providers, pool);
-      svn_auth_set_parameter (ab, SVN_AUTH_PARAM_DEFAULT_USERNAME, "");
-      svn_auth_set_parameter (ab, SVN_AUTH_PARAM_DEFAULT_PASSWORD, "");
 
       // initialize ctx structure
       memset (&ctx, 0, sizeof (ctx));
@@ -76,7 +75,6 @@ namespace svn
     {
       username = usr;
       password = pwd;
-      loginIsSet = true;
 
       svn_auth_baton_t * ab = ctx.auth_baton;
       svn_auth_set_parameter (ab, SVN_AUTH_PARAM_DEFAULT_USERNAME, 
@@ -114,7 +112,10 @@ namespace svn
       Data * data = static_cast <Data *> (baton);
 
       // if there is a listener, ask it
-      data->retrieveLogMessage ();
+      if (!data->logIsSet)
+      {
+        data->retrieveLogMessage ();
+      }
 
       //TODO maybe change encoding
       //take a look at *subversion*client/cmdline/util.c
@@ -175,10 +176,19 @@ namespace svn
       }
 
       Data * data = static_cast <Data *> (baton);
-      
-      if (!data->retrieveLogin ())
+
+      if (data->promptCounter > 6)
       {
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
+        data->promptCounter = 0;
+      }
+      data->promptCounter++;
+
+      if (data->promptCounter == 3)
+      {
+        if (!data->retrieveLogin ())
+        {
+          return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
+        }
       }
 
       if (hide==TRUE)
@@ -230,17 +240,12 @@ namespace svn
       bool ok;
 
       if (listener == 0)
-      {
-        ok = logIsSet;
-      }
-      else
-      {
-        ok = listener->contextGetLogMessage (logMessage);
+        return false;
 
-        if (ok)
-        {
-          logIsSet = true;
-        }
+      ok = listener->contextGetLogMessage (logMessage);
+      if (!ok)
+      {
+        logIsSet = false;
       }
 
       return ok;
@@ -260,19 +265,12 @@ namespace svn
     bool
     retrieveLogin ()
     {
-      bool ok = loginIsSet;
+      bool ok;
 
-      if (listener != 0)
-      {
-        if (!loginIsSet)
-        {
-          ok = listener->contextGetLogin (username, password);
-          if (ok)
-          {
-            loginIsSet = true;
-          }
-        }
-      }
+      if (listener == 0)
+        return false;
+
+      ok = listener->contextGetLogin (username, password);
 
       return ok;
     }
@@ -365,6 +363,13 @@ namespace svn
   Context::getListener () const
   {
     return m->listener;
+  }
+
+  void
+  Context::reset ()
+  {
+    m->promptCounter = 0;
+    m->logIsSet = false;
   }
 }
 
