@@ -18,13 +18,15 @@ AuthBaton::AuthBaton (apr_pool_t * pool,
   if (!username.IsEmpty ())
   {
     auth_obj->username = username.c_str ();
-    auth_obj->overwrite = TRUE;
+    auth_obj->store_auth_info = TRUE;
+    auth_obj->got_new_auth_info = TRUE;
   }
 
   if (!password.IsEmpty ())
   {
     auth_obj->password = password.c_str ();
-    auth_obj->overwrite = TRUE;
+    auth_obj->store_auth_info = TRUE;
+    auth_obj->got_new_auth_info = TRUE;
   }
 }
 

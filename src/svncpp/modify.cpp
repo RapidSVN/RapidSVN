@@ -1,3 +1,4 @@
+
 #include "modify.h"
 
 struct log_msg_baton
@@ -33,12 +34,12 @@ Modify::getRevision (long revNumber)
   return &rev;
 }
 
-bool
+void
 Modify::checkout (char * moduleName, char *destPath, long revision, 
                   bool recurse)
 {
   if(notify_func == NULL)
-    return false;
+    return;
 
   Err = svn_client_checkout (notify_func,
                              notify_baton,
@@ -51,9 +52,7 @@ Modify::checkout (char * moduleName, char *destPath, long revision,
                              pool);
 
   if(Err != NULL)
-    return false;
-
-  return true;
+    throw ClientException (Err);
 }
 
 void
@@ -63,7 +62,7 @@ Modify::notification (svn_wc_notify_func_t function, void * baton)
   notify_baton = baton;
 }
 
-bool
+void
 Modify::remove (const char * path, bool force)
 {
   svn_client_commit_info_t *commit_info = NULL;
@@ -74,36 +73,30 @@ Modify::remove (const char * path, bool force)
                            logMessage (NULL),
                            notify_func, notify_baton, pool);
   if(Err != NULL)
-    return false;
-
-  return true;
+    throw ClientException (Err);
 }
 
-bool
+void
 Modify::revert (const char * path, bool recurse)
 {
   Err = svn_client_revert (path, recurse, notify_func, 
                            notify_baton, pool);
 
   if(Err != NULL)
-    return false;
-
-  return true;
+    throw ClientException (Err);
 }
 
-bool
+void
 Modify::add (char * path, bool recurse)
 {
   Err = svn_client_add (path, recurse, notify_func, 
                         notify_baton, pool);
 
   if(Err != NULL)
-    return false;
-
-  return true;
+    throw ClientException (Err);
 }
 
-bool
+void
 Modify::update (char * path, long revision, bool recurse)
 {
   Err = svn_client_update (authenticate (),
@@ -115,12 +108,10 @@ Modify::update (char * path, long revision, bool recurse)
                            notify_baton,
                            pool);
   if(Err != NULL)
-    return false;
-
-  return true;
+    throw ClientException (Err);
 }
 
-bool
+void
 Modify::commit (char * path, char * message, bool recurse)
 {
   svn_client_commit_info_t *commit_info = NULL;
@@ -134,12 +125,10 @@ Modify::commit (char * path, char * message, bool recurse)
                            !recurse,
                            pool);
   if(Err != NULL)
-    return false;
-
-  return true;
+    throw ClientException (Err);
 }
 
-bool
+void
 Modify::copy (char * srcPath, char * destPath)
 {
   svn_client_commit_info_t *commit_info = NULL;
@@ -157,12 +146,10 @@ Modify::copy (char * srcPath, char * destPath)
                          pool);
   
   if(Err != NULL)
-    return false;
-
-  return true;
+    throw ClientException (Err);
 }
 
-bool
+void
 Modify::move (char * srcPath, char * destPath, long revision, bool force)
 {
   svn_client_commit_info_t *commit_info = NULL;
@@ -179,9 +166,7 @@ Modify::move (char * srcPath, char * destPath, long revision, bool force)
                          notify_baton,
                          pool);
   if(Err != NULL)
-    return false;
-
-  return true;
+    throw ClientException (Err);
 }
 
 apr_array_header_t *

@@ -5,6 +5,10 @@
 #include "auth.h"
 #include "svn_sorts.h"
 
+#ifndef _SVNCPP_EXCEPTION_H_
+#include "exception.h"
+#endif
+
 namespace svn
 {
 
@@ -31,36 +35,55 @@ public:
   ~Status ();
 
   /**
-   * Initiaties the status on a path. Returns false if the file is 
-   * not under version control.
+   * Initiaties the status on a path. 
+   * @exception ClientException
    */
-  bool loadPath (char * path);
+  void loadPath (char * path);
   
   /**
-   * Returns the revision.  Returns -1 on failure.
+   * Returns the revision.  
+   * @exception EntryNotVersioned
    */
-  long revision ();
+  unsigned long revision ();
 
   /**
    * Returns the last time the file was changed revision number.
-   * Returns -1 on failure.
+   * @exception EntryNotVersioned
    */
-  long lastChanged ();
+  unsigned long lastChanged ();
 
   /**
-   * Returns the file status in text. Returns NULL on failure.
+   * Returns the file status in text. 
+   * @exception EntryNotVersioned
    */
   char * statusText ();
 
   /**
-   * Returns the file status. Returns NULL on failure.
+   * Returns the file status property enum. 
+   * @exception EntryNotVersioned
    */
-  char * statusProp ();
+  svn_wc_status_kind statusProp ();
 
   /**
    * Returns whether the file is under version control.
    */
   bool isVersioned ();
+};
+
+/**
+ * Represents an error triggered when the path set is not versioned.
+ */
+class EntryNotVersioned : public Exception
+{
+public:
+  /**
+   * Constructor. 
+   */
+  EntryNotVersioned (std::string message = "") :
+      Exception(message) {};
+
+  /* Destructor */
+  virtual ~EntryNotVersioned () throw () {};
 };
 
 }

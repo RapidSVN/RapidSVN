@@ -25,7 +25,7 @@ Status::isVersioned ()
   return versioned;
 }
 
-bool
+void
 Status::loadPath (char * path)
 {
   const svn_item_t *item;
@@ -45,40 +45,40 @@ Status::loadPath (char * path)
 
   // Error present if function is not under version control
   if(Err != NULL)
-    return false;
+  {
+    versioned = false;
+    throw ClientException (Err);
+  }
     
   /* Convert the unordered hash to an ordered, sorted array */
   statusarray = apr_hash_sorted_keys (statushash,
                                       svn_sort_compare_items_as_paths,
                                       pool);
 
-  // We do not recurse, 
-  // so only the first entry is interesting to us.
+  // We do not recurse, so only the first entry is interesting to us.
   item = &APR_ARRAY_IDX (statusarray, 0, const svn_item_t);
   status = (svn_wc_status_t *) item->value;
 
-  if (!status->entry)           // not under revision control
-    return false;
-  
-  versioned = true;
-
-  return true;
+  if (!status->entry)  // not under revision control
+    versioned = false;
+  else
+    versioned = true;
 }
 
-long
+unsigned long
 Status::revision ()
 {
   if(versioned == false)
-    return -1;
+    throw EntryNotVersioned ();
 
   return status->entry->revision;
 }
   
-long
+unsigned long
 Status::lastChanged ()
 {
   if(versioned == false)
-    return -1;
+    throw EntryNotVersioned ();
 
   return status->entry->cmt_rev;
 }
@@ -89,7 +89,7 @@ Status::statusText ()
   char * statusText = NULL;
   
   if(versioned == false)
-    return NULL;
+    throw EntryNotVersioned ();
 
   switch (status->text_status)
   {
@@ -129,11 +129,13 @@ Status::statusText ()
   return statusText;
 }
 
-char *
+svn_wc_status_kind
 Status::statusProp ()
 {
-  //return status->prop_status;
-  return NULL;
+  if(versioned == false)
+    throw EntryNotVersioned ();
+  
+  return status->prop_status;
 }
 
 }

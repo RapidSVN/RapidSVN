@@ -13,10 +13,4 @@ Client::~Client ()
   svn_pool_destroy (pool);
 }
 
-svn_error_t *
-Client::getError ()
-{
-  return Err;
-}
-
 }

@@ -3,7 +3,6 @@
 #define _SVNCPP_AUTH_H_
 
 #include "client.h"
-#include "error.h"
 
 namespace svn
 {

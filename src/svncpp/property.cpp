@@ -23,18 +23,18 @@ Property::count ()
   return propCount;
 }
 
-bool
+void
 Property::loadPath (char * path)
 {
   filePath = path;
+  svn_error_t * error = NULL;
 
-  if(!loadProperties ())
-    return false;
-
-  return true;
+  error = loadProperties ();
+  if(error != NULL)
+    throw ClientException (error);
 }
 
-bool
+svn_error_t *
 Property::loadProperties ()
 {
   Err = svn_client_proplist (&props,
@@ -42,7 +42,7 @@ Property::loadProperties ()
                              false /* recurse */,
                              pool);
   if(Err != NULL)
-    return false;
+    return Err;
 
   propCount = 0;
 
@@ -65,7 +65,7 @@ Property::loadProperties ()
     } 
   }
 
-  return true;
+  return Err;
 }
 
 const char *
@@ -132,7 +132,7 @@ Property::getValue (char * name)
                             pool);
 
   if(Err != NULL)
-    return NULL;
+    throw ClientException (Err);
 
   for (hi = apr_hash_first (pool, prop); hi; hi = apr_hash_next (hi))
   {
@@ -148,45 +148,51 @@ Property::getValue (char * name)
     if (isSvnProperty (name))
       Err = svn_utf_string_from_utf8 (&propval, propval, pool);
 
+    if(Err != NULL)
+      throw ClientException (Err);
+
     return propval->data;
   }
 
   return NULL;
 }
 
-bool
+void
 Property::set (char * name, char * value, bool recurse)
 {
   const char *pname_utf8;
   const svn_string_t *propval = NULL;
+  svn_error_t * error = NULL;
+
   propval = svn_string_create ((const char *) value, pool);
 
   svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
 
-  Err = svn_client_propset (pname_utf8, propval, filePath,
-                            recurse, pool);
-  if(Err != NULL)
-    return false;
+  error = svn_client_propset (pname_utf8, propval, filePath,
+                              recurse, pool);
+  if(error != NULL)
+    throw ClientException (error);
 
-  loadProperties ();
-
-  return true;
+  error = loadProperties ();
+  if(error != NULL)
+    throw ClientException (error);
 }
 
-bool 
+void 
 Property::remove (char * name, bool recurse)
 {
   const char *pname_utf8;
+  svn_error_t * error = NULL;
   svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
 
-  Err = svn_client_propset (pname_utf8, NULL, filePath,
+  error = svn_client_propset (pname_utf8, NULL, filePath,
                             recurse, pool);
-  if(Err != NULL)
-    return false;
+  if(error != NULL)
+    throw ClientException (error);
 
-  loadProperties ();
-
-  return true;
+  error = loadProperties ();
+  if(error != NULL)
+    throw ClientException (error);
 }
 
 svn_boolean_t

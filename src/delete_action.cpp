@@ -1,11 +1,13 @@
+
+#include "svncpp/modify.h"
 #include "include.h"
+#include "delete_action.h"
 #include "wx/resource.h"
 #include "utils.h"
 #include "delete_dlg.h"
 #include "notify.h"
-#include "auth_baton.h"
+//#include "auth_baton.h"
 #include "rapidsvn_app.h"
-#include "delete_action.h"
 
 DeleteAction::DeleteAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr, apr_array_header_t * trgts):ActionThread (frame, __pool),
   targets
@@ -68,7 +70,6 @@ DeleteAction::Entry ()
   void *notify_baton = NULL;
 
   svn::Modify modify;
-  svn::Error Err;
 
   svn_cl__get_notifier (&notify_func, &notify_baton,
                         TRUE, FALSE, GetTracer (), pool);
@@ -77,16 +78,17 @@ DeleteAction::Entry ()
   {
     const char *target = ((const char **) (targets->elts))[i];
 
-    if(!modify.remove (target, force))
-      Err.setError (modify.getError ());
-    else
+    try
+    {
+      modify.remove (target, force);
       GetTracer ()->Trace ("Deletion successful");
-  }
-
-  if(Err.exists ())
-  {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (Err.message ()), ACTION_EVENT);
-    GetTracer ()->Trace ("Could not delete");
+    }
+    catch (svn::ClientException &e)
+    {
+      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+                       ACTION_EVENT);
+      GetTracer ()->Trace ("Could not delete");
+    }
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);

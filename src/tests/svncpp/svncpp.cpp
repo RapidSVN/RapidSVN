@@ -1,6 +1,5 @@
 #include "svncpp.h"
 #include <stdio.h>
-#include <string>
 
 CPPUNIT_TEST_SUITE_REGISTRATION( SvnCppTestCase );
 
@@ -18,15 +17,22 @@ SvnCppTestCase::testStatus ()
 
   CPPUNIT_ASSERT (status.isVersioned ());
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
-  CPPUNIT_ASSERT_EQUAL ((long)2, status.revision ());
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
 
   status.loadPath ("my_repos/main.cpp");
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Modified") == 0);
-  CPPUNIT_ASSERT_EQUAL ((long)1, status.revision ());
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)1, status.revision ());
 
-  status.loadPath ("my_repos/status.cpp");
-  CPPUNIT_ASSERT (status.statusText () == NULL);
-  CPPUNIT_ASSERT_EQUAL ((long)-1, status.revision ());
+  try
+  {
+    status.loadPath ("my_repos/status.cpp");
+    status.statusText ();
+    status.revision ();
+    CPPUNIT_ASSERT_MESSAGE ("No exception!", false);
+  }
+  catch (...)
+  {
+  }
 }
 
 void
@@ -41,14 +47,26 @@ SvnCppTestCase::testCheckout ()
   void * notify_baton = CreateNotifyBaton ();
 
   modify.notification (my_func, notify_baton);
-  CPPUNIT_ASSERT (modify.checkout (REPOS_PATH, CHECKOUT_PATH, -1, 1));
+
+  try
+  {
+    modify.checkout ("fake_path", CHECKOUT_PATH, -1, 1);
+    CPPUNIT_ASSERT (false); // it should not get here
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT (strlen(e.description ()) > 0);
+    CPPUNIT_ASSERT (strlen(e.source ()) > 0);
+  }
+
+  modify.checkout (REPOS_PATH, CHECKOUT_PATH, -1, 1);
 
   svn::Status status;
   status.loadPath ((char *)sPath.c_str ());
 
   CPPUNIT_ASSERT (status.isVersioned ());
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
-  CPPUNIT_ASSERT_EQUAL ((long)2, status.revision ());
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
 }
 
 void
@@ -56,22 +74,30 @@ SvnCppTestCase::testDeleteRevert ()
 {
   svn::Modify modify;
   svn::Status status;
-  svn::Error error;
 
-  CPPUNIT_ASSERT (modify.remove ("my_repos/README.txt", false));
+  try
+  {
+    modify.remove ("my_repos/README.txt", false);
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
 
   status.loadPath ("my_repos/README.txt");
   CPPUNIT_ASSERT (status.isVersioned ());
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Deleted") == 0);
 
-  // Test with forcing
-  CPPUNIT_ASSERT (modify.remove ("my_repos/main.cpp", true));
-  error.setError (modify.getError ());
-  CPPUNIT_ASSERT (error.aprError () == -1);
-
-  // Test revert
-  CPPUNIT_ASSERT (modify.revert ("my_repos/README.txt", false));
-  CPPUNIT_ASSERT (modify.revert ("my_repos/main.cpp", false));
+  try
+  {
+    modify.remove ("my_repos/main.cpp", true); // with forcing
+    modify.revert ("my_repos/README.txt", false);
+    modify.revert ("my_repos/main.cpp", false);
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
 
   status.loadPath ("my_repos/README.txt");
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
@@ -85,8 +111,15 @@ SvnCppTestCase::testAdd ()
   svn::Modify modify;
   svn::Status status;
 
-  CPPUNIT_ASSERT (modify.add ("my_repos/svncpp.h", true));
-  status.loadPath ("my_repos/svncpp.h");
+  try
+  {
+    modify.add ("my_repos/svncpp.h", true);
+    status.loadPath ("my_repos/svncpp.h");
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Added") == 0);
 }
 
@@ -94,7 +127,14 @@ void
 SvnCppTestCase::testUpdate ()
 {
   svn::Modify modify;
-  CPPUNIT_ASSERT (modify.update ("my_repos", -1, true));
+  try
+  {
+    modify.update ("my_repos", -1, true);
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
 }
 
 void
@@ -105,18 +145,22 @@ SvnCppTestCase::testCommit ()
 
   modify.username ("");
   modify.password ("");
-  CPPUNIT_ASSERT (modify.commit ("my_repos", 
-                                 "Message logged by SvnCpp!", 
-                                 true));
+  try
+  {
+    modify.commit ("my_repos", "Message logged by SvnCpp!", true);
+    status.loadPath("my_repos/svncpp.h");
+    CPPUNIT_ASSERT (status.isVersioned ());
+    CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
+    CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status.revision ());
 
-  status.loadPath("my_repos/svncpp.h");
-  CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
-  CPPUNIT_ASSERT_EQUAL ((long)3, status.revision ());
-
-  status.loadPath ("my_repos/main.cpp");
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
-  CPPUNIT_ASSERT_EQUAL ((long)2, status.revision ());
+    status.loadPath ("my_repos/main.cpp");
+    CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
+    CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
 }
 
 void
@@ -125,13 +169,18 @@ SvnCppTestCase::testCopy ()
   svn::Modify modify;
   svn::Status status;
 
-  CPPUNIT_ASSERT (modify.copy ("my_repos/main.cpp", 
-                               "my_repos/my_dir/main2.cpp"));
-
-  CPPUNIT_ASSERT (status.loadPath ("my_repos/my_dir/main2.cpp"));
+  try
+  {
+    modify.copy ("my_repos/main.cpp", "my_repos/my_dir/main2.cpp");
+    status.loadPath ("my_repos/my_dir/main2.cpp");
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
   CPPUNIT_ASSERT (status.isVersioned ());
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Added") == 0);
-  CPPUNIT_ASSERT_EQUAL ((long)2, status.revision ());
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
 }
 
 void
@@ -140,19 +189,31 @@ SvnCppTestCase::testMove ()
   svn::Modify modify;
   svn::Status status;
 
-  CPPUNIT_ASSERT (modify.move ("my_repos/svncpp.h", 
-                               "my_repos/my_dir/svncpp.h", -1, true));
+  try
+  {
+    modify.move ("my_repos/svncpp.h", "my_repos/my_dir/svncpp.h", -1, true);
+    status.loadPath ("my_repos/svncpp.h");
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
 
-  // Check if deleted
-  CPPUNIT_ASSERT (status.loadPath ("my_repos/svncpp.h"));
   CPPUNIT_ASSERT (status.isVersioned ());
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Deleted") == 0);
 
   // Check if added
-  CPPUNIT_ASSERT (status.loadPath ("my_repos/my_dir/svncpp.h"));
+  try
+  {
+    status.loadPath ("my_repos/my_dir/svncpp.h");
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
   CPPUNIT_ASSERT (status.isVersioned ());
   CPPUNIT_ASSERT (strcmp(status.statusText (), "Added") == 0);
-  CPPUNIT_ASSERT_EQUAL ((long)2, status.revision ());
+  CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
 }
 
 void
@@ -161,7 +222,14 @@ SvnCppTestCase::testProperty ()
   svn::Property property;
 
   // Load and count tests
-  CPPUNIT_ASSERT (property.loadPath ("my_repos/main.cpp"));
+  try
+  {
+    property.loadPath ("my_repos/main.cpp");
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
   CPPUNIT_ASSERT_EQUAL (2, property.count ());
 
   // Iteration tests
@@ -173,9 +241,9 @@ SvnCppTestCase::testProperty ()
 
   // Get and set value tests
   CPPUNIT_ASSERT (strcmp (property.getValue ("test"), "test_value") == 0);
-  CPPUNIT_ASSERT (property.set ("test", "new_value", false ));
+  property.set ("test", "new_value", false );
   CPPUNIT_ASSERT (strcmp (property.getValue ("test"), "new_value") == 0);
 
-  CPPUNIT_ASSERT (property.remove ("test", false));
+  property.remove ("test", false);
   CPPUNIT_ASSERT_EQUAL (1, property.count ());
 }

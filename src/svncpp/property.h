@@ -5,6 +5,10 @@
 #include "client.h"
 #include "svn_utf.h"
 
+#ifndef _SVNCPP_EXCEPTION_H_
+#include "exception.h"
+#endif
+
 namespace svn
 {
 
@@ -28,7 +32,7 @@ private:
   /**
    * Loads the initial data for the property list.
    */
-  bool loadProperties ();
+  svn_error_t * loadProperties ();
 
 public:
   Property ();
@@ -42,24 +46,28 @@ public:
   /**
    * Loads the file, verifies that it is valid, and records the 
    * property count.
+   * @exception ClientException
    */
-  bool loadPath (char * path);
+  void loadPath (char * path);
 
   /**
    * Sets or adds a property with a new value.
+   * @exception ClientException
    */
-  bool set (char * path, char * value, bool recurse);
+  void set (char * path, char * value, bool recurse);
 
   /**
-   * Returns the value of a property.
+   * Returns the value of a property.  Returns null if the property
    * was not found.
+   * @exception ClientException
    */
   const char * getValue (char * name);
 
   /**
    * Deletes a property.  
+   * @exception ClientException
    */
-  bool remove (char * name, bool recurse);
+  void remove (char * name, bool recurse);
 
   /**
    * Returns the next property name in the list.  Returns 

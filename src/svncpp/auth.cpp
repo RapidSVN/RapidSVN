@@ -10,7 +10,8 @@ Auth::Auth ()
 
   auth_obj->prompt_callback = NULL;
   auth_obj->prompt_baton = NULL;
-  auth_obj->overwrite = true;
+  auth_obj->store_auth_info = true;
+  auth_obj->got_new_auth_info = true;
 }
 
 Auth::~Auth ()

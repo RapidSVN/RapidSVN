@@ -2,7 +2,6 @@
 #define _COMMIT_ACTION_H_INCLUDED_
 
 #include "action_thread.h"
-#include "svncpp/modify.h"
 
 class CommitAction:public ActionThread
 {

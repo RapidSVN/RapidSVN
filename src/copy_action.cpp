@@ -1,3 +1,5 @@
+
+#include "svncpp/modify.h"
 #include "include.h"
 #include "wx/resource.h"
 #include "wx/filename.h"

@@ -3,6 +3,11 @@
 #define _SVNCPP_MODIFY_H_
 
 #include "auth.h"
+
+#ifndef _SVNCPP_EXCEPTION_H_
+#include "exception.h"
+#endif
+
 #define DEFAULT_ARRAY_SIZE 5
 
 /**
@@ -53,10 +58,11 @@ public:
    * @param moduleName name of the module to checkout.
    * @param destPath destination directory for checkout.
    * @param revision the revision number to checkout. If the number is -1
-                     then it will checkout the latest revision.
+   *                 then it will checkout the latest revision.
    * @param recurse whether you want it to checkout files recursively.
+   * @exception ClientException
    */
-  bool checkout (char * moduleName, char *destPath, long revision, 
+  void checkout (char * moduleName, char *destPath, long revision, 
                  bool recurse);
   
   /**
@@ -71,18 +77,21 @@ public:
 
   /**
    * Sets a file for deletion.
+   * @exception ClientException
    */
-  bool remove (const char * path, bool force);
+  void remove (const char * path, bool force);
 
   /**
    * Reverts a file to a pristine state.
+   * @exception ClientException
    */
-  bool revert (const char * path, bool recurse);
+  void revert (const char * path, bool recurse);
 
   /**
    * Adds a file to the repository.
+   * @exception ClientException
    */
-  bool add (char * path, bool recurse);
+  void add (char * path, bool recurse);
 
   /**
    * Updates the directory.
@@ -90,26 +99,30 @@ public:
    * @param revision the revision number to checkout. If the number is -1
    *                 then it will checkout the latest revision.
    * @param recurse recursively update.
+   * @exception ClientException
    */
-  bool update (char * path, long revision, bool recurse);
+  void update (char * path, long revision, bool recurse);
 
   /**
    * Commits changes to the repository.
    * @param path file to commit.
    * @param logMessage log message that accompanies check in.
-   * @param recurse whether the operation should be done recursively. 
+   * @param recurse whether the operation should be done recursively.
+   * @exception ClientException
    */
-  bool commit (char * path, char * logMessage, bool recurse);
+  void commit (char * path, char * logMessage, bool recurse);
 
   /**
    * Copies a versioned file with the history preserved.
+   * @exception ClientException
    */
-  bool copy (char * path, char * destPath);
+  void copy (char * path, char * destPath);
 
   /**
    * Moves or renames a file.
+   * @exception ClientException
    */
-  bool move (char * path, char * destPath, long revision, bool force);
+  void move (char * path, char * destPath, long revision, bool force);
 };
 
 }

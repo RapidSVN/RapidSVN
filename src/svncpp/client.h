@@ -32,11 +32,6 @@ public:
   Client ();
 
   ~Client ();
-
-  /**
-   * Returns the error object.
-   */
-  svn_error_t * getError ();
 };
 
 }
