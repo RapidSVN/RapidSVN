@@ -11,7 +11,6 @@ DefaultDirName={pf}\RapidSVN
 DefaultGroupName=RapidSVN
 LicenseFile=..\..\LICENSE.txt
 InfoBeforeFile=..\..\README
-;REMOVE InfoAfterFile=..\..\TODO.txt
 OutputBaseFilename=RapidSVN-0.1.3
 
 [Tasks]
@@ -19,21 +18,15 @@ Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "A
 
 [Components]
 Name: main; Description: RapidSVN Application; Types: compact custom full; Flags: fixed
-;REMOVE Name: code; Description: Source Code; Types: full compact
 
 [Files]
-Source: "libdb40.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite
-Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite
-Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; CopyMode: alwaysoverwrite
-Source: "..\..\TODO.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite
-Source: "..\..\README"; DestDir: "{app}"; CopyMode: alwaysoverwrite
-Source: "..\..\LICENSE.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite
-
-;REMOVE Source: "..\..\src\*.*"; DestDir: "{app}\src"; CopyMode: alwaysoverwrite; Components: code
-;REMOVE Source: "..\..\src\res\*.*"; DestDir: "{app}\src\res"; CopyMode: alwaysoverwrite; Components: code
-;REMOVE Source: "..\..\src\res\bitmaps\*.*"; DestDir: "{app}\src\res\bitmaps"; CopyMode: alwaysoverwrite; Components: code
-;REMOVE Source: "..\..\rapidsvn.dsp"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: code
-;REMOVE Source: "..\..\rapidsvn.dsw"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: code
+Source: "libdb40.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
+Source: "msvcp60.dll"; DestDir: "{sys}\mcvscp60.dll"; CopyMode: onlyifdoesntexist; Flags: sharedfile uninsneveruninstall; Components: main
+Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
+Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; CopyMode: alwaysoverwrite; Components: main
+Source: "..\..\TODO.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: main
+Source: "..\..\README"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: main
+Source: "..\..\LICENSE.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: main
 
 [Icons]
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"
