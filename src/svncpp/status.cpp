@@ -84,58 +84,108 @@ Status::lastChanged ()
 }
 
 const char *
-Status::statusText ()
+Status::statusDescription (svn_wc_status_kind kind)
 {
-  _statusText = "";
-  
-  if(versioned == false)
-    throw EntryNotVersioned ();
-
-  switch (status->text_status)
+  switch (kind)
   {
     case svn_wc_status_none:
-      _statusText = "Non-svn";
+      _statusText = "non-svn";
       break;
     case svn_wc_status_normal:
-      _statusText = "Normal";
+      _statusText = "normal";
       break;
     case svn_wc_status_added:
-      _statusText = "Added";
+      _statusText = "added";
       break;
     case svn_wc_status_absent:
-      _statusText = "Absent";
+      _statusText = "absent";
       break;
     case svn_wc_status_deleted:
-      _statusText = "Deleted";
+      _statusText = "deleted";
       break;
     case svn_wc_status_replaced:
-      _statusText = "Replaced";
+      _statusText = "replaced";
       break;
     case svn_wc_status_modified:
-      _statusText = "Modified";
+      _statusText = "modified";
       break;
     case svn_wc_status_merged:
-      _statusText = "Merged";
+      _statusText = "merged";
       break;
     case svn_wc_status_conflicted:
-      _statusText = "Conflicted";
+      _statusText = "conflicted";
       break;
     case svn_wc_status_unversioned:
     default:
-      _statusText = "Unversioned";
+      _statusText = "unversioned";
       break;
   }
   
   return _statusText.c_str ();
 }
 
+const char *
+Status::textDescription ()
+{
+  _statusText = "";
+
+  if(versioned == false)
+    throw EntryNotVersioned ();
+
+  return statusDescription (status->text_status);
+}
+
 svn_wc_status_kind
-Status::statusProp ()
+Status::textType ()
+{
+  if(versioned == false)
+    throw EntryNotVersioned ();
+  
+  return status->text_status;
+}
+
+const char *
+Status::propDescription ()
+{
+  _statusText = "";
+
+  if(versioned == false)
+    throw EntryNotVersioned ();
+
+  return statusDescription (status->prop_status);
+}
+
+svn_wc_status_kind
+Status::propType ()
 {
   if(versioned == false)
     throw EntryNotVersioned ();
   
   return status->prop_status;
+}
+
+bool
+Status::isCopied ()
+{
+  if(versioned == false)
+    throw EntryNotVersioned ();
+
+  if(status->copied == 1)
+    return true;
+
+  return false;
+}
+
+bool
+Status::isLocked ()
+{
+  if(versioned == false)
+    throw EntryNotVersioned ();
+
+  if(status->locked == 1)
+    return true;
+
+  return false;
 }
 
 }

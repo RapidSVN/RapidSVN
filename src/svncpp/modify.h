@@ -109,7 +109,7 @@ public:
    * @param recurse whether the operation should be done recursively.
    * @exception ClientException
    */
-  void commit (const char * path, const char * logMessage, bool recurse);
+  void commit (const char * path, const char * message, bool recurse);
 
   /**
    * Copies a versioned file with the history preserved.
@@ -123,6 +123,45 @@ public:
    */
   void move (const char * srcPath, const char * destPath, 
              long revision, bool force);
+
+  /**
+   * Creates a directory directly in a repository or creates a 
+   * directory on disk and schedules it for addition.
+   * @exception ClientException
+   */
+  void mkdir (const char * path, const char * message);
+
+  /**
+   * Recursively cleans up a local directory, finishing any
+   * incomplete operations, removing lockfiles, etc.
+   * @param path a local directory.
+   * @exception ClientException
+   */
+  void cleanup (const char * path);
+
+  /**
+   * Removes the 'conflicted' state on a file.
+   * @exception ClientException
+   */
+  void resolve (const char * path, bool recurse);
+
+  /**
+   * Exports the contents of either a subversion repository into a 
+   * 'clean' directory (meaning a directory with no administrative 
+   * directories).
+   * @exception ClientException
+   * @param destPath this path must not exist.
+   */
+  void export (const char * srcPath, const char * destPath, long revision);
+
+  /**
+   * Update locate copy to mirror a new url. This excapsulates the 
+   * svn_client_switch() client method.
+   * @exception ClientException
+   */
+  void mirror (const char * path, const char * url, 
+               long revision, bool recurse);
+
 };
 
 }

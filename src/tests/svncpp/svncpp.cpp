@@ -17,17 +17,21 @@ SvnCppTestCase::testStatus ()
   status.loadPath("my_repos/README.txt");
 
   CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
+  CPPUNIT_ASSERT_EQUAL (svn_wc_status_normal, status.textType ());
   CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
+  CPPUNIT_ASSERT (status.isLocked () == false);
+  CPPUNIT_ASSERT (status.isCopied () == false);
 
   status.loadPath ("my_repos/main.cpp");
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Modified") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "modified") == 0);
+  CPPUNIT_ASSERT_EQUAL (svn_wc_status_modified, status.textType ());
   CPPUNIT_ASSERT_EQUAL ((unsigned long)1, status.revision ());
 
   try
   {
     status.loadPath ("my_repos/status.cpp");
-    status.statusText ();
+    status.textDescription ();
     status.revision ();
     CPPUNIT_ASSERT_MESSAGE ("No exception!", false);
   }
@@ -62,7 +66,7 @@ SvnCppTestCase::testCheckout ()
   status.loadPath ((char *)sPath.c_str ());
 
   CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
   CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
 }
 
@@ -85,7 +89,7 @@ SvnCppTestCase::testDeleteRevert ()
 
   status.loadPath ("my_repos/README.txt");
   CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Deleted") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "deleted") == 0);
 
   try
   {
@@ -99,9 +103,9 @@ SvnCppTestCase::testDeleteRevert ()
   }
 
   status.loadPath ("my_repos/README.txt");
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
   status.loadPath ("my_repos/main.cpp");
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
 }
 
 void
@@ -121,7 +125,7 @@ SvnCppTestCase::testAdd ()
   {
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Added") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "added") == 0);
 }
 
 void
@@ -156,11 +160,11 @@ SvnCppTestCase::testCommit ()
     modify.commit ("my_repos", "Message logged by SvnCpp!", true);
     status.loadPath("my_repos/svncpp.h");
     CPPUNIT_ASSERT (status.isVersioned ());
-    CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
+    CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
     CPPUNIT_ASSERT_EQUAL ((unsigned long)3, status.revision ());
 
     status.loadPath ("my_repos/main.cpp");
-    CPPUNIT_ASSERT (strcmp(status.statusText (), "Normal") == 0);
+    CPPUNIT_ASSERT (strcmp(status.textDescription (), "normal") == 0);
     CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
   }
   catch (svn::ClientException &e)
@@ -187,7 +191,7 @@ SvnCppTestCase::testCopy ()
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
   CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Added") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "added") == 0);
   CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
 }
 
@@ -210,7 +214,7 @@ SvnCppTestCase::testMove ()
   }
 
   CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Deleted") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "deleted") == 0);
 
   // Check if added
   try
@@ -222,7 +226,7 @@ SvnCppTestCase::testMove ()
     CPPUNIT_ASSERT_MESSAGE (e.description (), false);
   }
   CPPUNIT_ASSERT (status.isVersioned ());
-  CPPUNIT_ASSERT (strcmp(status.statusText (), "Added") == 0);
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "added") == 0);
   CPPUNIT_ASSERT_EQUAL ((unsigned long)2, status.revision ());
 }
 
@@ -257,3 +261,47 @@ SvnCppTestCase::testProperty ()
   property.remove ("test", false);
   CPPUNIT_ASSERT_EQUAL (1, property.count ());
 }
+
+void
+SvnCppTestCase::testMkdir ()
+{
+  svn::Modify modify;
+  svn::Status status;
+
+  modify.notification (&notify);
+
+  try
+  {
+    modify.mkdir ("my_repos/new_dir", "Created a new directory");
+    status.loadPath ("my_repos/new_dir");
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
+
+  CPPUNIT_ASSERT (status.isVersioned ());
+  CPPUNIT_ASSERT (strcmp(status.textDescription (), "added") == 0);
+}
+
+void
+SvnCppTestCase::testExport ()
+{
+  svn::Modify modify;
+  svn::Status status;
+
+  modify.notification (&notify);
+
+  try
+  {
+    modify.export ("my_repos", "my_repos/export_dir", 2);
+    status.loadPath ("my_repos/export_dir");
+  }
+  catch (svn::ClientException &e)
+  {
+    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
+  }
+
+  CPPUNIT_ASSERT (status.isVersioned () == false);
+}
+

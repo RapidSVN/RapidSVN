@@ -19,6 +19,8 @@ class SvnCppTestCase : public CppUnit::TestCase
   CPPUNIT_TEST( testCommit );
   CPPUNIT_TEST( testCopy );
   CPPUNIT_TEST( testMove );
+  CPPUNIT_TEST( testMkdir );
+  CPPUNIT_TEST( testExport );
   CPPUNIT_TEST( testProperty );
   CPPUNIT_TEST_SUITE_END();
 
@@ -52,6 +54,10 @@ protected:
   void testMove ();
 
   void testProperty ();
+
+  void testMkdir ();
+
+  void testExport ();
 };
 
 /**

@@ -31,6 +31,13 @@ private:
    * Reset to all of the default properties.
    */
   void reset ();
+
+  /**
+   * Returns the description of the status.
+   */
+  const char * statusDescription (svn_wc_status_kind kind);
+
+
   
 public:
   Status ();
@@ -54,21 +61,45 @@ public:
   unsigned long lastChanged ();
 
   /**
-   * Returns the file status in text. 
+   * Returns the file status of the "textual" component. 
    * @exception EntryNotVersioned
    */
-  const char * statusText ();
+  const char * textDescription ();
 
   /**
-   * Returns the file status property enum. 
+   * Returns the file status property enum of the "textual" component. 
    * @exception EntryNotVersioned
    */
-  svn_wc_status_kind statusProp ();
+  svn_wc_status_kind textType ();
+
+  /**
+   * Returns the file status of the "property" component. 
+   * @exception EntryNotVersioned
+   */
+  const char * propDescription ();
+
+  /**
+   * Returns the file status property enum of the "property" component. 
+   * @exception EntryNotVersioned
+   */
+  svn_wc_status_kind propType ();
 
   /**
    * Returns whether the file is under version control.
    */
   bool isVersioned ();
+
+  /**
+   * Returns true if the file is locked.
+   * @exception EntryNotVersioned
+   */
+  bool isLocked ();
+
+  /**
+   * Returns true if the file is copied.
+   * @exception EntryNotVersioned
+   */
+  bool isCopied ();
 };
 
 /**

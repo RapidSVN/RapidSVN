@@ -167,6 +167,78 @@ Modify::move (const char * srcPath, const char * destPath,
     throw ClientException (Err);
 }
 
+void
+Modify::mkdir (const char * path, const char * message)
+{
+  svn_client_commit_info_t *commit_info = NULL;
+
+  Err = svn_client_mkdir (&commit_info,
+                          path,
+                          authenticate (),
+                          &svn_cl__get_log_message,
+                          logMessage (message),
+                          Notify::notify,
+                          (void *) _notify,
+                          pool);
+
+  if(Err != NULL)
+    throw ClientException (Err);
+}
+
+void
+Modify::cleanup (const char * path)
+{
+  Err = svn_client_cleanup (path, pool);
+
+  if(Err != NULL)
+    throw ClientException (Err);
+}
+
+void
+Modify::resolve (const char * path, bool recurse)
+{
+  Err = svn_client_resolve (path,
+                            Notify::notify,
+                            (void *) _notify,
+                            recurse,
+                            pool);
+
+  if(Err != NULL)
+    throw ClientException (Err);
+}
+
+void
+Modify::export (const char * srcPath, const char * destPath, long revision)
+{
+  Err = svn_client_export (srcPath,
+                           destPath,
+                           getRevision (revision),
+                           authenticate (),
+                           Notify::notify,
+                           (void *) _notify,
+                           pool);
+
+  if(Err != NULL)
+    throw ClientException (Err);
+}
+
+void
+Modify::mirror (const char * path, const char * url, 
+               long revision, bool recurse)
+{
+  Err = svn_client_switch (authenticate (),
+                           path,
+                           url,
+                           getRevision (revision),
+                           recurse,
+                           Notify::notify,
+                           (void *) _notify,
+                           pool);
+
+  if(Err != NULL)
+    throw ClientException (Err);
+}
+
 apr_array_header_t *
 Modify::target (const char * path)
 {
