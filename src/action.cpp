@@ -353,6 +353,27 @@ Action::PostEvent (wxEvent & event)
   wxPostEvent (handler, event);
 }
 
+bool
+Action::contextAskQuestion (const std::string & question,
+                            std::string & answer,
+                            bool hide)
+{
+  wxString myAnswer;
+  if (hide)
+  {
+    myAnswer = wxGetPasswordFromUser (
+      question.c_str (), _("Question"), "", GetParent ());
+  }
+  else
+  {
+    myAnswer = wxGetTextFromUser (
+      question.c_str (), _("Question"), "", GetParent ());
+  }
+
+  answer = myAnswer.c_str ();
+  return myAnswer.Length () > 0;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

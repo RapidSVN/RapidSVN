@@ -190,6 +190,14 @@ public:
   virtual bool
   contextGetLogMessage (std::string & msg);
 
+  /**
+   * @see svn::ContextListener
+   */
+  virtual bool
+  contextAskQuestion (const std::string & question,
+                      std::string & answer,
+                      bool hide);
+
   /** set the name of the action */
   void
   SetName (const char * name);

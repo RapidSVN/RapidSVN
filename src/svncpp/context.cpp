@@ -39,15 +39,24 @@ namespace svn
         promptCounter (0)
     {
       // intialize authentication providers
+      // * simple 
+      // * simple prompt 
+      // * ssl server file 
+      // * ssl client file 
+      // * ssl pw file 
+      // * ssl server prompt 
+      // * ssl client prompt
+      // * ssl pw prompt
+      // ===================
+      // 8 providers
       apr_array_header_t *providers = 
-        apr_array_make (pool, 2, 
+        apr_array_make (pool, 8, 
                         sizeof (svn_auth_provider_object_t *));
       svn_auth_provider_object_t *provider;
 
       svn_client_get_simple_provider (
         &provider,
         pool);
-
       *(svn_auth_provider_object_t **)apr_array_push (providers) =
         provider;
 
@@ -57,7 +66,43 @@ namespace svn
         this,
         100000000, // not very nice. should be infinite...
         pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
 
+      // add ssl providers
+      svn_client_get_ssl_server_file_provider (&provider, pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
+
+      svn_client_get_ssl_client_file_provider (&provider, pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
+
+      svn_client_get_ssl_pw_file_provider (&provider, pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
+
+      svn_client_get_ssl_server_prompt_provider (
+        &provider, 
+        ssl_server_prompt,
+        this,
+        pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
+
+      svn_client_get_ssl_client_prompt_provider (
+        &provider,
+        ssl_client_prompt,
+        this, 
+        pool);
+      *(svn_auth_provider_object_t **)apr_array_push (providers) = 
+        provider;
+
+      svn_client_get_ssl_pw_prompt_provider (
+        &provider,
+        ssl_pw_prompt,
+        this, 
+        pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
@@ -207,6 +252,123 @@ namespace svn
                    (const char **)result,
                    data->getUsername (), NULL, pool));
       }
+
+      return SVN_NO_ERROR;
+    }
+
+    /**
+     * used by the ssl server prompt provider 
+     *
+     * @param result returned username/password, depending on
+     *               on hide
+     * @param prompt string (unused here)
+     * @param hide 0=username/1=password
+     * @param baton Context
+     * @param pool pool to use
+     * @return error
+     */
+    static svn_error_t *
+    ssl_server_prompt (const char **result, 
+                       const char *prompt,
+                       svn_boolean_t hide, 
+                       void *baton, 
+                       apr_pool_t *pool)
+    {
+      if (baton == NULL)
+      {
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
+                                 "Context::prompt: baton==NULL");
+      }
+
+      Data * data = static_cast <Data *> (baton);
+      return data->askQuestion (prompt, result, hide  != 0, pool);
+    }
+
+    /**
+     * used by the ssl client prompt provider 
+     *
+     * @param result returned username/password, depending on
+     *               on hide
+     * @param prompt string (unused here)
+     * @param hide 0=username/1=password
+     * @param baton Context
+     * @param pool pool to use
+     * @return error
+     */
+    static svn_error_t *
+    ssl_client_prompt (const char **result, 
+                       const char *prompt,
+                       svn_boolean_t hide, 
+                       void *baton, 
+                       apr_pool_t *pool)
+    {
+      if (baton == NULL)
+      {
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
+                                 "Context::prompt: baton==NULL");
+      }
+
+      Data * data = static_cast <Data *> (baton);
+      return data->askQuestion (prompt, result, hide != 0, pool);
+    }
+
+    /**
+     * used by the ssl pw prompt provider 
+     *
+     * @param result returned username/password, depending on
+     *               on hide
+     * @param prompt string (unused here)
+     * @param hide 0=username/1=password
+     * @param baton Context
+     * @param pool pool to use
+     * @return error
+     */
+    static svn_error_t *
+    ssl_pw_prompt (const char **result, 
+                   const char *prompt,
+                   svn_boolean_t hide, 
+                   void *baton, 
+                   apr_pool_t *pool)
+    {
+      if (baton == NULL)
+      {
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
+                                 "Context::prompt: baton==NULL");
+      }
+
+      Data * data = static_cast <Data *> (baton);
+      return data->askQuestion (prompt, result, hide != 0, pool);
+    }
+
+    /**
+     * retrieves an answer for a question that the
+     * subversion api asks
+     *
+     * @param question question string
+     * @param answer answer string
+     * @param hide true if the answer be hidden (passwords)
+     * @param pool
+     * @return error code
+     */
+    svn_error_t *
+    askQuestion (const char *question,
+                 const char **result,
+                 bool hide,
+                 apr_pool_t *pool)
+    {
+      std::string newResult ("");
+      bool ok = listener->contextAskQuestion (
+        question, newResult, hide);
+
+      if (!ok)
+      {
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
+                                 "Context::question: cancelled");
+      }
+
+      SVN_ERR (svn_utf_cstring_to_utf8( 
+                 (const char **)result, 
+                 newResult.c_str (), NULL, pool));
 
       return SVN_NO_ERROR;
     }

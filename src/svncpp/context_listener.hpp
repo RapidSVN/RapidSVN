@@ -80,6 +80,23 @@ namespace svn
      */
     virtual bool
     contextGetLogMessage (std::string & msg) = 0;
+
+    /**
+     * this method will be called if the context
+     * or the subversion api wants to ask the
+     * user a question. The question and the answers
+     * will be strings
+     *
+     * @param question
+     * @param anwswer
+     * @param hide true if the answer is something like a password
+     * @return continue action
+     * @retval true continue
+     */
+    virtual bool
+    contextAskQuestion (const std::string & question,
+                        std::string & answer,
+                        bool hide) = 0;
   };
 }
 
