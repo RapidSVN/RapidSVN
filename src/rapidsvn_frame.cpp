@@ -263,6 +263,7 @@ public:
     menuView->Append (0, _("Columns"), MenuColumns);
     menuView->AppendCheckItem (ID_Flat, _("Flat Mode"));
     menuView->AppendCheckItem (ID_RefreshWithUpdate, _("Refresh with Update"));
+    menuView->AppendCheckItem (ID_ShowUnversioned, _("Show unversioned entries"));
 
     // Preferences menu item goes to its own place on MacOSX,
     // so no separator is necessary.
@@ -529,6 +530,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
   EVT_MENU (ID_Flat, RapidSvnFrame::OnFlatView)
   EVT_MENU (ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
+  EVT_MENU (ID_ShowUnversioned, RapidSvnFrame::OnShowUnversioned)
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
   EVT_MENU (ID_Stop, RapidSvnFrame::OnStop)
@@ -615,6 +617,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
 
   m->CheckMenu (ID_Flat,              m_listCtrl->IsFlat());
   m->CheckMenu (ID_RefreshWithUpdate, m_listCtrl->GetWithUpdate());
+  m->CheckMenu (ID_ShowUnversioned,   m_listCtrl->GetShowUnversioned());
 
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
@@ -1641,6 +1644,15 @@ RapidSvnFrame::OnRefreshWithUpdate (wxCommandEvent & WXUNUSED (event))
 {
   bool checked = m->IsMenuChecked (ID_RefreshWithUpdate);
   m_listCtrl->SetWithUpdate (checked);
+  UpdateFolderBrowser ();
+}
+
+
+void
+RapidSvnFrame::OnShowUnversioned (wxCommandEvent & WXUNUSED (event))
+{
+  bool checked = m->IsMenuChecked (ID_ShowUnversioned);
+  m_listCtrl->SetShowUnversioned (checked);
   UpdateFolderBrowser ();
 }
 

@@ -96,6 +96,7 @@ static const char ConfigColumnWidthFmt[]   = "/FileListCtrl/Column%sWidth";
 static const char ConfigColumnVisibleFmt[] = "/FileListCtrl/Column%sVisible";
 static const char ConfigWithUpdate[]       = "/FileListCtrl/WithUpdate";
 static const char ConfigFlatView[]         = "/FileListCtrl/FlatView";
+static const char ConfigShowUnversioned[]  = "/FileListCtrl/ShowUnversioned";
 
 /**
  * test if the given status entry is a file or
@@ -571,6 +572,7 @@ public:
   svn::Context * Context;
   wxString Path;
   bool WithUpdate;
+  bool ShowUnversioned;
   wxImageList *ImageListSmall;
   bool ColumnVisible[COL_COUNT];
   wxString ColumnCaption[COL_COUNT];
@@ -663,8 +665,9 @@ public:
   {
       // Get settings from config file:
     wxConfigBase *config = wxConfigBase::Get ();
-    config->Read (ConfigWithUpdate, &WithUpdate);
-    config->Read (ConfigFlatView,   &FlatMode);
+    config->Read (ConfigWithUpdate,      &WithUpdate);
+    config->Read (ConfigFlatView,        &FlatMode);
+    config->Read (ConfigShowUnversioned, &ShowUnversioned, (bool) true);
     
     SortColumn = config->Read (ConfigSortColumn, (long) 0);
     SortIncreasing = config->Read (ConfigSortOrder, (long) 1) ? true : false;
@@ -691,8 +694,9 @@ public:
   {
     // Write settings to config file:
     wxConfigBase *config = wxConfigBase::Get ();
-    config->Write (ConfigWithUpdate, WithUpdate);
-    config->Write (ConfigFlatView,   FlatMode);
+    config->Write (ConfigWithUpdate,      WithUpdate);
+    config->Write (ConfigFlatView,        FlatMode);
+    config->Write (ConfigShowUnversioned, ShowUnversioned);
     
     config->Write (ConfigSortColumn, (long) SortColumn);
     config->Write (ConfigSortOrder, (long) (SortIncreasing ? 1 : 0));
@@ -901,100 +905,105 @@ FileListCtrl::UpdateFileList ()
       }
     }
 
-    InsertItem (i, values[COL_NAME], imageIndex);
-
-
-    // The item data will be used to sort the list:
-    SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
-    // and must delete it in due course.
-
-    text = "";
-
-    if (status.isVersioned ())
+    
+    // User want to see unversioned entries?
+    if (status.isVersioned() || m->ShowUnversioned)
     {
-      const svn::Entry & entry = status.entry ();
-      values[COL_REV].Printf ("%ld", entry.revision ());
-      values[COL_CMT_REV].Printf ("%ld", entry.cmtRev ());
-
-      values[COL_AUTHOR] = entry.cmtAuthor ();
-
-      // date formatting
-      values[COL_CMT_DATE] = FormatDateTime (entry.cmtDate ());
-      values[COL_TEXT_TIME] = FormatDateTime (entry.textTime ());
-      values[COL_PROP_TIME] = FormatDateTime (entry.propTime ());
-
-      values[COL_URL] = entry.url ();
-      values[COL_REPOS] = entry.repos ();
-      values[COL_UUID] = entry.uuid ();
-      
-      wxString schedule;
-      switch (entry.schedule ())
+      InsertItem (i, values[COL_NAME], imageIndex);
+  
+  
+      // The item data will be used to sort the list:
+      SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
+      // and must delete it in due course.
+  
+      text = "";
+  
+      if (status.isVersioned ())
       {
-      case svn_wc_schedule_add:
-        schedule = _("add");
+        const svn::Entry & entry = status.entry ();
+        values[COL_REV].Printf ("%ld", entry.revision ());
+        values[COL_CMT_REV].Printf ("%ld", entry.cmtRev ());
+  
+        values[COL_AUTHOR] = entry.cmtAuthor ();
+  
+        // date formatting
+        values[COL_CMT_DATE] = FormatDateTime (entry.cmtDate ());
+        values[COL_TEXT_TIME] = FormatDateTime (entry.textTime ());
+        values[COL_PROP_TIME] = FormatDateTime (entry.propTime ());
+  
+        values[COL_URL] = entry.url ();
+        values[COL_REPOS] = entry.repos ();
+        values[COL_UUID] = entry.uuid ();
+        
+        wxString schedule;
+        switch (entry.schedule ())
+        {
+        case svn_wc_schedule_add:
+          schedule = _("add");
+          break;
+        case svn_wc_schedule_delete:
+          schedule = _("delete");
+          break;
+        case svn_wc_schedule_replace:
+          schedule = _("replace");
+          break;
+        case svn_wc_schedule_normal:
+          schedule = "";
+          break;
+        }
+        values[COL_SCHEDULE] = schedule;
+  
+        if (entry.isCopied ())
+        {
+          values[COL_COPIED].Printf ("%s, %ld", 
+            entry.copyfromUrl (),
+            entry.copyfromRev ());
+        }
+  
+        values[COL_CONFLICT_OLD] = entry.conflictOld ();
+        values[COL_CONFLICT_NEW] = entry.conflictNew ();
+        values[COL_CONFLICT_WRK] = entry.conflictWrk ();
+        values[COL_CHECKSUM] = entry.checksum ();
+      }
+      switch (status.textStatus ())
+      {
+      case svn_wc_status_none:
         break;
-      case svn_wc_schedule_delete:
-        schedule = _("delete");
+      case svn_wc_status_normal:
+        // empty text 
+        if (status.reposTextStatus () == svn_wc_status_modified)
+          values[COL_TEXT_STATUS] = _("out of date");
         break;
-      case svn_wc_schedule_replace:
-        schedule = _("replace");
-        break;
-      case svn_wc_schedule_normal:
-        schedule = "";
+      default:
+        values[COL_TEXT_STATUS] = 
+          StatusDescription (status.textStatus ());
         break;
       }
-      values[COL_SCHEDULE] = schedule;
-
-      if (entry.isCopied ())
+      switch (status.propStatus ())
       {
-        values[COL_COPIED].Printf ("%s, %ld", 
-                                  entry.copyfromUrl (),
-                                  entry.copyfromRev ());
+      case svn_wc_status_none:
+        break;
+      case svn_wc_status_normal:
+        // empty text
+        if (status.reposPropStatus () == svn_wc_status_modified)
+          values[COL_PROP_STATUS] = _("out of date");
+        break;
+      default:
+        values[COL_PROP_STATUS] = 
+          StatusDescription (status.propStatus ());
+        break;
       }
-
-      values[COL_CONFLICT_OLD] = entry.conflictOld ();
-      values[COL_CONFLICT_NEW] = entry.conflictNew ();
-      values[COL_CONFLICT_WRK] = entry.conflictWrk ();
-      values[COL_CHECKSUM] = entry.checksum ();
-    }
-    switch (status.textStatus ())
-    {
-    case svn_wc_status_none:
-      break;
-    case svn_wc_status_normal:
-      // empty text 
-      if (status.reposTextStatus () == svn_wc_status_modified)
-        values[COL_TEXT_STATUS] = _("out of date");
-      break;
-    default:
-      values[COL_TEXT_STATUS] = 
-        StatusDescription (status.textStatus ());
-      break;
-    }
-    switch (status.propStatus ())
-    {
-    case svn_wc_status_none:
-      break;
-    case svn_wc_status_normal:
-      // empty text
-      if (status.reposPropStatus () == svn_wc_status_modified)
-        values[COL_PROP_STATUS] = _("out of date");
-      break;
-    default:
-      values[COL_PROP_STATUS] = 
-        StatusDescription (status.propStatus ());
-      break;
-    }
-
-    // set the text for all visible items
-    // (ignore column 0 since this is already set with
-    // InsertItem
-    for (int col=1; col<COL_COUNT; col++)
-    {
-      int index = m->ColumnIndex[col];
-      if (index != -1)
+  
+      // set the text for all visible items
+      // (ignore column 0 since this is already set with
+      // InsertItem
+      for (int col=1; col<COL_COUNT; col++)
       {
-        SetItem (i, index, values[col]);
+        int index = m->ColumnIndex[col];
+        if (index != -1)
+        {
+          SetItem (i, index, values[col]);
+        }
       }
     }
   }
@@ -1473,6 +1482,20 @@ bool
 FileListCtrl::GetWithUpdate () const
 {
   return m->WithUpdate;
+}
+
+
+void
+FileListCtrl::SetShowUnversioned (bool value)
+{
+  m->ShowUnversioned = value;
+}
+
+
+bool
+FileListCtrl::GetShowUnversioned () const
+{
+  return m->ShowUnversioned;
 }
 
 

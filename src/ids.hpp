@@ -26,6 +26,7 @@ enum
   ID_About,
   ID_Refresh,
   ID_RefreshWithUpdate,
+  ID_ShowUnversioned,
   ID_Contents,
   ID_Preferences,
   ID_AddWcBookmark,

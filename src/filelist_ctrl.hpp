@@ -134,6 +134,14 @@ public:
   bool
   GetWithUpdate () const;
 
+  /**
+   * shall we display unversioned file entries?
+   */
+  void
+  SetShowUnversioned (bool value);
+
+  bool
+  GetShowUnversioned() const;
 
   /**
    * get the "flat" setting
