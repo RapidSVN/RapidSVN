@@ -21,7 +21,7 @@
 #include "revert_action.hpp"
 
 RevertAction::RevertAction (wxWindow * parent)
-  : Action (parent, _("Revert"), actionWithTargets)
+  : Action (parent, _("Revert"), GetBaseFlags ())
 {
 }
 

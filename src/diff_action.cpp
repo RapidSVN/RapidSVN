@@ -61,36 +61,6 @@ public:
 
 
   /**
-   * retrieves a file @a path with @a revision
-   * settings from the repository and write it to
-   * a temporary file
-   *
-   * @return temporary filename
-   */
-  svn::Path
-  getFile (const svn::Path & path, 
-           const svn::Revision & revision)
-  {
-    svn::Client client (GetContext ());
-
-    wxString revStr;
-    if (revision.kind () == revision.HEAD)
-      revStr = _("HEAD");
-    else
-      revStr.Printf ("%" SVN_REVNUM_T_FMT, revision.revnum ());
-
-    wxString msg;
-    msg.Printf (_("Get file %s rev. %s"),
-                path.c_str (), revStr.c_str ());
-    Trace (msg);
-
-    svn::Path dstPath ("");
-    client.get (dstPath, path, revision);
-    return dstPath;
-  }
-
-
-  /**
    * retrieves a file @a path that has the same
    * revision as the working copy
    */
@@ -100,7 +70,7 @@ public:
   {
     svn::Revision revision (getRevision (path, status));
 
-    return getFile (path, revision);
+    return mAction->GetPathAsTempFile (path, revision);
   }
 
 
@@ -210,13 +180,13 @@ public:
 
     case DiffData::WITH_DIFFERENT_REVISION:
       dstFile1 = path;
-      dstFile2 = getFile (getPath1 (path), diffData.revision1);
+      dstFile2 = mAction->GetPathAsTempFile (getPath1 (path), diffData.revision1);
 
       break;
 
     case DiffData::TWO_REVISIONS:
-      dstFile1 = getFile (getPath1 (path), diffData.revision1);
-      dstFile2 = getFile (getPath2 (path), diffData.revision2);
+      dstFile1 = mAction->GetPathAsTempFile (getPath1 (path), diffData.revision1);
+      dstFile2 = mAction->GetPathAsTempFile (getPath2 (path), diffData.revision2);
 
       break;
 
@@ -241,10 +211,9 @@ public:
 
 
 DiffAction::DiffAction (wxWindow * parent)
-  : Action (parent, _("Diff"), actionWithTargets)
+  : Action (parent, _("Diff"), GetBaseFlags ())
 {
   m = new Data (this);
-  SetFlags (DONT_UPDATE);
 }
 
 

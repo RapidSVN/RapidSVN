@@ -32,6 +32,8 @@
 #include "ids.hpp"
 #include "utils.hpp"
 #include "bookmarks.hpp"
+#include "rapidsvn_app.hpp"
+#include "rapidsvn_frame.hpp"
 
 // bitmaps
 #include "res/bitmaps/computer.xpm"
@@ -296,6 +298,11 @@ public:
       AppendMenuItem (menu, ID_Update);
       AppendMenuItem (menu, ID_Commit);
     }
+    
+    // Check for disabled items
+    RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
+    frame->TrimDisabledMenuItems (menu);
+  
     // show menu
     window->PopupMenu (&menu, pt);
   }

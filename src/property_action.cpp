@@ -22,7 +22,7 @@
  * right now this supports only one target
  */
 PropertyAction::PropertyAction (wxWindow * parent)
-  : Action (parent, _("Property"), actionWithSingleTarget)
+  : Action (parent, _("Property"), GetBaseFlags ())
 {
 }
 

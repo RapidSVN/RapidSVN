@@ -24,7 +24,7 @@
 #include "utils.hpp"
 
 CleanupAction::CleanupAction (wxWindow * parent)
-  : Action (parent, _("Cleanup"), actionWithoutTarget)
+  : Action (parent, _("Cleanup"), GetBaseFlags ())
 {
 }
 

@@ -22,7 +22,7 @@
 #include "import_action.hpp"
 
 ImportAction::ImportAction (wxWindow * parent)
-  :Action (parent, _("Import"), actionWithoutTarget)
+  :Action (parent, _("Import"), GetBaseFlags ())
 {
 }
 

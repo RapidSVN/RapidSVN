@@ -23,7 +23,7 @@
 
 MoveAction::MoveAction (wxWindow * parent, 
                                 int kind) 
- : Action (parent, "", actionWithSingleTarget),
+ : Action (parent, "", GetBaseFlags ()),
    m_kind (kind)
 {
   const char * name;

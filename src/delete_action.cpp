@@ -26,7 +26,7 @@
 #include "delete_dlg.hpp"
 
 DeleteAction::DeleteAction (wxWindow * parent) 
-  : Action (parent, _("Delete"), actionWithTargets)
+  : Action (parent, _("Delete"), GetBaseFlags ())
 {
 }
 

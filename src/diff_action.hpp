@@ -33,6 +33,14 @@ public:
   virtual bool Perform ();
   virtual bool Prepare ();
 
+  /**
+   * Describe which targets the action can perform upon
+   */
+  static unsigned int GetBaseFlags ()
+  {
+    return DONT_UPDATE|SINGLE_TARGET|MULTIPLE_TARGETS|RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
+  }
+
 private:
   struct Data;
   Data * m;

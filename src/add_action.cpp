@@ -33,7 +33,7 @@ public:
 };
 
 AddAction::AddAction (wxWindow * parent, bool recursive)
-  : Action (parent, _("Add"), actionWithTargets),
+  : Action (parent, _("Add"), GetBaseFlags ()),
     m (new Data (recursive))
 {
 }

@@ -28,6 +28,14 @@ public:
   virtual bool Prepare ();
   virtual bool Perform ();
 
+  /**
+   * Describe which targets the action can perform upon
+   */
+  static unsigned int GetBaseFlags ()
+  {
+    return WITHOUT_TARGET;
+  }
+
 private:
   MergeData m_data;
 };

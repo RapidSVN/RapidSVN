@@ -20,6 +20,8 @@
 #include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/targets.hpp"
+#include "svncpp/url.hpp"
+#include "svncpp/wc.hpp"
 
 // app
 #include "ids.hpp"
@@ -295,7 +297,9 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_RemoveBookmark, RapidSvnFrame::OnRemoveBookmark)
   EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
   EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
+  
   EVT_MENU (ID_Info, RapidSvnFrame::OnInfo)
+  EVT_UPDATE_UI (ID_Info, RapidSvnFrame::OnUpdateCommand)
 
   EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
@@ -310,6 +314,9 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnFileCommand)
   EVT_MENU_RANGE (ID_Column_Min, ID_Column_Max, RapidSvnFrame::OnColumn)
 
+  EVT_UPDATE_UI_RANGE (ID_File_Min, ID_File_Max, RapidSvnFrame::OnUpdateCommand)
+  EVT_UPDATE_UI_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnUpdateCommand)
+  
   EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
 
   EVT_TOOL_ENTER (ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
@@ -863,16 +870,239 @@ RapidSvnFrame::GetActionTargets () const
   if (m_listCtrl->GetSelectedItemCount () <= 0 || 
       m_activePane != ACTIVEPANE_FILELIST)
   {
-    //yes, so build the file list from the folder browser
-    wxFileName fname (m_folder_browser->GetPath ());
-
-    wxString path = fname.GetFullPath ();
+    wxString path = m_folder_browser->GetPath ();
+    
+    if (!svn::Url::isValid (path))
+    {
+      wxFileName fname (path);
+      path = fname.GetFullPath ();
+    }
+    
     return svn::Targets (path.c_str ());
   }
   else
   {
     //no, build the file list from the list control
     return m_listCtrl->GetTargets ();
+  }
+}
+
+unsigned int
+RapidSvnFrame::GetSelectionActionFlags () const
+{
+  unsigned int flags = 0;
+  
+  //is there nothing selected in the list control, 
+  //or is the active window *not* the list control?
+  if (m_listCtrl->GetSelectedItemCount () <= 0 || 
+      m_activePane != ACTIVEPANE_FILELIST)
+  {
+    //yes, so examine the folder browser
+    
+    flags |= Action::IS_DIR;
+    wxString path = m_folder_browser->GetPath ();
+    const char * path_c = path.c_str ();
+    if (*path_c != '\0')
+    {
+      flags |= Action::SINGLE_TARGET;
+      if (svn::Url::isValid (path_c))
+      {
+        flags |= Action::RESPOSITORY_TYPE;
+      }
+      else
+      {
+        if (svn::Wc::checkWc (path_c))
+        {
+          flags |= Action::VERSIONED_WC_TYPE;
+        }
+        else
+        {
+          flags |= Action::UNVERSIONED_WC_TYPE;
+        }
+      }
+    }
+  }
+  else
+  {
+    //no, ask the list control
+    flags = m_listCtrl->GetSelectionActionFlags ();
+  }
+  
+  return flags;
+}
+
+/* ValidateIDActionFlags and OnFileCommand could be refactored into a single class factory (big switch statement)
+   and GetFlags/Perform calls, but that seems a little messy, so keeping them separate for now. */
+bool
+RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
+{
+  unsigned int baseActionFlags = 0;
+  if ((id >= ID_Verb_Min) && (id <= ID_Verb_Max))
+  {
+    baseActionFlags = ExternalProgramAction::GetBaseFlags ();
+  }
+  else
+  {
+    switch (id)
+    {
+    case ID_Explore:
+      // Special case of ExternalProgramAction - needs to be a working copy, not just single target
+      baseActionFlags = ExternalProgramAction::GetBaseFlags () & ~Action::RESPOSITORY_TYPE;
+      break;
+  
+    case ID_Default_Action:
+      baseActionFlags = ExternalProgramAction::GetBaseFlags ();
+      break;
+  
+    case ID_Update:
+      baseActionFlags = UpdateAction::GetBaseFlags ();
+      break;
+  
+    case ID_Commit:
+      baseActionFlags = CommitAction::GetBaseFlags ();
+      break;
+  
+    case ID_Add:
+      baseActionFlags = AddAction::GetBaseFlags ();
+      break;
+  
+    case ID_AddRecursive:
+      baseActionFlags = AddAction::GetBaseFlags ();
+      break;
+  
+    case ID_Import:
+      baseActionFlags = ImportAction::GetBaseFlags ();
+      break;
+  
+    case ID_Checkout:
+      baseActionFlags = CheckoutAction::GetBaseFlags ();
+      break;
+  
+    case ID_Cleanup:
+      baseActionFlags = CleanupAction::GetBaseFlags ();
+      break;
+  
+    case ID_Log:
+      baseActionFlags = LogAction::GetBaseFlags ();
+      break;
+  
+    case ID_Revert:
+      baseActionFlags = RevertAction::GetBaseFlags ();
+      break;
+  
+    case ID_Resolve:
+      baseActionFlags = ResolveAction::GetBaseFlags ();
+      break;
+  
+    case ID_Delete:
+      baseActionFlags = DeleteAction::GetBaseFlags ();
+      break;
+  
+    case ID_Copy:
+      baseActionFlags = MoveAction::GetBaseFlags ();
+      break;
+  
+    case ID_Move:
+      baseActionFlags = MoveAction::GetBaseFlags ();
+      break;
+  
+    case ID_Mkdir:
+      baseActionFlags = MkdirAction::GetBaseFlags ();
+      break;
+  
+    case ID_Merge:
+      baseActionFlags = MergeAction::GetBaseFlags ();
+      break;
+  
+    case ID_Property:
+      baseActionFlags = PropertyAction::GetBaseFlags ();
+      break;
+  
+    case ID_Rename: 
+      baseActionFlags = MoveAction::GetBaseFlags ();
+      break;
+  
+    case ID_Switch:
+      baseActionFlags = SwitchAction::GetBaseFlags ();
+      break;
+  
+    case ID_Diff:
+      baseActionFlags = DiffAction::GetBaseFlags ();
+      break;
+  
+    case ID_Info:
+      // Not actually part of the Action hierarchy, but here for completeness
+      baseActionFlags = Action::SINGLE_TARGET|Action::MULTIPLE_TARGETS|Action::RESPOSITORY_TYPE|Action::VERSIONED_WC_TYPE|Action::UNVERSIONED_WC_TYPE;
+      break;
+  
+    case ID_Contents: //TODO
+    default:
+      // If unrecognised, by default return true
+      return true;
+      break;
+    }
+  }
+  
+  if (baseActionFlags & Action::WITHOUT_TARGET)
+  {
+    return true;
+  }
+    
+  // Check the sole quantity flag in selectedActionFlags is in baseActionFlags
+  // then check any type flags in selectedActionFlags are in baseActionFlags, but selectedActionFlags doesn't include any other types 
+  return (selectionActionFlags & baseActionFlags & Action::TARGET_QUANTITY_MASK) != 0
+            && (selectionActionFlags & baseActionFlags & Action::TARGET_TYPE_MASK) == (selectionActionFlags & Action::TARGET_TYPE_MASK);
+}
+
+void
+RapidSvnFrame::OnUpdateCommand (wxUpdateUIEvent & updateUIEvent)
+{
+  updateUIEvent.Enable (ValidateIDActionFlags (updateUIEvent.m_id, GetSelectionActionFlags ()));
+}
+
+void
+RapidSvnFrame::TrimDisabledMenuItems (wxMenu & menu)
+{
+  // Check for disabled items
+  size_t pos = menu.GetMenuItemCount ();
+  unsigned int selectionActionFlags = GetSelectionActionFlags ();
+  while (pos-- > 0)
+  {
+    wxMenuItem *pItem = menu.FindItemByPosition (pos);
+    if (!pItem->IsSeparator () && !ValidateIDActionFlags (pItem->GetId (), selectionActionFlags))
+    {
+      menu.Destroy (pItem);
+    }
+  }
+  
+  // Trim unnecessary separators
+  pos = menu.GetMenuItemCount ();
+  bool sepNeeded = false;
+  while (pos-- > 0)
+  {
+    wxMenuItem *pItem = menu.FindItemByPosition (pos);
+    if (pItem->IsSeparator ())
+    {
+      // If we're at a separator at the top, trash it & look for any more we skipped along the way
+      if (pos == 0)
+      {
+        ++pos;
+        sepNeeded = false;
+      }
+      
+      if (sepNeeded)
+      {
+        sepNeeded = false;
+      }
+      else
+      {
+        menu.Destroy (pItem);
+      }
+    }
+    else
+    {
+      sepNeeded = true;
+    }
   }
 }
 
@@ -1091,8 +1321,7 @@ RapidSvnFrame::ShowInfo ()
 
   try
   {
-    svn::Targets targets = m_listCtrl->GetTargets ();
-    std::vector<svn::Path> vector = targets.targets ();
+    std::vector<svn::Path> vector = GetActionTargets ().targets ();
     std::vector<svn::Path>::const_iterator it;
 
     for (it = vector.begin (); it != vector.end (); it++)
@@ -1170,7 +1399,7 @@ RapidSvnFrame::UpdateCurrentPath ()
 bool
 RapidSvnFrame::InvokeDefaultAction ()
 {
-  size_t folder_count = 0, file_count = 0;
+  unsigned int selectionActionFlags = GetSelectionActionFlags ();
   std::vector<svn::Path> targets = GetActionTargets ().targets ();
 
   // the default action will be invoked only for a single file
@@ -1181,24 +1410,12 @@ RapidSvnFrame::InvokeDefaultAction ()
   if (targets.size () != 1)
     return false;
 
-  wxFileName path (targets[0].c_str ());
-  wxString fullPath = path.GetFullPath ();
-  if (wxDirExists (fullPath))
-    folder_count++;
-  else
-    file_count++;
-  
-  // We can't decide
-  if (folder_count && file_count)
-    return false;
-
-  // We will do anything only if ONE file or folder is selected
-  if (folder_count == 1)
+  if (selectionActionFlags & Action::IS_DIR)
   {
     // go one folder deeper...
-    m_folder_browser->SelectFolder (fullPath.c_str ());
+    m_folder_browser->SelectFolder (targets[0].c_str ());
   }
-  else if (file_count == 1)
+  else
   {
     Perform (new ExternalProgramAction (this, -1, false));
   }
@@ -1211,7 +1428,7 @@ RapidSvnFrame::Perform (Action * action)
 {
   action->SetPath (m_currentPath.c_str ());
   action->SetContext (m_context);
-  if (action->GetOptions () != actionWithoutTarget)
+  if ((action->GetFlags () & Action::WITHOUT_TARGET) == 0)
   {
     action->SetTargets (GetActionTargets ());
   }

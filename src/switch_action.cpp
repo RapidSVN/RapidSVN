@@ -24,7 +24,7 @@
 #include "utils.hpp"
 
 SwitchAction::SwitchAction (wxWindow * parent) 
- : Action (parent, _("Switch"), actionWithSingleTarget)
+ : Action (parent, _("Switch"), GetBaseFlags ())
 {
 }
 

@@ -24,7 +24,7 @@
 #include "utils.hpp"
 
 GetAction::GetAction (wxWindow * parent, const GetData & data)
-  : Action (parent, _("Update"), actionWithoutTarget),
+  : Action (parent, _("Update"), GetBaseFlags ()),
     m_data (data)
 {
 }

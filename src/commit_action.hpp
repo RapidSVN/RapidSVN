@@ -31,6 +31,14 @@ public:
   virtual bool Perform ();
   virtual bool Prepare ();
 
+  /**
+   * Describe which targets the action can perform upon
+   */
+  static unsigned int GetBaseFlags ()
+  {
+    return SINGLE_TARGET|MULTIPLE_TARGETS|VERSIONED_WC_TYPE;
+  }
+
 private:
   bool m_recursive;
   wxString m_message;

@@ -21,7 +21,7 @@
 #include "utils.hpp"
 
 CheckoutAction::CheckoutAction (wxWindow * parent)
-  : Action (parent, _("Checkout"), actionWithoutTarget)
+  : Action (parent, _("Checkout"), GetBaseFlags ())
 {
 }
 

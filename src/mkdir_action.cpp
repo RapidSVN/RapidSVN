@@ -22,7 +22,7 @@
 #include "mkdir_action.hpp"
 
 MkdirAction::MkdirAction (wxWindow * parent, const char * path)
- : Action (parent, _("Mkdir"), actionWithoutTarget),
+ : Action (parent, _("Mkdir"), GetBaseFlags ()),
    m_path (path)
 {
 }

@@ -21,7 +21,7 @@
 #include "merge_action.hpp"
 
 MergeAction::MergeAction (wxWindow * parent)
-  : Action (parent, _("Merge"), actionWithoutTarget)
+  : Action (parent, _("Merge"), GetBaseFlags ())
 {
 }
 

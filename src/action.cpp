@@ -15,6 +15,9 @@
 #include "wx/wx.h"
 #include "wx/utils.h"
 
+// svncpp
+#include "svncpp/client.hpp"
+
 // app
 #include "action.hpp"
 #include "tracer.hpp"
@@ -60,11 +63,6 @@ public:
   /** the name of the action */
   wxString name;
 
-  /**
-   * Options for the action. 
-   */
-  ActionOptions options;
-
   /** flags for the action */
   unsigned int flags;
 
@@ -97,8 +95,8 @@ public:
 
   svn::Targets targets;
 
-  Data (wxWindow * parnt, const wxString & nam, ActionOptions opts)
-    :  parent (parnt), name (nam), options (opts), flags (0),
+  Data (wxWindow * parnt, const wxString & nam, unsigned int flgs)
+    :  parent (parnt), name (nam), flags (flgs),
        tracer (0), ownTracer (false)
   {
   }
@@ -117,10 +115,22 @@ public:
 const unsigned int Action::DONT_UPDATE = 1;
 const unsigned int Action::UPDATE_LATER = 2;
 
+const unsigned int Action::WITHOUT_TARGET = 4;
 
-Action::Action (wxWindow * parent, const wxString & name, ActionOptions options)
+const unsigned int Action::SINGLE_TARGET = 8;
+const unsigned int Action::MULTIPLE_TARGETS = 16;
+const unsigned int Action::TARGET_QUANTITY_MASK = SINGLE_TARGET|MULTIPLE_TARGETS;
+
+const unsigned int Action::RESPOSITORY_TYPE = 32;
+const unsigned int Action::VERSIONED_WC_TYPE = 64;
+const unsigned int Action::UNVERSIONED_WC_TYPE = 128;
+const unsigned int Action::TARGET_TYPE_MASK = RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
+
+const unsigned int Action::IS_DIR = 256;
+
+Action::Action (wxWindow * parent, const wxString & name, unsigned int flgs)
 {
-  m = new Data (parent, name, options);
+  m = new Data (parent, name, flgs);
 }
 
 Action::~Action ()
@@ -236,37 +246,30 @@ bool
 Action::Prepare ()
 {
   bool result = true;
-  switch (m->options)
+  
+  if ((GetFlags () & Action::WITHOUT_TARGET) == 0)
   {
-  case actionWithoutTarget:
-    break;
-
-  case actionWithSingleTarget:
-    if (m->targets.size () != 1)
+    unsigned int quantityFlags = GetFlags() & Action::TARGET_QUANTITY_MASK;
+    if (quantityFlags == Action::SINGLE_TARGET)
     {
-      wxMessageBox (_("Please select only one file or directory."),
-                    _("Error"),
-                    wxOK | wxICON_HAND);
-      result = false;
+      if (m->targets.size () != 1)
+      {
+        wxMessageBox (_("Please select only one file or directory."),
+                      _("Error"),
+                      wxOK | wxICON_HAND);
+        result = false;
+      }
     }
-    break;
-
-  case actionWithTargets:
-    if (m->targets.size () < 1)
+    else
     {
-      wxMessageBox (_("Nothing selected."),
-                    _("Error"),
-                    wxOK | wxICON_HAND);
-      result = false;
+      if (m->targets.size () < 1)
+      {
+        wxMessageBox (_("Nothing selected."),
+                      _("Error"),
+                      wxOK | wxICON_HAND);
+        result = false;
+      }
     }
-    break;
-    
-  default:
-    // unknown option
-    wxMessageBox (_("Internal error: unknown action option"),
-                  _("Error"),
-                  wxOK | wxICON_HAND);
-    result = false;
   }
 
   if (result)
@@ -282,13 +285,6 @@ Action::GetTarget ()
 {
   return m->targets.target ();
 }
-
-ActionOptions
-Action::GetOptions ()
-{
-  return m->options;
-}
-
 
 const char * 
 Action::GetName () const
@@ -327,6 +323,28 @@ void
 Action::SetFlags (unsigned int flags)
 {
   m->flags = flags;
+}
+
+svn::Path
+Action::GetPathAsTempFile (const svn::Path & path, 
+           const svn::Revision & revision)
+{
+  svn::Client client (GetContext ());
+
+  wxString revStr;
+  if (revision.kind () == revision.HEAD)
+    revStr = _("HEAD");
+  else
+    revStr.Printf ("%" SVN_REVNUM_T_FMT, revision.revnum ());
+
+  wxString msg;
+  msg.Printf (_("Get file %s rev. %s"),
+              path.c_str (), revStr.c_str ());
+  Trace (msg);
+
+  svn::Path dstPath ("");
+  client.get (dstPath, path, revision);
+  return dstPath;
 }
 
 /* -----------------------------------------------------------------

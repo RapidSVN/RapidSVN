@@ -28,12 +28,17 @@
 #include "svncpp/client.hpp"
 #include "svncpp/entry.hpp"
 #include "svncpp/targets.hpp"
+#include "svncpp/url.hpp"
 
 // app
 #include "ids.hpp"
 #include "filelist_ctrl.hpp"
 #include "utils.hpp"
 #include "verblist.hpp"
+#include "preferences.hpp"
+#include "action.hpp"
+#include "rapidsvn_app.hpp"
+#include "rapidsvn_frame.hpp"
 
 // Bitmaps
 #include "res/bitmaps/nonsvn_file.xpm"
@@ -971,10 +976,6 @@ FileListCtrl::ShowMenu (wxPoint & pt)
 {
   wxMenu menu;
 
-  AppendModifyMenu (&menu);
-  menu.AppendSeparator ();
-  AppendQueryMenu (&menu);
-
   // if there is exactly one file selected, then
   // we are going to add filetype specific entries
   if (GetSelectedItemCount () == 1)
@@ -996,10 +997,8 @@ FileListCtrl::ShowMenu (wxPoint & pt)
       // TODO: Report this error in the status bar?
     }
 
-    if (verbList.GetCount () > 0)
-      menu.AppendSeparator ();
-
-    for (size_t i = 0; 
+    size_t i = 0;
+    for (; 
          (i < verbList.GetCount ()) && 
          (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
     {
@@ -1010,9 +1009,44 @@ FileListCtrl::ShowMenu (wxPoint & pt)
       //pItem->SetBitmap (wxBITMAP (?))
       menu.Append (pItem);
     }
+    
+    if (i == 0)
+    {
+      // No verbs - allow configured editor if there is one
+      Preferences prefs;
+      if (!prefs.editor.IsEmpty () || IsDir (status))
+      {
+        const char * defaultActionVerb = _("Open");
+        if (!IsDir (status))
+        {
+          if (svn::Url::isValid (status->path ()))
+          {
+            defaultActionVerb = _("View HEAD");
+          }
+          else
+          {
+            defaultActionVerb = _("Edit");
+          }
+        }
+        menu.Append (new wxMenuItem (&menu, ID_Default_Action, defaultActionVerb));
+        ++i;
+      }
+    }
+
+    if (i > 0)
+    {
+      menu.AppendSeparator ();
+    }
   }
 
+  AppendModifyMenu (&menu);
+  menu.AppendSeparator ();
+  AppendQueryMenu (&menu);
 
+  // Check for disabled items
+  RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
+  frame->TrimDisabledMenuItems (menu);
+  
   PopupMenu (&menu, pt);
 }
 
@@ -1066,6 +1100,51 @@ FileListCtrl::GetTargets () const
   }
 
   return svn::Targets (v);
+}
+
+unsigned int
+FileListCtrl::GetSelectionActionFlags () const
+{
+  IndexArray arr = GetSelectedItems ();
+  size_t i, counter = 0;
+  unsigned int flags = 0;
+  
+  for (i = 0; i < arr.GetCount (); i++)
+  {
+    const int index = arr.Item (i);
+    svn::Status * status = (svn::Status*)GetItemData (index);
+
+    if (status == 0)
+      continue;
+
+    ++counter;
+    if (IsDir (status))
+    {
+      flags |= Action::IS_DIR;
+    }
+    if (svn::Url::isValid (status->path ()))
+    {
+      flags |= Action::RESPOSITORY_TYPE;
+    }
+    else
+    {
+      if (status->isVersioned ())
+      {
+        flags |= Action::VERSIONED_WC_TYPE;
+      }
+      else
+      {
+        flags |= Action::UNVERSIONED_WC_TYPE;
+      }
+    }
+  }
+  
+  if (counter)
+  {
+    flags |= counter == 1 ? Action::SINGLE_TARGET : Action::MULTIPLE_TARGETS;
+  }
+
+  return flags;
 }
 
 void

@@ -25,7 +25,7 @@
 #include "utils.hpp"
 
 UpdateAction::UpdateAction (wxWindow * parent)
-  : Action (parent, _("Update"), actionWithTargets)
+  : Action (parent, _("Update"), GetBaseFlags ())
 {
 }
 

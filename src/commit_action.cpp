@@ -26,7 +26,7 @@
 #include "utils.hpp"
 
 CommitAction::CommitAction (wxWindow * parent)
-  : Action (parent, _("Commit"), actionWithTargets)
+  : Action (parent, _("Commit"), GetBaseFlags ())
 {
 }
 

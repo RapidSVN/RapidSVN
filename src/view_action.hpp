@@ -42,6 +42,14 @@ public:
   virtual bool Perform ();
   virtual bool Prepare ();
 
+  /**
+   * Describe which targets the action can perform upon
+   */
+  static unsigned int GetBaseFlags ()
+  {
+    return DONT_UPDATE|WITHOUT_TARGET;
+  }
+
 private:
   GetData m_data;
 };

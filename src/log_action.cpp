@@ -23,7 +23,7 @@
 #include "log_dlg.hpp"
 
 LogAction::LogAction (wxWindow * parent)
-  : Action (parent, _("Log"), actionWithSingleTarget)
+  : Action (parent, _("Log"), GetBaseFlags ())
 {
 }
 

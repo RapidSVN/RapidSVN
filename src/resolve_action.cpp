@@ -21,7 +21,7 @@
 #include "resolve_action.hpp"
 
 ResolveAction::ResolveAction (wxWindow * parent)
-  : Action (parent, _("Resolve"), actionWithTargets)
+  : Action (parent, _("Resolve"), GetBaseFlags ())
 {
 }
 

@@ -36,6 +36,14 @@ public:
   virtual bool Perform ();
   virtual bool Prepare ();
 
+  /**
+   * Describe which targets the action can perform upon
+   */
+  static unsigned int GetBaseFlags ()
+  {
+    return UPDATE_LATER|SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
+  }
+
 protected:
   long m_verb_id;
   bool m_treat_as_folder;

@@ -24,10 +24,9 @@
 #include "utils.hpp"
 
 ViewAction::ViewAction (wxWindow * parent, const GetData & data)
-  : Action (parent, _("View"), actionWithoutTarget),
+  : Action (parent, _("View"), GetBaseFlags ()),
     m_data (data)
 {
-  SetFlags (DONT_UPDATE);
 }
 
 bool

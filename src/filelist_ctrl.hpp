@@ -146,6 +146,12 @@ public:
   const IndexArray GetSelectedItems () const;
   const svn::Targets GetTargets () const;
 
+  /**
+   * determine the properties of what has been selected
+   * in terms of the relevant Action Flags.
+   */
+  unsigned int
+  GetSelectionActionFlags () const;
 
   void
   SetContext (svn::Context * Context);

@@ -10,6 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+// svncpp
+#include "svncpp/url.hpp"
+
 // wx
 #include "wx/wx.h"
 #include "wx/filename.h"
@@ -21,10 +24,9 @@
 #include "verblist.hpp"
 
 ExternalProgramAction::ExternalProgramAction (wxWindow * parent, long verb_id, 
-  bool treat_as_folder) : Action (parent, _("Execute"), actionWithSingleTarget), 
+  bool treat_as_folder) : Action (parent, _("Execute"), GetBaseFlags ()), 
   m_verb_id (verb_id), m_treat_as_folder (treat_as_folder)
 {
-  SetFlags (UPDATE_LATER);
 }
 
 bool
@@ -40,7 +42,13 @@ ExternalProgramAction::Perform ()
   wxBusyCursor busy_cursor;
 
   // The actual target
-  wxString target_str = GetTarget ().c_str ();
+  svn::Path path = GetTarget ();
+  if (svn::Url::isValid (path.c_str ()))
+  {
+    path = GetPathAsTempFile(path);
+  }
+  
+  wxString target_str = path.c_str ();
   wxFileName target = target_str;
 
   // The target we'll pass to the external program

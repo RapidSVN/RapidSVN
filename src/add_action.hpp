@@ -34,6 +34,11 @@ public:
   virtual bool Prepare ();
   virtual bool Perform ();
 
+  static unsigned int GetBaseFlags ()
+  {
+    return SINGLE_TARGET|MULTIPLE_TARGETS|UNVERSIONED_WC_TYPE;
+  }
+  
 private:
   struct Data;
   Data * m;

@@ -65,6 +65,9 @@ public:
   RapidSvnFrame (const wxString & title);
   virtual ~RapidSvnFrame ();
 
+  /** Allow children to trim their popup menus using the frames logic */
+  void TrimDisabledMenuItems (wxMenu & menu);
+  
 private:
   /** disallow default constructor */
   RapidSvnFrame ();
@@ -149,9 +152,21 @@ private:
   void ShowLog ();
   void ShowInfo ();
 
+  // Enable/disable action menu items
+  bool
+  RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags);
+  void OnUpdateCommand (wxUpdateUIEvent & updateUIEvent);
+
   const svn::Targets 
   GetActionTargets() const;
 
+  /**
+   * determine the properties of what has been selected
+   * in terms of the relevant Action Flags.
+   */
+  unsigned int
+  GetSelectionActionFlags () const;
+  
   void DelEntries ();
   void MakeRevert ();
   void MakeResolve ();
