@@ -16,6 +16,7 @@ namespace svn
     m_pool = svn_pool_create (parent);
   }
 
+    /*
   Pool::Pool (Pool * pool)
   {
     if (pool != this)
@@ -23,6 +24,7 @@ namespace svn
       m_pool = pool->pool ();
     }
   }
+    */
 
   Pool::~Pool ()
   {

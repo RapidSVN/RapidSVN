@@ -17,30 +17,28 @@ namespace svn
   class Pool
   {
   public:
-            /**
-	     * creates a new pool
-	     */
+    /**
+     * creates a new pool
+     */
     Pool ();
 
-            /**
-	     * creates a new pool to an existing pool
-	     */
+    /**
+     * creates a new pool to an existing pool
+     */
     Pool (apr_pool_t * parent);
-
-            /**
-	     * copy constructor
-	     */
-    Pool (Pool * pool);
 
     virtual ~ Pool ();
 
-            /**
-	     * returns the handle to the pool
-	     */
+    /**
+     * returns the handle to the pool
+     */
     apr_pool_t *pool ();
 
   private:
      apr_pool_t * m_pool;
+
+     Pool& operator=(const Pool&);
+     Pool(const Pool&);
   };
 }
 
