@@ -15,6 +15,7 @@
 
 // wxwindows
 #include "wx/app.h"
+#include "wx/intl.h"
 
 // app
 #include "utils.hpp"
@@ -24,6 +25,8 @@ class RapidSvnApp:public wxApp
 protected:
   virtual bool OnInit ();
   virtual int OnExit ();
+private:
+  wxLocale m_locale;
 };
 
 DECLARE_APP (RapidSvnApp)
