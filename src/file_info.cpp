@@ -90,7 +90,10 @@ struct FileInfo::Data
       str.Printf (_("Url: %s"), entry.url ());
       addLine (str);
 
-      str.Printf (_("Repository: %s"), entry.repos ());
+      str.Printf (_("Repository: %s"), entry.repos () ? entry.repos () : _("<None>"));
+      addLine (str);
+
+      str.Printf (_("Repository UUID: %s"), entry.uuid () ? entry.uuid () : _("<None>"));
       addLine (str);
 
       str.Printf (_("Revision: %ld"), entry.revision ());
@@ -168,7 +171,7 @@ struct FileInfo::Data
       info_print_time (entry.propTime (), _("Properties Last Updated"), str);
       addLine (str);
 
-      str.Printf (_("Checksum: %s"), entry.checksum ());
+      str.Printf (_("Checksum: %s"), entry.checksum () ? entry.checksum () : _("<None>"));
       addLine (str);
 
       if (text_conflict)
