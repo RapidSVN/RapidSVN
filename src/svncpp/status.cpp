@@ -14,18 +14,13 @@
 
 namespace svn
 {
-
-
-  Status::Status ()
-  {
-    init (NULL, NULL);
-  }
-
   Status::Status (const Status & src)
   {
-    init (src.m_path.c_str (), src.m_status);
+    if( &src != this )
+    {
+      init (src.m_path.c_str (), src.m_status);
+    }
   }
-
 
   Status::Status (const char *path, svn_wc_status_t * status)
   {
@@ -35,21 +30,26 @@ namespace svn
   void Status::init (const char *path, const svn_wc_status_t * status)
   {
     m_path = path;
-    m_status = status;
-    m_versioned = FALSE;
-    m_isDir = FALSE;
-    m_isCopied = FALSE;
-    m_isLocked = FALSE;
+    m_isVersioned = false;
+    m_isDir = false;
+    m_isCopied = false;
+    m_isLocked = false;
     m_revision = SVN_INVALID_REVNUM;
     m_lastChanged = 0;
     m_lastCommitAuthor = "";
     m_textType = svn_wc_status_none;
     m_propType = svn_wc_status_none;
 
-    if (status != NULL)
+    if (status == NULL)
     {
+      m_status = NULL;
+    }
+    else
+    {
+      m_status = new svn_wc_status_t (*status);
+
       svn_wc_entry_t *entry = status->entry;
-      m_versioned = status->text_status > svn_wc_status_unversioned;
+      m_isVersioned = status->text_status > svn_wc_status_unversioned;
       m_textType = status->text_status;
       m_propType = status->prop_status;
       m_isCopied = status->copied == 1;
@@ -59,8 +59,11 @@ namespace svn
       {
         m_revision = entry->revision;
         m_lastChanged = entry->cmt_rev;
-        if(entry->cmt_author) // if just added then no author
+        if (entry->cmt_author)
+        { 
+          // if just added then no author
           m_lastCommitAuthor = entry->cmt_author;
+         }
         m_isDir = entry->kind == svn_node_dir;
       }
     }
@@ -68,9 +71,14 @@ namespace svn
 
   Status::~Status ()
   {
+    if (m_status != NULL)
+    {
+      delete m_status;
+    }
   }
 
-  const char *Status::statusDescription (svn_wc_status_kind kind)
+  const char *
+  Status::statusDescription (const svn_wc_status_kind kind) const
   {
     switch (kind)
     {
