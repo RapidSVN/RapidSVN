@@ -164,6 +164,7 @@ public:
   wxMenuBar * MenuBar;
   Listener listener;
   bool updateAfterActivate;
+  bool dontUpdateFilelist;
 
   /** 
    * This instance of @a apr is used to initialize/terminate apr 
@@ -172,7 +173,7 @@ public:
 
   Data (wxWindow * parent)
     : MenuColumns (0), MenuBar (0), listener (parent),
-      updateAfterActivate (false)
+      updateAfterActivate (false), dontUpdateFilelist (false)
   {
     InitializeMenu ();
   }
@@ -202,14 +203,14 @@ public:
     // View menu
     wxMenu *menuView = new wxMenu;
     AppendMenuItem (*menuView, ID_Refresh);
-    AppendMenuItem (*menuView, ID_RefreshWithUpdate);
     menuView->AppendSeparator ();
 
     AppendMenuItem (*menuView, ID_Explore);
     menuView->AppendSeparator ();
 
     menuView->Append (0, _("Columns"), MenuColumns);
-    menuView->AppendCheckItem (ID_Flat, _("Flat Mode...\tCTRL-F"));
+    menuView->AppendCheckItem (ID_Flat, _("Flat Mode"));
+    menuView->AppendCheckItem (ID_RefreshWithUpdate, _("Refresh with Update"));
 
     menuView->AppendSeparator ();
     
@@ -299,9 +300,9 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
-  EVT_MENU (ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
   EVT_MENU (ID_Flat, RapidSvnFrame::OnFlatView)
+  EVT_MENU (ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
 
@@ -483,8 +484,11 @@ RapidSvnFrame::~RapidSvnFrame ()
 }
 
 void
-RapidSvnFrame::UpdateFileList (bool withUpdate)
+RapidSvnFrame::UpdateFileList ()
 {
+  if (m->dontUpdateFilelist)
+    return;
+
   wxBusyCursor busy;
   if (m_listCtrl && m_folder_browser)
   {
@@ -493,7 +497,7 @@ RapidSvnFrame::UpdateFileList (bool withUpdate)
       try
       {
         m_listCtrl->SetContext (m_context);
-        m_listCtrl->UpdateFileList (m_currentPath, withUpdate);
+        m_listCtrl->UpdateFileList (m_currentPath);
         m_listCtrl->Show (TRUE);
       }
       catch (svn::ClientException & e)
@@ -572,14 +576,6 @@ void
 RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
 {
   UpdateFolderBrowser ();
-  //UpdateFileList ();
-}
-
-void
-RapidSvnFrame::OnRefreshWithUpdate (wxCommandEvent & WXUNUSED (event))
-{
-  UpdateFolderBrowser ();
-  UpdateFileList (true);
 }
 
 void
@@ -1255,6 +1251,16 @@ RapidSvnFrame::OnFlatView (wxCommandEvent & event)
   UpdateFileList ();
 }
 
+
+void
+RapidSvnFrame::OnRefreshWithUpdate (wxCommandEvent & WXUNUSED (event))
+{
+  bool checked = m->IsMenuChecked (ID_RefreshWithUpdate);
+  m_listCtrl->SetWithUpdate (checked);
+  UpdateFolderBrowser ();
+}
+
+
 void
 RapidSvnFrame::OnColumnReset (wxCommandEvent &)
 {
@@ -1279,8 +1285,19 @@ RapidSvnFrame::UpdateFolderBrowser ()
   m_currentPath = "";
   UpdateFileList ();
 
-  if (m_folder_browser)
-    m_folder_browser->Refresh ();
+  try
+  {
+    m->dontUpdateFilelist = true;
+
+    if (m_folder_browser)
+      m_folder_browser->Refresh ();
+  }
+  catch (...)
+  {
+  }
+
+  m->dontUpdateFilelist = false;
+  UpdateFileList ();
 }
 
 void

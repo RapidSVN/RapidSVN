@@ -50,6 +50,9 @@
 #include "res/bitmaps/sort_down.xpm"
 #include "res/bitmaps/sort_up.xpm"
 #include "res/bitmaps/modified_versioned_folder.xpm"
+#include "res/bitmaps/newer_file.xpm"
+#include "res/bitmaps/newer_folder.xpm"
+
 
 /**
  * The index from where there will be only images not related 
@@ -64,6 +67,8 @@ enum
   IMG_INDX_SORT_DOWN,
   IMG_INDX_SORT_UP,
   IMG_INDX_MODIFIED_VERSIONED_FOLDER,
+  IMG_INDX_NEWER_FILE,
+  IMG_INDX_NEWER_FOLDER,
   IMG_INDX_COUNT
 };
 
@@ -477,6 +482,7 @@ public:
   bool FlatMode;
   svn::Context * Context;
   wxString Path;
+  bool WithUpdate;
   wxImageList *ImageListSmall;
   bool ColumnVisible[COL_COUNT];
   wxString ColumnCaption[COL_COUNT];
@@ -486,7 +492,8 @@ public:
   /** default constructor */
   Data ()
     : SortIncreasing (true), SortColumn (COL_NAME), 
-      DirtyColumns (true), FlatMode (false), Context (0)
+      DirtyColumns (true), FlatMode (false), Context (0),
+      Path (""), WithUpdate (false)
   {
     ImageListSmall = new wxImageList (16, 16, TRUE);
 
@@ -508,6 +515,9 @@ public:
     ImageListSmall->Add (wxIcon (sort_up_xpm));
 
     ImageListSmall->Add (wxIcon (modified_versioned_folder_xpm));
+
+    ImageListSmall->Add (wxIcon (newer_file_xpm));
+    ImageListSmall->Add (wxIcon (newer_folder_xpm));
   }
 
   /** destructor */
@@ -667,6 +677,8 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   IMAGE_INDEX[IMG_INDX_SORT_UP] = 12;
 
   IMAGE_INDEX[IMG_INDX_MODIFIED_VERSIONED_FOLDER] = 13;
+  IMAGE_INDEX[IMG_INDX_NEWER_FILE] = 14;
+  IMAGE_INDEX[IMG_INDX_NEWER_FOLDER] = 15;
 
   // set this file list control to use the image list
   SetImageList (m->ImageListSmall, wxIMAGE_LIST_SMALL);
@@ -685,15 +697,15 @@ FileListCtrl::~FileListCtrl ()
 }
 
 void
-FileListCtrl::UpdateFileList (const wxString & path, bool withUpdate)
+FileListCtrl::UpdateFileList (const wxString & path)
 {
   m->Path = path;
 
-  UpdateFileList (withUpdate);
+  UpdateFileList ();
 }
 
 void
-FileListCtrl::UpdateFileList (bool withUpdate)
+FileListCtrl::UpdateFileList ()
 {
   const wxString & path = m->Path;
   // delete all the items in the list to display the new ones
@@ -710,7 +722,7 @@ FileListCtrl::UpdateFileList (bool withUpdate)
 
   svn::Client client (m->Context);
   const svn::StatusEntries statusVector =
-    client.status (path.c_str (), m->FlatMode, true, withUpdate);
+    client.status (path.c_str (), m->FlatMode, true, m->WithUpdate);
   svn::StatusEntries::const_iterator it;
   const size_t pathLength = path.Length () + 1;
 
@@ -741,6 +753,9 @@ FileListCtrl::UpdateFileList (bool withUpdate)
     wxString text;
 
     int imageIndex = 0;
+    bool newer = 
+      (status.reposTextStatus () == svn_wc_status_modified) ||
+      (status.reposPropStatus () == svn_wc_status_modified);
 
     if (status.isVersioned ())
     {
@@ -750,14 +765,22 @@ FileListCtrl::UpdateFileList (bool withUpdate)
             (status.propStatus () == svn_wc_status_modified))
           imageIndex = GetImageIndex (
             IMG_INDX_MODIFIED_VERSIONED_FOLDER, -1);
-        else
+        else 
           imageIndex = GetImageIndex (
             IMG_INDX_VERSIONED_FOLDER, -1);
+
+        const int normalIndex = IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER];
+        if ((imageIndex == normalIndex) && newer)
+          imageIndex = IMG_INDX_NEWER_FOLDER;
       }
       else
       {
         imageIndex = GetImageIndex (
           status.textStatus (), status.propStatus ());
+
+        const int normalIndex = IMAGE_INDEX[svn_wc_status_normal];
+        if ((imageIndex == normalIndex) && newer)
+          imageIndex = IMAGE_INDEX[IMG_INDX_NEWER_FILE];
       }
     }
     else
@@ -1283,6 +1306,21 @@ FileListCtrl::GetContext () const
 {
   return m->Context;
 }
+
+
+void
+FileListCtrl::SetWithUpdate (bool value)
+{
+  m->WithUpdate = value;
+}
+
+
+bool
+FileListCtrl::GetWithUpdate () const
+{
+  return m->WithUpdate;
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

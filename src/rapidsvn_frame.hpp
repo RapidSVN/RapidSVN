@@ -140,7 +140,7 @@ private:
   bool InvokeDefaultAction ();
 
   /** update the contents of the filelist */
-  void UpdateFileList (bool withUpdate=false);
+  void UpdateFileList ();
 
   /** update the contents of the folder browser */
   void UpdateFolderBrowser ();

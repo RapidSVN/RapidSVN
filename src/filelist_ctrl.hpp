@@ -121,6 +121,19 @@ public:
    */
   void SetFlat (const bool flat);
 
+
+  /**
+   * shall we contact the repository when updating,
+   * so we get information about out-dated-ness?
+   */
+  void
+  SetWithUpdate (bool value);
+
+
+  bool
+  GetWithUpdate () const;
+
+
   /**
    * get the "flat" setting
    *
@@ -128,8 +141,8 @@ public:
    */
   bool IsFlat ();
 
-  void UpdateFileList (bool withUpdate=false);
-  void UpdateFileList (const wxString & path, bool withUpdate=false);
+  void UpdateFileList ();
+  void UpdateFileList (const wxString & path);
   const IndexArray GetSelectedItems () const;
   const svn::Targets GetTargets () const;
 
