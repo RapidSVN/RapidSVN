@@ -64,16 +64,24 @@ MoveAction::Prepare ()
     break;
   case MOVE_COPY:
     break;
-  default: // invalid action
+  default: // invalid kind
     return false;
   }
 
   // create description for the dialog
   const char * descr;
-  if (m_kind == MOVE_MOVE)
-    descr = _("Enter new name:");
-  else
+  switch (m_kind)
+  {
+  case MOVE_COPY:
+  case MOVE_MOVE:
     descr = _("Select destination:");
+    break;
+  case MOVE_RENAME:
+    descr = _("Enter new name:");
+    break;
+  default:
+    return false;
+  }
 
   DestinationDlg dlg (GetParent (), GetName (),
                       descr, flags);
