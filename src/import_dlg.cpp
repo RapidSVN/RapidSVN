@@ -69,16 +69,6 @@ public:
                                           wxPoint(-1,-1), wxSize(20, -1));
     Grid->Add(BrowseButton, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
   
-    // Row 2:  
-    Grid->Add(new wxStaticText(wnd, -1, _("New entry")), 0, 
-              wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-    wxTextCtrl *NewEntry = new wxTextCtrl(wnd, -1, "",
-                                          wxDefaultPosition, wxSize(300, -1), 0,
-                                          wxTextValidator(wxFILTER_NONE, &data.NewEntry));
-    Grid->Add(NewEntry, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
-    Grid->Add(new wxStaticText(wnd, -1, ""), 0, 
-              0, 5);
-
     mainSizer->Add(Grid, 0, wxALL | wxEXPAND, 5);
 
   
@@ -161,7 +151,6 @@ ImportDlg::OnOk (wxCommandEvent &event)
 
   TrimString (m->data.Repository);
   TrimString (m->data.Path);
-  TrimString (m->data.NewEntry);
   TrimString (m->data.LogMessage);
   
   if (m->data.Repository.IsEmpty ())
@@ -183,16 +172,6 @@ ImportDlg::OnOk (wxCommandEvent &event)
                     _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
 
       // Do not allow the user to continue if the reposURL is empty.
-      return;
-    }
-
-    if (m->data.NewEntry.IsEmpty ())
-    {
-      wxMessageBox (_("New entry name required when importing a file!"),
-                    _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
-
-      // Do not allow the user to continue if the new_entry is empty 
-      // and the import is addressing a file.
       return;
     }
   }

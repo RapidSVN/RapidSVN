@@ -55,13 +55,8 @@ ImportAction::Perform ()
   svn::Client client (GetContext ());
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
-  const char *the_new_entry = NULL;
 
-  // if new entry is empty, the_new_entry must be left NULL.
-  if (!m_data.NewEntry.IsEmpty ())
-    the_new_entry = m_data.NewEntry.c_str ();
-
-  client.import (m_data.Path.c_str (), m_data.Repository.c_str (), the_new_entry,
+  client.import (m_data.Path.c_str (), m_data.Repository.c_str (),
                  m_data.LogMessage.c_str(), m_data.Recursive);
 
   return true;

@@ -234,10 +234,13 @@ namespace svn
      * 'clean' directory (meaning a directory with no administrative 
      * directories).
      * @exception ClientException
+     * @param srcPath source path
      * @param destPath a destination path that must not already exist.
+     * @param revision revision to use for the export
+     * @param force force export
      */
     void doExport (const Path & srcPath, const Path & destPath, 
-                   const Revision & revision);
+                   const Revision & revision, bool force=false);
 
     /**
      * Update local copy to mirror a new url. This excapsulates the 
@@ -250,12 +253,13 @@ namespace svn
     /**
      * Import file or directory PATH into repository directory URL at
      * head.  This usually requires authentication, see Auth.
+     * @param path path to import
+     * @param url
      * @param message log message.
-     * @param newEntry new directory in which the contents of <i>path</i> are 
-     *        imported.
+     * @param recurse
      * @exception ClientException
      */
-    void import (const Path & path, const char * url, const Path & newEntry,
+    void import (const Path & path, const char * url,
                  const char * message, bool recurse);
 
     /**

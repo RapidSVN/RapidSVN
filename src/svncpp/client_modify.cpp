@@ -243,7 +243,7 @@ namespace svn
 
   void
   Client::doExport (const Path & srcPath, const Path & destPath, 
-                    const Revision & revision)
+                    const Revision & revision, bool force)
   {
     Pool pool;
     svn_error_t * error =  
@@ -251,6 +251,7 @@ namespace svn
                          destPath.c_str (),
                          const_cast<svn_opt_revision_t*>
                          (revision.revision ()),
+                         force,
                          *m_context,
                          pool);
 
@@ -280,7 +281,6 @@ namespace svn
   void
   Client::import (const Path & path, 
                   const char * url, 
-                  const Path & newEntry, 
                   const char * message, 
                   bool recurse)
   {
@@ -293,7 +293,6 @@ namespace svn
       svn_client_import (&commit_info,
                          path.c_str (),
                          url,
-                         newEntry.c_str (),
                          !recurse,
                          *m_context,
                          pool);

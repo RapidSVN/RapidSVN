@@ -23,7 +23,6 @@ struct ImportData
 {
   wxString Repository;
   wxString Path;
-  wxString NewEntry;
   wxString LogMessage;
   bool Recursive;
   bool TreeType;
