@@ -20,6 +20,7 @@
 #include "path.hpp"
 #include "pool.hpp"
 #include "property.hpp"
+#include "revision.hpp"
 
 
 namespace svn
@@ -45,13 +46,14 @@ namespace svn
   Property::list ()
   {
     Pool pool;
+    Revision revision;
 
     m_entries.clear ();
     apr_array_header_t * props;
     svn_error_t * error =
       svn_client_proplist (&props,
                            m_path.c_str (), 
-                           NULL, // revision
+                           revision,
                            false, /* recurse */
                            m_context,
                            pool);
@@ -91,12 +93,13 @@ namespace svn
   Property::getValue (const char * name)
   {
     Pool pool;
+    Revision revision;
 
     apr_hash_t *props;
     svn_client_propget (&props, 
                         name, 
                         m_path.c_str (),
-                        NULL, // revision
+                        revision,
                         false, // recurse
                         m_context.ctx (),
                         pool);
