@@ -114,7 +114,7 @@ private:
   /** 
    * disallow copy constructor
    */
-  Workbench (const & Workbench);
+  Workbench (const Workbench &);
 
   /**
    * disallow assignment operator

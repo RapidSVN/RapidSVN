@@ -200,7 +200,7 @@ public:
         else
         {
           enabled = true;
-          label.Printf (_("Logout '%s'"), username);
+          label.Printf (_("Logout '%s'"), username.c_str ());
         }
 
         item = new wxMenuItem (&menu, ID_Logout, label);
@@ -302,7 +302,6 @@ public:
         for(index = 0; index < count; index++)
         {
           const wxString path (workbench.GetProject (index));
-          svn::Context * context = workbench.GetContext (index);
           FolderItemData* data= new FolderItemData (FOLDER_TYPE_PROJECT, 
                                                     path, path, TRUE);
           wxString label;
