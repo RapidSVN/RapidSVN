@@ -10,11 +10,8 @@ for FILE in $@ ; do
     echo "Invalid file $FILE" >&2
   else
     mv $FILE $FILE.orig
-    #remove tabs
-    tr "\t" " " < $FILE.orig > $FILE.trout
-    #no for the style
-    $INDENT $FILE.trout -o $FILE
-    rm $FILE.trout
+    #now for the style
+    $INDENT $FILE.orig -o $FILE
   fi
 done
 
