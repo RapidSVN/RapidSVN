@@ -58,142 +58,156 @@ struct FileInfo::Data
   }
 
   void 
-  addLine (const char * line)
+  addLine (const char * line="")
   {
     info += line;
     info += "\n";
   }
 
+
+  void 
+  addInfoForStatus (const svn::Status & status)
+  {
+    const svn::Entry entry = status.entry ();
+    wxString str;
+
+    if (!entry.isValid ())
+    {
+      addLine (_("Not versioned"));
+      return;
+    }
+
+    svn_boolean_t text_conflict = FALSE;
+    svn_boolean_t props_conflict = FALSE;
+
+    str.Printf (_("Name: %s"), entry.name ());
+    addLine (str);
+
+    str.Printf (_("Url: %s"), entry.url ());
+    addLine (str);
+
+    str.Printf (_("Repository: %s"), entry.repos () ? entry.repos () : _("<None>"));
+    addLine (str);
+
+    str.Printf (_("Repository UUID: %s"), entry.uuid () ? entry.uuid () : _("<None>"));
+    addLine (str);
+
+    str.Printf (_("Revision: %ld"), entry.revision ());
+    addLine (str);
+
+    wxString fmt = _("Node Kind: %s");
+    switch (entry.kind ())
+    {
+    case svn_node_file:
+      str.Printf (fmt, _("file"));
+      break;
+
+    case svn_node_dir:
+      str.Printf (fmt, _("directory"));
+//          SVN_ERR (svn_wc_conflicted_p (&text_conflict, &props_conflict,
+//                                        path.c_str (), entry, pool));
+      break;
+
+    case svn_node_none:
+      str.Printf (fmt, _("none"));
+      break;
+
+    case svn_node_unknown:
+    default:
+      str.Printf (fmt, _("unknown"));
+      break;
+    }
+    addLine (str);
+
+    fmt = _("Schedule: %s");
+    switch (entry.schedule ())
+    {
+    case svn_wc_schedule_normal:
+      str.Printf (fmt, _("normal"));
+      break;
+
+    case svn_wc_schedule_add:
+      str.Printf (fmt, _("add"));
+      break;
+
+    case svn_wc_schedule_delete:
+      str.Printf (fmt, _("delete"));
+      break;
+
+    case svn_wc_schedule_replace:
+      str.Printf (fmt, _("replace"));
+      break;
+
+    default:
+      str.Printf (fmt, _("unknown"));
+      break;
+    }
+
+    if (entry.isCopied ())
+    {
+      str.Printf (_("Copied From Url: %s"), entry.copyfromUrl ());
+      addLine (str);
+
+      str.Printf (_("Copied From Rev: %ld"), entry.copyfromRev ());
+      addLine (str);
+    }
+
+    str.Printf (_("Last Changed Author: %s"), entry.cmtAuthor ());
+    addLine (str);
+
+    str.Printf (_("Last Changed Rev: %ld"), entry.cmtRev ());
+    addLine (str);
+
+    info_print_time (entry.cmtDate (), _("Last Changed Date"), str);
+    addLine (str);
+
+    info_print_time (entry.textTime (), _("Text Last Updated"), str);
+    addLine (str);
+
+    info_print_time (entry.propTime (), _("Properties Last Updated"), str);
+    addLine (str);
+
+    str.Printf (_("Checksum: %s"), entry.checksum () ? entry.checksum () : _("<None>"));
+    addLine (str);
+
+    if (text_conflict)
+    {
+      str.Printf (_("Conflict Previous Base File: %s"),
+                  entry.conflictOld ());
+      addLine (str);
+
+      str.Printf (_("Conflict Previous Working File: %s"),
+                  entry.conflictWrk ());
+      addLine (str);
+
+      str.Printf (_("Conflict Current Base File: %s"), 
+                  entry.conflictNew ());
+      addLine (str);
+    }
+
+    if (props_conflict)
+    {
+      str.Printf (_("Conflict Properties File: %s"), 
+                  entry.prejfile ());
+      addLine (str);
+    }
+  }
+
   void
   createInfoForPath (svn::Client & client, const char * path)
   {
-    addLine (path);
     try
     {
-      svn::Status status = client.singleStatus (path);
+      svn::StatusEntries ent = client.status (path);
+      svn::StatusEntries::const_iterator it;
 
-      const svn::Entry entry = status.entry ();
-      wxString str;
-
-      if (!entry.isValid ())
+      for (it=ent.begin (); it!=ent.end (); it++)
       {
-        addLine (_("Not versioned"));
-        return;
-      }
+        svn::Status status (*it);
 
-      svn_boolean_t text_conflict = FALSE;
-      svn_boolean_t props_conflict = FALSE;
-
-      str.Printf (_("Name: %s"), entry.name ());
-      addLine (str);
-
-      str.Printf (_("Url: %s"), entry.url ());
-      addLine (str);
-
-      str.Printf (_("Repository: %s"), entry.repos () ? entry.repos () : _("<None>"));
-      addLine (str);
-
-      str.Printf (_("Repository UUID: %s"), entry.uuid () ? entry.uuid () : _("<None>"));
-      addLine (str);
-
-      str.Printf (_("Revision: %ld"), entry.revision ());
-      addLine (str);
-
-      wxString fmt = _("Node Kind: %s");
-      switch (entry.kind ())
-      {
-      case svn_node_file:
-        str.Printf (fmt, _("file"));
-        break;
-
-      case svn_node_dir:
-        str.Printf (fmt, _("directory"));
-//          SVN_ERR (svn_wc_conflicted_p (&text_conflict, &props_conflict,
-//                                        path.c_str (), entry, pool));
-        break;
-
-      case svn_node_none:
-        str.Printf (fmt, _("none"));
-        break;
-
-      case svn_node_unknown:
-      default:
-        str.Printf (fmt, _("unknown"));
-        break;
-      }
-      addLine (str);
-
-      fmt = _("Schedule: %s");
-      switch (entry.schedule ())
-      {
-      case svn_wc_schedule_normal:
-        str.Printf (fmt, _("normal"));
-        break;
-
-      case svn_wc_schedule_add:
-        str.Printf (fmt, _("add"));
-        break;
-
-      case svn_wc_schedule_delete:
-        str.Printf (fmt, _("delete"));
-        break;
-
-      case svn_wc_schedule_replace:
-        str.Printf (fmt, _("replace"));
-        break;
-
-      default:
-        str.Printf (fmt, _("unknown"));
-        break;
-      }
-
-      if (entry.isCopied ())
-      {
-        str.Printf (_("Copied From Url: %s"), entry.copyfromUrl ());
-        addLine (str);
-
-        str.Printf (_("Copied From Rev: %ld"), entry.copyfromRev ());
-        addLine (str);
-      }
-
-      str.Printf (_("Last Changed Author: %s"), entry.cmtAuthor ());
-      addLine (str);
-
-      str.Printf (_("Last Changed Rev: %ld"), entry.cmtRev ());
-      addLine (str);
-
-      info_print_time (entry.cmtDate (), _("Last Changed Date"), str);
-      addLine (str);
-
-      info_print_time (entry.textTime (), _("Text Last Updated"), str);
-      addLine (str);
-
-      info_print_time (entry.propTime (), _("Properties Last Updated"), str);
-      addLine (str);
-
-      str.Printf (_("Checksum: %s"), entry.checksum () ? entry.checksum () : _("<None>"));
-      addLine (str);
-
-      if (text_conflict)
-      {
-        str.Printf (_("Conflict Previous Base File: %s"),
-                    entry.conflictOld ());
-        addLine (str);
-
-        str.Printf (_("Conflict Previous Working File: %s"),
-                    entry.conflictWrk ());
-        addLine (str);
-
-        str.Printf (_("Conflict Current Base File: %s"), 
-                    entry.conflictNew ());
-        addLine (str);
-      }
-
-      if (props_conflict)
-      {
-        str.Printf (_("Conflict Properties File: %s"), 
-                    entry.prejfile ());
-        addLine (str);
+        addLine (status.path ());
+        addInfoForStatus (status);
+        addLine ();
       }
     }
     catch (svn::Exception & e)
