@@ -20,6 +20,7 @@
 
 // app
 #include "action.hpp"
+#include "config.hpp"
 #include "tracer.hpp"
 #include "rapidsvn_app.hpp"
 
@@ -51,6 +52,17 @@ ACTION_NAMES [] =
   NULL                // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
 };
 const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
+
+#ifdef USE_SIMPLE_WORKER
+void
+SafeYield ()
+{
+  wxSafeYield ();
+}
+#else
+void 
+SafeYield () {};
+#endif
 
 
 struct Action::Data
@@ -149,7 +161,7 @@ Action::PostStringEvent (int code, wxString str, int event_id)
   // send in a thread-safe way
   wxPostEvent (m->parent, event);
 
-  wxSafeYield ();
+  SafeYield ();
 }
 
 void
@@ -162,7 +174,7 @@ Action::PostDataEvent (int code, void *data, int event_id)
   // send in a thread-safe way
   wxPostEvent (m->parent, event);
 
-  wxSafeYield ();
+  SafeYield ();
 }
 
 void 
@@ -192,7 +204,7 @@ Action::Trace (const wxString & msg)
     m->tracer->Trace (msg);
   }
 
-  wxSafeYield ();
+  SafeYield ();
 }
 
 void
