@@ -16,7 +16,7 @@ SVN_TOP_DIR := $(shell pwd)/../../..
 NAME := $(shell grep '^Name:' < $(SPECFILE) | sed -e 's/^Name: //')
 SVN_VERSION_MICRO := $(shell grep 'define SVN_VER_MICRO' < $(VERSION_FILE) | (read one two three; echo $$three) )
 VERSION := $(shell grep '^AC_REVISION' $(VERSION_FILE) | sed -e 's/^AC_REVISION(//' -e 's/)//' )
-RELEASE := $(shell svn st -v $(SPECFILE) | awk '/rapidsvn.spec/ { if ( $$4 == "rapidsvn.spec" ) { print $$3 } else { print $$2 } }')
+RELEASE := $(shell svn st -v $(SPECFILE) | cut -b 10- | ( read one two ; echo $$one ) )
 
 SOURCE_RPM_DIR := $(HOME)/$(RPMDIR)/sources/$(NAME)-$(VERSION)-$(RELEASE)
 
