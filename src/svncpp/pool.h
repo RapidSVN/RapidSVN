@@ -31,27 +31,46 @@ namespace svn
   {
   public:
     /**
-     * creates a new pool
+     * creates new instance, but no pool.
+     * You will have to call "Create" next.
      */
     Pool ();
 
     /**
-     * creates a new pool to an existing pool
+     * creates a subpool new pool to an existing pool
      */
     Pool (apr_pool_t * parent);
 
     virtual ~ Pool ();
 
     /**
+     * copy constructor create a new subpool to
+     * the existing pool
+     */
+    Pool (Pool&);
+
+    /**
      * returns the handle to the pool
      */
     apr_pool_t *pool ();
 
-  private:
-     apr_pool_t * m_pool;
+    /**
+     * create a new pool
+     *
+     * @param parent NULL: parent pool. If NULL this
+     *               creates a global pool, otherwise
+     *               a subpool
+     */
+    void Create (apr_pool_t * parent);
 
-     Pool& operator=(const Pool&);
-     Pool (const Pool&);
+    /**
+     * create a subpool to the existing pool
+     */
+    void Create (Pool & parent);
+
+  private:
+    apr_pool_t * m_pool;
+    Pool& operator=(const Pool&);
   };
 }
 
