@@ -43,7 +43,8 @@ rapidsvn_SOURCES= \
 	trace_update.cpp \
 	update_action.cpp \
 	update_dlg.cpp \
-	utils.cpp
+	utils.cpp \
+        verblist.cpp
 
 rapidsvn_LDFLAGS=-Lsvncpp -L$(SVN_LIB)
 rapidsvn_LDADD= -lsvncpp \
