@@ -4,7 +4,7 @@ TODO ITEM NOTES
 * All of the functions below only change data on the client side.  
   All changes must be committed for them to take affect.  No
   functionalities are to be added that directly change the respository 
-  on the server.
+  on the server unless the change cannot be completed with a commit.
 
 File Explorer
 * Add to the preferences a default file explorer.
@@ -30,12 +30,15 @@ Log
 Build Instructions
 * Right now the build instructions in README.txt are very Windows oriented.  
   It would be nice if someone could add some instructions for Unix/Linux too.
+  Some documentation for a Linux installation has been added.
 
 Status and Info
 * Make the Status and Info boxes easier to read.
 
 Icon and Logo
-* Create a logo for the project and make it into an ico and xpm.
+* Create a logo for the project and make it into an ico and xpm.  Note: in 
+  wxWindows 2.3.2 apparently .ico files can be used in GTK+ programs as well 
+  so we might be able to consolidate all icons as .ico files.
 
 Revert - completed
 * If there were changes to the file it will ask the user if they really 
@@ -140,3 +143,8 @@ Progress Meter
   move at least when a directory is being browsed.  This operation can take a 
   long time to complete, which may give the user the false sense that the 
   program is frozen.
+
+Replace wxWindows resources dialogs with sizers
+* The existing .wxr files work correctly only on Windows.  On environments like
+  GTK+ the windows and controls are very small.  Replace all of these dialogs 
+  with wxSizer objects.  An example of this conversion is checkout_dlg.cpp.

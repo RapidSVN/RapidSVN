@@ -395,71 +395,15 @@ VSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
                 "About VSvn", wxOK | wxICON_INFORMATION);
 }
 
-svn_client_auth_baton_t *
-svn_cl__make_auth_baton (apr_pool_t * pool)
-{
-  svn_client_auth_baton_t *auth_obj;
-  auth_obj =
-    (svn_client_auth_baton_t *) apr_pcalloc (pool, sizeof (*auth_obj));
-
-  auth_obj->prompt_callback = NULL;     //svn_cl__prompt_user;
-  auth_obj->prompt_baton = NULL;
-
-  /* Add more authentication args here as necessary... */
-
-  return auth_obj;
-}
-
 void
 VSvnFrame::OnStatus (wxCommandEvent & WXUNUSED (event))
 {
   wxString items = m_folder_browser->GetPath () + "\r\n";
   wxString fullPath;
 
-  apr_hash_t *statushash;
   svn_revnum_t youngest = SVN_INVALID_REVNUM;
-  svn_client_auth_baton_t *auth_baton;
 
   ShowStatus ();
-  return;
-
-  long item = -1;
-
-  auth_baton = svn_cl__make_auth_baton (pool);
-
-
-  for (;;)
-  {
-    item = m_listCtrl->GetNextItem (item,
-                                    wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-    if (item == -1)
-      break;
-#ifdef WIN32
-    fullPath =
-      m_folder_browser->GetPath () + "\\" + m_listCtrl->GetItemText (item);
-    UnixPath (fullPath);
-#else
-    fullPath =
-      m_folder_browser->GetPath () + "/" + m_listCtrl->GetItemText (item);
-#endif
-
-    // this item is selected - do whatever is needed with it
-    items += m_listCtrl->GetItemText (item) + "\r\n";
-
-    svn_stringbuf_t *target = svn_stringbuf_create (fullPath, pool);
-    svn_error_t *err = svn_client_status (&statushash,
-                                          &youngest,
-                                          target->data,
-                                          auth_baton,
-                                          1,
-                                          0,
-                                          0,
-                                          0,
-                                          pool);
-
-  }
-
-  //wxMessageBox( items );
 }
 
 void
