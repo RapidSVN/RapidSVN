@@ -243,3 +243,8 @@ SvnNotify::onNotify (const char *path,
   }
 }
 
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

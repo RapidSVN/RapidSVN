@@ -85,3 +85,8 @@ struct NotifyBaton
   svn_boolean_t sent_first_txdelta;
   apr_pool_t *pool;
 };
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../../../rapidsvn-dev.el")
+ * end:
+ */

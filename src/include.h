@@ -37,3 +37,8 @@
 #include "wx/config.h"
 #include "wx/thread.h"
 #include "wx/frame.h"
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

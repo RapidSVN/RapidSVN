@@ -25,3 +25,8 @@ main( int argc, char **argv)
 
   return wasSucessful;
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../../../rapidsvn-dev.el")
+ * end:
+ */

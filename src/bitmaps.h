@@ -27,3 +27,8 @@
 #include "res/bitmaps/update.xpm"
 #include "res/bitmaps/versioned_folder.xpm"
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

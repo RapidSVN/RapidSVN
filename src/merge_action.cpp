@@ -108,3 +108,8 @@ MergeAction::getRevision (wxString & str)
   return -2; // head
 }
 
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

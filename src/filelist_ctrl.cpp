@@ -592,3 +592,8 @@ FileListCtrl::DeleteItem (long item)
     delete p;
   wxListCtrl::DeleteItem (item);
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

@@ -413,3 +413,8 @@ get_trace_commit_editor (const svn_delta_editor_t ** editor,
 
   return SVN_NO_ERROR;
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

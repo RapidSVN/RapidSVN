@@ -24,3 +24,8 @@ svn_error_t *get_trace_update_editor (const svn_delta_editor_t ** editor,
                                       Tracer * tracer, apr_pool_t * pool);
 
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

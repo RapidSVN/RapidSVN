@@ -69,3 +69,8 @@ svn_error_t * prompt (char **info, const char *prompt, svn_boolean_t hide,
 }
 
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../../rapidsvn-dev.el")
+ * end:
+ */

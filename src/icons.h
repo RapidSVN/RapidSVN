@@ -28,3 +28,8 @@
 #include "res/bitmaps/sort_down.xpm"
 #include "res/bitmaps/sort_up.xpm"
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

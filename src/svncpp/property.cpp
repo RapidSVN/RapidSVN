@@ -240,3 +240,8 @@ Property::isSvnProperty (const char * name)
 }
 
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../../rapidsvn-dev.el")
+ * end:
+ */

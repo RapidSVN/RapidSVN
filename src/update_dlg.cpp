@@ -128,3 +128,8 @@ UpdateDlg::EnableControls()
   pRevision->Enable(!pUseLatest->IsChecked());
 }
 
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

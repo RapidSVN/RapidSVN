@@ -142,3 +142,8 @@ svn_cl__may_need_force (svn_error_t * err)
 
   return err;
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

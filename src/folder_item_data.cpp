@@ -45,3 +45,8 @@ FolderItemData::Create (const int folderType, const wxString & path,
     m_hasChildren = hasChildren;
 }
                
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

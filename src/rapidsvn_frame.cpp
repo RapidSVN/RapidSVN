@@ -1218,3 +1218,8 @@ LogTracer::Trace (const wxString & str)
 {
   AppendText (str + _T ("\n"));
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

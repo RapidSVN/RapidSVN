@@ -139,3 +139,8 @@ private:
 
 #endif // _PREFERENCES_DLG_H_INCLUDED_
 
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

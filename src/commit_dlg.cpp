@@ -99,3 +99,8 @@ CommitDlg::InitializeData ()
   mainSizer->SetSizeHints(this);
   mainSizer->Fit(this);
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

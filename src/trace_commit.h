@@ -24,3 +24,8 @@ svn_error_t *get_trace_commit_editor (const svn_delta_editor_t ** editor,
 
 
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

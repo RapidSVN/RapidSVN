@@ -66,3 +66,8 @@ ResolveAction::Entry ()
 
   return NULL;
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

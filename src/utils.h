@@ -44,3 +44,8 @@ void handle_svn_error (svn_error_t * err, Tracer * tracer);
 svn_error_t *svn_cl__may_need_force (svn_error_t * err);
 
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

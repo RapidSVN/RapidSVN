@@ -69,3 +69,8 @@ LogAction::setLogMessage (const char * message)
 {
   logDialog->setLogMessage (message);
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

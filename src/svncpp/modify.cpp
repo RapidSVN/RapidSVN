@@ -358,3 +358,8 @@ svn_cl__get_log_message (const char **log_msg,
 
   return SVN_NO_ERROR;
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../../rapidsvn-dev.el")
+ * end:
+ */

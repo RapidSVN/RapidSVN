@@ -149,3 +149,8 @@ static svn_error_t * messageReceiver (void *baton,
 }
 
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../../rapidsvn-dev.el")
+ * end:
+ */

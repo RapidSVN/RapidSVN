@@ -18,3 +18,8 @@ svn_error_t *svn_get_file_info (const wxString & path,
                                 apr_pool_t * pool, wxString & info);
 
 #endif
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

@@ -56,3 +56,8 @@ ActionThread::PostDataEvent (int code, void *data, int event_id)
   wxPostEvent (mainFrame, event);
 
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

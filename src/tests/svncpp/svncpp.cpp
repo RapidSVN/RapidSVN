@@ -369,3 +369,8 @@ SvnCppTestCase::testLog ()
   CPPUNIT_ASSERT_EQUAL ((unsigned long)1, log.revision ());
 }
 
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../../../rapidsvn-dev.el")
+ * end:
+ */

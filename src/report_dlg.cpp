@@ -72,3 +72,8 @@ Report_Dlg::OnButton (wxCommandEvent & event)
 {
   event.Skip ();
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

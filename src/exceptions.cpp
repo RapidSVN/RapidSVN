@@ -40,3 +40,8 @@ RapidSvnEx::what (const wxString & __what)
 {
   estr.Printf (_T ("%s  code: %ld"), __what.c_str (), code);
 }
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */
