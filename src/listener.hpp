@@ -101,7 +101,8 @@ public:
   virtual bool 
   contextGetLogin (const std::string & realm,
                    std::string & username, 
-                   std::string & password);
+                   std::string & password,
+				   bool maySave);
 
   /**
    * @see svn::ContextListener
@@ -139,7 +140,9 @@ public:
    * @see svn::ContextListener
    */
   virtual bool
-  contextSslClientCertPwPrompt (std::string & password);
+  contextSslClientCertPwPrompt (std::string & password,
+                                const std::string & realm, 
+                                bool maySave);
 
 
   /**

@@ -103,19 +103,19 @@ namespace svn
     }
 
     apr_array_header_t *statusarray = 
-      apr_hash_sorted_keys (status_hash, svn_sort_compare_items_as_paths,
+      svn_sort__hash (status_hash, svn_sort_compare_items_as_paths,
                             pool);
     int i;
 
     /* Loop over array, printing each name/status-structure */
     for (i = statusarray->nelts-1; i >= 0; i--)
     {
-      const svn_item_t *item;
+      const svn_sort__item_t *item;
       const char *filePath;
       svn_error_t *err;
       svn_wc_status_t *status = NULL;
 
-      item = &APR_ARRAY_IDX (statusarray, i, const svn_item_t);
+      item = &APR_ARRAY_IDX (statusarray, i, const svn_sort__item_t);
       status = (svn_wc_status_t *) item->value;
 
       err =
@@ -238,13 +238,13 @@ namespace svn
     }
     
     apr_array_header_t *statusarray = 
-      apr_hash_sorted_keys (status_hash, svn_sort_compare_items_as_paths,
+      svn_sort__hash (status_hash, svn_sort_compare_items_as_paths,
                             pool);
-    const svn_item_t *item;
+    const svn_sort__item_t *item;
     const char *filePath;
     svn_wc_status_t *status = NULL;
 
-    item = &APR_ARRAY_IDX (statusarray, 0, const svn_item_t);
+    item = &APR_ARRAY_IDX (statusarray, 0, const svn_sort__item_t);
     status = (svn_wc_status_t *) item->value;
 
     //TODO svn_error_t *err =

@@ -87,14 +87,16 @@ namespace svn
       throw ClientException (error);
   }
 
+
   void
-  Client::revert (const Path & path, 
+  Client::revert (const Targets & targets,
                   bool recurse) throw (ClientException)
   {
     Pool pool;
 
     svn_error_t * error =
-      svn_client_revert (path.c_str (), 
+      svn_client_revert (//const_cast<apr_array_header_t*> 
+                         (targets.array (pool)), 
                          recurse, 
                          *m_context,
                          pool);
@@ -102,6 +104,7 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+
 
   void
   Client::add (const Path & path, 

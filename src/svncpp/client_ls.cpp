@@ -27,7 +27,7 @@
 
 
 static int
-compare_items_as_paths (const svn_item_t *a, const svn_item_t *b)
+compare_items_as_paths (const svn_sort__item_t *a, const svn_sort__item_t *b)
 {
   return svn_path_compare_paths ((const char *)a->key, (const char *)b->key);
 }
@@ -54,7 +54,7 @@ namespace svn
       throw ClientException (error);
 
     apr_array_header_t * 
-      array = apr_hash_sorted_keys (
+      array = svn_sort__hash (
         hash, compare_items_as_paths, pool);
 
     DirEntries entries;
@@ -63,9 +63,9 @@ namespace svn
     {
       const char *utf8_entryname;
       svn_dirent_t *dirent;
-      svn_item_t *item;
+      svn_sort__item_t *item;
      
-      item = &APR_ARRAY_IDX (array, i, svn_item_t);
+      item = &APR_ARRAY_IDX (array, i, svn_sort__item_t);
 
       utf8_entryname = static_cast<const char *>(item->key);
 

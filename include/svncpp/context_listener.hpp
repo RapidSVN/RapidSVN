@@ -51,7 +51,8 @@ namespace svn
     virtual bool 
     contextGetLogin (const std::string & realm,
                      std::string & username, 
-                     std::string & password) = 0;
+                     std::string & password,
+                     bool maySave) = 0;
 
     /** 
      * this method will be called to notify about
@@ -123,11 +124,12 @@ namespace svn
       std::string validUntil;
       std::string issuerDName;
       std::string realm;
+      bool maySave;
 
       SslServerTrustData (const apr_uint32_t failures_ = 0)
         : failures (failures_), hostname (""), fingerprint (""),
-          validFrom (""), validUntil (""), issuerDName(""),
-          realm ("")
+          validFrom (""), validUntil (""), issuerDName (""),
+          realm (""), maySave (true)
       {
       }
     };
@@ -158,7 +160,9 @@ namespace svn
      * @param password
      */
     virtual bool
-    contextSslClientCertPwPrompt (std::string & password) = 0;
+    contextSslClientCertPwPrompt (std::string & password, 
+                                  const std::string & realm, 
+                                  bool maySave) = 0;
   };
 }
 

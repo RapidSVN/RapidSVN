@@ -168,7 +168,8 @@ bool
 Listener::contextGetLogin (
   const std::string & realm,
   std::string & username, 
-  std::string & password)
+  std::string & password,
+  bool maySave)
 {
   // TODO: show realm
   AuthDlg dlg (GetParent (), username.c_str () , password.c_str ());
@@ -257,7 +258,9 @@ Listener::contextSslClientCertPrompt (std::string & certFile)
 }
 
 bool
-Listener::contextSslClientCertPwPrompt (std::string & password)
+Listener::contextSslClientCertPwPrompt (std::string & password,
+                                        const std::string & realm, 
+                                        bool maySave)
 {
   //TODO
   AuthDlg dlg (GetParent (), "", password.c_str (), 

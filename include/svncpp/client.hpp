@@ -164,11 +164,12 @@ namespace svn
             bool force) throw (ClientException);
 
     /**
-     * Reverts a file to a pristine state.
+     * Reverts a couple of files to a pristiner state.
      * @exception ClientException
      */
-    void 
-    revert (const Path & path, bool recurse) throw (ClientException);
+    void
+    revert (const Targets & targets, bool recurse) throw (ClientException);
+
 
     /**
      * Adds a file to the repository.

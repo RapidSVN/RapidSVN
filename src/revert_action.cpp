@@ -45,22 +45,16 @@ RevertAction::Prepare ()
   return true;
 }
 
+
 bool
 RevertAction::Perform ()
 {
-  const std::vector<svn::Path> & v = GetTargets ();
-  std::vector<svn::Path>::const_iterator it;
-
   svn::Client client;
-  for (it = v.begin (); it != v.end (); it++)
-  {
-    const svn::Path & path = *it;
-
-    client.revert (path.c_str (), false);
-  }
+  client.revert (GetTargets (), false);
 
   return true;
 }
+
 
 /* -----------------------------------------------------------------
  * local variables:

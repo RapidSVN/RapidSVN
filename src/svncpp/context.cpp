@@ -144,8 +144,9 @@ namespace svn
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
+      // plugged in 3 as the retry limit - what is a good limit?       
       svn_client_get_ssl_client_cert_pw_prompt_provider (
-        &provider, onSslClientCertPwPrompt, this, pool);
+        &provider, onSslClientCertPwPrompt, this, 3, pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
         provider;
 
@@ -285,12 +286,13 @@ namespace svn
                     void *baton,
                     const char *realm,
                     const char *username, 
+                    svn_boolean_t may_save,
                     apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
 
-      if (!data->retrieveLogin (username, realm))
+      if (!data->retrieveLogin (username, realm, may_save != 0))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
       svn_auth_cred_simple_t* lcred = (svn_auth_cred_simple_t*)
@@ -316,6 +318,7 @@ namespace svn
                             const char *realm,
                             apr_uint32_t failures,
                             const svn_auth_ssl_server_cert_info_t *info,
+                            svn_boolean_t may_save,
                             apr_pool_t *pool)
     {
       Data * data;
@@ -329,11 +332,12 @@ namespace svn
       trustData.validFrom = info->valid_from;
       trustData.validUntil = info->valid_until;
       trustData.issuerDName = info->issuer_dname;
+      trustData.maySave = may_save != 0;
 
       apr_uint32_t acceptedFailures;
       ContextListener::SslServerTrustAnswer answer =
         data->listener->contextSslServerTrustPrompt (
-          trustData, acceptedFailures);
+          trustData, acceptedFailures );
 
       if(answer == ContextListener::DONT_ACCEPT)
         *cred = NULL;
@@ -345,7 +349,7 @@ namespace svn
       
         if (answer == ContextListener::ACCEPT_PERMANENTLY)
         {
-          cred_->trust_permanently = 1;
+          cred_->may_save = 1;
           cred_->accepted_failures = acceptedFailures;
         }
         *cred = cred_;
@@ -390,13 +394,15 @@ namespace svn
     onSslClientCertPwPrompt (
       svn_auth_cred_ssl_client_cert_pw_t **cred, 
       void *baton, 
+      const char *realm,
+      svn_boolean_t may_save,
       apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
 
       std::string password ("");
-      if (!data->listener->contextSslClientCertPwPrompt (password))
+      if (!data->listener->contextSslClientCertPwPrompt (password, realm, may_save != 0))
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
       svn_auth_cred_ssl_client_cert_pw_t *cred_ = 
@@ -473,7 +479,8 @@ namespace svn
      */
     bool
     retrieveLogin (const char * username_,
-                   const char * realm)
+                   const char * realm,
+                   bool may_save)
     {
       bool ok;
 
@@ -485,7 +492,7 @@ namespace svn
       else
         username = username_;
 
-      ok = listener->contextGetLogin (realm, username, password);
+      ok = listener->contextGetLogin (realm, username, password, may_save);
 
       return ok;
     }
