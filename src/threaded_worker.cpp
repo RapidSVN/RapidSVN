@@ -38,7 +38,7 @@ ThreadedWorker::Create (wxWindow * parent)
   Run ();
 }
 
-const ActionState 
+ActionState 
 ThreadedWorker::GetState ()
 {
   wxMutexLocker locker (m_mutex);
@@ -46,7 +46,7 @@ ThreadedWorker::GetState ()
   return m_state;
 }
 
-const ActionResult
+ActionResult
 ThreadedWorker::GetResult ()
 {
   wxMutexLocker locker (m_mutex);
@@ -54,7 +54,7 @@ ThreadedWorker::GetResult ()
   return m_result;
 }
 
-const bool
+bool
 ThreadedWorker::Perform (Action * action)
 {
   {

@@ -62,7 +62,7 @@ public:
   /**
    * @see ActionWorker
    */
-  virtual const bool Perform (Action * action);
+  virtual bool Perform (Action * action);
 
 protected:
   virtual void * Entry ();
