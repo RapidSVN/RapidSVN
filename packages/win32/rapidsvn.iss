@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=RapidSVN
-AppVerName=RapidSVN 0.3
+AppVerName=RapidSVN 0.3.0
 AppPublisherURL=http://rapidsvn.tigris.org/
 AppSupportURL=http://rapidsvn.tigris.org/
 AppUpdatesURL=http://rapidsvn.tigris.org/
@@ -22,6 +22,8 @@ Name: main; Description: RapidSVN Application; Types: compact custom full; Flags
 [Files]
 Source: "libdb40.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
 Source: "msvcp60.dll"; DestDir: "{app}\bin"; CopyMode: onlyifdoesntexist; Components: main
+Source: "libeay32.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
+Source: "ssleay32.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
 Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
 Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; CopyMode: alwaysoverwrite; Components: main
 Source: "..\..\TODO.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: main

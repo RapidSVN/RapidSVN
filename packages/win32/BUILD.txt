@@ -7,5 +7,11 @@ BUILD INSTRUCTIONS
   open the rapidsvn.iss from the packages/win32 directory, then 
   click Compile.
 
-* Note: The Release binary of the Berkeley DB must be located in the 
-  packages/win32 directory.
+Note: The Release binaries of the following libraries must be 
+      located in the packages/win32 directory
+      * Berkeley DB
+        libdb40.dll
+      * OpenSSL
+        libeay32.dll
+        ssleay32.dll
+      
