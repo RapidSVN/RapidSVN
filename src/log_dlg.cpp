@@ -22,6 +22,7 @@
 #include "log_dlg.hpp"
 #include "utils.hpp"
 
+
 enum
 {
   ID_View = 1,
@@ -98,6 +99,8 @@ private:
     {
       const svn::LogEntry & entry = *it;
       wxString rev;
+      wxString dateStr (FormatDateTime (entry.date));
+
       rev.Printf("%ld", (long) entry.revision);
 
       //TODO perform date formatting. but dont use
@@ -105,7 +108,7 @@ private:
       //wxString date (entry.date.c_str ());
       InsertItem (index, rev);
       SetItem (index, 1, entry.author.c_str ());
-      SetItem (index, 2, entry.date.c_str ());
+      SetItem (index, 2, dateStr);
       index++;
     }
  

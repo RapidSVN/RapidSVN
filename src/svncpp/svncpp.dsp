@@ -141,6 +141,10 @@ SOURCE=.\exception.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\log_entry.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\path.cpp
 # End Source File
 # Begin Source File
