@@ -22,6 +22,7 @@ OBJECTS=action_thread.o \
 		mkdir_action.o \
 		mkdir_dlg.o \
 		preferences_dlg.o \
+		patched_dirctrlg.o \
 		report_dlg.o \
 		resolve_action.o \
 		revert_action.o \
@@ -49,6 +50,9 @@ WX_LIBS=@WX_LIBS@
 LIBS=-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
 		$(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(APR_LIBS) \
 		$(WX_LIBS)
+#you can debug your application with electric fence.
+#just uncomment the following line (you must have electric fence installed)
+#LIBS=-lefence $(LIBS)
 SVN_INC=-I/usr/local/include/subversion-1
 CXXFLAGS=@CXXFLAGS@ -fexceptions
 
