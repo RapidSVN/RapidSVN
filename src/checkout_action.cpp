@@ -60,6 +60,9 @@ CheckoutAction::Perform ()
   TrimString(m_data.RepUrl);
   
   long revnum=-1;
+  
+  svn::Revision revision (svn::Revision::HEAD);
+
   // Did the user request a specific revision?:
   if (!m_data.UseLatest)
   {
@@ -68,9 +71,9 @@ CheckoutAction::Perform ()
     {
       m_data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
     }
+    revision = svn::Revision(revnum);
   }
-
-  svn::Revision revision (revnum);
+  
   wxSetWorkingDirectory (m_data.DestFolder);
   client.checkout (m_data.RepUrl.c_str (), 
                    m_data.DestFolder.c_str (), 
