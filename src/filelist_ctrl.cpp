@@ -311,51 +311,50 @@ FileListCtrl::UpdateFileList (const wxString & path)
   std::string stdpath(path.c_str());
 
   svn::Client client;
-  std::vector < svn::Status * >statusVector =
+  const std::vector<svn::Status> & statusVector =
     client.status (path.c_str (), FALSE);
-  std::vector < svn::Status * >::const_iterator it = statusVector.begin ();
+  std::vector<svn::Status>::const_iterator it;
 
-  while (it != statusVector.end ())
+  for (it = statusVector.begin (); it != statusVector.end (); it++)
   {
-    svn::Status * pStatus = *it;
+    const svn::Status & status = *it;
 
     int i = GetItemCount ();
 
-    if( pStatus->path() == stdpath )
+    if( status.path() == stdpath )
     {
       name = ".";
     }
     else
     {
-      name = wxFileNameFromPath (pStatus->path ());
+      name = wxFileNameFromPath (status.path ());
     }
 
     wxString text;
     const char *ctext;
 
-    pStatus = *it;
     int imageIndex = 0;
 
-    if (pStatus->isVersioned ())
+    if (status.isVersioned ())
     {
-      if (pStatus->isDir ())
+      if (status.isDir ())
       {
         imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER);
       }
       else
       {
-        imageIndex = GetImageIndex (pStatus->textType ());
+        imageIndex = GetImageIndex (status.textType ());
       }
     }
     else
     {
       // unversioned entries dont carry dir info
       // with them. must find this out by ourself
-      if (wxDirExists (pStatus->path ()))
+      if (wxDirExists (status.path ()))
       {
         imageIndex = GetImageIndex (IMG_INDX_FOLDER);
       }
-      else if (wxFileExists (pStatus->path ()))
+      else if (wxFileExists (status.path ()))
       {
         imageIndex = GetImageIndex (svn_wc_status_unversioned);
       }
@@ -368,38 +367,36 @@ FileListCtrl::UpdateFileList (const wxString & path)
     InsertItem (i, name, imageIndex);
 
     // The item data will be used to sort the list:
-    SetItemData (i, (long) pStatus);    // The control now owns this data
+    SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
     // and must delete it in due course.
 
-    if (pStatus->isVersioned ())
-      text.Printf (_T ("%ld"), pStatus->revision ());
-    else
-      text = _T (" ");
-
+    text = "";
+    if (status.isVersioned ())
+    {
+      text.Printf ("%ld", status.revision ());
+    }
     SetItem (i, 1, text);
 
-    if (pStatus->isVersioned ())
-      text.Printf (_T ("%ld"), pStatus->lastChanged ());
-    else
-      text = _T (" ");
-
+    text = "";
+    if (status.isVersioned ())
+    {
+      text.Printf ("%ld", status.lastChanged ());
+    }
     SetItem (i, 2, text);
 
-    ctext = pStatus->textDescription ();
+    ctext = status.textDescription ();
     if (!ctext)
     {
       ctext = "";
     }
-    SetItem (i, 3, ctext);
+    SetItem (i, 3, _T (ctext));
 
-    ctext = pStatus->propDescription ();
+    ctext = status.propDescription ();
     if (!ctext)
     {
       ctext = "";
     }
-    SetItem (i, 4, ctext);
-
-    it++;
+    SetItem (i, 4, _T (ctext));
   }
 
   SortItems (wxListCompareFunction, (long) this);
@@ -617,7 +614,9 @@ FileListCtrl::DeleteAllItems ()
   {
     svn::Status * p = (svn::Status *) GetItemData (i);
     if (p)
+    {
       delete p;
+    }
   }
   wxListCtrl::DeleteAllItems ();
 }
@@ -627,7 +626,9 @@ FileListCtrl::DeleteItem (long item)
 {
   svn::Status * p = (svn::Status *) GetItemData (item);
   if (p)
+  {
     delete p;
+  }
   wxListCtrl::DeleteItem (item);
 }
 /* -----------------------------------------------------------------

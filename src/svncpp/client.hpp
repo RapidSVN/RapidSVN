@@ -15,15 +15,11 @@
 #define _SVNCPP_CLIENT_H_
 
 // stl
-#include <string>
 #include <vector>
 
 // svncpp
 #include "path.hpp"
 #include "revision.hpp"
-
-//forward declaration
-//typedef struct svn_error_t;
 
 /**
  * SvnCpp namespace.
@@ -55,7 +51,6 @@ namespace svn
 
     ~Client ();
 
-
     /**
      * Returns the last destination path submitted. 
      *
@@ -71,16 +66,16 @@ namespace svn
      * @param descend Recurse into subdirectories if existant.
      * @return Hash map with Status entries.
      */
-    std::vector<Status *>
+    std::vector<Status>
     status (const char * path,  const bool descend = false);
 
     /**
      * Returns the status of a single file in the path.
      *
      * @param path File to gather status.
-     * @return NULL if the path is not versioned.
+     * @return a Status with Statis.isVersioned = FALSE
      */
-    Status * singleStatus (const char * path);
+    Status singleStatus (const char * path);
   };
 
 }

@@ -44,11 +44,11 @@ namespace svn
   }
 
 
-  std::vector<Status *>
+  vector<Status>
   Client::status (const char * path, const bool descend)
   {
     svn_error_t *Err;
-    std::vector <Status *>statusHash;
+    vector<Status>statusHash;
     apr_hash_t *status_hash;
     Pool subPool;
 
@@ -82,25 +82,30 @@ namespace svn
            svn_handle_error (err, stderr, FALSE);
          */
 
-        statusHash.push_back (new Status (filePath, status));
+        statusHash.push_back (Status (filePath, status));
 
       }
     }
     return statusHash;
   }
 
-  Status *
+  Status 
   Client::singleStatus (const char * path)
   {
     svn_error_t *Err;
-    Status * result;
     apr_hash_t *status_hash;
     Pool subPool;
 
-    Err = svn_client_status (&status_hash, NULL, path, NULL, false, true,
-                             false,     //update
-                             false,     //no_ignore,
-                             NULL, NULL, //Notify baton
+    Err = svn_client_status (&status_hash, 
+                             NULL, // youngest
+                             path, 
+                             NULL, // auth_baton
+                             false, // dont descend
+                             true, // get all
+                             false,     // dont update
+                             false,     // ignore,
+                             NULL, // no notify func
+                             NULL, // no notify baton
                              subPool.pool());
 
     if(Err == NULL)
@@ -122,12 +127,12 @@ namespace svn
          if (err)
          svn_handle_error (err, stderr, FALSE);
        */
-      result = new Status (filePath, status);
+      return Status (filePath, status);
     }
     else
-      result = NULL;
-
-    return result;
+    {
+      return Status ();
+    }
   };
 
 }
