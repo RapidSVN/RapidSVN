@@ -35,12 +35,6 @@ wxString &
 UnixPath (wxString & path);
 
 /**
- * Get a status string describing the given svn status
- */
-void 
-GetStatusText (wxString & str, svn_wc_status_kind st);
-
-/**
  * Trim whitespace at start and end of string
  * (Convenience function for trimming first left, then right)
  */

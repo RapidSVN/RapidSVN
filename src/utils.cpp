@@ -100,44 +100,6 @@ wxString & UnixPath (wxString & path)
   return path;
 }
 
-void
-GetStatusText (wxString & str, svn_wc_status_kind st)
-{
-  switch (st)
-  {
-  case svn_wc_status_none:
-    str = _("Non-svn");
-    break;
-  case svn_wc_status_normal:
-    str = _("Normal");
-    break;
-  case svn_wc_status_added:
-    str = _("Added");
-    break;
-  case svn_wc_status_missing:
-    str = _("Missing");
-    break;
-  case svn_wc_status_deleted:
-    str = _("Deleted");
-    break;
-  case svn_wc_status_replaced:
-    str = _("Replaced");
-    break;
-  case svn_wc_status_modified:
-    str = _("Modified");
-    break;
-  case svn_wc_status_merged:
-    str = _("Merged");
-    break;
-  case svn_wc_status_conflicted:
-    str = _("Conflicted");
-    break;
-  case svn_wc_status_unversioned:
-  default:
-    str = _("Unversioned");
-    break;
-  }
-}
 
 void
 TrimString (wxString & str)
