@@ -54,6 +54,13 @@ namespace svn
     virtual ~Context ();
 
     /**
+     * enable/disable authentication caching
+     * 
+     * @param value true=enable/false=disable
+     */
+    void setAuthCache (bool value);
+
+    /**
      * set username/password for authentication
      */
     void setLogin (const char * username, const char * password);

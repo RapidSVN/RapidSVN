@@ -169,6 +169,17 @@ namespace svn
       ctx.notify_baton = this;
     }
 
+    void setAuthCache(bool value)
+    {
+      void *param = 0;
+      if (!value)
+        param = (void *)"1";
+ 
+      svn_auth_set_parameter (ctx.auth_baton,
+                              SVN_AUTH_PARAM_NO_AUTH_CACHE,
+                              param);
+    }
+
     /** @see Context::setLogin */
     void setLogin (const char * usr, const char *pwd)
     {
@@ -480,6 +491,12 @@ namespace svn
     delete m;
   }
   
+  void
+  Context::setAuthCache (bool value)
+  {
+    m->setAuthCache (value);
+  }
+
   void
   Context::setLogin (const char * username, const char * password)
   {
