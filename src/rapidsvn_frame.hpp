@@ -164,10 +164,10 @@ private:
   void Contents ();
   void Preferences ();
 
-  FileListCtrl *GetFileList ()
-  {
-    return m_listCtrl;
-  }
+//REMOVE  FileListCtrl *GetFileList ()
+//REMOVE  {
+//REMOVE    return m_listCtrl;
+//REMOVE  }
 
   FolderBrowser *GetFolderBrowser ()
   {

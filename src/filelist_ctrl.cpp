@@ -80,9 +80,10 @@ int IMAGE_INDEX[N_STATUS_KIND];
  * Tags for wxConfig file settings, defined here to avoid duplicate
  * hard coded strings.
  */
-static const char *pSortColumnTag = "/FileListCtrl/SortColumn";
-static const char *pSortOrderTag = "/FileListCtrl/SortOrder";
-static const char *pSortColumnWidth = "/FileListCtrl/Column%dWidth";
+static const char ConfigSortColumn[] = "/FileListCtrl/SortColumn";
+static const char ConfigSortOrder[] = "/FileListCtrl/SortOrder";
+static const char ConfigColumnWidthFmt[] = "/FileListCtrl/Column%dWidth";
+static const char ConfigColumnVisibleFmt[] = "/FileListCtrl/Column%dVisible";
 
 /**
  * test if the given status entry is a file or
@@ -122,6 +123,32 @@ IsDir (const svn::Status * status)
   return wxDirExists (status->path ());
 }
 
+static const int
+GetDefaultWidth (int col)
+{
+  int width;
+  switch (col)
+  {
+    case FileListCtrl::COL_NAME:
+    case FileListCtrl::COL_CMT_DATE:
+    case FileListCtrl::COL_TEXT_TIME:
+    case FileListCtrl::COL_PROP_TIME:
+      width = 150;
+      break;
+    case FileListCtrl::COL_AUTHOR:
+    case FileListCtrl::COL_TEXT_STATUS:
+    case FileListCtrl::COL_PROP_STATUS:
+      width = 100;
+      break;
+    default:
+      width = 75;
+      break;
+  }
+
+  return width;
+}
+
+
 /**
  * private struct that hide implementation details
  * to users of @a FileListCtrl
@@ -133,7 +160,7 @@ public:
   int SortColumn;
   wxString Path;
   wxImageList *ImageListSmall;
-
+  bool ColumnVisible[COL_COUNT];
 
   /** default constructor */
   Data ()
@@ -291,6 +318,7 @@ public:
 
 };  
 
+
 /**
  * A safe wrapper for getting images - avoids array bounds
  * exceptions.
@@ -359,8 +387,8 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
 
   // Get settings from config file:
   wxConfigBase *pConfig = wxConfigBase::Get ();
-  m->SortColumn = pConfig->Read (pSortColumnTag, (long) 0);
-  m->SortIncreasing = pConfig->Read (pSortOrderTag, (long) 1) ? true : false;
+  m->SortColumn = pConfig->Read (ConfigSortColumn, (long) 0);
+  m->SortIncreasing = pConfig->Read (ConfigSortOrder, (long) 1) ? true : false;
 
   wxListItem itemCol;
   itemCol.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_IMAGE;
@@ -369,6 +397,10 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   int col;
   for (col = 0; col < COL_COUNT; col++)
   {
+    wxString key;
+    key.Printf (ConfigColumnVisibleFmt, col);
+    m->ColumnVisible[col] = pConfig->Read (key, (long) 1) != 0;
+
     switch (col)
     {
     case COL_NAME:
@@ -408,20 +440,8 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   for (col=0; col < COL_COUNT; col++)
   {
     wxString key;
-    key.Printf (pSortColumnWidth, col);
-    long width;
-    switch (col)
-    {
-    case COL_NAME:
-      width = 150;
-      break;
-    case COL_AUTHOR:
-      width = 100;
-      break;
-    default:
-      width = 75;
-      break;
-    }
+    key.Printf (ConfigColumnWidthFmt, col);
+    long width = (long)GetDefaultWidth (col);
     SetColumnWidth (col, pConfig->Read (key, width));
   }
 }
@@ -430,13 +450,16 @@ FileListCtrl::~FileListCtrl ()
 {
   // Write settings to config file:
   wxConfigBase *pConfig = wxConfigBase::Get ();
-  pConfig->Write (pSortColumnTag, (long) m->SortColumn);
-  pConfig->Write (pSortOrderTag, (long) (m->SortIncreasing ? 1 : 0));
+  pConfig->Write (ConfigSortColumn, (long) m->SortColumn);
+  pConfig->Write (ConfigSortOrder, (long) (m->SortIncreasing ? 1 : 0));
   for (int col=0; col < COL_COUNT; col++)
   {
     wxString key;
-    key.Printf(pSortColumnWidth, col);
+    key.Printf(ConfigColumnWidthFmt, col);
     pConfig->Write (key, (long) GetColumnWidth (col));
+
+    key.Printf(ConfigColumnVisibleFmt, col);
+    pConfig->Write (key, (long) m->ColumnVisible[col]);
   }
 
   DeleteAllItems ();
@@ -781,6 +804,11 @@ FileListCtrl::DeleteItem (long item)
 void 
 FileListCtrl::ResetColumns ()
 {
+  for (int col=0; col < COL_COUNT; col++)
+  {
+    m->ColumnVisible[col] = true;
+    SetColumnWidth (col, GetDefaultWidth (col));
+  }
 }
 
 void 
@@ -799,6 +827,29 @@ FileListCtrl::SetColumnImages()
     SetColumn (i, LI);
   }
 }
+
+void
+FileListCtrl::SetColumnVisible (const int col, const bool visible)
+{
+  if ((col >= 0) && (col < COL_COUNT))
+  {
+    m->ColumnVisible[col] = visible;
+  }
+}
+
+const bool
+FileListCtrl::GetColumnVisible (const int col)
+{
+  if ((col >= 0) && (col < COL_COUNT))
+  {
+    return m->ColumnVisible[col];
+  }
+  else
+  {
+    return false;
+  }
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

@@ -62,7 +62,6 @@
 static const int NUM_ITEMS = 30;
 
 // List config keys here, to avoid duplicating literal text:
-const static char ConfigBrowserPath[] = "/MainFrame/BrowserPath";
 const static char ConfigLeft[] = "/MainFrame/Left";
 const static char ConfigTop[] = "/MainFrame/Top";
 const static char ConfigWidth[] = "/MainFrame/Width";
@@ -73,8 +72,25 @@ const static char ConfigProjectFmt[] = "/Workbench/Project%d";
 
 const static char TraceMisc[] = "tracemisc";
 
-//REMOVE // define this to 1 to use wxToolBarSimple instead of the native one
-//REMOVE #define USE_GENERIC_TBAR 0
+/**
+ * map to match columns with menu Ids.
+ *
+ * @remark Make sure every time you add a new column
+ *         to @a FileListCtrl you have to add an entry
+ *         here. Same order!
+ */
+static const int COLUMN_ID_MAP[FileListCtrl::COL_COUNT] =
+{
+  -1, // cannot show/hide name
+  ID_Column_Rev,
+  ID_Column_Cmt_Rev,
+  ID_Column_Author,
+  ID_Column_Text_Status,
+  ID_Column_Prop_Status,
+  ID_Column_Cmt_Date,
+  ID_Column_Text_Time,
+  ID_Column_Prop_Time
+};
 
 /**
  * class that hide implementation specific data and methods from
@@ -239,8 +255,9 @@ public:
   void 
   CheckColumn (int id, bool check)
   {
-    //MenuColumns->Check (id, check);
+    MenuColumns->Check (id, check);
   }
+
 };
 
 BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
@@ -350,6 +367,16 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
 
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
+
+  // Adapt the menu entries
+  for (int col=0; col < FileListCtrl::COL_COUNT; col++)
+  {
+    int id = COLUMN_ID_MAP[col];
+    if (id != -1)
+    {
+      m->CheckColumn (id, m_listCtrl->GetColumnVisible (col));
+    }
+  }
 
   UpdateFileList ();
 
@@ -1045,14 +1072,30 @@ RapidSvnFrame::OnFileListSelected (wxListEvent & event)
 void 
 RapidSvnFrame::OnColumn (wxCommandEvent & event)
 {
-  bool checked = m->IsColumnChecked(event.m_id);
-  m->CheckColumn(event.m_id, !checked);
+  bool visible = m->IsColumnChecked(event.m_id);
+  for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
+  {
+    if (COLUMN_ID_MAP[col] == event.m_id)
+    {
+      m_listCtrl->SetColumnVisible (col, visible);
+      break;
+    }
+  }
 }
 
 void
 RapidSvnFrame::OnColumnReset (wxCommandEvent &)
 {
   m_listCtrl->ResetColumns ();
+  for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
+  {
+    bool visible = m_listCtrl->GetColumnVisible (col);
+    int id = COLUMN_ID_MAP [col];
+    if (id != -1)
+    {
+      m->CheckColumn (id, visible);
+    }
+  }
 }
 
 InfoPanel::InfoPanel (wxWindow * parent)
