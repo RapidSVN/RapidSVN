@@ -16,6 +16,7 @@
 
 #if defined( _MSC_VER) && _MSC_VER <= 1200
 #pragma warning( disable: 4786 )// debug symbol truncated
+#pragma warning( disable: 4290 )// C++ exception specification ignored 
 #endif
 
 // stl
@@ -31,6 +32,10 @@
 #include "revision.hpp"
 #include "log_entry.hpp"
 #include "annotate_line.hpp"
+
+#ifdef WIN32
+#pragma warning( disable: 4290 )// C++ exception specification ignored 
+#endif
 
 /**
  * SvnCpp namespace.

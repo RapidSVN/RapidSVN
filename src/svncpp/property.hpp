@@ -17,6 +17,7 @@
 #ifdef WIN32
 // Eliminate worthless win32 warnings
 #pragma warning(disable: 4786)
+#pragma warning( disable: 4290 )// C++ exception specification ignored 
 #endif
 
 // stl 
