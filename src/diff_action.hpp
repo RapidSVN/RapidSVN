@@ -26,6 +26,10 @@ public:
    */
   DiffAction (wxWindow * parent);
 
+
+  /** Destructor */
+  virtual ~DiffAction ();
+
   virtual bool Perform ();
   virtual bool Prepare ();
 
