@@ -1,7 +1,7 @@
 #define MINIMAL_QUIT      1
 #define MINIMAL_ABOUT     102
 
-mondrian             ICON    "res/mondrian.ico"
+AaLogo               ICON    "res/mondrian.ico"
 
 nonsvn_file          ICON    "res/bitmaps/nonsvn_file.ico"
 normal_file          ICON    "res/bitmaps/normal_file.ico"
@@ -26,7 +26,6 @@ update               BITMAP    "res/bitmaps/update.bmp"
 commit               BITMAP    "res/bitmaps/commit.bmp"
 revert               BITMAP    "res/bitmaps/revert.bmp"
 info                 BITMAP    "res/bitmaps/info.bmp"
-status               BITMAP    "res/bitmaps/status.bmp"
 log                  BITMAP    "res/bitmaps/log.bmp"
 resolve              BITMAP    "res/bitmaps/resolve.bmp"
 folderup             BITMAP    "res/bitmaps/folderup.bmp"

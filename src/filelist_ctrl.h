@@ -18,15 +18,13 @@ class FileListCtrl:public wxListCtrl
 {
 private:
   apr_pool_t * pool;
-
   wxImageList *m_imageListSmall;
-
   wxString m_path;
 
-      /**
-      * An array that holds indexes of the currently
-      * selected items in the file list.
-      */
+  /**
+   * An array that holds indexes of the currently
+   * selected items in the file list.
+   */
   IndexArray indx_arr;
   
   int SortColumn;
@@ -37,6 +35,12 @@ private:
   static int wxCALLBACK FileListCtrl::CompareItems(
     svn::Status* ps1, svn::Status* ps2, int SortColumn, bool SortIncreasing);
   void SetColumnImages();
+
+  /**
+   * Returns the overall file status. 
+   */
+  svn_wc_status_kind fileStatus (svn::Status * status);
+
 
 public:
    FileListCtrl (wxWindow * parent,

@@ -1,5 +1,7 @@
 
 #include "log.h"
+#include "svn_time.h"
+#include "svn_utf.h"
 
 struct log_message_receiver_baton
 {
@@ -135,6 +137,30 @@ Log::date ()
     return NULL;
 
   return _date[cursor].c_str ();
+}
+
+const char *
+Log::formatDate (const char * dateText, const char * format)
+{
+  apr_time_t timeTemp;
+  const char * date;
+  char * dateNative;
+  time_t time;
+  char buffer[40];
+  struct tm * localTime;
+  svn_string_t * str;
+
+  svn_time_from_nts (&timeTemp, dateText, pool);
+  date = svn_time_to_human_nts(timeTemp, pool);
+  dateNative = (char *)date;
+
+  time = svn_parse_date (dateNative, NULL);
+  localTime = localtime (&time);
+
+  strftime (buffer, 40, format, localTime);
+  str = svn_string_create (buffer, pool);
+
+  return str->data;
 }
 
 const char *

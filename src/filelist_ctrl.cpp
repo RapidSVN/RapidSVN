@@ -304,7 +304,7 @@ FileListCtrl::UpdateFileList (const wxString & path)
         InsertItem (i, name, GetImageIndex(IMG_INDX_FOLDER));
     }
     else
-      InsertItem (i, name, GetImageIndex(pStatus->textType ()));
+      InsertItem (i, name, GetImageIndex(fileStatus (pStatus)));
       
     // The item data will be used to sort the list:
     SetItemData (i, (long) pStatus);  // The control now owns this data
@@ -417,6 +417,16 @@ FileListCtrl::SetColumnImages()
   }
 }
 
+svn_wc_status_kind
+FileListCtrl::fileStatus (svn::Status * status)
+{
+  if(status->textType () != svn_wc_status_none &&
+     status->textType () != svn_wc_status_normal)
+    return status->textType ();
+
+  return status->propType ();
+}
+
 void
 FileListCtrl::ShowMenu (long index, wxPoint & pt)
 {
@@ -452,9 +462,6 @@ FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
 
   menu.AppendSeparator ();
 
-  pItem = new wxMenuItem (&menu, ID_Status, _T ("Status"));
-  pItem->SetBitmap (wxBITMAP (status));
-  menu.Append (pItem);
   pItem = new wxMenuItem (&menu, ID_Info, _T ("Info"));
   pItem->SetBitmap (wxBITMAP (info));
   menu.Append (pItem);

@@ -37,7 +37,6 @@
 #define TOOLBAR_COMMIT  106
 #define TOOLBAR_REVERT  107
 #define TOOLBAR_INFO  108
-#define TOOLBAR_STATUS  109
 #define TOOLBAR_LOG   110
 #define TOOLBAR_RESOLVE  111
 #define TOOLBAR_FOLDERUP 112
@@ -63,7 +62,6 @@ EVT_MENU (ID_AddProject, RapidSvnFrame::OnAddProject)
 EVT_MENU (ID_RemoveProject, RapidSvnFrame::OnRemoveProject)
 EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
 EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
-EVT_MENU (ID_Status, RapidSvnFrame::OnStatus)
 EVT_MENU (ID_Log, RapidSvnFrame::OnLog)
 EVT_MENU (ID_Info, RapidSvnFrame::OnInfo)
 EVT_MENU (ID_Checkout, RapidSvnFrame::OnCheckout)
@@ -103,7 +101,7 @@ wxFrame ((wxFrame *) NULL, -1, title)
   // call to Get().
   wxConfigBase *pConfig = wxConfigBase::Get ();
 
-  SetIcon (wxICON (mondrian));
+  SetIcon (wxICON (AaLogo));
 
   // Toolbar
   m_tbar = NULL;
@@ -279,7 +277,7 @@ RapidSvnFrame::InitializeMenu ()
   // Create menu
   wxMenu *menuCreate = new wxMenu;
   menuCreate->Append (ID_Import, "&Import an unversioned file or tree ...");
-  menuCreate->Append (ID_Checkout, "&Checkout module ...");
+  menuCreate->Append (ID_Checkout, "&Checkout working copy ...");
 
   menuCreate->AppendSeparator ();
 
@@ -334,9 +332,6 @@ RapidSvnFrame::InitializeMenu ()
 
   // Query menu
   wxMenu *menuQuery = new wxMenu;
-  pItem = new wxMenuItem (menuQuery, ID_Status, _T ("Status"));
-  pItem->SetBitmap (wxBITMAP (status));
-  menuQuery->Append (pItem);
 
   pItem = new wxMenuItem (menuQuery, ID_Log, _T ("Log"));
   pItem->SetBitmap (wxBITMAP (log));
@@ -417,19 +412,6 @@ RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
               SVN_VER_MAJOR, SVN_VER_MINOR, SVN_VER_MICRO,
               wxMAJOR_VERSION, wxMINOR_VERSION, wxRELEASE_NUMBER);
   wxMessageBox (msg, "About RapidSVN", wxOK | wxICON_INFORMATION);
-}
-
-void
-RapidSvnFrame::OnStatus (wxCommandEvent & WXUNUSED (event))
-{
-  /* doesnt seem to be needed now.
-     wxString items = m_folder_browser->GetPath () + "\r\n";
-     wxString fullPath;
-
-     svn_revnum_t youngest = SVN_INVALID_REVNUM;
-   */
-
-  ShowStatus ();
 }
 
 void
@@ -681,17 +663,6 @@ RapidSvnFrame::AddInfoTools ()
                     _T ("Info selected"),
                     _T ("Display info about selected entries"));
 
-  toolBar->AddTool (TOOLBAR_STATUS,
-                    wxBITMAP (status),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _T ("Status selected"),
-                    _T
-                    ("Print the status of working copy files and directories"));
-
   toolBar->AddTool (TOOLBAR_LOG,
                     wxBITMAP (log),
                     wxNullBitmap,
@@ -717,10 +688,6 @@ RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
   {
   case TOOLBAR_REFRESH:
     m_listCtrl->UpdateFileList (m_folder_browser->GetPath ());
-    break;
-
-  case TOOLBAR_STATUS:
-    ShowStatus ();
     break;
 
   case TOOLBAR_INFO:
@@ -946,33 +913,6 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       }
     }
     break;
-  }
-}
-
-void
-RapidSvnFrame::ShowStatus ()
-{
-  IndexArray arr = m_listCtrl->GetSelectedItems ();
-  size_t i;
-  wxString path = m_folder_browser->GetPath ();
-  wxString all_status;
-  wxString line;
-  wxString _path;
-
-  for (i = 0; i < arr.GetCount (); i++)
-  {
-    wxFileName fname (path, m_listCtrl->GetItemText (arr[i]));
-    _path = fname.GetFullPath ();
-
-    statusString (fname.GetFullPath (), line);
-    if (!line.IsEmpty ())
-      all_status += line + _T ("\n");
-  }
-
-  if (!all_status.IsEmpty ())
-  {
-    Report_Dlg rdlg (this, _T ("Status"), all_status);
-    rdlg.ShowModal ();
   }
 }
 

@@ -126,7 +126,8 @@ LogList::InitializeList ()
     sprintf (rev, "%ld", (long) _log->revision ());
     InsertItem (index, _T (rev));
     SetItem (index, 1, _T (_log->author ()));
-    SetItem (index, 2, _T (_log->date ()));
+    SetItem (index, 2, _T (_log->formatDate (_log->date (), 
+                                             "%a %b %d %H:%M:%S %Y")));
     index++;
   }
  

@@ -63,7 +63,6 @@ public:
   void OnPreferences (wxCommandEvent & event);
 
   // Query menu
-  void OnStatus (wxCommandEvent & event);
   void OnLog (wxCommandEvent & event);
   void OnInfo (wxCommandEvent & event);
 
@@ -115,8 +114,6 @@ public:
   void UpdateFileList ();
 
   // utility functions
-
-  void ShowStatus ();
   void ShowLog ();
   void ShowInfo ();
 
@@ -199,7 +196,6 @@ enum
   ID_Add,
   ID_Del,
   ID_Revert,
-  ID_Status,
   ID_Log,
   ID_Info,
   ID_Resolve,

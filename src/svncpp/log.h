@@ -97,6 +97,14 @@ public:
   const char * date ();
 
   /**
+   * Formats the output of a Subversion date.
+   * @param dateText Subversion date text. Takes the result of the 
+   *                 date() method.
+   * @param format template for formatting the returned date.
+   */
+  const char * formatDate (const char * dateText, const char * format);
+
+  /**
    * Returns the log author of the current result set.
    */
   const char * author ();
