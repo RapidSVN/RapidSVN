@@ -125,21 +125,21 @@ public:
 };
 
 
-const unsigned int Action::DONT_UPDATE = 1;
-const unsigned int Action::UPDATE_LATER = 2;
+const unsigned int Action::DONT_UPDATE          = 0x0001;
+const unsigned int Action::UPDATE_LATER         = 0x0002;
+const unsigned int Action::WITHOUT_TARGET       = 0x0004;
+const unsigned int Action::SINGLE_TARGET        = 0x0008;
+const unsigned int Action::MULTIPLE_TARGETS     = 0x0010;
+const unsigned int Action::RESPOSITORY_TYPE     = 0x0020;
+const unsigned int Action::VERSIONED_WC_TYPE    = 0x0040;
+const unsigned int Action::UNVERSIONED_WC_TYPE  = 0x0080;
+const unsigned int Action::IS_DIR               = 0x0100;
+const unsigned int Action::UPDATE_TREE          = 0x0200;
 
-const unsigned int Action::WITHOUT_TARGET = 4;
-
-const unsigned int Action::SINGLE_TARGET = 8;
-const unsigned int Action::MULTIPLE_TARGETS = 16;
+// combined flags
 const unsigned int Action::TARGET_QUANTITY_MASK = SINGLE_TARGET|MULTIPLE_TARGETS;
+const unsigned int Action::TARGET_TYPE_MASK     = RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
 
-const unsigned int Action::RESPOSITORY_TYPE = 32;
-const unsigned int Action::VERSIONED_WC_TYPE = 64;
-const unsigned int Action::UNVERSIONED_WC_TYPE = 128;
-const unsigned int Action::TARGET_TYPE_MASK = RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
-
-const unsigned int Action::IS_DIR = 256;
 
 Action::Action (wxWindow * parent, const wxString & name, unsigned int flgs)
 {

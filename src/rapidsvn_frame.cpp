@@ -1383,10 +1383,18 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
         // the next time the app gets activated
         m->updateAfterActivate = true;
       }
-      else if ((actionFlags & Action::DONT_UPDATE) == 0)
+      else 
       {
-        Trace (_("Updating..."));
-        UpdateFileList ();
+        if ((actionFlags & Action::UPDATE_TREE) != 0)
+        {
+          Trace (_("Updating..."));
+          UpdateFolderBrowser ();
+        }
+        else if ((actionFlags & Action::DONT_UPDATE) == 0)
+        {
+          Trace (_("Updating..."));
+          UpdateFileList ();
+        }
       }
 
       Trace (_("Ready\n"));

@@ -63,6 +63,11 @@ public:
   static const unsigned int UPDATE_LATER;
 
   /**
+   * if set then the tree will be updates as well.
+   */
+  static const unsigned int UPDATE_TREE;
+
+  /**
    * the action does not depend on the currently selected
    * target - so can proceed regardless
    *
