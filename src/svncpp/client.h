@@ -16,7 +16,7 @@
 namespace svn
 {
   /**
-   * Subversion client API.  This class is never directly used.
+   * Subversion client API.
    */
   class Client
   {

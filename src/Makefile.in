@@ -47,6 +47,7 @@ OBJECTS=action_thread.o \
 		svncpp/notify.o \
 		svncpp/log.o \
 		svncpp/modify.o \
+		svncpp/pool.o \
 		svncpp/status.o
 
 APR_LIBS=@APR_LIBS@

@@ -1,5 +1,6 @@
 
 #include "client.h"
+#include "pool.h"
 #include "svn_path.h"
 #include "svn_client.h"
 #include "svn_sorts.h"
@@ -78,16 +79,17 @@ namespace svn
     svn_error_t *Err;
     std::vector < Status * >statusHash;
     apr_hash_t *status_hash;
+    Pool subPool(pool);
 
     Err = svn_client_status (&status_hash, NULL, path, NULL, descend, TRUE,
                              FALSE,     //update
                              FALSE,     //no_ignore,
-                             pool);
+                             subPool.pool());
     if (Err == NULL)
     {
       apr_array_header_t *statusarray = 
          apr_hash_sorted_keys (status_hash, svn_sort_compare_items_as_paths,
-                               pool);
+                               subPool.pool());
       int i;
 
       /* Loop over array, printing each name/status-structure */
@@ -102,7 +104,7 @@ namespace svn
         status = (svn_wc_status_t *) item->value;
 
         err =
-          svn_utf_cstring_from_utf8 (&filePath, (const char *) item->key, pool);
+          svn_utf_cstring_from_utf8 (&filePath, (const char *) item->key, subPool.pool());
         /* no error handling here yet
            if (err)
            svn_handle_error (err, stderr, FALSE);
@@ -121,17 +123,18 @@ namespace svn
     svn_error_t *Err;
     Status * result;
     apr_hash_t *status_hash;
+    Pool subPool(pool);
 
     Err = svn_client_status (&status_hash, NULL, path, NULL, false, true,
                              false,     //update
                              false,     //no_ignore,
-                             pool);
+                             subPool.pool());
 
     if(Err == NULL)
     {
       apr_array_header_t *statusarray = 
          apr_hash_sorted_keys (status_hash, svn_sort_compare_items_as_paths,
-                               pool);
+                               subPool.pool());
       const svn_item_t *item;
       const char *filePath;
       svn_error_t *err;
@@ -141,7 +144,7 @@ namespace svn
       status = (svn_wc_status_t *) item->value;
 
       err =
-        svn_utf_cstring_from_utf8 (&filePath, (const char *) item->key, pool);
+        svn_utf_cstring_from_utf8 (&filePath, (const char *) item->key, subPool.pool());
       /* no error handling here yet
          if (err)
          svn_handle_error (err, stderr, FALSE);
@@ -152,6 +155,6 @@ namespace svn
       result = NULL;
 
     return result;
-  }
+  };
 
 }
