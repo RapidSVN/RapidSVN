@@ -179,6 +179,8 @@ public:
     mainSizer->Add (textSizer, 1, wxALL | wxEXPAND, 5);
     mainSizer->Add (buttonSizer, 0, wxALL | wxALIGN_RIGHT , 5);
 
+    okButton->SetDefault ();
+
     SetAutoLayout (true);
     SetSizer (mainSizer);
 
@@ -301,10 +303,10 @@ public:
     boxSizer->Add (grid, 1, wxALL | wxEXPAND, 2);
 
     // buttons
-    wxButton * newButton = new wxButton (wnd, ID_New, _("New..."));
-    editButton = new wxButton (wnd, ID_Edit, _("Edit..."));
+    wxButton * newButton = new wxButton (wnd, ID_New, _("&New..."));
+    editButton = new wxButton (wnd, ID_Edit, _("&Edit..."));
     editButton->Enable (false);
-    delButton = new wxButton (wnd, ID_Delete, _("Delete"));
+    delButton = new wxButton (wnd, ID_Delete, _("&Delete"));
     delButton->Enable (false);
     wxButton * okButton = new wxButton (wnd, ID_OK, _("OK"));
     wxButton * cancelButton = new wxButton (wnd, ID_Cancel, _("Cancel"));
@@ -317,6 +319,7 @@ public:
     buttonSizer->Add (okButton, 0, wxALL, 5);
     buttonSizer->Add (cancelButton, 0, wxALL, 5);
 
+    cancelButton->SetDefault ();
     wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
 
     mainSizer->Add (boxSizer, 1, wxALL | wxCENTER | wxEXPAND , 5);
