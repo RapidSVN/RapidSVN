@@ -470,7 +470,7 @@ RapidSvnFrame::~RapidSvnFrame ()
   for (item = 0; item < itemCount; item++)
   {
     wxString key;
-    key.Printf (_(ConfigProjectFmt), item);
+    key.Printf (ConfigProjectFmt, item);
 
     const char * project = m_folder_browser->GetProject (item);
 
