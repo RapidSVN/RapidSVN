@@ -207,6 +207,32 @@ wxString
 StatusDescription (const svn_wc_status_kind kind);
 
 
+/**
+ * converts a string from local encoding (like Ansi on 
+ * Windows) to utf8
+ *
+ * @see Utf8ToLocal
+ *
+ * @param srcLocal string in local encoding
+ * @return string in local encoding
+ */
+wxString
+LocalToUtf8 (const wxString & srcLocal);
+
+
+/**
+ * converts a string from utf to the local encoding 
+ * (like Ansi on Windows)
+ *
+ * @see LocalToUtf8
+ *
+ * @param srcUtf8 string in utf8 encoding
+ * @return string in utf8 encoding
+ */
+wxString
+Utf8ToLocal (const wxString & srcUtf8);
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

@@ -398,6 +398,22 @@ StatusDescription (const svn_wc_status_kind kind)
 }
 
 
+wxString
+Utf8ToLocal (const wxString & srcUtf8)
+{
+  wxString dst (srcUtf8, wxConvUTF8);
+
+  return srcUtf8;
+}
+
+wxString
+LocalToUtf8 (const wxString & srcLocal)
+{
+  wxString dst (srcLocal.mb_str (wxConvUTF8));
+
+  return dst;
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

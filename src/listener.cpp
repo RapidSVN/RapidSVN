@@ -21,6 +21,7 @@
 #include "tracer.hpp"
 #include "auth_dlg.hpp"
 #include "commit_dlg.hpp"
+#include "utils.hpp"
 
 static const char *
 ACTION_NAMES [] =
@@ -178,11 +179,9 @@ Listener::contextGetLogin (
   bool ok = dlg.ShowModal () == wxID_OK;
   if (ok)
   {
-    // WORKAROUND: CONVERT TO UTF8
-    wxString usernameNative (dlg.GetUsername ());
-    wxString passwordNative (dlg.GetPassword ());
-    wxString usernameUtf8 (usernameNative.mb_str (wxConvUTF8));
-    wxString passwordUtf8 (passwordNative.mb_str (wxConvUTF8));
+    wxString usernameUtf8 (LocalToUtf8 (dlg.GetUsername ()));
+    wxString passwordUtf8 (LocalToUtf8 (dlg.GetPassword ()));
+
     username = usernameUtf8.c_str ();
     password = passwordUtf8.c_str ();
   }
@@ -228,9 +227,7 @@ Listener::contextGetLogMessage (std::string & msg)
   bool ok = dlg.ShowModal () == wxID_OK;
   if (ok)
   {
-    // WORKAROUND: CONVERT TO UTF8
-    wxString messageNative (dlg.GetMessage ());
-    wxString messageUtf8 (messageNative.mb_str (wxConvUTF8));
+    wxString messageUtf8 (LocalToUtf8 (dlg.GetMessage ()));
     msg = messageUtf8.c_str ();
   }
   return ok;

@@ -291,9 +291,9 @@ public:
   void
   OnSelected (long index)
   {
-    wxString message;
     const svn::LogEntry & entry = (*entries)[index];
-    message = entry.message.c_str ();
+
+    wxString message (Utf8ToLocal (entry.message.c_str ()));
     message.Trim (false);
 
     m_logMsg->Show (false);
