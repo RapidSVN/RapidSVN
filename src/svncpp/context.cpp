@@ -185,6 +185,10 @@ namespace svn
       // get the config based on the configDir passed in
       svn_config_get_config (&ctx.config, c_configDir, pool);
 
+      // tell the auth functions where the config is
+      svn_auth_set_parameter(ab, SVN_AUTH_PARAM_CONFIG_DIR,
+                             c_configDir);
+
       ctx.auth_baton = ab;
       ctx.log_msg_func = onLogMsg;
       ctx.log_msg_baton = this;
