@@ -23,11 +23,10 @@
 class AddAction:public Action
 {
 private:
-  svn::Path m_path;
   svn::Targets m_targets;
 
 public:
-  AddAction (wxWindow * parent, Tracer * tr, const svn::Path & path, const svn::Targets & trgts);
+  AddAction (wxWindow * parent, const svn::Targets & trgts);
 
   bool Prepare ();
   bool Perform ();

@@ -81,6 +81,36 @@ Action::Trace (const wxString & msg)
   }
 }
 
+void
+Action::SetParent (wxWindow * parent)
+{
+  m_parent = parent;
+}
+
+void
+Action::SetPath (const svn::Path & path)
+{
+  m_path = path;
+}
+
+const svn::Path &
+Action::GetPath ()
+{
+  return m_path;
+}
+
+void
+Action::SetContext (svn::Context * context)
+{
+  m_context = context;
+}
+
+svn::Context * 
+Action::GetContext ()
+{
+  return m_context;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -14,13 +14,17 @@
 // wxwindows
 #include "wx/utils.h"
 
+// svncpp
+#include "svncpp/exception.hpp"
+
 // app
 #include "action.hpp"
 #include "simple_worker.hpp"
+#include "tracer.hpp"
 
 SimpleWorker::SimpleWorker ()
   : m_action (0), m_state (ACTION_NONE), 
-    m_result (ACTION_NOTHING), m_parent (0)
+    m_result (ACTION_NOTHING), m_parent (0), m_tracer (0)
 {
 }
 
@@ -32,9 +36,10 @@ void
 SimpleWorker::Create (wxWindow * parent)
 {
   m_action = 0;
-  m_state = ACTION_NONE;
+  m_state  = ACTION_NONE;
   m_result = ACTION_NOTHING;
   m_parent = parent;
+  m_tracer = 0;
 }
 
 ActionState 
@@ -56,15 +61,31 @@ SimpleWorker::Perform (Action * action)
   m_action = action;
   m_state = ACTION_INIT;
 
-  if (!m_action->Prepare ())
+  try
   {
-    m_result = ACTION_ABORTED;
-    delete m_action;
-    m_action = 0;
-    m_state = ACTION_NONE;
-    return true;
+    if (!m_action->Prepare ())
+    {
+      m_result = ACTION_ABORTED;
+      delete m_action;
+      m_action = 0;
+      m_state = ACTION_NONE;
+      return true;
+    }
+  }
+  catch (svn::ClientException & e)
+  {
+    wxString msg;
+    msg.Printf ( _T("Error while preparing action: %s"), e.message () );
+    Trace (msg);
+    return false;
+  }
+  catch (...)
+  {
+    Trace (_T("Error while preparing action."));
+    return false;
   }
   
+  try
   {
     // this cursor stuff has to change...
     wxBusyCursor wait;
@@ -82,6 +103,34 @@ SimpleWorker::Perform (Action * action)
     m_action = 0;
     m_state = ACTION_NONE;
     return true;
+  }
+  catch (svn::ClientException & e)
+  {
+    wxString msg;
+    msg.Printf (_T("Error while performing action: %s"), 
+                e.message ());
+    Trace (msg);
+    return false;
+  }
+  catch (...)
+  {
+    Trace (_T("Error while performing action."));
+    return false;
+  }
+}
+
+void
+SimpleWorker::SetTracer (Tracer * tracer)
+{
+  m_tracer = tracer;
+}
+
+void
+SimpleWorker::Trace (const wxString & message)
+{
+  if (m_tracer)
+  {
+    m_tracer->Trace (message);
   }
 }
 

@@ -105,7 +105,6 @@ private:
 
   // Modify menu
   void OnFileCommand (wxCommandEvent & event);
-  void OnAdd (wxCommandEvent & event);
   void OnDelete (wxCommandEvent & event);
   void OnRevert (wxCommandEvent & event);
   void OnResolve (wxCommandEvent & event);
@@ -155,7 +154,6 @@ private:
 
   const svn::Targets GetActionTargets() const;
 
-  void AddEntries ();
   void DelEntries ();
   void MakeRevert ();
   void MakeResolve ();
@@ -201,6 +199,7 @@ private:
   ActionType m_lastAction;
   wxString m_currentPath;
   wxString m_title;
+  svn::Context * m_context;
 
 private:
   DECLARE_EVENT_TABLE ()

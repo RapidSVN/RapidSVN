@@ -21,10 +21,9 @@
 #include "add_action.hpp"
 #include "svn_notify.hpp"
 
-AddAction::AddAction (wxWindow * parent, Tracer * tr, 
-                      const svn::Path & path, 
+AddAction::AddAction (wxWindow * parent, 
                       const svn::Targets & targets)
-  : Action (parent, tr, false), m_path (path), m_targets (targets)
+  : Action (parent), m_targets (targets)
 {
 }
 

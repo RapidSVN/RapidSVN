@@ -13,10 +13,17 @@
 #ifndef _ACTION_H_
 #define _ACTION_H_
 
+// svncpp
+#include "svncpp/path.hpp"
+
 // forward declarations
 class Tracer;
 class wxString;
 class wxWindow;
+namespace svn
+{
+  class Context;
+}
 
 /**
  * Inherit from this class
@@ -56,15 +63,29 @@ public:
   void SetTracer (Tracer * t, bool own = true);
 
   /**
-   * thread-safe method to post a string event
-   * the event is posted to parent
+   * set actions parent window
+   *
+   * @param parent the parent that will receive events
    */
-  void PostStringEvent (int code, wxString str, int event_id);
+  void SetParent (wxWindow * parent);
 
   /**
-   * thread-safe method to post a data event
+   * @return parent
    */
-  void PostDataEvent (int code, void *data, int event_id);
+  wxWindow * GetParent ();
+
+  /**
+   * sets the context for this action
+   *
+   * @param context
+   */
+  void SetContext (svn::Context * context);
+
+  /**
+   * @return the context of the action
+   */
+  svn::Context *
+  GetContext ();
 
   /**
    * Prepare action. This method is execute in the main
@@ -85,12 +106,30 @@ public:
   virtual bool Perform () = 0;
 
   /**
-   * @return parent
+   * sets the path for the action
+   *
+   * @param path
    */
-  wxWindow * GetParent ();
+  void SetPath (const svn::Path & path);
+
+  /**
+   * @return path
+   */
+  const svn::Path & GetPath ();
 
 protected:
   void Trace (const wxString & msg);
+
+  /**
+   * thread-safe method to post a string event
+   * the event is posted to parent
+   */
+  void PostStringEvent (int code, wxString str, int event_id);
+
+  /**
+   * thread-safe method to post a data event
+   */
+  void PostDataEvent (int code, void *data, int event_id);
 
 private:
   /**
@@ -111,6 +150,18 @@ private:
    * is responsible for deleting the tracer.
    */
   bool m_ownTracer;
+
+  /**
+   * the context under which the action will be
+   * performed. this includes auth info and callback
+   * addresses
+   */
+  svn::Context * m_context;
+
+  /**
+   * the path where the action will take place
+   */
+  svn::Path m_path;
 
   /**
    * private default constructor

@@ -93,7 +93,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Checkout, RapidSvnFrame::OnCheckout)
   EVT_MENU (ID_Import, RapidSvnFrame::OnImport)
   EVT_MENU (ID_Update, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Add, RapidSvnFrame::OnAdd)
+  EVT_MENU (ID_Add, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Del, RapidSvnFrame::OnDelete)
   EVT_MENU (ID_Commit, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Revert, RapidSvnFrame::OnRevert)
@@ -129,6 +129,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_listCtrl = NULL;
   m_title = title;
   m_actionWorker.Create (this);
+  m_context = NULL;
 
   // enable trace
   wxLog::AddTraceMask (wxTraceMisc);
@@ -499,12 +500,6 @@ RapidSvnFrame::OnCheckout (wxCommandEvent & WXUNUSED (event))
 }
 
 void
-RapidSvnFrame::OnAdd (wxCommandEvent & WXUNUSED (event))
-{
-  AddEntries ();
-}
-
-void
 RapidSvnFrame::OnDelete (wxCommandEvent & WXUNUSED (event))
 {
   DelEntries ();
@@ -797,11 +792,8 @@ RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
 
   case TOOLBAR_COMMIT:
   case TOOLBAR_UPDATE:
-    OnFileCommand (event);
-    break;
-
   case TOOLBAR_ADD:
-    AddEntries ();
+    OnFileCommand (event);
     break;
 
   case TOOLBAR_DEL:
@@ -931,16 +923,26 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
   ActionType lastAction;
   Action* action = NULL;
   svn::Targets targets = GetActionTargets ();
+  int count = targets.targets ().size ();
 
   switch (event.m_id)
   {
+  case TOOLBAR_UPDATE:
   case ID_Update:
     action = new UpdateAction(this, targets, m_currentPath, m_logTracer, false);
     lastAction = ACTION_TYPE_UPDATE;
     break;
+  case TOOLBAR_COMMIT:
   case ID_Commit:
     action = new CommitAction(this, targets, m_currentPath, m_logTracer, false);
     lastAction = ACTION_TYPE_COMMIT;
+    break;
+  case TOOLBAR_ADD:
+  case ID_Add:
+    if (count == 0)
+      break;
+    action =  new AddAction (this, targets);
+    lastAction = ACTION_TYPE_ADD;
     break;
   }
 
@@ -1089,20 +1091,6 @@ RapidSvnFrame::ShowInfo ()
 }
 
 void
-RapidSvnFrame::AddEntries ()
-{
-  if (m_listCtrl->GetSelectedItemCount () == 0)
-    return;
-
-
-  svn::Targets targets = m_listCtrl->GetTargets ();
-
-  AddAction *action = 
-    new AddAction (this, m_logTracer, m_currentPath.c_str (), targets);
-  Perform (ACTION_TYPE_ADD, action);
-}
-
-void
 RapidSvnFrame::MakeRevert ()
 {
   wxMessageDialog sure_dlg (this,
@@ -1229,6 +1217,9 @@ void
 RapidSvnFrame::Perform (ActionType type, Action * action)
 {
   m_lastAction = type;
+  action->SetPath (m_currentPath.c_str ());
+  action->SetContext (m_context);
+  m_actionWorker.SetTracer (m_logTracer);
   m_actionWorker.Perform (action);
 }
 

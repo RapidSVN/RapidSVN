@@ -13,12 +13,15 @@
 #ifndef _IDS_H_INCLUDED_
 #define _IDS_H_INCLUDED_
 
+// wxwindows
+#include "wx/defs.h"
+
 /*
  * Menu commands IDs
  */
 enum
 {
-  ID_Quit = 1,
+  ID_Quit = wxID_HIGHEST,
   ID_About,
   ID_Refresh,
   ID_Import,
@@ -54,7 +57,7 @@ enum
   TOKEN_SVN_INTERNAL_ERROR,
   TOKEN_VSVN_INTERNAL_ERROR,
   TOKEN_ACTION_END,
-  LIST_CTRL = 1000
+  LIST_CTRL
 };
 
 #endif

@@ -54,6 +54,11 @@ public:
   /**
    * @see ActionWorker
    */
+  virtual void SetTracer (Tracer * tr);
+
+  /**
+   * @see ActionWorker
+   */
   virtual bool 
   Perform (Action * action);
 
@@ -62,11 +67,21 @@ private:
   ActionState m_state;
   ActionResult m_result;
   wxWindow * m_parent;
+  Tracer * m_tracer;
 
   /**
    * private copy constructor
    */
   SimpleWorker (const SimpleWorker &);
+
+  /**
+   * sends a message to the tracer. This is
+   * a utility function that checks m_tracer
+   * before tracing
+   *
+   * @param message to send
+   */
+  void Trace (const wxString & message);
 };
 
 #endif

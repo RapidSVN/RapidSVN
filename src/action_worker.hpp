@@ -16,6 +16,10 @@
 // declarations
 class Action;
 class wxWindow;
+namespace svn
+{
+  class Context;
+}
 
 enum ActionState
 {
@@ -48,6 +52,7 @@ public:
    * associate worker with parent window and
    *
    * @param parent parent window
+   * @param the tracer that will receive notifications
    */
   virtual void 
   Create (wxWindow * parent) = 0;
@@ -70,6 +75,18 @@ public:
    */
   virtual ActionResult 
   GetResult () = 0;
+
+  /**
+   * sets the tracer that will be notified
+   * this values will be passed to each
+   * action that is to be performed.
+   * The tracer will NOT be owned by the
+   * worker then.
+   *
+   * @param tracer
+   */
+  virtual void 
+  SetTracer (Tracer * tr) = 0;
 
   /**
    * Used to run an Action. If there
