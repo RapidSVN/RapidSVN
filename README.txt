@@ -44,6 +44,11 @@ BUILDING AND INSTALLING
 
 * Download the wxWindows 2.3.2 libraries: http://www.wxwindows.org/
 
+  If you are building wxWindows on linux, you will need to specify 
+  the --disable-no-exceptions parameter to configure (see 
+  http://www.wxwindows.org/faqgen.htm#exceptions). For development
+  to develop RapidSVN you will probably also want --enable-debug.
+
 * Download the latest Subversion source tree.  Here are the directions: 
   http://subversion.tigris.org/project_source.html
 
