@@ -11,6 +11,8 @@ public:
 					VSvnEx( const wxString&__estr = "",
 							const long __code = -1 );
 
+	virtual			~VSvnEx();
+
 					VSvnEx( const VSvnEx& rhs )
 					{
 						*this = rhs;

@@ -7,6 +7,10 @@ VSvnEx::VSvnEx( const wxString& __estr, const long __code )
 	what( __estr );
 }
 
+VSvnEx::~VSvnEx()
+{
+}
+
 VSvnEx& VSvnEx::operator=( const VSvnEx& rhs )
 {
 	if( this == &rhs )
