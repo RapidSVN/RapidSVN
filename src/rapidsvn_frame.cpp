@@ -363,7 +363,7 @@ END_EVENT_TABLE ()
                                            SPLITTER_WINDOW,
                                            wxDefaultPosition,
                                            wxDefaultSize,
-                                           wxSP_FULLSASH | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
+                                           wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
 
 
   m_info_panel = new InfoPanel (m_horiz_splitter);
@@ -383,7 +383,7 @@ END_EVENT_TABLE ()
                                           SPLITTER_WINDOW,
                                           wxDefaultPosition,
                                           wxDefaultSize,
-                                          wxSP_FULLSASH | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
+                                          wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
 
   // Create the list control to display files
   m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL, 
