@@ -38,7 +38,7 @@ rapidsvn_SOURCES= \
 	merge_dlg.cpp \
 	mkdir_action.cpp \
 	move_action.cpp \
-        preferences.cpp \
+	preferences.cpp \
 	preferences_dlg.cpp \
 	property_action.cpp \
 	property_dlg.cpp \
@@ -50,13 +50,12 @@ rapidsvn_SOURCES= \
 	revert_action.cpp \
 	simple_worker.cpp \
 	switch_action.cpp \
-	threaded_worker.cpp \
 	tracer.cpp \
 	trace_update.cpp \
 	update_action.cpp \
 	update_dlg.cpp \
 	utils.cpp \
-        verblist.cpp \
+	verblist.cpp \
 	view_action.cpp 
 
 rapidsvn_LDFLAGS=-Lsvncpp
