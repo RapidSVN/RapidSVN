@@ -37,10 +37,12 @@ END_EVENT_TABLE ()
 BEGIN_EVENT_TABLE (PropertyGrid, wxGrid)
 END_EVENT_TABLE()
 
-PropertyDlg::PropertyDlg (wxWindow * parent, const svn::Path & target)
+PropertyDlg::PropertyDlg (wxWindow * parent, 
+                          svn::Context * context,
+                          const svn::Path & target)
            : wxDialog (parent, -1, _("Property Editor"), wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             m_property(NULL, target.c_str ())
+             m_property(context, target.c_str ())
 {
   InitializeData ();
   CentreOnParent ();
@@ -126,7 +128,8 @@ PropertyDlg::SaveData ()
 {
   wxString name, value;
 
-  for(int i = 0; i < propGrid->GetNumberRows () - 1; i++)
+  const int count = propGrid->GetNumberRows ();
+  for(int i = 0; i < count; i++)
   {
     name = propGrid->GetCellValue (i, 0);
     value = propGrid->GetCellValue (i, 1);

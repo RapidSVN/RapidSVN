@@ -39,7 +39,8 @@ private:
 class PropertyDlg : public wxDialog
 {
 public:
-  PropertyDlg (wxWindow * parent, const svn::Path & target);
+  PropertyDlg (wxWindow * parent, svn::Context * context, 
+               const svn::Path & target);
 private:
   svn::Property m_property;
   PropertyGrid * propGrid;

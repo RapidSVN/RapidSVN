@@ -224,6 +224,12 @@ public:
 
     menuModif->AppendSeparator ();
 
+    pItem = new wxMenuItem (menuModif, ID_Property, _("Properties"));
+    pItem->SetBitmap (wxBITMAP (info));
+    menuModif->Append (pItem);
+
+    menuModif->AppendSeparator ();
+
     pItem = new wxMenuItem (menuModif, ID_Add, _("Add"));
     pItem->SetBitmap (wxBITMAP (add));
     menuModif->Append (pItem);
@@ -264,10 +270,6 @@ public:
     menuQuery->Append (pItem);
 
     pItem = new wxMenuItem (menuQuery, ID_Info, _("Info"));
-    pItem->SetBitmap (wxBITMAP (info));
-    menuQuery->Append (pItem);
-
-    pItem = new wxMenuItem (menuQuery, ID_Property, _("Properties"));
     pItem->SetBitmap (wxBITMAP (info));
     menuQuery->Append (pItem);
 
@@ -943,6 +945,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
     case ID_Property:
       action = new PropertyAction (this);
       lastAction = ACTION_TYPE_PROPERTY;
+      break;
 
     case ID_Contents: //TODO
     case ID_Rename: //TODO
@@ -968,23 +971,12 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   break;
 
   case TOKEN_SVN_INTERNAL_ERROR:
-  {
-    if (event.GetClientData ())
-    {
-      ErrorTracer err_tr (this);
-
-      handle_svn_error ((svn_error_t *) event.GetClientData (), &err_tr);
-      err_tr.ShowErrors ();
-    }
-  }
-  break;
-
   case TOKEN_INTERNAL_ERROR:
   {
-    ErrorTracer err_tr (this);
-
-    err_tr.Trace (event.GetString ());
-    err_tr.ShowErrors ();
+    Trace (_("Error:"));
+    Trace (event.GetString ());
+    UpdateFileList ();
+    Trace (_("Ready\n"));
   }
   break;
 

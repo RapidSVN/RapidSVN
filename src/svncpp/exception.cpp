@@ -48,13 +48,20 @@ namespace svn
   }
 
 
-  ClientException::ClientException (svn_error_t * error, 
-                                    const char * msg) throw () : 
-    Exception (msg)
+  ClientException::ClientException (svn_error_t * error) throw () : 
+    Exception ("")
   {
-    if (error != 0)
+    if (error == 0)
+      return;
+
+    svn_error_t * next = error->child;
+    std::string & message = m->message;
+    message = error->message;
+    while (next != 0)
     {
-      //TODO go through the messages in error
+      message = message + "\n" + next->message;
+
+      next = next->child;
     }
   }
 

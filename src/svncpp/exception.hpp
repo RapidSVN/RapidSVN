@@ -60,8 +60,7 @@ namespace svn
     /**
      * Constructor.  Sets the error template and an optional message.
      */
-    ClientException (svn_error_t * error, 
-                     const char * message = "") throw ();
+    ClientException (svn_error_t * error) throw ();
 
     /** 
      * Copy constructor
