@@ -55,8 +55,7 @@ OBJECTS=action.o \
 		svncpp/pool.o \
 		svncpp/revision.o \
 		svncpp/status.o \
-		svncpp/targets.o \
-		svncpp/utils.o
+		svncpp/targets.o
 
 APR_LIBS=@APR_LIBS@
 WX_LIBS=@WX_LIBS@
