@@ -114,7 +114,7 @@ MoveAction::Perform ()
       std::string dirpath;
       srcPath.split (dirpath, basename);
       destPath = dirpath.c_str ();
-      destPath.addCompontent (m_destination.c_str ());
+      destPath.addComponent (m_destination.c_str ());
 
       client.move (srcPath, unusedRevision, destPath, m_force);
     }

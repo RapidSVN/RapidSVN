@@ -57,7 +57,7 @@ MkdirAction::Perform ()
   wxString newDir (m_path + m_target);
 
   svn::Path target (m_path.c_str ());
-  target.addCompontent (m_target.c_str ());
+  target.addComponent (m_target.c_str ());
 
   client.mkdir (target, "");
   return true;
