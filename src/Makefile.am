@@ -48,10 +48,10 @@ rapidsvn_SOURCES= \
 	update_dlg.cpp \
 	utils.cpp
 
-rapidsvn_LDADD=-dlopen svncpp/libsvncpp.la \
-	-L$(SVN_LIB) \
+rapidsvn_LDFLAGS=-L$(SVN_LIB) -Lsvncpp
+rapidsvn_LDADD= -lsvncpp \
 	-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
-	$(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(APR_LIBS) \
+	-laprutil-0 -lapr-0 -lneon $(APR_LIBS) \
 	$(WX_LIBS)
 rapidsvn_DEPENDENCIES=svncpp/libsvncpp.la
 
