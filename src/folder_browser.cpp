@@ -11,6 +11,8 @@
 #include "res/bitmaps/computer.xpm"
 #include "res/bitmaps/folder.xpm"
 #include "res/bitmaps/open_folder.xpm"
+#include "res/bitmaps/update.xpm"
+#include "res/bitmaps/commit.xpm"
 
 //IMPLEMENT_DYNAMIC_CLASS (FolderBrowser, wxControl)
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
