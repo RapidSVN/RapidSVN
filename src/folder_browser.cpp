@@ -620,8 +620,11 @@ public:
    * @param path
    */
   bool
-  SelectFolder (const wxString & path)
+  SelectFolder (const wxString & pathP)
   {
+    // Convert the input string to subversion internal representation
+    const wxString path = svn::Path (pathP).c_str();
+
     wxTreeItemId bookmarkId = GetSelectedBookmarkId ();
 
     // found a valid bookmark? otherwise quit
@@ -647,9 +650,9 @@ public:
       if (!data->isReal ())
         break;
 
-      svn::Path nodePath (data->getPath ());
+      const svn::Path nodePath (data->getPath ());
       if (nodePath.length () == 0)
-       break;
+        break;
 
       // check if @a path and @a nodePath match already
       // in this case we are done
