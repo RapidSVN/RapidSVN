@@ -15,52 +15,53 @@
 #define _PROPERTY_DLG_H_INCLUDED_
 
 // wxwindows
-#include "wx/grid.h"
 #include "wx/dialog.h"
 #include "wx/window.h"
 
 // svncpp
 #include "svncpp/property.hpp"
 
-
-class PropertyGrid : public wxGrid
-{
-public:
-  PropertyGrid (wxWindow * parent, const svn::Property & property);
-  void FillList ();
-
-private:
-  const svn::Property & m_property;
-  void InitializeData ();
-  
-  DECLARE_EVENT_TABLE ()
-};
+// forward declarations
+class wxListEvent;
 
 class PropertyDlg : public wxDialog
 {
 public:
   PropertyDlg (wxWindow * parent, svn::Context * context, 
                const svn::Path & target);
+
+  /**
+   * destructor
+   */
+  virtual ~PropertyDlg ();
+
 private:
-  svn::Property m_property;
-  PropertyGrid * propGrid;
-
-  void InitializeData ();
-
-  /**
-   * Save all of the valid property key/value pairs.
-   */
-  void SaveData ();
-
-  /**
-   * Remove all of the property key/value pairs that do not 
-   * exist any more.
-   */
-  void RemoveData ();
+  struct Data;
+  Data * m;
 
   void OnClose (wxCommandEvent & event);
   void OnOK (wxCommandEvent & event);
-  
+
+  void OnNew (wxCommandEvent & event);
+  void OnEdit (wxCommandEvent & event);
+  void OnDelete (wxCommandEvent & event);
+  void OnSelected (wxListEvent & event);
+
+  /**
+   * disallow default constructor
+   */
+  PropertyDlg ();
+
+  /**
+   * disallow copy constructor
+   */
+  PropertyDlg (const PropertyDlg &);
+
+  /**
+   * disallow assignment operator
+   */
+  PropertyDlg operator & (const PropertyDlg &);
+private:
   DECLARE_EVENT_TABLE ()
 };
 

@@ -37,7 +37,7 @@ PropertyAction::Prepare ()
   PropertyDlg dlg (GetParent (), GetContext (), GetTarget ());
   dlg.ShowModal ();
 
-  return false;
+  return true;
 }
 
 bool
