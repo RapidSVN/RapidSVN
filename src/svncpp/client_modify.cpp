@@ -225,7 +225,7 @@ namespace svn
     apr_pool_t * apr_pool = subPool.pool ();
 
     svn_error_t * error =  
-      svn_client_cleanup (path.c_str (), apr_pool);
+      svn_client_cleanup (path.c_str (), *m_context, apr_pool);
 
     if(error != NULL)
       throw ClientException (error);

@@ -188,7 +188,7 @@ namespace svn
      * @param path a local directory.
      * @exception ClientException
      */
-    static void cleanup (const Path & path);
+    void cleanup (const Path & path);
 
     /**
      * Removes the 'conflicted' state on a file.

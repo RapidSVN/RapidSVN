@@ -97,11 +97,9 @@ namespace svn
     svn_auth_set_parameter (ab, SVN_AUTH_PARAM_DEFAULT_PASSWORD,
                             m_password.c_str ());
 
-    m_ctx.config = 0;
+    memset (&m_ctx, 0, sizeof (m_ctx));
     svn_config_get_config (&m_ctx.config, m_pool);
     m_ctx.auth_baton = ab;
-    m_ctx.prompt_func = NULL;
-    m_ctx.prompt_baton = NULL;
     m_ctx.log_msg_func = log_msg;
     m_ctx.log_msg_baton = this;
     m_ctx.notify_func = notify;
