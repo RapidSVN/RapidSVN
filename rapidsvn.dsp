@@ -168,6 +168,10 @@ SOURCE=.\src\mkdir_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\patched_dirctrlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\preferences_dlg.cpp
 # End Source File
 # Begin Source File
