@@ -150,6 +150,50 @@ GetDefaultWidth (int col)
 }
 
 /**
+ * compare two paths
+ *
+ * @param p1
+ * @param p2
+ * @return < -> -1 / = -> 0 / > -> 1
+ */
+static int
+ComparePaths (const char * p1, const char * p2)
+{
+  wxFileName fn1 (p1);
+  wxFileName fn2 (p2);
+
+  wxString path1 = fn1.GetPath ();
+  wxString path2 = fn2.GetPath ();
+
+  int res = 0;
+
+  // Is p2 a subdir or entry of p1?
+  if (path1.CmpNoCase (p2) == 0)
+  {
+    return -1;
+  }
+
+  // Is p1 a subdir or entry of p2?
+  if (path2.CmpNoCase (p1) == 0)
+  {
+    return 1;
+  }
+
+  // first compare path component
+  res = path1.CmpNoCase (path2);
+
+  if (res == 0)
+  {
+    wxString file1 = fn1.GetName ();
+    wxString file2 = fn2.GetName ();
+
+    res = file1.CmpNoCase (file2);
+  }
+
+  return res;
+}
+
+/**
  * compare two unsigned long numbers
  *
  * @param val1 value 1
@@ -212,7 +256,7 @@ CompareColumn (svn::Status * ps1,
     break;
 
   case FileListCtrl::COL_PATH: 
-    res = Compare (ps1->path (), ps2->path ());
+    res = ComparePaths (ps1->path (), ps2->path ());
     break;
 
   case FileListCtrl::COL_REV:     
