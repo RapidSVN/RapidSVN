@@ -48,7 +48,7 @@ namespace svn
     if (error != 0)
       throw ClientException (error);
 
-    return stringbuf->data;
+    return std::string( stringbuf->data, stringbuf->len );
   }
 
 
