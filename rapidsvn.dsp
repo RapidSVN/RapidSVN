@@ -162,6 +162,10 @@ SOURCE=.\src\folder_item_data.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\get_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\import_action.cpp
 # End Source File
 # Begin Source File
@@ -363,6 +367,14 @@ SOURCE=.\src\folder_browser.hpp
 # Begin Source File
 
 SOURCE=.\src\folder_item_data.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\get_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\get_data.cpp
 # End Source File
 # Begin Source File
 

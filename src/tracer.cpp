@@ -41,8 +41,7 @@ EventTracer::EventTracer (wxFrame * fr)
 void
 EventTracer::Trace (const wxString & str)
 {
-  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
-  event.SetInt (TOKEN_INFO);
+  wxCommandEvent event = CreateActionEvent (TOKEN_INFO);
   event.SetString (str);
 
   // send in a thread-safe way

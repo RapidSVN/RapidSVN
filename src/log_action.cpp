@@ -45,7 +45,7 @@ LogAction::Prepare ()
                           svn::Revision::HEAD);
   }
   {
-    LogDlg dlg (GetParent (), entries);
+    LogDlg dlg (GetParent (), target.c_str (), entries);
     dlg.ShowModal ();
   }
   delete entries;

@@ -85,7 +85,7 @@ enum
   ID_Column_Checksum,
   ID_Column_Max,
 
-  ACTION_EVENT,                 // this one gets sent from the action threads
+  ACTION_EVENT, // this one gets sent from the action threads
 // Ids used for communication events between threads and frame
   TOKEN_BASE,
   TOKEN_INFO,
@@ -93,6 +93,8 @@ enum
   TOKEN_INTERNAL_ERROR,
   TOKEN_ACTION_START,
   TOKEN_ACTION_END,
+  TOKEN_GET,
+  ACTION_UPDATE,
   FILELIST_CTRL,
   FOLDER_BROWSER,
 };

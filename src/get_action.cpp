@@ -11,52 +11,46 @@
  * ====================================================================
  */
 
-#ifndef _LOG_DLG_H_INCLUDED_
-#define _LOG_DLG_H_INCLUDED_
-
 // wxwindows
-#include "wx/dialog.h"
+#include "wx/wx.h"
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/path.hpp"
 
-//forward declarations
-class wxTextCtrl;
-class LogList;
-class wxListEvent;
+// app
+#include "ids.hpp"
+#include "get_action.hpp"
+#include "svn_notify.hpp"
+#include "tracer.hpp"
+#include "utils.hpp"
 
-class LogDlg : public wxDialog
+GetAction::GetAction (wxWindow * parent, const GetData & data)
+  : Action (parent, _("Update"), actionWithoutTarget),
+    m_data (data)
 {
-public:
-  /**
-   * constructor. the @a entries are NOT owned by 
-   * this class. 
-   *
-   * @param parent parent window
-   * @param path path of selected item
-   * @param entries log entries
-   */
-  LogDlg (wxWindow * parent, 
-          const char * path,
-          const svn::LogEntries * entries);
+}
 
-  /**
-   * destructor
-   */
-  virtual ~LogDlg ();
+bool
+GetAction::Prepare ()
+{
+  return true;
+}
 
-private:
-  /** hide implementation details */
-  struct Data;
-  Data * m;
+bool
+GetAction::Perform ()
+{
+  svn::Client client (GetContext ());
+  SvnNotify notify (GetTracer ());
+  client.notification (&notify);
 
-  void OnGet (wxCommandEvent & event);
-  void OnSelected(wxListEvent& event);
-  
-  DECLARE_EVENT_TABLE ()
-};
+  wxSetWorkingDirectory (GetPath ().c_str ());
+  client.update (m_data.path.c_str (),
+                 m_data.revision,
+                 false);
 
-#endif
+  return true;
+}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -20,6 +20,7 @@
 class wxString;
 class Tracer;
 class wxMenu;
+class wxCommandEvent;
 
 /**
  * Create pseudo-unix paths on windows for use with svn (reverse backslashes,
@@ -86,6 +87,14 @@ AppendQueryMenu (wxMenu * parentMenu);
  */
 bool
 CheckRevision (const char * revstring);
+
+/**
+ * Creates an action event with @a token.
+ *
+ * @param token 
+ */
+wxCommandEvent 
+CreateActionEvent (int token);
 
 #endif
 /* -----------------------------------------------------------------

@@ -225,6 +225,15 @@ CheckRevision (const char * revstring)
 
   return ok;
 }
+
+wxCommandEvent
+CreateActionEvent (int token)
+{
+  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
+  event.SetInt (token);
+  
+  return event;
+}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

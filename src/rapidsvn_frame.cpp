@@ -32,6 +32,7 @@
 #include "commit_action.hpp"
 #include "delete_action.hpp"
 #include "external_program_action.hpp"
+#include "get_action.hpp"
 #include "import_action.hpp"
 #include "merge_action.hpp"
 #include "mkdir_action.hpp"
@@ -930,6 +931,24 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
     Trace (_("Ready\n"));
   }
   break;
+    
+  case TOKEN_GET:
+  {
+    GetData * pData (static_cast<GetData *>(event.GetClientData ())); 
+    
+    if (pData != 0)
+    {
+      // copy the data first. This makes sure
+      // the memory is released in the occurence
+      // of an exception
+      GetData data (*pData);
+      delete pData;
+      GetAction * action = new GetAction (this, data);
+      Perform (action);
+    }
+  }
+    
+  break;
   }
 }
 
@@ -944,7 +963,6 @@ RapidSvnFrame::ShowInfo ()
   wxString _path;
   svn::Pool subPool;
   svn_error_t *err = NULL;
-  bool wasError = false;
 
   try
   {

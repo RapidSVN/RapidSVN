@@ -10,50 +10,43 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+#ifndef _GET_ACTION_H_INCLUDED_
+#define _GET_ACTION_H_INCLUDED_
 
-#ifndef _LOG_DLG_H_INCLUDED_
-#define _LOG_DLG_H_INCLUDED_
+// app
+#include "action.hpp"
+#include "get_data.hpp"
 
-// wxwindows
-#include "wx/dialog.h"
+// forward declarations
+class wxWindow;
 
-// svncpp
-#include "svncpp/client.hpp"
-
-//forward declarations
-class wxTextCtrl;
-class LogList;
-class wxListEvent;
-
-class LogDlg : public wxDialog
+/**
+ * This class works very much like UpdateAction.
+ * There are differences:
+ * - there wont be any dialogs shown
+ * - the action ignores "targets" 
+ * - works only on a single path that is 
+ *   pass in the @a GetData structure
+ */
+class GetAction:public Action
 {
 public:
   /**
-   * constructor. the @a entries are NOT owned by 
-   * this class. 
+   * Constructor. This constructor creates an
+   * get action, that will not prompt for
+   * input in Prepare. Instead, the settings
+   * in @a data will be used
    *
    * @param parent parent window
-   * @param path path of selected item
-   * @param entries log entries
+   * @param data update data
    */
-  LogDlg (wxWindow * parent, 
-          const char * path,
-          const svn::LogEntries * entries);
+  GetAction (wxWindow * parent, const GetData & data);
 
-  /**
-   * destructor
-   */
-  virtual ~LogDlg ();
+  virtual bool Perform ();
+  virtual bool Prepare ();
 
 private:
-  /** hide implementation details */
-  struct Data;
-  Data * m;
-
-  void OnGet (wxCommandEvent & event);
-  void OnSelected(wxListEvent& event);
-  
-  DECLARE_EVENT_TABLE ()
+  GetData m_data;
 };
 
 #endif

@@ -17,7 +17,10 @@
 #include "wx/listctrl.h"
 
 // app
+#include "get_data.hpp"
+#include "ids.hpp"
 #include "log_dlg.hpp"
+#include "utils.hpp"
 
 enum
 {
@@ -49,15 +52,40 @@ public:
     DeleteAllItems ();
   }
 
+  /**
+   * returns the selected revision.
+   *
+   * @return selected revision
+   * @retval -1 if nothing was selected or the cell
+   *            contains an invalid string 
+   */
+  svn_revnum_t
+  GetSelectedRevision () const
+  {
+    long item = GetNextItem (-1, wxLIST_NEXT_ALL, 
+                             wxLIST_STATE_SELECTED);
+    if (item == -1)
+      return -1;
+
+    wxListItem info;
+    info.m_itemId = item;
+    info.m_col = 0;
+    info.m_mask = wxLIST_MASK_TEXT;
+  
+    if (!GetItem (info))
+      return -1;
+    svn_revnum_t revnum = -1;
+    info.m_text.ToLong (&revnum);
+    
+    return revnum;
+  }
+
 
 private:
-  //const svn::LogEntries * m_entries;
-
   void OnSelected(wxListEvent& event);
   void InitializeList (const svn::LogEntries * entries)
   {
     SetSingleStyle (wxLC_REPORT);
-    //const char * dateFormat = "%a %b %d %H:%M:%S %Y";
 
     InsertColumn (0, _("Revision"));
     InsertColumn (1, _("User"));
@@ -102,10 +130,17 @@ struct LogDlg::Data
 private:
 public:
   const svn::LogEntries * entries;
+  wxString path;
+  wxWindow * parent;
   wxWindow * window;
 
-  Data (wxWindow * wnd, const svn::LogEntries * entries_)
-    : entries (entries_), window (wnd)
+
+  Data (wxWindow * parent_,
+        wxWindow * wnd,
+        const char * path_,
+        const svn::LogEntries * entries_)
+    : entries (entries_), path (path_), 
+      parent (parent_), window (wnd)
   {
     // create controls
     wxString history;
@@ -135,10 +170,10 @@ public:
     logSizer->Add (m_logList, 1, wxLEFT);
 
     wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
-    buttonSizer->Add (buttonClose, 0, wxALL, 5);
-    buttonSizer->Add (m_buttonView, 0, wxALL, 5);
-    buttonSizer->Add (m_buttonGet, 0, wxALL, 5);
-    buttonSizer->Add (m_buttonDiff, 0, wxALL, 5);
+    buttonSizer->Add (buttonClose, 0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (m_buttonView, 0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (m_buttonGet, 0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (m_buttonDiff, 0, wxALL | wxEXPAND, 5);
 
     wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
     topSizer->Add (logSizer, 1, wxALL, 5);
@@ -162,63 +197,35 @@ public:
     mainSizer->Fit (wnd);
   }
 
+  /**
+   * handler for the "get" button.
+   * @a CheckButtons makes sure this command will
+   * only be enabled if one entry in the list is
+   * selected
+   */ 
   void
   OnGet ()
   {
-    int sel = m_logList->GetSelectedItemCount ();
-    wxListItem info;
+    wxBusyCursor busy;
+    int count = m_logList->GetSelectedItemCount ();
 
-    if(sel == 0 || sel > 1)
-    {
-      wxMessageDialog dlg (window, _("You must select exactly one revision."),
-                           _("Error"), wxOK);
-      dlg.ShowModal ();
-    }
-    else
-    {
-      long item = -1;
+    if (count != 1)
+      return;
 
-      for (;;)
-      {
-        item = m_logList->GetNextItem (item, wxLIST_NEXT_ALL, 
-                                    wxLIST_STATE_SELECTED);
-        if(item == -1)
-          break;
-
-        info.m_itemId = item;
-        info.m_col = 0;
-        info.m_mask = wxLIST_MASK_TEXT;
-  
-        if(!m_logList->GetItem (info))
-          return;
-        svn_revnum_t revnum;
-        info.m_text.ToLong (&revnum);
-        GetRevision (revnum);
-      }
-    }
+    svn_revnum_t revnum = m_logList->GetSelectedRevision ();
+    GetRevision (revnum);
   }
 
   void
   GetRevision (const svn_revnum_t revision)
   {
-  //TODO this has to be checked. Is there duplication of functionality underway?
-  //   svn::Modify modify;
-  //   svn::Notify notify;
-  //   modify.notification (&notify);
+    wxCommandEvent event = CreateActionEvent (TOKEN_GET);
+    GetData * data = new GetData ();
+    data->revision = revision;
+    data->path = path;
+    event.SetClientData (data);
 
-  //   try
-  //   {
-  //     modify.update (m_log->getLastPath (), svn::Revision(revision), false);
-  //     wxMessageDialog dlg (this, _("Revision retrieved successfully."),
-  //                          _("Message"), wxOK);
-  //     dlg.ShowModal ();
-  //   }
-  //   catch (svn::ClientException &e)
-  //   {
-  //     wxMessageDialog dlg (this, _("An update error occurred."),
-  //                          _(e.description ()), wxOK);
-  //     dlg.ShowModal ();
-  //   }
+    wxPostEvent (parent, event);
   }
 
   void
@@ -248,11 +255,13 @@ public:
 };
 
 
-LogDlg::LogDlg (wxWindow * parent, const svn::LogEntries * entries)
+LogDlg::LogDlg (wxWindow * parent,
+                const char * path,
+                const svn::LogEntries * entries)
   : wxDialog (parent, -1, _("Log History"), wxDefaultPosition, 
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data (this, entries);
+  m = new Data (parent, this, path, entries);
 
   CentreOnParent ();
 }
