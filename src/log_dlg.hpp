@@ -50,9 +50,35 @@ private:
   struct Data;
   Data * m;
 
+
+  /**
+   * Event handler for the "Get" button 
+   * @param event
+   */
   void OnGet (wxCommandEvent & event);
+
+
+  /**
+   * Event handler for the "View" button
+   * @param event
+   */
   void OnView (wxCommandEvent & event);
-  void OnSelected(wxListEvent& event);
+
+
+  /**
+   * Event handler that will be called whenever
+   * the selection in the list of revision changes
+   *
+   * @param event
+   */
+  void OnSelected (wxListEvent& event);
+
+
+  /**
+   * Event handler for the "Diff" button
+   * @param event
+   */
+  void OnDiff (wxCommandEvent & event);
   
   DECLARE_EVENT_TABLE ()
 };

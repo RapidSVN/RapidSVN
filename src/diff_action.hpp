@@ -16,6 +16,9 @@
 // app
 #include "action.hpp"
 
+// forward declaration
+struct DiffData;
+
 class DiffAction:public Action
 {
 public:
@@ -25,6 +28,16 @@ public:
    * @param parent parent window
    */
   DiffAction (wxWindow * parent);
+
+
+  /**
+   * Constructor, that takes read configured @a DiffData,
+   * so no dialog will be displayed
+   *
+   * @param parent parent window
+   * @param data diff data
+   */
+  DiffAction (wxWindow * parent, DiffData & data);
 
 
   /** Destructor */

@@ -37,11 +37,18 @@ private:
   Action * mAction;
 
 public:
+  bool showDialog;
   DiffData diffData;
 
 
   Data (Action * action)
-    : mAction (action)
+    : mAction (action), showDialog (true)
+  {
+  }
+
+
+  Data (Action * action, DiffData & data)
+    : mAction (action), showDialog (false), diffData (data)
   {
   }
 
@@ -217,6 +224,13 @@ DiffAction::DiffAction (wxWindow * parent)
 }
 
 
+DiffAction::DiffAction (wxWindow * parent, DiffData & data)
+  : Action (parent, _("Diff"), GetBaseFlags ())
+{
+  m = new Data (this, data);
+}
+
+
 DiffAction::~DiffAction ()
 {
   delete m;
@@ -229,32 +243,35 @@ DiffAction::Prepare ()
   if (!Action::Prepare ())
     return false;
 
-  // check the first target and try to
-  // determine whether we are on a local
-  // or remote location
-  svn::Path target = GetTarget ();
-  bool isRemote = svn::Url::isValid (target.c_str ());
-
-  DiffDlg dlg (GetParent ());
-
-  size_t count = GetTargets ().size ();
-
-  if (count != 1)
-    dlg.EnableUrl (false);
-
-  if (isRemote)
+  if (m->showDialog)
   {
-    DiffData::CompareType types [] = {
-      DiffData::TWO_REVISIONS
-    };
+    // check the first target and try to
+    // determine whether we are on a local
+    // or remote location
+    svn::Path target = GetTarget ();
+    bool isRemote = svn::Url::isValid (target.c_str ());
 
-    dlg.AllowCompareTypes (types, WXSIZEOF (types));
+    DiffDlg dlg (GetParent ());
+
+    size_t count = GetTargets ().size ();
+
+    if (count != 1)
+      dlg.EnableUrl (false);
+
+    if (isRemote)
+    {
+      DiffData::CompareType types [] = {
+        DiffData::TWO_REVISIONS
+      };
+
+      dlg.AllowCompareTypes (types, WXSIZEOF (types));
+    }
+
+    if( dlg.ShowModal () != wxID_OK )
+      return false;
+
+    m->diffData = dlg.GetData ();
   }
-
-  if( dlg.ShowModal () != wxID_OK )
-    return false;
-
-  m->diffData = dlg.GetData ();
 
   return true;
 }

@@ -13,6 +13,10 @@
 #ifndef _RAPIDSVN_UTILS_H_INCLUDED_
 #define _RAPIDSVN_UTILS_H_INCLUDED_
 
+
+// wx
+#include "wx/dynarray.h"
+
 // svn
 #include "svn_wc.h"
 
@@ -21,6 +25,17 @@ class wxString;
 class Tracer;
 class wxMenu;
 class wxCommandEvent;
+
+
+/**
+ * declaration of an array with @a svn_revnum_t elements
+ */
+#ifdef WX_DEFINE_ARRAY_LONG
+WX_DEFINE_ARRAY_LONG (svn_revnum_t, RevnumArray);
+#else
+WX_DEFINE_ARRAY (svn_revnum_t, RevnumArray);
+#endif
+
 
 /**
  * Create pseudo-unix paths on windows for use with svn (reverse backslashes,

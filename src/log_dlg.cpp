@@ -17,6 +17,7 @@
 #include "wx/listctrl.h"
 
 // app
+#include "diff_data.hpp"
 #include "get_data.hpp"
 #include "ids.hpp"
 #include "log_dlg.hpp"
@@ -36,7 +37,7 @@ class LogList : public wxListCtrl
 public:
   LogList (wxWindow * parent, const svn::LogEntries * entries)
     : wxListCtrl (parent, LOG_LIST, wxDefaultPosition, 
-                  wxSize(365, 150), wxLC_REPORT)
+                  wxSize (365, 150), wxLC_REPORT)
   {
     InitializeList (entries);
     CentreOnParent ();
@@ -45,6 +46,30 @@ public:
   virtual ~LogList ()
   {
     DeleteAllItems ();
+  }
+
+
+  /**
+   * Returns the revision for the given @a item
+   *
+   * @param item
+   * @return revnum
+   * @retval -1 not found/error
+   */
+  svn_revnum_t
+  GetRevisionForItem (long item) const
+  {
+    wxListItem info;
+    info.m_itemId = item;
+    info.m_col = 0;
+    info.m_mask = wxLIST_MASK_TEXT;
+  
+    if (!GetItem (info))
+      return -1;
+
+    svn_revnum_t revnum=-1;
+    info.m_text.ToLong (&revnum);
+    return revnum;
   }
 
   /**
@@ -62,22 +87,45 @@ public:
     if (item == -1)
       return -1;
 
-    wxListItem info;
-    info.m_itemId = item;
-    info.m_col = 0;
-    info.m_mask = wxLIST_MASK_TEXT;
-  
-    if (!GetItem (info))
-      return -1;
-    svn_revnum_t revnum = -1;
-    info.m_text.ToLong (&revnum);
-    
-    return revnum;
+    return GetRevisionForItem (item);
+  }
+
+
+  /**
+   * returns the selected revisions.
+   * Like @a GetSelectedRevision, but can return 
+   * more revisions at once.
+   *
+   * @return if nothing is selected, an empty array
+   *         will be returned
+   */
+  RevnumArray
+  GetSelectedRevisions () const
+  {
+    RevnumArray array;
+
+    long item=-1;
+
+    do
+    {
+      item = GetNextItem (item, wxLIST_NEXT_ALL,
+                               wxLIST_STATE_SELECTED);
+
+      if (item != -1)
+      {
+        svn_revnum_t revnum (GetRevisionForItem (item));
+
+        array.Add (revnum);
+      }
+    } 
+    while (item != -1);
+
+    return array;
   }
 
 
 private:
-  void OnSelected(wxListEvent& event);
+  void OnSelected (wxListEvent& event);
   void InitializeList (const svn::LogEntries * entries)
   {
     SetSingleStyle (wxLC_REPORT);
@@ -101,7 +149,7 @@ private:
       wxString rev;
       wxString dateStr (FormatDateTime (entry.date));
 
-      rev.Printf("%ld", (long) entry.revision);
+      rev.Printf ("%ld", (long) entry.revision);
 
       //TODO perform date formatting. but dont use
       //subversion but wxDateTime
@@ -141,7 +189,7 @@ public:
   {
     // create controls
     wxString history;
-    history.Printf(_("History: %d revisions"), entries->size ());
+    history.Printf (_("History: %d revisions"), entries->size ());
     wxStaticText * historyLabel = new wxStaticText (wnd, -1, history);
 
     m_logList = new LogList (wnd, entries);
@@ -178,7 +226,7 @@ public:
 
 
     wxStaticBox * boxMessage = 
-      new wxStaticBox(wnd, -1, _("Log Message:"));
+      new wxStaticBox (wnd, -1, _("Log Message:"));
     wxStaticBoxSizer *messageSizer = 
       new wxStaticBoxSizer (boxMessage, wxHORIZONTAL);
     messageSizer->Add (m_logMsg, 1, wxALL | wxEXPAND, 2);
@@ -250,6 +298,31 @@ public:
     CheckButtons ();
   }
 
+  void
+  OnDiff ()
+  {
+    RevnumArray array (m_logList->GetSelectedRevisions ());
+
+    if (array.Count () != 2)
+    {
+      wxMessageBox (_("Invalid selection. Exactly two revisions needed for diff."),
+                    _("Error"), wxOK | wxICON_ERROR, parent);
+      return;
+    }
+
+    wxBusyCursor busy;
+
+    wxCommandEvent event (CreateActionEvent (TOKEN_DIFF));
+    DiffData * data = new DiffData ();
+    data->compareType = DiffData::TWO_REVISIONS;
+    data->revision1 = svn::Revision (array[0]);
+    data->revision2 = svn::Revision (array[1]);
+    event.SetClientData (data);
+
+    wxPostEvent (parent, event);
+  }
+
+
   void 
   CheckButtons ()
   {
@@ -264,6 +337,7 @@ public:
 BEGIN_EVENT_TABLE (LogDlg, wxDialog)
   EVT_BUTTON (ID_Get, LogDlg::OnGet)
   EVT_BUTTON (ID_View, LogDlg::OnView)
+  EVT_BUTTON (ID_Diff, LogDlg::OnDiff)
   EVT_LIST_ITEM_SELECTED (LOG_LIST, LogDlg::OnSelected)
 END_EVENT_TABLE ()
 
@@ -300,6 +374,14 @@ LogDlg::OnSelected (wxListEvent& event)
 {
   m->OnSelected (event.m_itemIndex);
 }
+
+
+void
+LogDlg::OnDiff (wxCommandEvent & event)
+{
+  m->OnDiff ();
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

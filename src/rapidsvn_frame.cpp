@@ -24,6 +24,7 @@
 #include "svncpp/wc.hpp"
 
 // app
+#include "diff_data.hpp"
 #include "ids.hpp"
 #include "file_info.hpp"
 #include "listener.hpp"
@@ -1221,99 +1222,111 @@ void
 RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 {
   const int token = event.GetInt ();
+
   switch (token)
   {
   case TOKEN_INFO:
-  {
     Trace (event.GetString ());
-  }
-  break;
+    break;
 
   case TOKEN_SVN_INTERNAL_ERROR:
   case TOKEN_INTERNAL_ERROR:
-  {
     Trace (event.GetString ());
     UpdateFileList ();
     Trace (_("Ready\n"));
-  }
-  break;
+    break;
 
   case TOKEN_ACTION_START:
-  {
     Trace (event.GetString ());
     wxLogStatus (event.GetString ());
-  }
-  break;
+    break;
 
   case TOKEN_ACTION_END:
-  {
-    unsigned int actionFlags = 
-      (unsigned int)event.GetClientData ();
-
-    if ((actionFlags & Action::UPDATE_LATER) != 0)
     {
-      // dont update immediately but set this
-      // marker to update right after
-      // the next time the app gets activated
-      m->updateAfterActivate = true;
-    }
-    else if ((actionFlags & Action::DONT_UPDATE) == 0)
-    {
-      Trace (_("Updating..."));
-      UpdateFileList ();
-    }
+      unsigned int actionFlags = 
+        (unsigned int)event.GetClientData ();
 
-    Trace (_("Ready\n"));
-  }
-  break;
+      if ((actionFlags & Action::UPDATE_LATER) != 0)
+      {
+        // dont update immediately but set this
+        // marker to update right after
+        // the next time the app gets activated
+        m->updateAfterActivate = true;
+      }
+      else if ((actionFlags & Action::DONT_UPDATE) == 0)
+      {
+        Trace (_("Updating..."));
+        UpdateFileList ();
+      }
+
+      Trace (_("Ready\n"));
+    }
+    break;
 
   case TOKEN_VIEW:
-  {
-    GetData * pData = static_cast<GetData *>(event.GetClientData ());
-    
-    if (pData != 0)
     {
-      // copy the data first. This makes sure
-      // the memory is released in the occurence
-      // of an exception
-      GetData data (*pData);
-      delete pData;
+      GetData * pData = static_cast<GetData *>(event.GetClientData ());
+    
+      if (pData != 0)
+      {
+        // copy the data first. This makes sure
+        // the memory is released in the occurence
+        // of an exception
+        GetData data (*pData);
+        delete pData;
 
-      Action * action = new ViewAction (this, data);
-      Perform (action);
+        Action * action = new ViewAction (this, data);
+        Perform (action);
+      }
     }
-  }
-  break;
+    break;
 
   case TOKEN_ADD_BOOKMARK:
-  {
-    const char * bookmark = event.GetString ().c_str ();
+    {
+      const char * bookmark = event.GetString ().c_str ();
 
-    m_folder_browser->AddBookmark (bookmark);
-    m_folder_browser->Refresh ();
-    m_folder_browser->SelectBookmark (bookmark);
-  }
-  break;
+      m_folder_browser->AddBookmark (bookmark);
+      m_folder_browser->Refresh ();
+      m_folder_browser->SelectBookmark (bookmark);
+    }
+    break;
 
   case TOKEN_GET:
-  {
-    GetData * pData = static_cast<GetData *>(event.GetClientData ()); 
-    
-    if (pData != 0)
     {
-      // copy the data first. This makes sure
-      // the memory is released in the occurence
-      // of an exception
-      GetData data (*pData);
-      delete pData;
-      Action * action;
-
-      action = new GetAction (this, data);
-      Perform (action);
-    }
-  }
+      GetData * pData = static_cast<GetData *>(event.GetClientData ()); 
     
-  break;
+      if (pData != 0)
+      {
+        // copy the data first. This makes sure
+        // the memory is released in the occurence
+        // of an exception
+        GetData data (*pData);
+        delete pData;
+        Action * action;
+
+        action = new GetAction (this, data);
+        Perform (action);
+      }
+    }
+    
+    break;
+  case TOKEN_DIFF:
+    {
+      DiffData * pData = static_cast<DiffData *>(event.GetClientData ());
+
+      if (pData != 0)
+      {
+        // copy and delete data
+        DiffData data (*pData);
+        delete pData;
+        Action * action;
+
+        action = new DiffAction (this, data);
+        Perform (action);
+      }
+    }
+    break;
+
   }
 }
 
