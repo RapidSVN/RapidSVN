@@ -1,1 +1,1 @@
-shlibs:Depends=libapr0 (>= 2.0.46), libc6 (>= 2.3.1-1), libdb4.1, libgcc1 (>= 1:3.3-1), libldap2 (>= 2.1.17-1), libneon23 (>= 0.23.9), libssl0.9.7, libstdc++5 (>= 1:3.3-1), libsvn0 (>= 0.36.0-1), libwxgtk2.4 (>= 2.4.0.8), libxml2 (>= 2.5.7-1), libxmltok1, zlib1g (>= 1:1.1.4)
+shlibs:Depends=libapr0 (>= 2.0.47-7), libc6 (>= 2.3.1-1), libdb4.2, libgcc1 (>= 1:3.3-1), libldap2 (>= 2.1.17-1), libneon24 (>= 0.24.4), libssl0.9.7, libstdc++5 (>= 1:3.3-1), libsvn0 (>= 0.37.0-1), libwxgtk2.4 (>= 2.4.2), libxml2 (>= 2.5.7-1), libxmltok1, zlib1g (>= 1:1.1.4)

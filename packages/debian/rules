@@ -25,7 +25,7 @@ configure-stamp:
 	# Add here commands to configure the package.
 	./autogen.sh
 	chmod +x ./configure
-	./configure --prefix=/usr --with-svn-include=/usr/include --with-svn-lib=/usr/lib --with-docbook-xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh
+	./configure --prefix=/usr --with-svn-include=/usr/include --with-svn-lib=/usr/lib --with-docbook-xsl=/usr/share/xml/docbook/stylesheet/nwalsh --mandir=/usr/share/man
 	touch configure-stamp
 
 
@@ -48,6 +48,7 @@ clean:
 
 	# Add here commands to clean up after the build process.
 	-$(MAKE) clean
+	rm -f config.status
 
 	dh_clean
 
@@ -60,7 +61,10 @@ install: build
 	# Add here commands to install the package into debian/rapidsvn.
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/rapidsvn
 
-	rm -f $(CURDIR)/debian/rapidsvn/usr/share/doc/rapidsvn/LICENSE.txt
+	# Install lintian override
+	cp $(CURDIR)/debian/rapidsvn.override $(CURDIR)/debian/rapidsvn/usr/share/lintian/overrides/rapidsvn
+
+#	rm -f $(CURDIR)/debian/rapidsvn/usr/share/doc/rapidsvn/LICENSE.txt
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -72,6 +76,7 @@ binary-arch: build install
 	dh_testroot
 	dh_installchangelogs ChangeLog
 	dh_installdocs
+	rm -f $(CURDIR)/debian/rapidsvn/usr/share/doc/rapidsvn/LICENSE.txt
 	dh_installexamples
 #	dh_install
 #	dh_installmenu

@@ -23,6 +23,8 @@
 // forward declarations
 class Tracer;
 class wxWindow;
+class wxEvent;
+
 namespace svn
 {
   class Context;
