@@ -16,6 +16,10 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/status.hpp"
+
+// stl
+#include <vector>
 
 // app
 #include "delete_action.hpp"
@@ -49,9 +53,40 @@ DeleteAction::Prepare ()
 bool
 DeleteAction::Perform ()
 {
-  svn::Client client;
+  svn::Client client (GetContext ());
 
-  client.remove (GetTargets (), m_force);
+  const std::vector<svn::Path> & v = GetTargets ();
+  std::vector<svn::Path>::const_iterator it;
+
+  for (it=v.begin (); it!=v.end (); it++)
+  {
+    svn::Path path (*it);
+    const char * cpath = path.c_str ();
+    svn::Status status (client.singleStatus (cpath));
+
+    // if the file is versioned then it will be
+    // handled by subversion
+    if (status.isVersioned ())
+      client.remove (path, m_force);
+    else if (wxDirExists (cpath))
+    {
+      // we dont want to delete unversioned directories...
+      wxString msg;
+      msg.Printf (_("Skipping unversioned directory: %s"),
+                  cpath);
+      Trace (msg);
+    }
+    else if (wxFileExists (cpath))
+    {
+      wxString msg;
+      msg.Printf (_("Deleting unversioned file: %s"),
+                  cpath);
+      Trace (msg);
+
+      wxRemoveFile (cpath);
+    }
+  }
+
 
   return true;
 }
