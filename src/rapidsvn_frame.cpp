@@ -31,7 +31,7 @@
 #include "ids.hpp"
 
 #include "svn_file_info.hpp"
-#include "rapidsvn_app.hpp"
+//REMOVE #include "rapidsvn_app.hpp"
 
 #include "checkout_action.hpp"
 #include "import_action.hpp"

@@ -21,6 +21,9 @@
 //#include "ids.h"
 #include "tracer.hpp"
 #include "log_action.hpp"
+#include "filelist_ctrl.hpp"
+#include "folder_browser.hpp"
+#include "utils.hpp"
 
 #define SPLITTER_WINDOW   100
 

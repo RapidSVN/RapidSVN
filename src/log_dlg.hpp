@@ -14,6 +14,10 @@
 #ifndef _LOG_DLG_H_INCLUDED_
 #define _LOG_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/listctrl.h"
+
+// app
 #include "svncpp/log.hpp"
 
 class LogList : public wxListCtrl
