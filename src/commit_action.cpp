@@ -61,9 +61,14 @@ CommitAction::Perform ()
 
   const svn::Targets & targets = GetTargets ();
 
+  // WORKAROUND: CONVERT TO UTF8
+  // message = m_message.c_str ();
+  wxString messageUtf8 (m_message.mb_str (wxConvUTF8));
+  const char * message = messageUtf8.c_str ();
+
   svn::Pool pool;
   long revision = 
-    client.commit (targets.array (pool), m_message.c_str (), 
+    client.commit (targets.array (pool), message, 
                    m_recursive);
   wxString str;
 

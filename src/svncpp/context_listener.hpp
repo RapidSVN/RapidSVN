@@ -40,6 +40,9 @@ namespace svn
      * this method will be called to retrieve
      * authentication information
      *
+     * WORKAROUND FOR apr_xlate PROBLEM: 
+     * STRINGS ALREADY HAVE TO BE UTF8!!!
+     *
      * @param username
      * @param password
      * @return continue action?
@@ -74,6 +77,9 @@ namespace svn
      * this method will be called to retrieve
      * a log message
      *
+     * WORKAROUND FOR apr_xlate PROBLEM: 
+     * STRINGS ALREADY HAVE TO BE UTF8!!!
+     *
      * @param msg log message
      * @return continue action?
      * @retval true continue
@@ -86,6 +92,9 @@ namespace svn
      * or the subversion api wants to ask the
      * user a question. The question and the answers
      * will be strings
+     *
+     * WORKAROUND FOR apr_xlate PROBLEM: 
+     * STRINGS ALREADY HAVE TO BE UTF8!!!
      *
      * @param question
      * @param anwswer

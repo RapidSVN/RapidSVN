@@ -286,8 +286,13 @@ Action::contextGetLogin (std::string & username,
   bool ok = dlg.ShowModal () == wxID_OK;
   if (ok)
   {
-    username = dlg.GetUsername ();
-    password = dlg.GetPassword ();
+    // WORKAROUND: CONVERT TO UTF8
+    wxString usernameNative (dlg.GetUsername ());
+    wxString passwordNative (dlg.GetPassword ());
+    wxString usernameUtf8 (usernameNative.mb_str (wxConvUTF8));
+    wxString passwordUtf8 (passwordNative.mb_str (wxConvUTF8));
+    username = usernameUtf8.c_str ();
+    password = passwordUtf8.c_str ();
   }
 
   return ok;
@@ -370,7 +375,10 @@ Action::contextAskQuestion (const std::string & question,
       question.c_str (), _("Question"), "", GetParent ());
   }
 
-  answer = myAnswer.c_str ();
+  // WORKAROUND: CONVERT TO UTF8
+  //answer = myAnswer.c_str ();
+  wxString answerUtf8 (myAnswer.mb_str (wxConvUTF8));
+  answer = answerUtf8.c_str ();
   return myAnswer.Length () > 0;
 }
 

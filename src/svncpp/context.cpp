@@ -11,10 +11,13 @@
  * ====================================================================
  */
 
+// Apache Portable Runtime
+#include "apr_xlate.h"
+
 // Subversion api
 #include "svn_auth.h"
 #include "svn_config.h"
-#include "svn_utf.h"
+#include "svn_subst.h"
 
 // svncpp
 #include "context.hpp"
@@ -33,6 +36,31 @@ namespace svn
     std::string username;
     std::string password;
     std::string logMessage;
+
+    /**
+     * translate native c-string to utf8 
+     */
+    static svn_error_t * 
+    translateString (const char * str, const char ** newStr,
+                     apr_pool_t * pool)
+    {
+      // due to problems with apr_xlate we dont perform
+      // any conversion at this place. YOU will have to make
+      // sure any strings passed are UTF 8 strings
+      // svn_string_t *string = svn_string_create ("", pool);
+      // 
+      // string->data = str;
+      // string->len = strlen (str);
+      // 
+      // const char * encoding = APR_LOCALE_CHARSET;
+      // 
+      // SVN_ERR (svn_subst_translate_string (&string, string,
+      //                                      encoding, pool));
+      // 
+      // *newStr = string->data;
+      *newStr = str;
+      return SVN_NO_ERROR;
+    }
 
     Data ()
       : listener (0), logIsSet (false), 
@@ -172,9 +200,10 @@ namespace svn
         data->retrieveLogMessage ();
       }
 
-      //TODO maybe change encoding
-      //take a look at *subversion*client/cmdline/util.c
-      *log_msg = data->getLogMessage ();
+      // translate log message in native encoding to utf8
+      SVN_ERR (translateString (data->getLogMessage (),
+                                log_msg, pool));
+
       *tmp_file = NULL;
     
       return SVN_NO_ERROR;
@@ -248,15 +277,11 @@ namespace svn
 
       if (hide==TRUE)
       {
-        SVN_ERR (svn_utf_cstring_to_utf8( 
-                   (const char **)result, 
-                   data->getPassword (), NULL, pool));
+        SVN_ERR (translateString (data->getPassword (), result, pool));
       }
       else
       {
-        SVN_ERR (svn_utf_cstring_to_utf8( 
-                   (const char **)result,
-                   data->getUsername (), NULL, pool));
+        SVN_ERR (translateString (data->getUsername (), result, pool));
       }
 
       return SVN_NO_ERROR;
@@ -372,9 +397,7 @@ namespace svn
                                  "Context::question: cancelled");
       }
 
-      SVN_ERR (svn_utf_cstring_to_utf8( 
-                 (const char **)result, 
-                 newResult.c_str (), NULL, pool));
+      SVN_ERR (translateString (newResult.c_str (), result, pool));
 
       return SVN_NO_ERROR;
     }
