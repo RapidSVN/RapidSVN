@@ -9,6 +9,7 @@ libsvncpp_la_SOURCES= \
 	client_diff.cpp \
 	client_ls.cpp \
 	client_modify.cpp \
+	client_property.cpp \
 	client_status.cpp \
 	context.cpp \
 	dirent.cpp \

@@ -105,6 +105,10 @@ SOURCE=.\client_modify.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\client_property.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\client_status.cpp
 # End Source File
 # Begin Source File

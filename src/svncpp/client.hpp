@@ -16,11 +16,14 @@
 
 // stl
 #include <vector>
+#include <utility>
+#include <map>
 
 // svncpp
 #include "context.hpp"
 #include "exception.hpp"
 #include "path.hpp"
+#include "entry.hpp"
 #include "revision.hpp"
 #include "log_entry.hpp"
 
@@ -38,6 +41,13 @@ namespace svn
   typedef std::vector<LogEntry> LogEntries;
   typedef std::vector<Status> StatusEntries;
   typedef std::vector<DirEntry> DirEntries;
+
+  // map of property names to values
+  typedef std::map<std::string,std::string> PropertiesMap;
+  // pair of path, PropertiesMap
+  typedef std::pair<std::string, PropertiesMap> PathPropertiesMapEntry;
+  // list of path, Properties pairs
+  typedef std::vector<PathPropertiesMapEntry> PathPropertiesMapList;
 
   /**
    * Subversion client API.
@@ -113,6 +123,14 @@ namespace svn
               const Revision & revision, 
               bool recurse) throw (ClientException);
   
+    /**
+     * relocate wc @a from to @a to
+     * @exception ClientException
+     */
+    void 
+    relocate (const char *from_url, const char *to_url,
+              const Path & path, bool recurse) throw (ClientException);
+
     /**
      * Sets a single file for deletion.
      * @exception ClientException
@@ -214,6 +232,9 @@ namespace svn
     void 
     mkdir (const Path & path, 
            const char * message) throw (ClientException);
+    void 
+    mkdir (const Targets & targets, 
+           const char * message) throw (ClientException);
 
     /**
      * Recursively cleans up a local directory, finishing any
@@ -279,7 +300,19 @@ namespace svn
     merge (const Path & path1, const Revision & revision1, 
            const Path & path2, const Revision & revision2,
            const Path & localPath, bool force, 
-           bool recurse) throw (ClientException);
+           bool recurse,
+           bool notice_ancestry=false,
+           bool dry_run=false) throw (ClientException);
+
+    /**
+     * Retrieve information for the given path
+     * from the wc
+     *
+     * @param path
+     * @return Entry
+     */
+    Entry
+    info (const char *path );
 
     /**
      * Retrieve log information for the given path
@@ -338,6 +371,134 @@ namespace svn
     ls (const char * pathOrUrl,
         svn_opt_revision_t * revision,
         bool recurse) throw (ClientException);
+
+    /**
+     * lists properties in @a path no matter whether local or
+     * repository
+     *
+     * @param path
+     * @param revision
+     * @param recurse
+     * @return PropertiesList
+     */
+    PathPropertiesMapList
+    proplist(const Path &path,
+             const Revision &revision,
+             bool recurse=false);
+
+    /**
+     * lists one property in @a path no matter whether local or
+     * repository
+     *
+     * @param path
+     * @param revision
+     * @param recurse
+     * @return PropertiesList
+     */
+    PathPropertiesMapList
+    propget(const char *propName,
+            const Path &path,
+            const Revision &revision,
+            bool recurse=false);
+
+    /**
+     * set property in @a path no matter whether local or
+     * repository
+     *
+     * @param path
+     * @param revision
+     * @param propName
+     * @param propValue
+     * @param recurse
+     * @return PropertiesList
+     */
+    void
+    propset(const char *propName,
+            const char *propValue,
+            const Path &path,
+            const Revision &revision,
+            bool recurse=false);
+
+    /**
+     * delete property in @a path no matter whether local or
+     * repository
+     *
+     * @param path
+     * @param revision
+     * @param propName
+     * @param propValue
+     * @param recurse
+     * @return PropertiesList
+     */
+    void
+    propdel(const char *propName,
+            const Path &path,
+            const Revision &revision,
+            bool recurse=false);
+
+
+    /**
+     * lists revision properties in @a path no matter whether local or
+     * repository
+     *
+     * @param path
+     * @param revision
+     * @param recurse
+     * @return PropertiesList
+     */
+    std::pair<svn_revnum_t,PropertiesMap>
+    revproplist(const Path &path,
+             const Revision &revision);
+
+    /**
+     * lists one revision property in @a path no matter whether local or
+     * repository
+     *
+     * @param path
+     * @param revision
+     * @param recurse
+     * @return PropertiesList
+     */
+    std::pair<svn_revnum_t,std::string>
+    revpropget(const char *propName,
+            const Path &path,
+            const Revision &revision);
+
+    /**
+     * set revision property in @a path no matter whether local or
+     * repository
+     *
+     * @param path
+     * @param revision
+     * @param propName
+     * @param propValue
+     * @param recurse
+     * @return PropertiesList
+     */
+    svn_revnum_t
+    revpropset(const char *propName,
+            const char *propValue,
+            const Path &path,
+            const Revision &revision,
+    bool force=false);
+
+    /**
+     * delete revision property in @a path no matter whether local or
+     * repository
+     *
+     * @param path
+     * @param revision
+     * @param propName
+     * @param propValue
+     * @param recurse
+     * @return PropertiesList
+     */
+    svn_revnum_t
+    revpropdel(const char *propName,
+            const Path &path,
+            const Revision &revision,
+    bool force=false);
+
 
   private:
     Context * m_context;

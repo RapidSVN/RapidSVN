@@ -10,6 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+#if defined( _MSC_VER) && _MSC_VER <= 1200
+#pragma warning( disable: 4786 )// debug symbol truncated
+#endif
 
 // stl
 #include <string>
@@ -213,6 +216,24 @@ namespace svn
   }
 
   void
+  Client::mkdir (const Targets & targets, 
+                 const char * message) throw (ClientException)
+  {
+    Pool pool;
+    m_context->setLogMessage (message);
+
+    svn_client_commit_info_t *commit_info = NULL;
+    svn_error_t * error =  
+      svn_client_mkdir (&commit_info, 
+                        const_cast<apr_array_header_t*> 
+                        (targets.array (pool)),
+                        *m_context, pool);
+
+    if(error != NULL)
+      throw ClientException (error);
+  }
+
+  void
   Client::cleanup (const Path & path) throw (ClientException)
   {
     Pool subPool;
@@ -306,7 +327,9 @@ namespace svn
   Client::merge (const Path & path1, const Revision & revision1, 
                  const Path & path2, const Revision & revision2,
                  const Path & localPath, bool force, 
-                 bool recurse) throw (ClientException)
+                 bool recurse,
+                 bool notice_ancestry,
+                 bool dry_run) throw (ClientException)
   {
     Pool pool;
     svn_error_t * error =  
@@ -316,15 +339,35 @@ namespace svn
                         revision2.revision (),
                         localPath.c_str (),
                         recurse,
-                        FALSE, // ignore_ancestry
+                        !notice_ancestry,
                         force,
-                        FALSE, // dry_run
+                        dry_run,
                         *m_context,
                         pool);
 
     if(error != NULL)
       throw ClientException (error);
   }
+
+  void
+  Client::relocate (const char * from_url, 
+                    const char * to_url, 
+                    const Path & path,
+                    bool recurse) throw (ClientException)
+  {
+    Pool pool;
+    svn_error_t * error =  
+      svn_client_relocate (from_url,
+                         to_url,
+                         path.c_str (),
+                         recurse,
+                         *m_context,
+                         pool);
+    
+    if(error != NULL)
+      throw ClientException (error);
+  }
+
 }
 
 /* -----------------------------------------------------------------

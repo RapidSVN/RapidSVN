@@ -10,6 +10,9 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+#if defined( _MSC_VER) && _MSC_VER <= 1200
+#pragma warning( disable: 4786 )// debug symbol truncated
+#endif
 
 // Subversion api
 #include "svn_client.h"
@@ -288,6 +291,27 @@ namespace svn
     }
 
     return entries;
+  }
+
+  Entry
+  Client::info (const char *path )
+  {
+    Pool pool;
+    svn_wc_adm_access_t *adm_access;
+
+    svn_error_t *error
+      = svn_wc_adm_probe_open (&adm_access, NULL, path, FALSE,
+                                    FALSE, pool);
+    if (error != NULL)
+      throw ClientException (error);
+
+    const svn_wc_entry_t *entry;
+    error = svn_wc_entry (&entry, path, adm_access, FALSE, pool);
+    if (error != NULL)
+      throw ClientException (error);
+
+    // entry may be NULL
+    return Entry( entry );
   }
 
 }
