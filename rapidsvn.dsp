@@ -182,6 +182,10 @@ SOURCE=.\src\import_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\listed_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\log_action.cpp
 # End Source File
 # Begin Source File
@@ -399,6 +403,10 @@ SOURCE=.\src\import_action.hpp
 # Begin Source File
 
 SOURCE=.\src\import_dlg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\listed_dlg.hpp
 # End Source File
 # Begin Source File
 

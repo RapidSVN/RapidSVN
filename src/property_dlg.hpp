@@ -21,10 +21,10 @@
 // svncpp
 #include "svncpp/property.hpp"
 
-// forward declarations
-class wxListEvent;
+// app
+#include "listed_dlg.hpp"
 
-class PropertyDlg : public wxDialog
+class PropertyDlg : public ListEditorDlg
 {
 public:
   PropertyDlg (wxWindow * parent, svn::Context * context, 
@@ -35,17 +35,17 @@ public:
    */
   virtual ~PropertyDlg ();
 
+
+protected:
+  virtual void
+  ReadFromGrid ();
+
+  virtual void
+  WriteToGrid ();
+
 private:
   struct Data;
   Data * m;
-
-  void OnClose (wxCommandEvent & event);
-  void OnOK (wxCommandEvent & event);
-
-  void OnNew (wxCommandEvent & event);
-  void OnEdit (wxCommandEvent & event);
-  void OnDelete (wxCommandEvent & event);
-  void OnSelected (wxListEvent & event);
 
   /**
    * disallow default constructor
@@ -61,8 +61,6 @@ private:
    * disallow assignment operator
    */
   PropertyDlg operator & (const PropertyDlg &);
-private:
-  DECLARE_EVENT_TABLE ()
 };
 
 #endif

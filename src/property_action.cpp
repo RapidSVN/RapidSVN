@@ -35,9 +35,8 @@ PropertyAction::Prepare ()
   }
 
   PropertyDlg dlg (GetParent (), GetContext (), GetTarget ());
-  dlg.ShowModal ();
 
-  return true;
+  return dlg.ShowModal () == wxID_OK;
 }
 
 bool
