@@ -30,7 +30,7 @@
 /* Minor version number.
    Modify when new functionality is added or new interfaces are
    defined, but all changes are backward compatible. */
-#define RAPIDSVN_VER_MINOR      2
+#define RAPIDSVN_VER_MINOR      3
 
 /* Patch number.
    Modify for every released patch. */
@@ -38,7 +38,7 @@
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
-#define RAPIDSVN_VER_MILESTONE "0.2"
+#define RAPIDSVN_VER_MILESTONE "0.3"
 
 #endif
 /* -----------------------------------------------------------------
