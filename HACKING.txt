@@ -269,24 +269,29 @@ For the RapidSVN website we are producing two types of packages:
 
 These are the steps to follow when creating a new release of RapidSVN:
 
+0. Release preparations:
+
+   *  Edit the version numbers in the file "version.xml" and run 
+      the Python script check-version.py (from the directory "tools")
+
+   *  Create the the change description in the "CHANGES" file
+
+   *  Commit "version.xml" and "CHANGES"
+
+   *  Create the version tag by copying (either using svn or RapidSVN):
+      "svn cp -m "Version XYZ tag" . https://svn.collab.net/repos/rapidsvn/tags/XYZ
+
 1. Create source tarball (on Linux):
 
-   *  Checkout a fresh working copy of RapidSVN from the repository
+   *  Checkout a fresh working copy of RapidSVN (using
+      http://svn.collab.net/repos/rapidsvn/tags/XYZ) from the repository
       to make sure everything is built and no old stuff is lying around
 
    *  Make sure all the tools required are there (autoconf, automake,
       doxygen, xsltproc, docbook)
 
-   *  Edit the version numbers in the file "version.xml" and run 
-      the Python script check-version.py (from the directory "tools")
-
    *  Run "autogen.sh", "configure", "make" "make dist"
       (no errors allowed!)
-
-   *  Commit "version.xml"
-
-   *  Create the version tag by copying (either using svn or RapidSVN):
-      "svn cp -m "Version XYZ tag" . https://svn.collab.net/repos/rapidsvn/tags/XYZ
 
    *  Uninstall older rapidsvn/libsvncpp version (if there)
 
