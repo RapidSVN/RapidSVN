@@ -143,11 +143,13 @@ wxFrame ((wxFrame *) NULL, -1, title)
   m_folder_browser = new FolderBrowser (m_vert_splitter,
                                         pool,
                                         -1,
-                                        "/home/teo/w/rwc-svn",
+                                        _T("/home/teo/w/rwc-svn"),
                                         wxDefaultPosition,
                                         wxDefaultSize,
                                         wxDIRCTRL_DIR_ONLY,
-                                        "/home/teo/w/rwc-svn/*");
+                                        _T(""),
+                                        0,
+                                        _T(""));
 
   InitFileList ();
   m_listCtrl->UpdateFileList (m_folder_browser->GetDefaultPath ());
@@ -864,7 +866,7 @@ VSvnFrame::OnToolLeftClick (wxCommandEvent & event)
 void
 VSvnFrame::BrowseDir ()
 {
-  wxDirDialog dialog (this, "Select a working directory");
+  wxDirDialog dialog (this, "Select a working directory", wxGetHomeDir ());
 
   if (dialog.ShowModal () == wxID_OK)
   {

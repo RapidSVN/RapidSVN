@@ -3,22 +3,17 @@
 
 #include "res/checkout.h"
 
-#if defined(__WXMSW__)
-static char *Checkout_Dialog = NULL;
-#else
-# include "res/checkout.wxr"
-#endif
-
-class CheckoutDlg:public wxDialog
+class CheckoutDlg : public wxDialog
 {
 
 public:
-  wxTextCtrl * moduleName;
+  wxTextCtrl *moduleName;
   wxTextCtrl *destFolder;
   wxTextCtrl *user;
   wxTextCtrl *pass;
   wxTextCtrl *revision;
   wxCheckBox *recursive;
+  CheckoutDlg (wxWindow *parent);
 
 public:
   void OnOk (wxCommandEvent & event);

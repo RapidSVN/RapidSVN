@@ -10,6 +10,7 @@ private:
   wxString moduleName;
   wxString user;
   wxString pass;
+  wxFrame *thisframe;
   svn_boolean_t recursive;
   unsigned long revnum;
 

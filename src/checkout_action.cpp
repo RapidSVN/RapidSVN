@@ -7,9 +7,10 @@
 #include "rapidsvn_app.h"
 #include "checkout_action.h"
 
-CheckoutAction::CheckoutAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr):ActionThread (frame,
-              __pool)
+CheckoutAction::CheckoutAction (wxFrame * frame, apr_pool_t * __pool, 
+                                Tracer * tr):ActionThread (frame, __pool)
 {
+  thisframe = frame;
   SetTracer (tr, FALSE);        // do not own the tracer
   revnum = 0;
   rev_specified = false;
@@ -20,58 +21,38 @@ CheckoutAction::Perform ()
 {
   ////////////////////////////////////////////////////////////
   // Here we are in the main thread.
+  CheckoutDlg *coDlg = new CheckoutDlg(thisframe);
 
-#if defined(__WXMSW__)
-  // Load the .wxr 'file' from a .rc resource, under Windows.
-  Checkout_Dialog = wxLoadUserResource ("Checkout_Dialog", "WXRDATA");
-  // All resources in the file (only one in this case) get parsed
-  // by this call.
-  wxResourceParseString (Checkout_Dialog);
-#else
-  // Simply parse the data pointed to by the variable Import_Dialog.
-  wxResourceParseData (Checkout_Dialog);
-#endif
+  if (coDlg->ShowModal () != ID_BUTTON_OK)
+    return;
 
-  CheckoutDlg *coDlg = new CheckoutDlg;
+  destinationFolder = coDlg->destFolder->GetValue ();
+  TrimString (destinationFolder);
+  UnixPath (destinationFolder);
+  moduleName = coDlg->moduleName->GetValue ();
+  TrimString (moduleName);
+  user = coDlg->user->GetValue ();
+  pass = coDlg->pass->GetValue ();
+  recursive = coDlg->recursive->GetValue ();
 
-  if (coDlg->LoadFromResource (mainFrame, "Checkout_Dialog"))
+  // get revision number from dialog
+  // #### TODO: check errors
+  wxString tmpstr = coDlg->revision->GetValue ();
+  TrimString (tmpstr);
+  if (tmpstr.IsEmpty ())
+    rev_specified = false;
+  else
   {
-    coDlg->InitializeData ();
-
-    if (coDlg->ShowModal () == ID_BUTTON_OK)
-    {
-      destinationFolder = coDlg->destFolder->GetValue ();
-      TrimString (destinationFolder);
-      UnixPath (destinationFolder);
-      moduleName = coDlg->moduleName->GetValue ();
-      TrimString (moduleName);
-      user = coDlg->user->GetValue ();
-      pass = coDlg->pass->GetValue ();
-      recursive = coDlg->recursive->GetValue ();
-
-      // get revision number from dialog
-      // #### TODO: check errors
-      wxString tmpstr = coDlg->revision->GetValue ();
-      TrimString (tmpstr);
-      if (tmpstr.IsEmpty ())
-        rev_specified = false;
-      else
-      {
-        rev_specified = true;
-        tmpstr.ToULong (&revnum, 10);
-      }
-
-
-      // #### TODO: check errors and throw an exception
-      // create the thread
-      Create ();
-
-      // here we start the action thread
-      Run ();
-
-      ////////////////////////////////////////////////////////////
-    }
+    rev_specified = true;
+    tmpstr.ToULong (&revnum, 10);
   }
+
+  // #### TODO: check errors and throw an exception
+  // create the thread
+  Create ();
+
+  // here we start the action thread
+  Run ();
 
   // destroy the dialog
   coDlg->Close (TRUE);
