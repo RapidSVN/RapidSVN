@@ -24,9 +24,9 @@
 #include "simple_worker.hpp"
 #include "tracer.hpp"
 
-SimpleWorker::SimpleWorker ()
+SimpleWorker::SimpleWorker (wxWindow * parent)
   : m_action (0), m_state (ACTION_NONE), 
-    m_result (ACTION_NOTHING), m_parent (0), m_tracer (0)
+    m_result (ACTION_NOTHING), m_parent (parent), m_tracer (0)
 {
 }
 

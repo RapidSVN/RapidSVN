@@ -730,6 +730,10 @@ SOURCE=.\wx\msw\size.cur
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\res\svn.ico
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\wx\msw\tip.ico
 # End Source File
 # Begin Source File

@@ -26,7 +26,7 @@ public:
   /**
    * default constructor.
    */
-  SimpleWorker ();
+  SimpleWorker (wxWindow * parent = 0);
 
   /**
    * destructor

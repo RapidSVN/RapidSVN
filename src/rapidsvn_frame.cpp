@@ -116,7 +116,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_folder_browser = NULL;
   m_listCtrl = NULL;
   m_title = title;
-  m_actionWorker.Create (this);
+  m_actionWorker = new SimpleWorker (this);
   m_context = NULL;
   m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
@@ -226,6 +226,9 @@ RapidSvnFrame::~RapidSvnFrame ()
 
   if (m_logTracer)
     delete m_logTracer;
+
+  if (m_actionWorker)
+    delete m_actionWorker;
 
   // Save frame size and position.
 
@@ -1022,8 +1025,8 @@ RapidSvnFrame::Perform (ActionType type, Action * action)
     action->SetTargets (GetActionTargets ());
   }
   action->SetTracer (m_logTracer);
-  m_actionWorker.SetTracer (m_logTracer);
-  m_actionWorker.Perform (action);
+  m_actionWorker->SetTracer (m_logTracer);
+  m_actionWorker->Perform (action);
 }
 
 void 

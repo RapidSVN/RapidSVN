@@ -172,7 +172,7 @@ private:
 
 
 private:
-  SimpleWorker m_actionWorker;
+  ActionWorker * m_actionWorker;
 
   FolderBrowser * m_folder_browser;
   FileListCtrl *m_listCtrl;
