@@ -34,7 +34,8 @@ ExternalProgramAction::Perform ()
   wxBusyCursor busy_cursor;
 
   // The actual target
-  wxFileName target = GetTarget ().c_str ();
+  wxString target_str = GetTarget ().c_str ();
+  wxFileName target = target_str;
 
   // The target we'll pass to the external program
   wxString target_document = target.GetFullPath ();
