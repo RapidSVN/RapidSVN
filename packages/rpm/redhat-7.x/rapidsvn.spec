@@ -17,7 +17,7 @@ Requires: apache-libapr-utils >= %{apache_version}
 Requires: subversion
 #Requires: /sbin/install-info
 BuildPreReq: subversion-devel
-BuildPreReq: wxGTK-devel
+BuildPreReq: wxGTK-devel >= 2.3.3
 BuildPreReq: apache >= %{apache_version}
 BuildPreReq: apache-devel >= %{apache_version}
 BuildPreReq: apache-libapr-devel >= %{apache_version}
@@ -59,10 +59,11 @@ ${AUTOCONF}
 %patch0 -p0
 
 ./configure \
+	--with-wx-config=/usr/bin/wxgtk-2.3-config \
 	--with-apr-config=/usr/local/apache2/bin/apr-config \
 	--disable-no-exceptions
 
-%patch1 -p0
+#%patch1 -p0
 
 %build
 cd src

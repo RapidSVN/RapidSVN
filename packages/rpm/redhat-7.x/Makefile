@@ -7,11 +7,11 @@
 ##########################################################################
 
 SPECFILE := rapidsvn.spec
-VERSION_FILE := ../../configure.in
+VERSION_FILE := ../../../configure.in
 
 RPMDIR := rpms
 
-SVN_TOP_DIR := $(shell pwd)/../..
+SVN_TOP_DIR := $(shell pwd)/../../..
 
 NAME := $(shell grep '^Name:' < $(SPECFILE) | sed -e 's/^Name: //')
 SVN_VERSION_MICRO := $(shell grep 'define SVN_VER_MICRO' < $(VERSION_FILE) | (read one two three; echo $$three) )

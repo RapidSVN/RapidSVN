@@ -1,9 +1,9 @@
---- src/Makefile.in	2002/09/14 22:36:08	1.1
-+++ src/Makefile.in	2002/09/14 22:36:38
-@@ -51,7 +51,7 @@
- LIBS=-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
- 		$(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(APR_LIBS) \
- 		$(WX_LIBS)
+--- src/Makefile.in	2002/10/19 20:52:39	1.1
++++ src/Makefile.in	2002/10/19 20:52:56
+@@ -56,7 +56,7 @@
+ #you can debug your application with electric fence.
+ #just uncomment the following line (you must have electric fence installed)
+ #LIBS=-lefence $(LIBS)
 -SVN_INC=-I/usr/local/include/subversion-1
 +SVN_INC=-I/usr/include/subversion-1
  CXXFLAGS=@CXXFLAGS@ -fexceptions
