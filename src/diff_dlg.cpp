@@ -610,7 +610,7 @@ private:
       if (COMPARE_TYPES [i] == compareType)
       {
         mComboCmpType->Append (COMPARE_TYPE_LABELS [i],
-                               (void*) compareType);
+                               (void*) & (COMPARE_TYPES [i]));
         ok = true;
         break;
       }
@@ -634,13 +634,11 @@ private:
     if (sel < 0)
       return DiffData::INVALID_COMPARE_TYPE;
 
-    int value = (int)mComboCmpType->GetClientData (sel);
-
-    if ((value <= DiffData::INVALID_COMPARE_TYPE) ||
-        (value >= DiffData::COMPARE_TYPE_COUNT))
+    DiffData::CompareType* ct = (DiffData::CompareType*) mComboCmpType->GetClientData (sel);
+    if (!ct)
       return DiffData::INVALID_COMPARE_TYPE;
-
-    return (DiffData::CompareType) value;
+    
+    return *ct;
   }
 
 
@@ -660,7 +658,8 @@ private:
 
     for (int i=0; i < c; i++)
     {
-      if (compareType == (int)mComboCmpType->GetClientData (i))
+      DiffData::CompareType* ct = (DiffData::CompareType*) mComboCmpType->GetClientData (i);
+      if (ct && compareType == *ct)
       {
         mComboCmpType->SetSelection (i);
         found = true;

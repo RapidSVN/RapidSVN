@@ -1243,8 +1243,17 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_ACTION_END:
     {
-      unsigned int actionFlags = 
-        (unsigned int)event.GetClientData ();
+      unsigned int* af = (unsigned int*) event.GetClientData ();
+      unsigned int actionFlags = 0;
+      if (af)
+      {
+        actionFlags = *af;
+        delete af;
+      }
+      else
+      {
+        Trace (_("Error receiving action event!"));
+      }
 
       if ((actionFlags & Action::UPDATE_LATER) != 0)
       {

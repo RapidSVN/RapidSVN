@@ -200,7 +200,7 @@ SimpleWorker::Perform (Action * action)
     return false;
   }
 
-  PostDataEvent (TOKEN_ACTION_END, (void*)actionFlags, 
+  PostDataEvent (TOKEN_ACTION_END, (void*) new unsigned int(actionFlags), 
                  ACTION_EVENT);
   return true;
 }
