@@ -25,8 +25,6 @@ struct MergeData
   wxString Path1Rev;
   wxString Path2Rev;
   wxString Destination;
-  wxString User;
-  wxString Password;
   bool Recursive;
   bool Force;
 };

@@ -24,8 +24,6 @@ public:
     sData();
     
     wxString LogMessage;
-    wxString User;
-    wxString Password;
     bool Force;
   };
   

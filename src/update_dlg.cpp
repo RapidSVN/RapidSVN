@@ -64,27 +64,6 @@ UpdateDlg::InitData ()
 
   topSizer->Add(revSizer, 1, wxALL, 5);
   
-  // The authentication fields:
-  wxStaticBoxSizer *authSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _("Authentication")), wxHORIZONTAL);
-    
-  authSizer->Add(new wxStaticText(this, -1, _("User")), 0, 
-    wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-   
-  wxTextCtrl* pUser = new wxTextCtrl (this, -1, _(""),
-    wxDefaultPosition, wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NONE, &m_data.User));
-  authSizer->Add (pUser, 1, 
-    wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
-
-  authSizer->Add(new wxStaticText (this, -1, _("Password")), 0,
-    wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  wxTextCtrl* pass = new wxTextCtrl (this, -1, _(""), wxPoint(-1,-1), 
-    wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_data.Password));
-  authSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
-  
-  middleSizer->Add(authSizer, 1, wxALL, 5);
-
   // The buttons:
   buttonSizer->Add(new wxButton( this, wxID_OK, _("OK" )), 0, 
                    wxALL, 10);

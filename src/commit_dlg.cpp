@@ -35,21 +35,13 @@ CommitDlg::InitializeData ()
 {
   // create controls
   wxStaticBox* msgBox = new wxStaticBox(this, -1, _("Enter log message"));
+
+  wxSize msgSize (GetCharWidth () * 80, GetCharHeight () * 10);
+
   wxTextCtrl* msg = 
     new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
-                   wxSize(-1, 50), wxTE_MULTILINE,
+                   msgSize, wxTE_MULTILINE,
                    wxTextValidator(wxFILTER_NONE, &m_data.LogMessage));
-  wxStaticBox* authBox = new wxStaticBox(this, -1, _("Authentication"));
-  wxStaticText* userLabel = new wxStaticText(this, -1, _("User"));
-  wxTextCtrl* user = new wxTextCtrl (this, -1, _(""),
-    wxDefaultPosition, wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NONE, &m_data.User));
-  wxStaticText* passLabel = 
-    new wxStaticText (this, -1, _("Password"));
-  wxTextCtrl* pass = 
-    new wxTextCtrl (this, -1, _(""), wxPoint(-1,-1), 
-                    wxDefaultSize, wxTE_PASSWORD, 
-                    wxTextValidator(wxFILTER_NONE, &m_data.Password));
   wxCheckBox* recursive  = 
     new wxCheckBox(this, -1, "Recursive",
                    wxDefaultPosition, wxDefaultSize, 0,
@@ -65,22 +57,9 @@ CommitDlg::InitializeData ()
     new wxStaticBoxSizer(msgBox, wxHORIZONTAL);
   msgSizer->Add(msg, 1, wxALL | wxEXPAND, 5);
   
-  // The authentication fields:
-  wxStaticBoxSizer *authSizer = new wxStaticBoxSizer(
-    authBox, wxHORIZONTAL);
-    
-  authSizer->Add(userLabel, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  authSizer->Add (user, 1, wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
-  authSizer->Add(passLabel, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  authSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
-  
-  wxBoxSizer *middleSizer = new wxBoxSizer(wxHORIZONTAL);
-  middleSizer->Add(authSizer, 1, wxALL | wxEXPAND, 5);
-
-  // The "recursive" check box:
-    
   // The buttons:
   wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+  buttonSizer->Add(recursive, 1, wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 10);
   buttonSizer->Add(ok, 0, wxALL, 10);
   buttonSizer->Add(cancel, 0, wxALL, 10);
 
@@ -89,9 +68,7 @@ CommitDlg::InitializeData ()
 
   // Add all the sizers to the main sizer
   mainSizer->Add (topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
-  mainSizer->Add (middleSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-  mainSizer->Add (recursive, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
-  mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
+  mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
 
   SetAutoLayout(true);
   SetSizer(mainSizer);

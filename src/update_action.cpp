@@ -55,7 +55,7 @@ UpdateAction::Prepare ()
 bool
 UpdateAction::Perform ()
 {
-  svn::Context context (m_data.User, m_data.Password);
+  svn::Context context;
   svn::Client client (&context);
   SvnNotify notify (GetTracer ());
   client.notification (&notify);

@@ -23,8 +23,6 @@ struct CommitData
   }
 
   wxString LogMessage;
-  wxString User;
-  wxString Password;
   bool Recursive;
 };
   

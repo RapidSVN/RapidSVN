@@ -103,7 +103,6 @@ SimpleWorker::Perform (Action * action)
     delete m_action;
     m_action = 0;
     m_state = ACTION_NONE;
-    return true;
   }
   catch (svn::ClientException & e)
   {
@@ -125,6 +124,7 @@ SimpleWorker::Perform (Action * action)
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
+  return true;
 }
 
 void

@@ -49,7 +49,7 @@ MergeAction::Prepare ()
 bool
 MergeAction::Perform ()
 {
-  svn::Context context (m_data.User.c_str (), m_data.Password.c_str ());
+  svn::Context context;
   svn::Client client (&context);
   SvnNotify notify (GetTracer ());
   client.notification (&notify);

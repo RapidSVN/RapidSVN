@@ -20,8 +20,6 @@ struct UpdateData
     UseLatest = true;
   }
     
-  wxString User;
-  wxString Password;
   wxString Revision;
   bool UseLatest;
 };

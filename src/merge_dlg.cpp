@@ -184,23 +184,6 @@ MergeDlg::InitializeData ()
     wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_data.Force));
   sundrySizer->Add(Force, 0, wxALL, 5);
 
-  // Authentication row:
-  wxStaticBoxSizer *authSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _("Authentication")), wxHORIZONTAL);
-
-  authSizer->Add(new wxStaticText(this, -1, _("User")), 0, 
-    wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl* user = new wxTextCtrl(this, -1, "",
-    wxDefaultPosition, wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NONE, &m_data.User));
-  authSizer->Add(user, 1, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-
-  authSizer->Add(new wxStaticText(this, -1, _("Password")), 0,
-    wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  wxTextCtrl* pass = new wxTextCtrl(this, -1, "", wxDefaultPosition, 
-    wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_data.Password));
-  authSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
- 
   // Button row
   wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
   buttonSizer->Add(new wxButton(this, wxID_OK, _("OK" )), 0, 
@@ -210,7 +193,6 @@ MergeDlg::InitializeData ()
 
   // Add all sizers to main sizer
   mainSizer->Add(mergeSizer, 0, wxALL | wxEXPAND, 5);
-  mainSizer->Add(authSizer, 0, wxALL | wxEXPAND, 5);
   mainSizer->Add(sundrySizer, 0, wxALL | wxCENTER, 5);
   mainSizer->Add(buttonSizer, 0, wxALL | wxCENTER, 5);
 

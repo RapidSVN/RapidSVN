@@ -25,8 +25,6 @@ public:
     
     wxString Target;
     wxString LogMessage;
-    wxString User;
-    wxString Password;
   };
 
   MkdirDlg(wxWindow* parent, sData* pData);
