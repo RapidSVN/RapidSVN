@@ -6,6 +6,15 @@
 #include <wx/resource.h>
 #include <wx/valgen.h>
 
+// List wxConfig key names here:
+static const char* szTextKey = "/Preferences/Text";
+static const char* szEnableXKey = "/Preferences/EnableX";
+static const char* szEnableYKey = "/Preferences/EnableY";
+static const char* szEnable1Key = "/Preferences/Enable1";
+static const char* szEnable2Key = "/Preferences/Enable2";
+static const char* szEnable3Key = "/Preferences/Enable3";
+static const char* szChoiceKey = "/Preferences/Choice";
+
 /* PreferencesDlg::SData ***************************************************/
 
 PreferencesDlg::SData::SData()
@@ -20,25 +29,21 @@ PreferencesDlg::SData::SData()
   Choice = 1;
 }  
 
-// Config file key for preference data:
-static const wxString ConfigPath("/Preferences");
-
 void
 PreferencesDlg::SData::Read(wxConfigBase* pConfig)
 {
   if (pConfig)
   {
-    pConfig->SetPath(ConfigPath);
     // If these reads fail, the default values from the 
     // constructor remain:
-    Text = pConfig->Read("Text", Text);
-    pConfig->Read("EnableX", &EnableX);
-    pConfig->Read("EnableY", &EnableY);
-    pConfig->Read("Enable1", &Enable1);
-    pConfig->Read("Enable2", &Enable2);
-    pConfig->Read("Enable3", &Enable3);
+    Text = pConfig->Read(szTextKey, Text);
+    pConfig->Read(szEnableXKey, &EnableX);
+    pConfig->Read(szEnableYKey, &EnableY);
+    pConfig->Read(szEnable1Key, &Enable1);
+    pConfig->Read(szEnable2Key, &Enable2);
+    pConfig->Read(szEnable3Key, &Enable3);
     long l = Choice;
-    pConfig->Read("Choice", (long *) &l);
+    pConfig->Read(szChoiceKey, (long *) &l);
     Choice = l;
   }
 }
@@ -48,14 +53,13 @@ PreferencesDlg::SData::Write(wxConfigBase* pConfig) const
 {
   if (pConfig)
   {
-    pConfig->SetPath(ConfigPath);
-    pConfig->Write("Text", Text);
-    pConfig->Write("EnableX", EnableX);
-    pConfig->Write("EnableY", EnableY);
-    pConfig->Write("Enable1", Enable1);
-    pConfig->Write("Enable2", Enable2);
-    pConfig->Write("Enable3", Enable3);
-    pConfig->Write("Choice", (long) Choice);  
+    pConfig->Write(szTextKey, Text);
+    pConfig->Write(szEnableXKey, EnableX);
+    pConfig->Write(szEnableYKey, EnableY);
+    pConfig->Write(szEnable1Key, Enable1);
+    pConfig->Write(szEnable2Key, Enable2);
+    pConfig->Write(szEnable3Key, Enable3);
+    pConfig->Write(szChoiceKey, (long) Choice);  
       // int not supported - an oversight in wxConfig?
   }
 }
