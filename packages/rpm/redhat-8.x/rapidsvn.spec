@@ -8,7 +8,6 @@ Group: Utilities/System
 URL: http://rapidsvn.tigris.org
 Source0: %{name}-%{version}-%{release}.tar.gz
 Patch0: rapidsvn.include.patch
-Patch1: apr.patch
 Packager: David Summers <david@summersoft.fay.ar.us>
 Requires: httpd-apr >= %{apache_version}
 Requires: subversion
@@ -58,8 +57,6 @@ ${AUTOCONF}
 	--with-wx-config=/usr/bin/wxgtk-2.3-config \
 	--with-apr-config=/usr/bin/apr-config \
 	--disable-no-exceptions
-
-#%patch1 -p0
 
 %build
 cd src
