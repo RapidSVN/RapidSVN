@@ -85,7 +85,7 @@ public:
     }
 
     if (singleContext == 0)
-      contexts.Add (new svn::Context ());
+      contexts.Add (CreateContext ());
   }
 
   bool
@@ -120,6 +120,20 @@ public:
 
       contexts.RemoveAt (0);
     }
+  }
+
+  /**
+   * factory method to create a new context 
+   */
+  svn::Context *
+  CreateContext ()
+  {
+    svn::Context * context = new svn::Context ();
+    
+    // disable authentication caching.
+    context->setAuthCache(false);
+
+    return context;
   }
 };
 
@@ -198,7 +212,7 @@ Bookmarks::SetAuthPerBookmark (const bool perBookmark)
   {
     // one Context for all
     m->ClearContexts ();
-    m->singleContext = new svn::Context ();
+    m->singleContext = m->CreateContext ();
   }
   else
   {
@@ -213,7 +227,7 @@ Bookmarks::SetAuthPerBookmark (const bool perBookmark)
     size_t index;
     for (index=0; index < count; index++)
     {
-      m->contexts.Add (new svn::Context ());
+      m->contexts.Add (m->CreateContext ());
     }
   }
 }
