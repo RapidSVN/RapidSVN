@@ -53,6 +53,15 @@ public:
     COL_CMT_DATE,
     COL_TEXT_TIME,
     COL_PROP_TIME,
+    COL_CHECKSUM,
+    COL_URL,
+    COL_REPOS,
+    COL_UUID,
+    COL_SCHEDULE,
+    COL_COPIED,
+    COL_CONFLICT_OLD,
+    COL_CONFLICT_NEW,
+    COL_CONFLICT_WRK,
     COL_COUNT
   } FileListColumns;
 

@@ -129,24 +129,51 @@ GetDefaultWidth (int col)
   int width;
   switch (col)
   {
-    case FileListCtrl::COL_NAME:
-    case FileListCtrl::COL_CMT_DATE:
-    case FileListCtrl::COL_TEXT_TIME:
-    case FileListCtrl::COL_PROP_TIME:
-      width = 150;
-      break;
-    case FileListCtrl::COL_AUTHOR:
-    case FileListCtrl::COL_TEXT_STATUS:
-    case FileListCtrl::COL_PROP_STATUS:
-      width = 100;
-      break;
-    default:
-      width = 75;
-      break;
+  case FileListCtrl::COL_CHECKSUM:
+    width = 220;
+    break;
+  case FileListCtrl::COL_NAME:
+  case FileListCtrl::COL_CMT_DATE:
+  case FileListCtrl::COL_TEXT_TIME:
+  case FileListCtrl::COL_PROP_TIME:
+    width = 150;
+    break;
+  case FileListCtrl::COL_AUTHOR:
+  case FileListCtrl::COL_TEXT_STATUS:
+  case FileListCtrl::COL_PROP_STATUS:
+    width = 100;
+    break;
+  default:
+    width = 75;
+    break;
   }
 
   return width;
 }
+
+static const char * 
+COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
+{
+  _("Name"),
+  _("Revision"),
+  _("Rep. Rev."),
+  _("Author"),
+  _("Status"),
+  _("Prop Status"),
+  _("Last Changed"),
+  _("Date"),
+  _("Prop Date"),
+  _("Checksum"),
+  _("Url"),
+  _("Repository"),
+  _("UUID"),
+  _("Schedule"),
+  _("Copied"),
+  _("Conflict Old"),
+  _("Conflict New"),
+  _("Conflict Work")
+};
+
 
 
 /**
@@ -161,6 +188,7 @@ public:
   wxString Path;
   wxImageList *ImageListSmall;
   bool ColumnVisible[COL_COUNT];
+  wxString ColumnCaption[COL_COUNT];
 
   /** default constructor */
   Data ()
@@ -307,7 +335,7 @@ public:
   {
     svn::Status * ps1 = (svn::Status *) item1;
     svn::Status * ps2 = (svn::Status *) item2;
-    FileListCtrl::Data *data = (FileListCtrl::Data *) sortData;
+    Data *data = (Data *) sortData;
 
     if (ps1 && ps2) 
       return CompareItems (ps1, ps2, data->SortColumn, 
@@ -400,37 +428,8 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
     wxString key;
     key.Printf (ConfigColumnVisibleFmt, col);
     m->ColumnVisible[col] = pConfig->Read (key, (long) 1) != 0;
+    itemCol.m_text = COLUMN_CAPTIONS[col];
 
-    switch (col)
-    {
-    case COL_NAME:
-      itemCol.m_text = _("Name");
-      break;
-    case COL_REV:
-      itemCol.m_text = _("Revision");
-      break;
-    case COL_CMT_REV:
-      itemCol.m_text = _("Rep. Rev.");
-      break;
-    case COL_CMT_DATE:
-      itemCol.m_text = _("Last Changed");
-      break;
-    case COL_AUTHOR:
-      itemCol.m_text = _("Author");
-      break;
-    case COL_TEXT_STATUS:
-      itemCol.m_text = _("Status");
-      break;
-    case COL_PROP_STATUS:
-      itemCol.m_text = _("Prop Status");
-      break;
-    case COL_TEXT_TIME:
-      itemCol.m_text = _("Date");
-      break;
-    case COL_PROP_TIME:
-      itemCol.m_text = _("Prop Date");
-      break;
-    }
     InsertColumn (col, itemCol);
   }
 
@@ -564,6 +563,16 @@ FileListCtrl::UpdateFileList ()
     wxString propStatus;
     wxString textDate;
     wxString propDate;
+    wxString url;
+    wxString repos;
+    wxString uuid;
+    wxString schedule;
+    wxString copied;
+    wxString conflictOld;
+    wxString conflictNew;
+    wxString conflictWrk;
+    wxString checksum;
+
     if (status.isVersioned ())
     {
       const svn::Entry & entry = status.entry ();
@@ -576,6 +585,35 @@ FileListCtrl::UpdateFileList ()
       cmtDate = FormatDate (entry.cmtDate ());
       textDate = FormatDate (entry.textTime ());
       propDate = FormatDate (entry.propTime ());
+
+      url = entry.url ();
+      repos = entry.repos ();
+      uuid = entry.uuid ();
+      
+      switch (entry.schedule ())
+      {
+      case svn_wc_schedule_add:
+        schedule = _("add");
+        break;
+      case svn_wc_schedule_delete:
+        schedule = _("delete");
+        break;
+      case svn_wc_schedule_replace:
+        schedule = _("replace");
+        break;
+      }
+
+      if (entry.isCopied ())
+      {
+        copied.Printf("%s, %ld", 
+                      entry.copyfromUrl (),
+                      entry.copyfromRev ());
+      }
+
+      conflictOld = entry.conflictOld ();
+      conflictNew = entry.conflictNew ();
+      conflictWrk = entry.conflictWrk ();
+      checksum = entry.checksum ();
     }
     switch(status.textStatus ())
     {
@@ -597,6 +635,7 @@ FileListCtrl::UpdateFileList ()
       propStatus = svn::Status::statusDescription (status.propStatus ());
       break;
     }
+
     SetItem (i, COL_REV, revision);
     SetItem (i, COL_CMT_REV, cmtRev);
     SetItem (i, COL_CMT_DATE, cmtDate);
@@ -605,6 +644,16 @@ FileListCtrl::UpdateFileList ()
     SetItem (i, COL_PROP_STATUS, propStatus);
     SetItem (i, COL_TEXT_TIME, textDate);
     SetItem (i, COL_PROP_TIME, propDate);
+    SetItem (i, COL_CHECKSUM, checksum);
+    SetItem (i, COL_URL, url);
+    SetItem (i, COL_REPOS, repos);
+    SetItem (i, COL_UUID, uuid);
+    SetItem (i, COL_SCHEDULE, schedule);
+    SetItem (i, COL_COPIED, copied);
+    SetItem (i, COL_CONFLICT_OLD, conflictOld);
+    SetItem (i, COL_CONFLICT_NEW, conflictNew);
+    SetItem (i, COL_CONFLICT_WRK, conflictWrk);
+
   }
 
   SortItems (Data::CompareFunction, (long) this->m);
@@ -806,7 +855,25 @@ FileListCtrl::ResetColumns ()
 {
   for (int col=0; col < COL_COUNT; col++)
   {
-    m->ColumnVisible[col] = true;
+    bool visible;
+    switch (col)
+    {
+    case COL_URL:
+    case COL_REPOS:
+    case COL_UUID:
+    case COL_SCHEDULE:
+    case COL_COPIED:
+    case COL_CONFLICT_OLD:
+    case COL_CONFLICT_NEW:
+    case COL_CONFLICT_WRK:
+      visible = false;
+      break;
+
+    default:
+      visible = true;
+      break;
+    }
+    m->ColumnVisible[col] = visible;
     SetColumnWidth (col, GetDefaultWidth (col));
   }
 }

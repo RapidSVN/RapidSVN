@@ -89,7 +89,44 @@ static const int COLUMN_ID_MAP[FileListCtrl::COL_COUNT] =
   ID_Column_Prop_Status,
   ID_Column_Cmt_Date,
   ID_Column_Text_Time,
-  ID_Column_Prop_Time
+  ID_Column_Prop_Time,
+  ID_Column_Checksum,
+  ID_Column_Url,
+  ID_Column_Repos,
+  ID_Column_Uuid,
+  ID_Column_Schedule,
+  ID_Column_Copied, 
+  ID_Column_ConflictOld,
+  ID_Column_ConflictNew,
+  ID_Column_ConflictWrk
+};
+
+/**
+ * Captions for the columns. We cant use the texts used for
+ * the column headings in FileListCtrl since they dont have
+ * shortcuts.
+ */
+static const char *
+COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
+{
+  "", // Name is not used here
+  _("&Revision"),
+  _("R&ep. Rev."),
+  _("&Author"),
+  _("&Status"),
+  _("&Prop Status"),
+  _("&Last Changed"),
+  _("&Date"),
+  _("Pr&op Date"),
+  _("Checksum"),
+  _("Url"),
+  _("Repository"),
+  _("UUID"),
+  _("Schedule"),
+  _("Copied"),
+  _("Conflict Old"),
+  _("Conflict New"),
+  _("Conflict Work")
 };
 
 /**
@@ -126,14 +163,14 @@ public:
 
     MenuColumns->AppendSeparator ();
 
-    MenuColumns->AppendCheckItem (ID_Column_Rev, _("&Revision"));
-    MenuColumns->AppendCheckItem (ID_Column_Cmt_Rev, _("Re&pository Revision"));
-    MenuColumns->AppendCheckItem (ID_Column_Author, _("&Author"));
-    MenuColumns->AppendCheckItem (ID_Column_Text_Status, _("&Status"));
-    MenuColumns->AppendCheckItem (ID_Column_Prop_Status, _("&Property Status"));
-    MenuColumns->AppendCheckItem (ID_Column_Cmt_Date, _("Repository &Date"));
-    MenuColumns->AppendCheckItem (ID_Column_Text_Time, _("File &Changed"));
-    MenuColumns->AppendCheckItem (ID_Column_Prop_Time, _("Property C&hanged"));
+    for (int col = 0; col <= FileListCtrl::COL_COUNT; col++)
+    {
+      int id = COLUMN_ID_MAP[col];
+      if (id != -1)
+      {
+        MenuColumns->AppendCheckItem (id, COLUMN_CAPTIONS[col]);
+      }
+    }
 
     // View menu
     wxMenu *menuView = new wxMenu;

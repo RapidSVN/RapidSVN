@@ -61,6 +61,16 @@ enum
   ID_Column_Cmt_Date,
   ID_Column_Text_Time,
   ID_Column_Prop_Time,
+  ID_Column_Url,
+  ID_Column_Repos,
+  ID_Column_Uuid,
+  //ID_Column_Kind, we dont need this, do we?
+  ID_Column_Schedule,
+  ID_Column_Copied, // combination of isCopied + copyfromUrl
+  ID_Column_ConflictOld,
+  ID_Column_ConflictNew,
+  ID_Column_ConflictWrk,
+  ID_Column_Checksum,
   ID_Column_Max,
   ACTION_EVENT,                 // this one gets sent from the action threads
 // Ids used for communication events between threads and frame
