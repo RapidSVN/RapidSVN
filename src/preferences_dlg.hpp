@@ -14,10 +14,14 @@
 #define _PREFERENCES_DLG_H_INCLUDED_
 
 // wxwindows
-#include "wx/confbase.h"
-#include "wx/notebook.h"
+//REMOVE #include "wx/confbase.h"
+#include "wx/dialog.h"
+//REMOVE #include "wx/notebook.h"
+#include "wx/panel.h"
 
-/* Panels for the preferences dialog. */
+// forward declarations
+class wxConfigBase;
+class wxNotebook;
 
 /**
  * General settings page for the preferences dialog.

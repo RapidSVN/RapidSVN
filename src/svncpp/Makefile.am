@@ -3,13 +3,12 @@ noinst_HEADERS=${wildcard *.hpp}
 lib_LTLIBRARIES=libsvncpp.la
 
 libsvncpp_la_SOURCES= \
-	auth.cpp \
 	client.cpp \
+	client_modify.cpp \
 	client_status.cpp \
 	context.cpp \
 	exception.cpp \
 	log.cpp \
-	modify.cpp \
 	notify.cpp \
 	path.cpp \
 	pool.cpp \

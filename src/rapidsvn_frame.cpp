@@ -15,14 +15,16 @@
 //#include <vector>
 
 // wxwindows
-#include "wx/thread.h"
-#include "wx/utils.h"
-#include "wx/log.h"
+#include "wx/confbase.h"
+#include "wx/wx.h"
+//REMOVE#include "wx/thread.h"
+//REMOVE#include "wx/utils.h"
+//REMOVE#include "wx/log.h"
 //#include <wx/resource.h>
 #include "wx/filename.h"
-#include "wx/thread.h"
-#include "wx/version.h"
-#include "wx/window.h"
+//REMOVE#include "wx/thread.h"
+//REMOVE#include "wx/version.h"
+//REMOVE#include "wx/window.h"
 
 // svncpp
 //#include "svncpp/exception.hpp"
