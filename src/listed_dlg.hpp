@@ -64,6 +64,13 @@ public:
   virtual int
   ShowModal ();
 
+  /** 
+   * enables or disables the saving/modification
+   * of properties.
+   */
+  void
+  SetReadOnly(bool value);
+
 protected:
   virtual void
   ReadFromGrid () = 0;

@@ -40,6 +40,11 @@ enum
   EDIT_EDIT
 };
 
+static const char * LABEL_EDIT=_("&Edit...");
+static const char * LABEL_VIEW=_("&View...");
+static const char * LABEL_NEW=_("&New...");
+static const char * LABEL_DELETE=_("&Delete...");
+
 class ListCtrl : public wxListView
 {
 public:
@@ -149,7 +154,8 @@ public:
    * Constructor
    */
   EntryDlg (wxWindow * parent, const wxString & title)
-    : wxDialog (parent, -1, title, wxDefaultPosition)
+    : wxDialog (parent, -1, title, wxDefaultPosition),
+      m_readOnly (false)
   {
     wxStaticText * labelName = new wxStaticText (this, -1, _("Name"));
     wxStaticText * labelValue = new wxStaticText (this, -1, _("Value"));
@@ -192,6 +198,7 @@ public:
 
     m_addTitle = "";
     m_editTitle = "";
+    m_mode = EDIT_NEW;
   }
 
   /**
@@ -215,6 +222,7 @@ public:
       // invalid mode, exit
       return false;
     }
+    m_mode = mode;
 
     SetReturnCode (wxID_CANCEL);
     m_textName->Enable (mode == EDIT_NEW);
@@ -248,7 +256,16 @@ public:
     m_labelValue->SetLabel (caption);
   }
 
+  void SetReadOnly (bool value)
+  {
+    m_readOnly = value;
+    m_textName->Enable ((m_mode == EDIT_NEW) && !value);
+    m_textValue->Enable (!value);
+    CheckButtons ();
+  }
+
 private:
+  bool m_readOnly;
   wxTextCtrl * m_textName;
   wxTextCtrl * m_textValue;
   wxStaticText * m_labelName;
@@ -256,6 +273,7 @@ private:
   wxButton * m_buttonOk;
   wxString m_addTitle;
   wxString m_editTitle;
+  int m_mode;
 
   void
   OnName (wxCommandEvent &)
@@ -268,7 +286,7 @@ private:
   {
     wxString name = m_textName->GetValue ();
     TrimString (name);
-    m_buttonOk->Enable (name.Length () > 0);
+    m_buttonOk->Enable ((name.Length () > 0) && !m_readOnly);
   }
 
 private:
@@ -284,7 +302,10 @@ struct ListEditorDlg::Data
   wxWindow * window;
   wxString nameCaption;
   wxString valueCaption;
+  bool readOnly;
   ListCtrl * listCtrl;
+  wxButton * newButton;
+  wxButton * okButton;
   wxButton * editButton;
   wxButton * delButton;
   wxStaticBox * box;
@@ -293,7 +314,8 @@ struct ListEditorDlg::Data
   
 public:
   Data (wxWindow * wnd)
-    : window (wnd), nameCaption (_("Name")), valueCaption (_("Value"))
+    : window (wnd), nameCaption (_("Name")), valueCaption (_("Value")),
+      readOnly (false)
   {
     // create controls
     wxStaticBoxSizer *boxSizer = new wxStaticBoxSizer (
@@ -304,12 +326,12 @@ public:
     boxSizer->Add (listCtrl, 1, wxALL | wxEXPAND, 2);
 
     // buttons
-    wxButton * newButton = new wxButton (wnd, ID_New, _("&New..."));
-    editButton = new wxButton (wnd, ID_Edit, _("&Edit..."));
+    newButton = new wxButton (wnd, ID_New, LABEL_NEW);
+    editButton = new wxButton (wnd, ID_Edit, LABEL_EDIT);
     editButton->Enable (false);
-    delButton = new wxButton (wnd, ID_Delete, _("&Delete"));
+    delButton = new wxButton (wnd, ID_Delete, LABEL_DELETE);
     delButton->Enable (false);
-    wxButton * okButton = new wxButton (wnd, wxID_OK, _("OK"));
+    okButton = new wxButton (wnd, wxID_OK, _("OK"));
     wxButton * cancelButton = new wxButton (wnd, wxID_CANCEL, _("Cancel"));
 
     wxBoxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
@@ -359,7 +381,7 @@ public:
     // enabled if there is a selected item
     bool selected = IsSelected ();
     editButton->Enable (selected);
-    delButton->Enable (selected);
+    delButton->Enable (selected && !readOnly);
   }
 
   /**
@@ -396,9 +418,7 @@ public:
     }
 
     EntryDlg dlg (window, title);
-
-
-    
+    dlg.SetReadOnly (readOnly);
     if (!dlg.Execute (mode, name, value))
       return;
 
@@ -524,6 +544,16 @@ long
 ListEditorDlg::FindEntry (const wxString & name) const
 {
   return m->listCtrl->FindItem (-1, name, false);
+}
+
+void
+ListEditorDlg::SetReadOnly (bool value)
+{
+  m->readOnly = value;
+  m->newButton->Enable (!value);
+  m->okButton->Enable (!value);
+  m->OnSelected ();
+  m->editButton->SetLabel (value ? LABEL_VIEW : LABEL_EDIT);
 }
 
 

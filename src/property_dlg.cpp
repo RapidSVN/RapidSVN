@@ -19,6 +19,7 @@
 
 // svncpp
 #include "svncpp/exception.hpp"
+#include "svncpp/url.hpp"
 
 // app
 #include "property_dlg.hpp"
@@ -43,11 +44,16 @@ PropertyDlg::PropertyDlg (wxWindow * parent,
                           const svn::Path & target)
   : ListEditorDlg (parent, _("Property Editor"))
 {
-  m = new Data (this, context, target.c_str ());
+  const char * target_ = target.c_str ();
+  // the property list is read-only when working 
+  // on a repository 
+  const bool readOnly = svn::Url::isValid(target_);
+  m = new Data (this, context, target_);
 
   SetCaption (_("Properties:"));
   SetAddTitle (_("New Property"));
   SetEditTitle (_("Edit Property"));
+  SetReadOnly (readOnly);
 }
 
 PropertyDlg::~PropertyDlg ()
