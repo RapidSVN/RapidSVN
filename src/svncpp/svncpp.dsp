@@ -139,6 +139,10 @@ SOURCE=.\status.cpp
 
 SOURCE=.\targets.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\wc.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -190,6 +194,10 @@ SOURCE=.\status.hpp
 # Begin Source File
 
 SOURCE=.\targets.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\wc.hpp
 # End Source File
 # End Group
 # End Target
