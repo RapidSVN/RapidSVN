@@ -16,11 +16,6 @@
 #include "wx/valgen.h"
 #include "wx/listctrl.h"
 
-// svncpp
-//#include "svncpp/exception.hpp"
-//#include "svncpp/log_entry.hpp"
-//#include "svncpp/notify.hpp"
-
 // app
 #include "log_dlg.hpp"
 
@@ -108,53 +103,52 @@ LogDlg::LogDlg (wxWindow * parent, const svn::LogEntries * entries)
 
 LogDlg::~LogDlg ()
 {
-  if (m_entries!=0)
-  {
-    delete m_entries;
-  }
 }
 
 void
 LogDlg::InitializeData ()
 {
+  // create controls
   wxString history;
   history.Printf(_T("History: %d revisions"), m_entries->size ());
-
-  wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-  wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
-
-  wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);
   wxStaticText * historyLabel = new wxStaticText (this, -1, history);
 
-  logSizer->Add (historyLabel, 0, wxALL, 5);
   m_logList = new LogList (this, m_entries);
-  logSizer->Add (m_logList, 1, wxLEFT);
-
-  wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
-  wxButton * closeButton = new wxButton (this, ID_Close, _T("Close"));
-  wxButton * viewButton = new wxButton (this, ID_View, _T("View"));
-  wxButton * getButton = new wxButton (this, ID_Get, _T("Get"));
-  wxButton * diffButton = new wxButton (this, ID_Diff, _T("Diff"));
-
-  buttonSizer->Add (closeButton, 0, wxALL, 5);
-  buttonSizer->Add (viewButton, 0, wxALL, 5);
-  buttonSizer->Add (getButton, 0, wxALL, 5);
-  buttonSizer->Add (diffButton, 0, wxALL, 5);
-
-  topSizer->Add (logSizer, 1, wxALL, 5);
-  topSizer->Add (buttonSizer, 0, wxALL, 5);
 
   m_logMsg = new wxTextCtrl (this, LOG_MSG, _T(""), 
                            wxDefaultPosition, wxSize (420, 110), 
                            wxTE_READONLY | wxTE_MULTILINE );
 
-  mainSizer->Add (topSizer, 0, wxALL | wxEXPAND, 5);
+  wxButton * closeButton = new wxButton (this, ID_Close, _T("Close"));
+  wxButton * viewButton = new wxButton (this, ID_View, _T("View"));
+  wxButton * getButton = new wxButton (this, ID_Get, _T("Get"));
+  wxButton * diffButton = new wxButton (this, ID_Diff, _T("Diff"));
+
+  // position controls
+
+  wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);
+  logSizer->Add (historyLabel, 0, wxALL, 5);
+  logSizer->Add (m_logList, 1, wxLEFT);
+
+  wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
+  buttonSizer->Add (closeButton, 0, wxALL, 5);
+  buttonSizer->Add (viewButton, 0, wxALL, 5);
+  buttonSizer->Add (getButton, 0, wxALL, 5);
+  buttonSizer->Add (diffButton, 0, wxALL, 5);
+
+  wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
+  topSizer->Add (logSizer, 1, wxALL, 5);
+  topSizer->Add (buttonSizer, 0, wxALL, 5);
+
+
 
   wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer (
           new wxStaticBox(this, -1, _T("Log Message:")), 
           wxHORIZONTAL);
-
   messageSizer->Add (m_logMsg, 1, wxALL | wxEXPAND, 2);
+
+  wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
+  mainSizer->Add (topSizer, 0, wxALL | wxEXPAND, 5);
   mainSizer->Add (messageSizer, 1, wxALL | wxEXPAND, 5);
 
   SetAutoLayout (true);
@@ -230,33 +224,14 @@ LogDlg::GetRevision (const svn_revnum_t revision)
 //   }
 }
 
-void 
-LogDlg::setLogMessage (const char * message)
-{
-  m_logMsg->SetValue (_T(message));
-}
-
 void
 LogDlg::OnSelected (wxListEvent& event)
 {
-  wxListItem info;
   wxString message;
-  
-  info.m_itemId = event.m_itemIndex;
-  info.m_col = 0;
-  info.m_mask = wxLIST_MASK_TEXT;
-  
-  if(!m_logList->GetItem (info))
-    return;
-  //long rev = atol (info.m_text.c_str ());
-
   const svn::LogEntry & entry = (*m_entries)[event.m_itemIndex];
   message = entry.message.c_str ();
   message.Trim (false);
   m_logMsg->SetValue (message);
-  //TODO we dont want such, do we?
-  //wxGetApp ().GetAppFrame ()->getLogAction ()->setLogMessage 
-  //(message.c_str ());
 }
 
 /* -----------------------------------------------------------------

@@ -992,7 +992,7 @@ RapidSvnFrame::Perform (ActionType type, Action * action)
   {
     action->SetTargets (GetActionTargets ());
   }
-  action->SetTracer (m_logTracer);
+  action->SetTracer (m_logTracer, false);
   m_actionWorker->SetTracer (m_logTracer);
   m_actionWorker->Perform (action);
 }

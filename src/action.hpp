@@ -68,7 +68,7 @@ public:
    * If own is TRUE, then the ActionThread class
    * is responsible for deleting the tracer.
    */
-  void SetTracer (Tracer * t, bool own = true);
+  void SetTracer (Tracer * t, bool own);
 
   /**
    * set actions parent window

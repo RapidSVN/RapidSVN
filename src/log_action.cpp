@@ -36,13 +36,19 @@ LogAction::Prepare ()
 
   svn::Context context;
   svn::Client client (&context);
-      
+
+  const svn::LogEntries * entries;
   svn::Path target = GetTarget ();
-  const svn::LogEntries * entries = 
-    client.log (target.c_str (), svn::Revision::START, 
-                svn::Revision::HEAD);
-  LogDlg dlg (GetParent (), entries);
-  dlg.ShowModal ();
+  {
+    wxBusyCursor cursor;
+    entries = client.log (target.c_str (), svn::Revision::START, 
+                          svn::Revision::HEAD);
+  }
+  {
+    LogDlg dlg (GetParent (), entries);
+    dlg.ShowModal ();
+  }
+  delete entries;
 
   return false;
 }

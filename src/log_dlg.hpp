@@ -29,7 +29,7 @@ class LogDlg : public wxDialog
 {
 public:
   /**
-   * constructor. the entries are owned and deleted by 
+   * constructor. the entries are NOT owned by 
    * this class
    *
    * @param parent parent window
@@ -38,8 +38,6 @@ public:
   LogDlg (wxWindow * parent, const svn::LogEntries * entries);
 
   virtual ~LogDlg ();
-
-  void setLogMessage (const char * message);
 
 private:
   const svn::LogEntries * m_entries;
