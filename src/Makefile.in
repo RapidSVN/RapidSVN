@@ -10,7 +10,6 @@ OBJECTS=action_thread.o \
 		commit_action.o \
 		commit_dlg.o \
 		copy_action.o \
-		copy_dlg.o \
 		delete_action.o \
 		delete_dlg.o \
 		exceptions.o \

@@ -62,6 +62,30 @@ BUILDING AND INSTALLING
   set WX=C:\Program Files\wx2
   set SUBVERSION=D:\dev\subversion
 
+
+BUILDING ON LINUX/UNIX
+
+* Download all of the Subversion code and build it. Note: it is much easier if
+  you download the RPMs provided on the Subversion site:
+  http://subversion.tigris.org/servlets/ProjectDocumentList
+
+* Download the RapidSVN code.
+
+* Go to the rapidsvn directory and run:
+  autoconfig configure.in > configure
+  chmod 775 configure
+  ./configure --with-apr-config=/path/to/apr-config
+
+* If everything is successful then open src/Makefile and tell it where your
+  Subversion include directory is:
+  SVN_INC=-I/path/to/subversion/include
+
+* Then go to the src/ directory and run 'make'
+
+* If it is build and you get an error like 'could not find something.so' then
+  you probably need to add the Apache lib directory into /etc/ld.so.conf and
+  then run 'ldconfig'.
+
 PROJECT CONTRIBUTORS
 
 * Paul Marculescu - original author
