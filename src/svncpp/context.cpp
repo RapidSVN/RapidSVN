@@ -13,6 +13,7 @@
 
 // Subversion api
 #include "svn_auth.h"
+#include "svn_config.h"
 #include "svn_utf.h"
 
 // svncpp
@@ -97,6 +98,7 @@ namespace svn
                             m_password.c_str ());
 
     m_ctx.config = 0;
+    svn_config_get_config (&m_ctx.config, m_pool);
     m_ctx.auth_baton = ab;
     m_ctx.prompt_func = NULL;
     m_ctx.prompt_baton = NULL;

@@ -12,13 +12,15 @@
  */
 
 // wxwindows
-#include "wx/utils.h"
+#include "wx/wx.h"
+//RMOVE #include "wx/utils.h"
 
 // svncpp
 #include "svncpp/exception.hpp"
 
 // app
 #include "action.hpp"
+#include "ids.hpp"
 #include "simple_worker.hpp"
 #include "tracer.hpp"
 
@@ -109,14 +111,21 @@ SimpleWorker::Perform (Action * action)
     wxString msg;
     msg.Printf (_T("Error while performing action: %s"), 
                 e.message ());
-    Trace (msg);
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
+    //TODO thread safe? 
+    //Trace (msg);
     return false;
   }
   catch (...)
   {
-    Trace (_T("Error while performing action."));
+    wxString msg (_T("Error while performing action."));
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
+    //TODO thread safe?
+    //Trace ();
     return false;
   }
+
+  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
 }
 
 void
@@ -132,6 +141,28 @@ SimpleWorker::Trace (const wxString & message)
   {
     m_tracer->Trace (message);
   }
+}
+
+void
+SimpleWorker::PostStringEvent (int code, wxString str, int event_id)
+{
+  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, event_id);
+  event.SetInt (code);
+  event.SetString (str);
+
+  // send in a thread-safe way
+  wxPostEvent (m_parent, event);
+}
+
+void
+SimpleWorker::PostDataEvent (int code, void *data, int event_id)
+{
+  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, event_id);
+  event.SetInt (code);
+  event.SetClientData (data);
+
+  // send in a thread-safe way
+  wxPostEvent (m_parent, event);
 }
 
 /* -----------------------------------------------------------------

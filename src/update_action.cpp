@@ -90,8 +90,8 @@ UpdateAction::Perform ()
       result = false;
       PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
                        ACTION_EVENT);
-      GetTracer ()->Trace ("Update failed:");
-      GetTracer ()->Trace (e.description ());
+      Trace ("Update failed:");
+      Trace (e.description ());
     }
   }
 

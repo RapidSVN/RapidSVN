@@ -17,12 +17,16 @@
 
 // app
 #include "ids.hpp"
-#include "tracer.hpp"
+//REMOVE #include "tracer.hpp"
 #include "add_action.hpp"
 #include "svn_notify.hpp"
 
 AddAction::AddAction (wxWindow * parent)
   : Action (parent, actionWithTargets)
+{
+}
+
+AddAction::~AddAction ()
 {
 }
 
@@ -39,7 +43,6 @@ AddAction::Perform ()
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
-  bool result = true;
 
   const std::vector<svn::Path> & v (GetTargets ());
   std::vector<svn::Path>::const_iterator it;
@@ -48,22 +51,10 @@ AddAction::Perform ()
   {
     const svn::Path & path = *it;
 
-    try
-    {
-      client.add (path.c_str (), false);
-    }
-    catch (svn::ClientException &e)
-    {
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
-                       ACTION_EVENT);
-      result = false;
-    }
-
+    client.add (path.c_str (), false);
   }
 
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-
-  return false;
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:

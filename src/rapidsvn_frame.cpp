@@ -487,7 +487,7 @@ RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
   {
     m_folder_browser->Refresh ();
   }
-  //Preferences ();
+  UpdateFileList ();
 }
 
 void
@@ -1021,6 +1021,7 @@ RapidSvnFrame::Perform (ActionType type, Action * action)
   {
     action->SetTargets (GetActionTargets ());
   }
+  action->SetTracer (m_logTracer);
   m_actionWorker.SetTracer (m_logTracer);
   m_actionWorker.Perform (action);
 }

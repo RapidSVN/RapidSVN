@@ -23,6 +23,7 @@ class AddAction:public Action
 {
 public:
   AddAction (wxWindow * parent);
+  virtual ~AddAction ();
 
   virtual bool Prepare ();
   virtual bool Perform ();
