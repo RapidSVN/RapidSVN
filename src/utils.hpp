@@ -24,11 +24,26 @@ class Tracer;
 
 #define APPLICATION_NAME _("RapidSVN")
 
-
+/**
+ * Create pseudo-unix paths on windows for use with svn (reverse backslashes,
+ * but leave the rest as it is)
+ *
+ * NOTE: Does nothing on non-windows platforms
+ *
+ * @param path Native path to convert
+ * @return string with all backslashes converted to forward slashes
+ */
 wxString & UnixPath (wxString & path);
 
+/**
+ * Get a status string describing the given svn status
+ */
 void GetStatusText (wxString & str, svn_wc_status_kind st);
 
+/**
+ * Trim whitespace at start and end of string
+ * (Convenience function for trimming first left, then right)
+ */
 void TrimString (wxString & str);
 
 void *svn_cl__make_log_msg_baton (const char *message,

@@ -26,15 +26,9 @@
 
 wxString & UnixPath (wxString & path)
 {
-#ifdef WIN32
-  /*
-     wxChar  *str = path.GetWriteBuf( path.Length() );
-     wxDos2UnixFilename( str );
-     path.UngetWriteBuf();
-   */
-  path.Replace ("\\", "/");
+#ifdef _WIN32
+  path.Replace("\\", "/");
 #endif
-
   return path;
 }
 
