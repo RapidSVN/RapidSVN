@@ -34,7 +34,7 @@ namespace svn
   Url::isValid (const char * url)
   {
     std::string urlTest (url);
-    for (int index=0; index < SCHEME_COUNT-1; index++)
+    for (int index=0; index < SCHEME_COUNT; index++)
     {
       std::string scheme = VALID_SCHEMES[index];
       std::string urlComp = urlTest.substr (0, scheme.length ());
