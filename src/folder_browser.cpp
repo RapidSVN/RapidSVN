@@ -320,29 +320,37 @@ void
 FolderBrowser::ShowMenu (long index, wxPoint & pt)
 {
   const FolderItemData * data = GetSelection ();
-  if (data)
+  if (!data)
   {
-    wxFileName filepath (data->getPath ());
-    wxMenu popup_menu;
-    wxString path = filepath.GetFullPath ();
-
-    BuildMenu (popup_menu, UnixPath (path));
-
-    PopupMenu (&popup_menu, pt);
+    return;
   }
-}
 
-void
-FolderBrowser::BuildMenu (wxMenu & menu, const wxString & path)
-{
-  wxMenuItem *pItem;
+  // create menu
+  wxMenu menu;
+  wxMenuItem *item;
+  int type =  data->getFolderType ();
 
-  pItem = new wxMenuItem (&menu, ID_Update, _T ("Update"));
-  pItem->SetBitmap (wxBITMAP (update));
-  menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
-  pItem->SetBitmap (wxBITMAP (commit));
-  menu.Append (pItem);
+  item = new wxMenuItem (&menu, ID_AddProject, _T ("&Add to Workbench..."));
+  menu.Append (item);
+
+  if (type==FOLDER_TYPE_PROJECT)
+  {
+    item = new wxMenuItem (&menu, ID_RemoveProject, _T ("&Remove from Workbench..."));
+    menu.Append (item);
+  }
+
+  if ((type==FOLDER_TYPE_PROJECT)||(type==FOLDER_TYPE_NORMAL))
+  {
+    menu.AppendSeparator ();
+    item = new wxMenuItem (&menu, ID_Update, _T ("Update"));
+    item->SetBitmap (wxBITMAP (update));
+    menu.Append (item);
+    item = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
+    item->SetBitmap (wxBITMAP (commit));
+    menu.Append (item);
+  }
+  // show menu
+  PopupMenu (&menu, pt);
 }
 
 void

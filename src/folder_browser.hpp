@@ -66,7 +66,6 @@ private:
   void OnItemRightClk (wxTreeEvent & event);
 
   void ShowMenu (long index, wxPoint & pt);
-  void BuildMenu (wxMenu & menu, const wxString & path);
   bool HasSubdirectories (const wxString & path);
   void Delete (const wxTreeItemId & id);
   void DeleteAllItems ();
