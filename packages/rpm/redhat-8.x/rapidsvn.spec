@@ -35,11 +35,6 @@ if you don't have root access on your machine but would like to use this
 package.
 
 %changelog
-* Thu Jul 24 2003 David Summers <david@summersoft.fay.ar.us> 0.2.0-1
-  (Even though the src/version.hpp still says 0.1.3)
-- Brought SPEC file up-to-date.
-- Added documentation files.
-
 * Wed Jul 31 2002 David Summers <david@summersoft.fay.ar.us> 0.1
 - First version
 
@@ -75,7 +70,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%doc AUTHORS COPYING ChangeLog HACKING.txt LICENSE.txt NEWS README TODO.txt
 /usr/bin/*
 /usr/lib/*
 /usr/man/man1/*
