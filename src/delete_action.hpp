@@ -24,16 +24,11 @@ class DeleteAction:public Action
 {
 private:
   DeleteDlg::sData Data;
-  wxFrame *m_pFrame;
-
-  svn::Targets m_targets;
-
 public:
-   DeleteAction (wxWindow * parent, Tracer * tr, 
-                 const svn::Targets & targets);
+  DeleteAction (wxWindow * parent);
 
-  bool Perform ();
-  bool Prepare ();
+  virtual bool Perform ();
+  virtual bool Prepare ();
 };
 
 #endif

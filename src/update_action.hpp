@@ -24,14 +24,12 @@ class wxWindow;
 class UpdateAction:public Action
 {
 public:
-  UpdateAction (wxWindow * parent, const svn::Targets & targets, 
-                wxString & path, Tracer * tr, bool owns);
-  bool Perform ();
-  bool Prepare ();
+  UpdateAction (wxWindow * parent);
+
+  virtual bool Perform ();
+  virtual bool Prepare ();
 
 private:
-  svn::Targets m_targets;
-  wxString m_path;
   UpdateData m_data;
 };
 

@@ -21,14 +21,19 @@
 #include "ids.hpp"
 #include "svn_notify.hpp"
 
-DeleteAction::DeleteAction (wxWindow * parent, Tracer * tr, const svn::Targets & targets) 
-  : Action (parent, tr, false), m_targets (targets)
+DeleteAction::DeleteAction (wxWindow * parent) 
+  : Action (parent, actionWithTargets)
 {
 }
 
 bool
 DeleteAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
   DeleteDlg dlg (GetParent (), &Data);
 
   if (dlg.ShowModal () != wxID_OK)
@@ -45,8 +50,9 @@ DeleteAction::Perform ()
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
+  bool result = true;
 
-  const std::vector<svn::Path> & v = m_targets.targets ();
+  const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
 
   for (it = v.begin (); it != v.end (); it++)
@@ -63,12 +69,13 @@ DeleteAction::Perform ()
                        ACTION_EVENT);
       GetTracer ()->Trace ("Delete failed:");
       GetTracer ()->Trace (e.description ());
+      result = false;
     }
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
 
-  return NULL;
+  return result;
 }
 /* -----------------------------------------------------------------
  * local variables:

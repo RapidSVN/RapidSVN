@@ -31,9 +31,6 @@ namespace svn
    */
   class Targets
   {
-  private:
-    std::vector<Path> m_targets;
-
   public:
     /** 
      * Constructor
@@ -56,7 +53,7 @@ namespace svn
      *
      * @param target
      */
-    Targets (const char * target );
+    Targets (const char * target = 0);
 
     /**
      * Copy Constructor
@@ -81,6 +78,36 @@ namespace svn
      */
     const std::vector<Path> &
     targets() const;
+
+    /**
+     * @return the number of targets
+     */
+    size_t size () const;
+
+    /**
+     * operator to return the vector
+     *
+     * @return vector with targets
+     */
+    operator const std::vector<Path> & () const
+    {
+      return m_targets;
+    }
+
+    /**
+     * returns one single target. in fact,
+     * the first in the vector, it there are more
+     * than one. if there is no target returns
+     * an empty path
+     *
+     * @return single path
+     */
+    const Path
+    target () const;
+    
+
+  private:
+    std::vector<Path> m_targets;
   };
 }
 

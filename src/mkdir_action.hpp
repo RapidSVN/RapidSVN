@@ -23,10 +23,10 @@ private:
   MkdirDlg::sData m_data;
 
 public:
-  MkdirAction (wxWindow * parent, Tracer * tr);
+  MkdirAction (wxWindow * parent);
 
-  bool Perform ();
-  bool Prepare ();
+  virtual bool Perform ();
+  virtual bool Prepare ();
 };
 
 #endif

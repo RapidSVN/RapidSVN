@@ -100,8 +100,8 @@ GetImageIndex (int Index)
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
   EVT_LIST_ITEM_ACTIVATED (-1, FileListCtrl::OnItemActivated)
-  EVT_LIST_ITEM_RIGHT_CLICK (LIST_CTRL, FileListCtrl::OnItemRightClk)
-  EVT_LIST_COL_CLICK (LIST_CTRL, FileListCtrl::OnColumnLeftClick)
+  EVT_LIST_ITEM_RIGHT_CLICK (FILELIST_CTRL, FileListCtrl::OnItemRightClk)
+  EVT_LIST_COL_CLICK (FILELIST_CTRL, FileListCtrl::OnColumnLeftClick)
 END_EVENT_TABLE ()
 
 FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id, 

@@ -11,25 +11,41 @@
  * ====================================================================
  */
 
+// wxwindows
+#include "wx/wx.h"
+
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/exception.hpp"
 
 // app
 #include "ids.hpp"
 #include "tracer.hpp"
 #include "revert_action.hpp"
 #include "svn_notify.hpp"
-#include "svncpp/exception.hpp"
 
-RevertAction::RevertAction (wxWindow * parent, Tracer * tr, 
-                            const svn::Targets & targets)
-  : Action (parent, tr, false), m_targets(targets)
+RevertAction::RevertAction (wxWindow * parent)
+  : Action (parent, actionWithTargets)
 {
 }
 
 bool
 RevertAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
+  wxMessageDialog dlg (GetParent (),
+                       _T("Do you want to revert local changes?"),
+                       _T("Revert"), wxYES_NO | wxICON_QUESTION);
+
+  if (dlg.ShowModal () != wxID_YES)
+  {
+    return false;
+  }
+
   return true;
 }
 
@@ -41,7 +57,7 @@ RevertAction::Perform ()
   client.notification (&notify);
   bool result = true;
 
-  const std::vector<svn::Path> & v = m_targets.targets ();
+  const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
 
   for (it = v.begin (); it != v.end (); it++)

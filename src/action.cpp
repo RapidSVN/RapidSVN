@@ -18,8 +18,9 @@
 #include "action.hpp"
 #include "tracer.hpp"
 
-Action::Action (wxWindow * parent, Tracer * tracer, bool own)
-  :  m_parent (parent), m_tracer (tracer), m_ownTracer (own)
+Action::Action (wxWindow * parent, ActionOptions options)
+  :  m_parent (parent), m_options (options), 
+     m_tracer (0), m_ownTracer (false)
 {
 }
 
@@ -109,6 +110,75 @@ svn::Context *
 Action::GetContext ()
 {
   return m_context;
+}
+
+void
+Action::SetTargets (const svn::Targets & targets)
+{
+  m_targets = targets;
+}
+
+const svn::Targets &
+Action::GetTargets ()
+{
+  return m_targets;
+}
+
+bool
+Action::Prepare ()
+{
+  bool result = true;
+  switch (m_options)
+  {
+  case actionWithoutTarget:
+    break;
+
+  case actionWithSingleTarget:
+    if (m_targets.size () != 1)
+    {
+      wxMessageBox (_T("Please select only one file or directory."),
+                    _T("Error"),
+                    wxOK | wxICON_HAND);
+      result = false;
+    }
+    break;
+
+  case actionWithTargets:
+    if (m_targets.size () < 1)
+    {
+      wxMessageBox (_T("Nothing selected."),
+                    _T("Error"),
+                    wxOK | wxICON_HAND);
+      result = false;
+    }
+    break;
+    
+  default:
+    // unknown option
+    wxMessageBox (_T("Internal error: unknown action option"),
+                  _T("Error"),
+                  wxOK | wxICON_HAND);
+    result = false;
+  }
+
+  if (result)
+  {
+    wxSetWorkingDirectory (m_path.c_str ());
+  }
+
+  return result;
+}
+
+const svn::Path 
+Action::GetTarget ()
+{
+  return m_targets.target ();
+}
+
+ActionOptions
+Action::GetOptions ()
+{
+  return m_options;
 }
 
 /* -----------------------------------------------------------------

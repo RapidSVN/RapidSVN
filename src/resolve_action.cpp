@@ -21,9 +21,8 @@
 #include "resolve_action.hpp"
 #include "svn_notify.hpp"
 
-ResolveAction::ResolveAction (wxWindow * parent, Tracer * tr, 
-                              const svn::Targets & targets)
-  : Action (parent, tr, false), m_targets (targets)
+ResolveAction::ResolveAction (wxWindow * parent)
+  : Action (parent, actionWithTargets)
 {
 }
 
@@ -31,7 +30,7 @@ bool
 ResolveAction::Prepare ()
 {
   // No dialog for Resolve. 
-  return true;
+  return Action::Prepare ();
 }
 
 bool
@@ -42,7 +41,7 @@ ResolveAction::Perform ()
   client.notification (&notify);
   bool result = true;
 
-  const std::vector<svn::Path> v = m_targets.targets ();
+  const std::vector<svn::Path> v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
 
   for (it = v.begin (); it != v.end (); it++)

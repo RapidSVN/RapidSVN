@@ -13,22 +13,16 @@
 #ifndef _REVERT_ACTION_H_INCLUDED_
 #define _REVERT_ACTION_H_INCLUDED_
 
-// svncpp
-#include "svncpp/targets.hpp"
-
 // app
 #include "action.hpp"
 
 class RevertAction:public Action
 {
-private:
-  svn::Targets m_targets;
-
 public:
-  RevertAction (wxWindow * parent, Tracer * tr, const svn::Targets & trgts);
+  RevertAction (wxWindow * parent);
 
-  bool Perform ();
-  bool Prepare ();
+  virtual bool Perform ();
+  virtual bool Prepare ();
 };
 
 #endif

@@ -50,6 +50,7 @@ enum
   ID_RenameHere,
   ID_CopyHere,
   ID_Cleanup,
+  ID_Delete,
   ACTION_EVENT,                 // this one gets sent from the action threads
 // Ids used for communication events between threads and frame
   TOKEN_BASE,
@@ -57,7 +58,8 @@ enum
   TOKEN_SVN_INTERNAL_ERROR,
   TOKEN_VSVN_INTERNAL_ERROR,
   TOKEN_ACTION_END,
-  LIST_CTRL
+  FILELIST_CTRL,
+  FOLDER_BROWSER,
 };
 
 #endif

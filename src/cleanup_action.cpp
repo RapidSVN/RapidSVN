@@ -24,15 +24,15 @@
 #include "tracer.hpp"
 #include "utils.hpp"
 
-CleanupAction::CleanupAction (wxWindow * parent, svn::Path & path, Tracer * tr)
-  : Action (parent, tr, false), m_path (path)
+CleanupAction::CleanupAction (wxWindow * parent)
+  : Action (parent, actionWithoutTarget)
 {
 }
 
 bool
 CleanupAction::Prepare ()
 {
-  return true;
+  return Action::Prepare ();
 }
 
 bool
@@ -41,8 +41,9 @@ CleanupAction::Perform ()
   bool result = false;
   try
   {
-    wxSetWorkingDirectory (m_path.c_str ());
-    svn::Client::cleanup (m_path);
+    const svn::Path & path (GetPath ());
+    wxSetWorkingDirectory (path.c_str ());
+    svn::Client::cleanup (path);
     Trace (_T ("Cleanup of working directory finished"));
     result = true;
   }

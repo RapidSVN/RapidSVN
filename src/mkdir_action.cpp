@@ -21,14 +21,19 @@
 #include "mkdir_action.hpp"
 #include "svn_notify.hpp"
 
-MkdirAction::MkdirAction (wxWindow * parent, Tracer * tr)
- : Action (parent, tr, false)
+MkdirAction::MkdirAction (wxWindow * parent)
+ : Action (parent, actionWithoutTarget)
 {
 }
 
 bool
 MkdirAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
   MkdirDlg dlg  ( GetParent (), &m_data);
 
   if (dlg.ShowModal () != wxID_OK)

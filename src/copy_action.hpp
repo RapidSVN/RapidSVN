@@ -14,27 +14,28 @@
 #define _COPY_ACTION_H_INCLUDED_
 
 // svncpp
-#include "svncpp/targets.hpp"
+//REMOVE #include "svncpp/targets.hpp"
 
 // app
 #include "action.hpp"
 
+// forward declarations
+namespace svn
+{
+  class Path;
+}
+
 class CopyAction:public Action
 {
-private:
-  wxString m_path;
-  wxString m_dest;
-  wxString m_src;
-  wxString m_logMsg;
-  svn::Targets m_targets;
-  wxString DestinationPath (wxString src);
-
 public:
-  CopyAction (wxWindow * parent, Tracer * tr, 
-              const wxString & path, const svn::Targets & targets);
+  CopyAction (wxWindow * parent);
 
-  bool Perform ();
-  bool Prepare ();
+  virtual bool Perform ();
+  virtual bool Prepare ();
+
+private:
+  const svn::Path DestinationPath (const svn::Path & src);
+
 };
 
 #endif

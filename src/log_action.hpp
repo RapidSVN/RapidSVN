@@ -20,7 +20,7 @@
 class LogAction : public Action
 {
 public:
-  LogAction (wxWindow * parent, Tracer * tr, const char * target);
+  LogAction (wxWindow * parent);
 
   /**
    * @see Action
@@ -34,7 +34,6 @@ public:
   void setLogMessage (const char * message);
 
 private:
-  const char * m_target;
 };
 
 #endif

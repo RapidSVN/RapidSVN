@@ -28,15 +28,19 @@
 #include "tracer.hpp"
 #include "utils.hpp"
 
-UpdateAction::UpdateAction (wxWindow * parent, const svn::Targets & targets,
-                            wxString & path, Tracer * tr, bool owns)
-  : Action (parent, tr, owns), m_targets (targets), m_path (path)
+UpdateAction::UpdateAction (wxWindow * parent)
+  : Action (parent, actionWithTargets)
 {
 }
 
 bool
 UpdateAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
   UpdateDlg dlg (GetParent ());
 
   if (dlg.ShowModal () != wxID_OK)
@@ -70,9 +74,9 @@ UpdateAction::Perform ()
   }
 
   bool result = true;
-  const std::vector<svn::Path> & v = m_targets.targets ();
+  const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
-  wxSetWorkingDirectory (m_path);
+  wxSetWorkingDirectory (GetPath ().c_str ());
   for (it = v.begin(); it != v.end(); it++)
   {
     const svn::Path & path = *it;

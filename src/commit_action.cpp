@@ -25,15 +25,19 @@
 #include "tracer.hpp"
 #include "utils.hpp"
 
-CommitAction::CommitAction (wxWindow * parent, const svn::Targets & targets,
-                            wxString & path, Tracer * tr, bool own)
-  : Action (parent, tr, own), m_targets (targets), m_path (path)
+CommitAction::CommitAction (wxWindow * parent)
+  : Action (parent, actionWithTargets)
 {
 }
 
 bool
 CommitAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
   CommitDlg dlg(GetParent ());
 
   if (dlg.ShowModal () != wxID_OK)
@@ -53,28 +57,19 @@ CommitAction::Perform ()
   svn::Client client (&context);
   client.notification (&notify);
 
-  svn::Targets targets (m_targets);
+  const svn::Targets & targets (GetTargets ());
 
   bool result = false;
   try
   {
     svn::Pool pool;
-    wxSetWorkingDirectory (m_path);
     long revision = 
       client.commit (targets.array (pool.pool ()), m_data.LogMessage.c_str (), 
                      m_data.Recursive);
     wxString str;
 
-//REMOVE DEPRECATED
-//     if(!client.isAuthenticated ())
-//     {
-//       str = "Authentication failed.";
-//     }
-//     else
-//     {
     str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
                                revision);
-//     }
     GetTracer ()->Trace (str);
     result = true;
   }

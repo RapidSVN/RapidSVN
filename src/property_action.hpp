@@ -19,13 +19,12 @@
 class PropertyAction : public Action
 {
 public:
-  PropertyAction (wxWindow * parent,Tracer * tr, const char * target);
+  PropertyAction (wxWindow * parent);
 
-  bool Prepare ();
-  bool Perform ();
+  virtual bool Prepare ();
+  virtual bool Perform ();
 
 private:
-  const char * m_target;
 };
 
 #endif

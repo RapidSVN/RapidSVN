@@ -66,6 +66,12 @@ namespace svn
     return *this;
   }
 
+  bool
+  Path::isset () const
+  {
+    return m_path.length () > 0;
+  }
+
 }
 
 /* -----------------------------------------------------------------

@@ -23,15 +23,13 @@
 class MergeAction:public Action
 {
 public:
-  MergeAction (wxWindow * frame, Tracer * tr, const svn::Path & path);
+  MergeAction (wxWindow * frame);
 
   virtual bool Prepare ();
   virtual bool Perform ();
 
 private:
   MergeData m_data;
-  svn::Path m_path;
-
 };
 
 #endif

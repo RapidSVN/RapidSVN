@@ -20,17 +20,25 @@
 #include "log_action.hpp"
 #include "log_dlg.hpp"
 
-LogAction::LogAction (wxWindow * parent, Tracer * tr, const char * target)
-  : Action (parent, tr, false), m_target(target)
+LogAction::LogAction (wxWindow * parent)
+  : Action (parent, actionWithSingleTarget)
 {
 }
 
 bool
 LogAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+      
   try
   {
-    svn::Log log (m_target, svn::Revision::START, svn::Revision::HEAD);
+    svn::Path target = GetTarget ();
+    svn::Log log (target.c_str (), 
+                  svn::Revision::START, 
+                  svn::Revision::HEAD);
     LogDlg dlg (GetParent (), log);
     dlg.ShowModal ();
   }
@@ -55,5 +63,7 @@ LogAction::Perform ()
 // }
 
 /* -----------------------------------------------------------------
- * local variables: eval: (load-file "../rapidsvn-dev.el") end:
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
  */

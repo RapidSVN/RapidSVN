@@ -75,6 +75,15 @@ namespace svn
     const char * 
     c_str() const;
 
+    /**
+     * check whether a path is set. Right now
+     * this checks only if the string is non-
+     * empty.
+     *
+     * @return true if there is a path set
+     */
+    bool 
+    isset() const;
   };
 }
 

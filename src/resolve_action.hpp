@@ -13,22 +13,16 @@
 #ifndef _RESOLVE_ACTION_H_INCLUDED_
 #define _RESOLVE_ACTION_H_INCLUDED_
 
-// svncpp
-#include "svncpp/targets.hpp"
-
 // app
 #include "action.hpp"
 
 class ResolveAction:public Action
 {
-private:
-  svn::Targets m_targets;
-
 public:
-  ResolveAction (wxWindow * parent, Tracer * tr, const svn::Targets & targets);
+  ResolveAction (wxWindow * parent);
 
-  bool Perform ();
-  bool Prepare ();
+  virtual bool Perform ();
+  virtual bool Prepare ();
 };
 
 #endif

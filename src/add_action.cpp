@@ -21,9 +21,8 @@
 #include "add_action.hpp"
 #include "svn_notify.hpp"
 
-AddAction::AddAction (wxWindow * parent, 
-                      const svn::Targets & targets)
-  : Action (parent), m_targets (targets)
+AddAction::AddAction (wxWindow * parent)
+  : Action (parent, actionWithTargets)
 {
 }
 
@@ -31,7 +30,7 @@ bool
 AddAction::Prepare ()
 {
   // No dialog for Add
-  return true;
+  return Action::Prepare ();
 }
 
 bool
@@ -42,7 +41,7 @@ AddAction::Perform ()
   client.notification (&notify);
   bool result = true;
 
-  const std::vector<svn::Path> & v = m_targets.targets ();
+  const std::vector<svn::Path> & v (GetTargets ());
   std::vector<svn::Path>::const_iterator it;
 
   for (it = v.begin (); it != v.end (); it++)

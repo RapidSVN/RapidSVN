@@ -23,15 +23,19 @@
 #include "svn_notify.hpp"
 #include "tracer.hpp"
 
-CheckoutAction::CheckoutAction (wxWindow * parent, 
-                                Tracer * tracer)
-  : Action (parent, tracer, false)
+CheckoutAction::CheckoutAction (wxWindow * parent)
+  : Action (parent, actionWithoutTarget)
 {
 }
 
 bool
 CheckoutAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
   CheckoutDlg dlg (GetParent ());
   if( dlg.ShowModal () != wxID_OK )
   {

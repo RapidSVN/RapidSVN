@@ -15,6 +15,7 @@
 
 // svncpp
 #include "svncpp/path.hpp"
+#include "svncpp/targets.hpp"
 
 // forward declarations
 class Tracer;
@@ -24,6 +25,13 @@ namespace svn
 {
   class Context;
 }
+
+enum ActionOptions
+{
+  actionWithoutTarget,
+  actionWithSingleTarget,
+  actionWithTargets
+};
 
 /**
  * Inherit from this class
@@ -40,10 +48,10 @@ public:
    * constructor
    *
    * @param parent parent window
-   * @param tracer tracer
+   * @param options 
    * @param own tracer owned by action?
    */
-  Action (wxWindow * parent, Tracer * tracer=0, bool own=true);
+  Action (wxWindow * parent, ActionOptions options);
 
   /**
    * destructor
@@ -90,6 +98,9 @@ public:
   /**
    * Prepare action. This method is execute in the main
    * thread. You can use this method for user interaction.
+   * Make sure to call Action::Prepare in every class
+   * that inherits from Action. Make sure you check the
+   * returned value as well.
    *
    * Return false to cancel action
    *
@@ -97,7 +108,7 @@ public:
    *
    * @return true=continue/false=cancel
    */
-  virtual bool Prepare () = 0;
+  virtual bool Prepare ();
    
   /**
    * perform action. if any error occurs, an exception
@@ -116,6 +127,31 @@ public:
    * @return path
    */
   const svn::Path & GetPath ();
+
+  /**
+   * sets the targets for the action.
+   * Not every action will need targets.
+   *
+   * @param targets
+   */
+  void SetTargets (const svn::Targets & targets);
+
+  /**
+   * @return the targets for this action
+   */
+  const svn::Targets & GetTargets ();
+
+  /**
+   * @return a single target for this action
+   */
+  const svn::Path GetTarget ();
+
+  /**
+   * retrieves the options for the action
+   *
+   * @return options
+   */
+  ActionOptions GetOptions ();
 
 protected:
   void Trace (const wxString & msg);
@@ -137,6 +173,11 @@ private:
    */
   wxWindow * m_parent;
     
+  /**
+   * Options for the action. 
+   */
+  ActionOptions m_options;
+
   /**
    * This member variable will take the address 
    * of a trace object allocated in a class 
@@ -162,6 +203,9 @@ private:
    * the path where the action will take place
    */
   svn::Path m_path;
+
+  svn::Targets m_targets;
+
 
   /**
    * private default constructor

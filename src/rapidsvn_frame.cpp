@@ -59,18 +59,6 @@
 #include "res/bitmaps/log.xpm"
 #include "res/bitmaps/info.xpm"
 
-// Toolbars' ids
-#define TOOLBAR_REFRESH  101
-#define TOOLBAR_ADD   103
-#define TOOLBAR_DEL   104
-#define TOOLBAR_UPDATE  105
-#define TOOLBAR_COMMIT  106
-#define TOOLBAR_REVERT  107
-#define TOOLBAR_INFO  108
-#define TOOLBAR_LOG   110
-#define TOOLBAR_RESOLVE  111
-#define TOOLBAR_FOLDERUP 112
-
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
 
@@ -88,34 +76,34 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_RemoveProject, RapidSvnFrame::OnRemoveProject)
   EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
   EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
-  EVT_MENU (ID_Log, RapidSvnFrame::OnLog)
+  EVT_MENU (ID_Log, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Info, RapidSvnFrame::OnInfo)
-  EVT_MENU (ID_Checkout, RapidSvnFrame::OnCheckout)
-  EVT_MENU (ID_Import, RapidSvnFrame::OnImport)
+  EVT_MENU (ID_Checkout, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Import, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Update, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Add, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Del, RapidSvnFrame::OnDelete)
+  EVT_MENU (ID_Del, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Commit, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Revert, RapidSvnFrame::OnRevert)
-  EVT_MENU (ID_Copy, RapidSvnFrame::OnCopy)
-  EVT_MENU (ID_Rename, RapidSvnFrame::OnRename)
-  EVT_MENU (ID_Resolve, RapidSvnFrame::OnResolve)
-  EVT_MENU (ID_Property, RapidSvnFrame::OnProperties)
-  EVT_MENU (ID_Mkdir, RapidSvnFrame::OnMkdir)
-  EVT_MENU (ID_Merge, RapidSvnFrame::OnMerge)
+  EVT_MENU (ID_Revert, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Copy, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Rename, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Resolve, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Property, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Mkdir, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Merge, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
-  EVT_MENU (ID_MoveTo, RapidSvnFrame::OnMoveTo)
-  EVT_MENU (ID_CopyTo, RapidSvnFrame::OnCopyTo)
-  EVT_MENU (ID_RenameHere, RapidSvnFrame::OnRenameHere)
-  EVT_MENU (ID_CopyHere, RapidSvnFrame::OnCopyHere)
-  EVT_MENU (ID_Cleanup, RapidSvnFrame::OnCleanup)
+  EVT_MENU (ID_MoveTo, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_CopyTo, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_RenameHere, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_CopyHere, RapidSvnFrame::OnFileCommand)
+  EVT_MENU (ID_Cleanup, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
-  EVT_MENU (-1, RapidSvnFrame::OnToolLeftClick)
   EVT_TOOL_ENTER (ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
   EVT_TREE_SEL_CHANGED (-1, RapidSvnFrame::OnFolderBrowserSelChanged)
   EVT_TREE_KEY_DOWN (-1, RapidSvnFrame::OnFolderBrowserKeyDown) 
+  EVT_LIST_ITEM_SELECTED (-1, RapidSvnFrame::OnFileListSelected)
 END_EVENT_TABLE ()
 
 /** class implementation **/
@@ -130,6 +118,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_title = title;
   m_actionWorker.Create (this);
   m_context = NULL;
+  m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
   // enable trace
   wxLog::AddTraceMask (wxTraceMisc);
@@ -180,7 +169,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
                                           wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
 
   // Create the list control to display files
-  m_listCtrl = new FileListCtrl (m_vert_splitter, LIST_CTRL, 
+  m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL, 
                                  wxDefaultPosition, wxDefaultSize);
 
   // Set the current browse position:
@@ -188,7 +177,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
     pConfig->Read (szBrowserPathKey, wxDirDialogDefaultFolderStr);
 
   // Create the browse control
-  m_folder_browser = new FolderBrowser (m_vert_splitter);
+  m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
 
   UpdateFileList ();
 
@@ -480,71 +469,9 @@ RapidSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
 }
 
 void
-RapidSvnFrame::OnLog (wxCommandEvent & WXUNUSED (event))
-{
-  ShowLog ();
-}
-
-void
-RapidSvnFrame::OnImport (wxCommandEvent & WXUNUSED (event))
-{
-  ImportAction *action = new ImportAction (this, m_logTracer, m_currentPath);
-  Perform (ACTION_TYPE_IMPORT, action);
-}
-
-void
-RapidSvnFrame::OnCheckout (wxCommandEvent & WXUNUSED (event))
-{
-  CheckoutAction *action = new CheckoutAction (this, m_logTracer);
-  Perform (ACTION_TYPE_CHECKOUT, action);
-}
-
-void
-RapidSvnFrame::OnDelete (wxCommandEvent & WXUNUSED (event))
-{
-  DelEntries ();
-}
-
-void
-RapidSvnFrame::OnRevert (wxCommandEvent & WXUNUSED (event))
-{
-  MakeRevert ();
-}
-
-void
-RapidSvnFrame::OnResolve (wxCommandEvent & WXUNUSED (event))
-{
-  MakeResolve ();
-}
-
-void
-RapidSvnFrame::OnCopy (wxCommandEvent & WXUNUSED (event))
-{
-  MakeCopy ();
-}
-
-void
-RapidSvnFrame::OnRename (wxCommandEvent & WXUNUSED (event))
-{
-  Rename ();
-}
-
-void
-RapidSvnFrame::OnMkdir (wxCommandEvent & WXUNUSED (event))
-{
-  Mkdir ();
-}
-
-void
-RapidSvnFrame::OnMerge (wxCommandEvent & WXUNUSED (event))
-{
-  Merge ();
-}
-
-void
 RapidSvnFrame::OnContents (wxCommandEvent & WXUNUSED (event))
 {
-  Contents ();
+  //TODO 
 }
 
 void
@@ -552,13 +479,6 @@ RapidSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
 {
   Preferences ();
 }
-
-void
-RapidSvnFrame::OnProperties (wxCommandEvent & WXUNUSED (event))
-{
-  Properties ();
-}
-
 
 void
 RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
@@ -569,36 +489,6 @@ RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
   }
   //Preferences ();
 }
-
-void
-RapidSvnFrame::OnCopyTo (wxCommandEvent & WXUNUSED (event))
-{
-}
-
-void
-RapidSvnFrame::OnMoveTo (wxCommandEvent & WXUNUSED (event))
-{
-}
-
-void
-RapidSvnFrame::OnRenameHere (wxCommandEvent & WXUNUSED (event))
-{
-}
-
-void
-RapidSvnFrame::OnCopyHere (wxCommandEvent & WXUNUSED (event))
-{
-}
-
-void
-RapidSvnFrame::OnCleanup (wxCommandEvent & WXUNUSED (event))
-{
-  svn::Path path (m_currentPath);
-  CleanupAction * action = 
-    new CleanupAction (this, path, m_logTracer);
-  Perform (ACTION_TYPE_CLEANUP, action);
-}
-
 
 void
 RapidSvnFrame::LayoutChildren ()
@@ -651,7 +541,7 @@ RapidSvnFrame::RecreateToolbar ()
   AddInfoTools ();
 
   // Set toolbar refresh button.
-  toolBar->AddTool (TOOLBAR_REFRESH,
+  toolBar->AddTool (ID_Refresh,
                     wxBITMAP (refresh),
                     wxNullBitmap,
                     FALSE,
@@ -673,7 +563,7 @@ RapidSvnFrame::AddActionTools ()
 {
   wxToolBarBase *toolBar = GetToolBar ();
 
-  toolBar->AddTool (TOOLBAR_ADD,
+  toolBar->AddTool (ID_Add,
                     wxBITMAP (add),
                     wxNullBitmap,
                     FALSE,
@@ -683,7 +573,7 @@ RapidSvnFrame::AddActionTools ()
                     _T ("Add selected"),
                     _T ("Put files and directories under revision control"));
 
-  toolBar->AddTool (TOOLBAR_DEL,
+  toolBar->AddTool (ID_Delete,
                     wxBITMAP (delete),
                     wxNullBitmap,
                     FALSE,
@@ -693,7 +583,7 @@ RapidSvnFrame::AddActionTools ()
                     _T ("Remove selected"),
                     _T ("Remove files and directories from version control"));
 
-  toolBar->AddTool (TOOLBAR_UPDATE,
+  toolBar->AddTool (ID_Update,
                     wxBITMAP (update),
                     wxNullBitmap,
                     FALSE,
@@ -704,7 +594,7 @@ RapidSvnFrame::AddActionTools ()
                     _T
                     ("Bring changes from the repository into the working copy"));
 
-  toolBar->AddTool (TOOLBAR_COMMIT,
+  toolBar->AddTool (ID_Commit,
                     wxBITMAP (commit),
                     wxNullBitmap,
                     FALSE,
@@ -715,7 +605,7 @@ RapidSvnFrame::AddActionTools ()
                     _T
                     ("Send changes from your working copy to the repository"));
 
-  toolBar->AddTool (TOOLBAR_REVERT,
+  toolBar->AddTool (ID_Revert,
                     wxBITMAP (revert),
                     wxNullBitmap,
                     FALSE,
@@ -726,7 +616,7 @@ RapidSvnFrame::AddActionTools ()
                     _T
                     ("Restore pristine working copy file (undo all local edits)"));
 
-  toolBar->AddTool (TOOLBAR_RESOLVE,
+  toolBar->AddTool (ID_Resolve,
                     wxBITMAP (resolve),
                     wxNullBitmap,
                     FALSE,
@@ -745,7 +635,7 @@ RapidSvnFrame::AddInfoTools ()
 {
   wxToolBarBase *toolBar = GetToolBar ();
 
-  toolBar->AddTool (TOOLBAR_INFO,
+  toolBar->AddTool (ID_Info,
                     wxBITMAP (info),
                     wxNullBitmap,
                     FALSE,
@@ -755,7 +645,7 @@ RapidSvnFrame::AddInfoTools ()
                     _T ("Info selected"),
                     _T ("Display info about selected entries"));
 
-  toolBar->AddTool (TOOLBAR_LOG,
+  toolBar->AddTool (ID_Log,
                     wxBITMAP (log),
                     wxNullBitmap,
                     FALSE,
@@ -773,58 +663,37 @@ RapidSvnFrame::OnToolEnter (wxCommandEvent & event)
 {
 }
 
-void
-RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
-{
-  switch (event.GetId ())
-  {
-  case TOOLBAR_REFRESH:
-    UpdateFileList ();
-    break;
-
-  case TOOLBAR_INFO:
-    ShowInfo ();
-    break;
-
-  case TOOLBAR_LOG:
-    ShowLog ();
-    break;
-
-  case TOOLBAR_COMMIT:
-  case TOOLBAR_UPDATE:
-  case TOOLBAR_ADD:
-    OnFileCommand (event);
-    break;
-
-  case TOOLBAR_DEL:
-    DelEntries ();
-    break;
-
-  case TOOLBAR_REVERT:
-    MakeRevert ();
-    break;
-
-  case TOOLBAR_RESOLVE:
-    MakeResolve ();
-    break;
-
-  /*TODO remove this
-  case TOOLBAR_FOLDERUP:
-    {
-      
-      wxString gigi;
-      int x;
-      wxFileName path (m_folder_browser->GetPath ());
-      //path.AppendDir( path.GetPathSeparators() );
-      x = path.GetDirCount ();
-      //path.RemoveDir( x );
-      //gigi = path.GetFullPath();
-      //m_folder_browser->SetPath( path.GetFullPath() );
-    }
-    break;
-  */
-  }
-}
+//REMOVE void
+//REMOVE RapidSvnFrame::OnToolLeftClick (wxCommandEvent & event)
+//REMOVE {
+//REMOVE   switch (event.GetId ())
+//REMOVE   {
+//REMOVE   case TOOLBAR_REFRESH:
+//REMOVE     UpdateFileList ();
+//REMOVE     break;
+//REMOVE 
+//REMOVE   case TOOLBAR_INFO:
+//REMOVE     ShowInfo ();
+//REMOVE     break;
+//REMOVE 
+//REMOVE   case TOOLBAR_LOG:
+//REMOVE     ShowLog ();
+//REMOVE     break;
+//REMOVE 
+//REMOVE   case TOOLBAR_COMMIT:
+//REMOVE   case TOOLBAR_UPDATE:
+//REMOVE   case TOOLBAR_ADD:
+//REMOVE   case TOOLBAR_DEL:
+//REMOVE   case TOOLBAR_REVERT:
+//REMOVE   case TOOLBAR_RESOLVE:
+//REMOVE     OnFileCommand (event);
+//REMOVE     break;
+//REMOVE 
+//REMOVE     MakeResolve ();
+//REMOVE     break;
+//REMOVE 
+//REMOVE   }
+//REMOVE }
 
 void
 RapidSvnFrame::AddProject ()
@@ -897,12 +766,10 @@ RapidSvnFrame::InitFolderBrowser ()
 const svn::Targets
 RapidSvnFrame::GetActionTargets () const
 {
-  wxWindow* activeWindow = FindFocus();
-
-
   //is there nothing selected in the list control, 
   //or is the active window *not* the list control?
-  if (m_listCtrl->GetSelectedItemCount () <= 0 || activeWindow != m_listCtrl)
+  if (m_listCtrl->GetSelectedItemCount () <= 0 || 
+      m_activePane != ACTIVEPANE_FILELIST)
   {
     //yes, so build the file list from the folder browser
     wxFileName fname (m_folder_browser->GetPath ());
@@ -920,30 +787,82 @@ RapidSvnFrame::GetActionTargets () const
 void
 RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 {
-  ActionType lastAction;
+  ActionType lastAction = ACTION_TYPE_NONE;
   Action* action = NULL;
-  svn::Targets targets = GetActionTargets ();
-  int count = targets.targets ().size ();
 
   switch (event.m_id)
   {
-  case TOOLBAR_UPDATE:
   case ID_Update:
-    action = new UpdateAction(this, targets, m_currentPath, m_logTracer, false);
+    action = new UpdateAction(this);
     lastAction = ACTION_TYPE_UPDATE;
     break;
-  case TOOLBAR_COMMIT:
+
   case ID_Commit:
-    action = new CommitAction(this, targets, m_currentPath, m_logTracer, false);
+    action = new CommitAction(this);
     lastAction = ACTION_TYPE_COMMIT;
     break;
-  case TOOLBAR_ADD:
+
   case ID_Add:
-    if (count == 0)
-      break;
-    action =  new AddAction (this, targets);
+    action = new AddAction (this);
     lastAction = ACTION_TYPE_ADD;
     break;
+
+  case ID_Import:
+    action = new ImportAction (this);
+    lastAction = ACTION_TYPE_IMPORT;
+    break;
+
+  case ID_Checkout:
+    action = new CheckoutAction (this);
+    lastAction = ACTION_TYPE_CHECKOUT;
+    break;
+
+  case ID_Cleanup:
+    action = new CleanupAction (this);
+    lastAction = ACTION_TYPE_CLEANUP;
+    break;
+
+  case ID_Log:
+    action = new LogAction (this);
+    lastAction = ACTION_TYPE_LOG;
+    break;
+
+  case ID_Revert:
+    action = new RevertAction (this);
+    lastAction = ACTION_TYPE_REVERT;
+    break;
+
+  case ID_Delete:
+    action = new DeleteAction (this);
+    lastAction = ACTION_TYPE_DELETE;
+    break;
+
+  case ID_Copy:
+    //TODO Make sure there is only one file selected
+    action = new CopyAction (this);
+    lastAction = ACTION_TYPE_COPY;
+    break;
+
+  case ID_Mkdir:
+    action = new MkdirAction (this);
+    lastAction = ACTION_TYPE_MKDIR;
+    break;
+
+  case ID_Merge:
+    action = new MergeAction (this);
+    lastAction = ACTION_TYPE_MERGE;
+    break;
+
+  case ID_Property:
+    action = new PropertyAction (this);
+    lastAction = ACTION_TYPE_PROPERTY;
+
+  case ID_Contents: //TODO
+  case ID_Rename: //TODO
+  default:
+    m_logTracer->Trace (_T("Unimplemented action!"));
+    break;
+
   }
 
   if( action )
@@ -986,63 +905,23 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_ACTION_END:
     {
-      switch (m_lastAction)
-      {
-        case ACTION_TYPE_UPDATE:
-        case ACTION_TYPE_ADD:
-        case ACTION_TYPE_DEL:
-        case ACTION_TYPE_COMMIT:
-        case ACTION_TYPE_REVERT:
-        case ACTION_TYPE_RESOLVE:
-          UpdateFileList ();
-          break;
-      }
+      // well, why not always update
+      // after an action?
+//       switch (m_lastAction)
+//       {
+//         case ACTION_TYPE_UPDATE:
+//         case ACTION_TYPE_ADD:
+//         case ACTION_TYPE_DEL:
+//         case ACTION_TYPE_COMMIT:
+//         case ACTION_TYPE_REVERT:
+//         case ACTION_TYPE_RESOLVE:
+//           UpdateFileList ();
+//           break;
+//       }
+      UpdateFileList ();
     }
     break;
   }
-}
-
-void
-RapidSvnFrame::ShowLog ()
-{
-  svn::Targets targets = m_listCtrl->GetTargets ();
-
-  const std::vector<svn::Path> & v = targets.targets ();
-  std::vector<svn::Path>::const_iterator it;
-
-  // TODO: this handles only one target
-  //       add more targets
-  it=v.begin (); 
-  if (it==v.end ())
-  {
-    return;
-  }
-
-  const svn::Path & path = *it;
-
-  LogAction * action =
-    new LogAction (this, m_logTracer, path.c_str ());
-  Perform (ACTION_TYPE_LOG, action);
-}
-
-void
-RapidSvnFrame::Properties ()
-{
-  svn::Targets targets = m_listCtrl->GetTargets ();
-  const std::vector<svn::Path> & v = targets.targets ();
-  std::vector<svn::Path>::const_iterator it = v.begin ();
-
-  if (v.size () != 1)
-  {
-    wxMessageBox ( _("Select only one file or directory") );
-    return;
-  }
-
-  const svn::Path & path = *it;
-
-  PropertyAction * action = 
-    new PropertyAction (this, m_logTracer, path.c_str ());
-  Perform (ACTION_TYPE_PROPERTY, action);
 }
 
 void
@@ -1091,92 +970,10 @@ RapidSvnFrame::ShowInfo ()
 }
 
 void
-RapidSvnFrame::MakeRevert ()
-{
-  wxMessageDialog sure_dlg (this,
-                            _T
-                            ("Are you sure you want to revert local changes to pristine files?"),
-                            _T ("Revert"), wxYES_NO | wxICON_QUESTION);
-
-  if (sure_dlg.ShowModal () != wxID_YES)
-    return;
-
-  const svn::Targets targets = GetActionTargets ();
-
-  RevertAction *action = new RevertAction (this, m_logTracer, targets);
-  Perform (ACTION_TYPE_REVERT, action);
-}
-
-void
-RapidSvnFrame::MakeResolve ()
-{
-  const svn::Targets targets = GetActionTargets ();
-
-  ResolveAction *action = 
-    new ResolveAction (this, m_logTracer, targets);
-  Perform (ACTION_TYPE_RESOLVE, action);
-}
-
-void
-RapidSvnFrame::DelEntries ()
-{
-  if (m_listCtrl->GetSelectedItemCount () == 0)
-    return;
-
-  svn::Targets targets = m_listCtrl->GetTargets ();
-
-  DeleteAction *action = new DeleteAction (this, m_logTracer, targets);
-  Perform (ACTION_TYPE_DEL, action);
-}
-
-void
-RapidSvnFrame::MakeCopy ()
-{
-  if (m_listCtrl->GetSelectedItemCount () != 1)
-  {
-    wxMessageDialog dlg (this, _T ("You can only copy one file at a time"),
-                         _T ("Copy error"), wxOK);
-    dlg.ShowModal ();
-    return;
-  }
-
-  const svn::Targets targets = m_listCtrl->GetTargets ();
-
-  CopyAction *action = 
-    new CopyAction (this, m_logTracer, m_currentPath, targets);
-  Perform (ACTION_TYPE_COPY, action);
-}
-
-void
-RapidSvnFrame::Rename ()
-{
-
-}
-
-void
-RapidSvnFrame::Mkdir ()
-{
-  MkdirAction *action = new MkdirAction (this, m_logTracer);
-  Perform (ACTION_TYPE_MKDIR, action);
-}
-
-void
-RapidSvnFrame::Merge ()
-{
-  MergeAction *action = new MergeAction (this, m_logTracer, m_currentPath.c_str ());
-  Perform (ACTION_TYPE_MERGE, action);
-}
-
-void
-RapidSvnFrame::Contents ()
-{
-  return;
-}
-
-void
 RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 {
 //  ((wxTreeCtrl*)event.m_eventObject)->Refresh( false, NULL );
+  m_activePane = ACTIVEPANE_FOLDER_BROWSER;
   UpdateCurrentPath ();
   UpdateFileList ();
 }
@@ -1186,6 +983,7 @@ RapidSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
 {
   if (event.GetKeyEvent ().GetKeyCode () == WXK_F5)
   {
+    m_activePane = ACTIVEPANE_FOLDER_BROWSER;
     UpdateFileList ();
   }
   else
@@ -1219,17 +1017,29 @@ RapidSvnFrame::Perform (ActionType type, Action * action)
   m_lastAction = type;
   action->SetPath (m_currentPath.c_str ());
   action->SetContext (m_context);
+  if (action->GetOptions () != actionWithoutTarget)
+  {
+    action->SetTargets (GetActionTargets ());
+  }
   m_actionWorker.SetTracer (m_logTracer);
   m_actionWorker.Perform (action);
 }
 
-InfoPanel::InfoPanel (wxWindow * parent):wxPanel (parent, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxCLIP_CHILDREN)
+void 
+RapidSvnFrame::OnFileListSelected (wxListEvent & event)
+{
+  m_activePane = ACTIVEPANE_FILELIST;
+}
+
+InfoPanel::InfoPanel (wxWindow * parent)
+  : wxPanel (parent, -1, wxDefaultPosition, wxDefaultSize, 
+             wxTAB_TRAVERSAL | wxCLIP_CHILDREN)
 {
 }
 
-LogTracer::LogTracer (wxWindow * parent):wxTextCtrl (parent, -1, _T (""), wxPoint (0, 0),
-            wxDefaultSize,
-            wxTE_MULTILINE | wxTE_READONLY)
+LogTracer::LogTracer (wxWindow * parent)
+  : wxTextCtrl (parent, -1, _T (""), wxPoint (0, 0),
+                wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY)
 {
   SetMaxLength (0);
 }

@@ -27,17 +27,13 @@ class Tracer;
 class CommitAction : public Action
 {
 public:
-  CommitAction (wxWindow * parent, const svn::Targets & targets,
-                wxString & path, Tracer * tr, bool owns);
-  bool Perform ();
-  bool Prepare ();
+  CommitAction (wxWindow * parent);
+
+  virtual bool Perform ();
+  virtual bool Prepare ();
 
 private:
-  svn::Targets m_targets;
-  wxString m_path;
   CommitData m_data;
-  wxWindow *m_parent;
-
 
   // hide default and copy constructor
   CommitAction ();

@@ -25,10 +25,11 @@
 #include "svn_notify.hpp"
 
 
-CopyAction::CopyAction (wxWindow * parent, Tracer * tr, 
-                        const wxString & path,
-                        const svn::Targets & targets )
-  : Action (parent, tr, false), m_path (path), m_targets(targets)
+/**
+ * right now we are accepting only target.
+ */
+CopyAction::CopyAction (wxWindow * parent)
+  : Action (parent, actionWithSingleTarget)
 {
 }
 
@@ -36,7 +37,7 @@ bool
 CopyAction::Prepare ()
 {
   // nothing to do here
-  return true;
+  return Action::Prepare ();
 }
 
 bool
@@ -47,10 +48,10 @@ CopyAction::Perform ()
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
-  m_src = m_targets.targets ()[0].c_str ();
-  m_dest = DestinationPath (m_src);
+  svn::Path src = GetTarget ();
+  svn::Path dest = DestinationPath (src);
 
-  if(m_dest.IsEmpty ())
+  if(!dest.isset ())
     return false;
 
   try
@@ -58,14 +59,14 @@ CopyAction::Perform ()
     //TODO right now we are copying only HEAD
     //this should be configurable
     const svn::Revision head (svn::Revision::HEAD);
-    client.copy (m_src.c_str (), head, m_dest.c_str ());
-    GetTracer ()->Trace ("Copy successful");
+    client.copy (src, head, dest);
+    GetTracer ()->Trace (_T("Copy successful"));
   }
   catch (svn::ClientException &e)
   {
     PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
                      ACTION_EVENT);
-    GetTracer ()->Trace ("Copy failed:");
+    GetTracer ()->Trace (_T("Copy failed:"));
     GetTracer ()->Trace (e.description ());
     result = false;
   }
@@ -76,34 +77,36 @@ CopyAction::Perform ()
 /**
  * Returns the properly formatted destination file name.
  */
-wxString
-CopyAction::DestinationPath (wxString src)
+const svn::Path
+CopyAction::DestinationPath (const svn::Path & src)
 {
   wxString dest;
-  wxFileName file (src);
+  wxFileName file (src.c_str ());
   wxDirDialog dialog (GetParent (), 
                       _T ("Select a directory to copy to"), 
-                      m_path);
+                      GetPath ().c_str ());
 
   if (dialog.ShowModal () != wxID_OK)
     return _T ("");
 
 
   dest = dialog.GetPath ();
+  //TODO replace textual constant with real const
   if(dest.Right (4) == ".svn")
   {
       wxMessageDialog dlg (GetParent (), 
                            _T ("This is an invalid directory."),
-                           _T ("Error"), wxOK);
+                           _T ("Error"), wxOK | wxICON_HAND);
       dlg.ShowModal ();
 
-      return _T ("");
+      return "";
   }
 
+  //TODO clean this stuff up.
   dest = dest + file.GetPathSeparators ().Left (1) + file.GetFullName ();
-  dest.Replace(_T ("\\"), _T ("/"), true);
+  dest.Replace("\\", "/", true);
 
-  return dest;
+  return dest.c_str ();
 }
 /* -----------------------------------------------------------------
  * local variables:

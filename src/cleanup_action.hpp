@@ -25,12 +25,12 @@ class Tracer;
 class CleanupAction : public Action
 {
 public:
-  CleanupAction (wxWindow * parent, svn::Path & path, Tracer * tr);
-  bool Perform ();
-  bool Prepare ();
+  CleanupAction (wxWindow * parent);
+
+  virtual bool Perform ();
+  virtual bool Prepare ();
 
 private:
-  svn::Path m_path;
 
   // hide default and copy constructor
   CleanupAction ();

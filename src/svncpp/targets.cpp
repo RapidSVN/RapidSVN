@@ -56,7 +56,10 @@ namespace svn
   
   Targets::Targets (const char * target)
   {
-    m_targets.push_back (target);
+    if (target != 0)
+    {
+      m_targets.push_back (target);
+    }
   }
 
   const apr_array_header_t *
@@ -86,6 +89,25 @@ namespace svn
   Targets::targets () const
   {
     return m_targets;
+  }
+
+  size_t 
+  Targets::size () const
+  {
+    return m_targets.size ();
+  }
+
+  const Path
+  Targets::target () const
+  {
+    if (m_targets.size () > 0)
+    {
+      return m_targets[0];
+    }
+    else
+    {
+      return "";
+    }
   }
 }
 

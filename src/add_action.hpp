@@ -15,21 +15,17 @@
 
 // svncpp
 #include "svncpp/path.hpp"
-#include "svncpp/targets.hpp"
 
 // app
 #include "action.hpp"
 
 class AddAction:public Action
 {
-private:
-  svn::Targets m_targets;
-
 public:
-  AddAction (wxWindow * parent, const svn::Targets & trgts);
+  AddAction (wxWindow * parent);
 
-  bool Prepare ();
-  bool Perform ();
+  virtual bool Prepare ();
+  virtual bool Perform ();
 };
 
 #endif

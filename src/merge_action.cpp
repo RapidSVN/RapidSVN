@@ -20,15 +20,19 @@
 #include "merge_action.hpp"
 #include "svn_notify.hpp"
 
-MergeAction::MergeAction (wxWindow * parent, Tracer * tr, 
-                          const svn::Path & path)
-  : Action (parent, tr, false), m_path (path)
+MergeAction::MergeAction (wxWindow * parent)
+  : Action (parent, actionWithoutTarget)
 {
 }
 
 bool
 MergeAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
   MergeDlg dlg (GetParent (), m_data);
 
   if (dlg.ShowModal () != wxID_OK)
@@ -50,26 +54,28 @@ MergeAction::Perform ()
   // Set current working directory to point to the path
   // in the folder browser (the path where the merge will be 
   // performed)
-  if (!wxSetWorkingDirectory (m_path.c_str ()))
+  wxString path (GetPath ().c_str ());
+  if (!wxSetWorkingDirectory (path))
   {
     wxString msg;
     msg.Printf(_T ("Could not set working directory to %s"),
-               m_path.c_str ());
+               path.c_str ());
     PostStringEvent (TOKEN_VSVN_INTERNAL_ERROR, msg, ACTION_EVENT);
-    return NULL;
+    return false;
   }
 
 
   //TODO check this
   long rev1 = 0;//MergeAction::getRevision (m_data.Path1Rev);
   long rev2 = 0;//MergeAction::getRevision (m_data.Path2Rev);
+  bool result = true;
   try
   {
     client.merge (m_data.Path1.c_str (), 
                   rev1, 
                   m_data.Path2.c_str (), 
                   rev2, 
-                  m_path.c_str (), 
+                  path.c_str (), 
                   m_data.Force, 
                   m_data.Recursive);
   }
@@ -79,9 +85,10 @@ MergeAction::Perform ()
                      ACTION_EVENT);
     GetTracer ()->Trace ("Merge failed:");
     GetTracer ()->Trace (e.description ());
+    result = false;
   }
   
-  return NULL;
+  return result;
 }
 
 /* -----------------------------------------------------------------

@@ -18,22 +18,30 @@
 #include "property_action.hpp"
 #include "property_dlg.hpp"
 
-PropertyAction::PropertyAction (wxWindow * parent, 
-                                Tracer * tr, const char * target)
-  : Action (parent, tr, false), m_target(target)
+/**
+ * right now this supports only one target
+ */
+PropertyAction::PropertyAction (wxWindow * parent)
+  : Action (parent, actionWithSingleTarget)
 {
 }
 
 bool
 PropertyAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
   try
   {
-    PropertyDlg dlg (GetParent (), m_target);
+    PropertyDlg dlg (GetParent (), GetTarget ());
     dlg.ShowModal ();
   }
   catch (svn::Exception &)
   {
+    //TODO handle this
   }
 
   return false;

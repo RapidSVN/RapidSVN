@@ -15,7 +15,6 @@
 
 #include "action.hpp"
 #include "import_dlg.hpp"
-#include "svncpp/pool.hpp"
 
 class ImportAction:public Action
 {
@@ -23,10 +22,10 @@ private:
   ImportDlg::sData m_data;
 
 public:
-  ImportAction (wxWindow * parent, Tracer * tr, const wxString & path);
+  ImportAction (wxWindow * parent);
 
-  bool Perform ();
-  bool Prepare ();
+  virtual bool Perform ();
+  virtual bool Prepare ();
 };
 
 #endif

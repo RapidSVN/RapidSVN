@@ -37,10 +37,10 @@ END_EVENT_TABLE ()
 BEGIN_EVENT_TABLE (PropertyGrid, wxGrid)
 END_EVENT_TABLE()
 
-PropertyDlg::PropertyDlg (wxWindow * parent, const char * target)
+PropertyDlg::PropertyDlg (wxWindow * parent, const svn::Path & target)
            : wxDialog (parent, -1, _T("Property Editor"), wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             m_property(NULL, target)
+             m_property(NULL, target.c_str ())
 {
   InitializeData ();
   CentreOnParent ();

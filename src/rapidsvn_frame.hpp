@@ -45,9 +45,17 @@ typedef enum
   ACTION_TYPE_MERGE,
   ACTION_TYPE_CLEANUP,
   ACTION_TYPE_PROPERTY,
-  ACTION_TYPE_LOG
+  ACTION_TYPE_LOG,
+  ACTION_TYPE_DELETE
 }
 ActionType;
+
+typedef enum
+{
+  ACTIVEPANE_FOLDER_BROWSER,
+  ACTIVEPANE_FILELIST
+}
+ActivePane;
 
 
 // forward declarations
@@ -93,25 +101,9 @@ private:
   // Query menu
   void OnLog (wxCommandEvent & event);
   void OnInfo (wxCommandEvent & event);
-  void OnProperties (wxCommandEvent & event);
-
-  // Create menu
-  void OnCheckout (wxCommandEvent & event);
-  void OnImport (wxCommandEvent & event);
-  void OnCopy (wxCommandEvent & event);
-  void OnRename (wxCommandEvent & event);
-  void OnMkdir (wxCommandEvent & event);
-  void OnMerge (wxCommandEvent & event);
 
   // Modify menu
   void OnFileCommand (wxCommandEvent & event);
-  void OnDelete (wxCommandEvent & event);
-  void OnRevert (wxCommandEvent & event);
-  void OnResolve (wxCommandEvent & event);
-  void OnCopyTo (wxCommandEvent & event);
-  void OnMoveTo (wxCommandEvent & event);
-  void OnRenameHere (wxCommandEvent & event);
-  void OnCopyHere (wxCommandEvent & event);
 
   // Extras menu
   void OnCleanup (wxCommandEvent & event);
@@ -142,6 +134,7 @@ private:
   void RemoveProject ();
   void OnFolderBrowserSelChanged (wxTreeEvent & event);
   void OnFolderBrowserKeyDown (wxTreeEvent & event);
+  void OnFileListSelected (wxListEvent & event);
 
   void UpdateCurrentPath ();
 
@@ -157,7 +150,6 @@ private:
   void DelEntries ();
   void MakeRevert ();
   void MakeResolve ();
-  void Properties ();
 
   void MakeCopy ();
   void Rename ();
@@ -200,6 +192,7 @@ private:
   wxString m_currentPath;
   wxString m_title;
   svn::Context * m_context;
+  ActivePane m_activePane;
 
 private:
   DECLARE_EVENT_TABLE ()

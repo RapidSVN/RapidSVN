@@ -24,14 +24,10 @@ public:
    * Constructor
    *
    * @param parent parent window
-   * @param tracer
-   * @param own own tracer?
    */
-  CheckoutAction (wxWindow * parent, 
-                  Tracer * tracer);
+  CheckoutAction (wxWindow * parent);
 
   virtual bool Perform ();
-
   virtual bool Prepare ();
 
 private:

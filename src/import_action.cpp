@@ -22,16 +22,19 @@
 #include "import_action.hpp"
 #include "svn_notify.hpp"
 
-ImportAction::ImportAction (wxWindow * parent, Tracer * tr, 
-                            const wxString & path)
-  :Action (parent, tr, false)
+ImportAction::ImportAction (wxWindow * parent)
+  :Action (parent, actionWithoutTarget)
 {
-  m_data.Path = path;
 }
 
 bool
 ImportAction::Prepare ()
 {
+  if (!Action::Prepare ())
+  {
+    return false;
+  }
+
   ImportDlg dlg (GetParent (), &m_data);
 
   if (dlg.ShowModal () != wxID_OK)
