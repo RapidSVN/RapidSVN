@@ -41,7 +41,7 @@ static const char * EXECUTABLE_WILDCARD =
 #else
 // NOTE: (WX 2.4.0) On Motif, neither multiple extensions nor multiple file
 // types are supported (wildcard is limited to a single "*.ext" string)
-static const char * EXECUTABLE_WILDCARD = "";
+static const char * EXECUTABLE_WILDCARD = _("All files|*");
 #endif
 
 /* GeneralPanel **************************************************************/
