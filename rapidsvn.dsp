@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 src\svncpp\Release\svncpp.lib $(SUBVERSION)\subversion\libsvn_auth\Release\libsvn_auth.lib $(SUBVERSION)\subversion\libsvn_client\Release\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_fs\Release\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Release\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Release\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra_svn\Release\libsvn_ra_svn.lib $(SUBVERSION)\subversion\libsvn_ra\Release\libsvn_ra.lib $(SUBVERSION)\subversion\libsvn_repos\Release\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_wc\Release\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Release\libsvn_subr.lib $(SUBVERSION)\subversion\libsvn_delta\Release\libsvn_delta.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibR\xml.lib $(SUBVERSION)\apr\LibR\apr.lib $(SUBVERSION)\apr-util\LibR\aprutil.lib $(SUBVERSION)\neon\libneon.lib $(SUBVERSION)\apr-iconv\LibR\apriconv.lib $(SUBVERSION)\db4-win32\lib\libdb40.lib "$(WX)\lib\wxmsw.lib" wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libcmt"
+# ADD LINK32 src\svncpp\Release\svncpp.lib $(SUBVERSION)\subversion\libsvn_diff\Release\libsvn_diff.lib $(SUBVERSION)\subversion\libsvn_client\Release\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_fs\Release\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Release\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Release\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra_svn\Release\libsvn_ra_svn.lib $(SUBVERSION)\subversion\libsvn_ra\Release\libsvn_ra.lib $(SUBVERSION)\subversion\libsvn_repos\Release\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_wc\Release\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Release\libsvn_subr.lib $(SUBVERSION)\subversion\libsvn_delta\Release\libsvn_delta.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibR\xml.lib $(SUBVERSION)\apr\LibR\apr.lib $(SUBVERSION)\apr-util\LibR\aprutil.lib $(SUBVERSION)\neon\libneon.lib $(SUBVERSION)\apr-iconv\LibR\apriconv.lib $(SUBVERSION)\db4-win32\lib\libdb40.lib "$(WX)\lib\wxmsw.lib" wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libcmt"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "rapidsvn - Win32 Debug"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 src\svncpp\Debug\svncpp.lib $(SUBVERSION)\subversion\libsvn_auth\Debug\libsvn_auth.lib $(SUBVERSION)\subversion\libsvn_repos\Debug\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_fs\Debug\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Debug\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Debug\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra_svn\Debug\libsvn_ra_svn.lib $(SUBVERSION)\subversion\libsvn_ra\Debug\libsvn_ra.lib $(SUBVERSION)\neon\libneond.lib $(SUBVERSION)\apr-iconv\LibD\apriconv.lib $(SUBVERSION)\subversion\libsvn_wc\Debug\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Debug\libsvn_subr.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibD\xml.lib $(SUBVERSION)\subversion\libsvn_client\Debug\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_delta\Debug\libsvn_delta.lib $(SUBVERSION)\apr\LibD\apr.lib $(SUBVERSION)\apr-util\LibD\aprutil.lib $(SUBVERSION)\db4-win32\lib\libdb40d.lib "$(WX)\lib\wxmswd.lib" wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../lib" /libpath:"../../contrib/lib"
+# ADD LINK32 src\svncpp\Debug\svncpp.lib $(SUBVERSION)\subversion\libsvn_diff\Debug\libsvn_diff.lib $(SUBVERSION)\subversion\libsvn_repos\Debug\libsvn_repos.lib $(SUBVERSION)\subversion\libsvn_fs\Debug\libsvn_fs.lib $(SUBVERSION)\subversion\libsvn_ra_dav\Debug\libsvn_ra_dav.lib $(SUBVERSION)\subversion\libsvn_ra_local\Debug\libsvn_ra_local.lib $(SUBVERSION)\subversion\libsvn_ra_svn\Debug\libsvn_ra_svn.lib $(SUBVERSION)\subversion\libsvn_ra\Debug\libsvn_ra.lib $(SUBVERSION)\neon\libneond.lib $(SUBVERSION)\apr-iconv\LibD\apriconv.lib $(SUBVERSION)\subversion\libsvn_wc\Debug\libsvn_wc.lib $(SUBVERSION)\subversion\libsvn_subr\Debug\libsvn_subr.lib $(SUBVERSION)\apr-util\xml\expat\lib\LibD\xml.lib $(SUBVERSION)\subversion\libsvn_client\Debug\libsvn_client.lib $(SUBVERSION)\subversion\libsvn_delta\Debug\libsvn_delta.lib $(SUBVERSION)\apr\LibD\apr.lib $(SUBVERSION)\apr-util\LibD\aprutil.lib $(SUBVERSION)\db4-win32\lib\libdb40d.lib "$(WX)\lib\wxmswd.lib" wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../lib" /libpath:"../../contrib/lib"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -258,7 +258,7 @@ SOURCE=.\src\utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\verblist_win32.cpp
+SOURCE=.\src\win32\verblist.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -323,6 +323,10 @@ SOURCE=.\src\delete_dlg.hpp
 # Begin Source File
 
 SOURCE=.\src\exceptions.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\external_program_action.hpp
 # End Source File
 # Begin Source File
 

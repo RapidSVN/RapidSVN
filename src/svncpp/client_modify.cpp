@@ -84,8 +84,8 @@ namespace svn
     svn_client_commit_info_t *commit_info = NULL;
 
     svn_error_t * error =
-      svn_client_delete (&commit_info, path.c_str (), 
-                         NULL, // wx_adm_access
+      svn_client_delete (&commit_info, 
+                         path.c_str (), 
                          force,
                          *m_context,
                          pool);

@@ -260,7 +260,7 @@ close_directory (void *dir_baton, apr_pool_t *)
 
 
 static svn_error_t *
-apply_textdelta (void *file_baton,const char *, const char *, apr_pool_t *,
+apply_textdelta (void *file_baton,const char *, apr_pool_t *,
                  svn_txdelta_window_handler_t * handler, void **handler_baton)
 {
   FileBaton *fb = (FileBaton *) file_baton;

@@ -236,7 +236,7 @@ add_file (const char *path,
 }
 
 static svn_error_t *
-close_file (void *file_baton, apr_pool_t *)
+close_file (void *file_baton, const char *, apr_pool_t *)
 {
   FileBaton *fb = (FileBaton *) file_baton;
   EditBaton *eb = fb->edit_baton;
@@ -354,7 +354,7 @@ delete_entry (const char *path,
 }
 
 static svn_error_t *
-apply_textdelta (void *file_baton, const char *, const char *, apr_pool_t *, 
+apply_textdelta (void *file_baton, const char *, apr_pool_t *, 
                  svn_txdelta_window_handler_t * handler, void **handler_baton)
 {
   FileBaton *fb = (FileBaton *) file_baton;

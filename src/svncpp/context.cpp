@@ -82,14 +82,14 @@ namespace svn
 
     apr_array_header_t *providers
       = apr_array_make (m_pool, 1, sizeof (svn_auth_provider_object_t *));
-    svn_auth_provider_object_t *wc_provider
-      = (svn_auth_provider_object_t *)apr_pcalloc (m_pool, sizeof (*wc_provider));
+    svn_auth_provider_object_t *client_provider
+      = (svn_auth_provider_object_t *)apr_pcalloc (m_pool, sizeof (*client_provider));
 
-    svn_wc_get_simple_provider (
-      &(wc_provider->vtable),
-      &(wc_provider->provider_baton), m_pool);
+    svn_client_get_simple_provider (
+      &(client_provider->vtable),
+      &(client_provider->provider_baton), m_pool);
 
-    *(svn_auth_provider_object_t **)apr_array_push (providers) = wc_provider;
+    *(svn_auth_provider_object_t **)apr_array_push (providers) = client_provider;
     svn_auth_baton_t *ab;
     svn_auth_open (&ab, providers, m_pool);
     svn_auth_set_parameter (ab, SVN_AUTH_PARAM_DEFAULT_USERNAME,
