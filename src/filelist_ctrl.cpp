@@ -1247,15 +1247,17 @@ void
 FileListCtrl::OnColumnEndDrag (wxListEvent & event)
 {
   int index = event.GetColumn ();
-  // the calls below didnt work on wxGTK but
-  // item.GetWidth () always returned 0
-  // they seemed to work on windows.
-  // if the code below works on wxMSW as well
-  // remove the commented-out code below and
-  // this remark as well
-  //const wxListItem item = event.GetItem ();
-  //const int width = item.GetWidth ();
+
+  // TODO clean this mess up. We dont want #ifdef's in the source code
+
+#ifdef __WXMSW__
+  // this works only with wxMSW
+  const wxListItem item = event.GetItem ();
+  const int width = item.GetWidth ();
+#else
+  // and this is for all the other platforms
   const int width = GetColumnWidth (index);
+#endif
   for (int col=0; col < COL_COUNT; col++)
   {
     if (m->ColumnIndex[col] == index)
