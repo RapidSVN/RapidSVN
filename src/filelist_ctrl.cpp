@@ -933,13 +933,30 @@ FileListCtrl::OnItemActivated (wxListEvent & event)
 void
 FileListCtrl::OnItemRightClk (wxListEvent & event)
 {
-  int flag;
-  wxPoint screenPt = wxGetMousePosition ();
-  wxPoint clientPt = ScreenToClient (screenPt);
+  wxPoint clientPt = event.GetPoint ();
 
-  long index = HitTest (clientPt, flag);
+  // Ensure the item is selected.  This way we ensure that the menu we
+  // get from ShowMenu refers to the item on which the user clicked,
+  // as opposed to whatever happens to be selected.
+
+  int flag;
+  const long index = HitTest (clientPt, flag);
+
   if (index >= 0)
   {
+    // Clear all selections
+    const int n = this->GetItemCount();
+
+    for (int i = 0; i < n; i++)
+    {
+      wxListItem info;
+      info.SetId (i);
+      this->GetItem (info);
+      this->SetItemState(i,0,wxLIST_STATE_SELECTED);
+    }
+
+    Select (index);
+
     ShowMenu (index, clientPt);
   }
 }
