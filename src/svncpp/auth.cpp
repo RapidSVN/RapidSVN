@@ -27,7 +27,7 @@ struct prompt_user_baton
  * the user is unable to authenticate.
  */
 static svn_error_t * 
-prompt (char **info, const char *prompt, svn_boolean_t hide,
+prompt (const char **info, const char *prompt, svn_boolean_t hide,
         void *baton, apr_pool_t *pool);
 
 namespace svn
@@ -83,7 +83,7 @@ namespace svn
 }
 
 static svn_error_t *
-prompt (char **info, const char *prompt, svn_boolean_t hide,
+prompt (const char **info, const char *prompt, svn_boolean_t hide,
         void *baton, apr_pool_t *pool)
 {
   prompt_user_baton *pub = (prompt_user_baton*) baton;
