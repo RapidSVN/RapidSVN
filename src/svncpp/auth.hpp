@@ -38,7 +38,7 @@ namespace svn
 
   public:
     Auth ();
-    ~Auth ();
+    virtual ~Auth ();
 
     /**
      * Sets the username.
