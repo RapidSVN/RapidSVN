@@ -1,5 +1,3 @@
-INCLUDES=-I/usr/local/include/subversion-1
-
 noinst_HEADERS=${wildcard *.hpp}
 
 lib_LTLIBRARIES=libsvncpp.la

@@ -1,7 +1,5 @@
 SUBDIRS=svncpp res
 
-INCLUDES=-I/usr/local/include/subversion-1
-
 noinst_HEADERS=${wildcard *.hpp}
 
 bin_PROGRAMS=rapidsvn

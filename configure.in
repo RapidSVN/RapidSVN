@@ -26,9 +26,33 @@ else
     AC_MSG_RESULT([not found])
     AC_MSG_ERROR([APR is required. Try --with-apr-config.])
 fi
-CXXFLAGS="$CXXFLAGS `$APRCONFIG --cflags` `$APRCONFIG --cppflags` \
-                    `$APRCONFIG --includes`"
+CPPFLAGS="$CPPFLAGS  `$APRCONFIG --cppflags` `$APRCONFIG --includes`"
+CXXFLAGS="$CXXFLAGS `$APRCONFIG --cflags`"
 APR_LIBS="`$APRCONFIG --link-ld --libs`"
+
+dnl
+dnl Subversion
+dnl
+
+SVNCONFIG=svn-config
+AC_ARG_WITH(svn-config,
+[[  --with-svn-config=FILE    Use the given path to svn-config when determining
+                            Subversion configuration; defaults to "svn-config"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        SVNCONFIG=$withval
+    fi
+])
+AC_MSG_CHECKING([for Subversion])
+if $SVNCONFIG --cflags > /dev/null; then
+    AC_MSG_RESULT([found])
+else
+    AC_MSG_RESULT([not found])
+    AC_MSG_ERROR([Subversion is required. Try --with-svn-config.])
+fi
+CPPFLAGS="$CPPFLAGS `$SVNCONFIG --cppflags` `$SVNCONFIG --includes`"
+CXXFLAGS="$CXXFLAGS `$SVNCONFIG --cflags`"
+SVN_LIBS="`$SVNCONFIG --libs`"
 
 dnl
 dnl wxWindows
@@ -47,7 +71,8 @@ AC_MSG_CHECKING([wxWindows version])
 if wxversion=`$WXCONFIG --version`; then
     AC_MSG_RESULT([$wxversion])
 else
-    AC_MSG_RESULT([none found])
+    AC_MSG_RESULT([not found])
+    AC_MSG_ERROR([wxWindows is required. Try --with-wx-config.])
 fi
 case $wxversion in
     [2.3.3])
@@ -56,9 +81,10 @@ case $wxversion in
         ;;
     *)
         AC_MSG_ERROR([wxWindows 2.3.3 or 2.4.0 required])
+	AC_MSG_ERROR([Try --with-wx-config.])
         ;;
 esac
-
+CPPFLAGS="$CPPFLAGS `$WXCONFIG --cppflags`"
 CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
 WX_LIBS="`$WXCONFIG --libs`"
 
