@@ -51,6 +51,78 @@ enum
   FOLDER_IMAGE_COUNT
 };
 
+static const unsigned int MAXLENGTH_BOOKMARK = 35;
+
+/**
+ * beautify a path, that is too long, so not everything can be
+ * displayed
+ *
+ * Examples:
+ * 1. Local Unix path
+ *    Before:  /home/users/xela/work/rapidsvn/src/svncpp
+ *    After:   /...ork/rapidsvn/src/svncpp
+ *
+ * 2. Local Windows path
+ *    Before:  d:\Documents and Settings\alex\Application Data
+ *    After:   D:\...alex\Application Data
+ * 
+ * 3. Repository URL
+ *    Before:  https://svn.collab.net/repos/rapidsvn/trunk/src/svncpp
+ *    After:   https://...apidsvn/trunk/src/svncpp
+ *
+ * Jobs to do:
+ * - Uppercase Windows drive letters
+ * - shorten path while preserving root path/url
+ *
+ * @param path input path
+ * @return beatified path
+ */
+wxString 
+BeautifyPath (const wxString & path)
+{
+  if( path.length() <= MAXLENGTH_BOOKMARK )
+    return path;
+
+  int pos = path.Find (":");
+  wxString newPath;
+
+  if (pos >= 0)
+  {
+    pos += 1;
+    // ok. we do have a dot. So is it an url or
+    // a windows drive?
+    newPath = path.Left (pos);
+
+    if (!svn::Url::isValid (path.c_str ()))
+      newPath = newPath.Upper ();
+  }
+
+  // Now add chars until a different char than
+  // / or \ appears
+  while (pos < path.Length ())
+  {
+    char c = path.GetChar (pos);
+
+    if ( (c == '/') || (c == '\\'))
+    {
+      newPath += c;
+      pos++;
+    }
+    else
+      break;
+  }
+
+  newPath += "...";
+
+  const int restPos = path.Length () - MAXLENGTH_BOOKMARK + 
+    newPath.Length ();
+
+  newPath += path.Mid (restPos);
+
+  return newPath;
+}
+
+
 struct FolderBrowser::Data
 {
 public:
@@ -60,8 +132,6 @@ public:
   wxWindow * window;
   Bookmarks bookmarks;
   
-  static const unsigned int MAXLENGTH_BOOKMARK;
-
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
     : window (window)
   {
@@ -296,17 +366,7 @@ public:
           const wxString path (bookmarks.GetBookmark (index));
           FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK, 
                                                     path, path, TRUE);
-          wxString label;
-    
-          if( path.length() < Data::MAXLENGTH_BOOKMARK )
-          {
-            label = path;
-          }
-          else
-          {
-            label = "..." + path.Right(Data::MAXLENGTH_BOOKMARK );
-          }
-
+          wxString label (BeautifyPath (path));
           wxTreeItemId newId = treeCtrl->AppendItem (parentId, label, 
                                                      FOLDER_IMAGE_FOLDER, 
                                                      FOLDER_IMAGE_FOLDER, 
@@ -541,8 +601,6 @@ public:
     return success;
   }
 };
-
-const unsigned int FolderBrowser::Data::MAXLENGTH_BOOKMARK = 25;
 
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
   EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
