@@ -1,7 +1,6 @@
 #include "include.h"
-#include "rapidsvn_app.h"
-
 #include "folder_browser.h"
+#include "svn_wc.h"
 
 FolderBrowser::FolderBrowser (wxWindow * wnd,
                               apr_pool_t * __pool,
@@ -139,4 +138,30 @@ void
 FolderBrowser::AddProject (const wxString & path)
 {
   m_workbenchItems.Add (path);
+}
+
+wxTreeItemId
+  FolderBrowser::AppendItem (const wxTreeItemId & parent,
+                             const wxString & text, int image,
+                             int selectedImage, wxTreeItemData * data)
+{
+  bool add = TRUE;
+  wxTreeItemId treeItemId;
+  wxDirItemData *dirData = static_cast < wxDirItemData * >(data);
+
+  if (dirData != NULL)
+  {
+    if ((dirData->m_isDir) && (dirData->m_name == SVN_WC_ADM_DIR_NAME))
+    {
+      add = FALSE;
+    }
+  }
+
+  if (add)
+  {
+    treeItemId =
+      wxGenericDirCtrl::AppendItem (parent, text, image, selectedImage, data);
+  }
+
+  return treeItemId;
 }

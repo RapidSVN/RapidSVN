@@ -9,7 +9,7 @@ IMPLEMENT_APP (VsvnApp)
   // to Get() if you want to override the default values (the application
   // name is the name of the executable and the vendor name is the same)
   SetVendorName (APPLICATION_NAME);
-  SetAppName (_T ("RapidSVN"));
+  SetAppName (APPLICATION_NAME);
 
   appFrame = new VSvnFrame (APPLICATION_NAME);
   appFrame->Show (TRUE);

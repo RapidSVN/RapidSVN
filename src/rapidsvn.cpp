@@ -426,11 +426,12 @@ VSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
   wxString msg;
 
-  msg.Printf (_("RapidSVN Version %d.%d.%d\n"
-                "Mileston:e %s\n"
-                "\nBuilt with\n"
-                "Subversion %d.%d.%d and\n"
-                "wxWindows %d.%d.%d"),
+  msg.Printf (_T ("%s Version %d.%d.%d\n"
+                  "Mileston:e %s\n"
+                  "\nBuilt with\n"
+                  "Subversion %d.%d.%d and\n"
+                  "wxWindows %d.%d.%d"),
+              APPLICATION_NAME,
               RAPIDSVN_VER_MAJOR, RAPIDSVN_VER_MINOR, RAPIDSVN_VER_MICRO,
               RAPIDSVN_VER_MILESTONE,
               SVN_VER_MAJOR, SVN_VER_MINOR, SVN_VER_MICRO,
@@ -793,8 +794,20 @@ void
 VSvnFrame::AddProject ()
 {
   wxDirDialog dialog (this, "Select a directory", wxGetHomeDir ());
+  bool add = TRUE;
 
   if (dialog.ShowModal () == wxID_OK)
+  {
+    wxFileName fileName (dialog.GetPath ());
+    if ((fileName.GetName () + fileName.GetExt ()) == SVN_WC_ADM_DIR_NAME)
+    {
+      add = FALSE;
+      wxMessageBox (_T
+                    ("You cannot add a subversion administrative directory to the workbench!"),
+                    APPLICATION_NAME, wxOK);
+    }
+  }
+  if (add)
   {
     m_folder_browser->AddProject (dialog.GetPath ());
     m_folder_browser->Refresh ();
@@ -990,7 +1003,7 @@ VSvnFrame::ShowLog ()
   apr_array_header_t *targets = m_listCtrl->GetTargets (subpool);
   const char *target;
 
-  if(targets->nelts > 0)
+  if (targets->nelts > 0)
   {
     target = ((const char **) (targets->elts))[0];
     m_logAction = new LogAction (this, subpool, m_logTracer, target);

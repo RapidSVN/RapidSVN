@@ -9,7 +9,6 @@
 
 #define SPLITTER_WINDOW   100
 
-
 typedef enum
 {
   ACTION_TYPE_NONE,
@@ -136,7 +135,7 @@ public:
   void Contents ();
   void Preferences ();
 
-  
+
   FileListCtrl *GetFileList ()
   {
     return m_listCtrl;

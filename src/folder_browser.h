@@ -44,7 +44,10 @@ public:
 protected:
    virtual void ExpandDir (const wxTreeItemId & parentId);
   virtual void CollapseDir (const wxTreeItemId & parentId);
-
+  virtual wxTreeItemId AppendItem (const wxTreeItemId & parent,
+                                   const wxString & text,
+                                   int image = -1, int selectedImage = -1,
+                                   wxTreeItemData * data = NULL);
 private:
    wxTreeItemId m_workbenchId;
   UniqueArrayString m_workbenchItems;
