@@ -77,7 +77,7 @@ public:
   bool
   RemoveProject (const char * path)
   {
-    size_t index = projects.Index (path);
+    int index = projects.Index (path);
 
     if (index == wxNOT_FOUND)
       return false;
@@ -157,7 +157,7 @@ Workbench::GetContext (const size_t index)
 svn::Context *
 Workbench::GetContext (const char * path)
 {
-  size_t index = m->projects.Index (path);
+  int index = m->projects.Index (path);
 
   if (index == wxNOT_FOUND)
     return 0;

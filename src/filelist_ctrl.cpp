@@ -34,12 +34,6 @@
 #include "verblist.hpp"
 
 // Bitmaps
-#include "res/bitmaps/update.xpm"
-#include "res/bitmaps/commit.xpm"
-#include "res/bitmaps/revert.xpm"
-#include "res/bitmaps/resolve.xpm"
-#include "res/bitmaps/info.xpm"
-#include "res/bitmaps/log.xpm"
 #include "res/bitmaps/nonsvn_file.xpm"
 #include "res/bitmaps/normal_file.xpm"
 #include "res/bitmaps/added_file.xpm"
