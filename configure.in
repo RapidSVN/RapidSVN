@@ -85,7 +85,8 @@ AC_ARG_WITH(svn-lib,
     fi
 ])
 AC_MSG_CHECKING([for Subversion libraries])
-if test -f "$SVN_LIB/libsvn_client-1.so"; then
+LIBSVN_RESULT=`find $SVN_LIB -name "libsvn_client-1.*" -maxdepth 1 -type f`
+if test -n "$LIBSVN_RESULT"; then
     AC_MSG_RESULT([found])
 else
     AC_MSG_RESULT([not found])
