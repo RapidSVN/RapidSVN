@@ -75,7 +75,6 @@ private:
   /** disallow copy constructor */
   RapidSvnFrame (const RapidSvnFrame &);
 
-  void OnSize (wxSizeEvent & event);
   void OnActivate (wxActivateEvent & event);
 
   // File menu
@@ -91,6 +90,7 @@ private:
   void OnColumn (wxCommandEvent & event);
   void OnColumnReset (wxCommandEvent & event);
   void OnFlatView (wxCommandEvent & event);
+  void OnStop (wxCommandEvent & event);
 
   // Query menu
   void OnLog (wxCommandEvent & event);
@@ -105,12 +105,6 @@ private:
   // Help menu
   void OnContents (wxCommandEvent & event);
   void OnAbout (wxCommandEvent & event);
-
-  // toolbar administration
-  void LayoutChildren ();
-  void RecreateToolbar ();
-  void AddActionTools ();
-  void AddInfoTools ();
 
   // toolbar events
   void OnToolEnter (wxCommandEvent & event);
@@ -224,7 +218,6 @@ private:
   wxTextCtrl *m_log;
   EventTracer *m_logTracer;
 
-  wxToolBar *m_tbar;
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
   wxString m_currentPath;

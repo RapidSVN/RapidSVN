@@ -265,6 +265,11 @@ AppendMenuItem (wxMenu & menu, int id)
   case ID_Column_Reset:
     caption = _("Reset Columns");
     break;
+
+  case ID_Stop:
+    caption = _("&Stop");
+    break;
+
   case ID_Explore:
     caption = _("Explore...\tF2");
   }

@@ -73,6 +73,7 @@
 #include "res/bitmaps/resolve.xpm"
 #include "res/bitmaps/log.xpm"
 #include "res/bitmaps/info.xpm"
+#include "res/bitmaps/stop.xpm"
 
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
@@ -156,6 +157,111 @@ COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
   _("Conflict Work")
 };
 
+
+/**
+ * Local helper function to add action tools to @a toolbar
+ *
+ * @param toolbar
+ */
+static void
+AddActionTools (wxToolBarBase *toolBar)
+{
+  toolBar->AddTool (ID_Add,
+                    wxBitmap (add_xpm),
+                    wxNullBitmap,
+                    FALSE,
+                    -1,
+                    -1,
+                    (wxObject *) NULL,
+                    _("Add selected"),
+                    _("Put files and directories under revision control"));
+
+  toolBar->AddTool (ID_Delete,
+                    wxBitmap (delete_xpm),
+                    wxNullBitmap,
+                    FALSE,
+                    -1,
+                    -1,
+                    (wxObject *) NULL,
+                    _("Delete selected"),
+                    _("Delete files and directories from version control"));
+
+  toolBar->AddTool (ID_Update,
+                    wxBitmap (update_xpm),
+                    wxNullBitmap,
+                    FALSE,
+                    -1,
+                    -1,
+                    (wxObject *) NULL,
+                    _("Update selected"),
+                    _("Bring changes from the repository into the working copy"));
+
+  toolBar->AddTool (ID_Commit,
+                    wxBitmap (commit_xpm),
+                    wxNullBitmap,
+                    FALSE,
+                    -1,
+                    -1,
+                    (wxObject *) NULL,
+                    _("Commit selected"),
+                    _("Send changes from your working copy to the repository"));
+
+  toolBar->AddTool (ID_Revert,
+                    wxBitmap (revert_xpm),
+                    wxNullBitmap,
+                    FALSE,
+                    -1,
+                    -1,
+                    (wxObject *) NULL,
+                    _("Revert selected"),
+                    _("Restore pristine working copy file (undo all local edits)"));
+
+  toolBar->AddTool (ID_Resolve,
+                    wxBitmap (resolve_xpm),
+                    wxNullBitmap,
+                    FALSE,
+                    -1,
+                    -1,
+                    (wxObject *) NULL,
+                    _("Resolve selected"),
+                    _("Remove 'conflicted' state on working copy files or directories)"));
+
+  toolBar->AddSeparator ();
+}
+
+
+/**
+ * helper function to add info tools to the @a toolbar
+ *
+ * @param toolbar
+ */
+static void
+AddInfoTools (wxToolBarBase * toolBar)
+{
+  toolBar->AddTool (ID_Info,
+                    wxBitmap (info_xpm),
+                    wxNullBitmap,
+                    FALSE,
+                    -1,
+                    -1,
+                    (wxObject *) NULL,
+                    _("Info selected"),
+                    _("Display info about selected entries"));
+
+  toolBar->AddTool (ID_Log,
+                    wxBitmap (log_xpm),
+                    wxNullBitmap,
+                    FALSE,
+                    -1,
+                    -1,
+                    (wxObject *) NULL,
+                    _("Log selected"),
+                    _("Show the log messages for a set entries"));
+
+  toolBar->AddSeparator ();
+}
+
+
 /**
  * class that hide implementation specific data and methods from
  * the interface
@@ -168,21 +274,28 @@ public:
   Listener listener;
   bool updateAfterActivate;
   bool dontUpdateFilelist;
+private:
+  bool m_running;
+  size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
+  wxFrame * m_parent;
+
+public:
 
   /** 
    * This instance of @a apr is used to initialize/terminate apr 
    */
   svn::Apr apr;
 
-  Data (wxWindow * parent)
+  Data (wxFrame * parent)
     : MenuColumns (0), MenuBar (0), listener (parent),
-      updateAfterActivate (false), dontUpdateFilelist (false)
+      updateAfterActivate (false), dontUpdateFilelist (false),
+      m_running (false), m_toolbar_rows (1), m_parent (parent)
   {
     InitializeMenu ();
   }
 
   void
-  RapidSvnFrame::Data::InitializeMenu ()
+  InitializeMenu ()
   {
     // File menu
     wxMenu *menuFile = new wxMenu;
@@ -206,6 +319,7 @@ public:
     // View menu
     wxMenu *menuView = new wxMenu;
     AppendMenuItem (*menuView, ID_Refresh);
+    AppendMenuItem (*menuView, ID_Stop);
     menuView->AppendSeparator ();
 
     AppendMenuItem (*menuView, ID_Explore);
@@ -289,10 +403,175 @@ public:
     MenuBar->Check (id, check);
   }
 
+  void
+  SetRunning (bool running)
+  {
+    if (running && ! m_running)
+      listener.cancel (false);
+
+    m_running = running;
+
+    wxToolBarBase * toolBar = m_parent->GetToolBar ();
+
+    wxASSERT (toolBar != 0);
+
+    toolBar->EnableTool (ID_Stop, running);
+    MenuBar->Enable (ID_Stop, running);
+  }
+
+  bool 
+  IsRunning () const
+  {
+    return m_running;
+  }
+
+
+  void
+  RecreateToolbar ()
+  {
+    // delete the old toolbar
+    wxToolBarBase * toolBar = m_parent->GetToolBar ();
+    delete toolBar;
+
+    m_parent->SetToolBar (NULL);
+
+    long style = wxNO_BORDER | wxTB_FLAT | wxTB_DOCKABLE;
+    style |= wxTB_HORIZONTAL;
+
+    toolBar = m_parent->CreateToolBar (style, ID_TOOLBAR);
+    toolBar->SetMargins (4, 4);
+
+    AddActionTools (toolBar);
+    AddInfoTools (toolBar);
+
+    // Set toolbar refresh button.
+    toolBar->AddTool (ID_Refresh,
+                      wxBitmap (refresh_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL, 
+                      _("Refresh"), 
+                      _("Refresh the file list"));
+
+    toolBar->AddSeparator ();
+
+    // STOP button
+    toolBar->AddTool (ID_Stop,
+                      wxBitmap (stop_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      0,
+                      _("Stop"),
+                      _("Stop the current action"));
+
+    // After adding the buttons to the toolbar, 
+    // must call Realize() to reflect the changes.  
+    toolBar->Realize ();
+
+    toolBar->SetRows (m_toolbar_rows);
+  }
+
+  void
+  AddActionTools (wxToolBarBase *toolBar)
+  {
+    wxASSERT (toolBar);
+
+    toolBar->AddTool (ID_Add,
+                      wxBitmap (add_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL,
+                      _("Add selected"),
+                      _("Put files and directories under revision control"));
+
+    toolBar->AddTool (ID_Delete,
+                      wxBitmap (delete_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL,
+                      _("Delete selected"),
+                      _("Delete files and directories from version control"));
+
+    toolBar->AddTool (ID_Update,
+                      wxBitmap (update_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL,
+                      _("Update selected"),
+                      _("Bring changes from the repository into the working copy"));
+
+    toolBar->AddTool (ID_Commit,
+                      wxBitmap (commit_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL,
+                      _("Commit selected"),
+                      _("Send changes from your working copy to the repository"));
+
+    toolBar->AddTool (ID_Revert,
+                      wxBitmap (revert_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL,
+                      _("Revert selected"),
+                      _("Restore pristine working copy file (undo all local edits)"));
+
+    toolBar->AddTool (ID_Resolve,
+                      wxBitmap (resolve_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL,
+                      _("Resolve selected"),
+                      _("Remove 'conflicted' state on working copy files or directories)"));
+
+    toolBar->AddSeparator ();
+  }
+
+
+  void
+  AddInfoTools (wxToolBarBase *toolBar)
+  {
+    toolBar->AddTool (ID_Info,
+                      wxBitmap (info_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL,
+                      _("Info selected"),
+                      _("Display info about selected entries"));
+
+    toolBar->AddTool (ID_Log,
+                      wxBitmap (log_xpm),
+                      wxNullBitmap,
+                      FALSE,
+                      -1,
+                      -1,
+                      (wxObject *) NULL,
+                      _("Log selected"),
+                      _("Show the log messages for a set entries"));
+
+    toolBar->AddSeparator ();
+  }
 };
 
 BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
-  EVT_SIZE (RapidSvnFrame::OnSize)
   EVT_ACTIVATE (RapidSvnFrame::OnActivate)
   EVT_MENU (ID_AddWcBookmark, RapidSvnFrame::OnAddWcBookmark)
   EVT_MENU (ID_AddRepoBookmark, RapidSvnFrame::OnAddRepoBookmark)
@@ -311,6 +590,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
+  EVT_MENU (ID_Stop, RapidSvnFrame::OnStop)
 
   EVT_MENU_RANGE (ID_File_Min, ID_File_Max, RapidSvnFrame::OnFileCommand)
   EVT_MENU_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnFileCommand)
@@ -350,9 +630,6 @@ END_EVENT_TABLE ()
 
   SetIcon (wxIcon (svn_xpm));
 
-  // Toolbar
-  m_tbar = NULL;
-
   // toolbar rows
   m_toolbar_rows = 1;
 
@@ -360,7 +637,8 @@ END_EVENT_TABLE ()
   CreateStatusBar ();
 
   // Create the toolbar
-  RecreateToolbar ();
+  m->RecreateToolbar ();
+  m->SetRunning (false);
 
   m_horiz_splitter = 
     new ProportionalSplitterWindow (1.0f, this,
@@ -501,16 +779,21 @@ RapidSvnFrame::UpdateFileList ()
   if (m->dontUpdateFilelist)
     return;
 
-  wxBusyCursor busy;
+  m->SetRunning (true);
+
   if (m_listCtrl && m_folder_browser)
   {
-    if (m_currentPath.length () > 0)
+    wxBusyCursor busy;
+    if (m_currentPath.length () == 0)
+      m_listCtrl->Show (FALSE);
+    else
     {
       try
       {
         m_listCtrl->SetContext (m_context);
         m_listCtrl->UpdateFileList (m_currentPath);
         m_listCtrl->Show (TRUE);
+
       }
       catch (svn::ClientException & e)
       {
@@ -527,11 +810,9 @@ RapidSvnFrame::UpdateFileList ()
         Trace (_("Error while updating filelist"));
       }
     }
-    else
-    {
-      m_listCtrl->Show (FALSE);
-    }
   }
+
+  m->SetRunning (false);
 }
 
 void
@@ -590,38 +871,6 @@ RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
   UpdateFolderBrowser ();
 }
 
-void
-RapidSvnFrame::LayoutChildren ()
-{
-  wxSize size = GetClientSize ();
-
-  int offset;
-  if (m_tbar)
-  {
-    m_tbar->SetSize (-1, size.y);
-    m_tbar->Move (0, 0);
-
-    offset = m_tbar->GetSize ().x;
-  }
-  else
-  {
-    offset = 0;
-  }
-}
-
-void
-RapidSvnFrame::OnSize (wxSizeEvent & event)
-{
-  if (m_tbar)
-  {
-    LayoutChildren ();
-  }
-  else
-  {
-    event.Skip ();
-  }
-}
-
 
 void 
 RapidSvnFrame::OnActivate (wxActivateEvent & event)
@@ -636,143 +885,10 @@ RapidSvnFrame::OnActivate (wxActivateEvent & event)
 
 
 void
-RapidSvnFrame::RecreateToolbar ()
-{
-  // delete the old toolbar
-  wxToolBarBase *toolBar = GetToolBar ();
-  delete toolBar;
-
-  SetToolBar (NULL);
-
-  long style = wxNO_BORDER | wxTB_FLAT | wxTB_DOCKABLE;
-  style |= wxTB_HORIZONTAL;
-
-  toolBar = CreateToolBar (style, ID_TOOLBAR);
-  toolBar->SetMargins (4, 4);
-
-  AddActionTools ();
-  AddInfoTools ();
-
-  // Set toolbar refresh button.
-  toolBar->AddTool (ID_Refresh,
-                    wxBitmap (refresh_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL, 
-                    _("Refresh"), 
-                    _("Refresh the file list"));
-
-  toolBar->AddSeparator ();
-
-  // After adding the buttons to the toolbar, 
-  // must call Realize() to reflect the changes.  
-  toolBar->Realize ();
-
-  toolBar->SetRows (m_toolbar_rows);
-}
-
-void
-RapidSvnFrame::AddActionTools ()
-{
-  wxToolBarBase *toolBar = GetToolBar ();
-
-  toolBar->AddTool (ID_Add,
-                    wxBitmap (add_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Add selected"),
-                    _("Put files and directories under revision control"));
-
-  toolBar->AddTool (ID_Delete,
-                    wxBitmap (delete_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Delete selected"),
-                    _("Delete files and directories from version control"));
-
-  toolBar->AddTool (ID_Update,
-                    wxBitmap (update_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Update selected"),
-                    _("Bring changes from the repository into the working copy"));
-
-  toolBar->AddTool (ID_Commit,
-                    wxBitmap (commit_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Commit selected"),
-                    _("Send changes from your working copy to the repository"));
-
-  toolBar->AddTool (ID_Revert,
-                    wxBitmap (revert_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Revert selected"),
-                    _("Restore pristine working copy file (undo all local edits)"));
-
-  toolBar->AddTool (ID_Resolve,
-                    wxBitmap (resolve_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Resolve selected"),
-                    _("Remove 'conflicted' state on working copy files or directories)"));
-
-  toolBar->AddSeparator ();
-}
-
-void
-RapidSvnFrame::AddInfoTools ()
-{
-  wxToolBarBase *toolBar = GetToolBar ();
-
-  toolBar->AddTool (ID_Info,
-                    wxBitmap (info_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Info selected"),
-                    _("Display info about selected entries"));
-
-  toolBar->AddTool (ID_Log,
-                    wxBitmap (log_xpm),
-                    wxNullBitmap,
-                    FALSE,
-                    -1,
-                    -1,
-                    (wxObject *) NULL,
-                    _("Log selected"),
-                    _("Show the log messages for a set entries"));
-
-  toolBar->AddSeparator ();
-}
-
-void
 RapidSvnFrame::OnToolEnter (wxCommandEvent & event)
 {
 }
+
 
 void
 RapidSvnFrame::AddWcBookmark ()
@@ -1039,7 +1155,7 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       // Not actually part of the Action hierarchy, but here for completeness
       baseActionFlags = Action::SINGLE_TARGET|Action::MULTIPLE_TARGETS|Action::RESPOSITORY_TYPE|Action::VERSIONED_WC_TYPE|Action::UNVERSIONED_WC_TYPE;
       break;
-  
+
     case ID_Contents: //TODO
     default:
       // If unrecognised, by default return true
@@ -1481,16 +1597,29 @@ RapidSvnFrame::InvokeDefaultAction ()
 void
 RapidSvnFrame::Perform (Action * action)
 {
-  action->SetPath (m_currentPath.c_str ());
-  action->SetContext (m_context);
-  if ((action->GetFlags () & Action::WITHOUT_TARGET) == 0)
+  try
   {
-    action->SetTargets (GetActionTargets ());
+    m->SetRunning (true);
+    m->listener.cancel (false);
+
+    action->SetPath (m_currentPath.c_str ());
+    action->SetContext (m_context);
+    if ((action->GetFlags () & Action::WITHOUT_TARGET) == 0)
+    {
+      action->SetTargets (GetActionTargets ());
+    }
+    action->SetTracer (m_logTracer, false);
+    m_actionWorker->SetTracer (m_logTracer);
+    m_actionWorker->SetContext (m_context, false);
+    m_actionWorker->Perform (action);
+
+    m->SetRunning (false);
   }
-  action->SetTracer (m_logTracer, false);
-  m_actionWorker->SetTracer (m_logTracer);
-  m_actionWorker->SetContext (m_context, false);
-  m_actionWorker->Perform (action);
+  catch (...)
+  {
+    m->SetRunning (false);
+    throw; // svn::Excepton (e);
+  }
 }
 
 void 
@@ -1557,6 +1686,8 @@ RapidSvnFrame::UpdateFolderBrowser ()
   m_currentPath = "";
   UpdateFileList ();
 
+  m->SetRunning (true);
+
   try
   {
     m->dontUpdateFilelist = true;
@@ -1567,6 +1698,8 @@ RapidSvnFrame::UpdateFolderBrowser ()
   catch (...)
   {
   }
+
+  m->SetRunning (false);
 
   m->dontUpdateFilelist = false;
   UpdateFileList ();
@@ -1609,6 +1742,12 @@ RapidSvnFrame::OnLogout (wxCommandEvent & event)
     return;
 
   context->setLogin ("", "");
+}
+
+void 
+RapidSvnFrame::OnStop (wxCommandEvent & event)
+{
+  m->listener.cancel (true);
 }
 
 InfoPanel::InfoPanel (wxWindow * parent)

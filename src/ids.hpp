@@ -35,6 +35,7 @@ enum
   ID_Login,
   ID_Logout,
   ID_Flat,
+  ID_Stop,
 
   ID_File_Min,
   ID_Add,

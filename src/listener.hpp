@@ -151,6 +151,29 @@ public:
   virtual bool
   contextCancel ();
 
+
+  /**
+   * shall the ongoing operation be cancelled?
+   *
+   * @see isCancelled
+   * 
+   * @param value
+   *  @li true cancel operation
+   *  @li false dont cancel
+   */
+  void
+  cancel (bool value);
+
+
+  /**
+   * @see cancel
+   * @return check whether the ongoing operation is to be cancelled
+   * @retval true cancel
+   * @retval false dont cancel
+   */
+  bool
+  isCancelled () const;
+
 protected:
   void Trace (const wxString & msg);
 

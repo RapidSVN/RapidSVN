@@ -76,6 +76,13 @@ public:
 
 
   /**
+   * is ongoing operation to be cancelled?
+   * will be evaluated by Listener::contextCancel
+   */
+  bool isCancelled;
+
+
+  /**
    * the context under which the action will be
    * performed. this includes auth info and callback
    * addresses
@@ -85,7 +92,8 @@ public:
   svn::Targets targets;
 
   Data (wxWindow * parnt)
-    :  parent (parnt), tracer (0), ownTracer (false)
+    : parent (parnt), tracer (0), ownTracer (false),
+      isCancelled (false)
   {
   }
 
@@ -284,9 +292,22 @@ Listener::contextSslClientCertPwPrompt (std::string & password,
 bool
 Listener::contextCancel ()
 {
-  // nothing in here yet. In the future we might want
-  // to add code that reacts on a STOP button click.
-  return false;
+  wxSafeYield ();
+  return m->isCancelled;
+}
+
+
+bool
+Listener::isCancelled () const
+{
+  return m->isCancelled;
+}
+
+
+void
+Listener::cancel (bool value)
+{
+  m->isCancelled = value;
 }
 
 

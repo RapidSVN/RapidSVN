@@ -36,7 +36,7 @@ public:
   /**
    * @see ActionWorker
    */
-  void 
+  virtual void 
   Create (wxWindow * parent);
 
   /**
