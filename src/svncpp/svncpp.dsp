@@ -93,6 +93,10 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\client_annotate.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\client_cat.cpp
 # End Source File
 # Begin Source File
@@ -167,6 +171,10 @@ SOURCE=.\wc.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\annotate_line.hpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\client.hpp

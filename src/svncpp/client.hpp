@@ -26,6 +26,7 @@
 #include "entry.hpp"
 #include "revision.hpp"
 #include "log_entry.hpp"
+#include "annotate_line.hpp"
 
 /**
  * SvnCpp namespace.
@@ -41,12 +42,13 @@ namespace svn
   typedef std::vector<LogEntry> LogEntries;
   typedef std::vector<Status> StatusEntries;
   typedef std::vector<DirEntry> DirEntries;
+  typedef std::vector<AnnotateLine> AnnotatedFile;
 
   // map of property names to values
   typedef std::map<std::string,std::string> PropertiesMap;
   // pair of path, PropertiesMap
   typedef std::pair<std::string, PropertiesMap> PathPropertiesMapEntry;
-  // list of path, Properties pairs
+  // vector of path, Properties pairs
   typedef std::vector<PathPropertiesMapEntry> PathPropertiesMapList;
 
   /**
@@ -187,6 +189,20 @@ namespace svn
     std::string
     cat (const Path & path, 
          const Revision & revision) throw (ClientException);
+
+    /**
+     * Retrieves the contents for a specific @a revision of
+     * a @a path
+     *
+     * @param path path of file or directory
+     * @param revision_start revision to retrieve
+     * @param revision_end revision to retrieve
+     * @return contents of the file
+     */
+    AnnotatedFile *
+    annotate (const Path & path, 
+              const Revision & revisionStart, 
+              const Revision & revisionEnd) throw (ClientException);
 
     /**
      * Commits changes to the repository. This usually requires 

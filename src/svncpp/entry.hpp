@@ -146,6 +146,15 @@ namespace svn
     }
 
     /**
+     * @return true if deleted
+     */
+    const bool
+    isAbsent () const
+    {
+      return m_entry->absent != 0;
+    }
+
+    /**
      * @return copyfrom location
      */
     const char *
