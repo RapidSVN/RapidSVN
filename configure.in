@@ -53,7 +53,6 @@ case $wxversion in
         ;;
 esac
 CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags`"
-LDFLAGS="$LDFLAGS `$WXCONFIG --ldflags`"
 WX_LIBS="`$WXCONFIG --libs`"
 
 AC_OUTPUT(src/Makefile)
