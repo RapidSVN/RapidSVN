@@ -31,8 +31,8 @@ Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 
 [Icons]
-Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"
-Name: "{userdesktop}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; Tasks: desktopicon
+Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}";
+Name: "{userdesktop}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\bin\rapidsvn.exe"; Description: "Launch RapidSVN"; Flags: nowait postinstall skipifsilent
