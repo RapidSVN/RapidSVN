@@ -32,10 +32,36 @@ public:
    */
   virtual ~Preferences ();
 
+  /** 
+   * location of the executable to edit files 
+   */
   wxString editor;
-  wxString explorer;
+
+  /** 
+   * always use the editor executable to edit files
+   */
   bool editorAlways;
+
+  /** 
+   * location of the executable that will be 
+   * used for exploring folders
+   */
+  wxString explorer;
+
+  /** 
+   * always use the explorer executable for folders 
+   */
   bool explorerAlways;
+
+  /**
+   * location of the diff-tool executable
+   */
+  wxString diffTool;
+
+  /**
+   * remember passwords for each bookmark (vs. the 
+   * same passwords for all bookmarks)
+   */
   bool authPerBookmark;
 
 private:

@@ -21,12 +21,12 @@
 
 // platform dependant constants
 #ifdef _WIN32
-  static const char DEFAULT_EXPLORER [] =
-    "explorer.exe";
+  static const char * DEFAULT_EXPLORER = "explorer.exe";
 #else
-  static const char DEFAULT_EXPLORER [] = "";
+  static const char * DEFAULT_EXPLORER = "";
 #endif
-static const char DEFAULT_EDITOR [] = "";
+static const char * DEFAULT_EDITOR = "";
+static const char * DEFAULT_DIFF_TOOL = "";
 
 /**
  * Configuration key names
@@ -41,6 +41,8 @@ static const char CONF_EXPLORER_ALWAYS[] =
   "/Preferences/AlwaysStandardFileExplorer";
 static const char CONF_AUTH_PER_BOOKMARK[] =
   "/Preferences/AuthPerBookmark";
+static const char CONF_DIFF_TOOL[] =
+  "/Preferences/DiffTool";
 
 /**
  * The Preferences singleton
@@ -48,8 +50,9 @@ static const char CONF_AUTH_PER_BOOKMARK[] =
 static Preferences * m_preferences;
 
 Preferences::Preferences ()
-  : editor (DEFAULT_EDITOR), explorer (DEFAULT_EXPLORER),
-    editorAlways (false), explorerAlways (false),
+  : editor (DEFAULT_EDITOR), editorAlways (false), 
+    explorer (DEFAULT_EXPLORER), explorerAlways (false),
+    diffTool (DEFAULT_DIFF_TOOL),
     authPerBookmark (false)
 {
   Read ();
@@ -72,6 +75,8 @@ Preferences::Read ()
   explorer = config->Read (CONF_EXPLORER, explorer);
   config->Read (CONF_EXPLORER_ALWAYS, &explorerAlways);
 
+  diffTool = config->Read (CONF_DIFF_TOOL, diffTool);
+
   config->Read (CONF_AUTH_PER_BOOKMARK, &authPerBookmark);
 }
 
@@ -84,6 +89,8 @@ void Preferences::Write () const
 
   config->Write (CONF_EXPLORER, explorer);
   config->Write (CONF_EXPLORER_ALWAYS, explorerAlways);
+
+  config->Write (CONF_DIFF_TOOL, diffTool);
 
   config->Write (CONF_AUTH_PER_BOOKMARK, authPerBookmark);
 }

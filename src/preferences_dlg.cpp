@@ -26,8 +26,9 @@
 
 enum
 {
-  ID_StandardEditorLookup,
-  ID_StandardExplorerLookup
+  ID_StandardEditorLookup = wxID_HIGHEST,
+  ID_StandardExplorerLookup,
+  ID_DiffToolLookup
 };
 
 /****************************************************************************/
@@ -43,25 +44,49 @@ static const char * EXECUTABLE_WILDCARD =
 static const char * EXECUTABLE_WILDCARD = "";
 #endif
 
-/* GeneralPanel *********************************************************/
+/* ProgramsPanel *********************************************************/
 
 /**
  * General settings page for the preferences dialog.
  * Use this as a model for adding new pages.
  *
  */
-class GeneralPanel : public wxPanel
+class ProgramsPanel : public wxPanel
 {
 public:
 
-  GeneralPanel::GeneralPanel (wxWindow* parent, Preferences * prefs)
+  ProgramsPanel::ProgramsPanel (wxWindow* parent, Preferences * prefs)
     : wxPanel (parent), m_prefs (prefs)
   {
     InitializeData ();
   }
 
-  virtual ~GeneralPanel ()
+  virtual ~ProgramsPanel ()
   {
+  }
+
+
+  /**
+   * Show a dialog to select an executable file
+   *
+   * @param title Dialog title
+   * @param textCtrl Text-Control where the path is stored
+   * @retval true if everything is ok
+   * @retval false if dialog was aborted
+   */
+  bool SelectExecutable (const wxString & title, wxTextCtrl * textCtrl)
+  {
+    wxFileDialog dlg (this, title);
+
+    dlg.SetStyle (wxHIDE_READONLY | wxOPEN);
+    dlg.SetWildcard (EXECUTABLE_WILDCARD);
+    dlg.SetPath (textCtrl->GetValue ());
+
+    if (dlg.ShowModal () != wxID_OK)
+      return false;
+
+    textCtrl->SetValue (dlg.GetPath ());
+    return true;
   }
 
 
@@ -71,14 +96,9 @@ public:
   void 
   OnStandardEditorLookup (wxCommandEvent & event)
   {
-    wxFileDialog file_dialog (this, _("Select standard editor executable"));
-
-    file_dialog.SetStyle (wxHIDE_READONLY | wxOPEN);
-    file_dialog.SetWildcard (EXECUTABLE_WILDCARD);
-    file_dialog.SetPath (m_text_editor->GetValue ());
-
-    if (file_dialog.ShowModal () == wxID_OK)
-      m_text_editor->SetValue (file_dialog.GetPath ());
+    SelectExecutable (
+      _("Select standard editor executable"), 
+      mTextEditor);
   }
 
   /**
@@ -87,20 +107,27 @@ public:
   void 
   OnStandardFileExplorerLookup (wxCommandEvent & event)
   {
-    wxFileDialog file_dialog (this, _("Select standard file explorer executable"));
+    SelectExecutable (
+      _("Select standard file explorer executable"), 
+      mTextExplorer);
+  }
 
-    file_dialog.SetStyle (wxHIDE_READONLY | wxOPEN);
-    file_dialog.SetWildcard (EXECUTABLE_WILDCARD);
-    file_dialog.SetPath (m_text_editor->GetValue ());
-
-    if (file_dialog.ShowModal () == wxID_OK)
-      m_text_editor->SetValue (file_dialog.GetPath ());
+  /**
+   * Called when "browse-button" of Diff-Tool field is clicked
+   */
+  void
+  OnDiffToolLookup (wxCommandEvent & event)
+  {
+    SelectExecutable (
+      _("Select diff tool executable"),
+      mTextDiffTool);
   }
 
 private:
   Preferences * m_prefs;
-  wxTextCtrl * m_text_editor;
-  wxTextCtrl * m_text_explorer;
+  wxTextCtrl * mTextEditor;
+  wxTextCtrl * mTextExplorer;
+  wxTextCtrl * mTextDiffTool;
 
   void InitializeData ()
   {
@@ -114,7 +141,7 @@ private:
       // text ctrl
       wxTextValidator valText (wxFILTER_NONE, 
                       & m_prefs->editor);
-      m_text_editor = new wxTextCtrl (this, -1, "", 
+      mTextEditor = new wxTextCtrl (this, -1, "", 
                                       wxDefaultPosition, 
                                       wxSize (200, -1), 
                                       0, valText);
@@ -130,7 +157,7 @@ private:
 
       // position controls
       wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
-      sizer->Add (m_text_editor, 1, 
+      sizer->Add (mTextEditor, 1, 
                   wxALIGN_CENTER | wxEXPAND | wxALL, 5);
       sizer->AddGrowableCol (0);
       sizer->Add (button, 0, wxALIGN_CENTER);
@@ -147,7 +174,7 @@ private:
     {
       // text ctrl
       wxTextValidator valText (wxFILTER_NONE, &m_prefs->explorer);
-      m_text_explorer = 
+      mTextExplorer = 
         new wxTextCtrl (this, -1, "", wxDefaultPosition, 
                         wxSize (200, -1), 
                         0, valText);
@@ -165,13 +192,41 @@ private:
 
       // position controls
       wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
-      sizer->Add (m_text_explorer, 1, 
+      sizer->Add (mTextExplorer, 1, 
                   wxALIGN_CENTER | wxEXPAND | wxALL, 5);
       sizer->AddGrowableCol (0);
       sizer->Add (button, 0, wxALIGN_CENTER);
       sizer->Add (check, 1, 
                   wxEXPAND | wxALL, 5);
       sizerExplorer->Add (sizer, 1, wxEXPAND);
+    }
+
+
+    // Diff Tool
+    wxStaticBox * boxDiffTool =
+      new wxStaticBox (this, -1, _("Diff tool:"));
+
+    wxStaticBoxSizer * sizerDiffTool =
+      new wxStaticBoxSizer (boxDiffTool, wxHORIZONTAL);
+    {
+      // text ctrl
+      wxTextValidator valText (wxFILTER_NONE, &m_prefs->diffTool);
+      mTextDiffTool = 
+        new wxTextCtrl (this, -1, "", wxDefaultPosition, 
+                        wxSize (200, -1), 
+                        0, valText);
+
+      // button
+      wxButton * button = 
+        CreateEllipsisButton(this, ID_DiffToolLookup);
+
+      // position controls
+      wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
+      sizer->Add (mTextDiffTool, 1, 
+                  wxALIGN_CENTER | wxEXPAND | wxALL, 5);
+      sizer->AddGrowableCol (0);
+      sizer->Add (button, 0, wxALIGN_CENTER);
+      sizerDiffTool->Add (sizer, 1, wxEXPAND);
     }
 
     // Position main elements
@@ -184,6 +239,8 @@ private:
     leftsizer->Add (sizerEditor, 0, wxEXPAND);
     leftsizer->Add (5, 5);
     leftsizer->Add (sizerExplorer, 0, wxEXPAND);
+    leftsizer->Add (5, 5);
+    leftsizer->Add (sizerDiffTool, 0, wxEXPAND);
 
     SetSizer (panelsizer);
     SetAutoLayout (true);
@@ -215,11 +272,13 @@ private:
 };
 
 
-BEGIN_EVENT_TABLE (GeneralPanel, wxPanel)
+BEGIN_EVENT_TABLE (ProgramsPanel, wxPanel)
   EVT_BUTTON (ID_StandardEditorLookup, 
-    GeneralPanel::OnStandardEditorLookup)
+    ProgramsPanel::OnStandardEditorLookup)
   EVT_BUTTON (ID_StandardExplorerLookup, 
-    GeneralPanel::OnStandardFileExplorerLookup)
+    ProgramsPanel::OnStandardFileExplorerLookup)
+  EVT_BUTTON (ID_DiffToolLookup,
+  ProgramsPanel::OnDiffToolLookup)
 END_EVENT_TABLE ()
 
 /* ExternalsPanel *********************************************************/
@@ -317,15 +376,16 @@ public:
     wxNotebookSizer *nbs = new wxNotebookSizer (notebook);
   
     // General
-    GeneralPanel *pGeneralPanel = new GeneralPanel (notebook, prefs);
-    notebook->AddPage (pGeneralPanel, _("General"));
+    ProgramsPanel *generalPanel = new ProgramsPanel (notebook, prefs);
+    notebook->AddPage (generalPanel, _("Programs"));
 
     AuthPanel * authPanel = new AuthPanel (notebook, prefs);
     notebook->AddPage (authPanel, _("Authentication"));
 
     // Externals
-    ExternalsPanel *pExternalsPanel = ExternalsPanel::Create (notebook);
-    notebook->AddPage (pExternalsPanel, _("Externals"));
+    // no useful entries in here yet
+    //ExternalsPanel *externalsPanel = ExternalsPanel::Create (notebook);
+    //notebook->AddPage (externalsPanel, _("Externals"));
   
     topsizer->Add (nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 6);
     topsizer->Add (button_sizer, 0, wxALIGN_CENTER);
