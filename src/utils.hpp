@@ -10,10 +10,15 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _VSVN_UTILS_H_INCLUDED_
-#define _VSVN_UTILS_H_INCLUDED_
+#ifndef _RAPIDSVN_UTILS_H_INCLUDED_
+#define _RAPIDSVN_UTILS_H_INCLUDED_
 
-#include "tracer.hpp"
+// svn
+#include "svn_wc.h"
+
+// forward declarations
+class wxString;
+class Tracer;
 
 #define DEFAULT_ARRAY_SIZE 5
 
