@@ -141,11 +141,89 @@ AC_ARG_WITH(cppunit-config,
     fi
 ])
 
+dnl
+dnl XsltProc
+dnl 
+XSLTPROC=xsltproc
+AC_ARG_WITH(xsltproc,
+[[  --with-xsltproc=FILE     Use the given path to xsltproc; 
+                            defaults to "xsltproc"]],
+[
+    if test "$withval" != "yes"; then
+        XSLTPROC=$withval
+    fi
+])
+AC_MSG_CHECKING([xsltproc])
+if test -z "$XSLTPROC" ; then
+   AC_MSG_RESULT([not used])
+else
+   if xsltprocversion=`$XSLTPROC --version` ; then
+      AC_MSG_RESULT([found])
+   else
+      AC_MSG_RESULT([not found])	
+      XSLTPROC=""
+   fi
+fi
+
+dnl
+dnl Docbook XSL
+dnl
+DOCBOOK_XSL="/etc/sgml/docbook-xsl"
+AC_ARG_WITH(docbook-xsl,
+[[  --with-docbook-xsl=DIR   Determine the location of the
+                           DocBook XSL stylesheets,
+                           needed for manpage generation.
+                           Defaults to "/etc/sgml/docbook-xsl".]],
+[
+    if test "$withval" != "yes"; then
+        DOCBOOK_XSL=$withval
+    fi
+])
+AC_MSG_CHECKING([docbook xsl stylesheets ($DOCBOOK_XSL)])
+if test -z "$DOCBOOK_XSL" ; then
+   AC_MSG_RESULT([no])
+else
+   if test -d "$DOCBOOK_XSL" ; then
+      AC_MSG_RESULT([found])
+   else
+      AC_MSG_RESULT([not found])
+      DOCBOOK_XSL=""
+   fi
+fi
+if test "$DOCBOOK_XSL" ; then
+   DOCBOOK_XSL_MANS="$DOCBOOK_XSL/manpages"
+   AC_MSG_CHECKING([docbook xsl support for manpages ($DOCBOOK_XSL_MANS)])
+   if test -d "$DOCBOOK_XSL_MANS" ; then
+      AC_MSG_RESULT([found])
+   else      
+      AC_MSG_RESULT([not found])
+      DOCBOOK_XSL=""
+   fi
+fi
+
+
+dnl
+dnl Manpage creation (with xsltproc)
+dnl
+AC_MSG_CHECKING([manpage creation])
+if test "$XSLTPROC" -a "$DOCBOOK_XSL" ; then
+   AC_MSG_RESULT([yes])
+   TARGET_MANPAGE=manpage-yes
+else
+   AC_MSG_RESULT([no (xsltproc and docbook-xsl with manpage support needed)])
+   TARGET_MANPAGE=manpage-no
+fi
+
 AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
 AC_SUBST(SVN_LIB)
+AC_SUBST(DOCBOOK_XSL)
+AC_SUBST(XSLTPROC)
+AC_SUBST(TARGET_MANPAGE)
 
-AC_OUTPUT(Makefile src/Makefile src/svncpp/Makefile src/res/Makefile)
+AC_OUTPUT(Makefile \
+          doc/Makefile doc/manpage/Makefile \
+          src/Makefile src/svncpp/Makefile src/res/Makefile)
 
 if test "$CPPUNITCONFIG" ; then
     CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
