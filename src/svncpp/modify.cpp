@@ -35,7 +35,6 @@ Modify::checkout (const char * moduleName, const char *destPath,
                              lastPath.c_str (),
                              getRevision (revision),
                              recurse,
-                             NULL,
                              pool);
 
   if(Err != NULL)
@@ -95,7 +94,6 @@ Modify::update (const char * path, long revision, bool recurse)
   internalPath (lastPath);
   Err = svn_client_update (authenticate (),
                            lastPath.c_str (),
-                           NULL,
                            getRevision (revision),
                            recurse,
                            Notify::notify,
@@ -117,9 +115,7 @@ Modify::commit (const char * path, const char * message, bool recurse)
                            (void *) _notify, 
                            authenticate (), target (lastPath.c_str ()), 
                            &svn_cl__get_log_message, 
-                           logMessage (message), NULL, revnum, 
-                           !recurse,
-                           pool);
+                           logMessage (message), !recurse, pool);
   if(Err != NULL)
     throw ClientException (Err);
 
@@ -283,8 +279,6 @@ Modify::import (const char * path, const char * url, const char * newEntry,
                            newEntry,
                            &svn_cl__get_log_message,
                            logMessage (message),
-                           NULL,
-                           SVN_INVALID_REVNUM,
                            !recurse,
                            pool);
 

@@ -25,6 +25,8 @@ OBJECTS=action_thread.o \
 		mkdir_dlg.o \
 		preferences_dlg.o \
 		patched_dirctrlg.o \
+		property_action.o \
+		property_dlg.o \
 		report_dlg.o \
 		resolve_action.o \
 		revert_action.o \
