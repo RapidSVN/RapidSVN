@@ -20,7 +20,6 @@
 #include "svncpp/exception.hpp"
 
 // app
-//REMOVE #include "rapidsvn_app.hpp"
 #include "property_dlg.hpp"
 
 enum

@@ -25,6 +25,7 @@
 
 // svncpp
 #include "auth.hpp"
+#include "path.hpp"
 
 namespace svn
 {
