@@ -18,14 +18,16 @@
 
 // svncpp
 #include "context.hpp"
+#include "context_listener.hpp"
 
 namespace svn
 {
   struct Context::Data
   {
   public:
-    bool loginSet;
-    bool logSet;
+    ContextListener * listener;
+    bool loginIsSet;
+    bool logIsSet;
     Pool pool;
     svn_client_ctx_t ctx;
     std::string username;
@@ -33,7 +35,7 @@ namespace svn
     std::string logMessage;
 
     Data ()
-      : loginSet (false), logSet (false)
+      : listener (0), loginIsSet (false), logIsSet (false)
     {
       // intialize authentication providers
       apr_array_header_t *providers = 
@@ -71,7 +73,7 @@ namespace svn
     {
       username = usr;
       password = pwd;
-      loginSet = true;
+      loginIsSet = true;
 
       svn_auth_baton_t * ab = ctx.auth_baton;
       svn_auth_set_parameter (ab, SVN_AUTH_PARAM_DEFAULT_USERNAME, 
@@ -85,9 +87,14 @@ namespace svn
     void setLogMessage (const char * msg)
     {
       logMessage = msg;
-      logSet = true;
+      logIsSet = true;
     }
-      
+
+    /**
+     * this function gets called by the subversion api function
+     * when a log message is needed. This is the case on a commit
+     * for example
+     */
     static svn_error_t *
     log_msg (const char **log_msg, 
              const char **tmp_file,
@@ -95,15 +102,29 @@ namespace svn
              void *baton,
              apr_pool_t *pool)
     {
-      Context * context = (Context *)baton;
+      if (baton == NULL)
+      {
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
+                                 "Context::Data::log_msg: baton==NULL");
+      }
+
+      Data * data = static_cast <Data *> (baton);
+
+      // if there is a listener, ask it
+      data->retrieveLogMessage ();
+
       //TODO maybe change encoding
       //take a look at *subversion*client/cmdline/util.c
-      *log_msg = context->getLogMessage ();
+      *log_msg = data->getLogMessage ();
       *tmp_file = NULL;
     
       return SVN_NO_ERROR;
     }
 
+    /**
+     * this is the callback function for the subversion
+     * api functions to signal the progress of an action
+     */
     static void 
     notify (void * baton,
             const char *path,
@@ -114,7 +135,15 @@ namespace svn
             svn_wc_notify_state_t prop_state,
             svn_revnum_t revision)
     {
-      //TODO forward this
+      if (baton == 0)
+      {
+        return;
+      }
+
+      Data * data = static_cast <Data *> (baton);
+
+      data->notify (path, action, kind, mime_type, content_state,
+                    prop_state, revision);
     }
 
     /**
@@ -136,32 +165,134 @@ namespace svn
             void *baton, 
             apr_pool_t *pool)
     {
-      apr_status_t status=0;
-
       if (baton == NULL)
       {
-        return svn_error_create (status, NULL, 
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
                                  "Context::prompt: baton==NULL");
       }
 
-      Context * context = (Context *)baton;
+      Data * data = static_cast <Data *> (baton);
+      
+      if (!data->retrieveLogin ())
+      {
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
+      }
 
       if (hide==TRUE)
       {
         SVN_ERR (svn_utf_cstring_to_utf8( 
                    (const char **)result, 
-                   context->getPassword (), NULL, pool));
+                   data->getPassword (), NULL, pool));
       }
       else
       {
         SVN_ERR (svn_utf_cstring_to_utf8( 
                    (const char **)result,
-                   context->getUsername (), NULL, pool));
+                   data->getUsername (), NULL, pool));
       }
 
       return SVN_NO_ERROR;
     }
-    
+
+    const char * 
+    getUsername () const
+    {
+      return username.c_str ();
+    }
+
+    const char *
+    getPassword () const
+    {
+      return password.c_str ();
+    }
+
+    const char *
+    getLogMessage () const
+    {
+      return logMessage.c_str ();
+    }
+
+    /**
+     * if the @a listener is set, use it to retrieve the log
+     * message using ContextListener::contextGetLogMessage. 
+     * This return values is given back, then.
+     *
+     * if the @a listener is not set the its checked whether
+     * the log message has been set using @a setLogMessage
+     * yet. If not, return false otherwise true
+     */
+    bool 
+    retrieveLogMessage ()
+    {
+      bool ok;
+
+      if (listener == 0)
+      {
+        ok = logIsSet;
+      }
+      else
+      {
+        ok = listener->contextGetLogMessage (logMessage);
+
+        if (ok)
+        {
+          logIsSet = true;
+        }
+      }
+
+      return ok;
+    }
+
+    /**
+     * if the @a listener is set and no password has been
+     * set yet, use it to retrieve login and password using 
+     * ContextListener::contextGetLogin.
+     * 
+     * if the @a listener is not set, check if setLogin
+     * has been called yet. 
+     *
+     * @return continue?
+     * @retval false cancel
+     */
+    bool
+    retrieveLogin ()
+    {
+      bool ok = loginIsSet;
+
+      if (listener != 0)
+      {
+        if (!loginIsSet)
+        {
+          ok = listener->contextGetLogin (username, password);
+          if (ok)
+          {
+            loginIsSet = true;
+          }
+        }
+
+        return ok;
+      }
+    }
+
+    /**
+     * if the @a listener is set call the method
+     * @a contextNotify
+     */
+    void 
+    notify (const char *path,
+            svn_wc_notify_action_t action,
+            svn_node_kind_t kind,
+            const char *mime_type,
+            svn_wc_notify_state_t content_state,
+            svn_wc_notify_state_t prop_state,
+            svn_revnum_t revision)
+    {
+      if (listener != 0)
+      {
+        listener->contextNotify (path, action, kind, mime_type,
+                                 content_state, prop_state, revision);
+      }
+    }
   };
 
   Context::Context ()
@@ -206,21 +337,32 @@ namespace svn
   const char *
   Context::getUsername () const
   {
-    return m->username.c_str ();
+    return m->getUsername ();
   }
 
   const char *
   Context::getPassword () const
   {
-    return m->password.c_str ();
+    return m->getPassword ();
   }
 
   const char *
   Context::getLogMessage () const
   {
-    return m->logMessage.c_str ();
+    return m->getLogMessage ();
   }
 
+  void 
+  Context::setListener (ContextListener * listener)
+  {
+    m->listener = listener;
+  }
+
+  ContextListener * 
+  Context::getListener () const
+  {
+    return m->listener;
+  }
 }
 
 /* -----------------------------------------------------------------

@@ -23,10 +23,11 @@
 // svncpp
 #include "pool.hpp"
 
-// forward declarations
-
 namespace svn
 {
+  // forward declarations
+  class ContextListener;
+
   /**
    * This class will hold the client context
    * and replace the old notification and baton
@@ -94,6 +95,24 @@ namespace svn
      */
     const char *
     getPassword () const;
+
+    /**
+     * set the listener for the context. The listener will be
+     * called to poll authentication information and other
+     * information like this
+     *
+     * @param listener
+     */
+    void 
+    setListener (ContextListener * listener);
+
+    /**
+     * get the listener
+     *
+     * @return the listener
+     */
+    ContextListener * 
+    getListener () const;
 
   private:
     struct Data;
