@@ -14,6 +14,7 @@ merged_file			ICON	"res/bitmaps/merged_file.ico"
 conflicted_file		ICON	"res/bitmaps/conflicted_file.ico"
 
 folder				ICON	"res/bitmaps/folder.ico"
+versioned_folder       ICON    "res/bitmaps/versioned_folder.ico"
 
 
 refresh				BITMAP	"res/bitmaps/refresh.bmp"

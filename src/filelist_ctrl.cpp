@@ -12,7 +12,7 @@
  * Number of items in the IMAGE_INDEX table.
  * This should be large enough to include the range of status codes.
  */
-#define N_STATUS_KIND		20
+#define N_STATUS_KIND		21
 
 /**
  * The index from where there will be only images not related 
@@ -20,7 +20,8 @@
  */
 #define N_START_EXTRA_IMGS	15
 
-#define IMG_INDX_FOLDER		N_START_EXTRA_IMGS
+#define IMG_INDX_FOLDER 		N_START_EXTRA_IMGS
+#define IMG_INDX_VERSIONED_FOLDER	(N_START_EXTRA_IMGS + 1)
 
 /**
  * This table holds information about image index in a image list.
@@ -60,6 +61,7 @@ FileListCtrl::FileListCtrl( wxWindow *parent,
 	m_imageListSmall->Add( wxICON(conflicted_file) );
 
 	m_imageListSmall->Add( wxICON(folder) );
+	m_imageListSmall->Add( wxICON(versioned_folder) );
 
 	// set the indexes
 	IMAGE_INDEX[svn_wc_status_none] = 0;
@@ -74,6 +76,7 @@ FileListCtrl::FileListCtrl( wxWindow *parent,
 	IMAGE_INDEX[svn_wc_status_conflicted] = 8;
 
 	IMAGE_INDEX[IMG_INDX_FOLDER]	= 9;
+	IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER]	= 10;
 	
 	// set this file list control to use the image list
 	this->SetImageList( m_imageListSmall, wxIMAGE_LIST_SMALL );
@@ -123,7 +126,16 @@ void FileListCtrl::UpdateFileList( const wxString& path )
 			if( name != ".." && name != SVN_WC_ADM_DIR_NAME )		// not the parent directory
 			{
 				if( wxDirExists( f ) )		// a directory
-					InsertItem( i, name, IMAGE_INDEX[IMG_INDX_FOLDER] );
+				{
+					if( SVN_IS_VALID_REVNUM( file_info.getRevision() ) )
+					{
+						InsertItem( i, name, IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER] );
+					}
+					else
+					{
+						InsertItem( i, name, IMAGE_INDEX[IMG_INDX_FOLDER] );
+					}
+				}
 				else					
 					InsertItem( i, name, IMAGE_INDEX[file_info.getFileStatus()] );
 
