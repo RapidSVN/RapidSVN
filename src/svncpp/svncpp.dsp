@@ -101,6 +101,10 @@ SOURCE=.\modify.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\notify.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\property.cpp
 # End Source File
 # Begin Source File
@@ -126,6 +130,10 @@ SOURCE=.\exception.h
 # Begin Source File
 
 SOURCE=.\modify.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\notify.h
 # End Source File
 # Begin Source File
 

@@ -24,7 +24,7 @@ Property::count ()
 }
 
 void
-Property::loadPath (char * path)
+Property::loadPath (const char * path)
 {
   filePath = path;
   svn_error_t * error = NULL;
@@ -38,7 +38,7 @@ svn_error_t *
 Property::loadProperties ()
 {
   Err = svn_client_proplist (&props,
-                             filePath, 
+                             filePath.c_str (), 
                              false /* recurse */,
                              pool);
   if(Err != NULL)
@@ -120,14 +120,14 @@ Property::reset ()
 }
 
 const char *
-Property::getValue (char * name)
+Property::getValue (const char * name)
 {
   apr_hash_t *prop;
   apr_hash_index_t *hi;
 
   Err = svn_client_propget (&prop,
                             name,
-                            filePath,
+                            filePath.c_str (),
                             false /* recurse */,
                             pool);
 
@@ -158,7 +158,7 @@ Property::getValue (char * name)
 }
 
 void
-Property::set (char * name, char * value, bool recurse)
+Property::set (const char * name, const char * value, bool recurse)
 {
   const char *pname_utf8;
   const svn_string_t *propval = NULL;
@@ -168,7 +168,7 @@ Property::set (char * name, char * value, bool recurse)
 
   svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
 
-  error = svn_client_propset (pname_utf8, propval, filePath,
+  error = svn_client_propset (pname_utf8, propval, filePath.c_str (),
                               recurse, pool);
   if(error != NULL)
     throw ClientException (error);
@@ -179,13 +179,13 @@ Property::set (char * name, char * value, bool recurse)
 }
 
 void 
-Property::remove (char * name, bool recurse)
+Property::remove (const char * name, bool recurse)
 {
   const char *pname_utf8;
   svn_error_t * error = NULL;
   svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
 
-  error = svn_client_propset (pname_utf8, NULL, filePath,
+  error = svn_client_propset (pname_utf8, NULL, filePath.c_str (),
                             recurse, pool);
   if(error != NULL)
     throw ClientException (error);
@@ -196,7 +196,7 @@ Property::remove (char * name, bool recurse)
 }
 
 svn_boolean_t
-Property::isSvnProperty (char * name)
+Property::isSvnProperty (const char * name)
 {
   const char *pname_utf8;
 

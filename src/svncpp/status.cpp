@@ -26,7 +26,7 @@ Status::isVersioned ()
 }
 
 void
-Status::loadPath (char * path)
+Status::loadPath (const char * path)
 {
   const svn_item_t *item;
 
@@ -35,7 +35,7 @@ Status::loadPath (char * path)
 
   Err = svn_client_status (&statushash,
                            &youngest,
-                           filePath,
+                           filePath.c_str (),
                            authenticate (),
                            0,
                            1,
@@ -47,7 +47,7 @@ Status::loadPath (char * path)
   if(Err != NULL)
   {
     versioned = false;
-    throw ClientException (Err);
+    return;
   }
     
   /* Convert the unordered hash to an ordered, sorted array */
@@ -83,10 +83,10 @@ Status::lastChanged ()
   return status->entry->cmt_rev;
 }
 
-char *
+const char *
 Status::statusText ()
 {
-  char * statusText = NULL;
+  _statusText = "";
   
   if(versioned == false)
     throw EntryNotVersioned ();
@@ -94,39 +94,39 @@ Status::statusText ()
   switch (status->text_status)
   {
     case svn_wc_status_none:
-      statusText = "Non-svn";
+      _statusText = "Non-svn";
       break;
     case svn_wc_status_normal:
-      statusText = "Normal";
+      _statusText = "Normal";
       break;
     case svn_wc_status_added:
-      statusText = "Added";
+      _statusText = "Added";
       break;
     case svn_wc_status_absent:
-      statusText = "Absent";
+      _statusText = "Absent";
       break;
     case svn_wc_status_deleted:
-      statusText = "Deleted";
+      _statusText = "Deleted";
       break;
     case svn_wc_status_replaced:
-      statusText = "Replaced";
+      _statusText = "Replaced";
       break;
     case svn_wc_status_modified:
-      statusText = "Modified";
+      _statusText = "Modified";
       break;
     case svn_wc_status_merged:
-      statusText = "Merged";
+      _statusText = "Merged";
       break;
     case svn_wc_status_conflicted:
-      statusText = "Conflicted";
+      _statusText = "Conflicted";
       break;
     case svn_wc_status_unversioned:
     default:
-      statusText = "Unversioned";
+      _statusText = "Unversioned";
       break;
   }
   
-  return statusText;
+  return _statusText.c_str ();
 }
 
 svn_wc_status_kind

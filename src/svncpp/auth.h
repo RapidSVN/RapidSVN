@@ -3,6 +3,7 @@
 #define _SVNCPP_AUTH_H_
 
 #include "client.h"
+#include <string>
 
 namespace svn
 {
@@ -13,8 +14,8 @@ namespace svn
 class Auth : public svn::Client
 {
 private:
-  char * userName;
-  char * passWord;
+  std::string userName;
+  std::string passWord;
   svn_client_auth_baton_t * auth_obj;
 
 public:
@@ -24,12 +25,12 @@ public:
   /**
    * Sets the username.
    */
-  void username (char * username);
+  void username (const char * username);
   
   /**
    * Sets the password.
    */
-  void password (char * password);
+  void password (const char * password);
   
   /**
    * Returns an authentication object.

@@ -19,13 +19,13 @@ Auth::~Auth ()
 }
 
 void
-Auth::username (char *username)
+Auth::username (const char *username)
 {
   userName = username;
 }
 
 void
-Auth::password (char *password)
+Auth::password (const char *password)
 {
   passWord = password;
 }

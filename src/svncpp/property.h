@@ -4,6 +4,7 @@
 
 #include "client.h"
 #include "svn_utf.h"
+#include <string>
 
 #ifndef _SVNCPP_EXCEPTION_H_
 #include "exception.h"
@@ -19,7 +20,7 @@ class Property : public svn::Client
 {
 private:
   apr_array_header_t * props;
-  char * filePath;
+  std::string filePath;
   int propCount;
   int currentProp;
   const char * propName;
@@ -27,7 +28,7 @@ private:
   /**
    * Returns whether or not the property is a special Subversion property.
    */
-  svn_boolean_t isSvnProperty (char * name);
+  svn_boolean_t isSvnProperty (const char * name);
 
   /**
    * Loads the initial data for the property list.
@@ -48,26 +49,26 @@ public:
    * property count.
    * @exception ClientException
    */
-  void loadPath (char * path);
+  void loadPath (const char * path);
 
   /**
    * Sets or adds a property with a new value.
    * @exception ClientException
    */
-  void set (char * path, char * value, bool recurse);
+  void set (const char * path, const char * value, bool recurse);
 
   /**
    * Returns the value of a property.  Returns null if the property
    * was not found.
    * @exception ClientException
    */
-  const char * getValue (char * name);
+  const char * getValue (const char * name);
 
   /**
    * Deletes a property.  
    * @exception ClientException
    */
-  void remove (char * name, bool recurse);
+  void remove (const char * name, bool recurse);
 
   /**
    * Returns the next property name in the list.  Returns 

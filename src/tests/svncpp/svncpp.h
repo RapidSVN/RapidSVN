@@ -22,6 +22,9 @@ class SvnCppTestCase : public CppUnit::TestCase
   CPPUNIT_TEST( testProperty );
   CPPUNIT_TEST_SUITE_END();
 
+private:
+  svn::Notify notify;
+
 public:
   void setUp ();
 
@@ -62,33 +65,3 @@ struct NotifyBaton
   svn_boolean_t sent_first_txdelta;
   apr_pool_t *pool;
 };
-
-/**
- * Empty helper function for testCheckout.
- */
-static void
-notify (void *baton,
-        const char *path,
-        svn_wc_notify_action_t action,
-        svn_node_kind_t kind,
-        const char *mime_type,
-        svn_wc_notify_state_t content_state,
-        svn_wc_notify_state_t prop_state, svn_revnum_t revision)
-{
-}
-
-/**
- * Creates an empty notify baton.
- */
-NotifyBaton *
-CreateNotifyBaton ()
-{
-  NotifyBaton *nb = new NotifyBaton;
-  nb->received_some_change = FALSE;
-  nb->sent_first_txdelta = FALSE;
-  nb->is_checkout = 1;
-  nb->suppress_final_line = 1;
-  nb->pool = svn_pool_create (NULL);
-
-  return nb;
-}

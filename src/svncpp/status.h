@@ -4,6 +4,7 @@
 
 #include "auth.h"
 #include "svn_sorts.h"
+#include <string>
 
 #ifndef _SVNCPP_EXCEPTION_H_
 #include "exception.h"
@@ -23,7 +24,8 @@ private:
   apr_array_header_t * statusarray;
   svn_wc_status_t * status;
   bool versioned;
-  char * filePath;
+  std::string filePath;
+  std::string _statusText;
   
   /**
    * Reset to all of the default properties.
@@ -36,9 +38,8 @@ public:
 
   /**
    * Initiaties the status on a path. 
-   * @exception ClientException
    */
-  void loadPath (char * path);
+  void loadPath (const char * path);
   
   /**
    * Returns the revision.  
@@ -56,7 +57,7 @@ public:
    * Returns the file status in text. 
    * @exception EntryNotVersioned
    */
-  char * statusText ();
+  const char * statusText ();
 
   /**
    * Returns the file status property enum. 

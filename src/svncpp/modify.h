@@ -3,6 +3,7 @@
 #define _SVNCPP_MODIFY_H_
 
 #include "auth.h"
+#include "notify.h"
 
 #ifndef _SVNCPP_EXCEPTION_H_
 #include "exception.h"
@@ -26,8 +27,7 @@ namespace svn
 class Modify : public svn::Auth
 {
 private:
-  svn_wc_notify_func_t notify_func;
-  void * notify_baton;
+  Notify * _notify;
   svn_client_revision_t rev;
 
   /**
@@ -38,12 +38,12 @@ private:
   /**
    * Creates a log message baton.
    */
-  void * logMessage (char * message, char * baseDirectory = NULL);
+  void * logMessage (const char * message, char * baseDirectory = NULL);
 
   /**
    * Creates a target out of a string.
    */
-  apr_array_header_t * target (char * path);
+  apr_array_header_t * target (const char * path);
 
   svn_error_t * getLogMessage (const char **log_msg,
                          apr_array_header_t * commit_items,
@@ -62,18 +62,17 @@ public:
    * @param recurse whether you want it to checkout files recursively.
    * @exception ClientException
    */
-  void checkout (char * moduleName, char *destPath, long revision, 
-                 bool recurse);
+  void checkout (const char * moduleName, const char *destPath, 
+                 long revision, bool recurse);
   
   /**
    * Sets the notification function and baton that the C library 
    * uses to send processing information back to the calling program.
    * This must be called before calling the other methods in this class.
-   * @param function function that the SVN library should call when 
-   *                    checking out each file.
-   * @param baton invoked with notify_func.
+   * @param notify function that the SVN library should call when 
+   *               checking out each file.
    */
-  void notification (svn_wc_notify_func_t function, void * baton);
+  void notification (Notify * notify);
 
   /**
    * Sets a file for deletion.
@@ -91,7 +90,7 @@ public:
    * Adds a file to the repository.
    * @exception ClientException
    */
-  void add (char * path, bool recurse);
+  void add (const char * path, bool recurse);
 
   /**
    * Updates the directory.
@@ -101,7 +100,7 @@ public:
    * @param recurse recursively update.
    * @exception ClientException
    */
-  void update (char * path, long revision, bool recurse);
+  void update (const char * path, long revision, bool recurse);
 
   /**
    * Commits changes to the repository.
@@ -110,19 +109,20 @@ public:
    * @param recurse whether the operation should be done recursively.
    * @exception ClientException
    */
-  void commit (char * path, char * logMessage, bool recurse);
+  void commit (const char * path, const char * logMessage, bool recurse);
 
   /**
    * Copies a versioned file with the history preserved.
    * @exception ClientException
    */
-  void copy (char * path, char * destPath);
+  void copy (const char * srcPath, const char * destPath);
 
   /**
    * Moves or renames a file.
    * @exception ClientException
    */
-  void move (char * path, char * destPath, long revision, bool force);
+  void move (const char * srcPath, const char * destPath, 
+             long revision, bool force);
 };
 
 }

@@ -1,3 +1,4 @@
+
 #include "svncpp.h"
 #include <stdio.h>
 
@@ -39,14 +40,10 @@ void
 SvnCppTestCase::testCheckout ()
 {
   svn::Modify modify;
-  svn_wc_notify_func_t my_func = NULL;
   std::string sPath = CHECKOUT_PATH;
   sPath += "/README.txt";
 
-  my_func = notify;
-  void * notify_baton = CreateNotifyBaton ();
-
-  modify.notification (my_func, notify_baton);
+  modify.notification (&notify);
 
   try
   {
@@ -74,6 +71,8 @@ SvnCppTestCase::testDeleteRevert ()
 {
   svn::Modify modify;
   svn::Status status;
+
+  modify.notification (&notify);
 
   try
   {
@@ -111,6 +110,8 @@ SvnCppTestCase::testAdd ()
   svn::Modify modify;
   svn::Status status;
 
+  modify.notification (&notify);
+
   try
   {
     modify.add ("my_repos/svncpp.h", true);
@@ -127,6 +128,9 @@ void
 SvnCppTestCase::testUpdate ()
 {
   svn::Modify modify;
+
+  modify.notification (&notify);
+
   try
   {
     modify.update ("my_repos", -1, true);
@@ -142,6 +146,8 @@ SvnCppTestCase::testCommit ()
 {
   svn::Modify modify;
   svn::Status status;
+
+  modify.notification (&notify);
 
   modify.username ("");
   modify.password ("");
@@ -169,6 +175,8 @@ SvnCppTestCase::testCopy ()
   svn::Modify modify;
   svn::Status status;
 
+  modify.notification (&notify);
+
   try
   {
     modify.copy ("my_repos/main.cpp", "my_repos/my_dir/main2.cpp");
@@ -188,6 +196,8 @@ SvnCppTestCase::testMove ()
 {
   svn::Modify modify;
   svn::Status status;
+
+  modify.notification (&notify);
 
   try
   {
