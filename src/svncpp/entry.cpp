@@ -51,6 +51,16 @@ namespace svn
         apr_pcalloc (m_pool, sizeof (svn_wc_entry_t));
     }
   }
+
+  Entry &
+  Entry::operator = (const Entry & src)
+  {
+    if (this == &src)
+      return *this;
+
+    init (src);
+    return *this;
+  }
 }
 
 /* -----------------------------------------------------------------

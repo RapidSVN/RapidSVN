@@ -264,16 +264,16 @@ namespace svn
       return m_entry;
     }
 
+    /**
+     * assignment operator
+     */
+    Entry &
+    operator = (const Entry &);
+
   private:
     svn_wc_entry_t * m_entry;
     Pool m_pool;
     bool m_valid;
-
-    /**
-     * disallow assignment operator
-     */
-    Entry &
-    operator = (const Entry &);
 
     /**
      * initializes the members
