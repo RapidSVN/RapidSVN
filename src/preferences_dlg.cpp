@@ -110,11 +110,12 @@ PreferencesDlg::InitializeData ()
   
   topsizer->Add(nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 10);
   topsizer->Add(button_sizer, 0, wxALIGN_CENTER);
-  
+
+// Order is important here:  
   SetSizer(topsizer);
+  SetAutoLayout(true);  // Must precede call to Fit to work on Windows.
   topsizer->SetSizeHints(this); 
   topsizer->Fit(this);
-  SetAutoLayout(true);
 }
 
 bool
@@ -181,7 +182,7 @@ GeneralPanel::InitializeData()
   leftsizer->Add(enable2sizer, 1, wxALIGN_LEFT);
   leftsizer->Add(
     new wxStaticText(this, -1,
-      _T("(Replace with real preferences in due course))")),
+      _T("(Replace with real preferences in due course)")),
       0, wxALL | wxALIGN_LEFT, 5);
     
   rightsizer->Add(whichsizer, 1, wxALIGN_LEFT);
