@@ -59,6 +59,7 @@ public:
 
   // View menu
   void OnBrowse (wxCommandEvent & event);
+  void OnPreferences (wxCommandEvent & event);
 
   // Query menu
   void OnStatus (wxCommandEvent & event);
@@ -130,6 +131,7 @@ public:
   void Mkdir ();
   void Merge ();
   void Contents ();
+  void Preferences ();
 
   FileListCtrl *GetFileList ()
   {

@@ -23,6 +23,7 @@ OBJECTS=action_thread.o \
 		mkdir_action.o \
 		mkdir_dlg.o \
 		notify.o \
+    preferences_dlg.o \
 		report_dlg.o \
 		resolve_action.o \
 		revert_action.o \

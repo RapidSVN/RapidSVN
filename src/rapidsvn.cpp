@@ -22,6 +22,7 @@
 #include "merge_action.h"
 
 #include "report_dlg.h"
+#include "preferences_dlg.h"
 
 #include "rapidsvn.h"
 
@@ -72,6 +73,7 @@ EVT_MENU (ID_Resolve, VSvnFrame::OnResolve)
 EVT_MENU (ID_Mkdir, VSvnFrame::OnMkdir)
 EVT_MENU (ID_Merge, VSvnFrame::OnMerge)
 EVT_MENU (ID_Contents, VSvnFrame::OnContents)
+EVT_MENU (ID_Preferences, VSvnFrame::OnPreferences)
 EVT_MENU (ACTION_EVENT, VSvnFrame::OnActionEvent)
 EVT_MENU (-1, VSvnFrame::OnToolLeftClick)
 EVT_TOOL_ENTER (ID_TOOLBAR, VSvnFrame::OnToolEnter)
@@ -196,6 +198,8 @@ wxFrame ((wxFrame *) NULL, -1, title)
 
   // put the working copy selections in the combo browser
   InitComboBrowser ();
+  
+  PreferencesDlg::Data.Read(pConfig);
 }
 
 VSvnFrame::~VSvnFrame ()
@@ -237,6 +241,8 @@ VSvnFrame::~VSvnFrame ()
     key.Printf (_T ("/MainFrame/wc%d"), x);
     pConfig->Write (key, m_comboBrowse->GetString (x));
   }
+
+  PreferencesDlg::Data.Write(pConfig);
 
   apr_pool_destroy (pool);
 }
@@ -521,6 +527,11 @@ VSvnFrame::OnContents (wxCommandEvent & WXUNUSED (event))
   Contents ();
 }
 
+void
+VSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
+{
+  Preferences ();
+}
 
 void
 VSvnFrame::LayoutChildren ()
@@ -1209,6 +1220,14 @@ void
 VSvnFrame::Contents ()
 {
   return;
+}
+
+void
+VSvnFrame::Preferences ()
+{
+  PreferencesDlg* pDlg = PreferencesDlg::CreateInstance(this);
+  pDlg->ShowModal();
+  pDlg->Close(TRUE);
 }
 
 InfoPanel::InfoPanel (wxWindow * parent):wxPanel (parent, -1)
