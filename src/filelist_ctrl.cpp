@@ -865,8 +865,11 @@ FileListCtrl::UpdateFileList ()
     switch (status.textStatus ())
     {
     case svn_wc_status_none:
+      break;
     case svn_wc_status_normal:
-      // empty text for them
+      // empty text 
+      if (newer)
+        values[COL_TEXT_STATUS] = _("out of date");
       break;
     default:
       values[COL_TEXT_STATUS] = 
@@ -876,8 +879,11 @@ FileListCtrl::UpdateFileList ()
     switch (status.propStatus ())
     {
     case svn_wc_status_none:
+      break;
     case svn_wc_status_normal:
       // empty text
+      if (newer)
+        values[COL_TEXT_STATUS] = _("out of date");
       break;
     default:
       values[COL_PROP_STATUS] = 
