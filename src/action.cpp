@@ -73,6 +73,15 @@ Action::GetParent ()
   return m_parent;
 }
 
+void
+Action::Trace (const wxString & msg)
+{
+  if (m_tracer)
+  {
+    m_tracer->Trace (msg);
+  }
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

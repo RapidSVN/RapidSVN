@@ -16,26 +16,32 @@
 // wxwindows
 //#include "wx/frame.h"
 
-// svncpp
-#include "svncpp/targets.hpp"
+//// svncpp
+//#include "svncpp/targets.hpp"
 
 // app
 //#include "action_thread.hpp"
-#include "file_action.hpp"
-#include "update_dlg.hpp"
+//REMOVE#include "file_action.hpp"
+//#include "update_dlg.hpp"
+#include "action.hpp"
+#include "update_data.hpp"
 
-class UpdateAction:public FileAction
+class svn::Targets;
+class Tracer;
+class wxWindow;
+
+class UpdateAction:public Action
 {
-private:
-  UpdateDlg::sData m_data;
-
-  svn::Targets m_targets;
-  wxFrame *m_pFrame;
-
 public:
-  UpdateAction (wxFrame * frame, Tracer * tr, const svn::Targets & targets);
-  void Perform ();
-  bool PerformUI ();
+  UpdateAction (wxWindow * parent, const svn::Targets & targets, 
+                wxString & path, Tracer * tr, bool owns);
+  bool Perform ();
+  bool Prepare ();
+
+private:
+  svn::Targets m_targets;
+  wxString m_path;
+  UpdateData m_data;
 };
 
 #endif

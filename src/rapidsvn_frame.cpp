@@ -22,9 +22,11 @@
 #include "wx/version.h"
 
 // svncpp
+//#include "svncpp/exception.hpp"
 #include "svncpp/log.hpp"
 //#include "svncpp/path.hpp"
 #include "svncpp/targets.hpp"
+//#include "svncpp/utils.hpp"
 
 // app
 #include "include.hpp"
@@ -45,6 +47,7 @@
 #include "mkdir_action.hpp"
 #include "merge_action.hpp"
 #include "property_action.hpp"
+#include "cleanup_action.hpp"
 
 #include "report_dlg.hpp"
 #include "preferences_dlg.hpp"
@@ -116,6 +119,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_CopyTo, RapidSvnFrame::OnCopyTo)
   EVT_MENU (ID_RenameHere, RapidSvnFrame::OnRenameHere)
   EVT_MENU (ID_CopyHere, RapidSvnFrame::OnCopyHere)
+  EVT_MENU (ID_Cleanup, RapidSvnFrame::OnCleanup)
   EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
   EVT_MENU (-1, RapidSvnFrame::OnToolLeftClick)
   EVT_TOOL_ENTER (ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
@@ -379,6 +383,11 @@ RapidSvnFrame::InitializeMenu ()
   pItem->SetBitmap (wxBITMAP (info));
   menuQuery->Append (pItem);
 
+  // Extras menu
+  wxMenu *menuExtras = new wxMenu;
+  pItem = new wxMenuItem (menuExtras, ID_Cleanup, _T ("Cleanup"));
+  menuExtras->Append (pItem);
+
   // Help Menu
   wxMenu *menuHelp = new wxMenu;
   menuHelp->Append (ID_Contents, "&Contents");
@@ -387,12 +396,13 @@ RapidSvnFrame::InitializeMenu ()
 
   // Create the menu bar and append the menus
   wxMenuBar *menuBar = new wxMenuBar;
-  menuBar->Append (menuFile, "&File");
-  menuBar->Append (menuView, "&View");
-  menuBar->Append (menuCreate, "&Create");
-  menuBar->Append (menuModif, "&Modify");
-  menuBar->Append (menuQuery, "&Query");
-  menuBar->Append (menuHelp, "&Help");
+  menuBar->Append (menuFile, _T ("&File"));
+  menuBar->Append (menuView, _T ("&View"));
+  menuBar->Append (menuCreate, _T ("&Create"));
+  menuBar->Append (menuModif, _T ("&Modify"));
+  menuBar->Append (menuQuery, _T ("&Query"));
+  menuBar->Append (menuExtras, _T ("&Extras"));
+  menuBar->Append (menuHelp, _T ("&Help"));
 
   SetMenuBar (menuBar);
 }
@@ -574,6 +584,17 @@ void
 RapidSvnFrame::OnCopyHere (wxCommandEvent & WXUNUSED (event))
 {
 }
+
+void
+RapidSvnFrame::OnCleanup (wxCommandEvent & WXUNUSED (event))
+{
+  svn::Path path (m_currentPath);
+  lastAction = ACTION_TYPE_CLEANUP;
+  CleanupAction * action = 
+    new CleanupAction (this, path, m_logTracer, false);
+  m_actionWorker.Perform (action);
+}
+
 
 void
 RapidSvnFrame::LayoutChildren ()
@@ -898,24 +919,24 @@ RapidSvnFrame::GetActionTargets () const
 void
 RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 {
-  FileAction* action = NULL;
+  Action* action = NULL;
   svn::Targets targets = GetActionTargets ();
 
   switch (event.m_id)
   {
   case ID_Update:
-    action = new UpdateAction(this, m_logTracer, targets);
+    action = new UpdateAction(this, targets, m_currentPath, m_logTracer, false);
     lastAction = ACTION_TYPE_UPDATE;
     break;
   case ID_Commit:
-    action = new CommitAction(this, m_logTracer, targets);
+    action = new CommitAction(this, targets, m_currentPath, m_logTracer, false);
     lastAction = ACTION_TYPE_COMMIT;
     break;
   }
 
   if( action )
   {
-    action->PerformAction();
+    m_actionWorker.Perform (action);
   }
 }
 

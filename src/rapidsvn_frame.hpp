@@ -14,8 +14,10 @@
 #define _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
 
 // wxwindows
-#include <wx/toolbar.h>
-#include <wx/splitter.h>
+#include "wx/frame.h"
+#include "wx/textctrl.h"
+#include "wx/toolbar.h"
+#include "wx/splitter.h"
 
 // app
 //#include "ids.h"
@@ -41,14 +43,15 @@ typedef enum
   ACTION_TYPE_RESOLVE,
   ACTION_TYPE_COPY,
   ACTION_TYPE_MKDIR,
-  ACTION_TYPE_MERGE
+  ACTION_TYPE_MERGE,
+  ACTION_TYPE_CLEANUP
 }
 ActionType;
 
 
 // forward declarations
-class RapidSvnFrame;
 class svn::Targets;
+class wxFrame;
 
 /**
 * Panel holding the splitter with the folder browser
@@ -72,7 +75,7 @@ class RapidSvnFrame:public wxFrame
 {
 public:
   RapidSvnFrame (const wxString & title);
-  ~RapidSvnFrame ();
+  virtual ~RapidSvnFrame ();
 
   void OnSize (wxSizeEvent & event);
 
@@ -108,6 +111,9 @@ public:
   void OnMoveTo (wxCommandEvent & event);
   void OnRenameHere (wxCommandEvent & event);
   void OnCopyHere (wxCommandEvent & event);
+
+  // Extras menu
+  void OnCleanup (wxCommandEvent & event);
 
   // Help menu
   void OnContents (wxCommandEvent & event);

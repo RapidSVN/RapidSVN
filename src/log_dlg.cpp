@@ -12,7 +12,8 @@
  */
 
 // wx windows
-#include <wx/valgen.h>
+#include "wx/wx.h"
+#include "wx/valgen.h"
 
 // svncpp
 #include "svncpp/exception.hpp"
@@ -20,6 +21,7 @@
 #include "svncpp/notify.hpp"
 
 // app
+//TODO
 #include "rapidsvn_app.hpp"
 #include "log_dlg.hpp"
 

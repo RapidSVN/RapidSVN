@@ -7,6 +7,7 @@ OBJECTS=action.o \
 		add_action.o \
 		checkout_action.o \
 		checkout_dlg.o \
+		cleanup_action.o \
 		commit_action.o \
 		commit_dlg.o \
 		copy_action.o \
@@ -54,7 +55,8 @@ OBJECTS=action.o \
 		svncpp/pool.o \
 		svncpp/revision.o \
 		svncpp/status.o \
-		svncpp/targets.o
+		svncpp/targets.o \
+		svncpp/utils.o
 
 APR_LIBS=@APR_LIBS@
 WX_LIBS=@WX_LIBS@

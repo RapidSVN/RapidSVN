@@ -46,7 +46,7 @@ enum
   ID_CopyTo,
   ID_RenameHere,
   ID_CopyHere,
-
+  ID_Cleanup,
   ACTION_EVENT,                 // this one gets sent from the action threads
 
   LIST_CTRL = 1000

@@ -13,25 +13,33 @@
 #ifndef _COMMIT_DLG_H_INCLUDED_
 #define _COMMIT_DLG_H_INCLUDED_
 
-class CommitDlg:public wxDialog
+// wx
+#include "wx/dialog.h"
+
+// app
+#include "commit_data.hpp"
+
+// forward declarations
+class CommitDlg : public wxDialog
 {
 public:
-  struct sData 
-  {
-    sData();
-    
-    wxString LogMessage;
-    wxString User;
-    wxString Password;
-    bool Recursive;
-  };
-  
-  CommitDlg(wxWindow* parent, sData* pData);
+  /**
+   * constructor
+   *
+   * @param parent parent window
+   */
+  CommitDlg(wxWindow* parent);
+
+  /**
+   * @return data
+   */
+  const CommitData &
+  GetData () const;
 
 private:
   void InitializeData ();
   
-  sData* m_pData;
+  CommitData m_data;
   
   DECLARE_EVENT_TABLE ()
 };

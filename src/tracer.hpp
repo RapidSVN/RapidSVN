@@ -15,8 +15,10 @@
 
 // wx
 //#include "wx/textctrl.h"
+#include "wx/string.h"
 
 // forward declarations
+class wxFrame;
 class wxTextCtrl;
 
 /**

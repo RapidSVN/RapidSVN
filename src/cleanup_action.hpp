@@ -10,38 +10,31 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _COMMIT_ACTION_H_INCLUDED_
-#define _COMMIT_ACTION_H_INCLUDED_
+#ifndef _CLEANUP_ACTION_H_INCLUDED_
+#define _CLEANUP_ACTION_H_INCLUDED_
+
+// svncpp
+#include "svncpp/path.hpp"
 
 // app
 #include "action.hpp"
-#include "commit_data.hpp"
 
 // forward declarations
-namespace svn
-{
-  class Targets;
-}
 class Tracer;
 
-class CommitAction : public Action
+class CleanupAction : public Action
 {
 public:
-  CommitAction (wxWindow * parent, const svn::Targets & targets,
-                wxString & path, Tracer * tr, bool owns);
+  CleanupAction (wxWindow * parent, svn::Path & path, Tracer * tr, bool owns);
   bool Perform ();
   bool Prepare ();
 
 private:
-  svn::Targets m_targets;
-  wxString m_path;
-  CommitData m_data;
-  wxWindow *m_parent;
-
+  svn::Path m_path;
 
   // hide default and copy constructor
-  CommitAction ();
-  CommitAction (const CommitAction &);
+  CleanupAction ();
+  CleanupAction (const CleanupAction &);
 };
 
 #endif

@@ -10,43 +10,40 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _COMMIT_ACTION_H_INCLUDED_
-#define _COMMIT_ACTION_H_INCLUDED_
 
-// app
-#include "action.hpp"
-#include "commit_data.hpp"
+#ifndef _SVNCPP_UTILS_HPP_
+#define _SVNCPP_UTILS_HPP_
 
-// forward declarations
 namespace svn
 {
-  class Targets;
+  // forward declarations
+  class Path;
+
+  /**
+   * Encapsulation for Subversion Utility functions
+   */
+  class Utils
+  {
+  public:
+    /**
+     * perform cleanup on working copy
+     *
+     * @param path path to clean.
+     */
+    static void 
+    cleanup (const Path & path);
+
+  private:
+    /**
+     * hide default constructor
+     */
+    Utils ();
+  };
 }
-class Tracer;
-
-class CommitAction : public Action
-{
-public:
-  CommitAction (wxWindow * parent, const svn::Targets & targets,
-                wxString & path, Tracer * tr, bool owns);
-  bool Perform ();
-  bool Prepare ();
-
-private:
-  svn::Targets m_targets;
-  wxString m_path;
-  CommitData m_data;
-  wxWindow *m_parent;
-
-
-  // hide default and copy constructor
-  CommitAction ();
-  CommitAction (const CommitAction &);
-};
 
 #endif
 /* -----------------------------------------------------------------
  * local variables:
- * eval: (load-file "../rapidsvn-dev.el")
+ * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */

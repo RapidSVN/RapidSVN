@@ -11,39 +11,46 @@
  * ====================================================================
  */
 
+// wxwindows
+#include "wx/wx.h"
+
 // svncpp
 #include "svncpp/exception.hpp"
 #include "svncpp/modify.hpp"
 #include "svncpp/path.hpp"
-//#include "svncpp/targets.hpp"
+#include "svncpp/targets.hpp"
 
 // app
-#include "include.hpp"
-#include "rapidsvn_app.hpp"
+//REMOVE#include "include.hpp"
+//REMOVE#include "rapidsvn_app.hpp"
+#include "ids.hpp"
 #include "update_action.hpp"
+#include "update_dlg.hpp"
 #include "svn_notify.hpp"
+#include "tracer.hpp"
+#include "utils.hpp"
 
-UpdateAction::UpdateAction (wxFrame * frame, 
-                            Tracer * tr, const svn::Targets & targets)
-  : FileAction (frame), m_targets (targets)
+UpdateAction::UpdateAction (wxWindow * parent, const svn::Targets & targets,
+                            wxString & path, Tracer * tr, bool owns)
+  : Action (parent, tr, owns), m_targets (targets), m_path (path)
 {
-  SetTracer (tr, FALSE);        // do not own the tracer
-  m_pFrame = frame;
 }
 
 bool
-UpdateAction::PerformUI ()
+UpdateAction::Prepare ()
 {
-  UpdateDlg *upDlg = new UpdateDlg(m_pFrame, &m_data);
+  UpdateDlg dlg (GetParent ());
 
-  int retval = upDlg->ShowModal ();
-  // destroy the dialog
-  upDlg->Close (TRUE);
+  if (dlg.ShowModal () != wxID_OK)
+  {
+    return false;
+  }
 
-  return (retval == wxID_OK);
+  m_data = dlg.GetData ();
+  return true;
 }
 
-void
+bool
 UpdateAction::Perform ()
 {
   svn::Modify modify;
@@ -65,9 +72,11 @@ UpdateAction::Perform ()
       revision = svn::Revision (revnum);
     }
   }
-  
+
+  bool result = true;
   const std::vector<svn::Path> & v = m_targets.targets ();
   std::vector<svn::Path>::const_iterator it;
+  wxSetWorkingDirectory (m_path);
   for (it = v.begin(); it != v.end(); it++)
   {
     const svn::Path & path = *it;
@@ -78,6 +87,7 @@ UpdateAction::Perform ()
     }
     catch (svn::ClientException &e)
     {
+      result = false;
       PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
                        ACTION_EVENT);
       GetTracer ()->Trace ("Update failed:");
@@ -86,6 +96,7 @@ UpdateAction::Perform ()
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
+  return result;
 }
 /* -----------------------------------------------------------------
  * local variables:

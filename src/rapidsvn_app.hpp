@@ -13,6 +13,10 @@
 #ifndef _VSVN_APP_H_INCLUDED_
 #define _VSVN_APP_H_INCLUDED_
 
+// wxwindows
+#include "wx/wx.h"
+
+// app
 #include "filelist_ctrl.hpp"
 #include "folder_browser.hpp"
 #include "utils.hpp"

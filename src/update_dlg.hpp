@@ -13,31 +13,34 @@
 #ifndef _UPDATE_DLG_H_INCLUDED_
 #define _UPDATE_DLG_H_INCLUDED_
 
+// wxwindows
+#include "wx/dialog.h"
+
+// app
+#include "update_data.hpp"
+
+// forward declarations
+class wxCheckBox;
+class wxStaticText;
+class wxTextCtrl;
+
 class UpdateDlg:public wxDialog
 {
 public:
-  struct sData 
-  {
-    sData();
-    
-    wxString User;
-    wxString Password;
-    wxString Revision;
-    bool UseLatest;
-  };
-
-  UpdateDlg(wxWindow* parent, sData* pData);
-  virtual void InitDialog();
+  UpdateDlg (wxWindow* parent);
   
+  const UpdateData &
+  GetData () const;
 private:
-  void InitializeData();
+  void InitData();
+  void InitDialog();
   void OnUseLatest(wxCommandEvent &event);
   void EnableControls();
 
-  sData* m_pData;
-  wxCheckBox* pUseLatest;
-  wxStaticText* pRevisionLabel; 
-  wxTextCtrl* pRevision;
+  UpdateData m_data;
+  wxCheckBox* m_useLatestCheck;
+  wxStaticText* m_revisionLabel; 
+  wxTextCtrl* m_revisionText;
   
   DECLARE_EVENT_TABLE()
 };

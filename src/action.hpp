@@ -92,6 +92,9 @@ public:
    */
   wxWindow * GetParent ();
 
+protected:
+  void Trace (const wxString & msg);
+
 private:
   /**
    * The parent

@@ -18,48 +18,53 @@
 #include "svncpp/targets.hpp"
 
 // app
-#include "include.hpp"
-#include "rapidsvn_app.hpp"
+//REMOVE #include "include.hpp"
+//REMOVE #include "rapidsvn_app.hpp"
 #include "commit_action.hpp"
+#include "commit_dlg.hpp"
+#include "ids.hpp"
 #include "svn_notify.hpp"
+#include "tracer.hpp"
+#include "utils.hpp"
 
-CommitAction::CommitAction (wxFrame * frame, 
-                            Tracer * tr, const svn::Targets & targets)
-  : FileAction (frame), m_targets (targets)
+CommitAction::CommitAction (wxWindow * parent, const svn::Targets & targets,
+                            wxString & path, Tracer * tr, bool own)
+  : Action (parent, tr, own), m_targets (targets), m_path (path)
 {
-  m_thisframe = frame;
-  SetTracer (tr, FALSE);        // do not own the tracer
 }
 
 bool
-CommitAction::PerformUI ()
+CommitAction::Prepare ()
 {
-  CommitDlg *ciDlg = new CommitDlg(m_thisframe, &m_data);
+  CommitDlg dlg(GetParent ());
 
-  int retval = ciDlg->ShowModal ();
-  // destroy the dialog
-  ciDlg->Close (TRUE);
+  if (dlg.ShowModal () != wxID_OK)
+  {
+    return false;
+  }
 
-  return (retval == wxID_OK);
+  m_data = dlg.GetData ();
+  return true;
 }
 
-void
+bool
 CommitAction::Perform ()
 {
-  svn::Modify modify;
   SvnNotify notify (GetTracer ());
-  modify.notification (&notify);
-  long revision;
-  svn::Pool pool(NULL);
 
+  svn::Modify modify;
+  modify.notification (&notify);
   modify.username (m_data.User);
   modify.password (m_data.Password);
 
   svn::Targets targets (m_targets);
 
+  bool result = false;
   try
   {
-    revision = 
+    svn::Pool pool;
+    wxSetWorkingDirectory (m_path);
+    long revision = 
       modify.commit (targets.array (pool.pool ()), m_data.LogMessage.c_str (), 
                      m_data.Recursive);
     wxString str;
@@ -74,6 +79,7 @@ CommitAction::Perform ()
                               revision);
     }
     GetTracer ()->Trace (str);
+    result = true;
   }
   catch (svn::ClientException &e)
   {
@@ -84,6 +90,7 @@ CommitAction::Perform ()
   }
 
   PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
+  return result;
 }
 /* -----------------------------------------------------------------
  * local variables:

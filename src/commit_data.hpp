@@ -10,40 +10,24 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _COMMIT_ACTION_H_INCLUDED_
-#define _COMMIT_ACTION_H_INCLUDED_
+#ifndef _COMMIT_DATA_H_INCLUDED_
+#define _COMMIT_DATA_H_INCLUDED_
 
-// app
-#include "action.hpp"
-#include "commit_data.hpp"
+#include "wx/string.h"
 
-// forward declarations
-namespace svn
+struct CommitData
 {
-  class Targets;
-}
-class Tracer;
+  CommitData ()
+  {
+    Recursive = false;
+  }
 
-class CommitAction : public Action
-{
-public:
-  CommitAction (wxWindow * parent, const svn::Targets & targets,
-                wxString & path, Tracer * tr, bool owns);
-  bool Perform ();
-  bool Prepare ();
-
-private:
-  svn::Targets m_targets;
-  wxString m_path;
-  CommitData m_data;
-  wxWindow *m_parent;
-
-
-  // hide default and copy constructor
-  CommitAction ();
-  CommitAction (const CommitAction &);
+  wxString LogMessage;
+  wxString User;
+  wxString Password;
+  bool Recursive;
 };
-
+  
 #endif
 /* -----------------------------------------------------------------
  * local variables:

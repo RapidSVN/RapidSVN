@@ -15,10 +15,14 @@
 #define _LOG_DLG_H_INCLUDED_
 
 // wxwindows
+#include "wx/dialog.h"
 #include "wx/listctrl.h"
 
 // app
 #include "svncpp/log.hpp"
+
+//forward declarations
+class wxBoxSizer;
 
 class LogList : public wxListCtrl
 {
