@@ -970,7 +970,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   }
   break;
 
-  case TOKEN_VSVN_INTERNAL_ERROR:
+  case TOKEN_INTERNAL_ERROR:
   {
     ErrorTracer err_tr (this);
 
@@ -979,9 +979,17 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   }
   break;
 
+  case TOKEN_ACTION_START:
+  {
+    m_log->AppendText (event.GetString () + "\n");
+    wxLogStatus (event.GetString ());
+  }
+  break;
+
   case TOKEN_ACTION_END:
   {
     UpdateFileList ();
+    m_log->AppendText ( _("Ready\n"));
   }
   break;
   }

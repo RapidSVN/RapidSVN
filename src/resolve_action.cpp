@@ -15,6 +15,9 @@
 #include "svncpp/exception.hpp"
 #include "svncpp/client.hpp"
 
+// wxwindows
+#include "wx/intl.h"
+
 // app
 #include "ids.hpp"
 #include "tracer.hpp"
@@ -22,7 +25,7 @@
 #include "svn_notify.hpp"
 
 ResolveAction::ResolveAction (wxWindow * parent)
-  : Action (parent, actionWithTargets)
+  : Action (parent, _("Resolve"), actionWithTargets)
 {
 }
 
@@ -48,18 +51,8 @@ ResolveAction::Perform ()
   {
     const svn::Path & path = *it;
 
-    try
-    {
-      client.resolve (path.c_str (), false);
-    }
-    catch (svn::ClientException &e)
-    {
-      GetTracer ()->Trace (e.description ());
-      result = false;
-    }
+    client.resolve (path.c_str (), false);
   }
-
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
 
   return result;
 }

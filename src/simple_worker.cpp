@@ -15,6 +15,7 @@
 #include "wx/wx.h"
 
 // svncpp
+#include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
 
 // app
@@ -58,6 +59,10 @@ SimpleWorker::GetResult ()
 bool
 SimpleWorker::Perform (Action * action)
 {
+  svn::Context context;
+  action->SetContext (&context);
+  context.setListener (action);
+
   m_result = ACTION_NOTHING;
   m_action = action;
   m_state = ACTION_INIT;
@@ -85,7 +90,13 @@ SimpleWorker::Perform (Action * action)
     Trace (_("Error while preparing action."));
     return false;
   }
-  
+
+  {
+    wxString msg;
+    msg.Printf (_("Executing action: %s"), action->GetName ());
+    PostStringEvent (TOKEN_ACTION_START, msg, ACTION_EVENT);
+  }
+
   try
   {
     // this cursor stuff has to change...

@@ -24,7 +24,7 @@
 #include "tracer.hpp"
 
 CheckoutAction::CheckoutAction (wxWindow * parent)
-  : Action (parent, actionWithoutTarget)
+  : Action (parent, _("Checkout"), actionWithoutTarget)
 {
 }
 
@@ -48,8 +48,7 @@ CheckoutAction::Prepare ()
 bool
 CheckoutAction::Perform ()
 {
-  svn::Context context;
-  svn::Client client (&context);
+  svn::Client client (GetContext ());
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
@@ -68,25 +67,13 @@ CheckoutAction::Perform ()
     }
   }
 
-  bool result = true;
-  try
-  {
-    svn::Revision revision (revnum);
-    wxSetWorkingDirectory (m_data.DestFolder);
-    client.checkout (m_data.ModuleName.c_str (), 
-                     m_data.DestFolder.c_str (), 
-                     revision, m_data.Recursive);
-  }
-  catch (svn::ClientException &e)
-  {
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
-                       ACTION_EVENT);
-      GetTracer ()->Trace ("Checkout failed:");
-      GetTracer ()->Trace (e.description ());
-      result = false;
-  }
+  svn::Revision revision (revnum);
+  wxSetWorkingDirectory (m_data.DestFolder);
+  client.checkout (m_data.ModuleName.c_str (), 
+                   m_data.DestFolder.c_str (), 
+                   revision, m_data.Recursive);
  
-  return result;
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:

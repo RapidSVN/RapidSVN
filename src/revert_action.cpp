@@ -25,7 +25,7 @@
 #include "svn_notify.hpp"
 
 RevertAction::RevertAction (wxWindow * parent)
-  : Action (parent, actionWithTargets)
+  : Action (parent, _("Revert"), actionWithTargets)
 {
 }
 
@@ -64,19 +64,8 @@ RevertAction::Perform ()
   {
     const svn::Path & path = *it;
 
-    try
-    {
-      client.revert (path.c_str (), false);
-    }
-    catch (svn::ClientException &e)
-    {
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, e.description (), 
-                       ACTION_EVENT);
-      result = false;
-    }
+    client.revert (path.c_str (), false);
   }
-
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
 
   return result;
 }

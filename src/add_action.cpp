@@ -15,13 +15,16 @@
 #include "svncpp/client.hpp"
 #include "svncpp/exception.hpp"
 
+// wxwindows
+#include "wx/intl.h"
+
 // app
 #include "ids.hpp"
 #include "add_action.hpp"
 #include "svn_notify.hpp"
 
 AddAction::AddAction (wxWindow * parent)
-  : Action (parent, actionWithTargets)
+  : Action (parent, _("Add"), actionWithTargets)
 {
 }
 
@@ -53,7 +56,6 @@ AddAction::Perform ()
     client.add (path.c_str (), false);
   }
 
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
   return true;
 }
 /* -----------------------------------------------------------------

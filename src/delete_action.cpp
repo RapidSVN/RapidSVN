@@ -25,7 +25,7 @@
 #include "svn_notify.hpp"
 
 DeleteAction::DeleteAction (wxWindow * parent) 
-  : Action (parent, actionWithTargets)
+  : Action (parent, _("Delete"), actionWithTargets)
 {
 }
 
@@ -53,7 +53,6 @@ DeleteAction::Perform ()
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
-  bool result = true;
 
   const std::vector<svn::Path> & v = GetTargets ();
   std::vector<svn::Path>::const_iterator it;
@@ -62,23 +61,10 @@ DeleteAction::Perform ()
   {
     const svn::Path & path = *it;
 
-    try
-    {
-      client.remove (path.c_str (), Data.Force);
-    }
-    catch (svn::ClientException &e)
-    {
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
-                       ACTION_EVENT);
-      GetTracer ()->Trace ("Delete failed:");
-      GetTracer ()->Trace (e.description ());
-      result = false;
-    }
+    client.remove (path.c_str (), Data.Force);
   }
 
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-
-  return result;
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:

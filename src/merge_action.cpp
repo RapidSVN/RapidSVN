@@ -24,7 +24,7 @@
 #include "svn_notify.hpp"
 
 MergeAction::MergeAction (wxWindow * parent)
-  : Action (parent, actionWithoutTarget)
+  : Action (parent, _("Merge"), actionWithoutTarget)
 {
 }
 
@@ -49,8 +49,7 @@ MergeAction::Prepare ()
 bool
 MergeAction::Perform ()
 {
-  svn::Context context;
-  svn::Client client (&context);
+  svn::Client client (GetContext ());
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
@@ -63,7 +62,8 @@ MergeAction::Perform ()
     wxString msg;
     msg.Printf(_("Could not set working directory to %s"),
                path.c_str ());
-    PostStringEvent (TOKEN_VSVN_INTERNAL_ERROR, msg, ACTION_EVENT);
+    TraceError (msg);
+    //PostStringEvent (TOKEN_VSVN_INTERNAL_ERROR, msg, ACTION_EVENT);
     return false;
   }
 
@@ -71,27 +71,14 @@ MergeAction::Perform ()
   //TODO check this
   long rev1 = 0;//MergeAction::getRevision (m_data.Path1Rev);
   long rev2 = 0;//MergeAction::getRevision (m_data.Path2Rev);
-  bool result = true;
-  try
-  {
-    client.merge (m_data.Path1.c_str (), 
-                  rev1, 
-                  m_data.Path2.c_str (), 
-                  rev2, 
-                  path.c_str (), 
-                  m_data.Force, 
-                  m_data.Recursive);
-  }
-  catch (svn::ClientException &e)
-  {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
-                     ACTION_EVENT);
-    GetTracer ()->Trace ("Merge failed:");
-    GetTracer ()->Trace (e.description ());
-    result = false;
-  }
-  
-  return result;
+  client.merge (m_data.Path1.c_str (), 
+                rev1, 
+                m_data.Path2.c_str (), 
+                rev2, 
+                path.c_str (), 
+                m_data.Force, 
+                m_data.Recursive);
+  return true;
 }
 
 /* -----------------------------------------------------------------

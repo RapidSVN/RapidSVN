@@ -14,12 +14,15 @@
 #define _ACTION_H_
 
 // svncpp
+#include "svncpp/context_listener.hpp"
 #include "svncpp/path.hpp"
 #include "svncpp/targets.hpp"
 
+// wxwindows
+#include "wx/string.h"
+
 // forward declarations
 class Tracer;
-class wxString;
 class wxWindow;
 namespace svn
 {
@@ -41,17 +44,18 @@ enum ActionOptions
  *
  * @see ActionWorker
  */
-class Action
+class Action : public svn::ContextListener
 {
 public:
   /**
    * constructor
    *
    * @param parent parent window
+   * @param name of the action
    * @param options 
    * @param own tracer owned by action?
    */
-  Action (wxWindow * parent, ActionOptions options);
+  Action (wxWindow * parent, const wxString & name, ActionOptions options);
 
   /**
    * destructor
@@ -153,8 +157,54 @@ public:
    */
   ActionOptions GetOptions ();
 
+  /**
+   * @see svn::ContextListener
+   */
+  virtual bool 
+  contextGetLogin (std::string & username, 
+                   std::string & password);
+
+  /**
+   * @see svn::ContextListener
+   */
+  virtual void
+  contextNotify (const char *path,
+          svn_wc_notify_action_t action,
+          svn_node_kind_t kind,
+          const char *mime_type,
+          svn_wc_notify_state_t content_state,
+          svn_wc_notify_state_t prop_state,
+          svn_revnum_t revision);
+
+  /**
+   * @see svn::ContextListener
+   */
+  virtual bool
+  contextGetLogMessage (std::string & msg);
+
+  /** returns the name of the action */
+  const char * 
+  GetName () const;
+
 protected:
   void Trace (const wxString & msg);
+
+  void TraceError (const wxString & msg);
+
+private:
+  struct Data;
+  // this structure contains implementation specific data
+  Data * m;
+
+  /**
+   * private default constructor
+   */
+  Action ();
+
+  /**
+   * private copy constructor
+   */
+  Action (const Action &);
 
   /**
    * thread-safe method to post a string event
@@ -167,55 +217,6 @@ protected:
    */
   void PostDataEvent (int code, void *data, int event_id);
 
-private:
-  /**
-   * The parent
-   */
-  wxWindow * m_parent;
-    
-  /**
-   * Options for the action. 
-   */
-  ActionOptions m_options;
-
-  /**
-   * This member variable will take the address 
-   * of a trace object allocated in a class 
-   * derived from ActionThread. It will be used
-   * from the svn_delta_editor callbacks.
-   */
-  Tracer * m_tracer;
-    
-  /**
-   * If ownTracer is TRUE, then the ActionThread class
-   * is responsible for deleting the tracer.
-   */
-  bool m_ownTracer;
-
-  /**
-   * the context under which the action will be
-   * performed. this includes auth info and callback
-   * addresses
-   */
-  svn::Context * m_context;
-
-  /**
-   * the path where the action will take place
-   */
-  svn::Path m_path;
-
-  svn::Targets m_targets;
-
-
-  /**
-   * private default constructor
-   */
-  Action ();
-
-  /**
-   * private copy constructor
-   */
-  Action (const Action &);
 };
 
 #endif

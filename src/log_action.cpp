@@ -17,12 +17,15 @@
 //#include "svncpp/log.hpp"
 #include "svncpp/revision.hpp"
 
+// wxwindows
+#include "wx/intl.h"
+
 // app
 #include "log_action.hpp"
 #include "log_dlg.hpp"
 
 LogAction::LogAction (wxWindow * parent)
-  : Action (parent, actionWithSingleTarget)
+  : Action (parent, _("Log"), actionWithSingleTarget)
 {
 }
 

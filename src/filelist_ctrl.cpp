@@ -641,6 +641,8 @@ FileListCtrl::UpdateFileList ()
   SortItems (Data::CompareFunction, (long) this->m);
 
   Show ();
+
+  wxLogStatus (_("Ready"),"");
 }
 
 void 

@@ -26,7 +26,7 @@
 #include "svn_notify.hpp"
 
 ImportAction::ImportAction (wxWindow * parent)
-  :Action (parent, actionWithoutTarget)
+  :Action (parent, _("Import"), actionWithoutTarget)
 {
 }
 
@@ -51,33 +51,19 @@ ImportAction::Prepare ()
 bool
 ImportAction::Perform ()
 {
-  svn::Context context;
-  svn::Client client (&context);
+  svn::Client client (GetContext ());
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
   const char *the_new_entry = NULL;
-  bool result = true;
 
   // if new entry is empty, the_new_entry must be left NULL.
   if (!m_data.NewEntry.IsEmpty ())
     the_new_entry = m_data.NewEntry.c_str ();
 
-  try
-  {
-    client.import (m_data.Path.c_str (), m_data.Repository.c_str (), the_new_entry,
-                   m_data.LogMessage.c_str(), m_data.Recursive);
-    GetTracer ()->Trace ("Import successful.");
-  }
-  catch (svn::ClientException &e)
-  {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
-                     ACTION_EVENT);
-    GetTracer ()->Trace ("Import failed:");
-    GetTracer ()->Trace (e.description ());
-    result = false;
-  }
+  client.import (m_data.Path.c_str (), m_data.Repository.c_str (), the_new_entry,
+                 m_data.LogMessage.c_str(), m_data.Recursive);
 
-  return result;
+  return true;
 }
 
 /* -----------------------------------------------------------------

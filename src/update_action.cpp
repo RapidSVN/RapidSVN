@@ -29,7 +29,7 @@
 #include "utils.hpp"
 
 UpdateAction::UpdateAction (wxWindow * parent)
-  : Action (parent, actionWithTargets)
+  : Action (parent, _("Update"), actionWithTargets)
 {
 }
 
@@ -55,8 +55,7 @@ UpdateAction::Prepare ()
 bool
 UpdateAction::Perform ()
 {
-  svn::Context context;
-  svn::Client client (&context);
+  svn::Client client (GetContext ());
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
@@ -81,21 +80,9 @@ UpdateAction::Perform ()
   {
     const svn::Path & path = *it;
 
-    try
-    {
-      client.update (path.c_str (), revision, true);
-    }
-    catch (svn::ClientException &e)
-    {
-      result = false;
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
-                       ACTION_EVENT);
-      Trace ("Update failed:");
-      Trace (e.description ());
-    }
+    client.update (path.c_str (), revision, true);
   }
 
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
   return result;
 }
 /* -----------------------------------------------------------------

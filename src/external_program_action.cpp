@@ -12,6 +12,7 @@
  */
 // wx
 #include "wx/filename.h"
+#include "wx/intl.h"
 
 // app
 #include "external_program_action.hpp"
@@ -19,7 +20,7 @@
 #include "verblist.hpp"
 
 ExternalProgramAction::ExternalProgramAction (wxWindow * parent, long verb_id, 
-  bool treat_as_folder) : Action (parent, actionWithSingleTarget), 
+  bool treat_as_folder) : Action (parent, _("Execute"), actionWithSingleTarget), 
   m_verb_id (verb_id), m_treat_as_folder (treat_as_folder)
 {
 }
@@ -52,15 +53,7 @@ ExternalProgramAction::Perform ()
   }
 
   // Get verbs from the OS
-  try
-  {
-    verb_list.InitFromDocument (target_document);
-  }
-  catch (std::exception)
-  {
-    // Failed assembling verbs.
-    // TODO: Trace this?
-  }
+  verb_list.InitFromDocument (target_document);
 
   // An explicit verb was chose that is not available
   if ((m_verb_id >= 0) && ((size_t)m_verb_id > verb_list.GetCount()))

@@ -14,6 +14,9 @@
 // svncpp
 #include "svncpp/exception.hpp"
 
+// wxwindows
+#include "wx/intl.h"
+
 // app
 #include "property_action.hpp"
 #include "property_dlg.hpp"
@@ -22,7 +25,7 @@
  * right now this supports only one target
  */
 PropertyAction::PropertyAction (wxWindow * parent)
-  : Action (parent, actionWithSingleTarget)
+  : Action (parent, _("Property"), actionWithSingleTarget)
 {
 }
 

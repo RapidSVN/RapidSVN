@@ -29,7 +29,7 @@
 #include "utils.hpp"
 
 CommitAction::CommitAction (wxWindow * parent)
-  : Action (parent, actionWithTargets)
+  : Action (parent, _("Commit"), actionWithTargets)
 {
 }
 
@@ -56,36 +56,22 @@ bool
 CommitAction::Perform ()
 {
   SvnNotify notify (GetTracer ());
-  svn::Context context;
-  svn::Client client (&context);
+  svn::Client client (GetContext ());
   client.notification (&notify);
 
   const svn::Targets & targets = GetTargets ();
 
-  bool result = false;
-  try
-  {
-    svn::Pool pool;
-    long revision = 
-      client.commit (targets.array (pool), m_data.LogMessage.c_str (), 
-                     m_data.Recursive);
-    wxString str;
+  svn::Pool pool;
+  long revision = 
+    client.commit (targets.array (pool), m_data.LogMessage.c_str (), 
+                   m_data.Recursive);
+  wxString str;
 
-    str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
-                               revision);
-    GetTracer ()->Trace (str);
-    result = true;
-  }
-  catch (svn::ClientException &e)
-  {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
-                     ACTION_EVENT);
-    GetTracer ()->Trace ("The commit action failed:");
-    GetTracer ()->Trace (e.description ());
-  }
+  str = wxString::Format ("Committed revision %" SVN_REVNUM_T_FMT ".",
+                             revision);
+  Trace (str);
 
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-  return result;
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:

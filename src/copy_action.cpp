@@ -29,7 +29,7 @@
  * right now we are accepting only target.
  */
 CopyAction::CopyAction (wxWindow * parent)
-  : Action (parent, actionWithSingleTarget)
+  : Action (parent, _("Copy"), actionWithSingleTarget)
 {
 }
 
@@ -43,7 +43,6 @@ CopyAction::Prepare ()
 bool
 CopyAction::Perform ()
 {
-  bool result = true;
   svn::Client client;
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
@@ -54,24 +53,12 @@ CopyAction::Perform ()
   if(!dest.isset ())
     return false;
 
-  try
-  {
-    //TODO right now we are copying only HEAD
-    //this should be configurable
-    const svn::Revision head (svn::Revision::HEAD);
-    client.copy (src, head, dest);
-    GetTracer ()->Trace (_("Copy successful"));
-  }
-  catch (svn::ClientException &e)
-  {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
-                     ACTION_EVENT);
-    GetTracer ()->Trace (_("Copy failed:"));
-    GetTracer ()->Trace (e.description ());
-    result = false;
-  }
+  //TODO right now we are copying only HEAD
+  //this should be configurable
+  const svn::Revision head (svn::Revision::HEAD);
+  client.copy (src, head, dest);
 
-  return result;
+  return true;
 }
 
 /**

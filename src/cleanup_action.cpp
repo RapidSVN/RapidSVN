@@ -26,7 +26,7 @@
 #include "utils.hpp"
 
 CleanupAction::CleanupAction (wxWindow * parent)
-  : Action (parent, actionWithoutTarget)
+  : Action (parent, _("Cleanup"), actionWithoutTarget)
 {
 }
 
@@ -39,27 +39,13 @@ CleanupAction::Prepare ()
 bool
 CleanupAction::Perform ()
 {
-  bool result = false;
-  try
-  {
-    svn::Context context;
-    svn::Client client (&context);
-    const svn::Path & path = GetPath ();
-    wxSetWorkingDirectory (path.c_str ());
-    client.cleanup (path.c_str ());
-    Trace (_("Cleanup of working directory finished"));
-    result = true;
-  }
-  catch (svn::ClientException &e)
-  {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
-                     ACTION_EVENT);
-    GetTracer ()->Trace ("Cleanup failed:");
-    GetTracer ()->Trace (e.description ());
-  }
+  svn::Client client (GetContext ());
+  const svn::Path & path = GetPath ();
 
-  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
-  return result;
+  wxSetWorkingDirectory (path.c_str ());
+  client.cleanup (path.c_str ());
+
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:

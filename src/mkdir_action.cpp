@@ -15,6 +15,9 @@
 #include "svncpp/exception.hpp"
 #include "svncpp/client.hpp"
 
+// wxwindows
+#include "wx/intl.h"
+
 // app
 #include "ids.hpp"
 #include "mkdir_dlg.hpp"
@@ -22,7 +25,7 @@
 #include "svn_notify.hpp"
 
 MkdirAction::MkdirAction (wxWindow * parent)
- : Action (parent, actionWithoutTarget)
+ : Action (parent, _("Mkdir"), actionWithoutTarget)
 {
 }
 
@@ -48,25 +51,12 @@ MkdirAction::Prepare ()
 bool
 MkdirAction::Perform ()
 {
-  svn::Context context;
-  svn::Client client (&context);
+  svn::Client client (GetContext ());
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
-  bool result = true;
 
-  try
-  {
-    client.mkdir (m_data.Target.c_str (), m_data.LogMessage.c_str ());
-  }
-  catch (svn::ClientException &e)
-  {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, e.description (), 
-                     ACTION_EVENT);
-    GetTracer ()->Trace ("Mkdir failed:");
-    GetTracer ()->Trace (e.description ());
-    result = false;
-  }
-  return result;
+  client.mkdir (m_data.Target.c_str (), m_data.LogMessage.c_str ());
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:
