@@ -138,7 +138,7 @@ namespace svn
      * @return the entry's prop status in the repository
      */
     const svn_wc_status_kind
-    reposPropStatus () 
+    reposPropStatus () const
     {
       return m_status->repos_prop_status;
     }
