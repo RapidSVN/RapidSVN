@@ -70,4 +70,4 @@ $(PROGRAM):	$(OBJECTS)
 	$(CXX) -o $(PROGRAM)  $(LIBS) $(OBJECTS)
 
 clean: 
-	rm -f *.o $(PROGRAM)
+	rm -f *.o svncpp/*.o $(PROGRAM)
