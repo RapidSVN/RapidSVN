@@ -20,15 +20,15 @@ Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "A
 Name: main; Description: RapidSVN Application; Types: compact custom full; Flags: fixed
 
 [Files]
-Source: "libdb42.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
-Source: "msvcp60.dll"; DestDir: "{app}\bin"; CopyMode: onlyifdoesntexist; Components: main
-Source: "libeay32.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
-Source: "ssleay32.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
-Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite; Components: main
-Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; CopyMode: alwaysoverwrite; Components: main
-Source: "..\..\TODO.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: main
-Source: "..\..\README"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: main
-Source: "..\..\LICENSE.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite; Components: main
+Source: "libdb42.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "msvcp60.dll"; DestDir: "{app}\bin"; Flags: onlyifdoesntexist; Components: main
+Source: "libeay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "ssleay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
+Source: "..\..\TODO.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
+Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
+Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 
 [Icons]
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"
