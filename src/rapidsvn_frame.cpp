@@ -202,9 +202,13 @@ public:
 
     // View menu
     wxMenu *menuView = new wxMenu;
-    pItem = new wxMenuItem (menuView, ID_Refresh, _("Refresh        F5"));
+    pItem = new wxMenuItem (menuView, ID_Refresh, _("Refresh\tF5"));
     pItem->SetBitmap (wxBITMAP (refresh));
     menuView->Append (pItem);
+
+    menuView->AppendSeparator ();
+
+    menuView->AppendCheckItem (ID_Explore, _("Explore...\tF2"));
 
     menuView->AppendSeparator ();
 
@@ -1055,15 +1059,6 @@ RapidSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
 {
   switch (event.GetKeyEvent ().GetKeyCode ())
   {
-  case WXK_F5:
-    m_activePane = ACTIVEPANE_FOLDER_BROWSER;
-    UpdateFileList ();
-    break;
-
-  case WXK_F2:
-    ProcessCommand (ID_Explore);
-    break;
-
   case WXK_RETURN:
     ProcessCommand (ID_Default_Action);
     break;

@@ -720,15 +720,6 @@ FileListCtrl::OnKeyDown (wxKeyEvent & event)
 {
   switch (event.GetKeyCode ())
   {
-    case WXK_F5:
-      UpdateFileList ();
-      break;
-
-    case WXK_F2:
-      if (!PostMenuEvent (this, ID_Explore))
-        event.Skip ();
-      break;
-
     case WXK_RETURN:
       if (!PostMenuEvent (this, ID_Default_Action))
         event.Skip ();

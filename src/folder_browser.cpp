@@ -527,11 +527,6 @@ FolderBrowser::~FolderBrowser ()
   delete m;
 }
 
-//REMOVE UniqueArrayString & FolderBrowser::GetWorkbenchItems ()
-//REMOVE {
-//REMOVE return m->workbenchItems;
-//REMOVE }
-
 void
 FolderBrowser::Refresh ()
 {
