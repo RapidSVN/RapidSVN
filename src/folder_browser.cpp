@@ -84,7 +84,7 @@ static const unsigned int MAXLENGTH_BOOKMARK = 35;
  * @param path input path
  * @return beatified path
  */
-wxString 
+static wxString 
 BeautifyPath (const wxString & path)
 {
   if( path.length() <= MAXLENGTH_BOOKMARK )
@@ -127,6 +127,13 @@ BeautifyPath (const wxString & path)
   newPath += path.Mid (restPos);
 
   return newPath;
+}
+
+
+static bool
+IsValidSeparator (const wxString & sep)
+{
+  return ((sep == "/") || (sep == "\\"));
 }
 
 
@@ -177,11 +184,9 @@ public:
     {
       return "";
     }
-    else
-    {
-      FolderItemData* data = GetItemData (id);
-      return data->getPath ();
-    }
+
+    FolderItemData* data = GetItemData (id);
+    return data->getPath ();
   }
 
   const FolderItemData *
@@ -527,54 +532,125 @@ public:
     }
   }
 
-  bool
-  SelectFolder (const char * path)
+
+  /**
+   * Finds the child entry with @a path
+   */
+  wxTreeItemId 
+  FindClosestChild (const wxTreeItemId & parentId, const wxString & path)
   {
-    const FolderItemData * data = GetSelection ();
-
-    if (data == 0)
-      return false;
-
-    // is this a realy entry?
-    if (!data->isReal ())
-      return false;
-
-    // make sure the selected tree is open
-    const wxTreeItemId parentId = data->GetId ();
-
-    if (!treeCtrl->IsExpanded(parentId))
-    {
-      treeCtrl->Expand (parentId);
-    }
-
-    // no search through the list of children
     long cookie;
     wxTreeItemId id = treeCtrl->GetFirstChild (parentId, cookie);
+    wxTreeItemId childId;
 
     bool success = false;
 
-    while (!success)
+    while (id.IsOk ())
     {
       const FolderItemData * data = GetItemData (id);
 
-      // if data is not set we have an invalid id
       if (data == 0)
         break;
 
-      if (data->getPath () == path)
+      if (!data->isReal ())
+        break;
+
+      const wxString nodePath (data->getPath ());
+      if (nodePath.Length () == 0)
+        break;
+
+      // first check: full match?
+      if (nodePath == path)
+      {
+        childId = id;
+        break;
+      }
+
+      // second check: match until path delimiter
+      wxString prefix (path.Left (nodePath.Length ()));
+      wxString sep = path.Mid (nodePath.Length (), 1);
+
+      if ( (prefix == nodePath) && 
+           IsValidSeparator (sep) )
+      {
+        childId = id;
+        break;
+      }
+
+      id = treeCtrl->GetNextChild (parentId, cookie);
+    } // while (id.IsOk ())
+
+    return childId;
+  }
+
+  /**
+   * Tries to select @a path in the current selected bookmark.
+   * If it cannot be found in there (because it is deeper in
+   * the folder hierarchy) then we try to open folder nodes
+   * until we find the path. If the path as whole is not found
+   * (folder removed or deleted) we open up the directory structure
+   * as close as possible.
+   *
+   * @param path
+   */
+  bool
+  SelectFolder (const wxString & path)
+  {
+    wxTreeItemId bookmarkId = GetSelectedBookmarkId ();
+
+    // found a valid bookmark? otherwise quit
+    if (!bookmarkId.IsOk ())
+      return false;
+
+    // begin searching in the folder hierarchy
+    bool success=false;
+    wxTreeItemId id = bookmarkId;
+    while (id.IsOk ())
+    {
+      const FolderItemData * data = GetItemData (id);
+
+      // first some validity checkings:
+      // - there has to be a valid @a data item
+      // - the node has to be "real" 
+      // - the path of the node has to be non-empty
+      // - the prefix of @a path has to match
+      //   the path of the @a node
+      if (data == 0)
+        break;
+
+      wxString nodePath (data->getPath ());
+      if (nodePath.Length () == 0)
+        break;
+
+      if (!data->isReal ())
+        break;
+
+      // check if @a path and @a nodePath match already
+      // in this case we are done
+      if (path == nodePath)
       {
         success = true;
+        break;
       }
-      else
-      {
-        id = treeCtrl->GetNextChild (parentId, cookie);
-      }
-    }
+
+      wxString prefix (path.Left (nodePath.Length ()));
+      wxString sep (path.Mid (nodePath.Length (), 1));
+      if ((prefix != nodePath) || !IsValidSeparator (sep))
+        break;
+
+      if (!data->hasChildren ())
+        break;
+
+      // try to find @a path in one of the children
+      // make sure node is open
+      if (!treeCtrl->IsExpanded (id))
+        treeCtrl->Expand (id);
+
+      id = FindClosestChild (id, path);
+    } // while (id.IsOk ())
 
     if (success)
-    {
       treeCtrl->SelectItem (id);
-    }
 
     return success;
   }
@@ -621,6 +697,60 @@ public:
 
     return success;
   }
+
+
+  /**
+   * Try to go up in the folder hierarchy until we
+   * find a bookmark node. 
+   *
+   * @return id of bookmark for selected node
+   */
+  wxTreeItemId 
+  GetSelectedBookmarkId () const
+  {
+    wxTreeItemId id = treeCtrl->GetSelection ();
+    const FolderItemData * data;
+    wxTreeItemId bookmarkId;
+
+    while (id.IsOk ())
+    {
+      data = GetItemData (id);
+
+      if (data == 0)
+        break;
+
+      if (data->getFolderType () == FOLDER_TYPE_BOOKMARK)
+      {
+        bookmarkId = id;
+        break;
+      }
+
+      // step up one level
+      id = treeCtrl->GetItemParent (id);
+    }
+
+    return bookmarkId;
+  }
+
+
+  wxString 
+  GetSelectedBookmark () const
+  {
+    wxTreeItemId id = GetSelectedBookmarkId ();
+
+    wxString path ("");
+
+    if (id.IsOk ())
+    {
+      FolderItemData * data = GetItemData (id);
+
+      if (data != 0)
+        path = data->getPath ();
+    }
+
+    return path;
+  }
+    
 };
 
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
@@ -646,8 +776,26 @@ FolderBrowser::~FolderBrowser ()
 void
 FolderBrowser::Refresh ()
 {
+  // remember selected
+  wxString bookmarkPath = m->GetSelectedBookmark ();
+  wxString path = m->GetPath ();
+
+  // refresh contents
   m->treeCtrl->Collapse (m->rootId);
   m->treeCtrl->Expand (m->rootId);
+
+  // now try to find the remembered selection
+  if (bookmarkPath.Length () == 0)
+    return;
+
+  if(!m->SelectBookmark (bookmarkPath))
+    return;
+
+  wxTreeItemId bookmarkId = m->treeCtrl->GetSelection ();
+  if (m->treeCtrl->ItemHasChildren (bookmarkId))
+    m->treeCtrl->Expand (bookmarkId);
+
+  SelectFolder (path);
 }
 
 const bool

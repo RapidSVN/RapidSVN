@@ -564,7 +564,7 @@ void
 RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
 {
   UpdateFolderBrowser ();
-  UpdateFileList ();
+  //UpdateFileList ();
 }
 
 void
@@ -1232,10 +1232,11 @@ RapidSvnFrame::UpdateFolderBrowser ()
 {
   wxBusyCursor busy;
 
+  m_currentPath = "";
+  UpdateFileList ();
+
   if (m_folder_browser)
-  {
     m_folder_browser->Refresh ();
-  }
 }
 
 void
