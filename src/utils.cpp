@@ -128,7 +128,7 @@ statusString (const wxString & path, wxString & line)
 
   line.Empty ();
 
-  status.loadPath (UnixPath (newPath));
+  status.loadPath (UnixPath (newPath), wxDirExists (newPath));
 
   switch (status.textType ())
   {

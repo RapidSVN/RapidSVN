@@ -26,11 +26,13 @@ Status::isVersioned ()
 }
 
 void
-Status::loadPath (const char * path)
+Status::loadPath (const char * path, bool _isdir)
 {
   const svn_item_t *item;
 
   filePath = path;
+  isdir = _isdir;
+  
   reset ();
 
   Err = svn_client_status (&statushash,
@@ -193,6 +195,18 @@ Status::isLocked ()
     return true;
 
   return false;
+}
+
+const char *
+Status::getPath ()
+{
+  return filePath.c_str();
+}
+
+bool
+Status::isDir ()
+{
+  return isdir;
 }
 
 }

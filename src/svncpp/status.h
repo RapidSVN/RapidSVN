@@ -26,6 +26,7 @@ private:
   bool versioned;
   std::string filePath;
   std::string _statusText;
+  bool isdir;
   
   /**
    * Reset to all of the default properties.
@@ -46,7 +47,17 @@ public:
   /**
    * Initiaties the status on a path. 
    */
-  void loadPath (const char * path);
+  void loadPath (const char * path, bool IsDir);
+
+  /**
+   * Returns the file path.
+   */
+  const char * getPath ();
+
+  /**
+   * Returns true if the path is a directory.
+   */
+  bool isDir ();
   
   /**
    * Returns the revision.  

@@ -89,7 +89,7 @@ wxListCtrl (parent, id, pos, size, wxLC_REPORT)
   IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER] = 10;
 
   // set this file list control to use the image list
-  this->SetImageList (m_imageListSmall, wxIMAGE_LIST_SMALL);
+  SetImageList (m_imageListSmall, wxIMAGE_LIST_SMALL);
 
   m_path.Empty ();
 }
@@ -99,10 +99,29 @@ FileListCtrl::~FileListCtrl ()
   delete m_imageListSmall;
 }
 
+static int wxCALLBACK wxListCompareFunction(long item1, long item2, long sortData)
+{
+  svn::Status* ps1 = (svn::Status*) item1;
+  svn::Status* ps2 = (svn::Status*) item2;
+  
+  if (ps1 && ps2)   // Defensive programming.
+  {
+    // Directories precede files:
+    if (ps1->isDir() && !ps2->isDir())
+      return -1;
+    else if (!ps1->isDir() && ps2->isDir())
+      return 1;
+    else
+      return wxString(ps1->getPath()).CmpNoCase(ps2->getPath());
+  }
+  else
+    return 0;
+}
+
 void
 FileListCtrl::UpdateFileList (const wxString & path)
 {
-  svn::Status status;
+  svn::Status* pStatus = NULL;
   m_path = path;
 
   // delete all the items in the list to display the new ones
@@ -117,7 +136,7 @@ FileListCtrl::UpdateFileList (const wxString & path)
   wxLogStatus (_T ("Listing entries in '%s'"), path.c_str ());
 
   // Hide the list to speed up inserting
-  this->Hide(); 
+  Hide(); 
 
   while (!f.IsEmpty ())
   {
@@ -129,44 +148,53 @@ FileListCtrl::UpdateFileList (const wxString & path)
     name = wxFileNameFromPath (f);
     wxString text;
 
-    status.loadPath (UnixPath (f));
+    pStatus = new svn::Status;
+    
+    bool isdir = wxDirExists (f);
+    pStatus->loadPath (UnixPath (f), isdir);
 
     // in the parent directory
     if (name == ".." || name == SVN_WC_ADM_DIR_NAME)
       continue;
 
-    if (wxDirExists (f))    // a directory
+    if (isdir)    // a directory
     {
-      if (status.isVersioned ())
+      if (pStatus->isVersioned ())
         InsertItem (i, name, GetImageIndex(IMG_INDX_VERSIONED_FOLDER));
       else
         InsertItem (i, name, GetImageIndex(IMG_INDX_FOLDER));
     }
     else
-      InsertItem (i, name, GetImageIndex(status.textType ()));
+      InsertItem (i, name, GetImageIndex(pStatus->textType ()));
+      
+    // The item data will be used to sort the list:
+    SetItemData (i, (long) pStatus);  // The control now owns this data
+                                      // and must delete it in due course.
 
-    if (status.isVersioned ())
-      text.Printf (_T ("%ld"), status.revision ());
+    if (pStatus->isVersioned ())
+      text.Printf (_T ("%ld"), pStatus->revision ());
     else
       text = _T (" ");
 
     SetItem (i, 1, text);
 
-    if (status.isVersioned ())
-      text.Printf (_T ("%ld"), status.lastChanged ());
+    if (pStatus->isVersioned ())
+      text.Printf (_T ("%ld"), pStatus->lastChanged ());
     else
       text = _T (" ");
 
     SetItem (i, 2, text);
 
-    text = status.textDescription ();
+    text = pStatus->textDescription ();
     SetItem (i, 3, text);
 
-    text = status.propDescription ();
+    text = pStatus->propDescription ();
     SetItem (i, 4, text);
   }
 
-  this->Show();
+  SortItems(wxListCompareFunction, 0);
+  
+  Show();
 }
 
 void
@@ -187,7 +215,7 @@ FileListCtrl::OnKeyDown (wxKeyEvent & event)
 void
 FileListCtrl::OnItemActivated (wxListEvent & event)
 {
-  wxString name = this->GetItemText (event.GetIndex ());
+  wxString name = GetItemText (event.GetIndex ());
   wxFileName fullpath (m_path, name);
 
   if (fullpath.DirExists ())
@@ -299,7 +327,7 @@ FileListCtrl::GetTargets (apr_pool_t * pool)
 
   for (i = 0; i < arr.GetCount (); i++)
   {
-    wxFileName fname (m_path, this->GetItemText (arr[i]));
+    wxFileName fname (m_path, GetItemText (arr[i]));
     wxString path = fname.GetFullPath ();
     const char *target = apr_pstrdup (pool, UnixPath (path));
 
@@ -318,7 +346,30 @@ FileListCtrl::GetFullUnixPath (long index, wxString & fullpath)
     return;
 
   wxFileName fname (wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->
-                    GetPath (), this->GetItemText (index));
+                    GetPath (), GetItemText (index));
   fullpath = fname.GetFullPath ();
   UnixPath (fullpath);
 }
+
+bool 
+FileListCtrl::DeleteAllItems()
+{
+  // Delete the item data before deleting the items:
+  for (int i = 0; i < GetItemCount(); i++)
+  {
+    svn::Status* p = (svn::Status*) GetItemData(i);
+    if (p)
+      delete p;
+  }
+  wxListCtrl::DeleteAllItems();
+}
+
+bool 
+FileListCtrl::DeleteItem( long item )
+{
+  svn::Status* p = (svn::Status*) GetItemData(item);
+  if (p)
+    delete p;
+  wxListCtrl::DeleteItem(item);
+}
+
