@@ -14,8 +14,8 @@ the absolute path of the test directory.  Change it to your directory.
 directory on your computer.  Open it and set the "REPOS_PATH" to the same path
 set in the make_respos file.
 
-* Build the tests with the file designed for your environment.  Right now there 
-is no method to build with Unix.  This will be rectified.
+* Build the tests with the file designed for your environment. Right now the 
+  the tests get compiled but not linked with Unix. Feel free to rectify this.
 
 TIPS
 

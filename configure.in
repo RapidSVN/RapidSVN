@@ -53,10 +53,34 @@ case $wxversion in
         AC_MSG_ERROR([wxWindows 2.3.3 required])
         ;;
 esac
+
 CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
 WX_LIBS="`$WXCONFIG --libs`"
+
+dnl
+dnl CppUnit
+dnl 
+
+CPPUNITCONFIG=
+AC_ARG_WITH(cppunit-config,
+[[  --with-cppunit-config=FILE     Use the given path to cppunit-config
+                            when determining the cpp Unit configuration; 
+                            defaults to ""]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        CPPUNITCONFIG=$withval
+    fi
+])
 
 AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
 
 AC_OUTPUT(src/Makefile)
+
+if test "$CPPUNITCONFIG" ; then
+    CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
+    CPPUNIT_LIBS="`$CPPUNITCONFIG --libs`"
+    AC_SUBST(CPPUNIT_LIBS)
+    AC_SUBST(CPPUNIT_CXXFLAGS)
+    AC_OUTPUT(src/tests/svncpp/Makefile)
+fi
