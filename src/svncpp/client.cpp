@@ -97,6 +97,7 @@ namespace svn
     Err = svn_client_status (&status_hash, NULL, path, NULL, descend, TRUE,
                              FALSE,     //update
                              FALSE,     //no_ignore,
+                             NULL, NULL,  //Notify baton
                              subPool.pool());
     if (Err == NULL)
     {
@@ -141,6 +142,7 @@ namespace svn
     Err = svn_client_status (&status_hash, NULL, path, NULL, false, true,
                              false,     //update
                              false,     //no_ignore,
+                             NULL, NULL, //Notify baton
                              subPool.pool());
 
     if(Err == NULL)
