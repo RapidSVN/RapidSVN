@@ -38,7 +38,7 @@
 #include "res/bitmaps/nonsvn_file.xpm"
 #include "res/bitmaps/normal_file.xpm"
 #include "res/bitmaps/added_file.xpm"
-#include "res/bitmaps/absent_file.xpm"
+#include "res/bitmaps/missing_file.xpm"
 #include "res/bitmaps/deleted_file.xpm"
 #include "res/bitmaps/replaced_file.xpm"
 #include "res/bitmaps/modified_file.xpm"
@@ -492,7 +492,7 @@ public:
     ImageListSmall->Add (wxIcon (nonsvn_file_xpm));
     ImageListSmall->Add (wxIcon (normal_file_xpm));
     ImageListSmall->Add (wxIcon (added_file_xpm));
-    ImageListSmall->Add (wxIcon (absent_file_xpm));
+    ImageListSmall->Add (wxIcon (missing_file_xpm));
     ImageListSmall->Add (wxIcon (deleted_file_xpm));
     ImageListSmall->Add (wxIcon (replaced_file_xpm));
     ImageListSmall->Add (wxIcon (modified_file_xpm));
@@ -677,7 +677,7 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   IMAGE_INDEX[svn_wc_status_unversioned] = 0;
   IMAGE_INDEX[svn_wc_status_normal] = 1;
   IMAGE_INDEX[svn_wc_status_added] = 2;
-  IMAGE_INDEX[svn_wc_status_absent] = 3;
+  IMAGE_INDEX[svn_wc_status_missing] = 3;
   IMAGE_INDEX[svn_wc_status_deleted] = 4;
   IMAGE_INDEX[svn_wc_status_replaced] = 5;
   IMAGE_INDEX[svn_wc_status_modified] = 6;

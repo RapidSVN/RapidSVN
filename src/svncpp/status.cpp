@@ -87,8 +87,8 @@ namespace svn
     case svn_wc_status_added:
       return "added";
       break;
-    case svn_wc_status_absent:
-      return "absent";
+    case svn_wc_status_missing:
+      return "missing";
       break;
     case svn_wc_status_deleted:
       return "deleted";

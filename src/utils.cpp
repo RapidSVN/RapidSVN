@@ -107,8 +107,8 @@ GetStatusText (wxString & str, svn_wc_status_kind st)
   case svn_wc_status_added:
     str = _("Added");
     break;
-  case svn_wc_status_absent:
-    str = _("Absent");
+  case svn_wc_status_missing:
+    str = _("Missing");
     break;
   case svn_wc_status_deleted:
     str = _("Deleted");

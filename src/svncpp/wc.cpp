@@ -50,8 +50,11 @@ namespace svn
     Path urlPath (url);
 
     svn_error_t * error =
-      svn_wc_ensure_adm (dirPath.c_str (), urlPath.c_str (),
-                         revision.revnum (), pool);
+      svn_wc_ensure_adm (dirPath.c_str (),    // path 
+                         0,                   // UUID 
+                         urlPath.c_str (),    // url
+                         revision.revnum (),  // revision
+                         pool);
 
     if(error != NULL)
       throw ClientException (error);

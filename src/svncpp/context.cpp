@@ -208,10 +208,10 @@ namespace svn
      */
     static svn_error_t *
     onLogMsg (const char **log_msg, 
-             const char **tmp_file,
-             apr_array_header_t *commit_items,
-             void *baton,
-             apr_pool_t *pool)
+              const char **tmp_file,
+              apr_array_header_t *commit_items,
+              void *baton,
+              apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
@@ -239,13 +239,13 @@ namespace svn
      */
     static void 
     onNotify (void * baton,
-            const char *path,
-            svn_wc_notify_action_t action,
-            svn_node_kind_t kind,
-            const char *mime_type,
-            svn_wc_notify_state_t content_state,
-            svn_wc_notify_state_t prop_state,
-            svn_revnum_t revision)
+              const char *path,
+              svn_wc_notify_action_t action,
+              svn_node_kind_t kind,
+              const char *mime_type,
+              svn_wc_notify_state_t content_state,
+              svn_wc_notify_state_t prop_state,
+              svn_revnum_t revision)
     {
       if (baton == 0)
         return;
@@ -291,10 +291,10 @@ namespace svn
      */
     static svn_error_t *
     onSslServerTrustPrompt (svn_auth_cred_ssl_server_trust_t **cred, 
-                      void *baton, 
-                      int failures,
-                      const svn_auth_ssl_server_cert_info_t *info,
-                      apr_pool_t *pool)
+                            void *baton, 
+                            int failures,
+                            const svn_auth_ssl_server_cert_info_t *info,
+                            apr_pool_t *pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
@@ -447,10 +447,10 @@ namespace svn
       if (listener == 0)
         return false;
 
-	    if (username_ == NULL)
-		    username = "";
-	    else
-	      username = username_;
+      if (username_ == NULL)
+        username = "";
+      else
+        username = username_;
 
       ok = listener->contextGetLogin (realm, username, password);
 

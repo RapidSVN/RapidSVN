@@ -1,5 +1,5 @@
 /* XPM */
-static char * absent_file_xpm[] = {
+static char * missing_file_xpm[] = {
 "16 16 6 1",
 " 	c None",
 ".	c #808080",
