@@ -12,10 +12,12 @@
  */
 
 // wxwindows
+#include "wx/wx.h"
 #include "wx/confbase.h"
 
 //app
 #include "rapidsvn_app.hpp"
+#include "rapidsvn_frame.hpp"
 
 IMPLEMENT_APP (RapidSvnApp)
      bool RapidSvnApp::OnInit ()

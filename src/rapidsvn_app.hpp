@@ -10,17 +10,14 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _VSVN_APP_H_INCLUDED_
-#define _VSVN_APP_H_INCLUDED_
+#ifndef _RAPIDSVN_APP_H_INCLUDED_
+#define _RAPIDSVN_APP_H_INCLUDED_
 
 // wxwindows
-#include "wx/wx.h"
+#include "wx/app.h"
 
 // app
-#include "filelist_ctrl.hpp"
-#include "folder_browser.hpp"
 #include "utils.hpp"
-#include "rapidsvn_frame.hpp"
 
 class RapidSvnFrame;
 
