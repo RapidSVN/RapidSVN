@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=rapidsvn - Win32 Debug DLL
+CFG=rapidsvn - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,13 +13,12 @@ CFG=rapidsvn - Win32 Debug DLL
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "rapidsvn.mak" CFG="rapidsvn - Win32 Debug DLL"
+!MESSAGE NMAKE /f "rapidsvn.mak" CFG="rapidsvn - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "rapidsvn - Win32 Release" (based on "Win32 (x86) Application")
 !MESSAGE "rapidsvn - Win32 Debug" (based on "Win32 (x86) Application")
-!MESSAGE "rapidsvn - Win32 Debug DLL" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -70,33 +69,6 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "$(SUBVERSION)/include" /I "$(WX)/include" /I "$(WX)/contrib/include" /I "$(APR)/include" /D "SVN_DEBUG" /D "_DEBUG" /D WINVER=0x400 /D "_MT" /D wxUSE_GUI=1 /D "__WXDEBUG__" /D WXDEBUG=1 /D "WIN32" /D "_WINDOWS" /D "APR_DECLARE_STATIC" /D "APU_DECLARE_STATIC" /Yu"include.h" /FD /GZ /c
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /i "$(WX)/include" /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 $(SUBVERSION)\libsvn_client\Debug\libsvn_client.lib $(SUBVERSION)\libsvn_delta\Debug\libsvn_delta.lib $(SUBVERSION)\libsvn_subr\Debug\libsvn_subr.lib $(SUBVERSION)\libsvn_wc\Debug\libsvn_wc.lib $(SUBVERSION)\libsvn_ra\Debug\libsvn_ra.lib $(SUBVERSION)\libsvn_ra_local\Debug\libsvn_ra_local.lib $(SUBVERSION)\libsvn_ra_dav\Debug\libsvn_ra_dav.lib $(SUBVERSION)\libsvn_repos\Debug\libsvn_repos.lib $(SUBVERSION)\libsvn_fs\Debug\libsvn_fs.lib $(APR)\LibD\apr.lib D:\subversion\apr-util\LibD\aprutil.lib $(SVN)\neon\libneonD.lib $(SVN)\db4-win32\lib\libdb40d.lib $(WX)\lib\wxmswd.lib comctl32.lib wsock32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# SUBTRACT LINK32 /pdb:none
-
-!ELSEIF  "$(CFG)" == "rapidsvn - Win32 Debug DLL"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug DLL"
-# PROP BASE Intermediate_Dir "Debug DLL"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "DebugDLL"
-# PROP Intermediate_Dir "DebugDLL"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
 # ADD CPP /nologo /MDd /W3 /GX /ZI /Od /I "$(WX)/include" /I "$(WX)/contrib/include" /I "$(SUBVERSION)/apr/include" /I "$(SUBVERSION)/apr-util/include" /I "$(SUBVERSION)/apr-util/xml/expat/lib" /I "$(SUBVERSION)/subversion/include" /D "_DEBUG" /D "__WINDOWS__" /D "__WXMSW__" /D DEBUG=1 /D "__WXDEBUG__" /D "__WIN95__" /D "__WIN32__" /D WINVER=0x0400 /D "STRICT" /D "WIN32" /D "_WINDOWS" /D "APR_DECLARE_STATIC" /D "APU_DECLARE_STATIC" /D "SVN_DEBUG" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -115,7 +87,6 @@ LINK32=link.exe
 
 # Name "rapidsvn - Win32 Release"
 # Name "rapidsvn - Win32 Debug"
-# Name "rapidsvn - Win32 Debug DLL"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
