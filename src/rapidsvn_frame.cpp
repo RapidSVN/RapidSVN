@@ -218,7 +218,7 @@ public:
     pItem->SetBitmap (wxBITMAP (add));
     menuModif->Append (pItem);
 
-    pItem = new wxMenuItem (menuModif, ID_Del, _("Remove"));
+    pItem = new wxMenuItem (menuModif, ID_Delete, _("Delete"));
     pItem->SetBitmap (wxBITMAP (delete));
     menuModif->Append (pItem);
 
@@ -303,35 +303,19 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_RemoveProject, RapidSvnFrame::OnRemoveProject)
   EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
   EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
-  EVT_MENU (ID_Log, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Info, RapidSvnFrame::OnInfo)
-  EVT_MENU (ID_Checkout, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Import, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Update, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Add, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Del, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Commit, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Revert, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Copy, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Rename, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Resolve, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Property, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Mkdir, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Merge, RapidSvnFrame::OnFileCommand)
+
   EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
-  EVT_MENU (ID_MoveTo, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_CopyTo, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_RenameHere, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_CopyHere, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Cleanup, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Explore, RapidSvnFrame::OnFileCommand)
-  EVT_MENU (ID_Default_Action, RapidSvnFrame::OnFileCommand)
-  EVT_MENU_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnFileCommand)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
+
+  EVT_MENU_RANGE (ID_File_Min, ID_File_Max, RapidSvnFrame::OnFileCommand)
+  EVT_MENU_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnFileCommand)
   EVT_MENU_RANGE (ID_Column_Min, ID_Column_Max, RapidSvnFrame::OnColumn)
+
   EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
+
   EVT_TOOL_ENTER (ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
   EVT_TREE_SEL_CHANGED (-1, RapidSvnFrame::OnFolderBrowserSelChanged)
   EVT_TREE_KEY_DOWN (-1, RapidSvnFrame::OnFolderBrowserKeyDown) 
@@ -693,8 +677,8 @@ RapidSvnFrame::AddActionTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _("Remove selected"),
-                    _("Remove files and directories from version control"));
+                    _("Delete selected"),
+                    _("Delete files and directories from version control"));
 
   toolBar->AddTool (ID_Update,
                     wxBITMAP (update),
@@ -997,19 +981,6 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_ACTION_END:
   {
-    // well, why not always update
-    // after an action?
-//       switch (m_lastAction)
-//       {
-//         case ACTION_TYPE_UPDATE:
-//         case ACTION_TYPE_ADD:
-//         case ACTION_TYPE_DEL:
-//         case ACTION_TYPE_COMMIT:
-//         case ACTION_TYPE_REVERT:
-//         case ACTION_TYPE_RESOLVE:
-//           UpdateFileList ();
-//           break;
-//       }
     UpdateFileList ();
   }
   break;

@@ -53,6 +53,7 @@ AddAction::Perform ()
     client.add (path.c_str (), false);
   }
 
+  PostDataEvent (TOKEN_ACTION_END, NULL, ACTION_EVENT);
   return true;
 }
 /* -----------------------------------------------------------------
