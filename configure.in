@@ -47,10 +47,10 @@ else
     AC_MSG_RESULT([none found])
 fi
 case $wxversion in
-    [2.3.[23]])
+    [2.3.3])
         ;;
     *)
-        AC_MSG_ERROR([wxWindows 2.3.2 / 2.3.3 required])
+        AC_MSG_ERROR([wxWindows 2.3.3 required])
         ;;
 esac
 CXXFLAGS="$CXXFLAGS `$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
