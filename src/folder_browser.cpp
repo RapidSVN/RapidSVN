@@ -15,6 +15,7 @@
 #include "svncpp/context.hpp"
 #include "svncpp/client.hpp"
 #include "svncpp/dirent.hpp"
+#include "svncpp/status.hpp"
 #include "svncpp/url.hpp"
 #include "svncpp/wc.hpp"
 
@@ -39,6 +40,9 @@
 #include "res/bitmaps/folder.xpm"
 #include "res/bitmaps/nonsvn_open_folder.xpm"
 #include "res/bitmaps/earth.xpm"
+#include "res/bitmaps/modified_versioned_folder.xpm"
+#include "res/bitmaps/modified_open_folder.xpm"
+#include "res/bitmaps/bookmark.xpm"
 
 enum
 {
@@ -48,6 +52,9 @@ enum
   FOLDER_IMAGE_NONSVN_FOLDER,
   FOLDER_IMAGE_NONSVN_OPEN_FOLDER,
   FOLDER_IMAGE_EARTH,
+  FOLDER_IMAGE_MODIFIED_FOLDER,
+  FOLDER_IMAGE_MODIFIED_OPEN_FOLDER,
+  FOLDER_IMAGE_BOOKMARK,
   FOLDER_IMAGE_COUNT
 };
 
@@ -142,6 +149,9 @@ public:
     imageList->Add (wxIcon (folder_xpm));
     imageList->Add (wxIcon (nonsvn_open_folder_xpm));
     imageList->Add (wxIcon (earth_xpm));
+    imageList->Add (wxIcon (modified_versioned_folder_xpm));
+    imageList->Add (wxIcon (modified_open_folder_xpm));
+    imageList->Add (wxIcon (bookmark_xpm));
 
     treeCtrl = new wxTreeCtrl (window, -1, pos, size, 
                                wxTR_HAS_BUTTONS);
@@ -368,11 +378,11 @@ public:
                                                     path, path, TRUE);
           wxString label (BeautifyPath (path));
           wxTreeItemId newId = treeCtrl->AppendItem (parentId, label, 
-                                                     FOLDER_IMAGE_FOLDER, 
-                                                     FOLDER_IMAGE_FOLDER, 
+                                                     FOLDER_IMAGE_BOOKMARK, 
+                                                     FOLDER_IMAGE_BOOKMARK, 
                                                      data);
           treeCtrl->SetItemHasChildren (newId, TRUE);
-          treeCtrl->SetItemImage (newId, FOLDER_IMAGE_OPEN_FOLDER,  
+          treeCtrl->SetItemImage (newId, FOLDER_IMAGE_BOOKMARK,  
                                     wxTreeItemIcon_Expanded);
         }
       }
@@ -415,6 +425,7 @@ public:
   RefreshLocal (const wxString & parentPath, 
                 const wxTreeItemId & parentId)
   {
+    svn::Client client (GetContext ());
     wxDir dir (parentPath);
     if(!dir.IsOpened ())
       return;
@@ -440,6 +451,16 @@ public:
         {
           image = FOLDER_IMAGE_NONSVN_FOLDER;
           open_image = FOLDER_IMAGE_NONSVN_OPEN_FOLDER;
+        }
+        else
+        {
+          svn::Status status = client.singleStatus (fullPath_c);
+          if ((status.textStatus () == svn_wc_status_modified) ||
+              (status.propStatus () == svn_wc_status_modified))
+          {
+            image = FOLDER_IMAGE_MODIFIED_FOLDER;
+            open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
+          }
         }
   
         FolderItemData * data = 

@@ -48,23 +48,23 @@
 #include "res/bitmaps/versioned_folder.xpm"
 #include "res/bitmaps/sort_down.xpm"
 #include "res/bitmaps/sort_up.xpm"
-
-/**
- * Number of items in the IMAGE_INDEX table.
- * This should be large enough to include the range of status codes.
- */
-#define N_STATUS_KIND  21
+#include "res/bitmaps/modified_versioned_folder.xpm"
 
 /**
  * The index from where there will be only images not related 
  * to the status.
  */
-#define N_START_EXTRA_IMGS 15
+static const int START_EXTRA_IMGS=15;
 
-#define IMG_INDX_FOLDER   N_START_EXTRA_IMGS
-#define IMG_INDX_VERSIONED_FOLDER (N_START_EXTRA_IMGS + 1)
-#define IMG_INDX_SORT_DOWN (N_START_EXTRA_IMGS + 2)
-#define IMG_INDX_SORT_UP (N_START_EXTRA_IMGS + 3)
+enum
+{
+  IMG_INDX_FOLDER = START_EXTRA_IMGS,
+  IMG_INDX_VERSIONED_FOLDER,
+  IMG_INDX_SORT_DOWN,
+  IMG_INDX_SORT_UP,
+  IMG_INDX_MODIFIED_VERSIONED_FOLDER,
+  IMG_INDX_COUNT
+};
 
 /**
  * This table holds information about image index in a image list.
@@ -72,7 +72,7 @@
  * For every index that equals a valid status code, there should be
  * a valid value which represents an index in the image list.
  */
-int IMAGE_INDEX[N_STATUS_KIND];
+static int IMAGE_INDEX[IMG_INDX_COUNT];
 
 /**
  * Tags for wxConfig file settings, defined here to avoid duplicate
@@ -244,9 +244,6 @@ CompareColumn (svn::Status * ps1,
                int column)
 {
   int res = 0;
-  unsigned long r1 = 0, r2 = 0;
-  bool ok1 = ps1->isVersioned ();
-  bool ok2 = ps2->isVersioned ();
   svn::Entry e1 (ps1->entry ());
   svn::Entry e2 (ps2->entry ());
 
@@ -507,6 +504,8 @@ public:
 
     ImageListSmall->Add (wxIcon (sort_down_xpm));
     ImageListSmall->Add (wxIcon (sort_up_xpm));
+
+    ImageListSmall->Add (wxIcon (modified_versioned_folder_xpm));
   }
 
   /** destructor */
@@ -612,12 +611,12 @@ static int
 GetImageIndex (int textIndex, int propIndex)
 {
   int image = 0;
-  if ((textIndex >= 0) && (textIndex <= N_STATUS_KIND))
+  if ((textIndex >= 0) && (textIndex <= IMG_INDX_COUNT))
   {
     if ( (textIndex == svn_wc_status_normal) && 
          (propIndex > svn_wc_status_normal) )
     {
-      if ( (propIndex >= 0) && (propIndex <= N_STATUS_KIND) )
+      if ( (propIndex >= 0) && (propIndex <= IMG_INDX_COUNT) )
       {
         image = IMAGE_INDEX[propIndex];
       }
@@ -690,6 +689,8 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
 
   IMAGE_INDEX[IMG_INDX_SORT_DOWN] = 11;
   IMAGE_INDEX[IMG_INDX_SORT_UP] = 12;
+
+  IMAGE_INDEX[IMG_INDX_MODIFIED_VERSIONED_FOLDER] = 13;
 
   // set this file list control to use the image list
   SetImageList (m->ImageListSmall, wxIMAGE_LIST_SMALL);
@@ -772,11 +773,18 @@ FileListCtrl::UpdateFileList ()
     {
       if (IsDir (&status))
       {
-        imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER, -1);
+        if ((status.textStatus () == svn_wc_status_modified) ||
+            (status.propStatus () == svn_wc_status_modified))
+          imageIndex = GetImageIndex (
+            IMG_INDX_MODIFIED_VERSIONED_FOLDER, -1);
+        else
+          imageIndex = GetImageIndex (
+            IMG_INDX_VERSIONED_FOLDER, -1);
       }
       else
       {
-        imageIndex = GetImageIndex (status.textStatus (), status.propStatus ());
+        imageIndex = GetImageIndex (
+          status.textStatus (), status.propStatus ());
       }
     }
     else
