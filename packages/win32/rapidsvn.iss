@@ -30,7 +30,7 @@ Source: "..\..\TODO.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: ma
 Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "libapriconv.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "libapriconv-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 Source: "libaprutil.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 
 [Icons]
