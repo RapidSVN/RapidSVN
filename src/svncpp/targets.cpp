@@ -62,6 +62,10 @@ namespace svn
     }
   }
 
+  Targets::~Targets ()
+  {
+  }
+
   const apr_array_header_t *
   Targets::array (const Pool & pool) const
   {

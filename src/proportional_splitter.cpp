@@ -16,13 +16,14 @@
 
 BEGIN_EVENT_TABLE (ProportionalSplitterWindow, wxSplitterWindow)
   EVT_SIZE (ProportionalSplitterWindow::OnSize)
-  //EVT_SPLITTER_SASH_POS_CHANGED(-1, ProportionalSplitterWindow::OnSashPositionChange) 
 END_EVENT_TABLE ()
 
-ProportionalSplitterWindow::ProportionalSplitterWindow (float proportion, 
-  wxWindow *parent, wxWindowID id, const wxPoint& pos, const wxSize& size, 
-  long style, const wxString& name) : m_proportion (proportion), 
-  wxSplitterWindow (parent, id, pos, size, style, name)
+ProportionalSplitterWindow::ProportionalSplitterWindow (
+  float proportion, wxWindow *parent, wxWindowID id, 
+  const wxPoint& pos, const wxSize& size, long style, 
+  const wxString& name) 
+  : wxSplitterWindow (parent, id, pos, size, style, name),
+    m_proportion (proportion)
 {
 }
 
@@ -30,7 +31,8 @@ bool
 ProportionalSplitterWindow::SplitVertically(wxWindow *window1, 
   wxWindow *window2, int sashPosition)
 {
-  bool result = wxSplitterWindow::SplitVertically(window1, window2, sashPosition);
+  bool result = wxSplitterWindow::SplitVertically(
+    window1, window2, sashPosition);
   m_old_length_tot = GetLength(GetSize());
   return result;
 }
@@ -39,7 +41,8 @@ bool
 ProportionalSplitterWindow::SplitHorizontally(wxWindow *window1, 
   wxWindow *window2, int sashPosition)
 {
-  bool result = wxSplitterWindow::SplitHorizontally(window1, window2, sashPosition);
+  bool result = wxSplitterWindow::SplitHorizontally(
+    window1, window2, sashPosition);
   m_old_length_tot = GetLength(GetSize());
   return result;
 }
@@ -50,7 +53,8 @@ ProportionalSplitterWindow::OnSize (wxSizeEvent & event)
   // Require both windows present to do adjustments
   if (GetWindow1() && GetWindow2())
   {
-    int new_length_tot, new_length[2], dead_space;
+    int new_length_tot, dead_space;
+    float new_length[2];
 
     // Get new lengths
     new_length_tot = GetLength(event.m_size);
