@@ -24,6 +24,7 @@ Name: code; Description: Source Code; Types: full compact
 [Files]
 Source: "libdb40.dll"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite
 Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; CopyMode: alwaysoverwrite
+Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; CopyMode: alwaysoverwrite
 Source: "..\..\TODO.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite
 Source: "..\..\README"; DestDir: "{app}"; CopyMode: alwaysoverwrite
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; CopyMode: alwaysoverwrite
