@@ -40,9 +40,9 @@ BUILDING AND INSTALLING
 
 * Download the source code for RapidSVN.  You can do this by running the
   following svn command:
-  % svn co http://svn.collab.net/repos/svn/clients/rapidsvn/trunk rapidsvn  
+  % svn co http://svn.collab.net/repos/rapidsvn/trunk rapidsvn
 
-* Download the wxWindows 2.3.3 libraries: http://www.wxwindows.org/
+* Download the wxWindows 2.3.3 (or >= 2.4.0) libraries: http://www.wxwindows.org/
 
   If you are building wxWindows on linux, you will need to specify 
   the --disable-no-exceptions parameter to configure (see 
@@ -94,17 +94,18 @@ BUILDING ON LINUX/UNIX
   you download the RPMs provided on the Subversion site:
   http://subversion.tigris.org/servlets/ProjectDocumentList
 
-* Download the RapidSVN code.
+* Download the source code for RapidSVN.  You can do this by running the
+  following svn command:
+  % svn co http://svn.collab.net/repos/rapidsvn/trunk rapidsvn
 
 * Go to the rapidsvn directory and run:
-  autoconf configure.in > configure
-  chmod 775 configure
-  ./configure --with-apr-config=/path/to/apr-config
+  % ./autogen.sh
+  % ./configure
 
-* If everything is successful then open src/Makefile and tell it where your
-  Subversion include directory is:
-  SVN_INC=-I/path/to/subversion/include
-
+* The configure script might complain about apps/paths it didnt find
+  % ./configure --help 
+  will return a list of options you might want to set-
+  
 * Then go to the src/ directory and run 'make'
 
 * If it is built and you get an error like 'could not find something.so' then
