@@ -12,6 +12,7 @@ OBJECTS=action_thread.o \
 		delete_action.o \
 		delete_dlg.o \
 		exceptions.o \
+		file_action.o \
 		filelist_ctrl.o \
 		folder_browser.o \
 		folder_item_data.o \
