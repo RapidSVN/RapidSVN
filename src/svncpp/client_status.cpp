@@ -38,7 +38,7 @@ namespace svn
   {
     LogEntries * entries = 
       (LogEntries *) baton;
-    entries->push_back ( LogEntry(rev, author, date, msg));
+    entries->insert (entries->begin (), LogEntry(rev, author, date, msg));
 
     return NULL;
   }
@@ -73,7 +73,7 @@ namespace svn
     int i;
 
     /* Loop over array, printing each name/status-structure */
-    for (i = 0; i < statusarray->nelts; i++)
+    for (i = statusarray->nelts-1; i >= 0; i--)
     {
       const svn_item_t *item;
       const char *filePath;

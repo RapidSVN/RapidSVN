@@ -238,7 +238,8 @@ namespace svn
 
     /**
      * Retrieve log information for the given path
-     * Loads the log messages result set. 
+     * Loads the log messages result set. The first
+     * entry  is the youngest revision.
      *
      * You can use the constants Revision::START and
      * Revision::HEAD
