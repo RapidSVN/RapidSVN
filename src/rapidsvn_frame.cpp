@@ -174,7 +174,7 @@ public:
 
     MenuColumns->AppendSeparator ();
 
-    for (int col = 0; col <= FileListCtrl::COL_COUNT; col++)
+    for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
     {
       int id = COLUMN_ID_MAP[col];
       if (id != -1)
