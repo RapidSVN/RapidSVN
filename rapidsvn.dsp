@@ -809,13 +809,5 @@ SOURCE=.\src\wx\msw\watch1.cur
 SOURCE=.\wx\msw\watch1.cur
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\res\checkout.wxr
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\Makefile.in
-# End Source File
 # End Target
 # End Project

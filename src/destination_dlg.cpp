@@ -85,9 +85,9 @@ const int DIALOG_FLAGS = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
 
 DestinationDlg::DestinationDlg (wxWindow* parent, 
                                const char * title,
-                               const char * descr = "", 
-                               const int flags=0,
-                               const char * dst = "")
+                               const char * descr, 
+                               const int flags,
+                               const char * dst)
  : wxDialog(parent, -1, title,
             wxDefaultPosition, wxDefaultSize, 
             DIALOG_FLAGS)
@@ -108,8 +108,8 @@ DestinationDlg::~DestinationDlg ()
 
 void
 DestinationDlg::Create (wxWindow* parent, const char * title,
-                        const char * descr = "", const int flags=0,
-                        const char * dst = "")
+                        const char * descr, const int flags,
+                        const char * dst)
 {
   wxDialog::Create (parent, -1, title, wxDefaultPosition,
                     wxDefaultSize, DIALOG_FLAGS);

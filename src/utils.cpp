@@ -184,17 +184,17 @@ void
 AppendModifyMenu (wxMenu * parentMenu)
 {
   wxMenuItem * item;
-  item = new wxMenuItem (parentMenu, ID_Update, _("&Update"));
+  item = new wxMenuItem (parentMenu, ID_Update, _("&Update..."));
   item->SetBitmap (wxBITMAP (update));
   parentMenu->Append (item);
 
-  item = new wxMenuItem (parentMenu, ID_Commit, _("Co&mmit"));
+  item = new wxMenuItem (parentMenu, ID_Commit, _("Co&mmit..."));
   item->SetBitmap (wxBITMAP (commit));
   parentMenu->Append (item);
 
   parentMenu->AppendSeparator ();
 
-  item = new wxMenuItem (parentMenu, ID_Property, _("&Properties"));
+  item = new wxMenuItem (parentMenu, ID_Property, _("&Properties..."));
   item->SetBitmap (wxBITMAP (info));
   parentMenu->Append (item);
 
