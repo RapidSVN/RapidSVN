@@ -79,9 +79,12 @@ class Foo
 Documenting
 ===================
 
-Every function, whether public or internal, must start out with a
-documentation comment that describes what the function does.  The documentation 
-format that we choose is the Doxygen format:
+Every function and class, whether public or internal, must start 
+out with a documentation comment that describes what the function 
+does. The comments are placed in the headers. Comments in the
+source files are only used for implementation details.
+
+The documentation format that we choose is the Doxygen format:
 
 http://www.stack.nl/~dimitri/doxygen/
 
@@ -89,14 +92,12 @@ Example:
 
 /**
  * Multiplies 2 numbers together.
- * @param nNumber1 first number
- * @param nNumber2 second number
+ * @param number1 first number
+ * @param number2 second number
  * @return the multiplied number
  */
 int
-MultiplyMe(int nNumber1, int nNumber2)
-{
-}
+MultiplyMe(int number1, int number2);
 
 Read over the RapidSVN code to get an overview of how this
 documentation looks in practice.
