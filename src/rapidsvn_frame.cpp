@@ -42,6 +42,7 @@
 #include "revert_action.hpp"
 #include "switch_action.hpp"
 #include "update_action.hpp"
+#include "view_action.hpp"
 
 // dialogs
 #include "about_dlg.hpp"
@@ -901,7 +902,8 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 void
 RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 {
-  switch (event.GetInt ())
+  const int token = event.GetInt ();
+  switch (token)
   {
   case TOKEN_INFO:
   {
@@ -932,6 +934,24 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   }
   break;
     
+  case TOKEN_VIEW:
+  {
+    GetData * pData (static_cast<GetData *>(event.GetClientData ()));
+    
+    if (pData != 0)
+    {
+      // copy the data first. This makes sure
+      // the memory is released in the occurence
+      // of an exception
+      GetData data (*pData);
+      delete pData;
+
+      Action * action = new ViewAction (this, data);
+      Perform (action);
+    }
+  }
+  break;
+
   case TOKEN_GET:
   {
     GetData * pData (static_cast<GetData *>(event.GetClientData ())); 
@@ -943,7 +963,9 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       // of an exception
       GetData data (*pData);
       delete pData;
-      GetAction * action = new GetAction (this, data);
+      Action * action;
+
+      action = new GetAction (this, data);
       Perform (action);
     }
   }

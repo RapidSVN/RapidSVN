@@ -136,7 +136,7 @@ namespace svn
     void add (const Path & path, bool recurse);
 
     /**
-     * Updates the directory.
+     * Updates the file or directory.
      * @param path target file.
      * @param revision the revision number to checkout. 
      *                 Revision::HEAD will checkout the 
@@ -146,6 +146,17 @@ namespace svn
      */
     void update (const Path & path, const Revision & revision, 
                  bool recurse);
+
+    /**
+     * Retrieves the contents for a specific @a revision of
+     * a @a path
+     *
+     * @param path path of file or directory
+     * @param revision revision to retrieve
+     * @return contents of the file
+     */
+    std::string
+    cat (const Path & path, const Revision & revision);
 
     /**
      * Commits changes to the repository. This usually requires 

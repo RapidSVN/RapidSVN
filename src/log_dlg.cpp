@@ -31,11 +31,6 @@ enum
   LOG_MSG
 };
 
-BEGIN_EVENT_TABLE (LogDlg, wxDialog)
-  EVT_BUTTON             (ID_Get,   LogDlg::OnGet)
-  EVT_LIST_ITEM_SELECTED (LOG_LIST, LogDlg::OnSelected)
-END_EVENT_TABLE ()
-
 class LogList : public wxListCtrl
 {
 public:
@@ -207,27 +202,37 @@ public:
   OnGet ()
   {
     wxBusyCursor busy;
-    int count = m_logList->GetSelectedItemCount ();
-
-    if (count != 1)
-      return;
-
+ 
     svn_revnum_t revnum = m_logList->GetSelectedRevision ();
-    GetRevision (revnum);
-  }
-
-  void
-  GetRevision (const svn_revnum_t revision)
-  {
+ 
     wxCommandEvent event = CreateActionEvent (TOKEN_GET);
     GetData * data = new GetData ();
-    data->revision = revision;
+    data->revision = revnum;
     data->path = path;
     event.SetClientData (data);
 
     wxPostEvent (parent, event);
   }
 
+  /**
+   * handle the "View" button
+   */
+  void
+  OnView ()
+  {
+    wxBusyCursor busy;
+ 
+    svn_revnum_t revnum = m_logList->GetSelectedRevision ();
+ 
+    wxCommandEvent event = CreateActionEvent (TOKEN_VIEW);
+    GetData * data = new GetData ();
+    data->revision = revnum;
+    data->path = path;
+    event.SetClientData (data);
+
+    wxPostEvent (parent, event);
+  }
+    
   void
   OnSelected (long index)
   {
@@ -254,6 +259,11 @@ public:
   }
 };
 
+BEGIN_EVENT_TABLE (LogDlg, wxDialog)
+  EVT_BUTTON (ID_Get, LogDlg::OnGet)
+  EVT_BUTTON (ID_View, LogDlg::OnView)
+  EVT_LIST_ITEM_SELECTED (LOG_LIST, LogDlg::OnSelected)
+END_EVENT_TABLE ()
 
 LogDlg::LogDlg (wxWindow * parent,
                 const char * path,
@@ -275,6 +285,12 @@ void
 LogDlg::OnGet (wxCommandEvent & event)
 {
   m->OnGet ();
+}
+
+void
+LogDlg::OnView (wxCommandEvent & event)
+{
+  m->OnView ();
 }
 
 void

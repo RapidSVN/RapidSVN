@@ -48,10 +48,12 @@ rapidsvn_SOURCES= \
 	trace_commit.cpp \
 	tracer.cpp \
 	trace_update.cpp \
+	tviewer.cpp \
 	update_action.cpp \
 	update_dlg.cpp \
 	utils.cpp \
         verblist.cpp \
+	view_action.cpp \
 	workbench.cpp
 
 rapidsvn_LDFLAGS=-Lsvncpp -L$(SVN_LIB)

@@ -270,6 +270,10 @@ SOURCE=.\src\tracer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\tviewer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\update_action.cpp
 # End Source File
 # Begin Source File
@@ -279,6 +283,10 @@ SOURCE=.\src\update_dlg.cpp
 # Begin Source File
 
 SOURCE=.\src\utils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\view_action.cpp
 # End Source File
 # Begin Source File
 

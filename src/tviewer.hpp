@@ -10,51 +10,46 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
-#ifndef _LOG_DLG_H_INCLUDED_
-#define _LOG_DLG_H_INCLUDED_
+#ifndef _TVIEWER_H_INCLUDED_
+#define _TVIEWER_H_INCLUDED_
 
 // wxwindows
 #include "wx/dialog.h"
 
-// svncpp
-#include "svncpp/client.hpp"
-
-//forward declarations
-class wxTextCtrl;
-class LogList;
-class wxListEvent;
-
-class LogDlg : public wxDialog
+class TextViewer : public wxDialog
 {
 public:
   /**
-   * constructor. the @a entries are NOT owned by 
-   * this class. 
+   * constructor
    *
-   * @param parent parent window
-   * @param path path of selected item
-   * @param entries log entries
+   * @param title window title
    */
-  LogDlg (wxWindow * parent, 
-          const char * path,
-          const svn::LogEntries * entries);
+  TextViewer (const char * title);
 
   /**
    * destructor
    */
-  virtual ~LogDlg ();
+  virtual ~TextViewer ();
 
+  /** 
+   * sets the contents of the viewer to @a text
+   *
+   * @param text new contents (with newlines)
+   */
+  void
+  SetText (const char * text);
+  
 private:
-  /** hide implementation details */
   struct Data;
   Data * m;
 
-  void OnGet (wxCommandEvent & event);
-  void OnView (wxCommandEvent & event);
-  void OnSelected(wxListEvent& event);
-  
-  DECLARE_EVENT_TABLE ()
+  void
+  OnClose (wxCloseEvent & event);
+
+  void 
+  OnCancel (wxCommandEvent & event);
+
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

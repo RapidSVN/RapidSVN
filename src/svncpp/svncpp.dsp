@@ -89,6 +89,10 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\client_cat.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\client_modify.cpp
 # End Source File
 # Begin Source File
