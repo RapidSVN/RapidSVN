@@ -447,7 +447,10 @@ namespace svn
       if (listener == 0)
         return false;
 
-      username = username_;
+	    if (username_ == NULL)
+		    username = "";
+	    else
+	      username = username_;
 
       ok = listener->contextGetLogin (realm, username, password);
 
