@@ -18,6 +18,7 @@
 namespace svn
 {
   const svn_opt_revision_kind Revision::START = svn_opt_revision_number;
+  const svn_opt_revision_kind Revision::BASE = svn_opt_revision_base;
   const svn_opt_revision_kind Revision::HEAD = svn_opt_revision_head;
 
   Revision::Revision (const svn_opt_revision_t * revision)

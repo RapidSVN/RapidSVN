@@ -174,9 +174,12 @@ AppendModifyMenu (wxMenu * parentMenu)
 void 
 AppendQueryMenu (wxMenu * parentMenu)
 {
+  AppendMenuItem (parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
+  AppendMenuItem (parentMenu, ID_DiffBase, _("&Diff to Base...\tCTRL+B"));
+  AppendMenuItem (parentMenu, ID_DiffHead, _("&Diff to Head...\tCTRL+H"));
+  parentMenu->AppendSeparator ();
   AppendMenuItem (parentMenu, ID_Log, _("&Log...\tCTRL-L"),
                   wxBitmap (log_xpm));
-  AppendMenuItem (parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
   AppendMenuItem (parentMenu, ID_Info, _("&Info...\tCTRL-I"),
                   wxBitmap (info_xpm));
 }

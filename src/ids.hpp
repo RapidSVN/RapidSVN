@@ -52,6 +52,8 @@ enum
   ID_Default_Action,
   ID_Delete,
   ID_Diff,
+  ID_DiffBase,
+  ID_DiffHead,
   ID_Explore,
   ID_Import,
   ID_Log,

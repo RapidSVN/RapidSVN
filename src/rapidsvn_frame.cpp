@@ -1296,6 +1296,20 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
       action = new DiffAction (this);
       break;
 
+    case ID_DiffBase:
+      {
+        DiffData data (svn::Revision::BASE);
+        action = new DiffAction (this, data);
+        break;
+      }
+
+    case ID_DiffHead:
+      {
+        DiffData data (svn::Revision::HEAD);
+        action = new DiffAction (this, data);
+        break;
+      }
+
     case ID_Edit:
       action = new ViewAction (this);
       break;

@@ -38,6 +38,7 @@ namespace svn
 
   public:
     static const svn_opt_revision_kind START;
+    static const svn_opt_revision_kind BASE;
     static const svn_opt_revision_kind HEAD;
 
     /**

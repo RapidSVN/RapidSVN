@@ -44,11 +44,14 @@ public:
   svn::Revision revision2;
 
   /** Constructor */
-  DiffData ()
-    : compareType (WITH_SAME_REVISION),
-      useUrl1 (false), url1 (""),
-      useUrl2 (false), url2 ("")
+  DiffData (svn_opt_revision_kind kind = svn::Revision::BASE)
+   : compareType (WITH_SAME_REVISION),
+     useUrl1 (false), url1 (""),
+     useUrl2 (false), url2 (""),
+     revision1 (kind)
   {
+    if (kind != svn::Revision::BASE) 
+      compareType = WITH_DIFFERENT_REVISION;
   }
 };
 
