@@ -13,11 +13,16 @@
 #ifndef _FOLDER_BROWSER_H_INCLUDED_
 #define _FOLDER_BROWSER_H_INCLUDED_
 
-#include "unique_array_string.hpp"
+// wxwindows
 #include "wx/treectrl.h"
 
+// forward declarations
 class wxImageList;
 class FolderItemData;
+namespace svn
+{
+  class Context;
+};
 
 class FolderBrowser : public wxControl
 {
@@ -31,10 +36,32 @@ public:
 
   virtual void Refresh ();
 
-  UniqueArrayString & GetWorkbenchItems ();
+  //UniqueArrayString & GetWorkbenchItems ();
 
+  /**
+   * remove the selected project from the project
+   */
   const bool RemoveProject ();
-  void AddProject (const wxString & projectPath);
+
+  /**
+   * add project 
+   */
+  void AddProject (const char * projectPath);
+
+  /**
+   * @return project count on workbench
+   */
+  const size_t 
+  GetProjectCount () const;
+
+  /**
+   * get the path of the project at @a index
+   *
+   * @param index zero-based index
+   * @return path of the project
+   */
+  const char *
+  GetProject (const size_t index) const;
 
   /**
    * returns the path of the current selection
@@ -52,6 +79,14 @@ public:
   const FolderItemData * GetSelection () const;
 
   /**
+   * return the authentication context of the current selection
+   *
+   * @return authentication context
+   * @retval NULL if Workbench is selected
+   */
+  svn::Context * GetContext ();
+
+  /**
    * selects @a path in the current folder.
    * If the tree leaf is closed it will be opened.
    *
@@ -61,6 +96,21 @@ public:
    */
   bool
   SelectFolder(const char * path);
+
+  /**
+   * setting whether there will be one login for all the
+   * projects in the workbench 
+   *   or
+   * each project in the workbench remembers its own login
+   */
+  void
+  SetAuthPerProject (const bool value);
+
+  /**
+   * @return auth per project setting
+   */
+  const bool 
+  GetAuthPerProject () const;
 
 private:
   struct Data;

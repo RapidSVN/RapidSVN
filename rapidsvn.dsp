@@ -272,6 +272,10 @@ SOURCE=.\src\utils.cpp
 
 SOURCE=.\src\win32\verblist.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\src\workbench.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -491,6 +495,10 @@ SOURCE=.\src\verblist_win32.hpp
 # Begin Source File
 
 SOURCE=.\src\version.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\workbench.hpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"

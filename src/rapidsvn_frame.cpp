@@ -40,6 +40,7 @@
 #include "cleanup_action.hpp"
 #include "external_program_action.hpp"
 
+#include "auth_dlg.hpp"
 #include "report_dlg.hpp"
 #include "preferences.hpp"
 #include "preferences_dlg.hpp"
@@ -196,7 +197,7 @@ public:
 
     menuView->AppendSeparator ();
     
-    pItem = new wxMenuItem (menuView, ID_Preferences, _("Preferences"));
+    pItem = new wxMenuItem (menuView, ID_Preferences, _("Preferences..."));
     menuView->Append (pItem);
 
     // Create menu
@@ -270,6 +271,8 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
+  EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
+  EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
 
   EVT_MENU_RANGE (ID_File_Min, ID_File_Max, RapidSvnFrame::OnFileCommand)
   EVT_MENU_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnFileCommand)
@@ -295,7 +298,7 @@ END_EVENT_TABLE ()
   m_listCtrl = NULL;
   m_title = title;
   m_actionWorker = new SimpleWorker (this);
-  m_context = new svn::Context ();
+  m_context = 0;
   m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
   // enable trace
@@ -353,6 +356,10 @@ END_EVENT_TABLE ()
 
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
+  {
+    Preferences prefs;
+    m_folder_browser->SetAuthPerProject (prefs.authPerProject);
+  }
 
   // Adapt the menu entries
   for (int col=0; col < FileListCtrl::COL_COUNT; col++)
@@ -406,9 +413,6 @@ RapidSvnFrame::~RapidSvnFrame ()
   if (m_actionWorker)
     delete m_actionWorker;
 
-  if (m_context)
-    delete m_context;
-
   // Save frame size and position.
 
   int x, y;
@@ -431,14 +435,16 @@ RapidSvnFrame::~RapidSvnFrame ()
 
 
   // Save the workbench contents
-  wxString key;
   size_t item;
-  UniqueArrayString & workbenchItems = m_folder_browser->GetWorkbenchItems ();
-  const size_t itemCount = workbenchItems.GetCount ();
+  const size_t itemCount = m_folder_browser->GetProjectCount ();
   for (item = 0; item < itemCount; item++)
   {
+    wxString key;
     key.Printf (_(ConfigProjectFmt), item);
-    pConfig->Write (key, workbenchItems.Item (item));
+
+    const char * project = m_folder_browser->GetProject (item);
+
+    pConfig->Write (key, project);
   }
 
   delete m;
@@ -786,18 +792,16 @@ RapidSvnFrame::InitFolderBrowser ()
 
   wxASSERT (m_folder_browser);
 
-  int i;
   wxString key;
-  wxString val;
-  UniqueArrayString & workbenchItems = 
-    m_folder_browser->GetWorkbenchItems ();
+  wxString project;
 
-  for (i = 0;; i++)
+  int item;
+  for (item = 0;; item++)
   {
-    key.Printf (ConfigProjectFmt, i);
-    if (pConfig->Read (key, &val, ""))
+    key.Printf (ConfigProjectFmt, item);
+    if (pConfig->Read (key, &project, ""))
     {
-      workbenchItems.Add (val);
+      m_folder_browser->AddProject (project);
     }
 
     else
@@ -1048,16 +1052,26 @@ RapidSvnFrame::ShowPreferences ()
 {
   Preferences prefs;
   PreferencesDlg dlg (this, & prefs);
-  dlg.ShowModal ();
-  dlg.Close (TRUE);
+  bool ok = dlg.ShowModal () == wxID_OK;
+
+  if (ok)
+  {
+    m_folder_browser->SetAuthPerProject (prefs.authPerProject);
+  }
 }
 
 void
 RapidSvnFrame::UpdateCurrentPath ()
 {
-  if( m_folder_browser)
+  if (m_folder_browser == 0)
+  {
+    m_currentPath = "";
+    m_context = 0;
+  }
+  else
   {
     m_currentPath = m_folder_browser->GetPath ();
+    m_context = m_folder_browser->GetContext ();
   }
 
   SetTitle (m_title + ": " + m_currentPath);
@@ -1176,6 +1190,34 @@ RapidSvnFrame::Trace (const char *msg)
     message.Printf ("%s\n", msg);
     m_log->AppendText (message);
   }
+}
+
+void 
+RapidSvnFrame::OnLogin (wxCommandEvent & event)
+{
+  svn::Context * context = m_folder_browser->GetContext ();
+
+  if (context == 0)
+    return;
+
+  AuthDlg dlg (this, context->getUsername ());
+  bool ok = dlg.ShowModal () == wxID_OK;
+
+  if (ok)
+  {
+    context->setLogin (dlg.GetUsername (), dlg.GetPassword ());
+  }
+}
+
+void 
+RapidSvnFrame::OnLogout (wxCommandEvent & event)
+{
+  svn::Context * context = m_folder_browser->GetContext ();
+
+  if (context == 0)
+    return;
+
+  context->setLogin ("", "");
 }
 
 InfoPanel::InfoPanel (wxWindow * parent)

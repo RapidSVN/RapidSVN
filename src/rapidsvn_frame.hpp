@@ -142,6 +142,8 @@ private:
   void OnFolderBrowserSelChanged (wxTreeEvent & event);
   void OnFolderBrowserKeyDown (wxTreeEvent & event);
   void OnFileListSelected (wxListEvent & event);
+  void OnLogin (wxCommandEvent & event);
+  void OnLogout (wxCommandEvent & event);
 
   void UpdateCurrentPath ();
 

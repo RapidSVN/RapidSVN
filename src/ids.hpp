@@ -30,6 +30,8 @@ enum
   ID_AddProject,
   ID_RemoveProject,
   ID_Info,
+  ID_Login,
+  ID_Logout,
   //REMOVE ID_Combo,
 
   ID_File_Min,

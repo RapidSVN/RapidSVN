@@ -11,12 +11,9 @@
  * ====================================================================
  */
 #ifndef _FOLDER_ITEM_DATA_H_
-#define _FOLDER_ITEN_DATA_H_
+#define _FOLDER_ITEM_DATA_H_
 
-#if defined(__GNUG__) && !defined(__APPLE__)
-#pragma interface "folder_item_data.hpp"
-#endif
-
+// wxwindows
 #include "wx/wx.h"
 #include "wx/treectrl.h"
 
@@ -28,39 +25,65 @@ enum
   FOLDER_TYPE_NORMAL
 };
 
+/**
+ * this information is stored with every entry in the
+ * class FolderBrowser
+ */
 class FolderItemData : public wxTreeItemData
 {
 public: 
+  /**
+   * constructor
+   */
   FolderItemData(const int folderType,  
                  const wxString & path = wxEmptyString, 
                  const wxString & name = wxEmptyString,
-                 const bool hasChildren = FALSE);
+                 bool hasChildren = false);
 
+  /**
+   * default constructor
+   */
   FolderItemData ();
 
+  /**
+   * copy constructor
+   */
   FolderItemData (const FolderItemData& src);   
 
-  void Create (const int folderType,  
-               const wxString & path = wxEmptyString, 
-               const wxString & name = wxEmptyString,
-               const bool hasChildren = FALSE);
+  /**
+   * destructor
+   */
+  virtual ~FolderItemData ();
+
+  /**
+   * initialize the member variables
+   */
+  void 
+  Create (const int folderType,  
+          const wxString & path = wxEmptyString, 
+          const wxString & name = wxEmptyString,
+          bool hasChildren = false);
     
-  const int getFolderType () const
+  const int 
+  getFolderType () const
   {
     return m_folderType;
   }
 
-  const wxString& getPath () const 
+  const wxString& 
+  getPath () const 
   {
     return m_path;
   }
 
-  const wxString& getName () const
+  const wxString& 
+  getName () const
   {
     return m_name;
   }
 
-  const bool hasChildren () const
+  const bool 
+  hasChildren () const
   {
     return m_hasChildren;
   }
@@ -90,6 +113,12 @@ private:
   wxString m_path;
   wxString m_name;
   bool m_hasChildren;
+
+  /**
+   * disallow assignment operator
+   */
+  const FolderItemData &
+  operator = (const FolderItemData & src);
 };
 
 

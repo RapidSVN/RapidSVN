@@ -43,18 +43,6 @@ static const char * EXECUTABLE_WILDCARD =
 static const char * EXECUTABLE_WILDCARD = "";
 #endif
 
-/**
- * Configuration key names
- */
-static const char STANDARD_EDITOR_KEY[] = 
-  "/Preferences/StandardEditor";
-static const char STANDARD_EDITOR_ALWAYS_KEY[] = 
-  "/Preferences/AlwaysStandardEditor";
-static const char STANDARD_FILE_EXPLORER_KEY[] = 
-  "/Preferences/StandardFileExplorer";
-static const char STANDARD_FILE_EXPLORER_ALWAYS_KEY[] = 
-  "/Preferences/AlwaysStandardFileExplorer";
-
 /* GeneralPanel *********************************************************/
 
 /**
@@ -116,63 +104,86 @@ private:
 
   void InitializeData ()
   {
+    // Standard Editor
+    wxStaticBox * boxEditor = 
+      new wxStaticBox (this, -1, _("Standard editor:"));
+
+    wxStaticBoxSizer * sizerEditor = 
+      new wxStaticBoxSizer (boxEditor, wxHORIZONTAL);
+    {
+      // text ctrl
+      wxTextValidator valText (wxFILTER_NONE, 
+                      & m_prefs->editor);
+      m_text_editor = new wxTextCtrl (this, -1, "", 
+                                      wxDefaultPosition, 
+                                      wxSize (200, -1), 
+                                      0, valText);
+      // button
+      wxButton * button = 
+        CreateEllipsisButton(this, ID_StandardEditorLookup);
+      // checkbox
+      wxGenericValidator valCheck (&m_prefs->editorAlways);
+      wxCheckBox * check =
+        new wxCheckBox (this, -1, _("Use always"), 
+                        wxDefaultPosition, 
+                        wxDefaultSize, 0, valCheck );
+
+      // position controls
+      wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
+      sizer->Add (m_text_editor, 1, 
+                  wxALIGN_CENTER | wxEXPAND | wxALL, 5);
+      sizer->AddGrowableCol (0);
+      sizer->Add (button, 0, wxALIGN_CENTER);
+      sizer->Add (check, 1, wxALL | wxEXPAND, 5);
+      sizerEditor->Add (sizer, 1, wxEXPAND);
+    }
+
+    // Standard File Explorer
+    wxStaticBox * boxExplorer =
+      new wxStaticBox (this, -1, _("Standard file explorer:"));
+
+    wxStaticBoxSizer * sizerExplorer =
+      new wxStaticBoxSizer (boxExplorer, wxHORIZONTAL);
+    {
+      // text ctrl
+      wxTextValidator valText (wxFILTER_NONE, &m_prefs->explorer);
+      m_text_explorer = 
+        new wxTextCtrl (this, -1, "", wxDefaultPosition, 
+                        wxSize (200, -1), 
+                        0, valText);
+
+      // button
+      wxButton * button = 
+        CreateEllipsisButton(this, ID_StandardExplorerLookup);
+
+      // check
+      wxGenericValidator valCheck (&m_prefs->explorerAlways);
+      wxCheckBox * check = 
+        new wxCheckBox (this, -1, _("Use always"), 
+                        wxDefaultPosition, 
+                        wxDefaultSize, 0, valCheck);
+
+      // position controls
+      wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
+      sizer->Add (m_text_explorer, 1, 
+                  wxALIGN_CENTER | wxEXPAND | wxALL, 5);
+      sizer->AddGrowableCol (0);
+      sizer->Add (button, 0, wxALIGN_CENTER);
+      sizer->Add (check, 1, 
+                  wxEXPAND | wxALL, 5);
+      sizerExplorer->Add (sizer, 1, wxEXPAND);
+    }
+
+    // Position main elements
     wxBoxSizer *panelsizer = new wxBoxSizer (wxHORIZONTAL);
 
     // Left column
     wxBoxSizer *leftsizer = new wxBoxSizer (wxVERTICAL);
     panelsizer->Add (leftsizer, 1, wxALL | wxALIGN_TOP, 10);
 
-    // Standard Editor
-    wxBoxSizer *standard_editor_label_sizer = new wxBoxSizer (wxHORIZONTAL);
-    leftsizer->Add (standard_editor_label_sizer, 1, wxEXPAND | wxALIGN_LEFT);
-    standard_editor_label_sizer->Add (
-      new wxStaticText (this, -1, _("Standard editor:")), 0, wxALIGN_CENTER);
-
-    wxBoxSizer *standard_editor_sizer = new wxBoxSizer (wxHORIZONTAL);
-    leftsizer->Add (standard_editor_sizer, 1, wxEXPAND | wxALIGN_LEFT);
-    // TODO: File existence validation when the entire string has been entered
-    m_text_editor = new wxTextCtrl (this, -1, "", wxDefaultPosition, 
-      wxSize (200, -1), 0, 
-      wxTextValidator (wxFILTER_NONE, & m_prefs->editor));
-    standard_editor_sizer->Add (m_text_editor, 1, wxALIGN_CENTER);
-  
-    standard_editor_sizer->Add (CreateEllipsisButton(this, 
-      ID_StandardEditorLookup), 0, wxALIGN_CENTER);
-
-    // Use Standard Editor Always
-    wxBoxSizer *standard_editor_always_sizer = new wxBoxSizer (wxHORIZONTAL);
-    leftsizer->Add (standard_editor_always_sizer, 1, wxALIGN_LEFT);
-    standard_editor_always_sizer->Add ( 
-      new wxCheckBox (this, -1, _("Use always"), wxDefaultPosition, wxDefaultSize, 0, 
-        wxGenericValidator (&m_prefs->editorAlways)), 
-      0, wxALIGN_CENTER);
-
-    // Standard File Explorer
-    wxBoxSizer *standard_file_explorer_label_sizer = new wxBoxSizer (wxHORIZONTAL);
-    leftsizer->Add (standard_file_explorer_label_sizer, 1, wxEXPAND | wxALIGN_LEFT);
-    standard_file_explorer_label_sizer->Add (
-      new wxStaticText (this, -1, _("Standard file explorer:")), 0, wxALIGN_CENTER);
-
-    wxBoxSizer *standard_file_explorer_sizer = new wxBoxSizer (wxHORIZONTAL);
-    leftsizer->Add (standard_file_explorer_sizer, 1, wxEXPAND | wxALIGN_LEFT);
-    // TODO: File existence validation when the entire string has been entered
-    m_text_explorer = new wxTextCtrl (this, -1, "", wxDefaultPosition, 
-      wxSize (200, -1), 0, wxTextValidator (wxFILTER_NONE, &m_prefs->explorer));
-    standard_file_explorer_sizer->Add (m_text_explorer, 1, wxALL | wxALIGN_CENTER);
-  
-    standard_file_explorer_sizer->Add (CreateEllipsisButton(this, 
-      ID_StandardExplorerLookup), 0, wxALIGN_CENTER);
-
-    // Use Standard File Explorer Always
-    wxBoxSizer *standard_file_explorer_always_sizer = new wxBoxSizer (wxHORIZONTAL);
-    leftsizer->Add (standard_file_explorer_always_sizer, 1, wxALIGN_LEFT);
-    standard_file_explorer_always_sizer->Add ( 
-      new wxCheckBox (
-        this, -1, _("Use always"), wxDefaultPosition, wxDefaultSize, 0, 
-        wxGenericValidator (&m_prefs->explorerAlways)
-      ), 
-      0, wxALIGN_CENTER
-    );
+    leftsizer->Add (sizerEditor, 0, wxEXPAND);
+    leftsizer->Add (5, 5);
+    leftsizer->Add (sizerExplorer, 0, wxEXPAND);
 
     SetSizer (panelsizer);
     SetAutoLayout (true);
@@ -241,6 +252,32 @@ ExternalsPanel::InitializeData ()
   SetAutoLayout (TRUE);
 }
 
+/* AuthPanel **************************************************************/
+class AuthPanel : public wxPanel
+{
+public:
+  AuthPanel (wxWindow * parent, Preferences * prefs)
+    : wxPanel (parent), m_prefs (prefs)
+  {
+    wxBoxSizer * mainsizer = new wxBoxSizer (wxVERTICAL);
+    {
+      wxGenericValidator valCheck (&m_prefs->authPerProject);
+      wxCheckBox * check = 
+        new wxCheckBox (this, -1, 
+                        _("Different login for each project in the Workbench"), 
+                        wxDefaultPosition, 
+                        wxDefaultSize, 0, valCheck);
+      mainsizer->Add (20, 20);
+      mainsizer->Add (check, 0, wxALL, 5);
+    }
+
+    SetSizer (mainsizer);
+    SetAutoLayout (true);
+  }
+private:
+  Preferences * m_prefs;
+};
+
 /* PreferencesDlg *********************************************************/
  
 BEGIN_EVENT_TABLE (PreferencesDlg, wxDialog)
@@ -279,8 +316,14 @@ public:
     notebook = new wxNotebook (wnd, -1, wxDefaultPosition, wxDefaultSize); 
     wxNotebookSizer *nbs = new wxNotebookSizer (notebook);
   
+    // General
     GeneralPanel *pGeneralPanel = new GeneralPanel (notebook, prefs);
     notebook->AddPage (pGeneralPanel, _("General"));
+
+    AuthPanel * authPanel = new AuthPanel (notebook, prefs);
+    notebook->AddPage (authPanel, _("Authentication"));
+
+    // Externals
     ExternalsPanel *pExternalsPanel = ExternalsPanel::Create (notebook);
     notebook->AddPage (pExternalsPanel, _("Externals"));
   

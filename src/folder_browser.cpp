@@ -12,6 +12,7 @@
  */
 
 // svncpp
+#include "svncpp/context.hpp"
 #include "svncpp/wc.hpp"
 
 // wxwindows
@@ -25,6 +26,7 @@
 #include "folder_browser.hpp"
 #include "folder_item_data.hpp"
 #include "ids.hpp"
+#include "workbench.hpp"
 
 // bitmaps
 #include "res/bitmaps/computer.xpm"
@@ -53,8 +55,8 @@ public:
   wxTreeCtrl* treeCtrl;
   wxTreeItemId rootId;
   wxImageList* imageList;
-  UniqueArrayString workbenchItems;
   wxWindow * window;
+  Workbench workbench;
   
   static const unsigned int MAXLENGTH_PROJECT;
 
@@ -116,15 +118,53 @@ public:
     }
   }
 
+  svn::Context *
+  GetContext () 
+  {
+    const FolderItemData * data = GetSelection ();
+    if (data == 0)
+      return 0;
+
+    svn::Context * context = 0;
+
+    bool ok = true;
+    while (context == 0)
+    {
+      switch (data->getFolderType ())
+      {
+      case FOLDER_TYPE_NORMAL:
+        {
+          wxTreeItemId id = data->GetId ();
+          wxTreeItemId parentId = treeCtrl->GetParent (id);
+          data = GetItemData (parentId);
+        }
+        break;
+
+      case FOLDER_TYPE_PROJECT:
+        context = workbench.GetContext (data->getPath ());
+        ok = context != 0;
+
+        break;
+      default:
+        ok = false;
+        break;
+      }
+
+      if (!ok)
+        break;
+    }
+
+    return context;
+  }
+
 
   void
   ShowMenu (long index, wxPoint & pt)
   {
     const FolderItemData * data = GetSelection ();
     if (!data)
-    {
       return;
-    }
+    const svn::Context * context = GetContext ();
 
     // create menu
     wxMenu menu;
@@ -137,6 +177,35 @@ public:
     if (type==FOLDER_TYPE_PROJECT)
     {
       item = new wxMenuItem (&menu, ID_RemoveProject, _("&Remove from Workbench..."));
+      menu.Append (item);
+
+      menu.AppendSeparator ();
+      item = new wxMenuItem (&menu, ID_Login, _("Login..."));
+      menu.Append (item);
+
+      {
+        wxString label;
+        wxString username;
+        bool enabled = false;
+
+        if (context != 0)
+        {
+          username = context->getUsername ();
+        }
+
+        if (username.length () == 0)
+        {
+          label = _("Logout");
+        }
+        else
+        {
+          enabled = true;
+          label.Printf (_("Logout '%s'"), username);
+        }
+
+        item = new wxMenuItem (&menu, ID_Logout, label);
+        item->Enable (enabled);
+      }
       menu.Append (item);
     }
 
@@ -227,12 +296,13 @@ public:
     {
       case FOLDER_TYPE_WORKBENCH:
       {
-        const int count = workbenchItems.GetCount ();
+        const int count = workbench.Count ();
         int index;
 
         for(index = 0; index < count; index++)
         {
-          const wxString& path = workbenchItems.Item (index);
+          const wxString path (workbench.GetProject (index));
+          svn::Context * context = workbench.GetContext (index);
           FolderItemData* data= new FolderItemData (FOLDER_TYPE_PROJECT, 
                                                     path, path, TRUE);
           wxString label;
@@ -422,10 +492,10 @@ FolderBrowser::~FolderBrowser ()
   delete m;
 }
 
-UniqueArrayString & FolderBrowser::GetWorkbenchItems ()
-{
-  return m->workbenchItems;
-}
+//REMOVE UniqueArrayString & FolderBrowser::GetWorkbenchItems ()
+//REMOVE {
+//REMOVE return m->workbenchItems;
+//REMOVE }
 
 void
 FolderBrowser::Refresh ()
@@ -449,7 +519,7 @@ FolderBrowser::RemoveProject ()
     {
       wxString path = data->getPath ();
       m->Delete (id);
-      m->workbenchItems.Remove (path.c_str ());
+      m->workbench.RemoveProject (path.c_str ());
       success = TRUE;
     }
   }
@@ -458,9 +528,9 @@ FolderBrowser::RemoveProject ()
 }
 
 void
-FolderBrowser::AddProject (const wxString & path)
+FolderBrowser::AddProject (const char * path)
 {
-  m->workbenchItems.Add (path);
+  m->workbench.AddProject (path);
   //TODO Refresh();
 }
 
@@ -518,6 +588,41 @@ FolderBrowser::SelectFolder (const char * path)
 {
   return m->SelectFolder (path);
 }
+
+const size_t
+FolderBrowser::GetProjectCount () const
+{
+  return m->workbench.Count ();
+}
+
+const char *
+FolderBrowser::GetProject (const size_t index) const
+{
+  return m->workbench.GetProject (index);
+}
+
+svn::Context * 
+FolderBrowser::GetContext ()
+{
+  return m->GetContext ();
+}
+
+void
+FolderBrowser::SetAuthPerProject (const bool value)
+{
+  m->workbench.SetAuthPerProject (value);
+}
+
+/**
+ * @return auth per project setting
+ */
+const bool 
+FolderBrowser::GetAuthPerProject () const
+{
+  return m->workbench.GetAuthPerProject ();
+}
+
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

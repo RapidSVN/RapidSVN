@@ -48,7 +48,8 @@ rapidsvn_SOURCES= \
 	update_action.cpp \
 	update_dlg.cpp \
 	utils.cpp \
-        verblist.cpp
+        verblist.cpp \
+	workbench.cpp
 
 rapidsvn_LDFLAGS=-Lsvncpp -L$(SVN_LIB)
 rapidsvn_LDADD= -lsvncpp \
