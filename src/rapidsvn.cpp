@@ -399,7 +399,17 @@ VSvnFrame::UpdateFileList ()
 {
   if (m_listCtrl && m_folder_browser)
   {
-    m_listCtrl->UpdateFileList (m_folder_browser->GetPath ());
+    const wxString & path = m_folder_browser->GetPath ();
+
+    if (path.length () > 0)
+    {
+      m_listCtrl->UpdateFileList (path);
+      m_listCtrl->Show (TRUE);
+    }
+    else
+    {
+      m_listCtrl->Show (FALSE);
+    }
   }
 }
 
