@@ -1,3 +1,40 @@
+Version 0.7.0 (released Sep 02 2004)
+http://svn.collab.net/repos/rapidsvn/tags/0.7.0
+
+User-visible changes:
+179 	Direct text editor access from RapidSVN
+172 	Options are now configurable in View/Diff tool preferences
+192 	Added STOP button
+190 	Added Documentation for Release Management
+191 	New merge button in log dialogue
+220 	Tweaked: Remember window status "Maximized"
+195 	Tweaked: Commits are now recursive as default (in dialog)
+206 	Tweaked: Changed menu entries for "Add Working Copy" and 
+        "Add Repository" menu items confusing
+165   	Fixed: Space in dir name became %20 on rename
+194 	Fixed: Copy didnt work with URL destination
+196 	Fixed: Win32 build files were missing from tar.gz source kits
+167 	Fixed: crash on expand bottom bookmark
+214 	Fixed: Incorrect info for repository directories
+197 	Fixed: Commit/Update used active file instead of folder in 
+               folder browser menu (when right-clicking in the folder browser)
+207 	Fixed: TextViewer (called by LogDlg) removed (see #179)
+189 	Fixed: Sort order; group unversioned items with other modified
+198 	Fixed: folder double-clicking on Win32
+
+
+Developer-visible changes:
+201 	Fixed: Client::log("") failed
+204 	Fixed: cat couldnt return binary data
+218 	Fixed: Default config dir created against user wishes
+219 	Fixed: Auth code ddidnt not use users config_dir
+224 	Fixed: make fails on Suse 9.1
+208 	Fixed: install svncpp headers (with make install)
+199 	Fixed: Correctly disable VC7 warning 4290
+200 	Fixed: VC7 wants some more Exception ctors
+
+
+
 Version 0.6.0 (released May 24 2004)
 http://svn.collab.net/repos/rapidsvn/tags/0.6.0
 
