@@ -27,13 +27,13 @@ namespace svn
 class Exception : public std::exception
 {
 private:
-  std::string _message;
+  std::string m_message;
 
 public:
   /**
    * Constructor.  Assigns the exception reason.
    */
-  Exception (std::string &message) throw ();
+  Exception (const std::string & message) throw ();
 
   ~Exception () throw ();
 
@@ -50,14 +50,14 @@ public:
 class ClientException : public Exception
 {
 private:
-  svn_error_t * _error;
+  svn_error_t * m_error;
 
 public:
   /**
    * Constructor.  Sets the error template and an optional message.
    */
   ClientException (svn_error_t * error, 
-                   std::string message = "") throw ();
+                   const std::string message = "") throw ();
 
   virtual ~ClientException () throw ();
 

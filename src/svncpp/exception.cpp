@@ -17,8 +17,8 @@ namespace svn
 {
 
 // Generic Exception implementation
-Exception::Exception (std::string &message)  throw () : 
-  _message(message)
+Exception::Exception (const std::string & message)  throw () : 
+  m_message(message)
 {
 }
 
@@ -29,14 +29,14 @@ Exception::~Exception () throw ()
 const char *
 Exception::message ()
 {
-  return _message.c_str ();
+  return m_message.c_str ();
 }
 
 // ClientException implementation
 
 ClientException::ClientException (svn_error_t * error, 
-                                  std::string message) throw () : 
-  Exception (message), _error(error)
+                                  const std::string message) throw () : 
+  Exception (message), m_error(error)
 {
 }
 
@@ -47,19 +47,19 @@ ClientException::~ClientException () throw ()
 const char *
 ClientException::description ()
 {
-  return _error->message;
+  return m_error->message;
 }
 
 const char *
 ClientException::source ()
 {
-  return _error->file;
+  return m_error->file;
 }
 
 int
 ClientException::aprError ()
 {
-  return _error->apr_err;
+  return m_error->apr_err;
 }
 
 }
