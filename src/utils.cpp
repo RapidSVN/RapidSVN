@@ -15,6 +15,12 @@
 
 // wxwindows
 #include "wx/wx.h"
+#include "wx/datetime.h"
+
+
+// apr
+#include "apr_strings.h"
+
 
 // svncpp
 #include "svncpp/client.hpp"
@@ -221,23 +227,9 @@ AppendBookmarksMenu (wxMenu * parentMenu)
 bool
 CheckRevision (const char * revstring)
 {
-  wxString value (revstring);
-  bool ok;
+  svn_revnum_t revnum;
 
-  TrimString (value);
-  if (value.Length () <= 0)
-  {
-    ok = false;
-  }
-  else
-  {
-    long revnum;
-    value.ToLong (&revnum);
-
-    ok = revnum >= 0;
-  }
-
-  return ok;
+  return ParseRevision (revstring, revnum);
 }
 
 wxCommandEvent
@@ -315,6 +307,51 @@ AppendMenuItem (wxMenu & menu, int id)
 
   return item;
 }
+
+
+bool
+ParseRevision (const wxString & revstring, svn_revnum_t & revnum)
+{
+  wxString value (revstring);
+
+  TrimString (value);
+  if (value.Length () <= 0)
+    return false;
+
+  return value.ToLong (&revnum);
+}
+
+
+bool
+ParseDateTime (const wxString & datestring, apr_time_t & date)
+{
+  wxString value (datestring);
+
+  TrimString (value);
+
+  if (value.Length () <= 0)
+    return false;
+
+  // parse the string using the current locale setting
+  // (we check only if the complete parsing failed,
+  //  not if only the partial string could be parsed)
+  wxDateTime dateTime;
+  if (dateTime.ParseFormat (datestring, "%c") ==0)
+    return false;
+
+  apr_time_ansi_put (&date, dateTime.GetTicks ());
+  return true;
+}
+
+
+bool
+CheckDateTime (const wxString & datestring)
+{
+  apr_time_t time;
+
+  return ParseDateTime (datestring, time);
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:
