@@ -1,3 +1,5 @@
+
+#include "svncpp/log.h"
 #include "include.h"
 #include <wx/utils.h>
 #include <wx/log.h>
@@ -5,8 +7,6 @@
 #include "wx/filename.h"
 
 #include "svn_file_info.h"
-#include "svn_file_log.h"
-
 #include "rapidsvn_app.h"
 
 #include "checkout_action.h"
@@ -1001,27 +1001,41 @@ VSvnFrame::ShowLog ()
   apr_pool_t *subpool = svn_pool_create (pool);
   apr_array_header_t *targets = m_listCtrl->GetTargets (subpool);
   wxString all;
-  svn_error_t *err = NULL;
-  bool wasError = false;
+  svn::Log log;
+  char rev [sizeof(long)*8+1];
 
-  err = svn_cl_log (targets, &all, subpool);
-  if (err)
+  for (int i = 0; i < targets->nelts; i++)
   {
-    all.Empty ();
+    const char *target = ((const char **) (targets->elts))[i];
 
-    StringTracer ertr (all);
-    handle_svn_error (err, &ertr);
-    wasError = true;
+    log.loadPath (target, -2, 1);
+    if(log.isVersioned ())
+    {
+      while(log.next ())
+      {
+        ltoa (log.revision (), rev, 10);
+        all += "--------------------\n";
+        all += "Revision: ";
+        all += rev;
+        all += "\nAuthor: ";
+        all += log.author ();
+        all += "\nDate: ";
+        all += log.date ();
+        all += "\n\nMessage: ";
+        all += log.message ();
+        all += "\n";
+      }
+    }
   }
 
   if (!all.IsEmpty ())
   {
     int rep_type = NORMAL_REPORT;
     wxString caption = _T ("Log");
-    if (wasError)
+    if (!log.isVersioned ())
     {
       rep_type = ERROR_REPORT;
-      caption = _T ("Log error");
+      caption = _T ("File is not versioned.");
     }
 
     Report_Dlg rdlg (this, caption, all, rep_type);

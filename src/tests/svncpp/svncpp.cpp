@@ -242,31 +242,46 @@ SvnCppTestCase::testProperty ()
 {
   svn::Property property;
 
-  // Load and count tests
-  try
-  {
-    property.loadPath ("my_repos/main.cpp");
-  }
-  catch (svn::ClientException &e)
-  {
-    CPPUNIT_ASSERT_MESSAGE (e.description (), false);
-  }
+  property.loadPath ("my_repos/main.cpp");
+  CPPUNIT_ASSERT (property.isVersioned ());
   CPPUNIT_ASSERT_EQUAL (2, property.count ());
 
   // Iteration tests
-  CPPUNIT_ASSERT (strcmp (property.nextProperty (), "test") == 0);
-  CPPUNIT_ASSERT (strcmp (property.nextProperty (), "test2") == 0);
-  CPPUNIT_ASSERT (property.nextProperty () == NULL);
-  property.reset ();
-  CPPUNIT_ASSERT (strcmp (property.nextProperty (), "test") == 0);
+  CPPUNIT_ASSERT (property.next ());
+  CPPUNIT_ASSERT (strcmp (property.name (), "test") == 0);
+  CPPUNIT_ASSERT (strcmp (property.value (), "test_value") == 0);
 
-  // Get and set value tests
-  CPPUNIT_ASSERT (strcmp (property.getValue ("test"), "test_value") == 0);
-  property.set ("test", "new_value", false );
-  CPPUNIT_ASSERT (strcmp (property.getValue ("test"), "new_value") == 0);
+  CPPUNIT_ASSERT (property.next ());
+  CPPUNIT_ASSERT (strcmp (property.name (), "test2") == 0);
+  CPPUNIT_ASSERT (strcmp (property.value (), "test_value2") == 0);
 
-  property.remove ("test", false);
-  CPPUNIT_ASSERT_EQUAL (1, property.count ());
+  CPPUNIT_ASSERT (property.first ());
+  CPPUNIT_ASSERT (strcmp (property.name (), "test") == 0);
+  CPPUNIT_ASSERT (strcmp (property.value (), "test_value") == 0);
+
+  try
+  {
+    property.set ("new_test", "something", false);
+  }
+  catch (...)
+  {
+    CPPUNIT_ASSERT (false);
+  }
+
+  property.loadPath ("my_repos/main.cpp");
+  CPPUNIT_ASSERT_EQUAL (3, property.count ());
+
+  try
+  {
+    property.remove ("new_test", false);
+  }
+  catch (...)
+  {
+    CPPUNIT_ASSERT (false);
+  }
+
+  property.loadPath ("my_repos/main.cpp");
+  CPPUNIT_ASSERT_EQUAL (2, property.count ());
 }
 
 void

@@ -7,20 +7,68 @@ namespace svn
 
 Property::Property ()
 {
-  props = NULL;
-  propCount = 0;
-  currentProp = 0;
-  propName = NULL;
+  reset ();
 }
 
 Property::~Property ()
 {
 }
 
+void
+Property::reset ()
+{
+  size = 0;
+  cursor = -1;
+  propName.clear ();
+  propValue.clear ();
+  versioned = false;
+}
+
+
 int
 Property::count ()
 {
-  return propCount;
+  return size;
+}
+
+bool
+Property::last ()
+{
+  if(count () < 1)
+    return false;
+
+  cursor = count () - 1;
+  return true;
+}
+
+bool
+Property::first ()
+{
+  if(count () < 1)
+    return false;
+
+  cursor = 0;
+  return true;
+}
+
+bool
+Property::next ()
+{
+  if((cursor + 1) >= count ())
+    return false;
+
+  cursor++;
+  return true;
+}
+
+bool
+Property::previous ()
+{
+  if((cursor - 1) < 0)
+    return false;
+
+  cursor--;
+  return true;
 }
 
 void
@@ -28,54 +76,19 @@ Property::loadPath (const char * path)
 {
   filePath = path;
   svn_error_t * error = NULL;
+  apr_array_header_t * props;
 
-  error = loadProperties ();
-  if(error != NULL)
-    throw ClientException (error);
-}
-
-svn_error_t *
-Property::loadProperties ()
-{
+  reset ();
   Err = svn_client_proplist (&props,
                              filePath.c_str (), 
                              false /* recurse */,
                              pool);
+  versioned = true;
   if(Err != NULL)
-    return Err;
-
-  propCount = 0;
-
-  for (int j = 0; j < props->nelts; ++j)
   {
-    svn_client_proplist_item_t *item = 
-          ((svn_client_proplist_item_t **)props->elts)[j];
-
-    const char *node_name_native;
-    svn_utf_cstring_from_utf8_stringbuf (&node_name_native,
-                                         item->node_name,
-                                         pool);
-
-    apr_hash_index_t *hi;
-
-    for (hi = apr_hash_first (pool, item->prop_hash); hi; 
-         hi = apr_hash_next (hi))
-    {
-      propCount++;
-    } 
+    versioned = false;
+    return;
   }
-
-  return Err;
-}
-
-const char *
-Property::nextProperty ()
-{
-  if(props == NULL)
-    return NULL;
-
-  if(currentProp >= propCount)
-    return NULL;
 
   for (int j = 0; j < props->nelts; ++j)
   {
@@ -95,66 +108,42 @@ Property::nextProperty ()
     {
       const void *key;
       const char *key_native;
+      void *val;
+      const svn_string_t *propval;
 
-      if(index != currentProp)
-      {
-        index++;
-        continue;
-      }
-
-      apr_hash_this (hi, &key, NULL, NULL);
+      apr_hash_this (hi, &key, NULL, &val);
+      propval = (svn_string_t *)val;
       svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
 
-      propName = key_native;
-      currentProp++;
+      propName.push_back (key_native);
+      propValue.push_back (propval->data);
+      size++;
     } 
   }
-
-  return propName;
 }
 
-void
-Property::reset ()
+bool
+Property::isVersioned ()
 {
-  currentProp = 0;
+  return versioned;
 }
 
 const char *
-Property::getValue (const char * name)
+Property::value ()
 {
-  apr_hash_t *prop;
-  apr_hash_index_t *hi;
+  if(cursor == -1)
+    return NULL;
 
-  Err = svn_client_propget (&prop,
-                            name,
-                            filePath.c_str (),
-                            false /* recurse */,
-                            pool);
+  return propValue[cursor].c_str ();
+}
 
-  if(Err != NULL)
-    throw ClientException (Err);
+const char *
+Property::name ()
+{
+  if(cursor == -1)
+    return NULL;
 
-  for (hi = apr_hash_first (pool, prop); hi; hi = apr_hash_next (hi))
-  {
-    const void *key;
-    void *val;
-    const svn_string_t *propval;
-
-    apr_hash_this (hi, &key, NULL, &val);
-    propval = (svn_string_t *)val;
-
-    /* If this is a special Subversion property, it is stored as
-       UTF8, so convert to the native format. */
-    if (isSvnProperty (name))
-      Err = svn_utf_string_from_utf8 (&propval, propval, pool);
-
-    if(Err != NULL)
-      throw ClientException (Err);
-
-    return propval->data;
-  }
-
-  return NULL;
+  return propName[cursor].c_str ();
 }
 
 void
@@ -172,10 +161,6 @@ Property::set (const char * name, const char * value, bool recurse)
                               recurse, pool);
   if(error != NULL)
     throw ClientException (error);
-
-  error = loadProperties ();
-  if(error != NULL)
-    throw ClientException (error);
 }
 
 void 
@@ -187,10 +172,6 @@ Property::remove (const char * name, bool recurse)
 
   error = svn_client_propset (pname_utf8, NULL, filePath.c_str (),
                             recurse, pool);
-  if(error != NULL)
-    throw ClientException (error);
-
-  error = loadProperties ();
   if(error != NULL)
     throw ClientException (error);
 }

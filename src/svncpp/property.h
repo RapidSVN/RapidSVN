@@ -2,8 +2,14 @@
 #ifndef _SVNCPP_PROPERTY_H_
 #define _SVNCPP_PROPERTY_H_
 
+#ifdef WIN32
+// Eliminate worthless win32 warnings
+#pragma warning(disable: 4786)
+#endif
+
 #include "client.h"
 #include "svn_utf.h"
+#include <vector>
 #include <string>
 
 #ifndef _SVNCPP_EXCEPTION_H_
@@ -19,21 +25,19 @@ namespace svn
 class Property : public svn::Client
 {
 private:
-  apr_array_header_t * props;
   std::string filePath;
-  int propCount;
-  int currentProp;
-  const char * propName;
+  int size;
+  int cursor;
+  bool versioned;
+  std::vector<std::string> propName;
+  std::vector<std::string> propValue;
+
+  void reset ();
 
   /**
    * Returns whether or not the property is a special Subversion property.
    */
   svn_boolean_t isSvnProperty (const char * name);
-
-  /**
-   * Loads the initial data for the property list.
-   */
-  svn_error_t * loadProperties ();
 
 public:
   Property ();
@@ -45,42 +49,62 @@ public:
   int count ();
 
   /**
-   * Loads the file, verifies that it is valid, and records the 
-   * property count.
-   * @exception ClientException
+   * Loads the properties result set, clearing old result sets. 
    */
   void loadPath (const char * path);
 
   /**
-   * Sets or adds a property with a new value.
-   * @exception ClientException
+   * Moves to the next row in the result set.
+   * @returns true if the cursor is in the result set.
    */
-  void set (const char * path, const char * value, bool recurse);
+  bool next ();
 
   /**
-   * Returns the value of a property.  Returns null if the property
-   * was not found.
+   * Moves to the previous row in the result set.
+   * @returns true if the cursor is in the result set.
+   */
+  bool previous ();
+
+  /**
+   * Moves to the last row in the log result set.
+   * @returns true if the cursor is in the result set.
+   */
+  bool last ();
+
+  /**
+   * Moves to the first row in the log result set.
+   * @returns true if the cursor is in the result set.
+   */
+  bool first ();
+
+  /**
+   * Returns true if the file called in loadPath is versioned.
+   */
+  bool isVersioned ();
+
+  /**
+   * Sets an existing property with a new value or adds a new 
+   * property.  If a result is added it does not reload the 
+   * result set.  Run loadPath again.
    * @exception ClientException
    */
-  const char * getValue (const char * name);
+  void set (const char * name, const char * value, bool recurse);
+
+  /**
+   * Returns the name of the current property of the result set.
+   */
+  const char * name ();
+
+  /**
+   * Returns the value of the current property of the result set.
+   */
+  const char * value ();
 
   /**
    * Deletes a property.  
    * @exception ClientException
    */
   void remove (const char * name, bool recurse);
-
-  /**
-   * Returns the next property name in the list.  Returns 
-   * NULL when the iteration is complete.
-   */
-  const char * nextProperty ();
-
-  /**
-   * Resets the iterator in which the NextProperty method 
-   * runs.
-   */
-  void reset ();
 };
 
 }

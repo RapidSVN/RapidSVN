@@ -46,8 +46,13 @@ public:
   ~Log();
 
   /**
-   * Loads the log messages. This usually requires authentication, 
-   * see Auth. 
+   * Loads the log messages result set, clearing old result sets. 
+   * This usually requires authentication, see Auth. 
+   * @param revisionStart if set to -2 then the revision will start 
+   *                      at the revision head.
+   * @param revisionEnd if revisionStart is set to -2 and this is set 
+   *                    to 1 then it will retrieve all log messages.
+   *                        
    */
   void loadPath (const char * path, long revisionStart, 
                  long revisionEnd);
