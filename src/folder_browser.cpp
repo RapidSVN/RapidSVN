@@ -365,7 +365,7 @@ public:
     wxTreeItemId parentId = event.GetItem ();
     int type = FOLDER_TYPE_INVALID;
 
-    if(rootId == 0)
+    if(!rootId.IsOk ())
     {
       rootId = treeCtrl->GetRootItem ();
     }
