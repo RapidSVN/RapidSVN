@@ -1,5 +1,5 @@
-%define apache_version 2.0.43-0.1
-%define apr_version 0.9.4
+%define apache_version 2.0.48-0.1
+%define apr_version 0.9.5
 Summary: A cross-platform GUI for the Subversion concurrent versioning system.
 Name: rapidsvn
 Version: @VERSION@
@@ -19,7 +19,7 @@ BuildPreReq: doxygen
 BuildPreReq: httpd-devel >= %{apache_version}
 BuildPreReq: libtool >= 1.4.2
 BuildPreReq: libxslt >= 1.0.27
-BuildPreReq: subversion-devel
+BuildPreReq: subversion-devel = 0.34.0
 BuildPreReq: wxGTK-devel >= 2.4.1
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 Prefix: /usr
@@ -35,6 +35,11 @@ if you don't have root access on your machine but would like to use this
 package.
 
 %changelog
+* Sat Dec 27 2003 David Summers <david@summersoft.fay.ar.us> 0.4.0-6962
+- Requires subversion-devel-0.34.0.
+- Requires apache-2.0.48.
+- Requires apr-0.9.5.
+
 * Wed Jul 31 2002 David Summers <david@summersoft.fay.ar.us> 0.1
 - First version
 
