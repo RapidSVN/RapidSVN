@@ -63,8 +63,8 @@ ImportDlg::OnOk (wxCommandEvent &event)
   
   if (m_data->Repository.IsEmpty ())
   {
-    wxMessageBox (_T ("Repository URL is required for import!"),
-                  _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+    wxMessageBox (_("Repository URL is required for import!"),
+                  _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
 
     // Do not allow the user to continue if the path is empty 
     // and the import is addressing a file.
@@ -76,8 +76,8 @@ ImportDlg::OnOk (wxCommandEvent &event)
 
     if (m_data->Path.IsEmpty ())
     {
-      wxMessageBox (_T ("File path required when importing a file!"),
-                    _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+      wxMessageBox (_("File path required when importing a file!"),
+                    _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
 
       // Do not allow the user to continue if the reposURL is empty.
       return;
@@ -85,8 +85,8 @@ ImportDlg::OnOk (wxCommandEvent &event)
 
     if (m_data->NewEntry.IsEmpty ())
     {
-      wxMessageBox (_T ("New entry name required when importing a file!"),
-                    _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+      wxMessageBox (_("New entry name required when importing a file!"),
+                    _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
 
       // Do not allow the user to continue if the new_entry is empty 
       // and the import is addressing a file.
@@ -106,7 +106,7 @@ ImportDlg::OnBrowse (wxCommandEvent & WXUNUSED (event))
   if (m_data->TreeType)
   {
     wxDirDialog dialog (this,
-                        _T ("Select a directory to import"),
+                        _("Select a directory to import"),
                         m_data->Path);
 
     if (dialog.ShowModal () == wxID_OK)
@@ -115,7 +115,7 @@ ImportDlg::OnBrowse (wxCommandEvent & WXUNUSED (event))
   else                          // it's a file 
   {
     wxFileDialog dialog (this,
-                         _T ("Select a file to import"),
+                         _("Select a file to import"),
                          m_data->Path);
 
     if (dialog.ShowModal () == wxID_OK)
@@ -134,34 +134,34 @@ ImportDlg::InitializeData ()
   Grid->AddGrowableCol(1);  // The second column can be expanded.
 
   // Row 0:  
-  Grid->Add(new wxStaticText(this, -1, _T("Repository URL")), 0, 
+  Grid->Add(new wxStaticText(this, -1, _("Repository URL")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl *Repository = new wxTextCtrl(this, -1, _T(""),
+  wxTextCtrl *Repository = new wxTextCtrl(this, -1, _(""),
     wxDefaultPosition, wxSize(300, -1), 0,
     wxTextValidator(wxFILTER_NONE, &m_data->Repository));
   Grid->Add(Repository, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
-  Grid->Add(new wxStaticText(this, -1, _T("")), 0, 
+  Grid->Add(new wxStaticText(this, -1, _("")), 0, 
     0, 5);
 
   // Row 1:  
-  Grid->Add(new wxStaticText(this, -1, _T("Path")), 0, 
+  Grid->Add(new wxStaticText(this, -1, _("Path")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl *Path = new wxTextCtrl(this, -1, _T(""),
+  wxTextCtrl *Path = new wxTextCtrl(this, -1, _(""),
     wxDefaultPosition, wxSize(300, -1), 0,
     wxTextValidator(wxFILTER_NONE, &m_data->Path));
   Grid->Add(Path, 1, wxLEFT | wxEXPAND, 5);
-  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, _T("..."), 
+  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, _("..."), 
     wxPoint(-1,-1), wxSize(20, -1));
   Grid->Add(BrowseButton, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
   
   // Row 2:  
-  Grid->Add(new wxStaticText(this, -1, _T("New entry")), 0, 
+  Grid->Add(new wxStaticText(this, -1, _("New entry")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl *NewEntry = new wxTextCtrl(this, -1, _T(""),
+  wxTextCtrl *NewEntry = new wxTextCtrl(this, -1, _(""),
     wxDefaultPosition, wxSize(300, -1), 0,
     wxTextValidator(wxFILTER_NONE, &m_data->NewEntry));
   Grid->Add(NewEntry, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
-  Grid->Add(new wxStaticText(this, -1, _T("")), 0, 
+  Grid->Add(new wxStaticText(this, -1, _("")), 0, 
     0, 5);
 
   mainSizer->Add(Grid, 0, wxALL | wxEXPAND, 5);
@@ -169,9 +169,9 @@ ImportDlg::InitializeData ()
   
   // The message field:
   wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("Enter log message")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("Enter log message")), wxHORIZONTAL);
     
-  wxTextCtrl* Log = new wxTextCtrl(this, -1, _T(""), wxDefaultPosition, 
+  wxTextCtrl* Log = new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
     wxSize(-1, 50), wxTE_MULTILINE,
     wxTextValidator(wxFILTER_NONE, &m_data->LogMessage));
     
@@ -182,19 +182,19 @@ ImportDlg::InitializeData ()
   // Sundry items row:
   wxBoxSizer *SundrySizer = new wxBoxSizer(wxHORIZONTAL);
   
-  wxCheckBox* Recursive = new wxCheckBox (this, -1, _T("Recursive"),
+  wxCheckBox* Recursive = new wxCheckBox (this, -1, _("Recursive"),
     wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_data->Recursive));
   SundrySizer->Add(Recursive, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
   
-  SundrySizer->Add(new wxStaticText(this, -1, _T("Path type:")), 0, 
+  SundrySizer->Add(new wxStaticText(this, -1, _("Path type:")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 30);
 
   SundrySizer->Add(
-    new wxRadioButton(this, -1, _T("Tree"), wxDefaultPosition, wxDefaultSize, 0,
+    new wxRadioButton(this, -1, _("Tree"), wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&m_data->TreeType)),
     0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
   SundrySizer->Add(
-    new wxRadioButton(this, -1, _T("File"), wxDefaultPosition, wxDefaultSize, 0,
+    new wxRadioButton(this, -1, _("File"), wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&m_data->FileType)),
     0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
@@ -202,18 +202,18 @@ ImportDlg::InitializeData ()
 
   // Authentication row:
   wxStaticBoxSizer *AuthSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("Authentication")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("Authentication")), wxHORIZONTAL);
 
-  AuthSizer->Add(new wxStaticText(this, -1, _T("User")), 0, 
+  AuthSizer->Add(new wxStaticText(this, -1, _("User")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-  wxTextCtrl* user = new wxTextCtrl(this, -1, _T(""),
+  wxTextCtrl* user = new wxTextCtrl(this, -1, _(""),
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_data->User));
   AuthSizer->Add(user, 1, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
 
-  AuthSizer->Add(new wxStaticText(this, -1, _T("Password")), 0,
+  AuthSizer->Add(new wxStaticText(this, -1, _("Password")), 0,
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  wxTextCtrl* pass = new wxTextCtrl(this, -1, _T(""), wxDefaultPosition, 
+  wxTextCtrl* pass = new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
     wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_data->Password));
   AuthSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
@@ -221,9 +221,9 @@ ImportDlg::InitializeData ()
 
   // Button row
   wxBoxSizer *ButtonSizer = new wxBoxSizer(wxHORIZONTAL);
-  ButtonSizer->Add(new wxButton(this, wxID_OK, _T("OK" )), 0, 
+  ButtonSizer->Add(new wxButton(this, wxID_OK, _("OK" )), 0, 
     wxALL, 10);
-  ButtonSizer->Add(new wxButton(this, wxID_CANCEL, _T("Cancel")), 0, 
+  ButtonSizer->Add(new wxButton(this, wxID_CANCEL, _("Cancel")), 0, 
     wxALL, 10);
 
   mainSizer->Add(ButtonSizer, 0, wxALL | wxCENTER, 5);

@@ -136,8 +136,8 @@ Action::Prepare ()
   case actionWithSingleTarget:
     if (m_targets.size () != 1)
     {
-      wxMessageBox (_T("Please select only one file or directory."),
-                    _T("Error"),
+      wxMessageBox (_("Please select only one file or directory."),
+                    _("Error"),
                     wxOK | wxICON_HAND);
       result = false;
     }
@@ -146,8 +146,8 @@ Action::Prepare ()
   case actionWithTargets:
     if (m_targets.size () < 1)
     {
-      wxMessageBox (_T("Nothing selected."),
-                    _T("Error"),
+      wxMessageBox (_("Nothing selected."),
+                    _("Error"),
                     wxOK | wxICON_HAND);
       result = false;
     }
@@ -155,8 +155,8 @@ Action::Prepare ()
     
   default:
     // unknown option
-    wxMessageBox (_T("Internal error: unknown action option"),
-                  _T("Error"),
+    wxMessageBox (_("Internal error: unknown action option"),
+                  _("Error"),
                   wxOK | wxICON_HAND);
     result = false;
   }

@@ -38,7 +38,7 @@ BEGIN_EVENT_TABLE (PropertyGrid, wxGrid)
 END_EVENT_TABLE()
 
 PropertyDlg::PropertyDlg (wxWindow * parent, const svn::Path & target)
-           : wxDialog (parent, -1, _T("Property Editor"), wxDefaultPosition, 
+           : wxDialog (parent, -1, _("Property Editor"), wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
              m_property(NULL, target.c_str ())
 {
@@ -51,23 +51,23 @@ PropertyDlg::InitializeData ()
 {
   // create controls
   wxStaticBoxSizer *boxSizer = new wxStaticBoxSizer (
-        new wxStaticBox(this, -1, _T("Properties")), 
+        new wxStaticBox(this, -1, _("Properties")), 
         wxHORIZONTAL);
 
   propGrid = new PropertyGrid (this, m_property);
   propGrid->CreateGrid (1, 2);
   propGrid->SetGridLineColour (wxColour ("black"));
 
-  propGrid->SetColLabelValue (0, _T("Name"));
-  propGrid->SetColLabelValue (1, _T("Value"));
+  propGrid->SetColLabelValue (0, _("Name"));
+  propGrid->SetColLabelValue (1, _("Value"));
   propGrid->SetColSize (0, 120);
   propGrid->SetColSize (1, 120);
   propGrid->FillList ();
   propGrid->Show ();
 
   wxBoxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
-  wxButton * okButton = new wxButton (this, ID_OK, _T("OK"));
-  wxButton * cancelButton = new wxButton (this, ID_Cancel, _T("Cancel"));
+  wxButton * okButton = new wxButton (this, ID_OK, _("OK"));
+  wxButton * cancelButton = new wxButton (this, ID_Cancel, _("Cancel"));
   buttonSizer->Add (okButton, 0, wxALL, 5);
   buttonSizer->Add (cancelButton, 0, wxALL, 5);
 

@@ -353,22 +353,22 @@ FolderBrowser::ShowMenu (long index, wxPoint & pt)
   wxMenuItem *item;
   int type =  data->getFolderType ();
 
-  item = new wxMenuItem (&menu, ID_AddProject, _T ("&Add to Workbench..."));
+  item = new wxMenuItem (&menu, ID_AddProject, _("&Add to Workbench..."));
   menu.Append (item);
 
   if (type==FOLDER_TYPE_PROJECT)
   {
-    item = new wxMenuItem (&menu, ID_RemoveProject, _T ("&Remove from Workbench..."));
+    item = new wxMenuItem (&menu, ID_RemoveProject, _("&Remove from Workbench..."));
     menu.Append (item);
   }
 
   if ((type==FOLDER_TYPE_PROJECT)||(type==FOLDER_TYPE_NORMAL))
   {
     menu.AppendSeparator ();
-    item = new wxMenuItem (&menu, ID_Update, _T ("Update"));
+    item = new wxMenuItem (&menu, ID_Update, _("Update"));
     item->SetBitmap (wxBITMAP (update));
     menu.Append (item);
-    item = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
+    item = new wxMenuItem (&menu, ID_Commit, _("Commit"));
     item->SetBitmap (wxBITMAP (commit));
     menu.Append (item);
   }

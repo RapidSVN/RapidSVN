@@ -22,7 +22,7 @@ class Tracer;
 
 #define DEFAULT_ARRAY_SIZE 5
 
-#define APPLICATION_NAME _T("RapidSVN")
+#define APPLICATION_NAME _("RapidSVN")
 
 
 wxString & UnixPath (wxString & path);

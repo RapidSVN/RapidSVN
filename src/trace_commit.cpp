@@ -11,6 +11,9 @@
  * ====================================================================
  */
 
+// wxwindows
+#include "wx/wx.h"
+
 // subversion
 #include "svn_path.h"
 #include "svn_pools.h"
@@ -266,11 +269,11 @@ apply_textdelta (void *file_baton,const char *, const char *, apr_pool_t *,
 
   if (!fb->edit_baton->started_sending_txdeltas)
   {
-    fb->edit_baton->tracer->Trace (_T ("Transmitting file data ..."));
+    fb->edit_baton->tracer->Trace (_("Transmitting file data ..."));
     fb->edit_baton->started_sending_txdeltas = TRUE;
   }
 
-  //fb->edit_baton->tracer->Trace( _T(".") );
+  //fb->edit_baton->tracer->Trace( _(".") );
 
   return SVN_NO_ERROR;
 }
@@ -368,7 +371,7 @@ close_edit (void *edit_baton, apr_pool_t*)
 
   if (eb->started_sending_txdeltas)
   {
-    eb->tracer->Trace (_T ("Done!"));
+    eb->tracer->Trace (_("Done!"));
   }
 
   svn_pool_destroy (eb->pool);

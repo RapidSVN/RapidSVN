@@ -28,7 +28,7 @@ void
 TextCtrlTracer::Trace (const wxString & str)
 {
   wxMutexGuiEnter ();
-  m_txtCtrl->AppendText (str + _T ("\n"));
+  m_txtCtrl->AppendText (str + _("\n"));
   wxMutexGuiLeave ();
 }
 
@@ -67,7 +67,7 @@ ErrorTracer::Trace (const wxString & str)
 void
 ErrorTracer::ShowErrors ()
 {
-  ReportDlg rdlg (m_parent, _T ("Error"), m_msgs, ERROR_REPORT);
+  ReportDlg rdlg (m_parent, _("Error"), m_msgs, ERROR_REPORT);
   rdlg.ShowModal ();
 }
 

@@ -14,6 +14,9 @@
 // stl
 #include <vector>
 
+// wxwindows
+#include "wx/wx.h"
+
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/status.hpp"
@@ -42,35 +45,35 @@ GetStatusText (wxString & str, svn_wc_status_kind st)
   switch (st)
   {
   case svn_wc_status_none:
-    str = wxT ("Non-svn");
+    str = _("Non-svn");
     break;
   case svn_wc_status_normal:
-    str = wxT ("Normal");
+    str = _("Normal");
     break;
   case svn_wc_status_added:
-    str = wxT ("Added");
+    str = _("Added");
     break;
   case svn_wc_status_absent:
-    str = wxT ("Absent");
+    str = _("Absent");
     break;
   case svn_wc_status_deleted:
-    str = wxT ("Deleted");
+    str = _("Deleted");
     break;
   case svn_wc_status_replaced:
-    str = wxT ("Replaced");
+    str = _("Replaced");
     break;
   case svn_wc_status_modified:
-    str = wxT ("Modified");
+    str = _("Modified");
     break;
   case svn_wc_status_merged:
-    str = wxT ("Merged");
+    str = _("Merged");
     break;
   case svn_wc_status_conflicted:
-    str = wxT ("Conflicted");
+    str = _("Conflicted");
     break;
   case svn_wc_status_unversioned:
   default:
-    str = wxT ("Unversioned");
+    str = _("Unversioned");
     break;
   }
 }
@@ -110,14 +113,14 @@ handle_svn_error (svn_error_t * err, Tracer * tracer)
   if ((err->apr_err > APR_OS_START_USEERR)
       && (err->apr_err <= APR_OS_START_CANONERR))
   {
-    str.Printf (_T ("svn_error: #%d : <%s>"), err->apr_err,
+    str.Printf (_("svn_error: #%d : <%s>"), err->apr_err,
                 svn_strerror (err->apr_err, buf, sizeof (buf)));
     tracer->Trace (str);
   }
   /* Otherwise, this must be an APR error code. */
   else
   {
-    str.Printf (_T ("apr_error: #%d : <%s>"),
+    str.Printf (_("apr_error: #%d : <%s>"),
                 err->apr_err,
                 apr_strerror (err->apr_err, buf, sizeof (buf)));
     tracer->Trace (str);
@@ -125,7 +128,7 @@ handle_svn_error (svn_error_t * err, Tracer * tracer)
 
   if (err->message)
   {
-    str.Printf (_T ("  %s"), err->message);
+    str.Printf (_("  %s"), err->message);
     tracer->Trace (str);
   }
 

@@ -11,6 +11,9 @@
  * ====================================================================
  */
 
+// wxwindows
+#include "wx/wx.h"
+
 // svncpp
 #include "svncpp/exception.hpp"
 #include "svncpp/client.hpp"
@@ -58,7 +61,7 @@ MergeAction::Perform ()
   if (!wxSetWorkingDirectory (path))
   {
     wxString msg;
-    msg.Printf(_T ("Could not set working directory to %s"),
+    msg.Printf(_("Could not set working directory to %s"),
                path.c_str ());
     PostStringEvent (TOKEN_VSVN_INTERNAL_ERROR, msg, ACTION_EVENT);
     return false;
@@ -81,7 +84,7 @@ MergeAction::Perform ()
   }
   catch (svn::ClientException &e)
   {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
                      ACTION_EVENT);
     GetTracer ()->Trace ("Merge failed:");
     GetTracer ()->Trace (e.description ());

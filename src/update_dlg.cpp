@@ -28,7 +28,7 @@ EVT_CHECKBOX (ID_USELATEST, UpdateDlg::OnUseLatest)
 END_EVENT_TABLE ()
 
 UpdateDlg::UpdateDlg(wxWindow* parent)
-  : wxDialog(parent, -1, _T("Update"),
+  : wxDialog(parent, -1, _("Update"),
              wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
@@ -46,12 +46,12 @@ UpdateDlg::InitData ()
 
   // The revision fields:
   wxStaticBoxSizer *revSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("Revision")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("Revision")), wxHORIZONTAL);
     
-  m_revisionLabel = new wxStaticText(this, -1, _T("Number")); 
+  m_revisionLabel = new wxStaticText(this, -1, _("Number")); 
   revSizer->Add(m_revisionLabel, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
    
-  m_revisionText = new wxTextCtrl (this, -1, _T(""),
+  m_revisionText = new wxTextCtrl (this, -1, _(""),
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NUMERIC, &m_data.Revision));
   revSizer->Add (m_revisionText, 1, 
@@ -66,29 +66,29 @@ UpdateDlg::InitData ()
   
   // The authentication fields:
   wxStaticBoxSizer *authSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("Authentication")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("Authentication")), wxHORIZONTAL);
     
-  authSizer->Add(new wxStaticText(this, -1, _T("User")), 0, 
+  authSizer->Add(new wxStaticText(this, -1, _("User")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
    
-  wxTextCtrl* pUser = new wxTextCtrl (this, -1, _T(""),
+  wxTextCtrl* pUser = new wxTextCtrl (this, -1, _(""),
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_data.User));
   authSizer->Add (pUser, 1, 
     wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
 
-  authSizer->Add(new wxStaticText (this, -1, _T("Password")), 0,
+  authSizer->Add(new wxStaticText (this, -1, _("Password")), 0,
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  wxTextCtrl* pass = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
+  wxTextCtrl* pass = new wxTextCtrl (this, -1, _(""), wxPoint(-1,-1), 
     wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_data.Password));
   authSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
   
   middleSizer->Add(authSizer, 1, wxALL, 5);
 
   // The buttons:
-  buttonSizer->Add(new wxButton( this, wxID_OK, _T("OK" )), 0, 
+  buttonSizer->Add(new wxButton( this, wxID_OK, _("OK" )), 0, 
                    wxALL, 10);
-  buttonSizer->Add(new wxButton( this, wxID_CANCEL, _T("Cancel")), 0, 
+  buttonSizer->Add(new wxButton( this, wxID_CANCEL, _("Cancel")), 0, 
                    wxALL, 10);
 
   // Add all the sizers to the main sizer

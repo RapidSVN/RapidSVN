@@ -34,7 +34,7 @@ BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)
 END_EVENT_TABLE ()
 
 CheckoutDlg::CheckoutDlg (wxWindow * parent)
-  : wxDialog (parent, -1, _T("Check out module"), wxDefaultPosition, 
+  : wxDialog (parent, -1, _("Check out module"), wxDefaultPosition, 
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   InitControls ();
@@ -56,8 +56,8 @@ CheckoutDlg::OnOK (wxCommandEvent & event)
     if (!m_data.Revision.ToULong (&rev, 10))
     {
       // could not convert revision to a number
-      wxMessageBox (_T ("Revision must be an unsigned number!"),
-                    _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+      wxMessageBox (_("Revision must be an unsigned number!"),
+                    _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
       return;
     }
   }
@@ -74,7 +74,7 @@ CheckoutDlg::OnBrowse (wxCommandEvent & event)
   // Transfer data from controls into m_pData:
   TransferDataFromWindow();
   wxDirDialog dialog (this,
-                      _T ("Select a destination folder to checkout to"),
+                      _("Select a destination folder to checkout to"),
                       wxGetHomeDir(), wxDD_NEW_DIR_BUTTON);
 
   if (dialog.ShowModal () == wxID_OK)
@@ -92,44 +92,44 @@ void
 CheckoutDlg::InitControls ()
 {
   // create controls
-  wxTextCtrl* moduleName = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1),
+  wxTextCtrl* moduleName = new wxTextCtrl (this, -1, _(""), wxPoint(-1,-1),
     wxSize(235, -1), 0, wxTextValidator(wxFILTER_NONE, &m_data.ModuleName));
-  wxStaticBox* destBox = new wxStaticBox(this, 0, _T("Destination Folder"));
-  m_destFolderText = new wxTextCtrl (this, -1, _T(""), wxDefaultPosition, 
+  wxStaticBox* destBox = new wxStaticBox(this, 0, _("Destination Folder"));
+  m_destFolderText = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
     wxSize(205, -1), 0, wxTextValidator(wxFILTER_NONE, &m_data.DestFolder));
-  wxButton* browse = new wxButton(this, ID_BUTTON_BROWSE, _T("..."), 
+  wxButton* browse = new wxButton(this, ID_BUTTON_BROWSE, _("..."), 
                                   wxPoint(-1,-1), wxSize(20, -1) );
-  m_revisionLabel = new wxStaticText (this, -1, _T("Number"));
-  wxStaticBox* revisionBox = new wxStaticBox(this, -1, _T("Revision"));
-  m_revisionText = new wxTextCtrl (this, -1, _T(""), wxDefaultPosition, 
+  m_revisionLabel = new wxStaticText (this, -1, _("Number"));
+  wxStaticBox* revisionBox = new wxStaticBox(this, -1, _("Revision"));
+  m_revisionText = new wxTextCtrl (this, -1, _(""), wxDefaultPosition, 
     wxSize(50, -1), 0, wxTextValidator(wxFILTER_NUMERIC, &m_data.Revision));                             
   m_useLatestCheck = new wxCheckBox(this, ID_USELATEST, "Use latest",
     wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_data.UseLatest));
-  wxTextCtrl* user = new wxTextCtrl (this, -1, _T(""),
+  wxTextCtrl* user = new wxTextCtrl (this, -1, _(""),
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_data.User));
   wxTextCtrl* pass = 
-    new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
+    new wxTextCtrl (this, -1, _(""), wxPoint(-1,-1), 
                     wxDefaultSize, wxTE_PASSWORD, 
                     wxTextValidator(wxFILTER_NONE, &m_data.Password));
   wxCheckBox* recursive = 
-    new wxCheckBox (this, -1, _T("Recursive"),
+    new wxCheckBox (this, -1, _("Recursive"),
                     wxDefaultPosition, wxDefaultSize, 0, 
                     wxGenericValidator(&m_data.Recursive));
   wxCheckBox* workbench = 
-    new wxCheckBox (this, -1, _T("Add to workbench"),
+    new wxCheckBox (this, -1, _("Add to workbench"),
                     wxDefaultPosition, wxDefaultSize, 0,
                     wxGenericValidator(&m_data.Workbench));
-  wxStaticBox* authBox = new wxStaticBox(this, -1, _T("Authentication"));
-  wxStaticText* userLabel = new wxStaticText (this, -1, _T("User"));
-  wxStaticText* passLabel = new wxStaticText (this, -1, _T("Password"));
-  wxButton* ok = new wxButton( this, wxID_OK, _T("OK" ));
-  wxButton* cancel = new wxButton( this, wxID_CANCEL, _T("Cancel"));
+  wxStaticBox* authBox = new wxStaticBox(this, -1, _("Authentication"));
+  wxStaticText* userLabel = new wxStaticText (this, -1, _("User"));
+  wxStaticText* passLabel = new wxStaticText (this, -1, _("Password"));
+  wxButton* ok = new wxButton( this, wxID_OK, _("OK" ));
+  wxButton* cancel = new wxButton( this, wxID_CANCEL, _("Cancel"));
 
   // place controls
   // Module row
   wxStaticBoxSizer *moduleSizer = new wxStaticBoxSizer (
-          new wxStaticBox(this, -1, _T("URL")), 
+          new wxStaticBox(this, -1, _("URL")), 
           wxHORIZONTAL);
   moduleSizer->Add (moduleName, 1, wxALL | wxEXPAND, 5);
 

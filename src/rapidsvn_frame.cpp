@@ -64,7 +64,7 @@ static const int NUM_ITEMS = 30;
 // List config keys here, to avoid duplicating literal text:
 const static char *szBrowserPathKey = "/MainFrame/BrowserPath";
 
-#define wxTraceMisc wxT("tracemisc")
+#define wxTraceMisc _("tracemisc")
 
 // define this to 1 to use wxToolBarSimple instead of the native one
 #define USE_GENERIC_TBAR 0
@@ -151,7 +151,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title)
   m_info_panel = new InfoPanel (m_horiz_splitter);
   m_log = new wxTextCtrl (m_horiz_splitter,
                           -1,
-                          _T (""),
+                          _(""),
                           wxPoint (0, 0),
                           wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
 
@@ -262,7 +262,7 @@ RapidSvnFrame::~RapidSvnFrame ()
   const size_t itemCount = workbenchItems.GetCount ();
   for (item = 0; item < itemCount; item++)
   {
-    key.Printf (_T ("/MainFrame/wc%d"), item);
+    key.Printf (_("/MainFrame/wc%d"), item);
     pConfig->Write (key, workbenchItems.Item (item));
   }
 
@@ -283,109 +283,109 @@ RapidSvnFrame::InitializeMenu ()
 
   // View menu
   wxMenu *menuView = new wxMenu;
-  pItem = new wxMenuItem (menuView, ID_Refresh, _T ("Refresh        F5"));
+  pItem = new wxMenuItem (menuView, ID_Refresh, _("Refresh        F5"));
   pItem->SetBitmap (wxBITMAP (refresh));
   menuView->Append (pItem);
 
   //menuView->AppendSeparator ();
   //
-  //pItem = new wxMenuItem (menuView, ID_Preferences, _T ("Preferences"));
+  //pItem = new wxMenuItem (menuView, ID_Preferences, _("Preferences"));
   //menuView->Append (pItem);
 
   // Create menu
   wxMenu *menuCreate = new wxMenu;
-  menuCreate->Append (ID_Import, _T ("&Import an unversioned file or tree ..."));
-  menuCreate->Append (ID_Checkout, _T ("&Checkout working copy ..."));
+  menuCreate->Append (ID_Import, _("&Import an unversioned file or tree ..."));
+  menuCreate->Append (ID_Checkout, _("&Checkout working copy ..."));
 
   menuCreate->AppendSeparator ();
 
-  menuCreate->Append (ID_Mkdir, _T ("Make a new directory ..."));
-  menuCreate->Append (ID_Copy, _T ("C&opy remembering history ..."));
+  menuCreate->Append (ID_Mkdir, _("Make a new directory ..."));
+  menuCreate->Append (ID_Copy, _("C&opy remembering history ..."));
 
   menuCreate->AppendSeparator ();
 
-  menuCreate->Append (ID_Merge, _T ("Merge differences"));
-  menuCreate->Append (ID_Switch, _T ("Switch to URL ..."));
+  menuCreate->Append (ID_Merge, _("Merge differences"));
+  menuCreate->Append (ID_Switch, _("Switch to URL ..."));
 
   // Modify menu
   wxMenu *menuModif = new wxMenu;
-  pItem = new wxMenuItem (menuModif, ID_Update, _T ("Update"));
+  pItem = new wxMenuItem (menuModif, ID_Update, _("Update"));
   pItem->SetBitmap (wxBITMAP (update));
   menuModif->Append (pItem);
 
-  pItem = new wxMenuItem (menuModif, ID_Commit, _T ("Commit"));
+  pItem = new wxMenuItem (menuModif, ID_Commit, _("Commit"));
   pItem->SetBitmap (wxBITMAP (commit));
   menuModif->Append (pItem);
 
   menuModif->AppendSeparator ();
 
-  pItem = new wxMenuItem (menuModif, ID_Add, _T ("Add"));
+  pItem = new wxMenuItem (menuModif, ID_Add, _("Add"));
   pItem->SetBitmap (wxBITMAP (add));
   menuModif->Append (pItem);
 
-  pItem = new wxMenuItem (menuModif, ID_Del, _T ("Remove"));
+  pItem = new wxMenuItem (menuModif, ID_Del, _("Remove"));
   pItem->SetBitmap (wxBITMAP (delete));
   menuModif->Append (pItem);
 
   menuModif->AppendSeparator ();
 
-  pItem = new wxMenuItem (menuModif, ID_Revert, _T ("Revert"));
+  pItem = new wxMenuItem (menuModif, ID_Revert, _("Revert"));
   pItem->SetBitmap (wxBITMAP (revert));
   menuModif->Append (pItem);
 
-  pItem = new wxMenuItem (menuModif, ID_Resolve, _T ("Resolve conflicts"));
+  pItem = new wxMenuItem (menuModif, ID_Resolve, _("Resolve conflicts"));
   pItem->SetBitmap (wxBITMAP (resolve));
   menuModif->Append (pItem);
 
   // Copy and rename menu
   menuModif->AppendSeparator ();
 
-  pItem = new wxMenuItem (menuModif, ID_CopyTo, _T ("Copy"));
+  pItem = new wxMenuItem (menuModif, ID_CopyTo, _("Copy"));
   //pItem->SetBitmap (wxBITMAP (copy));
   menuModif->Append (pItem);
 
-  pItem = new wxMenuItem (menuModif, ID_MoveTo, _T ("Move"));
+  pItem = new wxMenuItem (menuModif, ID_MoveTo, _("Move"));
   //pItem->SetBitmap (wxBITMAP (rename));
   menuModif->Append (pItem);
 
-  pItem = new wxMenuItem (menuModif, ID_RenameHere, _T ("Rename"));
+  pItem = new wxMenuItem (menuModif, ID_RenameHere, _("Rename"));
   //pItem->SetBitmap (wxBITMAP (rename));
   menuModif->Append (pItem);
 
   // Query menu
   wxMenu *menuQuery = new wxMenu;
-  pItem = new wxMenuItem (menuQuery, ID_Log, _T ("Log"));
+  pItem = new wxMenuItem (menuQuery, ID_Log, _("Log"));
   pItem->SetBitmap (wxBITMAP (log));
   menuQuery->Append (pItem);
 
-  pItem = new wxMenuItem (menuQuery, ID_Info, _T ("Info"));
+  pItem = new wxMenuItem (menuQuery, ID_Info, _("Info"));
   pItem->SetBitmap (wxBITMAP (info));
   menuQuery->Append (pItem);
 
-  pItem = new wxMenuItem (menuQuery, ID_Property, _T ("Properties"));
+  pItem = new wxMenuItem (menuQuery, ID_Property, _("Properties"));
   pItem->SetBitmap (wxBITMAP (info));
   menuQuery->Append (pItem);
 
   // Extras menu
   wxMenu *menuExtras = new wxMenu;
-  pItem = new wxMenuItem (menuExtras, ID_Cleanup, _T ("Cleanup"));
+  pItem = new wxMenuItem (menuExtras, ID_Cleanup, _("Cleanup"));
   menuExtras->Append (pItem);
 
   // Help Menu
   wxMenu *menuHelp = new wxMenu;
-  menuHelp->Append (ID_Contents, _T ("&Contents"));
+  menuHelp->Append (ID_Contents, _("&Contents"));
   menuHelp->AppendSeparator ();
-  menuHelp->Append (ID_About, _T ("&About..."));
+  menuHelp->Append (ID_About, _("&About..."));
 
   // Create the menu bar and append the menus
   wxMenuBar *menuBar = new wxMenuBar;
-  menuBar->Append (menuFile, _T ("&File"));
-  menuBar->Append (menuView, _T ("&View"));
-  menuBar->Append (menuCreate, _T ("&Create"));
-  menuBar->Append (menuModif, _T ("&Modify"));
-  menuBar->Append (menuQuery, _T ("&Query"));
-  menuBar->Append (menuExtras, _T ("&Extras"));
-  menuBar->Append (menuHelp, _T ("&Help"));
+  menuBar->Append (menuFile, _("&File"));
+  menuBar->Append (menuView, _("&View"));
+  menuBar->Append (menuCreate, _("&Create"));
+  menuBar->Append (menuModif, _("&Modify"));
+  menuBar->Append (menuQuery, _("&Query"));
+  menuBar->Append (menuExtras, _("&Extras"));
+  menuBar->Append (menuHelp, _("&Help"));
 
   SetMenuBar (menuBar);
 }
@@ -410,7 +410,7 @@ RapidSvnFrame::UpdateFileList ()
       }
       catch (...)
       {
-        m_logTracer->Trace (_T("Exception when updating filelist"));
+        m_logTracer->Trace (_("Exception when updating filelist"));
       }
     }
     else
@@ -443,7 +443,7 @@ RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
   wxString msg;
 
-  msg.Printf (_T ("%s Version %d.%d.%d\n"
+  msg.Printf (_("%s Version %d.%d.%d\n"
                   "Milestone: %s\n"
                   "\n%s\n\n"
                   "For more information see:\n"
@@ -460,7 +460,7 @@ RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
               wxMAJOR_VERSION, wxMINOR_VERSION, wxRELEASE_NUMBER);
 
   wxString title;
-  title.Printf (_T ("About %s"), APPLICATION_NAME);
+  title.Printf (_("About %s"), APPLICATION_NAME);
   wxMessageBox (msg, title, wxOK | wxICON_INFORMATION);
 }
 
@@ -550,8 +550,8 @@ RapidSvnFrame::RecreateToolbar ()
                     -1,
                     -1,
                     (wxObject *) NULL, 
-                    _T ("Refresh"), 
-                    _T ("Refresh the file list"));
+                    _("Refresh"), 
+                    _("Refresh the file list"));
 
   toolBar->AddSeparator ();
 
@@ -574,8 +574,8 @@ RapidSvnFrame::AddActionTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _T ("Add selected"),
-                    _T ("Put files and directories under revision control"));
+                    _("Add selected"),
+                    _("Put files and directories under revision control"));
 
   toolBar->AddTool (ID_Delete,
                     wxBITMAP (delete),
@@ -584,8 +584,8 @@ RapidSvnFrame::AddActionTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _T ("Remove selected"),
-                    _T ("Remove files and directories from version control"));
+                    _("Remove selected"),
+                    _("Remove files and directories from version control"));
 
   toolBar->AddTool (ID_Update,
                     wxBITMAP (update),
@@ -594,9 +594,8 @@ RapidSvnFrame::AddActionTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _T ("Update selected"),
-                    _T
-                    ("Bring changes from the repository into the working copy"));
+                    _("Update selected"),
+                    _("Bring changes from the repository into the working copy"));
 
   toolBar->AddTool (ID_Commit,
                     wxBITMAP (commit),
@@ -605,9 +604,8 @@ RapidSvnFrame::AddActionTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _T ("Commit selected"),
-                    _T
-                    ("Send changes from your working copy to the repository"));
+                    _("Commit selected"),
+                    _("Send changes from your working copy to the repository"));
 
   toolBar->AddTool (ID_Revert,
                     wxBITMAP (revert),
@@ -616,9 +614,8 @@ RapidSvnFrame::AddActionTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _T ("Revert selected"),
-                    _T
-                    ("Restore pristine working copy file (undo all local edits)"));
+                    _("Revert selected"),
+                    _("Restore pristine working copy file (undo all local edits)"));
 
   toolBar->AddTool (ID_Resolve,
                     wxBITMAP (resolve),
@@ -627,9 +624,8 @@ RapidSvnFrame::AddActionTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _T ("Resolve selected"),
-                    _T
-                    ("Remove 'conflicted' state on working copy files or directories)"));
+                    _("Resolve selected"),
+                    _("Remove 'conflicted' state on working copy files or directories)"));
 
   toolBar->AddSeparator ();
 }
@@ -646,8 +642,8 @@ RapidSvnFrame::AddInfoTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _T ("Info selected"),
-                    _T ("Display info about selected entries"));
+                    _("Info selected"),
+                    _("Display info about selected entries"));
 
   toolBar->AddTool (ID_Log,
                     wxBITMAP (log),
@@ -656,8 +652,8 @@ RapidSvnFrame::AddInfoTools ()
                     -1,
                     -1,
                     (wxObject *) NULL,
-                    _T ("Log selected"),
-                    _T ("Show the log messages for a set entries"));
+                    _("Log selected"),
+                    _("Show the log messages for a set entries"));
 
   toolBar->AddSeparator ();
 }
@@ -684,8 +680,7 @@ RapidSvnFrame::AddProject ()
   if ((fileName.GetName () + fileName.GetExt ()) == SVN_WC_ADM_DIR_NAME)
   {
     add = FALSE;
-    wxMessageBox (_T
-                  ("You cannot add a subversion administrative directory to the workbench!"),
+    wxMessageBox (_("You cannot add a subversion administrative directory to the workbench!"),
                   APPLICATION_NAME, wxOK);
     return;
   }
@@ -694,7 +689,7 @@ RapidSvnFrame::AddProject ()
   m_folder_browser->AddProject (dialog.GetPath ());
   m_folder_browser->Refresh ();
 
-  wxLogStatus (_T ("Added project to workbench  '%s'"),
+  wxLogStatus (_("Added project to workbench  '%s'"),
                dialog.GetPath ().c_str ());
 }
 
@@ -704,7 +699,7 @@ RapidSvnFrame::RemoveProject ()
   wxASSERT (m_folder_browser);
   if( m_folder_browser->RemoveProject() )
   {
-    wxLogStatus (_T ("Removed project from workbench"));
+    wxLogStatus (_("Removed project from workbench"));
   }
 }
 
@@ -722,8 +717,8 @@ RapidSvnFrame::InitFolderBrowser ()
 
   for (i = 0;; i++)
   {
-    key.Printf (_T ("/MainFrame/wc%d"), i);
-    if (pConfig->Read (key, &val, _T ("")))
+    key.Printf (_("/MainFrame/wc%d"), i);
+    if (pConfig->Read (key, &val, _("")))
     {
       workbenchItems.Add (val);
     }
@@ -832,7 +827,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
   case ID_Contents: //TODO
   case ID_Rename: //TODO
   default:
-    m_logTracer->Trace (_T("Unimplemented action!"));
+    m_logTracer->Trace (_("Unimplemented action!"));
     break;
 
   }
@@ -929,11 +924,11 @@ RapidSvnFrame::ShowInfo ()
 
   {
     int rep_type = NORMAL_REPORT;
-    wxString caption = _T ("Info");
+    wxString caption = _("Info");
     if (wasError)
     {
       rep_type = ERROR_REPORT;
-      caption = _T ("Info error");
+      caption = _("Info error");
     }
 
     ReportDlg rdlg (this, caption, all_info, rep_type);
@@ -1010,7 +1005,7 @@ InfoPanel::InfoPanel (wxWindow * parent)
 }
 
 LogTracer::LogTracer (wxWindow * parent)
-  : wxTextCtrl (parent, -1, _T (""), wxPoint (0, 0),
+  : wxTextCtrl (parent, -1, _(""), wxPoint (0, 0),
                 wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY)
 {
   SetMaxLength (0);
@@ -1019,7 +1014,7 @@ LogTracer::LogTracer (wxWindow * parent)
 void
 LogTracer::Trace (const wxString & str)
 {
-  AppendText (str + _T ("\n"));
+  AppendText (str + _("\n"));
 }
 /* -----------------------------------------------------------------
  * local variables:

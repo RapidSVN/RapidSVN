@@ -12,7 +12,8 @@
  */
 
 // wxwindows
-#include "wx/filefn.h"
+#include "wx/wx.h"
+//#include "wx/filefn.h"
 
 // svncpp
 #include "svncpp/exception.hpp"
@@ -46,12 +47,12 @@ CleanupAction::Perform ()
     const svn::Path & path = GetPath ();
     wxSetWorkingDirectory (path.c_str ());
     client.cleanup (path.c_str ());
-    Trace (_T ("Cleanup of working directory finished"));
+    Trace (_("Cleanup of working directory finished"));
     result = true;
   }
   catch (svn::ClientException &e)
   {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
                      ACTION_EVENT);
     GetTracer ()->Trace ("Cleanup failed:");
     GetTracer ()->Trace (e.description ());

@@ -27,7 +27,7 @@ MkdirDlg::sData::sData()
 }
 
 MkdirDlg::MkdirDlg(wxWindow* parent, sData* pData)
-: wxDialog(parent, -1, _T("Create a new directory under revision control"),
+: wxDialog(parent, -1, _("Create a new directory under revision control"),
   wxDefaultPosition, wxDefaultSize,
     wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
   m_pData(pData)
@@ -47,9 +47,9 @@ MkdirDlg::InitializeData ()
 
     // The target field:
   wxStaticBoxSizer *targetSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("New directory or repository URL")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("New directory or repository URL")), wxHORIZONTAL);
     
-  wxTextCtrl* Target = new wxTextCtrl(this, -1, _T(""), wxDefaultPosition, 
+  wxTextCtrl* Target = new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
     wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_pData->Target));
     
@@ -59,9 +59,9 @@ MkdirDlg::InitializeData ()
 
   // The message field:
   wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("Enter log message")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("Enter log message")), wxHORIZONTAL);
     
-  wxTextCtrl* Log = new wxTextCtrl(this, -1, _T(""), wxDefaultPosition, 
+  wxTextCtrl* Log = new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
     wxSize(-1, 50), wxTE_MULTILINE,
     wxTextValidator(wxFILTER_NONE, &m_pData->LogMessage));
     
@@ -71,29 +71,29 @@ MkdirDlg::InitializeData ()
   
   // The authentication fields:
   wxStaticBoxSizer *authSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("Authentication")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("Authentication")), wxHORIZONTAL);
     
-  authSizer->Add(new wxStaticText(this, -1, _T("User")), 0, 
+  authSizer->Add(new wxStaticText(this, -1, _("User")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
     
-  wxTextCtrl* pUser = new wxTextCtrl (this, -1, _T(""),
+  wxTextCtrl* pUser = new wxTextCtrl (this, -1, _(""),
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_pData->User));
   authSizer->Add (pUser, 1, 
     wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
 
-  authSizer->Add(new wxStaticText (this, -1, _T("Password")), 0,
+  authSizer->Add(new wxStaticText (this, -1, _("Password")), 0,
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
-  wxTextCtrl* pass = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
+  wxTextCtrl* pass = new wxTextCtrl (this, -1, _(""), wxPoint(-1,-1), 
     wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_pData->Password));
   authSizer->Add(pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5);
   
   authouterSizer->Add(authSizer, 1, wxALL | wxEXPAND, 5);
 
   // The buttons:
-  buttonSizer->Add(new wxButton( this, wxID_OK, _T("OK" )), 0, 
+  buttonSizer->Add(new wxButton( this, wxID_OK, _("OK" )), 0, 
                    wxALL, 10);
-  buttonSizer->Add(new wxButton( this, wxID_CANCEL, _T("Cancel")), 0, 
+  buttonSizer->Add(new wxButton( this, wxID_CANCEL, _("Cancel")), 0, 
                    wxALL, 10);
 
   // Add all the sizers to the main sizer

@@ -60,13 +60,13 @@ CopyAction::Perform ()
     //this should be configurable
     const svn::Revision head (svn::Revision::HEAD);
     client.copy (src, head, dest);
-    GetTracer ()->Trace (_T("Copy successful"));
+    GetTracer ()->Trace (_("Copy successful"));
   }
   catch (svn::ClientException &e)
   {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
                      ACTION_EVENT);
-    GetTracer ()->Trace (_T("Copy failed:"));
+    GetTracer ()->Trace (_("Copy failed:"));
     GetTracer ()->Trace (e.description ());
     result = false;
   }
@@ -83,11 +83,11 @@ CopyAction::DestinationPath (const svn::Path & src)
   wxString dest;
   wxFileName file (src.c_str ());
   wxDirDialog dialog (GetParent (), 
-                      _T ("Select a directory to copy to"), 
+                      _("Select a directory to copy to"), 
                       GetPath ().c_str ());
 
   if (dialog.ShowModal () != wxID_OK)
-    return _T ("");
+    return _("");
 
 
   dest = dialog.GetPath ();
@@ -95,8 +95,8 @@ CopyAction::DestinationPath (const svn::Path & src)
   if(dest.Right (4) == ".svn")
   {
       wxMessageDialog dlg (GetParent (), 
-                           _T ("This is an invalid directory."),
-                           _T ("Error"), wxOK | wxICON_HAND);
+                           _("This is an invalid directory."),
+                           _("Error"), wxOK | wxICON_HAND);
       dlg.ShowModal ();
 
       return "";

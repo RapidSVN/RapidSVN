@@ -31,7 +31,7 @@ info_print_time (apr_time_t atime, const wxChar * desc, wxString & str)
   /* if this returns an error, just don't print anything out */
   apr_err = apr_time_exp_tz (&extime, atime, 0);
   if (!apr_err)
-    str.Printf (_T ("%s: %04lu-%02lu-%02lu %02lu:%02lu GMT\n"), desc,
+    str.Printf (_("%s: %04lu-%02lu-%02lu %02lu:%02lu GMT\n"), desc,
                 (unsigned long) (extime.tm_year + 1900),
                 (unsigned long) (extime.tm_mon + 1),
                 (unsigned long) (extime.tm_mday),
@@ -51,18 +51,18 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
 
   SVN_ERR (svn_wc_adm_probe_open (&adm_access, NULL, path.c_str (), FALSE,
                                   FALSE, pool));
-  info = path + _T ("\n");
+  info = path + _("\n");
 
   SVN_ERR (svn_wc_entry (&entry, path.c_str (), adm_access, FALSE, pool));
   if (!entry)
   {
-    info += _T ("(Not a versioned resource)\n");
+    info += _("(Not a versioned resource)\n");
     return SVN_NO_ERROR;
   }
 
   if ((entry->name) && strcmp (entry->name, SVN_WC_ENTRY_THIS_DIR))
   {
-    str.Printf (_T ("Name: %s\n"), entry->name);
+    str.Printf (_("Name: %s\n"), entry->name);
     info += str;
   }
 
@@ -87,7 +87,7 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
   switch (entry->kind)
   {
   case svn_node_file:
-    info += _T ("Node Kind: file\n");
+    info += _("Node Kind: file\n");
     {
       const char *dir_name;
       svn_path_split (path.c_str (), &dir_name, NULL, pool);
@@ -97,37 +97,37 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
     break;
 
   case svn_node_dir:
-    info += _T ("Node Kind: directory\n");
+    info += _("Node Kind: directory\n");
     SVN_ERR (svn_wc_conflicted_p (&text_conflict, &props_conflict,
                                   path.c_str (), entry, pool));
     break;
 
   case svn_node_none:
-    info += _T ("Node Kind: none\n");
+    info += _("Node Kind: none\n");
     break;
 
   case svn_node_unknown:
   default:
-    info += _T ("Node Kind: unknown\n");
+    info += _("Node Kind: unknown\n");
     break;
   }
 
   switch (entry->schedule)
   {
   case svn_wc_schedule_normal:
-    info += _T ("Schedule: normal\n");
+    info += _("Schedule: normal\n");
     break;
 
   case svn_wc_schedule_add:
-    info += _T ("Schedule: add\n");
+    info += _("Schedule: add\n");
     break;
 
   case svn_wc_schedule_delete:
-    info += _T ("Schedule: delete\n");
+    info += _("Schedule: delete\n");
     break;
 
   case svn_wc_schedule_replace:
-    info += _T ("Schedule: replace\n");
+    info += _("Schedule: replace\n");
     break;
 
   default:
@@ -138,13 +138,13 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
   {
     if (entry->copyfrom_url)
     {
-      str.Printf (_T ("Copied From Url: %s\n"), entry->copyfrom_url);
+      str.Printf (_("Copied From Url: %s\n"), entry->copyfrom_url);
       info += str;
     }
 
     if (SVN_IS_VALID_REVNUM (entry->copyfrom_rev))
     {
-      str.Printf (_T ("Copied From Rev: %" SVN_REVNUM_T_FMT "\n"),
+      str.Printf (_("Copied From Rev: %" SVN_REVNUM_T_FMT "\n"),
                   entry->copyfrom_rev);
       info += str;
     }
@@ -152,14 +152,14 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
 
   if (entry->cmt_author)
   {
-    str.Printf (_T ("Last Changed Author: %s\n"), entry->cmt_author);
+    str.Printf (_("Last Changed Author: %s\n"), entry->cmt_author);
     info += str;
   }
 
 
   if (SVN_IS_VALID_REVNUM (entry->cmt_rev))
   {
-    str.Printf (_T ("Last Changed Rev: %" SVN_REVNUM_T_FMT "\n"),
+    str.Printf (_("Last Changed Rev: %" SVN_REVNUM_T_FMT "\n"),
                 entry->cmt_rev);
     info += str;
   }
@@ -167,52 +167,52 @@ svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
 
   if (entry->cmt_date)
   {
-    info_print_time (entry->cmt_date, _T ("Last Changed Date"), str);
+    info_print_time (entry->cmt_date, _("Last Changed Date"), str);
     info += str;
   }
 
   if (entry->text_time)
   {
-    info_print_time (entry->text_time, _T ("Text Last Updated"), str);
+    info_print_time (entry->text_time, _("Text Last Updated"), str);
     info += str;
   }
 
   if (entry->prop_time)
   {
-    info_print_time (entry->prop_time, _T ("Properties Last Updated"), str);
+    info_print_time (entry->prop_time, _("Properties Last Updated"), str);
     info += str;
   }
 
   if (entry->checksum)
   {
-    str.Printf (_T ("Checksum: %s\n"), entry->checksum);
+    str.Printf (_("Checksum: %s\n"), entry->checksum);
     info += str;
   }
 
   if (text_conflict && entry->conflict_old)
   {
-    str.Printf (_T ("Conflict Previous Base File: %s\n"),
+    str.Printf (_("Conflict Previous Base File: %s\n"),
                 entry->conflict_old);
     info += str;
   }
 
   if (text_conflict && entry->conflict_wrk)
   {
-    str.Printf (_T ("Conflict Previous Working File: %s\n"),
+    str.Printf (_("Conflict Previous Working File: %s\n"),
                 entry->conflict_wrk);
     info += str;
   }
 
   if (text_conflict && entry->conflict_new)
   {
-    str.Printf (_T ("Conflict Current Base File: %s\n"), entry->conflict_new);
+    str.Printf (_("Conflict Current Base File: %s\n"), entry->conflict_new);
     info += str;
   }
 
 
   if (props_conflict && entry->prejfile)
   {
-    str.Printf (_T ("Conflict Properties File: %s\n"), entry->prejfile);
+    str.Printf (_("Conflict Properties File: %s\n"), entry->prejfile);
     info += str;
   }
 

@@ -11,6 +11,9 @@
  * ====================================================================
  */
 
+// wxwindows
+#include "wx/wx.h"
+
 // svncpp
 #include "svncpp/exception.hpp"
 #include "svncpp/client.hpp"
@@ -67,7 +70,7 @@ ImportAction::Perform ()
   }
   catch (svn::ClientException &e)
   {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
                      ACTION_EVENT);
     GetTracer ()->Trace ("Import failed:");
     GetTracer ()->Trace (e.description ());

@@ -13,7 +13,7 @@
 #ifndef _COMMIT_DLG_H_INCLUDED_
 #define _COMMIT_DLG_H_INCLUDED_
 
-// wx
+// wxwindows
 #include "wx/dialog.h"
 
 // app

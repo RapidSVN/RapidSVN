@@ -11,6 +11,9 @@
  * ====================================================================
  */
 
+// wxwindows
+#include "wx/wx.h"
+
 // app
 #include "exceptions.hpp"
 
@@ -38,7 +41,7 @@ RapidSvnEx & RapidSvnEx::operator = (const RapidSvnEx & rhs)
 void
 RapidSvnEx::what (const wxString & __what)
 {
-  estr.Printf (_T ("%s  code: %ld"), __what.c_str (), code);
+  estr.Printf (_("%s  code: %ld"), __what.c_str (), code);
 }
 /* -----------------------------------------------------------------
  * local variables:

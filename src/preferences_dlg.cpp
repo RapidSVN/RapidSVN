@@ -36,7 +36,7 @@ PreferencesDlg::SData::SData()
 {
   // Default values which will be used if data could not be 
   // read from a wxConfig object by Read().
-  Text = _T("Default text");
+  Text = _("Default text");
   EnableX = true;
   EnableY = false;
   Enable1 = Enable2 = false;
@@ -96,7 +96,7 @@ PreferencesDlg::CreateInstance(wxWindow* parent)
 }
 
 PreferencesDlg::PreferencesDlg(wxWindow* parent)
-  : wxDialog(parent, -1, _T("Preferences"),
+  : wxDialog(parent, -1, _("Preferences"),
       wxDefaultPosition, wxDefaultSize,
       wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
     m_pNB(NULL)
@@ -123,9 +123,9 @@ PreferencesDlg::InitializeData ()
   wxNotebookSizer *nbs = new wxNotebookSizer(m_pNB);
   
   GeneralPanel *pGeneralPanel = GeneralPanel::Create(m_pNB);
-  m_pNB->AddPage(pGeneralPanel, _T("General"));
+  m_pNB->AddPage(pGeneralPanel, _("General"));
   ExternalsPanel *pExternalsPanel = ExternalsPanel::Create(m_pNB);
-  m_pNB->AddPage(pExternalsPanel, _T("Externals"));
+  m_pNB->AddPage(pExternalsPanel, _("Externals"));
   
   topsizer->Add(nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 10);
   topsizer->Add(button_sizer, 0, wxALIGN_CENTER);
@@ -201,54 +201,54 @@ GeneralPanel::InitializeData()
   leftsizer->Add(enable2sizer, 1, wxALIGN_LEFT);
   leftsizer->Add(
     new wxStaticText(this, -1,
-      _T("(Replace with real preferences in due course)")),
+      _("(Replace with real preferences in due course)")),
       0, wxALL | wxALIGN_LEFT, 5);
     
   rightsizer->Add(whichsizer, 1, wxALIGN_LEFT);
   rightsizer->Add(picksizer, 1, wxALIGN_LEFT);
 
   textsizer->Add(
-    new wxStaticText(this, -1, _T("Enter some text:")),
+    new wxStaticText(this, -1, _("Enter some text:")),
     0, wxALL | wxALIGN_CENTER, 5);
   textsizer->Add(
-    new wxTextCtrl(this, -1, _T(""), wxDefaultPosition, wxSize(100, -1), 0,
+    new wxTextCtrl(this, -1, _(""), wxDefaultPosition, wxSize(100, -1), 0,
       wxTextValidator(wxFILTER_ALPHA, &PreferencesDlg::Data.Text)),
     1, wxALL | wxALIGN_CENTER, 5);
     
   enable1sizer->Add(
-    new wxCheckBox(this, -1, _T("Enable feature X"),
+    new wxCheckBox(this, -1, _("Enable feature X"),
       wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&PreferencesDlg::Data.EnableX)),
     0, wxALL | wxALIGN_CENTER, 5);
     
   enable2sizer->Add(
-    new wxCheckBox(this, -1, _T("Enable feature Y"), 
+    new wxCheckBox(this, -1, _("Enable feature Y"), 
       wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&PreferencesDlg::Data.EnableY)),
     0, wxALL | wxALIGN_CENTER, 5);
   
   whichsizer->Add(
-    new wxStaticText(this, -1, _T("Select one:")),
+    new wxStaticText(this, -1, _("Select one:")),
     0, wxALL | wxALIGN_CENTER, 5);
   whichsizer->Add(
-    new wxRadioButton(this, -1, _T("1"), wxDefaultPosition, wxDefaultSize, 0,
+    new wxRadioButton(this, -1, _("1"), wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&PreferencesDlg::Data.Enable1)),
     0, wxALL | wxALIGN_CENTER, 5);
   whichsizer->Add(
-    new wxRadioButton(this, -1, _T("2"), wxDefaultPosition, wxDefaultSize, 0,
+    new wxRadioButton(this, -1, _("2"), wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&PreferencesDlg::Data.Enable2)),
     0, wxALL | wxALIGN_CENTER, 5);
   whichsizer->Add(
-    new wxRadioButton(this, -1, _T("3"), wxDefaultPosition, wxDefaultSize, 0,
+    new wxRadioButton(this, -1, _("3"), wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&PreferencesDlg::Data.Enable3)),
     0, wxALL | wxALIGN_CENTER, 5);
     
   picksizer->Add(
-    new wxStaticText(this, -1, _T("Pick one:")),
+    new wxStaticText(this, -1, _("Pick one:")),
     0, wxALL | wxALIGN_CENTER, 5);
-  static wxString s1(_T("First option"));
-  static wxString s2(_T("Second option"));
-  static wxString s3(_T("Third option"));
+  static wxString s1(_("First option"));
+  static wxString s2(_("Second option"));
+  static wxString s3(_("Third option"));
   static wxString ss[] = { s1, s2, s3 };
   
   picksizer->Add(
@@ -283,7 +283,7 @@ ExternalsPanel::InitializeData()
 {
   wxBoxSizer *panelsizer = new wxBoxSizer(wxVERTICAL);
   panelsizer->Add(
-    new wxStaticText (this, -1, _T("External settings go here.")),
+    new wxStaticText (this, -1, _("External settings go here.")),
     1, wxEXPAND | wxALL, 10);
 
   SetSizer(panelsizer);

@@ -12,9 +12,10 @@
  */
 
 // wxwindows
-#include "wx/textctrl.h"
-#include "wx/button.h"
-#include "wx/sizer.h"
+#include "wx/wx.h"
+//#include "wx/textctrl.h"
+//#include "wx/button.h"
+//#include "wx/sizer.h"
 
 // app
 #include "report_dlg.hpp"
@@ -30,7 +31,7 @@ ReportDlg::ReportDlg (wxWindow * parent,
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
     m_str (data)
 {
-  m_text = new wxTextCtrl (this, -1, _T (""),
+  m_text = new wxTextCtrl (this, -1, _(""),
                          wxDefaultPosition,
                          wxSize (500, 200),
                          wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH);

@@ -13,7 +13,6 @@
 
 // wxwindows
 #include "wx/wx.h"
-//RMOVE #include "wx/utils.h"
 
 // svncpp
 #include "svncpp/exception.hpp"
@@ -77,13 +76,13 @@ SimpleWorker::Perform (Action * action)
   catch (svn::ClientException & e)
   {
     wxString msg;
-    msg.Printf ( _T("Error while preparing action: %s"), e.message () );
+    msg.Printf ( _("Error while preparing action: %s"), e.message () );
     Trace (msg);
     return false;
   }
   catch (...)
   {
-    Trace (_T("Error while preparing action."));
+    Trace (_("Error while preparing action."));
     return false;
   }
   
@@ -109,7 +108,7 @@ SimpleWorker::Perform (Action * action)
   catch (svn::ClientException & e)
   {
     wxString msg;
-    msg.Printf (_T("Error while performing action: %s"), 
+    msg.Printf (_("Error while performing action: %s"), 
                 e.message ());
     PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
     //TODO thread safe? 
@@ -118,7 +117,7 @@ SimpleWorker::Perform (Action * action)
   }
   catch (...)
   {
-    wxString msg (_T("Error while performing action."));
+    wxString msg (_("Error while performing action."));
     PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
     //TODO thread safe?
     //Trace ();

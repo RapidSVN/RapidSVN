@@ -13,7 +13,7 @@
 #ifndef _TRACER_H_INCLUDED_
 #define _TRACER_H_INCLUDED_
 
-// wx
+// wxwindows
 #include "wx/string.h"
 
 // forward declarations

@@ -38,8 +38,8 @@ RevertAction::Prepare ()
   }
 
   wxMessageDialog dlg (GetParent (),
-                       _T("Do you want to revert local changes?"),
-                       _T("Revert"), wxYES_NO | wxICON_QUESTION);
+                       _("Do you want to revert local changes?"),
+                       _("Revert"), wxYES_NO | wxICON_QUESTION);
 
   if (dlg.ShowModal () != wxID_YES)
   {

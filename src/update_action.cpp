@@ -88,7 +88,7 @@ UpdateAction::Perform ()
     catch (svn::ClientException &e)
     {
       result = false;
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (e.description ()), 
+      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, _(e.description ()), 
                        ACTION_EVENT);
       Trace ("Update failed:");
       Trace (e.description ());

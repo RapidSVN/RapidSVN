@@ -45,8 +45,8 @@ MergeDlg::TestRev (wxString & val)
   if (!val.ToULong (&rev, 10) && rev < 0)
   {
     // could not convert revision to a number
-    wxMessageBox (_T ("Revision must be an unsigned number!"),
-                  _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+    wxMessageBox (_("Revision must be an unsigned number!"),
+                  _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
     return -1;
   }
 
@@ -54,7 +54,7 @@ MergeDlg::TestRev (wxString & val)
 }
 
 MergeDlg::MergeDlg (wxWindow * parent, MergeData & data)
-           : wxDialog (parent, -1, _T("Merge revisions"), wxDefaultPosition, 
+           : wxDialog (parent, -1, _("Merge revisions"), wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
              m_data(data)
 {
@@ -83,8 +83,8 @@ MergeDlg::OnOK (wxCommandEvent & event)
 
   if (m_data.Path1.IsEmpty ())
   {
-    wxMessageBox (_T ("First path or URL is required for merge!"),
-                  _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+    wxMessageBox (_("First path or URL is required for merge!"),
+                  _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
 
     // Do not allow the user to continue if the path is empty 
     // and the import is addressing a file.
@@ -99,8 +99,8 @@ MergeDlg::OnOK (wxCommandEvent & event)
     // no deductible interval from the first path
     if (m_data.Path2.IsEmpty ())
     {
-      wxMessageBox (_T ("Second path or URL is required for merge!"),
-                    _T ("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+      wxMessageBox (_("Second path or URL is required for merge!"),
+                    _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
 
       // Do not allow the user to continue if the path is empty 
       // and the import is addressing a file.
@@ -118,15 +118,15 @@ MergeDlg::InitializeData ()
 
   // Merge paths grid:
   wxStaticBoxSizer *mergeSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("Merge")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("Merge")), wxHORIZONTAL);
     
   wxFlexGridSizer* grid = new wxFlexGridSizer(6, 2, 0, 0);
   grid->AddGrowableCol(0);  // The first column can be expanded.
 
   // Row 0:  
-  grid->Add(new wxStaticText(this, -1, _T("First working copy or URL")), 0, 
+  grid->Add(new wxStaticText(this, -1, _("First working copy or URL")), 0, 
     0, 5);
-  grid->Add(new wxStaticText(this, -1, _T("Revision")), 0, 
+  grid->Add(new wxStaticText(this, -1, _("Revision")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
     
   // Row 1:  
@@ -141,9 +141,9 @@ MergeDlg::InitializeData ()
   grid->Add(Path1Rev, 0, wxLEFT, 20);
     
   // Row 2:
-  grid->Add(new wxStaticText(this, -1, _T("Second working copy or URL")), 0, 
+  grid->Add(new wxStaticText(this, -1, _("Second working copy or URL")), 0, 
     0, 5);
-  grid->Add(new wxStaticText(this, -1, _T("Revision")), 0, 
+  grid->Add(new wxStaticText(this, -1, _("Revision")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
 
   // Row 3:  
@@ -158,7 +158,7 @@ MergeDlg::InitializeData ()
   grid->Add(Path2Rev, 0, wxLEFT, 20);
 
   // Row 4:
-  grid->Add(new wxStaticText(this, -1, _T("Destination path")), 0, 
+  grid->Add(new wxStaticText(this, -1, _("Destination path")), 0, 
     0, 5);
   grid->Add(new wxStaticText(this, -1, ""), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
@@ -169,7 +169,7 @@ MergeDlg::InitializeData ()
     wxTextValidator(wxFILTER_NONE, &m_data.Destination));
   grid->Add(Destination, 1, wxBOTTOM | wxEXPAND, 5);
   
-  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, _T("..."), 
+  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, _("..."), 
     wxPoint(-1,-1), wxSize(20, -1));
   grid->Add(BrowseButton, 0, wxALL, 5);
 
@@ -177,25 +177,25 @@ MergeDlg::InitializeData ()
 
   // Sundry items row:
   wxBoxSizer *sundrySizer = new wxBoxSizer(wxHORIZONTAL);
-  wxCheckBox* Recursive = new wxCheckBox (this, -1, _T("Recursive"),
+  wxCheckBox* Recursive = new wxCheckBox (this, -1, _("Recursive"),
     wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_data.Recursive));
   sundrySizer->Add(Recursive, 0, wxALL, 5);
-  wxCheckBox* Force = new wxCheckBox (this, -1, _T("Force"),
+  wxCheckBox* Force = new wxCheckBox (this, -1, _("Force"),
     wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_data.Force));
   sundrySizer->Add(Force, 0, wxALL, 5);
 
   // Authentication row:
   wxStaticBoxSizer *authSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _T("Authentication")), wxHORIZONTAL);
+    new wxStaticBox(this, -1, _("Authentication")), wxHORIZONTAL);
 
-  authSizer->Add(new wxStaticText(this, -1, _T("User")), 0, 
+  authSizer->Add(new wxStaticText(this, -1, _("User")), 0, 
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
   wxTextCtrl* user = new wxTextCtrl(this, -1, "",
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_data.User));
   authSizer->Add(user, 1, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
 
-  authSizer->Add(new wxStaticText(this, -1, _T("Password")), 0,
+  authSizer->Add(new wxStaticText(this, -1, _("Password")), 0,
     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
   wxTextCtrl* pass = new wxTextCtrl(this, -1, "", wxDefaultPosition, 
     wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_data.Password));
@@ -203,9 +203,9 @@ MergeDlg::InitializeData ()
  
   // Button row
   wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-  buttonSizer->Add(new wxButton(this, wxID_OK, _T("OK" )), 0, 
+  buttonSizer->Add(new wxButton(this, wxID_OK, _("OK" )), 0, 
     wxALL, 10);
-  buttonSizer->Add(new wxButton(this, wxID_CANCEL, _T("Cancel")), 0, 
+  buttonSizer->Add(new wxButton(this, wxID_CANCEL, _("Cancel")), 0, 
     wxALL, 10);
 
   // Add all sizers to main sizer
@@ -230,7 +230,7 @@ MergeDlg::OnBrowse (wxCommandEvent & event)
   // Transfer data from controls into m_pData:
   TransferDataFromWindow();
   wxDirDialog dialog (this,
-                      _T ("Select a destination folder to merge to"),
+                      _("Select a destination folder to merge to"),
                       wxGetHomeDir());
 
   if (dialog.ShowModal () == wxID_OK)

@@ -61,9 +61,9 @@ private:
     SetSingleStyle (wxLC_REPORT);
     //const char * dateFormat = "%a %b %d %H:%M:%S %Y";
 
-    InsertColumn (0, _T("Revision"));
-    InsertColumn (1, _T("User"));
-    InsertColumn (2, _T("Date"));
+    InsertColumn (0, _("Revision"));
+    InsertColumn (1, _("User"));
+    InsertColumn (2, _("Date"));
 
     SetColumnWidth (0, 65);
     SetColumnWidth (1, 100);
@@ -93,7 +93,7 @@ private:
 };
 
 LogDlg::LogDlg (wxWindow * parent, const svn::LogEntries * entries)
-  : wxDialog (parent, -1, _T ("Log History"), wxDefaultPosition, 
+  : wxDialog (parent, -1, _("Log History"), wxDefaultPosition, 
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
     m_entries(entries), m_logList (0)
 {
@@ -110,19 +110,19 @@ LogDlg::InitializeData ()
 {
   // create controls
   wxString history;
-  history.Printf(_T("History: %d revisions"), m_entries->size ());
+  history.Printf(_("History: %d revisions"), m_entries->size ());
   wxStaticText * historyLabel = new wxStaticText (this, -1, history);
 
   m_logList = new LogList (this, m_entries);
 
-  m_logMsg = new wxTextCtrl (this, LOG_MSG, _T(""), 
+  m_logMsg = new wxTextCtrl (this, LOG_MSG, _(""), 
                            wxDefaultPosition, wxSize (420, 110), 
                            wxTE_READONLY | wxTE_MULTILINE );
 
-  wxButton * closeButton = new wxButton (this, ID_Close, _T("Close"));
-  wxButton * viewButton = new wxButton (this, ID_View, _T("View"));
-  wxButton * getButton = new wxButton (this, ID_Get, _T("Get"));
-  wxButton * diffButton = new wxButton (this, ID_Diff, _T("Diff"));
+  wxButton * closeButton = new wxButton (this, ID_Close, _("Close"));
+  wxButton * viewButton = new wxButton (this, ID_View, _("View"));
+  wxButton * getButton = new wxButton (this, ID_Get, _("Get"));
+  wxButton * diffButton = new wxButton (this, ID_Diff, _("Diff"));
 
   // position controls
 
@@ -143,7 +143,7 @@ LogDlg::InitializeData ()
 
 
   wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer (
-          new wxStaticBox(this, -1, _T("Log Message:")), 
+          new wxStaticBox(this, -1, _("Log Message:")), 
           wxHORIZONTAL);
   messageSizer->Add (m_logMsg, 1, wxALL | wxEXPAND, 2);
 
@@ -172,8 +172,8 @@ LogDlg::OnGet (wxCommandEvent & event)
 
   if(sel == 0 || sel > 1)
   {
-    wxMessageDialog dlg (this, _T ("You must select exactly one revision."),
-                         _T ("Error"), wxOK);
+    wxMessageDialog dlg (this, _("You must select exactly one revision."),
+                         _("Error"), wxOK);
     dlg.ShowModal ();
   }
   else
@@ -212,14 +212,14 @@ LogDlg::GetRevision (const svn_revnum_t revision)
 //   try
 //   {
 //     modify.update (m_log->getLastPath (), svn::Revision(revision), false);
-//     wxMessageDialog dlg (this, _T ("Revision retrieved successfully."),
-//                          _T ("Message"), wxOK);
+//     wxMessageDialog dlg (this, _("Revision retrieved successfully."),
+//                          _("Message"), wxOK);
 //     dlg.ShowModal ();
 //   }
 //   catch (svn::ClientException &e)
 //   {
-//     wxMessageDialog dlg (this, _T ("An update error occurred."),
-//                          _T (e.description ()), wxOK);
+//     wxMessageDialog dlg (this, _("An update error occurred."),
+//                          _(e.description ()), wxOK);
 //     dlg.ShowModal ();
 //   }
 }

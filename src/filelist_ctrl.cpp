@@ -242,31 +242,31 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
     switch (col)
     {
     case COL_NAME:
-      itemCol.m_text = wxT ("Name");
+      itemCol.m_text = _("Name");
       break;
     case COL_REV:
-      itemCol.m_text = _T ("Revision");
+      itemCol.m_text = _("Revision");
       break;
     case COL_CMT_REV:
-      itemCol.m_text = _T ("Rep. Rev.");
+      itemCol.m_text = _("Rep. Rev.");
       break;
     case COL_CMT_DATE:
-      itemCol.m_text = _T ("Last Changed");
+      itemCol.m_text = _("Last Changed");
       break;
     case COL_AUTHOR:
-      itemCol.m_text = _T ("Author");
+      itemCol.m_text = _("Author");
       break;
     case COL_TEXT_STATUS:
-      itemCol.m_text = _T ("Status");
+      itemCol.m_text = _("Status");
       break;
     case COL_PROP_STATUS:
-      itemCol.m_text = _T ("Prop Status");
+      itemCol.m_text = _("Prop Status");
       break;
     case COL_TEXT_TIME:
-      itemCol.m_text = _T ("Date");
+      itemCol.m_text = _("Date");
       break;
     case COL_PROP_TIME:
-      itemCol.m_text = _T ("Prop Date");
+      itemCol.m_text = _("Prop Date");
       break;
     }
     InsertColumn (col, itemCol);
@@ -402,16 +402,16 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
     break;
 
   case COL_TEXT_STATUS:
-    t1 = _T (svn::Status::statusDescription (ps1->textStatus ()));
-    t2 = _T (svn::Status::statusDescription (ps2->textStatus ()));
+    t1 = _(svn::Status::statusDescription (ps1->textStatus ()));
+    t2 = _(svn::Status::statusDescription (ps2->textStatus ()));
     rc = wxString (t1).CmpNoCase (t2);
     if (!SortIncreasing)
       rc = rc * -1;             // Reverse the sort order.
     break;
 
   case COL_PROP_STATUS:
-    t1 = _T (svn::Status::statusDescription (ps1->propStatus ()));
-    t2 = _T (svn::Status::statusDescription (ps2->propStatus ()));
+    t1 = _(svn::Status::statusDescription (ps1->propStatus ()));
+    t2 = _(svn::Status::statusDescription (ps2->propStatus ()));
     rc = wxString (t1).CmpNoCase (t2);
     if (!SortIncreasing)
       rc = rc * -1;             // Reverse the sort order.
@@ -445,10 +445,10 @@ FileListCtrl::UpdateFileList ()
   DeleteAllItems ();
 
   // cycle through the files and folders in the current path
-  wxFileName fullpath (path, wxT ("*"));
+  wxFileName fullpath (path, _("*"));
   wxString name;
 
-  wxLogStatus (_T ("Listing entries in '%s'"), path.c_str ());
+  wxLogStatus (_("Listing entries in '%s'"), path.c_str ());
 
   // Hide the list to speed up inserting
   Hide ();
@@ -660,34 +660,34 @@ FileListCtrl::buildMenu (wxMenu & menu, const wxString & path)
 {
   wxMenuItem *pItem;
 
-  pItem = new wxMenuItem (&menu, ID_Update, _T ("Update"));
+  pItem = new wxMenuItem (&menu, ID_Update, _("Update"));
   pItem->SetBitmap (wxBITMAP (update));
   menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Commit, _T ("Commit"));
+  pItem = new wxMenuItem (&menu, ID_Commit, _("Commit"));
   pItem->SetBitmap (wxBITMAP (commit));
   menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_CopyTo, _T ("Copy"));
+  pItem = new wxMenuItem (&menu, ID_CopyTo, _("Copy"));
   menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_MoveTo, _T ("Move"));
+  pItem = new wxMenuItem (&menu, ID_MoveTo, _("Move"));
   menu.Append (pItem);
 
   menu.AppendSeparator ();
 
-  pItem = new wxMenuItem (&menu, ID_Revert, _T ("Revert"));
+  pItem = new wxMenuItem (&menu, ID_Revert, _("Revert"));
   pItem->SetBitmap (wxBITMAP (revert));
   menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Resolve, _T ("Resolve"));
+  pItem = new wxMenuItem (&menu, ID_Resolve, _("Resolve"));
   pItem->SetBitmap (wxBITMAP (resolve));
   menu.Append (pItem);
 
   menu.AppendSeparator ();
 
-  pItem = new wxMenuItem (&menu, ID_RenameHere, _T ("Rename"));
+  pItem = new wxMenuItem (&menu, ID_RenameHere, _("Rename"));
   menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Info, _T ("Info"));
+  pItem = new wxMenuItem (&menu, ID_Info, _("Info"));
   pItem->SetBitmap (wxBITMAP (info));
   menu.Append (pItem);
-  pItem = new wxMenuItem (&menu, ID_Log, _T ("Log"));
+  pItem = new wxMenuItem (&menu, ID_Log, _("Log"));
   pItem->SetBitmap (wxBITMAP (log));
   menu.Append (pItem);
 }

@@ -22,7 +22,7 @@ BEGIN_EVENT_TABLE (CommitDlg, wxDialog)
 END_EVENT_TABLE ()
 
 CommitDlg::CommitDlg(wxWindow* parent)
-  : wxDialog(parent, -1, _T("Commit changes to repository"),
+  : wxDialog(parent, -1, _("Commit changes to repository"),
              wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
@@ -34,28 +34,28 @@ void
 CommitDlg::InitializeData ()
 {
   // create controls
-  wxStaticBox* msgBox = new wxStaticBox(this, -1, _T("Enter log message"));
+  wxStaticBox* msgBox = new wxStaticBox(this, -1, _("Enter log message"));
   wxTextCtrl* msg = 
-    new wxTextCtrl(this, -1, _T(""), wxDefaultPosition, 
+    new wxTextCtrl(this, -1, _(""), wxDefaultPosition, 
                    wxSize(-1, 50), wxTE_MULTILINE,
                    wxTextValidator(wxFILTER_NONE, &m_data.LogMessage));
-  wxStaticBox* authBox = new wxStaticBox(this, -1, _T("Authentication"));
-  wxStaticText* userLabel = new wxStaticText(this, -1, _T("User"));
-  wxTextCtrl* user = new wxTextCtrl (this, -1, _T(""),
+  wxStaticBox* authBox = new wxStaticBox(this, -1, _("Authentication"));
+  wxStaticText* userLabel = new wxStaticText(this, -1, _("User"));
+  wxTextCtrl* user = new wxTextCtrl (this, -1, _(""),
     wxDefaultPosition, wxDefaultSize, 0,
     wxTextValidator(wxFILTER_NONE, &m_data.User));
   wxStaticText* passLabel = 
-    new wxStaticText (this, -1, _T("Password"));
+    new wxStaticText (this, -1, _("Password"));
   wxTextCtrl* pass = 
-    new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1), 
+    new wxTextCtrl (this, -1, _(""), wxPoint(-1,-1), 
                     wxDefaultSize, wxTE_PASSWORD, 
                     wxTextValidator(wxFILTER_NONE, &m_data.Password));
   wxCheckBox* recursive  = 
     new wxCheckBox(this, -1, "Recursive",
                    wxDefaultPosition, wxDefaultSize, 0,
                    wxGenericValidator(&m_data.Recursive));
-  wxButton* ok =  new wxButton( this, wxID_OK, _T("OK" ));
-  wxButton* cancel = new wxButton( this, wxID_CANCEL, _T("Cancel"));
+  wxButton* ok =  new wxButton( this, wxID_OK, _("OK" ));
+  wxButton* cancel = new wxButton( this, wxID_CANCEL, _("Cancel"));
 
   // position controls
   wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
