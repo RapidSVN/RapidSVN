@@ -18,7 +18,7 @@ namespace svn
   {
     if( &src != this )
     {
-      init (src.m_path.c_str (), src.m_status);
+      init (src);
     }
   }
 
@@ -40,21 +40,15 @@ namespace svn
     m_textType = svn_wc_status_none;
     m_propType = svn_wc_status_none;
 
-    if (status == NULL)
+    if (status != NULL)
     {
-      m_status = NULL;
-    }
-    else
-    {
-      m_status = new svn_wc_status_t (*status);
-
-      svn_wc_entry_t *entry = status->entry;
       m_isVersioned = status->text_status > svn_wc_status_unversioned;
       m_textType = status->text_status;
       m_propType = status->prop_status;
       m_isCopied = status->copied == 1;
       m_isLocked = status->locked == 1;
 
+      svn_wc_entry_t * entry = status->entry;
       if (entry != NULL)
       {
         m_revision = entry->revision;
@@ -63,18 +57,29 @@ namespace svn
         { 
           // if just added then no author
           m_lastCommitAuthor = entry->cmt_author;
-         }
+        }
         m_isDir = entry->kind == svn_node_dir;
       }
     }
   }
 
+  void
+  Status::init (const Status & src)
+  {
+    m_isVersioned = src.m_isVersioned;
+    m_path = src.m_path;
+    m_isDir = src.m_isDir;
+    m_isCopied = src.m_isCopied;
+    m_isLocked = src.m_isLocked;
+    m_revision = src.m_revision;
+    m_lastChanged = src.m_lastChanged;
+    m_lastCommitAuthor = src.m_lastCommitAuthor;
+    m_textType = src.m_textType;
+    m_propType = src.m_propType;
+  }
+
   Status::~Status ()
   {
-    if (m_status != NULL)
-    {
-      delete m_status;
-    }
   }
 
   const char *

@@ -35,7 +35,6 @@ namespace svn
     std::string m_lastCommitAuthor;
     svn_wc_status_kind m_textType;
     svn_wc_status_kind m_propType;
-    svn_wc_status_t * m_status;
 
     /**
      * Returns the description of the status.
@@ -51,6 +50,14 @@ namespace svn
      */
     void 
     init (const char *path, const svn_wc_status_t * status);
+
+    /**
+     * initialize data from another instance
+     *
+     * @param src instance to use
+     */
+    void
+    init (const Status & src);
 
   public:
 
