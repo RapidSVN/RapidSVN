@@ -41,7 +41,8 @@ enum
   FOLDER_IMAGE_OPEN_FOLDER,
   FOLDER_IMAGE_COUNT
 };
-    
+
+const int FolderBrowser::MAXLENGTH_PROJECT = 25;
 
 FolderBrowser::FolderBrowser (wxWindow * parent,
                               apr_pool_t *pool,
@@ -154,7 +155,18 @@ FolderBrowser::OnExpandItem (wxTreeEvent & event)
         const wxString& path = m_workbenchItems.Item (index);
         FolderItemData* data= new FolderItemData (FOLDER_TYPE_PROJECT, 
                                                   path, path, TRUE);
-        wxTreeItemId newId = m_treeCtrl->AppendItem (parentId, path, 
+        wxString label;
+        
+        if( path.length() < MAXLENGTH_PROJECT )
+        {
+          label = path;
+        }
+        else
+        {
+          label = "..." + path.Right(MAXLENGTH_PROJECT );
+        }
+
+        wxTreeItemId newId = m_treeCtrl->AppendItem (parentId, label, 
                                                      FOLDER_IMAGE_FOLDER, 
                                                      FOLDER_IMAGE_FOLDER, 
                                                      data);

@@ -48,6 +48,8 @@ private:
   wxTreeItemId m_rootId;
   wxImageList* m_imageList;
   UniqueArrayString m_workbenchItems;
+  
+  static const int MAXLENGTH_PROJECT;
 
   void OnExpandItem (wxTreeEvent & event);
   void OnCollapseItem (wxTreeEvent & event);
