@@ -17,6 +17,5 @@ libsvncpp_la_SOURCES= \
 	revision.cpp \
 	skeleton.cpp \
 	status.cpp \
-	targets.cpp \
-	utils.cpp
+	targets.cpp
 
