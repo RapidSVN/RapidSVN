@@ -9,10 +9,9 @@
 /* PreferencesDlg::SData ***************************************************/
 
 PreferencesDlg::SData::SData()
-/*
-  Initialize the preferences data to its default values.
-*/
 {
+  // Default values which will be used if data could not be 
+  // read from a wxConfig object by Read().
   Text = _T("Default text");
   EnableX = true;
   EnableY = false;
@@ -24,10 +23,8 @@ PreferencesDlg::SData::SData()
 // Config file key for preference data:
 static const wxString ConfigPath("/Preferences");
 
-void PreferencesDlg::SData::Read(wxConfigBase* pConfig)
-/*
-  Read the data from the config file supplied.
-*/
+void
+PreferencesDlg::SData::Read(wxConfigBase* pConfig)
 {
   if (pConfig)
   {
@@ -46,10 +43,8 @@ void PreferencesDlg::SData::Read(wxConfigBase* pConfig)
   }
 }
 
-void PreferencesDlg::SData::Write(wxConfigBase* pConfig) const
-/*
-  Write the data from the config file supplied.
-*/
+void
+PreferencesDlg::SData::Write(wxConfigBase* pConfig) const
 {
   if (pConfig)
   {
@@ -60,7 +55,8 @@ void PreferencesDlg::SData::Write(wxConfigBase* pConfig) const
     pConfig->Write("Enable1", Enable1);
     pConfig->Write("Enable2", Enable2);
     pConfig->Write("Enable3", Enable3);
-    pConfig->Write("Choice", (long) Choice);  // int not supported - an oversight in wxConfig?
+    pConfig->Write("Choice", (long) Choice);  
+      // int not supported - an oversight in wxConfig?
   }
 }
 
@@ -73,10 +69,6 @@ PreferencesDlg::SData PreferencesDlg::Data;
 
 PreferencesDlg*
 PreferencesDlg::CreateInstance(wxWindow* parent)
-/*
-  This function is the only way to get an instance of this
-  dialog. It guarantees that the class is correctly initialised.
-*/
 {
   PreferencesDlg* pInstance = new PreferencesDlg(parent);
   pInstance->InitializeData();
@@ -125,7 +117,8 @@ PreferencesDlg::InitializeData ()
   SetAutoLayout(true);
 }
 
-bool PreferencesDlg::TransferDataToWindow()
+bool
+PreferencesDlg::TransferDataToWindow()
 {
   bool b = wxDialog::TransferDataToWindow();
   // Transfer data for every page. This doesn't happen by default.
@@ -137,7 +130,8 @@ bool PreferencesDlg::TransferDataToWindow()
   return b;  
 }
 
-bool PreferencesDlg::TransferDataFromWindow()
+bool
+PreferencesDlg::TransferDataFromWindow()
 {
   bool b = wxDialog::TransferDataFromWindow();
   // Transfer data for every page. This doesn't happen by default.
@@ -167,7 +161,8 @@ GeneralPanel::GeneralPanel(wxWindow* parent)
 {
 }
 
-void GeneralPanel::InitializeData()
+void
+GeneralPanel::InitializeData()
 {
   wxBoxSizer *panelsizer = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer *leftsizer = new wxBoxSizer(wxVERTICAL);
@@ -185,8 +180,9 @@ void GeneralPanel::InitializeData()
   leftsizer->Add(enable1sizer, 1, wxALIGN_LEFT);
   leftsizer->Add(enable2sizer, 1, wxALIGN_LEFT);
   leftsizer->Add(
-    new wxStaticText(this, -1, _T("(Replace with real preferences in due course))")),
-    0, wxALL | wxALIGN_LEFT, 5);
+    new wxStaticText(this, -1,
+      _T("(Replace with real preferences in due course))")),
+      0, wxALL | wxALIGN_LEFT, 5);
     
   rightsizer->Add(whichsizer, 1, wxALIGN_LEFT);
   rightsizer->Add(picksizer, 1, wxALIGN_LEFT);
@@ -200,12 +196,14 @@ void GeneralPanel::InitializeData()
     1, wxALL | wxALIGN_CENTER, 5);
     
   enable1sizer->Add(
-    new wxCheckBox(this, -1, _T("Enable feature X"), wxDefaultPosition, wxDefaultSize, 0,
+    new wxCheckBox(this, -1, _T("Enable feature X"),
+      wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&PreferencesDlg::Data.EnableX)),
     0, wxALL | wxALIGN_CENTER, 5);
     
   enable2sizer->Add(
-    new wxCheckBox(this, -1, _T("Enable feature Y"), wxDefaultPosition, wxDefaultSize, 0,
+    new wxCheckBox(this, -1, _T("Enable feature Y"), 
+      wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&PreferencesDlg::Data.EnableY)),
     0, wxALL | wxALIGN_CENTER, 5);
   
@@ -260,7 +258,8 @@ ExternalsPanel::ExternalsPanel(wxWindow* parent)
 {
 }
 
-void ExternalsPanel::InitializeData()
+void
+ExternalsPanel::InitializeData()
 {
   wxBoxSizer *panelsizer = new wxBoxSizer(wxVERTICAL);
   panelsizer->Add(
