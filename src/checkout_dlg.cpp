@@ -34,7 +34,7 @@ BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)
 END_EVENT_TABLE ()
 
 CheckoutDlg::CheckoutDlg (wxWindow * parent)
-  : wxDialog (parent, -1, _("Check out module"), wxDefaultPosition, 
+  : wxDialog (parent, -1, _("Checkout"), wxDefaultPosition, 
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   InitControls ();
@@ -74,7 +74,7 @@ CheckoutDlg::OnBrowse (wxCommandEvent & event)
   // Transfer data from controls into m_pData:
   TransferDataFromWindow();
   wxDirDialog dialog (this,
-                      _("Select a destination folder to checkout to"),
+                      _("Select a destination directory"),
                       wxGetHomeDir(), wxDD_NEW_DIR_BUTTON);
 
   if (dialog.ShowModal () == wxID_OK)
@@ -94,7 +94,7 @@ CheckoutDlg::InitControls ()
   // create controls
   wxTextCtrl* moduleName = new wxTextCtrl (this, -1, "", wxPoint(-1,-1),
     wxSize(235, -1), 0, wxTextValidator(wxFILTER_NONE, &m_data.ModuleName));
-  wxStaticBox* destBox = new wxStaticBox(this, 0, _("Destination Folder"));
+  wxStaticBox* destBox = new wxStaticBox(this, 0, _("Destination Directory"));
   m_destFolderText = new wxTextCtrl (this, -1, "", wxDefaultPosition, 
     wxSize(205, -1), 0, wxTextValidator(wxFILTER_NONE, &m_data.DestFolder));
   wxButton* browse = new wxButton(this, ID_BUTTON_BROWSE, "...", 

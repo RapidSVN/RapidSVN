@@ -15,7 +15,6 @@
 
 // app
 #include "action.hpp"
-#include "mkdir_dlg.hpp"
 
 class MkdirAction:public Action
 {

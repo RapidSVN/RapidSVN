@@ -25,6 +25,7 @@ class CopyMoveAction:public Action
 private:
   bool m_copy;
   wxString m_destination;
+  bool m_force;
 
 public:
   /**

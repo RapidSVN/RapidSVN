@@ -46,9 +46,12 @@ CopyMoveAction::Prepare ()
     return false;
   }
 
+  bool move = !m_copy;
+  int flags = move ? DestinationDlg::WITH_FORCE : 0;
+
   DestinationDlg dlg (GetParent (), GetName (),
                       _("Select destination:"),
-                      m_destination);
+                      flags);
 
   if (dlg.ShowModal () != wxID_OK)
   {
@@ -56,6 +59,7 @@ CopyMoveAction::Prepare ()
   }
 
   m_destination = dlg.GetDestination ();
+  m_force = dlg.GetForce ();
 
   return true;
 }
@@ -77,7 +81,7 @@ CopyMoveAction::Perform ()
   }
   else
   {
-    client.move (srcPath, unusedRevision, destPath, false);
+    client.move (srcPath, unusedRevision, destPath, m_force);
   }
   return true;
 }

@@ -194,10 +194,6 @@ SOURCE=.\src\mkdir_action.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\mkdir_dlg.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\preferences.cpp
 # End Source File
 # Begin Source File
@@ -407,10 +403,6 @@ SOURCE=.\src\merge_dlg.hpp
 # Begin Source File
 
 SOURCE=.\src\mkdir_action.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\mkdir_dlg.hpp
 # End Source File
 # Begin Source File
 

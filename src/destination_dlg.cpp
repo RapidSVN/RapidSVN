@@ -22,23 +22,40 @@ struct DestinationDlg::Data
 {
 public:
   wxString destination;
+  bool force;
 
-  Data (wxWindow * window, const char * descr, const char * dst)
-    : destination (dst)
+  Data (wxWindow * window, const char * descr, 
+        int flags, const char * dest)
+    : destination (dest), force (false)
   {
+    bool withForce = (flags & WITH_FORCE) != 0;
+
     wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
-    wxStaticText * label = 
+    // The description:
+    wxStaticText * labelDescr = 
       new wxStaticText (window, -1, descr);
-    topSizer->Add (label, 0, wxALL, 5);
+    mainSizer->Add (labelDescr, 0, wxALL, 5);
 
-    // The "force" check box:
+    // The destination:
     wxTextValidator val (wxFILTER_NONE, &destination);
-    wxTextCtrl * textDst = 
+    wxTextCtrl * textDest = 
       new wxTextCtrl (window, -1, "", wxDefaultPosition, 
                       wxSize (200, -1), 0, val);
+      
+    mainSizer->Add (textDest, 0, wxALL | wxEXPAND, 5);
+
+    // The force check
+    if (withForce)
+    {
+      wxGenericValidator val (&force);
+      wxCheckBox * check = 
+        new wxCheckBox (window, -1, _("Force"),
+                        wxDefaultPosition, wxDefaultSize,
+                        0, val);
+      mainSizer->Add (check, 0, wxALL | wxALIGN_CENTER_HORIZONTAL);
+    }
     
     // The buttons:
     buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0, 
@@ -47,8 +64,6 @@ public:
                      wxALL, 10);
 
     // Add all the sizers to the main sizer
-    mainSizer->Add (topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
-    mainSizer->Add (textDst, 0, wxALL, 5);
     mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
 
     window->SetAutoLayout(true);
@@ -57,30 +72,61 @@ public:
     mainSizer->SetSizeHints(window);
     mainSizer->Fit(window);
   }
+
 };
 
 
 BEGIN_EVENT_TABLE (DestinationDlg, wxDialog)
 END_EVENT_TABLE ()
 
-DestinationDlg::DestinationDlg(wxWindow* parent, const char * title,
-                               const char * descr, const char * dst)
+const int DestinationDlg::WITH_FORCE=1;
+
+const int DIALOG_FLAGS = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
+
+DestinationDlg::DestinationDlg (wxWindow* parent, 
+                               const char * title,
+                               const char * descr = "", 
+                               const int flags=0,
+                               const char * dst = "")
  : wxDialog(parent, -1, title,
             wxDefaultPosition, wxDefaultSize, 
-            wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+            DIALOG_FLAGS)
 {
-  m = new Data (this, descr, dst);
+  m = new Data (this, descr, flags, dst);
+}
+
+DestinationDlg::DestinationDlg ()
+  : wxDialog (), m (0)
+{
 }
 
 DestinationDlg::~DestinationDlg ()
 {
-  delete m;
+  if (m)
+    delete m;
+}
+
+void
+DestinationDlg::Create (wxWindow* parent, const char * title,
+                        const char * descr = "", const int flags=0,
+                        const char * dst = "")
+{
+  wxDialog::Create (parent, -1, title, wxDefaultPosition,
+                    wxDefaultSize, DIALOG_FLAGS);
+
+  m = new Data (this, descr, flags, dst);
 }
 
 const char *
 DestinationDlg::GetDestination () const
 {
   return m->destination;
+}
+
+bool
+DestinationDlg::GetForce () const
+{
+  return m->force;
 }
 
 /* -----------------------------------------------------------------

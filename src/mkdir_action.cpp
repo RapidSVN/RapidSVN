@@ -19,7 +19,7 @@
 
 // app
 #include "ids.hpp"
-#include "mkdir_dlg.hpp"
+#include "destination_dlg.hpp"
 #include "mkdir_action.hpp"
 #include "svn_notify.hpp"
 
@@ -37,14 +37,15 @@ MkdirAction::Prepare ()
     return false;
   }
 
-  MkdirDlg dlg  ( GetParent (), "");
+  DestinationDlg dlg (GetParent (), _("Make directory"),
+                      _("Directory:"));
 
   if (dlg.ShowModal () != wxID_OK)
   {
     return false;
   }
 
-  wxString target (dlg.GetTarget ()); 
+  wxString target (dlg.GetDestination ()); 
   m_target = target.Strip (wxString::both);
   return true;
 }
