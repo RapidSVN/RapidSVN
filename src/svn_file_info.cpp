@@ -24,7 +24,7 @@ info_print_time (apr_time_t atime, const wxChar * desc, wxString & str)
 svn_error_t *
 svn_get_file_info (const wxString & path, apr_pool_t * pool, wxString & info)
 {
-  svn_wc_entry_t *entry;
+  const svn_wc_entry_t *entry;
   wxString str;
   svn_boolean_t text_conflict = FALSE;
   svn_boolean_t props_conflict = FALSE;

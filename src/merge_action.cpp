@@ -42,9 +42,10 @@ MergeAction::Perform ()
       path2 = mrgDlg->path2->GetValue ();
       TrimString (path2);
 
-      rev1 = getRevision (mrgDlg->rev_start->GetValue ());
-      rev_end = getRevision (mrgDlg->rev_end->GetValue ());
-      rev2 = getRevision (mrgDlg->rev_second->GetValue ());
+      wxString s;
+      rev1 = getRevision (s = mrgDlg->rev_start->GetValue ());
+      rev_end = getRevision (s = mrgDlg->rev_end->GetValue ());
+      rev2 = getRevision (s = mrgDlg->rev_second->GetValue ());
 
       user = mrgDlg->user->GetValue ();
       pass = mrgDlg->pass->GetValue ();

@@ -152,7 +152,7 @@ close_directory (void *dir_baton)
   if (db->prop_changed)
   {
     // Check for conflicted state.
-    svn_wc_entry_t *entry;
+    const svn_wc_entry_t *entry;
     svn_boolean_t merged, tc, pc;
     apr_pool_t *subpool = svn_pool_create (eb->pool);
     svn_wc_adm_access_t *adm_access;
@@ -233,7 +233,7 @@ close_file (void *file_baton)
      be the case even when FB->ADDED is set.  */
   {
     /* First, check for conflicted state. */
-    svn_wc_entry_t *entry;
+    const svn_wc_entry_t *entry;
     svn_boolean_t merged, tc, pc;
     apr_pool_t *subpool = svn_pool_create (eb->pool);
     const char *pdir = svn_path_remove_component_nts (fb->path, subpool);
