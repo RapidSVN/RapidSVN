@@ -303,6 +303,8 @@ FileListCtrl::UpdateFileList (const wxString & path)
   // Hide the list to speed up inserting
   Hide ();
 
+  std::string stdpath(path.c_str());
+
   svn::Client client;
   std::vector < svn::Status * >statusVector =
     client.status (path.c_str (), FALSE);
@@ -313,7 +315,16 @@ FileListCtrl::UpdateFileList (const wxString & path)
     svn::Status * pStatus = *it;
 
     int i = GetItemCount ();
-    name = wxFileNameFromPath (pStatus->path ());
+
+    if( pStatus->path() == stdpath )
+    {
+      name = ".";
+    }
+    else
+    {
+      name = wxFileNameFromPath (pStatus->path ());
+    }
+
     wxString text;
     const char *ctext;
 
