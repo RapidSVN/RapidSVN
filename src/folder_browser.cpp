@@ -96,6 +96,9 @@ TruncatePath (const wxString & path_)
   wxString newPath;
 
   pos++;
+  if (pos > 0)
+    newPath = path.Left (pos);
+
 
   // Now add chars until a different char than
   // / or \ appears
