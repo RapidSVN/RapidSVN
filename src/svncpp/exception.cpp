@@ -31,11 +31,22 @@ namespace svn
       : message (msg)
     {
     }
+  
+  
+    Data (const Data& other) 
+      : message(other.message), apr_err(other.apr_err)
+    {
+    }
   };
    
-  Exception::Exception (const char * message)  throw ()
+  Exception::Exception (const char * message) throw ()
   {
     m = new Data (message);
+  }
+
+  Exception::Exception (const Exception & other) throw ()
+  {
+    m = new Data (*other.m);
   }
 
   Exception::~Exception () throw ()
