@@ -8,6 +8,7 @@ libsvncpp_la_SOURCES= \
 	client_status.cpp \
 	context.cpp \
 	exception.cpp \
+	entry.cpp \
 	log.cpp \
 	notify.cpp \
 	path.cpp \
