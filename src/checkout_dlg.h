@@ -30,13 +30,9 @@ private:
 
   sData * m_pData;
   wxCheckBox * pUseLatest;
-  wxTextCtrl * destFolder;
   wxTextCtrl * revision;
-  wxTextCtrl * moduleName;
-  wxTextCtrl * user;
-  wxTextCtrl * pass;
-  wxCheckBox * recursive;
   wxStaticText * pRevisionLabel; 
+  wxTextCtrl * destFolder;
 
   DECLARE_EVENT_TABLE ()
 };
