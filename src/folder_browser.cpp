@@ -260,7 +260,10 @@ public:
     int type =  data->getFolderType ();
 
     AppendMenuItem (menu, ID_AddWcBookmark);
+    AppendMenuItem (menu, ID_Checkout);
+    menu.AppendSeparator ();
     AppendMenuItem (menu, ID_AddRepoBookmark);
+    AppendMenuItem (menu, ID_CreateRepository);
 
     if (type==FOLDER_TYPE_BOOKMARK)
     {

@@ -211,17 +211,25 @@ AppendMenuItem (wxMenu & menu, int id)
   switch (id)
   {
   case ID_AddWcBookmark:
-    caption = _("&Add Working Copy...");
+    caption = _("&Add Existing Working Copy...");
     bitmap = wxBitmap (add_wc_bookmark_xpm);
     break;
 
   case ID_AddRepoBookmark:
-    caption = _("Add &Repository...");
+    caption = _("Add Existing &Repository...");
     break;
   
   case ID_RemoveBookmark:
     caption = _("&Remove Bookmark...");
     bitmap = wxBitmap (remove_bookmark_xpm);
+    break;
+
+  case ID_CreateRepository:
+    caption = _("Create New Repository...");
+    break;
+
+  case ID_Checkout:
+    caption = _("Checkout New Working Copy...");
     break;
 
   case ID_Login:

@@ -223,6 +223,7 @@ public:
     wxMenu *menuRepos = new wxMenu;
     menuRepos->Append (ID_Import, _("&Import...\tCTRL-I"));
     menuRepos->Append (ID_Checkout, _("Check&out...\tCTRL-O"));
+    menuRepos->Append (ID_CreateRepository, _("&Create..."));
 
     menuRepos->AppendSeparator ();
 
@@ -1205,6 +1206,19 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
     case ID_Diff:
       action = new DiffAction (this);
+      break;
+
+    case ID_CreateRepository:
+      wxMessageBox (
+        _("Please use the command line utility 'svnadmin'\n"
+          "to create a new repository.\n\n"
+          "This command line utility is not part of the\n"
+          "RapidSVN distribution.\n\n"
+          "More information about subversion:\n"
+          "http://svnbook.red-bean.com/\n"
+          "http://subversion.tigris.org"),
+        _("Information"),
+        wxOK);
       break;
 
     case ID_Contents: //TODO
