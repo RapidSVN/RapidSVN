@@ -28,7 +28,6 @@ OBJECTS=action_thread.o \
 		resolve_action.o \
 		revert_action.o \
 		svn_file_info.o \
-		svn_file_log.o \
 		svn_notify.o \
 		trace_commit.o \
 		trace_update.o \
@@ -43,6 +42,7 @@ OBJECTS=action_thread.o \
 		svncpp/property.o \
 		svncpp/exception.o \
 		svncpp/notify.o \
+		svncpp/log.o \
 		svncpp/modify.o \
 		svncpp/status.o
 
