@@ -112,9 +112,9 @@ handle_svn_error (svn_error_t * err, Tracer * tracer)
   /* Otherwise, this must be an APR error code. */
   else
   {
-    str.Printf (_T ("apr_error: #%d, src_err %d : <%s>"),
+    str.Printf (_T ("apr_error: #%d : <%s>"),
                 err->apr_err,
-                err->src_err, apr_strerror (err->apr_err, buf, sizeof (buf)));
+                apr_strerror (err->apr_err, buf, sizeof (buf)));
     tracer->Trace (str);
   }
 

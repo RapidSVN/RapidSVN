@@ -43,13 +43,16 @@ OBJECTS=action_thread.o \
 		rapidsvn_app.o \
 		svncpp/auth.o \
 		svncpp/client.o \
-		svncpp/property.o \
 		svncpp/exception.o \
 		svncpp/notify.o \
 		svncpp/log.o \
 		svncpp/modify.o \
+		svncpp/path.o \
+		svncpp/property.o \
 		svncpp/pool.o \
-		svncpp/status.o
+		svncpp/revision.o \
+		svncpp/status.o \
+		svncpp/targets.o
 
 APR_LIBS=@APR_LIBS@
 WX_LIBS=@WX_LIBS@
