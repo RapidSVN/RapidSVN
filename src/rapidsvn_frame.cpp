@@ -1123,7 +1123,7 @@ RapidSvnFrame::InvokeDefaultAction ()
   
   for (std::vector<svn::Path>::iterator i = targets.begin (); i != targets.end (); i++)
   {
-    wxFileName path = i->c_str();
+    wxFileName path (i->c_str());
     if (wxDirExists (path.GetFullPath ()))
       folder_count++;
     else
