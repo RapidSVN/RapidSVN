@@ -137,7 +137,7 @@ public:
       case FOLDER_TYPE_NORMAL:
         {
           wxTreeItemId id = data->GetId ();
-          wxTreeItemId parentId = treeCtrl->GetParent (id);
+          wxTreeItemId parentId = treeCtrl->GetItemParent (id);
           data = GetItemData (parentId);
         }
         break;
