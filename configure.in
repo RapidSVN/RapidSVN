@@ -124,6 +124,7 @@ else
     AC_MSG_RESULT([not found])
     AC_MSG_ERROR([Subversion libraries are required. Try --with-svn-lib.])
 fi
+SVN_LIBS="-L$SVN_LIB -lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1"
    
 dnl
 dnl wxWindows
@@ -326,7 +327,7 @@ fi
 
 AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
-AC_SUBST(SVN_LIB)
+AC_SUBST(SVN_LIBS)
 AC_SUBST(DOCBOOK_XSL)
 AC_SUBST(XSLTPROC)
 AC_SUBST(TARGET_MANPAGE)

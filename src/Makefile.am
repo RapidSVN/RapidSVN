@@ -54,9 +54,9 @@ rapidsvn_SOURCES= \
         verblist.cpp \
 	view_action.cpp 
 
-rapidsvn_LDFLAGS=-Lsvncpp -L$(SVN_LIB)
+rapidsvn_LDFLAGS=-Lsvncpp
 rapidsvn_LDADD= -lsvncpp \
-	-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
+	$(SVN_LIBS) \
 	-lneon $(APR_LIBS) \
 	$(WX_LIBS)
 rapidsvn_DEPENDENCIES=svncpp/libsvncpp.la
