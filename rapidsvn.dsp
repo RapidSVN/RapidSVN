@@ -279,6 +279,10 @@ SOURCE=.\src\switch_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\threaded_worker.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\trace_update.cpp
 # End Source File
 # Begin Source File
@@ -364,6 +368,10 @@ SOURCE=.\src\commit_action.hpp
 # Begin Source File
 
 SOURCE=.\src\commit_dlg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\config.hpp
 # End Source File
 # Begin Source File
 
@@ -528,6 +536,10 @@ SOURCE=.\src\svn_notify.hpp
 # Begin Source File
 
 SOURCE=.\src\switch_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\threaded_worker.hpp
 # End Source File
 # Begin Source File
 
