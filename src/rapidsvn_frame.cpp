@@ -960,7 +960,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   {
   case TOKEN_INFO:
   {
-    m_log->AppendText (event.GetString () + "\n");
+    Trace (event.GetString ());
   }
   break;
 
@@ -987,7 +987,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_ACTION_START:
   {
-    m_log->AppendText (event.GetString () + "\n");
+    Trace (event.GetString ());
     wxLogStatus (event.GetString ());
   }
   break;
@@ -995,7 +995,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   case TOKEN_ACTION_END:
   {
     UpdateFileList ();
-    m_log->AppendText ( _("Ready\n"));
+    Trace (_("Ready\n"));
   }
   break;
   }
@@ -1196,6 +1196,17 @@ RapidSvnFrame::UpdateFolderBrowser ()
   if (m_folder_browser)
   {
     m_folder_browser->Refresh ();
+  }
+}
+
+void
+RapidSvnFrame::Trace (const char *msg)
+{
+  if (m_log != 0)
+  {
+    wxString message;
+    message.Printf ("%s\n", msg);
+    m_log->AppendText (message);
   }
 }
 

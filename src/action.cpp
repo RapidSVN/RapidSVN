@@ -17,6 +17,7 @@
 // app
 #include "action.hpp"
 #include "tracer.hpp"
+#include "auth_dlg.hpp"
 
 struct Action::Data
 {
@@ -98,6 +99,8 @@ Action::PostStringEvent (int code, wxString str, int event_id)
 
   // send in a thread-safe way
   wxPostEvent (m->parent, event);
+
+  wxSafeYield ();
 }
 
 void
@@ -109,6 +112,8 @@ Action::PostDataEvent (int code, void *data, int event_id)
 
   // send in a thread-safe way
   wxPostEvent (m->parent, event);
+
+  wxSafeYield ();
 }
 
 void 
@@ -137,6 +142,8 @@ Action::Trace (const wxString & msg)
   {
     m->tracer->Trace (msg);
   }
+
+  wxSafeYield ();
 }
 
 void
@@ -248,8 +255,16 @@ bool
 Action::contextGetLogin (std::string & username, 
                  std::string & password)
 {
-  // Implement code to ask for authentication information
-  return false;
+  AuthDlg dlg (GetParent (), username.c_str () , password.c_str ());
+
+  bool ok = dlg.ShowModal () == wxID_OK;
+  if (ok)
+  {
+    username = dlg.GetUsername ();
+    password = dlg.GetPassword ();
+  }
+
+  return ok;
 }
 
 void
@@ -263,6 +278,7 @@ Action::contextNotify (const char *path,
 {
   // Implement code to generate usefule messages that can be 
   // transmitted with "Trace"
+  wxSafeYield ();
 }
 
 bool

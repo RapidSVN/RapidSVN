@@ -20,10 +20,16 @@ class AuthDlg:public wxDialog
 {
 public:
   AuthDlg (wxWindow * parent, 
-           const wxString & username, 
-           const wxString & password);
+           const char * username = "", 
+           const char * password = "");
 
   virtual ~AuthDlg ();
+
+  const char * 
+  GetUsername () const;
+
+  const char *
+  GetPassword () const;
 
 private:
   struct Data;

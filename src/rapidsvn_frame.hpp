@@ -234,6 +234,14 @@ private:
   svn::Context * m_context;
   ActivePane m_activePane;
 
+  /**
+   * add message to log window
+   *
+   * @param msg message to add
+   */
+  void
+  Trace (const char * msg) ;
+
 private:
   DECLARE_EVENT_TABLE ()
 };

@@ -14,6 +14,7 @@
 // wxwindows
 #include "wx/wx.h"
 #include "wx/valgen.h"
+#include "wx/sizer.h"
 
 // app
 #include "auth_dlg.hpp"
@@ -24,7 +25,7 @@ END_EVENT_TABLE ()
 struct AuthDlg::Data
 {
 public:
-  wxString User;
+  wxString Username;
   wxString Password;
 
   Data (wxWindow * window)
@@ -37,7 +38,7 @@ public:
 
     wxTextCtrl* textUser = new wxTextCtrl (
       window, -1, "", wxDefaultPosition, wxDefaultSize, 0,
-      wxTextValidator (wxFILTER_NONE, &User));
+      wxTextValidator (wxFILTER_NONE, &Username));
 
     wxStaticText * labelPassword =
       new wxStaticText (window, -1, _("Password"));
@@ -50,11 +51,11 @@ public:
     // buttons
     wxButton * buttonOk = new wxButton (window, wxID_OK, 
                                         _("OK"));
-    wxButton * buttonCancel = new wxButton (this, wxID_CANCEL, 
+    wxButton * buttonCancel = new wxButton (window, wxID_CANCEL, 
                                             _("Cancel"));
 
     // create sizers and position controls
-    wxFlexGridSizer *authSizer = new wxFlexSizer(2, 2, 5, 5);
+    wxFlexGridSizer *authSizer = new wxFlexGridSizer(2, 2, 5, 5);
     authSizer->Add (labelUser, 0, 
                    wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
     
@@ -77,8 +78,8 @@ public:
     mainSizer->Add (authSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
     mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
 
-    SetAutoLayout (true);
-    SetSizer (mainSizer);
+    window->SetAutoLayout (true);
+    window->SetSizer (mainSizer);
 
     mainSizer->SetSizeHints (window);
     mainSizer->Fit (window);
@@ -86,13 +87,13 @@ public:
   
 };
 
-AuthDlg::AuthDlg (wxWindow* parent, const wxString & username,
-                  const wxString & password)
+AuthDlg::AuthDlg (wxWindow* parent, const char * username,
+                  const char * password)
 : wxDialog (parent, -1, _("Authentication"),
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  new m (this);
+  m = new Data (this);
   CentreOnParent ();
 }
 
@@ -100,6 +101,19 @@ AuthDlg::~AuthDlg ()
 {
   delete m;
 }
+
+const char * 
+AuthDlg::GetUsername () const
+{
+  return m->Username.c_str ();
+}
+
+const char *
+AuthDlg::GetPassword () const
+{
+  return m->Password.c_str ();
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
