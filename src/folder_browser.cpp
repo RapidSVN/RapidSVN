@@ -212,7 +212,9 @@ public:
     svn::Context * context = 0;
 
     if (data == 0)
+    {
       context = &defaultContext;
+    }
     else
     {
       bool ok = true;
@@ -220,6 +222,10 @@ public:
       {
         switch (data->getFolderType ())
         {
+        case FOLDER_TYPE_BOOKMARKS:
+          context = &defaultContext;
+          break;
+
         case FOLDER_TYPE_NORMAL:
           {
             wxTreeItemId id = data->GetId ();
@@ -256,6 +262,7 @@ public:
     const FolderItemData * data = GetSelection ();
     if (!data)
       return;
+
     const svn::Context * context = GetContext ();
 
     // create menu
