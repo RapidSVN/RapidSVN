@@ -19,11 +19,12 @@
 #include "svn_utf.h"
 
 // svncpp
-#include "client.hpp"
-#include "path.hpp"
-#include "exception.hpp"
-#include "pool.hpp"
-#include "revision.hpp"
+#include "svncpp/client.hpp"
+#include "svncpp/path.hpp"
+#include "svncpp/exception.hpp"
+#include "svncpp/pool.hpp"
+#include "svncpp/revision.hpp"
+
 
 namespace svn
 {

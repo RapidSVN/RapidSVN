@@ -11,16 +11,15 @@
  * ====================================================================
  */
 
-// svncpp 
-#include "path.hpp"
-#include "pool.hpp"
-
 // subversion api
 #include "svn_path.h"
 
-
 // apr api
 #include "apr_file_io.h"
+
+// svncpp 
+#include "svncpp/path.hpp"
+#include "svncpp/pool.hpp"
 
 
 namespace svn

@@ -15,10 +15,11 @@
 #include "svn_wc.h"
 
 // svncpp
-#include "exception.hpp"
-#include "path.hpp"
-#include "pool.hpp"
-#include "wc.hpp"
+#include "svncpp/exception.hpp"
+#include "svncpp/path.hpp"
+#include "svncpp/pool.hpp"
+#include "svncpp/wc.hpp"
+
 
 namespace svn
 {

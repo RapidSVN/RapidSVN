@@ -17,9 +17,7 @@
 // subversion api
 #include "svn_pools.h"
 
-/**
- * SvnCpp namespace
- */
+
 namespace svn
 {
   /**

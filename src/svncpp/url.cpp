@@ -22,8 +22,9 @@
 #include "svn_ra.h"
 
 // svncpp
-#include "pool.hpp"
-#include "url.hpp"
+#include "svncpp/pool.hpp"
+#include "svncpp/url.hpp"
+
 
 namespace svn
 {

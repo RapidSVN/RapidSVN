@@ -14,7 +14,6 @@
 #ifndef _SVNCPP_CLIENT_H_
 #define _SVNCPP_CLIENT_H_
 
-
 // Ignore MSVC 6 compiler warning: debug symbol truncated
 #if defined (_MSC_VER) && _MSC_VER <= 1200
 #pragma warning (disable: 4786)
@@ -32,13 +31,13 @@
 #include <map>
 
 // svncpp
-#include "context.hpp"
-#include "exception.hpp"
-#include "path.hpp"
-#include "entry.hpp"
-#include "revision.hpp"
-#include "log_entry.hpp"
-#include "annotate_line.hpp"
+#include "svncpp/context.hpp"
+#include "svncpp/exception.hpp"
+#include "svncpp/path.hpp"
+#include "svncpp/entry.hpp"
+#include "svncpp/revision.hpp"
+#include "svncpp/log_entry.hpp"
+#include "svncpp/annotate_line.hpp"
 
 
 /**

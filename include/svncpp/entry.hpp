@@ -18,7 +18,8 @@
 #include "svn_wc.h"
 
 // svncpp
-#include "pool.hpp"
+#include "svncpp/pool.hpp"
+
 
 namespace svn
 {

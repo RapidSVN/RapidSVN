@@ -15,7 +15,8 @@
 #endif
 
 // svncpp
-#include "client.hpp"
+#include "svncpp/client.hpp"
+
 
 namespace svn
 {

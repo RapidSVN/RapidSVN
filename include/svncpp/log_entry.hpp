@@ -20,6 +20,7 @@
 // subversion api
 #include "svn_types.h"
 
+
 namespace svn
 {
   struct LogEntry

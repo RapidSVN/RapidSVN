@@ -13,7 +13,8 @@
  */
 
 // svncpp
-#include "entry.hpp"
+#include "svncpp/entry.hpp"
+
 
 namespace svn
 {

@@ -13,9 +13,9 @@
  */
 
 // svncpp
-#include "status.hpp"
+#include "svncpp/status.hpp"
 
-#include <assert.h>
+//#include <assert.h>
 
 namespace svn
 {

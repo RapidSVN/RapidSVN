@@ -15,7 +15,8 @@
 #include <string>
 
 // svncpp
-#include "exception.hpp"
+#include "svncpp/exception.hpp"
+
 
 namespace svn
 {

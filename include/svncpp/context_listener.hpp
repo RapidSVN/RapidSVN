@@ -21,9 +21,8 @@
 #include "svn_client.h"
 
 // svncpp
-#include "pool.hpp"
+#include "svncpp/pool.hpp"
 
-// forward declarations
 
 namespace svn
 {

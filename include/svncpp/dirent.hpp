@@ -17,6 +17,7 @@
 // subversion api
 #include "svn_client.h"
 
+
 namespace svn
 {
   class DirEntry

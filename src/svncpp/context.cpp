@@ -21,8 +21,9 @@
 #include "svn_utf.h"
 
 // svncpp
-#include "context.hpp"
-#include "context_listener.hpp"
+#include "svncpp/context.hpp"
+#include "svncpp/context_listener.hpp"
+
 
 namespace svn
 {

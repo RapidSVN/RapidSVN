@@ -21,9 +21,10 @@
 #include "svn_utf.h"
 
 // svncpp
-#include "client.hpp"
-#include "dirent.hpp"
-#include "exception.hpp"
+#include "svncpp/client.hpp"
+#include "svncpp/dirent.hpp"
+#include "svncpp/exception.hpp"
+
 
 static int
 compare_items_as_paths (const svn_item_t *a, const svn_item_t *b)

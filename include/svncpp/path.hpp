@@ -14,7 +14,9 @@
 #ifndef _SVNCPP_PATH_HPP_
 #define _SVNCPP_PATH_HPP_
 
+// stl
 #include <string>
+
 
 namespace svn
 {

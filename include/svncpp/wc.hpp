@@ -11,43 +11,45 @@
  * ====================================================================
  */
 
-#ifndef _SVNCPP_URL_H_
-#define _SVNCPP_URL_H_
+#ifndef _SVNCPP_WC_HPP_
+#define _SVNCPP_WC_HPP_ 
 
-// stl
-#include <string>
-#include <vector>
+// svncpp
+#include "svncpp/revision.hpp"
+
 
 namespace svn
 {
-  class Url
+  /**
+   * Class that deals with a working copy
+   */
+  class Wc
   {
   public:
-    /** Constructor */
-    Url ();
-
-    /** Destructor */
-    virtual ~Url ();
+    /**
+     * check if Path is a valid working directory
+     *
+     * @param dir path to a directory
+     * @return true=valid working copy
+     */
+    static bool 
+    checkWc (const char * dir);
 
     /**
-     * Checks if @a url is valid
+     * ensure that an administrative area exists for @a dir, so that @a dir
+     * is a working copy subdir based on @a url at @a revision.
      *
-     * Example of a valid URL:
-     *   http://svn.collab.net/repos/svn
-     * Example of an invalid URL:
-     *   /home/foo/bar
+     * @param dir path to a directory
+     * @param url corresponding url
+     * @param revision expected working copy revision
      */
-    static bool
-    isValid (const char * url);
+    static void
+    ensureAdm (const char * dir, const char * uuid, 
+               const char * url, const Revision & revision);
 
-    /**
-     * returns a vector with url schemas that are
-     * supported by svn 
-     *
-     * @return vector with entries like "file:", "http:"
-     */
-    static std::vector<std::string>
-    supportedSchemas ();
+    static const char * ADM_DIR_NAME;
+
+  private:
   };
 }
 
@@ -57,4 +59,3 @@ namespace svn
  * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */
-

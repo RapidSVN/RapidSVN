@@ -14,9 +14,10 @@
 #ifndef _SVNCPP_REVISION_HPP_
 #define _SVNCPP_REVISION_HPP_ 
 
-// subversion includes
+// subversion api
 #include "svn_types.h"
 #include "svn_opt.h"
+
 
 namespace svn
 {

@@ -11,7 +11,9 @@
  * ====================================================================
  */
 
-#include "revision.hpp"
+// svncpp
+#include "svncpp/revision.hpp"
+
 
 namespace svn
 {

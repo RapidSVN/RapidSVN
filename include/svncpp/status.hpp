@@ -15,12 +15,12 @@
 #define _SVNCPP_STATUS_HPP_
 
 // subversion api
-//#include "svn_types.h"
 #include "svn_wc.h"
 
 // svncpp
-#include "entry.hpp"
-#include "pool.hpp"
+#include "svncpp/entry.hpp"
+#include "svncpp/pool.hpp"
+
 
 namespace svn
 {

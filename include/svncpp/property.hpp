@@ -31,8 +31,9 @@
 #include <string>
 
 // svncpp
-#include "context.hpp"
-#include "path.hpp"
+#include "svncpp/context.hpp"
+#include "svncpp/path.hpp"
+
 
 namespace svn
 {

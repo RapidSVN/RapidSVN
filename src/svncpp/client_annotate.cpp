@@ -18,7 +18,8 @@
 #include "svn_client.h"
 
 // svncpp
-#include "client.hpp"
+#include "svncpp/client.hpp"
+
 
 namespace svn
 {

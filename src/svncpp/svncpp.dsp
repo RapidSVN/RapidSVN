@@ -173,71 +173,71 @@ SOURCE=.\wc.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\annotate_line.hpp
+SOURCE=..\..\include\svncpp\annotate_line.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\apr.hpp
+SOURCE=..\..\include\svncpp\apr.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\client.hpp
+SOURCE=..\..\include\svncpp\client.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\context.hpp
+SOURCE=..\..\include\svncpp\context.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\context_listener.hpp
+SOURCE=..\..\include\svncpp\context_listener.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\dirent.hpp
+SOURCE=..\..\include\svncpp\dirent.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\entry.hpp
+SOURCE=..\..\include\svncpp\entry.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\exception.hpp
+SOURCE=..\..\include\svncpp\exception.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\log_entry.hpp
+SOURCE=..\..\include\svncpp\log_entry.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\path.hpp
+SOURCE=..\..\include\svncpp\path.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\pool.hpp
+SOURCE=..\..\include\svncpp\pool.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\property.hpp
+SOURCE=..\..\include\svncpp\property.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\revision.hpp
+SOURCE=..\..\include\svncpp\revision.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\status.hpp
+SOURCE=..\..\include\svncpp\status.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\targets.hpp
+SOURCE=..\..\include\svncpp\targets.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\url.hpp
+SOURCE=..\..\include\svncpp\url.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\wc.hpp
+SOURCE=..\..\include\svncpp\wc.hpp
 # End Source File
 # End Group
 # End Target
