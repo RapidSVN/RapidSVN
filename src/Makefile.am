@@ -29,6 +29,7 @@ rapidsvn_SOURCES= \
 	import_action.cpp \
 	import_dlg.cpp \
 	listed_dlg.cpp \
+	listener.cpp \
 	log_action.cpp \
 	log_dlg.cpp \
 	merge_action.cpp \

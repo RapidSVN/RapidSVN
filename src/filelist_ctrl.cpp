@@ -478,6 +478,7 @@ public:
   int SortColumn;
   bool DirtyColumns;
   bool FlatMode;
+  svn::Context * Context;
   wxString Path;
   wxImageList *ImageListSmall;
   bool ColumnVisible[COL_COUNT];
@@ -488,7 +489,7 @@ public:
   /** default constructor */
   Data ()
     : SortIncreasing (true), SortColumn (COL_NAME), 
-      DirtyColumns (true), FlatMode (false)
+      DirtyColumns (true), FlatMode (false), Context (0)
   {
     ImageListSmall = new wxImageList (16, 16, TRUE);
 
@@ -736,10 +737,7 @@ FileListCtrl::UpdateFileList (bool withUpdate)
 
   std::string stdpath (path.c_str ());
 
-  svn::Context context;
-  context.setLogin ("", "");
-
-  svn::Client client (&context);
+  svn::Client client (m->Context);
   const svn::StatusEntries statusVector =
     client.status (path.c_str (), m->FlatMode, true, withUpdate);
   svn::StatusEntries::const_iterator it;
@@ -1299,6 +1297,20 @@ bool
 FileListCtrl::IsFlat ()
 {
   return m->FlatMode;
+}
+
+
+void
+FileListCtrl::SetContext (svn::Context * Context)
+{
+  m->Context = Context;
+}
+
+
+svn::Context *
+FileListCtrl::GetContext () const
+{
+  return m->Context;
 }
 
 /* -----------------------------------------------------------------

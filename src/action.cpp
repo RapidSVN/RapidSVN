@@ -16,9 +16,10 @@
 
 // app
 #include "action.hpp"
-#include "cert_dlg.hpp"
 #include "tracer.hpp"
-#include "auth_dlg.hpp"
+
+// subversion api
+#include "svn_wc.h"
 
 static const char *
 ACTION_NAMES [] =
@@ -279,64 +280,6 @@ Action::GetOptions ()
   return m->options;
 }
 
-bool 
-Action::contextGetLogin (
-  const std::string & realm,
-  std::string & username, 
-  std::string & password)
-{
-  // TODO: show realm
-  AuthDlg dlg (GetParent (), username.c_str () , password.c_str ());
-
-  bool ok = dlg.ShowModal () == wxID_OK;
-  if (ok)
-  {
-    // WORKAROUND: CONVERT TO UTF8
-    wxString usernameNative (dlg.GetUsername ());
-    wxString passwordNative (dlg.GetPassword ());
-    wxString usernameUtf8 (usernameNative.mb_str (wxConvUTF8));
-    wxString passwordUtf8 (passwordNative.mb_str (wxConvUTF8));
-    username = usernameUtf8.c_str ();
-    password = passwordUtf8.c_str ();
-  }
-
-  return ok;
-}
-
-void
-Action::contextNotify (const char *path,
-        svn_wc_notify_action_t action,
-        svn_node_kind_t kind,
-        const char *mime_type,
-        svn_wc_notify_state_t content_state,
-        svn_wc_notify_state_t prop_state,
-        svn_revnum_t revision)
-{
-  // Map an action to string and trace the action and path
-  const char * actionString = 0;
-
-  if (action >= 0 && action <= MAX_ACTION)
-    actionString = ACTION_NAMES [action];
-
-  if (actionString != 0)
-  {
-    wxString msg;
-    msg.Printf ("%s: %s", actionString, path);
-
-    Trace (msg);
-  }
-
-  // Implement code to generate usefule messages that can be 
-  // transmitted with "Trace"
-  wxSafeYield ();
-}
-
-bool
-Action::contextGetLogMessage (std::string & msg)
-{
-  // Implement code to ask for a log message
-  return false;
-}
 
 const char * 
 Action::GetName () const
@@ -362,52 +305,6 @@ Action::PostEvent (wxEvent & event)
 
   wxPostEvent (handler, event);
 }
-
-
-svn::ContextListener::SslServerTrustAnswer
-Action::contextSslServerTrustPrompt (
-  const svn::ContextListener::SslServerTrustData & data,
-  long & acceptedFailures)
-{
-  CertDlg dlg (GetParent (), data);
-
-  dlg.ShowModal ();
-  acceptedFailures = dlg.AcceptedFailures ();
-
-  return dlg.Answer ();  
-}
-
-
-bool
-Action::contextSslClientCertPrompt (std::string & certFile)
-{
-  wxString filename = wxFileSelector (
-    _("Select Certificate File"), "", "", "",
-    "*.*", wxOPEN | wxFILE_MUST_EXIST,
-    GetParent ());
-
-  if (filename.empty ())
-    return false;
-
-  //TODO
-  certFile = filename.c_str ();
-  return true;
-}
-
-bool
-Action::contextSslClientCertPwPrompt (std::string & password)
-{
-  //TODO
-  AuthDlg dlg (GetParent (), "", password.c_str (), 
-               AuthDlg::HIDE_USERNAME);
-
-  if (dlg.ShowModal () != wxID_OK)
-    return false;
-
-  password = dlg.GetPassword ();
-  return true;
-}
-
 
 
 /* -----------------------------------------------------------------

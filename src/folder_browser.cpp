@@ -140,14 +140,15 @@ IsValidSeparator (const wxString & sep)
 struct FolderBrowser::Data
 {
 public:
+  wxWindow * window;
+  svn::ContextListener * listener;
   wxTreeCtrl* treeCtrl;
   wxTreeItemId rootId;
   wxImageList* imageList;
-  wxWindow * window;
   Bookmarks bookmarks;
   
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
-    : window (window)
+    : window (window), listener (0)
   {
     imageList = new wxImageList (16, 16, TRUE);
     imageList->Add (wxIcon (computer_xpm));
@@ -240,6 +241,9 @@ public:
       if (!ok)
         break;
     }
+
+    if (context != 0)
+      context->setListener (listener);
 
     return context;
   }
@@ -906,9 +910,6 @@ FolderBrowser::SetAuthPerBookmark (const bool value)
   m->bookmarks.SetAuthPerBookmark (value);
 }
 
-/**
- * @return auth per bookmark setting
- */
 const bool 
 FolderBrowser::GetAuthPerBookmark () const
 {
@@ -919,6 +920,19 @@ bool
 FolderBrowser::SelectBookmark (const char * bookmarkPath)
 {
   return m->SelectBookmark (bookmarkPath);
+}
+
+
+void
+FolderBrowser::SetListener (svn::ContextListener * listener)
+{
+  m->listener = listener;
+}
+
+svn::ContextListener *
+FolderBrowser::GetListener () const
+{
+  return m->listener;
 }
 
 

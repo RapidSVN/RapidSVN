@@ -45,11 +45,7 @@ CheckoutAction::Prepare ()
 bool
 CheckoutAction::Perform ()
 {
-  // the checkout action may not use the main context but its own
-  svn::Context context;
-  context.setListener (this);
-
-  svn::Client client (&context);
+  svn::Client client (GetContext ());
 
   TrimString(m_data.DestFolder);
   UnixPath(m_data.DestFolder);

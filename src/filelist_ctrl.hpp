@@ -34,6 +34,7 @@ WX_DEFINE_ARRAY (long, IndexArray);
 namespace svn
 {
   class Targets;
+  class Context;
 }
 
 class FileListCtrl:public wxListView
@@ -131,6 +132,14 @@ public:
   void UpdateFileList (const wxString & path, bool withUpdate=false);
   const IndexArray GetSelectedItems () const;
   const svn::Targets GetTargets () const;
+
+
+  void
+  SetContext (svn::Context * Context);
+
+
+  svn::Context *
+  GetContext () const;
 
 private:
   struct Data;

@@ -126,7 +126,6 @@ SimpleWorker::Perform (Action * action)
 
   action->SetContext (m->context);
   m->context->reset ();
-  m->context->setListener (action);
 
   m->result = ACTION_NOTHING;
   m->action = action;
@@ -249,6 +248,7 @@ SimpleWorker::GetContext () const
 {
   return m->context;
 }
+
 
 /* -----------------------------------------------------------------
  * local variables:

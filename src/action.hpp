@@ -14,7 +14,6 @@
 #define _ACTION_H_
 
 // svncpp
-#include "svncpp/context_listener.hpp"
 #include "svncpp/path.hpp"
 #include "svncpp/targets.hpp"
 
@@ -40,11 +39,11 @@ enum ActionOptions
  * Inherit from this class
  * and use the constructor to pass parameters to the class.
  *
- * Use the class ActionWorker to run actions.
+ * Use the class @a ActionWorker to run actions.
  *
  * @see ActionWorker
  */
-class Action : public svn::ContextListener
+class Action 
 {
 public:
   /**
@@ -53,7 +52,6 @@ public:
    * @param parent parent window
    * @param name of the action
    * @param options 
-   * @param own tracer owned by action?
    */
   Action (wxWindow * parent, const wxString & name, ActionOptions options);
 
@@ -69,7 +67,7 @@ public:
 
   /**
    * Sets the tracer passed as an argument.
-   * If own is TRUE, then the ActionThread class
+   * If own is TRUE, then the @a Action class
    * is responsible for deleting the tracer.
    */
   void SetTracer (Tracer * t, bool own);
@@ -102,19 +100,21 @@ public:
   /**
    * Prepare action. This method is execute in the main
    * thread. You can use this method for user interaction.
-   * Make sure to call Action::Prepare in every class
-   * that inherits from Action. Make sure you check the
+   * Make sure to call @a Action::Prepare in every class
+   * that inherits from @a Action. Make sure you check the
    * returned value as well.
    *
    * Return false to cancel action
    *
    * @see ActionWorker
    *
-   * @return true=continue/false=cancel
+   * @retval true continue
+   * @retval false cancel
    */
   virtual bool 
   Prepare ();
    
+
   /**
    * perform action. if any error occurs, an exception
    * will be thrown.
@@ -165,51 +165,6 @@ public:
   ActionOptions 
   GetOptions ();
 
-  /**
-   * @see svn::ContextListener
-   */
-  virtual bool 
-  contextGetLogin (const std::string & realm,
-                   std::string & username, 
-                   std::string & password);
-
-  /**
-   * @see svn::ContextListener
-   */
-  virtual void
-  contextNotify (const char *path,
-          svn_wc_notify_action_t action,
-          svn_node_kind_t kind,
-          const char *mime_type,
-          svn_wc_notify_state_t content_state,
-          svn_wc_notify_state_t prop_state,
-          svn_revnum_t revision);
-
-  /**
-   * @see svn::ContextListener
-   */
-  virtual bool
-  contextGetLogMessage (std::string & msg);
-
-  /**
-   * @see svn::ContextListener
-   */
-  virtual svn::ContextListener::SslServerTrustAnswer
-  contextSslServerTrustPrompt (
-    const svn::ContextListener::SslServerTrustData & data,
-    long & acceptedFailures);
-
-  /**
-   * @see svn::ContextListener
-   */
-  virtual bool
-  contextSslClientCertPrompt (std::string & certFile);
-
-  /**
-   * @see svn::ContextListener
-   */
-  virtual bool
-  contextSslClientCertPwPrompt (std::string & password);
 
   /** set the name of the action */
   void

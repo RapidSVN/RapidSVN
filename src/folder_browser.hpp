@@ -22,6 +22,7 @@ class FolderItemData;
 namespace svn
 {
   class Context;
+  class ContextListener;
 };
 
 class FolderBrowser : public wxControl
@@ -118,6 +119,14 @@ public:
    */
   const bool 
   GetAuthPerBookmark () const;
+
+
+  void
+  SetListener (svn::ContextListener * listener);
+
+
+  svn::ContextListener *
+  GetListener () const;
 
 private:
   struct Data;

@@ -23,8 +23,8 @@
 
 // app
 #include "ids.hpp"
-
 #include "file_info.hpp"
+#include "listener.hpp"
 
 // actions
 #include "add_action.hpp"
@@ -161,14 +161,15 @@ struct RapidSvnFrame::Data
 public:
   wxMenu * MenuColumns;
   wxMenuBar * MenuBar;
+  Listener Listener;
 
   /** 
    * This instance of @a apr is used to initialize/terminate apr 
    */
   svn::Apr apr;
 
-  Data ()
-    : MenuColumns (0), MenuBar (0)
+  Data (wxWindow * parent)
+    : MenuColumns (0), MenuBar (0), Listener (parent)
   {
     InitializeMenu ();
   }
@@ -317,7 +318,7 @@ END_EVENT_TABLE ()
     : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize, 
                wxDEFAULT_FRAME_STYLE)
 {
-  m = new Data ();
+  m = new Data (this);
   m_folder_browser = NULL;
   m_listCtrl = NULL;
   m_title = title;
@@ -382,6 +383,7 @@ END_EVENT_TABLE ()
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
   {
     Preferences prefs;
+    m_folder_browser->SetListener (&m->Listener);
     m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
   }
 
@@ -485,6 +487,7 @@ RapidSvnFrame::UpdateFileList (bool withUpdate)
     {
       try
       {
+        m_listCtrl->SetContext (m_context);
         m_listCtrl->UpdateFileList (m_currentPath, withUpdate);
         m_listCtrl->Show (TRUE);
       }
