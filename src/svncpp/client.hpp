@@ -439,12 +439,10 @@ namespace svn
      * delete property in @a path no matter whether local or
      * repository
      *
+     * @param propName
      * @param path
      * @param revision
-     * @param propName
-     * @param propValue
      * @param recurse
-     * @return PropertiesList
      */
     void
     propdel(const char *propName,
@@ -459,61 +457,59 @@ namespace svn
      *
      * @param path
      * @param revision
-     * @param recurse
      * @return PropertiesList
      */
     std::pair<svn_revnum_t,PropertiesMap>
     revproplist(const Path &path,
-             const Revision &revision);
+                const Revision &revision);
 
     /**
      * lists one revision property in @a path no matter whether local or
      * repository
      *
+     * @param propName
      * @param path
      * @param revision
-     * @param recurse
      * @return PropertiesList
      */
     std::pair<svn_revnum_t,std::string>
     revpropget(const char *propName,
-            const Path &path,
-            const Revision &revision);
+               const Path &path,
+               const Revision &revision);
 
     /**
      * set revision property in @a path no matter whether local or
      * repository
      *
-     * @param path
-     * @param revision
      * @param propName
      * @param propValue
-     * @param recurse
-     * @return PropertiesList
+     * @param path
+     * @param revision
+     * @param force
+     * @return Revision
      */
     svn_revnum_t
     revpropset(const char *propName,
-            const char *propValue,
-            const Path &path,
-            const Revision &revision,
-    bool force=false);
+               const char *propValue,
+               const Path &path,
+               const Revision &revision,
+               bool force=false);
 
     /**
      * delete revision property in @a path no matter whether local or
      * repository
      *
+     * @param propName
      * @param path
      * @param revision
-     * @param propName
-     * @param propValue
-     * @param recurse
-     * @return PropertiesList
+     * @param force
+     * @return Revision
      */
     svn_revnum_t
     revpropdel(const char *propName,
-            const Path &path,
-            const Revision &revision,
-    bool force=false);
+               const Path &path,
+               const Revision &revision,
+               bool force=false);
 
 
   private:
