@@ -1014,21 +1014,21 @@ RapidSvnFrame::ShowLog ()
 void
 RapidSvnFrame::Properties ()
 {
-  svn::Pool localPool;
-
   svn::Targets targets = m_listCtrl->GetTargets ();
   const std::vector<svn::Path> & v = targets.targets ();
   std::vector<svn::Path>::const_iterator it = v.begin ();
 
-  // TODO: this handles only one target!
-  if (it!=v.end ())
+  if (v.size () != 1)
   {
-    const svn::Path & path = *it;
-
-    PropertyAction * propAction = 
-      new PropertyAction (this, m_logTracer, path.c_str ());
-    propAction->Perform ();
+    wxMessageBox ( _("Select only one file or directory") );
+    return;
   }
+
+  const svn::Path & path = *it;
+
+  PropertyAction * action = 
+    new PropertyAction (this, m_logTracer, path.c_str ());
+  m_actionWorker.Perform (action);
 }
 
 void

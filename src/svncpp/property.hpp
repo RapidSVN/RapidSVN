@@ -24,69 +24,42 @@
 #include <string>
 
 // svncpp
-#include "auth.hpp"
+#include "context.hpp"
 #include "path.hpp"
 
 namespace svn
 {
+  struct PropertyEntry
+  {
+    std::string name;
+    std::string value;
+
+    PropertyEntry (const char * name, const char * value);
+  };    
+
   // forward declarations
   class Path;
 
   /**
    * Class for manipulating Subversion properties.
-   *
-   * TODO replace pseudo-iterator interface
-   *      with stl containers
    */
-  class Property : public svn::Auth
+  class Property 
   {
   public:
-    Property ();
-    ~Property ();
+    Property (const Context & context = Context::Anonymous,
+              const Path & path = "");
+
+    virtual ~Property ();
 
     /**
-     * Returns the number of properties found.
+     * get the list of properties for the path.
+     * throws an exception if the path isnt versioned.
      */
-    int count ();
-
-    /**
-     * Loads the properties result set, clearing old result sets. 
-     */
-    void loadPath (const Path & path);
-
-    /**
-     * Moves to the next row in the result set.
-     * @returns true if the cursor is in the result set.
-     */
-    bool next ();
-
-    /**
-     * Moves to the previous row in the result set.
-     * @returns true if the cursor is in the result set.
-     */
-    bool previous ();
-
-    /**
-     * Moves to the last row in the log result set.
-     * @returns true if the cursor is in the result set.
-     */
-    bool last ();
-
-    /**
-     * Moves to the first row in the log result set.
-     * @returns true if the cursor is in the result set.
-     */
-    bool first ();
-
-    /**
-     * Moves to the cursor before first row in the log result set.
-     */
-    void beforeFirst ();
-
-    /**
-     * Returns true if the file called in loadPath is versioned.
-     */
-    bool isVersioned ();
+    const std::vector<PropertyEntry> &
+    entries () const
+    {
+      return m_entries;
+    }
 
     /**
      * Sets an existing property with a new value or adds a new 
@@ -94,39 +67,21 @@ namespace svn
      * result set.  Run loadPath again.
      * @exception ClientException
      */
-    void set (const char * name, const char * value, bool recurse);
-
-    /**
-     * Returns the name of the current property of the result set.
-     */
-    const char * name ();
-
-    /**
-     * Returns the value of the current property of the result set.
-     */
-    const char * value ();
+    void set (const char * name, const char * value);
 
     /**
      * Deletes a property.  
      * @exception ClientException
      */
-    void remove (const char * name, bool recurse);
+    void remove (const char * name);
 
   private:
-    int m_size;
-    int m_cursor;
-    bool m_versioned;
-    std::vector<std::string> m_propNames;
-    std::vector<std::string> m_propValues;
-    Path m_lastPath;
+    Context m_context;
+    Path m_path;
+    std::vector<PropertyEntry> m_entries;
 
-    void reset ();
-    const char * propertyValue (const char * key);
-
-    /**
-     * Returns whether or not the property is a special Subversion property.
-     */
-    svn_boolean_t isSvnProperty (const char * name);
+    std::string getValue (const char * name);
+    void list ();
 
   };
 

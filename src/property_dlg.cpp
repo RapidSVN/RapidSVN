@@ -37,10 +37,10 @@ END_EVENT_TABLE ()
 BEGIN_EVENT_TABLE (PropertyGrid, wxGrid)
 END_EVENT_TABLE()
 
-PropertyDlg::PropertyDlg (wxWindow * parent, svn::Property *property)
+PropertyDlg::PropertyDlg (wxWindow * parent, const char * target)
            : wxDialog (parent, -1, "Property Editor", wxDefaultPosition, 
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             m_property(property)
+             m_property(svn::Context::Anonymous, target)
 {
   InitializeData ();
   CentreOnParent ();
@@ -56,7 +56,7 @@ PropertyDlg::InitializeData ()
         wxHORIZONTAL);
 
   propGrid = new PropertyGrid (this, m_property);
-  propGrid->CreateGrid (m_property->count () + 5, 2);
+  propGrid->CreateGrid (1, 2);
   propGrid->SetGridLineColour (wxColour ("black"));
 
   propGrid->SetColLabelValue (0, "Name");
@@ -87,12 +87,21 @@ void
 PropertyGrid::FillList ()
 {
   int index = 0;
-  while(m_property->next ())
+  const std::vector<svn::PropertyEntry> & entries
+    = m_property.entries ();
+  std::vector<svn::PropertyEntry>::const_iterator it = entries.begin ();
+
+  DeleteRows ();
+  AppendRows (entries.size () + 1);
+  while (it != entries.end ())
   {
-    SetCellValue (index, 0, m_property->name ());
-    SetCellValue (index, 1, m_property->value ());
+    const svn::PropertyEntry & entry = *it;
+  
+    SetCellValue (index, 0, entry.name.c_str ());
+    SetCellValue (index, 1, entry.value.c_str ());
 
     index++;
+    it++;
   }
 }
 
@@ -114,7 +123,6 @@ void
 PropertyDlg::SaveData ()
 {
   wxString name, value;
-  m_property->beforeFirst ();
 
   for(int i = 0; i < propGrid->GetNumberRows () - 1; i++)
   {
@@ -127,7 +135,7 @@ PropertyDlg::SaveData ()
     {
       try
       {
-        m_property->set (name.c_str (), value.c_str (), false);
+        m_property.set (name.c_str (), value.c_str ());
       }
       catch (svn::ClientException &e)
       {
@@ -147,11 +155,13 @@ PropertyDlg::RemoveData ()
 {
   wxString propValue, cellValue;
   bool found;
-  m_property->beforeFirst ();
+  const std::vector<svn::PropertyEntry> & entries = m_property.entries ();
+  std::vector<svn::PropertyEntry>::const_iterator it = entries.begin ();
 
-  while(m_property->next ())
+  while (it != entries.end ())
   {
-    propValue = m_property->name ();
+    const svn::PropertyEntry & entry = *it;
+    propValue = entry.name.c_str();
     found = false;
 
     for(int i = 0; i < propGrid->GetNumberRows () - 1; i++)
@@ -166,7 +176,7 @@ PropertyDlg::RemoveData ()
     {
       try
       {
-        m_property->remove (propValue.c_str (), false);
+        m_property.remove (propValue.c_str ());
       }
       catch (svn::ClientException &e)
       {
@@ -178,10 +188,12 @@ PropertyDlg::RemoveData ()
         dlg.ShowModal ();
       }
     }
+
+    it++;
   }
 }
 
-PropertyGrid::PropertyGrid (wxWindow * parent, svn::Property *property)
+PropertyGrid::PropertyGrid (wxWindow * parent, const svn::Property & property)
            : wxGrid (parent, PROPERTY_GRID, wxDefaultPosition, 
              wxSize(350, 150), wxLC_REPORT),
              m_property(property)

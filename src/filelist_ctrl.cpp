@@ -118,21 +118,21 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   m_imageListSmall = new wxImageList (16, 16, TRUE);
 
   // add images to image list
-  m_imageListSmall->Add (wxICON (nonsvn_file));
-  m_imageListSmall->Add (wxICON (normal_file));
-  m_imageListSmall->Add (wxICON (added_file));
-  m_imageListSmall->Add (wxICON (absent_file));
-  m_imageListSmall->Add (wxICON (deleted_file));
-  m_imageListSmall->Add (wxICON (replaced_file));
-  m_imageListSmall->Add (wxICON (modified_file));
-  m_imageListSmall->Add (wxICON (merged_file));
-  m_imageListSmall->Add (wxICON (conflicted_file));
+  m_imageListSmall->Add (wxIcon (nonsvn_file_xpm));
+  m_imageListSmall->Add (wxIcon (normal_file_xpm));
+  m_imageListSmall->Add (wxIcon (added_file_xpm));
+  m_imageListSmall->Add (wxIcon (absent_file_xpm));
+  m_imageListSmall->Add (wxIcon (deleted_file_xpm));
+  m_imageListSmall->Add (wxIcon (replaced_file_xpm));
+  m_imageListSmall->Add (wxIcon (modified_file_xpm));
+  m_imageListSmall->Add (wxIcon (merged_file_xpm));
+  m_imageListSmall->Add (wxIcon (conflicted_file_xpm));
 
-  m_imageListSmall->Add (wxICON (folder));
-  m_imageListSmall->Add (wxICON (versioned_folder));
+  m_imageListSmall->Add (wxIcon (folder_xpm));
+  m_imageListSmall->Add (wxIcon (versioned_folder_xpm));
 
-  m_imageListSmall->Add (wxICON (sort_down));
-  m_imageListSmall->Add (wxICON (sort_up));
+  m_imageListSmall->Add (wxIcon (sort_down_xpm));
+  m_imageListSmall->Add (wxIcon (sort_up_xpm));
 
   // set the indexes
   IMAGE_INDEX[svn_wc_status_none] = 0;

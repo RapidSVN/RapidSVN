@@ -20,6 +20,8 @@
 
 namespace svn
 {
+  const Context Context::Anonymous = Context ();
+
   svn_error_t *
   Context::prompt (const char **result, 
                    const char *prompt,

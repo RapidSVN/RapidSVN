@@ -11,58 +11,40 @@
  * ====================================================================
  */
 
-#include "svncpp/path.hpp"
-#include "svncpp/property.hpp"
-#include "include.hpp"
-#include "wx/resource.h"
-#include "rapidsvn_app.hpp"
+// svncpp
+#include "svncpp/exception.hpp"
+
+// app
 #include "property_action.hpp"
-#include "svn_notify.hpp"
+#include "property_dlg.hpp"
 
-
-PropertyAction::PropertyAction (wxFrame * frame, 
-                      Tracer * tr, const char * target)
-  : ActionThread (frame), _target(target)
+PropertyAction::PropertyAction (wxWindow * parent, 
+                                Tracer * tr, const char * target)
+  : Action (parent, tr, false), m_target(target)
 {
-  thisframe = frame;
-  SetTracer (tr, FALSE);        // do not own the tracer
 }
 
-void
-PropertyAction::Perform ()
+bool
+PropertyAction::Prepare ()
 {
-  ////////////////////////////////////////////////////////////
-  // Here we are in the main thread.
-  svn::Property property;
-
-  property.loadPath (_target);
-
-  if(!property.isVersioned ())
-	  return;
-
-  propDialog = new PropertyDlg(thisframe, &property);
-
-  if (propDialog->ShowModal () == wxID_OK)
+  try
   {
-    // #### TODO: check errors and throw an exception
-    // create the thread
-    Create ();
-
-    // here we start the action thread
-    Run ();
-
-    ////////////////////////////////////////////////////////////
+    PropertyDlg dlg (GetParent (), m_target);
+    dlg.ShowModal ();
+  }
+  catch (svn::Exception &)
+  {
   }
 
-  // destroy the dialog
-  propDialog->Close (TRUE);
+  return false;
 }
 
-void *
-PropertyAction::Entry ()
+bool
+PropertyAction::Perform ()
 {
-  return NULL;
+  return true;
 }
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

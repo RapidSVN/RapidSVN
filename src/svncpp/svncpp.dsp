@@ -153,10 +153,6 @@ SOURCE=.\auth.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\client.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\client.hpp
 # End Source File
 # Begin Source File

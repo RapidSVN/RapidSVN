@@ -62,7 +62,12 @@ namespace svn
     /**
      * operator to get svn_client_ctx object
      */
-    operator svn_client_ctx_t * ()
+    operator svn_client_ctx_t * () 
+    {
+      return &m_ctx;
+    }
+
+    svn_client_ctx_t * ctx ()
     {
       return &m_ctx;
     }
@@ -77,6 +82,7 @@ namespace svn
       m_logMessage = msg;
     }
 
+    static const Context Anonymous;
   private:
     Pool m_pool;
     svn_client_ctx_t m_ctx;

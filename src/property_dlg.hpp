@@ -17,18 +17,20 @@
 // wxwindows
 #include "wx/grid.h"
 #include "wx/dialog.h"
+#include "wx/window.h"
 
 // svncpp
 #include "svncpp/property.hpp"
 
+
 class PropertyGrid : public wxGrid
 {
 public:
-  PropertyGrid (wxWindow * parent, svn::Property * property);
+  PropertyGrid (wxWindow * parent, const svn::Property & property);
   void FillList ();
 
 private:
-  svn::Property * m_property;
+  const svn::Property & m_property;
   void InitializeData ();
   
   DECLARE_EVENT_TABLE ()
@@ -37,9 +39,9 @@ private:
 class PropertyDlg : public wxDialog
 {
 public:
-  PropertyDlg (wxWindow * parent, svn::Property * property);
+  PropertyDlg (wxWindow * parent, const char * target);
 private:
-  svn::Property * m_property;
+  svn::Property m_property;
   PropertyGrid * propGrid;
 
   void InitializeData ();

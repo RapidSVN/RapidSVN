@@ -74,6 +74,7 @@ namespace svn
      */
     const char * 
     c_str() const;
+
   };
 }
 

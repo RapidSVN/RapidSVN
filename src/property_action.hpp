@@ -14,21 +14,18 @@
 #ifndef _PROPERTY_ACTION_H_INCLUDED_
 #define _PROPERTY_ACTION_H_INCLUDED_
 
-#include "action_thread.hpp"
-#include "property_dlg.hpp"
+#include "action.hpp"
 
-class PropertyAction : public ActionThread
+class PropertyAction : public Action
 {
-private:
-  wxFrame *thisframe;
-  const char * _target;
-  PropertyDlg * propDialog;
-
 public:
-  PropertyAction (wxFrame * frame,Tracer * tr, const char * target);
+  PropertyAction (wxWindow * parent,Tracer * tr, const char * target);
 
-  void Perform ();
-  void *Entry ();
+  bool Prepare ();
+  bool Perform ();
+
+private:
+  const char * m_target;
 };
 
 #endif
