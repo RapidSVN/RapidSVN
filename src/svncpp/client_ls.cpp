@@ -59,6 +59,13 @@ namespace svn
 
     DirEntries entries;
 
+    std::string basePath ("");
+    if (pathOrUrl != 0 && *pathOrUrl != '\0')
+    {
+      basePath = pathOrUrl;
+      basePath += '/';
+    }
+
     for (int i = 0; i < array->nelts; ++i)
     {
       const char *utf8_entryname;
@@ -76,9 +83,9 @@ namespace svn
       error = svn_utf_cstring_from_utf8 (
         &native_entryname, utf8_entryname, pool);      
 
-      std::string fullname (pathOrUrl); 
+      std::string fullname (basePath);
       std::string name (native_entryname);
-      fullname += "/" + name;
+      fullname += name;
 
       entries.push_back (DirEntry (fullname.c_str (), dirent));
     }
