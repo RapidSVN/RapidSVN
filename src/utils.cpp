@@ -31,6 +31,7 @@
 #include "ids.hpp"
 #include "utils.hpp"
 #include "tracer.hpp"
+#include "verblist.hpp"
 
 // bitmaps
 #include "res/bitmaps/add.xpm"
@@ -425,6 +426,49 @@ LocalToUtf8 (const wxString & srcLocal)
 
   return dst;
 }
+
+
+void
+AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
+{
+    wxASSERT (status);
+
+    // Append file verbs
+    try
+    {
+      VerbList verbList;
+
+      verbList.InitFromDocument (status->path ());
+
+      if (verbList.GetCount () == 0)
+        return;
+
+      wxMenu * menu = new wxMenu ();
+
+      size_t i = 0;
+      for (; 
+           (i < verbList.GetCount ()) && 
+           (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
+      {
+        wxMenuItem *pItem;
+        // TODO: Convert verb names to unicode on the fly if needed (or make
+        // verblist follow wxWindows' unicode setting)
+        pItem = new wxMenuItem (menu, ID_Verb_Min + i, verbList.GetName (i));
+        //pItem->SetBitmap (wxBITMAP (?))
+        menu->Append (pItem);
+      }
+    
+      parentMenu->Append (ID_Open, _("Open..."), menu);
+    }
+    catch (std::exception)
+    {
+      // Failed assembling verbs. 
+      // TODO: Report this error in the status bar?
+
+    }
+
+}
+
 
 
 /* -----------------------------------------------------------------

@@ -26,6 +26,11 @@ class Tracer;
 class wxMenu;
 class wxCommandEvent;
 
+namespace svn
+{
+  class Status;
+}
+
 
 /**
  * declaration of an array with @a svn_revnum_t elements
@@ -94,6 +99,20 @@ AppendBookmarksMenu (wxMenu * parentMenu);
  */
 void 
 AppendQueryMenu (wxMenu * parentMenu);
+
+
+/**
+ * Append entries for "verbs" (Win32 only).
+ * Since this feature is context specific (based on
+ * the selected file), @a status has to be passed.
+ * Works only with one selected file
+ *
+ * @param parentMenu menu that will receive the items
+ * @param status status instance of the selected item
+ */
+void
+AppendVerbMenu (wxMenu * parentMenu, svn::Status * status);
+
 
 /**
  * Checks if the given string contains a valid

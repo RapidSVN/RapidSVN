@@ -34,7 +34,6 @@
 #include "ids.hpp"
 #include "filelist_ctrl.hpp"
 #include "utils.hpp"
-#include "verblist.hpp"
 #include "preferences.hpp"
 #include "action.hpp"
 #include "rapidsvn_app.hpp"
@@ -1104,60 +1103,8 @@ FileListCtrl::ShowMenu (wxPoint & pt)
     long item = GetNextItem (-1, wxLIST_NEXT_ALL, 
                              wxLIST_STATE_SELECTED);
     svn::Status * status = (svn::Status*)GetItemData (item);
-    VerbList verbList;
 
-    // Append file verbs
-    try
-    {
-      if(status != 0)
-      verbList.InitFromDocument (status->path ());
-    }
-    catch (std::exception)
-    {
-      // Failed assembling verbs. 
-      // TODO: Report this error in the status bar?
-    }
-
-    size_t i = 0;
-    for (; 
-         (i < verbList.GetCount ()) && 
-         (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
-    {
-      wxMenuItem *pItem;
-      // TODO: Convert verb names to unicode on the fly if needed (or make
-      // verblist follow wxWindows' unicode setting)
-      pItem = new wxMenuItem (&menu, ID_Verb_Min + i, verbList.GetName (i));
-      //pItem->SetBitmap (wxBITMAP (?))
-      menu.Append (pItem);
-    }
-    
-    if (i == 0)
-    {
-      // No verbs - allow configured editor if there is one
-      Preferences prefs;
-      if (!prefs.editor.IsEmpty () || IsDir (status))
-      {
-        const char * defaultActionVerb = _("Open");
-        if (!IsDir (status))
-        {
-          if (svn::Url::isValid (status->path ()))
-          {
-            defaultActionVerb = _("View HEAD");
-          }
-          else
-          {
-            defaultActionVerb = _("Edit");
-          }
-        }
-        menu.Append (new wxMenuItem (&menu, ID_Default_Action, defaultActionVerb));
-        ++i;
-      }
-    }
-
-    if (i > 0)
-    {
-      menu.AppendSeparator ();
-    }
+    AppendVerbMenu (&menu, status);
   }
 
   AppendModifyMenu (&menu);
