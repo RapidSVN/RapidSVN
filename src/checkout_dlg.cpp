@@ -66,7 +66,7 @@ CheckoutDlg::OnBrowse (wxCommandEvent & event)
   TransferDataFromWindow();
   wxDirDialog dialog (this,
                       _T ("Select a destination folder to checkout to"),
-                      wxGetHomeDir());
+                      wxGetHomeDir(), wxDD_NEW_DIR_BUTTON);
 
   if (dialog.ShowModal () == wxID_OK)
   {
@@ -87,7 +87,7 @@ CheckoutDlg::InitializeData ()
 
   // Module row
   wxStaticBoxSizer *moduleSizer = new wxStaticBoxSizer (
-          new wxStaticBox(this, -1, _T("Module to check out (full path)")), 
+          new wxStaticBox(this, -1, _T("URL")), 
           wxHORIZONTAL);
   wxTextCtrl* moduleName = new wxTextCtrl (this, -1, _T(""), wxPoint(-1,-1),
     wxSize(235, -1), 0,
