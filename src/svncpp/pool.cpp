@@ -11,9 +11,6 @@
  * ====================================================================
  */
 
-#ifndef _SVNCPP_POOL_HPP_
-#define _SVNCPP_POOL_HPP_
-
 #include "pool.hpp"
 
 /**
@@ -63,7 +60,6 @@ namespace svn
 //   }
 }
 
-#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../../rapidsvn-dev.el")
