@@ -177,6 +177,10 @@ SOURCE=.\annotate_line.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\apr.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\client.hpp
 # End Source File
 # Begin Source File

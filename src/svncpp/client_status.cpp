@@ -253,17 +253,23 @@ namespace svn
   };
 
   static Status
-  remoteSingleStatus (const char * path, Context * context)
+  remoteSingleStatus (Client * client, const char * path, Context * context)
   {
-    // TODO!!!
-    return Status ();
+    Revision rev (Revision::HEAD);
+
+    DirEntries dirEntries = client->ls (path, rev, false);
+
+    if (dirEntries.size () == 0)
+      return Status ();
+    else
+      return dirEntryToStatus (dirEntries [0]);
   }
 
   Status 
   Client::singleStatus (const char * path) throw (ClientException)
   {
     if (Url::isValid (path))
-      return remoteSingleStatus (path, m_context);
+      return remoteSingleStatus (this, path, m_context);
     else
       return localSingleStatus (path, m_context);
   }

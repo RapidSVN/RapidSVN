@@ -92,7 +92,10 @@ namespace svn
 
       // add the revision number to the filename
       char revstring[20];
-      sprintf (revstring, "%d", revision.revnum ());
+      if (revision.kind () == revision.HEAD)
+        strcpy (revstring, "HEAD");
+      else
+        sprintf (revstring, "%d", revision.revnum ());
       filename += "-";
       filename += revstring;
 
