@@ -19,20 +19,11 @@
 // app
 #include "utils.hpp"
 
-class RapidSvnFrame;
-
 class RapidSvnApp:public wxApp
 {
+protected:
   virtual bool OnInit ();
   virtual int OnExit ();
-
-public:
-   RapidSvnFrame * appFrame;
-
-  RapidSvnFrame *GetAppFrame ()
-  {
-    return appFrame;
-  }
 };
 
 DECLARE_APP (RapidSvnApp)
