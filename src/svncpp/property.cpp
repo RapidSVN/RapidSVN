@@ -2,7 +2,7 @@
 #include "property.h"
 #include "stdio.h"
 
-namespace Svn
+namespace svn
 {
 
 Property::Property ()
@@ -18,24 +18,24 @@ Property::~Property ()
 }
 
 int
-Property::Count ()
+Property::count ()
 {
   return propCount;
 }
 
 bool
-Property::LoadPath (char * path)
+Property::loadPath (char * path)
 {
   filePath = path;
 
-  if(!LoadProperties ())
+  if(!loadProperties ())
     return false;
 
   return true;
 }
 
 bool
-Property::LoadProperties ()
+Property::loadProperties ()
 {
   Err = svn_client_proplist (&props,
                              filePath, 
@@ -69,7 +69,7 @@ Property::LoadProperties ()
 }
 
 const char *
-Property::NextProperty ()
+Property::nextProperty ()
 {
   if(props == NULL)
     return NULL;
@@ -114,13 +114,13 @@ Property::NextProperty ()
 }
 
 void
-Property::Reset ()
+Property::reset ()
 {
   currentProp = 0;
 }
 
 const char *
-Property::GetValue (char * name)
+Property::getValue (char * name)
 {
   apr_hash_t *prop;
   apr_hash_index_t *hi;
@@ -145,7 +145,7 @@ Property::GetValue (char * name)
 
     /* If this is a special Subversion property, it is stored as
        UTF8, so convert to the native format. */
-    if (IsSvnProperty (name))
+    if (isSvnProperty (name))
       Err = svn_utf_string_from_utf8 (&propval, propval, pool);
 
     return propval->data;
@@ -155,7 +155,7 @@ Property::GetValue (char * name)
 }
 
 bool
-Property::Set (char * name, char * value, bool recurse)
+Property::set (char * name, char * value, bool recurse)
 {
   const char *pname_utf8;
   const svn_string_t *propval = NULL;
@@ -168,13 +168,13 @@ Property::Set (char * name, char * value, bool recurse)
   if(Err != NULL)
     return false;
 
-  LoadProperties ();
+  loadProperties ();
 
   return true;
 }
 
 bool 
-Property::Delete (char * name, bool recurse)
+Property::remove (char * name, bool recurse)
 {
   const char *pname_utf8;
   svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
@@ -184,13 +184,13 @@ Property::Delete (char * name, bool recurse)
   if(Err != NULL)
     return false;
 
-  LoadProperties ();
+  loadProperties ();
 
   return true;
 }
 
 svn_boolean_t
-Property::IsSvnProperty (char * name)
+Property::isSvnProperty (char * name)
 {
   const char *pname_utf8;
 

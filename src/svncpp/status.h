@@ -5,13 +5,13 @@
 #include "auth.h"
 #include "svn_sorts.h"
 
-namespace Svn
+namespace svn
 {
 
 /**
  * Subversion status API.
  */
-class Status : public Svn::Auth
+class Status : public svn::Auth
 {
 private:
   apr_hash_t *statushash;
@@ -24,7 +24,7 @@ private:
   /**
    * Reset to all of the default properties.
    */
-  void Reset ();
+  void reset ();
   
 public:
   Status ();
@@ -34,33 +34,33 @@ public:
    * Initiaties the status on a path. Returns false if the file is 
    * not under version control.
    */
-  bool LoadPath (char * path);
+  bool loadPath (char * path);
   
   /**
    * Returns the revision.  Returns -1 on failure.
    */
-  long Revision ();
+  long revision ();
 
   /**
    * Returns the last time the file was changed revision number.
    * Returns -1 on failure.
    */
-  long LastChanged ();
+  long lastChanged ();
 
   /**
    * Returns the file status in text. Returns NULL on failure.
    */
-  char * StatusText ();
+  char * statusText ();
 
   /**
    * Returns the file status. Returns NULL on failure.
    */
-  char * StatusProp ();
+  char * statusProp ();
 
   /**
    * Returns whether the file is under version control.
    */
-  bool IsVersioned ();
+  bool isVersioned ();
 };
 
 }

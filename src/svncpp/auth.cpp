@@ -1,6 +1,6 @@
 #include "auth.h"
 
-namespace Svn
+namespace svn
 {
 
 Auth::Auth ()
@@ -18,19 +18,19 @@ Auth::~Auth ()
 }
 
 void
-Auth::Username (char *username)
+Auth::username (char *username)
 {
   userName = username;
 }
 
 void
-Auth::Password (char *password)
+Auth::password (char *password)
 {
   passWord = password;
 }
 
 svn_client_auth_baton_t *
-Auth::Authenticate ()
+Auth::authenticate ()
 {
   return auth_obj;
 }

@@ -4,7 +4,7 @@
 
 #include "client.h"
 
-namespace Svn
+namespace svn
 {
 
 /**
@@ -22,27 +22,27 @@ public:
   /**
    * Sets the error from an Subversion error struct.
    */
-  void SetError (svn_error_t * error);
+  void setError (svn_error_t * error);
 
   /**
    * Records whether an error exists.
    */
-  bool Exists ();
+  bool exists ();
 
   /**
    * Returns the error message. Returns NULL if there is no error.
    */
-  const char * Message ();
+  const char * message ();
 
   /**
    * Returns the error source.  Returns NULL if there is no error.
    */
-  const char * Source ();
+  const char * source ();
 
   /**
    * Returns the APR error id.  Returns -1 if there is no error.
    */
-  int AprError ();
+  int aprError ();
 
 };
 

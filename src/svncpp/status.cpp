@@ -1,7 +1,7 @@
 
 #include "status.h"
 
-namespace Svn
+namespace svn
 {
 
 Status::Status ()
@@ -13,30 +13,30 @@ Status::~Status ()
 }
 
 void 
-Status::Reset ()
+Status::reset ()
 {
   versioned = false;
   youngest = SVN_INVALID_REVNUM;
 }
 
 bool
-Status::IsVersioned ()
+Status::isVersioned ()
 {
   return versioned;
 }
 
 bool
-Status::LoadPath (char * path)
+Status::loadPath (char * path)
 {
   const svn_item_t *item;
 
   filePath = path;
-  Reset ();
+  reset ();
 
   Err = svn_client_status (&statushash,
                            &youngest,
                            filePath,
-                           Authenticate (),
+                           authenticate (),
                            0,
                            1,
                            0,
@@ -66,7 +66,7 @@ Status::LoadPath (char * path)
 }
 
 long
-Status::Revision ()
+Status::revision ()
 {
   if(versioned == false)
     return -1;
@@ -75,7 +75,7 @@ Status::Revision ()
 }
   
 long
-Status::LastChanged ()
+Status::lastChanged ()
 {
   if(versioned == false)
     return -1;
@@ -84,7 +84,7 @@ Status::LastChanged ()
 }
 
 char *
-Status::StatusText ()
+Status::statusText ()
 {
   char * statusText = NULL;
   
@@ -130,7 +130,7 @@ Status::StatusText ()
 }
 
 char *
-Status::StatusProp ()
+Status::statusProp ()
 {
   //return status->prop_status;
   return NULL;

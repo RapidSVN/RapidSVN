@@ -12,13 +12,13 @@ svn_error_t * svn_cl__get_log_message (const char **log_msg,
                          apr_array_header_t * commit_items,
                          void *baton, apr_pool_t * pool);
 
-namespace Svn
+namespace svn
 {
 
 /**
  * Repository modification class.
  */
-class Modify : public Svn::Auth
+class Modify : public svn::Auth
 {
 private:
   svn_wc_notify_func_t notify_func;
@@ -28,19 +28,19 @@ private:
   /**
    * Create a revision template.
    */
-  svn_client_revision_t * Revision (long revNumber);
+  svn_client_revision_t * getRevision (long revNumber);
 
   /**
    * Creates a log message baton.
    */
-  void * LogMessage (char * message, char * baseDirectory = NULL);
+  void * logMessage (char * message, char * baseDirectory = NULL);
 
   /**
    * Creates a target out of a string.
    */
-  apr_array_header_t * Target (char * path);
+  apr_array_header_t * target (char * path);
 
-  svn_error_t * GetLogMessage (const char **log_msg,
+  svn_error_t * getLogMessage (const char **log_msg,
                          apr_array_header_t * commit_items,
                          void *baton, apr_pool_t * pool);
 
@@ -56,7 +56,7 @@ public:
                      then it will checkout the latest revision.
    * @param recurse whether you want it to checkout files recursively.
    */
-  bool Checkout (char * moduleName, char *destPath, long revision, 
+  bool checkout (char * moduleName, char *destPath, long revision, 
                  bool recurse);
   
   /**
@@ -67,22 +67,22 @@ public:
    *                    checking out each file.
    * @param baton invoked with notify_func.
    */
-  void Notification (svn_wc_notify_func_t function, void * baton);
+  void notification (svn_wc_notify_func_t function, void * baton);
 
   /**
    * Sets a file for deletion.
    */
-  bool Delete (const char * path, bool force);
+  bool remove (const char * path, bool force);
 
   /**
    * Reverts a file to a pristine state.
    */
-  bool Revert (const char * path, bool recurse);
+  bool revert (const char * path, bool recurse);
 
   /**
    * Adds a file to the repository.
    */
-  bool Add (char * path, bool recurse);
+  bool add (char * path, bool recurse);
 
   /**
    * Updates the directory.
@@ -91,7 +91,7 @@ public:
    *                 then it will checkout the latest revision.
    * @param recurse recursively update.
    */
-  bool Update (char * path, long revision, bool recurse);
+  bool update (char * path, long revision, bool recurse);
 
   /**
    * Commits changes to the repository.
@@ -99,17 +99,17 @@ public:
    * @param logMessage log message that accompanies check in.
    * @param recurse whether the operation should be done recursively. 
    */
-  bool Commit (char * path, char * logMessage, bool recurse);
+  bool commit (char * path, char * logMessage, bool recurse);
 
   /**
    * Copies a versioned file with the history preserved.
    */
-  bool Copy (char * path, char * destPath);
+  bool copy (char * path, char * destPath);
 
   /**
    * Moves or renames a file.
    */
-  bool Move (char * path, char * destPath, long revision, bool force);
+  bool move (char * path, char * destPath, long revision, bool force);
 };
 
 }

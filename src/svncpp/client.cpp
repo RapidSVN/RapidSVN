@@ -1,6 +1,6 @@
 #include "client.h"
 
-namespace Svn
+namespace svn
 {
 
 Client::Client ()
@@ -14,7 +14,7 @@ Client::~Client ()
 }
 
 svn_error_t *
-Client::GetError ()
+Client::getError ()
 {
   return Err;
 }

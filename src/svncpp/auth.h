@@ -5,13 +5,13 @@
 #include "client.h"
 #include "error.h"
 
-namespace Svn
+namespace svn
 {
 
 /**
  * Subversion authentication API.
  */
-class Auth : public Svn::Client
+class Auth : public svn::Client
 {
 private:
   char * userName;
@@ -25,17 +25,17 @@ public:
   /**
    * Sets the username.
    */
-  void Username (char * username);
+  void username (char * username);
   
   /**
    * Sets the password.
    */
-  void Password (char * password);
+  void password (char * password);
   
   /**
    * Returns an authentication object.
    */
-  svn_client_auth_baton_t * Authenticate ();
+  svn_client_auth_baton_t * authenticate ();
 };
 
 }

@@ -67,8 +67,8 @@ DeleteAction::Entry ()
   svn_wc_notify_func_t notify_func = NULL;
   void *notify_baton = NULL;
 
-  Svn::Modify modify;
-  Svn::Error Err;
+  svn::Modify modify;
+  svn::Error Err;
 
   svn_cl__get_notifier (&notify_func, &notify_baton,
                         TRUE, FALSE, GetTracer (), pool);
@@ -77,15 +77,15 @@ DeleteAction::Entry ()
   {
     const char *target = ((const char **) (targets->elts))[i];
 
-    if(!modify.Delete (target, force))
-      Err.SetError (modify.GetError ());
+    if(!modify.remove (target, force))
+      Err.setError (modify.getError ());
     else
       GetTracer ()->Trace ("Deletion successful");
   }
 
-  if(Err.Exists ())
+  if(Err.exists ())
   {
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (Err.Message ()), ACTION_EVENT);
+    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, wxT (Err.message ()), ACTION_EVENT);
     GetTracer ()->Trace ("Could not delete");
   }
 

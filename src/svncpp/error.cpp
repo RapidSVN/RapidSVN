@@ -1,7 +1,7 @@
 
 #include "error.h"
 
-namespace Svn
+namespace svn
 {
 
 Error::Error ()
@@ -14,13 +14,13 @@ Error::~Error ()
 }
 
 void
-Error::SetError (svn_error_t * error)
+Error::setError (svn_error_t * error)
 {
   err = error;
 }
 
 bool
-Error::Exists ()
+Error::exists ()
 {
   if(err != NULL)
     return true;
@@ -29,7 +29,7 @@ Error::Exists ()
 }
 
 const char * 
-Error::Message ()
+Error::message ()
 {
   if(err == NULL)
     return NULL;
@@ -38,7 +38,7 @@ Error::Message ()
 }
 
 const char * 
-Error::Source ()
+Error::source ()
 {
   if(err == NULL)
     return NULL;
@@ -47,7 +47,7 @@ Error::Source ()
 }
 
 int
-Error::AprError ()
+Error::aprError ()
 {
   if(err == NULL)
     return -1;

@@ -6,7 +6,7 @@ struct log_msg_baton
   const char *base_dir;
 };
 
-namespace Svn
+namespace svn
 {
 
 Modify::Modify ()
@@ -21,7 +21,7 @@ Modify::~Modify ()
 }
 
 svn_client_revision_t *
-Modify::Revision (long revNumber)
+Modify::getRevision (long revNumber)
 {
   if(revNumber == -1)
     rev.kind = svn_client_revision_unspecified;
@@ -34,7 +34,7 @@ Modify::Revision (long revNumber)
 }
 
 bool
-Modify::Checkout (char * moduleName, char *destPath, long revision, 
+Modify::checkout (char * moduleName, char *destPath, long revision, 
                   bool recurse)
 {
   if(notify_func == NULL)
@@ -42,10 +42,10 @@ Modify::Checkout (char * moduleName, char *destPath, long revision,
 
   Err = svn_client_checkout (notify_func,
                              notify_baton,
-                             Authenticate (),
+                             authenticate (),
                              moduleName,
                              destPath,
-                             Revision (revision),
+                             getRevision (revision),
                              recurse,
                              NULL,
                              pool);
@@ -57,21 +57,21 @@ Modify::Checkout (char * moduleName, char *destPath, long revision,
 }
 
 void
-Modify::Notification (svn_wc_notify_func_t function, void * baton)
+Modify::notification (svn_wc_notify_func_t function, void * baton)
 {
   notify_func = function;
   notify_baton = baton;
 }
 
 bool
-Modify::Delete (const char * path, bool force)
+Modify::remove (const char * path, bool force)
 {
   svn_client_commit_info_t *commit_info = NULL;
 
   Err = svn_client_delete (&commit_info, path, NULL, force,
-                           Authenticate (),
+                           authenticate (),
                            &svn_cl__get_log_message,
-                           LogMessage (NULL),
+                           logMessage (NULL),
                            notify_func, notify_baton, pool);
   if(Err != NULL)
     return false;
@@ -80,7 +80,7 @@ Modify::Delete (const char * path, bool force)
 }
 
 bool
-Modify::Revert (const char * path, bool recurse)
+Modify::revert (const char * path, bool recurse)
 {
   Err = svn_client_revert (path, recurse, notify_func, 
                            notify_baton, pool);
@@ -92,7 +92,7 @@ Modify::Revert (const char * path, bool recurse)
 }
 
 bool
-Modify::Add (char * path, bool recurse)
+Modify::add (char * path, bool recurse)
 {
   Err = svn_client_add (path, recurse, notify_func, 
                         notify_baton, pool);
@@ -104,12 +104,12 @@ Modify::Add (char * path, bool recurse)
 }
 
 bool
-Modify::Update (char * path, long revision, bool recurse)
+Modify::update (char * path, long revision, bool recurse)
 {
-  Err = svn_client_update (Authenticate (),
+  Err = svn_client_update (authenticate (),
                            path,
                            NULL,
-                           Revision (revision),
+                           getRevision (revision),
                            recurse,
                            notify_func,
                            notify_baton,
@@ -121,16 +121,16 @@ Modify::Update (char * path, long revision, bool recurse)
 }
 
 bool
-Modify::Commit (char * path, char * logMessage, bool recurse)
+Modify::commit (char * path, char * message, bool recurse)
 {
   svn_client_commit_info_t *commit_info = NULL;
   svn_revnum_t revnum = SVN_INVALID_REVNUM;
 
   Err = svn_client_commit (&commit_info, notify_func, 
                            notify_baton, 
-                           Authenticate (), Target (path), 
+                           authenticate (), target (path), 
                            &svn_cl__get_log_message, 
-                           LogMessage (logMessage), NULL, revnum, 
+                           logMessage (message), NULL, revnum, 
                            !recurse,
                            pool);
   if(Err != NULL)
@@ -140,18 +140,18 @@ Modify::Commit (char * path, char * logMessage, bool recurse)
 }
 
 bool
-Modify::Copy (char * srcPath, char * destPath)
+Modify::copy (char * srcPath, char * destPath)
 {
   svn_client_commit_info_t *commit_info = NULL;
 
   Err = svn_client_copy (&commit_info,
                          srcPath,
-                         Revision (-1),
+                         getRevision (-1),
                          destPath,
                          NULL,
-                         Authenticate (),
+                         authenticate (),
                          &svn_cl__get_log_message,
-                         LogMessage (NULL),
+                         logMessage (NULL),
                          notify_func, 
                          notify_baton,
                          pool);
@@ -163,18 +163,18 @@ Modify::Copy (char * srcPath, char * destPath)
 }
 
 bool
-Modify::Move (char * srcPath, char * destPath, long revision, bool force)
+Modify::move (char * srcPath, char * destPath, long revision, bool force)
 {
   svn_client_commit_info_t *commit_info = NULL;
 
   Err = svn_client_move (&commit_info,
                          srcPath,
-                         Revision (-1),
+                         getRevision (-1),
                          destPath,
                          force,
-                         Authenticate (),
+                         authenticate (),
                          &svn_cl__get_log_message,
-                         LogMessage (NULL),
+                         logMessage (NULL),
                          notify_func,
                          notify_baton,
                          pool);
@@ -185,7 +185,7 @@ Modify::Move (char * srcPath, char * destPath, long revision, bool force)
 }
 
 apr_array_header_t *
-Modify::Target (char * path)
+Modify::target (char * path)
 {
   apr_array_header_t *targets = apr_array_make (pool,
                                                 DEFAULT_ARRAY_SIZE,
@@ -198,7 +198,7 @@ Modify::Target (char * path)
 }
 
 void *
-Modify::LogMessage (char * message, char * baseDirectory)
+Modify::logMessage (char * message, char * baseDirectory)
 {
   log_msg_baton *baton = (log_msg_baton *) 
                          apr_palloc (pool, sizeof (*baton));

@@ -9,7 +9,7 @@
 /**
  * SvnCpp namespace.
  */
-namespace Svn
+namespace svn
 {
 
 /**
@@ -27,7 +27,7 @@ protected:
 
 public:
   /**
-   * Initialize the primary memory pool.
+   * Initializes the primary memory pool.
    */
   Client ();
 
@@ -36,7 +36,7 @@ public:
   /**
    * Returns the error object.
    */
-  svn_error_t * GetError ();
+  svn_error_t * getError ();
 };
 
 }
