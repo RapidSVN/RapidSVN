@@ -222,10 +222,6 @@ SOURCE=.\src\simple_worker.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\svncpp\status.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\svn_file_info.cpp
 # End Source File
 # Begin Source File

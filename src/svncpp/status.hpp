@@ -57,7 +57,7 @@ namespace svn
     const char *
     path () const
     {
-      return m_path;
+      return m_path->data;
     }
 
     /**
@@ -103,7 +103,7 @@ namespace svn
     const bool 
     isLocked () const 
     {
-      return m_status->locked;
+      return m_status->locked != 0;
     }
 
     /**
@@ -112,7 +112,7 @@ namespace svn
     const bool 
     isCopied () const 
     {
-      return m_status->copied;
+      return m_status->copied != 0;
     }
 
     /**
@@ -121,7 +121,7 @@ namespace svn
     const bool
     isSwitched () const 
     {
-      return m_status->switched;
+      return m_status->switched != 0;
     }
 
     /**
@@ -153,8 +153,8 @@ namespace svn
     /**
      * @return the textual description of the status.
      */
-    const char *
-    statusDescription (const svn_wc_status_kind kind) const;
+    static const char *
+    statusDescription (const svn_wc_status_kind kind);
 
     /**
      * assignment operator
@@ -163,7 +163,7 @@ namespace svn
     operator = (const Status &);
   private:
     svn_wc_status_t * m_status;
-    char * m_path;
+    svn_string_t * m_path;
     Pool m_pool;
     bool m_isVersioned;
 
@@ -176,7 +176,6 @@ namespace svn
     void 
     init (const char *path, const svn_wc_status_t * status);
   };
-
 }
 
 #endif

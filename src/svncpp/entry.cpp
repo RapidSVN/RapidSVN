@@ -18,6 +18,7 @@
 namespace svn
 {
   Entry::Entry (const svn_wc_entry_t * src)
+    : m_pool (0), m_entry (0)
   {
     // copy the contents of src
     if (src)
@@ -26,7 +27,8 @@ namespace svn
     }
     else
     {
-      m_entry = apr_pcalloc (m_pool, sizeof (svn_wc_entry_t));
+      m_entry = (svn_wc_entry_t*)
+        apr_pcalloc (m_pool, sizeof (svn_wc_entry_t));
     }
   }
 

@@ -15,17 +15,21 @@
 // svncpp
 #include "status.hpp"
 
+#include <assert.h>
+
 namespace svn
 {
   Status::Status (const Status & src)
+    : m_path (0), m_status (0)
   {
     if( &src != this )
     {
-      init (src.m_path, src.m_status);
+      init (src.m_path->data, src.m_status);
     }
   }
 
   Status::Status (const char *path, svn_wc_status_t * status)
+    : m_path (0), m_status (0)
   {
     init (path, status);
   }
@@ -36,6 +40,15 @@ namespace svn
 
   void Status::init (const char *path, const svn_wc_status_t * status)
   {
+    if (path)
+    {
+      m_path = svn_string_create (path, m_pool);
+    }
+    else
+    {
+      m_path = svn_string_create ("", m_pool);
+    }
+
     m_status = (svn_wc_status_t *)
       apr_pcalloc (m_pool, sizeof (svn_wc_status_t));
     if (!status)
@@ -61,7 +74,7 @@ namespace svn
   }
 
   const char *
-  Status::statusDescription (const svn_wc_status_kind kind) const
+  Status::statusDescription (const svn_wc_status_kind kind)
   {
     switch (kind)
     {
@@ -106,7 +119,7 @@ namespace svn
     if (this == &status)
       return *this;
 
-    init (status.m_path, status.m_status);
+    init (status.m_path->data, status.m_status);
     return *this;
   }
 }

@@ -101,6 +101,10 @@ SOURCE=.\context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\entry.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\exception.cpp
 # End Source File
 # Begin Source File
@@ -154,6 +158,10 @@ SOURCE=.\client.hpp
 # Begin Source File
 
 SOURCE=.\context.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\entry.hpp
 # End Source File
 # Begin Source File
 

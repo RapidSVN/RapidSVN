@@ -17,6 +17,9 @@
 #include "wx/filename.h"
 #include "wx/imaglist.h"
 
+// subversion api
+#include "svn_time.h"
+
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/entry.hpp"
@@ -88,12 +91,13 @@ enum
 {
   COL_NAME = 0,
   COL_REV,
-  COL_CMT_DATE,
+  COL_CMT_REV,
   COL_AUTHOR,
   COL_TEXT_STATUS,
   COL_PROP_STATUS,
-  COL_DATE,
-  COL_PROP_DATE,
+  COL_CMT_DATE,
+  COL_TEXT_TIME,
+  COL_PROP_TIME,
   COL_COUNT
 };
 
@@ -108,6 +112,25 @@ GetImageIndex (int Index)
     return IMAGE_INDEX[Index];
   else
     return 0;
+}
+
+/**
+ * utility function to format a date
+ */
+wxString
+FormatDate (apr_time_t apr_date)
+{
+  svn::Pool pool;
+  wxString str = svn_time_to_cstring (apr_date, pool);
+  // use only first 19 chars
+  // 5 year + sep
+  // 3 month + sep
+  // 3 day + sep
+  // 3 h + sep
+  // 3 m + sep
+  // 2 s
+  wxString date = str.Left (19);
+  return date;
 }
 
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
@@ -224,6 +247,9 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
     case COL_REV:
       itemCol.m_text = _T ("Revision");
       break;
+    case COL_CMT_REV:
+      itemCol.m_text = _T ("Rep. Rev.");
+      break;
     case COL_CMT_DATE:
       itemCol.m_text = _T ("Last Changed");
       break;
@@ -236,10 +262,10 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
     case COL_PROP_STATUS:
       itemCol.m_text = _T ("Prop Status");
       break;
-    case COL_DATE:
+    case COL_TEXT_TIME:
       itemCol.m_text = _T ("Date");
       break;
-    case COL_PROP_DATE:
+    case COL_PROP_TIME:
       itemCol.m_text = _T ("Prop Date");
       break;
     }
@@ -300,6 +326,10 @@ FileListCtrl::wxListCompareFunction (long item1, long item2, long sortData)
     return 0;
 }
 
+/**
+ * @todo check the sort algorithm, especially the
+ *       switch statements...
+ */
 int wxCALLBACK
 FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
                             int SortColumn, bool SortIncreasing)
@@ -309,6 +339,7 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
   bool ok1, ok2;
   svn::Entry e1 (ps1->entry ());
   svn::Entry e2 (ps2->entry ());
+  wxString t1, t2;
 
   switch (SortColumn)
   {
@@ -328,6 +359,7 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
 
   case COL_REV:     
   case COL_CMT_DATE:
+  case COL_CMT_REV:
     ok1 = ok2 = true;
 
     switch (SortColumn)
@@ -337,6 +369,13 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
       r1 = e1.revision ();
       ok2 = ps2->isVersioned ();
       r2 = e2.revision ();
+      break;
+
+    case COL_CMT_REV:
+      ok1 = ps1->isVersioned ();
+      r1 = e1.cmtRev ();
+      ok2 = ps2->isVersioned ();
+      r2 = e2.cmtRev ();
       break;
 
     case COL_CMT_DATE:
@@ -363,15 +402,17 @@ FileListCtrl::CompareItems (svn::Status * ps1, svn::Status * ps2,
     break;
 
   case COL_TEXT_STATUS:
-    rc =
-      wxString (ps1->textDescription ()).CmpNoCase (ps2->textDescription ());
+    t1 = _T (svn::Status::statusDescription (ps1->textStatus ()));
+    t2 = _T (svn::Status::statusDescription (ps2->textStatus ()));
+    rc = wxString (t1).CmpNoCase (t2);
     if (!SortIncreasing)
       rc = rc * -1;             // Reverse the sort order.
     break;
 
   case COL_PROP_STATUS:
-    rc =
-      wxString (ps1->propDescription ()).CmpNoCase (ps2->propDescription ());
+    t1 = _T (svn::Status::statusDescription (ps1->propStatus ()));
+    t2 = _T (svn::Status::statusDescription (ps2->propStatus ()));
+    rc = wxString (t1).CmpNoCase (t2);
     if (!SortIncreasing)
       rc = rc * -1;             // Reverse the sort order.
     break;
@@ -438,19 +479,19 @@ FileListCtrl::UpdateFileList ()
     }
 
     wxString text;
-    const char *ctext;
 
     int imageIndex = 0;
 
     if (status.isVersioned ())
     {
-      if (isDir (&status.isDir))
+      //REMOVE const svn::Entry & entry = status.entry ();
+      if (isDir (&status))
       {
         imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER);
       }
       else
       {
-        imageIndex = GetImageIndex (status.textType ());
+        imageIndex = GetImageIndex (status.textStatus ());
       }
     }
     else
@@ -478,39 +519,55 @@ FileListCtrl::UpdateFileList ()
     // and must delete it in due course.
 
     text = "";
+    wxString revision;
+    wxString author;
+    wxString cmtDate;
+    wxString cmtRev;
+    wxString textStatus;
+    wxString propStatus;
+    wxString textDate;
+    wxString propDate;
     if (status.isVersioned ())
     {
-      text.Printf ("%ld", status.revision ());
-    }
-    SetItem (i, COL_REV, text);
+      const svn::Entry & entry = status.entry ();
+      revision.Printf ("%ld", entry.revision ());
+      cmtRev.Printf ("%ld", entry.cmtRev ());
 
-    ctext = status.lastCommitAuthor ();
-    if (!ctext)
-    {
-      ctext = "";
-    }
-    SetItem (i, COL_AUTHOR, ctext);
+      author = entry.cmtAuthor ();
 
-    text = "";
-    if (status.isVersioned ())
-    {
-      text.Printf ("%ld", status.lastChanged ());
+      // date formatting
+      cmtDate = FormatDate (entry.cmtDate ());
+      textDate = FormatDate (entry.textTime ());
+      propDate = FormatDate (entry.propTime ());
     }
-    SetItem (i, COL_CMT_DATE, text);
-
-    ctext = status.textDescription ();
-    if (!ctext)
+    switch(status.textStatus ())
     {
-      ctext = "";
+    case svn_wc_status_none:
+    case svn_wc_status_normal:
+      // empty text for them
+      break;
+    default:
+      textStatus = svn::Status::statusDescription (status.textStatus ());
+      break;
     }
-    SetItem (i, COL_TEXT_STATUS, _T (ctext));
-
-    ctext = status.propDescription ();
-    if (!ctext)
+    switch(status.propStatus ())
     {
-      ctext = "";
+    case svn_wc_status_none:
+    case svn_wc_status_normal:
+      // empty text
+      break;
+    default:
+      propStatus = svn::Status::statusDescription (status.propStatus ());
+      break;
     }
-    SetItem (i, COL_PROP_STATUS, _T (ctext));
+    SetItem (i, COL_REV, revision);
+    SetItem (i, COL_CMT_REV, cmtRev);
+    SetItem (i, COL_CMT_DATE, cmtDate);
+    SetItem (i, COL_AUTHOR, author);
+    SetItem (i, COL_TEXT_STATUS, textStatus);
+    SetItem (i, COL_PROP_STATUS, propStatus);
+    SetItem (i, COL_TEXT_TIME, textDate);
+    SetItem (i, COL_PROP_TIME, propDate);
   }
 
   SortItems (wxListCompareFunction, (long) this);
@@ -534,23 +591,7 @@ FileListCtrl::OnKeyDown (wxKeyEvent & event)
 void
 FileListCtrl::OnItemActivated (wxListEvent & event)
 {
-  //TODO do we really need this
-  //TODO if the answer is yes, then find a way to
-  //TODO eliminate the way calls are passed DEEP
-  /*
-  wxString name = GetItemText (event.GetIndex ());
-  wxFileName fullpath (m_path, name);
-
-  if (fullpath.DirExists ())
-  {
-    // If the path is a directory, change the path in the folder browser.
-    // There is no need to call UpdateFileList() as SetPath() will 
-    // trigger a EVT_TREE_SEL_CHANGED message in the fiolder browser.
-
-    wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->SetPath (fullpath.
-                                                              GetFullPath ());
-  }
-  */
+  //Unused now
 }
 
 void
@@ -600,15 +641,6 @@ FileListCtrl::SetColumnImages ()
       LI.m_image = -1;
     SetColumn (i, LI);
   }
-}
-
-svn_wc_status_kind FileListCtrl::fileStatus (svn::Status * status)
-{
-  if (status->textType () != svn_wc_status_none &&
-      status->textType () != svn_wc_status_normal)
-    return status->textType ();
-
-  return status->propType ();
 }
 
 void

@@ -49,12 +49,6 @@ private:
     svn::Status* ps1, svn::Status* ps2, int SortColumn, bool SortIncreasing);
   void SetColumnImages();
 
-  /**
-   * Returns the overall file status. 
-   */
-  svn_wc_status_kind fileStatus (svn::Status * status);
-
-
 public:
   FileListCtrl (wxWindow * parent, const wxWindowID id,
                 const wxPoint & pos, const wxSize & size);

@@ -15,8 +15,10 @@
 #define _SVNCPP_ENTRY_HPP_
 
 // subversion api
-//#include "svn_types.h"
 #include "svn_wc.h"
+
+// svncpp
+#include "pool.hpp"
 
 namespace svn
 {
@@ -109,7 +111,7 @@ namespace svn
     const bool 
     isCopied () const
     {
-      return m_entry->copied;
+      return m_entry->copied != 0;
     }
     
     /**
@@ -118,7 +120,7 @@ namespace svn
     const bool
     isDeleted () const
     {
-      return m_entry->deleted;
+      return m_entry->deleted != 0;
     }
 
     /**
@@ -244,9 +246,11 @@ namespace svn
     svn_wc_entry_t * m_entry;
     Pool m_pool;
 
-
-
-
+    /**
+     * disallow assignment operator
+     */
+    Entry &
+    operator = (const Entry &);
  };
 
 }
