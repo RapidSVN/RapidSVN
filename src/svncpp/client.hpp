@@ -194,6 +194,27 @@ namespace svn
     cat (const Path & path, 
          const Revision & revision) throw (ClientException);
 
+
+    /**
+     * Retrieves the contents for a specific @a revision of
+     * a @a path and saves it to the destination file @a dstPath.
+     *
+     * If @a dstPath is empty (""), then this path will be
+     * constructed from the temporary directory on this system
+     * and the filename in @a path. @a dstPath will still have
+     * the file extension from @a path and uniqueness of the
+     * temporary filename will be ensured.
+     *
+     * @param dstPath Filename in which the contents
+     *                of the file file will be safed.
+     * @param path path or url 
+     * @param revision
+     */
+    void
+    get (Path & dstPath, const Path & path,
+         const Revision & revision) throw (ClientException);
+
+
     /**
      * Retrieves the contents for a specific @a revision of
      * a @a path
