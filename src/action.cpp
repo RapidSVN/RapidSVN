@@ -278,9 +278,12 @@ Action::GetOptions ()
 }
 
 bool 
-Action::contextGetLogin (std::string & username, 
-                 std::string & password)
+Action::contextGetLogin (
+  const std::string & realm,
+  std::string & username, 
+  std::string & password)
 {
+  // TODO: show realm
   AuthDlg dlg (GetParent (), username.c_str () , password.c_str ());
 
   bool ok = dlg.ShowModal () == wxID_OK;
@@ -359,28 +362,66 @@ Action::PostEvent (wxEvent & event)
 }
 
 bool
-Action::contextAskQuestion (const std::string & question,
-                            std::string & answer,
-                            bool hide)
+Action::contextSslServerPrompt (
+  svn::ContextListener::SslServerPromptData & data)
 {
-  wxString myAnswer;
-  if (hide)
-  {
-    myAnswer = wxGetPasswordFromUser (
-      question.c_str (), _("Question"), "", GetParent ());
-  }
-  else
-  {
-    myAnswer = wxGetTextFromUser (
-      question.c_str (), _("Question"), "", GetParent ());
-  }
+  wxString msg;
+  msg.Printf ("%s\n" // question 
+              "%s: %s\n" // hostname
+              "%s: %s\n" // issuer
+              "%s: %s\n" // valid from
+              "%s: %s\n" // valid until
+              "%s: %s", // fingerprint
+              _("Do you want to trust this certificate permanently?"),
+              _("Hostname"), data.hostname.c_str (),
+              _("Issuer"), data.issuerDName.c_str (),
+              _("Valid from"), data.validFrom.c_str (),
+              _("Valid until"), data.validUntil.c_str (),
+              _("Fingerprint"), data.fingerprint.c_str ());
 
-  // WORKAROUND: CONVERT TO UTF8
-  //answer = myAnswer.c_str ();
-  wxString answerUtf8 (myAnswer.mb_str (wxConvUTF8));
-  answer = answerUtf8.c_str ();
-  return myAnswer.Length () > 0;
+  int answer = wxMessageBox (msg, _("SSL Certificate"), 
+                             wxYES_NO | wxCENTRE | wxICON_QUESTION,
+                             GetParent ());
+
+  if (answer != wxYES)
+    return false;
+  
+  // Yes! Trust permanently
+  data.trustPermanently = true;
+  return true;
 }
+
+bool
+Action::contextSslClientPrompt (std::string & certFile)
+{
+  wxString filename = wxFileSelector (
+    _("Select Certificate File"), "", "", "",
+    "*.*", wxOPEN | wxFILE_MUST_EXIST,
+    GetParent ());
+
+  if (filename.empty ())
+    return false;
+
+  //TODO
+  certFile = filename.c_str ();
+  return true;
+}
+
+bool
+Action::contextSslPwPrompt (std::string & password)
+{
+  //TODO
+  AuthDlg dlg (GetParent (), "", password.c_str (), 
+               AuthDlg::HIDE_USERNAME);
+
+  if (dlg.ShowModal () != wxID_OK)
+    return false;
+
+  password = dlg.GetPassword ();
+  return true;
+}
+
+
 
 /* -----------------------------------------------------------------
  * local variables:

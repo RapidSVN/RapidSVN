@@ -10,40 +10,27 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _AUTH_DLG_H_INCLUDED_
-#define _AUTH_DLG_H_INCLUDED_
 
-// wxwindows
-#include "wx/dialog.h"
+// stl
+#include <string>
 
-class AuthDlg:public wxDialog
+// svncpp
+#include "context_listener.hpp"
+
+namespace svn
 {
-public:
-  static const int HIDE_USERNAME;
+  ContextListener::SslServerPromptData::SslServerPromptData (
+    const int failures_)
+    : trustPermanently (false), acceptedFailures (0),
+      failures (failures_), hostname (""), fingerprint (""),
+      validFrom (""), validUntil (""), issuerDName("")
+  {
+  }
 
-  AuthDlg (wxWindow * parent, 
-           const char * username = "", 
-           const char * password = "",
-           int flags = 0);
+}
 
-  virtual ~AuthDlg ();
-
-  const char * 
-  GetUsername () const;
-
-  const char *
-  GetPassword () const;
-
-private:
-  struct Data;
-  Data * m;
-  
-  DECLARE_EVENT_TABLE ()
-};
-
-#endif
 /* -----------------------------------------------------------------
  * local variables:
- * eval: (load-file "../rapidsvn-dev.el")
+ * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */

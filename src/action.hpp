@@ -169,7 +169,8 @@ public:
    * @see svn::ContextListener
    */
   virtual bool 
-  contextGetLogin (std::string & username, 
+  contextGetLogin (const std::string & realm,
+                   std::string & username, 
                    std::string & password);
 
   /**
@@ -194,9 +195,20 @@ public:
    * @see svn::ContextListener
    */
   virtual bool
-  contextAskQuestion (const std::string & question,
-                      std::string & answer,
-                      bool hide);
+  contextSslServerPrompt (
+    svn::ContextListener::SslServerPromptData & data);
+
+  /**
+   * @see svn::ContextListener
+   */
+  virtual bool
+  contextSslClientPrompt (std::string & certFile);
+
+  /**
+   * @see svn::ContextListener
+   */
+  virtual bool
+  contextSslPwPrompt (std::string & password);
 
   /** set the name of the action */
   void

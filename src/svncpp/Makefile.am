@@ -10,6 +10,7 @@ libsvncpp_la_SOURCES= \
 	client_modify.cpp \
 	client_status.cpp \
 	context.cpp \
+	context_listener.cpp \
 	dirent.cpp \
 	exception.cpp \
 	entry.cpp \

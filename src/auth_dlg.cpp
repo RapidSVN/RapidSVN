@@ -28,17 +28,24 @@ public:
   wxString Username;
   wxString Password;
 
-  Data (wxWindow * window)
+  Data (wxWindow * window, int flags)
   {
+    wxStaticText * labelUser;
+    wxTextCtrl * textUser;
+    const bool showUser = (flags & HIDE_USERNAME) == 0;
+
     // create controls first
 
     // authentication fields
-    wxStaticText * labelUser = 
-      new wxStaticText (window, -1, _("User"));
+    if (showUser)
+    {
+      labelUser = 
+        new wxStaticText (window, -1, _("User"));
 
-    wxTextCtrl* textUser = new wxTextCtrl (
-      window, -1, "", wxDefaultPosition, wxDefaultSize, 0,
-      wxTextValidator (wxFILTER_NONE, &Username));
+      textUser = new wxTextCtrl (
+        window, -1, "", wxDefaultPosition, wxDefaultSize, 0,
+        wxTextValidator (wxFILTER_NONE, &Username));
+    }
 
     wxStaticText * labelPassword =
       new wxStaticText (window, -1, _("Password"));
@@ -56,11 +63,14 @@ public:
 
     // create sizers and position controls
     wxFlexGridSizer *authSizer = new wxFlexGridSizer(2, 2, 5, 5);
-    authSizer->Add (labelUser, 0, 
-                   wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
+    if (showUser)
+    {
+      authSizer->Add (labelUser, 0, 
+                      wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
     
-    authSizer->Add (textUser, 1, 
-                    wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
+      authSizer->Add (textUser, 1, 
+                      wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
+    }
 
     authSizer->Add (labelPassword, 0,
                    wxLEFT | wxALIGN_CENTER_VERTICAL, 5);  
@@ -87,13 +97,15 @@ public:
   
 };
 
+const int AuthDlg::HIDE_USERNAME = 1;
+
 AuthDlg::AuthDlg (wxWindow* parent, const char * username,
-                  const char * password)
+                  const char * password, int flags)
 : wxDialog (parent, -1, _("Authentication"),
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data (this);
+  m = new Data (this, flags);
   CentreOnParent ();
 }
 

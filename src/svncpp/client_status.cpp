@@ -43,6 +43,23 @@ namespace svn
     return NULL;
   }
 
+  struct StatusEntriesBaton {
+    apr_pool_t* pool;
+    apr_hash_t* hash;
+  };
+
+  static void StatusEntriesFunc (void *baton,
+                                 const char *path,
+                                 svn_wc_status_t *status)
+  {
+      svn_wc_status_t* stat;
+      StatusEntriesBaton* seb = (StatusEntriesBaton*)baton;
+
+      path = apr_pstrdup (seb->pool, path);
+      stat = svn_wc_dup_status (status, seb->pool);
+      apr_hash_set (seb->hash, path, APR_HASH_KEY_STRING, stat);
+  }
+
   static StatusEntries
   localStatus (const char * path,
                const bool descend,
@@ -56,11 +73,18 @@ namespace svn
     apr_hash_t *status_hash;
     svn_revnum_t revnum;
     Pool pool;
+    StatusEntriesBaton baton;
+
+    status_hash = apr_hash_make (pool);
+    baton.hash = status_hash;
+    baton.pool = pool;
 
     error = svn_client_status (
-      &status_hash, // pointer to hash
       &revnum,      // revnum
       path,         // path
+      0,
+      StatusEntriesFunc, // status func
+      &baton,        // status baton
       descend,
       get_all,
       update,
@@ -182,16 +206,23 @@ namespace svn
     svn_error_t *error;
     apr_hash_t *status_hash;
     Pool pool;
+    StatusEntriesBaton baton;
+
+    status_hash = apr_hash_make( pool );
+    baton.hash = status_hash;
+    baton.pool = pool;
 
     error = svn_client_status (
-      &status_hash, // pointer to hash
-      NULL,         // revnum
+      0,      // revnum
       path,         // path
-      false,        // descend
-      true,         // get all
-      false,        //update
-      false,        //no_ignore,
-      *context,   //client ctx
+      0,
+      StatusEntriesFunc, // status func
+      &baton,        // status baton
+      false,
+      true,
+      false,
+      false,
+      *context,    //client ctx
       pool);
 
     if (error != NULL)

@@ -44,12 +44,14 @@ namespace svn
      * STRINGS ALREADY HAVE TO BE UTF8!!!
      *
      * @param username
+     * @param realm in which username/password will be used
      * @param password
      * @return continue action?
      * @retval true continue
      */
     virtual bool 
-    contextGetLogin (std::string & username, 
+    contextGetLogin (const std::string & realm,
+                     std::string & username, 
                      std::string & password) = 0;
 
     /** 
@@ -66,12 +68,12 @@ namespace svn
      */
     virtual void
     contextNotify (const char *path,
-            svn_wc_notify_action_t action,
-            svn_node_kind_t kind,
-            const char *mime_type,
-            svn_wc_notify_state_t content_state,
-            svn_wc_notify_state_t prop_state,
-            svn_revnum_t revision) = 0;
+                   svn_wc_notify_action_t action,
+                   svn_node_kind_t kind,
+                   const char *mime_type,
+                   svn_wc_notify_state_t content_state,
+                   svn_wc_notify_state_t prop_state,
+                   svn_revnum_t revision) = 0;
 
     /**
      * this method will be called to retrieve
@@ -88,24 +90,53 @@ namespace svn
     contextGetLogMessage (std::string & msg) = 0;
 
     /**
-     * this method will be called if the context
-     * or the subversion api wants to ask the
-     * user a question. The question and the answers
-     * will be strings
+     * @see contextSslServerPrompt
+     */
+    struct SslServerPromptData
+    {
+    public:
+      /** the following data is requested */
+      bool trustPermanently;
+      int acceptedFailures;
+
+      /** failure count */
+      const int failures;
+
+      /** certificate information */
+      std::string hostname;
+      std::string fingerprint;
+      std::string validFrom;
+      std::string validUntil;
+      std::string issuerDName;
+
+      SslServerPromptData (const int failures = 0);
+    };
+
+    /**
+     * this method is called if there is a certificate,
+     * that has to be confirmed by the user
      *
-     * WORKAROUND FOR apr_xlate PROBLEM: 
-     * STRINGS ALREADY HAVE TO BE UTF8!!!
-     *
-     * @param question
-     * @param anwswer
-     * @param hide true if the answer is something like a password
-     * @return continue action
-     * @retval true continue
+     * @param data 
+     * @retval false prompt was cancelled
      */
     virtual bool
-    contextAskQuestion (const std::string & question,
-                        std::string & answer,
-                        bool hide) = 0;
+    contextSslServerPrompt (SslServerPromptData & data) = 0;
+
+    /**
+     * this method is called to retrieve client side
+     * information
+     */
+    virtual bool 
+    contextSslClientPrompt (std::string & certFile) = 0;
+
+    /**
+     * this method is called to retrieve the password
+     * for the certificate
+     *
+     * @param password
+     */
+    virtual bool
+    contextSslPwPrompt (std::string & password) = 0;
   };
 }
 

@@ -18,6 +18,7 @@
 #include "svn_auth.h"
 #include "svn_config.h"
 #include "svn_subst.h"
+#include "svn_utf.h"
 
 // svncpp
 #include "context.hpp"
@@ -62,6 +63,35 @@ namespace svn
       return SVN_NO_ERROR;
     }
 
+    /**
+     * the @a baton is interpreted as Data *
+     * Several checks are performed on the baton:
+     * - baton == 0?
+     * - baton->Data
+     * - listener set?
+     *
+     * @param baton
+     * @param data returned data if everything is OK
+     * @retval SVN_NO_ERROR if everything is fine
+     * @retval SVN_ERR_CANCELLED on invalid values
+     */
+    static svn_error_t *
+    getData (void * baton, Data ** data)
+    {
+      if (baton == NULL)
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
+                                 "invalid baton");
+
+      Data * data_ = static_cast <Data *>(baton);
+
+      if (data_->listener == 0)
+        return svn_error_create (SVN_ERR_CANCELLED, NULL,
+                                 "invalid listener");
+
+      *data = data_;
+      return SVN_NO_ERROR;
+    }
+
     Data ()
       : listener (0), logIsSet (false), 
         promptCounter (0)
@@ -96,7 +126,7 @@ namespace svn
 
       svn_client_get_simple_prompt_provider (
         &provider,
-        prompt,
+        onSimplePrompt,
         this,
         100000000, // not very nice. should be infinite...
         pool);
@@ -118,7 +148,7 @@ namespace svn
 
       svn_client_get_ssl_server_prompt_provider (
         &provider, 
-        ssl_server_prompt,
+        onSslServerPrompt,
         this,
         pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
@@ -126,7 +156,7 @@ namespace svn
 
       svn_client_get_ssl_client_prompt_provider (
         &provider,
-        ssl_client_prompt,
+        onSslClientPrompt,
         this, 
         pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
@@ -134,7 +164,7 @@ namespace svn
 
       svn_client_get_ssl_pw_prompt_provider (
         &provider,
-        ssl_pw_prompt,
+        onSslPwPrompt,
         this, 
         pool);
       *(svn_auth_provider_object_t **)apr_array_push (providers) = 
@@ -147,9 +177,9 @@ namespace svn
       memset (&ctx, 0, sizeof (ctx));
       svn_config_get_config (&ctx.config, 0, pool);
       ctx.auth_baton = ab;
-      ctx.log_msg_func = log_msg;
+      ctx.log_msg_func = onLogMsg;
       ctx.log_msg_baton = this;
-      ctx.notify_func = notify;
+      ctx.notify_func = onNotify;
       ctx.notify_baton = this;
     }
 
@@ -180,29 +210,21 @@ namespace svn
      * for example
      */
     static svn_error_t *
-    log_msg (const char **log_msg, 
+    onLogMsg (const char **log_msg, 
              const char **tmp_file,
              apr_array_header_t *commit_items,
              void *baton,
              apr_pool_t *pool)
     {
-      if (baton == NULL)
-      {
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
-                                 "Context::Data::log_msg: baton==NULL");
-      }
+      Data * data;
+      SVN_ERR (getData (baton, &data));
 
-      Data * data = static_cast <Data *> (baton);
+      std::string msg ("");
+      if (!data->retrieveLogMessage (msg))
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
-      // if there is a listener, ask it
-      if (!data->logIsSet)
-      {
-        data->retrieveLogMessage ();
-      }
-
-      // translate log message in native encoding to utf8
-      SVN_ERR (translateString (data->getLogMessage (),
-                                log_msg, pool));
+      SVN_ERR (svn_utf_cstring_to_utf8 (
+                 log_msg, msg.c_str (), pool));
 
       *tmp_file = NULL;
     
@@ -214,7 +236,7 @@ namespace svn
      * api functions to signal the progress of an action
      */
     static void 
-    notify (void * baton,
+    onNotify (void * baton,
             const char *path,
             svn_wc_notify_action_t action,
             svn_node_kind_t kind,
@@ -224,9 +246,7 @@ namespace svn
             svn_revnum_t revision)
     {
       if (baton == 0)
-      {
         return;
-      }
 
       Data * data = static_cast <Data *> (baton);
 
@@ -235,169 +255,122 @@ namespace svn
     }
 
     /**
-     * used by the simple prompt provider to retrieve
-     * username and password
-     *
-     * @param result returned username/password, depending on
-     *               on hide
-     * @param prompt string (unused here)
-     * @param hide 0=username/1=password
-     * @param baton Context
-     * @param pool pool to use
-     * @return error
+     * @see svn_auth_simple_prompt_func_t
      */
     static svn_error_t *
-    prompt (const char **result, 
-            const char *prompt,
-            svn_boolean_t hide, 
-            void *baton, 
-            apr_pool_t *pool)
+    onSimplePrompt (svn_auth_cred_simple_t **cred,
+                    void *baton,
+                    const char *realm,
+                    const char *username, 
+                    apr_pool_t *pool)
     {
-      if (baton == NULL)
-      {
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
-                                 "Context::prompt: baton==NULL");
-      }
+      Data * data;
+      SVN_ERR (getData (baton, &data));
 
-      Data * data = static_cast <Data *> (baton);
+      if (!data->retrieveLogin (username, realm))
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
-      if (data->promptCounter > 6)
-      {
-        data->promptCounter = 0;
-      }
-      data->promptCounter++;
+      svn_auth_cred_simple_t* lcred = (svn_auth_cred_simple_t*)
+        apr_palloc (pool, sizeof (svn_auth_cred_simple_t));
+      SVN_ERR (svn_utf_cstring_to_utf8 ( 
+                 &lcred->password,
+                 data->getPassword (), pool));
+      SVN_ERR (svn_utf_cstring_to_utf8 ( 
+                 &lcred->username,
+                 data->getUsername (), pool));
 
-      if (data->promptCounter == 3)
-      {
-        if (!data->retrieveLogin ())
-        {
-          return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
-        }
-      }
-
-      if (hide==TRUE)
-      {
-        SVN_ERR (translateString (data->getPassword (), result, pool));
-      }
-      else
-      {
-        SVN_ERR (translateString (data->getUsername (), result, pool));
-      }
+      *cred = lcred;
 
       return SVN_NO_ERROR;
     }
 
     /**
-     * used by the ssl server prompt provider 
-     *
-     * @param result returned username/password, depending on
-     *               on hide
-     * @param prompt string (unused here)
-     * @param hide 0=username/1=password
-     * @param baton Context
-     * @param pool pool to use
-     * @return error
+     * @see svn_auth_ssl_server_prompt_func_t
      */
     static svn_error_t *
-    ssl_server_prompt (const char **result, 
-                       const char *prompt,
-                       svn_boolean_t hide, 
+    onSslServerPrompt (svn_auth_cred_server_ssl_t **cred, 
                        void *baton, 
+                       int failures,
+                       const svn_auth_ssl_server_cert_info_t *info,
                        apr_pool_t *pool)
     {
-      if (baton == NULL)
-      {
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
-                                 "Context::prompt: baton==NULL");
-      }
+      Data * data;
+      SVN_ERR (getData (baton, &data));
+      
+      ContextListener::SslServerPromptData promptData (failures);
+      promptData.hostname = info->hostname;
+      promptData.fingerprint = info->fingerprint;
+      promptData.validFrom = info->valid_from;
+      promptData.validUntil = info->valid_until;
+      promptData.issuerDName = info->issuer_dname;
 
-      Data * data = static_cast <Data *> (baton);
-      return data->askQuestion (prompt, result, hide  != 0, pool);
+      if (!data->listener->contextSslServerPrompt (promptData))
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
+
+      svn_auth_cred_server_ssl_t *cred_ = (svn_auth_cred_server_ssl_t*)
+        apr_palloc (pool, sizeof (svn_auth_cred_server_ssl_t));
+      
+      cred_->trust_permanently = promptData.trustPermanently;
+      cred_->accepted_failures = promptData.acceptedFailures;
+
+      *cred = cred_;
+      
+      return SVN_NO_ERROR;
     }
 
     /**
-     * used by the ssl client prompt provider 
-     *
-     * @param result returned username/password, depending on
-     *               on hide
-     * @param prompt string (unused here)
-     * @param hide 0=username/1=password
-     * @param baton Context
-     * @param pool pool to use
-     * @return error
+     * @see svn_auth_ssl_client_prompt_func_t
      */
     static svn_error_t *
-    ssl_client_prompt (const char **result, 
-                       const char *prompt,
-                       svn_boolean_t hide, 
+    onSslClientPrompt (svn_auth_cred_client_ssl_t **cred, 
                        void *baton, 
                        apr_pool_t *pool)
     {
-      if (baton == NULL)
-      {
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
-                                 "Context::prompt: baton==NULL");
-      }
+      Data * data;
+      SVN_ERR (getData (baton, &data));
 
-      Data * data = static_cast <Data *> (baton);
-      return data->askQuestion (prompt, result, hide != 0, pool);
+      std::string certFile ("");
+      if (!data->listener->contextSslClientPrompt (certFile))
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
+
+      svn_auth_cred_client_ssl_t *cred_ = (svn_auth_cred_client_ssl_t*)
+        apr_palloc (pool, sizeof (svn_auth_cred_client_ssl_t));
+        
+      SVN_ERR (svn_utf_cstring_to_utf8 (
+                 &cred_->cert_file,
+                 certFile.c_str (),
+                 pool));
+
+      *cred = cred_;
+
+      return SVN_NO_ERROR;
     }
 
     /**
-     * used by the ssl pw prompt provider 
-     *
-     * @param result returned username/password, depending on
-     *               on hide
-     * @param prompt string (unused here)
-     * @param hide 0=username/1=password
-     * @param baton Context
-     * @param pool pool to use
-     * @return error
+     * @see svn_auth_ssl_pw_prompt_func_t  
      */
     static svn_error_t *
-    ssl_pw_prompt (const char **result, 
-                   const char *prompt,
-                   svn_boolean_t hide, 
+    onSslPwPrompt (svn_auth_cred_client_ssl_pass_t **cred, 
                    void *baton, 
                    apr_pool_t *pool)
     {
-      if (baton == NULL)
-      {
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
-                                 "Context::prompt: baton==NULL");
-      }
+      Data * data;
+      SVN_ERR (getData (baton, &data));
 
-      Data * data = static_cast <Data *> (baton);
-      return data->askQuestion (prompt, result, hide != 0, pool);
-    }
+      std::string password ("");
+      if (!data->listener->contextSslPwPrompt (password))
+        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
 
-    /**
-     * retrieves an answer for a question that the
-     * subversion api asks
-     *
-     * @param question question string
-     * @param answer answer string
-     * @param hide true if the answer be hidden (passwords)
-     * @param pool
-     * @return error code
-     */
-    svn_error_t *
-    askQuestion (const char *question,
-                 const char **result,
-                 bool hide,
-                 apr_pool_t *pool)
-    {
-      std::string newResult ("");
-      bool ok = listener->contextAskQuestion (
-        question, newResult, hide);
+      svn_auth_cred_client_ssl_pass_t *cred_ = 
+        (svn_auth_cred_client_ssl_pass_t *)apr_palloc (
+          pool, sizeof (svn_auth_cred_client_ssl_pass_t));
 
-      if (!ok)
-      {
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, 
-                                 "Context::question: cancelled");
-      }
+      SVN_ERR (svn_utf_cstring_to_utf8 (
+                 &cred_->password,
+                 password.c_str (),
+                 pool));
 
-      SVN_ERR (translateString (newResult.c_str (), result, pool));
+      *cred = cred_;
 
       return SVN_NO_ERROR;
     }
@@ -428,9 +401,12 @@ namespace svn
      * if the @a listener is not set the its checked whether
      * the log message has been set using @a setLogMessage
      * yet. If not, return false otherwise true
+     *
+     * @param msg log message
+     * @retval false cancel
      */
     bool 
-    retrieveLogMessage ()
+    retrieveLogMessage (std::string & msg)
     {
       bool ok;
 
@@ -438,10 +414,10 @@ namespace svn
         return false;
 
       ok = listener->contextGetLogMessage (logMessage);
-      if (!ok)
-      {
+      if (ok)
+        msg = logMessage;
+      else
         logIsSet = false;
-      }
 
       return ok;
     }
@@ -458,14 +434,17 @@ namespace svn
      * @retval false cancel
      */
     bool
-    retrieveLogin ()
+    retrieveLogin (const char * username_,
+                   const char * realm)
     {
       bool ok;
 
       if (listener == 0)
         return false;
 
-      ok = listener->contextGetLogin (username, password);
+      username = username_;
+
+      ok = listener->contextGetLogin (realm, username, password);
 
       return ok;
     }

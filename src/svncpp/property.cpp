@@ -137,7 +137,7 @@ namespace svn
       = svn_string_create ((const char *) value, pool);
 
     const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
+    svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
 
     svn_error_t * error = 
       svn_client_propset (pname_utf8, propval, m_path.c_str (),
@@ -152,7 +152,7 @@ namespace svn
     Pool pool;
 
     const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
+    svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
 
     svn_error_t * error = 
       error = svn_client_propset (pname_utf8, 
@@ -171,7 +171,7 @@ namespace svn
     Pool pool;
 
     const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, name, NULL, pool);
+    svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
     svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (pname_utf8);
 
     return is_svn_prop;
