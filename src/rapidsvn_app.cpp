@@ -46,7 +46,7 @@ bool RapidSvnApp::OnInit ()
 int
 RapidSvnApp::OnExit ()
 {
-  PurgeTempFiles ();
+  OptionallyPurgeTempFiles ();
   
   // destroy application configuration object
   delete wxConfigBase::Set ((wxConfigBase *) NULL);
@@ -56,7 +56,7 @@ RapidSvnApp::OnExit ()
 
 
 void
-RapidSvnApp::RegisterTempFile (const char* filename)
+RapidSvnApp::OptionallyRegisterTempFile (const char* filename)
 {
   Preferences prefs;
   
@@ -72,7 +72,7 @@ RapidSvnApp::RegisterTempFile (const char* filename)
 }
   
 void
-RapidSvnApp::PurgeTempFiles ()
+RapidSvnApp::OptionallyPurgeTempFiles ()
 {
   Preferences prefs;
   

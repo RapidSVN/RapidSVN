@@ -44,10 +44,38 @@ static const char * EXECUTABLE_WILDCARD =
 static const char * EXECUTABLE_WILDCARD = "";
 #endif
 
+/* GeneralPanel **************************************************************/
+class GeneralPanel : public wxPanel
+{
+public:
+  GeneralPanel (wxWindow * parent, Preferences * prefs)
+    : wxPanel (parent), m_prefs (prefs)
+  {
+    wxBoxSizer * mainsizer = new wxBoxSizer (wxVERTICAL);
+    {
+      wxGenericValidator valCheck (&m_prefs->purgeTempFiles);
+      wxCheckBox * check = 
+        new wxCheckBox (this, -1, 
+                        _("Purge temporary files on program exit"), 
+                        wxDefaultPosition, 
+                        wxDefaultSize, 0, valCheck);
+      
+      mainsizer->Add (20, 20);
+      mainsizer->Add (check, 0, wxALL, 5);
+    }
+
+    SetSizer (mainsizer);
+    SetAutoLayout (true);
+  }
+private:
+  Preferences * m_prefs;
+};
+
+
 /* ProgramsPanel *********************************************************/
 
 /**
- * General settings page for the preferences dialog.
+ * External program settings page for the preferences dialog.
  * Use this as a model for adding new pages.
  *
  */
@@ -230,25 +258,6 @@ private:
     }
 
 
-    // Temporary Files
-    wxStaticBox * boxTempFiles =
-      new wxStaticBox (this, -1, _("Temporary Files:"));
-
-    wxStaticBoxSizer * sizerTempFiles =
-      new wxStaticBoxSizer (boxTempFiles, wxHORIZONTAL);
-    {
-      // check
-      wxGenericValidator valCheck (&m_prefs->purgeTempFiles);
-      wxCheckBox * check = 
-        new wxCheckBox (this, -1, _("Purge on program exit"), 
-                        wxDefaultPosition, 
-                        wxDefaultSize, 0, valCheck);
-
-
-      // position control
-      sizerTempFiles->Add (check, 0, wxALIGN_CENTER);
-    }
-
     // Position main elements
     wxBoxSizer *panelsizer = new wxBoxSizer (wxHORIZONTAL);
 
@@ -261,8 +270,6 @@ private:
     leftsizer->Add (sizerExplorer, 0, wxEXPAND);
     leftsizer->Add (5, 5);
     leftsizer->Add (sizerDiffTool, 0, wxEXPAND);
-    leftsizer->Add (5, 5);
-    leftsizer->Add (sizerTempFiles, 0, wxEXPAND);
 
     SetSizer (panelsizer);
     SetAutoLayout (true);
@@ -397,9 +404,12 @@ public:
     notebook = new wxNotebook (wnd, -1, wxDefaultPosition, wxDefaultSize); 
     wxNotebookSizer *nbs = new wxNotebookSizer (notebook);
   
-    // General
-    ProgramsPanel *generalPanel = new ProgramsPanel (notebook, prefs);
-    notebook->AddPage (generalPanel, _("Programs"));
+    // Add the pages
+    GeneralPanel *generalPanel = new GeneralPanel (notebook, prefs);
+    notebook->AddPage (generalPanel, _("General"));
+    
+    ProgramsPanel *programsPanel = new ProgramsPanel (notebook, prefs);
+    notebook->AddPage (programsPanel, _("Programs"));
 
     AuthPanel * authPanel = new AuthPanel (notebook, prefs);
     notebook->AddPage (authPanel, _("Authentication"));

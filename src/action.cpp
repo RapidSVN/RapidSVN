@@ -347,7 +347,7 @@ Action::GetPathAsTempFile (const svn::Path & path,
   client.get (dstPath, path, revision);
   
   // Remember this temporary file so we can delete it when the application exits
-  ::wxGetApp ().RegisterTempFile (dstPath.c_str ());
+  ::wxGetApp ().OptionallyRegisterTempFile (dstPath.c_str ());
   
   return dstPath;
 }

@@ -20,8 +20,8 @@
 class RapidSvnApp:public wxApp
 {
 public:
-  void RegisterTempFile (const char* filename);
-  void PurgeTempFiles ();
+  void OptionallyRegisterTempFile (const char* filename);
+  void OptionallyPurgeTempFiles ();
   
 protected:
   virtual bool OnInit ();
