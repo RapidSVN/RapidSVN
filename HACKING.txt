@@ -12,6 +12,7 @@ TABLE OF CONTENTS
    * Documenting
    * Writing log messages
    * Other conventions
+   * Maintainer's Corner
 
 
 
@@ -22,17 +23,19 @@ To understand how things work, read doc/svn-design.{texi,info,ps,pdf},
 and read the header files, which tend to have thoroughly-commented
 data structures.
 
-   char *                                     /* func type on own line */
-   argblarg(char *arg1, int arg2)             /* func name on own line */
-   {                                          /* first brace on own line */
-     if ((some_very_long_condition && arg2)   /* indent 2 cols */
-       || remaining_condition)                /* new line before operator */
-     {                                        /* brace on own line */
-       arg1 = some_func (arg1, arg2);         /* space before opening paren */
-     }                                        /* close brace on own line */
+   char *                                     // func type on own line
+   argblarg (char *arg1, int arg2)            // func name on own line, single
+                                              // space between function name 
+                                              // and opening paren
+   {                                          // first brace on own line 
+     if ((some_very_long_condition && arg2)   // indent 2 cols (no tabs!)
+       || remaining_condition)                // new line before operator
+     {                                        // brace on own line 
+       arg1 = some_func (arg1, arg2);         // space before opening paren 
+     }                                        // close brace on own line
      else
      {
-       do                                     /* format do-while like this */
+       do                                     // format do-while like this
        {
          arg1 = another_func (arg1);
        }
@@ -66,7 +69,7 @@ class Foo
 {
   int m_myMember;
 
-  Foo(int intitialFoo)
+  Foo (int intitialFoo)
   {
     int bar = initialFoo * 2;
 
@@ -97,7 +100,7 @@ Example:
  * @return the multiplied number
  */
 int
-MultiplyMe(int number1, int number2);
+MultiplyMe (int number1, int number2);
 
 Read over the RapidSVN code to get an overview of how this
 documentation looks in practice.
@@ -252,3 +255,96 @@ In addition to the standards above, RapidSVN uses these conventions:
       Example for a XPM:
       % svn propset svn:mime-type image/x-xpm
      
+
+
+Maintainer's Corner
+===================
+
+For the RapidSVN website we are producing two types of packages:
+
+   *  Source tarball rapidsvn-???.tar.gz
+
+   *  Windows Installer RapidSVN-???.exe
+ 
+
+These are the steps to follow when creating a new release of RapidSVN:
+
+1. Create source tarball (on Linux):
+
+   *  Checkout a fresh working copy of RapidSVN from the repository
+      to make sure everything is built and no old stuff is lying around
+
+   *  Make sure all the tools required are there (autoconf, automake,
+      doxygen, xsltproc, docbook)
+
+   *  Edit the version numbers in the file "version.xml" and run 
+      the Python script check-version.py (from the directory "tools")
+
+   *  Run "autogen.sh", "configure", "make" "make dist"
+      (no errors allowed!)
+
+   *  Commit "version.xml"
+
+   *  Create the version tag by copying (either using svn or RapidSVN):
+      "svn cp -m "Version XYZ tag" . https://svn.collab.net/repos/rapidsvn/tags/XYZ
+
+   *  Uninstall older rapidsvn/libsvncpp version (if there)
+
+   *  Extract the source tarball to a temporary directory, check if everything
+      is there and call "configure", "make", "make install"
+
+   *  Run RapidSVN 
+
+   *  Send the tarball to xelarellum@tigris.org, so he can upload it
+      to http://www.rapidsvn.org/download and create the necessary links in
+      the files/documents section of http://rapidsvn.tigris.org
+
+2. Create Windows installer (on Windows using MSVC 6):
+
+   *  Checkout a fresh working copy of RapidSVN (using
+      http://svn.collab.net/repos/rapidsvn/tags/XYZ) from the repository
+      to make sure everything is built and no old stuff is lying around
+     
+   *  Make sure you are using the latest stable release of
+      Innosetup, Subversion, wxWidgets, Openssl, BerkeyleyDB. Build all these tools
+      and libraries. Some minor changes in apr_config.h or apu_config.h may
+      be necessary so subversion compiles. Follow the build instructions
+      for the subversion distribution
+
+   *  Because of incompatibilities of the shfolder dll between
+      different Internet Explorer/Windows versions make sure the settings
+      for Visual C (in the menu "Extras->Options->Directories") are:
+      -  Platform SDK library files first in list
+      -  Platform SDK header files last in files
+
+   *  Open the workspace rapidsvn.dsw in Visual C and build the projects
+      "rapidsvn.dsp" and "svncpp.dsp" in release mode.
+
+   *  Uninstall older RapidSVN version (if there)
+
+   *  Copy the Openssl and BerkeleyDB dlls to "packages/win32"
+
+   *  Open "packages/win32/rapidsvn.iss" and build the installer executable
+
+   *  Run the installer
+
+   *  Run RapidSVN
+
+   *  Send the installer executable to xelarellum@tigris.org, so he can 
+      upload it to http://www.rapidsvn.org/download and create 
+      the necessary links in the files/documents section of 
+      http://rapidsvn.tigris.org
+
+3. Create a news entry on http://rapidsvn.tigris.org and send announcement emails
+   (with same text) to announce@rapidsvn.tigris.org, dev@rapidsvn.tigris.org,
+   users@rapidsvn.tigris.org including the MD5 checksums for both the 
+   source tarball and the win32 installer executable.
+
+4. Update and commit (with CVS) the webpage http://rapidsvn.tigris.org. 
+   This includes changes to the roadmap items, archival of older roadmap items, 
+   updating of the svncpp doxygen documentation (you can use the output generated
+   when building on Linux).
+
+5. Update the issue tracker. This includes creation of new versions and milestones.
+
+Voila. Another release of RapidSVN is done!
