@@ -37,8 +37,6 @@ CopyAction::Entry ()
 {
   svn_client_revision_t rev;
   svn_client_commit_info_t *commit_info = NULL;
-  svn_boolean_t src_is_url = false;
-  svn_boolean_t dst_is_url = false;
   svn_wc_notify_func_t notify_func = NULL;
   AuthBaton auth_baton (pool, _T (""), _T (""));
   void *notify_baton = NULL;

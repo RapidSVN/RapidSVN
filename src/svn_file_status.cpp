@@ -5,7 +5,7 @@
 
 SvnFileStatus::SvnFileStatus (apr_pool_t * thepool)
 {
-  subpool = svn_pool_create (thepool);
+  subpool = svn_pool_create (NULL);// (thepool);
 }
 
 SvnFileStatus::~SvnFileStatus ()
@@ -13,7 +13,7 @@ SvnFileStatus::~SvnFileStatus ()
   svn_pool_destroy (subpool);
 }
 
-void
+bool
 SvnFileStatus::retrieveStatus (const wxString & path, AuthBaton & auth_baton)
 {
   apr_hash_t *statushash;
@@ -21,6 +21,9 @@ SvnFileStatus::retrieveStatus (const wxString & path, AuthBaton & auth_baton)
   apr_array_header_t *statusarray;
 
   status = NULL;
+
+  if(subpool == NULL)
+    return false;
 
   svn_error_t *err = svn_client_status (&statushash,
                                         &youngest,
@@ -32,14 +35,14 @@ SvnFileStatus::retrieveStatus (const wxString & path, AuthBaton & auth_baton)
                                         0,
                                         subpool);
 
-  if (err != NULL)
-    return;
+  // Error present if function is not under version control
+  if(err != NULL)
+    return true;
 
   /* Convert the unordered hash to an ordered, sorted array */
   statusarray = apr_hash_sorted_keys (statushash,
                                       svn_sort_compare_items_as_paths,
                                       subpool);
-
 
   const svn_item_t *item;
 
@@ -49,8 +52,9 @@ SvnFileStatus::retrieveStatus (const wxString & path, AuthBaton & auth_baton)
   status = (svn_wc_status_t *) item->value;
 
   if (!status->entry)           // not under revision control
-    return;
+    return true;
 
+  return true;
 }
 
 svn_wc_status_kind
@@ -88,3 +92,4 @@ SvnFileStatus::getLastChange () const
 
   return status->entry->cmt_rev;
 }
+

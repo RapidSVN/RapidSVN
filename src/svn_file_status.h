@@ -13,7 +13,7 @@ public:
    SvnFileStatus (apr_pool_t * thepool);
   ~SvnFileStatus ();
 
-  void retrieveStatus (const wxString & path, AuthBaton & auth_baton);
+  bool retrieveStatus (const wxString & path, AuthBaton & auth_baton);
 
   svn_wc_status_kind getFileStatus () const;
   svn_wc_status_kind getFilePropStatus () const;

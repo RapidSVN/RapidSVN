@@ -966,7 +966,8 @@ VSvnFrame::ShowStatus ()
   {
     wxFileName fname (path, m_listCtrl->GetItemText (arr[i]));
     _path = fname.GetFullPath ();
-    file_status.retrieveStatus (UnixPath (_path), auth_baton);
+    if(!file_status.retrieveStatus (UnixPath (_path), auth_baton))
+      continue;
 
     MakeStatusLine (file_status, fname.GetFullPath (), line);
     if (!line.IsEmpty ())

@@ -114,26 +114,26 @@ FileListCtrl::UpdateFileList (const wxString & path)
     f = wxFindNextFile ();
     if (!f.IsEmpty ())
     {
-      // get svn status information
-      file_info.retrieveStatus (UnixPath (f), auth_baton);
-
-      name = wxFileNameFromPath (f);
       int i = GetItemCount ();
-
+      name = wxFileNameFromPath (f);
       wxString text;
+
+      // get svn status information
+      if(!file_info.retrieveStatus (UnixPath (f), auth_baton))
+      {
+        text = "Status load failed: " + f;
+        InsertItem (i, text);
+        continue;
+      }
 
       if (name != ".." && name != SVN_WC_ADM_DIR_NAME)  // not the parent directory
       {
         if (wxDirExists (f))    // a directory
         {
           if (SVN_IS_VALID_REVNUM (file_info.getRevision ()))
-          {
             InsertItem (i, name, IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER]);
-          }
           else
-          {
             InsertItem (i, name, IMAGE_INDEX[IMG_INDX_FOLDER]);
-          }
         }
         else
           InsertItem (i, name, IMAGE_INDEX[file_info.getFileStatus ()]);
