@@ -423,6 +423,7 @@ public:
     case DiffData::WITH_SAME_REVISION:
     default:
       // nothing special
+      break;
     }
     return diffData;
   }

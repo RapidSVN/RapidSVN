@@ -94,7 +94,7 @@ TruncatePath (const wxString & path_)
   if (path.length() <= MAXLENGTH_BOOKMARK)
     return path;
 
-  int pos = path.Find (":");
+  size_t pos = path.Find (":");
   wxString newPath;
 
   pos++;
