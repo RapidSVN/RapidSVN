@@ -1,13 +1,11 @@
-Index: ./src/Makefile.in
-===================================================================
---- ./src/Makefile.in
-+++ ./src/.svn/tmp/Makefile.in.62908.00001.tmp	Wed Jul 31 23:49:33 2002
-@@ -44,7 +44,7 @@
+--- src/Makefile.in	2002/09/14 22:36:08	1.1
++++ src/Makefile.in	2002/09/14 22:36:38
+@@ -51,7 +51,7 @@
  LIBS=-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
  		$(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(APR_LIBS) \
  		$(WX_LIBS)
 -SVN_INC=-I/usr/local/include/subversion-1
 +SVN_INC=-I/usr/include/subversion-1
- CXXFLAGS=@CXXFLAGS@
+ CXXFLAGS=@CXXFLAGS@ -fexceptions
  
  # implementation
