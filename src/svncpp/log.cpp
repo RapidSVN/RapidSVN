@@ -109,6 +109,15 @@ Log::first ()
   return true;
 }
 
+void
+Log::beforeFirst ()
+{
+  if(count () < 1)
+    return;
+
+  cursor = -1;
+}
+
 const char *
 Log::message ()
 {

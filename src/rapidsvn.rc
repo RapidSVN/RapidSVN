@@ -31,6 +31,3 @@ folderup             BITMAP    "res/bitmaps/folderup.bmp"
 
 #include "wx/msw/wx.rc"
 
-Import_Dialog        WXRDATA "res/import.wxr"
-Mkdir_Dialog         WXRDATA "res/mkdir.wxr"
-Merge_Dialog         WXRDATA "res/merge.wxr"

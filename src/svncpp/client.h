@@ -6,6 +6,7 @@
 #include "svn_pools.h"
 #include "svn_client.h"
 #include "svn_opt.h"
+#include <string>
 
 /**
  * SvnCpp namespace.
@@ -21,11 +22,22 @@ class Client
 protected:
   apr_pool_t * pool;
   svn_opt_revision_t rev;
+  std::string targetPath;
 
   /**
    * Global error object struct.
    */
   svn_error_t * Err;
+
+  /**
+   * Returns the last path submitted.
+   */
+  const char * getLastPath ();
+
+  /**
+   * Convert the path to the Subversion format.
+   */
+  void internalPath (std::string & path);
 
   /**
    * Create a revision template.

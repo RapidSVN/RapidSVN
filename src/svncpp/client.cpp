@@ -1,4 +1,6 @@
+
 #include "client.h"
+#include "svn_path.h"
 
 #define DEFAULT_ARRAY_SIZE 5
 
@@ -51,6 +53,20 @@ Client::target (const char * path)
   (*((const char **) apr_array_push (targets))) = target;
 
   return targets;
+}
+
+const char *
+Client::getLastPath ()
+{
+  return targetPath.c_str ();
+}
+
+void
+Client::internalPath (std::string & path)
+{
+  svn_stringbuf_t * buf = svn_stringbuf_create (path.c_str (), pool);
+  svn_path_internal_style (buf);
+  path = buf->data;
 }
 
 }

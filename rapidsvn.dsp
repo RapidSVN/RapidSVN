@@ -152,6 +152,14 @@ SOURCE=.\src\include.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\log_action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\log_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\merge_action.cpp
 # End Source File
 # Begin Source File
@@ -304,6 +312,14 @@ SOURCE=.\src\include.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\log_action.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\log_dlg.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\merge_action.h
 # End Source File
 # Begin Source File
@@ -317,6 +333,10 @@ SOURCE=.\src\mkdir_action.h
 # Begin Source File
 
 SOURCE=.\src\mkdir_dlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\patched_dirctrlg.h
 # End Source File
 # Begin Source File
 

@@ -17,6 +17,8 @@ OBJECTS=action_thread.o \
 		import_action.o \
 		import_dlg.o \
 		include.o \
+		log_action.o \
+		log_dlg.o \
 		merge_action.o \
 		merge_dlg.o \
 		mkdir_action.o \

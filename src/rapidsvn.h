@@ -5,6 +5,7 @@
 #include <wx/splitter.h>
 
 #include "tracer.h"
+#include "log_action.h"
 
 #define SPLITTER_WINDOW   100
 
@@ -146,11 +147,17 @@ public:
     return m_folder_browser;
   }
 
+  LogAction *getLogAction ()
+  {
+    return m_logAction;
+  }
+
 
 private:
 
   FolderBrowser * m_folder_browser;
   FileListCtrl *m_listCtrl;
+  LogAction *m_logAction;
 
   wxSplitterWindow *m_horiz_splitter;
   wxSplitterWindow *m_vert_splitter;

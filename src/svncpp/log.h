@@ -82,6 +82,11 @@ public:
   bool first ();
 
   /**
+   * Moves to the cursor before first row in the log result set.
+   */
+  void beforeFirst ();
+
+  /**
    * Returns the log message of the current result set.
    */
   const char * message ();

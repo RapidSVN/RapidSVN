@@ -987,46 +987,13 @@ VSvnFrame::ShowLog ()
 {
   apr_pool_t *subpool = svn_pool_create (pool);
   apr_array_header_t *targets = m_listCtrl->GetTargets (subpool);
-  wxString all;
-  svn::Log log;
-  char rev[sizeof (long) * 8 + 1];
+  const char *target;
 
-  for (int i = 0; i < targets->nelts; i++)
+  if(targets->elts > 0)
   {
-    const char *target = ((const char **) (targets->elts))[i];
-
-    log.loadPath (target, -2, 1);
-    if (log.isVersioned ())
-    {
-      while (log.next ())
-      {
-        sprintf (rev, "%ld", (long) log.revision ());
-        all += "--------------------\n";
-        all += "Revision: ";
-        all += rev;
-        all += "\nAuthor: ";
-        all += log.author ();
-        all += "\nDate: ";
-        all += log.date ();
-        all += "\n\nMessage: ";
-        all += log.message ();
-        all += "\n";
-      }
-    }
-  }
-
-  if (!all.IsEmpty ())
-  {
-    int rep_type = NORMAL_REPORT;
-    wxString caption = _T ("Log");
-    if (!log.isVersioned ())
-    {
-      rep_type = ERROR_REPORT;
-      caption = _T ("File is not versioned.");
-    }
-
-    Report_Dlg rdlg (this, caption, all, rep_type);
-    rdlg.ShowModal ();
+    target = ((const char **) (targets->elts))[0];
+    m_logAction = new LogAction (this, subpool, m_logTracer, target);
+    m_logAction->Perform ();
   }
 
   svn_pool_destroy (subpool);
