@@ -1,3 +1,4 @@
+AC_REVISION(0.1)
 AC_INIT(src/rapidsvn.cpp)
 
 AC_PROG_CXX
