@@ -28,7 +28,7 @@ public:
   /** 
    * @see IVerbList
    */ 
-  void InitFromDocument (const wxFileName &document_path);
+  void InitFromDocument (const wxString &document_path);
 
   /** 
    * @see IVerbList

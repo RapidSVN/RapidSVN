@@ -18,7 +18,7 @@ VerbList::VerbList ()
 {
 }
 
-void VerbList::InitFromDocument (const wxFileName &)
+void VerbList::InitFromDocument (const wxString &)
 {
 }
 
