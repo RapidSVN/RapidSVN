@@ -413,19 +413,57 @@ StatusDescription (const svn_wc_status_kind kind)
   }
 }
 
+#if !wxUSE_UNICODE
+static wxMBConv *
+GetWXLocalConv ()
+{
+#if defined(__WXGTK20__)
+  // In wxGTK 2.0+, for some reason wvConvCurrent
+  // is always set to wxConvUTF8 - which is not correct!
+  // We will instead echo some logic in wxEntryStart 
+  // to choose between wxConvLibc & wxConvLocal.
+  static wxMBConv *wxConvCorrect = NULL;
+  
+  if (wxConvCorrect == NULL)
+  {
+    if (wxOKlibc ())
+    {
+      wxConvCorrect = &wxConvLibc;
+    }
+    else
+    {
+      wxConvCorrect = &wxConvLocal;
+    }
+  }
+  
+  return wxConvCorrect;
+#else
+  // Use what wxWidgets has already selected to be the correct conversion
+  return wxConvCurrent;
+#endif
+}
+#endif
 
 wxString
 Utf8ToLocal (const wxString & srcUtf8)
 {
+#if wxUSE_UNICODE
   wxString dst (srcUtf8, wxConvUTF8);
+#else
+  wxString dst (srcUtf8.wc_str (wxConvUTF8), *GetWXLocalConv ());
+#endif
 
-  return srcUtf8;
+  return dst;
 }
 
 wxString
 LocalToUtf8 (const wxString & srcLocal)
 {
+#if wxUSE_UNICODE
   wxString dst (srcLocal.mb_str (wxConvUTF8));
+#else
+  wxString dst (srcLocal.wc_str (*GetWXLocalConv ()), wxConvUTF8);
+#endif
 
   return dst;
 }

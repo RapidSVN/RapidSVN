@@ -254,8 +254,7 @@ namespace svn
           return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
       }
 
-      SVN_ERR (svn_utf_cstring_to_utf8 (
-                 log_msg, msg.c_str (), pool));
+      *log_msg = apr_pstrdup (pool, msg.c_str ());
 
       *tmp_file = NULL;
     
