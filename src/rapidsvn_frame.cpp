@@ -46,6 +46,8 @@
 #include "svn_version.h"
 #include "version.hpp"
 
+#include "proportional_splitter.hpp"
+
 // Bitmaps
 #include "res/bitmaps/svn.xpm"
 #include "res/bitmaps/refresh.xpm"
@@ -367,11 +369,12 @@ END_EVENT_TABLE ()
   // Create the toolbar
   RecreateToolbar ();
 
-  m_horiz_splitter = new wxSplitterWindow (this,
-                                           SPLITTER_WINDOW,
-                                           wxDefaultPosition,
-                                           wxDefaultSize,
-                                           SPLITTER_STYLE);
+  m_horiz_splitter = 
+    new ProportionalSplitterWindow (1.0f, this,
+                                    SPLITTER_WINDOW,
+                                    wxDefaultPosition,
+                                    wxDefaultSize,
+                                    SPLITTER_STYLE);
 
 
   m_info_panel = new InfoPanel (m_horiz_splitter);

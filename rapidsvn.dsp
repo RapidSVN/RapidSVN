@@ -202,6 +202,10 @@ SOURCE=.\src\property_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\proportional_splitter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\rapidsvn.rc
 # End Source File
 # Begin Source File
@@ -399,6 +403,10 @@ SOURCE=.\src\property_action.hpp
 # Begin Source File
 
 SOURCE=.\src\property_dlg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\proportional_splitter.hpp
 # End Source File
 # Begin Source File
 
