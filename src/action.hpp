@@ -203,6 +203,15 @@ protected:
 
   void TraceError (const wxString & msg);
 
+  /**
+   * thread-save method to post an event. The event will
+   * be sent to the actions parent
+   *
+   * @param event event to send
+   */
+  void
+  PostEvent (wxEvent & event);
+
 private:
   struct Data;
   // this structure contains implementation specific data

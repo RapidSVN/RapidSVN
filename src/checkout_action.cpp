@@ -75,6 +75,15 @@ CheckoutAction::Perform ()
   client.checkout (m_data.RepUrl.c_str (), 
                    m_data.DestFolder.c_str (), 
                    revision, m_data.Recursive);
+
+  // now post event to add project to workbench
+  if (m_data.Workbench)
+  {
+    wxCommandEvent event = CreateActionEvent (TOKEN_ADD_PROJECT);
+    event.SetString (m_data.DestFolder);
+
+    PostEvent (event);
+  }
  
   return true;
 }

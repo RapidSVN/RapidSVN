@@ -470,7 +470,39 @@ public:
     return static_cast<FolderItemData *>(treeCtrl->GetItemData (id));
   }
 
+  bool
+  SelectProject (const char *projectPath)
+  {
+    long cookie;
+    wxTreeItemId id = treeCtrl->GetFirstChild (rootId, cookie);
 
+    bool success = false;
+    while (!success)
+    {
+      FolderItemData * data = GetItemData (id);
+
+      // if id is not valid, data will be 0
+      // This is the case if there are no
+      // or no more children for rootId
+      if (data == 0)
+        break;
+
+      // project match?
+      if (data->getPath () == projectPath)
+      {
+        // select project
+        success = true;
+        treeCtrl->SelectItem (id);
+      }
+      else
+      {
+        // otherwise move to next
+        id = treeCtrl->GetNextChild (rootId, cookie);
+      }
+    }
+
+    return success;
+  }
 };
 
 const unsigned int FolderBrowser::Data::MAXLENGTH_PROJECT = 25;
@@ -623,6 +655,12 @@ const bool
 FolderBrowser::GetAuthPerProject () const
 {
   return m->workbench.GetAuthPerProject ();
+}
+
+bool
+FolderBrowser::SelectProject (const char * projectPath)
+{
+  return m->SelectProject (projectPath);
 }
 
 

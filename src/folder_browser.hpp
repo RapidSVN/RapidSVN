@@ -95,7 +95,16 @@ public:
    * @retval false if entry was not found
    */
   bool
-  SelectFolder(const char * path);
+  SelectFolder (const char * path);
+
+  /**
+   * selects the @a project in the workbench
+   *
+   * @param projectPath project path
+   * @return true on success
+   */
+  bool
+  SelectProject (const char * projectPath);
 
   /**
    * setting whether there will be one login for all the

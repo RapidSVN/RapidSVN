@@ -952,6 +952,16 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   }
   break;
 
+  case TOKEN_ADD_PROJECT:
+  {
+    const char * project = event.GetString ().c_str ();
+
+    m_folder_browser->AddProject (project);
+    m_folder_browser->Refresh ();
+    m_folder_browser->SelectProject (project);
+  }
+  break;
+
   case TOKEN_GET:
   {
     GetData * pData (static_cast<GetData *>(event.GetClientData ())); 

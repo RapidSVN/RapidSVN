@@ -340,6 +340,19 @@ Action::SetName (const char * name)
   m->name = name;
 }
 
+void
+Action::PostEvent (wxEvent & event)
+{
+  wxEvtHandler * handler;
+
+  handler = GetParent ();
+
+  if (handler == 0)
+    return;
+
+  wxPostEvent (handler, event);
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
