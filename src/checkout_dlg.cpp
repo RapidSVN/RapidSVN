@@ -143,7 +143,9 @@ CheckoutDlg::InitializeData ()
     wxDefaultSize, wxTE_PASSWORD, wxTextValidator(wxFILTER_NONE, &m_pData->Password));
   authSizer->Add (pass, 1, wxALL | wxALIGN_CENTER_VERTICAL, 5 );
  
-  wxCheckBox* recursive = new wxCheckBox (this, -1, _T("Recursive"));
+  wxCheckBox* recursive = new wxCheckBox (this, -1, _T("Recursive"),
+    wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_pData->Recursive));
+  
 
   // Button row
   buttonSizer->Add(new wxButton( this, wxID_OK, _T("OK" )), 0, 

@@ -11,7 +11,6 @@
 CheckoutAction::CheckoutAction (wxFrame * frame, apr_pool_t * __pool, 
                                 Tracer * tr):ActionThread (frame, __pool)
 {
-  m_pFrame = frame;
   SetTracer (tr, FALSE);        // do not own the tracer
   m_pFrame = frame;
 }

@@ -1,43 +1,34 @@
 #ifndef _IMPORT_DLG_H_INCLUDED_
 #define _IMPORT_DLG_H_INCLUDED_
 
-#include "res/merge.h"
-
-#if defined(__WXMSW__)
-// Under Windows, some compilers can't include
-// a whole .wxr file. import_dlg will point to the whole .wxr 'file'.
-static char *Merge_Dialog = NULL;
-#else
-// Other platforms should have sensible compilers that
-// cope with long strings.
-#include "res/merge.wxr"
-#endif
-
-
 class MergeDlg:public wxDialog
 {
-
 public:
-  wxTextCtrl * path1;
-  wxTextCtrl *path2;
+  struct sData 
+  {
+    sData();
 
-  wxTextCtrl *rev_start;
-  wxTextCtrl *rev_end;
-
-  wxTextCtrl *rev_second;
-
-  wxTextCtrl *user;
-  wxTextCtrl *pass;
-  wxCheckBox *recursive;
-  wxCheckBox *force;
-
-public:
-  void OnOk (wxCommandEvent & event);
-  void OnCancel (wxCommandEvent & event);
-
-  void InitializeData ();
+    wxString Path1;
+    wxString Path2;
+    wxString Path1Rev1;
+    wxString Path1Rev2;
+    wxString Path2Rev;
+    wxString User;
+    wxString Password;
+    bool Recursive;
+    bool Force;
+  };
+  
+  MergeDlg (wxWindow *parent, sData* pData);
+  void OnOK (wxCommandEvent& event);
 
 private:
- DECLARE_EVENT_TABLE ()};
+  void InitializeData ();
+  int TestRev (wxString & val);
+  
+  sData * m_pData;
+
+  DECLARE_EVENT_TABLE ()
+};
 
 #endif

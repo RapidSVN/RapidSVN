@@ -13,53 +13,22 @@ MergeAction::MergeAction (wxFrame * frame, apr_pool_t * __pool, Tracer * tr)
             : ActionThread (frame, __pool)
 {
   SetTracer (tr, FALSE);        // do not own the tracer
+  m_pFrame = frame;
 }
 
 void
 MergeAction::Perform ()
 {
-#if defined(__WXMSW__)
-  // Load the .wxr 'file' from a .rc resource, under Windows.
-  Merge_Dialog = wxLoadUserResource ("Merge_Dialog", "WXRDATA");
-  // All resources in the file (only one in this case) get parsed
-  // by this call.
-  wxResourceParseString (Merge_Dialog);
-#else
-  // Simply parse the data pointed to by the variable Merge_Dialog.
-  wxResourceParseData (Merge_Dialog);
-#endif
+  MergeDlg *mrgDlg = new MergeDlg(m_pFrame, &Data);
 
-  MergeDlg *mrgDlg = new MergeDlg;
-
-  if (mrgDlg->LoadFromResource (mainFrame, "Merge_Dialog"))
+  if (mrgDlg->ShowModal () == wxID_OK)
   {
-    mrgDlg->InitializeData ();
+    // #### TODO: check errors and throw an exception
+    // create the thread
+    Create ();
 
-    if (mrgDlg->ShowModal () == ID_BUTTON_OK)
-    {
-      path1 = mrgDlg->path1->GetValue ();
-      TrimString (path1);
-      path2 = mrgDlg->path2->GetValue ();
-      TrimString (path2);
-
-      wxString s;
-      rev1 = getRevision (s = mrgDlg->rev_start->GetValue ());
-      rev_end = getRevision (s = mrgDlg->rev_end->GetValue ());
-      rev2 = getRevision (s = mrgDlg->rev_second->GetValue ());
-
-      user = mrgDlg->user->GetValue ();
-      pass = mrgDlg->pass->GetValue ();
-
-      recursive = mrgDlg->recursive->GetValue ();
-      force = mrgDlg->force->GetValue ();
-
-      // #### TODO: check errors and throw an exception
-      // create the thread
-      Create ();
-
-      // here we start the action thread
-      Run ();
-    }
+    // here we start the action thread
+    Run ();
   }
 
   // destroy the dialog
@@ -73,8 +42,8 @@ MergeAction::Entry ()
   SvnNotify notify (GetTracer ());
   modify.notification (&notify);
 
-  modify.username (user.c_str ());
-  modify.password (pass.c_str ());
+  modify.username (Data.User.c_str ());
+  modify.password (Data.Password.c_str ());
 
   wxString targetPath =
     wxGetApp ().GetAppFrame ()->GetFolderBrowser ()->GetPath ();
@@ -93,10 +62,12 @@ MergeAction::Entry ()
   }
 
 
+  long rev1 = MergeAction::getRevision (Data.Path1Rev1);
+  long rev2 = MergeAction::getRevision (Data.Path2Rev);
   try
   {
-    modify.merge (path1.c_str (), rev1, path2.c_str (), rev2, 
-                  targetPath, force, recursive);
+    modify.merge (Data.Path1.c_str (), rev1, Data.Path2.c_str (), rev2, 
+                  targetPath, Data.Force, Data.Recursive);
   }
   catch (svn::ClientException &e)
   {
@@ -105,7 +76,7 @@ MergeAction::Entry ()
     GetTracer ()->Trace ("Merge failed:");
     GetTracer ()->Trace (e.description ());
   }
-
+  
   return NULL;
 }
 
@@ -124,9 +95,3 @@ MergeAction::getRevision (wxString & str)
   return -2; // head
 }
 
-MergeAction::~MergeAction ()
-{
-#if defined(__WXMSW__)
-  delete Merge_Dialog;
-#endif
-}
