@@ -42,6 +42,7 @@ rapidsvn_SOURCES= \
 	simple_worker.cpp \
 	svn_file_info.cpp \
 	svn_notify.cpp \
+	switch_action.cpp \
 	trace_commit.cpp \
 	tracer.cpp \
 	trace_update.cpp \

@@ -10,23 +10,35 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _UPDATE_DATA_H_INCLUDED_
-#define _UPDATE_DATA_H_INCLUDED_
+#ifndef _SWITCH_ACTION_H_INCLUDED_
+#define _SWITCH_ACTION_H_INCLUDED_
 
-// wxwindows
-#include "wx/string.h"
+// svncpp
+#include "svncpp/targets.hpp"
 
-struct UpdateData
+// app
+#include "action.hpp"
+#include "update_data.hpp"
+
+/**
+ * this action class can be used to copy, move and rename
+ * files and folders. Right now it supports only a single target
+ */
+class SwitchAction:public Action
 {
-  UpdateData()
-    : revision (""), url (""), useLatest (true), recursive (true)
-  {
-  }
-    
-  wxString revision;
-  wxString url;
-  bool useLatest;
-  bool recursive;
+private:
+  UpdateData m_data;
+
+public:
+  /**
+   * constructor
+   *
+   * @param parent parent window
+   */
+  SwitchAction (wxWindow * parent);
+
+  virtual bool Perform ();
+  virtual bool Prepare ();
 };
 
 #endif

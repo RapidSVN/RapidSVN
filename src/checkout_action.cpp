@@ -47,7 +47,11 @@ CheckoutAction::Prepare ()
 bool
 CheckoutAction::Perform ()
 {
-  svn::Client client (GetContext ());
+  // the checkout action may not use the main context but its own
+  svn::Context context;
+  context.setListener (this);
+
+  svn::Client client (&context);
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 

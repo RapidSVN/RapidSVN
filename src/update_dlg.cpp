@@ -27,54 +27,79 @@ enum
 struct UpdateDlg::Data
 {
 private:
-  wxTextCtrl * m_revisionText;
-  wxCheckBox * m_useLatestCheck;
+  wxTextCtrl * m_textRevision;
+  wxCheckBox * m_checkUseLatest;
+  wxTextCtrl * m_textUrl;
 public:
   UpdateData data;
 
-  Data (wxWindow * window, bool recursive)
+  Data (wxWindow * window, int flags, bool recursive)
+    : m_textRevision (0), m_checkUseLatest (0), m_textUrl (0)
   {
     data.recursive = recursive;
 
     wxBoxSizer *mainSizer = new wxBoxSizer (wxVERTICAL);
-    wxBoxSizer *topSizer = new wxBoxSizer (wxHORIZONTAL);
-    wxBoxSizer *middleSizer = new wxBoxSizer (wxHORIZONTAL);
+    wxBoxSizer *middleSizer = new wxBoxSizer (wxVERTICAL);
     wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
 
-    // The revision fields:
-    wxStaticBoxSizer *revSizer = new wxStaticBoxSizer (
-      new wxStaticBox (window, -1, _("Revision")), wxHORIZONTAL);
-    
-    m_revisionText = new wxTextCtrl (window, -1, "",
-      wxDefaultPosition, wxDefaultSize, 0,
-      wxTextValidator (wxFILTER_NUMERIC, &data.revision));
-    revSizer->Add (m_revisionText, 1, 
-      wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
+    // The URL fields:
+    if (flags & WITH_URL)
+    {
+      wxStaticBox * box = new wxStaticBox (window, -1, _("URL"));
+      wxStaticBoxSizer * sizer = 
+        new wxStaticBoxSizer (box, wxHORIZONTAL);
+      wxTextValidator val (wxFILTER_NONE, &data.url);
+      m_textUrl = new wxTextCtrl (window, -1, "",
+                                  wxDefaultPosition, 
+                                  wxDefaultSize, 0, val);
+      sizer->Add (m_textUrl, 1, wxALL | wxEXPAND, 5);
+      middleSizer->Add (sizer, 1, wxALL | wxEXPAND, 5);
+    }
 
-    m_useLatestCheck = new wxCheckBox (window, ID_USELATEST, "Use latest",
-      wxDefaultPosition, wxDefaultSize, 0,
-      wxGenericValidator (&data.useLatest));
-    revSizer->Add (m_useLatestCheck, 0, wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
-    topSizer->Add (revSizer, 1, wxALL, 5);
+    // The revision fields:
+    {
+      wxStaticBox * box = new wxStaticBox (window, -1, _("Revision"));
+      wxStaticBoxSizer *revSizer = 
+        new wxStaticBoxSizer (box, wxHORIZONTAL);
+      wxTextValidator val (wxFILTER_NUMERIC, &data.revision);
+      m_textRevision = new wxTextCtrl (window, -1, "",
+                                       wxDefaultPosition, 
+                                       wxDefaultSize, 0, val);
+      revSizer->Add (m_textRevision, 1, 
+                     wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
+
+      wxGenericValidator valCheck (&data.useLatest);
+      m_checkUseLatest = new wxCheckBox (window, ID_USELATEST, 
+                                         _("Use latest"),
+                                         wxDefaultPosition, 
+                                         wxDefaultSize, 0, valCheck);
+      revSizer->Add (m_checkUseLatest, 0, 
+                     wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
+      middleSizer->Add (revSizer, 1, wxALL | wxEXPAND, 5);
+    }
 
     // The recursive checkbox
+    if ((flags & WITHOUT_RECURSIVE) == 0)
     {
       wxGenericValidator val (&data.recursive);
       wxCheckBox * checkRecursive = 
         new wxCheckBox (window, -1, _("Recursive"), 
                         wxDefaultPosition, wxDefaultSize, 0, val);
-      middleSizer->Add (checkRecursive, 0, wxALIGN_CENTER_HORIZONTAL | wxALL , 5);
+      middleSizer->Add (checkRecursive, 0, 
+                        wxALIGN_CENTER_HORIZONTAL | wxALL , 5);
     }
     
     // The buttons:
-    buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0, 
-                     wxALL, 10);
-    buttonSizer->Add(new wxButton( window, wxID_CANCEL, _("Cancel")), 0, 
-                     wxALL, 10);
+    wxButton * button;
+    button = new wxButton (window, wxID_OK, _("OK" ));
+    buttonSizer->Add (button, 0, wxALL, 10);
+    button = new wxButton (window, wxID_CANCEL, _("Cancel"));
+    buttonSizer->Add (button, 0, wxALL, 10);
 
     // Add all the sizers to the main sizer
-    mainSizer->Add (topSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
+    //mainSizer->Add (topSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
     mainSizer->Add (middleSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
+    mainSizer->Add (5, 5, 1, wxEXPAND);
     mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
 
     window->SetAutoLayout(true);
@@ -88,7 +113,7 @@ public:
   void 
   EnableControls()
   {
-    m_revisionText->Enable(!m_useLatestCheck->IsChecked());
+    m_textRevision->Enable(!m_checkUseLatest->IsChecked());
   }
 
 };
@@ -97,12 +122,16 @@ BEGIN_EVENT_TABLE (UpdateDlg, wxDialog)
   EVT_CHECKBOX (ID_USELATEST, UpdateDlg::OnUseLatest)
 END_EVENT_TABLE ()
 
-UpdateDlg::UpdateDlg (wxWindow* parent, int flags, bool recursive)
-  : wxDialog(parent, -1, _("Update"),
+const int UpdateDlg::WITH_URL = 1;
+const int UpdateDlg::WITHOUT_RECURSIVE = 2;
+
+UpdateDlg::UpdateDlg (wxWindow* parent, const char * title, int flags, 
+                      bool recursive)
+  : wxDialog(parent, -1, title,
              wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data (this, recursive);
+  m = new Data (this, flags, recursive);
   CentreOnParent();
 }
 
@@ -124,8 +153,8 @@ UpdateDlg::OnUseLatest(wxCommandEvent &)
   m->EnableControls();
 }
 
-const UpdateData &
-UpdateDlg::GetData () const 
+UpdateData &
+UpdateDlg::GetData ()
 {
   return m->data;
 }

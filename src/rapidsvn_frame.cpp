@@ -39,6 +39,7 @@
 #include "property_action.hpp"
 #include "resolve_action.hpp"
 #include "revert_action.hpp"
+#include "switch_action.hpp"
 #include "update_action.hpp"
 
 // dialogs
@@ -912,6 +913,10 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
     case ID_Rename: 
       action = new MoveAction (this, MOVE_RENAME);
+      break;
+
+    case ID_Switch:
+      action = new SwitchAction (this);
       break;
 
     case ID_Contents: //TODO

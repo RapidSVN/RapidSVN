@@ -22,6 +22,9 @@ struct UpdateData;
 class UpdateDlg:public wxDialog
 {
 public:
+  /** show dialog without "recursiv" checkbox */
+  static const int WITHOUT_RECURSIVE;
+
   /** show dialog with URL line */
   static const int WITH_URL;
 
@@ -32,7 +35,9 @@ public:
    * @param flags flags for the window (@a WITH_URL)
    * @param recursive default flag for the "recursive" check
    */
-  UpdateDlg (wxWindow* parent, int flags = 0,
+  UpdateDlg (wxWindow* parent, 
+             const char * title,
+             int flags = 0,
              bool recursive = true);
 
   /**
@@ -40,8 +45,8 @@ public:
    */
   virtual ~UpdateDlg ();
   
-  const UpdateData &
-  GetData () const;
+  UpdateData &
+  GetData ();
 
   void InitDialog ();
 private:

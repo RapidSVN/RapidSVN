@@ -246,6 +246,10 @@ SOURCE=.\src\svn_notify.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\switch_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\trace_commit.cpp
 # End Source File
 # Begin Source File
@@ -451,6 +455,10 @@ SOURCE=.\src\svn_file_info.hpp
 # Begin Source File
 
 SOURCE=.\src\svn_notify.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\switch_action.hpp
 # End Source File
 # Begin Source File
 

@@ -16,31 +16,43 @@
 
 // svncpp
 #include "svncpp/client.hpp"
-#include "svncpp/path.hpp"
-#include "svncpp/targets.hpp"
+#include "svncpp/status.hpp"
 
 // app
 #include "ids.hpp"
-#include "update_action.hpp"
-#include "update_dlg.hpp"
 #include "svn_notify.hpp"
-#include "tracer.hpp"
+#include "switch_action.hpp"
+#include "update_dlg.hpp"
 #include "utils.hpp"
 
-UpdateAction::UpdateAction (wxWindow * parent)
-  : Action (parent, _("Update"), actionWithTargets)
+SwitchAction::SwitchAction (wxWindow * parent) 
+ : Action (parent, _("Switch"), actionWithSingleTarget)
 {
 }
 
 bool
-UpdateAction::Prepare ()
+SwitchAction::Prepare ()
 {
   if (!Action::Prepare ())
   {
     return false;
   }
 
-  UpdateDlg dlg (GetParent (), _("Update"));
+  // first try to get the URL for the target
+  wxString url = "";
+  {
+    svn::Path path = GetTarget ();
+    svn::Client client (GetContext ());
+    svn::Status status (client.singleStatus (path.c_str ()));
+    url = status.entry ().url ();
+  }
+
+  // create flags for the dialog
+  int flags = UpdateDlg::WITH_URL;
+
+  UpdateDlg dlg (GetParent (), _("Switch"), flags,
+                 true);
+  dlg.GetData ().url = url;
 
   if (dlg.ShowModal () != wxID_OK)
   {
@@ -48,41 +60,33 @@ UpdateAction::Prepare ()
   }
 
   m_data = dlg.GetData ();
+
   return true;
 }
 
 bool
-UpdateAction::Perform ()
+SwitchAction::Perform ()
 {
   svn::Client client (GetContext ());
   SvnNotify notify (GetTracer ());
   client.notification (&notify);
 
+  svn::Path path = GetTarget ();
+  const char * url = m_data.url.c_str ();
   svn::Revision revision (svn::Revision::HEAD);
-  // Did the user request a specific revision?:
+
   if (!m_data.useLatest)
   {
-    TrimString(m_data.revision);
-    if (!m_data.revision.IsEmpty ())
-    {
-      svn_revnum_t revnum;
-      m_data.revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
-      revision = svn::Revision (revnum);
-    }
+    svn_revnum_t revnum;
+    TrimString (m_data.revision);
+    m_data.revision.ToLong (&revnum);
+    revision = revnum;
   }
 
-  bool result = true;
-  const std::vector<svn::Path> & v = GetTargets ();
-  std::vector<svn::Path>::const_iterator it;
-  wxSetWorkingDirectory (GetPath ().c_str ());
-  for (it = v.begin(); it != v.end(); it++)
-  {
-    const svn::Path & path = *it;
+  client.doSwitch (path, url, revision,
+                   m_data.recursive);
 
-    client.update (path.c_str (), revision, m_data.recursive);
-  }
-
-  return result;
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:
