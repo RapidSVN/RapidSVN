@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<book>
+  <title>RapidSVN: front-end for the Subversion revision system</title>
+
+  <bookinfo>
+    <author>
+      <surname>Müller</surname>
+
+      <firstname>Alexander</firstname>
+
+      <affiliation>
+        <address><email>XelaRellum@tigris.org</email></address>
+      </affiliation>
+    </author>
+
+    <copyright>
+      <year>2002-2003</year>
+
+      <holder>The RapidSVN Group</holder>
+    </copyright>
+
+    <legalnotice>
+      <para>Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License, Version
+      1.1 or any later version published by the Free Software Foundation; with
+      no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+      Texts. A copy of the license is included in the section entitled
+      &#34;GNU Free Documentation License&#34;.</para>
+    </legalnotice>
+  </bookinfo>
+
+  <reference>
+    <referenceinfo>
+      <productname>RapidSVN</productname>
+
+      <title>RapidSVN Reference</title>
+    </referenceinfo>
+
+    <title>RapidSVN Reference</title>
+
+    <refentry>
+      <refentryinfo>
+        <title>rapidsvn</title>
+      </refentryinfo>
+
+      <refmeta>
+        <refentrytitle>rapidsvn</refentrytitle>
+
+        <manvolnum>1</manvolnum>
+      </refmeta>
+
+      <refnamediv>
+        <refname>rapidsvn</refname>
+
+        <refpurpose>application providing a gui frontend for the subversion
+        version control system</refpurpose>
+      </refnamediv>
+
+      <refsynopsisdiv>
+        <cmdsynopsis>
+          <arg>rapidsvn</arg>
+        </cmdsynopsis>
+      </refsynopsisdiv>
+
+      <refsect1>
+        <title>Description</title>
+
+        <para>The application <command>rapidsvn</command> provides a cross
+        platform frontend for the subversion version control system.</para>
+      </refsect1>
+    </refentry>
+  </reference>
+</book>
