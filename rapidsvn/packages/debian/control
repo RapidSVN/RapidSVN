@@ -1,0 +1,13 @@
+Source: rapidsvn
+Section: x11
+Priority: optional
+Maintainer: László Böszörményi (GCS) <gcs@lsc.hu>
+Build-Depends: autoconf, automake, libtool, debhelper (>= 4.1.52), libsvn0-dev (>= 0.37), libwxgtk2.4-dev (>= 2.4.2), xsltproc (>= 1.0.30), docbook-xsl (>= 1.64)
+Standards-Version: 3.6.1
+
+Package: rapidsvn
+Architecture: any
+Depends: ${shlib:Depends}, libsvn0 (>= 0.37), libwxgtk2.4 (>= 2.4.2)
+Description: GUI client for subversion
+ Graphical client for the subversion revision control system.
+ This client uses wxWindow for it's UI

@@ -1,0 +1,6 @@
+RapidSVN TODO LIST
+
+All of the TODO items have been moved to the Issue Tracker:
+
+http://rapidsvn.tigris.org/servlets/ProjectIssues
+
