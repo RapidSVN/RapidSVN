@@ -24,6 +24,7 @@ namespace svn
   {
   public:
     std::string message;
+    apr_status_t apr_err;
 
     Data (const char * msg)
       : message (msg)
@@ -41,6 +42,12 @@ namespace svn
     delete m;
   }
 
+  const apr_status_t
+  Exception::apr_err () const
+  {
+    return m->apr_err;
+  }
+
   const char *
   Exception::message () const
   {
@@ -54,6 +61,7 @@ namespace svn
     if (error == 0)
       return;
 
+    m->apr_err = error->apr_err;
     svn_error_t * next = error->child;
     std::string & message = m->message;
     message = error->message;
