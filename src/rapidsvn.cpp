@@ -25,6 +25,9 @@
 #include "preferences_dlg.h"
 
 #include "rapidsvn.h"
+#include "wx/version.h"
+#include "svn_version.h"
+#include "version.h"
 
 // Toolbars' ids
 #define TOOLBAR_REFRESH  101
@@ -238,10 +241,9 @@ VSvnFrame::~VSvnFrame ()
   // Save the workbench contents
 
   wxString key;
-  int item;
-  const wxArrayString & workbenchItems =
-    m_folder_browser->GetWorkbenchItems ();
-  const int itemCount = workbenchItems.GetCount ();
+  size_t item;
+  UniqueArrayString & workbenchItems = m_folder_browser->GetWorkbenchItems ();
+  const size_t itemCount = workbenchItems.GetCount ();
   for (item = 0; item < itemCount; item++)
   {
     key.Printf (_T ("/MainFrame/wc%d"), item);
@@ -422,8 +424,18 @@ VSvnFrame::OnQuit (wxCommandEvent & WXUNUSED (event))
 void
 VSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
-  wxMessageBox ("RapidSVN\nBuilt with Subversion Alpha\nand wxWindows 2.3.2",
-                "About VSvn", wxOK | wxICON_INFORMATION);
+  wxString msg;
+
+  msg.Printf (_("RapidSVN Version %d.%d.%d\n"
+                "Mileston:e %s\n"
+                "\nBuilt with\n"
+                "Subversion %d.%d.%d and\n"
+                "wxWindows %d.%d.%d"),
+              RAPIDSVN_VER_MAJOR, RAPIDSVN_VER_MINOR, RAPIDSVN_VER_MICRO,
+              RAPIDSVN_VER_MILESTONE,
+              SVN_VER_MAJOR, SVN_VER_MINOR, SVN_VER_MICRO,
+              wxMAJOR_VERSION, wxMINOR_VERSION, wxRELEASE_NUMBER);
+  wxMessageBox (msg, "About RapidSVN", wxOK | wxICON_INFORMATION);
 }
 
 void
@@ -818,7 +830,7 @@ VSvnFrame::InitFolderBrowser ()
   int i;
   wxString key;
   wxString val;
-  wxArrayString & workbenchItems = m_folder_browser->GetWorkbenchItems ();
+  UniqueArrayString & workbenchItems = m_folder_browser->GetWorkbenchItems ();
 
   for (i = 0;; i++)
   {

@@ -12,6 +12,8 @@
 #define wxDIRCTRL_DIR_ONLY PATCHED_DIRCTRL_DIR_ONLY
 #endif
 
+#include "unique_array_string.h"
+
 class FolderBrowser:public wxGenericDirCtrl
 {
 private:
@@ -34,7 +36,7 @@ public:
   virtual void Refresh ();
   virtual void SetupSections ();
 
-   wxArrayString & GetWorkbenchItems ();
+   UniqueArrayString & GetWorkbenchItems ();
 
   const bool RemoveProject (const wxTreeItemId & id);
   void AddProject (const wxString & path);
@@ -44,8 +46,8 @@ protected:
   virtual void CollapseDir (const wxTreeItemId & parentId);
 
 private:
-  wxTreeItemId m_workbenchId;
-  wxArrayString m_workbenchItems;
+   wxTreeItemId m_workbenchId;
+  UniqueArrayString m_workbenchItems;
 };
 
 

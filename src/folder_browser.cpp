@@ -16,7 +16,6 @@ wxGenericDirCtrl (wnd, id, dir, pos, size, style, filter, defaultFilter, name)
 {
   pool = __pool;
 
-
   wxTreeCtrl *treeCtrl = GetTreeCtrl ();
 
   if (treeCtrl)
@@ -25,7 +24,6 @@ wxGenericDirCtrl (wnd, id, dir, pos, size, style, filter, defaultFilter, name)
     CollapseDir (rootId);
     ExpandDir (rootId);
   }
-
 }
 
 FolderBrowser::~FolderBrowser ()
@@ -103,7 +101,7 @@ FolderBrowser::CollapseDir (const wxTreeItemId & parentId)
   wxGenericDirCtrl::CollapseDir (parentId);
 }
 
-wxArrayString & FolderBrowser::GetWorkbenchItems ()
+UniqueArrayString & FolderBrowser::GetWorkbenchItems ()
 {
   return m_workbenchItems;
 }
@@ -140,9 +138,5 @@ FolderBrowser::RemoveProject (const wxTreeItemId & id)
 void
 FolderBrowser::AddProject (const wxString & path)
 {
-  if (m_workbenchItems.Index (path) == wxNOT_FOUND)
-  {
-    m_workbenchItems.Add (path);
-  }
+  m_workbenchItems.Add (path);
 }
-
