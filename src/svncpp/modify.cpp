@@ -239,6 +239,51 @@ Modify::mirror (const char * path, const char * url,
     throw ClientException (Err);
 }
 
+void
+Modify::import (const char * path, const char * url, const char * newEntry,
+                const char * message, bool recurse)
+{
+  svn_client_commit_info_t *commit_info = NULL;
+
+  Err = svn_client_import (&commit_info,
+                           Notify::notify,
+                           (void *) _notify,
+                           authenticate (),   
+                           path,
+                           url,
+                           newEntry,
+                           &svn_cl__get_log_message,
+                           logMessage (message),
+                           NULL,
+                           SVN_INVALID_REVNUM,
+                           !recurse,
+                           pool);
+
+  if(Err != NULL)
+    throw ClientException (Err);
+}
+
+void
+Modify::merge (const char * path1, long revision1, 
+               const char * path2, long revision2,
+               const char * localPath, bool force, bool recurse)
+{
+  Err = svn_client_merge (Notify::notify,
+                          (void *) _notify,
+                          authenticate (),
+                          path1,
+                          getRevision (revision1),
+                          path2,
+                          getRevision (revision2),
+                          localPath,
+                          recurse,
+                          force,
+                          pool);
+
+  if(Err != NULL)
+    throw ClientException (Err);
+}
+
 apr_array_header_t *
 Modify::target (const char * path)
 {

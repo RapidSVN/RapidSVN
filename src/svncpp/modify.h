@@ -103,9 +103,10 @@ public:
   void update (const char * path, long revision, bool recurse);
 
   /**
-   * Commits changes to the repository.
+   * Commits changes to the repository. This usually requires 
+   * authentication, see Auth.
    * @param path file to commit.
-   * @param logMessage log message that accompanies check in.
+   * @param message log message.
    * @param recurse whether the operation should be done recursively.
    * @exception ClientException
    */
@@ -126,7 +127,9 @@ public:
 
   /**
    * Creates a directory directly in a repository or creates a 
-   * directory on disk and schedules it for addition.
+   * directory on disk and schedules it for addition. If <i>path</i>
+   * is a URL then authentication is usually required, see Auth.
+   * @param message log message.
    * @exception ClientException
    */
   void mkdir (const char * path, const char * message);
@@ -150,7 +153,7 @@ public:
    * 'clean' directory (meaning a directory with no administrative 
    * directories).
    * @exception ClientException
-   * @param destPath this path must not exist.
+   * @param destPath a destination path that must not already exist.
    */
   void export (const char * srcPath, const char * destPath, long revision);
 
@@ -162,6 +165,24 @@ public:
   void mirror (const char * path, const char * url, 
                long revision, bool recurse);
 
+  /**
+   * Import file or directory PATH into repository directory URL at
+   * head.  This usually requires authentication, see Auth.
+   * @param message log message.
+   * @param newEntry new directory in which the contents of <i>path</i> are 
+   *        imported.
+   * @exception ClientException
+   */
+  void import (const char * path, const char * url, const char * newEntry,
+               const char * message, bool recurse);
+
+  /**
+   * Merge changes from two paths into a new local path.
+   * @exception ClientException
+   */
+  void merge (const char * path1, long revision1, 
+              const char * path2, long revision2,
+              const char * localPath, bool force, bool recurse);
 };
 
 }
