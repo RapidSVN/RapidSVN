@@ -109,7 +109,12 @@ namespace svn
       std::string validUntil;
       std::string issuerDName;
 
-      SslServerPromptData (const int failures = 0);
+      SslServerPromptData (const int failures_ = 0)
+        : trustPermanently (false), acceptedFailures (0),
+          failures (failures_), hostname (""), fingerprint (""),
+          validFrom (""), validUntil (""), issuerDName("")
+      {
+      }
     };
 
     /**

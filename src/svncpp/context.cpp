@@ -220,8 +220,13 @@ namespace svn
       SVN_ERR (getData (baton, &data));
 
       std::string msg ("");
-      if (!data->retrieveLogMessage (msg))
-        return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
+      if (data->logIsSet)
+        msg = data->getLogMessage ();
+      else
+      {
+        if (!data->retrieveLogMessage (msg))
+          return svn_error_create (SVN_ERR_CANCELLED, NULL, "");
+      }
 
       SVN_ERR (svn_utf_cstring_to_utf8 (
                  log_msg, msg.c_str (), pool));
