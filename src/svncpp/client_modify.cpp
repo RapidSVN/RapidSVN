@@ -23,31 +23,6 @@
 #include "pool.hpp"
 #include "targets.hpp"
 
-/* REMOVE
-struct log_msg_baton
-{
-  log_msg_baton (const std::string & message)
-  {
-    this->message = message;
-  }
-
-  std::string message;
-};
-
-// static functions
-static svn_error_t *
-get_log_message (const char **log_msg,
-  const char **tmp_file,
-  apr_array_header_t * commit_items,
-  void *baton, apr_pool_t * pool)
-{
-  log_msg_baton *lmb = (log_msg_baton *) baton;
-
-  *log_msg = apr_pstrdup (pool, lmb->message.c_str ());
-  return SVN_NO_ERROR;
-}
-
-*/
 namespace svn
 {
   void
