@@ -99,9 +99,12 @@ private:
   void OnCleanup (wxCommandEvent & event);
 
   // Help menu
-  void OnContents (wxCommandEvent & event);
+  void OnHelp(wxCommandEvent & event);
+  void OnHelpContents (wxCommandEvent & event);
+  void OnHelpIndex (wxCommandEvent & event);
+  void OnHelpStartupTips (wxCommandEvent & event);
   void OnAbout (wxCommandEvent & event);
-
+  
   // toolbar events
   void OnToolEnter (wxCommandEvent & event);
   void OnToolLeftClick (wxCommandEvent & event);

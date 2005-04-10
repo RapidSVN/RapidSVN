@@ -16,6 +16,9 @@
 // wxwindows
 #include "wx/app.h"
 #include "wx/intl.h"
+#include <wx/html/helpctrl.h> // html help support
+
+class wxTipProvider;
 
 class RapidSvnApp:public wxApp
 {
@@ -23,6 +26,21 @@ public:
   void OptionallyRegisterTempFile (const wxString & filename);
   void OptionallyPurgeTempFiles ();
   
+#if wxUSE_WXHTML_HELP
+  wxHtmlHelpController& GetHelpController()
+  {
+    return *m_helpController;
+  }
+#endif
+
+#if wxUSE_STARTUP_TIPS
+  wxTipProvider*
+  MakeTipProvider (bool force = false);
+
+  void
+  SaveTipsInfo (bool showAtStartup, int tipIndex);
+#endif
+
 protected:
   virtual bool OnInit ();
   virtual int OnExit ();
@@ -31,9 +49,17 @@ private:
   wxLocale m_locale;
   
   wxArrayString m_TempFiles;
+  
+#if wxUSE_WXHTML_HELP
+  wxHtmlHelpController* m_helpController;
+  
+  bool 
+  LocateHelp ();
+#endif
 };
 
 DECLARE_APP (RapidSvnApp)
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

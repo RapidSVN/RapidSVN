@@ -14,6 +14,7 @@
 #include "wx/confbase.h"
 #include "wx/wx.h"
 #include "wx/filename.h"
+#include <wx/tipdlg.h>
 
 // svncpp
 #include "svncpp/apr.hpp"
@@ -24,6 +25,7 @@
 #include "svncpp/wc.hpp"
 
 // app
+#include "rapidsvn_app.hpp"
 #include "config.hpp"
 #include "diff_data.hpp"
 #include "ids.hpp"
@@ -322,9 +324,15 @@ public:
 
     // Help Menu
     wxMenu *menuHelp = new wxMenu;
-    //dont lie about not existant help!
-    //menuHelp->Append (ID_Contents, _("&Contents"));
-    //menuHelp->AppendSeparator ();
+#if wxUSE_WXHTML_HELP
+    menuHelp->Append (ID_HelpContents, _("&Contents\tF1"));
+    menuHelp->Append (ID_HelpIndex, _("&Index\tShift+F1"));
+    menuHelp->AppendSeparator ();
+#endif
+#if wxUSE_STARTUP_TIPS
+    menuHelp->Append (ID_HelpStartupTips, _("Show Startup Tips"));
+    menuHelp->AppendSeparator ();
+#endif
     menuHelp->Append (ID_About, _("&About..."));
 
     // Create the menu bar and append the menus
@@ -545,7 +553,10 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Info, RapidSvnFrame::OnInfo)
   EVT_UPDATE_UI (ID_Info, RapidSvnFrame::OnUpdateCommand)
 
-  EVT_MENU (ID_Contents, RapidSvnFrame::OnContents)
+  EVT_MENU (ID_HelpContents, RapidSvnFrame::OnHelpContents)
+  EVT_MENU (ID_HelpIndex, RapidSvnFrame::OnHelpIndex)
+  EVT_MENU (ID_HelpStartupTips, RapidSvnFrame::OnHelpStartupTips)
+  
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
@@ -833,9 +844,48 @@ RapidSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
 }
 
 void
-RapidSvnFrame::OnContents (wxCommandEvent & WXUNUSED (event))
+RapidSvnFrame::OnHelpContents (wxCommandEvent & WXUNUSED (event))
 {
-  //TODO 
+#if wxUSE_WXHTML_HELP
+  ::wxGetApp ().GetHelpController().DisplayContents();
+#endif
+}
+
+void
+RapidSvnFrame::OnHelpIndex (wxCommandEvent & WXUNUSED (event))
+{
+#if wxUSE_WXHTML_HELP
+  ::wxGetApp ().GetHelpController().DisplayIndex();
+#endif
+}
+
+void
+RapidSvnFrame::OnHelpStartupTips (wxCommandEvent & WXUNUSED (event))
+{
+#if wxUSE_STARTUP_TIPS
+  RapidSvnApp& app = ::wxGetApp();
+  wxTipProvider* tipProvider = app.MakeTipProvider (true);
+  if (tipProvider)
+  {
+    bool showAtStartup = ::wxShowTip (this, tipProvider);
+    app.SaveTipsInfo (showAtStartup, tipProvider->GetCurrentTip ());
+    delete tipProvider;
+  }
+#endif
+}
+
+void RapidSvnFrame::OnHelp (wxCommandEvent &WXUNUSED(event))
+{
+#if wxUSE_WXHTML_HELP
+    wxWindow *active = wxGetActiveWindow();
+    wxString helptext;
+    while (active && helptext.IsEmpty())
+    {
+        helptext = active->GetHelpText();
+        active = GetParent();
+    }
+    wxGetApp ().GetHelpController().Display(helptext);
+#endif
 }
 
 void
@@ -1151,7 +1201,6 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       baseActionFlags = ViewAction::GetEditFlags ();
       break;
 
-    case ID_Contents: //TODO
     default:
       // If unrecognised, by default return true
       return true;
@@ -1356,7 +1405,6 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
         wxOK);
       break;
 
-    case ID_Contents: //TODO
     default:
       m_logTracer->Trace (_("Unimplemented action!"));
       break;

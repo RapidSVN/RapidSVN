@@ -52,6 +52,9 @@ private:
   OnText (wxCommandEvent & event);
 
   void 
+  OnHelp (wxCommandEvent & event);
+  
+  void 
   OnUseLatest (wxCommandEvent & event);
 
   void 

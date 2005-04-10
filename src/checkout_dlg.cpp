@@ -16,8 +16,10 @@
 // wxwindows
 #include "wx/sizer.h"
 #include <wx/valgen.h>
+#include "wx/cshelp.h"
 
 // app
+#include "rapidsvn_app.hpp"
 #include "checkout_dlg.hpp"
 #include "utils.hpp"
 
@@ -48,12 +50,14 @@ public:
     m_textRepUrl = 
       new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
                       wxSize(235, -1), 0, valModule);
+    m_textRepUrl->SetHelpText (_("Enter the repository URL (not local path) here."));
     wxStaticBox* destBox = 
       new wxStaticBox (wnd, 0, _("Destination Directory"));
     wxTextValidator valDest (wxFILTER_NONE, &data.DestFolder);
     m_textDest = 
       new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition, 
                       wxSize(205, -1), 0, valDest);
+    m_textDest->SetHelpText (_("Enter the local path where you want the code checked out to here."));
     wxButton* browse = 
       new wxButton (wnd, ID_BUTTON_BROWSE, wxT("..."), 
                    wxDefaultPosition, wxSize(20, -1) );
@@ -63,22 +67,27 @@ public:
     wxTextValidator valRevision (wxFILTER_NUMERIC, &data.Revision);
     m_textRevision = 
       new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition, 
-                      wxSize(50, -1), 0, valRevision);                             
+                      wxSize(50, -1), 0, valRevision);        
+    m_textRevision->SetHelpText(_("If not using the latest version of the files, specify which revision to use here."));
     wxGenericValidator valLatest (&data.UseLatest);
     m_checkUseLatest = 
       new wxCheckBox (wnd, ID_USELATEST, _("Use latest"),
                      wxDefaultPosition, wxDefaultSize, 0, valLatest);
+    m_checkUseLatest->SetHelpText(_("Set this to get the latest version of the files in the repository."));
     wxCheckBox* recursive = 
       new wxCheckBox (wnd, -1, _("Recursive"),
                       wxDefaultPosition, wxDefaultSize, 0, 
                       wxGenericValidator(&data.Recursive));
+    recursive->SetHelpText(_("Set to get all subdirectories from the URL also."));
     wxCheckBox* bookmarks = 
       new wxCheckBox (wnd, -1, _("Add to bookmarks"),
                       wxDefaultPosition, wxDefaultSize, 0,
                       wxGenericValidator(&data.Bookmarks));
+    bookmarks->SetHelpText(_("Set to automatically create a new working copy bookmark."));
 
     m_buttonOk = new wxButton( wnd, wxID_OK, _("OK" ));
     wxButton* cancel = new wxButton( wnd, wxID_CANCEL, _("Cancel"));
+    wxButton* help = new wxButton( wnd, wxID_HELP, _("Help"));
 
     // place controls
     // URL row
@@ -105,6 +114,11 @@ public:
     wxBoxSizer *buttonSizer  = new wxBoxSizer (wxHORIZONTAL);
     buttonSizer->Add(m_buttonOk, 0, wxALL, 10);
     buttonSizer->Add(cancel, 0, wxALL, 10);
+    // Add explicit context-sensitive help button for non-MSW
+    buttonSizer->Add(help, 0, wxALL, 10);
+#ifndef __WXMSW__
+    buttonSizer->Add(new wxContextHelpButton(wnd), 0, wxALL, 10);
+#endif
 
     // Extras sizer
     wxBoxSizer *extrasSizer = new wxBoxSizer (wxHORIZONTAL);
@@ -149,6 +163,10 @@ public:
     }
 
     m_buttonOk->Enable (ok);
+    if (ok)
+    {
+      m_buttonOk->SetDefault ();
+    }
   }
 
 
@@ -159,12 +177,18 @@ BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)
   EVT_BUTTON (wxID_OK, CheckoutDlg::OnOK)
   EVT_CHECKBOX (ID_USELATEST, CheckoutDlg::OnUseLatest)
   EVT_TEXT (-1, CheckoutDlg::OnText)
+  EVT_BUTTON (wxID_HELP, CheckoutDlg::OnHelp)
 END_EVENT_TABLE ()
 
 CheckoutDlg::CheckoutDlg (wxWindow * parent)
-  : wxDialog (parent, -1, _("Checkout"), wxDefaultPosition, 
-              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
+    // Add the context-sensitive help button on the caption for MSW
+#ifdef __WXMSW__
+  SetExtraStyle (wxDIALOG_EX_CONTEXTHELP);
+#endif
+  Create (parent, -1, _("Checkout"), wxDefaultPosition, 
+              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+              
   m = new Data (this);
   CentreOnParent();
 }
@@ -217,6 +241,12 @@ void
 CheckoutDlg::OnText (wxCommandEvent &)
 {
   m->CheckControls ();
+}
+
+void 
+CheckoutDlg::OnHelp (wxCommandEvent & event)
+{
+  ::wxGetApp ().GetHelpController().Display(wxT("Checkout dialog"));
 }
 
 /* -----------------------------------------------------------------
