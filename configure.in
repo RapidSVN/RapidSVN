@@ -156,19 +156,19 @@ fi
 SVN_LIBS="-L$SVN_LIB -lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1"
 
 dnl
-dnl wxWindows
+dnl wxWidgets
 dnl
 
 WX_CONFIGS="wx-config"
 AC_ARG_WITH(wx-config,
 [[  --with-wx-config=FILE     Use the given path to wx-config when determining
-                            wxWindows configuration; defaults to "wx-config"]],
+                            wxWidgets configuration; defaults to "wx-config"]],
 [
     if test "$withval" != "yes" -a "$withval" != ""; then
         WX_CONFIGS=$withval
     fi
 ])
-AC_MSG_CHECKING([wxWindows version])
+AC_MSG_CHECKING([wxWidgets version])
 WX_CONFIG=""
 for VALUE in $WX_CONFIGS ; do
 	if WX_VERSION=`$VALUE --version 2>&1` ; then
@@ -180,7 +180,7 @@ if test $WX_CONFIG ; then
 	AC_MSG_RESULT([$WX_VERSION])
 else
 	AC_MSG_RESULT([not found])
-	AC_MSG_ERROR([wxWindows is required. Try --with-wx-config.])
+	AC_MSG_ERROR([wxWidgets is required. Try --with-wx-config.])
 fi
 case $WX_VERSION in
     [2.4.[2-9]])
@@ -188,7 +188,7 @@ case $WX_VERSION in
     [2.[5-9].*])
 	;;
     *)
-        AC_MSG_ERROR([wxWindows >= 2.4.2 required, found version $WX_VERSION])
+        AC_MSG_ERROR([wxWidgets >= 2.4.2 required, found version $WX_VERSION])
 	AC_MSG_ERROR([Try --with-wx-config.])
         ;;
 esac

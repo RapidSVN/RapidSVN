@@ -3,7 +3,7 @@ RapidSVN
 INTRODUCTION
 
 RapidSVN is a cross-platform GUI front-end for the Subversion revision system 
-(http://subversion.tigris.org/) written in C++ using the wxWindows GUI 
+(http://subversion.tigris.org/) written in C++ using the wxWidgets GUI 
 framework. It is distributed under the Apache Software License, Version 1.1.  
 See LICENSE.txt for more details. 
 
@@ -11,9 +11,9 @@ Currently it compiles under Windows and it does so with Linux but there are a
 few runtime issues that are currently being worked out.  Eventually this 
 should run on the Mac and several other flavors of *NIX.
 
-WHY WXWINDOWS?
+WHY WXWIDGETS?
 
-Many of you are probably curious why we would choose wxWindows as the platform 
+Many of you are probably curious why we would choose wxWidgets as the platform 
 in which to build this project.  Since the beginning the goal of Subversion 
 was to build a client that would improve source control for operating system 
 platform.  By using the Apache Portable Runtime and a load of #ifdef's this 
@@ -21,14 +21,14 @@ goal has been effectively accomplished.  With RapidSVN we would like to
 continue this theme.  
 
 In order to get people to transfer over to product to make it easier the 
-program should conform to whatever platform they are using.  wxWindows is the 
+program should conform to whatever platform they are using.  wxWidgets is the 
 perfect platform for this.  It uses GDI on Windows so the Windows guys never
 even think for a second that they are using a non-Windows tool and GTK for 
 all the Unix guys.  There is even an effort to use QT as well.  This makes 
 the best of both worlds without messing with a person's personal 
 environment.  
 
-For developers wxWindows is great. It is easy to learn and quite powerful for 
+For developers wxWidgets is great. It is easy to learn and quite powerful for 
 any platform.  It made the choice easy.
 
 BUILDING AND INSTALLING
@@ -42,11 +42,11 @@ BUILDING AND INSTALLING
   following svn command:
   % svn co http://svn.collab.net/repos/rapidsvn/trunk rapidsvn
 
-* Download the wxWindows 2.3.3 (or >= 2.4.0) libraries: http://www.wxwindows.org/
+* Download the wxWidgets 2.3.3 (or >= 2.4.0) libraries: http://www.wxWidgets.org/
 
-  If you are building wxWindows on linux, you will need to specify 
+  If you are building wxWidgets on linux, you will need to specify 
   the --disable-no-exceptions parameter to configure (see 
-  http://www.wxwindows.org/faqgen.htm#exceptions). For development
+  http://www.wxWidgets.org/faqgen.htm#exceptions). For development
   you will probably also want --enable-debug.
 
 * Download the latest Subversion source tree.  Here are the directions: 
@@ -80,7 +80,7 @@ BUILDING AND INSTALLING
 
 * Two environmental variables must be set as well: 
   SUBVERSION - SVN libraries root directory
-  WX - wxWindows libraries directory
+  WX - wxWidgets libraries directory
 
   On Windows you can add the following to autoexec.bat or through the 
   Environmental Variables editor.
