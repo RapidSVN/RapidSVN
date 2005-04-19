@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=RapidSVN
-AppVerName=RapidSVN 0.7.2
+AppVerName=RapidSVN 0.8.0
 AppPublisherURL=http://rapidsvn.tigris.org/
 AppSupportURL=http://rapidsvn.tigris.org/
 AppUpdatesURL=http://rapidsvn.tigris.org/
@@ -11,7 +11,7 @@ DefaultDirName={pf}\RapidSVN
 DefaultGroupName=RapidSVN
 LicenseFile=..\..\LICENSE.txt
 InfoBeforeFile=..\..\README
-OutputBaseFilename=RapidSVN-0.7.2
+OutputBaseFilename=RapidSVN-0.8.0
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
