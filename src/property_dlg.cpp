@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/grid.h"
 #include "wx/listctrl.h"
@@ -30,7 +30,7 @@ struct PropertyDlg::Data
 {
   wxWindow * window;
   svn::Property property;
-  
+
 public:
   Data (wxWindow * wnd, svn::Context * context, const char * target)
     : window (wnd), property (context, target)
@@ -39,14 +39,14 @@ public:
 
 };
 
-PropertyDlg::PropertyDlg (wxWindow * parent, 
+PropertyDlg::PropertyDlg (wxWindow * parent,
                           svn::Context * context,
                           const svn::Path & target)
   : ListEditorDlg (parent, _("Property Editor"))
 {
   const char * target_ = target.c_str ();
-  // the property list is read-only when working 
-  // on a repository 
+  // the property list is read-only when working
+  // on a repository
   const bool readOnly = svn::Url::isValid(target_);
   m = new Data (this, context, target_);
 
@@ -65,7 +65,7 @@ PropertyDlg::~PropertyDlg ()
  * transfer the contents of the grid to @a property.
  * Properties, that are set only in @a property will be
  * set to NULL
- * 
+ *
  * @see WriteToGrid
  */
 void
@@ -101,12 +101,12 @@ PropertyDlg::ReadFromGrid ()
       wxString name, value;
 
       GetEntryAtIndex (index, name, value);
-      
+
       std::string nameUtf8 (LocalToUtf8 (name));
       std::string valueUtf8 (LocalToUtf8 (value));
 
       m->property.set (nameUtf8.c_str (), valueUtf8.c_str ());
-    }    
+    }
   }
   catch (...)
   {
@@ -122,12 +122,12 @@ PropertyDlg::ReadFromGrid ()
  *
  * @see ReadFromGrid
  */
-void 
+void
 PropertyDlg::WriteToGrid ()
 {
-  const std::vector<svn::PropertyEntry> & 
+  const std::vector<svn::PropertyEntry> &
     entries = m->property.entries ();
-  std::vector<svn::PropertyEntry>::const_iterator 
+  std::vector<svn::PropertyEntry>::const_iterator
     it = entries.begin ();
 
   DeleteAllEntries ();
@@ -137,7 +137,7 @@ PropertyDlg::WriteToGrid ()
 
     SetEntry (Utf8ToLocal (entry.name.c_str ()),
         Utf8ToLocal (entry.value.c_str ()));
-  
+
     it++;
   }
 }

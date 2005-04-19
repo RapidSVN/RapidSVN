@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/confbase.h"
 #include <wx/fs_zip.h> // ZIP filesystem support
@@ -76,7 +76,7 @@ bool RapidSvnApp::OnInit ()
     delete tipProvider;
   }
 #endif
-    
+
   return TRUE;
 }
 
@@ -84,7 +84,7 @@ int
 RapidSvnApp::OnExit ()
 {
   OptionallyPurgeTempFiles ();
-  
+
   // destroy application configuration object
   delete wxConfigBase::Set ((wxConfigBase *) NULL);
 
@@ -93,7 +93,7 @@ RapidSvnApp::OnExit ()
 #if wxUSE_WXHTML_HELP
   delete m_helpController;
 #endif
-  
+
   return 0;
 }
 
@@ -101,7 +101,7 @@ void
 RapidSvnApp::OptionallyRegisterTempFile (const wxString & filename)
 {
   Preferences prefs;
-  
+
   if (prefs.purgeTempFiles)
   {
     m_TempFiles.Add(filename);
@@ -111,12 +111,12 @@ RapidSvnApp::OptionallyRegisterTempFile (const wxString & filename)
     m_TempFiles.Clear ();
   }
 }
-  
+
 void
 RapidSvnApp::OptionallyPurgeTempFiles ()
 {
   Preferences prefs;
-  
+
   if (prefs.purgeTempFiles)
   {
     for (size_t i = 0; i < m_TempFiles.GetCount (); ++i)
@@ -138,7 +138,7 @@ RapidSvnApp::LocateHelp ()
 #ifdef __WXMAC__
     appPath += appName + wxT(".app/Contents/Resources"));
 #endif
-    
+
     wxString helpfile = appPath + wxFileName::GetPathSeparator() + appName + wxT(".htb");
     wxConfigBase* cfg = wxConfigBase::Get ();
     helpfile = cfg->Read (HELP_FILE, helpfile);
@@ -146,7 +146,7 @@ RapidSvnApp::LocateHelp ()
     {
       return false;
     }
-    
+
     // TODO: Hmmm - I haven't called Initialise yet, but AddBook seems to work directly...
     while (!m_helpController->AddBook (wxFileName(helpfile)))
     {

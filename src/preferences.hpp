@@ -13,7 +13,7 @@
 #ifndef _PREFERENCES_H_INCLUDED_
 #define _PREFERENCES_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/string.h"
 
 /**
@@ -32,12 +32,12 @@ public:
    */
   virtual ~Preferences ();
 
-  /** 
-   * location of the executable to edit files 
+  /**
+   * location of the executable to edit files
    */
   wxString editor;
 
-  /** 
+  /**
    * always use the editor executable to edit files
    */
   bool editorAlways;
@@ -47,14 +47,14 @@ public:
    */
   wxString editorArgs;
 
-  /** 
-   * location of the executable that will be 
+  /**
+   * location of the executable that will be
    * used for exploring folders
    */
   wxString explorer;
 
-  /** 
-   * always use the explorer executable for folders 
+  /**
+   * always use the explorer executable for folders
    */
   bool explorerAlways;
 
@@ -73,13 +73,13 @@ public:
    */
   wxString diffToolArgs;
 
-  /** 
+  /**
    * delete all temporary files made by the program upon exit
    */
   bool purgeTempFiles;
 
   /**
-   * remember passwords for each bookmark (vs. the 
+   * remember passwords for each bookmark (vs. the
    * same passwords for all bookmarks)
    */
   bool authPerBookmark;

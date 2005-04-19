@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/utils.h"
 
@@ -63,7 +63,7 @@ SafeYield ()
   wxSafeYield ();
 }
 #else
-void 
+void
 SafeYield () {};
 #endif
 
@@ -75,7 +75,7 @@ public:
    * The parent
    */
   wxWindow * parent;
-    
+
   /** the name of the action */
   wxString name;
 
@@ -83,13 +83,13 @@ public:
   unsigned int flags;
 
   /**
-   * This member variable will take the address 
-   * of a trace object allocated in a class 
+   * This member variable will take the address
+   * of a trace object allocated in a class
    * derived from ActionThread. It will be used
    * from the svn_delta_editor callbacks.
    */
   Tracer * tracer;
-    
+
   /**
    * If ownTracer is TRUE, then the ActionThread class
    * is responsible for deleting the tracer.
@@ -180,7 +180,7 @@ Action::PostDataEvent (int code, void *data, int event_id)
   SafeYield ();
 }
 
-void 
+void
 Action::SetTracer (Tracer * t, bool own)
 {
   m->tracer = t;
@@ -240,7 +240,7 @@ Action::SetContext (svn::Context * context)
   m->context = context;
 }
 
-svn::Context * 
+svn::Context *
 Action::GetContext ()
 {
   return m->context;
@@ -262,7 +262,7 @@ bool
 Action::Prepare ()
 {
   bool result = true;
-  
+
   if ((GetFlags () & Action::WITHOUT_TARGET) == 0)
   {
     unsigned int quantityFlags = GetFlags() & Action::TARGET_QUANTITY_MASK;
@@ -296,13 +296,13 @@ Action::Prepare ()
   return result;
 }
 
-const svn::Path 
+const svn::Path
 Action::GetTarget ()
 {
   return m->targets.target ();
 }
 
-const wxString & 
+const wxString &
 Action::GetName () const
 {
   return m->name;
@@ -328,7 +328,7 @@ Action::PostEvent (wxEvent & event)
 }
 
 
-unsigned int 
+unsigned int
 Action::GetFlags () const
 {
   return m->flags;
@@ -342,7 +342,7 @@ Action::SetFlags (unsigned int flags)
 }
 
 svn::Path
-Action::GetPathAsTempFile (const svn::Path & path, 
+Action::GetPathAsTempFile (const svn::Path & path,
            const svn::Revision & revision)
 {
   svn::Client client (GetContext ());
@@ -360,11 +360,11 @@ Action::GetPathAsTempFile (const svn::Path & path,
 
   svn::Path dstPath ("");
   client.get (dstPath, path, revision);
-  
+
   // Remember this temporary file so we can delete it when the application exits
   ::wxGetApp ().OptionallyRegisterTempFile (
       Utf8ToLocal (dstPath.c_str ()));
-  
+
   return dstPath;
 }
 

@@ -10,7 +10,7 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/confbase.h"
 
@@ -31,19 +31,19 @@ static const wxChar * DEFAULT_DIFF_TOOL = wxT("");
 /**
  * Configuration key names
  */
-static const wxChar CONF_EDITOR[] = 
+static const wxChar CONF_EDITOR[] =
   wxT("/Preferences/StandardEditor");
-static const wxChar CONF_EDITOR_ALWAYS[] = 
+static const wxChar CONF_EDITOR_ALWAYS[] =
   wxT("/Preferences/AlwaysStandardEditor");
 static const wxChar CONF_EDITOR_ARGS[] =
   wxT("/Preferences/StandardEditorArgs");
-static const wxChar CONF_EXPLORER[] = 
+static const wxChar CONF_EXPLORER[] =
   wxT("/Preferences/StandardFileExplorer");
-static const wxChar CONF_EXPLORER_ALWAYS[] = 
+static const wxChar CONF_EXPLORER_ALWAYS[] =
   wxT("/Preferences/AlwaysStandardFileExplorer");
 static const wxChar CONF_EXPLORER_ARGS[] =
   wxT("/Preferences/StandardFileExplorerArgs");
-static const wxChar CONF_PURGE_TEMP_FILES[] = 
+static const wxChar CONF_PURGE_TEMP_FILES[] =
   wxT("/Preferences/PurgeTempFiles");
 static const wxChar CONF_AUTH_PER_BOOKMARK[] =
   wxT("/Preferences/AuthPerBookmark");
@@ -54,8 +54,8 @@ static const wxChar CONF_DIFF_TOOL_ARGS[] =
 
 Preferences::Preferences ()
   : editor (DEFAULT_EDITOR), editorAlways (false), editorArgs (wxEmptyString),
-    explorer (DEFAULT_EXPLORER), explorerAlways (false), 
-    explorerArgs (wxEmptyString), diffTool (DEFAULT_DIFF_TOOL), 
+    explorer (DEFAULT_EXPLORER), explorerAlways (false),
+    explorerArgs (wxEmptyString), diffTool (DEFAULT_DIFF_TOOL),
     diffToolArgs (wxEmptyString), purgeTempFiles (true),
     authPerBookmark (false)
 {
@@ -67,7 +67,7 @@ Preferences::~Preferences ()
   Write ();
 }
 
-void 
+void
 Preferences::Read ()
 {
   wxConfigBase * config = wxConfigBase::Get ();
@@ -105,7 +105,7 @@ void Preferences::Write () const
   config->Write (CONF_DIFF_TOOL_ARGS, diffToolArgs);
 
   config->Write (CONF_PURGE_TEMP_FILES, purgeTempFiles);
-  
+
   config->Write (CONF_AUTH_PER_BOOKMARK, authPerBookmark);
 }
 

@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // svncpp
@@ -23,7 +23,7 @@
 #include "update_dlg.hpp"
 #include "utils.hpp"
 
-SwitchAction::SwitchAction (wxWindow * parent) 
+SwitchAction::SwitchAction (wxWindow * parent)
  : Action (parent, _("Switch"), GetBaseFlags ())
 {
 }

@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // app
@@ -59,7 +59,7 @@ public:
   }
 };
 
-CertDlg::CertDlg (wxWindow * parent, 
+CertDlg::CertDlg (wxWindow * parent,
                   const svn::ContextListener::SslServerTrustData & trustData)
   : wxDialog (parent, -1, _("SSL Certificate"), wxDefaultPosition),
     m (new Data (trustData.failures))
@@ -87,7 +87,7 @@ CertDlg::CertDlg (wxWindow * parent,
                        tmp.c_str ());
   wxStaticBox * failBox = new wxStaticBox (
     this, -1, failBoxLabel);
-  wxStaticBoxSizer * failBoxSizer = 
+  wxStaticBoxSizer * failBoxSizer =
     new wxStaticBoxSizer (failBox, wxVERTICAL);
   failBoxSizer->Add (labelFailure, 0, wxALL, 10);
 
@@ -120,18 +120,18 @@ CertDlg::CertDlg (wxWindow * parent,
   certBoxSizer->Add (certSizer);
 
   wxBoxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
-  buttonSizer->Add (new wxButton (this, ID_PERM, _("&Permanently")), 
+  buttonSizer->Add (new wxButton (this, ID_PERM, _("&Permanently")),
                     0, wxALL, 5);
-  buttonSizer->Add (new wxButton (this, ID_TEMP, _("&Temporarily")), 
+  buttonSizer->Add (new wxButton (this, ID_TEMP, _("&Temporarily")),
                     0, wxALL, 5);
-  buttonSizer->Add (new wxButton (this, wxID_CANCEL, _("Cancel")), 
+  buttonSizer->Add (new wxButton (this, wxID_CANCEL, _("Cancel")),
                     0, wxALL, 5);
-    
+
   wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
   mainSizer->Add (labelTitle, 0, wxALL, 5);
   mainSizer->Add (failBoxSizer, 0, wxALL | wxEXPAND, 5);
   mainSizer->Add (certBoxSizer, 0, wxALL | wxEXPAND, 5);
-  mainSizer->Add (buttonSizer, 0, 
+  mainSizer->Add (buttonSizer, 0,
                   wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
   SetAutoLayout(true);
@@ -150,7 +150,7 @@ CertDlg::~CertDlg ()
 }
 
 
-void 
+void
 CertDlg::OnPerm (wxCommandEvent & event)
 {
   m->answer = svn::ContextListener::ACCEPT_PERMANENTLY;
@@ -158,7 +158,7 @@ CertDlg::OnPerm (wxCommandEvent & event)
 }
 
 
-void 
+void
 CertDlg::OnTemp (wxCommandEvent & event)
 {
   m->answer = svn::ContextListener::ACCEPT_TEMPORARILY;
@@ -166,7 +166,7 @@ CertDlg::OnTemp (wxCommandEvent & event)
 }
 
 
-svn::ContextListener::SslServerTrustAnswer 
+svn::ContextListener::SslServerTrustAnswer
 CertDlg::Answer () const
 {
   return m->answer;

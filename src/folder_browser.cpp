@@ -19,7 +19,7 @@
 #include "svncpp/url.hpp"
 #include "svncpp/wc.hpp"
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/filename.h"
 #include "wx/dir.h"
@@ -80,7 +80,7 @@ public:
   wxImageList* imageList;
   Bookmarks bookmarks;
   svn::Context defaultContext;
-  
+
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
     : window (window), listener (0)
   {
@@ -95,12 +95,12 @@ public:
     imageList->Add (wxIcon (modified_open_folder_xpm));
     imageList->Add (wxIcon (bookmark_xpm));
 
-    treeCtrl = new wxTreeCtrl (window, -1, pos, size, 
+    treeCtrl = new wxTreeCtrl (window, -1, pos, size,
                                wxTR_HAS_BUTTONS|wxTR_SINGLE);
     treeCtrl->AssignImageList (imageList);
 
     FolderItemData* data = new FolderItemData (FOLDER_TYPE_BOOKMARKS);
-    rootId = treeCtrl->AddRoot (_("Bookmarks"), FOLDER_IMAGE_COMPUTER, 
+    rootId = treeCtrl->AddRoot (_("Bookmarks"), FOLDER_IMAGE_COMPUTER,
                                     FOLDER_IMAGE_COMPUTER, data);
     treeCtrl->SetItemHasChildren (rootId, TRUE);
   }
@@ -114,7 +114,7 @@ public:
   GetPath ()
   {
     const wxTreeItemId id = treeCtrl->GetSelection ();
-  
+
     if(!id.IsOk())
     {
       return wxEmptyString;
@@ -128,7 +128,7 @@ public:
   GetSelection () const
   {
     const wxTreeItemId id = treeCtrl->GetSelection ();
-  
+
     if(!id.IsOk())
     {
       return NULL;
@@ -141,7 +141,7 @@ public:
   }
 
   svn::Context *
-  GetContext () 
+  GetContext ()
   {
     const FolderItemData * data = GetSelection ();
     svn::Context * context = 0;
@@ -246,11 +246,11 @@ public:
       AppendMenuItem (menu, ID_Update);
       AppendMenuItem (menu, ID_Commit);
     }
-    
+
     // Check for disabled items
     RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
     frame->TrimDisabledMenuItems (menu);
-  
+
     // show menu
     window->PopupMenu (&menu, pt);
   }
@@ -263,14 +263,14 @@ public:
 
     wxDir dir (path);
 
-    bool ok = dir.GetFirst(&filename, wxEmptyString, 
+    bool ok = dir.GetFirst(&filename, wxEmptyString,
                              wxDIR_DIRS);
     if(!dir.IsOpened ())
       return false;
-  
+
     if (!ok)
       return false;
-  
+
     while (ok)
     {
       if (filename != Utf8ToLocal (svn::Wc::ADM_DIR_NAME))
@@ -337,14 +337,14 @@ public:
         {
           const wxString path
               (bookmarks.GetBookmark (index));
-          FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK, 
+          FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK,
                                                     path, path, TRUE);
-          wxTreeItemId newId = treeCtrl->AppendItem (parentId, path, 
-                                                     FOLDER_IMAGE_BOOKMARK, 
-                                                     FOLDER_IMAGE_BOOKMARK, 
+          wxTreeItemId newId = treeCtrl->AppendItem (parentId, path,
+                                                     FOLDER_IMAGE_BOOKMARK,
+                                                     FOLDER_IMAGE_BOOKMARK,
                                                      data);
           treeCtrl->SetItemHasChildren (newId, TRUE);
-          treeCtrl->SetItemImage (newId, FOLDER_IMAGE_BOOKMARK,  
+          treeCtrl->SetItemImage (newId, FOLDER_IMAGE_BOOKMARK,
                                     wxTreeItemIcon_Expanded);
         }
       }
@@ -370,7 +370,7 @@ public:
                     errtxt.c_str ());
       }
       break;
-    }   
+    }
 
     treeCtrl->SortChildren (parentId);
   }
@@ -393,7 +393,7 @@ public:
   }
 
   void
-  RefreshLocal (const wxString & parentPath, 
+  RefreshLocal (const wxString & parentPath,
                 const wxTreeItemId & parentId)
   {
     svn::Client client (GetContext ());
@@ -402,7 +402,7 @@ public:
       return;
 
     wxString filename;
-    bool ok = dir.GetFirst(&filename, wxEmptyString, 
+    bool ok = dir.GetFirst(&filename, wxEmptyString,
                            wxDIR_DIRS);
     bool parentHasSubdirectories = false;
 
@@ -411,7 +411,7 @@ public:
       if(filename != Utf8ToLocal (svn::Wc::ADM_DIR_NAME))
       {
         parentHasSubdirectories = true;
-  
+
         wxFileName path(parentPath, filename, wxPATH_NATIVE);
         wxString fullPath = path.GetFullPath ();
         std::string fullPathUtf8;
@@ -434,19 +434,19 @@ public:
             open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
           }
         }
-  
-        FolderItemData * data = 
-          new FolderItemData (FOLDER_TYPE_NORMAL, 
-                              fullPath, 
+
+        FolderItemData * data =
+          new FolderItemData (FOLDER_TYPE_NORMAL,
+                              fullPath,
                               filename, TRUE);
 
-        wxTreeItemId newId = 
+        wxTreeItemId newId =
           treeCtrl->AppendItem(
-            parentId, filename, 
+            parentId, filename,
             image, image, data);
         treeCtrl->SetItemHasChildren (
           newId, HasSubdirectories(fullPath) );
-        treeCtrl->SetItemImage (newId, open_image,  
+        treeCtrl->SetItemImage (newId, open_image,
                                 wxTreeItemIcon_Expanded);
       }
 
@@ -459,14 +459,14 @@ public:
   }
 
   void
-  RefreshRepository (const wxString & parentPath, 
+  RefreshRepository (const wxString & parentPath,
                      const wxTreeItemId & parentId)
   {
     svn::Client client (GetContext ());
     svn::Revision rev (svn::Revision::HEAD);
     std::string parentPathUtf8;
     LocalToUtf8(parentPath, parentPathUtf8);
-    svn::DirEntries entries = 
+    svn::DirEntries entries =
       client.ls (parentPathUtf8.c_str (), rev, false);
     svn::DirEntries::const_iterator it;
 
@@ -480,24 +480,24 @@ public:
       wxString fullPath = Utf8ToLocal (entry.name ());
       wxString filename (fullPath.Mid (parentPath.Length () + 1));
       //parentHasSubdirectories = true;
-      
+
       if (entry.kind () != svn_node_dir)
         continue;
 
-      FolderItemData * data = 
-        new FolderItemData (FOLDER_TYPE_NORMAL, 
-                            fullPath, 
+      FolderItemData * data =
+        new FolderItemData (FOLDER_TYPE_NORMAL,
+                            fullPath,
                             filename, TRUE);
 
-      wxTreeItemId newId = 
+      wxTreeItemId newId =
         treeCtrl->AppendItem(
-          parentId, filename, 
+          parentId, filename,
           image, image, data);
       treeCtrl->SetItemHasChildren (
         newId, true );
-      treeCtrl->SetItemImage (newId, open_image,  
+      treeCtrl->SetItemImage (newId, open_image,
                                 wxTreeItemIcon_Expanded);
-      
+
     }
   }
 
@@ -505,7 +505,7 @@ public:
   /**
    * Finds the child entry with @a path
    */
-  wxTreeItemId 
+  wxTreeItemId
   FindClosestChild (const wxTreeItemId & parentId, const wxString & path)
   {
     long cookie;
@@ -583,7 +583,7 @@ public:
 
       // first some validity checkings:
       // - there has to be a valid @a data item
-      // - the node has to be "real" 
+      // - the node has to be "real"
       // - the path of the node has to be non-empty
       // - the prefix of @a path has to match
       //   the path of the @a node
@@ -674,11 +674,11 @@ public:
 
   /**
    * Try to go up in the folder hierarchy until we
-   * find a bookmark node. 
+   * find a bookmark node.
    *
    * @return id of bookmark for selected node
    */
-  wxTreeItemId 
+  wxTreeItemId
   GetSelectedBookmarkId () const
   {
     wxTreeItemId id = treeCtrl->GetSelection ();
@@ -706,7 +706,7 @@ public:
   }
 
 
-  wxString 
+  wxString
   GetSelectedBookmark () const
   {
     wxTreeItemId id = GetSelectedBookmarkId ();
@@ -723,16 +723,16 @@ public:
 
     return path;
   }
-    
+
 };
 
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
   EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
   EVT_TREE_ITEM_COLLAPSED (-1, FolderBrowser::OnCollapseItem)
-  EVT_SIZE (FolderBrowser::OnSize) 
+  EVT_SIZE (FolderBrowser::OnSize)
   EVT_TREE_ITEM_RIGHT_CLICK (-1, FolderBrowser::OnItemRightClk)
   EVT_CONTEXT_MENU (FolderBrowser::OnContextMenu)
-END_EVENT_TABLE () 
+END_EVENT_TABLE ()
 
 FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
                               const wxPoint & pos, const wxSize & size,
@@ -802,7 +802,7 @@ FolderBrowser::AddBookmark (const wxString & path)
 }
 
 const
-wxString 
+wxString
 FolderBrowser::GetPath () const
 {
   return m->GetPath ();
@@ -859,7 +859,7 @@ FolderBrowser::OnItemRightClk (wxTreeEvent & event)
 #endif
 }
 
-void 
+void
 FolderBrowser::OnContextMenu (wxContextMenuEvent & event)
 {
   wxPoint clientPt = ScreenToClient (event.GetPosition ());
@@ -884,7 +884,7 @@ FolderBrowser::GetBookmark (const size_t index) const
   return m->bookmarks.GetBookmark (index);
 }
 
-svn::Context * 
+svn::Context *
 FolderBrowser::GetContext ()
 {
   return m->GetContext ();
@@ -896,7 +896,7 @@ FolderBrowser::SetAuthPerBookmark (const bool value)
   m->bookmarks.SetAuthPerBookmark (value);
 }
 
-const bool 
+const bool
 FolderBrowser::GetAuthPerBookmark () const
 {
   return m->bookmarks.GetAuthPerBookmark ();

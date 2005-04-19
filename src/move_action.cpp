@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // svncpp
@@ -22,8 +22,8 @@
 #include "destination_dlg.hpp"
 #include "utils.hpp"
 
-MoveAction::MoveAction (wxWindow * parent, 
-                                int kind) 
+MoveAction::MoveAction (wxWindow * parent,
+                                int kind)
  : Action (parent, wxEmptyString, GetBaseFlags ()),
    m_kind (kind)
 {

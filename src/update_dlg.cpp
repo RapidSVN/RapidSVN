@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
@@ -55,11 +55,11 @@ public:
     if (withUrl ())
     {
       wxStaticBox * box = new wxStaticBox (window, -1, _("URL"));
-      wxStaticBoxSizer * sizer = 
+      wxStaticBoxSizer * sizer =
         new wxStaticBoxSizer (box, wxHORIZONTAL);
       wxTextValidator val (wxFILTER_NONE, &data.url);
       m_textUrl = new wxTextCtrl (window, ID_URL, wxEmptyString,
-                                  wxDefaultPosition, 
+                                  wxDefaultPosition,
                                   wxDefaultSize, 0, val);
       sizer->Add (m_textUrl, 1, wxALL | wxEXPAND, 5);
       middleSizer->Add (sizer, 1, wxALL | wxEXPAND, 5);
@@ -69,21 +69,21 @@ public:
     if (withRevision ())
     {
       wxStaticBox * box = new wxStaticBox (window, -1, _("Revision"));
-      wxStaticBoxSizer *revSizer = 
+      wxStaticBoxSizer *revSizer =
         new wxStaticBoxSizer (box, wxHORIZONTAL);
       wxTextValidator val (wxFILTER_NUMERIC, &data.revision);
       m_textRevision = new wxTextCtrl (window, ID_REVISION, wxEmptyString,
-                                       wxDefaultPosition, 
+                                       wxDefaultPosition,
                                        wxDefaultSize, 0, val);
-      revSizer->Add (m_textRevision, 1, 
+      revSizer->Add (m_textRevision, 1,
                      wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
 
       wxGenericValidator valCheck (&data.useLatest);
-      m_checkUseLatest = new wxCheckBox (window, ID_USELATEST, 
+      m_checkUseLatest = new wxCheckBox (window, ID_USELATEST,
                                          _("Use latest"),
-                                         wxDefaultPosition, 
+                                         wxDefaultPosition,
                                          wxDefaultSize, 0, valCheck);
-      revSizer->Add (m_checkUseLatest, 0, 
+      revSizer->Add (m_checkUseLatest, 0,
                      wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
       middleSizer->Add (revSizer, 1, wxALL | wxEXPAND, 5);
     }
@@ -92,13 +92,13 @@ public:
     if (withRecursive ())
     {
       wxGenericValidator val (&data.recursive);
-      wxCheckBox * checkRecursive = 
-        new wxCheckBox (window, -1, _("Recursive"), 
+      wxCheckBox * checkRecursive =
+        new wxCheckBox (window, -1, _("Recursive"),
                         wxDefaultPosition, wxDefaultSize, 0, val);
-      middleSizer->Add (checkRecursive, 0, 
+      middleSizer->Add (checkRecursive, 0,
                         wxALIGN_CENTER_HORIZONTAL | wxALL , 5);
     }
-    
+
     // The buttons:
     m_buttonOk = new wxButton (window, wxID_OK, _("OK" ));
     buttonSizer->Add (m_buttonOk, 0, wxALL, 10);
@@ -119,7 +119,7 @@ public:
 
   }
 
-  void 
+  void
   EnableControls()
   {
     if (withRevision ())
@@ -148,7 +148,7 @@ public:
     m_buttonOk->Enable (ok);
   }
 
-  bool 
+  bool
   withRevision ()
   {
     return (m_flags & WITHOUT_REVISION) == 0;
@@ -178,7 +178,7 @@ const int UpdateDlg::WITH_URL = 1;
 const int UpdateDlg::WITHOUT_RECURSIVE = 2;
 const int UpdateDlg::WITHOUT_REVISION = 4;
 
-UpdateDlg::UpdateDlg (wxWindow* parent, const wxString & title, int flags, 
+UpdateDlg::UpdateDlg (wxWindow* parent, const wxString & title, int flags,
                       bool recursive)
   : wxDialog(parent, -1, title,
              wxDefaultPosition, wxDefaultSize,
@@ -201,7 +201,7 @@ UpdateDlg::InitDialog()
   m->CheckButtons ();
 }
 
-void 
+void
 UpdateDlg::OnUseLatest(wxCommandEvent &)
 {
   m->EnableControls();

@@ -13,7 +13,7 @@
 #ifndef _TRACER_H_INCLUDED_
 #define _TRACER_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/string.h"
 
 // forward declarations
@@ -23,8 +23,8 @@ class wxWindow;
 
 /**
 * The Tracer class is an interface used for
-* traceing inside functions as svn_client_checkout, 
-* svn_client_copy, svn_client_import etc, in general 
+* traceing inside functions as svn_client_checkout,
+* svn_client_copy, svn_client_import etc, in general
 * for functions requiring a trace editor.
 */
 class Tracer

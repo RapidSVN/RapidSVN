@@ -13,7 +13,7 @@
 #ifndef _COMMIT_DLG_H_INCLUDED_
 #define _COMMIT_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 // forward declarations
@@ -48,7 +48,7 @@ private:
   /** hide implementation details */
   struct Data;
   Data * m;
-  
+
   DECLARE_EVENT_TABLE ()
 };
 

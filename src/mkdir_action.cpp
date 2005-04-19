@@ -14,7 +14,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // app
@@ -44,7 +44,7 @@ MkdirAction::Prepare ()
     return false;
   }
 
-  wxString target (dlg.GetDestination ()); 
+  wxString target (dlg.GetDestination ());
   m_target = target.Strip (wxString::both);
   return true;
 }
@@ -57,7 +57,7 @@ MkdirAction::Perform ()
   // add target to path
   wxString newDir (m_path + m_target);
   // TODO: What is newDir for???
-  
+
   std::string pathUtf8 (LocalToUtf8 (m_path));
   std::string targetUtf8 (LocalToUtf8 (m_target));
   svn::Path target (pathUtf8);

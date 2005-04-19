@@ -13,7 +13,7 @@
 #ifndef _FILE_LIST_CONROL_H_INCLUDED_
 #define _FILE_LIST_CONROL_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/listctrl.h"
 #include "wx/dynarray.h"
 
@@ -88,7 +88,7 @@ public:
    * set visibility of column
    *
    * @param col column number
-   * @param visible 
+   * @param visible
    */
   void SetColumnVisible (const int col, const bool visible);
 
@@ -109,7 +109,7 @@ public:
    * set column width
    *
    * @param col column number
-   * @param width 
+   * @param width
    */
   void SetColumnWidth (const int col, const int width);
 

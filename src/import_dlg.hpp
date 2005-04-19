@@ -13,7 +13,7 @@
 #ifndef _IMPORT_DLG_H_INCLUDED_
 #define _IMPORT_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 // forward declarations
@@ -40,16 +40,16 @@ public:
   ImportData &
   GetData ();
 
-private:  
+private:
   /** hide implementation details */
   struct Data;
   Data *m;
 
   /**
-   * Event handler for OK button 
+   * Event handler for OK button
    */
   void OnOk (wxCommandEvent & event);
-  
+
   /**
    * Event handler for Browser button
    */

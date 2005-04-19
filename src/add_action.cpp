@@ -14,7 +14,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 
-// wxwindows
+// wxWidgets
 #include "wx/intl.h"
 
 // app

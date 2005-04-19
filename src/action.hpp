@@ -18,7 +18,7 @@
 #include "svncpp/targets.hpp"
 #include "svncpp/revision.hpp"
 
-// wxwindows
+// wxWidgets
 #include "wx/string.h"
 
 // forward declarations
@@ -39,7 +39,7 @@ namespace svn
  *
  * @see ActionWorker
  */
-class Action 
+class Action
 {
 public:
   /**
@@ -74,21 +74,21 @@ public:
    * @remarks Shouldn't be used with any of the @a TARGET_QUANTITY_MASK flags
    */
   static const unsigned int WITHOUT_TARGET;
-  
+
   /**
    * the action can act on a single target
    *
    * @see TARGET_QUANTITY_MASK
    */
   static const unsigned int SINGLE_TARGET;
-    
+
   /**
    * the action can act on multiple targets simultaneously
    *
    * @see TARGET_QUANTITY_MASK
    */
   static const unsigned int MULTIPLE_TARGETS;
-  
+
   /**
    * covers both target quantity flags for some
    * bitwise actsions, but not @a WITHOUT_TARGET
@@ -97,7 +97,7 @@ public:
    * @see MULTIPLE_TARGETS
    */
   static const unsigned int TARGET_QUANTITY_MASK;
-  
+
   /**
    * the action can work with Url type paths
    * from the repository
@@ -105,7 +105,7 @@ public:
    * @see TARGET_TYPE_MASK
    */
   static const unsigned int RESPOSITORY_TYPE;
-  
+
   /**
    * the action can work with versioned
    * files from the working copies
@@ -113,7 +113,7 @@ public:
    * @see TARGET_TYPE_MASK
    */
   static const unsigned int VERSIONED_WC_TYPE;
-  
+
   /**
    * the action can work with un-versioned
    * files from the working copies
@@ -121,7 +121,7 @@ public:
    * @see TARGET_TYPE_MASK
    */
   static const unsigned int UNVERSIONED_WC_TYPE;
-  
+
   /**
    * covers the three target types for some
    * bitwise actsions, but not @a IS_DIR
@@ -131,7 +131,7 @@ public:
    * @see UNVERSIONED_WC_TYPE
    */
   static const unsigned int TARGET_TYPE_MASK;
-  
+
   /**
    * used by the framework to indicate a target is a directory,
    * either repository or working copy
@@ -143,7 +143,7 @@ public:
    *
    * @param parent parent window
    * @param name of the action
-   * @param options 
+   * @param options
    */
   Action (wxWindow * parent, const wxString & name, unsigned int flgs);
 
@@ -203,15 +203,15 @@ public:
    * @retval true continue
    * @retval false cancel
    */
-  virtual bool 
+  virtual bool
   Prepare ();
-   
+
 
   /**
    * perform action. if any error occurs, an exception
    * will be thrown.
    */
-  virtual bool 
+  virtual bool
   Perform () = 0;
 
   /**
@@ -219,13 +219,13 @@ public:
    *
    * @param path
    */
-  void 
+  void
   SetPath (const svn::Path & path);
 
   /**
    * @return path
    */
-  const svn::Path & 
+  const svn::Path &
   GetPath ();
 
   /**
@@ -234,19 +234,19 @@ public:
    *
    * @param targets
    */
-  void 
+  void
   SetTargets (const svn::Targets & targets);
 
   /**
    * @return the targets for this action
    */
-  const svn::Targets & 
+  const svn::Targets &
   GetTargets ();
 
   /**
    * @return a single target for this action
    */
-  const svn::Path 
+  const svn::Path
   GetTarget ();
 
 
@@ -255,7 +255,7 @@ public:
    *
    * @see DONT_UPDATE
    */
-  unsigned int 
+  unsigned int
   GetFlags () const;
 
 
@@ -264,7 +264,7 @@ public:
   SetName (const wxString & name);
 
   /** returns the name of the action */
-  const wxString & 
+  const wxString &
   GetName () const;
 
 
@@ -279,7 +279,7 @@ public:
    */
   void TraceError (const wxString & msg);
 
-  
+
   /**
     * retrieves a file @a path with @a revision
     * settings from the repository and write it to
@@ -289,7 +289,7 @@ public:
     */
   svn::Path
   Action::GetPathAsTempFile (
-    const svn::Path & path, 
+    const svn::Path & path,
     const svn::Revision & revision = svn::Revision::HEAD);
 
 protected:
@@ -305,7 +305,7 @@ protected:
 
 
   /**
-   * sets the flags for this action - but passing into 
+   * sets the flags for this action - but passing into
    * the constructor is preferred
    */
   void

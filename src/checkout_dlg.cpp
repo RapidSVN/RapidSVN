@@ -13,7 +13,7 @@
 //TODO #include "include.hpp"
 //TODO #include "rapidsvn_app.hpp"
 
-// wxwindows
+// wxWidgets
 #include "wx/sizer.h"
 #include <wx/valgen.h>
 #include "wx/cshelp.h"
@@ -47,39 +47,39 @@ public:
     wxStaticBox* urlBox =
       new wxStaticBox (wnd, 0, _("URL"));
     wxTextValidator valModule (wxFILTER_NONE, &data.RepUrl);
-    m_textRepUrl = 
+    m_textRepUrl =
       new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
                       wxSize(235, -1), 0, valModule);
     m_textRepUrl->SetHelpText (_("Enter the repository URL (not local path) here."));
-    wxStaticBox* destBox = 
+    wxStaticBox* destBox =
       new wxStaticBox (wnd, 0, _("Destination Directory"));
     wxTextValidator valDest (wxFILTER_NONE, &data.DestFolder);
-    m_textDest = 
-      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition, 
+    m_textDest =
+      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
                       wxSize(205, -1), 0, valDest);
     m_textDest->SetHelpText (_("Enter the local path where you want the code checked out to here."));
-    wxButton* browse = 
-      new wxButton (wnd, ID_BUTTON_BROWSE, wxT("..."), 
+    wxButton* browse =
+      new wxButton (wnd, ID_BUTTON_BROWSE, wxT("..."),
                    wxDefaultPosition, wxSize(20, -1) );
 
-    wxStaticBox* revisionBox = 
+    wxStaticBox* revisionBox =
       new wxStaticBox (wnd, -1, _("Revision"));
     wxTextValidator valRevision (wxFILTER_NUMERIC, &data.Revision);
-    m_textRevision = 
-      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition, 
-                      wxSize(50, -1), 0, valRevision);        
+    m_textRevision =
+      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
+                      wxSize(50, -1), 0, valRevision);
     m_textRevision->SetHelpText(_("If not using the latest version of the files, specify which revision to use here."));
     wxGenericValidator valLatest (&data.UseLatest);
-    m_checkUseLatest = 
+    m_checkUseLatest =
       new wxCheckBox (wnd, ID_USELATEST, _("Use latest"),
                      wxDefaultPosition, wxDefaultSize, 0, valLatest);
     m_checkUseLatest->SetHelpText(_("Set this to get the latest version of the files in the repository."));
-    wxCheckBox* recursive = 
+    wxCheckBox* recursive =
       new wxCheckBox (wnd, -1, _("Recursive"),
-                      wxDefaultPosition, wxDefaultSize, 0, 
+                      wxDefaultPosition, wxDefaultSize, 0,
                       wxGenericValidator(&data.Recursive));
     recursive->SetHelpText(_("Set to get all subdirectories from the URL also."));
-    wxCheckBox* bookmarks = 
+    wxCheckBox* bookmarks =
       new wxCheckBox (wnd, -1, _("Add to bookmarks"),
                       wxDefaultPosition, wxDefaultSize, 0,
                       wxGenericValidator(&data.Bookmarks));
@@ -91,22 +91,22 @@ public:
 
     // place controls
     // URL row
-    wxStaticBoxSizer *urlSizer = 
+    wxStaticBoxSizer *urlSizer =
       new wxStaticBoxSizer (urlBox, wxHORIZONTAL);
     urlSizer->Add (m_textRepUrl, 1, wxALL | wxEXPAND, 5);
 
     // Destination row
-    wxStaticBoxSizer *destSizer = 
+    wxStaticBoxSizer *destSizer =
       new wxStaticBoxSizer (destBox, wxHORIZONTAL);
     destSizer->Add (m_textDest, 1, wxALL | wxEXPAND, 5);
     destSizer->Add (browse, 0, wxALL, 5);
 
     // Revision row
     wxBoxSizer *reSizer = new wxBoxSizer (wxHORIZONTAL);
-    wxStaticBoxSizer *revisionSizer = 
+    wxStaticBoxSizer *revisionSizer =
       new wxStaticBoxSizer (revisionBox, wxHORIZONTAL);
     revisionSizer->Add (m_textRevision, 1, wxALL | wxEXPAND, 5);
-    revisionSizer->Add (m_checkUseLatest, 0, 
+    revisionSizer->Add (m_checkUseLatest, 0,
                         wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
     reSizer->Add (revisionSizer, 1, wxALL | wxEXPAND, 0);
 
@@ -140,7 +140,7 @@ public:
     mainSizer->Fit(wnd);
   }
 
-  void 
+  void
   CheckControls()
   {
     bool checked = m_checkUseLatest->IsChecked();
@@ -186,9 +186,9 @@ CheckoutDlg::CheckoutDlg (wxWindow * parent)
 #ifdef __WXMSW__
   SetExtraStyle (wxDIALOG_EX_CONTEXTHELP);
 #endif
-  Create (parent, -1, _("Checkout"), wxDefaultPosition, 
+  Create (parent, -1, _("Checkout"), wxDefaultPosition,
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
-              
+
   m = new Data (this);
   CentreOnParent();
 }
@@ -225,7 +225,7 @@ CheckoutDlg::InitDialog()
   m->CheckControls();
 }
 
-void 
+void
 CheckoutDlg::OnUseLatest(wxCommandEvent &)
 {
   m->CheckControls();
@@ -243,7 +243,7 @@ CheckoutDlg::OnText (wxCommandEvent &)
   m->CheckControls ();
 }
 
-void 
+void
 CheckoutDlg::OnHelp (wxCommandEvent & event)
 {
   ::wxGetApp ().GetHelpController().Display(wxT("Checkout dialog"));

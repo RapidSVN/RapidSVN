@@ -17,7 +17,7 @@
 // stl
 #include <exception>
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/confbase.h"
 #include "wx/filename.h"
@@ -60,7 +60,7 @@
 
 
 /**
- * The index from where there will be only images not related 
+ * The index from where there will be only images not related
  * to the status.
  */
 static const int START_EXTRA_IMGS=15;
@@ -107,13 +107,13 @@ static const wxChar ConfigShowUnversioned[]  = wxT("/FileListCtrl/ShowUnversione
  *       possible
  *
  * @param status status entry
- * @retval false is invalid status 
+ * @retval false is invalid status
  */
-static bool 
+static bool
 IsDir (const svn::Status * status)
 {
   // invalid entry
-  
+
   if (!status)
   {
     return false;
@@ -131,7 +131,7 @@ IsDir (const svn::Status * status)
   {
     return entry->kind == svn_node_dir;
   }
-  
+
   // unversioned.
   return wxDirExists (Utf8ToLocal (status->path ()));
 }
@@ -190,13 +190,13 @@ Compare (svn_wc_status_kind status1, svn_wc_status_kind status2, bool newer1, bo
   {
     status2 = FAKE_SVN_WC_OUT_OF_DATE;
   }
-  
+
   if (status1 == status2)
   {
     return 0;
   }
-  
-  static svn_wc_status_kind lookup[] = 
+
+  static svn_wc_status_kind lookup[] =
   {
     svn_wc_status_external,
     svn_wc_status_ignored,
@@ -215,7 +215,7 @@ Compare (svn_wc_status_kind status1, svn_wc_status_kind status2, bool newer1, bo
     svn_wc_status_none,
     (svn_wc_status_kind)0
   };
-  
+
   for (svn_wc_status_kind* pkind = lookup; *pkind; ++pkind)
   {
     if (*pkind == status1)
@@ -227,7 +227,7 @@ Compare (svn_wc_status_kind status1, svn_wc_status_kind status2, bool newer1, bo
       return 1;
     }
   }
-  
+
   // Unrecognised either
   return 0;
 }
@@ -247,7 +247,7 @@ ComparePaths (const char * p1, const char * p2)
 
   wxFileName fn1 (wxp1);
   wxFileName fn2 (wxp2);
-  
+
   wxString path1 = fn1.GetPath ();
   wxString path2 = fn2.GetPath ();
 
@@ -311,10 +311,10 @@ Compare (const char * s1, const char * s2)
 {
   const char * sv1 = s1 == 0 ? "" : s1;
   const char * sv2 = s2 == 0 ? "" : s2;
-  
+
   wxString wx1 (Utf8ToLocal (sv1));
   wxString wx2 (Utf8ToLocal (sv2));
-  
+
   return wx1.CmpNoCase (wx2);
 }
 
@@ -326,7 +326,7 @@ Compare (const char * s1, const char * s2)
  * @param column to compare
  * @return -1
  */
-static int 
+static int
 CompareColumn (svn::Status * ps1,
                svn::Status * ps2,
                int column)
@@ -335,28 +335,28 @@ CompareColumn (svn::Status * ps1,
   svn::Entry e1 (ps1->entry ());
   svn::Entry e2 (ps2->entry ());
 
-  bool newer1 = 
+  bool newer1 =
     (ps1->reposTextStatus () == svn_wc_status_modified) ||
     (ps1->reposPropStatus () == svn_wc_status_modified);
-  bool newer2 = 
+  bool newer2 =
     (ps2->reposTextStatus () == svn_wc_status_modified) ||
     (ps2->reposPropStatus () == svn_wc_status_modified);
-  
+
   switch (column)
   {
-  case FileListCtrl::COL_NAME:                     
+  case FileListCtrl::COL_NAME:
     res = Compare (ps1->path (), ps2->path ());
     break;
 
-  case FileListCtrl::COL_PATH: 
+  case FileListCtrl::COL_PATH:
     res = ComparePaths (ps1->path (), ps2->path ());
     break;
 
-  case FileListCtrl::COL_REV:     
+  case FileListCtrl::COL_REV:
     res = Compare (e1.revision (), e2.revision ());
     break;
 
-  case FileListCtrl::COL_CMT_REV:     
+  case FileListCtrl::COL_CMT_REV:
     res = Compare (e1.cmtRev (), e2.cmtRev ());
     break;
 
@@ -432,7 +432,7 @@ CompareColumn (svn::Status * ps1,
 }
 
 /**
- * check the given @a svn::Status entries and the 
+ * check the given @a svn::Status entries and the
  * sort settings. Not only the @a SortColumn is
  * used for comparison but secondary columns as
  * well so the entries are always sorted in
@@ -463,7 +463,7 @@ CompareItems (svn::Status * ps1, svn::Status * ps2,
 
   switch (SortColumn)
   {
-  case FileListCtrl::COL_NAME:                     
+  case FileListCtrl::COL_NAME:
     res = CompareColumn (ps1, ps2, FileListCtrl::COL_NAME);
     if (res == 0)
     {
@@ -504,7 +504,7 @@ CompareItems (svn::Status * ps1, svn::Status * ps2,
 /**
  * array with column captions
  */
-static const wxChar * 
+static const wxChar *
 COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
 {
   _("Name"),
@@ -533,7 +533,7 @@ COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
  * array with column names. These names are
  * used to save and retrieve column specific
  * preferences.
- * 
+ *
  * Note: these string must not be translatable
  *       so dont enclose them in _( )
  */
@@ -587,7 +587,7 @@ public:
 
   /** default constructor */
   Data ()
-    : SortIncreasing (true), SortColumn (COL_NAME), 
+    : SortIncreasing (true), SortColumn (COL_NAME),
       DirtyColumns (true), FlatMode (false), Context (0),
       WithUpdate (false)
   {
@@ -623,12 +623,12 @@ public:
     delete ImageListSmall;
   }
 
-  /** 
+  /**
    * get the real column. @a clickedColumn is only the index
    * of the visible column that got clicked. If there are
    * invisible columns this translates to something completely different
    */
-  int 
+  int
   GetRealColumn (int clickedColumn)
   {
     int colIndex;
@@ -655,8 +655,8 @@ public:
     svn::Status * ps2 = (svn::Status *) item2;
     Data *data = (Data *) (sortData);
 
-    if (ps1 && ps2) 
-      return CompareItems (ps1, ps2, data->SortColumn, 
+    if (ps1 && ps2)
+      return CompareItems (ps1, ps2, data->SortColumn,
                            data->SortIncreasing);
     else
       return 0;
@@ -674,7 +674,7 @@ public:
     config->Read (ConfigWithUpdate,      &WithUpdate);
     config->Read (ConfigFlatView,        &FlatMode);
     config->Read (ConfigShowUnversioned, &ShowUnversioned, (bool) true);
-    
+
     SortColumn = config->Read (ConfigSortColumn, (long) 0);
     SortIncreasing = config->Read (ConfigSortOrder, (long) 1) ? true : false;
 
@@ -684,7 +684,7 @@ public:
       wxString key;
       key.Printf (ConfigColumnVisibleFmt, COLUMN_NAMES[col]);
       ColumnVisible[col] = config->Read (key, (long) 1) != 0;
-  
+
       key.Printf (ConfigColumnWidthFmt, COLUMN_NAMES[col]);
       long width = (long)GetDefaultWidth (col);
       ColumnWidth[col] = config->Read (key, width);
@@ -703,7 +703,7 @@ public:
     config->Write (ConfigWithUpdate,      WithUpdate);
     config->Write (ConfigFlatView,        FlatMode);
     config->Write (ConfigShowUnversioned, ShowUnversioned);
-    
+
     config->Write (ConfigSortColumn, (long) SortColumn);
     config->Write (ConfigSortOrder, (long) (SortIncreasing ? 1 : 0));
     // loop through all the columns
@@ -717,7 +717,7 @@ public:
       config->Write (key, (long) ColumnVisible[col]);
     }
   }
-};  
+};
 
 
 /**
@@ -730,7 +730,7 @@ GetImageIndex (int textIndex, int propIndex)
   int image = 0;
   if ((textIndex >= 0) && (textIndex <= IMG_INDX_COUNT))
   {
-    if ( (textIndex == svn_wc_status_normal) && 
+    if ( (textIndex == svn_wc_status_normal) &&
          (propIndex > svn_wc_status_normal) )
     {
       if ( (propIndex >= 0) && (propIndex <= IMG_INDX_COUNT) )
@@ -757,7 +757,7 @@ BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_CONTEXT_MENU (FileListCtrl::OnContextMenu)
 END_EVENT_TABLE ()
 
-FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id, 
+FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
                             const wxPoint & pos, const wxSize & size)
   : wxListView (parent, id, pos, size, wxLC_REPORT)
 {
@@ -825,7 +825,7 @@ FileListCtrl::UpdateFileList ()
 
   // Hide the list to speed up inserting
   Hide ();
-  
+
   svn::Client client (m->Context);
   const svn::StatusEntries statusVector =
     client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate);
@@ -870,7 +870,7 @@ FileListCtrl::UpdateFileList ()
     }
 
     int imageIndex = 0;
-    bool newer = 
+    bool newer =
       (status.reposTextStatus () == svn_wc_status_modified) ||
       (status.reposPropStatus () == svn_wc_status_modified);
 
@@ -882,7 +882,7 @@ FileListCtrl::UpdateFileList ()
             (status.propStatus () == svn_wc_status_modified))
           imageIndex = GetImageIndex (
             IMG_INDX_MODIFIED_VERSIONED_FOLDER, -1);
-        else 
+        else
           imageIndex = GetImageIndex (
             IMG_INDX_VERSIONED_FOLDER, -1);
 
@@ -922,34 +922,34 @@ FileListCtrl::UpdateFileList ()
       }
     }
 
-    
+
     // User want to see unversioned entries?
     if (status.isVersioned() || m->ShowUnversioned)
     {
       InsertItem (i, values[COL_NAME], imageIndex);
-  
-  
+
+
       // The item data will be used to sort the list:
       SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
       // and must delete it in due course.
-  
+
       if (status.isVersioned ())
       {
         const svn::Entry & entry = status.entry ();
         values[COL_REV].Printf (wxT("%ld"), entry.revision ());
         values[COL_CMT_REV].Printf (wxT("%ld"), entry.cmtRev ());
-  
+
         values[COL_AUTHOR] = Utf8ToLocal (entry.cmtAuthor ());
-  
+
         // date formatting
         values[COL_CMT_DATE] = FormatDateTime (entry.cmtDate ());
         values[COL_TEXT_TIME] = FormatDateTime (entry.textTime ());
         values[COL_PROP_TIME] = FormatDateTime (entry.propTime ());
-  
+
         values[COL_URL] = Utf8ToLocal (entry.url ());
         values[COL_REPOS] = Utf8ToLocal (entry.repos ());
         values[COL_UUID] = Utf8ToLocal (entry.uuid ());
-        
+
         wxString schedule;
         switch (entry.schedule ())
         {
@@ -966,15 +966,15 @@ FileListCtrl::UpdateFileList ()
           break;
         }
         values[COL_SCHEDULE] = schedule;
-  
+
         if (entry.isCopied ())
         {
           wxString tmp (Utf8ToLocal (entry.copyfromUrl()));
-          values[COL_COPIED].Printf (wxT("%s, %ld"), 
+          values[COL_COPIED].Printf (wxT("%s, %ld"),
             tmp.c_str (),
             entry.copyfromRev ());
         }
-  
+
         values[COL_CONFLICT_OLD] = Utf8ToLocal (entry.conflictOld ());
         values[COL_CONFLICT_NEW] = Utf8ToLocal (entry.conflictNew ());
         values[COL_CONFLICT_WRK] = Utf8ToLocal (entry.conflictWrk ());
@@ -985,12 +985,12 @@ FileListCtrl::UpdateFileList ()
       case svn_wc_status_none:
         break;
       case svn_wc_status_normal:
-        // empty text 
+        // empty text
         if (status.reposTextStatus () == svn_wc_status_modified)
           values[COL_TEXT_STATUS] = _("out of date");
         break;
       default:
-        values[COL_TEXT_STATUS] = 
+        values[COL_TEXT_STATUS] =
           StatusDescription (status.textStatus ());
         break;
       }
@@ -1004,11 +1004,11 @@ FileListCtrl::UpdateFileList ()
           values[COL_PROP_STATUS] = _("out of date");
         break;
       default:
-        values[COL_PROP_STATUS] = 
+        values[COL_PROP_STATUS] =
           StatusDescription (status.propStatus ());
         break;
       }
-  
+
       // set the text for all visible items
       // (ignore column 0 since this is already set with
       // InsertItem
@@ -1030,11 +1030,11 @@ FileListCtrl::UpdateFileList ()
   wxLogStatus (_("Ready"),"");
 }
 
-void 
+void
 FileListCtrl::OnDoubleClick (wxMouseEvent & event)
 {
   int flag;
-  
+
   // Don't post if the click didn't hit anything
   if (HitTest (ScreenToClient (wxGetMousePosition ()), flag) >= 0)
     if (!PostMenuEvent (this, ID_Default_Action))
@@ -1042,7 +1042,7 @@ FileListCtrl::OnDoubleClick (wxMouseEvent & event)
 }
 
 
-void 
+void
 FileListCtrl::OnKeyDown (wxKeyEvent & event)
 {
   switch (event.GetKeyCode ())
@@ -1051,7 +1051,7 @@ FileListCtrl::OnKeyDown (wxKeyEvent & event)
       if (!PostMenuEvent (this, ID_Default_Action))
         event.Skip ();
       break;
-    
+
     default:
       event.Skip ();
       break;
@@ -1130,7 +1130,7 @@ FileListCtrl::ShowMenu (wxPoint & pt)
   // we are going to add filetype specific entries
   if (GetSelectedItemCount () == 1)
   {
-    long item = GetNextItem (-1, wxLIST_NEXT_ALL, 
+    long item = GetNextItem (-1, wxLIST_NEXT_ALL,
                              wxLIST_STATE_SELECTED);
     svn::Status * status = (svn::Status*)GetItemData (item);
 
@@ -1144,11 +1144,11 @@ FileListCtrl::ShowMenu (wxPoint & pt)
   // Check for disabled items
   RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
   frame->TrimDisabledMenuItems (menu);
-  
+
   PopupMenu (&menu, pt);
 }
 
-const IndexArray 
+const IndexArray
 FileListCtrl::GetSelectedItems () const
 {
   int sel = GetSelectedItemCount ();
@@ -1176,7 +1176,7 @@ FileListCtrl::GetSelectedItems () const
   return indx_arr;
 }
 
-const svn::Targets 
+const svn::Targets
 FileListCtrl::GetTargets () const
 {
   IndexArray arr = GetSelectedItems ();
@@ -1206,7 +1206,7 @@ FileListCtrl::GetSelectionActionFlags () const
   IndexArray arr = GetSelectedItems ();
   size_t i, counter = 0;
   unsigned int flags = 0;
-  
+
   for (i = 0; i < arr.GetCount (); i++)
   {
     const int index = arr.Item (i);
@@ -1236,7 +1236,7 @@ FileListCtrl::GetSelectionActionFlags () const
       }
     }
   }
-  
+
   if (counter)
   {
     flags |= counter == 1 ? Action::SINGLE_TARGET : Action::MULTIPLE_TARGETS;
@@ -1272,7 +1272,7 @@ FileListCtrl::DeleteItem (long item)
   wxListCtrl::DeleteItem (item);
 }
 
-void 
+void
 FileListCtrl::ResetColumns ()
 {
   for (int col=0; col < COL_COUNT; col++)
@@ -1306,7 +1306,7 @@ FileListCtrl::ResetColumns ()
   }
 }
 
-void 
+void
 FileListCtrl::SetColumnImages ()
 {
   // Update the column titles to reflect the sort column.
@@ -1395,7 +1395,7 @@ FileListCtrl::UpdateColumns ()
   {
     DeleteColumn (0);
   }
-    
+
   while (GetColumnCount () < count)
   {
     InsertColumn (0, wxEmptyString);
@@ -1420,7 +1420,7 @@ FileListCtrl::UpdateColumns ()
   m->DirtyColumns = false;
 }
 
-void 
+void
 FileListCtrl::OnColumnEndDrag (wxListEvent & event)
 {
   int index = event.GetColumn ();
@@ -1450,7 +1450,7 @@ void
 FileListCtrl::SetColumnWidth (const int col, const int width)
 {
   m->ColumnWidth[col] = width;
-  
+
   int index = m->ColumnIndex[col];
   if (index != -1)
   {

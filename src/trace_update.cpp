@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // subversion
@@ -186,7 +186,7 @@ close_directory (void *dir_baton, apr_pool_t *)
 
     if (!pc)
     {
-      SVN_ERR (svn_wc_props_modified_p (&merged, db->path, 
+      SVN_ERR (svn_wc_props_modified_p (&merged, db->path,
                                         adm_access, subpool));
     }
 
@@ -358,7 +358,7 @@ delete_entry (const char *path,
 }
 
 static svn_error_t *
-apply_textdelta (void *file_baton, const char *, apr_pool_t *, 
+apply_textdelta (void *file_baton, const char *, apr_pool_t *,
                  svn_txdelta_window_handler_t * handler, void **handler_baton)
 {
   FileBaton *fb = (FileBaton *) file_baton;

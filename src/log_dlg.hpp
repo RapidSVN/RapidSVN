@@ -14,7 +14,7 @@
 #ifndef _LOG_DLG_H_INCLUDED_
 #define _LOG_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 // svncpp
@@ -29,14 +29,14 @@ class LogDlg : public wxDialog
 {
 public:
   /**
-   * constructor. the @a entries are NOT owned by 
-   * this class. 
+   * constructor. the @a entries are NOT owned by
+   * this class.
    *
    * @param parent parent window
    * @param path path of selected item
    * @param entries log entries
    */
-  LogDlg (wxWindow * parent, 
+  LogDlg (wxWindow * parent,
           const char * path,
           const svn::LogEntries * entries);
 
@@ -52,7 +52,7 @@ private:
 
 
   /**
-   * Event handler for the "Get" button 
+   * Event handler for the "Get" button
    * @param event
    */
   void OnGet (wxCommandEvent & event);
@@ -79,7 +79,7 @@ private:
    * @param event
    */
   void OnDiff (wxCommandEvent & event);
-  
+
   /**
    * Event handler for the "Merge" button
    * @param event

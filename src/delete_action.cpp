@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // svncpp
@@ -26,7 +26,7 @@
 #include "delete_dlg.hpp"
 #include "utils.hpp"
 
-DeleteAction::DeleteAction (wxWindow * parent) 
+DeleteAction::DeleteAction (wxWindow * parent)
   : Action (parent, _("Delete"), GetBaseFlags ())
 {
 }

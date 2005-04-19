@@ -13,7 +13,7 @@
 #ifndef _REPORT_DLG_H_INCLUDED_
 #define _REPORT_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 enum

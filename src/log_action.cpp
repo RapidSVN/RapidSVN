@@ -15,7 +15,7 @@
 #include "svncpp/client.hpp"
 #include "svncpp/revision.hpp"
 
-// wxwindows
+// wxWidgets
 #include "wx/intl.h"
 
 // app
@@ -41,7 +41,7 @@ LogAction::Prepare ()
   svn::Path target = GetTarget ();
   {
     wxBusyCursor cursor;
-    entries = client.log (target.c_str (), svn::Revision::START, 
+    entries = client.log (target.c_str (), svn::Revision::START,
                           svn::Revision::HEAD);
   }
   {

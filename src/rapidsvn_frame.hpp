@@ -13,7 +13,7 @@
 #ifndef _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
 #define _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/frame.h"
 #include "wx/textctrl.h"
 #include "wx/toolbar.h"
@@ -50,13 +50,13 @@ public:
    * @param title Application title
    * @param locale The locale that's used by the app
    */
-  RapidSvnFrame (const wxString & title, 
+  RapidSvnFrame (const wxString & title,
                  const wxLocale & locale);
   virtual ~RapidSvnFrame ();
 
   /** Allow children to trim their popup menus using the frames logic */
   void TrimDisabledMenuItems (wxMenu & menu);
-  
+
   /**
   * Change the active window, if the corresponding event is handled
   * in one of the sub-windows
@@ -104,7 +104,7 @@ private:
   void OnHelpIndex (wxCommandEvent & event);
   void OnHelpStartupTips (wxCommandEvent & event);
   void OnAbout (wxCommandEvent & event);
-  
+
   // toolbar events
   void OnToolEnter (wxCommandEvent & event);
   void OnToolLeftClick (wxCommandEvent & event);
@@ -150,7 +150,7 @@ private:
   RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags);
   void OnUpdateCommand (wxUpdateUIEvent & updateUIEvent);
 
-  const svn::Targets 
+  const svn::Targets
   GetActionTargets() const;
 
   /**
@@ -159,7 +159,7 @@ private:
    */
   unsigned int
   GetSelectionActionFlags () const;
-  
+
   void DelEntries ();
   void MakeRevert ();
   void MakeResolve ();
@@ -195,7 +195,7 @@ private:
    * @param col column index
    * @param visible true=visible
    */
-  void 
+  void
   SetColumnVisible (const int col, const bool visible);
 
 private:

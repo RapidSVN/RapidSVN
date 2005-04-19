@@ -13,7 +13,7 @@
 
 // stl
 #include <vector>
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 // apr
 //#include "apr_time.h"
@@ -51,14 +51,14 @@ struct FileInfo::Data
   svn::Context * context;
   std::vector<svn::Path> targets;
   wxString info;
-  
+
 
   Data (svn::Context * ctx)
     : context (ctx)
   {
   }
 
-  void 
+  void
   addLine (const wxString & line = wxEmptyString)
   {
     info += line;
@@ -66,7 +66,7 @@ struct FileInfo::Data
   }
 
 
-  void 
+  void
   addInfoForStatus (const svn::Status & status)
   {
     const svn::Entry entry = status.entry ();
@@ -203,7 +203,7 @@ struct FileInfo::Data
       addLine (str);
 
       tmp = Utf8ToLocal (entry.conflictNew ());
-      str.Printf (_("Conflict Current Base File: %s"), 
+      str.Printf (_("Conflict Current Base File: %s"),
                   tmp.c_str ());
       addLine (str);
     }
@@ -211,7 +211,7 @@ struct FileInfo::Data
     if (props_conflict)
     {
       tmp = Utf8ToLocal (entry.prejfile ());
-      str.Printf (_("Conflict Properties File: %s"), 
+      str.Printf (_("Conflict Properties File: %s"),
                   tmp.c_str ());
       addLine (str);
     }
@@ -252,7 +252,7 @@ FileInfo::~FileInfo ()
   delete m;
 }
 
-void 
+void
 FileInfo::addPath (const char * path)
 {
   m->targets.push_back (path);

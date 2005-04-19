@@ -13,10 +13,10 @@
 #ifndef _MERGE_DLG_H_INCLUDED_
 #define _MERGE_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
-struct MergeData 
+struct MergeData
 {
   MergeData();
 
@@ -39,7 +39,7 @@ public:
 private:
   void InitializeData ();
   int TestRev (wxString & val);
-  
+
   MergeData & m_data;
   bool m_calledByLogDlg;
 

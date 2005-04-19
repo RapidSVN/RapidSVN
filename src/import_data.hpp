@@ -13,7 +13,7 @@
 #ifndef _IMPORT_DATA_H_INCLUDED_
 #define _IMPORT_DATA_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/string.h"
 
 /**
@@ -26,7 +26,7 @@ struct ImportData
   wxString LogMessage;
   bool Recursive;
   bool TreeType;
-  bool FileType; 
+  bool FileType;
 };
 
 #endif

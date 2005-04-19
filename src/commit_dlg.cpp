@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
@@ -28,46 +28,46 @@ public:
     : recursive (true)
   {
     // create controls
-    wxStaticBox* msgBox = 
+    wxStaticBox* msgBox =
       new wxStaticBox(window, -1, unexpectedCommit ? _("This action has resulted in a Commit - please enter a log message") : _("Enter log message"));
 
-    wxSize msgSize (window->GetCharWidth () * 80, 
+    wxSize msgSize (window->GetCharWidth () * 80,
                     window->GetCharHeight () * 10);
 
     wxTextCtrl* msg;
     {
       wxTextValidator val (wxFILTER_NONE, &message);
-      msg = new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition, 
+      msg = new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
                             msgSize, wxTE_MULTILINE, val);
     }
     wxCheckBox * checkRecursive = NULL;
     if (!unexpectedCommit)
     {
       wxGenericValidator val (&recursive);
-      checkRecursive = 
+      checkRecursive =
         new wxCheckBox (window, -1, _("Recursive"),
                         wxDefaultPosition, wxDefaultSize, 0,
                         val);
     }
-    wxButton* ok = 
+    wxButton* ok =
       new wxButton (window, wxID_OK, _("OK" ));
-    wxButton* cancel = 
+    wxButton* cancel =
       new wxButton (window, wxID_CANCEL, _("Cancel"));
 
     // position controls
     wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
 
     // The message field:
-    wxStaticBoxSizer *msgSizer = 
+    wxStaticBoxSizer *msgSizer =
       new wxStaticBoxSizer (msgBox, wxHORIZONTAL);
     msgSizer->Add (msg, 1, wxALL | wxEXPAND, 5);
-  
+
     // The buttons:
     wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
     if (!unexpectedCommit)
     {
-      buttonSizer->Add (checkRecursive, 1, 
-                        wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 
+      buttonSizer->Add (checkRecursive, 1,
+                        wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT,
                         10);
     }
     buttonSizer->Add (ok, 0, wxALL, 10);

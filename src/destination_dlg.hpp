@@ -13,7 +13,7 @@
 #ifndef _DESTINATION_DLG_H_INCLUDED_
 #define _DESTINATION_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 /**
@@ -25,7 +25,7 @@ class DestinationDlg:public wxDialog
 {
 public:
   static const int WITH_FORCE;
-    
+
   /**
    * constructor
    *
@@ -43,7 +43,7 @@ public:
    * default constructor. Use @a Create to initialize the dialog
    */
   DestinationDlg ();
-  
+
   /**
    * destructor
    */
@@ -79,7 +79,7 @@ private:
    */
   struct Data;
   Data * m;
-  
+
   DECLARE_EVENT_TABLE ()
 };
 

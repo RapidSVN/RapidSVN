@@ -13,7 +13,7 @@
 #ifndef _CHECKOUT_DATA_H_INCLUDED_
 #define _CHECKOUT_DATA_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/string.h"
 
 struct CheckoutData

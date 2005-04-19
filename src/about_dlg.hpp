@@ -13,7 +13,7 @@
 #ifndef _ABOUT_DLG_H_INCLUDED_
 #define _ABOUT_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 /**

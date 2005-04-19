@@ -13,7 +13,7 @@
 #ifndef _UPDATE_DLG_H_INCLUDED_
 #define _UPDATE_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 // forward declarations
@@ -38,7 +38,7 @@ public:
    * @param flags flags for the window (@a WITH_URL)
    * @param recursive default flag for the "recursive" check
    */
-  UpdateDlg (wxWindow* parent, 
+  UpdateDlg (wxWindow* parent,
              const wxString & title,
              int flags = 0,
              bool recursive = true);
@@ -47,7 +47,7 @@ public:
    * destructor
    */
   virtual ~UpdateDlg ();
-  
+
   UpdateData &
   GetData ();
 
@@ -56,12 +56,12 @@ private:
   struct Data;
   Data * m;
 
-  void 
+  void
   OnUseLatest(wxCommandEvent &event);
 
-  void 
+  void
   OnText (wxCommandEvent & event);
-  
+
   DECLARE_EVENT_TABLE()
 };
 

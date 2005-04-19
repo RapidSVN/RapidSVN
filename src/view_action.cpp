@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // svncpp
@@ -24,7 +24,7 @@
 #include "utils.hpp"
 #include "view_action.hpp"
 
-ViewAction::ViewAction (wxWindow * parent, 
+ViewAction::ViewAction (wxWindow * parent,
                         const GetData & data)
   : Action (parent, _("View"), GetViewFlags ()),
     m_edit (false), m_data (data)
@@ -65,7 +65,7 @@ ViewAction::Perform ()
         GetPathAsTempFile(svn::Path (pathUtf8.c_str ()),
             m_data.revision).c_str ());
   }
-  
+
   wxString args (prefs.editorArgs);
   TrimString (args);
 

@@ -13,7 +13,7 @@
 #ifndef _UPDATE_DATA_H_INCLUDED_
 #define _UPDATE_DATA_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/string.h"
 
 struct UpdateData
@@ -22,7 +22,7 @@ struct UpdateData
     : revision (wxEmptyString), url (wxEmptyString), useLatest (true), recursive (true)
   {
   }
-    
+
   wxString revision;
   wxString url;
   bool useLatest;

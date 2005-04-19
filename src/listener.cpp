@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/utils.h"
 
@@ -59,17 +59,17 @@ public:
    * The parent
    */
   wxWindow * parent;
-    
+
 
   /**
-   * This member variable will take the address 
-   * of a trace object allocated in a class 
+   * This member variable will take the address
+   * of a trace object allocated in a class
    * derived from ActionThread. It will be used
    * from the svn_delta_editor callbacks.
    */
   Tracer * tracer;
-  
-  
+
+
   /**
    * If ownTracer is TRUE, then this class
    * is responsible for deleting the tracer.
@@ -120,7 +120,7 @@ Listener::~Listener ()
 }
 
 
-void 
+void
 Listener::SetTracer (Tracer * t, bool own)
 {
   m->tracer = t;
@@ -169,17 +169,17 @@ Listener::SetContext (svn::Context * context)
   m->context = context;
 }
 
-svn::Context * 
+svn::Context *
 Listener::GetContext ()
 {
   return m->context;
 }
 
 
-bool 
+bool
 Listener::contextGetLogin (
   const std::string & realm,
-  std::string & username, 
+  std::string & username,
   std::string & password,
   bool & maySave)
 {
@@ -222,7 +222,7 @@ Listener::contextNotify (const char *path,
     Trace (msg);
   }
 
-  // Implement code to generate usefule messages that can be 
+  // Implement code to generate usefule messages that can be
   // transmitted with "Trace"
   wxSafeYield ();
 }
@@ -232,7 +232,7 @@ bool
 Listener::contextGetLogMessage (std::string & msg)
 {
   CommitDlg dlg (GetParent (), true);
-  
+
   bool ok = dlg.ShowModal () == wxID_OK;
   if (ok)
   {
@@ -252,7 +252,7 @@ Listener::contextSslServerTrustPrompt (
   dlg.ShowModal ();
   acceptedFailures = dlg.AcceptedFailures ();
 
-  return dlg.Answer ();  
+  return dlg.Answer ();
 }
 
 
@@ -274,12 +274,12 @@ Listener::contextSslClientCertPrompt (std::string & certFile)
 
 bool
 Listener::contextSslClientCertPwPrompt (std::string & password,
-                                        const std::string & realm, 
+                                        const std::string & realm,
                                         bool & maySave)
 {
   //TODO
   wxString LocalPassword(Utf8ToLocal (password));
-  AuthDlg dlg (GetParent (), wxEmptyString, LocalPassword, 
+  AuthDlg dlg (GetParent (), wxEmptyString, LocalPassword,
                AuthDlg::HIDE_USERNAME);
 
   if (dlg.ShowModal () != wxID_OK)

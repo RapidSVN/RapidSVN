@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
@@ -30,7 +30,7 @@ public:
     wxBoxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
-    wxStaticText * label = 
+    wxStaticText * label =
       new wxStaticText (window, -1, _("Do you want to delete the selected files/directories?"));
     topSizer->Add (label, 0, wxALL, 5);
 
@@ -38,11 +38,11 @@ public:
     wxCheckBox* check = new wxCheckBox(window, -1, _("Force removal"),
       wxDefaultPosition, wxDefaultSize, 0,
       wxGenericValidator(&force));
-    
+
     // The buttons:
-    buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0, 
+    buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0,
                      wxALL, 10);
-    buttonSizer->Add(new wxButton( window, wxID_CANCEL, _("Cancel")), 0, 
+    buttonSizer->Add(new wxButton( window, wxID_CANCEL, _("Cancel")), 0,
                      wxALL, 10);
 
     // Add all the sizers to the main sizer
@@ -64,7 +64,7 @@ END_EVENT_TABLE ()
 
 DeleteDlg::DeleteDlg(wxWindow* parent)
  : wxDialog(parent, -1, _("Delete"),
-            wxDefaultPosition, wxDefaultSize, 
+            wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   m = new Data (this);

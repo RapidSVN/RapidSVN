@@ -13,7 +13,7 @@
 #ifndef _PREFERENCES_DLG_H_INCLUDED_
 #define _PREFERENCES_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 // forward declarations
@@ -38,21 +38,21 @@ public:
   /**
    * A specialised version of TransferDataFromWindow that calls
    * TransferDataFromWindow for each panel in the dialog. Sadly this
-   * is not the default base class behaviour. 
+   * is not the default base class behaviour.
    * @return true if transfer succeeded.
    */
   virtual bool TransferDataFromWindow ();
-  
+
   /**
    * A specialised version of TransferDataToWindow that calls
    * TransferDataToWindow for each panel in the dialog. Sadly this
-   * is not the default base class behaviour. 
+   * is not the default base class behaviour.
    * @return true if transfer succeeded.
    */
   virtual bool TransferDataToWindow ();
 
 private:
-  /** 
+  /**
    * disallow default constructor
    */
   PreferencesDlg ();
@@ -65,12 +65,12 @@ private:
   /**
    * disallow assignment operator
    */
-  PreferencesDlg & 
+  PreferencesDlg &
   operator = (const PreferencesDlg & src);
 
   struct Data;
   Data * m;
-  
+
 private:
   DECLARE_EVENT_TABLE ()
 };

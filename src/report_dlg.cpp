@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 //#include "wx/textctrl.h"
 //#include "wx/button.h"

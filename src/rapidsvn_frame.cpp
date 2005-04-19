@@ -10,7 +10,7 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-// wxwindows
+// wxWidgets
 #include "wx/confbase.h"
 #include "wx/wx.h"
 #include "wx/filename.h"
@@ -100,7 +100,7 @@ const static wxChar ConfigBookmarkCount[] = wxT("/Bookmarks/Count");
 
 const static wxChar TraceMisc[] = wxT("tracemisc");
 
-// Platform specific constants. 
+// Platform specific constants.
 #ifdef __WXMSW__
   const static int SPLITTER_STYLE = wxSP_FULLSASH | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
 #else
@@ -133,7 +133,7 @@ static const int COLUMN_ID_MAP[FileListCtrl::COL_COUNT] =
   ID_Column_Repos,
   ID_Column_Uuid,
   ID_Column_Schedule,
-  ID_Column_Copied, 
+  ID_Column_Copied,
   ID_Column_ConflictOld,
   ID_Column_ConflictNew,
   ID_Column_ConflictWrk
@@ -192,8 +192,8 @@ class LogTracer:public wxTextCtrl, public Tracer
 
 public:
   LogTracer (wxWindow * parent)
-    : wxTextCtrl (parent, -1, wxEmptyString, 
-                  wxPoint (0, 0), wxDefaultSize, 
+    : wxTextCtrl (parent, -1, wxEmptyString,
+                  wxPoint (0, 0), wxDefaultSize,
                   wxTE_MULTILINE | wxTE_READONLY)
   {
     SetMaxLength (0);
@@ -226,15 +226,15 @@ private:
 
 public:
 
-  /** 
-   * This instance of @a apr is used to initialize/terminate apr 
+  /**
+   * This instance of @a apr is used to initialize/terminate apr
    */
   svn::Apr apr;
 
   Data (wxFrame * parent, const wxLocale & locale_)
     : MenuColumns (0), MenuBar (0), listener (parent),
       updateAfterActivate (false), dontUpdateFilelist (false),
-      locale (locale_), m_running (false), m_toolbar_rows (1), 
+      locale (locale_), m_running (false), m_toolbar_rows (1),
       m_parent (parent)
   {
     InitializeMenu ();
@@ -339,7 +339,7 @@ public:
     MenuBar = new wxMenuBar;
     // Under wxMac the menu might be empty, so
     // don't show it:
-    if (menuFile->GetMenuItemCount()>0) 
+    if (menuFile->GetMenuItemCount()>0)
       MenuBar->Append (menuFile, _("&File"));
     MenuBar->Append (menuView, _("&View"));
     MenuBar->Append (menuRepos, _("&Repository"));
@@ -350,13 +350,13 @@ public:
     MenuBar->Append (menuHelp, _("&Help"));
   }
 
-  bool 
+  bool
   IsColumnChecked (int id)
   {
     return MenuColumns->IsChecked (id);
   }
 
-  void 
+  void
   CheckColumn (int id, bool check)
   {
     MenuColumns->Check (id, check);
@@ -390,7 +390,7 @@ public:
     MenuBar->Enable (ID_Stop, running);
   }
 
-  bool 
+  bool
   IsRunning () const
   {
     return m_running;
@@ -422,8 +422,8 @@ public:
                       FALSE,
                       -1,
                       -1,
-                      (wxObject *) NULL, 
-                      _("Refresh"), 
+                      (wxObject *) NULL,
+                      _("Refresh"),
                       _("Refresh the file list"));
 
     toolBar->AddSeparator ();
@@ -439,8 +439,8 @@ public:
                       _("Stop"),
                       _("Stop the current action"));
 
-    // After adding the buttons to the toolbar, 
-    // must call Realize() to reflect the changes.  
+    // After adding the buttons to the toolbar,
+    // must call Realize() to reflect the changes.
     toolBar->Realize ();
 
     toolBar->SetRows (m_toolbar_rows);
@@ -549,14 +549,14 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_RemoveBookmark, RapidSvnFrame::OnRemoveBookmark)
   EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
   EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
-  
+
   EVT_MENU (ID_Info, RapidSvnFrame::OnInfo)
   EVT_UPDATE_UI (ID_Info, RapidSvnFrame::OnUpdateCommand)
 
   EVT_MENU (ID_HelpContents, RapidSvnFrame::OnHelpContents)
   EVT_MENU (ID_HelpIndex, RapidSvnFrame::OnHelpIndex)
   EVT_MENU (ID_HelpStartupTips, RapidSvnFrame::OnHelpStartupTips)
-  
+
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
@@ -573,19 +573,19 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
 
   EVT_UPDATE_UI_RANGE (ID_File_Min, ID_File_Max, RapidSvnFrame::OnUpdateCommand)
   EVT_UPDATE_UI_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnUpdateCommand)
-  
+
   EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
 
   EVT_TOOL_ENTER (ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
   EVT_TREE_SEL_CHANGED (-1, RapidSvnFrame::OnFolderBrowserSelChanged)
-  EVT_TREE_KEY_DOWN (-1, RapidSvnFrame::OnFolderBrowserKeyDown) 
+  EVT_TREE_KEY_DOWN (-1, RapidSvnFrame::OnFolderBrowserKeyDown)
   EVT_LIST_ITEM_SELECTED (-1, RapidSvnFrame::OnFileListSelected)
 END_EVENT_TABLE ()
 
 /** class implementation **/
 RapidSvnFrame::RapidSvnFrame (const wxString & title,
                               const wxLocale & locale)
-  : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize, 
+  : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_FRAME_STYLE)
 {
   m = new Data (this, locale);
@@ -616,19 +616,19 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->RecreateToolbar ();
   m->SetRunning (false);
 
-  m_horiz_splitter = 
+  m_horiz_splitter =
     new ProportionalSplitterWindow (1.0f, this,
                                     SPLITTER_WINDOW,
                                     wxDefaultPosition,
                                     wxDefaultSize,
                                     SPLITTER_STYLE);
 
-  m_info_panel = new wxPanel (m_horiz_splitter, -1, 
-                              wxDefaultPosition, wxDefaultSize, 
+  m_info_panel = new wxPanel (m_horiz_splitter, -1,
+                              wxDefaultPosition, wxDefaultSize,
                               wxTAB_TRAVERSAL | wxCLIP_CHILDREN);
 
   m_log = new wxTextCtrl (m_horiz_splitter, -1, wxEmptyString,
-                          wxPoint (0, 0), wxDefaultSize, 
+                          wxPoint (0, 0), wxDefaultSize,
                           wxTE_MULTILINE | wxTE_READONLY);
 
   // as much as the widget can stand
@@ -645,7 +645,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                                           SPLITTER_STYLE);
 
   // Create the list control to display files
-  m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL, 
+  m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL,
                                  wxDefaultPosition, wxDefaultSize);
 
   m->CheckMenu (ID_Flat,              m_listCtrl->IsFlat());
@@ -901,7 +901,7 @@ RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
 }
 
 
-void 
+void
 RapidSvnFrame::OnActivate (wxActivateEvent & event)
 {
   if (event.GetActive () && m->updateAfterActivate)
@@ -961,9 +961,9 @@ RapidSvnFrame::AddWcBookmark ()
 void
 RapidSvnFrame::AddRepoBookmark ()
 {
-  const int flags = 
-    UpdateDlg::WITH_URL | 
-    UpdateDlg::WITHOUT_RECURSIVE | 
+  const int flags =
+    UpdateDlg::WITH_URL |
+    UpdateDlg::WITHOUT_RECURSIVE |
     UpdateDlg::WITHOUT_REVISION;
   UpdateDlg dialog (this, _("Repository URL"), flags);
 
@@ -1023,13 +1023,13 @@ RapidSvnFrame::InitFolderBrowser ()
 const svn::Targets
 RapidSvnFrame::GetActionTargets () const
 {
-  //is there nothing selected in the list control, 
+  //is there nothing selected in the list control,
   //or is the active window *not* the list control?
-  if (m_listCtrl->GetSelectedItemCount () <= 0 || 
+  if (m_listCtrl->GetSelectedItemCount () <= 0 ||
       m_activePane != ACTIVEPANE_FILELIST)
   {
     wxString path = m_folder_browser->GetPath ();
-    
+
     std::string pathUtf8;
     LocalToUtf8 (path, pathUtf8);
     if (!svn::Url::isValid (pathUtf8.c_str ()))
@@ -1038,7 +1038,7 @@ RapidSvnFrame::GetActionTargets () const
       path = fname.GetFullPath ();
       LocalToUtf8 (path, pathUtf8);
     }
-    
+
     return svn::Targets (pathUtf8.c_str ());
   }
   else
@@ -1052,14 +1052,14 @@ unsigned int
 RapidSvnFrame::GetSelectionActionFlags () const
 {
   unsigned int flags = 0;
-  
-  //is there nothing selected in the list control, 
+
+  //is there nothing selected in the list control,
   //or is the active window *not* the list control?
-  if (m_listCtrl->GetSelectedItemCount () <= 0 || 
+  if (m_listCtrl->GetSelectedItemCount () <= 0 ||
       m_activePane != ACTIVEPANE_FILELIST)
   {
     //yes, so examine the folder browser
-    
+
     flags |= Action::IS_DIR;
     wxString path = m_folder_browser->GetPath ();
     std::string pathUtf8;
@@ -1089,7 +1089,7 @@ RapidSvnFrame::GetSelectionActionFlags () const
     //no, ask the list control
     flags = m_listCtrl->GetSelectionActionFlags ();
   }
-  
+
   return flags;
 }
 
@@ -1111,87 +1111,87 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       // Special case of ExternalProgramAction - needs to be a working copy, not just single target
       baseActionFlags = ExternalProgramAction::GetBaseFlags () & ~Action::RESPOSITORY_TYPE;
       break;
-  
+
     case ID_Default_Action:
       baseActionFlags = ExternalProgramAction::GetBaseFlags ();
       break;
-  
+
     case ID_Update:
       baseActionFlags = UpdateAction::GetBaseFlags ();
       break;
-  
+
     case ID_Commit:
       baseActionFlags = CommitAction::GetBaseFlags ();
       break;
-  
+
     case ID_Add:
       baseActionFlags = AddAction::GetBaseFlags ();
       break;
-  
+
     case ID_AddRecursive:
       baseActionFlags = AddAction::GetBaseFlags ();
       break;
-  
+
     case ID_Import:
       baseActionFlags = ImportAction::GetBaseFlags ();
       break;
-  
+
     case ID_Checkout:
       baseActionFlags = CheckoutAction::GetBaseFlags ();
       break;
-  
+
     case ID_Cleanup:
       baseActionFlags = CleanupAction::GetBaseFlags ();
       break;
-  
+
     case ID_Log:
       baseActionFlags = LogAction::GetBaseFlags ();
       break;
-  
+
     case ID_Revert:
       baseActionFlags = RevertAction::GetBaseFlags ();
       break;
-  
+
     case ID_Resolve:
       baseActionFlags = ResolveAction::GetBaseFlags ();
       break;
-  
+
     case ID_Delete:
       baseActionFlags = DeleteAction::GetBaseFlags ();
       break;
-  
+
     case ID_Copy:
       baseActionFlags = MoveAction::GetBaseFlags ();
       break;
-  
+
     case ID_Move:
       baseActionFlags = MoveAction::GetBaseFlags ();
       break;
-  
+
     case ID_Mkdir:
       baseActionFlags = MkdirAction::GetBaseFlags ();
       break;
-  
+
     case ID_Merge:
       baseActionFlags = MergeAction::GetBaseFlags ();
       break;
-  
+
     case ID_Property:
       baseActionFlags = PropertyAction::GetBaseFlags ();
       break;
-  
-    case ID_Rename: 
+
+    case ID_Rename:
       baseActionFlags = MoveAction::GetBaseFlags ();
       break;
-  
+
     case ID_Switch:
       baseActionFlags = SwitchAction::GetBaseFlags ();
       break;
-  
+
     case ID_Diff:
       baseActionFlags = DiffAction::GetBaseFlags ();
       break;
-  
+
     case ID_Info:
       // Not actually part of the Action hierarchy, but here for completeness
       baseActionFlags = Action::SINGLE_TARGET|Action::MULTIPLE_TARGETS|Action::RESPOSITORY_TYPE|Action::VERSIONED_WC_TYPE|Action::UNVERSIONED_WC_TYPE;
@@ -1207,14 +1207,14 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       break;
     }
   }
-  
+
   if (baseActionFlags & Action::WITHOUT_TARGET)
   {
     return true;
   }
-    
+
   // Check the sole quantity flag in selectedActionFlags is in baseActionFlags
-  // then check any type flags in selectedActionFlags are in baseActionFlags, but selectedActionFlags doesn't include any other types 
+  // then check any type flags in selectedActionFlags are in baseActionFlags, but selectedActionFlags doesn't include any other types
   return (selectionActionFlags & baseActionFlags & Action::TARGET_QUANTITY_MASK) != 0
             && (selectionActionFlags & baseActionFlags & Action::TARGET_TYPE_MASK) == (selectionActionFlags & Action::TARGET_TYPE_MASK);
 }
@@ -1239,7 +1239,7 @@ RapidSvnFrame::TrimDisabledMenuItems (wxMenu & menu)
       menu.Destroy (pItem);
     }
   }
-  
+
   // Trim unnecessary separators
   pos = menu.GetMenuItemCount ();
   bool sepNeeded = false;
@@ -1254,7 +1254,7 @@ RapidSvnFrame::TrimDisabledMenuItems (wxMenu & menu)
         ++pos;
         sepNeeded = false;
       }
-      
+
       if (sepNeeded)
       {
         sepNeeded = false;
@@ -1362,7 +1362,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
       action = new PropertyAction (this);
       break;
 
-    case ID_Rename: 
+    case ID_Rename:
       action = new MoveAction (this, MOVE_RENAME);
       break;
 
@@ -1460,7 +1460,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
         // the next time the app gets activated
         m->updateAfterActivate = true;
       }
-      else 
+      else
       {
         if ((actionFlags & Action::UPDATE_TREE) != 0)
         {
@@ -1482,7 +1482,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   case TOKEN_VIEW:
     {
       GetData * pData = static_cast<GetData *>(event.GetClientData ());
-    
+
       if (pData != 0)
       {
         // copy the data first. This makes sure
@@ -1509,8 +1509,8 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_GET:
     {
-      GetData * pData = static_cast<GetData *>(event.GetClientData ()); 
-    
+      GetData * pData = static_cast<GetData *>(event.GetClientData ());
+
       if (pData != 0)
       {
         // copy the data first. This makes sure
@@ -1524,7 +1524,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
         Perform (action);
       }
     }
-    
+
     break;
   case TOKEN_DIFF:
     {
@@ -1661,7 +1661,7 @@ RapidSvnFrame::InvokeDefaultAction ()
 
   // the default action will be invoked only for a single file
   // or folder.
-  // if more or less than one file or folder is selected nothing 
+  // if more or less than one file or folder is selected nothing
   // will happen.
 
   if (targets.size () != 1)
@@ -1709,13 +1709,13 @@ RapidSvnFrame::Perform (Action * action)
   }
 }
 
-void 
+void
 RapidSvnFrame::OnFileListSelected (wxListEvent & event)
 {
   m_activePane = ACTIVEPANE_FILELIST;
 }
 
-void 
+void
 RapidSvnFrame::OnColumn (wxCommandEvent & event)
 {
   bool visible = m->IsColumnChecked(event.m_id);
@@ -1774,7 +1774,7 @@ RapidSvnFrame::OnColumnReset (wxCommandEvent &)
   UpdateFileList ();
 }
 
-void 
+void
 RapidSvnFrame::UpdateFolderBrowser ()
 {
   wxBusyCursor busy;
@@ -1811,7 +1811,7 @@ RapidSvnFrame::Trace (wxString msg)
   }
 }
 
-void 
+void
 RapidSvnFrame::OnLogin (wxCommandEvent & event)
 {
   svn::Context * context = m_folder_browser->GetContext ();
@@ -1832,7 +1832,7 @@ RapidSvnFrame::OnLogin (wxCommandEvent & event)
   }
 }
 
-void 
+void
 RapidSvnFrame::OnLogout (wxCommandEvent & event)
 {
   svn::Context * context = m_folder_browser->GetContext ();
@@ -1843,7 +1843,7 @@ RapidSvnFrame::OnLogout (wxCommandEvent & event)
   context->setLogin ("", "");
 }
 
-void 
+void
 RapidSvnFrame::OnStop (wxCommandEvent & event)
 {
   m->listener.cancel (true);

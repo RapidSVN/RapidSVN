@@ -18,7 +18,7 @@
 #include "svncpp/path.hpp"
 #include "svncpp/targets.hpp"
 
-// wxwindows
+// wxWidgets
 #include "wx/string.h"
 
 // forward declarations
@@ -81,7 +81,7 @@ public:
 
 
   /**
-   * sets the context 
+   * sets the context
    *
    * @param context
    */
@@ -98,9 +98,9 @@ public:
   /**
    * @see svn::ContextListener
    */
-  virtual bool 
+  virtual bool
   contextGetLogin (const std::string & realm,
-                   std::string & username, 
+                   std::string & username,
                    std::string & password,
 				           bool & maySave);
 
@@ -141,7 +141,7 @@ public:
    */
   virtual bool
   contextSslClientCertPwPrompt (std::string & password,
-                                const std::string & realm, 
+                                const std::string & realm,
                                 bool & maySave);
 
 
@@ -156,7 +156,7 @@ public:
    * shall the ongoing operation be cancelled?
    *
    * @see isCancelled
-   * 
+   *
    * @param value
    *  @li true cancel operation
    *  @li false dont cancel

@@ -13,7 +13,7 @@
 #ifndef _CERT_DLG_H_INCLUDED_
 #define _CERT_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 // svncpp
@@ -33,7 +33,7 @@ public:
 
   virtual ~CertDlg ();
 
-  svn::ContextListener::SslServerTrustAnswer 
+  svn::ContextListener::SslServerTrustAnswer
   Answer () const;
 
   wxUint32
@@ -43,7 +43,7 @@ private:
   struct Data;
   Data * m;
 
-private:  
+private:
   DECLARE_EVENT_TABLE ()
 
   void OnPerm (wxCommandEvent & event);

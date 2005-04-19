@@ -14,7 +14,7 @@
 #ifndef _LISTED_DLG_H_INCLUDED_
 #define _LISTED_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 #include "wx/window.h"
 
@@ -49,22 +49,22 @@ public:
   void
   DeleteAllEntries ();
 
-  long 
+  long
   SetEntry (const wxString & name, const wxString & value);
 
-  void 
+  void
   GetEntryAtIndex (long id, wxString & name, wxString & value) const;
 
-  long 
+  long
   GetEntryCount () const;
 
-  long 
+  long
   FindEntry (const wxString & name) const;
 
   virtual int
   ShowModal ();
 
-  /** 
+  /**
    * enables or disables the saving/modification
    * of properties.
    */
@@ -101,22 +101,22 @@ private:
   void
   CheckButtons ();
 
-  void 
+  void
   OnClose (wxCommandEvent & event);
 
-  void 
+  void
   OnOK (wxCommandEvent & event);
 
-  void 
+  void
   OnNew (wxCommandEvent & event);
 
-  void 
+  void
   OnEdit (wxCommandEvent & event);
 
-  void 
+  void
   OnDelete (wxCommandEvent & event);
 
-  void 
+  void
   OnSelected (wxListEvent & event);
 
 private:

@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/grid.h"
 #include "wx/listctrl.h"
@@ -50,7 +50,7 @@ class ListCtrl : public wxListView
 public:
   ListCtrl (wxWindow * parent)
     : wxListView (parent, ID_List, wxDefaultPosition,
-                  wxSize (350, 150), wxLC_REPORT | 
+                  wxSize (350, 150), wxLC_REPORT |
                   wxLC_SINGLE_SEL)
   {
     wxListItem info;
@@ -77,7 +77,7 @@ public:
    * @param value
    * @return id of new item if inserted or old item if updated
    */
-  long 
+  long
   SetEntry (const wxString & name, const wxString & value)
   {
     long id = FindItem (-1, name, false);
@@ -102,8 +102,8 @@ public:
    * returns the name/value pair for the selected item in the
    * list
    *
-   * @param name 
-   * @param value 
+   * @param name
+   * @param value
    * @retval false nothing selected
    */
   bool
@@ -124,7 +124,7 @@ public:
    * @param name property name
    * @param value property value
    */
-  void 
+  void
   GetEntryAtIndex (long id, wxString & name, wxString & value)
   {
     // get name
@@ -161,8 +161,8 @@ public:
     wxStaticText * labelValue = new wxStaticText (this, -1, _("Value"));
     wxTextCtrl * textName = new wxTextCtrl (this, ID_Name);
 
-    wxTextCtrl * textValue = 
-      new wxTextCtrl (this, ID_Value, wxEmptyString, wxDefaultPosition, 
+    wxTextCtrl * textValue =
+      new wxTextCtrl (this, ID_Value, wxEmptyString, wxDefaultPosition,
                       wxSize (300, 100), wxTE_MULTILINE);
 
     wxFlexGridSizer * textSizer = new wxFlexGridSizer (2, 5, 5);
@@ -277,7 +277,7 @@ private:
     CheckButtons ();
   }
 
-  void 
+  void
   CheckButtons ()
   {
     wxString name = m_textName->GetValue ();
@@ -307,7 +307,7 @@ struct ListEditorDlg::Data
   wxStaticBox * box;
   wxString addTitle;
   wxString editTitle;
-  
+
 public:
   Data (wxWindow * wnd)
     : window (wnd), nameCaption (_("Name")), valueCaption (_("Value")),
@@ -315,7 +315,7 @@ public:
   {
     // create controls
     wxStaticBoxSizer *boxSizer = new wxStaticBoxSizer (
-      box = new wxStaticBox (wnd, -1, wxEmptyString), 
+      box = new wxStaticBox (wnd, -1, wxEmptyString),
       wxHORIZONTAL);
 
     listCtrl = new ListCtrl (wnd);
@@ -370,7 +370,7 @@ public:
    * methode gets called by the selection event of
    * the grid
    */
-  void 
+  void
   OnSelected ()
   {
     // the edit and delete buttons will only be
@@ -383,7 +383,7 @@ public:
   /**
    * deletes the selected item in the list
    */
-  void 
+  void
   DeleteSelected ()
   {
     long id = listCtrl->GetFirstSelected ();
@@ -430,9 +430,9 @@ BEGIN_EVENT_TABLE (ListEditorDlg, wxDialog)
   EVT_LIST_ITEM_SELECTED (ID_List, ListEditorDlg::OnSelected)
 END_EVENT_TABLE ()
 
-ListEditorDlg::ListEditorDlg (wxWindow * parent, 
+ListEditorDlg::ListEditorDlg (wxWindow * parent,
                               const wxString & title)
-  : wxDialog (parent, -1, title, wxDefaultPosition, 
+  : wxDialog (parent, -1, title, wxDefaultPosition,
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   m = new Data (this);
@@ -462,7 +462,7 @@ ListEditorDlg::OnDelete (wxCommandEvent & event)
   m->DeleteSelected ();
 }
 
-void 
+void
 ListEditorDlg::OnSelected (wxListEvent &)
 {
   m->OnSelected ();
@@ -480,7 +480,7 @@ ListEditorDlg::SetNameCaption (const wxString & caption)
   m->nameCaption = caption;
 }
 
-void 
+void
 ListEditorDlg::SetValueCaption (const wxString & caption)
 {
   m->valueCaption = caption;
@@ -504,19 +504,19 @@ ListEditorDlg::DeleteAllEntries ()
   m->listCtrl->DeleteAllItems ();
 }
 
-long 
+long
 ListEditorDlg::SetEntry (const wxString & name, const wxString & value)
 {
   return m->listCtrl->SetEntry (name, value);
 }
 
-void 
+void
 ListEditorDlg::GetEntryAtIndex (long id, wxString & name, wxString & value) const
 {
   m->listCtrl->GetEntryAtIndex (id, name, value);
 }
 
-long 
+long
 ListEditorDlg::GetEntryCount () const
 {
   return m->listCtrl->GetItemCount ();

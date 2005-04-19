@@ -13,7 +13,7 @@
 #ifndef _DIFF_DLG_H_INCLUDED_
 #define _DIFF_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 
@@ -76,7 +76,7 @@ public:
    * @param count count of entries in @a types
    */
   void
-  AllowCompareTypes (const DiffData::CompareType types [], 
+  AllowCompareTypes (const DiffData::CompareType types [],
                      size_t count);
 
   /**

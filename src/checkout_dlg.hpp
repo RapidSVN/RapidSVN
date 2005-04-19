@@ -13,7 +13,7 @@
 #ifndef _CHECKOUT_DLG_H_INCLUDED_
 #define _CHECKOUT_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // app
@@ -45,19 +45,19 @@ private:
   struct Data;
   Data * m;
 
-  void 
+  void
   OnBrowse (wxCommandEvent & event);
 
-  void 
+  void
   OnText (wxCommandEvent & event);
 
-  void 
+  void
   OnHelp (wxCommandEvent & event);
-  
-  void 
+
+  void
   OnUseLatest (wxCommandEvent & event);
 
-  void 
+  void
   InitDialog ();
 
   DECLARE_EVENT_TABLE ()

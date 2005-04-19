@@ -13,7 +13,7 @@
 #ifndef _IDS_H_INCLUDED_
 #define _IDS_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/defs.h"
 
 /*

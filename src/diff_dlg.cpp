@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/sizer.h"
 #include "wx/valgen.h"
@@ -65,8 +65,8 @@ class RevisionPanel : public wxPanel
 {
 public:
   /** Constructor */
-  RevisionPanel (wxWindow * parent, 
-                wxWindowID id, 
+  RevisionPanel (wxWindow * parent,
+                wxWindowID id,
                 const wxString & title)
    : wxPanel (parent, id, wxDefaultPosition, wxDefaultSize),
      mEnableUrl (true)
@@ -76,7 +76,7 @@ public:
   }
 
 
-  /** 
+  /**
    * Checks the controls for validity and
    * enables/disables controls as result of this check
    */
@@ -104,7 +104,7 @@ public:
       if (!mCheckUseLatest->GetValue ())
         valid = CheckRevision (mTextRevision->GetValue ());
     }
-    else 
+    else
       valid = CheckDateTime (mTextDate->GetValue ());
 
     if (valid)
@@ -115,7 +115,7 @@ public:
   }
 
 
-  const svn::Revision 
+  const svn::Revision
   GetRevision () const
   {
     if (mRadioUseRevision->GetValue ())
@@ -140,14 +140,14 @@ public:
   }
 
 
-  bool 
+  bool
   GetUseUrl () const
   {
     return mCheckUseUrl->GetValue ();
   }
 
 
-  const wxString 
+  const wxString
   GetUrl () const
   {
     return mTextUrl->GetValue ();
@@ -194,7 +194,7 @@ public:
   }
 
 
-  void 
+  void
   SetUrl (const wxString & url)
   {
     mTextUrl->SetValue (url);
@@ -204,7 +204,7 @@ public:
   void
   EnableUrl (bool enable)
   {
-    // @todo 
+    // @todo
   }
 
 
@@ -217,7 +217,7 @@ private:
   /** text control with the revision number */
   wxTextCtrl * mTextRevision;
 
-  /** 
+  /**
    * check box: if not checked use revision number
    * (otherwise HEAD)
    */
@@ -286,7 +286,7 @@ private:
       new wxStaticBox (this, -1, title),
       wxVERTICAL);
     mainSizer->Add (gridSizer, 0, wxEXPAND);
-  
+
     this->SetAutoLayout (true);
     this->SetSizer (mainSizer);
 
@@ -313,7 +313,7 @@ private:
 
 
   /** checks the date control for validity */
-  void 
+  void
   CheckDateCtrls ()
   {
     mTextDate->Enable (mRadioUseDate->GetValue ());
@@ -336,16 +336,16 @@ private:
   }
 
 
-  /** 
+  /**
    * If anything has changed in the form,
    * e.g. a text has been entered, a radio button
-   * or checkbox has been clicked, this method 
+   * or checkbox has been clicked, this method
    * is executed to check all the controls for validity.
-   * 
+   *
    * An wxEVENT_UPDATE event is then sent to the parent of
    * this panel.
    */
-  void 
+  void
   OnCommand (wxCommandEvent & event)
   {
     CheckControls ();
@@ -371,8 +371,8 @@ END_EVENT_TABLE ()
 
 
 static const DiffData::CompareType COMPARE_TYPES [] = {
-  DiffData::WITH_SAME_REVISION, 
-  DiffData::WITH_DIFFERENT_REVISION, 
+  DiffData::WITH_SAME_REVISION,
+  DiffData::WITH_DIFFERENT_REVISION,
   DiffData::TWO_REVISIONS};
 
 static const wxString COMPARE_TYPE_LABELS [] =
@@ -386,7 +386,7 @@ static const wxString COMPARE_TYPE_LABELS [] =
 /**
  * This panel contains all the controls relevant for
  * the diff dialog. We are using a separate class to
- * hide implementation details 
+ * hide implementation details
  */
 class DiffDlg::Data : public wxPanel
 {
@@ -448,7 +448,7 @@ public:
 
 
   void
-  AllowCompareTypes (const DiffData::CompareType types [], 
+  AllowCompareTypes (const DiffData::CompareType types [],
                      size_t count)
   {
     if (count == 0)
@@ -473,7 +473,7 @@ public:
   }
 
 
-  void 
+  void
   AllowCompareTypes ()
   {
     // remember old selection and clear contents
@@ -494,7 +494,7 @@ private:
   wxWindow * mParent;
   wxButton * mButtonOK;
 
-  void 
+  void
   InitControls ()
   {
     // first row: label + combo with selection of options
@@ -505,8 +505,8 @@ private:
         this, -1, _("Compare:"));
 
       mComboCmpType = new wxComboBox (
-        this, ID_CompareType, wxEmptyString, wxDefaultPosition, wxDefaultSize, 
-        WXSIZEOF (COMPARE_TYPE_LABELS), COMPARE_TYPE_LABELS, 
+        this, ID_CompareType, wxEmptyString, wxDefaultPosition, wxDefaultSize,
+        WXSIZEOF (COMPARE_TYPE_LABELS), COMPARE_TYPE_LABELS,
         wxCB_READONLY);
 
       typeSizer->Add (label);
@@ -578,7 +578,7 @@ private:
   }
 
 
-  bool 
+  bool
   IsValid () const
   {
     bool valid = true;
@@ -626,7 +626,7 @@ private:
    * @retval INVALID_COMPARE_TYPE if nothing was
    *         selected or invalid result of @a GetClientData
    */
-  DiffData::CompareType 
+  DiffData::CompareType
   GetCompareType () const
   {
     int sel = mComboCmpType->GetSelection ();
@@ -637,7 +637,7 @@ private:
     DiffData::CompareType* ct = (DiffData::CompareType*) mComboCmpType->GetClientData (sel);
     if (!ct)
       return DiffData::INVALID_COMPARE_TYPE;
-    
+
     return *ct;
   }
 
@@ -676,7 +676,7 @@ private:
   }
 
 
-  void 
+  void
   OnCommand (wxCommandEvent & event)
   {
     CheckControls ();
@@ -695,7 +695,7 @@ END_EVENT_TABLE ()
 
 
 DiffDlg::DiffDlg (wxWindow * parent)
-  : wxDialog (parent, -1, _("Diff"), wxDefaultPosition, 
+  : wxDialog (parent, -1, _("Diff"), wxDefaultPosition,
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   m = new Data (this);
@@ -741,7 +741,7 @@ DiffDlg::EnableUrl (bool value)
 
 
 void
-DiffDlg::AllowCompareTypes (const DiffData::CompareType types [], 
+DiffDlg::AllowCompareTypes (const DiffData::CompareType types [],
                             size_t count)
 {
   m->AllowCompareTypes (types, count);

@@ -10,7 +10,7 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/confbase.h"
 #include "wx/notebook.h"
@@ -35,7 +35,7 @@ enum
 
 // platform dependant constants
 #ifdef _WIN32
-static const wxChar * EXECUTABLE_WILDCARD = 
+static const wxChar * EXECUTABLE_WILDCARD =
   _("Executable Files|*.exe;*.com;*.bat|All files (*.*)|*.*");
 
 #else
@@ -54,12 +54,12 @@ public:
     wxBoxSizer * mainsizer = new wxBoxSizer (wxVERTICAL);
     {
       wxGenericValidator valCheck (&m_prefs->purgeTempFiles);
-      wxCheckBox * check = 
-        new wxCheckBox (this, -1, 
-                        _("Purge temporary files on program exit"), 
-                        wxDefaultPosition, 
+      wxCheckBox * check =
+        new wxCheckBox (this, -1,
+                        _("Purge temporary files on program exit"),
+                        wxDefaultPosition,
                         wxDefaultSize, 0, valCheck);
-      
+
       mainsizer->Add (20, 20);
       mainsizer->Add (check, 0, wxALL, 5);
     }
@@ -121,22 +121,22 @@ public:
   /**
    * Called when "browse-button" of Standard Editor field is clicked
    */
-  void 
+  void
   OnStandardEditorLookup (wxCommandEvent & event)
   {
     SelectExecutable (
-      _("Select standard editor executable"), 
+      _("Select standard editor executable"),
       mTextEditor);
   }
 
   /**
    * Called when "browse-button" of Standard File Browser field is clicked
    */
-  void 
+  void
   OnStandardFileExplorerLookup (wxCommandEvent & event)
   {
     SelectExecutable (
-      _("Select standard file explorer executable"), 
+      _("Select standard file explorer executable"),
       mTextExplorer);
   }
 
@@ -160,41 +160,41 @@ private:
   void InitializeData ()
   {
     // Standard Editor
-    wxStaticBox * boxEditor = 
+    wxStaticBox * boxEditor =
       new wxStaticBox (this, -1, _("Standard editor:"));
 
-    wxStaticBoxSizer * sizerEditor = 
+    wxStaticBoxSizer * sizerEditor =
       new wxStaticBoxSizer (boxEditor, wxVERTICAL);
     {
       // text ctrl
       wxTextValidator val (wxFILTER_NONE, &m_prefs->editor);
       mTextEditor = new wxTextCtrl (
-        this, -1, wxEmptyString, wxDefaultPosition, 
+        this, -1, wxEmptyString, wxDefaultPosition,
         wxSize (200, -1), 0, val);
 
       // button
-      wxButton * button = 
+      wxButton * button =
         CreateEllipsisButton(this, ID_StandardEditorLookup);
 
       // arguments
       wxStaticText * labelArgs = new wxStaticText (
-        this, -1, _("Program arguments (%1=selected file):"), 
+        this, -1, _("Program arguments (%1=selected file):"),
         wxDefaultPosition);
       wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->editorArgs);
       wxTextCtrl * args = new wxTextCtrl (
-        this, -1, wxEmptyString, wxDefaultPosition, 
+        this, -1, wxEmptyString, wxDefaultPosition,
         wxSize (200, -1), 0, valArgs);
 
       // checkbox
       wxGenericValidator valCheck (&m_prefs->editorAlways);
       wxCheckBox * check =
-        new wxCheckBox (this, -1, _("Use always"), 
-                        wxDefaultPosition, 
+        new wxCheckBox (this, -1, _("Use always"),
+                        wxDefaultPosition,
                         wxDefaultSize, 0, valCheck );
 
       // position controls
       wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
-      sizer->Add (mTextEditor, 1, 
+      sizer->Add (mTextEditor, 1,
                   wxALIGN_CENTER | wxEXPAND | wxALL, 5);
       sizer->AddGrowableCol (0);
       sizer->Add (button, 0, wxALIGN_CENTER);
@@ -213,34 +213,34 @@ private:
     {
       // text ctrl
       wxTextValidator valText (wxFILTER_NONE, &m_prefs->explorer);
-      mTextExplorer = 
-        new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition, 
-                        wxSize (200, -1), 
+      mTextExplorer =
+        new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition,
+                        wxSize (200, -1),
                         0, valText);
 
       // button
-      wxButton * button = 
+      wxButton * button =
         CreateEllipsisButton(this, ID_StandardExplorerLookup);
 
       // arguments
       wxStaticText * labelArgs = new wxStaticText (
-        this, -1, _("Program arguments (%1=selected directory):"), 
+        this, -1, _("Program arguments (%1=selected directory):"),
         wxDefaultPosition);
       wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->explorerArgs);
       wxTextCtrl * args = new wxTextCtrl (
-        this, -1, wxEmptyString, wxDefaultPosition, 
+        this, -1, wxEmptyString, wxDefaultPosition,
         wxSize (200, -1), 0, valArgs);
 
       // check
       wxGenericValidator valCheck (&m_prefs->explorerAlways);
-      wxCheckBox * check = 
-        new wxCheckBox (this, -1, _("Use always"), 
-                        wxDefaultPosition, 
+      wxCheckBox * check =
+        new wxCheckBox (this, -1, _("Use always"),
+                        wxDefaultPosition,
                         wxDefaultSize, 0, valCheck);
 
       // position controls
       wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
-      sizer->Add (mTextExplorer, 1, 
+      sizer->Add (mTextExplorer, 1,
                   wxALIGN_CENTER | wxEXPAND | wxALL, 5);
       sizer->AddGrowableCol (0);
       sizer->Add (button, 0, wxALIGN_CENTER);
@@ -260,27 +260,27 @@ private:
     {
       // text ctrl
       wxTextValidator valText (wxFILTER_NONE, &m_prefs->diffTool);
-      mTextDiffTool = 
-        new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition, 
-                        wxSize (200, -1), 
+      mTextDiffTool =
+        new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition,
+                        wxSize (200, -1),
                         0, valText);
 
       // button
-      wxButton * button = 
+      wxButton * button =
         CreateEllipsisButton(this, ID_DiffToolLookup);
 
       // arguments
       wxStaticText * labelArgs = new wxStaticText (
-        this, -1, _("Program arguments (%1=file1, %2=file2):"), 
+        this, -1, _("Program arguments (%1=file1, %2=file2):"),
         wxDefaultPosition);
       wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->diffToolArgs);
       wxTextCtrl * args = new wxTextCtrl (
-        this, -1, wxEmptyString, wxDefaultPosition, 
+        this, -1, wxEmptyString, wxDefaultPosition,
         wxSize (200, -1), 0, valArgs);
 
       // position controls
       wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
-      sizer->Add (mTextDiffTool, 1, 
+      sizer->Add (mTextDiffTool, 1,
                   wxALIGN_CENTER | wxEXPAND | wxALL, 5);
       sizer->AddGrowableCol (0);
       sizer->Add (button, 0, wxALIGN_CENTER);
@@ -306,15 +306,15 @@ private:
     SetSizer (panelsizer);
     SetAutoLayout (true);
   }
-  
+
   DECLARE_EVENT_TABLE ()
 };
 
 
 BEGIN_EVENT_TABLE (ProgramsPanel, wxPanel)
-  EVT_BUTTON (ID_StandardEditorLookup, 
+  EVT_BUTTON (ID_StandardEditorLookup,
     ProgramsPanel::OnStandardEditorLookup)
-  EVT_BUTTON (ID_StandardExplorerLookup, 
+  EVT_BUTTON (ID_StandardExplorerLookup,
     ProgramsPanel::OnStandardFileExplorerLookup)
   EVT_BUTTON (ID_DiffToolLookup,
   ProgramsPanel::OnDiffToolLookup)
@@ -330,10 +330,10 @@ public:
     wxBoxSizer * mainsizer = new wxBoxSizer (wxVERTICAL);
     {
       wxGenericValidator valCheck (&m_prefs->authPerBookmark);
-      wxCheckBox * check = 
-        new wxCheckBox (this, -1, 
-                        _("Different login for each bookmark in the bookmarks list"), 
-                        wxDefaultPosition, 
+      wxCheckBox * check =
+        new wxCheckBox (this, -1,
+                        _("Different login for each bookmark in the bookmarks list"),
+                        wxDefaultPosition,
                         wxDefaultSize, 0, valCheck);
       mainsizer->Add (20, 20);
       mainsizer->Add (check, 0, wxALL, 5);
@@ -347,7 +347,7 @@ private:
 };
 
 /* PreferencesDlg *********************************************************/
- 
+
 BEGIN_EVENT_TABLE (PreferencesDlg, wxDialog)
 END_EVENT_TABLE ()
 
@@ -370,17 +370,17 @@ public:
 
     // Create the top-level controls in the dialog.
     // Each page will create its own controls.
- 
+
     wxBoxSizer *topsizer = new wxBoxSizer (wxVERTICAL);
     wxBoxSizer *button_sizer = new wxBoxSizer (wxHORIZONTAL);
 
-    notebook = new wxNotebook (wnd, -1, wxDefaultPosition, wxDefaultSize); 
+    notebook = new wxNotebook (wnd, -1, wxDefaultPosition, wxDefaultSize);
     wxNotebookSizer *nbs = new wxNotebookSizer (notebook);
-  
+
     // Add the pages
     GeneralPanel *generalPanel = new GeneralPanel (notebook, prefs);
     notebook->AddPage (generalPanel, _("General"));
-    
+
     ProgramsPanel *programsPanel = new ProgramsPanel (notebook, prefs);
     notebook->AddPage (programsPanel, _("Programs"));
 
@@ -399,19 +399,19 @@ public:
     // no useful entries in here yet
     //ExternalsPanel *externalsPanel = ExternalsPanel::Create (notebook);
     //notebook->AddPage (externalsPanel, _("Externals"));
-  
+
     topsizer->Add (nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 6);
     topsizer->Add (button_sizer, 0, wxALIGN_CENTER);
 
-    // Order is important here:  
+    // Order is important here:
     wnd->SetSizer (topsizer);
 
     // Must precede call to Fit to work on Windows.
-    wnd->SetAutoLayout (true);  
-    topsizer->SetSizeHints (wnd); 
+    wnd->SetAutoLayout (true);
+    topsizer->SetSizeHints (wnd);
     topsizer->Fit (wnd);
   }
-  
+
   bool
   TransferDataFromWindow ()
   {
@@ -422,7 +422,7 @@ public:
       for (int i = 0; i < notebook->GetPageCount (); i++)
         b = b && notebook->GetPage (i)->TransferDataFromWindow ();
     }
-    return b;  
+    return b;
   }
 
   bool
@@ -435,7 +435,7 @@ public:
       for (int i = 0; i < notebook->GetPageCount (); i++)
         b = b && notebook->GetPage (i)->TransferDataToWindow ();
     }
-    return b;  
+    return b;
   }
 };
 
@@ -457,10 +457,10 @@ PreferencesDlg::~PreferencesDlg ()
 /**
  * A specialised version of TransferDataFromWindow that calls
  * TransferDataFromWindow for each panel in the dialog. Sadly this
- * is not the default base class behaviour. 
+ * is not the default base class behaviour.
  * @return true if transfer succeeded.
  */
-bool 
+bool
 PreferencesDlg::TransferDataFromWindow ()
 {
   bool b = wxDialog::TransferDataFromWindow ();
@@ -472,10 +472,10 @@ PreferencesDlg::TransferDataFromWindow ()
 /**
  * A specialised version of TransferDataToWindow that calls
  * TransferDataToWindow for each panel in the dialog. Sadly this
- * is not the default base class behaviour. 
+ * is not the default base class behaviour.
  * @return true if transfer succeeded.
  */
-bool 
+bool
 PreferencesDlg::TransferDataToWindow ()
 {
   bool b = wxDialog::TransferDataToWindow ();

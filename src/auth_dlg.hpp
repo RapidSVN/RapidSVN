@@ -13,7 +13,7 @@
 #ifndef _AUTH_DLG_H_INCLUDED_
 #define _AUTH_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 
 class AuthDlg:public wxDialog
@@ -21,14 +21,14 @@ class AuthDlg:public wxDialog
 public:
   static const int HIDE_USERNAME;
 
-  AuthDlg (wxWindow * parent, 
-           const wxString & username = wxEmptyString, 
+  AuthDlg (wxWindow * parent,
+           const wxString & username = wxEmptyString,
            const wxString & password = wxEmptyString,
            int flags = 0);
 
   virtual ~AuthDlg ();
 
-  const wxString & 
+  const wxString &
   GetUsername () const;
 
   const wxString &
@@ -37,7 +37,7 @@ public:
 private:
   struct Data;
   Data * m;
-  
+
   DECLARE_EVENT_TABLE ()
 };
 

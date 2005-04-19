@@ -14,7 +14,7 @@
 #pragma warning( disable: 4786 )// debug symbol truncated
 #endif
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // svncpp
@@ -49,37 +49,37 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
     schemasStr += wxT("- ");
     schemasStr += Utf8ToLocal(schema);
   }
-    
+
 
   // format string
   wxString version;
   version.Printf (_("%s Version %d.%d.%d"),
                   APPLICATION_NAME,
-                  RAPIDSVN_VER_MAJOR, 
-                  RAPIDSVN_VER_MINOR, 
+                  RAPIDSVN_VER_MAJOR,
+                  RAPIDSVN_VER_MINOR,
                   RAPIDSVN_VER_MICRO);
 
   // TODO: Make these two constants in version.hpp translatable and wxT()'ed respectively.
   // Until then use the kludge of pretending they're UTF8 to save some silly looking ifdef's
   wxString strCopyrightMessage (Utf8ToLocal (RAPIDSVN_COPYRIGHT));
   wxString strVerMilestone (Utf8ToLocal (RAPIDSVN_VER_MILESTONE));
-  
+
   wxString milestone;
-  milestone.Printf (_("Milestone: %s"), 
+  milestone.Printf (_("Milestone: %s"),
                     strVerMilestone.c_str ());
 
   wxString subversion;
   subversion.Printf (_("Subversion %d.%d.%d"),
-                     SVN_VER_MAJOR, 
-                     SVN_VER_MINOR, 
+                     SVN_VER_MAJOR,
+                     SVN_VER_MINOR,
                      SVN_VER_MICRO);
 
   wxString wx;
-  wx.Printf (_("wxWindows %d.%d.%d"),
-             wxMAJOR_VERSION, 
-             wxMINOR_VERSION, 
+  wx.Printf (_("wxWidgets %d.%d.%d"),
+             wxMAJOR_VERSION,
+             wxMINOR_VERSION,
              wxRELEASE_NUMBER);
-  
+
   wxString copy;
   copy.Printf (wxT("%s\n" // version
                "%s\n" // milestone
@@ -95,7 +95,7 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
   built.Printf (wxT("%s\n" // built with
                 "%s\n" // subversion
                 "\n"
-                "%s"), // wxwindows
+                "%s"), // wxWidgets
                 _("Built with:"),
                 subversion.c_str (),
                 wx.c_str ());
@@ -124,8 +124,8 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
     this, -1, _("CanoncialName:"));
   wxStaticText * labelCanonicalName = new wxStaticText (
     this, -1, locale.GetCanonicalName ());
-    
-  wxStaticBitmap * logo = 
+
+  wxStaticBitmap * logo =
     new wxStaticBitmap (this, -1, wxBitmap (logo_xpm));
 
   wxButton * button = new wxButton (this, wxID_OK, _("OK"));

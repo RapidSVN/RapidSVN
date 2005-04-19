@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/dynarray.h"
 #include "wx/filename.h"
@@ -27,7 +27,7 @@
 
 WX_DEFINE_ARRAY (svn::Context *, ContextArray);
 
-struct Bookmarks::Data 
+struct Bookmarks::Data
 {
 public:
   svn::Context * singleContext;
@@ -67,7 +67,7 @@ public:
    *
    * @param name full path/url of the bookmark
    */
-  void 
+  void
   AddBookmark (wxString name)
   {
     TrimString (name);
@@ -125,13 +125,13 @@ public:
   }
 
   /**
-   * factory method to create a new context 
+   * factory method to create a new context
    */
   svn::Context *
   CreateContext ()
   {
     svn::Context * context = new svn::Context ();
-    
+
     // disable authentication caching.
     context->setAuthCache(false);
 
@@ -149,7 +149,7 @@ Bookmarks::~Bookmarks ()
   delete m;
 }
 
-void 
+void
 Bookmarks::AddBookmark (const wxString & name)
 {
   m->AddBookmark (name);
@@ -194,7 +194,7 @@ Bookmarks::GetContext (const wxString & path)
   return GetContext (index);
 }
 
-bool  
+bool
 Bookmarks::RemoveBookmark (const wxString & path)
 {
   return m->RemoveBookmark (path);

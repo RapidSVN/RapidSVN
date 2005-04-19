@@ -14,7 +14,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 
-// wxwindows
+// wxWidgets
 #include "wx/intl.h"
 
 // app
@@ -28,7 +28,7 @@ ResolveAction::ResolveAction (wxWindow * parent)
 bool
 ResolveAction::Prepare ()
 {
-  // No dialog for Resolve. 
+  // No dialog for Resolve.
   return Action::Prepare ();
 }
 

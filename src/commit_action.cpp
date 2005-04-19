@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // svncpp
@@ -47,7 +47,7 @@ CommitAction::Prepare ()
 
   m_recursive = dlg.GetRecursive ();
   m_message = dlg.GetMessage ();
-  
+
   return true;
 }
 
@@ -61,8 +61,8 @@ CommitAction::Perform ()
   std::string messageUtf8 (LocalToUtf8 (m_message));
 
   svn::Pool pool;
-  long revision = 
-    client.commit (targets.array (pool), messageUtf8.c_str (), 
+  long revision =
+    client.commit (targets.array (pool), messageUtf8.c_str (),
                    m_recursive);
   wxString str;
 

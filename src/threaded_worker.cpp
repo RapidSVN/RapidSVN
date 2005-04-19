@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // svncpp
@@ -101,7 +101,7 @@ public:
   /**
    * thread execution starts here
    */
-  virtual void * 
+  virtual void *
   Entry()
   {
     while (!TestDestroy ())
@@ -150,13 +150,13 @@ public:
       else
         result = ACTION_SUCCESS;
       actionFlags = action->GetFlags ();
-      
+
       state = ACTION_NONE;
     }
     catch (svn::ClientException & e)
     {
       wxString msg, errtxt (Utf8ToLocal (e.message ()));
-      msg.Printf (_("Error while performing action: %s"), 
+      msg.Printf (_("Error while performing action: %s"),
                   errtxt.c_str ());
       PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg);
 
@@ -181,11 +181,11 @@ public:
   }
 
 
-  /** 
+  /**
    * called when the thread exits - whether it terminates normally or is
    * stopped with Delete() (but not when it is Kill()ed!)
    */
-  virtual void 
+  virtual void
   OnExit()
   {
   }
@@ -241,7 +241,7 @@ ThreadedWorker::Create (wxWindow * parent)
   m->Init (parent);
 }
 
-ActionState 
+ActionState
 ThreadedWorker::GetState ()
 {
   return m->state;
@@ -312,7 +312,7 @@ ThreadedWorker::Perform (Action * action_)
   m->action = action_;
   return true;
 }
- 
+
 void
 ThreadedWorker::SetTracer (Tracer * tracer)
 {
@@ -325,7 +325,7 @@ ThreadedWorker::SetContext (svn::Context * context, bool own)
   m->SetContext (context, own);
 }
 
-svn::Context * 
+svn::Context *
 ThreadedWorker::GetContext () const
 {
   return m->context;

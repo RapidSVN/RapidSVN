@@ -14,7 +14,7 @@
 #ifndef _PROPERTY_DLG_H_INCLUDED_
 #define _PROPERTY_DLG_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/dialog.h"
 #include "wx/window.h"
 
@@ -27,7 +27,7 @@
 class PropertyDlg : public ListEditorDlg
 {
 public:
-  PropertyDlg (wxWindow * parent, svn::Context * context, 
+  PropertyDlg (wxWindow * parent, svn::Context * context,
                const svn::Path & target);
 
   /**

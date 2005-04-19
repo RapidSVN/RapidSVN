@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
@@ -24,7 +24,7 @@ public:
   wxString destination;
   bool force;
 
-  Data (wxWindow * window, const wxString & descr, 
+  Data (wxWindow * window, const wxString & descr,
         int flags, const wxString & dest)
     : destination (dest), force (false)
   {
@@ -34,33 +34,33 @@ public:
     wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
     // The description:
-    wxStaticText * labelDescr = 
+    wxStaticText * labelDescr =
       new wxStaticText (window, -1, descr);
     mainSizer->Add (labelDescr, 0, wxALL, 5);
 
     // The destination:
     wxTextValidator val (wxFILTER_NONE, &destination);
-    wxTextCtrl * textDest = 
-      new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition, 
+    wxTextCtrl * textDest =
+      new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
                       wxSize (200, -1), 0, val);
-      
+
     mainSizer->Add (textDest, 0, wxALL | wxEXPAND, 5);
 
     // The force check
     if (withForce)
     {
       wxGenericValidator val (&force);
-      wxCheckBox * check = 
+      wxCheckBox * check =
         new wxCheckBox (window, -1, _("Force"),
                         wxDefaultPosition, wxDefaultSize,
                         0, val);
       mainSizer->Add (check, 0, wxALL | wxALIGN_CENTER_HORIZONTAL);
     }
-    
+
     // The buttons:
-    buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0, 
+    buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0,
                      wxALL, 10);
-    buttonSizer->Add(new wxButton( window, wxID_CANCEL, _("Cancel")), 0, 
+    buttonSizer->Add(new wxButton( window, wxID_CANCEL, _("Cancel")), 0,
                      wxALL, 10);
 
     // Add all the sizers to the main sizer
@@ -83,13 +83,13 @@ const int DestinationDlg::WITH_FORCE=1;
 
 const int DIALOG_FLAGS = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
 
-DestinationDlg::DestinationDlg (wxWindow* parent, 
+DestinationDlg::DestinationDlg (wxWindow* parent,
                                const wxString & title,
-                               const wxString & descr, 
+                               const wxString & descr,
                                const int flags,
                                const wxString & dst)
  : wxDialog(parent, -1, title,
-            wxDefaultPosition, wxDefaultSize, 
+            wxDefaultPosition, wxDefaultSize,
             DIALOG_FLAGS)
 {
   m = new Data (this, descr, flags, dst);

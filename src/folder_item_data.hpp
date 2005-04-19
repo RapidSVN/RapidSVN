@@ -13,7 +13,7 @@
 #ifndef _FOLDER_ITEM_DATA_H_
 #define _FOLDER_ITEM_DATA_H_
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/treectrl.h"
 
@@ -31,12 +31,12 @@ enum
  */
 class FolderItemData : public wxTreeItemData
 {
-public: 
+public:
   /**
    * constructor
    */
-  FolderItemData(const int folderType,  
-                 const wxString & path = wxEmptyString, 
+  FolderItemData(const int folderType,
+                 const wxString & path = wxEmptyString,
                  const wxString & name = wxEmptyString,
                  bool hasChildren = false);
 
@@ -48,7 +48,7 @@ public:
   /**
    * copy constructor
    */
-  FolderItemData (const FolderItemData& src);   
+  FolderItemData (const FolderItemData& src);
 
   /**
    * destructor
@@ -58,31 +58,31 @@ public:
   /**
    * initialize the member variables
    */
-  void 
-  Create (const int folderType,  
-          const wxString & path = wxEmptyString, 
+  void
+  Create (const int folderType,
+          const wxString & path = wxEmptyString,
           const wxString & name = wxEmptyString,
           bool hasChildren = false);
-    
-  const int 
+
+  const int
   getFolderType () const
   {
     return m_folderType;
   }
 
-  const wxString& 
-  getPath () const 
+  const wxString&
+  getPath () const
   {
     return m_path;
   }
 
-  const wxString& 
+  const wxString&
   getName () const
   {
     return m_name;
   }
 
-  const bool 
+  const bool
   hasChildren () const
   {
     return m_hasChildren;

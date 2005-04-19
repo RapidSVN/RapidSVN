@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 #include "wx/filename.h"
 
@@ -52,7 +52,7 @@ MergeAction::Prepare ()
   MergeDlg dlg (GetParent (), m_calledByLogDlg, m_data);
 
   if (dlg.ShowModal () != wxID_OK)
-  { 
+  {
     return false;
   }
 
@@ -92,12 +92,12 @@ MergeAction::Perform ()
   LocalToUtf8(m_data.Path1, Path1Utf8);
   LocalToUtf8(m_data.Path2, Path2Utf8);
   LocalToUtf8(m_data.Destination, DestinationUtf8);
-  client.merge (svn::Path (Path1Utf8), 
-                rev1, 
-                svn::Path (Path2Utf8), 
-                rev2, 
-                svn::Path (DestinationUtf8), 
-                m_data.Force, 
+  client.merge (svn::Path (Path1Utf8),
+                rev1,
+                svn::Path (Path2Utf8),
+                rev2,
+                svn::Path (DestinationUtf8),
+                m_data.Force,
                 m_data.Recursive);
   return true;
 }

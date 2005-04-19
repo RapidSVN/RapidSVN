@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-// wxwindows
+// wxWidgets
 #include "wx/wx.h"
 
 // svncpp
@@ -104,7 +104,7 @@ SimpleWorker::Create (wxWindow * parent)
   m->Init (parent);
 }
 
-ActionState 
+ActionState
 SimpleWorker::GetState ()
 {
   return m->state;
@@ -187,7 +187,7 @@ SimpleWorker::Perform (Action * action)
   catch (svn::ClientException & e)
   {
     wxString msg, errtxt (Utf8ToLocal (e.message ()));
-    msg.Printf (_("Error while performing action: %s"), 
+    msg.Printf (_("Error while performing action: %s"),
                 errtxt.c_str ());
     PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
 
@@ -201,7 +201,7 @@ SimpleWorker::Perform (Action * action)
     return false;
   }
 
-  PostDataEvent (TOKEN_ACTION_END, (void*) new unsigned int(actionFlags), 
+  PostDataEvent (TOKEN_ACTION_END, (void*) new unsigned int(actionFlags),
                  ACTION_EVENT);
   return true;
 }
@@ -249,7 +249,7 @@ SimpleWorker::SetContext (svn::Context * context, bool own)
   m->SetContext (context, own);
 }
 
-svn::Context * 
+svn::Context *
 SimpleWorker::GetContext () const
 {
   return m->context;

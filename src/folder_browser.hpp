@@ -13,7 +13,7 @@
 #ifndef _FOLDER_BROWSER_H_INCLUDED_
 #define _FOLDER_BROWSER_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/treectrl.h"
 
 // forward declarations
@@ -43,14 +43,14 @@ public:
   const bool RemoveBookmark ();
 
   /**
-   * add bookmark 
+   * add bookmark
    */
   void AddBookmark (const wxString & path);
 
   /**
    * @return bookmark count on bookmarks
    */
-  const size_t 
+  const size_t
   GetBookmarkCount () const;
 
   /**
@@ -97,7 +97,7 @@ public:
   SelectFolder (const wxString & path);
 
   /**
-   * selects the @a bookmark 
+   * selects the @a bookmark
    *
    * @param bookmarkPath bookmark path
    * @return true on success
@@ -117,7 +117,7 @@ public:
   /**
    * @return auth per bookmark setting
    */
-  const bool 
+  const bool
   GetAuthPerBookmark () const;
 
 
@@ -133,7 +133,7 @@ private:
   Data * m;
 
   /**
-   * disallow default constructor 
+   * disallow default constructor
    */
   FolderBrowser ();
 
@@ -157,7 +157,7 @@ private:
   void OnCollapseItem (wxTreeEvent & event);
 
   void OnItemRightClk (wxTreeEvent & event);
-  
+
   void OnContextMenu (wxContextMenuEvent & event);
 
 };

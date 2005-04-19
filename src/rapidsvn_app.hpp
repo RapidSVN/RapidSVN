@@ -13,7 +13,7 @@
 #ifndef _RAPIDSVN_APP_H_INCLUDED_
 #define _RAPIDSVN_APP_H_INCLUDED_
 
-// wxwindows
+// wxWidgets
 #include "wx/app.h"
 #include "wx/intl.h"
 #include <wx/html/helpctrl.h> // html help support
@@ -25,7 +25,7 @@ class RapidSvnApp:public wxApp
 public:
   void OptionallyRegisterTempFile (const wxString & filename);
   void OptionallyPurgeTempFiles ();
-  
+
 #if wxUSE_WXHTML_HELP
   wxHtmlHelpController& GetHelpController()
   {
@@ -44,16 +44,16 @@ public:
 protected:
   virtual bool OnInit ();
   virtual int OnExit ();
-  
+
 private:
   wxLocale m_locale;
-  
+
   wxArrayString m_TempFiles;
-  
+
 #if wxUSE_WXHTML_HELP
   wxHtmlHelpController* m_helpController;
-  
-  bool 
+
+  bool
   LocateHelp ();
 #endif
 };
