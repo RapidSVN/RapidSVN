@@ -1,38 +1,67 @@
+Version 0.8.0 (released Apr 19 2005)
+http://svn.collab.net/repos/rapidsvn/tags/0.8.0
+
+User-visible changes:
+* 243 	New: Native Support for Mac OS X (no X11)
+* 252 	New: Fast diff to head revision
+* 202 	New: New column on the filelist pane: file's extension
+* 238 	New: Ability to access FSFS
+* 250 	New: Show versioned files only
+* 259 	Dont truncate entries in tree
+* 211   	Fixed: Filenames with special chars (Umlauts) dont work
+* 212 	Fixed: Commit messages with special chars (umlauts) dont work
+* 221 	Fixed: Slow response to right click on files
+* 230 	Fixed: Crash when trying to expand a node in the tree view
+* 234 	Fixed: No update when adding a new directory
+* 237 	Fixed: Folder Browser forgets location on refresh
+* 242 	Fixed: No German User-Interface
+* 255 	Fixed: Info report contains an invalid URL
+* 257 	Fixed: Path for repositories in wrong format (only Windows)
+* 263 	Fixed: No URL edit field visible with wxX11
+* 244 	Fixed: Crash while setting program path in Preferences
+
+Developer-visible changes:
+* 270 	Added Full Unicode support
+* 256 	Switched to Subversion 1.1 for Windows
+* 222 	Fixed: Cannot compile rapidsvn on unicode-enabled wxGTK systems
+* 235 	Fixed: Suse 9.1 complaints during build (wx with Unicode)
+* 248 	Fixed: Compiler error for threaded_worker.cpp
+* 267 	Fixed: configure and out-of-tree builds
+
+
 Version 0.7.0 (released Sep 02 2004)
 http://svn.collab.net/repos/rapidsvn/tags/0.7.0
 
 User-visible changes:
-179 	Direct text editor access from RapidSVN
-172 	Options are now configurable in View/Diff tool preferences
-192 	Added STOP button
-190 	Added Documentation for Release Management
-191 	New merge button in log dialogue
-220 	Tweaked: Remember window status "Maximized"
-195 	Tweaked: Commits are now recursive as default (in dialog)
-206 	Tweaked: Changed menu entries for "Add Working Copy" and 
+* 179 	Direct text editor access from RapidSVN
+* 172 	Options are now configurable in View/Diff tool preferences
+* 192 	Added STOP button
+* 190 	Added Documentation for Release Management
+* 191 	New merge button in log dialogue
+* 220 	Tweaked: Remember window status "Maximized"
+* 195 	Tweaked: Commits are now recursive as default (in dialog)
+* 206 	Tweaked: Changed menu entries for "Add Working Copy" and 
         "Add Repository" menu items confusing
-165   	Fixed: Space in dir name became %20 on rename
-194 	Fixed: Copy didnt work with URL destination
-196 	Fixed: Win32 build files were missing from tar.gz source kits
-167 	Fixed: crash on expand bottom bookmark
-214 	Fixed: Incorrect info for repository directories
-197 	Fixed: Commit/Update used active file instead of folder in 
+* 165   	Fixed: Space in dir name became %20 on rename
+* 194 	Fixed: Copy didnt work with URL destination
+* 196 	Fixed: Win32 build files were missing from tar.gz source kits
+* 167 	Fixed: crash on expand bottom bookmark
+* 214 	Fixed: Incorrect info for repository directories
+* 197 	Fixed: Commit/Update used active file instead of folder in 
                folder browser menu (when right-clicking in the folder browser)
-207 	Fixed: TextViewer (called by LogDlg) removed (see #179)
-189 	Fixed: Sort order; group unversioned items with other modified
-198 	Fixed: folder double-clicking on Win32
-
+* 207 	Fixed: TextViewer (called by LogDlg) removed (see #179)
+* 189 	Fixed: Sort order; group unversioned items with other modified
+* 198 	Fixed: folder double-clicking on Win32
 
 Developer-visible changes:
-201 	Fixed: Client::log("") failed
-204 	Fixed: cat couldnt return binary data
-218 	Fixed: Default config dir created against user wishes
-219 	Fixed: Auth code ddidnt not use users config_dir
-224 	Fixed: make fails on Suse 9.1
-208 	Fixed: install svncpp headers (with make install)
-199 	Fixed: Correctly disable VC7 warning 4290
-200 	Fixed: VC7 wants some more Exception ctors
-
+* 201 	Fixed: Client::log("") failed
+* 204 	Fixed: cat couldnt return binary data
+* 218 	Fixed: Default config dir created against user wishes
+* 219 	Fixed: Auth code ddidnt not use users config_dir
+* 224 	Fixed: make fails on Suse 9.1
+* 208 	Fixed: install svncpp headers (with make install)
+* 199 	Fixed: Correctly disable VC7 warning 4290
+* 200 	Fixed: VC7 wants some more Exception ctors
 
 
 Version 0.6.0 (released May 24 2004)
@@ -53,13 +82,11 @@ User-visible changes:
 * 185 	Fixed: Text/Property status display for 'out-of-date' files
 * 148 	Fixed: date display in log dlg
  
-
 Developer-visible changes:
 * 164 	Fixed: ls return path wrong for current dir
 * 169 	Fixed: Context inits apr after using apr function
 * 162 	Conform with Subversion 1.0.0
 * 168 	add changed path support to log
-
 
 
 Version 0.5.0 (released February 3 2004)
