@@ -19,6 +19,7 @@
 #include <wx/cshelp.h>
 
 //app
+#include "config.hpp"
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
 #include "version.hpp"
@@ -26,7 +27,7 @@
 
 static const wxChar HELP_FILE[] =  wxT("/Resources/HelpFile");
 
-#if wxUSE_STARTUP_TIPS
+#ifdef USE_STARTUP_TIPS
 static const wxChar TIPS_FILE[] = wxT("/Resources/TipsFile");
 static const wxChar TIPS_SHOW_AT_STARTUP[] = wxT("/Main/TipsShowAtStartup");
 static const wxChar TIPS_LAST_INDEX[] = wxT("/Main/TipsLastIndex");
@@ -47,7 +48,7 @@ bool RapidSvnApp::OnInit ()
   m_locale.AddCatalogLookupPathPrefix (wxT("locale"));
   m_locale.AddCatalog (wxT("rapidsvn"));
 
-#if wxUSE_WXHTML_HELP
+#ifdef  USE_HTML_HELP
   // Initialise the HTML help
   wxFileSystem::AddHandler (new wxZipFSHandler);
   m_helpController = new wxHtmlHelpController;
@@ -67,7 +68,7 @@ bool RapidSvnApp::OnInit ()
   SetTopWindow (frame);
 
   // Show tips if configured
-#if wxUSE_STARTUP_TIPS
+#ifdef USE_STARTUP_TIPS
   wxTipProvider* tipProvider = MakeTipProvider ();
   if (tipProvider)
   {
@@ -90,7 +91,7 @@ RapidSvnApp::OnExit ()
 
   // Remove the help provider & close down help
   delete wxHelpProvider::Set(NULL);
-#if wxUSE_WXHTML_HELP
+#ifdef  USE_HTML_HELP
   delete m_helpController;
 #endif
 
@@ -127,7 +128,7 @@ RapidSvnApp::OptionallyPurgeTempFiles ()
   m_TempFiles.Clear ();
 }
 
-#if wxUSE_WXHTML_HELP
+#ifdef  USE_HTML_HELP
 bool
 RapidSvnApp::LocateHelp ()
 {
@@ -177,7 +178,7 @@ RapidSvnApp::LocateHelp ()
 }
 #endif
 
-#if wxUSE_STARTUP_TIPS
+#ifdef USE_STARTUP_TIPS
 wxTipProvider*
 RapidSvnApp::MakeTipProvider (bool force)
 {
