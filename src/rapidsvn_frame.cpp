@@ -324,12 +324,13 @@ public:
 
     // Help Menu
     wxMenu *menuHelp = new wxMenu;
-#if wxUSE_WXHTML_HELP
+
+#ifdef  USE_HTML_HELP
     menuHelp->Append (ID_HelpContents, _("&Contents\tF1"));
     menuHelp->Append (ID_HelpIndex, _("&Index\tShift+F1"));
     menuHelp->AppendSeparator ();
 #endif
-#if wxUSE_STARTUP_TIPS
+#ifdef USE_STARTUP_TIPS
     menuHelp->Append (ID_HelpStartupTips, _("Show Startup Tips"));
     menuHelp->AppendSeparator ();
 #endif
@@ -846,7 +847,7 @@ RapidSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnHelpContents (wxCommandEvent & WXUNUSED (event))
 {
-#if wxUSE_WXHTML_HELP
+#ifdef  USE_HTML_HELP
   ::wxGetApp ().GetHelpController().DisplayContents();
 #endif
 }
@@ -854,7 +855,7 @@ RapidSvnFrame::OnHelpContents (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnHelpIndex (wxCommandEvent & WXUNUSED (event))
 {
-#if wxUSE_WXHTML_HELP
+#ifdef  USE_HTML_HELP
   ::wxGetApp ().GetHelpController().DisplayIndex();
 #endif
 }
@@ -862,7 +863,7 @@ RapidSvnFrame::OnHelpIndex (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnHelpStartupTips (wxCommandEvent & WXUNUSED (event))
 {
-#if wxUSE_STARTUP_TIPS
+#ifdef USE_STARTUP_TIPS
   RapidSvnApp& app = ::wxGetApp();
   wxTipProvider* tipProvider = app.MakeTipProvider (true);
   if (tipProvider)
@@ -876,7 +877,7 @@ RapidSvnFrame::OnHelpStartupTips (wxCommandEvent & WXUNUSED (event))
 
 void RapidSvnFrame::OnHelp (wxCommandEvent &WXUNUSED(event))
 {
-#if wxUSE_WXHTML_HELP
+#ifdef  USE_HTML_HELP
     wxWindow *active = wxGetActiveWindow();
     wxString helptext;
     while (active && helptext.IsEmpty())
