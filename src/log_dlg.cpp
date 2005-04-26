@@ -134,10 +134,12 @@ private:
     InsertColumn (0, _("Revision"));
     InsertColumn (1, _("User"));
     InsertColumn (2, _("Date"));
+    InsertColumn (3, _("Log Message"));
 
     SetColumnWidth (0, 65);
     SetColumnWidth (1, 100);
-    SetColumnWidth (2, 200);
+    SetColumnWidth (2, 150);
+    SetColumnWidth (3, 200);
 
     if (entries == 0)
       return;
@@ -158,6 +160,7 @@ private:
       InsertItem (index, rev);
       SetItem (index, 1, Utf8ToLocal (entry.author.c_str ()));
       SetItem (index, 2, dateStr);
+      SetItem (index, 3, Utf8ToLocal (entry.message.c_str ()));
       index++;
     }
  
@@ -216,7 +219,7 @@ public:
 
     wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);
     logSizer->Add (historyLabel, 0, wxALL, 5);
-    logSizer->Add (m_logList, 1, wxLEFT);
+    logSizer->Add (m_logList, 1, wxLEFT | wxEXPAND);
 
     wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
     buttonSizer->Add (buttonClose,   0, wxALL | wxEXPAND, 5);
