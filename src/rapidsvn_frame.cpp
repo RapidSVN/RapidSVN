@@ -1651,7 +1651,10 @@ RapidSvnFrame::UpdateCurrentPath ()
     m_context = m_folder_browser->GetContext ();
   }
 
-  SetTitle (m_title + wxT(": ") + m_currentPath);
+  if (m_currentPath.Length () > 0)
+    SetTitle (m_title + wxT(" - ") + m_currentPath);
+  else
+    SetTitle (m_title);
 }
 
 bool
