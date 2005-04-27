@@ -17,15 +17,23 @@
 
 // app
 #include "commit_dlg.hpp"
+#include "hist_val.hpp"
+
+
+static const wxChar CONF_HISTORY_COMMIT_LOG[] = wxT("History/CommitLog");
+static const int ID_HISTORY_COMBO_BOX = 1;
 
 struct CommitDlg::Data
 {
 public:
-  wxString message;
   bool recursive;
+  wxComboBox * comboHistory;
+  wxTextCtrl * msg;
+
+  wxString message;
 
   Data (wxWindow * window, bool unexpectedCommit)
-    : recursive (true)
+    : recursive (true), comboHistory (0), msg (0)
   {
     // create controls
     wxStaticBox* msgBox =
@@ -34,12 +42,24 @@ public:
     wxSize msgSize (window->GetCharWidth () * 80,
                     window->GetCharHeight () * 10);
 
-    wxTextCtrl* msg;
     {
-      wxTextValidator val (wxFILTER_NONE, &message);
+      HistoryValidator val (CONF_HISTORY_COMMIT_LOG, &message);
       msg = new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
                             msgSize, wxTE_MULTILINE, val);
     }
+
+    
+    wxStaticText * labelHistory = new wxStaticText (
+      window, -1, _("Recent entries:"), wxDefaultPosition);
+
+    {
+      HistoryValidator val (CONF_HISTORY_COMMIT_LOG, 0, true);
+      comboHistory = new wxComboBox (
+        window, ID_HISTORY_COMBO_BOX, wxEmptyString, 
+        wxDefaultPosition, wxDefaultSize, 0, NULL, 
+        wxCB_READONLY, val);
+    }
+
     wxCheckBox * checkRecursive = NULL;
     if (!unexpectedCommit)
     {
@@ -62,6 +82,11 @@ public:
       new wxStaticBoxSizer (msgBox, wxHORIZONTAL);
     msgSizer->Add (msg, 1, wxALL | wxEXPAND, 5);
 
+    // the history combo
+    wxBoxSizer * histSizer = new wxBoxSizer (wxHORIZONTAL);
+    histSizer->Add (labelHistory, 0, wxALL, 5);
+    histSizer->Add (comboHistory, 1, wxALL | wxEXPAND, 5);
+
     // The buttons:
     wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
     if (!unexpectedCommit)
@@ -78,6 +103,7 @@ public:
 
     // Add all the sizers to the main sizer
     mainSizer->Add (topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
+    mainSizer->Add (histSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
     mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
 
     window->SetAutoLayout (true);
@@ -90,6 +116,7 @@ public:
 
 
 BEGIN_EVENT_TABLE (CommitDlg, wxDialog)
+  EVT_COMBOBOX (ID_HISTORY_COMBO_BOX, CommitDlg::OnHistoryComboBox)
 END_EVENT_TABLE ()
 
 CommitDlg::CommitDlg (wxWindow* parent, bool unexpectedCommit)
@@ -116,6 +143,14 @@ bool
 CommitDlg::GetRecursive () const
 {
   return m->recursive;
+}
+
+
+void
+CommitDlg::OnHistoryComboBox (wxCommandEvent &)
+{
+  // transfer from combobox to text control
+  m->msg->SetValue (m->comboHistory->GetValue ());
 }
 
 /* -----------------------------------------------------------------

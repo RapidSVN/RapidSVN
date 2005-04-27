@@ -20,10 +20,11 @@
 
 //app
 #include "config.hpp"
+#include "hist_mgr.hpp"
+#include "preferences.hpp"
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
 #include "version.hpp"
-#include "preferences.hpp"
 
 static const wxChar HELP_FILE[] =  wxT("/Resources/HelpFile");
 
@@ -85,6 +86,8 @@ int
 RapidSvnApp::OnExit ()
 {
   OptionallyPurgeTempFiles ();
+
+  TheHistoryManager.Cleanup ();
 
   // destroy application configuration object
   delete wxConfigBase::Set ((wxConfigBase *) NULL);

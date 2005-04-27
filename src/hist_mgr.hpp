@@ -14,7 +14,7 @@
 #define _HIST_MGR_H_INCLUDED_
 
 // wxWidgets
-#include "wx/list.h"
+#include "wx/string.h"
 
 
 /**
@@ -36,25 +36,19 @@ public:
   virtual ~ HistoryManager ();
 
 
-  /** Default maximal number for the lists */
-  static const unsigned int DEFAULT_MAX_COUNT;
-
-  
   /** 
    * Read a list of strings identified by @a id
-   * from the configuration file.
+   * from the configuration file and write the
+   * results to @a list.
    *
    * The first entry in the list will be the most
    * recent entered string.
    *
    * @param id unique identier for the list
-   * @param maxCount the maximal number of entries
-   *                 for the list. 0 means unlimited
-   * @return a string list
+   * @return list of entries
    */
-  wxStringList 
-  ReadList (const wxString & id, 
-            unsigned int maxCount = DEFAULT_MAX_COUNT);
+  const wxArrayString & 
+  ReadList (const wxString & id);
 
 
   /**
@@ -75,16 +69,24 @@ public:
    *
    * @param id unique identifier for the list
    * @param list string list
-   * @param maxCount the maximal number of entries 
-   *                 for the list. 0 means unlimited
    */
   void
   WriteList (const wxString & id, 
-             const wxStringList & list,
-             unsigned int maxCount = DEFAULT_MAX_COUNT);
+             const wxArrayString & list);
+
+
+  /**
+   * Call this method to ensure all the data is
+   * written to the configuration files
+   */
+  void
+  Cleanup ();
 
 
 private:
+  struct Data;
+
+  Data * m;
 
   /** disallow copy constructor */
   HistoryManager (const HistoryManager &);
@@ -93,6 +95,13 @@ private:
   /** disallow assignment operator */
   HistoryManager & operator = (const HistoryManager &);
 };
+
+
+/**
+ * This is the singleton instance of the history manager
+ */
+extern HistoryManager TheHistoryManager;
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

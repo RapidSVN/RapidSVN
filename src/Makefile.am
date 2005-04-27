@@ -29,6 +29,7 @@ rapidsvn_SOURCES= \
 	folder_item_data.cpp \
 	get_action.cpp \
 	hist_mgr.cpp \
+	hist_val.cpp \
 	import_action.cpp \
 	import_dlg.cpp \
 	listed_dlg.cpp \

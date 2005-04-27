@@ -49,6 +49,8 @@ private:
   struct Data;
   Data * m;
 
+  void OnHistoryComboBox (wxCommandEvent &);
+private:
   DECLARE_EVENT_TABLE ()
 };
 
