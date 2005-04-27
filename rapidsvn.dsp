@@ -191,6 +191,10 @@ SOURCE=.\src\hist_mgr.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\hist_val.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\import_action.cpp
 # End Source File
 # Begin Source File
@@ -431,6 +435,10 @@ SOURCE=.\src\hist_mgr.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\hist_val.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\icons.hpp
 # End Source File
 # Begin Source File
@@ -544,10 +552,6 @@ SOURCE=.\src\trace_update.hpp
 # Begin Source File
 
 SOURCE=.\src\tracer.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\unique_array_string.hpp
 # End Source File
 # Begin Source File
 
