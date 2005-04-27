@@ -180,7 +180,7 @@ AppendQueryMenu (wxMenu * parentMenu)
   parentMenu->AppendSeparator ();
   AppendMenuItem (parentMenu, ID_Log, _("&Log...\tCTRL-L"),
                   wxBitmap (log_xpm));
-  AppendMenuItem (parentMenu, ID_Info, _("&Info...\tCTRL-I"),
+  AppendMenuItem (parentMenu, ID_Info, _("&Info..."),
                   wxBitmap (info_xpm));
 }
 
