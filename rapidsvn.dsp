@@ -187,6 +187,10 @@ SOURCE=.\src\get_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\hist_mgr.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\import_action.cpp
 # End Source File
 # Begin Source File
@@ -420,6 +424,10 @@ SOURCE=.\src\get_action.hpp
 # Begin Source File
 
 SOURCE=.\src\get_data.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\hist_mgr.hpp
 # End Source File
 # Begin Source File
 
