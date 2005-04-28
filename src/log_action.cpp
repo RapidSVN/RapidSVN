@@ -42,7 +42,7 @@ LogAction::Prepare ()
   {
     wxBusyCursor cursor;
     entries = client.log (target.c_str (), svn::Revision::START,
-                          svn::Revision::HEAD);
+                          svn::Revision::HEAD, false, false);
   }
   {
     LogDlg dlg (GetParent (), target.c_str (), entries);
