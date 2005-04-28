@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # ====================================================================
-# Copyright (c) 2002-2004 The RapidSvn Group.  All rights reserved.
+# Copyright (c) 2002-2005 The RapidSvn Group.  All rights reserved.
 #
 # This software is licensed as described in the file LICENSE.txt,
 # which you should have received as part of this distribution.

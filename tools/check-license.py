@@ -1,5 +1,16 @@
 #!/usr/bin/env python
 #
+# ====================================================================
+# Copyright (c) 2002-2005 The RapidSvn Group.  All rights reserved.
+#
+# This software is licensed as described in the file LICENSE.txt,
+# which you should have received as part of this distribution.
+#
+# This software consists of voluntary contributions made by many
+# individuals.  For exact contribution history, see the revision
+# history and logs, available at http://rapidsvn.tigris.org/.
+# ====================================================================
+#
 # check if a file has the proper license in it
 #
 # USAGE: check-license.py [-C] file1 file2 ... fileN
