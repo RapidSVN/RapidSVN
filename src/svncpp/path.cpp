@@ -258,8 +258,7 @@ end:
     const char * tempdir = NULL;
     Pool pool;
 
-    apr_status_t stat = apr_temp_dir_get (&tempdir, pool);
-    if (!APR_STATUS_IS_SUCCESS(stat))
+    if (apr_temp_dir_get (&tempdir, pool) != APR_SUCCESS)
     {
       tempdir = NULL;
     }
