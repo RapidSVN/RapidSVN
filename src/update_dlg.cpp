@@ -19,6 +19,8 @@
 #include "svncpp/url.hpp"
 
 // app
+#include "hist_entries.hpp"
+#include "hist_val.hpp"
 #include "update_dlg.hpp"
 #include "update_data.hpp"
 #include "utils.hpp"
@@ -35,14 +37,14 @@ struct UpdateDlg::Data
 private:
   wxTextCtrl * m_textRevision;
   wxCheckBox * m_checkUseLatest;
-  wxTextCtrl * m_textUrl;
+  wxComboBox * m_comboUrl;
   wxButton * m_buttonOk;
   const int m_flags;
 public:
   UpdateData data;
 
   Data (wxWindow * window, int flags, bool recursive)
-    : m_textRevision (0), m_checkUseLatest (0), m_textUrl (0),
+    : m_textRevision (0), m_checkUseLatest (0), m_comboUrl (0),
       m_buttonOk (0), m_flags (flags)
   {
     data.recursive = recursive;
@@ -57,11 +59,11 @@ public:
       wxStaticBox * box = new wxStaticBox (window, -1, _("URL"));
       wxStaticBoxSizer * sizer =
         new wxStaticBoxSizer (box, wxHORIZONTAL);
-      wxTextValidator val (wxFILTER_NONE, &data.url);
-      m_textUrl = new wxTextCtrl (window, ID_URL, wxEmptyString,
-                                  wxDefaultPosition,
-                                  wxDefaultSize, 0, val);
-      sizer->Add (m_textUrl, 1, wxALL | wxEXPAND, 5);
+      HistoryValidator val (HISTORY_REPOSITORY, &data.url);
+      m_comboUrl =
+        new wxComboBox (window, ID_URL, wxEmptyString, wxDefaultPosition,
+                        wxSize (235, -1), 0, 0, wxCB_DROPDOWN, val);
+      sizer->Add (m_comboUrl, 1, wxALL | wxEXPAND, 5);
       middleSizer->Add (sizer, 1, wxALL | wxEXPAND, 5);
     }
 
@@ -141,7 +143,7 @@ public:
     if (ok && withUrl ())
     {
       std::string UrlUtf8;
-      LocalToUtf8 (m_textUrl->GetValue (), UrlUtf8);
+      LocalToUtf8 (m_comboUrl->GetValue (), UrlUtf8);
       ok = svn::Url::isValid (UrlUtf8.c_str ());
     }
 

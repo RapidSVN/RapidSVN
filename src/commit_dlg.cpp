@@ -18,9 +18,9 @@
 // app
 #include "commit_dlg.hpp"
 #include "hist_val.hpp"
+#include "hist_entries.hpp"
 
 
-static const wxChar CONF_HISTORY_COMMIT_LOG[] = wxT("History/CommitLog");
 static const int ID_HISTORY_COMBO_BOX = 1;
 
 struct CommitDlg::Data
@@ -43,7 +43,7 @@ public:
                     window->GetCharHeight () * 10);
 
     {
-      HistoryValidator val (CONF_HISTORY_COMMIT_LOG, &message);
+      HistoryValidator val (HISTORY_COMMIT_LOG, &message);
       msg = new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
                             msgSize, wxTE_MULTILINE, val);
     }
@@ -53,7 +53,7 @@ public:
       window, -1, _("Recent entries:"), wxDefaultPosition);
 
     {
-      HistoryValidator val (CONF_HISTORY_COMMIT_LOG, 0, true);
+      HistoryValidator val (HISTORY_COMMIT_LOG, 0, true);
       comboHistory = new wxComboBox (
         window, ID_HISTORY_COMBO_BOX, wxEmptyString, 
         wxDefaultPosition, wxDefaultSize, 0, NULL, 

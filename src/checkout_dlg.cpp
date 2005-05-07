@@ -14,11 +14,13 @@
 //TODO #include "rapidsvn_app.hpp"
 
 // wxWidgets
-#include "wx/sizer.h"
-#include <wx/valgen.h>
 #include "wx/cshelp.h"
+#include "wx/sizer.h"
+#include "wx/valgen.h"
 
 // app
+#include "hist_entries.hpp"
+#include "hist_val.hpp"
 #include "rapidsvn_app.hpp"
 #include "checkout_dlg.hpp"
 #include "utils.hpp"
@@ -35,7 +37,7 @@ private:
   wxCheckBox * m_checkUseLatest;
   wxTextCtrl * m_textRevision;
   wxTextCtrl * m_textDest;
-  wxTextCtrl * m_textRepUrl;
+  wxComboBox * m_comboRepUrl;
   wxButton * m_buttonOk;
 
 public:
@@ -46,11 +48,11 @@ public:
     // create controls
     wxStaticBox* urlBox =
       new wxStaticBox (wnd, 0, _("URL"));
-    wxTextValidator valModule (wxFILTER_NONE, &data.RepUrl);
-    m_textRepUrl =
-      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
-                      wxSize(235, -1), 0, valModule);
-    m_textRepUrl->SetHelpText (_("Enter the repository URL (not local path) here."));
+    HistoryValidator valModule (HISTORY_REPOSITORY, &data.RepUrl);
+    m_comboRepUrl =
+      new wxComboBox (wnd, -1, wxEmptyString, wxDefaultPosition,
+                      wxSize (235, -1), 0, 0, wxCB_DROPDOWN, valModule);
+    m_comboRepUrl->SetHelpText (_("Enter the repository URL (not local path) here."));
     wxStaticBox* destBox =
       new wxStaticBox (wnd, 0, _("Destination Directory"));
     wxTextValidator valDest (wxFILTER_NONE, &data.DestFolder);
@@ -93,7 +95,7 @@ public:
     // URL row
     wxStaticBoxSizer *urlSizer =
       new wxStaticBoxSizer (urlBox, wxHORIZONTAL);
-    urlSizer->Add (m_textRepUrl, 1, wxALL | wxEXPAND, 5);
+    urlSizer->Add (m_comboRepUrl, 1, wxALL | wxEXPAND, 5);
 
     // Destination row
     wxStaticBoxSizer *destSizer =
@@ -157,7 +159,7 @@ public:
       ok = false;
     }
 
-    if (m_textRepUrl->GetValue ().Length () <= 0)
+    if (m_comboRepUrl->GetValue ().Length () <= 0)
     {
       ok = false;
     }

@@ -16,6 +16,8 @@
 #include "wx/valgen.h"
 
 // app
+#include "hist_entries.hpp"
+#include "hist_val.hpp"
 #include "import_data.hpp"
 #include "import_dlg.hpp"
 #include "utils.hpp"
@@ -50,10 +52,12 @@ public:
     // Row 0:
     Grid->Add(new wxStaticText(wnd, -1, _("Repository URL")), 0,
               wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-    wxTextCtrl *Repository = new wxTextCtrl(wnd, -1, wxEmptyString,
-                                            wxDefaultPosition, wxSize(300, -1), 0,
-                                            wxTextValidator(wxFILTER_NONE, &data.Repository));
-    Grid->Add(Repository, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
+
+    HistoryValidator val (HISTORY_REPOSITORY, &data.Repository);
+    wxComboBox *repository = 
+      new wxComboBox (wnd, -1, wxEmptyString, wxDefaultPosition,
+                      wxSize (235, -1), 0, 0, wxCB_DROPDOWN, val);
+    Grid->Add(repository, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
 
     Grid->Add(new wxStaticText(wnd, -1, wxEmptyString), 0,
               0, 5);
