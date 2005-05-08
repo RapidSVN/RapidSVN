@@ -621,11 +621,20 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->SetRunning (false);
 
   m_horiz_splitter =
+#if wxCHECK_VERSION(2, 6, 0)
+    new wxSplitterWindow (this,
+                                    SPLITTER_WINDOW,
+                                    wxDefaultPosition,
+                                    wxDefaultSize,
+                                    SPLITTER_STYLE);
+  m_horiz_splitter->SetSashGravity(1.0f);
+#else
     new ProportionalSplitterWindow (1.0f, this,
                                     SPLITTER_WINDOW,
                                     wxDefaultPosition,
                                     wxDefaultSize,
                                     SPLITTER_STYLE);
+#endif
 
   m_info_panel = new wxPanel (m_horiz_splitter, -1,
                               wxDefaultPosition, wxDefaultSize,
@@ -647,6 +656,10 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                                           wxDefaultPosition,
                                           wxDefaultSize,
                                           SPLITTER_STYLE);
+#if wxCHECK_VERSION(2, 6, 0)
+  // Not a complete solution, but a workaround for now...
+  m_vert_splitter->SetSashGravity(0.2f);
+#endif
 
   // Create the list control to display files
   m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL,

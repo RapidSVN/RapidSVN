@@ -60,7 +60,7 @@ private:
   /**
    * disallow copy constructor
    */
-  PreferencesDlg (const Preferences &);
+  PreferencesDlg (const PreferencesDlg &);
 
   /**
    * disallow assignment operator

@@ -35,7 +35,7 @@ static const unsigned int MAX_COUNT = 100;
 static const wxChar CONF_COUNT_FMT[] = wxT("/%s/Count");
 
 /** format string for a single value */
-static const wxChar CONF_VALUE_FMT[] = wxT("/%s/Value%d");
+static const wxChar CONF_VALUE_FMT[] = wxT("/%s/Value%ld");
 
 
 HistoryManager TheHistoryManager;
@@ -152,7 +152,11 @@ public:
     int i = list.Index (entry);
 
     if (i != wxNOT_FOUND)
+#if wxCHECK_VERSION(2, 6, 0)
+      list.RemoveAt (i);
+#else
       list.Remove (i);
+#endif
 
     // insert the string at the first position
     list.Insert (entry, 0);
@@ -198,7 +202,7 @@ private:
   WriteSingleList (const wxString & name, const wxArrayString & list)
   {
     // allow only maximal number
-    size_t count = list.Count ();
+    long count = list.Count ();
     
     if (count > MAX_COUNT)
       count = MAX_COUNT;
@@ -207,20 +211,20 @@ private:
     // we wanna write the real value
     wxConfigBase * cfg = wxConfigBase::Get ();
     wxString countStr;
-    countStr.Printf(CONF_COUNT_FMT, name);
+    countStr.Printf(CONF_COUNT_FMT, name.c_str ());
     cfg->Write (countStr, 0);
 
-    size_t index;
+    long index;
     for (index = 0; index < count; index++)
     {
       wxString valueStr;
-      valueStr.Printf (CONF_VALUE_FMT, name, index);
+      valueStr.Printf (CONF_VALUE_FMT, name.c_str (), index);
 
       cfg->Write (valueStr, list[index]);
     }
 
     // no write real number of entries
-    cfg->Write (countStr, (long)count);
+    cfg->Write (countStr, count);
   }
 
 
@@ -240,7 +244,7 @@ private:
     // and limit the number
     wxConfigBase * cfg = wxConfigBase::Get ();
     wxString countStr;
-    countStr.Printf(CONF_COUNT_FMT, name);
+    countStr.Printf(CONF_COUNT_FMT, name.c_str ());
 
     long count;
     cfg->Read (countStr, &count, 0);
@@ -249,13 +253,13 @@ private:
 
     // now read the list
     list.Alloc (count);
-    size_t index;
+    long index;
     for (index=0; index<count; index++)
     {
       // read a single entry for the list
       wxString valueStr;
-      valueStr.Printf (CONF_VALUE_FMT, name, index);
-      wxString value ("");
+      valueStr.Printf (CONF_VALUE_FMT, name.c_str (), index);
+      wxString value;
       cfg->Read (valueStr, &value);
 
       // trim it and append it to the list (only if non-empty)

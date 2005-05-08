@@ -375,7 +375,9 @@ public:
     wxBoxSizer *button_sizer = new wxBoxSizer (wxHORIZONTAL);
 
     notebook = new wxNotebook (wnd, -1, wxDefaultPosition, wxDefaultSize);
+#if !wxCHECK_VERSION(2, 6, 0)
     wxNotebookSizer *nbs = new wxNotebookSizer (notebook);
+#endif
 
     // Add the pages
     GeneralPanel *generalPanel = new GeneralPanel (notebook, prefs);
@@ -400,7 +402,11 @@ public:
     //ExternalsPanel *externalsPanel = ExternalsPanel::Create (notebook);
     //notebook->AddPage (externalsPanel, _("Externals"));
 
+#if wxCHECK_VERSION(2, 6, 0)
+    topsizer->Add (notebook, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 6);
+#else
     topsizer->Add (nbs, 1, wxALIGN_CENTER | wxEXPAND | wxALL, 6);
+#endif
     topsizer->Add (button_sizer, 0, wxALIGN_CENTER);
 
     // Order is important here:
@@ -419,7 +425,12 @@ public:
     // Transfer data for every page. This doesn't happen by default.
     if (notebook)
     {
-      for (int i = 0; i < notebook->GetPageCount (); i++)
+#if wxCHECK_VERSION(2, 6, 0)
+      size_t i;
+#else
+      int i;
+#endif
+      for (i = 0; i < notebook->GetPageCount (); i++)
         b = b && notebook->GetPage (i)->TransferDataFromWindow ();
     }
     return b;
@@ -432,7 +443,12 @@ public:
     // Transfer data for every page. This doesn't happen by default.
     if (notebook)
     {
-      for (int i = 0; i < notebook->GetPageCount (); i++)
+#if wxCHECK_VERSION(2, 6, 0)
+      size_t i;
+#else
+      int i;
+#endif
+      for (i = 0; i < notebook->GetPageCount (); i++)
         b = b && notebook->GetPage (i)->TransferDataToWindow ();
     }
     return b;

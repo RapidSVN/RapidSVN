@@ -82,6 +82,7 @@ public:
     wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
     buttonSizer->Add (buttonOk, 0, wxALL, 10);
     buttonSizer->Add (buttonCancel, 0, wxALL, 10);
+    buttonOk->SetDefault ();
 
     // Add all the sizers to the main sizer
     wxBoxSizer *mainSizer = new wxBoxSizer (wxVERTICAL);

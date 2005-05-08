@@ -238,8 +238,8 @@ public:
       }
 
       wxMenuItem * item = new wxMenuItem (&menu, ID_Logout, label);
-      item->Enable (enabled);
       menu.Append (item);
+      item->Enable (enabled);
     }
 
     if ((type==FOLDER_TYPE_BOOKMARK)||(type==FOLDER_TYPE_NORMAL))
@@ -382,7 +382,7 @@ public:
   {
     wxTreeItemId parentId = event.GetItem ();
 
-    long cookie;
+    wxTreeItemIdValue cookie;
     wxTreeItemId id = treeCtrl->GetFirstChild (parentId, cookie);
 
     while(id.IsOk())
@@ -510,7 +510,7 @@ public:
   wxTreeItemId
   FindClosestChild (const wxTreeItemId & parentId, const wxString & path)
   {
-    long cookie;
+    wxTreeItemIdValue cookie;
     wxTreeItemId id = treeCtrl->GetFirstChild (parentId, cookie);
     wxTreeItemId childId;
 
@@ -651,7 +651,7 @@ public:
   bool
   SelectBookmark (const wxString & bookmarkPath)
   {
-    long cookie;
+    wxTreeItemIdValue cookie;
     wxTreeItemId id = treeCtrl->GetFirstChild (rootId, cookie);
 
     bool success = false;
