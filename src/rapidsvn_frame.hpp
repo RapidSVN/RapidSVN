@@ -114,7 +114,6 @@ private:
   void OnActionEvent (wxCommandEvent & event);
 
   // Folder Browser
-  void InitFolderBrowser ();
   void AddWcBookmark ();
   void AddRepoBookmark ();
   void RemoveBookmark ();

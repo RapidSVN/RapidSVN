@@ -19,6 +19,7 @@
 // forward declarations
 class wxImageList;
 class FolderItemData;
+class wxConfigBase;
 namespace svn
 {
   class Context;
@@ -47,20 +48,6 @@ public:
    */
   void AddBookmark (const wxString & path);
 
-  /**
-   * @return bookmark count on bookmarks
-   */
-  const size_t
-  GetBookmarkCount () const;
-
-  /**
-   * get the path of the bookmark at @a index
-   *
-   * @param index zero-based index
-   * @return path of the bookmark
-   */
-  const wxString &
-  GetBookmark (const size_t index) const;
 
   /**
    * returns the path of the current selection
@@ -127,6 +114,26 @@ public:
 
   svn::ContextListener *
   GetListener () const;
+
+
+  /**
+   * Writes configuration including bookmarks
+   * to @a cfg
+   *
+   * @param cfg Config instance to write to
+   */
+  void
+  WriteConfig (wxConfigBase * cfg) const;
+
+
+  /**
+   * Read configuration
+   *
+   * @param cfg Config instance
+   */
+  void
+  ReadConfig (wxConfigBase * cfg);
+
 
 private:
   struct Data;

@@ -25,13 +25,14 @@
 #include "wx/dir.h"
 #include "wx/imaglist.h"
 #include "wx/treectrl.h"
+#include "wx/confbase.h"
+#include "wx/hashmap.h"
 
 // app
 #include "folder_browser.hpp"
 #include "folder_item_data.hpp"
 #include "ids.hpp"
 #include "utils.hpp"
-#include "bookmarks.hpp"
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
 
@@ -63,6 +64,13 @@ enum
 static const unsigned int MAXLENGTH_BOOKMARK = 35;
 
 
+const static wxChar ConfigBookmarkFmt[] = wxT("/Bookmarks/Bookmark%ld");
+const static wxChar ConfigBookmarkCount[] = wxT("/Bookmarks/Count");
+
+static const wxString EmptyString ("");
+
+
+// local functions
 static bool
 IsValidSeparator (const wxString & sep)
 {
@@ -70,19 +78,60 @@ IsValidSeparator (const wxString & sep)
 }
 
 
+/** 
+ * data structure that contains information about
+ * a single bookmark
+ */
+struct Bookmark
+{
+public:
+  svn::Context * context;
+
+
+  Bookmark ()
+    : context (0)
+  {
+  }
+
+
+  ~Bookmark ()
+  {
+    ClearContext ();
+  }
+
+
+  void
+  ClearContext ()
+  {
+    if (context != 0)
+    {
+      delete context;
+      context = 0;
+    }
+  }
+};
+
+
+static const Bookmark InvalidBookmark;
+
+
+WX_DECLARE_STRING_HASH_MAP (Bookmark, BookmarkHashMap);
+
 struct FolderBrowser::Data
 {
+private:
+  svn::Context * singleContext;
 public:
   wxWindow * window;
   svn::ContextListener * listener;
   wxTreeCtrl* treeCtrl;
   wxTreeItemId rootId;
   wxImageList* imageList;
-  Bookmarks bookmarks;
+  BookmarkHashMap bookmarks;
   svn::Context defaultContext;
 
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
-    : window (window), listener (0)
+    : singleContext (0), window (window), listener (0)
   {
     imageList = new wxImageList (16, 16, TRUE);
     imageList->Add (wxIcon (computer_xpm));
@@ -110,6 +159,51 @@ public:
     DeleteAllItems ();
   }
 
+  /**
+   * add a new bookmark, but only if it doesnt
+   * exist yet. Add a new context as well.
+   *
+   * @param name full path/url of the bookmark
+   */
+  void
+  AddBookmark (wxString name)
+  {
+    TrimString (name);
+
+    std::string nameUtf8;
+    LocalToUtf8(name, nameUtf8);
+    if (!svn::Url::isValid (nameUtf8.c_str()))
+    {
+      wxFileName filename (name);
+      name = filename.GetFullPath (wxPATH_NATIVE);
+    }
+
+    name = BeautifyPath (name);
+
+    bookmarks [name] = Bookmark ();
+
+    if (singleContext == 0)
+      bookmarks [name].context = CreateContext ();
+  }
+
+  
+  /**
+   * factory method to create a new context
+   */
+  svn::Context *
+  CreateContext ()
+  {
+    svn::Context * context = new svn::Context ();
+
+    // disable authentication caching.
+    context->setAuthCache (false);
+
+    context->setListener (listener);
+
+    return context;
+  }
+
+  
   const wxString
   GetPath ()
   {
@@ -141,54 +235,24 @@ public:
   }
 
   svn::Context *
-  GetContext ()
+  GetContext () 
   {
-    const FolderItemData * data = GetSelection ();
-    svn::Context * context = 0;
+    if (singleContext != 0)
+      return singleContext;
 
-    if (data == 0)
-    {
-      context = &defaultContext;
-    }
-    else
-    {
-      bool ok = true;
-      while (context == 0)
-      {
-        switch (data->getFolderType ())
-        {
-        case FOLDER_TYPE_BOOKMARKS:
-          context = &defaultContext;
-          break;
+    const wxString & path = GetSelectedBookmark ();
 
-        case FOLDER_TYPE_NORMAL:
-          {
-            wxTreeItemId id = data->GetId ();
-            wxTreeItemId parentId = treeCtrl->GetItemParent (id);
-            data = GetItemData (parentId);
-          }
-          break;
+    if (path.Length () == 0)
+      return &defaultContext;
 
-        case FOLDER_TYPE_BOOKMARK:
-          context = bookmarks.GetContext (data->getPath ());
-          ok = context != 0;
+    BookmarkHashMap::iterator it = bookmarks.find (path);
 
-          break;
-        default:
-          ok = false;
-          break;
-        }
+    if (it == bookmarks.end ())
+      return 0;
 
-        if (!ok)
-          break;
-      }
-    }
-
-    if (context != 0)
-      context->setListener (listener);
-
-    return context;
+    return it->second.context;
   }
+
 
 
   void
@@ -332,13 +396,12 @@ public:
     {
       case FOLDER_TYPE_BOOKMARKS:
       {
-        const int count = bookmarks.Count ();
-        int index;
+        BookmarkHashMap::iterator it = bookmarks.begin ();
 
-        for(index = 0; index < count; index++)
+        for (; it!= bookmarks.end (); it++)
         {
-          const wxString path
-              (bookmarks.GetBookmark (index));
+          const wxString & path = it->first;
+
           FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK,
                                                     path, path, TRUE);
           wxTreeItemId newId = treeCtrl->AppendItem (parentId, path,
@@ -717,22 +780,60 @@ public:
   }
 
 
-  wxString
-  GetSelectedBookmark () const
+  const wxString & 
+  GetSelectedBookmark ()
   {
     wxTreeItemId id = GetSelectedBookmarkId ();
 
-    wxString path;
+    if (!id.IsOk ())
+      return EmptyString;
 
-    if (id.IsOk ())
+    FolderItemData * data = GetItemData (id);
+
+    wxASSERT (data);
+
+    return data->getPath ();
+  }
+
+  void
+  SetAuthPerBookmark (const bool perBookmark)
+  {
+    if (!perBookmark)
     {
-      FolderItemData * data = GetItemData (id);
-
-      if (data != 0)
-        path = data->getPath ();
+      // one Context for all
+      ClearContexts ();
+      singleContext = CreateContext ();
     }
+    else
+    {
+      if (singleContext != 0)
+      {
+        delete singleContext;
+        singleContext = 0;
+      }
 
-    return path;
+      BookmarkHashMap::iterator it = bookmarks.begin ();
+
+      for (; it!=bookmarks.end (); it++)
+      {
+        it->second.context = CreateContext ();
+      }
+    }
+  }
+
+  const bool
+  GetAuthPerBookmark () const
+  {
+    return singleContext == 0;
+  }
+
+
+  void ClearContexts ()
+  {
+    BookmarkHashMap::iterator it = bookmarks.begin ();
+
+    for (; it!=bookmarks.end (); it++)
+      it->second.ClearContext ();
   }
 
 };
@@ -800,8 +901,7 @@ FolderBrowser::RemoveBookmark ()
 
   wxString path = data->getPath ();
   m->Delete (id);
-  m->bookmarks.RemoveBookmark (path);
-
+  m->bookmarks.erase (path);
 
   return true;
 }
@@ -809,7 +909,7 @@ FolderBrowser::RemoveBookmark ()
 void
 FolderBrowser::AddBookmark (const wxString & path)
 {
-  m->bookmarks.AddBookmark (path);
+  m->AddBookmark (path);
 }
 
 const
@@ -883,18 +983,6 @@ FolderBrowser::SelectFolder (const wxString & path)
   return m->SelectFolder (path);
 }
 
-const size_t
-FolderBrowser::GetBookmarkCount () const
-{
-  return m->bookmarks.Count ();
-}
-
-const wxString &
-FolderBrowser::GetBookmark (const size_t index) const
-{
-  return m->bookmarks.GetBookmark (index);
-}
-
 svn::Context *
 FolderBrowser::GetContext ()
 {
@@ -904,13 +992,13 @@ FolderBrowser::GetContext ()
 void
 FolderBrowser::SetAuthPerBookmark (const bool value)
 {
-  m->bookmarks.SetAuthPerBookmark (value);
+  m->SetAuthPerBookmark (value);
 }
 
 const bool
 FolderBrowser::GetAuthPerBookmark () const
 {
-  return m->bookmarks.GetAuthPerBookmark ();
+  return m->GetAuthPerBookmark ();
 }
 
 bool
@@ -930,6 +1018,50 @@ svn::ContextListener *
 FolderBrowser::GetListener () const
 {
   return m->listener;
+}
+
+
+void
+FolderBrowser::WriteConfig (wxConfigBase * cfg) const
+{
+  wxASSERT (cfg);
+
+  cfg->Write (ConfigBookmarkCount, (long)m->bookmarks.size ());
+
+  // Save the bookmarks contents
+  long item = 0;
+
+  BookmarkHashMap::iterator it = m->bookmarks.begin ();
+
+  for (; it != m->bookmarks.end (); it++)
+  {
+    wxString key;
+    key.Printf (ConfigBookmarkFmt, item);
+
+    cfg->Write (key, it->first);
+  }
+}
+
+
+void
+FolderBrowser::ReadConfig (wxConfigBase * cfg)
+{
+  wxASSERT (cfg);
+
+
+  long item, count;
+  cfg->Read (ConfigBookmarkCount, &count, 0);
+  for (item = 0; item < count; item++)
+  {
+    wxString key;
+    wxString path;
+
+    key.Printf (ConfigBookmarkFmt, item);
+    cfg->Read (key, &path, wxEmptyString);
+
+    if (path.Length () > 0)
+      m->bookmarks [path] = Bookmark ();
+  }
 }
 
 

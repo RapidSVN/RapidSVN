@@ -97,8 +97,6 @@ const static wxChar ConfigHeight[] = wxT("/MainFrame/Height");
 const static wxChar ConfigMaximized[] = wxT("/MainFrame/Maximized");
 const static wxChar ConfigSplitterHoriz[] = wxT("/MainFrame/SplitterHoriz");
 const static wxChar ConfigSplitterVert[] = wxT("/MainFrame/SplitterVert");
-const static wxChar ConfigBookmarkFmt[] = wxT("/Bookmarks/Bookmark%ld");
-const static wxChar ConfigBookmarkCount[] = wxT("/Bookmarks/Count");
 
 const static wxChar TraceMisc[] = wxT("tracemisc");
 
@@ -606,7 +604,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   // Retrieve a pointer to the application configuration object.
   // If the object is not created, it will be created upon the first
   // call to Get().
-  wxConfigBase *pConfig = wxConfigBase::Get ();
+  wxConfigBase *cfg = wxConfigBase::Get ();
 
   SetIcon (wxIcon (svn_xpm));
 
@@ -697,14 +695,14 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m_info_panel->SetSizer (sizer);
 
   // Read frame position
-  if (pConfig->Read (ConfigMaximized, (long int)0) == 1)
+  if (cfg->Read (ConfigMaximized, (long int)0) == 1)
     Maximize (true);
   else
   {
-    int x = pConfig->Read (ConfigLeft, 50);
-    int y = pConfig->Read (ConfigTop, 50);
-    int w = pConfig->Read (ConfigWidth, 806);
-    int h = pConfig->Read (ConfigHeight, 480);
+    int x = cfg->Read (ConfigLeft, 50);
+    int y = cfg->Read (ConfigTop, 50);
+    int w = cfg->Read (ConfigWidth, 806);
+    int h = cfg->Read (ConfigHeight, 480);
 
     Move (x, y);
     SetClientSize (w, h);
@@ -713,22 +711,23 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   // Get sash position for every splitter from configuration.
   int w,h;
   GetSize (&w, &h);
-  int vpos = pConfig->Read (ConfigSplitterVert, w / 3);
-  int hpos = pConfig->Read (ConfigSplitterHoriz, (3 * h) / 4);
+  int vpos = cfg->Read (ConfigSplitterVert, w / 3);
+  int hpos = cfg->Read (ConfigSplitterHoriz, (3 * h) / 4);
 
   // Set sash position for every splitter.
   // Note: to not revert the order of Split calls, as the panels will be messed up.
   m_horiz_splitter->SplitHorizontally (m_info_panel, m_log, hpos);
   m_vert_splitter->SplitVertically (m_folder_browser, m_listCtrl, vpos);
 
-  // put the working copy selections in the combo browser
-  InitFolderBrowser ();
+  // initialize the folder browser
+  m_folder_browser->ReadConfig (cfg);
+  UpdateFolderBrowser ();
 }
 
 RapidSvnFrame::~RapidSvnFrame ()
 {
-  wxConfigBase *pConfig = wxConfigBase::Get ();
-  if (pConfig == NULL)
+  wxConfigBase *cfg = wxConfigBase::Get ();
+  if (cfg == NULL)
     return;
 
   if (m_logTracer)
@@ -739,7 +738,7 @@ RapidSvnFrame::~RapidSvnFrame ()
 
   // Save frame size and position.
   if (IsMaximized ())
-    pConfig->Write (ConfigMaximized, 1);
+    cfg->Write (ConfigMaximized, 1);
   else
   {
     int x, y;
@@ -748,34 +747,21 @@ RapidSvnFrame::~RapidSvnFrame ()
     GetClientSize (&w, &h);
     GetPosition (&x, &y);
 
-    pConfig->Write (ConfigMaximized, 0);
-    pConfig->Write (ConfigLeft, (long) x);
-    pConfig->Write (ConfigTop, (long) y);
-    pConfig->Write (ConfigWidth, (long) w);
-    pConfig->Write (ConfigHeight, (long) h);
+    cfg->Write (ConfigMaximized, 0);
+    cfg->Write (ConfigLeft, (long) x);
+    cfg->Write (ConfigTop, (long) y);
+    cfg->Write (ConfigWidth, (long) w);
+    cfg->Write (ConfigHeight, (long) h);
   }
 
 
   // Save splitter positions
-  pConfig->Write (ConfigSplitterVert,
+  cfg->Write (ConfigSplitterVert,
                   (long) m_vert_splitter->GetSashPosition ());
-  pConfig->Write (ConfigSplitterHoriz,
+  cfg->Write (ConfigSplitterHoriz,
                   (long) m_horiz_splitter->GetSashPosition ());
 
-
-  // Save the bookmarks contents
-  long item;
-  const long itemCount = m_folder_browser->GetBookmarkCount ();
-  pConfig->Write (ConfigBookmarkCount, itemCount);
-  for (item = 0; item < itemCount; item++)
-  {
-    wxString key;
-    key.Printf (ConfigBookmarkFmt, item);
-
-    const wxString & bookmark = m_folder_browser->GetBookmark (item);
-
-    pConfig->Write (key, bookmark);
-  }
+  m_folder_browser->WriteConfig (cfg);
 
   delete m;
 }
@@ -1058,33 +1044,6 @@ RapidSvnFrame::EditBookmark ()
   }
 }
 
-
-void
-RapidSvnFrame::InitFolderBrowser ()
-{
-  wxConfigBase *pConfig = wxConfigBase::Get ();
-
-  wxASSERT (m_folder_browser);
-
-  wxString key;
-  wxString bookmark;
-
-  long item, count;
-  pConfig->Read (ConfigBookmarkCount, &count, 0);
-  for (item = 0; item < count; item++)
-  {
-    key.Printf (ConfigBookmarkFmt, item);
-    if (pConfig->Read (key, &bookmark, wxEmptyString))
-    {
-      m_folder_browser->AddBookmark (bookmark);
-    }
-
-    else
-      break;
-  }
-
-  UpdateFolderBrowser ();
-}
 
 const svn::Targets
 RapidSvnFrame::GetActionTargets () const
