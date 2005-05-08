@@ -76,6 +76,7 @@ private:
   void OnAddWcBookmark (wxCommandEvent & event);
   void OnAddRepoBookmark (wxCommandEvent & event);
   void OnRemoveBookmark (wxCommandEvent & event);
+  void OnEditBookmark (wxCommandEvent & event);
   void OnQuit (wxCommandEvent & event);
 
   // View menu
@@ -117,6 +118,7 @@ private:
   void AddWcBookmark ();
   void AddRepoBookmark ();
   void RemoveBookmark ();
+  void EditBookmark ();
   void OnFolderBrowserSelChanged (wxTreeEvent & event);
   void OnFolderBrowserKeyDown (wxTreeEvent & event);
   void OnFileListSelected (wxListEvent & event);

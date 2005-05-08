@@ -212,6 +212,8 @@ public:
 
     if (type==FOLDER_TYPE_BOOKMARK)
     {
+      menu.AppendSeparator ();
+      AppendMenuItem (menu, ID_EditBookmark);
       AppendMenuItem (menu, ID_RemoveBookmark);
       menu.AppendSeparator ();
       AppendMenuItem (menu, ID_Login);
@@ -558,11 +560,20 @@ public:
    * (folder removed or deleted) we open up the directory structure
    * as close as possible.
    *
+   * If @a path is an empty string, select the root
+   *
    * @param path
+   * @retval true selection successful
    */
   bool
   SelectFolder (const wxString & pathP)
   {
+    if (pathP.Length () == 0)
+    {
+      treeCtrl->SelectItem (treeCtrl->GetRootItem ());
+      return true;
+    }
+    
     // Convert the input string to subversion internal representation
     std::string pathPUtf8;
     LocalToUtf8 (pathP, pathPUtf8);
@@ -775,24 +786,24 @@ FolderBrowser::Refresh ()
 const bool
 FolderBrowser::RemoveBookmark ()
 {
-  bool success = FALSE;
-
   wxTreeItemId id = m->treeCtrl->GetSelection ();
 
-  if(id.IsOk ())
-  {
-    FolderItemData* data = (FolderItemData*) m->treeCtrl->GetItemData (id);
+  if(!id.IsOk ())
+    return false;
 
-    if( data->getFolderType() == FOLDER_TYPE_BOOKMARK )
-    {
-      wxString path = data->getPath ();
-      m->Delete (id);
-      m->bookmarks.RemoveBookmark (path);
-      success = TRUE;
-    }
-  }
+  FolderItemData* data = (FolderItemData*) m->treeCtrl->GetItemData (id);
 
-  return success;
+  if (data->getFolderType () != FOLDER_TYPE_BOOKMARK)
+    return false;
+
+  SelectFolder (wxEmptyString);
+
+  wxString path = data->getPath ();
+  m->Delete (id);
+  m->bookmarks.RemoveBookmark (path);
+
+
+  return true;
 }
 
 void

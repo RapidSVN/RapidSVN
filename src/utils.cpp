@@ -189,6 +189,8 @@ AppendBookmarksMenu (wxMenu * parentMenu)
 {
   AppendMenuItem (*parentMenu, ID_AddWcBookmark);
   AppendMenuItem (*parentMenu, ID_AddRepoBookmark);
+  parentMenu->AppendSeparator ();
+  AppendMenuItem (*parentMenu, ID_EditBookmark);
   AppendMenuItem (*parentMenu, ID_RemoveBookmark);
 }
 
@@ -233,6 +235,10 @@ AppendMenuItem (wxMenu & menu, int id)
   case ID_RemoveBookmark:
     caption = _("&Remove Bookmark...");
     bitmap = wxBitmap (remove_bookmark_xpm);
+    break;
+
+  case ID_EditBookmark:
+    caption = _("&Edit Bookmark...");
     break;
 
   case ID_CreateRepository:

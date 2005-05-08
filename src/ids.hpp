@@ -34,6 +34,7 @@ enum
   ID_AddWcBookmark,
   ID_AddRepoBookmark,
   ID_RemoveBookmark,
+  ID_EditBookmark,
   ID_Info,
   ID_Login,
   ID_Logout,

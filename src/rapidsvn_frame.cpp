@@ -27,10 +27,12 @@
 // app
 #include "rapidsvn_app.hpp"
 #include "config.hpp"
+#include "destination_dlg.hpp"
 #include "diff_data.hpp"
 #include "ids.hpp"
 #include "file_info.hpp"
 #include "listener.hpp"
+#include "folder_item_data.hpp"
 
 #ifdef USE_SIMPLE_WORKER
 #include "simple_worker.hpp"
@@ -548,6 +550,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_AddWcBookmark, RapidSvnFrame::OnAddWcBookmark)
   EVT_MENU (ID_AddRepoBookmark, RapidSvnFrame::OnAddRepoBookmark)
   EVT_MENU (ID_RemoveBookmark, RapidSvnFrame::OnRemoveBookmark)
+  EVT_MENU (ID_EditBookmark, RapidSvnFrame::OnEditBookmark)
   EVT_MENU (ID_Quit, RapidSvnFrame::OnQuit)
   EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
 
@@ -824,6 +827,14 @@ RapidSvnFrame::OnRemoveBookmark (wxCommandEvent & event)
   RemoveBookmark ();
 }
 
+
+void 
+RapidSvnFrame::OnEditBookmark (wxCommandEvent & event)
+{
+  EditBookmark ();
+}
+
+
 void
 RapidSvnFrame::OnQuit (wxCommandEvent & WXUNUSED (event))
 {
@@ -993,6 +1004,47 @@ RapidSvnFrame::RemoveBookmark ()
     wxLogStatus (_("Removed bookmark"));
   }
 }
+
+
+void
+RapidSvnFrame::EditBookmark ()
+{
+  wxASSERT (m_folder_browser);
+
+  const FolderItemData * bookmark = m_folder_browser->GetSelection ();
+
+  // if nothing is selected, or the wrong type,
+  // just exit (this should be handled by the routine
+  // that is responsible for greying out menu entries,
+  // but hey: nobody is perfect
+  if (!m_folder_browser)
+    return;
+
+  if (bookmark->getFolderType () != FOLDER_TYPE_BOOKMARK)
+    return;
+
+  // now edit the data
+  wxString oldPath (bookmark->getPath ());
+  DestinationDlg dlg (this, _("Edit Bookmark"), _("Bookmark"), 
+                      0, oldPath);
+
+  if (dlg.ShowModal () == wxID_OK)
+  {
+    // and if everything goes right, remove the old
+    // selection and add the new one
+    wxString newPath (dlg.GetDestination ());
+
+    // if nothing has changed, just exit
+    if (oldPath == newPath)
+      return;
+
+    m_folder_browser->RemoveBookmark ();
+    m_folder_browser->AddBookmark (newPath);
+    UpdateFolderBrowser ();
+    m_folder_browser->SelectBookmark (newPath);
+  }
+}
+
 
 void
 RapidSvnFrame::InitFolderBrowser ()
