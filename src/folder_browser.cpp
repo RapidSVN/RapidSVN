@@ -67,7 +67,7 @@ static const unsigned int MAXLENGTH_BOOKMARK = 35;
 const static wxChar ConfigBookmarkFmt[] = wxT("/Bookmarks/Bookmark%ld");
 const static wxChar ConfigBookmarkCount[] = wxT("/Bookmarks/Count");
 
-static const wxString EmptyString ("");
+static const wxString EmptyString;
 
 
 // local functions
