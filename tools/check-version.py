@@ -16,36 +16,31 @@
 #   places matches the current version and patch these files
 #   if necessary
 #
-# Usage: check-version.py (while in tools directory)
+# Usage: check-version.py (while in the top build-directory)
 #
 #
 # Version information is stored in the file "version.xml" in the
 # top build-directory.
 #
-# The following files are being checked/patched:
-#   version.xml           
-#   configure.in
-#   packages/win32/rapidsvn.iss
-#   packages/debian
-#   src/version.hpp
-#
 
-#import xmllib
 from xml.dom.minidom import parse
 import re
 
-VERSION_FILE = "../version.xml"
-CONFIGURE_IN_FILE = "../configure.in"
-VERSION_HPP_FILE = "../src/version.hpp"
-RAPIDSVN_ISS_FILE = "../packages/win32/rapidsvn.iss"
-DEBIAN_FILES_FILE = "../packages/debian/files"
-RAPIDSVN_RC_FILE = "../src/rapidsvn.rc"
+# The following files are being checked/patched:
+VERSION_FILE = "version.xml"
+CONFIGURE_IN_FILE = "configure.in"
+VERSION_HPP_FILE = "src/version.hpp"
+RAPIDSVN_ISS_FILE = "packages/win32/rapidsvn.iss"
+DEBIAN_FILES_FILE = "packages/debian/files"
+RAPIDSVN_RC_FILE = "src/rapidsvn.rc"
+MAKE_OSX_BUNDLE_FILE = "packages/osx/make_osx_bundle.sh"
 
 class Version:
     def __init__(self, filename):
         self.major = ""
         self.minor = ""
         self.micro = ""
+        self.str = ""
         self.milestone = ""
 
         self.readFromFile(filename)
@@ -56,7 +51,8 @@ class Version:
         self.major = version.attributes["major"].value
         self.minor = version.attributes["minor"].value
         self.micro = version.attributes["micro"].value
-        self.milestone = "%s.%s.%s" % (self.major, self.minor, self.micro)
+        self.str = "%s.%s.%s" % (self.major, self.minor, self.micro)
+        self.milestone = version.attributes["milestone"].value
 
 def replace(fname, regex, newval, what):
     s = open(fname, "r").read()
@@ -76,7 +72,7 @@ class VersionChecker:
         self.version = Version(VERSION_FILE)
 
     def checkConfigureIn(self):
-        newval = "AM_INIT_AUTOMAKE(rapidsvn, %s)" % (self.version.milestone)
+        newval = "AM_INIT_AUTOMAKE(rapidsvn, %s)" % (self.version.str)
         what = "Version information"
         replace(CONFIGURE_IN_FILE, 
                 "AM_INIT_AUTOMAKE[^\n]*", 
@@ -104,10 +100,10 @@ class VersionChecker:
     def checkRapidsvnIss(self):
         fname = RAPIDSVN_ISS_FILE
         replace(fname, "AppVerName=[^\n]*", 
-                 "AppVerName=RapidSVN %s" % (self.version.milestone), 
+                 "AppVerName=RapidSVN %s" % (self.version.str), 
                  "AppVerName")
         replace(fname, "OutputBaseFilename=[^\n]*", \
-                "OutputBaseFilename=RapidSVN-%s" % (self.version.milestone),
+                "OutputBaseFilename=RapidSVN-%s" % (self.version.str),
                 "OutputBaseFilename")
                 
     def checkRapidsvnRc(self):
@@ -122,14 +118,32 @@ class VersionChecker:
                 "#define VERSION_MICRO %s" % (self.version.micro),
                 "VERSION_MICRO")
         replace(fname, "#define VERSION_STRING.*",
-                "#define VERSION_STRING \"%s\\0\"" % (self.version.milestone),
+                "#define VERSION_STRING \"%s\\0\"" % (self.version.str),
                 "VERSION_STRING")
 
     def checkDebianFiles(self):
         fname = DEBIAN_FILES_FILE
         replace(fname, "rapidsvn_[^\n]*", \
-                "rapidsvn_%s-1_i386.deb x11 optional" % (self.version.milestone),
+                "rapidsvn_%s-1_i386.deb x11 optional" % (self.version.str),
                 "Debian package name")
+
+    def checkMakeOsXBundle(self):
+        fname = MAKE_OSX_BUNDLE_FILE
+        replace(fname, "<key>CFBundleVersion.*", \
+                "<key>CFBundleVersion</key><string>%s</string>" % \
+                (self.version.str), "CFBundleVersion")
+        replace(fname, "<key>CFBundleShortVersionString</key>.*", \
+                "<key>CFBundleShortVersionString</key><string>%s</string>" % \
+                (self.version.str), "CFBundleShortVersionString")
+        replace(fname, "<key>CFBundleGetInfoString</key>.*", \
+                "<key>CFBundleGetInfoString</key>" \
+                "<string>RapidSVN version %s, " \
+                "(c) 2005 RapidSVN</string>" % (self.version.str), \
+                "CFBundleGetInfoString")
+        replace(fname, "<key>CFBundleLongVersionString</key>.*", \
+                "<key>CFBundleLongVersionString</key>" \
+                "<string>%s, (c) 2005 RapidSVN</string>" % \
+                (self.version.str), "CFBundleLongVersionString")
 
     def run(self):
         print "Version information:"
@@ -143,6 +157,7 @@ class VersionChecker:
         self.checkRapidsvnIss()
         self.checkDebianFiles()
         self.checkRapidsvnRc()
+        self.checkMakeOsXBundle()
 
 if __name__ == "__main__":
     vc = VersionChecker()

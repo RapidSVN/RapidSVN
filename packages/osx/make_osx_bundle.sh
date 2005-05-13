@@ -1,8 +1,14 @@
+# 
+# Script to generate the RapidSVN.app bundle and
+# a disk image ready for distribution
+#
+
+# Create the bundle
 BUNDLEDIR=RapidSVN.app/Contents
 mkdir -p $BUNDLEDIR/MacOS
 mkdir -p $BUNDLEDIR/Resources
-cp src/rapidsvn $BUNDLEDIR/MacOS/
-cp src/res/svn.icns $BUNDLEDIR/Resources/
+cp ../../src/rapidsvn $BUNDLEDIR/MacOS/
+cp svn.icns $BUNDLEDIR/Resources/
 echo -n 'APPL????' > $BUNDLEDIR/PkgInfo
 
 echo -n \
@@ -26,16 +32,12 @@ echo -n \
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>0.7.0</string>
-	<key>CFBundleShortVersionString</key>
-	<string>0.7.0</string>
-	<key>CFBundleGetInfoString</key>
-	<string>rapidsvn version 0.7.0, (c) 2004 RapidSVN</string>
-	<key>CFBundleLongVersionString</key>
-	<string>0.7.0, (c) 2004 RapidSVN</string>
+	<key>CFBundleVersion</key><string>0.8.0</string>
+	<key>CFBundleShortVersionString</key><string>0.8.0</string>
+	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.8.0, (c) 2005 RapidSVN</string>
+	<key>CFBundleLongVersionString</key><string>0.8.0, (c) 2005 RapidSVN</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2004 RapidSVN</string>
+	<string>Copyright 2005 RapidSVN</string>
 	<key>LSRequiresCarbon</key>
         <true/>
 	<key>CSResourcesFileMapped</key>

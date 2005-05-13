@@ -41,7 +41,7 @@
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
-#define RAPIDSVN_VER_MILESTONE "0.8.0"
+#define RAPIDSVN_VER_MILESTONE "0.8"
 
 #endif
 /* -----------------------------------------------------------------
