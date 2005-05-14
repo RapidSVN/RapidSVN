@@ -1039,6 +1039,8 @@ FolderBrowser::WriteConfig (wxConfigBase * cfg) const
     key.Printf (ConfigBookmarkFmt, item);
 
     cfg->Write (key, it->first);
+
+    item++;
   }
 }
 
