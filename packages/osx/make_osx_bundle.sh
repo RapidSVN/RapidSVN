@@ -3,11 +3,16 @@
 # a disk image ready for distribution
 #
 
+# Remove any old stuff. We wanna create a FRESH bundle
+test -e RapidSVN.app && rm -rf RapidSVN.app
+test -e RapidSVN.dmg && rm -rf RapidSVN.dmg
+
 # Create the bundle
 BUNDLEDIR=RapidSVN.app/Contents
 mkdir -p $BUNDLEDIR/MacOS
 mkdir -p $BUNDLEDIR/Resources
 cp ../../src/rapidsvn $BUNDLEDIR/MacOS/
+strip $BUNDLEDIR/MacOS/rapidsvn
 cp svn.icns $BUNDLEDIR/Resources/
 echo -n 'APPL????' > $BUNDLEDIR/PkgInfo
 
@@ -45,3 +50,6 @@ echo -n \
 </dict>
 </plist>
 " > $BUNDLEDIR/Info.plist
+
+# Now create the disk image from the bundle
+hdiutil create -srcfolder RapidSVN.app RapidSVN.dmg
