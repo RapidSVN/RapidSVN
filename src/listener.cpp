@@ -293,8 +293,16 @@ Listener::contextSslClientCertPwPrompt (std::string & password,
 bool
 Listener::contextCancel ()
 {
-  wxSafeYield ();
-  return m->isCancelled;
+  return false;
+
+// Commented out the following code, because
+// it caused a lot of flickering on Mac OS/X
+// in the menu bar and was really slow.
+//
+// On the other hand, until we have some real
+// threading this isnt of much use anyway 
+//  wxSafeYield ();
+//  return m->isCancelled;
 }
 
 
