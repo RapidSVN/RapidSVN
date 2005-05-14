@@ -95,7 +95,7 @@ namespace svn
     do
     {
       const std::string tokenStart ("handles '");
-      const std::string tokenEnd ("' schema");
+      const std::string tokenEnd ("' schem");
       pos = descriptions.find (tokenStart, pos);
       if (pos == not_found)
         break;
