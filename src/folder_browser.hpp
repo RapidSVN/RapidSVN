@@ -36,25 +36,30 @@ public:
 
   virtual ~ FolderBrowser ();
 
-  virtual void Refresh ();
+  virtual void 
+  Refresh ();
 
   /**
    * remove the selected bookmark from bookmarks
    */
-  const bool RemoveBookmark ();
+  const bool 
+  RemoveBookmark ();
 
   /**
-   * add bookmark
+   * add bookmark. 
+   * 
+   * @param path path/url of the bookmark
    */
-  void AddBookmark (const wxString & path);
-
+  void 
+  AddBookmark (const wxString & path);
 
   /**
    * returns the path of the current selection
    * if nothing is selected, an empty string
    * is returned
    */
-  const wxString GetPath () const;
+  const wxString 
+  GetPath () const;
 
   /**
    * returns the "context" of the current selection.
@@ -62,7 +67,8 @@ public:
    *
    * @return context of selection
    */
-  const FolderItemData * GetSelection () const;
+  const FolderItemData * 
+  GetSelection () const;
 
   /**
    * return the authentication context of the current selection
@@ -70,7 +76,8 @@ public:
    * @return authentication context
    * @retval NULL if Bookmarks is selected
    */
-  svn::Context * GetContext ();
+  svn::Context * 
+  GetContext ();
 
   /**
    * selects @a path in the current folder.
@@ -100,6 +107,26 @@ public:
    */
   void
   SetAuthPerBookmark (const bool value);
+
+  /** 
+   * check whether flat-mode is turned on for the 
+   * selected bookmark
+   *
+   * @retval true flat-mode is turned on
+   */
+  const bool
+  IsFlat () const;
+
+  /**
+   * turns flat-mode for the selected bookmark 
+   * on or off
+   *
+   * @param flatMode true=on
+   * @retval true flat-mode successfully set
+   * @retval false not set, e.g. root selected or nothing
+   */
+  bool
+  SetFlat (bool flatMode);
 
   /**
    * @return auth per bookmark setting

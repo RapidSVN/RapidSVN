@@ -64,8 +64,9 @@ enum
 static const unsigned int MAXLENGTH_BOOKMARK = 35;
 
 
-const static wxChar ConfigBookmarkFmt[] = wxT("/Bookmarks/Bookmark%ld");
-const static wxChar ConfigBookmarkCount[] = wxT("/Bookmarks/Count");
+const static wxChar ConfigBookmarkFmt [] = wxT("/Bookmarks/Bookmark%ld");
+const static wxChar ConfigBookmarkCount [] = wxT("/Bookmarks/Count");
+const static wxChar ConfigFlatModeFmt [] = wxT("/Bookmarks/Bookmark%ldFlat");
 
 static const wxString EmptyString;
 
@@ -86,10 +87,11 @@ struct Bookmark
 {
 public:
   svn::Context * context;
+  bool flatMode;
 
 
-  Bookmark ()
-    : context (0)
+  Bookmark (bool flatMode_=false)
+    : context (0), flatMode (flatMode_)
   {
   }
 
@@ -112,7 +114,7 @@ public:
 };
 
 
-static const Bookmark InvalidBookmark;
+static Bookmark InvalidBookmark;
 
 
 WX_DECLARE_STRING_HASH_MAP (Bookmark, BookmarkHashMap);
@@ -166,7 +168,7 @@ public:
    * @param name full path/url of the bookmark
    */
   void
-  AddBookmark (wxString name)
+  AddBookmark (wxString name, bool flatMode)
   {
     TrimString (name);
 
@@ -180,8 +182,8 @@ public:
 
     name = BeautifyPath (name);
 
-    bookmarks [name] = Bookmark ();
-
+    bookmarks [name] = Bookmark (flatMode);
+    
     if (singleContext == 0)
       bookmarks [name].context = CreateContext ();
   }
@@ -240,7 +242,7 @@ public:
     if (singleContext != 0)
       return singleContext;
 
-    const wxString & path = GetSelectedBookmark ();
+    const wxString & path = GetSelectedBookmarkPath ();
 
     if (path.Length () == 0)
       return &defaultContext;
@@ -781,7 +783,7 @@ public:
 
 
   const wxString & 
-  GetSelectedBookmark ()
+  GetSelectedBookmarkPath () const
   {
     wxTreeItemId id = GetSelectedBookmarkId ();
 
@@ -794,6 +796,27 @@ public:
 
     return data->getPath ();
   }
+
+ 
+  Bookmark &
+  GetSelectedBookmark ()
+  {
+    const wxString & path = GetSelectedBookmarkPath ();
+
+    // empty string means there isnt a bookmark
+    // for the selecttion, e.g. the root of the tree
+    if (path.Length () == 0)
+      return InvalidBookmark;
+
+    // check whether we can find the bookmark
+    BookmarkHashMap::iterator it = bookmarks.find (path);
+
+    if (it == bookmarks.end ())
+      return InvalidBookmark;
+
+    return it->second;
+  }
+
 
   void
   SetAuthPerBookmark (const bool perBookmark)
@@ -863,7 +886,7 @@ void
 FolderBrowser::Refresh ()
 {
   // remember selected
-  wxString bookmarkPath = m->GetSelectedBookmark ();
+  wxString bookmarkPath = m->GetSelectedBookmarkPath ();
   wxString path = m->GetPath ();
 
   // refresh contents
@@ -909,7 +932,7 @@ FolderBrowser::RemoveBookmark ()
 void
 FolderBrowser::AddBookmark (const wxString & path)
 {
-  m->AddBookmark (path);
+  m->AddBookmark (path, false);
 }
 
 const
@@ -1035,10 +1058,15 @@ FolderBrowser::WriteConfig (wxConfigBase * cfg) const
 
   for (; it != m->bookmarks.end (); it++)
   {
-    wxString key;
-    key.Printf (ConfigBookmarkFmt, item);
+    wxString keyPath, keyFlatMode;
+    keyPath.Printf (ConfigBookmarkFmt, item);
+    keyFlatMode.Printf (ConfigFlatModeFmt, item);
 
-    cfg->Write (key, it->first);
+    cfg->Write (keyPath, it->first);
+    if (it->second.flatMode)
+      cfg->Write (keyFlatMode, (long)1);
+    else
+      cfg->Write (keyFlatMode, (long)0);
 
     item++;
   }
@@ -1055,20 +1083,50 @@ FolderBrowser::ReadConfig (wxConfigBase * cfg)
   cfg->Read (ConfigBookmarkCount, &count, 0);
   for (item = 0; item < count; item++)
   {
-    wxString key;
+    wxString keyPath, keyFlatMode;
     wxString path;
 
-    key.Printf (ConfigBookmarkFmt, item);
-    cfg->Read (key, &path, wxEmptyString);
+    keyPath.Printf (ConfigBookmarkFmt, item);
+    keyFlatMode.Printf (ConfigFlatModeFmt, item);
+    cfg->Read (keyPath, &path, wxEmptyString);
+
+    long flatMode;
+    cfg->Read (keyFlatMode, &flatMode, 0); 
 
     if (path.Length () > 0)
-      m->bookmarks [path] = Bookmark ();
+      m->bookmarks [path] = Bookmark (flatMode != 0);
   }
 }
 
+
+const bool
+FolderBrowser::IsFlat () const
+{
+  Bookmark & bookmark = m->GetSelectedBookmark ();
+
+  if (&bookmark == &InvalidBookmark)
+    return false;
+
+  return bookmark.flatMode;
+}
+
+
+bool
+FolderBrowser::SetFlat (bool flatMode) 
+{
+  Bookmark & bookmark = m->GetSelectedBookmark ();
+
+  if (&bookmark == &InvalidBookmark)
+    return false;
+
+  bookmark.flatMode = flatMode;
+  return true;
+} 
+  
 
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
  * end:
  */
+

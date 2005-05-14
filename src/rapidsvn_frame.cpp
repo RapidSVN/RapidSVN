@@ -663,7 +663,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL,
                                  wxDefaultPosition, wxDefaultSize);
 
-  m->CheckMenu (ID_Flat,              m_listCtrl->IsFlat());
+  m->CheckMenu (ID_Flat,              false);
   m->CheckMenu (ID_RefreshWithUpdate, m_listCtrl->GetWithUpdate());
   m->CheckMenu (ID_ShowUnversioned,   m_listCtrl->GetShowUnversioned());
 
@@ -1629,6 +1629,16 @@ void
 RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 {
   m_activePane = ACTIVEPANE_FOLDER_BROWSER;
+
+  // Update the menu and list control flat-mode setting 
+  bool flatMode = m_folder_browser->IsFlat ();
+  m_listCtrl->SetFlat (flatMode);
+  m->CheckMenu (ID_Flat, flatMode);
+
+  // Disable menu entry if no path is selected (e.g. root)
+  const wxString & path = m_folder_browser->GetPath ();  
+  m->MenuBar->Enable (ID_Flat, !path.IsEmpty ());
+ 
   UpdateCurrentPath ();
   UpdateFileList ();
 }
@@ -1758,12 +1768,20 @@ RapidSvnFrame::OnColumn (wxCommandEvent & event)
   UpdateFileList ();
 }
 
+
 void
 RapidSvnFrame::OnFlatView (wxCommandEvent & event)
 {
-  bool checked = m->IsMenuChecked (ID_Flat);
-  //m->CheckMenu (ID_Flat, !checked);
-  m_listCtrl->SetFlat (checked);
+  bool newFlatMode = !m_folder_browser->IsFlat ();
+
+  // if this cannot be set (e.g. invalid selecttion
+  // like the root element, we uncheck this
+  if (!m_folder_browser->SetFlat (newFlatMode))
+    newFlatMode = false;
+
+  m->CheckMenu (ID_Flat, newFlatMode);
+  m_listCtrl->SetFlat (newFlatMode);
+    
   UpdateFileList ();
 }
 
