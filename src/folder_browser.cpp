@@ -464,65 +464,53 @@ public:
                 const wxTreeItemId & parentId)
   {
     svn::Client client (GetContext ());
-    wxDir dir (parentPath);
-    if(!dir.IsOpened ())
-      return;
+    std::string parentPathUtf8;
 
-    wxString filename;
-    bool ok = dir.GetFirst(&filename, wxEmptyString,
-                           wxDIR_DIRS);
-    bool parentHasSubdirectories = false;
+    LocalToUtf8 (parentPath, parentPathUtf8);
 
-    while(ok)
+    // Get status array for parent and all entries within it
+    svn::StatusEntries entries = 
+      client.status (parentPathUtf8.c_str (),
+                     false,      // Not recursive
+                     true,       // Get all entries
+                     false,      // Dont update from repository
+                     false);     // Use global ignores
+
+    svn::StatusEntries::iterator it;
+    for (it = entries.begin (); it != entries.end (); it++)
     {
-      if(filename != Utf8ToLocal (svn::Wc::ADM_DIR_NAME))
-      {
-        parentHasSubdirectories = true;
+      svn::Status& status = *it;
 
-        wxFileName path(parentPath, filename, wxPATH_NATIVE);
-        wxString fullPath = path.GetFullPath ();
-        std::string fullPathUtf8;
-        LocalToUtf8(fullPath, fullPathUtf8);
+      // Convert path from UTF8 to Local
+      wxString path (Utf8ToLocal (status.path ()));
+
+      // Only display versioned directories and exclude parent itself
+      if ((status.entry ().kind () == svn_node_dir) && 
+          (parentPath != path))
+      {
         int image = FOLDER_IMAGE_FOLDER;
         int open_image = FOLDER_IMAGE_OPEN_FOLDER;
 
-        if (!svn::Wc::checkWc (fullPathUtf8.c_str ()))
+        if ((status.textStatus () == svn_wc_status_modified) ||
+            (status.propStatus () == svn_wc_status_modified))
         {
-          image = FOLDER_IMAGE_NONSVN_FOLDER;
-          open_image = FOLDER_IMAGE_NONSVN_OPEN_FOLDER;
-        }
-        else
-        {
-          svn::Status status = client.singleStatus (fullPathUtf8.c_str ());
-          if ((status.textStatus () == svn_wc_status_modified) ||
-              (status.propStatus () == svn_wc_status_modified))
-          {
-            image = FOLDER_IMAGE_MODIFIED_FOLDER;
-            open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
-          }
+          image = FOLDER_IMAGE_MODIFIED_FOLDER;
+          open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
         }
 
-        FolderItemData * data =
-          new FolderItemData (FOLDER_TYPE_NORMAL,
-                              fullPath,
-                              filename, TRUE);
+        wxFileName filename (path);
+        FolderItemData * data = new FolderItemData (
+          FOLDER_TYPE_NORMAL, path, 
+          filename.GetName (), TRUE);
 
-        wxTreeItemId newId =
-          treeCtrl->AppendItem(
-            parentId, filename,
-            image, image, data);
+        wxTreeItemId newId = treeCtrl->AppendItem(
+          parentId, filename.GetName (), image, image, data);
+
         treeCtrl->SetItemHasChildren (
-          newId, HasSubdirectories(fullPath) );
-        treeCtrl->SetItemImage (newId, open_image,
-                                wxTreeItemIcon_Expanded);
+          newId, HasSubdirectories (path));
+        treeCtrl->SetItemImage (newId, open_image, wxTreeItemIcon_Expanded);
       }
-
-      ok = dir.GetNext (&filename);
     }
-
-    // If no subdirectories, don't show the expander
-    if (!parentHasSubdirectories)
-      treeCtrl->SetItemHasChildren(parentId, FALSE);
   }
 
   void
