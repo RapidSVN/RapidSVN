@@ -1112,6 +1112,20 @@ FolderBrowser::SetFlat (bool flatMode)
 } 
   
 
+void
+FolderBrowser::ExpandSelection ()
+{
+  if (!m->treeCtrl)
+    return;
+
+  wxTreeItemId id (m->treeCtrl->GetSelection ());
+
+  if (!id.IsOk ())
+    return;
+
+  m->treeCtrl->Expand (id);
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

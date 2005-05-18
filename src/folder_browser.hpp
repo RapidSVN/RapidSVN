@@ -162,6 +162,14 @@ public:
   ReadConfig (wxConfigBase * cfg);
 
 
+  /**
+   * Expand the selected leaf of the tree.
+   * Has no effect if the selection has no
+   * leafs
+   */
+  void
+  ExpandSelection ();
+
 private:
   struct Data;
   Data * m;
@@ -184,7 +192,7 @@ private:
 private:
   DECLARE_EVENT_TABLE ()
 
-  void OnSize (wxSizeEvent & WXUNUSED (event));
+  void OnSize (wxSizeEvent & event);
 
   void OnExpandItem (wxTreeEvent & event);
 
@@ -193,7 +201,6 @@ private:
   void OnItemRightClk (wxTreeEvent & event);
 
   void OnContextMenu (wxContextMenuEvent & event);
-
 };
 
 
