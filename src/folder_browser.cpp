@@ -383,6 +383,11 @@ public:
     wxTreeItemId parentId = event.GetItem ();
     int type = FOLDER_TYPE_INVALID;
 
+    // If the parent is already expanded, 
+    // nothing has to be done here
+    if (treeCtrl->IsExpanded (parentId))
+      return;
+
     if(!rootId.IsOk ())
     {
       rootId = treeCtrl->GetRootItem ();
@@ -463,6 +468,11 @@ public:
   RefreshLocal (const wxString & parentPath,
                 const wxTreeItemId & parentId)
   {
+    // If the parent is already expanded, 
+    // nothing has to be done here
+    if (treeCtrl->IsExpanded (parentId))
+      return;
+
     svn::Client client (GetContext ());
     std::string parentPathUtf8;
 
