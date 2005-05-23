@@ -9,7 +9,7 @@ AppSupportURL=http://rapidsvn.tigris.org/
 AppUpdatesURL=http://rapidsvn.tigris.org/
 DefaultDirName={pf}\RapidSVN
 DefaultGroupName=RapidSVN
-LicenseFile=..\..\LICENSE.txt
+LicenseFile=..\..\GPL.txt
 InfoBeforeFile=..\..\README
 OutputBaseFilename=RapidSVN-0.8.0
 
@@ -29,6 +29,9 @@ Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; Flags
 Source: "..\..\TODO.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
+Source: "..\..\GPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
+Source: "..\..\LGPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
+Source: "..\..\FDL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 Source: "libapriconv-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 Source: "libaprutil.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main

@@ -2,52 +2,58 @@
 Copyright (C) 2002-2005 The RapidSvn Group. All rights reserved.
 
 =================================================================
-The Apache Software License, Version 1.1
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions
-are met:
-
-1. Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in
-   the documentation and/or other materials provided with the
-   distribution.
-
-3. The end-user documentation included with the redistribution,
-   if any, must include the following acknowledgment:
-      "This product includes software developed by the
-       RapidSvn Group (http://rapidsvn.tigris.org/)."
-   Alternately, this acknowledgment may appear in the software itself,
-   if and wherever such third-party acknowledgments normally appear.
-
-4. The names "RapidSvn" and "RapidSvn Group" must
-   not be used to endorse or promote products derived from this
-   software without prior written permission. For written
-   permission, please contact bmatzelle@tigris.org or
-   xelarellum@tigris.org.
-
-5. Products derived from this software may not be called "RapidSvn",
-   nor may "RapidSvn" appear in their name, without prior written
-   permission of the RapidSvn Group.
-
-THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
-ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
-USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
-OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-SUCH DAMAGE.
-=================================================================
 
 This software consists of voluntary contributions made by many
 individuals on behalf of the RapidSvn Group.  For more
 information on the RapidSvn Group, please see
 <http://rapidsvn.tigris.org/>.
+
+RapidSVN is licensed under the GNU General Public License.
+Svncpp is licensed under the GNU Lesser General Public License.
+All documentation included in this distribution and on the website
+is licensed under the GNU Free Documentation License.
+
+
+=== RapidSVN: GNU General Public License ===
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program (in the file GPL.txt); if not, write to 
+the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, 
+Boston, MA  02110-1301  USA
+
+
+=== Svncpp: GNU Lesser General Public License ===
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library (in the file LGPL.txt); if not, 
+write to the Free Software Foundation, Inc., 51 Franklin St, 
+Fifth Floor, Boston, MA  02110-1301  USA
+
+
+=== Documentation: GNU Free Documentation License ===
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+=================================================================

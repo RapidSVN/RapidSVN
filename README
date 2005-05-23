@@ -4,7 +4,7 @@ INTRODUCTION
 
 RapidSVN is a cross-platform GUI front-end for the Subversion revision system 
 (http://subversion.tigris.org/) written in C++ using the wxWidgets GUI 
-framework. It is distributed under the Apache Software License, Version 1.1.  
+framework. It is distributed under the GNU General Public License.  
 See LICENSE.txt for more details. 
 
 Currently it compiles under Windows and it does so with Linux but there are a 
