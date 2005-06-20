@@ -89,7 +89,7 @@ namespace svn
     svn_error_t * next = error->child;
     std::string & message = m->message;
     message = error->message;
-    while (next != 0)
+    while (next != NULL && next->message != NULL)
     {
       message = message + "\n" + next->message;
 
