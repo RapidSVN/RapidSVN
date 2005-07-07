@@ -1,0 +1,227 @@
+<html>
+<head>
+</head>
+<body>
+
+<hr noshade/>
+<img src="logo.png" alt="RapidSVN"/>
+<p/>
+<a href="screenshots.html">Screenshots</a> | 
+<a href="svncpp.html">SvnCpp C++ API</a> | 
+<a href="#download">Download</a>
+<p/>
+
+RapidSVN is a cross-platform GUI front-end for the 
+<a href="http://subversion.tigris.org/">Subversion</a> revision system 
+written in C++ using the <a href="http://www.wxwidgets.org/">wxWidgets</a> 
+framework.  This project also includes a Subversion client C++ API.
+<p/>
+
+<p>
+  <table border="0" cellpadding="0" width="98%" bgcolor="white">
+    <tr><td width="100%" bgcolor="yellow">
+      <font color="red">NOTE: RapidSVN's source code is <strong>not</strong>
+        hosted on tigris.org's CVS server. To obtain a working copy, you must 
+	use Subversion, not CVS. Please take a look at the 
+        <a href="#download">download</a> section for instructions on checking out 
+	our Subversion repository, or the <a href="/servlets/ProjectDocumentList">file 
+        sharing</a> area to find either a source tarball, a package for your 
+        favourite linux flavour or a Windows Installer.
+      </font>
+    </td></tr>
+  </table>
+</p>
+
+<h3>Mission</h3>
+We want to build a best of breed visual client that utilizes the best 
+features of clients from other revision control architectures.  While 
+being easy enough for users new to Subversion to work with it 
+must also be powerful enough to make 
+experienced users even more productive.
+<p/>
+
+<h3>Features</h3>
+<ul>
+<li>Simple - provides an easy to use interface for Subversion features
+<li>Efficient - simple for beginners but flexible enough to increase productivity 
+for experienced Subversion users
+<li>Portable - runs on any platform on which Subversion and wxWidgets can run: Linux, Windows,
+Mac OS 9/X, Solaris, etc.
+<li>Fast - entirely written in C++
+</ul>
+<p/>
+
+<h3>Dependencies</h3>
+RapidSVN depends on a couple of frameworks. So if you want to compile
+RapidSVN you have to download, configure and compile these frameworks first (unless you have access to a precompiled binary package with development files like headers and libraries included).
+<br/>
+<ul>
+<li><b><a href="http://subversion.tigris.org">Subversion 1.0.0</a></b> <a href="http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=260">download</a><br/>
+<li><b><a href="http://www.wxwidgets.org">wxWidgets 2.4.2</a></b> <a href="http://sourceforge.net/project/showfiles.php?group_id=9863">download</a><br/>
+<!-- <b>Platform notes:</b><br>
+  <ul type="circle">
+    <li><b>Windows: we noticed crashes on Windows when using wxWidgets 2.4.0. Please use wxWidgets 2.4.1 or newer.</b>
+    <li><b>Linux (GTK): menu items with bitmaps wont work when using wxGTK 2.4.1. This is a known bug in wxWidgets. Please use wxGTK 2.4.0 until this is fixed.</b>
+</ul> -->
+</ul>
+<p/>
+
+<h3>Roadmap</h3>
+<p><b>Color codes:</b><br>
+<table>
+  <tr>
+    <td bgcolor="green">Released</td>
+    <td>This is the latest official release of RapidSVN</td>
+  </tr>
+  <tr>
+    <td bgcolor="orange">In Work</td>
+    <td>This is the current line of development</td>
+  </tr>
+  <tr>
+    <td bgcolor="white">Not scheduled</td>
+    <td>This is a future release without a scheduled release date.</td>
+  </tr>
+</table>
+</p>
+<p>
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Status</th>
+    <th>Scheduled</th>
+    <th>Released</th>
+    <th>Remarks</th>
+  </tr>
+  <tr>
+    <td><b>0.6</b></td>
+    <td>Released</td>
+    <td>Mar&nbsp;2004</td>
+    <td>May&nbsp;24&nbsp;2004</td>
+    <td><a href="http://rapidsvn.tigris.org/issues/buglist.cgi?component=rapidsvn&target_milestone=0.6">Issues for this release</a>.</td>
+  </tr>
+  <tr>
+    <td><b>0.7</b></td>
+    <td>Released</td>
+    <td>July&nbsp;2004</td>
+    <td>Sep&nbsp;2&nbsp;2004</td>
+    <td><a href="http://rapidsvn.tigris.org/issues/buglist.cgi?component=rapidsvn&target_milestone=0.7">Issues for this release</a>.</td>
+  </tr>
+  <tr>
+    <td bgcolor="green" valign="top"><b>0.8</b></td>
+    <td bgcolor="green" valign="top">Released</td>
+    <td bgcolor="green" valign="top">Nov&nbsp;2004</td>
+    <td bgcolor="green" valign="top">Apr&nbsp;19&nbsp;2005</td>
+    <td bgcolor="green" valign="top"><a href="http://rapidsvn.tigris.org/issues/buglist.cgi?component=rapidsvn&target_milestone=0.8">Issues for this release</a>.</td>
+  </tr>
+  <tr>
+    <td bgcolor="orange" valign="top"><b>0.9</b></td>
+    <td bgcolor="orange" valign="top">In&nbsp;Work</td>
+    <td bgcolor="orange" valign="top">Jul&nbsp;2005</td>
+    <td bgcolor="orange" valign="top">&nbsp;</td>
+    <td bgcolor="orange" valign="top"><a href="http://rapidsvn.tigris.org/issues/buglist.cgi?component=rapidsvn&target_milestone=0.9">Issues for this release</a>.</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>0.10</b></td>
+    <td valign="top">Not&nbsp;scheduled</td>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">&nbsp;</td>
+    <td valign="top"><a href="http://rapidsvn.tigris.org/issues/buglist.cgi?component=rapidsvn&target_milestone=not+determined">Not scheduled issues.</a><br/>
+Note: If you have suggestions for future features or would like to see a feature in one of the next scheduled releases, write an <a href="mailto:dev@rapidsvn.tigris.org">email</a> to the developper mailing list or submit a <a href="http://rapidsvn.tigris.org/issues/enter_bug.cgi?issue_type=FEATURE">feature</a> request to the <a href="http://rapidsvn.tigris.org/servlets/ProjectIssues">issue tracker</a>.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Beta</b></td>
+    <td valign="top">Not&nbsp;scheduled</td>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">Emphasis on...<ul type="circle">
+      <li>improval of threading and concurrency of actions
+      <li>optimizations for memory consumtion and speed
+      <li>feature freeze
+    </ul></td>
+  </tr>
+  <tr>
+    <td valign="top"><b>1.0</b></td>
+    <td valign="top">Not&nbsp;scheduled</td>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">Post 1.0 Features:<br>
+      <ul type="circle">
+	<li>Implement a curses based wxCurses so we can run rapid eithout 
+recompilation in text view
+      </ul></td>
+  </tr>
+</table>
+</p>
+<p>
+<a href="past.html">Archived roadmap items...</a>.
+</p>
+
+<a name="download"/>
+<h3>Download</h3>
+<p>
+Binary Distributions<br>
+<ul>
+  <li><a href="/servlets/ProjectDocumentList?folderID=906">Debian Linux DEBs</a>
+  <li><a href="http://summersoft.fay.ar.us/pub/subversion/latest/">Red Hat Linux RPMs</a>
+  <li><a href="/servlets/ProjectDocumentList?folderID=184">Win32 binary installer</a>
+</ul>
+</p>
+<p>
+Building from source<br>
+<ul>
+  <li><p>Latest source<br/>
+  The source is stored 
+  in a Subversion repository (of course!) so in order to get the source code 
+  you have to download the svn client from the 
+  <a href="http://subversion.tigris.org/servlets/ProjectDocumentList">Subversion 
+  download page</a>.
+  </p>
+  <p>
+  Now you can download the source code for RapidSVN with the svn command-line 
+  client.  You can do this by running the following command:
+  <br/>
+  $ svn co http://svn.collab.net/repos/rapidsvn/trunk rapidsvn  
+  </p>
+
+  <li><a href="/servlets/ProjectDocumentList?folderID=353">
+Source tarball</a>
+</ul>
+</p>
+
+<h3>Contributing</h3>
+<p>Being a new project RapidSVN is in need of hackers and documentors. If you 
+are interested in conversing with some of 
+the other developers then join the development 
+<a href="/servlets/ProjectMailingListList">
+mailing list</a>.
+This project goes by a few coding conventions so please read the 
+<a href="http://svn.collab.net/repos/rapidsvn/trunk/HACKING.txt">
+Hacker's Guide To RapidSVN</a>.</p>
+<p>
+If you want to know what needs to be done for the first release or submit a bug
+then use the <a href="/servlets/ProjectIssues">
+Issue Tracker</a>.
+
+<p>
+We hope you join us!
+</p>
+
+<h3>History</h3>
+<p>
+The original code was written by Paul Marculescu with the name Visual 
+Subversion.  When Paul had no more time to devote to the program he released 
+it to the Subversion development list where Brent Matzelle and Alexander 
+Mueller picked up the code and started this project with the new name RapidSVN.
+<p/>
+
+<hr noshade/>
+
+<p align="center">
+<a href="http://www.wxwidgets.org/">
+<img src="builtwithwx.png" border="0" alt="wxWidgets"/>
+</a>
+</p>
+
+</body>
+</html>
