@@ -285,12 +285,12 @@ These are the steps to follow when creating a new release of RapidSVN:
    *  Commit "version.xml" and "CHANGES"
 
    *  Create the version tag by copying (either using svn or RapidSVN):
-      "svn cp -m "Version XYZ tag" . https://svn.collab.net/repos/rapidsvn/tags/XYZ
+      "svn cp -m "Version XYZ tag" . http://rapidsvn.tigris.org/svn/rapidsvn/tags/XYZ
 
 2. Create source tarball (on Linux):
 
    *  Checkout a fresh working copy of RapidSVN (using
-      http://svn.collab.net/repos/rapidsvn/tags/XYZ) from the repository
+      http://rapidsvn.tigris.org/svn/rapidsvn/tags/XYZ) from the repository
       to make sure everything is built and no old stuff is lying around
 
    *  Make sure all the tools required are there (autoconf, automake,
@@ -313,7 +313,7 @@ These are the steps to follow when creating a new release of RapidSVN:
 3. Create Windows installer (on Windows using MSVC 6):
 
    *  Checkout a fresh working copy of RapidSVN (using
-      http://svn.collab.net/repos/rapidsvn/tags/XYZ) from the repository
+      http://rapidsvn.tigris.org/svn/rapidsvn/tags/XYZ) from the repository
       to make sure everything is built and no old stuff is lying around
      
    *  Make sure you are using the latest stable release of

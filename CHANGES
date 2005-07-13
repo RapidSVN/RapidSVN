@@ -1,5 +1,5 @@
 Version 0.8.0 (released Apr 19 2005)
-http://svn.collab.net/repos/rapidsvn/tags/0.8.0
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.8.0
 
 User-visible changes:
 * 243 	New: Native Support for Mac OS X (no X11)
@@ -30,7 +30,7 @@ Developer-visible changes:
 
 
 Version 0.7.0 (released Sep 02 2004)
-http://svn.collab.net/repos/rapidsvn/tags/0.7.0
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.7.0
 
 User-visible changes:
 * 179 	Direct text editor access from RapidSVN
@@ -65,7 +65,7 @@ Developer-visible changes:
 
 
 Version 0.6.0 (released May 24 2004)
-http://svn.collab.net/repos/rapidsvn/tags/0.6.0
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.6.0
 
 User-visible changes:
 * 180   Configure script failed on Solaris because of "find -maxdepth"
@@ -90,7 +90,7 @@ Developer-visible changes:
 
 
 Version 0.5.0 (released February 3 2004)
-http://svn.collab.net/repos/rapidsvn/tags/0.5.0
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.5.0
 
 User-visible changes:
 * 4     Added file diff
@@ -126,7 +126,7 @@ Bugfixes for the following errors:
 
 
 Version 0.4.0 (released December 5 2003)
-http://svn.collab.net/repos/rapidsvn/tags/0.4.0
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.4.0
 
 User-visible changes:
 * 93	ui	Renamed workspace to "Bookmarks"

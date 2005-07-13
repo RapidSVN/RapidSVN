@@ -40,7 +40,7 @@ BUILDING AND INSTALLING
 
 * Download the source code for RapidSVN.  You can do this by running the
   following svn command:
-  % svn co http://svn.collab.net/repos/rapidsvn/trunk rapidsvn
+  % svn co http://rapidsvn.tigris.org/svn/rapidsvn/trunk rapidsvn
 
 * Download the wxWidgets 2.3.3 (or >= 2.4.0) libraries: http://www.wxWidgets.org/
 
@@ -96,7 +96,7 @@ BUILDING ON LINUX/UNIX
 
 * Download the source code for RapidSVN.  You can do this by running the
   following svn command:
-  % svn co http://svn.collab.net/repos/rapidsvn/trunk rapidsvn
+  % svn co http://rapidsvn.tigris.org/svn/rapidsvn/trunk rapidsvn
 
 * Go to the rapidsvn directory and run:
   % ./autogen.sh
