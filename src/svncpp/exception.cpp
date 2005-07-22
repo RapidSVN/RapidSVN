@@ -25,6 +25,7 @@
 
 // stl
 #include <string>
+#include <sstream>
 
 // svncpp
 #include "svncpp/exception.hpp"
@@ -87,8 +88,22 @@ namespace svn
 
     m->apr_err = error->apr_err;
     svn_error_t * next = error->child;
+    /// @todo send rapidsvn an hint that error->message may sometimes NULL!
     std::string & message = m->message;
-    message = error->message;
+    if (error->message) 
+      message = error->message;
+    else 
+    {
+      message = "Unknown error!\n";
+      if (error->file) 
+      {
+        message += "In file ";
+        message += error->file;
+        std::stringstream num;
+        num << " Line " << error->line;
+        message += num.str();
+      }
+    }
     while (next != NULL && next->message != NULL)
     {
       message = message + "\n" + next->message;

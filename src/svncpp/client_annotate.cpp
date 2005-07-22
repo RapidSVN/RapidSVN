@@ -45,7 +45,11 @@ namespace svn
                     apr_pool_t *pool)
   {
     AnnotatedFile * entries = (AnnotatedFile *) baton;
-    entries->push_back( AnnotateLine (line_no, revision, author, date, line));
+    entries->push_back (
+      AnnotateLine (line_no, revision, 
+                    author?author:"unknown", 
+                    date?date:"unknown date", 
+                    line?line:"???"));
 
     return NULL;
   }

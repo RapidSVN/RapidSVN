@@ -23,6 +23,31 @@
  * ====================================================================
  */
 
+/**
+ * @todo implement 1.2 SVN api:
+ *
+ *  SVN_CLIENT_COMMIT_ITEM_LOCK_TOKEN
+ *  svn_client_checkout2
+ *  svn_client_update2
+ *  snv_client_commit2
+ *  svn_client_status2
+ *  svn_client_log2
+ *  svn_client_blame2
+ *  svn_client_diff2
+ *  svn_client_diff_peg2
+ *  svn_client_move2
+ *  svn_client_propset2
+ *  svn_client_proget2
+ *  svn_client_proplist2
+ *  svn_client_export3
+ *  svn_client_ls2
+ *  svn_client_cat2
+ *  svn_client_lock
+ *  svn_client_unlock
+ *  svn_client_info
+ */
+
+
 // Apache Portable Runtime
 #include "apr_xlate.h"
 
@@ -208,6 +233,12 @@ namespace svn
       ctx.notify_baton = this;
       ctx.cancel_func = onCancel;
       ctx.cancel_baton = this;
+
+#if (SVN_VER_MAJOR >= 1) && (SVN_VER_MINOR >= 2)
+      ctx.notify_func2 = onNotify2;
+      ctx.notify_baton2 = this;
+#endif
+
     }
 
     void setAuthCache(bool value)
@@ -250,9 +281,9 @@ namespace svn
     static svn_error_t *
     onLogMsg (const char **log_msg, 
               const char **tmp_file,
-              apr_array_header_t *commit_items,
+              apr_array_header_t *, //UNUSED commit_items
               void *baton,
-              apr_pool_t *pool)
+              apr_pool_t * pool)
     {
       Data * data;
       SVN_ERR (getData (baton, &data));
@@ -295,6 +326,31 @@ namespace svn
       data->notify (path, action, kind, mime_type, content_state,
                     prop_state, revision);
     }
+
+
+#if (SVN_VER_MAJOR >= 1) && (SVN_VER_MINOR >= 2)
+    /**
+     * this is the callback function for the subversion 1.2
+     * api functions to signal the progress of an action
+     * 
+     * @todo right now we forward only to @a onNotify,
+     *       but maybe we should a notify2 to the listener
+     * @since subversion 1.2
+     */
+    static void
+    onNotify2(void*baton,const svn_wc_notify_t *action,apr_pool_t */*tpool*/)
+    {
+      if (!baton)
+        return;
+       
+      // for now forward the call to @a onNotify
+      onNotify (baton, action->path, action->action,
+                action->kind, action->mime_type,
+                action->content_state, action->prop_state,
+                action->revision);
+    }
+#endif
+
 
     /**
      * this is the callback function for the subversion

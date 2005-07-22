@@ -52,6 +52,7 @@ namespace svn
     static const svn_opt_revision_kind START;
     static const svn_opt_revision_kind BASE;
     static const svn_opt_revision_kind HEAD;
+    static const svn_opt_revision_kind WORKING;
 
     /**
      * Constructor
