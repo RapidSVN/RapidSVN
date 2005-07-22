@@ -539,14 +539,6 @@ SOURCE=.\src\simple_worker.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\svncpp\status.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\svn_notify.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\switch_action.hpp
 # End Source File
 # Begin Source File
@@ -576,10 +568,6 @@ SOURCE=.\src\utils.hpp
 # Begin Source File
 
 SOURCE=.\src\verblist.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\verblist_win32.hpp
 # End Source File
 # Begin Source File
 
