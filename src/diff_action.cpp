@@ -80,20 +80,6 @@ public:
 
 
   /**
-   * retrieves a file @a path that has the same
-   * revision as the working copy
-   */
-  svn::Path
-  getFile (const svn::Path & path, 
-           const svn::Status & status)
-  {
-    svn::Revision revision (getRevision (path, status));
-
-    return mAction->GetPathAsTempFile (path, revision);
-  }
-
-
-  /**
    * retrieves the status information for a file
    */
   svn::Status 
@@ -198,7 +184,7 @@ public:
     {
     case DiffData::WITH_SAME_REVISION:
       dstFile1 = path;
-      dstFile2 = getFile (path, status);
+      dstFile2 = mAction->GetPathAsTempFile (getPath1 (path), svn::Revision::BASE);
 
       break;
 
