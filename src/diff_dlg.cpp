@@ -383,15 +383,17 @@ END_EVENT_TABLE ()
 
 
 static const DiffData::CompareType COMPARE_TYPES [] = {
-  DiffData::WITH_SAME_REVISION,
+  DiffData::WITH_BASE,
+  DiffData::WITH_HEAD,
   DiffData::WITH_DIFFERENT_REVISION,
   DiffData::TWO_REVISIONS};
 
 static const wxString COMPARE_TYPE_LABELS [] =
 {
-  _("Working copy against same remote revision"),
-  _("Working copy against different remote revision/date"),
-  _("Two revisions/dates against each other")
+  _("Diff to BASE"),
+  _("Diff to HEAD"),
+  _("Diff to another revision/date"),
+  _("Diff two revisions/dates")
 };
 
 
@@ -432,7 +434,8 @@ public:
       diffData.revision1 = mRevisionOne->GetRevision ();
       diffData.revision2 = mRevisionTwo->GetRevision ();
       break;
-    case DiffData::WITH_SAME_REVISION:
+    case DiffData::WITH_HEAD:
+    case DiffData::WITH_BASE:
     default:
       // nothing special
       break;
@@ -493,7 +496,8 @@ public:
     mComboCmpType->Clear ();
 
     // fill list
-    AddCompareType (DiffData::WITH_SAME_REVISION);
+    AddCompareType (DiffData::WITH_BASE);
+    AddCompareType (DiffData::WITH_HEAD);
     AddCompareType (DiffData::WITH_DIFFERENT_REVISION);
     AddCompareType (DiffData::TWO_REVISIONS);
 
@@ -568,7 +572,11 @@ private:
 
     switch (GetCompareType ())
     {
-    case DiffData::WITH_SAME_REVISION:
+    case DiffData::WITH_BASE:
+      one = two = false;
+      break;
+
+    case DiffData::WITH_HEAD:
       one = two = false;
       break;
 

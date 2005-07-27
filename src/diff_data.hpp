@@ -38,7 +38,8 @@ public:
   typedef enum
   {
     INVALID_COMPARE_TYPE = 0,
-    WITH_SAME_REVISION,
+    WITH_BASE,
+    WITH_HEAD,
     WITH_DIFFERENT_REVISION,
     TWO_REVISIONS,
     COMPARE_TYPE_COUNT
@@ -57,7 +58,7 @@ public:
 
   /** Constructor */
   DiffData (svn_opt_revision_kind kind = svn::Revision::BASE)
-   : compareType (WITH_SAME_REVISION),
+   : compareType (WITH_BASE),
      useUrl1 (false), url1 (wxEmptyString),
      useUrl2 (false), url2 (wxEmptyString),
      revision1 (kind)

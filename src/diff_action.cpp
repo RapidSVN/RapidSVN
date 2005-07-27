@@ -182,9 +182,15 @@ public:
 
     switch (diffData.compareType)
     {
-    case DiffData::WITH_SAME_REVISION:
+    case DiffData::WITH_BASE:
       dstFile1 = path;
       dstFile2 = mAction->GetPathAsTempFile (getPath1 (path), svn::Revision::BASE);
+
+      break;
+
+    case DiffData::WITH_HEAD:
+      dstFile1 = path;
+      dstFile2 = mAction->GetPathAsTempFile (getPath1 (path), svn::Revision::HEAD);
 
       break;
 
