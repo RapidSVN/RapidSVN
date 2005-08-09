@@ -338,7 +338,7 @@ namespace svn
      * @since subversion 1.2
      */
     static void
-    onNotify2(void*baton,const svn_wc_notify_t *action,apr_pool_t */*tpool*/)
+    onNotify2 (void*baton,const svn_wc_notify_t *action,apr_pool_t *)
     {
       if (!baton)
         return;
@@ -364,7 +364,7 @@ namespace svn
 
       Data * data = static_cast <Data *> (baton);
 
-      if( data->cancel () )
+      if (data->cancel ())
         return svn_error_create (SVN_ERR_CANCELLED, NULL, "cancelled by user");
       else
         return SVN_NO_ERROR;
