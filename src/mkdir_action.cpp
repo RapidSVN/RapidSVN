@@ -23,11 +23,11 @@
  * ====================================================================
  */
 
-// svncpp
-#include "svncpp/client.hpp"
-
 // wxWidgets
 #include "wx/wx.h"
+
+// svncpp
+#include "svncpp/client.hpp"
 
 // app
 #include "destination_dlg.hpp"

@@ -23,14 +23,6 @@
  * ====================================================================
  */
 
-// svncpp
-#include "svncpp/context.hpp"
-#include "svncpp/client.hpp"
-#include "svncpp/dirent.hpp"
-#include "svncpp/status.hpp"
-#include "svncpp/url.hpp"
-#include "svncpp/wc.hpp"
-
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/filename.h"
@@ -39,6 +31,14 @@
 #include "wx/treectrl.h"
 #include "wx/confbase.h"
 #include "wx/hashmap.h"
+
+// svncpp
+#include "svncpp/context.hpp"
+#include "svncpp/client.hpp"
+#include "svncpp/dirent.hpp"
+#include "svncpp/status.hpp"
+#include "svncpp/url.hpp"
+#include "svncpp/wc.hpp"
 
 // app
 #include "folder_browser.hpp"

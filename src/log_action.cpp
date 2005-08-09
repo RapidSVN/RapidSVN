@@ -23,12 +23,13 @@
  * ====================================================================
  */
 
+// wxWidgets
+#include "wx/wx.h"
+#include "wx/intl.h"
+
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/revision.hpp"
-
-// wxWidgets
-#include "wx/intl.h"
 
 // app
 #include "log_action.hpp"

@@ -23,6 +23,9 @@
  * ====================================================================
  */
 
+// wxWidgets
+#include "wx/wx.h"
+
 // svncpp
 #include "svncpp/client.hpp"
 
