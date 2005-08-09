@@ -95,11 +95,9 @@ HistoryValidator::TransferToWindow()
       comboBox->Append (value);
     }
 
+    // if we have an entry, select it
     if (count > 0)
-    {
-      wxString firstValue (list.Item (0));
-      comboBox->SetValue (firstValue);
-    }
+      comboBox->SetSelection (0, 0);
 
     return true;
   }
