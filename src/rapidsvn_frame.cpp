@@ -726,14 +726,14 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   int vpos = cfg->Read (ConfigSplitterVert, w / 3);
   int hpos = cfg->Read (ConfigSplitterHoriz, (3 * h) / 4);
 
+  // initialize the folder browser
+  m_folder_browser->ReadConfig (cfg);
+  UpdateFolderBrowser ();
+
   // Set sash position for every splitter.
   // Note: to not revert the order of Split calls, as the panels will be messed up.
   m_horiz_splitter->SplitHorizontally (m_info_panel, m_log, hpos);
   m_vert_splitter->SplitVertically (m_folder_browser, m_listCtrl, vpos);
-
-  // initialize the folder browser
-  m_folder_browser->ReadConfig (cfg);
-  UpdateFolderBrowser ();
 }
 
 RapidSvnFrame::~RapidSvnFrame ()
