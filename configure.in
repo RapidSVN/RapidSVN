@@ -251,6 +251,30 @@ AC_ARG_WITH(docbook-xsl,
     fi
 ])
 AC_MSG_CHECKING([docbook xsl stylesheets ($DOCBOOK_XSL)])
+
+
+for _try_docbook_xsl in \
+  /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/html \
+  /usr/share/sgml/docbook/yelp/docbook/html \
+  /usr/local/share/sgml/docbook/stylesheet/xsl/nwalsh/html \
+  /usr/local/share/sgml/docbook/yelp/docbook/html \
+  /usr/share/docbook-xsl/html \
+  /usr/share/sgml/docbook/xsl-stylesheets*/html
+do
+  if test -f "$_try_docbook_xsl/docbook.xsl"
+  then
+    _docbook_xsl=$_try_docbook_xsl
+    break
+  fi
+done
+
+if test -z "$_docbook_xsl"
+then
+  _docbook_xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh
+fi
+
+DOCBOOK_XSL="$_docbook_xsl"
+
 if test -z "$DOCBOOK_XSL" ; then
    AC_MSG_RESULT([no])
 else
@@ -261,15 +285,52 @@ else
       DOCBOOK_XSL=""
    fi
 fi
-if test "$DOCBOOK_XSL" ; then
-   DOCBOOK_XSL_MANS="$DOCBOOK_XSL/manpages"
-   AC_MSG_CHECKING([docbook xsl support for manpages ($DOCBOOK_XSL_MANS)])
-   if test -d "$DOCBOOK_XSL_MANS" ; then
+
+
+dnl
+dnl Docbook Manpages
+dnl
+for _try_manpages in \
+  $DOCBOOK_XSL/manpages \
+  $DOCBOOK_XSL/../manpages 
+do
+  if test -d "$_try_manpages"
+  then
+    _manpages=$_try_manpages
+    break
+  fi
+done
+
+if test -z "$_manpages"
+then
+  _manpages=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages
+fi
+
+DOCBOOK_MANPAGES="$_manpages"
+
+AC_MSG_CHECKING([docbook manpages ($DOCBOOK_MANPAGES)])
+if test -z "$DOCBOOK_MANPAGES" ; then
+   AC_MSG_RESULT([no])
+else
+   if test -d "$DOCBOOK_MANPAGES" ; then
       AC_MSG_RESULT([found])
-   else      
+   else
       AC_MSG_RESULT([not found])
       DOCBOOK_XSL=""
+      DOCBOOK_MANPAGES=""
    fi
+fi
+
+DOCBOOK_XSL_MANS=""
+if test "$DOCBOOK_XSL" ; then
+  DOCBOOK_XSL_MANS="$DOCBOOK_MANPAGES"
+  AC_MSG_CHECKING([docbook xsl support for manpages ($DOCBOOK_XSL_MANS)])
+  if test -d "$DOCBOOK_XSL_MANS" ; then
+     AC_MSG_RESULT([found])
+  else      
+     AC_MSG_RESULT([not found])
+     DOCBOOK_XSL=""
+  fi
 fi
 
 
@@ -359,19 +420,25 @@ AC_SUBST(WX_LIBS)
 AC_SUBST(SVN_LIBS)
 AC_SUBST(NEON_LIBS)
 AC_SUBST(DOCBOOK_XSL)
+AC_SUBST(DOCBOOK_MANPAGES)
 AC_SUBST(XSLTPROC)
 AC_SUBST(TARGET_MANPAGE)
 AC_SUBST(DOXYGEN)
 AC_SUBST(TARGET_DOXYGEN)
 
+
 AC_OUTPUT(Makefile \
           doc/Makefile \
-          doc/manpage/Makefile \
           include/Makefile \
           include/svncpp/Makefile \
           src/Makefile \
           src/svncpp/Makefile \
           src/res/Makefile)
+
+
+if test "$DOCBOOK_XSL" ; then
+  AC_OUTPUT(doc/manpage/Makefile)
+fi
 
 if test "$CPPUNITCONFIG" ; then
     CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
