@@ -749,23 +749,25 @@ RapidSvnFrame::~RapidSvnFrame ()
     delete m_actionWorker;
 
   // Save frame size and position.
-  if (IsMaximized ())
-    cfg->Write (ConfigMaximized, 1);
-  else
+  if (!IsIconized())
   {
-    int x, y;
-    int w, h;
+    if (IsMaximized ())
+      cfg->Write (ConfigMaximized, 1);
+    else
+    {
+      int x, y;
+      int w, h;
 
-    GetClientSize (&w, &h);
-    GetPosition (&x, &y);
+      GetClientSize (&w, &h);
+      GetPosition (&x, &y);
 
-    cfg->Write (ConfigMaximized, 0);
-    cfg->Write (ConfigLeft, (long) x);
-    cfg->Write (ConfigTop, (long) y);
-    cfg->Write (ConfigWidth, (long) w);
-    cfg->Write (ConfigHeight, (long) h);
+      cfg->Write (ConfigMaximized, 0);
+      cfg->Write (ConfigLeft, (long) x);
+      cfg->Write (ConfigTop, (long) y);
+      cfg->Write (ConfigWidth, (long) w);
+      cfg->Write (ConfigHeight, (long) h);
+    }
   }
-
 
   // Save splitter positions
   cfg->Write (ConfigSplitterVert,
