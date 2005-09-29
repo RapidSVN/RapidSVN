@@ -681,12 +681,6 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
 
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
-  {
-    Preferences prefs;
-    m_folder_browser->SetListener (&m->listener);
-    m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
-  }
-  UpdateCurrentPath ();
 
   // Adapt the menu entries
   for (int col=0; col < FileListCtrl::COL_COUNT; col++)
@@ -728,6 +722,12 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
 
   // initialize the folder browser
   m_folder_browser->ReadConfig (cfg);
+  {
+    Preferences prefs;
+    m_folder_browser->SetListener (&m->listener);
+    m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
+  }
+  UpdateCurrentPath ();
   UpdateFolderBrowser ();
 
   // Set sash position for every splitter.
