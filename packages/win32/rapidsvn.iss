@@ -1,5 +1,8 @@
 ; Inno Setup script file
 ; Program: RapidSVN
+;
+; REMARKS: run the batch FetchFiles.bat
+;          before running this script
 
 [Setup]
 AppName=RapidSVN
@@ -20,21 +23,30 @@ Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "A
 Name: main; Description: RapidSVN Application; Types: compact custom full; Flags: fixed
 
 [Files]
-Source: "libdb42.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "msvcp60.dll"; DestDir: "{app}\bin"; Flags: onlyifdoesntexist; Components: main
-Source: "libeay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "ssleay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+; RapidSVN application files
 Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
-Source: "..\..\TODO.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\GPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LGPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\FDL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
-Source: "libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "libapriconv-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "libaprutil.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+
+; Microsoft Runtime DLL
+Source: "msvcp60.dll"; DestDir: "{app}\bin"; Flags: onlyifdoesntexist; Components: main
+
+; Berkeley DB
+Source: "tmp\libdb43.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+
+; OpenSSL
+Source: "tmp\libeay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\ssleay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+
+; APR
+Source: "tmp\libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\libapriconv.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\libaprutil.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\*.so"; DestDir: "{app}\bin\iconv"; Flags: ignoreversion; Components: main
 
 [Icons]
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin";
