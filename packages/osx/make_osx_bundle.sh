@@ -37,10 +37,10 @@ echo -n \
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key><string>0.8.0</string>
-	<key>CFBundleShortVersionString</key><string>0.8.0</string>
-	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.8.0, (c) 2005 RapidSVN</string>
-	<key>CFBundleLongVersionString</key><string>0.8.0, (c) 2005 RapidSVN</string>
+	<key>CFBundleVersion</key><string>0.9.0</string>
+	<key>CFBundleShortVersionString</key><string>0.9.0</string>
+	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.9.0, (c) 2005 RapidSVN</string>
+	<key>CFBundleLongVersionString</key><string>0.9.0, (c) 2005 RapidSVN</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2005 RapidSVN</string>
 	<key>LSRequiresCarbon</key>
