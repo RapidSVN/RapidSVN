@@ -17,6 +17,7 @@ index.html
 files.html
 annotate__line_8hpp-source.html
 apr_8hpp-source.html
+check_8hpp-source.html
 client_8hpp-source.html
 context_8hpp-source.html
 context__listener_8hpp-source.html
@@ -35,6 +36,7 @@ url_8hpp-source.html
 wc_8hpp-source.html
 annotate__line_8hpp.html
 apr_8hpp.html
+check_8hpp.html
 client_8hpp.html
 context_8hpp.html
 context__listener_8hpp.html
@@ -58,6 +60,7 @@ functions_func.html
 functions_vars.html
 functions_enum.html
 functions_eval.html
+functions_rela.html
 deprecated.html
 dir_000000.html
 dir_000001.html
@@ -88,6 +91,7 @@ classsvn_1_1Wc.html
 dirs.html
 globals.html
 globals_type.html
+globals_defs.html
 namespacemembers.html
 namespacemembers_type.html
 pages.html

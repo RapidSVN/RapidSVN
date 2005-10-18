@@ -9,6 +9,7 @@
   <UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="annotate_line.hpp"><param name="Local" value="annotate__line_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="apr.hpp"><param name="Local" value="apr_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="check.hpp"><param name="Local" value="check_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="client.hpp"><param name="Local" value="client_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="context.hpp"><param name="Local" value="context_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="context_listener.hpp"><param name="Local" value="context__listener_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
