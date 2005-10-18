@@ -8,6 +8,7 @@ User-visible changes:
 * 249 New: Bookmark based configuration for flat view
 * 253 New: Expand item in tree view when selected
 * 258 New: Added column for log messages in Log dialog
+* 307 New: No prefix in path column (Flat mode)
 * 273 Change titlebar info to "RapidSVN - <location>"
 * 205 Fixed: Show log entries for copied branches
 * 274 Fixed: Import and Info had the same shorcut
