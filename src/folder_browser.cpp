@@ -287,6 +287,7 @@ public:
     menu.AppendSeparator ();
     AppendMenuItem (menu, ID_AddRepoBookmark);
     AppendMenuItem (menu, ID_CreateRepository);
+    AppendMenuItem (menu, ID_Switch);
 
     if (type==FOLDER_TYPE_BOOKMARK)
     {

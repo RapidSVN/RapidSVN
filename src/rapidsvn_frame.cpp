@@ -316,7 +316,7 @@ public:
     menuRepos->AppendSeparator ();
 
     menuRepos->Append (ID_Merge, _("Merge..."));
-    menuRepos->Append (ID_Switch, _("Switch...\tCTRL-S"));
+    menuRepos->Append (ID_Switch, _("Switch URL...\tCTRL-S"));
 
     // Modify menu
     wxMenu *menuModif = new wxMenu;

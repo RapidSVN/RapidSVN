@@ -201,6 +201,7 @@ AppendBookmarksMenu (wxMenu * parentMenu)
 {
   AppendMenuItem (*parentMenu, ID_AddWcBookmark);
   AppendMenuItem (*parentMenu, ID_AddRepoBookmark);
+  AppendMenuItem (*parentMenu, ID_Switch);
   parentMenu->AppendSeparator ();
   AppendMenuItem (*parentMenu, ID_EditBookmark);
   AppendMenuItem (*parentMenu, ID_RemoveBookmark);
@@ -242,6 +243,10 @@ AppendMenuItem (wxMenu & menu, int id)
 
   case ID_AddRepoBookmark:
     caption = _("Add Existing &Repository...");
+    break;
+
+  case ID_Switch:
+    caption = _("&Switch Repository URL...");
     break;
 
   case ID_RemoveBookmark:
