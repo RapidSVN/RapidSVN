@@ -874,10 +874,13 @@ FileListCtrl::UpdateFileList ()
       std::string dir, filename, ext;
       path.split (dir, filename, ext);
 
-      if (isNative)
-        values[COL_PATH]    = Utf8ToLocal (path.native ().c_str ());
-      else
-        values[COL_PATH]    = wxFullPath;
+      if (isNative) { 
+        if (path.native().length() > pathUtf8Length)
+          values[COL_PATH]  = Utf8ToLocal(path.native().substr(pathUtf8Length).c_str());
+        else
+          values[COL_PATH]  = Utf8ToLocal(".");
+      } else
+        values[COL_PATH]    = wxString (Utf8ToLocal(fullPath.substr(pathUtf8Length)));
       values[COL_EXTENSION] = Utf8ToLocal (ext.c_str ());
     }
 
