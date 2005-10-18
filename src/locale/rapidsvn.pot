@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 10:20+0200\n"
+"POT-Creation-Date: 2005-10-18 11:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -308,7 +308,7 @@ msgstr ""
 msgid "Select a destination directory"
 msgstr ""
 
-#: ../cleanup_action.cpp:39 ../utils.cpp:291
+#: ../cleanup_action.cpp:39 ../utils.cpp:296
 msgid "Cleanup"
 msgstr ""
 
@@ -468,7 +468,7 @@ msgstr ""
 msgid "directory"
 msgstr ""
 
-#: ../file_info.cpp:137 ../utils.cpp:403
+#: ../file_info.cpp:137 ../utils.cpp:408
 msgid "none"
 msgstr ""
 
@@ -481,7 +481,7 @@ msgstr ""
 msgid "Schedule: %s"
 msgstr ""
 
-#: ../file_info.cpp:151 ../utils.cpp:406
+#: ../file_info.cpp:151 ../utils.cpp:411
 msgid "normal"
 msgstr ""
 
@@ -652,16 +652,16 @@ msgstr ""
 msgid "Bookmarks"
 msgstr ""
 
-#: ../folder_browser.cpp:310
+#: ../folder_browser.cpp:311
 msgid "Logout"
 msgstr ""
 
-#: ../folder_browser.cpp:315
+#: ../folder_browser.cpp:316
 #, c-format
 msgid "Logout '%s'"
 msgstr ""
 
-#: ../folder_browser.cpp:453
+#: ../folder_browser.cpp:454
 #, c-format
 msgid "Error while refreshing filelist (%s)"
 msgstr ""
@@ -1043,7 +1043,7 @@ msgid "Merge..."
 msgstr ""
 
 #: ../rapidsvn_frame.cpp:319
-msgid "Switch...\tCTRL-S"
+msgid "Switch URL...\tCTRL-S"
 msgstr ""
 
 #: ../rapidsvn_frame.cpp:341
@@ -1349,103 +1349,107 @@ msgstr ""
 msgid "&Info..."
 msgstr ""
 
-#: ../utils.cpp:235
+#: ../utils.cpp:236
 msgid "&Edit...\tF3"
 msgstr ""
 
-#: ../utils.cpp:239
+#: ../utils.cpp:240
 msgid "&Add Existing Working Copy..."
 msgstr ""
 
-#: ../utils.cpp:244
+#: ../utils.cpp:245
 msgid "Add Existing &Repository..."
 msgstr ""
 
-#: ../utils.cpp:248
-msgid "&Remove Bookmark..."
+#: ../utils.cpp:249
+msgid "&Switch Repository URL..."
 msgstr ""
 
 #: ../utils.cpp:253
+msgid "&Remove Bookmark..."
+msgstr ""
+
+#: ../utils.cpp:258
 msgid "&Edit Bookmark..."
 msgstr ""
 
-#: ../utils.cpp:257
+#: ../utils.cpp:262
 msgid "Create New Repository..."
 msgstr ""
 
-#: ../utils.cpp:261
+#: ../utils.cpp:266
 msgid "Checkout New Working Copy..."
 msgstr ""
 
-#: ../utils.cpp:265
+#: ../utils.cpp:270
 msgid "Login..."
 msgstr ""
 
-#: ../utils.cpp:269
+#: ../utils.cpp:274
 msgid "&Update...\tCTRL-U"
 msgstr ""
 
-#: ../utils.cpp:274
+#: ../utils.cpp:279
 msgid "Co&mmit...\tCTRL-M"
 msgstr ""
 
-#: ../utils.cpp:279
+#: ../utils.cpp:284
 msgid "E&xit\tCTRL-Q"
 msgstr ""
 
-#: ../utils.cpp:283
+#: ../utils.cpp:288
 msgid "Refresh View\tCTRL-R"
 msgstr ""
 
-#: ../utils.cpp:287
+#: ../utils.cpp:292
 msgid "Preferences..."
 msgstr ""
 
-#: ../utils.cpp:295
+#: ../utils.cpp:300
 msgid "Reset Columns"
 msgstr ""
 
-#: ../utils.cpp:299
+#: ../utils.cpp:304
 msgid "&Stop"
 msgstr ""
 
-#: ../utils.cpp:303
+#: ../utils.cpp:308
 msgid "Explore...\tF2"
 msgstr ""
 
-#: ../utils.cpp:409
+#: ../utils.cpp:414
 msgid "added"
 msgstr ""
 
-#: ../utils.cpp:412
+#: ../utils.cpp:417
 msgid "missing"
 msgstr ""
 
-#: ../utils.cpp:415
+#: ../utils.cpp:420
 msgid "deleted"
 msgstr ""
 
-#: ../utils.cpp:418
+#: ../utils.cpp:423
 msgid "replaced"
 msgstr ""
 
-#: ../utils.cpp:421
+#: ../utils.cpp:426
 msgid "modified"
 msgstr ""
 
-#: ../utils.cpp:424
+#: ../utils.cpp:429
 msgid "merged"
 msgstr ""
 
-#: ../utils.cpp:427
+#: ../utils.cpp:432
 msgid "conflicted"
 msgstr ""
 
-#: ../utils.cpp:431
+#: ../utils.cpp:436
 msgid "unversioned"
 msgstr ""
 
-#: ../utils.cpp:544
+#: ../utils.cpp:549
 msgid "Open..."
 msgstr ""
 
