@@ -1,0 +1,43 @@
+PROGRAM=svncpptest
+
+CXX=@CXX@
+
+OBJECTS= \
+	svncpp.o \
+	../../svncpp/auth.o \
+	../../svncpp/client.o \
+	../../svncpp/property.o \
+	../../svncpp/exception.o \
+	../../svncpp/notify.o \
+	../../svncpp/log.o \
+	../../svncpp/modify.o \
+	../../svncpp/pool.o \
+	../../svncpp/status.o
+
+APR_LIBS=@APR_LIBS@
+WX_LIBS=@WX_LIBS@
+CPPUNIT_LIBS=@CPPUNIT_LIBS@
+# insert -lefence if you want to debug memory problems
+LIBS=-lsvn_client-1 -lsvn_wc-1 -lsvn_ra-1 -lsvn_delta-1 -lsvn_subr-1 \
+		$(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(APR_LIBS) \
+		$(WX_LIBS) $(CPPUNIT_LIBS)
+#you can debug your application with electric fence.
+#just uncomment the following line (you must have electric fence installed)
+#LIBS=-lefence $(LIBS)
+SVN_INC=-I/usr/local/include/subversion-1
+CXXFLAGS=@CXXFLAGS@ @CPPUNIT_CXXFLAGS@ -I../.. -Wall -fexceptions
+
+# implementation
+
+.SUFFIXES:	.o .cpp
+
+.cpp.o:
+	$(CXX) -c -g $(SVN_INC) $(CXXFLAGS) -o $@ $<
+
+all:    $(PROGRAM)
+
+$(PROGRAM):	$(OBJECTS)
+	$(CXX) -o $(PROGRAM)  $(LIBS) $(OBJECTS)
+
+clean: 
+	rm -f *.o ../../svncpp/*.o $(PROGRAM)

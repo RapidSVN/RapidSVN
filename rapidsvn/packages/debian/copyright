@@ -1,0 +1,68 @@
+This package was debianized by Timothee Besset <ttimo@ttimo.net> on
+Sat,  5 Apr 2003 19:22:28 +0200.
+
+It was downloaded from http://svn.collab.net/repos/rapidsvn/trunk/
+
+Upstream Authors: Tim Kemp <kempus@tigris.org>, Stefan Kueng <steveking@tigris.org>
+
+Copyright:
+
+=================================================================
+Copyright (C) 2002-2005 The RapidSvn Group. All rights reserved.
+
+=================================================================
+
+This software consists of voluntary contributions made by many
+individuals on behalf of the RapidSvn Group.  For more
+information on the RapidSvn Group, please see
+<http://rapidsvn.tigris.org/>.
+
+RapidSVN is licensed under the GNU General Public License.
+Svncpp is licensed under the GNU Lesser General Public License.
+All documentation included in this distribution and on the website
+is licensed under the GNU Free Documentation License.
+
+
+=== RapidSVN: GNU General Public License ===
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program (in the file GPL.txt); if not, write to 
+the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, 
+Boston, MA  02110-1301  USA
+
+
+=== Svncpp: GNU Lesser General Public License ===
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library (in the file LGPL.txt); if not, 
+write to the Free Software Foundation, Inc., 51 Franklin St, 
+Fifth Floor, Boston, MA  02110-1301  USA
+
+
+=== Documentation: GNU Free Documentation License ===
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+=================================================================
