@@ -29,9 +29,6 @@
 // wxWidgets
 #include "wx/wx.h"
 
-// svncpp
-#include "svncpp/url.hpp"
-
 // app
 #include "about_dlg.hpp"
 #include "svn_version.h"
@@ -45,23 +42,6 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
   wxString title;
   title.Printf (_("About %s"), APPLICATION_NAME);
   SetTitle (title);
-
-  std::vector<std::string> schemasVector =
-    svn::Url::supportedSchemas ();
-  wxString schemasStr;
-  std::vector<std::string>::const_iterator it;
-  bool first = true;
-  for (it = schemasVector.begin (); it != schemasVector.end (); it++)
-  {
-    if (first)
-      first = false;
-    else
-      schemasStr += wxT("\n");
-    std::string schema = *it;
-    schemasStr += wxT("- ");
-    schemasStr += Utf8ToLocal(schema);
-  }
-
 
   // format string
   wxString version;
@@ -112,16 +92,10 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
                 subversion.c_str (),
                 wx.c_str ());
 
-  wxString schemas;
-  schemas.Printf (wxT("%s\n" // "supported url schemas"
-                  "%s"), // list of schemas
-                  _("Supported URL schemas: "),
-                  schemasStr.c_str ());
-
   // create controls
   wxStaticText * labelCopy = new wxStaticText (this, -1, copy);
   wxStaticText * labelBuilt = new wxStaticText (this, -1, built);
-  wxStaticText * labelSchemas = new wxStaticText (this, -1, schemas);
+  wxStaticText * labelSchemas = new wxStaticText (this, -1, wxEmptyString);
   wxStaticText * labelTitle = new wxStaticText (
     this, -1, _("Locale Information:"));
   wxStaticText * labelLanguageTitle = new wxStaticText (

@@ -58,6 +58,7 @@ namespace svn
      * supported by svn 
      *
      * @return vector with entries like "file:", "http:"
+     * @deprecated since 0.9.1 (returns an empty vector now)
      */
     static std::vector<std::string>
     supportedSchemas ();

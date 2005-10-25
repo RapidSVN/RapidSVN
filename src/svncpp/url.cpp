@@ -30,9 +30,6 @@
 #include <string>
 #include <vector>
 
-// subversion api
-#include "svn_ra.h"
-
 // svncpp
 #include "svncpp/pool.hpp"
 #include "svncpp/url.hpp"
@@ -47,8 +44,7 @@ namespace svn
     "http:", "https:", "svn:", "svn+ssh:", "file:"
   };
 
-  static bool mSchemasInitialized = false;
-  std::vector<std::string> mSchemas;
+  static std::vector<std::string> mSchemas;
 
   Url::Url () {}
 
@@ -80,53 +76,6 @@ namespace svn
   std::vector<std::string>
   Url::supportedSchemas ()
   {
-    if (mSchemasInitialized)
-      return mSchemas;
-
-    mSchemasInitialized = true;
-    Pool pool;
-    void * ra_baton;
-
-    svn_error_t * error = 
-      svn_ra_init_ra_libs (&ra_baton, pool);
-    if (error)
-      return mSchemas;
-
-    svn_stringbuf_t *descr;
-    error = 
-      svn_ra_print_ra_libraries (&descr, ra_baton, pool);
-    if (error)
-      return mSchemas;
-
-    // schemas are in the following form:
-    // <schema>:<whitespace><description>\n...
-    // find the fírst :
-    std::string descriptions (descr->data);
-    size_t pos=0;
-    const size_t not_found = std::string::npos;
-    do
-    {
-      const std::string tokenStart ("handles '");
-      const std::string tokenEnd ("' schem");
-      pos = descriptions.find (tokenStart, pos);
-      if (pos == not_found)
-        break;
-
-      pos += tokenStart.length ();
-
-      size_t posEnd = descriptions.find (tokenEnd, pos);
-      if (posEnd == not_found)
-        break;
-
-      // found
-      std::string schema (descriptions.substr (pos, posEnd-pos) + ":");
-      mSchemas.push_back (schema);
-
-      // forward to the next newline
-      pos = posEnd + tokenEnd.length ();
-    }
-    while (pos != not_found);
-
     return mSchemas;
   }
 }
