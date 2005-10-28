@@ -31,7 +31,6 @@ for VALUE in $APR_CONFIGS ; do
 		break
 	fi
 done
-test $VALUE && APR_CONFIG=$VALUE
 if test $APR_CONFIG ; then
     AC_MSG_RESULT([found])
 else
@@ -199,17 +198,29 @@ WX_LIBS="`$WX_CONFIG --libs`"
 dnl
 dnl CppUnit
 dnl 
-
-CPPUNITCONFIG=
+CPPUNITCONFIG="cppunit-config"
 AC_ARG_WITH(cppunit-config,
 [[  --with-cppunit-config=FILE     Use the given path to cppunit-config
                             when determining the cpp Unit configuration; 
                             defaults to ""]],
 [
-    if test "$withval" != "yes" -a "$withval" != ""; then
-        CPPUNITCONFIG=$withval
-    fi
+  if test "$withval" == "no"; then
+    CPPUNITCONFIG=
+  elif test "$withval" != "yes"; then
+    CPPUNITCONFIG=$withval
+  fi
 ])
+AC_MSG_CHECKING([cppunig-config])
+if test -z "$CPPUNITCONFIG" ; then
+  AC_MSG_RESULT([not used])
+else
+  if $CPPUNITCONFIG --version > /dev/null 2>&1; then
+    AC_MSG_RESULT([found])
+  else
+    AC_MSG_RESULT([not found])
+    CPPUNITCONFIG=
+  fi
+fi
 
 dnl
 dnl XsltProc
@@ -219,118 +230,88 @@ AC_ARG_WITH(xsltproc,
 [[  --with-xsltproc=FILE     Use the given path to xsltproc; 
                             defaults to "xsltproc"]],
 [
-    if test "$withval" != "yes"; then
-        XSLTPROC=$withval
-    fi
+  if test "$withval" == "no"; then
+    XSLTPROC=
+  elif test "$withval" != "yes"; then
+    XSLTPROC=$withval
+  fi
 ])
 AC_MSG_CHECKING([xsltproc])
 if test -z "$XSLTPROC" ; then
-   AC_MSG_RESULT([not used])
+  AC_MSG_RESULT([not used])
 else
-   if $XSLTPROC --version >/dev/null 2>&1 ; then
-      AC_MSG_RESULT([found])
-   else
-      AC_MSG_RESULT([not found])	
-      XSLTPROC=""
-   fi
+  if $XSLTPROC --version >/dev/null 2>&1 ; then
+    AC_MSG_RESULT([found])
+  else
+    AC_MSG_RESULT([not found])	
+    XSLTPROC=""
+  fi
 fi
 
 dnl
-dnl Docbook XSL
+dnl Docbook XSL Manpage Stylesheet
 dnl
-dnl DOCBOOK_XSL="/etc/sgml/docbook-xsl"
-DOCBOOK_XSL="/usr/share/sgml/docbook/stylesheet/xsl/nwalsh"
-AC_ARG_WITH(docbook-xsl,
-[[  --with-docbook-xsl=DIR   Determine the location of the
-                           DocBook XSL stylesheets,
-                           needed for manpage generation.
-                           Defaults to "/usr/share/sgml/docbook/stylesheet/xsl/nwalsh".]],
+DOCBOOK_MANPAGES=yes
+AC_ARG_WITH(docbook-xsl-manpages,
+[[  --with-docbook-xsl-manpages=FILE   Determine the location of the
+                                     DocBook XSL manpages stylesheet,
+                                     needed for manpage generation.
+                                     REMARK: do not supply something like
+                                     /.../html/docbook.xsl. The path has
+                                     to look like /.../manpages/docbook.xsl,
+                                     otherwise you are using the wrong stylesheet
+                                     resulting in an invalid manpage]],
 [
-    if test "$withval" != "yes"; then
-        DOCBOOK_XSL=$withval
-    fi
+  if test "$withval" == "no"; then
+    DOCBOOK_MANPAGES=
+  else
+    DOCBOOK_MANPAGES=$withval
+  fi
 ])
-AC_MSG_CHECKING([docbook xsl stylesheets ($DOCBOOK_XSL)])
 
+dnl search for Docbook XSL in standard places
+dnl remark: I didnt use a list if files for usage in
+dnl         a for .. do .. done loop since the line
+dnl         got too long (file not found error while
+dnl         executing)
+if test "$DOCBOOK_MANPAGES" == "yes"; then
+  X1=/usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl
+  X2=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook/docbook.xsl
+  X3=/usr/share/sgml/docbook/yelp/docbook/manpages/docbook.xsl
+  X4=/usr/share/sgml/docbook/xsl-stylesheets*/manpages/docbook.xsl
+  X5=/usr/local/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
+  X6=/usr/local/share/sgml/docbook/yelp/docbook/manpages/docbook.xsl
+  X7=/usr/share/docbook-xsl/manpages/docbook.xsl
+  X8=/usr/share/xml/docbook/stylesheet/nwalsh/current/manpages/docbook.xsl
 
-for _try_docbook_xsl in \
-  /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/html \
-  /usr/share/sgml/docbook/yelp/docbook/html \
-  /usr/local/share/sgml/docbook/stylesheet/xsl/nwalsh/html \
-  /usr/local/share/sgml/docbook/yelp/docbook/html \
-  /usr/share/docbook-xsl/html \
-  /usr/share/sgml/docbook/xsl-stylesheets*/html
-do
-  if test -f "$_try_docbook_xsl/docbook.xsl"
-  then
-    _docbook_xsl=$_try_docbook_xsl
-    break
+  if test -f $X1; then
+    DOCBOOK_MANPAGES=$X1
+  elif test -f $X2; then
+    DOCBOOK_MANPAGES=$X2
+  elif test -f $X3; then
+    DOCBOOK_MANPAGES=$X3
+  elif test -f $X4; then
+    DOCBOOK_MANPAGES=$X4
+  elif test -f $X5; then
+    DOCBOOK_MANPAGES=$X5
+  elif test -f $X6; then
+    DOCBOOK_MANPAGES=$X6
+  elif test -f $X7; then
+    DOCBOOK_MANPAGES=$X7
+  elif test -f $X8; then
+    DOCBOOK_MANPAGES=$X8
+  else
+    DOCBOOK_MANPAGES=notfound
   fi
-done
-
-if test -z "$_docbook_xsl"
-then
-  _docbook_xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh
 fi
-
-DOCBOOK_XSL="$_docbook_xsl"
-
-if test -z "$DOCBOOK_XSL" ; then
-   AC_MSG_RESULT([no])
+AC_MSG_CHECKING([docbook xsl stylesheet for manpages])
+if test -z "$DOCBOOK_MANPAGES"; then
+   AC_MSG_RESULT([not used])
+elif test -f "$DOCBOOK_MANPAGES"; then
+   AC_MSG_RESULT([found])
 else
-   if test -d "$DOCBOOK_XSL" ; then
-      AC_MSG_RESULT([found])
-   else
-      AC_MSG_RESULT([not found])
-      DOCBOOK_XSL=""
-   fi
-fi
-
-
-dnl
-dnl Docbook Manpages
-dnl
-for _try_manpages in \
-  $DOCBOOK_XSL/manpages \
-  $DOCBOOK_XSL/../manpages 
-do
-  if test -d "$_try_manpages"
-  then
-    _manpages=$_try_manpages
-    break
-  fi
-done
-
-if test -z "$_manpages"
-then
-  _manpages=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages
-fi
-
-DOCBOOK_MANPAGES="$_manpages"
-
-AC_MSG_CHECKING([docbook manpages ($DOCBOOK_MANPAGES)])
-if test -z "$DOCBOOK_MANPAGES" ; then
-   AC_MSG_RESULT([no])
-else
-   if test -d "$DOCBOOK_MANPAGES" ; then
-      AC_MSG_RESULT([found])
-   else
-      AC_MSG_RESULT([not found])
-      DOCBOOK_XSL=""
-      DOCBOOK_MANPAGES=""
-   fi
-fi
-
-DOCBOOK_XSL_MANS=""
-if test "$DOCBOOK_XSL" ; then
-  DOCBOOK_XSL_MANS="$DOCBOOK_MANPAGES"
-  AC_MSG_CHECKING([docbook xsl support for manpages ($DOCBOOK_XSL_MANS)])
-  if test -d "$DOCBOOK_XSL_MANS" ; then
-     AC_MSG_RESULT([found])
-  else      
-     AC_MSG_RESULT([not found])
-     DOCBOOK_XSL=""
-  fi
+   AC_MSG_RESULT([not found])
+   DOCBOOK_MANPAGES=""
 fi
 
 
@@ -338,7 +319,7 @@ dnl
 dnl Manpage creation (with xsltproc)
 dnl
 AC_MSG_CHECKING([manpage creation])
-if test "$XSLTPROC" -a "$DOCBOOK_XSL" ; then
+if test "$XSLTPROC" -a "$DOCBOOK_MANPAGES" ; then
    AC_MSG_RESULT([yes])
    TARGET_MANPAGE=manpage-yes
 else
@@ -355,20 +336,22 @@ AC_ARG_WITH(doxygen,
                           Used for creating API documentation; 
                           defaults to "doxygen"]],
 [
-    if test "$withval" != "yes"; then
-        DOXYGEN=$withval
-    fi
+  if test "$withval" == "no"; then
+    DOXYGEN=
+  elif test "$withval" != "yes"; then
+    DOXYGEN=$withval
+  fi
 ])
 AC_MSG_CHECKING([doxygen])
 if test -z "$DOXYGEN" ; then
    AC_MSG_RESULT([not used])
 else
-   if doxygenversion=`$DOXYGEN --version 2>&1` ; then
-      AC_MSG_RESULT([found])
-   else
-      AC_MSG_RESULT([not found])	
-      DOXYGEN=""
-   fi
+  if doxygenversion=`$DOXYGEN --version 2>&1` ; then
+    AC_MSG_RESULT([found])
+  else
+    AC_MSG_RESULT([not found])	
+    DOXYGEN=""
+  fi
 fi
 
 dnl
@@ -380,33 +363,35 @@ AC_ARG_WITH(dot,
                       This tool is needed by doxygen; 
                       defaults to "dot"]],
 [
-    if test "$withval" != "yes"; then
-        DOT=$withval
-    fi
+  if test "$withval" == "no"; then
+    DOT=
+  elif test "$withval" != "yes"; then
+    DOT=$withval
+  fi
 ])
 AC_MSG_CHECKING([dot])
 if test -z "$DOT" ; then
-   AC_MSG_RESULT([not used])
+  AC_MSG_RESULT([not used])
 else
-   if dotbla=`echo | $DOT 2>/dev/null` ; then
-      AC_MSG_RESULT([found])
-   else
-      AC_MSG_RESULT([not found])	
-      DOT=""
-   fi
+  if dotbla=`echo | $DOT 2>/dev/null` ; then
+    AC_MSG_RESULT([found])
+  else
+    AC_MSG_RESULT([not found])	
+    DOT=""
+  fi
 fi
 
 dnl
 dnl Final check for Doxygen
 dnl
 if test "$DOXYGEN" ; then
-   AC_MSG_CHECKING([if doxygen is usable])
-   if test -z "$DOT" ; then
-      AC_MSG_RESULT([no (dot needed)])
-      DOXYGEN=""
-   else
-      AC_MSG_RESULT([yes])
-   fi
+  AC_MSG_CHECKING([if doxygen is usable])
+  if test -z "$DOT" ; then
+    AC_MSG_RESULT([no (dot needed)])
+    DOXYGEN=""
+  else
+    AC_MSG_RESULT([yes])
+  fi
 fi
 
 if test "$DOXYGEN" ; then
@@ -419,7 +404,6 @@ AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
 AC_SUBST(SVN_LIBS)
 AC_SUBST(NEON_LIBS)
-AC_SUBST(DOCBOOK_XSL)
 AC_SUBST(DOCBOOK_MANPAGES)
 AC_SUBST(XSLTPROC)
 AC_SUBST(TARGET_MANPAGE)
@@ -429,16 +413,13 @@ AC_SUBST(TARGET_DOXYGEN)
 
 AC_OUTPUT(Makefile \
           doc/Makefile \
+          doc/manpage/Makefile \
           include/Makefile \
           include/svncpp/Makefile \
           src/Makefile \
           src/svncpp/Makefile \
           src/res/Makefile)
 
-
-if test "$DOCBOOK_XSL" ; then
-  AC_OUTPUT(doc/manpage/Makefile)
-fi
 
 if test "$CPPUNITCONFIG" ; then
     CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
