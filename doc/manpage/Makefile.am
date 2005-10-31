@@ -1,4 +1,4 @@
-man_MANS=rapidsvn.1
+man_MANS=$(MAN_MANS)
 EXTRA_DIST=$(man_MANS)
 MAKEMAN=@XSLTPROC@ --nonet --novalid @DOCBOOK_MANPAGES@
 
@@ -10,3 +10,6 @@ manpage-no:
 
 manpage-yes:
 	$(MAKEMAN) $(srcdir)/rapidsvn.xml
+
+clean:
+	-rm -f rapidsvn.1

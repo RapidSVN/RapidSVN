@@ -316,15 +316,27 @@ fi
 
 
 dnl
-dnl Manpage creation (with xsltproc)
+dnl Manpage
 dnl
+MANPAGE=yes
+AC_ARG_WITH(manpage,
+[[  --with-manpage=yes|no   Enable/disable manpage creation]],
+[
+  if test "$withval" != "yes"; then
+    MANPAGE=no
+  fi
+])
+TARGET_MANPAGE=manpage-no
+MAN_MANS=
 AC_MSG_CHECKING([manpage creation])
-if test "$XSLTPROC" -a "$DOCBOOK_MANPAGES" ; then
-   AC_MSG_RESULT([yes])
-   TARGET_MANPAGE=manpage-yes
+if test "$MANPAGE"=="no"; then
+  AC_MSG_RESULT([no])
+elif test "$XSLTPROC" -a "$DOCBOOK_MANPAGES" ; then
+  AC_MSG_RESULT([yes])
+  TARGET_MANPAGE=manpage-yes
+  MAN_MANS=rapidsvn.1
 else
    AC_MSG_RESULT([no (xsltproc and docbook-xsl with manpage support needed)])
-   TARGET_MANPAGE=manpage-no
 fi
 
 dnl
@@ -396,8 +408,10 @@ fi
 
 if test "$DOXYGEN" ; then
    TARGET_DOXYGEN="doxygen-yes"
+   DOXYGEN_DIST="svncpp.dox html/*"
 else 
    TARGET_DOXYGEN="doxygen-no"
+   DOXYGEN_DIST=
 fi
 
 AC_SUBST(APR_LIBS)
@@ -407,13 +421,15 @@ AC_SUBST(NEON_LIBS)
 AC_SUBST(DOCBOOK_MANPAGES)
 AC_SUBST(XSLTPROC)
 AC_SUBST(TARGET_MANPAGE)
+AC_SUBST(MAN_MANS)
 AC_SUBST(DOXYGEN)
+AC_SUBST(DOXYGEN_DIST)
 AC_SUBST(TARGET_DOXYGEN)
-
 
 AC_OUTPUT(Makefile \
           doc/Makefile \
           doc/manpage/Makefile \
+          doc/svncpp/Makefile \
           include/Makefile \
           include/svncpp/Makefile \
           src/Makefile \
