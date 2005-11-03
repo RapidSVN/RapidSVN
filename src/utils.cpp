@@ -407,6 +407,9 @@ StatusDescription (const svn_wc_status_kind kind)
   case svn_wc_status_none:
     return _("none");
     break;
+  case svn_wc_status_unversioned:
+    return _("unversioned");
+	break;
   case svn_wc_status_normal:
     return _("normal");
     break;
@@ -431,9 +434,17 @@ StatusDescription (const svn_wc_status_kind kind)
   case svn_wc_status_conflicted:
     return _("conflicted");
     break;
-  case svn_wc_status_unversioned:
+  case svn_wc_status_obstructed:
+    return _("obstructed");
+    break;
+  case svn_wc_status_external:
+    return _("external");
+    break;
+  case svn_wc_status_incomplete:
+    return _("incomplete");
+    break;
   default:
-    return _("unversioned");
+    return _("unknown value");
     break;
   }
 }

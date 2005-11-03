@@ -508,7 +508,8 @@ public:
       wxString path (Utf8ToLocal (status.path ()));
 
       // Only display versioned directories and exclude parent itself
-      if ((status.entry ().kind () == svn_node_dir) && 
+      if (((status.entry ().kind () == svn_node_dir) ||
+           (status.textStatus () == svn_wc_status_external)) && 
           (parentPath != path))
       {
         int image = FOLDER_IMAGE_FOLDER;
