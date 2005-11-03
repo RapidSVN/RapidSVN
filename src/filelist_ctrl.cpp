@@ -69,6 +69,7 @@
 #include "res/bitmaps/newer_file.xpm"
 #include "res/bitmaps/newer_folder.xpm"
 #include "res/bitmaps/modified_newer_file.xpm"
+#include "res/bitmaps/externals_folder.xpm"
 
 
 /**
@@ -87,6 +88,7 @@ enum
   IMG_INDX_NEWER_FILE,
   IMG_INDX_NEWER_FOLDER,
   IMG_INDX_MODIFIED_NEWER,
+  IMG_INDX_EXTERNALS_FOLDER,
   IMG_INDX_COUNT
 };
 
@@ -627,6 +629,8 @@ public:
     ImageListSmall->Add (wxIcon (newer_file_xpm));
     ImageListSmall->Add (wxIcon (newer_folder_xpm));
     ImageListSmall->Add (wxIcon (modified_newer_file_xpm));
+
+    ImageListSmall->Add (wxIcon (externals_folder_xpm));
   }
 
   /** destructor */
@@ -797,6 +801,7 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   IMAGE_INDEX[IMG_INDX_NEWER_FILE] = 14;
   IMAGE_INDEX[IMG_INDX_NEWER_FOLDER] = 15;
   IMAGE_INDEX[IMG_INDX_MODIFIED_NEWER] = 16;
+  IMAGE_INDEX[IMG_INDX_EXTERNALS_FOLDER] = 17;
 
   // set this file list control to use the image list
   SetImageList (m->ImageListSmall, wxIMAGE_LIST_SMALL);
@@ -897,9 +902,10 @@ FileListCtrl::UpdateFileList ()
             (status.propStatus () == svn_wc_status_modified))
           imageIndex = GetImageIndex (
             IMG_INDX_MODIFIED_VERSIONED_FOLDER, -1);
+        else if (status.textStatus () == svn_wc_status_external)
+          imageIndex = GetImageIndex (IMG_INDX_EXTERNALS_FOLDER, -1);
         else
-          imageIndex = GetImageIndex (
-            IMG_INDX_VERSIONED_FOLDER, -1);
+          imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER, -1);
 
         const int normalIndex = IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER];
         if ((imageIndex == normalIndex) && newer)

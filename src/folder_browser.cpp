@@ -58,6 +58,8 @@
 #include "res/bitmaps/modified_versioned_folder.xpm"
 #include "res/bitmaps/modified_open_folder.xpm"
 #include "res/bitmaps/bookmark.xpm"
+#include "res/bitmaps/externals_folder.xpm"
+#include "res/bitmaps/open_externals_folder.xpm"
 
 enum
 {
@@ -70,6 +72,8 @@ enum
   FOLDER_IMAGE_MODIFIED_FOLDER,
   FOLDER_IMAGE_MODIFIED_OPEN_FOLDER,
   FOLDER_IMAGE_BOOKMARK,
+  FOLDER_IMAGE_EXTERNALS_FOLDER,
+  FOLDER_IMAGE_OPEN_EXTERNALS_FOLDER,
   FOLDER_IMAGE_COUNT
 };
 
@@ -157,6 +161,8 @@ public:
     imageList->Add (wxIcon (modified_versioned_folder_xpm));
     imageList->Add (wxIcon (modified_open_folder_xpm));
     imageList->Add (wxIcon (bookmark_xpm));
+    imageList->Add (wxIcon (externals_folder_xpm));
+    imageList->Add (wxIcon (open_externals_folder_xpm));
 
     treeCtrl = new wxTreeCtrl (window, -1, pos, size,
                                wxTR_HAS_BUTTONS|wxTR_SINGLE);
@@ -514,6 +520,18 @@ public:
       {
         int image = FOLDER_IMAGE_FOLDER;
         int open_image = FOLDER_IMAGE_OPEN_FOLDER;
+
+        if (status.textStatus () == svn_wc_status_external)
+        {
+          image = FOLDER_IMAGE_EXTERNALS_FOLDER;
+          open_image = FOLDER_IMAGE_OPEN_EXTERNALS_FOLDER;
+        }
+        else
+        {
+          image = FOLDER_IMAGE_FOLDER;
+          open_image = FOLDER_IMAGE_OPEN_FOLDER;
+        }
+
 
         if ((status.textStatus () == svn_wc_status_modified) ||
             (status.propStatus () == svn_wc_status_modified))
