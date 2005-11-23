@@ -1746,10 +1746,7 @@ RapidSvnFrame::Perform (Action * action)
     LocalToUtf8(m_currentPath, currentPathUtf8);
     action->SetPath (svn::Path (currentPathUtf8));
     action->SetContext (m_context);
-    if ((action->GetFlags () & Action::WITHOUT_TARGET) == 0)
-    {
-      action->SetTargets (GetActionTargets ());
-    }
+    action->SetTargets (GetActionTargets ());
     action->SetTracer (m_logTracer, false);
     m_actionWorker->SetTracer (m_logTracer);
     m_actionWorker->SetContext (m_context, false);

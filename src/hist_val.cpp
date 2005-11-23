@@ -88,6 +88,15 @@ HistoryValidator::TransferToWindow()
     size_t count = list.Count ();
     size_t index;
 
+    // insert an entry with file selected to checkout
+    if (m_value != 0)
+    {
+      if (m_value->Length () > 0)
+      {
+        comboBox->Append (*m_value);
+      }
+    }
+
     for (index = 0; index < count; index++)
     {
       wxString value (list.Item (index));

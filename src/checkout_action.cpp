@@ -28,6 +28,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/url.hpp"
 
 // app
 #include "checkout_action.hpp"
@@ -48,11 +49,23 @@ CheckoutAction::Prepare ()
     return false;
   }
 
-  CheckoutDlg dlg (GetParent ());
-  if( dlg.ShowModal () != wxID_OK )
+  const std::vector<svn::Path> & v = GetTargets ();
+
+  svn::Path selectedUrl ("");
+
+  if (v.size () == 1)
+  {
+    if (svn::Url::isValid (v [0].c_str ()))
+      selectedUrl = v [0];
+  }
+
+  CheckoutDlg dlg (GetParent (), selectedUrl.c_str ());
+
+  if (dlg.ShowModal () != wxID_OK)
   {
     return false;
   }
+
   m_data = dlg.GetData ();
   return true;
 }

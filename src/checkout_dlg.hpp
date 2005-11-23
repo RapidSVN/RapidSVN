@@ -31,6 +31,13 @@
 // app
 #include "checkout_data.hpp"
 
+// svncpp
+namespace svn
+{
+  class Path;
+}
+
+
 class CheckoutDlg : public wxDialog
 {
 public:
@@ -38,8 +45,11 @@ public:
    * Constructor
    *
    * @param parent parent window
+   * @param selectedUrl pre-fills the URL field with
+   *                    this URL
    */
-  CheckoutDlg (wxWindow *parent);
+  CheckoutDlg (wxWindow *parent, 
+               const svn::Path & selectedUrl);
 
   /**
    * destructor

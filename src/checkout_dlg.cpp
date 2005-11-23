@@ -22,13 +22,14 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-//TODO #include "include.hpp"
-//TODO #include "rapidsvn_app.hpp"
 
 // wxWidgets
 #include "wx/cshelp.h"
 #include "wx/sizer.h"
 #include "wx/valgen.h"
+
+// svncpp
+#include "svncpp/path.hpp"
 
 // app
 #include "hist_entries.hpp"
@@ -194,7 +195,8 @@ BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)
   EVT_BUTTON (wxID_HELP, CheckoutDlg::OnHelp)
 END_EVENT_TABLE ()
 
-CheckoutDlg::CheckoutDlg (wxWindow * parent)
+CheckoutDlg::CheckoutDlg (wxWindow * parent, 
+                          const svn::Path & selectedUrl)
 {
     // Add the context-sensitive help button on the caption for MSW
 #ifdef __WXMSW__
@@ -205,6 +207,8 @@ CheckoutDlg::CheckoutDlg (wxWindow * parent)
 
   m = new Data (this);
   CentreOnParent();
+
+  m->data.RepUrl = selectedUrl.c_str();
 }
 
 CheckoutDlg::~CheckoutDlg ()
