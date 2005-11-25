@@ -127,6 +127,15 @@ public:
       context = 0;
     }
   }
+
+
+  void
+  SetAuthCache (bool value)
+  {
+    if (context != 0)
+      context->setAuthCache (value);
+  }
+
 };
 
 
@@ -889,6 +898,23 @@ public:
       it->second.ClearContext ();
   }
 
+
+  void SetAuthCache (bool value)
+  {
+    useAuthCache = value;
+
+    // make sure the already existing contexts
+    // are using the new setting
+    defaultContext.setAuthCache (value);
+    if (singleContext != 0)
+       singleContext->setAuthCache (value);
+
+    BookmarkHashMap::iterator it = bookmarks.begin ();
+
+    for (; it!= bookmarks.end (); it++)
+      it->second.SetAuthCache (value);
+  }
+
 };
 
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
@@ -1163,7 +1189,7 @@ FolderBrowser::GetAuthCache () const
 void
 FolderBrowser::SetAuthCache (const bool value)
 {
-  m->useAuthCache = value;
+  m->SetAuthCache (value);
 }
 
 void
