@@ -349,6 +349,15 @@ public:
                         wxDefaultSize, 0, valCheck);
       mainsizer->Add (20, 20);
       mainsizer->Add (check, 0, wxALL, 5);
+
+      wxGenericValidator cacheCheck (&m_prefs->useAuthCache);
+      check =
+        new wxCheckBox (this, -1,
+                        _("Store authentication credentials on hard disk"),
+                        wxDefaultPosition,
+                        wxDefaultSize, 0, cacheCheck);
+
+      mainsizer->Add (check, 0, wxALL, 5);
     }
 
     SetSizer (mainsizer);

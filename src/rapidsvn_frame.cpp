@@ -724,7 +724,8 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m_folder_browser->ReadConfig (cfg);
   {
     Preferences prefs;
-    m_folder_browser->SetListener (&m->listener);
+    m_folder_browser->SetListener        (&m->listener);
+    m_folder_browser->SetAuthCache       (prefs.useAuthCache);
     m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
   }
   UpdateCurrentPath ();
@@ -1683,6 +1684,7 @@ RapidSvnFrame::ShowPreferences ()
 
   if (ok)
   {
+    m_folder_browser->SetAuthCache (prefs.useAuthCache);
     m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
   }
 }

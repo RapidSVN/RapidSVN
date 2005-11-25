@@ -96,6 +96,11 @@ public:
    */
   bool authPerBookmark;
 
+  /**
+   * Store authentication data on hard disk
+   */
+  bool useAuthCache;
+
 private:
   void Read ();
   void Write () const;

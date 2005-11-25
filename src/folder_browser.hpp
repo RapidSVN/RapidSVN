@@ -147,6 +147,18 @@ public:
   GetAuthPerBookmark () const;
 
 
+  /**
+   * check if authentication credentials should be cached or not
+   */
+  const bool
+  GetAuthCache () const;
+
+  /**
+   * select if authentication credentials should be cached or not
+   */
+  void
+  SetAuthCache (const bool value);
+
   void
   SetListener (svn::ContextListener * listener);
 

@@ -147,9 +147,11 @@ public:
   wxImageList* imageList;
   BookmarkHashMap bookmarks;
   svn::Context defaultContext;
+  bool useAuthCache;
+
 
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
-    : singleContext (0), window (window), listener (0)
+    : singleContext (0), window (window), listener (0), useAuthCache (true)
   {
     imageList = new wxImageList (16, 16, TRUE);
     imageList->Add (wxIcon (computer_xpm));
@@ -215,9 +217,7 @@ public:
   {
     svn::Context * context = new svn::Context ();
 
-    // disable authentication caching.
-    context->setAuthCache (false);
-
+    context->setAuthCache (useAuthCache);
     context->setListener (listener);
 
     return context;
@@ -1153,6 +1153,18 @@ FolderBrowser::SetFlat (bool flatMode)
   return true;
 } 
   
+
+const bool
+FolderBrowser::GetAuthCache () const
+{
+  return m->useAuthCache;
+}
+ 
+void
+FolderBrowser::SetAuthCache (const bool value)
+{
+  m->useAuthCache = value;
+}
 
 void
 FolderBrowser::ExpandSelection ()

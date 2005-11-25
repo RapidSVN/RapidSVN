@@ -59,6 +59,8 @@ static const wxChar CONF_PURGE_TEMP_FILES[] =
   wxT("/Preferences/PurgeTempFiles");
 static const wxChar CONF_AUTH_PER_BOOKMARK[] =
   wxT("/Preferences/AuthPerBookmark");
+static const wxChar CONF_USE_AUTH_CACHE[] =
+  wxT("/Preferences/UseAuthCache");
 static const wxChar CONF_DIFF_TOOL[] =
   wxT("/Preferences/DiffTool");
 static const wxChar CONF_DIFF_TOOL_ARGS[] =
@@ -69,7 +71,7 @@ Preferences::Preferences ()
     explorer (DEFAULT_EXPLORER), explorerAlways (false),
     explorerArgs (wxEmptyString), diffTool (DEFAULT_DIFF_TOOL),
     diffToolArgs (wxEmptyString), purgeTempFiles (true),
-    authPerBookmark (false)
+    authPerBookmark (false), useAuthCache (true)
 {
   Read ();
 }
@@ -96,9 +98,9 @@ Preferences::Read ()
   diffTool = config->Read (CONF_DIFF_TOOL, diffTool);
   diffToolArgs = config->Read (CONF_DIFF_TOOL_ARGS, diffToolArgs);
 
-  config->Read (CONF_PURGE_TEMP_FILES, &purgeTempFiles);
-
+  config->Read (CONF_PURGE_TEMP_FILES,  &purgeTempFiles);
   config->Read (CONF_AUTH_PER_BOOKMARK, &authPerBookmark);
+  config->Read (CONF_USE_AUTH_CACHE,    &useAuthCache);
 }
 
 void Preferences::Write () const
@@ -119,6 +121,7 @@ void Preferences::Write () const
   config->Write (CONF_PURGE_TEMP_FILES, purgeTempFiles);
 
   config->Write (CONF_AUTH_PER_BOOKMARK, authPerBookmark);
+  config->Write (CONF_USE_AUTH_CACHE, useAuthCache);
 }
 
 /* -----------------------------------------------------------------
