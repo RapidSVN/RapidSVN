@@ -543,10 +543,10 @@ public:
         wxFileName filename (path);
         FolderItemData * data = new FolderItemData (
           FOLDER_TYPE_NORMAL, path, 
-          filename.GetName (), TRUE);
+          filename.GetFullName (), TRUE);
 
         wxTreeItemId newId = treeCtrl->AppendItem(
-          parentId, filename.GetName (), image, image, data);
+          parentId, filename.GetFullName (), image, image, data);
 
         treeCtrl->SetItemHasChildren (
           newId, HasSubdirectories (path));
