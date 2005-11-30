@@ -208,7 +208,7 @@ CheckoutDlg::CheckoutDlg (wxWindow * parent,
   m = new Data (this);
   CentreOnParent();
 
-  m->data.RepUrl = selectedUrl.c_str();
+  m->data.RepUrl = Utf8ToLocal (selectedUrl.c_str ());
 }
 
 CheckoutDlg::~CheckoutDlg ()

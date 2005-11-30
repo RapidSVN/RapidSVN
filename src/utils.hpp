@@ -43,6 +43,7 @@ class wxCommandEvent;
 namespace svn
 {
   class Status;
+  class Path;
 }
 
 
@@ -264,6 +265,14 @@ LocalToUtf8 (const wxString & srcLocal);
 void
 LocalToUtf8 (const wxString & srcLocal, std::string & dstUtf8);
 
+/**
+ * converts a string from local encoding to a utf8 path
+ *
+ * @param path path string in local encoding
+ * @return path in utf8
+ */
+svn::Path
+PathUtf8 (const wxString & path);
 
 /**
  * converts a string from utf to the local encoding 

@@ -55,11 +55,15 @@ CheckoutAction::Prepare ()
 
   if (v.size () == 1)
   {
-    if (svn::Url::isValid (v [0].c_str ()))
-      selectedUrl = v [0];
+    svn::Path selectedPath (v [0]);
+
+    if (selectedPath.isUrl ())
+    {
+      selectedUrl = selectedPath;
+    }
   }
 
-  CheckoutDlg dlg (GetParent (), selectedUrl.c_str ());
+  CheckoutDlg dlg (GetParent (), selectedUrl);
 
   if (dlg.ShowModal () != wxID_OK)
   {
@@ -78,9 +82,9 @@ CheckoutAction::Perform ()
   TrimString(m_data.DestFolder);
   UnixPath(m_data.DestFolder);
   TrimString(m_data.RepUrl);
-  
+
+  svn::Path repUrlUtf8 = PathUtf8 (m_data.RepUrl);
   long revnum=-1;
-  
   svn::Revision revision (svn::Revision::HEAD);
 
   // Did the user request a specific revision?:
@@ -95,10 +99,11 @@ CheckoutAction::Perform ()
   }
   
   wxSetWorkingDirectory (m_data.DestFolder);
-  std::string DestFolderUtf8;
-  LocalToUtf8 (m_data.DestFolder, DestFolderUtf8);
-  client.checkout (m_data.RepUrl.mb_str (), 
-                   svn::Path (DestFolderUtf8), 
+
+  svn::Path destFolderUtf8 = PathUtf8 (m_data.DestFolder);
+
+  client.checkout (repUrlUtf8.c_str (), 
+                   destFolderUtf8, 
                    revision, m_data.Recursive);
 
   // now post event to add bookmark to bookmarks
