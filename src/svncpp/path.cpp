@@ -57,6 +57,8 @@ namespace svn
   {
     Pool pool;
 
+    m_pathIsUrl = false;
+
     if (path == 0)
       m_path = "";
     else
@@ -65,6 +67,12 @@ namespace svn
         svn_path_internal_style (path, pool.pool () );
     
       m_path = int_path;
+      
+      if (svn::Url::isValid (int_path))
+      {
+        m_pathIsUrl = true;
+        m_path = svn::Url::escape (int_path);
+      }
     }
   }
 
@@ -81,11 +89,13 @@ namespace svn
   }
 
   Path& 
-  Path::operator=(const Path & path)
+  Path::operator= (const Path & path)
   {
     if (this == &path)
       return *this;
-    m_path = path.c_str();
+
+    init (path.c_str ());
+
     return *this;
   }
 
@@ -93,6 +103,13 @@ namespace svn
   Path::isset () const
   {
     return m_path.length () > 0;
+  }
+
+  void
+  const bool
+  Path::isUrl () const
+  {
+    return m_pathIsUrl;
   }
 
   void

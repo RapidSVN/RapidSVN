@@ -30,6 +30,9 @@
 #include <string>
 #include <vector>
 
+// subversion api
+#include "svn_path.h"
+
 // svncpp
 #include "svncpp/pool.hpp"
 #include "svncpp/url.hpp"
@@ -37,35 +40,37 @@
 
 namespace svn
 {
-  static const int SCHEMA_COUNT=5;
-  static const char * 
-  VALID_SCHEMAS [SCHEMA_COUNT] =
-  {
-    "http:", "https:", "svn:", "svn+ssh:", "file:"
-  };
-
-  static std::vector<std::string> mSchemas;
-
   Url::Url () {}
 
   Url::~Url () {}
 
+  /**
+   * determines if a path is a url; escape unsupported characters
+   * before checking
+   *
+   * @param urlToValidate url to be validated
+   */
   bool
-  Url::isValid (const char * url)
+  Url::isValid (const char * urlToValidate)
   {
-    std::string urlTest (url);
-    for (int index=0; index < SCHEMA_COUNT; index++)
-    {
-      std::string schema = VALID_SCHEMAS[index];
-      std::string urlComp = urlTest.substr (0, schema.length ());
+    std::string escapedUrlToValidate = escape (urlToValidate);
 
-      if (schema == urlComp)
-      {
-        return true;
-      }
-    }
+    return svn_path_is_url (escapedUrlToValidate.c_str ());
+  }
 
-    return false;
+  /**
+   * returns a url with forbidden charachters like spaces escaped
+   *
+   * @param url url to be escaped
+   *
+   * @return string escaped url
+   */
+  std::string
+  Url::escape (const char * url)
+  {
+    Pool pool;
+
+    return svn_path_uri_autoescape (url, pool);
   }
 
   /**
@@ -76,7 +81,9 @@ namespace svn
   std::vector<std::string>
   Url::supportedSchemas ()
   {
-    return mSchemas;
+    std::vector<std::string> schemas;
+
+    return schemas;
   }
 }
 

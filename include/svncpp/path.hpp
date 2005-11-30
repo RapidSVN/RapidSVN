@@ -40,6 +40,8 @@ namespace svn
   private:
     std::string m_path;
 
+    bool m_pathIsUrl;
+
     /**
      * initialize the class
      *
@@ -75,7 +77,7 @@ namespace svn
     /**
      * Assignment operator
      */
-    Path& operator=(const Path&);
+    Path& operator= (const Path&);
 
     /**
      * @return Path string
@@ -87,7 +89,7 @@ namespace svn
      * @return Path string as c string
      */
     const char * 
-    c_str() const;
+    c_str () const;
 
     /**
      * check whether a path is set. Right now
@@ -97,8 +99,15 @@ namespace svn
      * @return true if there is a path set
      */
     bool 
-    isset() const;
+    isset () const;
 
+    /**
+     * shows whether we have a path or url
+     *
+     * @return true if the path is a valid url
+     */
+    const bool
+    isUrl () const;
 
     /**
      * adds a new URL component to the path

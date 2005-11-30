@@ -51,7 +51,18 @@ namespace svn
      *   /home/foo/bar
      */
     static bool
-    isValid (const char * url);
+    isValid (const char * urlToValidate);
+
+    /**
+     * returns a url with forbidden charachters like spaces escaped
+     *
+     * Example of input:
+     *   http://rapidsvn.tigris.org/x y z.html
+     * Output:
+     *   http://rapidsvn.tigris.org/x%20y%20z.html
+     */
+    static std::string
+    escape (const char * url);
 
     /**
      * returns a vector with url schemas that are
