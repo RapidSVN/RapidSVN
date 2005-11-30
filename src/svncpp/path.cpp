@@ -105,7 +105,6 @@ namespace svn
     return m_path.length () > 0;
   }
 
-  void
   const bool
   Path::isUrl () const
   {
