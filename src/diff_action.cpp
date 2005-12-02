@@ -110,10 +110,7 @@ public:
   getPath1 (const svn::Path & path)
   {
     if (diffData.useUrl1)
-    {
-      std::string url1Utf8 (LocalToUtf8 (diffData.url1));
-      return svn::Path (url1Utf8);
-    }
+      return PathUtf8 (diffData.url1);
     return path;
   }
 
@@ -125,10 +122,7 @@ public:
   getPath2 (const svn::Path & path)
   {
     if (diffData.useUrl2)
-    {
-      std::string url2Utf8 (LocalToUtf8 (diffData.url1));
-      return svn::Path (url2Utf8);
-    }
+      return PathUtf8 (diffData.url1);
     else
       return path;
   }

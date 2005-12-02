@@ -1070,13 +1070,12 @@ RapidSvnFrame::GetActionTargets () const
   {
     wxString path = m_folder_browser->GetPath ();
 
-    std::string pathUtf8;
-    LocalToUtf8 (path, pathUtf8);
-    if (!svn::Url::isValid (pathUtf8.c_str ()))
+    svn::Path pathUtf8 (PathUtf8 (path));
+    if (!pathUtf8.isUrl ())
     {
       wxFileName fname (path);
       path = fname.GetFullPath ();
-      LocalToUtf8 (path, pathUtf8);
+      pathUtf8 = PathUtf8 (path);
     }
 
     return svn::Targets (pathUtf8.c_str ());
@@ -1102,12 +1101,12 @@ RapidSvnFrame::GetSelectionActionFlags () const
 
     flags |= Action::IS_DIR;
     wxString path = m_folder_browser->GetPath ();
-    std::string pathUtf8;
-    LocalToUtf8 (path, pathUtf8);
-    if (!pathUtf8.empty ())
+
+    svn::Path pathUtf8 (PathUtf8 (path));
+    if (!pathUtf8.isset ())
     {
       flags |= Action::SINGLE_TARGET;
-      if (svn::Url::isValid (pathUtf8.c_str ()))
+      if (pathUtf8.isUrl ())
       {
         flags |= Action::RESPOSITORY_TYPE;
       }
@@ -1744,9 +1743,8 @@ RapidSvnFrame::Perform (Action * action)
     m->SetRunning (true);
     m->listener.cancel (false);
 
-    std::string currentPathUtf8;
-    LocalToUtf8(m_currentPath, currentPathUtf8);
-    action->SetPath (svn::Path (currentPathUtf8));
+    svn::Path currentPathUtf8 (PathUtf8 (m_currentPath));
+    action->SetPath (currentPathUtf8);
     action->SetContext (m_context);
     action->SetTargets (GetActionTargets ());
     action->SetTracer (m_logTracer, false);

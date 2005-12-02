@@ -830,9 +830,8 @@ FileListCtrl::UpdateFileList (const wxString & path)
 void
 FileListCtrl::UpdateFileList ()
 {
-  std::string pathUtf8;
-  LocalToUtf8 (m->Path, pathUtf8);
-  const bool isNative (!svn::Url::isValid (pathUtf8.c_str ()));
+  svn::Path pathUtf8 (PathUtf8 (m->Path));
+  const bool isNative (!pathUtf8.isUrl ());
   // delete all the items in the list to display the new ones
   DeleteAllItems ();
 
@@ -848,7 +847,6 @@ FileListCtrl::UpdateFileList ()
     client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate);
   svn::StatusEntries::const_iterator it;
   const size_t pathUtf8Length = pathUtf8.length () + 1;
-
   for (it = statusVector.begin (); it != statusVector.end (); it++)
   {
     const svn::Status & status = *it;

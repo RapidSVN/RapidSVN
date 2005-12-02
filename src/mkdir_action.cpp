@@ -70,12 +70,11 @@ MkdirAction::Perform ()
   wxString newDir (m_path + m_target);
   // TODO: What is newDir for???
 
-  std::string pathUtf8 (LocalToUtf8 (m_path));
-  std::string targetUtf8 (LocalToUtf8 (m_target));
-  svn::Path target (pathUtf8);
-  target.addComponent (targetUtf8);
+  svn::Path pathUtf8 (PathUtf8 (m_path));
+  svn::Path targetUtf8 (PathUtf8 (m_target));
+  pathUtf8.addComponent (targetUtf8.c_str ());
 
-  client.mkdir (target, "");
+  client.mkdir (pathUtf8, "");
   return true;
 }
 /* -----------------------------------------------------------------

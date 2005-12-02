@@ -72,9 +72,9 @@ ViewAction::Perform ()
     path = Utf8ToLocal (GetTarget ().c_str ());
   else
   {
-    std::string pathUtf8 (LocalToUtf8 (m_data.path));
+    svn::Path pathUtf8 (PathUtf8 (m_data.path));
     path = Utf8ToLocal  (
-        GetPathAsTempFile(svn::Path (pathUtf8.c_str ()),
+        GetPathAsTempFile(pathUtf8.c_str (),
             m_data.revision).c_str ());
   }
 

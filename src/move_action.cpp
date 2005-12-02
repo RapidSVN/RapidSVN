@@ -115,9 +115,7 @@ MoveAction::Perform ()
   svn::Client client (GetContext ());
 
   svn::Path srcPath = GetTarget ();
-  std::string destUtf8;
-  LocalToUtf8 (m_destination, destUtf8);
-  svn::Path destPath (destUtf8);
+  svn::Path destPath (PathUtf8 (m_destination));
   svn::Revision unusedRevision;
 
   switch (m_kind)
@@ -135,10 +133,11 @@ MoveAction::Perform ()
       std::string basename;
       std::string dirpath;
       srcPath.split (dirpath, basename);
-      destPath = dirpath.c_str ();
-      destPath.addComponent (destUtf8);
 
-      client.move (srcPath, unusedRevision, destPath, m_force);
+      svn::Path newDestPath (dirpath);
+      newDestPath.addComponent(destPath.c_str ());
+
+      client.move (srcPath, unusedRevision, newDestPath, m_force);
     }
     break;
   }

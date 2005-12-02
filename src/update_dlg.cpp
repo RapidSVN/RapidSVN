@@ -28,7 +28,7 @@
 #include "wx/valgen.h"
 
 // svncpp
-#include "svncpp/url.hpp"
+#include "svncpp/path.hpp"
 
 // app
 #include "hist_entries.hpp"
@@ -154,9 +154,8 @@ public:
     }
     if (ok && withUrl ())
     {
-      std::string UrlUtf8;
-      LocalToUtf8 (m_comboUrl->GetValue (), UrlUtf8);
-      ok = svn::Url::isValid (UrlUtf8.c_str ());
+      svn::Path UrlUtf8 (PathUtf8 (m_comboUrl->GetValue ()));
+      ok = UrlUtf8.isUrl ();
     }
 
     m_buttonOk->Enable (ok);

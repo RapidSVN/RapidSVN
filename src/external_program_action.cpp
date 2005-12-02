@@ -59,10 +59,8 @@ ExternalProgramAction::Perform ()
 
   // The actual target
   svn::Path path = GetTarget ();
-  if (svn::Url::isValid (path.c_str ()))
-  {
+  if (path.isUrl ())
     path = GetPathAsTempFile(path);
-  }
   
   wxString target_str = Utf8ToLocal (path.c_str ());
   wxFileName target = target_str;

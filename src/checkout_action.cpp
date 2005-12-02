@@ -28,7 +28,6 @@
 
 // svncpp
 #include "svncpp/client.hpp"
-#include "svncpp/url.hpp"
 
 // app
 #include "checkout_action.hpp"
@@ -83,7 +82,7 @@ CheckoutAction::Perform ()
   UnixPath(m_data.DestFolder);
   TrimString(m_data.RepUrl);
 
-  svn::Path repUrlUtf8 = PathUtf8 (m_data.RepUrl);
+  svn::Path repUrlUtf8 (PathUtf8 (m_data.RepUrl));
   long revnum=-1;
   svn::Revision revision (svn::Revision::HEAD);
 
@@ -100,7 +99,7 @@ CheckoutAction::Perform ()
   
   wxSetWorkingDirectory (m_data.DestFolder);
 
-  svn::Path destFolderUtf8 = PathUtf8 (m_data.DestFolder);
+  svn::Path destFolderUtf8 (PathUtf8 (m_data.DestFolder));
 
   client.checkout (repUrlUtf8.c_str (), 
                    destFolderUtf8, 

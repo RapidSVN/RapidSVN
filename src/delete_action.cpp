@@ -74,9 +74,8 @@ DeleteAction::Perform ()
   for (it=v.begin (); it!=v.end (); it++)
   {
     svn::Path path (*it);
-    const char * cpath = path.c_str ();
-    svn::Status status (client.singleStatus (cpath));
-    wxString wxpath = Utf8ToLocal(cpath);
+    svn::Status status (client.singleStatus (path.c_str ()));
+    wxString wxpath = Utf8ToLocal(path.c_str ());
 
     // if the file is versioned then it will be
     // handled by subversion

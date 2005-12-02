@@ -55,7 +55,6 @@ ImportAction::Prepare ()
   }
 
   m_data = dlg.GetData ();
-
   return true;
 }
 
@@ -63,10 +62,12 @@ bool
 ImportAction::Perform ()
 {
   svn::Client client (GetContext ());
-  std::string PathUtf8 (LocalToUtf8(m_data.Path));
-  std::string RepositoryUtf8 (LocalToUtf8(m_data.Repository));
+
+  svn::Path pathUtf8 (PathUtf8 (m_data.Path));
+  svn::Path repositoryUtf8 (PathUtf8 (m_data.Repository));
   std::string LogMessageUtf8 (LocalToUtf8(m_data.LogMessage));
-  client.import (svn::Path (PathUtf8), RepositoryUtf8.c_str (),
+
+  client.import (pathUtf8, repositoryUtf8.c_str (),
                  LogMessageUtf8.c_str (), m_data.Recursive);
 
   return true;

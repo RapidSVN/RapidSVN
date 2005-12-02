@@ -100,15 +100,14 @@ MergeAction::Perform ()
     return false;
   }
 
-  std::string Path1Utf8, Path2Utf8, DestinationUtf8;
-  LocalToUtf8(m_data.Path1, Path1Utf8);
-  LocalToUtf8(m_data.Path2, Path2Utf8);
-  LocalToUtf8(m_data.Destination, DestinationUtf8);
-  client.merge (svn::Path (Path1Utf8),
+  svn::Path path1Utf8 (PathUtf8 (m_data.Path1));
+  svn::Path path2Utf8 (PathUtf8 (m_data.Path2));
+  svn::Path destinationUtf8 (PathUtf8 (m_data.Destination));
+  client.merge (path1Utf8,
                 rev1,
-                svn::Path (Path2Utf8),
+                path2Utf8,
                 rev2,
-                svn::Path (DestinationUtf8),
+                destinationUtf8,
                 m_data.Force,
                 m_data.Recursive);
   return true;

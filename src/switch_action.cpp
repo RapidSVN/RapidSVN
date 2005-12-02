@@ -78,7 +78,7 @@ bool
 SwitchAction::Perform ()
 {
   svn::Path path = GetTarget ();
-  std::string urlUtf8 (LocalToUtf8 (m_data.url));
+  svn::Path urlUtf8 (PathUtf8 (m_data.url));
   svn::Revision revision (svn::Revision::HEAD);
 
   if (!m_data.useLatest)

@@ -201,9 +201,8 @@ public:
   {
     TrimString (name);
 
-    std::string nameUtf8;
-    LocalToUtf8(name, nameUtf8);
-    if (!svn::Url::isValid (nameUtf8.c_str()))
+    svn::Path nameUtf8 (PathUtf8 (name));
+    if (nameUtf8.isUrl())
     {
       wxFileName filename (name);
       name = filename.GetFullPath (wxPATH_NATIVE);
@@ -455,10 +454,9 @@ public:
       try
       {
         const wxString& parentPath = parentData->getPath ();
-        std::string parentPathUtf8;
-        LocalToUtf8 (parentPath, parentPathUtf8);
+        svn::Path parentPathUtf8 (PathUtf8 (parentPath));
 
-        if ( svn::Url::isValid (parentPathUtf8.c_str ()))
+        if (parentPathUtf8.isUrl ())
           RefreshRepository (parentPath, parentId);
         else
           RefreshLocal (parentPath, parentId);
@@ -502,9 +500,7 @@ public:
       return;
 
     svn::Client client (GetContext ());
-    std::string parentPathUtf8;
-
-    LocalToUtf8 (parentPath, parentPathUtf8);
+    svn::Path parentPathUtf8 (PathUtf8 (parentPath));
 
     // Get status array for parent and all entries within it
     svn::StatusEntries entries = 
@@ -570,8 +566,7 @@ public:
   {
     svn::Client client (GetContext ());
     svn::Revision rev (svn::Revision::HEAD);
-    std::string parentPathUtf8;
-    LocalToUtf8(parentPath, parentPathUtf8);
+    svn::Path parentPathUtf8 (PathUtf8 (parentPath));
     svn::DirEntries entries =
       client.ls (parentPathUtf8.c_str (), rev, false);
     svn::DirEntries::const_iterator it;
@@ -679,9 +674,8 @@ public:
     }
     
     // Convert the input string to subversion internal representation
-    std::string pathPUtf8;
-    LocalToUtf8 (pathP, pathPUtf8);
-    const wxString path = Utf8ToLocal (svn::Path (pathPUtf8).c_str());
+    svn::Path pathPUtf8 (PathUtf8 (pathP));
+    const wxString path = Utf8ToLocal (pathPUtf8.c_str());
 
     wxTreeItemId bookmarkId = GetSelectedBookmarkId ();
 
