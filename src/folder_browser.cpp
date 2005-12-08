@@ -202,7 +202,7 @@ public:
     TrimString (name);
 
     svn::Path nameUtf8 (PathUtf8 (name));
-    if (nameUtf8.isUrl())
+    if (!nameUtf8.isUrl())
     {
       wxFileName filename (name);
       name = filename.GetFullPath (wxPATH_NATIVE);
