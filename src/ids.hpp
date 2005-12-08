@@ -71,6 +71,7 @@ enum
   ID_DiffHead,
   ID_Explore,
   ID_Import,
+  ID_Lock,
   ID_Log,
   ID_Merge,
   ID_Mkdir,
@@ -83,6 +84,7 @@ enum
   ID_Revert,
   ID_Switch,
   ID_Update,
+  ID_Unlock,
   ID_Edit,
   ID_File_Max,
 

@@ -43,6 +43,7 @@
 #include <map>
 
 // svncpp
+#include "svncpp/check.hpp"
 #include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/path.hpp"
@@ -171,6 +172,28 @@ namespace svn
     void 
     remove (const Targets & targets, 
             bool force) throw (ClientException);
+
+    /**
+     * Sets files to lock.
+     *
+     * @param targets targets to lock
+     * @param force force setting/stealing lock 
+     * @param comment writing comment about lock setting is neccessary
+     * @exception ClientException
+     */
+    void 
+    lock (const Targets & targets, bool force,
+          const char * comment) throw (ClientException);
+
+    /**
+     * Sets files to unlock.
+     *
+     * @param targets targets to unlock
+     * @param force force unlock even if lock belongs to another user 
+     * @exception ClientException
+     */
+    void 
+    unlock (const Targets & targets, bool force) throw (ClientException);
 
     /**
      * Reverts a couple of files to a pristiner state.

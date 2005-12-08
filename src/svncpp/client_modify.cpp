@@ -33,6 +33,7 @@
 #include "svn_client.h"
 
 // svncpp
+#include "svncpp/check.hpp"
 #include "svncpp/client.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/pool.hpp"
@@ -98,6 +99,44 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+
+  /**
+   * Using new LOCK feature in subversion 1.2 and up
+   */
+#if CHECK_SVN_SUPPORTS_LOCK
+  void
+  Client::lock (const Targets & targets, bool force,
+                const char * comment) throw (ClientException)
+  {
+    Pool pool;
+
+    svn_error_t * error =
+      svn_client_lock (const_cast<apr_array_header_t*> (targets.array (pool)), 
+                       comment,
+                       force,
+                       *m_context,
+                       pool);
+    if(error != NULL)
+      throw ClientException (error);
+  }
+
+  void
+  Client::unlock (const Targets & targets, bool force) throw (ClientException)
+  {
+    Pool pool;
+
+    svn_error_t * error =
+      svn_client_unlock (const_cast<apr_array_header_t*> (targets.array (pool)), 
+                       force,
+                       *m_context,
+                       pool);
+    if(error != NULL)
+      throw ClientException (error);
+  }
+#endif
+/**
+ * End of CHECK_SVN_SUPPORTS_LOCK
+ */
 
   void
   Client::revert (const Targets & targets,
