@@ -27,6 +27,9 @@
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
+//svncpp
+#include "svncpp/check.hpp"
+
 // app
 #include "commit_dlg.hpp"
 #include "hist_val.hpp"
@@ -39,13 +42,14 @@ struct CommitDlg::Data
 {
 public:
   bool recursive;
+  bool keepLocks;
   wxComboBox * comboHistory;
   wxTextCtrl * msg;
 
   wxString message;
 
   Data (wxWindow * window, bool unexpectedCommit)
-    : recursive (true), comboHistory (0), msg (0)
+    : recursive (true), keepLocks (true), comboHistory (0), msg (0)
   {
     // create controls
     wxStaticBox* msgBox =
@@ -81,6 +85,19 @@ public:
                         wxDefaultPosition, wxDefaultSize, 0,
                         val);
     }
+    wxCheckBox * checkKeepLocks = NULL;
+    if (!unexpectedCommit)
+    {
+      wxGenericValidator val (&keepLocks);
+      checkKeepLocks =
+        new wxCheckBox (window, -1, _("Keep locks"),
+                        wxDefaultPosition, wxDefaultSize, 0,
+                        val);
+    }
+
+    if (!svn::supportsLock)
+      checkKeepLocks->Hide ();
+
     wxButton* ok =
       new wxButton (window, wxID_OK, _("OK" ));
     wxButton* cancel =
@@ -104,6 +121,12 @@ public:
     if (!unexpectedCommit)
     {
       buttonSizer->Add (checkRecursive, 1,
+                        wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT,
+                        10);
+    }
+    if (!unexpectedCommit)
+    {
+      buttonSizer->Add (checkKeepLocks, 1,
                         wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT,
                         10);
     }
@@ -157,6 +180,11 @@ CommitDlg::GetRecursive () const
   return m->recursive;
 }
 
+bool
+CommitDlg::GetKeepLocks () const
+{
+  return m->keepLocks;
+}
 
 void
 CommitDlg::OnHistoryComboBox (wxCommandEvent &)

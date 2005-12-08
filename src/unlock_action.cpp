@@ -22,47 +22,62 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _COMMIT_ACTION_H_INCLUDED_
-#define _COMMIT_ACTION_H_INCLUDED_
+
+// wxWidgets
+#include "wx/wx.h"
+
+// svncpp
+#include "svncpp/check.hpp"
+#include "svncpp/client.hpp"
+//#include "svncpp/pool.hpp"
+#include "svncpp/targets.hpp"
 
 // app
-#include "action.hpp"
+#include "unlock_action.hpp"
+#include "unlock_dlg.hpp"
+#include "ids.hpp"
+#include "utils.hpp"
 
-// forward declarations
-namespace svn
+#if CHECK_SVN_SUPPORTS_LOCK
+
+UnlockAction::UnlockAction (wxWindow * parent)
+  : Action (parent, _("Unlock"), GetBaseFlags ())
 {
-  extern const bool supportsLock;
-  class Targets;
 }
-class Tracer;
 
-class CommitAction : public Action
+bool
+UnlockAction::Prepare ()
 {
-public:
-  CommitAction (wxWindow * parent);
-
-  virtual bool Perform ();
-  virtual bool Prepare ();
-
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
+  if (!Action::Prepare ())
   {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|VERSIONED_WC_TYPE;
+    return false;
   }
 
-private:
-  bool m_recursive;
-  bool m_keepLocks;
-  wxString m_message;
+  UnlockDlg dlg(GetParent ());
 
-  // hide default and copy constructor
-  CommitAction ();
-  CommitAction (const CommitAction &);
-};
+  if (dlg.ShowModal () != wxID_OK)
+  {
+    return false;
+  }
 
+  m_force = dlg.GetForce ();
+
+  return true;
+}
+
+bool
+UnlockAction::Perform ()
+{
+  svn::Client client (GetContext ());
+
+  const svn::Targets & targets = GetTargets ();
+
+  client.unlock (targets, m_force);
+
+  return true;
+}
 #endif
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

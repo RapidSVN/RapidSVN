@@ -31,6 +31,7 @@
 // svncpp
 #include "svncpp/apr.hpp"
 #include "svncpp/context.hpp"
+#include "svncpp/check.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/targets.hpp"
 #include "svncpp/url.hpp"
@@ -62,6 +63,7 @@
 #include "external_program_action.hpp"
 #include "get_action.hpp"
 #include "import_action.hpp"
+#include "lock_action.hpp"
 #include "merge_action.hpp"
 #include "mkdir_action.hpp"
 #include "move_action.hpp"
@@ -69,6 +71,7 @@
 #include "resolve_action.hpp"
 #include "revert_action.hpp"
 #include "switch_action.hpp"
+#include "unlock_action.hpp"
 #include "update_action.hpp"
 #include "view_action.hpp"
 
@@ -902,7 +905,7 @@ RapidSvnFrame::OnHelpStartupTips (wxCommandEvent & WXUNUSED (event))
 
 void RapidSvnFrame::OnHelp (wxCommandEvent &WXUNUSED(event))
 {
-#ifdef  USE_HTML_HELP
+#ifdef USE_HTML_HELP
     wxWindow *active = wxGetActiveWindow();
     wxString helptext;
     while (active && helptext.IsEmpty())
@@ -1183,6 +1186,12 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       baseActionFlags = CleanupAction::GetBaseFlags ();
       break;
 
+#if CHECK_SVN_SUPPORTS_LOCK
+    case ID_Lock:
+      baseActionFlags = LockAction::GetBaseFlags ();
+      break;
+#endif
+
     case ID_Log:
       baseActionFlags = LogAction::GetBaseFlags ();
       break;
@@ -1235,6 +1244,12 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       // Not actually part of the Action hierarchy, but here for completeness
       baseActionFlags = Action::SINGLE_TARGET|Action::MULTIPLE_TARGETS|Action::RESPOSITORY_TYPE|Action::VERSIONED_WC_TYPE|Action::UNVERSIONED_WC_TYPE;
       break;
+
+#if CHECK_SVN_SUPPORTS_LOCK
+    case ID_Unlock:
+      baseActionFlags = UnlockAction::GetBaseFlags ();
+      break;
+#endif
 
     case ID_Edit:
       baseActionFlags = ViewAction::GetEditFlags ();
@@ -1365,6 +1380,12 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
       action = new CleanupAction (this);
       break;
 
+#if CHECK_SVN_SUPPORTS_LOCK
+    case ID_Lock:
+      action = new LockAction (this);
+      break;
+#endif
+
     case ID_Log:
       action = new LogAction (this);
       break;
@@ -1426,6 +1447,12 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
         action = new DiffAction (this, data);
         break;
       }
+
+#if CHECK_SVN_SUPPORTS_LOCK
+    case ID_Unlock:
+      action = new UnlockAction (this);
+      break;
+#endif
 
     case ID_Edit:
       action = new ViewAction (this);

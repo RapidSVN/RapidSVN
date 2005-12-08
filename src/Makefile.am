@@ -34,6 +34,8 @@ rapidsvn_SOURCES= \
 	import_dlg.cpp \
 	listed_dlg.cpp \
 	listener.cpp \
+	lock_action.cpp \
+	lock_dlg.cpp \
 	log_action.cpp \
 	log_dlg.cpp \
 	merge_action.cpp \
@@ -54,6 +56,8 @@ rapidsvn_SOURCES= \
 	switch_action.cpp \
 	tracer.cpp \
 	trace_update.cpp \
+	unlock_action.cpp \
+	unlock_dlg.cpp \
 	update_action.cpp \
 	update_dlg.cpp \
 	utils.cpp \

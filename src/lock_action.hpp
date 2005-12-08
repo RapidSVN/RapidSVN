@@ -22,8 +22,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _COMMIT_ACTION_H_INCLUDED_
-#define _COMMIT_ACTION_H_INCLUDED_
+#ifndef _LOCK_ACTION_H_INCLUDED_
+#define _LOCK_ACTION_H_INCLUDED_
 
 // app
 #include "action.hpp"
@@ -31,15 +31,13 @@
 // forward declarations
 namespace svn
 {
-  extern const bool supportsLock;
   class Targets;
 }
-class Tracer;
 
-class CommitAction : public Action
+class LockAction : public Action
 {
 public:
-  CommitAction (wxWindow * parent);
+  LockAction (wxWindow * parent);
 
   virtual bool Perform ();
   virtual bool Prepare ();
@@ -53,13 +51,12 @@ public:
   }
 
 private:
-  bool m_recursive;
-  bool m_keepLocks;
+  bool m_stealLock;
   wxString m_message;
 
   // hide default and copy constructor
-  CommitAction ();
-  CommitAction (const CommitAction &);
+  LockAction ();
+  LockAction (const LockAction &);
 };
 
 #endif

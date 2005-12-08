@@ -189,6 +189,39 @@ namespace svn
     return revnum;
   }
 
+  /**
+   * Using new functions and features in subversion 1.2 and up
+   */
+#if CHECK_SVN_SUPPORTS_LOCK
+  svn_revnum_t
+  Client::commit (const Targets & targets, const char * message, 
+                  bool recurse, bool keepLocks) throw (ClientException)
+  {
+    Pool pool;
+
+    m_context->setLogMessage (message);
+
+    svn_client_commit_info_t *commit_info = NULL;
+
+    svn_error_t * error =
+      svn_client_commit2 (&commit_info, 
+                         targets.array (pool), 
+                         recurse, 
+                         keepLocks,
+                         *m_context,
+                         pool);
+    if (error != NULL)
+      throw ClientException (error);
+
+    if (commit_info && SVN_IS_VALID_REVNUM (commit_info->revision))
+      return commit_info->revision;
+
+    return -1;
+  }
+  /**
+   * Compatibility to older versions of subversion
+   */
+#else
   svn_revnum_t
   Client::commit (const Targets & targets, const char * message, 
                   bool recurse) throw (ClientException)
@@ -198,6 +231,7 @@ namespace svn
     m_context->setLogMessage (message);
 
     svn_client_commit_info_t *commit_info = NULL;
+
     svn_error_t * error =
       svn_client_commit (&commit_info, 
                          targets.array (pool), 
@@ -212,6 +246,7 @@ namespace svn
 
     return -1;
   }
+#endif
 
   void
   Client::copy (const Path & srcPath, 

@@ -22,47 +22,66 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _COMMIT_ACTION_H_INCLUDED_
-#define _COMMIT_ACTION_H_INCLUDED_
+
+// wxWidgets
+#include "wx/wx.h"
+
+// svncpp
+#include "svncpp/check.hpp"
+#include "svncpp/client.hpp"
+#include "svncpp/targets.hpp"
 
 // app
-#include "action.hpp"
+#include "lock_action.hpp"
+#include "lock_dlg.hpp"
+#include "ids.hpp"
+#include "utils.hpp"
 
-// forward declarations
-namespace svn
+/**
+ * Use this module only if subversion's version is 1.2 and up
+ */
+#if CHECK_SVN_SUPPORTS_LOCK
+
+LockAction::LockAction (wxWindow * parent)
+  : Action (parent, _("Lock"), GetBaseFlags ())
 {
-  extern const bool supportsLock;
-  class Targets;
 }
-class Tracer;
 
-class CommitAction : public Action
+bool
+LockAction::Prepare ()
 {
-public:
-  CommitAction (wxWindow * parent);
-
-  virtual bool Perform ();
-  virtual bool Prepare ();
-
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
+  if (!Action::Prepare ())
   {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|VERSIONED_WC_TYPE;
+    return false;
   }
 
-private:
-  bool m_recursive;
-  bool m_keepLocks;
-  wxString m_message;
+  LockDlg dlg(GetParent ());
 
-  // hide default and copy constructor
-  CommitAction ();
-  CommitAction (const CommitAction &);
-};
+  if (dlg.ShowModal () != wxID_OK)
+  {
+    return false;
+  }
 
+  m_stealLock = dlg.GetStealLock ();
+  m_message = dlg.GetMessage ();
+
+  return true;
+}
+
+bool
+LockAction::Perform ()
+{
+  svn::Client client (GetContext ());
+
+  const svn::Targets & targets = GetTargets ();
+  std::string messageUtf8 (LocalToUtf8 (m_message));
+
+  client.lock (targets, m_stealLock, messageUtf8.c_str ());
+
+  return true;
+}
 #endif
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

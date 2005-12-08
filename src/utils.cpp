@@ -29,13 +29,12 @@
 #include "wx/wx.h"
 #include "wx/datetime.h"
 
-
 // apr
 #include "apr_strings.h"
 #include "apr_time.h"
 
-
 // svncpp
+#include "svncpp/check.hpp"
 #include "svncpp/client.hpp"
 #include "svncpp/status.hpp"
 #include "svncpp/path.hpp"
@@ -182,6 +181,14 @@ AppendModifyMenu (wxMenu * parentMenu)
   AppendMenuItem (parentMenu, ID_Move, _("M&ove...\tF6"));
   AppendMenuItem (parentMenu, ID_Rename, _("Re&name...\tCTRL-N"));
   AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory...\tF7"));
+
+  if (svn::supportsLock)
+  {
+    parentMenu->AppendSeparator ();
+
+    AppendMenuItem (parentMenu, ID_Lock, _("&Lock"));
+    AppendMenuItem (parentMenu, ID_Unlock, _("&Unlock"));
+  }
 }
 
 void

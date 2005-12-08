@@ -177,7 +177,7 @@ namespace svn
      * Sets files to lock.
      *
      * @param targets targets to lock
-     * @param force force setting/stealing lock 
+     * @param force force setting/stealing lock
      * @param comment writing comment about lock setting is neccessary
      * @exception ClientException
      */
@@ -189,7 +189,7 @@ namespace svn
      * Sets files to unlock.
      *
      * @param targets targets to unlock
-     * @param force force unlock even if lock belongs to another user 
+     * @param force force unlock even if lock belongs to another user
      * @exception ClientException
      */
     void 
@@ -280,10 +280,18 @@ namespace svn
      * @param recurse whether the operation should be done recursively.
      * @exception ClientException
      */
+#if CHECK_SVN_SUPPORTS_LOCK
+    svn_revnum_t
+    commit (const Targets & targets,
+            const char * message, 
+            bool recurse,
+            bool keep_locks) throw (ClientException);
+#else
     svn_revnum_t
     commit (const Targets & targets, 
             const char * message, 
             bool recurse) throw (ClientException);
+#endif
 
     /**
      * Copies a versioned file with the history preserved.

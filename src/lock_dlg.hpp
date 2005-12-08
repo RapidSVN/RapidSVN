@@ -22,44 +22,48 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _COMMIT_ACTION_H_INCLUDED_
-#define _COMMIT_ACTION_H_INCLUDED_
+#ifndef _LOCK_DLG_H_INCLUDED_
+#define _LOCK_DLG_H_INCLUDED_
 
-// app
-#include "action.hpp"
+// wxWidgets
+#include "wx/dialog.h"
 
 // forward declarations
-namespace svn
-{
-  extern const bool supportsLock;
-  class Targets;
-}
-class Tracer;
-
-class CommitAction : public Action
+class LockDlg : public wxDialog
 {
 public:
-  CommitAction (wxWindow * parent);
-
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  /**
+   * constructor
+   *
+   * @param parent parent window
+   */
+  LockDlg(wxWindow* parent);
 
   /**
-   * Describe which targets the action can perform upon
+   * destructor
    */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|VERSIONED_WC_TYPE;
-  }
+  virtual ~LockDlg ();
+
+  /**
+   * @return log message
+   */
+  const wxString &
+  GetMessage () const;
+
+  /**
+   * @return stealLock setting
+   */
+  bool
+  GetStealLock () const;
 
 private:
-  bool m_recursive;
-  bool m_keepLocks;
-  wxString m_message;
+  /** hide implementation details */
+  struct Data;
+  Data * m;
 
-  // hide default and copy constructor
-  CommitAction ();
-  CommitAction (const CommitAction &);
+  void OnHistoryComboBox (wxCommandEvent &);
+private:
+  DECLARE_EVENT_TABLE ()
 };
 
 #endif

@@ -27,6 +27,7 @@
 #include "wx/wx.h"
 
 // svncpp
+#include "svncpp/check.hpp"
 #include "svncpp/client.hpp"
 #include "svncpp/pool.hpp"
 #include "svncpp/targets.hpp"
@@ -59,6 +60,7 @@ CommitAction::Prepare ()
 
   m_recursive = dlg.GetRecursive ();
   m_message = dlg.GetMessage ();
+  m_keepLocks = dlg.GetKeepLocks ();
 
   return true;
 }
@@ -73,9 +75,17 @@ CommitAction::Perform ()
   std::string messageUtf8 (LocalToUtf8 (m_message));
 
   svn::Pool pool;
+
+#if CHECK_SVN_SUPPORTS_LOCK
+  long revision =
+    client.commit (targets.array (pool), messageUtf8.c_str (),
+                   m_recursive, m_keepLocks);
+#else
   long revision =
     client.commit (targets.array (pool), messageUtf8.c_str (),
                    m_recursive);
+#endif
+
   wxString str;
 
   str = wxString::Format (wxT("%s %" SVN_REVNUM_T_FMT "."),
@@ -84,6 +94,7 @@ CommitAction::Perform ()
 
   return true;
 }
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

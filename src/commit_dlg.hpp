@@ -56,6 +56,12 @@ public:
   bool
   GetRecursive () const;
 
+  /**
+   * @return keepLocks setting
+   */
+  bool
+  GetKeepLocks () const;
+
 private:
   /** hide implementation details */
   struct Data;
