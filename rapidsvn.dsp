@@ -211,6 +211,14 @@ SOURCE=.\src\listener.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\lock_action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\lock_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\log_action.cpp
 # End Source File
 # Begin Source File
@@ -288,6 +296,14 @@ SOURCE=.\src\trace_update.cpp
 # Begin Source File
 
 SOURCE=.\src\tracer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\unlock_action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\unlock_dlg.cpp
 # End Source File
 # Begin Source File
 
@@ -463,6 +479,14 @@ SOURCE=.\src\listener.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\lock_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\lock_dlg.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\log_action.hpp
 # End Source File
 # Begin Source File
@@ -544,6 +568,14 @@ SOURCE=.\src\trace_update.hpp
 # Begin Source File
 
 SOURCE=.\src\tracer.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\unlock_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\unlock_dlg.hpp
 # End Source File
 # Begin Source File
 

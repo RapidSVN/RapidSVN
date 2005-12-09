@@ -23,12 +23,12 @@
  * ====================================================================
  */
 
+//svncpp
+#include "svncpp/check.hpp"
+
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"
-
-//svncpp
-#include "svncpp/check.hpp"
 
 // app
 #include "commit_dlg.hpp"
