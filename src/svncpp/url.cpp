@@ -55,7 +55,7 @@ namespace svn
   {
     std::string escapedUrlToValidate = escape (urlToValidate);
 
-    return svn_path_is_url (escapedUrlToValidate.c_str ());
+    return svn_path_is_url (escapedUrlToValidate.c_str ()) != 0;
   }
 
   /**
