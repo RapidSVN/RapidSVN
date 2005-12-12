@@ -35,6 +35,7 @@ class PathTestCase : public CppUnit::TestCase
   CPPUNIT_TEST (testSplit);
   CPPUNIT_TEST (testAddComponent);
   CPPUNIT_TEST (testCopy);
+  CPPUNIT_TEST (testIsUrl);
   CPPUNIT_TEST_SUITE_END ();
 
 public:
@@ -45,6 +46,7 @@ protected:
   void testSplit ();
   void testAddComponent ();
   void testCopy ();
+  void testIsUrl ();
 };
 
 /* -----------------------------------------------------------------

@@ -43,6 +43,7 @@ UrlTestCase::testIsValid ()
   CPPUNIT_ASSERT (svn::Url::isValid ("my_repos/some/dummy/path") == 0);
   CPPUNIT_ASSERT (svn::Url::isValid ("\\is that a path?/\\/") == 0);
   CPPUNIT_ASSERT (svn::Url::isValid ("https://yahoo.de/index.de.html") == 1);
+  CPPUNIT_ASSERT (svn::Url::isValid ("file:///local/file/here") == 1);
   CPPUNIT_ASSERT (svn::Url::isValid ("http://yahoo.de") == 1);
 }
 
@@ -51,6 +52,7 @@ UrlTestCase::testEscape ()
 {
   CPPUNIT_ASSERT ("http://tigris.org/x%20y%20z.html" == svn::Url::escape ("http://tigris.org/x y z.html"));
   CPPUNIT_ASSERT ("http://tigris.org/xyz.php" == svn::Url::escape ("http://tigris.org/xyz.php"));
+  CPPUNIT_ASSERT ("file:///local/file/here" == svn::Url::escape ("file:///local/file/here"));
 }
 
 

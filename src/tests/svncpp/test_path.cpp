@@ -51,6 +51,10 @@ PathTestCase::testInit ()
   svn::Path pathTwo = "http://this.is/a/url";
   CPPUNIT_ASSERT (strcmp ("http://this.is/a/url", pathTwo.c_str ()) == 0);
   CPPUNIT_ASSERT (pathTwo.isset ());
+
+  svn::Path pathThree = "file:///this.is/a/url";
+  CPPUNIT_ASSERT (strcmp ("file:///this.is/a/url", pathThree.c_str ()) == 0);
+  CPPUNIT_ASSERT (pathThree.isset ());
 }
 
 void
@@ -88,6 +92,14 @@ PathTestCase::testCopy ()
   svn::Path pathTwo = pathOne;
 
   CPPUNIT_ASSERT (strcmp (pathOne.c_str (), pathTwo.c_str ()) == 0);
+}
+
+void
+PathTestCase::testIsUrl ()
+{
+  svn::Path pathOne = "file:///this.is/a/url";
+  CPPUNIT_ASSERT (pathOne.isUrl ());
+  CPPUNIT_ASSERT (strcmp (pathOne.c_str (), "file:///this.is/a/url") == 0);
 }
 
 /* -----------------------------------------------------------------
