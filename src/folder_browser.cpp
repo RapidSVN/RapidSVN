@@ -516,7 +516,8 @@ public:
       svn::Status& status = *it;
 
       // Convert path from UTF8 to Local
-      wxString path (Utf8ToLocal (status.path ()));
+      wxFileName filename (Utf8ToFileName (status.path ()));
+      wxString path (filename.GetFullPath ());
 
       // Only display versioned directories and exclude parent itself
       if (((status.entry ().kind () == svn_node_dir) ||

@@ -28,6 +28,7 @@
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/datetime.h"
+#include "wx/filename.h"
 
 // apr
 #include "apr_strings.h"
@@ -500,6 +501,20 @@ Utf8ToLocal (const char* srcUtf8)
   return dst;
 }
 
+
+wxFileName
+Utf8ToFileName (const char * srcUtf8)
+{
+#if wxUSE_UNICODE
+  wxString dst (srcUtf8, wxConvUTF8);
+#else
+  wxString dst (wxConvUTF8.cMB2WC(srcUtf8), *GetWXLocalConv ());
+#endif
+
+  return dst;
+}
+
+
 wxString
 Utf8ToLocal (const std::string& srcUtf8)
 {
@@ -540,6 +555,7 @@ PathUtf8 (const wxString & path)
   return wxdst.mb_str ();
 #endif
 }
+
 
 void
 AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)

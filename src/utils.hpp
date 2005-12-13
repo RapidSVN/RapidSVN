@@ -39,6 +39,7 @@ class wxString;
 class Tracer;
 class wxMenu;
 class wxCommandEvent;
+class wxFileName;
 
 namespace svn
 {
@@ -300,6 +301,15 @@ Utf8ToLocal (const char* srcUtf8);
 wxString
 Utf8ToLocal (const std::string & srcUtf8);
 
+/**
+ * converts a filename from utf8
+ * to the local encoding and returns
+ * this as a @a wxFileName instance
+ *
+ * @param nameUtf8
+ */
+wxFileName
+Utf8ToFileName (const char * nameUtf8);
 
 #endif
 /* -----------------------------------------------------------------
