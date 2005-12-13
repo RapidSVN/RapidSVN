@@ -27,6 +27,7 @@
 #endif
 
 // wxWidgets
+#include "wx/setup.h"
 #include "wx/wx.h"
 
 // app
@@ -72,8 +73,12 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
              wxMINOR_VERSION,
              wxRELEASE_NUMBER);
 
+#if !(wxUSE_UNICODE==1)
+#error "Ungültig"
+#endif
+
   wxString copy;
-  copy.Printf (wxT("%s\n" // version
+  copy.Printf (L"%s\n" // version
                "%s\n" // milestone
                "\n%s\n\n" // copyright
                "%s\n" // for more information
