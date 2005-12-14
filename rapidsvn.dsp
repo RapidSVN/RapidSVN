@@ -382,7 +382,7 @@ SOURCE=.\src\utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\win32\verblist.cpp
+SOURCE=.\src\verblist.cpp
 # End Source File
 # Begin Source File
 

@@ -25,12 +25,8 @@
 #ifndef _VERBLIST_HPP_INCLUDED_
 #define _VERBLIST_HPP_INCLUDED_
 
-#include "wx/string.h"
-
-/*
-#ifdef _WIN32
-#endif //_WIN32
-*/
+// forward declarations
+class wxString;
 
 /**
  * VerbList abstracts a list of editors/handlers for a given file, with the
@@ -39,13 +35,11 @@
 class VerbList
 {
 public:
-#ifdef _WIN32
-  /**
-   * Construct an empty verb list
-   */
-  VerbList();  
-  ~VerbList();  
-#endif //_WIN32
+  /** constructor */
+  VerbList ();  
+
+  /** destructor */
+  virtual ~VerbList ();  
 
   /**
    * Assemble list of verbs based on the given document which can be a folder
@@ -53,30 +47,36 @@ public:
    *
    * @throw std::exception on unexpected errors
    */
-  void InitFromDocument (const wxString &document_path, bool isAFolder);
+  void 
+  InitFromDocument (const wxString & documentPath, bool isAFolder);
 
   /**
    * @return Number of verbs in list
    */
-  size_t GetCount() const;
+  size_t 
+  GetCount () const;
 
   /**
    * @return Name of verb with the given index
    */
-  const char *GetName(size_t index) const;
+  const wxString  & 
+  GetName (size_t index) const;
 
   /**
    * Launches the verb with the given index on the document on which the verb
    * list is based
    */
-  void Launch(size_t index) const;
+  void 
+  Launch (size_t index) const;
 
-// No data yet used for non-windows platforms
-#ifdef _WIN32
 private:
   struct Data;
   Data *m;
-#endif //_WIN32
 };
 
-#endif // _VERBLIST_HPP_INCLUDED_
+#endif 
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */
