@@ -73,21 +73,21 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
              wxRELEASE_NUMBER);
 
   wxString copy;
-  copy.Printf (wxT("%s\n" // version
-               "%s\n" // milestone
-               "\n%s\n\n" // copyright
-               "%s\n" // for more information
-               "http://rapidsvn.tigris.org"),
+  copy.Printf (wxT("%s\n") // version
+               wxT("%s\n") // milestone
+               wxT("\n%s\n\n") // copyright
+               wxT("%s\n") // for more information
+               wxT("http://rapidsvn.tigris.org"),
                version.c_str (),
                milestone.c_str (),
                strCopyrightMessage.c_str (),
                _("For more information see:"));
 
   wxString built;
-  built.Printf (wxT("%s\n" // built with
-                "%s\n" // subversion
-                "\n"
-                "%s"), // wxWidgets
+  built.Printf (wxT("%s\n") // built with
+                wxT("%s\n") // subversion
+                wxT("\n")
+                wxT("%s"), // wxWidgets
                 _("Built with:"),
                 subversion.c_str (),
                 wx.c_str ());

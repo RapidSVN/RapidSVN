@@ -191,7 +191,7 @@ public:
       else
       {
         wxString value;
-        value.Printf (wxT("%" SVN_REVNUM_T_FMT), revision.revnum ());
+        value.Printf (wxT("%") wxT(SVN_REVNUM_T_FMT), revision.revnum ());
         mTextRevision->SetValue (value);
         mCheckUseLatest->SetValue (false);
       }

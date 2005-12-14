@@ -88,8 +88,10 @@ CommitAction::Perform ()
 
   wxString str;
 
-  str = wxString::Format (wxT("%s %" SVN_REVNUM_T_FMT "."),
-                             _("Committed revision"), revision);
+  str = wxString::Format (wxT("%s %")
+                          wxT(SVN_REVNUM_T_FMT)
+                          wxT("."),
+                          _("Committed revision"), revision);
   Trace (str);
 
   return true;

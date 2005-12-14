@@ -391,11 +391,11 @@ close_edit (void *edit_baton, apr_pool_t *)
   if (!eb->no_final_line)
   {
     if (eb->is_checkout)
-      //printf( "Checked out revision %" SVN_REVNUM_T_FMT ".\n",
-      //  eb->revision );
     {
       wxString str =
-        wxString::Format (wxT("Checked out revision %" SVN_REVNUM_T_FMT "."),
+        wxString::Format (wxT("Checked out revision %")
+                          wxT(SVN_REVNUM_T_FMT)
+                          wxT("."),
                           eb->revision);
       eb->tracer->Trace (str);
     }
@@ -403,19 +403,19 @@ close_edit (void *edit_baton, apr_pool_t *)
     {
       if (eb->changed)
       {
-        //printf( "Updated to revision %" SVN_REVNUM_T_FMT ".\n",
-        //  eb->revision );
         wxString str =
-          wxString::Format (wxT("Updated to revision %" SVN_REVNUM_T_FMT "."),
+          wxString::Format (wxT("Updated to revision %")
+                            wxT(SVN_REVNUM_T_FMT)
+                            wxT("."),
                             eb->revision);
         eb->tracer->Trace (str);
       }
 
       else
       {
-        //printf( "At revision %" SVN_REVNUM_T_FMT ".\n",
-        //  eb->revision );
-        wxString str = wxString::Format (wxT("At revision %" SVN_REVNUM_T_FMT "."),
+        wxString str = wxString::Format (wxT("At revision %")
+                                         wxT(SVN_REVNUM_T_FMT)
+                                         wxT("."),
                                          eb->revision);
         eb->tracer->Trace (str);
       }

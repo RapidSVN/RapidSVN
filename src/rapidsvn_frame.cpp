@@ -973,8 +973,9 @@ RapidSvnFrame::AddWcBookmark ()
       Utf8ToLocal (SVN_WC_ADM_DIR_NAME))
   {
     add = FALSE;
-    wxMessageBox (_("You cannot add a subversion "
-                    "administrative directory to the bookmarks!"),
+    wxMessageBox (
+_("You cannot add a subversion administrative \
+directory to the bookmarks!"),
                   _("Error"), wxOK);
     return;
   }
@@ -1459,14 +1460,14 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
       break;
 
     case ID_CreateRepository:
-      wxMessageBox (
-        _("Please use the command line utility 'svnadmin'\n"
-          "to create a new repository.\n\n"
-          "This command line utility is not part of the\n"
-          "RapidSVN distribution.\n\n"
-          "More information about subversion:\n"
-          "http://svnbook.red-bean.com/\n"
-          "http://subversion.tigris.org"),
+      wxMessageBox ( 
+_("Please use the command line utility 'svnadmin'\n\
+to create a new repository.\n\n\
+This command line utility is not part of the\n\
+RapidSVN distribution.\n\n\
+More information about subversion:\n\
+http://svnbook.red-bean.com/\n\
+http://subversion.tigris.org"),
         _("Information"),
         wxOK);
       break;
