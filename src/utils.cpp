@@ -583,18 +583,13 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
            (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
       {
         wxMenuItem *pItem;
-        // TODO: Convert verb names to unicode on the fly if needed (or make
-        // verblist follow wxWidgets' unicode setting)
-        // TODO: Note: I think verbList.GetName is a Windows code-paged char *, not UTF 8, so don't use Utf8ToLocal like elsewhere
-        // Someone will need to put the correct mappings in eventually
-        pItem = new wxMenuItem (menu, ID_Verb_Min + i, wxString::FromAscii (verbList.GetName (i)));
-        //pItem->SetBitmap (wxBITMAP (?))
+        pItem = new wxMenuItem (menu, ID_Verb_Min + i, verbList.GetName (i));
         menu->Append (pItem);
       }
 
       parentMenu->Append (ID_Open, _("Open..."), menu);
     }
-    catch (std::exception)
+    catch (...)
     {
       // Failed assembling verbs.
       // TODO: Report this error in the status bar?
