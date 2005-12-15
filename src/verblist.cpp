@@ -220,7 +220,6 @@ void VerbList::InitFromDocument (const wxString & document_path, bool isAFolder)
   m->verb_list.clear ();
 
 
-  wxString extension_key_name;
   wxString progid_key_name;
 
   if (isAFolder)
@@ -233,7 +232,7 @@ void VerbList::InitFromDocument (const wxString & document_path, bool isAFolder)
       return;
 
     // Get progid of extension
-    extension_key_name = "." + m->document_path.GetExt ();
+    wxString extension_key_name (wxT(".") + m->document_path.GetExt ());
     wxRegKey ext_key (wxRegKey::HKCR, extension_key_name);
     if (!ext_key.Open ())
       return;
