@@ -39,104 +39,84 @@
 AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
   : wxDialog (parent, -1, wxEmptyString, wxDefaultPosition)
 {
-  wxString title;
-  title.Printf (_("About %s"), APPLICATION_NAME);
+  const wxString title (wxString::Format(
+    _("About %s"), APPLICATION_NAME));
   SetTitle (title);
 
   // format string
-  wxString version;
-  version.Printf (_("%s Version %d.%d.%d"),
-                  APPLICATION_NAME,
-                  RAPIDSVN_VER_MAJOR,
-                  RAPIDSVN_VER_MINOR,
-                  RAPIDSVN_VER_MICRO);
+  const wxString version (wxString::Format (
+    _("%s Version %d.%d.%d"),
+    APPLICATION_NAME,
+    RAPIDSVN_VER_MAJOR,
+    RAPIDSVN_VER_MINOR,
+    RAPIDSVN_VER_MICRO));
 
   // TODO: Make these two constants in version.hpp translatable and wxT()'ed respectively.
   // Until then use the kludge of pretending they're UTF8 to save some silly looking ifdef's
-  wxString strCopyrightMessage (Utf8ToLocal (RAPIDSVN_COPYRIGHT));
-  wxString strVerMilestone (Utf8ToLocal (RAPIDSVN_VER_MILESTONE));
+  const wxString strCopyrightMessage (Utf8ToLocal (RAPIDSVN_COPYRIGHT));
+  const wxString strVerMilestone (Utf8ToLocal (RAPIDSVN_VER_MILESTONE));
 
-  wxString milestone;
-  milestone.Printf (_("Milestone: %s"),
-                    strVerMilestone.c_str ());
+  const wxString milestone (wxString::Format (
+    _("Milestone: %s"),
+    strVerMilestone.c_str ()));
 
-  wxString subversion;
-  subversion.Printf (_("Subversion %d.%d.%d"),
-                     SVN_VER_MAJOR,
-                     SVN_VER_MINOR,
-                     SVN_VER_MICRO);
+#ifdef wxUSE_UNICODE
+  wxString unicode (_("Unicode"));
+#else
+  wxString unicode (_("Ansi"));
+#endif
 
-  wxString wx;
-  wx.Printf (_("wxWidgets %d.%d.%d"),
-             wxMAJOR_VERSION,
-             wxMINOR_VERSION,
-             wxRELEASE_NUMBER);
+  const wxString copy (wxString::Format(
+    wxT("%s\n") // version
+    wxT("%s\n") // milestone
+    wxT("\n%s\n\n") // copyright
+    wxT("%s\n") // for more information
+    wxT("http://rapidsvn.tigris.org"),
+    version.c_str (),
+    milestone.c_str (),
+    strCopyrightMessage.c_str (),
+    _("For more information see:")));
 
-  wxString copy;
-  copy.Printf (wxT("%s\n") // version
-               wxT("%s\n") // milestone
-               wxT("\n%s\n\n") // copyright
-               wxT("%s\n") // for more information
-               wxT("http://rapidsvn.tigris.org"),
-               version.c_str (),
-               milestone.c_str (),
-               strCopyrightMessage.c_str (),
-               _("For more information see:"));
 
-  wxString built;
-  built.Printf (wxT("%s\n") // built with
-                wxT("%s\n") // subversion
-                wxT("\n")
-                wxT("%s"), // wxWidgets
-                _("Built with:"),
-                subversion.c_str (),
-                wx.c_str ());
+  const wxString builtFmt(_("\
+Built with:\n\
+wxWidgets %d.%d.%d (%s)\n\
+Subversion %d.%d.%d\n"));
+
+  const wxString infoFmt(_("\
+Locale Information:\n\
+Language: %s\n\
+System Name: %s\n\
+Canonical Name: %s\n"));
+
+  const wxString built (wxString::Format(
+    builtFmt, 
+    wxMAJOR_VERSION, wxMINOR_VERSION, 
+    wxRELEASE_NUMBER, unicode,
+    SVN_VER_MAJOR, SVN_VER_MINOR, SVN_VER_MICRO));
+
+  const wxString info (wxString::Format(
+    infoFmt, 
+    locale.GetLocale (), locale.GetSysName (), 
+    locale.GetCanonicalName ()));
 
   // create controls
-  wxStaticText * labelCopy = new wxStaticText (this, -1, copy);
-  wxStaticText * labelBuilt = new wxStaticText (this, -1, built);
-  wxStaticText * labelSchemas = new wxStaticText (this, -1, wxEmptyString);
-  wxStaticText * labelTitle = new wxStaticText (
-    this, -1, _("Locale Information:"));
-  wxStaticText * labelLanguageTitle = new wxStaticText (
-    this, -1, _("Language:"));
-  wxStaticText * labelLanguageName = new wxStaticText (
-    this, -1, locale.GetLocale ());
-  wxStaticText * labelSysTitle = new wxStaticText (
-    this, -1, _("System Name:"));
-  wxStaticText * labelSysName = new wxStaticText (
-    this, -1, locale.GetSysName ());
-  wxStaticText * labelCanonicalTitle = new wxStaticText (
-    this, -1, _("CanoncialName:"));
-  wxStaticText * labelCanonicalName = new wxStaticText (
-    this, -1, locale.GetCanonicalName ());
-
   wxStaticBitmap * logo =
     new wxStaticBitmap (this, -1, wxBitmap (logo_xpm));
-
+  wxStaticText * labelCopy = new wxStaticText (this, -1, copy);
+  wxStaticText * labelBuilt = new wxStaticText (this, -1, built);
+  wxStaticText * labelInfo = new wxStaticText (this, -1, info);
   wxButton * button = new wxButton (this, wxID_OK, _("OK"));
 
   // position controls
-  wxFlexGridSizer * topSizer = new wxFlexGridSizer (2, 0, 10);
+  wxFlexGridSizer * topSizer = new wxFlexGridSizer (2, 10, 10);
   topSizer->Add (logo, 0);
   topSizer->Add (labelCopy, 1, wxEXPAND);
-  topSizer->Add (0, 10, wxBottom);
-  topSizer->Add (0, 10, wxBottom);
-  topSizer->Add (labelBuilt, 0);
-  topSizer->Add (labelSchemas, 0);
-  topSizer->Add (0, 10, wxBottom);
-  topSizer->Add (0, 10, wxBottom);
-  topSizer->Add (labelTitle, 0);
-  topSizer->Add (0, 0);
-  topSizer->Add (labelLanguageTitle, 0);
-  topSizer->Add (labelLanguageName, 0);
-  topSizer->Add (labelSysTitle, 0);
-  topSizer->Add (labelSysName, 0);
-  topSizer->Add (labelCanonicalTitle, 0);
-  topSizer->Add (labelCanonicalName, 0);
+  topSizer->Add (labelBuilt, 0, wxALL);
+  topSizer->Add (labelInfo, 0, wxALL);
 
   wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-  mainSizer->Add (topSizer, 0, wxALL, 20);
+  mainSizer->Add (topSizer, 0, wxALL, 5);
   mainSizer->Add (button, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
   SetAutoLayout(true);
