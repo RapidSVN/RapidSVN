@@ -47,12 +47,12 @@
  * NON WINDOWS IMPLEMENTATION OF VerbList
  *********************************************************************/
 
-VerbList::VerbList
+VerbList::VerbList ()
 {
 }
 
 
-VerbList::~VerbList 
+VerbList::~VerbList ()
 {
 }
 
