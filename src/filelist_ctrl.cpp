@@ -1048,8 +1048,8 @@ FileListCtrl::UpdateFileList ()
 
         if (entry.isLocked ())
           values[COL_LOCK_COMMENT] = Utf8ToLocal (entry.lockComment ());
-        else
-          values[COL_LOCK_COMMENT] = wxT("no");
+//        else
+//          values[COL_LOCK_COMMENT] = wxT("");
 
         values[COL_URL] = Utf8ToLocal (entry.url ());
         values[COL_REPOS] = Utf8ToLocal (entry.repos ());
