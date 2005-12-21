@@ -227,6 +227,26 @@ struct FileInfo::Data
                   tmp.c_str ());
       addLine (str);
     }
+
+    if (entry.isLocked ())
+    {
+      tmp = Utf8ToLocal (entry.lockToken ());
+      str.Printf (_("Lock Token: %s"),
+                  tmp.c_str ());
+      addLine (str);
+
+      tmp = Utf8ToLocal (entry.lockOwner ());
+      str.Printf (_("Lock Owner: %s"),
+                  tmp.c_str ());
+      addLine (str);
+
+      tmp = Utf8ToLocal (entry.lockComment ());
+      str.Printf (_("Lock Comment:\n%s"),
+                  tmp.c_str ());
+      addLine (str);
+
+      info_print_time (entry.lockCreationDate (), _("Lock Creation Date"), str);
+    }
   }
 
   void

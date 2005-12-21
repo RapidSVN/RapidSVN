@@ -251,6 +251,51 @@ namespace svn
     }
 
     /**
+     * @return true if locked
+     */
+    const bool
+    isLocked () const
+    {
+      return m_entry->lock_token != 0;
+    }
+
+    /**
+     * @return lock token or null if not locked
+     */
+    const char *
+    lockToken () const
+    {
+      return m_entry->lock_token;
+    }
+
+    /**
+     * @return lock owner or null if not locked
+     */
+    const char *
+    lockOwner () const
+    {
+      return m_entry->lock_owner;
+    }
+
+    /**
+     * @return comment lock, null or no comment
+     */
+    const char *
+    lockComment () const
+    {
+      return m_entry->lock_comment;
+    }
+
+    /**
+     * @return lock creation date or 0 if not locked
+     */
+    const apr_time_t
+    lockCreationDate () const
+    {
+      return m_entry->lock_creation_date;
+    }
+
+    /**
      * @return last revision this was changed
      */
     const svn_revnum_t

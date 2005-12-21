@@ -111,6 +111,7 @@ enum
   ID_Column_ConflictOld,
   ID_Column_ConflictNew,
   ID_Column_ConflictWrk,
+  ID_Column_LockComment,
   ID_Column_Checksum,
   ID_Column_Max,
 

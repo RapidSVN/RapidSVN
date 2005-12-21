@@ -187,7 +187,7 @@ AppendModifyMenu (wxMenu * parentMenu)
   {
     parentMenu->AppendSeparator ();
 
-    AppendMenuItem (parentMenu, ID_Lock, _("&Lock"));
+    AppendMenuItem (parentMenu, ID_Lock, _("&Lock..."));
     AppendMenuItem (parentMenu, ID_Unlock, _("&Unlock"));
   }
 }

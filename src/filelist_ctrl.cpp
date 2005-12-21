@@ -25,7 +25,6 @@
 #if defined( _MSC_VER) && _MSC_VER <= 1200
 #pragma warning( disable: 4786 )// debug symbol truncated
 #endif
-
 // stl
 #include <exception>
 
@@ -71,34 +70,16 @@
 #include "res/bitmaps/modified_newer_file.xpm"
 #include "res/bitmaps/externals_folder.xpm"
 
+#include "res/bitmaps/locked_normal_file.xpm"
+#include "res/bitmaps/locked_missing_file.xpm"
+#include "res/bitmaps/locked_deleted_file.xpm"
+#include "res/bitmaps/locked_replaced_file.xpm"
+#include "res/bitmaps/locked_modified_file.xpm"
+#include "res/bitmaps/locked_merged_file.xpm"
+#include "res/bitmaps/locked_conflicted_file.xpm"
+#include "res/bitmaps/locked_newer_file.xpm"
+#include "res/bitmaps/locked_modified_newer_file.xpm"
 
-/**
- * The index from where there will be only images not related
- * to the status.
- */
-static const int START_EXTRA_IMGS=15;
-
-enum
-{
-  IMG_INDX_FOLDER = START_EXTRA_IMGS,
-  IMG_INDX_VERSIONED_FOLDER,
-  IMG_INDX_SORT_DOWN,
-  IMG_INDX_SORT_UP,
-  IMG_INDX_MODIFIED_VERSIONED_FOLDER,
-  IMG_INDX_NEWER_FILE,
-  IMG_INDX_NEWER_FOLDER,
-  IMG_INDX_MODIFIED_NEWER,
-  IMG_INDX_EXTERNALS_FOLDER,
-  IMG_INDX_COUNT
-};
-
-/**
- * This table holds information about image index in a image list.
- * It will be accessed using a status code as an index.
- * For every index that equals a valid status code, there should be
- * a valid value which represents an index in the image list.
- */
-static int IMAGE_INDEX[IMG_INDX_COUNT];
 
 /**
  * Tags for wxConfig file settings, defined here to avoid duplicate
@@ -111,6 +92,7 @@ static const wxChar ConfigColumnVisibleFmt[] = wxT("/FileListCtrl/Column%sVisibl
 static const wxChar ConfigWithUpdate[]       = wxT("/FileListCtrl/WithUpdate");
 static const wxChar ConfigFlatView[]         = wxT("/FileListCtrl/FlatView");
 static const wxChar ConfigShowUnversioned[]  = wxT("/FileListCtrl/ShowUnversioned");
+
 
 /**
  * test if the given status entry is a file or
@@ -514,12 +496,182 @@ CompareItems (svn::Status * ps1, svn::Status * ps2,
   return res;
 }
 
+/**
+ * private struct that hide implementation details
+ * to users of @a FileListCtrl
+ */
+struct FileListCtrl::Data
+{
+public:
+  bool SortIncreasing;
+  int SortColumn;
+  bool DirtyColumns;
+  bool FlatMode;
+  svn::Context * Context;
+  wxString Path;
+  bool WithUpdate;
+  bool ShowUnversioned;
+  wxImageList *ImageListSmall;
+
+  /**
+   * The index from where there will be only images
+   * not related to the status.
+   * See svn_wc_status_kind in svn_wc.h for more details.
+   */
+  static const int START_EXTRA_IMGS=15;
+  
+  enum
+  {
+    IMG_INDX_FOLDER = START_EXTRA_IMGS,
+    IMG_INDX_VERSIONED_FOLDER,
+    IMG_INDX_SORT_DOWN,
+    IMG_INDX_SORT_UP,
+    IMG_INDX_MODIFIED_VERSIONED_FOLDER,
+    IMG_INDX_NEWER_FILE,
+    IMG_INDX_NEWER_FOLDER,
+    IMG_INDX_MODIFIED_NEWER,
+    IMG_INDX_EXTERNALS_FOLDER,
+    IMG_INDX_COUNT
+  };
+
+  static const wxChar * COLUMN_CAPTIONS [FileListCtrl::COL_COUNT];
+  
+  static const wxChar * COLUMN_NAMES[FileListCtrl::COL_COUNT];
+
+  /**
+   * This table holds information about image index in a image list.
+   * It will be accessed using a status code as a first index and locked
+   * flag as a second index.
+   * For every index that equals a valid status code there should be
+   * a valid value which represents an index in the image list
+   * when the second index is 0 (meaning that file is not locked).
+   * When second index equals 1 (for locked files), there are
+   * corresponding image indeces for some states.
+   */
+  int IMAGE_INDEX[IMG_INDX_COUNT][2];
+
+  struct item
+  {
+    int status;
+    wxIcon icon;
+  };
+  
+  /** function to count array items */
+  template <typename T, size_t N>
+  size_t countArrayItems(T (&array) [N]) { return N; }
+
+  bool ColumnVisible[COL_COUNT];
+  wxString ColumnCaption[COL_COUNT];
+  int ColumnIndex[COL_COUNT];
+  int ColumnWidth[COL_COUNT];
+
+  Data ();
+  ~Data ();
+
+  int
+  GetImageIndex (const svn::Status & status);
+
+  int
+  GetSortImageIndex (bool sortDown);
+
+  int
+  GetRealColumn (int clickedColumn);
+
+  static int wxCALLBACK
+  CompareFunction (long item1, long item2, long sortData);
+
+  void
+  ReadConfig ();
+
+  void
+  WriteConfig ();
+};
+
+
+/** default constructor */
+FileListCtrl::Data::Data ()
+: SortIncreasing (true), SortColumn (COL_NAME),
+  DirtyColumns (true), FlatMode (false), Context (0),
+  WithUpdate (false)
+{
+  /** array of icons and corresponding status */
+  item mIconArray [] =
+  {
+    {svn_wc_status_unversioned,           wxIcon (nonsvn_file_xpm)},
+    {svn_wc_status_normal,                wxIcon (normal_file_xpm)},
+    {svn_wc_status_added,                 wxIcon (added_file_xpm)},
+    {svn_wc_status_missing,               wxIcon (missing_file_xpm)},
+    {svn_wc_status_deleted,               wxIcon (deleted_file_xpm)},
+    {svn_wc_status_replaced,              wxIcon (replaced_file_xpm)},
+    {svn_wc_status_modified,              wxIcon (modified_file_xpm)},
+    {svn_wc_status_merged,                wxIcon (merged_file_xpm)},
+    {svn_wc_status_conflicted,            wxIcon (conflicted_file_xpm)},
+
+    {IMG_INDX_FOLDER,                     wxIcon (folder_xpm)},
+    {IMG_INDX_VERSIONED_FOLDER,           wxIcon (versioned_folder_xpm)},
+
+    {IMG_INDX_SORT_DOWN,                  wxIcon (sort_down_xpm)},
+    {IMG_INDX_SORT_UP,                    wxIcon (sort_up_xpm)},
+
+    {IMG_INDX_MODIFIED_VERSIONED_FOLDER,  wxIcon (modified_versioned_folder_xpm)},
+    {IMG_INDX_NEWER_FILE,                 wxIcon (newer_file_xpm)},
+    {IMG_INDX_NEWER_FOLDER,               wxIcon (newer_folder_xpm)},
+    {IMG_INDX_MODIFIED_NEWER,             wxIcon (modified_newer_file_xpm)},
+    {IMG_INDX_EXTERNALS_FOLDER,           wxIcon (externals_folder_xpm)}
+  };                               
+
+  /** the same for icons with lock */
+  item mLockIconArray [] =
+  {
+    {svn_wc_status_normal,                wxIcon (locked_normal_file_xpm)},
+    {svn_wc_status_missing,               wxIcon (locked_missing_file_xpm)},
+    {svn_wc_status_deleted,               wxIcon (locked_deleted_file_xpm)},
+    {svn_wc_status_replaced,              wxIcon (locked_replaced_file_xpm)},
+    {svn_wc_status_modified,              wxIcon (locked_modified_file_xpm)},
+    {svn_wc_status_merged,                wxIcon (locked_merged_file_xpm)},
+    {svn_wc_status_conflicted,            wxIcon (locked_conflicted_file_xpm)},
+    {IMG_INDX_NEWER_FILE,                 wxIcon (locked_newer_file_xpm)},
+    {IMG_INDX_MODIFIED_NEWER,             wxIcon (locked_modified_newer_file_xpm)}
+  };                               
+
+  /** count quantity of items in both arrays automatically */
+  const int ICON_COUNT = countArrayItems (mIconArray);
+  const int LOCK_ICON_COUNT = countArrayItems (mLockIconArray);
+
+  ImageListSmall = new wxImageList (16, 16, TRUE);
+  item m_item;
+
+  /**
+   * form neccessary IMAGE_INDEX and ImageListSmall arrays
+   * from two previous arrays, first common, than for locked items.
+   */
+  for(int i=0; i < ICON_COUNT; i++)
+  {
+    m_item = mIconArray [i];
+
+    IMAGE_INDEX[m_item.status][0] = i;
+    ImageListSmall->Add (m_item.icon);
+  }
+  for(int i=0; i < LOCK_ICON_COUNT; i++)
+  {
+    m_item = mLockIconArray [i];
+
+    IMAGE_INDEX[m_item.status][1] = ICON_COUNT + i;
+    ImageListSmall->Add (m_item.icon);
+  }
+}
+
+/** destructor */
+FileListCtrl::Data::~Data ()
+{
+  delete ImageListSmall;
+}
 
 /**
  * array with column captions
  */
-static const wxChar *
-COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
+const wxChar *
+FileListCtrl::Data::COLUMN_CAPTIONS [FileListCtrl::COL_COUNT] =
 {
   _("Name"),
   _("Path"),
@@ -532,6 +684,7 @@ COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
   _("Extension"),
   _("Date"),
   _("Prop Date"),
+  _("Lock Comment"),
   _("Checksum"),
   _("Url"),
   _("Repository"),
@@ -551,8 +704,8 @@ COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
  * Note: these string must not be translatable
  *       so dont enclose them in _( )
  */
-static const wxChar *
-COLUMN_NAMES[FileListCtrl::COL_COUNT] =
+const wxChar *
+FileListCtrl::Data::COLUMN_NAMES[FileListCtrl::COL_COUNT] =
 {
   wxT("Name"),
   wxT("Path"),
@@ -565,6 +718,7 @@ COLUMN_NAMES[FileListCtrl::COL_COUNT] =
   wxT("Extension"),
   wxT("Date"),
   wxT("PropDate"),
+  wxT("LockComment"),
   wxT("Checksum"),
   wxT("Url"),
   wxT("Repository"),
@@ -576,191 +730,196 @@ COLUMN_NAMES[FileListCtrl::COL_COUNT] =
   wxT("ConflictWork")
 };
 
-
-
-/**
- * private struct that hide implementation details
- * to users of @a FileListCtrl
- */
-struct FileListCtrl::Data
-{
-public:
-  bool SortIncreasing;
-  int SortColumn;
-  bool DirtyColumns;
-  bool FlatMode;
-  svn::Context * Context;
-  wxString Path;
-  bool WithUpdate;
-  bool ShowUnversioned;
-  wxImageList *ImageListSmall;
-  bool ColumnVisible[COL_COUNT];
-  wxString ColumnCaption[COL_COUNT];
-  int ColumnIndex[COL_COUNT];
-  int ColumnWidth[COL_COUNT];
-
-  /** default constructor */
-  Data ()
-    : SortIncreasing (true), SortColumn (COL_NAME),
-      DirtyColumns (true), FlatMode (false), Context (0),
-      WithUpdate (false)
-  {
-    ImageListSmall = new wxImageList (16, 16, TRUE);
-
-    // add images to image list
-    ImageListSmall->Add (wxIcon (nonsvn_file_xpm));
-    ImageListSmall->Add (wxIcon (normal_file_xpm));
-    ImageListSmall->Add (wxIcon (added_file_xpm));
-    ImageListSmall->Add (wxIcon (missing_file_xpm));
-    ImageListSmall->Add (wxIcon (deleted_file_xpm));
-    ImageListSmall->Add (wxIcon (replaced_file_xpm));
-    ImageListSmall->Add (wxIcon (modified_file_xpm));
-    ImageListSmall->Add (wxIcon (merged_file_xpm));
-    ImageListSmall->Add (wxIcon (conflicted_file_xpm));
-
-    ImageListSmall->Add (wxIcon (folder_xpm));
-    ImageListSmall->Add (wxIcon (versioned_folder_xpm));
-
-    ImageListSmall->Add (wxIcon (sort_down_xpm));
-    ImageListSmall->Add (wxIcon (sort_up_xpm));
-
-    ImageListSmall->Add (wxIcon (modified_versioned_folder_xpm));
-
-    ImageListSmall->Add (wxIcon (newer_file_xpm));
-    ImageListSmall->Add (wxIcon (newer_folder_xpm));
-    ImageListSmall->Add (wxIcon (modified_newer_file_xpm));
-
-    ImageListSmall->Add (wxIcon (externals_folder_xpm));
-  }
-
-  /** destructor */
-  ~Data ()
-  {
-    delete ImageListSmall;
-  }
-
-  /**
-   * get the real column. @a clickedColumn is only the index
-   * of the visible column that got clicked. If there are
-   * invisible columns this translates to something completely different
-   */
-  int
-  GetRealColumn (int clickedColumn)
-  {
-    int colIndex;
-    int column = clickedColumn;
-
-    for (colIndex = 0; colIndex <= clickedColumn; colIndex++)
-    {
-      if (!ColumnVisible[colIndex])
-      {
-        column++;
-      }
-    }
-
-    return column;
-  }
-
-  /**
-   * callback function for @a wxListCtrl::SortColumns
-   */
-  static int wxCALLBACK
-  CompareFunction (long item1, long item2, long sortData)
-  {
-    svn::Status * ps1 = (svn::Status *) item1;
-    svn::Status * ps2 = (svn::Status *) item2;
-    Data *data = (Data *) (sortData);
-
-    if (ps1 && ps2)
-      return CompareItems (ps1, ps2, data->SortColumn,
-                           data->SortIncreasing);
-    else
-      return 0;
-  }
-
-  /**
-   * read the preferences for the filelist
-   * in this case the visibilty and width of the columns
-   */
-  void
-  ReadConfig ()
-  {
-      // Get settings from config file:
-    wxConfigBase *config = wxConfigBase::Get ();
-    config->Read (ConfigWithUpdate,      &WithUpdate);
-    config->Read (ConfigFlatView,        &FlatMode);
-    config->Read (ConfigShowUnversioned, &ShowUnversioned, (bool) true);
-
-    SortColumn = config->Read (ConfigSortColumn, (long) 0);
-    SortIncreasing = config->Read (ConfigSortOrder, (long) 1) ? true : false;
-
-    int col;
-    for (col = 0; col < COL_COUNT; col++)
-    {
-      wxString key;
-      key.Printf (ConfigColumnVisibleFmt, COLUMN_NAMES[col]);
-      ColumnVisible[col] = config->Read (key, (long) 1) != 0;
-
-      key.Printf (ConfigColumnWidthFmt, COLUMN_NAMES[col]);
-      long width = (long)GetDefaultWidth (col);
-      ColumnWidth[col] = config->Read (key, width);
-    }
-    ColumnVisible[COL_PATH] = FlatMode;
-  }
-
-  /**
-   * save the preferences for the filelist
-   */
-  void
-  WriteConfig ()
-  {
-    // Write settings to config file:
-    wxConfigBase *config = wxConfigBase::Get ();
-    config->Write (ConfigWithUpdate,      WithUpdate);
-    config->Write (ConfigFlatView,        FlatMode);
-    config->Write (ConfigShowUnversioned, ShowUnversioned);
-
-    config->Write (ConfigSortColumn, (long) SortColumn);
-    config->Write (ConfigSortOrder, (long) (SortIncreasing ? 1 : 0));
-    // loop through all the columns
-    for (int col=0; col < COL_COUNT; col++)
-    {
-      wxString key;
-      key.Printf (ConfigColumnWidthFmt, COLUMN_NAMES[col]);
-      config->Write (key, (long) ColumnWidth[col]);
-
-      key.Printf (ConfigColumnVisibleFmt, COLUMN_NAMES[col]);
-      config->Write (key, (long) ColumnVisible[col]);
-    }
-  }
-};
-
-
 /**
  * A safe wrapper for getting images - avoids array bounds
  * exceptions.
  */
-static int
-GetImageIndex (int textIndex, int propIndex)
+int
+FileListCtrl::Data::GetImageIndex (const svn::Status & status)
 {
-  int image = 0;
-  if ((textIndex >= 0) && (textIndex <= IMG_INDX_COUNT))
+  int imageIndex = 0;
+
+  bool lock = status.entry ().isLocked ();
+
+
+  bool newer =
+    (status.reposTextStatus () == svn_wc_status_modified) ||
+    (status.reposPropStatus () == svn_wc_status_modified);
+
+  if (status.isVersioned ())
   {
-    if ( (textIndex == svn_wc_status_normal) &&
-         (propIndex > svn_wc_status_normal) )
+    int textIndex = status.textStatus ();
+    int propIndex = status.propStatus ();
+
+    if (IsDir (&status))
     {
-      if ( (propIndex >= 0) && (propIndex <= IMG_INDX_COUNT) )
+      if ((textIndex == svn_wc_status_modified) || (propIndex == svn_wc_status_modified))
       {
-        image = IMAGE_INDEX[propIndex];
+        imageIndex = IMAGE_INDEX[IMG_INDX_MODIFIED_VERSIONED_FOLDER][lock];
       }
+      else if (textIndex == svn_wc_status_external)
+      {
+        imageIndex = IMAGE_INDEX[IMG_INDX_EXTERNALS_FOLDER][lock];
+      }
+      else
+      {
+        imageIndex = IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER][lock];
+      }
+      const int normalIndex = IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER][lock];
+
+      if ((imageIndex == normalIndex) && newer)
+        imageIndex = IMAGE_INDEX[IMG_INDX_NEWER_FOLDER][lock]; //??
     }
     else
     {
-      image = IMAGE_INDEX[textIndex];
+      if ((textIndex >= 0) && (textIndex <= IMG_INDX_COUNT))
+      {
+        if ((textIndex == svn_wc_status_normal) && (propIndex > svn_wc_status_normal))
+        {
+          if ((propIndex >= 0) && (propIndex <= IMG_INDX_COUNT) )
+            imageIndex = IMAGE_INDEX[propIndex][lock];
+        }
+        else
+          imageIndex = IMAGE_INDEX[textIndex][lock];
+      }
+   
+      if (newer)
+      {
+        if (imageIndex == IMAGE_INDEX[svn_wc_status_normal][lock])
+          imageIndex = IMAGE_INDEX[IMG_INDX_NEWER_FILE][lock];
+        else
+          imageIndex = IMAGE_INDEX[IMG_INDX_MODIFIED_NEWER][lock];
+      }
+    }
+  }
+  else
+  {
+    wxString wxFullPath = Utf8ToLocal (status.path ());
+
+    // unversioned entries dont carry dir info
+    // with them. must find this out by ourself
+    if (wxDirExists (wxFullPath))
+    {
+      imageIndex = IMAGE_INDEX[IMG_INDX_FOLDER][lock];
+    }
+    else if (wxFileExists (wxFullPath))
+    {
+      imageIndex = IMAGE_INDEX[svn_wc_status_unversioned][lock];
+    }
+    else
+    {
+      imageIndex = IMAGE_INDEX[svn_wc_status_none][lock]; //??
     }
   }
 
-  return image;
+  return imageIndex;
+}
+
+/**
+ * A safe wrapper for getting images for sorting.
+ */
+inline int
+FileListCtrl::Data::GetSortImageIndex (bool sortDown)
+{
+  if (sortDown)
+    return IMAGE_INDEX[IMG_INDX_SORT_DOWN][false];
+
+  return IMAGE_INDEX[IMG_INDX_SORT_UP][false];
+}
+
+/**
+ * get the real column. @a clickedColumn is only the index
+ * of the visible column that got clicked. If there are
+ * invisible columns this translates to something completely different
+ */
+inline int
+FileListCtrl::Data::GetRealColumn (int clickedColumn)
+{
+  int colIndex;
+  int column = clickedColumn;
+
+  for (colIndex = 0; colIndex <= clickedColumn; colIndex++)
+  {
+    if (!ColumnVisible[colIndex])
+    {
+      column++;
+    }
+  }
+
+  return column;
+}
+
+/**
+ * callback function for @a wxListCtrl::SortColumns
+ */
+int wxCALLBACK
+FileListCtrl::Data::CompareFunction (long item1, long item2, long sortData)
+{
+  svn::Status * ps1 = (svn::Status *) item1;
+  svn::Status * ps2 = (svn::Status *) item2;
+  Data *data = (Data *) (sortData);
+
+  if (ps1 && ps2)
+    return CompareItems (ps1, ps2, data->SortColumn,
+                         data->SortIncreasing);
+  else
+    return 0;
+}
+
+/**
+ * read the preferences for the filelist
+ * in this case the visibilty and width of the columns
+ */
+inline void
+FileListCtrl::Data::ReadConfig ()
+{
+  // Get settings from config file:
+  wxConfigBase *config = wxConfigBase::Get ();
+  config->Read (ConfigWithUpdate,      &WithUpdate);
+  config->Read (ConfigFlatView,        &FlatMode);
+  config->Read (ConfigShowUnversioned, &ShowUnversioned, (bool) true);
+
+  SortColumn = config->Read (ConfigSortColumn, (long) 0);
+  SortIncreasing = config->Read (ConfigSortOrder, (long) 1) ? true : false;
+
+  int col;
+  for (col = 0; col < COL_COUNT; col++)
+  {
+    wxString key;
+    key.Printf (ConfigColumnVisibleFmt, COLUMN_NAMES[col]);
+    ColumnVisible[col] = config->Read (key, (long) 1) != 0;
+
+    key.Printf (ConfigColumnWidthFmt, COLUMN_NAMES[col]);
+    long width = (long)GetDefaultWidth (col);
+    ColumnWidth[col] = config->Read (key, width);
+  }
+  ColumnVisible[COL_PATH] = FlatMode;
+}
+
+/**
+ * save the preferences for the filelist
+ */
+inline void
+FileListCtrl::Data::WriteConfig ()
+{
+  // Write settings to config file:
+  wxConfigBase *config = wxConfigBase::Get ();
+  config->Write (ConfigWithUpdate,      WithUpdate);
+  config->Write (ConfigFlatView,        FlatMode);
+  config->Write (ConfigShowUnversioned, ShowUnversioned);
+
+  config->Write (ConfigSortColumn, (long) SortColumn);
+  config->Write (ConfigSortOrder, (long) (SortIncreasing ? 1 : 0));
+  // loop through all the columns
+  for (int col=0; col < COL_COUNT; col++)
+  {
+    wxString key;
+    key.Printf (ConfigColumnWidthFmt, COLUMN_NAMES[col]);
+    config->Write (key, (long) ColumnWidth[col]);
+
+    key.Printf (ConfigColumnVisibleFmt, COLUMN_NAMES[col]);
+    config->Write (key, (long) ColumnVisible[col]);
+  }
 }
 
 
@@ -778,30 +937,6 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   : wxListView (parent, id, pos, size, wxLC_REPORT)
 {
   m = new Data ();
-
-  // set the indexes
-  IMAGE_INDEX[svn_wc_status_none] = 0;
-  IMAGE_INDEX[svn_wc_status_unversioned] = 0;
-  IMAGE_INDEX[svn_wc_status_normal] = 1;
-  IMAGE_INDEX[svn_wc_status_added] = 2;
-  IMAGE_INDEX[svn_wc_status_missing] = 3;
-  IMAGE_INDEX[svn_wc_status_deleted] = 4;
-  IMAGE_INDEX[svn_wc_status_replaced] = 5;
-  IMAGE_INDEX[svn_wc_status_modified] = 6;
-  IMAGE_INDEX[svn_wc_status_merged] = 7;
-  IMAGE_INDEX[svn_wc_status_conflicted] = 8;
-
-  IMAGE_INDEX[IMG_INDX_FOLDER] = 9;
-  IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER] = 10;
-
-  IMAGE_INDEX[IMG_INDX_SORT_DOWN] = 11;
-  IMAGE_INDEX[IMG_INDX_SORT_UP] = 12;
-
-  IMAGE_INDEX[IMG_INDX_MODIFIED_VERSIONED_FOLDER] = 13;
-  IMAGE_INDEX[IMG_INDX_NEWER_FILE] = 14;
-  IMAGE_INDEX[IMG_INDX_NEWER_FOLDER] = 15;
-  IMAGE_INDEX[IMG_INDX_MODIFIED_NEWER] = 16;
-  IMAGE_INDEX[IMG_INDX_EXTERNALS_FOLDER] = 17;
 
   // set this file list control to use the image list
   SetImageList (m->ImageListSmall, wxIMAGE_LIST_SMALL);
@@ -870,7 +1005,6 @@ FileListCtrl::UpdateFileList ()
       values[COL_NAME] = wxFileNameFromPath (wxstr);
     }
 
-    wxString wxFullPath = Utf8ToLocal (status.path ());
     if (m->ColumnVisible[COL_PATH] || m->ColumnVisible[COL_EXTENSION])
     {
       svn::Path path (fullPath.c_str ());
@@ -878,75 +1012,21 @@ FileListCtrl::UpdateFileList ()
       path.split (dir, filename, ext);
 
       if (isNative) { 
-        if (path.native().length() > pathUtf8Length)
-          values[COL_PATH]  = Utf8ToLocal(path.native().substr(pathUtf8Length).c_str());
+        if (path.native ().length () > pathUtf8Length)
+          values[COL_PATH]  = Utf8ToLocal (path.native ().substr (pathUtf8Length).c_str ());
         else
-          values[COL_PATH]  = Utf8ToLocal(".");
+          values[COL_PATH]  = Utf8ToLocal (".");
       } else
-        values[COL_PATH]    = wxString (Utf8ToLocal(fullPath.substr(pathUtf8Length)));
+        values[COL_PATH]    = wxString (Utf8ToLocal (fullPath.substr (pathUtf8Length)));
       values[COL_EXTENSION] = Utf8ToLocal (ext.c_str ());
     }
 
-    int imageIndex = 0;
-    bool newer =
-      (status.reposTextStatus () == svn_wc_status_modified) ||
-      (status.reposPropStatus () == svn_wc_status_modified);
-
-    if (status.isVersioned ())
-    {
-      if (IsDir (&status))
-      {
-        if ((status.textStatus () == svn_wc_status_modified) ||
-            (status.propStatus () == svn_wc_status_modified))
-          imageIndex = GetImageIndex (
-            IMG_INDX_MODIFIED_VERSIONED_FOLDER, -1);
-        else if (status.textStatus () == svn_wc_status_external)
-          imageIndex = GetImageIndex (IMG_INDX_EXTERNALS_FOLDER, -1);
-        else
-          imageIndex = GetImageIndex (IMG_INDX_VERSIONED_FOLDER, -1);
-
-        const int normalIndex = IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER];
-        if ((imageIndex == normalIndex) && newer)
-          imageIndex = IMG_INDX_NEWER_FOLDER;
-      }
-      else
-      {
-        imageIndex = GetImageIndex (
-          status.textStatus (), status.propStatus ());
-
-        if (newer)
-        {
-          if (imageIndex == IMAGE_INDEX[svn_wc_status_normal])
-            imageIndex = IMAGE_INDEX[IMG_INDX_NEWER_FILE];
-          else
-            imageIndex = IMAGE_INDEX[IMG_INDX_MODIFIED_NEWER];
-        }
-      }
-    }
-    else
-    {
-      // unversioned entries dont carry dir info
-      // with them. must find this out by ourself
-      if (wxDirExists (wxFullPath))
-      {
-        imageIndex = GetImageIndex (IMG_INDX_FOLDER, -1);
-      }
-      else if (wxFileExists (wxFullPath))
-      {
-        imageIndex = GetImageIndex (svn_wc_status_unversioned, -1);
-      }
-      else
-      {
-        imageIndex = svn_wc_status_none;
-      }
-    }
-
+    int imageIndex = m->GetImageIndex (status);
 
     // User want to see unversioned entries?
     if (status.isVersioned() || m->ShowUnversioned)
     {
       InsertItem (i, values[COL_NAME], imageIndex);
-
 
       // The item data will be used to sort the list:
       SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
@@ -955,6 +1035,7 @@ FileListCtrl::UpdateFileList ()
       if (status.isVersioned ())
       {
         const svn::Entry & entry = status.entry ();
+
         values[COL_REV].Printf (wxT("%ld"), entry.revision ());
         values[COL_CMT_REV].Printf (wxT("%ld"), entry.cmtRev ());
 
@@ -964,6 +1045,11 @@ FileListCtrl::UpdateFileList ()
         values[COL_CMT_DATE] = FormatDateTime (entry.cmtDate ());
         values[COL_TEXT_TIME] = FormatDateTime (entry.textTime ());
         values[COL_PROP_TIME] = FormatDateTime (entry.propTime ());
+
+        if (entry.isLocked ())
+          values[COL_LOCK_COMMENT] = Utf8ToLocal (entry.lockComment ());
+        else
+          values[COL_LOCK_COMMENT] = wxT("no");
 
         values[COL_URL] = Utf8ToLocal (entry.url ());
         values[COL_REPOS] = Utf8ToLocal (entry.repos ());
@@ -1059,7 +1145,6 @@ FileListCtrl::OnDoubleClick (wxMouseEvent & event)
     if (!PostMenuEvent (this, ID_Default_Action))
       event.Skip ();
 }
-
 
 void
 FileListCtrl::OnKeyDown (wxKeyEvent & event)
@@ -1339,8 +1424,8 @@ FileListCtrl::SetColumnImages ()
     item.m_mask = wxLIST_MASK_IMAGE;
     if (col == m->SortColumn)
     {
-      item.m_image = m->SortIncreasing ?
-        IMAGE_INDEX[IMG_INDX_SORT_DOWN] : IMAGE_INDEX[IMG_INDX_SORT_UP];
+      bool sortDown = m->SortIncreasing ? true : false;
+      item.m_image = m->GetSortImageIndex (sortDown);
     }
     else
     {
@@ -1428,7 +1513,7 @@ FileListCtrl::UpdateColumns ()
     {
       wxListItem item;
       item.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_WIDTH;
-      item.m_text = COLUMN_CAPTIONS[col];
+      item.m_text = m->COLUMN_CAPTIONS[col];
       item.m_width = m->ColumnWidth[col];
       SetColumn (index, item);
     }

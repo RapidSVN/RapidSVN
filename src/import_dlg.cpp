@@ -160,9 +160,7 @@ ImportDlg::~ImportDlg ()
 void
 ImportDlg::OnOk (wxCommandEvent &event)
 {
-  wxString val;
-
-    // Transfer data from controls into m_data:
+  // Transfer data from controls into m_data:
   TransferDataFromWindow();
 
   TrimString (m->data.Repository);

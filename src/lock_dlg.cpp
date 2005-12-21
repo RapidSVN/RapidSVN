@@ -54,7 +54,8 @@ public:
                     window->GetCharHeight () * 4);
 
     msg = new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
-                          msgSize, wxTE_MULTILINE);
+                          msgSize, wxTE_MULTILINE,
+                          wxTextValidator(wxFILTER_NONE, &message));
 
     wxCheckBox * checkStealLock = NULL;
     wxGenericValidator val (&stealLock);
