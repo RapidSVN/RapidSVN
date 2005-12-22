@@ -496,6 +496,86 @@ CompareItems (svn::Status * ps1, svn::Status * ps2,
   return res;
 }
 
+
+/**
+ * The index from where there will be only images
+ * not related to the status.
+ * See @a svn_wc_status_kind in @a svn_wc.h for more details.
+ */
+enum
+{
+  IMG_INDX_FOLDER = 15,
+  IMG_INDX_VERSIONED_FOLDER,
+  IMG_INDX_SORT_DOWN,
+  IMG_INDX_SORT_UP,
+  IMG_INDX_MODIFIED_VERSIONED_FOLDER,
+  IMG_INDX_NEWER_FILE,
+  IMG_INDX_NEWER_FOLDER,
+  IMG_INDX_MODIFIED_NEWER,
+  IMG_INDX_EXTERNALS_FOLDER,
+  IMG_INDX_COUNT
+};
+
+
+struct MapItem
+{
+  int status;
+  wxIcon icon;
+
+  MapItem (int status_, const wxIcon & icon_)
+    : status (status_), icon (icon_)
+  {
+  }
+};
+
+
+/** array of icons and corresponding status */
+static const MapItem MAP_ICON_ARRAY [] =
+{
+  MapItem (svn_wc_status_unversioned,           wxIcon (nonsvn_file_xpm)),
+  MapItem (svn_wc_status_normal,                wxIcon (normal_file_xpm)),
+  MapItem (svn_wc_status_added,                 wxIcon (added_file_xpm)),
+  MapItem (svn_wc_status_missing,               wxIcon (missing_file_xpm)),
+  MapItem (svn_wc_status_deleted,               wxIcon (deleted_file_xpm)),
+  MapItem (svn_wc_status_replaced,              wxIcon (replaced_file_xpm)),
+  MapItem (svn_wc_status_modified,              wxIcon (modified_file_xpm)),
+  MapItem (svn_wc_status_merged,                wxIcon (merged_file_xpm)),
+  MapItem (svn_wc_status_conflicted,            wxIcon (conflicted_file_xpm)),
+
+  MapItem (IMG_INDX_FOLDER,                     wxIcon (folder_xpm)),
+  MapItem (IMG_INDX_VERSIONED_FOLDER,           wxIcon (versioned_folder_xpm)),
+
+  MapItem (IMG_INDX_SORT_DOWN,                  wxIcon (sort_down_xpm)),
+  MapItem (IMG_INDX_SORT_UP,                    wxIcon (sort_up_xpm)),
+
+  MapItem (IMG_INDX_MODIFIED_VERSIONED_FOLDER,  wxIcon (modified_versioned_folder_xpm)),
+  MapItem (IMG_INDX_NEWER_FILE,                 wxIcon (newer_file_xpm)),
+  MapItem (IMG_INDX_NEWER_FOLDER,               wxIcon (newer_folder_xpm)),
+  MapItem (IMG_INDX_MODIFIED_NEWER,             wxIcon (modified_newer_file_xpm)),
+  MapItem (IMG_INDX_EXTERNALS_FOLDER,           wxIcon (externals_folder_xpm))
+};                               
+
+static const size_t MAP_ICON_COUNT = 
+  sizeof (MAP_ICON_ARRAY) / sizeof (MAP_ICON_ARRAY [0]);
+
+/** the same for icons with lock */
+static const MapItem MAP_LOCK_ICON_ARRAY [] =
+{
+  MapItem (svn_wc_status_normal,                wxIcon (locked_normal_file_xpm)),
+  MapItem (svn_wc_status_missing,               wxIcon (locked_missing_file_xpm)),
+  MapItem (svn_wc_status_deleted,               wxIcon (locked_deleted_file_xpm)),
+  MapItem (svn_wc_status_replaced,              wxIcon (locked_replaced_file_xpm)),
+  MapItem (svn_wc_status_modified,              wxIcon (locked_modified_file_xpm)),
+  MapItem (svn_wc_status_merged,                wxIcon (locked_merged_file_xpm)),
+  MapItem (svn_wc_status_conflicted,            wxIcon (locked_conflicted_file_xpm)),
+  MapItem (IMG_INDX_NEWER_FILE,                 wxIcon (locked_newer_file_xpm)),
+  MapItem (IMG_INDX_MODIFIED_NEWER,             wxIcon (locked_modified_newer_file_xpm))
+};                               
+
+static const size_t MAP_LOCK_ICON_COUNT = 
+  sizeof (MAP_LOCK_ICON_ARRAY) / sizeof (MAP_LOCK_ICON_ARRAY [0]);
+
+
 /**
  * private struct that hide implementation details
  * to users of @a FileListCtrl
@@ -513,27 +593,6 @@ public:
   bool ShowUnversioned;
   wxImageList *ImageListSmall;
 
-  /**
-   * The index from where there will be only images
-   * not related to the status.
-   * See svn_wc_status_kind in svn_wc.h for more details.
-   */
-  static const int START_EXTRA_IMGS=15;
-  
-  enum
-  {
-    IMG_INDX_FOLDER = START_EXTRA_IMGS,
-    IMG_INDX_VERSIONED_FOLDER,
-    IMG_INDX_SORT_DOWN,
-    IMG_INDX_SORT_UP,
-    IMG_INDX_MODIFIED_VERSIONED_FOLDER,
-    IMG_INDX_NEWER_FILE,
-    IMG_INDX_NEWER_FOLDER,
-    IMG_INDX_MODIFIED_NEWER,
-    IMG_INDX_EXTERNALS_FOLDER,
-    IMG_INDX_COUNT
-  };
-
   static const wxChar * COLUMN_CAPTIONS [FileListCtrl::COL_COUNT];
   
   static const wxChar * COLUMN_NAMES[FileListCtrl::COL_COUNT];
@@ -548,22 +607,14 @@ public:
    * When second index equals 1 (for locked files), there are
    * corresponding image indeces for some states.
    */
-  int IMAGE_INDEX[IMG_INDX_COUNT][2];
+  int ImageIndexArray[IMG_INDX_COUNT][2];
 
-  struct item
-  {
-    int status;
-    wxIcon icon;
-  };
-  
-  /** function to count array items */
-  template <typename T, size_t N>
-  size_t countArrayItems(T (&array) [N]) { return N; }
+  bool ColumnVisible [COL_COUNT];
+  wxString ColumnCaption [COL_COUNT];
+  int ColumnIndex [COL_COUNT];
+  int ColumnWidth [COL_COUNT];
 
-  bool ColumnVisible[COL_COUNT];
-  wxString ColumnCaption[COL_COUNT];
-  int ColumnIndex[COL_COUNT];
-  int ColumnWidth[COL_COUNT];
+
 
   Data ();
   ~Data ();
@@ -594,70 +645,27 @@ FileListCtrl::Data::Data ()
   DirtyColumns (true), FlatMode (false), Context (0),
   WithUpdate (false)
 {
-  /** array of icons and corresponding status */
-  item mIconArray [] =
-  {
-    {svn_wc_status_unversioned,           wxIcon (nonsvn_file_xpm)},
-    {svn_wc_status_normal,                wxIcon (normal_file_xpm)},
-    {svn_wc_status_added,                 wxIcon (added_file_xpm)},
-    {svn_wc_status_missing,               wxIcon (missing_file_xpm)},
-    {svn_wc_status_deleted,               wxIcon (deleted_file_xpm)},
-    {svn_wc_status_replaced,              wxIcon (replaced_file_xpm)},
-    {svn_wc_status_modified,              wxIcon (modified_file_xpm)},
-    {svn_wc_status_merged,                wxIcon (merged_file_xpm)},
-    {svn_wc_status_conflicted,            wxIcon (conflicted_file_xpm)},
-
-    {IMG_INDX_FOLDER,                     wxIcon (folder_xpm)},
-    {IMG_INDX_VERSIONED_FOLDER,           wxIcon (versioned_folder_xpm)},
-
-    {IMG_INDX_SORT_DOWN,                  wxIcon (sort_down_xpm)},
-    {IMG_INDX_SORT_UP,                    wxIcon (sort_up_xpm)},
-
-    {IMG_INDX_MODIFIED_VERSIONED_FOLDER,  wxIcon (modified_versioned_folder_xpm)},
-    {IMG_INDX_NEWER_FILE,                 wxIcon (newer_file_xpm)},
-    {IMG_INDX_NEWER_FOLDER,               wxIcon (newer_folder_xpm)},
-    {IMG_INDX_MODIFIED_NEWER,             wxIcon (modified_newer_file_xpm)},
-    {IMG_INDX_EXTERNALS_FOLDER,           wxIcon (externals_folder_xpm)}
-  };                               
-
-  /** the same for icons with lock */
-  item mLockIconArray [] =
-  {
-    {svn_wc_status_normal,                wxIcon (locked_normal_file_xpm)},
-    {svn_wc_status_missing,               wxIcon (locked_missing_file_xpm)},
-    {svn_wc_status_deleted,               wxIcon (locked_deleted_file_xpm)},
-    {svn_wc_status_replaced,              wxIcon (locked_replaced_file_xpm)},
-    {svn_wc_status_modified,              wxIcon (locked_modified_file_xpm)},
-    {svn_wc_status_merged,                wxIcon (locked_merged_file_xpm)},
-    {svn_wc_status_conflicted,            wxIcon (locked_conflicted_file_xpm)},
-    {IMG_INDX_NEWER_FILE,                 wxIcon (locked_newer_file_xpm)},
-    {IMG_INDX_MODIFIED_NEWER,             wxIcon (locked_modified_newer_file_xpm)}
-  };                               
-
-  /** count quantity of items in both arrays automatically */
-  const int ICON_COUNT = countArrayItems (mIconArray);
-  const int LOCK_ICON_COUNT = countArrayItems (mLockIconArray);
-
   ImageListSmall = new wxImageList (16, 16, TRUE);
-  item m_item;
 
   /**
-   * form neccessary IMAGE_INDEX and ImageListSmall arrays
+   * form neccessary ImageIndexArray and ImageListSmall arrays
    * from two previous arrays, first common, than for locked items.
    */
-  for(int i=0; i < ICON_COUNT; i++)
+  size_t i;
+  for(i=0; i < MAP_ICON_COUNT; i++)
   {
-    m_item = mIconArray [i];
+    const MapItem & item = MAP_ICON_ARRAY [i];
 
-    IMAGE_INDEX[m_item.status][0] = i;
-    ImageListSmall->Add (m_item.icon);
+    ImageIndexArray [item.status][0] = i;
+    ImageListSmall->Add (item.icon);
   }
-  for(int i=0; i < LOCK_ICON_COUNT; i++)
-  {
-    m_item = mLockIconArray [i];
 
-    IMAGE_INDEX[m_item.status][1] = ICON_COUNT + i;
-    ImageListSmall->Add (m_item.icon);
+  for(i=0; i < MAP_LOCK_ICON_COUNT; i++)
+  {
+    const MapItem & item = MAP_LOCK_ICON_ARRAY [i];
+
+    ImageIndexArray [item.status][1] = MAP_ICON_COUNT + i;
+    ImageListSmall->Add (item.icon);
   }
 }
 
@@ -755,20 +763,20 @@ FileListCtrl::Data::GetImageIndex (const svn::Status & status)
     {
       if ((textIndex == svn_wc_status_modified) || (propIndex == svn_wc_status_modified))
       {
-        imageIndex = IMAGE_INDEX[IMG_INDX_MODIFIED_VERSIONED_FOLDER][lock];
+        imageIndex = ImageIndexArray[IMG_INDX_MODIFIED_VERSIONED_FOLDER][lock];
       }
       else if (textIndex == svn_wc_status_external)
       {
-        imageIndex = IMAGE_INDEX[IMG_INDX_EXTERNALS_FOLDER][lock];
+        imageIndex = ImageIndexArray[IMG_INDX_EXTERNALS_FOLDER][lock];
       }
       else
       {
-        imageIndex = IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER][lock];
+        imageIndex = ImageIndexArray[IMG_INDX_VERSIONED_FOLDER][lock];
       }
-      const int normalIndex = IMAGE_INDEX[IMG_INDX_VERSIONED_FOLDER][lock];
+      const int normalIndex = ImageIndexArray[IMG_INDX_VERSIONED_FOLDER][lock];
 
       if ((imageIndex == normalIndex) && newer)
-        imageIndex = IMAGE_INDEX[IMG_INDX_NEWER_FOLDER][lock]; //??
+        imageIndex = ImageIndexArray[IMG_INDX_NEWER_FOLDER][lock]; //??
     }
     else
     {
@@ -777,18 +785,18 @@ FileListCtrl::Data::GetImageIndex (const svn::Status & status)
         if ((textIndex == svn_wc_status_normal) && (propIndex > svn_wc_status_normal))
         {
           if ((propIndex >= 0) && (propIndex <= IMG_INDX_COUNT) )
-            imageIndex = IMAGE_INDEX[propIndex][lock];
+            imageIndex = ImageIndexArray[propIndex][lock];
         }
         else
-          imageIndex = IMAGE_INDEX[textIndex][lock];
+          imageIndex = ImageIndexArray[textIndex][lock];
       }
    
       if (newer)
       {
-        if (imageIndex == IMAGE_INDEX[svn_wc_status_normal][lock])
-          imageIndex = IMAGE_INDEX[IMG_INDX_NEWER_FILE][lock];
+        if (imageIndex == ImageIndexArray[svn_wc_status_normal][lock])
+          imageIndex = ImageIndexArray[IMG_INDX_NEWER_FILE][lock];
         else
-          imageIndex = IMAGE_INDEX[IMG_INDX_MODIFIED_NEWER][lock];
+          imageIndex = ImageIndexArray[IMG_INDX_MODIFIED_NEWER][lock];
       }
     }
   }
@@ -800,15 +808,15 @@ FileListCtrl::Data::GetImageIndex (const svn::Status & status)
     // with them. must find this out by ourself
     if (wxDirExists (wxFullPath))
     {
-      imageIndex = IMAGE_INDEX[IMG_INDX_FOLDER][lock];
+      imageIndex = ImageIndexArray[IMG_INDX_FOLDER][lock];
     }
     else if (wxFileExists (wxFullPath))
     {
-      imageIndex = IMAGE_INDEX[svn_wc_status_unversioned][lock];
+      imageIndex = ImageIndexArray[svn_wc_status_unversioned][lock];
     }
     else
     {
-      imageIndex = IMAGE_INDEX[svn_wc_status_none][lock]; //??
+      imageIndex = ImageIndexArray[svn_wc_status_none][lock]; //??
     }
   }
 
@@ -822,9 +830,9 @@ inline int
 FileListCtrl::Data::GetSortImageIndex (bool sortDown)
 {
   if (sortDown)
-    return IMAGE_INDEX[IMG_INDX_SORT_DOWN][false];
+    return ImageIndexArray[IMG_INDX_SORT_DOWN][false];
 
-  return IMAGE_INDEX[IMG_INDX_SORT_UP][false];
+  return ImageIndexArray[IMG_INDX_SORT_UP][false];
 }
 
 /**
