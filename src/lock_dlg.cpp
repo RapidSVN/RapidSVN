@@ -23,17 +23,12 @@
  * ====================================================================
  */
 
-//svncpp
-#include "svncpp/check.hpp"
-
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
 // app
 #include "lock_dlg.hpp"
-
-#if CHECK_SVN_SUPPORTS_LOCK
 
 struct LockDlg::Data
 {
@@ -127,8 +122,6 @@ LockDlg::GetStealLock () const
 {
   return m->stealLock;
 }
-
-#endif
 
 /* -----------------------------------------------------------------
  * local variables:
