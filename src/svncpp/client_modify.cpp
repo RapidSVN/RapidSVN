@@ -38,6 +38,15 @@
 #include "svncpp/exception.hpp"
 #include "svncpp/pool.hpp"
 #include "svncpp/targets.hpp"
+#include "m_check.hpp"
+
+#ifndef CHECK_SVN_VERSION
+#error "CHECK_SVN_VERSION not defined"
+#endif
+
+#ifndef CHECK_SVN_SUPPORTS_LOCK
+#error "CHECK_SVN_SUPPORTS_LOCK not defined"
+#endif
 
 
 namespace svn
@@ -119,7 +128,15 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+#else
+  void
+  Client::lock(const Targets &, bool, const char *) throw (ClientException)
+  {
+    throw ClientException ("Client::lock not supported");
+  }
+#endif
 
+#if CHECK_SVN_SUPPORTS_LOCK
   void
   Client::unlock (const Targets & targets, bool force) throw (ClientException)
   {
@@ -133,10 +150,13 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+#else 
+  void
+  Client::unlock(const Targets &, bool, bool force) throw (ClientException)
+  {
+    throw ClientException ("Client::unlock not supported");
+  }
 #endif
-/**
- * End of CHECK_SVN_SUPPORTS_LOCK
- */
 
   void
   Client::revert (const Targets & targets,
@@ -224,7 +244,7 @@ namespace svn
 #else
   svn_revnum_t
   Client::commit (const Targets & targets, const char * message, 
-                  bool recurse) throw (ClientException)
+                  bool recurse, bool keepLocks) throw (ClientException)
   {
     Pool pool;
 

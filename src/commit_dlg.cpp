@@ -95,7 +95,7 @@ public:
                         val);
     }
 
-    if (!svn::supportsLock)
+    if (!svn::SUPPORTS_LOCK)
       checkKeepLocks->Hide ();
 
     wxButton* ok =

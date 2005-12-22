@@ -25,12 +25,28 @@
 
 // svncpp
 #include "svncpp/check.hpp"
+#include "m_check.hpp"
+
+
+#ifndef CHECK_SVN_VERSION
+#error "CHECK_SVN_VERSION not defined"
+#endif
+
+#ifndef CHECK_SVN_SUPPORTS_LOCK
+#error "CHECK_SVN_SUPPORTS_LOCK not defined"
+#endif
+
+
+namespace svn
+{
 
 #if CHECK_SVN_SUPPORTS_LOCK
-  const bool svn::supportsLock = true;
+  const bool SUPPORTS_LOCK = true;
 #else
-  const bool svn::supportsLock = false;
+  const bool SUPPORTS_LOCK = false;
 #endif
+
+}
 
 
 /* -----------------------------------------------------------------

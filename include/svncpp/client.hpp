@@ -280,18 +280,11 @@ namespace svn
      * @param recurse whether the operation should be done recursively.
      * @exception ClientException
      */
-#if CHECK_SVN_SUPPORTS_LOCK
     svn_revnum_t
     commit (const Targets & targets,
             const char * message, 
             bool recurse,
-            bool keep_locks) throw (ClientException);
-#else
-    svn_revnum_t
-    commit (const Targets & targets, 
-            const char * message, 
-            bool recurse) throw (ClientException);
-#endif
+            bool keep_locks=false) throw (ClientException);
 
     /**
      * Copies a versioned file with the history preserved.

@@ -31,7 +31,6 @@
 // forward declarations
 namespace svn
 {
-  extern const bool supportsLock;
   class Targets;
 }
 class Tracer;

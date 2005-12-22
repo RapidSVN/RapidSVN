@@ -183,7 +183,7 @@ AppendModifyMenu (wxMenu * parentMenu)
   AppendMenuItem (parentMenu, ID_Rename, _("Re&name...\tCTRL-N"));
   AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory...\tF7"));
 
-  if (svn::supportsLock)
+  if (svn::SUPPORTS_LOCK)
   {
     parentMenu->AppendSeparator ();
 

@@ -1189,11 +1189,10 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       baseActionFlags = CleanupAction::GetBaseFlags ();
       break;
 
-#if CHECK_SVN_SUPPORTS_LOCK
     case ID_Lock:
-      baseActionFlags = LockAction::GetBaseFlags ();
+      if (svn::SUPPORTS_LOCK)
+        baseActionFlags = LockAction::GetBaseFlags ();
       break;
-#endif
 
     case ID_Log:
       baseActionFlags = LogAction::GetBaseFlags ();
@@ -1248,11 +1247,10 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       baseActionFlags = Action::SINGLE_TARGET|Action::MULTIPLE_TARGETS|Action::RESPOSITORY_TYPE|Action::VERSIONED_WC_TYPE|Action::UNVERSIONED_WC_TYPE;
       break;
 
-#if CHECK_SVN_SUPPORTS_LOCK
     case ID_Unlock:
-      baseActionFlags = UnlockAction::GetBaseFlags ();
+      if (svn::SUPPORTS_LOCK)
+        baseActionFlags = UnlockAction::GetBaseFlags ();
       break;
-#endif
 
     case ID_Edit:
       baseActionFlags = ViewAction::GetEditFlags ();
@@ -1383,11 +1381,9 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
       action = new CleanupAction (this);
       break;
 
-#if CHECK_SVN_SUPPORTS_LOCK
     case ID_Lock:
       action = new LockAction (this);
       break;
-#endif
 
     case ID_Log:
       action = new LogAction (this);
@@ -1451,11 +1447,9 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
         break;
       }
 
-#if CHECK_SVN_SUPPORTS_LOCK
     case ID_Unlock:
       action = new UnlockAction (this);
       break;
-#endif
 
     case ID_Edit:
       action = new ViewAction (this);

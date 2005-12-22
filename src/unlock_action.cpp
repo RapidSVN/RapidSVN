@@ -38,8 +38,6 @@
 #include "ids.hpp"
 #include "utils.hpp"
 
-#if CHECK_SVN_SUPPORTS_LOCK
-
 UnlockAction::UnlockAction (wxWindow * parent)
   : Action (parent, _("Unlock"), GetBaseFlags ())
 {
@@ -76,7 +74,6 @@ UnlockAction::Perform ()
 
   return true;
 }
-#endif
 
 /* -----------------------------------------------------------------
  * local variables:

@@ -243,6 +243,10 @@ SOURCE=..\..\include\svncpp\apr.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\include\svncpp\check.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\include\svncpp\client.hpp
 # End Source File
 # Begin Source File
@@ -304,6 +308,14 @@ SOURCE=..\..\include\svncpp\url.hpp
 # Begin Source File
 
 SOURCE=..\..\include\svncpp\wc.hpp
+# End Source File
+# End Group
+# Begin Group "Private Header Files"
+
+# PROP Default_Filter "hpp"
+# Begin Source File
+
+SOURCE=.\m_check.hpp
 # End Source File
 # End Group
 # End Target

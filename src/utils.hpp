@@ -43,8 +43,6 @@ class wxFileName;
 
 namespace svn
 {
-  extern const bool supportsLock;
-
   class Status;
   class Path;
 }

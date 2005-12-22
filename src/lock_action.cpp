@@ -27,7 +27,6 @@
 #include "wx/wx.h"
 
 // svncpp
-#include "svncpp/check.hpp"
 #include "svncpp/client.hpp"
 #include "svncpp/targets.hpp"
 
@@ -37,10 +36,6 @@
 #include "ids.hpp"
 #include "utils.hpp"
 
-/**
- * Use this module only if subversion's version is 1.2 and up
- */
-#if CHECK_SVN_SUPPORTS_LOCK
 
 LockAction::LockAction (wxWindow * parent)
   : Action (parent, _("Lock"), GetBaseFlags ())
@@ -80,7 +75,6 @@ LockAction::Perform ()
 
   return true;
 }
-#endif
 
 /* -----------------------------------------------------------------
  * local variables:

@@ -23,13 +23,30 @@
  * ====================================================================
  */
 
-#ifndef _SVNCPP_CHECK_HPP_
-#define _SVNCPP_CHECK_HPP_
+#ifndef _SVNCPP_M_CHECK_HPP_
+#define _SVNCPP_M_CHECK_HPP_
 
-namespace svn
-{
-  extern const bool SUPPORTS_LOCK;
-}
+// subversion api
+#include "svn_version.h"
+
+#ifndef SVN_VER_MAJOR
+#error "SVN_VER_MAJOR not defined"
+#endif
+
+#ifndef SVN_VER_MINOR
+#error "SVN_VER_MINOR not defined"
+#endif
+
+/**
+ * Check if the current version of the subversion
+ * API is at least major.minor
+ */
+#define CHECK_SVN_VERSION(major,minor) \
+  ((SVN_VER_MAJOR > (major)) || \
+  ((SVN_VER_MAJOR == (major)) && (SVN_VER_MINOR >= (minor))))
+
+#define CHECK_SVN_SUPPORTS_LOCK (CHECK_SVN_VERSION(1,2))
+
 
 #endif
 
