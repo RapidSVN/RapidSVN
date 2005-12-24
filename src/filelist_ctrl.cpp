@@ -517,13 +517,17 @@ enum
 };
 
 
+/**
+ * structure that maps a status entry to an 
+ * according XPM icon.
+ */
 struct MapItem
 {
   int status;
-  wxIcon icon;
+  const char ** xpm_data;
 
-  MapItem (int status_, const wxIcon & icon_)
-    : status (status_), icon (icon_)
+  MapItem (int status_, const char **xpm_data_)
+    : status (status_), xpm_data (xpm_data_)
   {
   }
 };
@@ -532,27 +536,27 @@ struct MapItem
 /** array of icons and corresponding status */
 static const MapItem MAP_ICON_ARRAY [] =
 {
-  MapItem (svn_wc_status_unversioned,           wxIcon (nonsvn_file_xpm)),
-  MapItem (svn_wc_status_normal,                wxIcon (normal_file_xpm)),
-  MapItem (svn_wc_status_added,                 wxIcon (added_file_xpm)),
-  MapItem (svn_wc_status_missing,               wxIcon (missing_file_xpm)),
-  MapItem (svn_wc_status_deleted,               wxIcon (deleted_file_xpm)),
-  MapItem (svn_wc_status_replaced,              wxIcon (replaced_file_xpm)),
-  MapItem (svn_wc_status_modified,              wxIcon (modified_file_xpm)),
-  MapItem (svn_wc_status_merged,                wxIcon (merged_file_xpm)),
-  MapItem (svn_wc_status_conflicted,            wxIcon (conflicted_file_xpm)),
+  MapItem (svn_wc_status_unversioned,           (const char**)nonsvn_file_xpm),
+  MapItem (svn_wc_status_normal,                (const char**)normal_file_xpm),
+  MapItem (svn_wc_status_added,                 (const char**)added_file_xpm),
+  MapItem (svn_wc_status_missing,               (const char**)missing_file_xpm),
+  MapItem (svn_wc_status_deleted,               (const char**)deleted_file_xpm),
+  MapItem (svn_wc_status_replaced,              (const char**)replaced_file_xpm),
+  MapItem (svn_wc_status_modified,              (const char**)modified_file_xpm),
+  MapItem (svn_wc_status_merged,                (const char**)merged_file_xpm),
+  MapItem (svn_wc_status_conflicted,            (const char**)conflicted_file_xpm),
 
-  MapItem (IMG_INDX_FOLDER,                     wxIcon (folder_xpm)),
-  MapItem (IMG_INDX_VERSIONED_FOLDER,           wxIcon (versioned_folder_xpm)),
+  MapItem (IMG_INDX_FOLDER,                     (const char**)folder_xpm),
+  MapItem (IMG_INDX_VERSIONED_FOLDER,           (const char**)versioned_folder_xpm),
 
-  MapItem (IMG_INDX_SORT_DOWN,                  wxIcon (sort_down_xpm)),
-  MapItem (IMG_INDX_SORT_UP,                    wxIcon (sort_up_xpm)),
+  MapItem (IMG_INDX_SORT_DOWN,                  (const char**)sort_down_xpm),
+  MapItem (IMG_INDX_SORT_UP,                    (const char**)sort_up_xpm),
 
-  MapItem (IMG_INDX_MODIFIED_VERSIONED_FOLDER,  wxIcon (modified_versioned_folder_xpm)),
-  MapItem (IMG_INDX_NEWER_FILE,                 wxIcon (newer_file_xpm)),
-  MapItem (IMG_INDX_NEWER_FOLDER,               wxIcon (newer_folder_xpm)),
-  MapItem (IMG_INDX_MODIFIED_NEWER,             wxIcon (modified_newer_file_xpm)),
-  MapItem (IMG_INDX_EXTERNALS_FOLDER,           wxIcon (externals_folder_xpm))
+  MapItem (IMG_INDX_MODIFIED_VERSIONED_FOLDER,  (const char**)modified_versioned_folder_xpm),
+  MapItem (IMG_INDX_NEWER_FILE,                 (const char**)newer_file_xpm),
+  MapItem (IMG_INDX_NEWER_FOLDER,               (const char**)newer_folder_xpm),
+  MapItem (IMG_INDX_MODIFIED_NEWER,             (const char**)modified_newer_file_xpm),
+  MapItem (IMG_INDX_EXTERNALS_FOLDER,           (const char**)externals_folder_xpm)
 };                               
 
 static const size_t MAP_ICON_COUNT = 
@@ -561,15 +565,15 @@ static const size_t MAP_ICON_COUNT =
 /** the same for icons with lock */
 static const MapItem MAP_LOCK_ICON_ARRAY [] =
 {
-  MapItem (svn_wc_status_normal,                wxIcon (locked_normal_file_xpm)),
-  MapItem (svn_wc_status_missing,               wxIcon (locked_missing_file_xpm)),
-  MapItem (svn_wc_status_deleted,               wxIcon (locked_deleted_file_xpm)),
-  MapItem (svn_wc_status_replaced,              wxIcon (locked_replaced_file_xpm)),
-  MapItem (svn_wc_status_modified,              wxIcon (locked_modified_file_xpm)),
-  MapItem (svn_wc_status_merged,                wxIcon (locked_merged_file_xpm)),
-  MapItem (svn_wc_status_conflicted,            wxIcon (locked_conflicted_file_xpm)),
-  MapItem (IMG_INDX_NEWER_FILE,                 wxIcon (locked_newer_file_xpm)),
-  MapItem (IMG_INDX_MODIFIED_NEWER,             wxIcon (locked_modified_newer_file_xpm))
+  MapItem (svn_wc_status_normal,                (const char**)locked_normal_file_xpm),
+  MapItem (svn_wc_status_missing,               (const char**)locked_missing_file_xpm),
+  MapItem (svn_wc_status_deleted,               (const char**)locked_deleted_file_xpm),
+  MapItem (svn_wc_status_replaced,              (const char**)locked_replaced_file_xpm),
+  MapItem (svn_wc_status_modified,              (const char**)locked_modified_file_xpm),
+  MapItem (svn_wc_status_merged,                (const char**)locked_merged_file_xpm),
+  MapItem (svn_wc_status_conflicted,            (const char**)locked_conflicted_file_xpm),
+  MapItem (IMG_INDX_NEWER_FILE,                 (const char**)locked_newer_file_xpm),
+  MapItem (IMG_INDX_MODIFIED_NEWER,             (const char**)locked_modified_newer_file_xpm)
 };                               
 
 static const size_t MAP_LOCK_ICON_COUNT = 
@@ -657,7 +661,7 @@ FileListCtrl::Data::Data ()
     const MapItem & item = MAP_ICON_ARRAY [i];
 
     ImageIndexArray [item.status][0] = i;
-    ImageListSmall->Add (item.icon);
+    ImageListSmall->Add (wxIcon (item.xpm_data));
   }
 
   for(i=0; i < MAP_LOCK_ICON_COUNT; i++)
@@ -665,7 +669,7 @@ FileListCtrl::Data::Data ()
     const MapItem & item = MAP_LOCK_ICON_ARRAY [i];
 
     ImageIndexArray [item.status][1] = MAP_ICON_COUNT + i;
-    ImageListSmall->Add (item.icon);
+    ImageListSmall->Add (wxIcon (item.xpm_data));
   }
 }
 
