@@ -79,7 +79,7 @@ CommitAction::Perform ()
   bool keepLocks = svn::SUPPORTS_LOCK ? m_keepLocks : false;
   long revision = 
     client.commit (targets.array (pool), messageUtf8.c_str (),
-                   m_recursive, m_keepLocks);
+                   m_recursive, keepLocks);
 
   wxString str;
 
