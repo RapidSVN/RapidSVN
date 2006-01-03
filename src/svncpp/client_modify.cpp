@@ -152,7 +152,7 @@ namespace svn
   }
 #else 
   void
-  Client::unlock(const Targets &, bool, bool force) throw (ClientException)
+  Client::unlock(const Targets &, bool force) throw (ClientException)
   {
     throw ClientException ("Client::unlock not supported");
   }

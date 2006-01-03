@@ -49,7 +49,7 @@ public:
   wxString message;
 
   Data (wxWindow * window, bool unexpectedCommit)
-    : recursive (true), keepLocks (true), comboHistory (0), msg (0)
+    : recursive (true), keepLocks (false), comboHistory (0), msg (0)
   {
     // create controls
     wxStaticBox* msgBox =
