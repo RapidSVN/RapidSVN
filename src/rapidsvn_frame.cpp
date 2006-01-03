@@ -1109,7 +1109,7 @@ RapidSvnFrame::GetSelectionActionFlags () const
     wxString path = m_folder_browser->GetPath ();
 
     svn::Path pathUtf8 (PathUtf8 (path));
-    if (!pathUtf8.isset ())
+    if (pathUtf8.length () > 0)
     {
       flags |= Action::SINGLE_TARGET;
       if (pathUtf8.isUrl ())
