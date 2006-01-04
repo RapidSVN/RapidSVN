@@ -89,16 +89,16 @@ Language: %s\n\
 System Name: %s\n\
 Canonical Name: %s\n"));
 
-  const wxString built (wxString::Format(
+  const wxString built (wxString::Format (
     builtFmt, 
     wxMAJOR_VERSION, wxMINOR_VERSION, 
-    wxRELEASE_NUMBER, unicode,
+    wxRELEASE_NUMBER, unicode.c_str (),
     SVN_VER_MAJOR, SVN_VER_MINOR, SVN_VER_MICRO));
 
   const wxString info (wxString::Format(
-    infoFmt, 
-    locale.GetLocale (), locale.GetSysName (), 
-    locale.GetCanonicalName ()));
+    infoFmt,
+    locale.GetLocale (), locale.GetSysName ().c_str (),
+    locale.GetCanonicalName ().c_str ()));
 
   // create controls
   wxStaticBitmap * logo =
