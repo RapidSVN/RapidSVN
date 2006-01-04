@@ -61,7 +61,7 @@
 #include "svncpp/apr.hpp"
 #include "svncpp/context.hpp"
 #include "svncpp/context_listener.hpp"
-
+#include "svncpp/check.hpp"
 
 namespace svn
 {
@@ -238,7 +238,6 @@ namespace svn
       ctx.notify_func2 = onNotify2;
       ctx.notify_baton2 = this;
 #endif
-
     }
 
     void setAuthCache(bool value)
