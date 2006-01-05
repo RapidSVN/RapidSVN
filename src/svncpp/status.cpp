@@ -39,7 +39,7 @@ namespace svn
     }
   }
 
-  Status::Status (const char *path, svn_wc_status_t * status)
+  Status::Status (const char *path, svn::SvnStatus * status)
     : m_status (0), m_path (0)
   {
     init (path, status);
@@ -49,7 +49,7 @@ namespace svn
   {
   }
 
-  void Status::init (const char *path, const svn_wc_status_t * status)
+  void Status::init (const char *path, const svn::SvnStatus * status)
   {
     if (path)
     {
@@ -60,8 +60,9 @@ namespace svn
       m_path = svn_string_create ("", m_pool);
     }
 
-    m_status = (svn_wc_status_t *)
-      apr_pcalloc (m_pool, sizeof (svn_wc_status_t));
+    m_status = (svn::SvnStatus *)
+      apr_pcalloc (m_pool, sizeof (svn::SvnStatus));
+
     if (!status)
     {
       m_isVersioned = false;
@@ -69,11 +70,11 @@ namespace svn
     else
     {
       m_isVersioned = status->text_status > svn_wc_status_unversioned;
+
       // now duplicate the contents
       if (status->entry)
-      {
         m_status->entry = svn_wc_entry_dup (status->entry, m_pool);
-      }
+
       m_status->text_status = status->text_status;
       m_status->prop_status = status->prop_status;
       m_status->locked = status->locked;
@@ -81,6 +82,12 @@ namespace svn
       m_status->switched = status->switched;
       m_status->repos_text_status = status->repos_text_status;
       m_status->repos_prop_status = status->repos_prop_status;
+
+      // duplicate the contents of repos_lock structure
+#if CHECK_SVN_SUPPORTS_LOCK
+      if (status->repos_lock)
+        m_status->repos_lock = svn_lock_dup (status->repos_lock, m_pool);
+#endif
     }
   }
 
@@ -92,6 +99,71 @@ namespace svn
 
     init (status.m_path->data, status.m_status);
     return *this;
+  }
+
+  const bool
+  Status::isLocked () const
+  {
+#if CHECK_SVN_SUPPORTS_LOCK
+    if (m_status->repos_lock)
+      return m_status->repos_lock->token != 0;
+    else
+      return false;
+#else
+    return 0;
+#endif
+  }
+
+  const char *
+  Status::lockToken () const
+  {
+#if CHECK_SVN_SUPPORTS_LOCK
+    if (m_status->repos_lock)
+      return m_status->repos_lock->token;
+    else
+      return "";
+#else
+    return "";
+#endif
+  }
+
+  const char *
+  Status::lockOwner () const
+  {
+#if CHECK_SVN_SUPPORTS_LOCK
+    if (m_status->repos_lock)
+      return m_status->repos_lock->owner;
+    else
+      return "";
+#else
+    return "";
+#endif
+  }
+
+  const char *
+  Status::lockComment () const
+  {
+#if CHECK_SVN_SUPPORTS_LOCK
+    if (m_status->repos_lock)
+      return m_status->repos_lock->comment;
+    else
+      return "";
+#else
+    return "";
+#endif
+  }
+
+  const apr_time_t
+  Status::lockCreationDate () const
+  {
+#if CHECK_SVN_SUPPORTS_LOCK
+    if (m_status->repos_lock)
+      return m_status->repos_lock->creation_date;
+    else
+      return 0;
+#else
+    return 0;
+#endif
   }
 }
 /* -----------------------------------------------------------------

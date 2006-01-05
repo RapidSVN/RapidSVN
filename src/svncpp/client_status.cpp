@@ -83,7 +83,7 @@ namespace svn
 
   static void StatusEntriesFunc (void *baton,
                                  const char *path,
-                                 svn_wc_status_t *status)
+                                 svn::SvnStatus *status)
   {
     StatusEntries * entries = static_cast<StatusEntries *>(baton);
 
@@ -104,6 +104,21 @@ namespace svn
     Revision rev (Revision::HEAD);
     Pool pool;
 
+#if (CHECK_SVN_VERSION(1,2))
+    error = svn_client_status2 (
+      &revnum,      // revnum
+      path,         // path
+      rev,
+      StatusEntriesFunc, // status func
+      &entries,        // status baton
+      descend,
+      get_all,
+      true,    // need 'update' to be true to get repository lock info
+      no_ignore,
+      true,
+      *context,    //client ctx
+      pool);
+#else
     error = svn_client_status (
       &revnum,      // revnum
       path,         // path
@@ -116,6 +131,7 @@ namespace svn
       no_ignore,
       *context,    //client ctx
       pool);
+#endif
 
     if (error!=NULL)
       throw ClientException (error);
@@ -147,9 +163,9 @@ namespace svn
     e->cmt_date = dirEntry.time ();
     e->cmt_author = dirEntry.lastAuthor ();
 
-    svn_wc_status_t * s =
-      static_cast<svn_wc_status_t *> (
-        apr_pcalloc (pool, sizeof (svn_wc_status_t)));
+    svn::SvnStatus * s =
+      static_cast<svn::SvnStatus *> (
+        apr_pcalloc (pool, sizeof (svn::SvnStatus)));
     s->entry = e;
     s->text_status = svn_wc_status_normal;
     s->prop_status = svn_wc_status_normal;
@@ -210,6 +226,21 @@ namespace svn
     svn_revnum_t revnum;
     Revision rev (Revision::HEAD);
 
+#if (CHECK_SVN_VERSION(1,2))
+    error = svn_client_status2 (
+      &revnum,      // revnum
+      path,         // path
+      rev,
+      StatusEntriesFunc, // status func
+      &entries,        // status baton
+      false,
+      true,
+      true,
+      false,
+      true,
+      *context,    //client ctx
+      pool);
+#else
     error = svn_client_status (
       &revnum,      // revnum
       path,         // path
@@ -222,6 +253,7 @@ namespace svn
       false,
       *context,    //client ctx
       pool);
+#endif
 
     if (error != NULL)
     {

@@ -228,24 +228,24 @@ struct FileInfo::Data
       addLine (str);
     }
 
-    if (entry.isLocked ())
+    if (status.isLocked ())
     {
-      tmp = Utf8ToLocal (entry.lockToken ());
+      tmp = Utf8ToLocal (status.lockToken ());
       str.Printf (_("Lock Token: %s"),
                   tmp.c_str ());
       addLine (str);
 
-      tmp = Utf8ToLocal (entry.lockOwner ());
+      tmp = Utf8ToLocal (status.lockOwner ());
       str.Printf (_("Lock Owner: %s"),
                   tmp.c_str ());
       addLine (str);
 
-      tmp = Utf8ToLocal (entry.lockComment ());
+      tmp = Utf8ToLocal (status.lockComment ());
       str.Printf (_("Lock Comment:\n%s"),
                   tmp.c_str ());
       addLine (str);
 
-      info_print_time (entry.lockCreationDate (), _("Lock Creation Date"), str);
+      info_print_time (status.lockCreationDate (), _("Lock Creation Date"), str);
     }
   }
 

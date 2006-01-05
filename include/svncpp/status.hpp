@@ -32,15 +32,23 @@
 #include "svncpp/entry.hpp"
 #include "svncpp/pool.hpp"
 
+#include "../../src/svncpp/m_check.hpp"
 
 namespace svn
 {
+//#if CHECK_SVN_VERSION(1,3)
+//  typedef svn_wc_status3_t SvnStatus;
+//#endif
+#if CHECK_SVN_VERSION(1,2)
+  typedef svn_wc_status2_t SvnStatus;
+#else
+  typedef svn_wc_status_t SvnStatus;
+#endif
+
   /**
-   * Subversion status API. This class wraps around
-   * @a svn_wc_status_t. 
+   * Subversion status API. 
    *
    * @see svn_wc.hpp
-   * @see svn_wc_status_t
    */
   class Status
   {
@@ -56,7 +64,7 @@ namespace svn
      * @param path path for this status entry
      * @param status status entry
      */
-    Status (const char *path = NULL, svn_wc_status_t * status = NULL);
+    Status (const char *path = NULL, SvnStatus * status = NULL);
 
     /**
      * destructor
@@ -112,11 +120,11 @@ namespace svn
     /**
      * @retval TRUE if locked
      */
-    const bool 
+    /*const bool 
     isLocked () const 
     {
       return m_status->locked != 0;
-    }
+    }*/
 
     /**
      * @retval TRUE if copied
@@ -155,9 +163,39 @@ namespace svn
     }
 
     /**
-     * @return svn_wc_status_t value
+     * @return true if locked
      */
-    operator svn_wc_status_t * () const 
+    const bool
+    isLocked () const;
+
+    /**
+     * @return lock token or null if not locked
+     */
+    const char *
+    lockToken () const;
+
+    /**
+     * @return lock owner or null if not locked
+     */
+    const char *
+    lockOwner () const;
+
+    /**
+     * @return comment lock, null or no comment
+     */
+    const char *
+    lockComment () const;
+
+    /**
+     * @return lock creation date or 0 if not locked
+     */
+    const apr_time_t
+    lockCreationDate () const;
+
+    /**
+     * @return SvnStatus value
+     */
+    operator SvnStatus * () const 
     {
       return m_status;
     }
@@ -167,8 +205,9 @@ namespace svn
      */
     Status &
     operator = (const Status &);
+
   private:
-    svn_wc_status_t * m_status;
+    SvnStatus * m_status;
     svn_string_t * m_path;
     Pool m_pool;
     bool m_isVersioned;
@@ -180,7 +219,7 @@ namespace svn
      * @param status if NULL isVersioned will be false
      */
     void 
-    init (const char *path, const svn_wc_status_t * status);
+    init (const char *path, const SvnStatus * status);
   };
 }
 

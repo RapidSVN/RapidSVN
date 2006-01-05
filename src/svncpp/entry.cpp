@@ -74,55 +74,6 @@ namespace svn
     return *this;
   }
 
-  const bool
-  Entry::isLocked () const
-  {
-#if CHECK_SVN_SUPPORTS_LOCK
-    return m_entry->lock_token != 0;
-#else
-    return 0;
-#endif
-  }
-
-  const char *
-  Entry::lockToken () const
-  {
-#if CHECK_SVN_SUPPORTS_LOCK
-    return m_entry->lock_token;
-#else
-    return "";
-#endif
-  }
-
-  const char *
-  Entry::lockOwner () const
-  {
-#if CHECK_SVN_SUPPORTS_LOCK
-    return m_entry->lock_owner;
-#else
-    return "";
-#endif
-  }
-
-  const char *
-  Entry::lockComment () const
-  {
-#if CHECK_SVN_SUPPORTS_LOCK
-    return m_entry->lock_comment;
-#else
-    return "";
-#endif
-  }
-
-  const apr_time_t
-  Entry::lockCreationDate () const
-  {
-#if CHECK_SVN_SUPPORTS_LOCK
-    return m_entry->lock_creation_date;
-#else
-    return 0;
-#endif
-  }
 }
 
 /* -----------------------------------------------------------------

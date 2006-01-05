@@ -115,7 +115,7 @@ IsDir (const svn::Status * status)
     return false;
   }
 
-  svn_wc_status_t * svn_status = *status;
+  svn::SvnStatus * svn_status = *status;
   if (!svn_status)
   {
     return false;
@@ -751,8 +751,7 @@ FileListCtrl::Data::GetImageIndex (const svn::Status & status)
 {
   int imageIndex = 0;
 
-  bool lock = status.entry ().isLocked ();
-
+  bool lock = status.isLocked ();
 
   bool newer =
     (status.reposTextStatus () == svn_wc_status_modified) ||
@@ -1058,10 +1057,8 @@ FileListCtrl::UpdateFileList ()
         values[COL_TEXT_TIME] = FormatDateTime (entry.textTime ());
         values[COL_PROP_TIME] = FormatDateTime (entry.propTime ());
 
-        if (entry.isLocked ())
-          values[COL_LOCK_COMMENT] = Utf8ToLocal (entry.lockComment ());
-//        else
-//          values[COL_LOCK_COMMENT] = wxT("");
+        if (status.isLocked ())
+          values[COL_LOCK_COMMENT] = Utf8ToLocal (status.lockComment ());
 
         values[COL_URL] = Utf8ToLocal (entry.url ());
         values[COL_REPOS] = Utf8ToLocal (entry.repos ());
