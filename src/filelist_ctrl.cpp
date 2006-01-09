@@ -696,6 +696,7 @@ FileListCtrl::Data::COLUMN_CAPTIONS [FileListCtrl::COL_COUNT] =
   _("Extension"),
   _("Date"),
   _("Prop Date"),
+  _("Lock Owner"),
   _("Lock Comment"),
   _("Checksum"),
   _("Url"),
@@ -730,6 +731,7 @@ FileListCtrl::Data::COLUMN_NAMES[FileListCtrl::COL_COUNT] =
   wxT("Extension"),
   wxT("Date"),
   wxT("PropDate"),
+  wxT("LockOwner"),
   wxT("LockComment"),
   wxT("Checksum"),
   wxT("Url"),
@@ -1022,12 +1024,14 @@ FileListCtrl::UpdateFileList ()
       std::string dir, filename, ext;
       path.split (dir, filename, ext);
 
-      if (isNative) { 
+      if (isNative)
+      { 
         if (path.native ().length () > pathUtf8Length)
           values[COL_PATH]  = Utf8ToLocal (path.native ().substr (pathUtf8Length).c_str ());
         else
           values[COL_PATH]  = Utf8ToLocal (".");
-      } else
+      }
+      else
         values[COL_PATH]    = wxString (Utf8ToLocal (fullPath.substr (pathUtf8Length)));
       values[COL_EXTENSION] = Utf8ToLocal (ext.c_str ());
     }
@@ -1058,7 +1062,10 @@ FileListCtrl::UpdateFileList ()
         values[COL_PROP_TIME] = FormatDateTime (entry.propTime ());
 
         if (status.isLocked ())
+        {
+          values[COL_LOCK_OWNER] = Utf8ToLocal (status.lockOwner ());
           values[COL_LOCK_COMMENT] = Utf8ToLocal (status.lockComment ());
+        }
 
         values[COL_URL] = Utf8ToLocal (entry.url ());
         values[COL_REPOS] = Utf8ToLocal (entry.repos ());
@@ -1401,6 +1408,8 @@ FileListCtrl::ResetColumns ()
     case COL_CONFLICT_OLD:
     case COL_CONFLICT_NEW:
     case COL_CONFLICT_WRK:
+    case COL_LOCK_OWNER:
+    case COL_LOCK_COMMENT:
     case COL_EXTENSION:
       visible = false;
       break;
