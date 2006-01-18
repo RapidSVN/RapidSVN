@@ -49,11 +49,16 @@ public:
   wxString message;
 
   Data (wxWindow * window, bool unexpectedCommit)
-    : recursive (true), keepLocks (false), comboHistory (0), msg (0)
+    : recursive (true), comboHistory (0), msg (0)
   {
     // create controls
     wxStaticBox* msgBox =
       new wxStaticBox(window, -1, unexpectedCommit ? _("This action has resulted in a Commit - please enter a log message") : _("Enter log message"));
+
+    if (unexpectedCommit)
+      keepLocks = true;
+    else
+      keepLocks = false;
 
     wxSize msgSize (window->GetCharWidth () * 80,
                     window->GetCharHeight () * 10);

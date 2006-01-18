@@ -39,7 +39,7 @@ public:
    *
    * @param context context to use
    */
-  FileInfo (svn::Context * context);
+  FileInfo (svn::Context * context, bool withUpdate = false);
 
   /**
    * destructor

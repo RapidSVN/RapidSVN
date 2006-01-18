@@ -1639,7 +1639,11 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 void
 RapidSvnFrame::ShowInfo ()
 {
-  FileInfo fileInfo (m_context);
+  bool withUpdate = false;
+  if (m_listCtrl)
+    withUpdate = m_listCtrl->GetWithUpdate ();
+
+  FileInfo fileInfo (m_context, withUpdate);
 
   try
   {

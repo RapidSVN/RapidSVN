@@ -39,7 +39,8 @@
 #include "svncpp/status.hpp"
 #include "svncpp/targets.hpp"
 #include "svncpp/url.hpp"
-
+#include "m_svn_status.hpp"
+#include "m_converter.hpp"
 
 namespace svn
 {
@@ -74,7 +75,6 @@ namespace svn
                                   log_item->action,
                                   log_item->copyfrom_path,
                                   log_item->copyfrom_rev) );
-
       }
     }
 
@@ -87,7 +87,8 @@ namespace svn
   {
     StatusEntries * entries = static_cast<StatusEntries *>(baton);
 
-    entries->push_back (Status (path, status));
+    static Converter converter;
+    entries->push_back (converter.toStatus (path, status));
   }
 
   static StatusEntries
@@ -113,7 +114,7 @@ namespace svn
       &entries,        // status baton
       descend,
       get_all,
-      true,    // need 'update' to be true to get repository lock info
+      update,    // need 'update' to be true to get repository lock info
       no_ignore,
       true,
       *context,    //client ctx
@@ -174,7 +175,8 @@ namespace svn
     s->repos_text_status = svn_wc_status_normal;
     s->repos_prop_status = svn_wc_status_normal;
 
-    return Status (url.c_str (), s);
+    static Converter converter;
+    return converter.toStatus (url.c_str (), s);
   }
 
   static StatusEntries
@@ -233,12 +235,12 @@ namespace svn
       rev,
       StatusEntriesFunc, // status func
       &entries,        // status baton
-      false,
-      true,
-      true,
-      false,
-      true,
-      *context,    //client ctx
+      false,       // recurse
+      true,        // get_all
+      false,       // update
+      false,       // no_ignore
+      true,        // ignore_externals
+      *context,    // client ctx
       pool);
 #else
     error = svn_client_status (
@@ -247,11 +249,11 @@ namespace svn
       rev,
       StatusEntriesFunc, // status func
       &entries,        // status baton
-      false,
-      true,
-      false,
-      false,
-      *context,    //client ctx
+      false,       // recurse
+      true,        // get_all
+      false,       // update
+      false,       // no_ignore
+      *context,    // client ctx
       pool);
 #endif
 

@@ -26,91 +26,137 @@
 // svncpp
 #include "svncpp/status.hpp"
 
-//#include <assert.h>
+#include "m_svn_status.hpp"
+#include "m_svn_data.hpp"
+#include "m_converter.hpp"
 
 namespace svn
 {
-  Status::Status (const Status & src)
-    : m_status (0), m_path (0)
+  // Status::Data is defined in m_svn_status.hpp
+
+
+  Status::Status ()
   {
-    if( &src != this )
-    {
-      init (src.m_path->data, src.m_status);
-    }
+    m = new Data;
+
+    m->status = 0;
+    m->path = "";
   }
 
-  Status::Status (const char *path, svn::SvnStatus * status)
-    : m_status (0), m_path (0)
+  Status::Status (const Status & src)
   {
-    init (path, status);
+    m = new Data;
+
+    m->status = 0;
+    m->path = "";
+
+    if (&src != this)
+    {
+      m->path = src.m->path;
+
+      m->status = (SvnStatus *)
+        apr_pcalloc (m->pool, sizeof (SvnStatus));
+  
+      if (!src.m->status)
+      {
+        m->isVersioned = false;
+      }
+      else
+      {
+        m->isVersioned = src.m->status->text_status > svn_wc_status_unversioned;
+  
+        // now duplicate the contents
+        if (src.m->status->entry)
+          m->status->entry = svn_wc_entry_dup (src.m->status->entry, m->pool);
+  
+        m->status->text_status = src.m->status->text_status;
+        m->status->prop_status = src.m->status->prop_status;
+        m->status->locked = src.m->status->locked;
+        m->status->copied = src.m->status->copied;
+        m->status->switched = src.m->status->switched;
+        m->status->repos_text_status = src.m->status->repos_text_status;
+        m->status->repos_prop_status = src.m->status->repos_prop_status;
+  
+        // duplicate the contents of repos_lock structure
+#if CHECK_SVN_SUPPORTS_LOCK
+        if (src.m->status->repos_lock)
+          m->status->repos_lock = svn_lock_dup (src.m->status->repos_lock, m->pool);
+#endif
+      }
+    }
   }
 
   Status::~Status ()
   {
+    delete m;
   }
 
-  void Status::init (const char *path, const svn::SvnStatus * status)
+  const char *
+  Status::path () const
   {
-    if (path)
-    {
-      m_path = svn_string_create (path, m_pool);
-    }
-    else
-    {
-      m_path = svn_string_create ("", m_pool);
-    }
-
-    m_status = (svn::SvnStatus *)
-      apr_pcalloc (m_pool, sizeof (svn::SvnStatus));
-
-    if (!status)
-    {
-      m_isVersioned = false;
-    }
-    else
-    {
-      m_isVersioned = status->text_status > svn_wc_status_unversioned;
-
-      // now duplicate the contents
-      if (status->entry)
-        m_status->entry = svn_wc_entry_dup (status->entry, m_pool);
-
-      m_status->text_status = status->text_status;
-      m_status->prop_status = status->prop_status;
-      m_status->locked = status->locked;
-      m_status->copied = status->copied;
-      m_status->switched = status->switched;
-      m_status->repos_text_status = status->repos_text_status;
-      m_status->repos_prop_status = status->repos_prop_status;
-
-      // duplicate the contents of repos_lock structure
-#if CHECK_SVN_SUPPORTS_LOCK
-      if (status->repos_lock)
-        m_status->repos_lock = svn_lock_dup (status->repos_lock, m_pool);
-#endif
-    }
+    return m->path.c_str ();
   }
 
-  Status &
-  Status::operator=(const Status & status)
+  const Entry 
+  Status::entry () const
   {
-    if (this == &status)
-      return *this;
+    return Entry (m->status->entry);
+  }
 
-    init (status.m_path->data, status.m_status);
-    return *this;
+  const svn_wc_status_kind 
+  Status::textStatus () const
+  {
+    return m->status->text_status;
+  }
+
+  const svn_wc_status_kind 
+  Status::propStatus () const
+  {
+    return m->status->prop_status;
+  }
+
+  const bool 
+  Status::isVersioned () const
+  {
+    return m->isVersioned;
+  }
+
+  const bool 
+  Status::isCopied () const
+  {
+    return m->status->copied != 0;
+  }
+
+  const bool
+  Status::isSwitched () const
+  {
+    return m->status->switched != 0;
+  }
+
+  const svn_wc_status_kind
+  Status::reposTextStatus () const
+  {
+    return m->status->repos_text_status;
+  }
+
+  const svn_wc_status_kind
+  Status::reposPropStatus () const
+  {
+    return m->status->repos_prop_status;
   }
 
   const bool
   Status::isLocked () const
   {
 #if CHECK_SVN_SUPPORTS_LOCK
-    if (m_status->repos_lock)
-      return m_status->repos_lock->token != 0;
+    if (m->status->repos_lock && (m->status->repos_lock->token != 0))
+      return true;
+    else if (m->status->entry)
+      return m->status->entry->lock_token != 0;
     else
       return false;
 #else
-    return 0;
+    return false;
 #endif
   }
 
@@ -118,8 +164,10 @@ namespace svn
   Status::lockToken () const
   {
 #if CHECK_SVN_SUPPORTS_LOCK
-    if (m_status->repos_lock)
-      return m_status->repos_lock->token;
+    if (m->status->repos_lock && m->status->repos_lock->token != 0)
+      return m->status->repos_lock->token;
+    else if (m->status->entry)
+      return m->status->entry->lock_token;
     else
       return "";
 #else
@@ -131,8 +179,10 @@ namespace svn
   Status::lockOwner () const
   {
 #if CHECK_SVN_SUPPORTS_LOCK
-    if (m_status->repos_lock)
-      return m_status->repos_lock->owner;
+    if (m->status->repos_lock && m->status->repos_lock->token != 0)
+      return m->status->repos_lock->owner;
+    else if (m->status->entry)
+      return m->status->entry->lock_owner;
     else
       return "";
 #else
@@ -144,8 +194,10 @@ namespace svn
   Status::lockComment () const
   {
 #if CHECK_SVN_SUPPORTS_LOCK
-    if (m_status->repos_lock)
-      return m_status->repos_lock->comment;
+    if (m->status->repos_lock && m->status->repos_lock->token != 0)
+      return m->status->repos_lock->comment;
+    else if (m->status->entry)
+      return m->status->entry->lock_comment;
     else
       return "";
 #else
@@ -157,13 +209,59 @@ namespace svn
   Status::lockCreationDate () const
   {
 #if CHECK_SVN_SUPPORTS_LOCK
-    if (m_status->repos_lock)
-      return m_status->repos_lock->creation_date;
+    if (m->status->repos_lock && m->status->repos_lock->token != 0)
+      return m->status->repos_lock->creation_date;
+    else if (m->status->entry)
+      return m->status->entry->lock_creation_date;
     else
       return 0;
 #else
     return 0;
 #endif
+  }
+
+  Status &
+  Status::operator=(const Status & src)
+  {
+    if (this == &src)
+      return *this;
+
+    delete m;
+    m = new Data;
+
+    m->path = src.m->path;
+ 
+    m->status = (SvnStatus *)
+      apr_pcalloc (m->pool, sizeof (SvnStatus));
+
+    if (!src.m->status)
+    {
+      m->isVersioned = false;
+    }
+    else
+    {
+      m->isVersioned = src.m->status->text_status > svn_wc_status_unversioned;
+
+      // now duplicate the contents
+      if (src.m->status->entry)
+        m->status->entry = svn_wc_entry_dup (src.m->status->entry, m->pool);
+
+      m->status->text_status = src.m->status->text_status;
+      m->status->prop_status = src.m->status->prop_status;
+      m->status->locked = src.m->status->locked;
+      m->status->copied = src.m->status->copied;
+      m->status->switched = src.m->status->switched;
+      m->status->repos_text_status = src.m->status->repos_text_status;
+      m->status->repos_prop_status = src.m->status->repos_prop_status;
+
+      // duplicate the contents of repos_lock structure
+#if CHECK_SVN_SUPPORTS_LOCK
+      if (src.m->status->repos_lock)
+      m->status->repos_lock = svn_lock_dup (src.m->status->repos_lock, m->pool);
+#endif
+    }
+
+    return *this;
   }
 }
 /* -----------------------------------------------------------------

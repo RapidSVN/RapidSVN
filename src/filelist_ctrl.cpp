@@ -115,17 +115,12 @@ IsDir (const svn::Status * status)
     return false;
   }
 
-  svn::SvnStatus * svn_status = *status;
-  if (!svn_status)
-  {
-    return false;
-  }
-
   // versioned resource?
-  svn_wc_entry_t * entry = svn_status->entry;
-  if (entry)
+  const svn::Entry & entry = status->entry ();
+
+  if (entry.isValid ())
   {
-    return entry->kind == svn_node_dir;
+    return entry.kind () == svn_node_dir;
   }
 
   // unversioned.

@@ -27,23 +27,33 @@
  * @todo implement 1.2 SVN api:
  *
  *  SVN_CLIENT_COMMIT_ITEM_LOCK_TOKEN
+ *  svn_client_add2
+ *  svn_client_add3
  *  svn_client_checkout2
+ *  svn_client_copy2
+ *  svn_client_cat2
  *  svn_client_update2
- *  snv_client_commit2
+ *  svn_client_commit3
  *  svn_client_status2
  *  svn_client_log2
  *  svn_client_blame2
  *  svn_client_diff2
+ *  svn_client_diff3
  *  svn_client_diff_peg2
+ *  svn_client_diff_peg3
+ *  svn_client_delete2
  *  svn_client_move2
+ *  svn_client_move3
+ *  svn_client_mkdir2
  *  svn_client_propset2
  *  svn_client_proget2
  *  svn_client_proplist2
+ *  svn_client_export2
  *  svn_client_export3
  *  svn_client_ls2
+ *  svn_client_ls3
+ *  svn_client_import2
  *  svn_client_cat2
- *  svn_client_lock
- *  svn_client_unlock
  *  svn_client_info
  */
 

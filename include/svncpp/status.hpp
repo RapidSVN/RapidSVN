@@ -32,21 +32,10 @@
 #include "svncpp/entry.hpp"
 #include "svncpp/pool.hpp"
 
-#include "../../src/svncpp/m_check.hpp"
-
 namespace svn
 {
-//#if CHECK_SVN_VERSION(1,3)
-//  typedef svn_wc_status3_t SvnStatus;
-//#endif
-#if CHECK_SVN_VERSION(1,2)
-  typedef svn_wc_status2_t SvnStatus;
-#else
-  typedef svn_wc_status_t SvnStatus;
-#endif
-
   /**
-   * Subversion status API. 
+   * Subversion status API.
    *
    * @see svn_wc.hpp
    */
@@ -54,113 +43,74 @@ namespace svn
   {
   public:
     /**
+     * default constructor
+     */
+    Status ();
+
+    /**
      * copy constructor
      */
     Status (const Status & src);
 
     /**
-     * default constructor
-     *
-     * @param path path for this status entry
-     * @param status status entry
-     */
-    Status (const char *path = NULL, SvnStatus * status = NULL);
-
-    /**
      * destructor
      */
-    virtual ~Status ();
+    ~Status ();
 
     /**
      * @return path of status entry
      */
     const char *
-    path () const
-    {
-      return m_path->data;
-    }
+    path () const;
 
     /**
      * @return entry for this path
      * @retval entry.isValid () = false item is not versioned
      */
     const Entry 
-    entry () const
-    {
-      return Entry (m_status->entry);
-    }
+    entry () const;
 
     /**
      * @return file status property enum of the "textual" component. 
      */
     const svn_wc_status_kind 
-    textStatus () const 
-    {
-      return m_status->text_status;
-    }
+    textStatus () const;
 
     /**
      * @return file status property enum of the "property" component. 
      */
     const svn_wc_status_kind 
-    propStatus () const 
-    {
-      return m_status->prop_status;
-    }
+    propStatus () const;
 
     /**
      * @retval TRUE if under version control
      */
     const bool 
-    isVersioned () const 
-    {
-      return m_isVersioned;
-    }
-
-    /**
-     * @retval TRUE if locked
-     */
-    /*const bool 
-    isLocked () const 
-    {
-      return m_status->locked != 0;
-    }*/
+    isVersioned () const;
 
     /**
      * @retval TRUE if copied
      */
     const bool 
-    isCopied () const 
-    {
-      return m_status->copied != 0;
-    }
+    isCopied () const;
 
     /**
      * @retval TRUE if switched
      */
     const bool
-    isSwitched () const 
-    {
-      return m_status->switched != 0;
-    }
+    isSwitched () const;
 
     /**
      * @return the entry's text status in the repository
      */
     const svn_wc_status_kind
-    reposTextStatus () const 
-    {
-      return m_status->repos_text_status;
-    }
+    reposTextStatus () const;
 
     /**
      * @return the entry's prop status in the repository
      */
     const svn_wc_status_kind
-    reposPropStatus () const
-    {
-      return m_status->repos_prop_status;
-    }
+    reposPropStatus () const;
 
     /**
      * @return true if locked
@@ -193,33 +143,16 @@ namespace svn
     lockCreationDate () const;
 
     /**
-     * @return SvnStatus value
-     */
-    operator SvnStatus * () const 
-    {
-      return m_status;
-    }
-
-    /**
      * assignment operator
      */
     Status &
     operator = (const Status &);
 
-  private:
-    SvnStatus * m_status;
-    svn_string_t * m_path;
-    Pool m_pool;
-    bool m_isVersioned;
+    friend class Converter;
 
-    /**
-     * Initialize structures
-     *
-     * @param path
-     * @param status if NULL isVersioned will be false
-     */
-    void 
-    init (const char *path, const SvnStatus * status);
+  private:
+    struct Data;
+    Data * m;
   };
 }
 

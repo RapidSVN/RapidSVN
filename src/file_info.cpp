@@ -63,10 +63,11 @@ struct FileInfo::Data
   svn::Context * context;
   std::vector<svn::Path> targets;
   wxString info;
+  bool withUpdate;
 
 
-  Data (svn::Context * ctx)
-    : context (ctx)
+  Data (svn::Context * ctx, bool update)
+    : context (ctx), withUpdate (update)
   {
   }
 
@@ -254,7 +255,7 @@ struct FileInfo::Data
   {
     try
     {
-      svn::StatusEntries ent = client.status (path);
+      svn::StatusEntries ent = client.status (path, false, true, withUpdate);
       svn::StatusEntries::const_iterator it;
 
       for (it=ent.begin (); it!=ent.end (); it++)
@@ -274,9 +275,9 @@ struct FileInfo::Data
   }
 };
 
-FileInfo::FileInfo (svn::Context * context)
+FileInfo::FileInfo (svn::Context * context, bool withUpdate)
 {
-  m = new Data (context);
+  m = new Data (context, withUpdate);
 }
 
 FileInfo::~FileInfo ()
@@ -301,7 +302,6 @@ FileInfo::info () const
   for (it = m->targets.begin (); it != m->targets.end (); it++)
   {
     svn::Path path = *it;
-    svn::Status status = client.singleStatus (path.c_str ());
 
     m->createInfoForPath (client, path.c_str ());
     m->addLine ();

@@ -287,6 +287,27 @@ namespace svn
       throw ClientException (error);
   }
 
+#if CHECK_SVN_VERSION(1,2)
+  void
+  Client::move (const Path & srcPath, 
+                const Revision & srcRevision, 
+                const Path & destPath, 
+                bool force) throw (ClientException)
+  {
+    Pool pool;
+    svn_client_commit_info_t *commit_info = NULL;
+    svn_error_t * error =  
+      svn_client_move2 (&commit_info,
+                       srcPath.c_str (),
+                       destPath.c_str (),
+                        force,
+                       *m_context,
+                       pool);
+
+    if(error != NULL)
+      throw ClientException (error);
+  }
+#else
   void
   Client::move (const Path & srcPath, 
                 const Revision & srcRevision, 
@@ -307,6 +328,7 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+#endif
 
   void
   Client::mkdir (const Path & path, 
