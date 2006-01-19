@@ -160,6 +160,21 @@ namespace svn
 #endif
   }
 
+  const bool
+  Status::isRepLock () const
+  {
+#if CHECK_SVN_SUPPORTS_LOCK
+    if (m->status->entry && (m->status->entry->lock_token != 0))
+      return false;
+    else if (m->status->repos_lock && (m->status->repos_lock->token != 0))
+      return true;
+    else
+      return false;
+#else
+    return false;
+#endif
+  }
+
   const char *
   Status::lockToken () const
   {

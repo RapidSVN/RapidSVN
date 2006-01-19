@@ -119,6 +119,12 @@ namespace svn
     isLocked () const;
 
     /**
+     * @return true if has repository lock (not local)
+     */
+    const bool
+    isRepLock () const;
+
+    /**
      * @return lock token or null if not locked
      */
     const char *
