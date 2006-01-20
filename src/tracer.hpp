@@ -43,6 +43,7 @@ class Tracer
 {
 public:
   virtual void Trace (const wxString &) = 0;
+  virtual ~Tracer () { }
 };
 
 

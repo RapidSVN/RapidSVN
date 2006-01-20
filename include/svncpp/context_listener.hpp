@@ -179,6 +179,8 @@ namespace svn
     contextSslClientCertPwPrompt (std::string & password, 
                                   const std::string & realm, 
                                   bool & maySave) = 0;
+
+    virtual ~ContextListener () { }
   };
 }
 

@@ -131,6 +131,7 @@ public:
   virtual svn::Context * 
   GetContext () const = 0;
 
+  virtual ~ActionWorker () { }
 };
 
 #endif
