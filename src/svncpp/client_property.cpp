@@ -39,8 +39,6 @@
 
 namespace svn
 {
-
-
   /**
    * lists properties in @a path no matter whether local or
    * repository
@@ -51,13 +49,13 @@ namespace svn
    * @return PropertiesList
    */
   PathPropertiesMapList
-  Client::proplist(const Path &path,
-                   const Revision &revision,
-                   bool recurse)
+  Client::proplist (const Path & path,
+                    const Revision & revision,
+                    bool recurse)
   {
     Pool pool;
-
     apr_array_header_t * props;
+
     svn_error_t * error =
       svn_client_proplist (&props,
                            path.c_str (), 
@@ -200,11 +198,11 @@ namespace svn
     Pool pool;
 
     svn_error_t * error = 
-      error = svn_client_propset (propName, 
-                                  NULL, // value = NULL
-                                  path.c_str (),
-                                  recurse,
-                                  pool);
+      svn_client_propset (propName, 
+                          NULL, // value = NULL
+                          path.c_str (),
+                          recurse,
+                          pool);
     if (error != NULL)
       throw ClientException (error);
   }
@@ -362,14 +360,14 @@ namespace svn
 
     svn_revnum_t revnum;
     svn_error_t * error = 
-      error = svn_client_revprop_set (propName, 
-                                      NULL, // value = NULL
-                                      path.c_str (),
-                                      revision.revision (),
-                                      &revnum,
-                                      force,
-                                      *m_context,
-                                      pool);
+      svn_client_revprop_set (propName, 
+                              NULL, // value = NULL
+                              path.c_str (),
+                              revision.revision (),
+                              &revnum,
+                              force,
+                              *m_context,
+                              pool);
     if (error != NULL)
       throw ClientException (error);
 

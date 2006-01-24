@@ -167,11 +167,11 @@ namespace svn
   //  svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
 
     svn_error_t * error = 
-      error = svn_client_propset (name, 
-                                  NULL, // value = NULL
-                                  m_path.c_str (),
-                                  false, //dont recurse
-                                  pool);
+      svn_client_propset (name, 
+                          NULL, // value = NULL
+                          m_path.c_str (),
+                          false, //dont recurse
+                          pool);
     if(error != NULL)
       throw ClientException (error);
   }

@@ -294,7 +294,7 @@ namespace svn
               void *baton,
               apr_pool_t * pool)
     {
-      Data * data;
+      Data * data = NULL;
       SVN_ERR (getData (baton, &data));
 
       std::string msg;
@@ -390,7 +390,7 @@ namespace svn
                     svn_boolean_t _may_save,
                     apr_pool_t *pool)
     {
-      Data * data;
+      Data * data = NULL;
       SVN_ERR (getData (baton, &data));
 
       bool may_save = _may_save != 0;
@@ -427,7 +427,7 @@ namespace svn
                             svn_boolean_t may_save,
                             apr_pool_t *pool)
     {
-      Data * data;
+      Data * data = NULL;
       SVN_ERR (getData (baton, &data));
       
       ContextListener::SslServerTrustData trustData (failures);
@@ -472,7 +472,7 @@ namespace svn
                            void *baton, 
                            apr_pool_t *pool)
     {
-      Data * data;
+      Data * data = NULL;
       SVN_ERR (getData (baton, &data));
 
       std::string certFile;
@@ -505,7 +505,7 @@ namespace svn
       svn_boolean_t maySave,
       apr_pool_t *pool)
     {
-      Data * data;
+      Data * data = NULL;
       SVN_ERR (getData (baton, &data));
 
       std::string password;
