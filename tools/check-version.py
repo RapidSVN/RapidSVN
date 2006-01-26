@@ -105,6 +105,12 @@ class VersionChecker:
         replace(fname, "OutputBaseFilename=[^\n]*", \
                 "OutputBaseFilename=RapidSVN-%s" % (self.version.str),
                 "OutputBaseFilename")
+        replace(fname, "DefaultGroupName=[^\n]*", \
+                "DefaultGroupname=RapidSVN %s\"" % (self.version.str),
+                "DefaultGroupname")
+        replace(fname, "userdesktop}\\\\RapidSVN[^\"]*\"", \
+                "userdesktop}\RapidSVN %s\"" % (self.version.str),
+                "[Icons]\\{userdesktop}")
                 
     def checkRapidsvnRc(self):
         fname = RAPIDSVN_RC_FILE
