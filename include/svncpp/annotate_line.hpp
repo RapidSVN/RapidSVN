@@ -60,33 +60,33 @@ namespace svn
     apr_int64_t 
     lineNumber () const
     {
-        return m_line_no;
+      return m_line_no;
     }
     svn_revnum_t 
     revision () const
     {
-        return m_revision;
+      return m_revision;
     }
 
 
     const std::string &
     author () const
     {
-        return m_author;
+      return m_author;
     }
 
 
     const std::string &
     date () const
     {
-        return m_date;
+      return m_date;
     }
 
 
     const std::string &
     line () const
     {
-        return m_line;
+      return m_line;
     }
 
   private:

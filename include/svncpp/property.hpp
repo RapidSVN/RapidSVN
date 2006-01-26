@@ -46,7 +46,6 @@
 #include "svncpp/context.hpp"
 #include "svncpp/path.hpp"
 
-
 namespace svn
 {
   struct PropertyEntry
@@ -102,9 +101,7 @@ namespace svn
 
     std::string getValue (const char * name);
     void list ();
-
   };
-
 }
 
 #endif

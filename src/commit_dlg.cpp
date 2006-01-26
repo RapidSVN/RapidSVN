@@ -35,7 +35,6 @@
 #include "hist_val.hpp"
 #include "hist_entries.hpp"
 
-
 static const int ID_HISTORY_COMBO_BOX = 1;
 
 struct CommitDlg::Data
@@ -69,7 +68,6 @@ public:
                             msgSize, wxTE_MULTILINE, val);
     }
 
-    
     wxStaticText * labelHistory = new wxStaticText (
       window, -1, _("Recent entries:"), wxDefaultPosition);
 

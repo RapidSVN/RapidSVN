@@ -48,7 +48,6 @@ public:
     : window (wnd), property (context, target)
   {
   }
-
 };
 
 PropertyDlg::PropertyDlg (wxWindow * parent,
@@ -85,8 +84,8 @@ PropertyDlg::ReadFromGrid ()
 {
   try
   {
-    const std::vector<svn::PropertyEntry> & entries
-      = m->property.entries ();
+    const std::vector<svn::PropertyEntry> & entries =
+      m->property.entries ();
     std::vector<svn::PropertyEntry>::const_iterator it = entries.begin ();
 
     // first check for deleted properties
@@ -124,7 +123,6 @@ PropertyDlg::ReadFromGrid ()
   {
     wxMessageBox (_("Error setting the property values"), _("Error"));
   }
-
 }
 
 /**
@@ -148,12 +146,11 @@ PropertyDlg::WriteToGrid ()
     const svn::PropertyEntry & entry = *it;
 
     SetEntry (Utf8ToLocal (entry.name.c_str ()),
-        Utf8ToLocal (entry.value.c_str ()));
+      Utf8ToLocal (entry.value.c_str ()));
 
     it++;
   }
 }
-
 
 /* -----------------------------------------------------------------
  * local variables:

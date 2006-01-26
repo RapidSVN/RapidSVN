@@ -56,7 +56,7 @@ namespace svn
      *                  subversion api stores its
      *                  configuration
      */
-    Context (const std::string & configDir="");
+    Context (const std::string & configDir = "");
 
     /**
      * copy constructor

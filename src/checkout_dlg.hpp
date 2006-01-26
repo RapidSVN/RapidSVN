@@ -37,7 +37,6 @@ namespace svn
   class Path;
 }
 
-
 class CheckoutDlg : public wxDialog
 {
 public:
