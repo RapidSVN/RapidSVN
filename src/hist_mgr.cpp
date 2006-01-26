@@ -40,7 +40,7 @@ WX_DECLARE_STRING_HASH_MAP (wxArrayString, wxArrayStringHashMap);
 
 
 /** maximal number of entries per list */
-static const unsigned int MAX_COUNT = 100;
+static const int MAX_COUNT = 100;
 
 
 /** format string for number values */
