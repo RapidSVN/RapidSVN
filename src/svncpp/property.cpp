@@ -33,11 +33,10 @@
 #include "svncpp/pool.hpp"
 #include "svncpp/property.hpp"
 #include "svncpp/revision.hpp"
-
+#include "m_check.hpp"
 
 namespace svn
 {
-
   PropertyEntry::PropertyEntry (const char * name, const char * value)
   {
     this->name = name;
@@ -140,13 +139,41 @@ namespace svn
     return propval->data;
   }
 
+#if (CHECK_SVN_VERSION(1,2))
   void
   Property::set (const char * name, const char * value)
   {
     Pool pool;
 
-    const svn_string_t * propval 
-      = svn_string_create ((const char *) value, pool);
+    const svn_string_t * propval =
+      svn_string_create ((const char *) value, pool);
+
+//    const char *pname_utf8;
+  //  svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
+
+    bool recurse = false;
+    bool skip_checks = false;
+
+    svn_error_t * error = 
+      svn_client_propset2 (name,
+                           propval,
+                           m_path.c_str (),
+                           recurse,
+                           skip_checks,
+                           *m_context,
+                           pool);
+
+    if(error != NULL)
+      throw ClientException (error);
+  }
+#else
+  void
+  Property::set (const char * name, const char * value)
+  {
+    Pool pool;
+
+    const svn_string_t * propval =
+      svn_string_create ((const char *) value, pool);
 
 //    const char *pname_utf8;
   //  svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
@@ -157,6 +184,7 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+#endif
 
   void 
   Property::remove (const char * name)

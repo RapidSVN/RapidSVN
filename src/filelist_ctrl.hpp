@@ -136,14 +136,12 @@ public:
    */
   void SetFlat (const bool flat);
 
-
   /**
    * shall we contact the repository when updating,
    * so we get information about out-dated-ness?
    */
   void
   SetWithUpdate (bool value);
-
 
   bool
   GetWithUpdate () const;
@@ -155,7 +153,13 @@ public:
   SetShowUnversioned (bool value);
 
   bool
-  GetShowUnversioned() const;
+  GetShowUnversioned () const;
+
+  void
+  SetIgnoreExternals (bool value);
+
+  bool
+  GetIgnoreExternals () const;
 
   /**
    * get the "flat" setting

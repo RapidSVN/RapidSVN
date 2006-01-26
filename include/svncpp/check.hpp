@@ -29,6 +29,8 @@
 namespace svn
 {
   extern const bool SUPPORTS_LOCK;
+  extern const bool SUPPORTS_PEG;
+  extern const bool SUPPORTS_EXTERNALS;
 }
 
 #endif

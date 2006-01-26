@@ -82,9 +82,9 @@ CheckoutAction::Perform ()
   UnixPath(m_data.DestFolder);
   TrimString(m_data.RepUrl);
 
-  svn::Path repUrlUtf8 (PathUtf8 (m_data.RepUrl));
-  long revnum=-1;
+  long revnum = -1;
   svn::Revision revision (svn::Revision::HEAD);
+  svn::Revision pegRevision;
 
   // Did the user request a specific revision?:
   if (!m_data.UseLatest)
@@ -96,14 +96,33 @@ CheckoutAction::Perform ()
     }
     revision = svn::Revision(revnum);
   }
+
+  revnum = -1;
+  // Did the user request a specific peg revision?:
+  if (svn::SUPPORTS_PEG && !m_data.NotSpecified)
+  {
+    TrimString(m_data.PegRevision);
+    if (!m_data.PegRevision.IsEmpty ())
+    {
+      m_data.PegRevision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
+    }
+    if (revnum != -1)
+      pegRevision = svn::Revision(revnum);
+  }
   
   wxSetWorkingDirectory (m_data.DestFolder);
 
+  svn::Path repUrlUtf8 (PathUtf8 (m_data.RepUrl));
   svn::Path destFolderUtf8 (PathUtf8 (m_data.DestFolder));
+
+  bool ignoreExternals = svn::SUPPORTS_EXTERNALS ? m_data.IgnoreExternals : false;
 
   client.checkout (repUrlUtf8.c_str (), 
                    destFolderUtf8, 
-                   revision, m_data.Recursive);
+                   revision,
+                   m_data.Recursive,
+                   ignoreExternals,
+                   pegRevision);
 
   // now post event to add bookmark to bookmarks
   if (m_data.Bookmarks)

@@ -27,6 +27,7 @@
 #endif
 // stl
 #include <exception>
+#include <map>
 
 // wxWidgets
 #include "wx/wx.h"
@@ -102,6 +103,7 @@ static const wxChar ConfigColumnVisibleFmt[] = wxT("/FileListCtrl/Column%sVisibl
 static const wxChar ConfigWithUpdate[]       = wxT("/FileListCtrl/WithUpdate");
 static const wxChar ConfigFlatView[]         = wxT("/FileListCtrl/FlatView");
 static const wxChar ConfigShowUnversioned[]  = wxT("/FileListCtrl/ShowUnversioned");
+static const wxChar ConfigIgnoreExternals[]  = wxT("/FileListCtrl/IgnoreExternals");
 
 /**
  * test if the given status entry is a file or
@@ -616,6 +618,7 @@ public:
   wxString Path;
   bool WithUpdate;
   bool ShowUnversioned;
+  bool IgnoreExternals;
   wxImageList *ImageListSmall;
 
   static const wxChar * COLUMN_CAPTIONS [FileListCtrl::COL_COUNT];
@@ -632,7 +635,7 @@ public:
    * When second index equals 1 (for locked files), there are
    * corresponding image indeces for some states.
    */
-  int ImageIndexArray[3 * IMG_INDX_COUNT];
+  std::map<int,int> ImageIndexArray;
 
   bool ColumnVisible [COL_COUNT];
   wxString ColumnCaption [COL_COUNT];
@@ -668,7 +671,7 @@ public:
 FileListCtrl::Data::Data ()
 : SortIncreasing (true), SortColumn (COL_NAME),
   DirtyColumns (true), FlatMode (false), Context (0),
-  WithUpdate (false)
+  WithUpdate (false), IgnoreExternals (false)
 {
   ImageListSmall = new wxImageList (16, 16, TRUE);
 
@@ -926,7 +929,8 @@ FileListCtrl::Data::ReadConfig ()
   wxConfigBase *config = wxConfigBase::Get ();
   config->Read (ConfigWithUpdate,      &WithUpdate);
   config->Read (ConfigFlatView,        &FlatMode);
-  config->Read (ConfigShowUnversioned, &ShowUnversioned, (bool) true);
+  config->Read (ConfigShowUnversioned, &ShowUnversioned, (bool) true); 
+  config->Read (ConfigIgnoreExternals, &IgnoreExternals, (bool) false);
 
   SortColumn = config->Read (ConfigSortColumn, (long) 0);
   SortIncreasing = config->Read (ConfigSortOrder, (long) 1) ? true : false;
@@ -956,6 +960,7 @@ FileListCtrl::Data::WriteConfig ()
   config->Write (ConfigWithUpdate,      WithUpdate);
   config->Write (ConfigFlatView,        FlatMode);
   config->Write (ConfigShowUnversioned, ShowUnversioned);
+  config->Write (ConfigIgnoreExternals, IgnoreExternals);
 
   config->Write (ConfigSortColumn, (long) SortColumn);
   config->Write (ConfigSortOrder, (long) (SortIncreasing ? 1 : 0));
@@ -1028,7 +1033,7 @@ FileListCtrl::UpdateFileList ()
 
   svn::Client client (m->Context);
   const svn::StatusEntries statusVector =
-    client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate);
+    client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate, false, m->IgnoreExternals);
   svn::StatusEntries::const_iterator it;
   const size_t pathUtf8Length = pathUtf8.length () + 1;
   for (it = statusVector.begin (); it != statusVector.end (); it++)
@@ -1629,13 +1634,11 @@ FileListCtrl::IsFlat ()
   return m->FlatMode;
 }
 
-
 void
 FileListCtrl::SetContext (svn::Context * Context)
 {
   m->Context = Context;
 }
-
 
 svn::Context *
 FileListCtrl::GetContext () const
@@ -1643,13 +1646,11 @@ FileListCtrl::GetContext () const
   return m->Context;
 }
 
-
 void
 FileListCtrl::SetWithUpdate (bool value)
 {
   m->WithUpdate = value;
 }
-
 
 bool
 FileListCtrl::GetWithUpdate () const
@@ -1657,13 +1658,11 @@ FileListCtrl::GetWithUpdate () const
   return m->WithUpdate;
 }
 
-
 void
 FileListCtrl::SetShowUnversioned (bool value)
 {
   m->ShowUnversioned = value;
 }
-
 
 bool
 FileListCtrl::GetShowUnversioned () const
@@ -1671,6 +1670,17 @@ FileListCtrl::GetShowUnversioned () const
   return m->ShowUnversioned;
 }
 
+void
+FileListCtrl::SetIgnoreExternals (bool value)
+{
+  m->IgnoreExternals = value;
+}
+
+bool
+FileListCtrl::GetIgnoreExternals () const
+{
+  return m->IgnoreExternals;
+}
 
 /* -----------------------------------------------------------------
  * local variables:

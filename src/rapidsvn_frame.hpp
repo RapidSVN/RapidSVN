@@ -96,6 +96,7 @@ private:
   void OnRefresh (wxCommandEvent & event);
   void OnRefreshWithUpdate (wxCommandEvent & event);
   void OnShowUnversioned (wxCommandEvent & event);
+  void OnIgnoreExternals (wxCommandEvent & event);
   void OnColumn (wxCommandEvent & event);
   void OnColumnReset (wxCommandEvent & event);
   void OnFlatView (wxCommandEvent & event);

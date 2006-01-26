@@ -76,16 +76,10 @@ UpdateAction::Perform ()
     }
   }
 
-  const std::vector<svn::Path> & v = GetTargets ();
-  std::vector<svn::Path>::const_iterator it;
   wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
   svn::Client client (GetContext ());
-  for (it = v.begin(); it != v.end(); it++)
-  {
-    const svn::Path & path = *it;
 
-    client.update (path.c_str (), revision, m_data.recursive);
-  }
+  client.update2 (GetTargets (), revision, m_data.recursive, true);
 
   return true;
 }

@@ -39,6 +39,7 @@ enum
   ID_Refresh,
   ID_RefreshWithUpdate,
   ID_ShowUnversioned,
+  ID_IgnoreExternals,
   ID_HelpContents,
   ID_HelpIndex,
   ID_HelpStartupTips,

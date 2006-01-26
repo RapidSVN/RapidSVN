@@ -51,16 +51,48 @@
 
 namespace svn
 {
+#if (CHECK_SVN_SUPPORTS_EXTERNALS && CHECK_SVN_SUPPORTS_PEG)
   svn_revnum_t
   Client::checkout (const char * url, 
                     const Path & destPath, 
                     const Revision & revision, 
-                    bool recurse) throw (ClientException)
+                    bool recurse,
+                    bool ignore_externals,
+                    const Revision & peg_revision) throw (ClientException)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool ();
-
     svn_revnum_t revnum = 0;
+
+    svn_error_t * error =
+      svn_client_checkout2 (&revnum,
+                            url, destPath.c_str (),
+                            revision.revision (), // peg_revision
+                            peg_revision.revision (), // revision
+                            recurse,
+                            ignore_externals,
+                            *m_context,
+                            apr_pool);
+
+    if(error != NULL)
+      throw ClientException (error);
+
+    return revnum;
+  }
+#else
+  svn_revnum_t
+  Client::checkout (const char * url, 
+                    const Path & destPath, 
+                    const Revision & revision, 
+                    bool recurse,
+                    bool ignore_externals,
+                    const Revision & peg_revision) throw (ClientException)
+  {
+    Pool subPool;
+
+    apr_pool_t * apr_pool = subPool.pool ();
+    svn_revnum_t revnum = 0;
+
     svn_error_t * error =
       svn_client_checkout (&revnum,
                            url, destPath.c_str (),
@@ -71,8 +103,10 @@ namespace svn
 
     if(error != NULL)
       throw ClientException (error);
+
     return revnum;
   }
+#endif
 
   void
   Client::remove (const Path & path, 
@@ -180,6 +214,10 @@ namespace svn
   {
     Pool pool;
 
+    // we do not need the newer version of this
+    // function "svn_client_add2" or "svn_client_add3"
+    // since RapidSVN doesnt even have a dialog
+    // for adding false 
     svn_error_t * error =
       svn_client_add (path.c_str (), 
                       recurse, 
@@ -197,6 +235,7 @@ namespace svn
   {
     Pool pool;
     svn_revnum_t revnum = 0;
+
     svn_error_t * error =
       svn_client_update (&revnum,
                          path.c_str (),
@@ -206,16 +245,58 @@ namespace svn
                          pool);
     if(error != NULL)
       throw ClientException (error);
+
     return revnum;
   }
 
+#if CHECK_SVN_SUPPORTS_EXTERNALS
+  void
+  Client::update2 (const Targets & targets, 
+                   const Revision & revision, 
+                   bool recurse,
+                   bool ignore_externals) throw (ClientException)
+  {
+    Pool pool;
+    apr_array_header_t * result_revs;
+
+    svn_error_t * error =
+      svn_client_update2 (&result_revs,
+                          const_cast<apr_array_header_t*> (targets.array (pool)),
+                          revision.revision (),
+                          recurse,
+                          ignore_externals,
+                          *m_context,
+                          pool);
+    if(error != NULL)
+      throw ClientException (error);
+  }
+#else
+  void
+  Client::update2 (const Targets & targets, 
+                   const Revision & revision, 
+                   bool recurse,
+                   bool ignore_externals) throw (ClientException)
+  {
+    Pool pool;
+    const std::vector<svn::Path> & v = targets;
+    std::vector<svn::Path>::const_iterator it;
+
+    for (it = v.begin(); it != v.end(); it++)
+    {
+      const svn::Path & path = *it;
+      Client::update (path.c_str (), revision, recurse);
+    }
+  }
+#endif
   /**
    * Using new functions and features in subversion 1.2 and up
    */
 #if CHECK_SVN_SUPPORTS_LOCK
   svn_revnum_t
-  Client::commit (const Targets & targets, const char * message, 
-                  bool recurse, bool keepLocks) throw (ClientException)
+  Client::commit (const Targets & targets,
+                  const char * message, 
+                  bool recurse,
+                  bool keep_locks) throw (ClientException)
   {
     Pool pool;
 
@@ -227,7 +308,7 @@ namespace svn
       svn_client_commit2 (&commit_info, 
                          targets.array (pool), 
                          recurse, 
-                         keepLocks,
+                         keep_locks,
                          *m_context,
                          pool);
     if (error != NULL)
@@ -243,8 +324,10 @@ namespace svn
    */
 #else
   svn_revnum_t
-  Client::commit (const Targets & targets, const char * message, 
-                  bool recurse, bool keepLocks) throw (ClientException)
+  Client::commit (const Targets & targets,
+                  const char * message, 
+                  bool recurse,
+                  bool keep_locks) throw (ClientException)
   {
     Pool pool;
 
@@ -296,13 +379,14 @@ namespace svn
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
+
     svn_error_t * error =  
       svn_client_move2 (&commit_info,
-                       srcPath.c_str (),
-                       destPath.c_str (),
+                        srcPath.c_str (),
+                        destPath.c_str (),
                         force,
-                       *m_context,
-                       pool);
+                        *m_context,
+                        pool);
 
     if(error != NULL)
       throw ClientException (error);
@@ -316,6 +400,7 @@ namespace svn
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
+
     svn_error_t * error =  
       svn_client_move (&commit_info,
                        srcPath.c_str (),
@@ -508,7 +593,6 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
-
 }
 
 /* -----------------------------------------------------------------

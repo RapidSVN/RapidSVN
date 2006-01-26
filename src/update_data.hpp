@@ -39,6 +39,7 @@ struct UpdateData
   wxString url;
   bool useLatest;
   bool recursive;
+  bool ignoreExternals;
 };
 
 #endif

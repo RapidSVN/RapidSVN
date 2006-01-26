@@ -86,7 +86,6 @@ namespace svn
 
     virtual ~Client ();
 
-
     /**
      * @return returns the Client context
      */
@@ -113,6 +112,7 @@ namespace svn
      * @param get_all Return all entries, not just the interesting ones.
      * @param update Query the repository for updates.
      * @param no_ignore Disregard default and svn:ignore property ignores.
+     * @param ignore_externals Disregard external files.
      * @return vector with Status entries.
      */
     StatusEntries 
@@ -120,7 +120,8 @@ namespace svn
             const bool descend = false,
             const bool get_all = true,
             const bool update = false,
-            const bool no_ignore = false) throw (ClientException);
+            const bool no_ignore = false,
+            const bool ignore_externals = false) throw (ClientException);
 
     /**
      * Returns the status of a single file in the path.
@@ -140,12 +141,16 @@ namespace svn
      * @param revision the revision number to checkout. If the number is -1
      *                 then it will checkout the latest revision.
      * @param recurse whether you want it to checkout files recursively.
+     * @param ignore_externals whether you want get external resources too.
+     * @param peg_revision peg revision to checkout, by default current.
      * @exception ClientException
      */
     svn_revnum_t
     checkout (const char * moduleName, const Path & destPath, 
               const Revision & revision, 
-              bool recurse) throw (ClientException);
+              bool recurse,
+              bool ignore_externals = false,
+              const Revision & peg_revision = Revision ()) throw (ClientException);
   
     /**
      * relocate wc @a from to @a to
@@ -202,7 +207,6 @@ namespace svn
     void
     revert (const Targets & targets, bool recurse) throw (ClientException);
 
-
     /**
      * Adds a file to the repository.
      * @exception ClientException
@@ -218,10 +222,26 @@ namespace svn
      *                 latest revision.
      * @param recurse recursively update.
      * @exception ClientException
+     *
+     * @deprecated
      */
     svn_revnum_t 
     update (const Path & path, const Revision & revision, 
             bool recurse) throw (ClientException);
+
+    /**
+     * Updates the file or directory.
+     * @param Targets target files.
+     * @param revision the revision number to checkout. 
+     *                 Revision::HEAD will checkout the 
+     *                 latest revision.
+     * @param recurse recursively update.
+     * @param ignore_externals don't affect external destinations.
+     * @exception ClientException
+     */
+    void
+    update2 (const Targets & targets, const Revision & revision, 
+             bool recurse, bool ignore_externals) throw (ClientException);
 
     /**
      * Retrieves the contents for a specific @a revision of
@@ -233,7 +253,8 @@ namespace svn
      */
     std::string
     cat (const Path & path, 
-         const Revision & revision) throw (ClientException);
+         const Revision & revision,
+         const Revision & peg_revision = Revision ()) throw (ClientException);
 
 
     /**
@@ -284,7 +305,7 @@ namespace svn
     commit (const Targets & targets,
             const char * message, 
             bool recurse,
-            bool keep_locks=false) throw (ClientException);
+            bool keep_locks = false) throw (ClientException);
 
     /**
      * Copies a versioned file with the history preserved.
@@ -351,7 +372,7 @@ namespace svn
     doExport (const Path & srcPath, 
               const Path & destPath, 
               const Revision & revision, 
-              bool force=false) throw (ClientException);
+              bool force = false) throw (ClientException);
 
     /**
      * Update local copy to mirror a new url. This excapsulates the 
@@ -373,7 +394,8 @@ namespace svn
      * @exception ClientException
      */
     void 
-    import (const Path & path, const char * url,
+    import (const Path & path,
+            const char * url,
             const char * message, 
             bool recurse) throw (ClientException);
 
@@ -386,8 +408,8 @@ namespace svn
            const Path & path2, const Revision & revision2,
            const Path & localPath, bool force, 
            bool recurse,
-           bool notice_ancestry=false,
-           bool dry_run=false) throw (ClientException);
+           bool notice_ancestry = false,
+           bool dry_run = false) throw (ClientException);
 
     /**
      * Retrieve information for the given path
@@ -397,7 +419,7 @@ namespace svn
      * @return Entry
      */
     Entry
-    info (const char *path );
+    info (const char * path);
 
     /**
      * Retrieve log information for the given path
@@ -415,10 +437,11 @@ namespace svn
      * @return a vector with log entries
      */
     const LogEntries *
-    log (const char * path, const Revision & revisionStart, 
+    log (const char * path,
+         const Revision & revisionStart, 
          const Revision & revisionEnd,
-         bool discoverChangedPaths=false, 
-         bool strictNodeHistory=true) throw (ClientException);
+         bool discoverChangedPaths = false, 
+         bool strictNodeHistory = true) throw (ClientException);
 
     /**
      * Produce diff output which describes the delta between
@@ -501,9 +524,9 @@ namespace svn
      * @return PropertiesList
      */
     PathPropertiesMapList
-    proplist(const Path &path,
-             const Revision &revision,
-             bool recurse=false);
+    proplist (const Path &path,
+              const Revision &revision,
+              bool recurse = false);
 
     /**
      * lists one property in @a path no matter whether local or
@@ -516,28 +539,34 @@ namespace svn
      * @return PathPropertiesMapList
      */
     PathPropertiesMapList
-    propget(const char *propName,
-            const Path &path,
-            const Revision &revision,
-            bool recurse=false);
+    propget (const char * propName,
+             const Path & path,
+             const Revision & revision,
+             bool recurse = false);
 
     /**
+     * This method is deprecated, please use
+     * @a Property.set
      * set property in @a path no matter whether local or
      * repository
+     *
+     * @deprecated
      *
      * @param path
      * @param revision
      * @param propName
      * @param propValue
      * @param recurse
+     * @param skip_checks
      * @return PropertiesList
      */
     void
-    propset(const char *propName,
-            const char *propValue,
-            const Path &path,
-            const Revision &revision,
-            bool recurse=false);
+    propset (const char * propName,
+             const char * propValue,
+             const Path & path,
+             const Revision & revision,
+             bool recurse = false,
+             bool skip_checks = true);
 
     /**
      * delete property in @a path no matter whether local or
@@ -549,10 +578,10 @@ namespace svn
      * @param recurse
      */
     void
-    propdel(const char *propName,
-            const Path &path,
-            const Revision &revision,
-            bool recurse=false);
+    propdel (const char * propName,
+             const Path & path,
+             const Revision & revision,
+             bool recurse = false);
 
 
     /**
@@ -564,8 +593,8 @@ namespace svn
      * @return PropertiesList
      */
     std::pair<svn_revnum_t,PropertiesMap>
-    revproplist(const Path &path,
-                const Revision &revision);
+    revproplist (const Path & path,
+                 const Revision & revision);
 
     /**
      * lists one revision property in @a path no matter whether local or
@@ -577,9 +606,9 @@ namespace svn
      * @return PropertiesList
      */
     std::pair<svn_revnum_t,std::string>
-    revpropget(const char *propName,
-               const Path &path,
-               const Revision &revision);
+    revpropget (const char * propName,
+                const Path & path,
+                const Revision & revision);
 
     /**
      * set revision property in @a path no matter whether local or
@@ -593,11 +622,11 @@ namespace svn
      * @return Revision
      */
     svn_revnum_t
-    revpropset(const char *propName,
-               const char *propValue,
-               const Path &path,
-               const Revision &revision,
-               bool force=false);
+    revpropset (const char * propName,
+                const char * propValue,
+                const Path & path,
+                const Revision & revision,
+                bool force = false);
 
     /**
      * delete revision property in @a path no matter whether local or
@@ -610,10 +639,10 @@ namespace svn
      * @return Revision
      */
     svn_revnum_t
-    revpropdel(const char *propName,
-               const Path &path,
-               const Revision &revision,
-               bool force=false);
+    revpropdel (const char * propName,
+                const Path & path,
+                const Revision & revision,
+                bool force = false);
 
 
   private:
@@ -628,9 +657,7 @@ namespace svn
      * disallow copy constructor
      */
     Client (const Client &);
-
   };
-
 }
 
 #endif

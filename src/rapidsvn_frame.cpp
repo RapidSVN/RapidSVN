@@ -306,6 +306,8 @@ public:
     menuView->AppendCheckItem (ID_Flat, _("Flat Mode"));
     menuView->AppendCheckItem (ID_RefreshWithUpdate, _("Refresh with Update"));
     menuView->AppendCheckItem (ID_ShowUnversioned, _("Show unversioned entries"));
+    if (svn::SUPPORTS_EXTERNALS)
+      menuView->AppendCheckItem (ID_IgnoreExternals, _("Ignore Externals"));
 
     // Preferences menu item goes to its own place on MacOSX,
     // so no separator is necessary.
@@ -584,6 +586,9 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Flat, RapidSvnFrame::OnFlatView)
   EVT_MENU (ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
   EVT_MENU (ID_ShowUnversioned, RapidSvnFrame::OnShowUnversioned)
+#if CHECK_SVN_SUPPORTS_EXTERNALS
+    EVT_MENU (ID_IgnoreExternals, RapidSvnFrame::OnIgnoreExternals)
+#endif
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
   EVT_MENU (ID_Stop, RapidSvnFrame::OnStop)
@@ -685,6 +690,8 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->CheckMenu (ID_Flat,              false);
   m->CheckMenu (ID_RefreshWithUpdate, m_listCtrl->GetWithUpdate());
   m->CheckMenu (ID_ShowUnversioned,   m_listCtrl->GetShowUnversioned());
+  if (svn::SUPPORTS_EXTERNALS)
+    m->CheckMenu (ID_IgnoreExternals,   m_listCtrl->GetIgnoreExternals());
 
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
@@ -1672,21 +1679,28 @@ RapidSvnFrame::ShowInfo ()
 void
 RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 {
-  m_activePane = ACTIVEPANE_FOLDER_BROWSER;
+  try
+  {
+    m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
-  // Update the menu and list control flat-mode setting 
-  bool flatMode = m_folder_browser->IsFlat ();
-  m_listCtrl->SetFlat (flatMode);
-  m->CheckMenu (ID_Flat, flatMode);
+    // Update the menu and list control flat-mode setting 
+    bool flatMode = m_folder_browser->IsFlat ();
+    m_listCtrl->SetFlat (flatMode);
+    m->CheckMenu (ID_Flat, flatMode);
+    
+    // Disable menu entry if no path is selected (e.g. root)
+    const wxString & path = m_folder_browser->GetPath ();  
+    m->MenuBar->Enable (ID_Flat, !path.IsEmpty ());
 
-  // Disable menu entry if no path is selected (e.g. root)
-  const wxString & path = m_folder_browser->GetPath ();  
-  m->MenuBar->Enable (ID_Flat, !path.IsEmpty ());
- 
-  UpdateCurrentPath ();
-  UpdateFileList ();
+    UpdateCurrentPath ();
+    UpdateFileList ();
 
-  m_folder_browser->ExpandSelection ();
+    m_folder_browser->ExpandSelection ();
+  }
+  catch(...)
+  {
+    Trace (_("Exception occured during filelist update"));
+  }
 }
 
 void
@@ -1846,6 +1860,16 @@ RapidSvnFrame::OnShowUnversioned (wxCommandEvent & WXUNUSED (event))
   UpdateFolderBrowser ();
 }
 
+void
+RapidSvnFrame::OnIgnoreExternals (wxCommandEvent & WXUNUSED (event))
+{
+  if (svn::SUPPORTS_EXTERNALS)
+  {
+    bool checked = m->IsMenuChecked (ID_IgnoreExternals);
+    m_listCtrl->SetIgnoreExternals (checked);
+  }
+  UpdateFolderBrowser ();
+}
 
 void
 RapidSvnFrame::OnColumnReset (wxCommandEvent &)

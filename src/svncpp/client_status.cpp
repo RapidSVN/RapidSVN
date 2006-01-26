@@ -53,9 +53,9 @@ namespace svn
                    const char *msg, 
                    apr_pool_t * pool)
   {
-    LogEntries * entries = 
-      (LogEntries *) baton;
+    LogEntries * entries = (LogEntries *) baton;
     entries->insert (entries->begin (), LogEntry (rev, author, date, msg));
+
     if (changedPaths != NULL)
     {
       LogEntry &entry = entries->front ();
@@ -97,7 +97,8 @@ namespace svn
                const bool get_all,
                const bool update,
                const bool no_ignore,
-               Context * context)
+               Context * context,
+               const bool ignore_externals)
   {
     svn_error_t *error;
     StatusEntries entries;
@@ -107,30 +108,30 @@ namespace svn
 
 #if (CHECK_SVN_VERSION(1,2))
     error = svn_client_status2 (
-      &revnum,      // revnum
-      path,         // path
-      rev,
+      &revnum,    // revnum
+      path,       // path
+      rev,        // revision
       StatusEntriesFunc, // status func
-      &entries,        // status baton
-      descend,
+      &entries,   // status baton
+      descend,    // recurse
       get_all,
-      update,    // need 'update' to be true to get repository lock info
+      update,     // need 'update' to be true to get repository lock info
       no_ignore,
-      true,
-      *context,    //client ctx
+      ignore_externals, // ignore_externals
+      *context,   // client ctx
       pool);
 #else
     error = svn_client_status (
-      &revnum,      // revnum
-      path,         // path
-      rev,
+      &revnum,    // revnum
+      path,       // path
+      rev,        // revision
       StatusEntriesFunc, // status func
-      &entries,        // status baton
-      descend,
+      &entries,   // status baton
+      descend,    // recurse
       get_all,
       update,
       no_ignore,
-      *context,    //client ctx
+      *context,   //client ctx
       pool);
 #endif
 
@@ -209,14 +210,15 @@ namespace svn
                   const bool descend,
                   const bool get_all,
                   const bool update,
-                  const bool no_ignore) throw (ClientException)
+                  const bool no_ignore,
+                  const bool ignore_externals) throw (ClientException)
   {
     if (Url::isValid (path))
       return remoteStatus (this, path, descend, get_all, update, 
                            no_ignore, m_context);
     else
       return localStatus (path, descend, get_all, update, 
-                          no_ignore, m_context);
+                          no_ignore, m_context, ignore_externals);
   }
   
   static Status
@@ -230,38 +232,36 @@ namespace svn
 
 #if (CHECK_SVN_VERSION(1,2))
     error = svn_client_status2 (
-      &revnum,      // revnum
-      path,         // path
-      rev,
+      &revnum,   // revnum
+      path,      // path
+      rev,       // revision
       StatusEntriesFunc, // status func
-      &entries,        // status baton
-      false,       // recurse
-      true,        // get_all
-      false,       // update
-      false,       // no_ignore
-      true,        // ignore_externals
-      *context,    // client ctx
+      &entries,  // status baton
+      false,     // recurse
+      true,      // get_all
+      false,     // update
+      false,     // no_ignore
+      true,      // ignore_externals
+      *context,  // client ctx
       pool);
 #else
     error = svn_client_status (
-      &revnum,      // revnum
-      path,         // path
-      rev,
+      &revnum,   // revnum
+      path,      // path
+      rev,       // revision
       StatusEntriesFunc, // status func
-      &entries,        // status baton
-      false,       // recurse
-      true,        // get_all
-      false,       // update
-      false,       // no_ignore
-      *context,    // client ctx
+      &entries,  // status baton
+      false,     // recurse
+      true,      // get_all
+      false,     // update
+      false,     // no_ignore
+      *context,  // client ctx
       pool);
 #endif
 
     if (error != NULL)
-    {
       throw ClientException (error);
-    }
-    
+
     return entries[0];
   };
 
@@ -287,15 +287,49 @@ namespace svn
       return localSingleStatus (path, m_context);
   }
 
+#if CHECK_SVN_SUPPORTS_PEG
   const LogEntries *
   Client::log (const char * path, const Revision & revisionStart, 
                const Revision & revisionEnd, bool discoverChangedPaths,
                bool strictNodeHistory ) throw (ClientException)
   {
-    Targets target (path);
     Pool pool;
+    Targets target (path);
     LogEntries * entries = new LogEntries ();
     svn_error_t *error;
+    int limit = 0;
+
+    error = svn_client_log2 (
+      target.array (pool), 
+      revisionStart.revision (), 
+      revisionEnd.revision (), 
+      limit,
+      discoverChangedPaths ? 1 : 0,
+      strictNodeHistory ? 1 : 0,
+      logReceiver,
+      entries, 
+      *m_context, // client ctx
+      pool);
+
+    if (error != NULL)
+    {
+      delete entries;
+      throw ClientException (error);
+    }
+
+    return entries;
+  }
+#else
+  const LogEntries *
+  Client::log (const char * path, const Revision & revisionStart, 
+               const Revision & revisionEnd, bool discoverChangedPaths,
+               bool strictNodeHistory ) throw (ClientException)
+  {
+    Pool pool;
+    Targets target (path);
+    LogEntries * entries = new LogEntries ();
+    svn_error_t *error;
+
     error = svn_client_log (
       target.array (pool), 
       revisionStart.revision (), 
@@ -315,28 +349,29 @@ namespace svn
 
     return entries;
   }
+#endif
 
   Entry
-  Client::info (const char *path )
+  Client::info (const char * path)
   {
     Pool pool;
-    svn_wc_adm_access_t *adm_access;
+    svn_wc_adm_access_t * adm_access;
 
-    svn_error_t *error
-      = svn_wc_adm_probe_open (&adm_access, NULL, path, FALSE,
-                                    FALSE, pool);
+    svn_error_t * error =
+      svn_wc_adm_probe_open (&adm_access, NULL, path, FALSE,
+                             FALSE, pool);
     if (error != NULL)
       throw ClientException (error);
 
-    const svn_wc_entry_t *entry;
+    const svn_wc_entry_t * entry;
     error = svn_wc_entry (&entry, path, adm_access, FALSE, pool);
+
     if (error != NULL)
       throw ClientException (error);
 
     // entry may be NULL
     return Entry( entry );
   }
-
 }
 
 /* -----------------------------------------------------------------

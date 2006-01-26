@@ -42,9 +42,11 @@
 
 namespace svn
 {
+#if CHECK_SVN_SUPPORTS_PEG
   std::string
   Client::cat (const Path & path, 
-               const Revision & revision) throw (ClientException)
+               const Revision & revision,
+               const Revision & peg_revision) throw (ClientException)
   {
     Pool pool;
     
@@ -52,7 +54,32 @@ namespace svn
     svn_stream_t * stream = svn_stream_from_stringbuf (stringbuf, pool);
 
     svn_error_t * error;
-    error = svn_client_cat (stream, path.c_str (),
+    error = svn_client_cat2 (stream,
+                             path.c_str (),
+                             peg_revision.revision (),
+                             revision.revision (), 
+                             *m_context, 
+                             pool);
+
+    if (error != 0)
+      throw ClientException (error);
+
+    return std::string (stringbuf->data, stringbuf->len);
+  }
+#else
+  std::string
+  Client::cat (const Path & path, 
+               const Revision & revision,
+               const Revision & peg_revision) throw (ClientException)
+  {
+    Pool pool;
+    
+    svn_stringbuf_t * stringbuf = svn_stringbuf_create ("", pool);
+    svn_stream_t * stream = svn_stream_from_stringbuf (stringbuf, pool);
+
+    svn_error_t * error;
+    error = svn_client_cat (stream,
+                            path.c_str (),
                             revision.revision (), 
                             *m_context, 
                             pool);
@@ -60,9 +87,9 @@ namespace svn
     if (error != 0)
       throw ClientException (error);
 
-    return std::string( stringbuf->data, stringbuf->len );
+    return std::string (stringbuf->data, stringbuf->len);
   }
-
+#endif
 
   /**
    * Create a new temporary file in @a dstPath. If @a dstPath
@@ -133,7 +160,6 @@ namespace svn
 
     return file;
   }
-
 
   void
   Client::get (Path & dstPath,

@@ -33,16 +33,21 @@ struct CheckoutData
   CheckoutData ()
   {
     UseLatest = true;
+    NotSpecified = true;
     Recursive = true;
     Bookmarks = true;
+    IgnoreExternals = false;
   }
 
   wxString RepUrl;
   wxString DestFolder;
   wxString Revision;
+  wxString PegRevision;
   bool Recursive;
   bool UseLatest;
+  bool NotSpecified;
   bool Bookmarks;
+  bool IgnoreExternals;
 };
 
 #endif

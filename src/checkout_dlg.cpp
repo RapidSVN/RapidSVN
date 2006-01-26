@@ -30,6 +30,7 @@
 
 // svncpp
 #include "svncpp/path.hpp"
+#include "svncpp/check.hpp"
 
 // app
 #include "hist_entries.hpp"
@@ -41,14 +42,17 @@
 enum
 {
   ID_USELATEST = 100,
-  ID_BUTTON_BROWSE,
+  ID_NOTSPECIFIED = 100,
+  ID_BUTTON_BROWSE
 };
 
 struct CheckoutDlg::Data
 {
 private:
   wxCheckBox * m_checkUseLatest;
+  wxCheckBox * m_checkNotSpecified;
   wxTextCtrl * m_textRevision;
+  wxTextCtrl * m_textPegRevision;
   wxTextCtrl * m_textDest;
   wxComboBox * m_comboRepUrl;
   wxButton * m_buttonOk;
@@ -84,11 +88,36 @@ public:
       new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
                       wxSize(50, -1), 0, valRevision);
     m_textRevision->SetHelpText(_("If not using the latest version of the files, specify which revision to use here."));
+
     wxGenericValidator valLatest (&data.UseLatest);
     m_checkUseLatest =
       new wxCheckBox (wnd, ID_USELATEST, _("Use latest"),
                      wxDefaultPosition, wxDefaultSize, 0, valLatest);
     m_checkUseLatest->SetHelpText(_("Set this to get the latest version of the files in the repository."));
+
+    wxStaticBox* pegRevisionBox =
+      new wxStaticBox (wnd, -1, _("Peg Revision"));
+    if (svn::SUPPORTS_PEG)
+    {
+      wxTextValidator valPegRevision (wxFILTER_NUMERIC, &data.PegRevision);
+      m_textPegRevision =
+        new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
+                        wxSize(50, -1), 0, valPegRevision);
+      m_textPegRevision->SetHelpText(_("If the files were renamed or moved sometime, specify which peg revision to use here."));
+    }
+    else
+    {
+      pegRevisionBox->Hide ();
+    }
+
+    wxGenericValidator valNotSpecified (&data.NotSpecified);
+    m_checkNotSpecified =
+      new wxCheckBox (wnd, ID_NOTSPECIFIED, _("Not specified"),
+                      wxDefaultPosition, wxDefaultSize, 0, valNotSpecified);
+    m_checkNotSpecified->SetHelpText(_("Set this to use BASE/HEAD (current) peg revision of the files."));
+    if (!svn::SUPPORTS_PEG)
+      m_checkNotSpecified->Hide ();
+
     wxCheckBox* recursive =
       new wxCheckBox (wnd, -1, _("Recursive"),
                       wxDefaultPosition, wxDefaultSize, 0,
@@ -99,6 +128,14 @@ public:
                       wxDefaultPosition, wxDefaultSize, 0,
                       wxGenericValidator(&data.Bookmarks));
     bookmarks->SetHelpText(_("Set to automatically create a new working copy bookmark."));
+
+    wxCheckBox* ignoreExternals =
+      new wxCheckBox (wnd, -1, _("Ignore externals"),
+                      wxDefaultPosition, wxDefaultSize, 0,
+                      wxGenericValidator(&data.IgnoreExternals));
+    ignoreExternals->SetHelpText(_("Set to ignore external definitions and the external working copies managed by them."));
+    if (!svn::SUPPORTS_EXTERNALS)
+      ignoreExternals->Hide ();
 
     m_buttonOk = new wxButton( wnd, wxID_OK, _("OK" ));
     wxButton* cancel = new wxButton( wnd, wxID_CANCEL, _("Cancel"));
@@ -125,6 +162,18 @@ public:
                         wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
     reSizer->Add (revisionSizer, 1, wxALL | wxEXPAND, 0);
 
+    wxBoxSizer *preSizer = new wxBoxSizer (wxHORIZONTAL);
+    // Peg revision row
+    if (svn::SUPPORTS_PEG)
+    {
+      wxStaticBoxSizer *pegRevisionSizer =
+        new wxStaticBoxSizer (pegRevisionBox, wxHORIZONTAL);
+      pegRevisionSizer->Add (m_textPegRevision, 1, wxALL | wxEXPAND, 5);
+      pegRevisionSizer->Add (m_checkNotSpecified, 0,
+                             wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
+      preSizer->Add (pegRevisionSizer, 1, wxALL | wxEXPAND, 0);
+    }
+
     // Button row
     wxBoxSizer *buttonSizer  = new wxBoxSizer (wxHORIZONTAL);
     buttonSizer->Add(m_buttonOk, 0, wxALL, 10);
@@ -139,12 +188,16 @@ public:
     wxBoxSizer *extrasSizer = new wxBoxSizer (wxHORIZONTAL);
     extrasSizer->Add(bookmarks, 0, wxALL | wxCENTER, 5);
     extrasSizer->Add(recursive, 0, wxALL | wxCENTER, 5);
+    if (svn::SUPPORTS_EXTERNALS)
+      extrasSizer->Add(ignoreExternals, 0, wxALL | wxCENTER, 5);
 
     // Add all sizers to main sizer
     wxBoxSizer *mainSizer    = new wxBoxSizer (wxVERTICAL);
     mainSizer->Add (urlSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (destSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (reSizer, 0, wxALL | wxEXPAND, 5);
+    if (svn::SUPPORTS_PEG)
+      mainSizer->Add (preSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (extrasSizer, 0, wxALL | wxCENTER, 5);
     mainSizer->Add (buttonSizer, 0, wxALL | wxCENTER, 5);
 
@@ -158,13 +211,25 @@ public:
   void
   CheckControls()
   {
-    bool checked = m_checkUseLatest->IsChecked();
-    m_textRevision->Enable (!checked);
+    bool useLatest = m_checkUseLatest->IsChecked();
+    bool notSpecified = m_checkNotSpecified->IsChecked();
+
+    m_textRevision->Enable (!useLatest);
+
+    if (svn::SUPPORTS_PEG)
+    {
+      m_textPegRevision->Enable (!notSpecified);
+    }
 
     bool ok = true;
-    if (!checked)
+    if (!useLatest)
     {
       ok = CheckRevision (m_textRevision->GetValue ());
+    }
+
+    if (!notSpecified && svn::SUPPORTS_PEG)
+    {
+      ok = CheckRevision (m_textPegRevision->GetValue ());
     }
 
     if (m_textDest->GetValue ().Length () <= 0)
@@ -183,8 +248,6 @@ public:
       m_buttonOk->SetDefault ();
     }
   }
-
-
 };
 
 BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)

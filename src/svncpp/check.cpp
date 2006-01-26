@@ -46,6 +46,17 @@ namespace svn
   const bool SUPPORTS_LOCK = false;
 #endif
 
+#if CHECK_SVN_SUPPORTS_PEG
+  const bool SUPPORTS_PEG = true;
+#else
+  const bool SUPPORTS_PEG = false;
+#endif
+
+#if CHECK_SVN_SUPPORTS_EXTERNALS
+  const bool SUPPORTS_EXTERNALS = true;
+#else
+  const bool SUPPORTS_EXTERNALS = false;
+#endif
 }
 
 
