@@ -47,8 +47,7 @@ public:
    * @param selectedUrl pre-fills the URL field with
    *                    this URL
    */
-  CheckoutDlg (wxWindow *parent, 
-               const svn::Path & selectedUrl);
+  CheckoutDlg (wxWindow * parent, const svn::Path & selectedUrl);
 
   /**
    * destructor

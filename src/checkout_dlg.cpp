@@ -139,7 +139,8 @@ public:
 
     m_buttonOk = new wxButton( wnd, wxID_OK, _("OK" ));
     wxButton* cancel = new wxButton( wnd, wxID_CANCEL, _("Cancel"));
-    wxButton* help = new wxButton( wnd, wxID_HELP, _("Help"));
+    // TODO: online help. Help button doesn't work yet, so commented out.
+    // wxButton* help = new wxButton( wnd, wxID_HELP, _("Help"));
 
     // place controls
     // URL row
@@ -178,8 +179,10 @@ public:
     wxBoxSizer *buttonSizer  = new wxBoxSizer (wxHORIZONTAL);
     buttonSizer->Add(m_buttonOk, 0, wxALL, 10);
     buttonSizer->Add(cancel, 0, wxALL, 10);
+    // Online Help to be done later
+//  buttonSizer->Add(help, 0, wxALL, 10);
+
     // Add explicit context-sensitive help button for non-MSW
-    buttonSizer->Add(help, 0, wxALL, 10);
 #ifndef __WXMSW__
     buttonSizer->Add(new wxContextHelpButton(wnd), 0, wxALL, 10);
 #endif
@@ -255,7 +258,7 @@ BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)
   EVT_BUTTON (wxID_OK, CheckoutDlg::OnOK)
   EVT_CHECKBOX (ID_USELATEST, CheckoutDlg::OnUseLatest)
   EVT_TEXT (-1, CheckoutDlg::OnText)
-  EVT_BUTTON (wxID_HELP, CheckoutDlg::OnHelp)
+//  EVT_BUTTON (wxID_HELP, CheckoutDlg::OnHelp)
 END_EVENT_TABLE ()
 
 CheckoutDlg::CheckoutDlg (wxWindow * parent, 
@@ -325,9 +328,10 @@ CheckoutDlg::OnText (wxCommandEvent &)
 }
 
 void
-CheckoutDlg::OnHelp (wxCommandEvent & event)
+CheckoutDlg::OnHelp (wxCommandEvent &)
 {
-  ::wxGetApp ().GetHelpController().Display(wxT("Checkout dialog"));
+  // @todo Has to be re-integrated for Online Help
+  // ::wxGetApp ().GetHelpController().Display(wxT("Checkout dialog"));
 }
 
 /* -----------------------------------------------------------------
