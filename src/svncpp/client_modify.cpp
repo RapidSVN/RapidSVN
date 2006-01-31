@@ -66,9 +66,10 @@ namespace svn
 
     svn_error_t * error =
       svn_client_checkout2 (&revnum,
-                            url, destPath.c_str (),
-                            revision.revision (), // peg_revision
-                            peg_revision.revision (), // revision
+                            url,
+                            destPath.c_str (),
+                            peg_revision.revision (), // peg_revision
+                            revision.revision (), // revision
                             recurse,
                             ignore_externals,
                             *m_context,
@@ -95,7 +96,8 @@ namespace svn
 
     svn_error_t * error =
       svn_client_checkout (&revnum,
-                           url, destPath.c_str (),
+                           url,
+                           destPath.c_str (),
                            revision.revision (),
                            recurse,
                            *m_context,
@@ -482,20 +484,21 @@ namespace svn
   }
 
   svn_revnum_t
-  Client::doExport (const Path & srcPath, 
-                    const Path & destPath, 
+  Client::doExport (const Path & from_path, 
+                    const Path & to_path, 
                     const Revision & revision, 
-                    bool force) throw (ClientException)
+                    bool overwrite) throw (ClientException)
   {
     Pool pool;
     svn_revnum_t revnum = 0;
+
     svn_error_t * error =  
       svn_client_export (&revnum,
-                         srcPath.c_str (),
-                         destPath.c_str (),
+                         from_path.c_str (),
+                         to_path.c_str (),
                          const_cast<svn_opt_revision_t*>
                          (revision.revision ()),
-                         force,
+                         overwrite,
                          *m_context,
                          pool);
 
