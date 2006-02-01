@@ -1,0 +1,209 @@
+               ======================================
+                      INSTALLING RapidSVN
+               ======================================
+
+
+Contents:
+      0. Preface
+      1. Prerequisites
+      2. Building on Linux/Unix
+      3. Building on Windows
+      4. Building on Mac OS/X
+
+
+0       Preface
+
+        This document will provide you some step-by-step
+        instructions to get RapidSVN up and running on
+        several platforms.
+        
+        We are mentioning only a few configurations and 
+        solutions that have worked for us.
+        
+        If there is some configuration or information missing
+        that you feel might be important, dont hesitate to
+        post on users@rapidsvn.tigris.org.
+        
+
+1       Prerequisites
+
+        RapidSVN depends on several libraries, some are
+        optional, some are mandatory, others are necessary
+        only for a specific platform.
+    
+1.1     Platforms
+
+        RapidSVN has been built and is run on several platforms:
+        - Windows 95/98/98 SE/ME/NT/2k/XP
+        - Unix (Linux, Solaris, FreeBSD)
+        - Mac OS/X (Tiger)
+        
+1.2     Compilers
+
+        Most platforms use the GNU GCC Compiler, but 
+        on Windows you will need some Microsoft C++ Compiler.
+        We are using VCC 6.0, but newer ones should work as well.
+        
+        There are efforts underway to build on Windows using
+        GCC as well, but right now, MS VCC is the simple answer.
+        
+1.3     Libraries
+
+        RapidSVN can be compiled whereever Subversion and wxWidgets
+        are available. All of the other dependencies are optional or
+        are needed only on some platforms.
+        
+        Mandatory libraries:
+        - Subversion >= 1.0 (for the Subversion functionality)
+        - Apache Portable Runtime (included with Subversion)
+        - Neon (included with Subversion)
+        - wxWidgets (for the graphical user interface)
+        
+        Optional libraries/applications:
+        - InnoSetup: installer for Windows
+        - doxygen: for code documentation
+        - graphviz: for code documentation (needed with doxygen)
+        - cppunit: for the regression tests
+        - OpenSSL: for SSL support)
+        - xsltproc: manpage generation
+        - DocBook XSL Manpage Stylesheet: manpage creation
+        - libtool: generation of "configure"
+        - autogen: generation of "configure"
+
+
+2       Building on Linux/Unix
+
+2.1     Building/Installing the libraries
+
+        You have to make sure Subversion and wxWidgets are compiled
+        and installed on your machine, including the files
+        needed for development (e.g. headers).
+        
+        There are binary packages for Subversion and wxWidgets available
+        on most distributions. As long as you dont need special features
+        that are not compiled in you may want to stick with these.
+
+2.2     Configuring the application
+
+        If you are building RapidSVN from the tarball, there is already
+        the "configure" script present. If you are building from a fresh
+        working copy from the repository, you need to create this script
+        running ./autogen.sh. You need libtool and autogen for this.
+        
+        Now that you have a "configure" script in the top directory of
+        the RapidSVN source tree, run it and check the output:
+        
+        ./configure
+        
+        The script will try to figure out which libraries are available 
+        on your machine and where to find them.
+        
+        There are several options for "configure" to tell the script where
+        to find stuff:
+        --with-apr-config=<location of apr-config>
+        --with-apu-config=<location of apu-config>
+        --with-neon-config=<location of neon-config>
+        --with-wx-config=<location of wx-config>
+        --with-svn-include=<directory which contains "subversion-1"
+        --with-svn-lib=<directory which contains "livsvn*"
+        
+        These options will be pretty sufficient for most installations.
+        
+2.3     Building the application
+
+        Well, type:
+        make
+        
+        Now the application should build. If you get compiler or linker
+        errors first check the configuration and directories on your
+        machine. If this doesnt solve your problems, google for help,
+        search the mailing list archives and if the problem is still
+        persistent, ask about your problem on users@rapidsvn.tigris.org.
+        
+2.4     Installing the application
+
+        Well, type (as user "root"):
+        make install
+        
+        Of course, you can create binary packges for your distribution
+        as well and then use the mechanisms it provides to install the 
+        package (e.g. dpkg, rpm). This is beyond the scope of this file.
+        
+        
+
+3       Building on Windows
+
+3.1     Building on Windows using Microsoft Visual Studio 6.0
+
+3.1.1   Building Subversion
+
+    A. Unpack
+
+        Unpack a Subversion source package as well as the wxWidgets source
+        package. Read the file INSTALL in the Subversion directory and
+        make sure you have installed all the tools you need.
+        
+        You will have to install Python, Perl, Microsoft Platform SDK
+        and an assembler like nasm or masm.
+        
+        The directory that contains Subversion in our example will be:
+          C:\Subversion-1.3.0
+        
+        Unpack the Berkeley DB binaries provided on the Subversion site
+        to the source tree. After this, the Berkeley DB directory
+        should be:
+          C:\Subversion-1.3.0\db4-win32
+        
+
+    B. Configure
+        
+        Open a command shell and make sure the Visual Studio tools are
+        can be found by typing "nmake". There may be a shortcut to a batch
+        script provided by Microsoft Visual Studio that has setup the
+        environment variables correctly.
+        
+        Now we have to configure the source tree using a python script
+        and tell the script to create the Visual Studio workspace and
+        project files:
+        
+        C:\Subversion-1.3.0> python gen-make.py -t dsp
+        
+        
+    C. Compile
+        
+        Start Microsoft Visual C++ 6.0 and open the workspace:
+          C:\Subversion-1.3.0\subversion_msvc.dsw
+          
+        Activate the configuration "__ALL__ - Debug" and start
+        the compilation.
+        
+        After a while the compilation should have finished.
+        
+        
+    TO BE CONTINUED...
+        
+
+
+4       Building on Mac OS/X
+
+        Basically, building on Mac OS/X the same mechanisms are used 
+        as under Linux. But there are some differences. 
+        
+        While on Linux an application is a binary which relies on some 
+        shared libraries (which are single binary files as well),
+        application on Mac OS/X have to resist in a special directory
+        structure. This binary can still rely on other shared libraries,
+        but since most applications on Mac OS/X are installed only by
+        dragging the application icon to the destination you cannot
+        be sure, whethere the installed shared libraries match the
+        versions you need.
+        
+        We decided to use only static linking for Subversion and wxWidgets
+        on Mac OS/X, so everything is included in a single binary.
+        
+        First, we need to create some temporary directories
+        
+4.1     Building/Installing the libraries
+
+    TO BE CONTINUED...
+
