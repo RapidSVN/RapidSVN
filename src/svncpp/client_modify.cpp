@@ -506,6 +506,53 @@ namespace svn
       throw ClientException (error);
     return revnum;
   }
+#if CHECK_SVN_SUPPORTS_EXTERNALS
+  void
+  Client::doExport2 (const Path & from_path, 
+                     const Path & to_path, 
+                     const Revision & revision, 
+                     bool overwrite,
+                     const Revision & peg_revision,
+                     bool ignore_externals,
+                     bool recurse,
+                     const char * native_eol) throw (ClientException)
+  {
+    Pool pool;
+    svn_revnum_t revnum = 0;
+
+    svn_error_t * error =  
+      svn_client_export3 (&revnum,
+                          from_path.c_str (),
+                          to_path.c_str (),
+                          peg_revision.revision (),
+                          revision.revision (),
+                          overwrite,
+                          ignore_externals,
+                          recurse,
+                          native_eol,
+                          *m_context,
+                          pool);
+
+    if(error != NULL)
+      throw ClientException (error);
+  }
+#else
+  void
+  Client::doExport2 (const Path & from_path, 
+                     const Path & to_path, 
+                     const Revision & revision, 
+                     bool overwrite,
+                     const Revision & peg_revision,
+                     bool ignore_externals,
+                     bool recurse,
+                     const char * native_eol) throw (ClientException)
+  {
+    Client::doExport (from_path, 
+                      to_path, 
+                      revision, 
+                      overwrite);
+  }
+#endif
 
   svn_revnum_t
   Client::doSwitch (const Path & path, 

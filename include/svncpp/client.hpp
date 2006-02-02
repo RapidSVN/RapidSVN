@@ -375,6 +375,29 @@ namespace svn
               bool force = false) throw (ClientException);
 
     /**
+     * Export into file or directory TO_PATH from local or remote FROM_PATH
+     * @param from_path path to import
+     * @param to_path where to import
+     * @param revision revision of files in source repository or working copy
+     * @param peg_revision
+     * @param overwrite overwrite existing files in to_path
+     * @param ignore_externals whether to ignore external sources in from_path
+     * @param recurse
+     * @param native_eol which EOL to use when exporting, usually different for
+     * different OSs
+     * @exception ClientException
+     */
+    void
+    doExport2 (const Path & from_path,
+               const Path & to_path,
+               const Revision & revision,
+               bool overwrite = false,
+               const Revision & peg_revision = Revision (),
+               bool ignore_externals = false,
+               bool recurse = true,
+               const char * native_eol = NULL) throw (ClientException);
+
+    /**
      * Update local copy to mirror a new url. This excapsulates the 
      * svn_client_switch() client method.
      * @exception ClientException
@@ -398,6 +421,7 @@ namespace svn
             const char * url,
             const char * message, 
             bool recurse) throw (ClientException);
+
 
     /**
      * Merge changes from two paths into a new local path.

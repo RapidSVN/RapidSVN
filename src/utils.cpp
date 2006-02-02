@@ -593,12 +593,8 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
     {
       // Failed assembling verbs.
       // TODO: Report this error in the status bar?
-
     }
-
 }
-
-
 
 /* -----------------------------------------------------------------
  * local variables:

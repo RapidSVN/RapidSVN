@@ -71,6 +71,7 @@ enum
   ID_DiffBase,
   ID_DiffHead,
   ID_Explore,
+  ID_Export,
   ID_Import,
   ID_Lock,
   ID_Log,

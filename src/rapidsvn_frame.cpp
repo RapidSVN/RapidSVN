@@ -63,6 +63,7 @@
 #include "external_program_action.hpp"
 #include "get_action.hpp"
 #include "import_action.hpp"
+#include "export_action.hpp"
 #include "lock_action.hpp"
 #include "merge_action.hpp"
 #include "mkdir_action.hpp"
@@ -319,6 +320,7 @@ public:
     // Repository menu
     wxMenu *menuRepos = new wxMenu;
     menuRepos->Append (ID_Import, _("&Import...\tCTRL-I"));
+    menuRepos->Append (ID_Export, _("&Export...\tCTRL-E"));
     menuRepos->Append (ID_Checkout, _("Check&out...\tCTRL-O"));
     menuRepos->Append (ID_CreateRepository, _("&Create..."));
 
@@ -1190,6 +1192,10 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       baseActionFlags = ImportAction::GetBaseFlags ();
       break;
 
+    case ID_Export:
+      baseActionFlags = ExportAction::GetBaseFlags ();
+      break;
+
     case ID_Checkout:
       baseActionFlags = CheckoutAction::GetBaseFlags ();
       break;
@@ -1380,6 +1386,10 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 
     case ID_Import:
       action = new ImportAction (this);
+      break;
+
+    case ID_Export:
+      action = new ExportAction (this);
       break;
 
     case ID_Checkout:

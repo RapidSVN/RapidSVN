@@ -21,6 +21,8 @@ rapidsvn_SOURCES= \
 	diff_action.cpp \
 	diff_dlg.cpp \
 	exceptions.cpp \
+	export_action.cpp \
+	export_dlg.cpp \
 	external_program_action.cpp \
 	filelist_ctrl.cpp \
 	file_info.cpp \
