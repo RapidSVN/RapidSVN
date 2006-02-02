@@ -133,15 +133,41 @@ Contents:
 
 3       Building on Windows
 
+        We are describing only ONE version or Subversion and wxWidgets
+        for Windows. On Unix, you often have to use the libraries that
+        are already installed. On Windows, things are different: you
+        download and build what you need. 
+        
+        Most people wont build RapidSVN on Windows at all but use the
+        binary packages.
+
 3.1     Building on Windows using Microsoft Visual Studio 6.0
 
-3.1.1   Building Subversion
+3.1.1   Building OpenSSL
+
+        Unpack the OpenSSL source package. Follow the build instructions
+        to configure and compile it.
+        
+        The directory that contains OpenSSL in our example will be:
+          C:\OpenSSL-0.9.8a
+          
+          
+3.1.2   Building ZLib
+
+        Unpack the ZLib source package. Follow the build instructions
+        to configure and compile it.
+        
+        The directory that contains OpenSSL in our example will be:
+          C:\ZLib-1.2.3
+          
+          
+3.1.3   Building Subversion 1.3.0
 
     A. Unpack
 
-        Unpack a Subversion source package as well as the wxWidgets source
-        package. Read the file INSTALL in the Subversion directory and
-        make sure you have installed all the tools you need.
+        Unpack a Subversion source package. Read the file INSTALL in the 
+        Subversion directory and make sure you have installed all the 
+        tools you need.
         
         You will have to install Python, Perl, Microsoft Platform SDK
         and an assembler like nasm or masm.
@@ -153,9 +179,24 @@ Contents:
         to the source tree. After this, the Berkeley DB directory
         should be:
           C:\Subversion-1.3.0\db4-win32
-        
 
-    B. Configure
+
+    B. Patch
+    
+        Well, some releases of Subversion cant be compiled on Windows without
+        adding some minor modifications.
+        
+        Open the file "C:\Subversion-1.3.0\neon\src\ne_xml.c
+        
+        Comment out the code the lines 50-54:
+        //#if !defined(XML_MAJOR_VERSION) || (XML_MAJOR_VERSION < 2 \
+        //                                    && XML_MINOR_VERSION == 95 \
+        //                                    && XML_MICRO_VERSION < 2)
+        //#define NEED_BOM_HANDLING
+        //#endif
+        
+        
+    C. Configure
         
         Open a command shell and make sure the Visual Studio tools are
         can be found by typing "nmake". There may be a shortcut to a batch
@@ -166,10 +207,12 @@ Contents:
         and tell the script to create the Visual Studio workspace and
         project files:
         
-        C:\Subversion-1.3.0> python gen-make.py -t dsp
+        C:\Subversion-1.3.0> python gen-make.py -t dsp \
+          --with-openssl=C:\openssl-0.9.8a \
+          --with-zlib=C:\zlib-1.2.3
         
         
-    C. Compile
+    D. Compile
         
         Start Microsoft Visual C++ 6.0 and open the workspace:
           C:\Subversion-1.3.0\subversion_msvc.dsw
@@ -179,9 +222,101 @@ Contents:
         
         After a while the compilation should have finished.
         
+        Now activate the configuration "__ALL__ - Release" and
+        start the compilation.
         
-    TO BE CONTINUED...
         
+3.1.4   Building wxWidgets 2.6.2
+
+    A.  Unpack
+    
+        Unpack wxWidgets source package.
+        
+        The directory that contains wxWidgets in our example will be:
+          C:\wxWidgets-2.6.2
+    
+    B.  Patch
+    
+        wxWidgets has to be modified to run without error. The 
+        runtime error will only occur when building and running the
+        Unicode Debug build of wxWidgets.
+        
+        Open the file "C:\wxWidgets-2.6.2\src\common\xpmdecod.c"
+        
+        Change line 553 from
+            name = wxStrdupA(inname);
+        to
+            name = _strdup(inname);
+            
+    C. Configure
+    
+        We have to configure and compile wxWidgets four times.
+        To configure wxWidgets you have to edit the file
+          C:\wxWidgets\build\msw\config.vc
+        
+        The following setting apply for all of our configurations:
+          SHARED = 0
+          MONOLITHIC = 0
+          USE_GUI = 1
+          USE_EXCEPTIONS = 1
+          USE_THREADS = 1
+          
+        For RapidSVN we need four permutations of 
+          BUILD = debug | release
+          UNICODE = 0 | 1
+          
+    D. Compile
+    
+        Open a command shell and make sure the Visual Studio tools are
+        can be found by typing "nmake". There may be a shortcut to a batch
+        script provided by Microsoft Visual Studio that has setup the
+        environment variables correctly.
+        
+        Change to the directory 
+          C:\wxWidgets-2.6.2\build\msw
+        and type
+          nmake /f makefile.vc
+        
+        
+3.1.5   Building RapidSVN
+        
+    A.  Prepare
+    
+        Create the environment variables OPENSSL, WX and SUBVERSION.
+        In our example, these will be
+        OPENSSL=C:\openssl-0.9.8a
+        SUBVERSION=C:\subversion-1.3.0
+        WX=C:\wxWidgets-2.6.2
+        
+        The directory that contains RapidSVN in our example will be:
+          C:\RapidSVN
+    
+    B.  Compile
+    
+        Now open the RapidSVN workspace in Microsoft Visual C++ 6.0:
+          C:\RapidSVN\rapidsvn.dsw
+          
+        Compilation should work out of the box now. You will
+        have to adapt paths a bit if you plan to use a different version
+        of wxWidgets or Subversion.
+        
+        If you want to create an installed you have to compile the
+        configurations:
+          rapidsvn - Win32 Release
+          rapidsvn - Win32 Unicode Release
+          
+        If you plan to debug and develop for RapidSVN you might want to
+        build the debug configurations as well
+          rapidsvn - Win32 Debug
+          rapidsvn - Win32 Unicode Debug
+    
+    C.  Create Installer
+    
+        Run the batch script to collect necessary DLLs:
+          C:\RapidSVN\packages\win32\FetchFiles.bat
+          
+        Now open the Innosetup project and compile the installer:
+          C:\RapidSVN\packages\win32\rapidsvn.iss
 
 
 4       Building on Mac OS/X
