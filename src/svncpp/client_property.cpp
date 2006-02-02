@@ -168,7 +168,6 @@ namespace svn
                    const Revision & revision,
                    bool recurse,
                    bool skip_checks)
-  //                   Context * context)
   {
     Pool pool;
 
@@ -193,8 +192,7 @@ namespace svn
                    const Path & path,
                    const Revision & revision,
                    bool recurse,
-                   bool skip_checks,
-                   Context * context)
+                   bool skip_checks)
   {
     Pool pool;
 
