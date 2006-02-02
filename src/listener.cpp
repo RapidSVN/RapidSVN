@@ -27,6 +27,9 @@
 #include "wx/wx.h"
 #include "wx/utils.h"
 
+// svncpp
+#include "svncpp/m_check.hpp"
+
 // app
 #include "listener.hpp"
 #include "cert_dlg.hpp"
@@ -40,29 +43,38 @@
 static const wxChar *
 ACTION_NAMES [] =
 {
-  _("Add"),           // svn_wc_notify_add,
-  _("Copy"),          // svn_wc_notify_copy,
-  _("Delete"),        // svn_wc_notify_delete,
-  _("Restore"),       // svn_wc_notify_restore,
-  _("Revert"),        // svn_wc_notify_revert,
-  NULL ,              // NOT USED HERE svn_wc_notify_failed_revert,
-  _("Resolved"),      // svn_wc_notify_resolved,
-  _("Skip"),          // NOT USED HERE svn_wc_notify_skip,
-  _("Deleted"),       // svn_wc_notify_update_delete,
-  _("Added"),         // svn_wc_notify_update_add,
-  _("Updated"),       // svn_wc_notify_update_update,
-  NULL,               // NOT USED HERE svn_wc_notify_update_completed,
-  NULL,               // NOT USED HERE svn_wc_notify_update_external,
-  NULL,               // NOT USED HERE svn_wc_notify_status_completed
-  NULL,               // NOT USED HERE svn_wc_notify_status_external
-  _("Modified"),      // svn_wc_notify_commit_modified,
-  _("Added"),         // svn_wc_notify_commit_added,
-  _("Deleted"),       // svn_wc_notify_commit_deleted,
-  _("Replaced"),      // svn_wc_notify_commit_replaced,
-  NULL                // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
+  _("Add"),              // svn_wc_notify_add,
+  _("Copy"),             // svn_wc_notify_copy,
+  _("Delete"),           // svn_wc_notify_delete,
+  _("Restore"),          // svn_wc_notify_restore,
+  _("Revert"),           // svn_wc_notify_revert,
+  NULL ,                 // NOT USED HERE svn_wc_notify_failed_revert,
+  _("Resolved"),         // svn_wc_notify_resolved,
+  _("Skip"),             // NOT USED HERE svn_wc_notify_skip,
+  _("Deleted"),          // svn_wc_notify_update_delete,
+  _("Added"),            // svn_wc_notify_update_add,
+  _("Updated"),          // svn_wc_notify_update_update,
+  NULL,                  // NOT USED HERE svn_wc_notify_update_completed,
+  NULL,                  // NOT USED HERE svn_wc_notify_update_external,
+  NULL,                  // NOT USED HERE svn_wc_notify_status_completed
+  NULL,                  // NOT USED HERE svn_wc_notify_status_external
+  _("Modified"),         // svn_wc_notify_commit_modified,
+  _("Added"),            // svn_wc_notify_commit_added,
+  _("Deleted"),          // svn_wc_notify_commit_deleted,
+  _("Replaced"),         // svn_wc_notify_commit_replaced,
+  NULL,                  // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
+  NULL,                  // NOT USED HERE svn_wc_notify_blame_revision
+  _("Locked"),           // svn_wc_notify_locked
+  _("Unlocked"),         // svn_wc_notify_unlocked
+  _("Failed to lock"),   // svn_wc_notify_failed_lock
+  _("Failed to unlock")  // svn_wc_notify_failed_unlock
 };
-const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
 
+#if CHECK_SVN_SUPPORTS_LOCK
+const int MAX_ACTION = svn_wc_notify_failed_unlock;
+#else
+const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
+#endif
 
 struct Listener::Data
 {
