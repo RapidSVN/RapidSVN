@@ -1,0 +1,86 @@
+Creating translations for RapidSVN.
+
+The directory structure for the user interface
+translations is as follows:
+
+rapidsvn
++-src
+  +-locale
+    +-rapidsvn.pot          This is a template file
+    |                       containing all the strings
+    |                       used in RapidSVN.
+    +-de                    This is a directory that
+      |                     contains the files
+      |                     necessary for the
+      |                     German translation
+      +-rapidsvn.po         This file contains a plain-text
+      |                     German translation
+      +-rapidsvn.mo         Binary message catalog, that
+                            will be used by RapidSVN to
+                            display the translated user
+                            interface.
+
+Whenever a new text string in the RapidSVN source code
+is added, updating the translation template rapidsvn.pot and
+all the translated rapidsvn.po files is necessary.
+
+Since there are not too many changes to the user interface
+between subsequent releases of RapidSVN it is sufficient to
+update that translation a week or two before creating a new 
+release.
+
+The following steps have to be performed for updating the
+translation:
+
+1. Recreate the template file
+
+   Open a shell and change to "src/locale"
+
+   Extract all the strings in the cpp source code files 
+   (only strings that should be translated are marked by
+   _("my string")):
+  
+     xgettext -o rapidsvn.pot -k_ ../*.cpp
+
+
+2. Merge the old translations and the new strings
+
+   This step has to be performed for every language.
+
+   Change to "src/locale/<language>" (e.g. "src/locale/de")
+
+   Save the old translation:
+     mv rapidsvn.po rapidsvn.po.old
+
+   Now merge the information:
+     msgmerge -o rapidsvn.po rapidsvn.po.old ../rapidsvn.pot
+
+
+3. Update the translations
+
+   This step has to be performed for every language.
+
+   The most easy way to check and update a translation is
+   to use the tool poEdit:
+  
+     poedit rapidsvn.po
+
+
+4. Compile the translations
+
+   This step has to be performed for every language.
+
+   Change to the directory "src/locale/<locale>".
+
+   Compile the translation:
+     msgfmt -o rapidsvn.mo rapidsvn.po
+
+
+5. Check the result in RapidSVN
+
+   Change to "src".
+
+   Set the appropriate locale:
+     export LANG=<locale> (e.g. de_DE, en_US)
+
+   Run rapidsvn and check the user interface.

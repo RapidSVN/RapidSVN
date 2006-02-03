@@ -157,38 +157,6 @@ static const int COLUMN_ID_MAP[FileListCtrl::COL_COUNT] =
   ID_Column_ConflictWrk
 };
 
-/**
- * Captions for the columns. We cant use the texts used for
- * the column headings in FileListCtrl since they dont have
- * shortcuts.
- */
-static const wxChar *
-COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
-{
-  wxT(""), // Name is not used here
-  wxT(""), // Path is not used here
-  _("&Revision"),
-  _("R&ep. Rev."),
-  _("&Author"),
-  _("&Status"),
-  _("&Prop Status"),
-  _("&Last Changed"),
-  _("E&xtension"),
-  _("&Date"),
-  _("Pr&op Date"),
-  _("Lock Owner"),
-  _("Lock Comment"),
-  _("Checksum"),
-  _("Url"),
-  _("Repository"),
-  _("UUID"),
-  _("Schedule"),
-  _("Copied"),
-  _("Conflict Old"),
-  _("Conflict New"),
-  _("Conflict Work")
-};
-
 
 /**
  * Local helper function to create the action worker
@@ -284,6 +252,38 @@ public:
     MenuColumns = new wxMenu;
     AppendMenuItem (*MenuColumns, ID_Column_Reset);
     MenuColumns->AppendSeparator ();
+
+    /**
+     * Captions for the columns. We cant use the texts used for
+     * the column headings in FileListCtrl since they dont have
+     * shortcuts.
+     */
+    const wxChar *
+    COLUMN_CAPTIONS[FileListCtrl::COL_COUNT] =
+    {
+      wxT(""), // Name is not used here
+      wxT(""), // Path is not used here
+      _("&Revision"),
+      _("R&ep. Rev."),
+      _("&Author"),
+      _("&Status"),
+      _("&Prop Status"),
+      _("&Last Changed"),
+      _("E&xtension"),
+      _("&Date"),
+      _("Pr&op Date"),
+      _("Lock Owner"),
+      _("Lock Comment"),
+      _("Checksum"),
+      _("Url"),
+      _("Repository"),
+      _("UUID"),
+      _("Schedule"),
+      _("Copied"),
+      _("Conflict Old"),
+      _("Conflict New"),
+      _("Conflict Work")
+    };
 
     for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
     {
@@ -614,15 +614,12 @@ END_EVENT_TABLE ()
 RapidSvnFrame::RapidSvnFrame (const wxString & title,
                               const wxLocale & locale)
   : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
-             wxDEFAULT_FRAME_STYLE)
+             wxDEFAULT_FRAME_STYLE),
+    m_folder_browser (NULL), m_listCtrl (NULL), m_title (title), m_context (0),
+    m_activePane (ACTIVEPANE_FOLDER_BROWSER)
 {
   m = new Data (this, locale);
-  m_folder_browser = NULL;
-  m_listCtrl = NULL;
-  m_title = title;
   m_actionWorker = CreateActionWorker (this);
-  m_context = 0;
-  m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
   // enable trace
   wxLog::AddTraceMask (TraceMisc);

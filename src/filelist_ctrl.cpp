@@ -621,7 +621,10 @@ public:
   bool IgnoreExternals;
   wxImageList *ImageListSmall;
 
-  static const wxChar * COLUMN_CAPTIONS [FileListCtrl::COL_COUNT];
+  // no need to be static because FileListCtrl is created only once
+  const wxChar * COLUMN_CAPTIONS [FileListCtrl::COL_COUNT];
+
+  void InitColumnCaptions ();
 
   static const wxChar * COLUMN_NAMES[FileListCtrl::COL_COUNT];
 
@@ -641,7 +644,6 @@ public:
   wxString ColumnCaption [COL_COUNT];
   int ColumnIndex [COL_COUNT];
   int ColumnWidth [COL_COUNT];
-
 
 
   Data ();
@@ -706,6 +708,8 @@ FileListCtrl::Data::Data ()
     ImageIndexArray [item.status + lock_offset] = MAP_LOCK_ICON_COUNT + MAP_ICON_COUNT + i;
     ImageListSmall->Add (wxIcon (item.xpm_data));
   }
+
+  InitColumnCaptions ();
 }
 
 /** destructor */
@@ -714,35 +718,40 @@ FileListCtrl::Data::~Data ()
   delete ImageListSmall;
 }
 
-/**
- * array with column captions
- */
-const wxChar *
-FileListCtrl::Data::COLUMN_CAPTIONS [FileListCtrl::COL_COUNT] =
+void
+FileListCtrl::Data::InitColumnCaptions ()
 {
-  _("Name"),
-  _("Path"),
-  _("Revision"),
-  _("Rep. Rev."),
-  _("Author"),
-  _("Status"),
-  _("Prop Status"),
-  _("Last Changed"),
-  _("Extension"),
-  _("Date"),
-  _("Prop Date"),
-  _("Lock Owner"),
-  _("Lock Comment"),
-  _("Checksum"),
-  _("Url"),
-  _("Repository"),
-  _("UUID"),
-  _("Schedule"),
-  _("Copied"),
-  _("Conflict Old"),
-  _("Conflict New"),
-  _("Conflict Work")
-};
+  const wxChar *
+  COLUMN_CAPTIONS_INIT [] =
+  {
+    _("Name"),
+    _("Path"),
+    _("Revision"),
+    _("Rep. Rev."),
+    _("Author"),
+    _("Status"),
+    _("Prop Status"),
+    _("Last Changed"),
+    _("Extension"),
+    _("Date"),
+    _("Prop Date"),
+    _("Lock Owner"),
+    _("Lock Comment"),
+    _("Checksum"),
+    _("Url"),
+    _("Repository"),
+    _("UUID"),
+    _("Schedule"),
+    _("Copied"),
+    _("Conflict Old"),
+    _("Conflict New"),
+    _("Conflict Work")
+  };
+
+  // initializing FileListCtrl::COLUMN_CAPTIONS
+  for (size_t i = 0; i < FileListCtrl::COL_COUNT; i++)
+    COLUMN_CAPTIONS [i] = COLUMN_CAPTIONS_INIT [i];
+}
 
 /**
  * array with column names. These names are
