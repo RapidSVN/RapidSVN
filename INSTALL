@@ -146,12 +146,15 @@ Contents:
 3.1.1   Building OpenSSL
 
         Unpack the OpenSSL source package. Follow the build instructions
-        to configure and compile it.
+        to configure and compile it. Configure OpenSSL so a static library
+        is built. You have to build using ms\nt.mak to achieve this.
+        The static library version of OpenSSL avoids conflicts with already 
+        installed versions of OpenSSL DLLs on the system. 
         
         The directory that contains OpenSSL in our example will be:
           C:\OpenSSL-0.9.8a
-          
-          
+
+
 3.1.2   Building ZLib
 
         Unpack the ZLib source package. Follow the build instructions
@@ -202,6 +205,12 @@ Contents:
         can be found by typing "nmake". There may be a shortcut to a batch
         script provided by Microsoft Visual Studio that has setup the
         environment variables correctly.
+        
+        Before configuring and compiling the code we want to tell Subversion
+        it shall link to the static library version of OpenSSL.
+        
+        Create an environment variable OPENSSL_STATIC with the value "yes"
+        to achieve this.
         
         Now we have to configure the source tree using a python script
         and tell the script to create the Visual Studio workspace and

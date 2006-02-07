@@ -39,10 +39,6 @@ Source: "msvcp60.dll"; DestDir: "{app}\bin"; Flags: onlyifdoesntexist; Component
 ; Berkeley DB
 Source: "tmp\libdb43.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 
-; OpenSSL
-Source: "tmp\libeay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "tmp\ssleay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-
 ; APR
 Source: "tmp\libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 Source: "tmp\libapriconv.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
