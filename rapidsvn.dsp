@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 msvcrtd.lib msvcprtd.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_ra-1.lib libsvn_ra_dav-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libneond.lib libapriconv.lib xml.lib libapr.lib libaprutil.lib libdb43d.lib wxbase26d.lib wxmsw26d_core.lib wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"src\svncpp\Debug" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_client" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_delta" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_diff" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs_base" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs_fs" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_dav" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_local" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_svn" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_repos" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_subr" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_wc" /libpath:"$(SUBVERSION)\apr-iconv\Debug" /libpath:"$(SUBVERSION)\apr-util\xml\expat\lib\LibD" /libpath:"$(SUBVERSION)\apr\Debug" /libpath:"$(SUBVERSION)\apr-util\Debug" /libpath:"$(SUBVERSION)\neon" /libpath:"$(SUBVERSION)\db4-win32\lib" /libpath:"$(WX)\lib\vc_lib"
+# ADD LINK32 msvcrtd.lib msvcprtd.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_ra-1.lib libsvn_ra_dav-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libneond.lib libapriconv.lib xml.lib libapr.lib libaprutil.lib libdb43d.lib wxbase26d.lib wxmsw26d_core.lib wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib /pdbtype:sept /libpath:"src\svncpp\Debug" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_client" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_delta" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_diff" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs_base" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs_fs" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_dav" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_local" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_svn" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_repos" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_subr" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_wc" /libpath:"$(SUBVERSION)\apr-iconv\Debug" /libpath:"$(SUBVERSION)\apr-util\xml\expat\lib\LibD" /libpath:"$(SUBVERSION)\apr\Debug" /libpath:"$(SUBVERSION)\apr-util\Debug" /libpath:"$(SUBVERSION)\neon" /libpath:"$(SUBVERSION)\db4-win32\lib" /libpath:"$(WX)\lib\vc_lib"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "rapidsvn - Win32 Unicode Debug"
@@ -219,6 +219,14 @@ SOURCE=.\src\diff_dlg.cpp
 # Begin Source File
 
 SOURCE=.\src\exceptions.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\export_action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\export_dlg.cpp
 # End Source File
 # Begin Source File
 
