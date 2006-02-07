@@ -432,9 +432,21 @@ AC_OUTPUT(Makefile \
           doc/svncpp/Makefile \
           include/Makefile \
           include/svncpp/Makefile \
+	  notes/Makefile \
+	  packages/Makefile \
+	  packages/debian/Makefile \
+	  packages/osx/Makefile \
+	  packages/rpm/Makefile \
+	  packages/rpm/fedora-core-3/Makefile \
+	  packages/rpm/redhat-7.x/Makefile \
+	  packages/rpm/redhat-8.x/Makefile \
+	  packages/win32/Makefile \
           src/Makefile \
+	  src/locale/Makefile \
+          src/res/Makefile \
           src/svncpp/Makefile \
-          src/res/Makefile)
+	  src/tests/Makefile \
+	  tools/Makefile)
 
 
 if test "$CPPUNITCONFIG" ; then

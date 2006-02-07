@@ -1,0 +1,1 @@
+EXTRA_DIST=rapidsvn_screenshot-2.png rapidsvn_screenshot.png

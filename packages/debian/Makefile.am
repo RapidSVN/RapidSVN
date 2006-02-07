@@ -1,0 +1,1 @@
+EXTRA_DIST=build-package.sh changelog compat control copyright dirs docs files rapidsvn.override rapidsvn.postinst.debhelper rapidsvn.postrm.debhelper rapidsvn.substvars rules

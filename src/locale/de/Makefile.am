@@ -1,0 +1,1 @@
+EXTRA_DIST=rapidsvn.mo rapidsvn.po

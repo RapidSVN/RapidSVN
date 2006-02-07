@@ -1,0 +1,1 @@
+SUBDIRS=fedora-core-3 redhat-7.x redhat-8.x
