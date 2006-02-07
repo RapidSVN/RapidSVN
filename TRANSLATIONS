@@ -34,26 +34,23 @@ translation:
 
 1. Recreate the template file
 
-   Open a shell and change to "src/locale"
-
-   Extract all the strings in the cpp source code files 
+   To extract all the strings in the cpp source code files 
    (only strings that should be translated are marked by
-   _("my string")):
-  
-     xgettext -o rapidsvn.pot -k_ ../*.cpp
+   _("my string")), open a shell and chdir to "src/locale";
+   now run:
+   
+     ../../tools/update-pot.sh
 
 
 2. Merge the old translations and the new strings
 
    This step has to be performed for every language.
 
-   Change to "src/locale/<language>" (e.g. "src/locale/de")
+   Change to "src/locale/<language>" and merge the
+   information:
+   
+     ../../../tools/update-po.sh
 
-   Save the old translation:
-     mv rapidsvn.po rapidsvn.po.old
-
-   Now merge the information:
-     msgmerge -o rapidsvn.po rapidsvn.po.old ../rapidsvn.pot
 
 
 3. Update the translations
@@ -68,12 +65,10 @@ translation:
 
 4. Compile the translations
 
-   This step has to be performed for every language.
-
-   Change to the directory "src/locale/<locale>".
-
-   Compile the translation:
-     msgfmt -o rapidsvn.mo rapidsvn.po
+   Change to the directory "src/locale" and
+   compile the translations:
+     
+     ../../compile-po.sh
 
 
 5. Check the result in RapidSVN

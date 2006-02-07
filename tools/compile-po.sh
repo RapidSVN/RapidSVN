@@ -12,16 +12,26 @@
 # ====================================================================
 #
 # This script compiles the translated strings to the binary
-# representation so the application can load this during runtime
+# representation so the application can load this during runtime.
 #
-# Remark: execute this script in <rapidsvn tree>/src/locale/<language>
+# All existing translation files are compiled.
+#
+# Remark: execute this script in <rapidsvn tree>/src/locale
 #
 # Usage:
 # >../../../tools/compile-po.sh
 
-PO="rapidsvn.po"
-MO="rapidsvn.mo"
+POT="rapidsvn.pot"
+if test ! -f $POT ; then
+  echo "rapidsvn.pot not found    MAKE SURE YOU EXECUTE THIS SCRIPT IN"
+  echo "                          <rapidsvn tree>/src/locale"
+  exit 1
+fi
 
-msgfmt -o$MO $PO
+for DIR in ?? ; do
+  PO="$DIR/rapidsvn.po"
+  MO="$DIR/rapidsvn.mo"
+  msgfmt -o$MO $PO
+done
 
 # end of file

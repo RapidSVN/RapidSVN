@@ -34,6 +34,7 @@ xgettext $OPTS
 CHANGED=`diff -q $POT $NEW_POT`
 if test -z "$CHANGED" ; then
   echo "$POT not changed"
+  rm $NEW_POT
 else
   echo "$POT has been changed"
   mv $POT $OLD_POT
