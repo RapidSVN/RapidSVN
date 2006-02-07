@@ -105,9 +105,12 @@ class VersionChecker:
         replace(fname, "OutputBaseFilename=[^\n]*", \
                 "OutputBaseFilename=RapidSVN-%s" % (self.version.str),
                 "OutputBaseFilename")
+        replace(fname, "DefaultDirName=[^\n]*", \
+                "DefaultDirName={pf}\RapidSVN %s" % (self.version.str),
+                "DefaultDirName")
         replace(fname, "DefaultGroupName=[^\n]*", \
-                "DefaultGroupname=RapidSVN %s\"" % (self.version.str),
-                "DefaultGroupname")
+                "DefaultGroupName=RapidSVN %s" % (self.version.str),
+                "DefaultGroupName")
         replace(fname, "userdesktop}\\\\RapidSVN[^\"]*\"", \
                 "userdesktop}\RapidSVN %s\"" % (self.version.str),
                 "[Icons]\\{userdesktop}")
