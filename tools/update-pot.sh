@@ -28,7 +28,7 @@ if test ! -f $POT ; then
   exit 1
 fi
 
-OPTS="-k_ -o$NEW_POT ../*.cpp"
+OPTS="-k_ -s -o$NEW_POT ../*.cpp"
 xgettext $OPTS
 
 CHANGED=`diff -q $POT $NEW_POT`
