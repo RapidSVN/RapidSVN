@@ -63,7 +63,7 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
 #ifdef wxUSE_UNICODE
   wxString unicode (_("Unicode"));
 #else
-  wxString unicode (_("Ansi"));
+  wxString unicode (_("ANSI"));
 #endif
 
   const wxString copy (wxString::Format(

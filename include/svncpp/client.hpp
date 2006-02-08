@@ -134,7 +134,7 @@ namespace svn
     Status 
     singleStatus (const char * path) throw (ClientException);
 
-  /**
+    /**
      * Executes a revision checkout.
      * @param moduleName name of the module to checkout.
      * @param destPath destination directory for checkout.
@@ -146,7 +146,8 @@ namespace svn
      * @exception ClientException
      */
     svn_revnum_t
-    checkout (const char * moduleName, const Path & destPath, 
+    checkout (const char * moduleName,
+              const Path & destPath, 
               const Revision & revision, 
               bool recurse,
               bool ignore_externals = false,

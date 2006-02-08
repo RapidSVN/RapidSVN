@@ -106,7 +106,7 @@ public:
       m_textPegRevision =
         new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
                         wxSize(50, -1), 0, valPegRevision);
-      m_textPegRevision->SetHelpText(_("If the files were renamed or moved sometime, specify which peg revision to use here."));
+      m_textPegRevision->SetHelpText(_("If the files were renamed or moved some time, specify which peg revision to use here."));
     }
     else
     {

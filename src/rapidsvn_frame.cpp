@@ -275,7 +275,7 @@ public:
       _("Lock Owner"),
       _("Lock Comment"),
       _("Checksum"),
-      _("Url"),
+      _("URL"),
       _("Repository"),
       _("UUID"),
       _("Schedule"),
@@ -533,7 +533,7 @@ public:
                       -1,
                       (wxObject *) NULL,
                       _("Resolve selected"),
-                      _("Remove 'conflicted' state on working copy files or directories)"));
+                      _("Remove 'conflicted' state on working copy files or directories"));
 
     toolBar->AddSeparator ();
   }

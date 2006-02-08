@@ -285,7 +285,7 @@ private:
 
     // third row: url
     mCheckUseUrl = new wxCheckBox (
-      this, ID_UseUrl, _("Use Url/Path:"));
+      this, ID_UseUrl, _("Use URL/Path:"));
     mTextUrl = new wxTextCtrl (this, ID_Url, wxEmptyString);
     mButtonBrowse = CreateEllipsisButton (this, ID_Browse);
     gridSizer->Add (mCheckUseUrl);

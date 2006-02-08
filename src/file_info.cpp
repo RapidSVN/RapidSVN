@@ -99,7 +99,7 @@ struct FileInfo::Data
     addLine (str);
 
     tmp = Utf8ToLocal (entry.url ());
-    str.Printf (_("Url: %s"), tmp.c_str ());
+    str.Printf (_("URL: %s"), tmp.c_str ());
     addLine (str);
 
     if (entry.repos ()) {
@@ -172,7 +172,7 @@ struct FileInfo::Data
     if (entry.isCopied ())
     {
       tmp = Utf8ToLocal (entry.copyfromUrl ());
-      str.Printf (_("Copied From Url: %s"), tmp.c_str ());
+      str.Printf (_("Copied From URL: %s"), tmp.c_str ());
       addLine (str);
 
       str.Printf (_("Copied From Rev: %ld"), entry.copyfromRev ());
