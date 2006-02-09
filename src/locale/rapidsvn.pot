@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-09 11:21+0100\n"
+"POT-Creation-Date: 2006-02-09 16:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -308,16 +308,16 @@ msgid ""
 msgstr ""
 
 #: ../export_dlg.cpp:152
-msgid "CR"
+msgid "CR (MacOS)"
 msgstr ""
 
 #: ../export_dlg.cpp:150
-msgid "CRLF"
+msgid "CRLF (Windows)"
 msgstr ""
 
 #: ../auth_dlg.cpp:74 ../cert_dlg.cpp:139 ../checkout_dlg.cpp:141
 #: ../commit_dlg.cpp:107 ../delete_dlg.cpp:57 ../destination_dlg.cpp:75
-#: ../diff_dlg.cpp:544 ../export_dlg.cpp:159 ../import_dlg.cpp:128
+#: ../diff_dlg.cpp:535 ../export_dlg.cpp:159 ../import_dlg.cpp:128
 #: ../listed_dlg.cpp:187 ../listed_dlg.cpp:343 ../lock_dlg.cpp:64
 #: ../merge_dlg.cpp:215 ../preferences_dlg.cpp:418 ../unlock_dlg.cpp:57
 #: ../update_dlg.cpp:119
@@ -381,31 +381,26 @@ msgstr ""
 msgid "Committed revision"
 msgstr ""
 
-#: ../diff_dlg.cpp:521
+#: ../diff_dlg.cpp:512
 msgid "Compare:"
 msgstr ""
 
-#: ../file_info.cpp:219
-#, c-format
-msgid "Conflict Current Base File: %s"
-msgstr ""
-
-#: ../filelist_ctrl.cpp:747 ../rapidsvn_frame.cpp:284
-msgid "Conflict New"
-msgstr ""
-
 #: ../filelist_ctrl.cpp:746 ../rapidsvn_frame.cpp:283
-msgid "Conflict Old"
+msgid "Conflict BASE"
 msgstr ""
 
 #: ../file_info.cpp:209
 #, c-format
-msgid "Conflict Previous Base File: %s"
+msgid "Conflict BASE File: %s"
 msgstr ""
 
-#: ../file_info.cpp:214
+#: ../filelist_ctrl.cpp:747 ../rapidsvn_frame.cpp:284
+msgid "Conflict HEAD"
+msgstr ""
+
+#: ../file_info.cpp:219
 #, c-format
-msgid "Conflict Previous Working File: %s"
+msgid "Conflict HEAD File: %s"
 msgstr ""
 
 #: ../file_info.cpp:227
@@ -415,6 +410,11 @@ msgstr ""
 
 #: ../filelist_ctrl.cpp:748 ../rapidsvn_frame.cpp:285
 msgid "Conflict Work"
+msgstr ""
+
+#: ../file_info.cpp:214
+#, c-format
+msgid "Conflict Working File: %s"
 msgstr ""
 
 #: ../filelist_ctrl.cpp:745 ../rapidsvn_frame.cpp:282
@@ -485,20 +485,20 @@ msgstr ""
 msgid "Destination path"
 msgstr ""
 
-#: ../diff_action.cpp:236 ../diff_action.cpp:243 ../diff_dlg.cpp:718
+#: ../diff_action.cpp:236 ../diff_action.cpp:243 ../diff_dlg.cpp:711
 #: ../log_dlg.cpp:221
 msgid "Diff"
 msgstr ""
 
-#: ../diff_dlg.cpp:393
+#: ../diff_dlg.cpp:615
 msgid "Diff to BASE"
 msgstr ""
 
-#: ../diff_dlg.cpp:394
+#: ../diff_dlg.cpp:616
 msgid "Diff to HEAD"
 msgstr ""
 
-#: ../diff_dlg.cpp:395
+#: ../diff_dlg.cpp:617
 msgid "Diff to another revision/date"
 msgstr ""
 
@@ -506,7 +506,7 @@ msgstr ""
 msgid "Diff tool:"
 msgstr ""
 
-#: ../diff_dlg.cpp:396
+#: ../diff_dlg.cpp:618
 msgid "Diff two revisions/dates"
 msgstr ""
 
@@ -593,10 +593,6 @@ msgstr ""
 #: ../merge_dlg.cpp:61 ../merge_dlg.cpp:99 ../merge_dlg.cpp:115
 #: ../property_dlg.cpp:124 ../rapidsvn_frame.cpp:989 ../tracer.cpp:81
 msgid "Error"
-msgstr ""
-
-#: ../rapidsvn_frame.cpp:1532
-msgid "Error receiving action event!"
 msgstr ""
 
 #: ../file_info.cpp:272
@@ -798,6 +794,10 @@ msgstr ""
 msgid "Internal Error: There is another action running"
 msgstr ""
 
+#: ../rapidsvn_frame.cpp:1532
+msgid "Internal Error: no client data for action event!"
+msgstr ""
+
 #: ../threaded_worker.cpp:281
 msgid "Internal Error: no context available"
 msgstr ""
@@ -823,7 +823,7 @@ msgid "Keep locks"
 msgstr ""
 
 #: ../export_dlg.cpp:151
-msgid "LF"
+msgid "LF (Unix)"
 msgstr ""
 
 #: ../filelist_ctrl.cpp:734
@@ -1027,7 +1027,7 @@ msgstr ""
 
 #: ../about_dlg.cpp:109 ../auth_dlg.cpp:72 ../checkout_dlg.cpp:140
 #: ../commit_dlg.cpp:105 ../delete_dlg.cpp:55 ../destination_dlg.cpp:73
-#: ../diff_dlg.cpp:543 ../export_dlg.cpp:158 ../import_dlg.cpp:126
+#: ../diff_dlg.cpp:534 ../export_dlg.cpp:158 ../import_dlg.cpp:126
 #: ../listed_dlg.cpp:186 ../listed_dlg.cpp:342 ../lock_dlg.cpp:62
 #: ../merge_dlg.cpp:213 ../preferences_dlg.cpp:415 ../report_dlg.cpp:58
 #: ../unlock_dlg.cpp:55 ../update_dlg.cpp:117
@@ -1273,11 +1273,11 @@ msgstr ""
 msgid "Revision must be an unsigned number!"
 msgstr ""
 
-#: ../diff_dlg.cpp:534
+#: ../diff_dlg.cpp:525
 msgid "Revision or date #&1:"
 msgstr ""
 
-#: ../diff_dlg.cpp:538
+#: ../diff_dlg.cpp:529
 msgid "Revision or date #&2:"
 msgstr ""
 
@@ -1382,7 +1382,7 @@ msgid "Show Startup Tips"
 msgstr ""
 
 #: ../rapidsvn_frame.cpp:563
-msgid "Show the log messages for a set entries"
+msgid "Show the log messages for the selected entries"
 msgstr ""
 
 #: ../rapidsvn_frame.cpp:309
@@ -1432,7 +1432,7 @@ msgid "Store authentication credentials on hard disk"
 msgstr ""
 
 #: ../switch_action.cpp:39 ../switch_action.cpp:63
-msgid "Switch"
+msgid "Switch URL"
 msgstr ""
 
 #: ../rapidsvn_frame.cpp:330
@@ -1592,7 +1592,7 @@ msgstr ""
 msgid "modified"
 msgstr ""
 
-#: ../export_dlg.cpp:149
+#: ../export_dlg.cpp:149 ../export_dlg.cpp:153
 msgid "native"
 msgstr ""
 
