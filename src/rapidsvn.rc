@@ -11,7 +11,7 @@
  * ====================================================================
  */
 
-logo ICON    "res/svn.ico"
+logo ICON    "res/rapidsvn.ico"
 
 #include "wx/msw/wx.rc"
 

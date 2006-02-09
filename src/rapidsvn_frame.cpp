@@ -90,7 +90,7 @@
 #include "proportional_splitter.hpp"
 
 // Bitmaps
-#include "res/bitmaps/svn.xpm"
+#include "res/bitmaps/rapidsvn_16x16.xpm"
 #include "res/bitmaps/refresh.xpm"
 #include "res/bitmaps/update.xpm"
 #include "res/bitmaps/commit.xpm"
@@ -629,7 +629,12 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   // call to Get().
   wxConfigBase *cfg = wxConfigBase::Get ();
 
-  SetIcon (wxIcon (svn_xpm));
+// @todo Would be good to have an icon bundle here
+//#ifdef __WXMSW__
+//  SetIcons (wxIconBundle (wxT("rapidsvn.exe"), 0));
+//#else
+  SetIcon (wxIcon (rapidsvn_16x16_xpm));
+//#endif
 
   // toolbar rows
   m_toolbar_rows = 1;
