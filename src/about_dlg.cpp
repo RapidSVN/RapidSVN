@@ -56,10 +56,6 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
   const wxString strCopyrightMessage (Utf8ToLocal (RAPIDSVN_COPYRIGHT));
   const wxString strVerMilestone (Utf8ToLocal (RAPIDSVN_VER_MILESTONE));
 
-  const wxString milestone (wxString::Format (
-    _("Milestone: %s"),
-    strVerMilestone.c_str ()));
-
 #ifdef wxUSE_UNICODE
   wxString unicode (_("Unicode"));
 #else
@@ -68,12 +64,10 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
 
   const wxString copy (wxString::Format(
     wxT("%s\n") // version
-    wxT("%s\n") // milestone
     wxT("\n%s\n\n") // copyright
     wxT("%s\n") // for more information
     wxT("http://rapidsvn.tigris.org"),
     version.c_str (),
-    milestone.c_str (),
     strCopyrightMessage.c_str (),
     _("For more information see:")));
 
