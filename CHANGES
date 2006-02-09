@@ -1,3 +1,40 @@
+Version 0.9.1 (released Feb 10 2006)
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.1
+
+User-visible changes:
+* 95  New: Bookmark editor
+* 258 New: Added column for log messages in Log dialog
+* 282 New: Support LOCK / UNLOCK
+* 326 New: pre-initialize repository URL in checkout dialog
+* 337 New: Added Russian translation
+* 338 New: Added Ukrainian translation
+* 341 New: Added Unicode build to Windows installer
+* 351 New: Added "Export" menu entry and dialog 
+* 327 Fixed: invalid logout menu item in folder browser context menu
+* 335 Fixed: URLs didnt support spaces
+* 336 Fixed: RapidSVN didnt use SVN stored credentials
+* 339 Fixed: Directory entries with a '.' were truncated in folder browser
+* 340 Fixed: Column names were not localized.
+* 343 Fixed: Crash / segfault at startup on Fedora Core 4
+* 345 Fixed: Some menu entries on bookmarks were invisible
+* 350 Fixed: RapidSVN crashed when clicking Help in Checkout Menu
+* 352 Fixed: wrong libeay32.dll was used on Windows XP / Windows Server 2003
+* 353 Fixed: Unicode Debug build crashed on Windows because of linker ambiguities
+
+Developer-visible changes:
+* 332 New: Include "packages" in source tarball
+* 330 New: Supported URL schemas were not detected
+* 279 New: Ensure Compatibility with wxWidgets 2.6.0
+* 283 New: Added Client::lock, Client::unlock, Status::locked
+* 287 New: Support Subversion 1.2
+* 348 Fixed: Removed warnings about abstract classes without virtual destructors
+* 349 Fixed: Warnings at compile time
+
+Work in progress (not completed):
+* 80  Remember filenames, log entries between calls
+* 261 Additional bookmark operations
+
+
 Version 0.9.0 (released Oct 18 2005)
 http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.0
 
