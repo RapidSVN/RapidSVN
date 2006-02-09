@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RapidSVN 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-09 11:21+0100\n"
-"PO-Revision-Date: 2006-02-09 11:23+0100\n"
+"PO-Revision-Date: 2006-02-09 14:09+0100\n"
 "Last-Translator: XelaRellum <XelaRellum@web.de>\n"
 "Language-Team: Alexander Mueller <XelaRellum@web.de>\n"
 "MIME-Version: 1.0\n"
@@ -71,15 +71,15 @@ msgstr "&Löschen..."
 
 #: ../utils.cpp:199
 msgid "&Diff to Base...\tCTRL+B"
-msgstr "&Diff zur Ausgangsversion...\tCTRL-B"
+msgstr "Vergleiche mit Basis...\tCTRL-B"
 
 #: ../utils.cpp:200
 msgid "&Diff to Head...\tCTRL+H"
-msgstr "&Diff zu Aktuellster...\tCTRL-H"
+msgstr "Vergleiche mit Aktuellster...\tCTRL-H"
 
 #: ../utils.cpp:198
 msgid "&Diff...\tCTRL+D"
-msgstr "&Diff...\tCTRL-D"
+msgstr "&Vergleiche...\tCTRL-D"
 
 #: ../utils.cpp:267
 msgid "&Edit Bookmark..."
@@ -292,7 +292,7 @@ msgstr "Autor"
 
 #: ../action.cpp:378
 msgid "BASE"
-msgstr "BASE"
+msgstr "BASIS"
 
 #: ../rapidsvn_frame.cpp:1056
 msgid "Bookmark"
@@ -528,11 +528,11 @@ msgstr "Vergleichen"
 
 #: ../diff_dlg.cpp:393
 msgid "Diff to BASE"
-msgstr "Vergleiche mit BASE"
+msgstr "Vergleiche mit BASIS"
 
 #: ../diff_dlg.cpp:394
 msgid "Diff to HEAD"
-msgstr "Vergleiche mit HEAD"
+msgstr "Vergleiche mit AKTUELLSTER"
 
 #: ../diff_dlg.cpp:395
 msgid "Diff to another revision/date"
@@ -798,7 +798,7 @@ msgstr "Hole Datei %s rev. %s"
 
 #: ../action.cpp:376
 msgid "HEAD"
-msgstr "HEAD"
+msgstr "AKTUELLSTE"
 
 #: ../log_dlg.cpp:209
 #, c-format
@@ -1457,7 +1457,7 @@ msgstr "Setzen Sie diese Einstellung, um die aktuellste Version der Dateien im R
 #: ../checkout_dlg.cpp:117
 #: ../export_dlg.cpp:120
 msgid "Set this to use BASE/HEAD (current) peg revision of the files."
-msgstr "Benutzen Sie dies für die BASE/HEAD (aktuell) \"peg\" Revision der Dateien."
+msgstr "Benutzen Sie dies für die BASIS/AKTUELLSTE \"peg\" Revision der Dateien."
 
 #: ../checkout_dlg.cpp:130
 msgid "Set to automatically create a new working copy bookmark."
