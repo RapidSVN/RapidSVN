@@ -1,1 +1,0 @@
-EXTRA_DIST=.rpmmacros rapidsvn.spec

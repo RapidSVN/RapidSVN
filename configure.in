@@ -437,9 +437,6 @@ AC_OUTPUT(Makefile \
 	  packages/debian/Makefile \
 	  packages/osx/Makefile \
 	  packages/rpm/Makefile \
-	  packages/rpm/fedora-core-3/Makefile \
-	  packages/rpm/redhat-7.x/Makefile \
-	  packages/rpm/redhat-8.x/Makefile \
 	  packages/win32/Makefile \
           src/Makefile \
 	  src/locale/Makefile \
