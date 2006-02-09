@@ -1251,6 +1251,8 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       break;
 
     case ID_Diff:
+    case ID_DiffBase:
+    case ID_DiffHead:
       baseActionFlags = DiffAction::GetBaseFlags ();
       break;
 
