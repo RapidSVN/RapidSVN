@@ -1,6 +1,6 @@
 /*
  * ====================================================================
- * Copyright (c) 2002-2005 The RapidSvn Group.  All rights reserved.
+ * Copyright (c) 2002-2006 The RapidSvn Group.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

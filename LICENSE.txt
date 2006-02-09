@@ -1,5 +1,5 @@
 =================================================================
-Copyright (C) 2002-2005 The RapidSvn Group. All rights reserved.
+Copyright (C) 2002-2006 The RapidSvn Group. All rights reserved.
 
 =================================================================
 
