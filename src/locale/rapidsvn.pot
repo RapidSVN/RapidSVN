@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-07 17:27+0100\n"
+"POT-Creation-Date: 2006-02-09 11:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,6 +228,10 @@ msgstr ""
 msgid "<None>"
 msgstr ""
 
+#: ../about_dlg.cpp:66
+msgid "ANSI"
+msgstr ""
+
 #: ../about_dlg.cpp:43
 #, c-format
 msgid "About %s"
@@ -269,10 +273,6 @@ msgstr ""
 
 #: ../preferences_dlg.cpp:56
 msgid "All files|*"
-msgstr ""
-
-#: ../about_dlg.cpp:66
-msgid "Ansi"
 msgstr ""
 
 #: ../auth_dlg.cpp:118 ../preferences_dlg.cpp:411
@@ -428,7 +428,7 @@ msgstr ""
 
 #: ../file_info.cpp:175
 #, c-format
-msgid "Copied From Url: %s"
+msgid "Copied From URL: %s"
 msgstr ""
 
 #: ../listener.cpp:47 ../move_action.cpp:49
@@ -766,7 +766,7 @@ msgstr ""
 
 #: ../checkout_dlg.cpp:106 ../export_dlg.cpp:109
 msgid ""
-"If the files were renamed or moved sometime, specify which peg revision to "
+"If the files were renamed or moved some time, specify which peg revision to "
 "use here."
 msgstr ""
 
@@ -1190,7 +1190,7 @@ msgid "Refresh with Update"
 msgstr ""
 
 #: ../rapidsvn_frame.cpp:536
-msgid "Remove 'conflicted' state on working copy files or directories)"
+msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr ""
 
 #: ../rapidsvn_frame.cpp:1032
@@ -1461,8 +1461,14 @@ msgstr ""
 msgid "Tree"
 msgstr ""
 
-#: ../checkout_dlg.cpp:67 ../export_dlg.cpp:70 ../update_dlg.cpp:71
+#: ../checkout_dlg.cpp:67 ../export_dlg.cpp:70 ../filelist_ctrl.cpp:741
+#: ../rapidsvn_frame.cpp:278 ../update_dlg.cpp:71
 msgid "URL"
+msgstr ""
+
+#: ../file_info.cpp:102
+#, c-format
+msgid "URL: %s"
 msgstr ""
 
 #: ../filelist_ctrl.cpp:743 ../rapidsvn_frame.cpp:280
@@ -1501,17 +1507,8 @@ msgstr ""
 msgid "Updating..."
 msgstr ""
 
-#: ../filelist_ctrl.cpp:741 ../rapidsvn_frame.cpp:278
-msgid "Url"
-msgstr ""
-
-#: ../file_info.cpp:102
-#, c-format
-msgid "Url: %s"
-msgstr ""
-
 #: ../diff_dlg.cpp:288
-msgid "Use Url/Path:"
+msgid "Use URL/Path:"
 msgstr ""
 
 #: ../preferences_dlg.cpp:203 ../preferences_dlg.cpp:249

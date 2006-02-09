@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-07 17:27+0100\n"
-"PO-Revision-Date: 2006-02-07 17:33+0100\n"
+"POT-Creation-Date: 2006-02-09 11:21+0100\n"
+"PO-Revision-Date: 2006-02-09 11:23+0100\n"
 "Last-Translator: XelaRellum <XelaRellum@web.de>\n"
 "Language-Team: Alexander Mueller <XelaRellum@web.de>\n"
 "MIME-Version: 1.0\n"
@@ -232,6 +232,10 @@ msgstr "- Das Zertifikat ist noch nicht gültig."
 msgid "<None>"
 msgstr "<kein>"
 
+#: ../about_dlg.cpp:66
+msgid "ANSI"
+msgstr ""
+
 #: ../about_dlg.cpp:43
 #, c-format
 msgid "About %s"
@@ -276,10 +280,6 @@ msgstr "Repository '%s' zu Lesezeichen hinzugefügt"
 #: ../preferences_dlg.cpp:56
 msgid "All files|*"
 msgstr "Alle Dateien|*"
-
-#: ../about_dlg.cpp:66
-msgid "Ansi"
-msgstr "Ansi"
 
 #: ../auth_dlg.cpp:118
 #: ../preferences_dlg.cpp:411
@@ -456,8 +456,8 @@ msgstr "Kopiert von Revision: %ld"
 
 #: ../file_info.cpp:175
 #, c-format
-msgid "Copied From Url: %s"
-msgstr "Kopiert von Url: %s"
+msgid "Copied From URL: %s"
+msgstr "Kopiert von URL: %s"
 
 #: ../listener.cpp:47
 #: ../move_action.cpp:49
@@ -540,7 +540,7 @@ msgstr "Vergleichen mit anderer Revision/Datum"
 
 #: ../preferences_dlg.cpp:268
 msgid "Diff tool:"
-msgstr "Diff-Tool:"
+msgstr "Tool zum Vergleichen:"
 
 #: ../diff_dlg.cpp:396
 msgid "Diff two revisions/dates"
@@ -816,7 +816,7 @@ msgstr "Wenn nicht die neueste Version der Dateien verwendet werden soll, dann g
 
 #: ../checkout_dlg.cpp:106
 #: ../export_dlg.cpp:109
-msgid "If the files were renamed or moved sometime, specify which peg revision to use here."
+msgid "If the files were renamed or moved some time, specify which peg revision to use here."
 msgstr "Wenn die Dateien umbenannt oder verschoben wurden, dann geben Sie die hier zu verwendende \"peg\" Revision an."
 
 #: ../rapidsvn_frame.cpp:311
@@ -1274,7 +1274,7 @@ msgid "Refresh with Update"
 msgstr "Aktualisieren mit Update"
 
 #: ../rapidsvn_frame.cpp:536
-msgid "Remove 'conflicted' state on working copy files or directories)"
+msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr "Entfernt den 'Konflikt' Status der ausgewählten Dateien oder Verzeichnisse"
 
 #: ../rapidsvn_frame.cpp:1032
@@ -1562,9 +1562,16 @@ msgstr "Baum"
 
 #: ../checkout_dlg.cpp:67
 #: ../export_dlg.cpp:70
+#: ../filelist_ctrl.cpp:741
+#: ../rapidsvn_frame.cpp:278
 #: ../update_dlg.cpp:71
 msgid "URL"
 msgstr "URL"
+
+#: ../file_info.cpp:102
+#, c-format
+msgid "URL: %s"
+msgstr "URL: %s"
 
 #: ../filelist_ctrl.cpp:743
 #: ../rapidsvn_frame.cpp:280
@@ -1607,19 +1614,9 @@ msgstr "Aktualisiert"
 msgid "Updating..."
 msgstr "Aktualisieren..."
 
-#: ../filelist_ctrl.cpp:741
-#: ../rapidsvn_frame.cpp:278
-msgid "Url"
-msgstr "Url"
-
-#: ../file_info.cpp:102
-#, c-format
-msgid "Url: %s"
-msgstr "Url: %s"
-
 #: ../diff_dlg.cpp:288
-msgid "Use Url/Path:"
-msgstr "Benutze Url/Pfad:"
+msgid "Use URL/Path:"
+msgstr "Benutze URL/Pfad:"
 
 #: ../preferences_dlg.cpp:203
 #: ../preferences_dlg.cpp:249
@@ -1756,6 +1753,10 @@ msgstr "Unbekannter Wert"
 msgid "unversioned"
 msgstr "unversioniert"
 
+#~ msgid "Ansi"
+#~ msgstr "Ansi"
+#~ msgid "Url"
+#~ msgstr "Url"
 #~ msgid "Subversion %d.%d.%d"
 #~ msgstr "Subversion %d.%d.%d"
 #~ msgid "wxWidgets %d.%d.%d"
