@@ -388,15 +388,6 @@ static const DiffData::CompareType COMPARE_TYPES [] = {
   DiffData::WITH_DIFFERENT_REVISION,
   DiffData::TWO_REVISIONS};
 
-static const wxString COMPARE_TYPE_LABELS [] =
-{
-  _("Diff to BASE"),
-  _("Diff to HEAD"),
-  _("Diff to another revision/date"),
-  _("Diff two revisions/dates")
-};
-
-
 /**
  * This panel contains all the controls relevant for
  * the diff dialog. We are using a separate class to
@@ -522,7 +513,7 @@ private:
 
       mComboCmpType = new wxComboBox (
         this, ID_CompareType, wxEmptyString, wxDefaultPosition, wxDefaultSize,
-        WXSIZEOF (COMPARE_TYPE_LABELS), COMPARE_TYPE_LABELS,
+        0, 0,
         wxCB_READONLY);
 
       typeSizer->Add (label);
@@ -615,28 +606,30 @@ private:
 
   /**
    * Add a compare type to the combo box
-   *
-   * @return success
-   * @retval false @a CompareType entry in @a CompareTypeLabels
-   *               not found
    */
-  bool
+  void
   AddCompareType (DiffData::CompareType compareType)
   {
-    bool ok = false;
-    const int c = WXSIZEOF (COMPARE_TYPES);
+    const wxString COMPARE_TYPE_LABELS [] =
+    {
+      _("Diff to BASE"),
+      _("Diff to HEAD"),
+      _("Diff to another revision/date"),
+      _("Diff two revisions/dates")
+    };
+
+    const int c = WXSIZEOF (COMPARE_TYPE_LABELS) / 
+      WXSIZEOF (COMPARE_TYPE_LABELS [0]);
+
     for (int i=0; i < c; i++)
     {
       if (COMPARE_TYPES [i] == compareType)
       {
         mComboCmpType->Append (COMPARE_TYPE_LABELS [i],
                                (void*) & (COMPARE_TYPES [i]));
-        ok = true;
         break;
       }
     }
-
-    return ok;
   }
 
 
