@@ -6,15 +6,21 @@
 
 [Setup]
 AppName=RapidSVN
-AppVerName=RapidSVN 0.9.0
+AppVerName=RapidSVN 0.9.1
 AppPublisherURL=http://rapidsvn.tigris.org/
 AppSupportURL=http://rapidsvn.tigris.org/
 AppUpdatesURL=http://rapidsvn.tigris.org/
-DefaultDirName={pf}\RapidSVN 0.9.0
-DefaultGroupName=RapidSVN 0.9.0
+DefaultDirName={pf}\RapidSVN 0.9.1
+DefaultGroupName=RapidSVN 0.9.1
 LicenseFile=..\..\GPL.txt
 InfoBeforeFile=..\..\README
-OutputBaseFilename=RapidSVN-0.9.0
+OutputBaseFilename=RapidSVN-0.9.1
+
+[Languages]
+Name: "en"; MessagesFile: "compiler:Default.isl"
+Name: "de"; MessagesFile: "compiler:Languages\German.isl"
+Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "uk"; MessagesFile: "Ukrainian-5-5.1.0.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
@@ -47,7 +53,7 @@ Source: "tmp\*.so"; DestDir: "{app}\bin\iconv"; Flags: ignoreversion; Components
 
 [Icons]
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin";
-Name: "{userdesktop}\RapidSVN 0.9.0"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon
+Name: "{userdesktop}\RapidSVN 0.9.1"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\bin\rapidsvn.exe"; Description: "Launch RapidSVN"; WorkingDir: "{app}\bin"; Flags: nowait postinstall skipifsilent

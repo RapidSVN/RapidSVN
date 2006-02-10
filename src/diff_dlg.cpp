@@ -382,6 +382,16 @@ BEGIN_EVENT_TABLE (RevisionPanel, wxPanel)
 END_EVENT_TABLE ()
 
 
+enum
+{
+  COMPARE_WITH_BASE = 0,
+  COMPARE_WITH_HEAD,
+  COMPARE_WITH_DIFFERENT_REVISION,
+  COMPARE_TWO_REVISIONS,
+  COMPARE_COUNT
+};
+
+
 static const DiffData::CompareType COMPARE_TYPES [] = {
   DiffData::WITH_BASE,
   DiffData::WITH_HEAD,
@@ -399,11 +409,20 @@ public:
   wxComboBox * mComboCmpType;
   RevisionPanel * mRevisionOne;
   RevisionPanel * mRevisionTwo;
+  wxString mCompareTypeLabels [COMPARE_COUNT];
+
 
   /** Constructor */
   Data (wxWindow * parent)
     : wxPanel (parent), mParent (parent)
   {
+    mCompareTypeLabels [COMPARE_WITH_BASE] = _("Diff to BASE");
+    mCompareTypeLabels [COMPARE_WITH_HEAD] = _("Diff to HEAD");
+    mCompareTypeLabels [COMPARE_WITH_DIFFERENT_REVISION] =  
+      _("Diff to another revision/date");
+    mCompareTypeLabels [COMPARE_TWO_REVISIONS] = 
+      _("Diff two revisions/dates");
+
     InitControls ();
     CheckControls ();
   }
@@ -513,7 +532,7 @@ private:
 
       mComboCmpType = new wxComboBox (
         this, ID_CompareType, wxEmptyString, wxDefaultPosition, wxDefaultSize,
-        0, 0,
+        COMPARE_COUNT, mCompareTypeLabels, 
         wxCB_READONLY);
 
       typeSizer->Add (label);
@@ -610,22 +629,11 @@ private:
   void
   AddCompareType (DiffData::CompareType compareType)
   {
-    const wxString COMPARE_TYPE_LABELS [] =
-    {
-      _("Diff to BASE"),
-      _("Diff to HEAD"),
-      _("Diff to another revision/date"),
-      _("Diff two revisions/dates")
-    };
-
-    const int c = WXSIZEOF (COMPARE_TYPE_LABELS) / 
-      WXSIZEOF (COMPARE_TYPE_LABELS [0]);
-
-    for (int i=0; i < c; i++)
+    for (int i=0; i < COMPARE_COUNT; i++)
     {
       if (COMPARE_TYPES [i] == compareType)
       {
-        mComboCmpType->Append (COMPARE_TYPE_LABELS [i],
+        mComboCmpType->Append (mCompareTypeLabels [i],
                                (void*) & (COMPARE_TYPES [i]));
         break;
       }
@@ -699,6 +707,7 @@ private:
 private:
   DECLARE_EVENT_TABLE ()
 };
+
 
 
 BEGIN_EVENT_TABLE (DiffDlg::Data, wxPanel)
