@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-09 16:59+0100\n"
+"POT-Creation-Date: 2006-02-10 10:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,7 +228,7 @@ msgstr ""
 msgid "<None>"
 msgstr ""
 
-#: ../about_dlg.cpp:66
+#: ../about_dlg.cpp:62
 msgid "ANSI"
 msgstr ""
 
@@ -261,12 +261,12 @@ msgstr ""
 msgid "Added"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1020
+#: ../rapidsvn_frame.cpp:1025
 #, c-format
 msgid "Added repository to bookmarks '%s'"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:997
+#: ../rapidsvn_frame.cpp:1002
 #, c-format
 msgid "Added working copy to bookmarks '%s'"
 msgstr ""
@@ -287,7 +287,7 @@ msgstr ""
 msgid "BASE"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1056
+#: ../rapidsvn_frame.cpp:1061
 msgid "Bookmark"
 msgstr ""
 
@@ -299,7 +299,7 @@ msgstr ""
 msgid "Bring changes from the repository into the working copy"
 msgstr ""
 
-#: ../about_dlg.cpp:81
+#: ../about_dlg.cpp:75
 #, c-format
 msgid ""
 "Built with:\n"
@@ -550,7 +550,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1056
+#: ../rapidsvn_frame.cpp:1061
 msgid "Edit Bookmark"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgstr ""
 #: ../action.cpp:298 ../action.cpp:308 ../import_dlg.cpp:173
 #: ../import_dlg.cpp:186 ../log_dlg.cpp:329 ../log_dlg.cpp:353
 #: ../merge_dlg.cpp:61 ../merge_dlg.cpp:99 ../merge_dlg.cpp:115
-#: ../property_dlg.cpp:124 ../rapidsvn_frame.cpp:989 ../tracer.cpp:81
+#: ../property_dlg.cpp:124 ../rapidsvn_frame.cpp:994 ../tracer.cpp:81
 msgid "Error"
 msgstr ""
 
@@ -631,16 +631,16 @@ msgstr ""
 msgid "Error while refreshing filelist (%s)"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:831
+#: ../rapidsvn_frame.cpp:836
 msgid "Error while updating filelist"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:822
+#: ../rapidsvn_frame.cpp:827
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1709
+#: ../rapidsvn_frame.cpp:1716
 msgid "Exception occured during filelist update"
 msgstr ""
 
@@ -706,7 +706,7 @@ msgstr ""
 msgid "Flat Mode"
 msgstr ""
 
-#: ../about_dlg.cpp:78
+#: ../about_dlg.cpp:72
 msgid "For more information see:"
 msgstr ""
 
@@ -778,7 +778,7 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1675
+#: ../rapidsvn_frame.cpp:1682
 msgid "Info"
 msgstr ""
 
@@ -786,7 +786,7 @@ msgstr ""
 msgid "Info selected"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1483
+#: ../rapidsvn_frame.cpp:1490
 msgid "Information"
 msgstr ""
 
@@ -794,7 +794,7 @@ msgstr ""
 msgid "Internal Error: There is another action running"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1532
+#: ../rapidsvn_frame.cpp:1539
 msgid "Internal Error: no client data for action event!"
 msgstr ""
 
@@ -849,7 +849,7 @@ msgstr ""
 msgid "Listing entries in '%s'"
 msgstr ""
 
-#: ../about_dlg.cpp:86
+#: ../about_dlg.cpp:80
 #, c-format
 msgid ""
 "Locale Information:\n"
@@ -965,11 +965,6 @@ msgstr ""
 msgid "Merge..."
 msgstr ""
 
-#: ../about_dlg.cpp:60
-#, c-format
-msgid "Milestone: %s"
-msgstr ""
-
 #: ../mkdir_action.cpp:38
 msgid "Mkdir"
 msgstr ""
@@ -1025,7 +1020,7 @@ msgstr ""
 msgid "Nothing selected."
 msgstr ""
 
-#: ../about_dlg.cpp:109 ../auth_dlg.cpp:72 ../checkout_dlg.cpp:140
+#: ../about_dlg.cpp:103 ../auth_dlg.cpp:72 ../checkout_dlg.cpp:140
 #: ../commit_dlg.cpp:105 ../delete_dlg.cpp:55 ../destination_dlg.cpp:73
 #: ../diff_dlg.cpp:534 ../export_dlg.cpp:158 ../import_dlg.cpp:126
 #: ../listed_dlg.cpp:186 ../listed_dlg.cpp:342 ../lock_dlg.cpp:62
@@ -1062,7 +1057,7 @@ msgstr ""
 msgid "Please select only one file or directory."
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1476
+#: ../rapidsvn_frame.cpp:1483
 msgid ""
 "Please use the command line utility 'svnadmin'\n"
 "to create a new repository.\n"
@@ -1160,7 +1155,7 @@ msgstr ""
 msgid "Ready"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1512 ../rapidsvn_frame.cpp:1556
+#: ../rapidsvn_frame.cpp:1519 ../rapidsvn_frame.cpp:1563
 msgid "Ready\n"
 msgstr ""
 
@@ -1193,7 +1188,7 @@ msgstr ""
 msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1032
+#: ../rapidsvn_frame.cpp:1037
 msgid "Removed bookmark"
 msgstr ""
 
@@ -1213,7 +1208,7 @@ msgstr ""
 msgid "Repository"
 msgstr ""
 
-#: ../import_dlg.cpp:65 ../rapidsvn_frame.cpp:1008
+#: ../import_dlg.cpp:65 ../rapidsvn_frame.cpp:1013
 msgid "Repository URL"
 msgstr ""
 
@@ -1323,7 +1318,7 @@ msgstr ""
 msgid "Select a destination folder to merge to"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:969
+#: ../rapidsvn_frame.cpp:974
 msgid "Select a directory"
 msgstr ""
 
@@ -1475,11 +1470,11 @@ msgstr ""
 msgid "UUID"
 msgstr ""
 
-#: ../about_dlg.cpp:64
+#: ../about_dlg.cpp:60
 msgid "Unicode"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1488
+#: ../rapidsvn_frame.cpp:1495
 msgid "Unimplemented action!"
 msgstr ""
 
@@ -1503,7 +1498,7 @@ msgstr ""
 msgid "Updated"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1546 ../rapidsvn_frame.cpp:1551
+#: ../rapidsvn_frame.cpp:1553 ../rapidsvn_frame.cpp:1558
 msgid "Updating..."
 msgstr ""
 
@@ -1540,7 +1535,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:987
+#: ../rapidsvn_frame.cpp:992
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr ""
 

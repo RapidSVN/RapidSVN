@@ -743,8 +743,8 @@ FileListCtrl::Data::InitColumnCaptions ()
     _("UUID"),
     _("Schedule"),
     _("Copied"),
-    _("Conflict Old"),
-    _("Conflict New"),
+    _("Conflict BASE"),
+    _("Conflict HEAD"),
     _("Conflict Work")
   };
 

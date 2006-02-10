@@ -147,10 +147,10 @@ public:
     wxGenericValidator valNativeEol (&data.NativeEol);
     wxArrayString eol;
     eol.Add (_("native"));
-    eol.Add (_("CRLF"));
-    eol.Add (_("LF"));
-    eol.Add (_("CR"));
-    m_comboNativeEol = new wxComboBox (wnd, ID_NATIVE_EOL, wxEmptyString, 
+    eol.Add (_("CRLF (Windows)"));
+    eol.Add (_("LF (Unix)"));
+    eol.Add (_("CR (MacOS)"));
+    m_comboNativeEol = new wxComboBox (wnd, ID_NATIVE_EOL, _("native"), 
                                        wxDefaultPosition, wxDefaultSize,
                                        eol, wxCB_READONLY);
     m_comboNativeEol->SetHelpText (_("Enter what kind of symbol(s) do you want as EOL (end of line) in exported files."));

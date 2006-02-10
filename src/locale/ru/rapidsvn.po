@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-09 16:59+0100\n"
-"PO-Revision-Date: 2006-02-09 17:02+0100\n"
+"POT-Creation-Date: 2006-02-10 10:15+0100\n"
+"PO-Revision-Date: 2006-02-10 10:12+0100\n"
 "Last-Translator: Olha <sleepy@adam-i-eva.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -105,8 +105,7 @@ msgstr "&Экстра"
 msgid "&File"
 msgstr "&Файл"
 
-#: ../rapidsvn_frame.cpp:240
-#: ../rapidsvn_frame.cpp:374
+#: ../rapidsvn_frame.cpp:240 ../rapidsvn_frame.cpp:374
 msgid "&Help"
 msgstr "&Помощь"
 
@@ -226,13 +225,11 @@ msgstr ""
 msgid "- The certificate is not yet valid."
 msgstr "- Сертификат недействителен."
 
-#: ../file_info.cpp:108
-#: ../file_info.cpp:116
-#: ../file_info.cpp:201
+#: ../file_info.cpp:108 ../file_info.cpp:116 ../file_info.cpp:201
 msgid "<None>"
 msgstr "<нет>"
 
-#: ../about_dlg.cpp:66
+#: ../about_dlg.cpp:62
 msgid "ANSI"
 msgstr "ANSI"
 
@@ -241,8 +238,7 @@ msgstr "ANSI"
 msgid "About %s"
 msgstr "О программе %s"
 
-#: ../add_action.cpp:48
-#: ../listener.cpp:46
+#: ../add_action.cpp:48 ../listener.cpp:46
 msgid "Add"
 msgstr "Добавление"
 
@@ -262,17 +258,16 @@ msgstr "Добавить выбранное"
 msgid "Add to bookmarks"
 msgstr "Добавить в ссылки"
 
-#: ../listener.cpp:55
-#: ../listener.cpp:62
+#: ../listener.cpp:55 ../listener.cpp:62
 msgid "Added"
 msgstr "Добавлено"
 
-#: ../rapidsvn_frame.cpp:1020
+#: ../rapidsvn_frame.cpp:1025
 #, c-format
 msgid "Added repository to bookmarks '%s'"
 msgstr "Репозиторий '%s' добавлен в закладки"
 
-#: ../rapidsvn_frame.cpp:997
+#: ../rapidsvn_frame.cpp:1002
 #, c-format
 msgid "Added working copy to bookmarks '%s'"
 msgstr "Рабочая копия '%s' добавлена в закладки"
@@ -281,8 +276,7 @@ msgstr "Рабочая копия '%s' добавлена в закладки"
 msgid "All files|*"
 msgstr "Все файлы|*"
 
-#: ../auth_dlg.cpp:118
-#: ../preferences_dlg.cpp:411
+#: ../auth_dlg.cpp:118 ../preferences_dlg.cpp:411
 msgid "Authentication"
 msgstr "Аутентификация"
 
@@ -294,7 +288,7 @@ msgstr "Автор"
 msgid "BASE"
 msgstr "BASE"
 
-#: ../rapidsvn_frame.cpp:1056
+#: ../rapidsvn_frame.cpp:1061
 msgid "Bookmark"
 msgstr "Закладка"
 
@@ -306,7 +300,7 @@ msgstr "Закладки"
 msgid "Bring changes from the repository into the working copy"
 msgstr "Внести в рабочую копию изменения, найденные в репозитории."
 
-#: ../about_dlg.cpp:81
+#: ../about_dlg.cpp:75
 #, c-format
 msgid ""
 "Built with:\n"
@@ -325,21 +319,11 @@ msgstr "CR (MacOS)"
 msgid "CRLF (Windows)"
 msgstr "CRLF (Windows)"
 
-#: ../auth_dlg.cpp:74
-#: ../cert_dlg.cpp:139
-#: ../checkout_dlg.cpp:141
-#: ../commit_dlg.cpp:107
-#: ../delete_dlg.cpp:57
-#: ../destination_dlg.cpp:75
-#: ../diff_dlg.cpp:535
-#: ../export_dlg.cpp:159
-#: ../import_dlg.cpp:128
-#: ../listed_dlg.cpp:187
-#: ../listed_dlg.cpp:343
-#: ../lock_dlg.cpp:64
-#: ../merge_dlg.cpp:215
-#: ../preferences_dlg.cpp:418
-#: ../unlock_dlg.cpp:57
+#: ../auth_dlg.cpp:74 ../cert_dlg.cpp:139 ../checkout_dlg.cpp:141
+#: ../commit_dlg.cpp:107 ../delete_dlg.cpp:57 ../destination_dlg.cpp:75
+#: ../diff_dlg.cpp:535 ../export_dlg.cpp:159 ../import_dlg.cpp:128
+#: ../listed_dlg.cpp:187 ../listed_dlg.cpp:343 ../lock_dlg.cpp:64
+#: ../merge_dlg.cpp:215 ../preferences_dlg.cpp:418 ../unlock_dlg.cpp:57
 #: ../update_dlg.cpp:119
 msgid "Cancel"
 msgstr "Отмена"
@@ -352,8 +336,7 @@ msgstr "Информация о сертификате:"
 msgid "Check&out...\tCTRL-O"
 msgstr "Создать локальную копию (check&out)...\tCTRL-O"
 
-#: ../checkout_action.cpp:39
-#: ../checkout_dlg.cpp:271
+#: ../checkout_action.cpp:39 ../checkout_dlg.cpp:271
 msgid "Checkout"
 msgstr "Извлечение копии"
 
@@ -361,8 +344,7 @@ msgstr "Извлечение копии"
 msgid "Checkout New Working Copy..."
 msgstr "Создать новую рабочую копию..."
 
-#: ../filelist_ctrl.cpp:740
-#: ../rapidsvn_frame.cpp:277
+#: ../filelist_ctrl.cpp:740 ../rapidsvn_frame.cpp:277
 msgid "Checksum"
 msgstr "Контрольная сумма"
 
@@ -371,8 +353,7 @@ msgstr "Контрольная сумма"
 msgid "Checksum: %s"
 msgstr "Контрольная сумма: %s"
 
-#: ../cleanup_action.cpp:39
-#: ../utils.cpp:305
+#: ../cleanup_action.cpp:39 ../utils.cpp:305
 msgid "Cleanup"
 msgstr "Уборка"
 
@@ -388,8 +369,7 @@ msgstr "Фиксировать из&менения (commit)...\tCTRL-M"
 msgid "Columns"
 msgstr "Столбцы"
 
-#: ../commit_action.cpp:42
-#: ../commit_dlg.cpp:161
+#: ../commit_action.cpp:42 ../commit_dlg.cpp:161
 msgid "Commit"
 msgstr "Фиксировать изменения"
 
@@ -409,8 +389,7 @@ msgstr "Зафиксирована ревизия"
 msgid "Compare:"
 msgstr "Сравнить:"
 
-#: ../filelist_ctrl.cpp:746
-#: ../rapidsvn_frame.cpp:283
+#: ../filelist_ctrl.cpp:746 ../rapidsvn_frame.cpp:283
 msgid "Conflict BASE"
 msgstr "Конфликт: BASE"
 
@@ -419,8 +398,7 @@ msgstr "Конфликт: BASE"
 msgid "Conflict BASE File: %s"
 msgstr "BASE-файл конфликта: %s"
 
-#: ../filelist_ctrl.cpp:747
-#: ../rapidsvn_frame.cpp:284
+#: ../filelist_ctrl.cpp:747 ../rapidsvn_frame.cpp:284
 msgid "Conflict HEAD"
 msgstr "Конфликт: HEAD"
 
@@ -434,8 +412,7 @@ msgstr "HEAD-файл конфликта: %s"
 msgid "Conflict Properties File: %s"
 msgstr "Файл конфликта свойств: %s"
 
-#: ../filelist_ctrl.cpp:748
-#: ../rapidsvn_frame.cpp:285
+#: ../filelist_ctrl.cpp:748 ../rapidsvn_frame.cpp:285
 msgid "Conflict Work"
 msgstr "Конфликт: рабочий ф-л"
 
@@ -444,8 +421,7 @@ msgstr "Конфликт: рабочий ф-л"
 msgid "Conflict Working File: %s"
 msgstr "Рабочий файл конфликта: %s"
 
-#: ../filelist_ctrl.cpp:745
-#: ../rapidsvn_frame.cpp:282
+#: ../filelist_ctrl.cpp:745 ../rapidsvn_frame.cpp:282
 msgid "Copied"
 msgstr "Скопировано"
 
@@ -459,8 +435,7 @@ msgstr "Скопировано из ревизии: %ld"
 msgid "Copied From URL: %s"
 msgstr "Скопировано с URL: %s"
 
-#: ../listener.cpp:47
-#: ../move_action.cpp:49
+#: ../listener.cpp:47 ../move_action.cpp:49
 msgid "Copy"
 msgstr "Копирование"
 
@@ -473,8 +448,7 @@ msgstr "Невозможно установить рабочим каталог�
 msgid "Create New Repository..."
 msgstr "Создать новый репозиторий..."
 
-#: ../filelist_ctrl.cpp:736
-#: ../log_dlg.cpp:148
+#: ../filelist_ctrl.cpp:736 ../log_dlg.cpp:148
 msgid "Date"
 msgstr "Дата"
 
@@ -482,9 +456,7 @@ msgstr "Дата"
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../delete_action.cpp:42
-#: ../delete_dlg.cpp:78
-#: ../listener.cpp:48
+#: ../delete_action.cpp:42 ../delete_dlg.cpp:78 ../listener.cpp:48
 msgid "Delete"
 msgstr "Удаление"
 
@@ -496,8 +468,7 @@ msgstr "Вынести файлы и каталоги из-под контрол
 msgid "Delete selected"
 msgstr "Удалить выбранное"
 
-#: ../listener.cpp:54
-#: ../listener.cpp:63
+#: ../listener.cpp:54 ../listener.cpp:63
 msgid "Deleted"
 msgstr "Удаление выполнено"
 
@@ -506,8 +477,7 @@ msgstr "Удаление выполнено"
 msgid "Deleting unversioned file: %s"
 msgstr "Удаляю неверсионированный файл: %s"
 
-#: ../checkout_dlg.cpp:74
-#: ../export_dlg.cpp:77
+#: ../checkout_dlg.cpp:74 ../export_dlg.cpp:77
 msgid "Destination Directory"
 msgstr "Целевой каталог"
 
@@ -519,9 +489,7 @@ msgstr "Целевой файл"
 msgid "Destination path"
 msgstr "Целевой путь"
 
-#: ../diff_action.cpp:236
-#: ../diff_action.cpp:243
-#: ../diff_dlg.cpp:711
+#: ../diff_action.cpp:236 ../diff_action.cpp:243 ../diff_dlg.cpp:711
 #: ../log_dlg.cpp:221
 msgid "Diff"
 msgstr "Сравнение"
@@ -586,7 +554,7 @@ msgstr "EOL (символ конца строки):"
 msgid "Edit"
 msgstr "Правка"
 
-#: ../rapidsvn_frame.cpp:1056
+#: ../rapidsvn_frame.cpp:1061
 msgid "Edit Bookmark"
 msgstr "Редактировать закладку"
 
@@ -598,8 +566,7 @@ msgstr "Редактировать свойство"
 msgid "Enter a comment for this lock"
 msgstr "Введите комментарий для блокировки"
 
-#: ../commit_dlg.cpp:55
-#: ../import_dlg.cpp:93
+#: ../commit_dlg.cpp:55 ../import_dlg.cpp:93
 msgid "Enter log message"
 msgstr "Введите журнальную запись"
 
@@ -615,27 +582,22 @@ msgstr "Введите путь, куда следует произвести э
 msgid "Enter the local path where you want the code checked out to here."
 msgstr "Введите путь, где вы хотите создать локальную копию."
 
-#: ../checkout_dlg.cpp:72
-#: ../export_dlg.cpp:75
+#: ../checkout_dlg.cpp:72 ../export_dlg.cpp:75
 msgid "Enter the repository URL (not local path) here."
 msgstr "Введите тут URL репозитория (не локальный путь)."
 
 #: ../export_dlg.cpp:156
-msgid "Enter what kind of symbol(s) do you want as EOL (end of line) in exported files."
-msgstr "Укажите, какие символы следует использовать в качестве EOL-маркера в экспортированных файлах. EOL - End Of Line, то есть конец строки."
+msgid ""
+"Enter what kind of symbol(s) do you want as EOL (end of line) in exported "
+"files."
+msgstr ""
+"Укажите, какие символы следует использовать в качестве EOL-маркера в "
+"экспортированных файлах. EOL - End Of Line, то есть конец строки."
 
-#: ../action.cpp:298
-#: ../action.cpp:308
-#: ../import_dlg.cpp:173
-#: ../import_dlg.cpp:186
-#: ../log_dlg.cpp:329
-#: ../log_dlg.cpp:353
-#: ../merge_dlg.cpp:61
-#: ../merge_dlg.cpp:99
-#: ../merge_dlg.cpp:115
-#: ../property_dlg.cpp:124
-#: ../rapidsvn_frame.cpp:989
-#: ../tracer.cpp:81
+#: ../action.cpp:298 ../action.cpp:308 ../import_dlg.cpp:173
+#: ../import_dlg.cpp:186 ../log_dlg.cpp:329 ../log_dlg.cpp:353
+#: ../merge_dlg.cpp:61 ../merge_dlg.cpp:99 ../merge_dlg.cpp:115
+#: ../property_dlg.cpp:124 ../rapidsvn_frame.cpp:994 ../tracer.cpp:81
 msgid "Error"
 msgstr "Ошибка"
 
@@ -652,24 +614,20 @@ msgstr "Ошибка присвоения значения свойств"
 msgid "Error validating server certificate for '%s':"
 msgstr "Ошибка при проверке подлинности сертификата сервера для '%s':"
 
-#: ../simple_worker.cpp:210
-#: ../threaded_worker.cpp:182
+#: ../simple_worker.cpp:210 ../threaded_worker.cpp:182
 msgid "Error while performing action."
 msgstr "Ошибка во время выполнения операции."
 
-#: ../simple_worker.cpp:202
-#: ../threaded_worker.cpp:171
+#: ../simple_worker.cpp:202 ../threaded_worker.cpp:171
 #, c-format
 msgid "Error while performing action: %s"
 msgstr "Ошибка во время выполнения операции: %s"
 
-#: ../simple_worker.cpp:167
-#: ../threaded_worker.cpp:315
+#: ../simple_worker.cpp:167 ../threaded_worker.cpp:315
 msgid "Error while preparing action."
 msgstr "Ошибка во время подготовки операции."
 
-#: ../simple_worker.cpp:161
-#: ../threaded_worker.cpp:305
+#: ../simple_worker.cpp:161 ../threaded_worker.cpp:305
 #, c-format
 msgid "Error while preparing action: %s"
 msgstr "Ошибка во время подготовки операции: %s"
@@ -679,16 +637,16 @@ msgstr "Ошибка во время подготовки операции: %s"
 msgid "Error while refreshing filelist (%s)"
 msgstr "Ошибка во время обновления списка файлов (%s)"
 
-#: ../rapidsvn_frame.cpp:831
+#: ../rapidsvn_frame.cpp:836
 msgid "Error while updating filelist"
 msgstr "Ошибка во время обновления списка файлов"
 
-#: ../rapidsvn_frame.cpp:822
+#: ../rapidsvn_frame.cpp:827
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "Ошибка во время обновления списка файлов (%s)"
 
-#: ../rapidsvn_frame.cpp:1709
+#: ../rapidsvn_frame.cpp:1716
 msgid "Exception occured during filelist update"
 msgstr "Обнаружено исключение во время обновления списка файлов"
 
@@ -698,15 +656,14 @@ msgstr "Выполняемые файлы|*.exe;*.com;*.bat|Все файлы (*
 
 #: ../external_program_action.cpp:42
 msgid "Execute"
-msgstr "Выпонить"
+msgstr "Выполнить"
 
 #: ../diff_action.cpp:228
 #, c-format
 msgid "Execute diff tool: %s"
 msgstr "Выполнение программы сравнения: %s"
 
-#: ../simple_worker.cpp:173
-#: ../threaded_worker.cpp:149
+#: ../simple_worker.cpp:173 ../threaded_worker.cpp:149
 #, c-format
 msgid "Execute: %s"
 msgstr "Выполнить: %s"
@@ -715,8 +672,7 @@ msgstr "Выполнить: %s"
 msgid "Explore...\tF2"
 msgstr "Просмотр...\tF2"
 
-#: ../export_action.cpp:40
-#: ../export_dlg.cpp:304
+#: ../export_action.cpp:40 ../export_dlg.cpp:304
 msgid "Export"
 msgstr "Экспорт"
 
@@ -756,12 +712,11 @@ msgstr "Первая рабочая копия или URL"
 msgid "Flat Mode"
 msgstr "Плоский режим (flat mode)"
 
-#: ../about_dlg.cpp:78
+#: ../about_dlg.cpp:72
 msgid "For more information see:"
 msgstr "Более подробная информация:"
 
-#: ../destination_dlg.cpp:66
-#: ../merge_dlg.cpp:207
+#: ../destination_dlg.cpp:66 ../merge_dlg.cpp:207
 msgid "Force"
 msgstr "Принудительно"
 
@@ -770,12 +725,18 @@ msgid "Force removal"
 msgstr "Принудительное удаление"
 
 #: ../export_dlg.cpp:134
-msgid "Force to execute even if destination directory not empty, causes overwriting of files with the same names."
-msgstr "Выполнить операцию, перезаписывая поверх существующие файлы в целевом пути. ВНИМАНИЕ! Может привести к потере данных!"
+msgid ""
+"Force to execute even if destination directory not empty, causes overwriting "
+"of files with the same names."
+msgstr ""
+"Выполнить операцию, перезаписывая поверх существующих файлов (в целевом "
+"пути). ВНИМАНИЕ! Может привести к потере данных!"
 
 #: ../unlock_dlg.cpp:50
 msgid "Force unlocking even if you are not the lock owner"
-msgstr "Принудить разблокировку, если блокировка принадлежит другому пользователю."
+msgstr ""
+"Принудить разблокировку. Разблокировать, даже если файл заблокирован другим "
+"пользователем."
 
 #: ../preferences_dlg.cpp:405
 msgid "General"
@@ -803,31 +764,33 @@ msgstr "История: %d ревизий"
 msgid "Hostname:"
 msgstr "Имя узла:"
 
-#: ../checkout_dlg.cpp:90
-#: ../export_dlg.cpp:93
-msgid "If not using the latest version of the files, specify which revision to use here."
+#: ../checkout_dlg.cpp:90 ../export_dlg.cpp:93
+msgid ""
+"If not using the latest version of the files, specify which revision to use "
+"here."
 msgstr "Если нужна не последняя версия файлов, введите тут номер ревизии."
 
-#: ../checkout_dlg.cpp:106
-#: ../export_dlg.cpp:109
-msgid "If the files were renamed or moved some time, specify which peg revision to use here."
-msgstr "Если файлы когда-либо переименовывались или перемещались, укажите номер пег-ревизии."
+#: ../checkout_dlg.cpp:106 ../export_dlg.cpp:109
+msgid ""
+"If the files were renamed or moved some time, specify which peg revision to "
+"use here."
+msgstr ""
+"Если файлы когда-либо переименовывались или перемещались, укажите номер пег-"
+"ревизии."
 
 #: ../rapidsvn_frame.cpp:311
 msgid "Ignore Externals"
 msgstr "Игнорировать внешние зависимости"
 
-#: ../checkout_dlg.cpp:133
-#: ../export_dlg.cpp:137
+#: ../checkout_dlg.cpp:133 ../export_dlg.cpp:137
 msgid "Ignore externals"
 msgstr "Игнорировать внешние определения"
 
-#: ../import_action.cpp:38
-#: ../import_dlg.cpp:147
+#: ../import_action.cpp:38 ../import_dlg.cpp:147
 msgid "Import"
 msgstr "Импорт"
 
-#: ../rapidsvn_frame.cpp:1675
+#: ../rapidsvn_frame.cpp:1682
 msgid "Info"
 msgstr "Информация"
 
@@ -835,15 +798,15 @@ msgstr "Информация"
 msgid "Info selected"
 msgstr "Информация о файле"
 
-#: ../rapidsvn_frame.cpp:1483
+#: ../rapidsvn_frame.cpp:1490
 msgid "Information"
 msgstr "Информация"
 
 #: ../threaded_worker.cpp:274
 msgid "Internal Error: There is another action running"
-msgstr "Внутренняя ошибка: на выполнении находиться другая операция"
+msgstr "Внутренняя ошибка: на выполнении находится другая операция"
 
-#: ../rapidsvn_frame.cpp:1532
+#: ../rapidsvn_frame.cpp:1539
 msgid "Internal Error: no client data for action event!"
 msgstr "Внутренняя ошибка: отсутствуют данные клиента для операции!"
 
@@ -857,7 +820,9 @@ msgstr "Обнаружен неправильный номер ревизии"
 
 #: ../log_dlg.cpp:328
 msgid "Invalid selection. Exactly two revisions needed for diff."
-msgstr "Неправильный выбор. Для операции сравнения необходимо выбрать ровно две ревизии."
+msgstr ""
+"Неправильный выбор. Для операции сравнения необходимо выбрать ровно две "
+"ревизии."
 
 #: ../log_dlg.cpp:352
 msgid "Invalid selection. Exactly two revisions needed for merge."
@@ -898,7 +863,7 @@ msgstr "Ревизия последнего изменения: %ld"
 msgid "Listing entries in '%s'"
 msgstr "Отображается содержимое '%s'"
 
-#: ../about_dlg.cpp:86
+#: ../about_dlg.cpp:80
 #, c-format
 msgid ""
 "Locale Information:\n"
@@ -911,8 +876,7 @@ msgstr ""
 "System Name: %s\n"
 "Canonical Name: %s\n"
 
-#: ../rapidsvn_app.cpp:169
-#: ../rapidsvn_app.cpp:177
+#: ../rapidsvn_app.cpp:169 ../rapidsvn_app.cpp:177
 msgid "Locate help"
 msgstr "Установить помощь:"
 
@@ -924,13 +888,11 @@ msgstr "Установить подсказки"
 msgid "Locate tips file"
 msgstr "Установить файл подсказок"
 
-#: ../lock_action.cpp:41
-#: ../lock_dlg.cpp:101
+#: ../lock_action.cpp:41 ../lock_dlg.cpp:101
 msgid "Lock"
 msgstr "Блокировка"
 
-#: ../filelist_ctrl.cpp:739
-#: ../rapidsvn_frame.cpp:276
+#: ../filelist_ctrl.cpp:739 ../rapidsvn_frame.cpp:276
 msgid "Lock Comment"
 msgstr "Комментарий к блокировке"
 
@@ -947,8 +909,7 @@ msgstr ""
 msgid "Lock Creation Date"
 msgstr "Дата установки блокировки"
 
-#: ../filelist_ctrl.cpp:738
-#: ../rapidsvn_frame.cpp:275
+#: ../filelist_ctrl.cpp:738 ../rapidsvn_frame.cpp:275
 msgid "Lock Owner"
 msgstr "Обладатель блокировки"
 
@@ -1011,9 +972,7 @@ msgstr "Создать &каталог...\tF7"
 msgid "Make directory"
 msgstr "Создание каталога"
 
-#: ../log_dlg.cpp:222
-#: ../merge_action.cpp:38
-#: ../merge_action.cpp:44
+#: ../log_dlg.cpp:222 ../merge_action.cpp:38 ../merge_action.cpp:44
 #: ../merge_dlg.cpp:133
 msgid "Merge"
 msgstr "Объединить"
@@ -1025,11 +984,6 @@ msgstr "Объединить ревизии"
 #: ../rapidsvn_frame.cpp:329
 msgid "Merge..."
 msgstr "Объединить изменения..."
-
-#: ../about_dlg.cpp:60
-#, c-format
-msgid "Milestone: %s"
-msgstr "Milestone: %s"
 
 #: ../mkdir_action.cpp:38
 msgid "Mkdir"
@@ -1043,9 +997,7 @@ msgstr "Изменено"
 msgid "Move"
 msgstr "Перемещение"
 
-#: ../filelist_ctrl.cpp:727
-#: ../listed_dlg.cpp:73
-#: ../listed_dlg.cpp:172
+#: ../filelist_ctrl.cpp:727 ../listed_dlg.cpp:73 ../listed_dlg.cpp:172
 #: ../listed_dlg.cpp:325
 msgid "Name"
 msgstr "Имя"
@@ -1080,8 +1032,7 @@ msgstr ""
 msgid "Node Kind: %s"
 msgstr "Тип: %s"
 
-#: ../checkout_dlg.cpp:115
-#: ../export_dlg.cpp:118
+#: ../checkout_dlg.cpp:115 ../export_dlg.cpp:118
 msgid "Not specified"
 msgstr "Не указано"
 
@@ -1093,23 +1044,12 @@ msgstr "Объект не версионирован"
 msgid "Nothing selected."
 msgstr "Ничего не выбрано."
 
-#: ../about_dlg.cpp:109
-#: ../auth_dlg.cpp:72
-#: ../checkout_dlg.cpp:140
-#: ../commit_dlg.cpp:105
-#: ../delete_dlg.cpp:55
-#: ../destination_dlg.cpp:73
-#: ../diff_dlg.cpp:534
-#: ../export_dlg.cpp:158
-#: ../import_dlg.cpp:126
-#: ../listed_dlg.cpp:186
-#: ../listed_dlg.cpp:342
-#: ../lock_dlg.cpp:62
-#: ../merge_dlg.cpp:213
-#: ../preferences_dlg.cpp:415
-#: ../report_dlg.cpp:58
-#: ../unlock_dlg.cpp:55
-#: ../update_dlg.cpp:117
+#: ../about_dlg.cpp:103 ../auth_dlg.cpp:72 ../checkout_dlg.cpp:140
+#: ../commit_dlg.cpp:105 ../delete_dlg.cpp:55 ../destination_dlg.cpp:73
+#: ../diff_dlg.cpp:534 ../export_dlg.cpp:158 ../import_dlg.cpp:126
+#: ../listed_dlg.cpp:186 ../listed_dlg.cpp:342 ../lock_dlg.cpp:62
+#: ../merge_dlg.cpp:213 ../preferences_dlg.cpp:415 ../report_dlg.cpp:58
+#: ../unlock_dlg.cpp:55 ../update_dlg.cpp:117
 msgid "OK"
 msgstr "OK"
 
@@ -1125,8 +1065,7 @@ msgstr "Перезапись"
 msgid "Password"
 msgstr "Пароль"
 
-#: ../filelist_ctrl.cpp:728
-#: ../import_dlg.cpp:78
+#: ../filelist_ctrl.cpp:728 ../import_dlg.cpp:78
 msgid "Path"
 msgstr "Путь"
 
@@ -1134,8 +1073,7 @@ msgstr "Путь"
 msgid "Path type:"
 msgstr "Целевой путь:"
 
-#: ../checkout_dlg.cpp:99
-#: ../export_dlg.cpp:102
+#: ../checkout_dlg.cpp:99 ../export_dlg.cpp:102
 msgid "Peg Revision"
 msgstr "Пег-ревизия"
 
@@ -1143,7 +1081,7 @@ msgstr "Пег-ревизия"
 msgid "Please select only one file or directory."
 msgstr "Выберите один файл или каталог."
 
-#: ../rapidsvn_frame.cpp:1476
+#: ../rapidsvn_frame.cpp:1483
 msgid ""
 "Please use the command line utility 'svnadmin'\n"
 "to create a new repository.\n"
@@ -1250,8 +1188,7 @@ msgstr "От&кат изменений\tCTRL-V"
 msgid "Ready"
 msgstr "Готово"
 
-#: ../rapidsvn_frame.cpp:1512
-#: ../rapidsvn_frame.cpp:1556
+#: ../rapidsvn_frame.cpp:1519 ../rapidsvn_frame.cpp:1563
 msgid "Ready\n"
 msgstr "Готово\n"
 
@@ -1259,12 +1196,8 @@ msgstr "Готово\n"
 msgid "Recent entries:"
 msgstr "Недавние записи:"
 
-#: ../checkout_dlg.cpp:122
-#: ../commit_dlg.cpp:87
-#: ../export_dlg.cpp:125
-#: ../import_dlg.cpp:106
-#: ../merge_dlg.cpp:204
-#: ../update_dlg.cpp:110
+#: ../checkout_dlg.cpp:122 ../commit_dlg.cpp:87 ../export_dlg.cpp:125
+#: ../import_dlg.cpp:106 ../merge_dlg.cpp:204 ../update_dlg.cpp:110
 msgid "Recursive"
 msgstr "Рекурсивно"
 
@@ -1288,7 +1221,7 @@ msgstr "Обновлять полностью"
 msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr "Устранить пометку 'конфликтует' с файлов или каталогов рабочей копии"
 
-#: ../rapidsvn_frame.cpp:1032
+#: ../rapidsvn_frame.cpp:1037
 msgid "Removed bookmark"
 msgstr "Закладка удалена"
 
@@ -1304,13 +1237,11 @@ msgstr "Рев. реп."
 msgid "Replaced"
 msgstr "Заменено"
 
-#: ../filelist_ctrl.cpp:742
-#: ../rapidsvn_frame.cpp:279
+#: ../filelist_ctrl.cpp:742 ../rapidsvn_frame.cpp:279
 msgid "Repository"
 msgstr "Репозиторий"
 
-#: ../import_dlg.cpp:65
-#: ../rapidsvn_frame.cpp:1008
+#: ../import_dlg.cpp:65 ../rapidsvn_frame.cpp:1013
 msgid "Repository URL"
 msgstr "URL репозитория"
 
@@ -1350,11 +1281,11 @@ msgstr "Восстановить"
 
 #: ../rapidsvn_frame.cpp:526
 msgid "Restore pristine working copy file (undo all local edits)"
-msgstr "Восстановить первоначальную рабочую копию файла (отменить все локальные изменения)"
+msgstr ""
+"Восстановить первоначальную рабочую копию файла (отменить все локальные "
+"изменения)"
 
-#: ../listener.cpp:50
-#: ../revert_action.cpp:36
-#: ../revert_action.cpp:50
+#: ../listener.cpp:50 ../revert_action.cpp:36 ../revert_action.cpp:50
 msgid "Revert"
 msgstr "Откат изменений"
 
@@ -1362,12 +1293,8 @@ msgstr "Откат изменений"
 msgid "Revert selected"
 msgstr "Откат изменений (revert)"
 
-#: ../checkout_dlg.cpp:85
-#: ../export_dlg.cpp:88
-#: ../filelist_ctrl.cpp:729
-#: ../log_dlg.cpp:146
-#: ../merge_dlg.cpp:141
-#: ../merge_dlg.cpp:158
+#: ../checkout_dlg.cpp:85 ../export_dlg.cpp:88 ../filelist_ctrl.cpp:729
+#: ../log_dlg.cpp:146 ../merge_dlg.cpp:141 ../merge_dlg.cpp:158
 #: ../update_dlg.cpp:85
 msgid "Revision"
 msgstr "Ревизия"
@@ -1397,8 +1324,7 @@ msgstr "Ревизия: %ld"
 msgid "SSL Certificate"
 msgstr "Сертификат SSL"
 
-#: ../filelist_ctrl.cpp:744
-#: ../rapidsvn_frame.cpp:281
+#: ../filelist_ctrl.cpp:744 ../rapidsvn_frame.cpp:281
 msgid "Schedule"
 msgstr "Планируется"
 
@@ -1419,8 +1345,7 @@ msgstr "Вторая рабочая копия или URL"
 msgid "Select Certificate File"
 msgstr "Выберите файл сертификата"
 
-#: ../checkout_dlg.cpp:294
-#: ../export_dlg.cpp:327
+#: ../checkout_dlg.cpp:294 ../export_dlg.cpp:327
 msgid "Select a destination directory"
 msgstr "Выберите целевой каталог"
 
@@ -1428,7 +1353,7 @@ msgstr "Выберите целевой каталог"
 msgid "Select a destination folder to merge to"
 msgstr "Укажите целевой каталог для объединения"
 
-#: ../rapidsvn_frame.cpp:969
+#: ../rapidsvn_frame.cpp:974
 msgid "Select a directory"
 msgstr "Выберите каталог"
 
@@ -1460,29 +1385,35 @@ msgstr "Выберите программу просмотра (выполняе
 msgid "Send changes from your working copy to the repository"
 msgstr "Отослать измения локальной копии в репозиторий"
 
-#: ../checkout_dlg.cpp:96
-#: ../export_dlg.cpp:99
+#: ../checkout_dlg.cpp:96 ../export_dlg.cpp:99
 msgid "Set this to get the latest version of the files in the repository."
-msgstr "Выберите этот пункт, чтобы получить последнюю версию файлов из репозитория."
+msgstr ""
+"Выберите этот пункт, чтобы получить последнюю версию файлов из репозитория."
 
-#: ../checkout_dlg.cpp:117
-#: ../export_dlg.cpp:120
+#: ../checkout_dlg.cpp:117 ../export_dlg.cpp:120
 msgid "Set this to use BASE/HEAD (current) peg revision of the files."
-msgstr "Выберите этот пункт, чтобы использовать последнюю (BASE/HEAD) ревизию файлов."
+msgstr ""
+"Выберите этот пункт, чтобы использовать последнюю (BASE/HEAD) ревизию файлов."
 
 #: ../checkout_dlg.cpp:130
 msgid "Set to automatically create a new working copy bookmark."
-msgstr "Выберите этот пункт для автоматического создания закладки для новой рабочей копии."
+msgstr ""
+"Выберите этот пункт для автоматического создания закладки для новой рабочей "
+"копии."
 
-#: ../checkout_dlg.cpp:125
-#: ../export_dlg.cpp:128
+#: ../checkout_dlg.cpp:125 ../export_dlg.cpp:128
 msgid "Set to get all subdirectories from the URL also."
-msgstr "Выберите этот пункт, чтобы также рекурсивно получить все подкаталоги этого URL."
+msgstr ""
+"Выберите этот пункт, чтобы также рекурсивно получить все подкаталоги этого "
+"URL."
 
-#: ../checkout_dlg.cpp:136
-#: ../export_dlg.cpp:140
-msgid "Set to ignore external definitions and the external working copies managed by them."
-msgstr "Установите эту опцию для игнорирования внешних определений и внешних рабочих копий, ими управляемых."
+#: ../checkout_dlg.cpp:136 ../export_dlg.cpp:140
+msgid ""
+"Set to ignore external definitions and the external working copies managed "
+"by them."
+msgstr ""
+"Установите эту опцию для игнорирования внешних определений и внешних рабочих "
+"копий, ими управляемых."
 
 #: ../rapidsvn_frame.cpp:357
 msgid "Show Startup Tips"
@@ -1538,8 +1469,7 @@ msgstr "Остановить текущую операцию"
 msgid "Store authentication credentials on hard disk"
 msgstr "Хранить аутентификационное удостоверение на диске"
 
-#: ../switch_action.cpp:39
-#: ../switch_action.cpp:63
+#: ../switch_action.cpp:39 ../switch_action.cpp:63
 msgid "Switch URL"
 msgstr "Переключение URL"
 
@@ -1553,29 +1483,29 @@ msgstr "Последнее обновление текста"
 
 #: ../view_action.cpp:67
 msgid "The Editor is not configured. Please check Edit->Preferences>Programs"
-msgstr "Не выбран редактор. Чтобы его установить, следуйте Правка->Настройки->Программы"
+msgstr ""
+"Не выбран редактор. Чтобы его установить, следуйте Правка->Настройки-"
+">Программы"
 
 #: ../cert_dlg.cpp:80
 msgid ""
 "There were errors validating the server certificate.\n"
 "Do you want to trust this certificate?"
 msgstr ""
-"Обнаружены ошибкы во время проверки сертификата сервера.\n"
+"Обнаружены ошибки во время проверки сертификата сервера.\n"
 "Принять этот сертификат?"
 
 #: ../commit_dlg.cpp:55
 msgid "This action has resulted in a Commit - please enter a log message"
-msgstr "Эта операция привела к фиксации (commit), поэтому введите сообщение для журнала"
+msgstr ""
+"Эта операция привела к фиксации (commit). Введите сообщение для журнала"
 
 #: ../import_dlg.cpp:114
 msgid "Tree"
 msgstr "Дерево"
 
-#: ../checkout_dlg.cpp:67
-#: ../export_dlg.cpp:70
-#: ../filelist_ctrl.cpp:741
-#: ../rapidsvn_frame.cpp:278
-#: ../update_dlg.cpp:71
+#: ../checkout_dlg.cpp:67 ../export_dlg.cpp:70 ../filelist_ctrl.cpp:741
+#: ../rapidsvn_frame.cpp:278 ../update_dlg.cpp:71
 msgid "URL"
 msgstr "URL"
 
@@ -1584,21 +1514,19 @@ msgstr "URL"
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: ../filelist_ctrl.cpp:743
-#: ../rapidsvn_frame.cpp:280
+#: ../filelist_ctrl.cpp:743 ../rapidsvn_frame.cpp:280
 msgid "UUID"
 msgstr "UUID"
 
-#: ../about_dlg.cpp:64
+#: ../about_dlg.cpp:60
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../rapidsvn_frame.cpp:1488
+#: ../rapidsvn_frame.cpp:1495
 msgid "Unimplemented action!"
 msgstr "Неподдерживаемая операция!"
 
-#: ../unlock_action.cpp:42
-#: ../unlock_dlg.cpp:78
+#: ../unlock_action.cpp:42 ../unlock_dlg.cpp:78
 msgid "Unlock"
 msgstr "Разблокировка"
 
@@ -1606,9 +1534,7 @@ msgstr "Разблокировка"
 msgid "Unlocked"
 msgstr "Разблокировка выполнена"
 
-#: ../get_action.cpp:39
-#: ../update_action.cpp:40
-#: ../update_action.cpp:52
+#: ../get_action.cpp:39 ../update_action.cpp:40 ../update_action.cpp:52
 msgid "Update"
 msgstr "Обновление"
 
@@ -1620,8 +1546,7 @@ msgstr "Обновить выбранное полностью"
 msgid "Updated"
 msgstr "Обновление выполнено"
 
-#: ../rapidsvn_frame.cpp:1546
-#: ../rapidsvn_frame.cpp:1551
+#: ../rapidsvn_frame.cpp:1553 ../rapidsvn_frame.cpp:1558
 msgid "Updating..."
 msgstr "Обновление..."
 
@@ -1629,20 +1554,16 @@ msgstr "Обновление..."
 msgid "Use URL/Path:"
 msgstr "Использовать URL/путь:"
 
-#: ../preferences_dlg.cpp:203
-#: ../preferences_dlg.cpp:249
+#: ../preferences_dlg.cpp:203 ../preferences_dlg.cpp:249
 msgid "Use always"
 msgstr "Использовать всегда"
 
-#: ../checkout_dlg.cpp:94
-#: ../diff_dlg.cpp:267
-#: ../export_dlg.cpp:97
+#: ../checkout_dlg.cpp:94 ../diff_dlg.cpp:267 ../export_dlg.cpp:97
 #: ../update_dlg.cpp:97
 msgid "Use latest"
 msgstr "Использовать последнюю версию"
 
-#: ../auth_dlg.cpp:55
-#: ../log_dlg.cpp:147
+#: ../auth_dlg.cpp:55 ../log_dlg.cpp:147
 msgid "User"
 msgstr "Пользователь"
 
@@ -1652,25 +1573,21 @@ msgstr "Действителен с:"
 
 #: ../cert_dlg.cpp:120
 msgid "Valid until:"
-msgstr "Действителено до:"
+msgstr "Действителен до:"
 
-#: ../listed_dlg.cpp:78
-#: ../listed_dlg.cpp:173
-#: ../listed_dlg.cpp:325
+#: ../listed_dlg.cpp:78 ../listed_dlg.cpp:173 ../listed_dlg.cpp:325
 msgid "Value"
 msgstr "Значение"
 
-#: ../log_dlg.cpp:219
-#: ../view_action.cpp:41
+#: ../log_dlg.cpp:219 ../view_action.cpp:41
 msgid "View"
 msgstr "Просмотр"
 
-#: ../rapidsvn_frame.cpp:987
+#: ../rapidsvn_frame.cpp:992
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "Нельзя добавить в закладки административный каталог subversion!"
 
-#: ../file_info.cpp:156
-#: ../filelist_ctrl.cpp:1128
+#: ../file_info.cpp:156 ../filelist_ctrl.cpp:1128
 msgid "add"
 msgstr "добавить"
 
@@ -1682,8 +1599,7 @@ msgstr "добавлен"
 msgid "conflicted"
 msgstr "конфликтует"
 
-#: ../file_info.cpp:160
-#: ../filelist_ctrl.cpp:1131
+#: ../file_info.cpp:160 ../filelist_ctrl.cpp:1131
 msgid "delete"
 msgstr "удалить"
 
@@ -1719,18 +1635,15 @@ msgstr "отсутствует"
 msgid "modified"
 msgstr "изменен"
 
-#: ../export_dlg.cpp:149
-#: ../export_dlg.cpp:153
+#: ../export_dlg.cpp:149 ../export_dlg.cpp:153
 msgid "native"
 msgstr "собственный формат ОС"
 
-#: ../file_info.cpp:138
-#: ../utils.cpp:417
+#: ../file_info.cpp:138 ../utils.cpp:417
 msgid "none"
 msgstr "нет"
 
-#: ../file_info.cpp:152
-#: ../utils.cpp:423
+#: ../file_info.cpp:152 ../utils.cpp:423
 msgid "normal"
 msgstr "нормальный"
 
@@ -1738,13 +1651,11 @@ msgstr "нормальный"
 msgid "obstructed"
 msgstr "заслоняет другой файл"
 
-#: ../filelist_ctrl.cpp:1161
-#: ../filelist_ctrl.cpp:1175
+#: ../filelist_ctrl.cpp:1161 ../filelist_ctrl.cpp:1175
 msgid "out of date"
 msgstr "устарел"
 
-#: ../file_info.cpp:164
-#: ../filelist_ctrl.cpp:1134
+#: ../file_info.cpp:164 ../filelist_ctrl.cpp:1134
 msgid "replace"
 msgstr "заменить"
 
@@ -1752,8 +1663,7 @@ msgstr "заменить"
 msgid "replaced"
 msgstr "замещен"
 
-#: ../file_info.cpp:143
-#: ../file_info.cpp:168
+#: ../file_info.cpp:143 ../file_info.cpp:168
 msgid "unknown"
 msgstr "неизвестн."
 
@@ -1765,32 +1675,45 @@ msgstr "неизвестное значение"
 msgid "unversioned"
 msgstr "не отслеживается"
 
+#~ msgid "Milestone: %s"
+#~ msgstr "Milestone: %s"
+
 #~ msgid "CR"
 #~ msgstr "CR"
+
 #~ msgid "CRLF"
 #~ msgstr "CRLF"
+
 #~ msgid "LF"
 #~ msgstr "LF"
 
 #, fuzzy
 #~ msgid "Conflict Previous Base File: %s"
 #~ msgstr "Conflict Previous Base File: %s"
+
 #~ msgid "Ansi"
 #~ msgstr "Ansi"
+
 #~ msgid "Url"
 #~ msgstr "Url"
+
 #~ msgid "Subversion %d.%d.%d"
 #~ msgstr "Subversion %d.%d.%d"
+
 #~ msgid "wxWidgets %d.%d.%d"
 #~ msgstr "wxWidgets %d.%d.%d"
+
 #~ msgid "Built with:"
 #~ msgstr "Собрано с использованием"
+
 #~ msgid "Supported URL schemas: "
 #~ msgstr "Поддерживаемые схемы URL:"
+
 #~ msgid "Locale Information:"
 #~ msgstr "Информация о локализации:"
+
 #~ msgid "Language:"
 #~ msgstr "Язык:"
+
 #~ msgid "Help"
 #~ msgstr "Помощь"
-

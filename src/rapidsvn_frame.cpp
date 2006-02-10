@@ -280,8 +280,8 @@ public:
       _("UUID"),
       _("Schedule"),
       _("Copied"),
-      _("Conflict Old"),
-      _("Conflict New"),
+      _("Conflict BASE"),
+      _("Conflict HEAD"),
       _("Conflict Work")
     };
 
@@ -560,7 +560,7 @@ public:
                       -1,
                       (wxObject *) NULL,
                       _("Log selected"),
-                      _("Show the log messages for a set entries"));
+                      _("Show the log messages for the selected entries"));
 
     toolBar->AddSeparator ();
   }
@@ -1536,7 +1536,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       }
       else
       {
-        Trace (_("Error receiving action event!"));
+        Trace (_("Internal Error: no client data for action event!"));
       }
 
       if ((actionFlags & Action::UPDATE_LATER) != 0)

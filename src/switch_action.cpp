@@ -36,7 +36,7 @@
 #include "utils.hpp"
 
 SwitchAction::SwitchAction (wxWindow * parent)
- : Action (parent, _("Switch"), GetBaseFlags ())
+ : Action (parent, _("Switch URL"), GetBaseFlags ())
 {
 }
 
@@ -60,7 +60,7 @@ SwitchAction::Prepare ()
   // create flags for the dialog
   int flags = UpdateDlg::WITH_URL;
 
-  UpdateDlg dlg (GetParent (), _("Switch"), flags,
+  UpdateDlg dlg (GetParent (), _("Switch URL"), flags,
                  true);
   dlg.GetData ().url = url;
 

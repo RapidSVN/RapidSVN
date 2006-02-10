@@ -206,17 +206,17 @@ struct FileInfo::Data
     if (text_conflict)
     {
       tmp = Utf8ToLocal (entry.conflictOld ());
-      str.Printf (_("Conflict Previous Base File: %s"),
+      str.Printf (_("Conflict BASE File: %s"),
                   tmp.c_str ());
       addLine (str);
 
       tmp = Utf8ToLocal (entry.conflictWrk ());
-      str.Printf (_("Conflict Previous Working File: %s"),
+      str.Printf (_("Conflict Working File: %s"),
                   tmp.c_str ());
       addLine (str);
 
       tmp = Utf8ToLocal (entry.conflictNew ());
-      str.Printf (_("Conflict Current Base File: %s"),
+      str.Printf (_("Conflict HEAD File: %s"),
                   tmp.c_str ());
       addLine (str);
     }
