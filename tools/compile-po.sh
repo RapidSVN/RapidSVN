@@ -43,7 +43,8 @@ fi
 for DIR in ?? ; do
   PO="$DIR/rapidsvn.po"
   MO="$DIR/rapidsvn.mo"
-  msgfmt -o$MO $PO
+  echo $DIR
+  msgfmt -o $MO $PO
 done
 
 # end of file
