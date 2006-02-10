@@ -1,1 +1,1 @@
-EXTRA_DIST=${wildcard de/rapidsvn.po} ${wildcard ru/rapidsvn.po} ${wildcard uk/rapidsvn.po} rapidsvn.pot
+EXTRA_DIST=de/rapidsvn.po ru/rapidsvn.po uk/rapidsvn.po rapidsvn.pot

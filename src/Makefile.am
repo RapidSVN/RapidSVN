@@ -1,4 +1,6 @@
-SUBDIRS=locale res svncpp tests
+SUBDIRS=svncpp
+
+DIST_SUBDIRS=${SUBDIRS} locale res tests
 
 noinst_HEADERS=${wildcard *.hpp}
 bin_PROGRAMS=rapidsvn
