@@ -1,3 +1,3 @@
 base referer
-rect $classsvn_1_1Exception.html 8,7 117,33
-rect $classsvn_1_1ClientException.html 168,7 312,33
+rect $classsvn_1_1Exception.html 7,8 117,32
+rect $classsvn_1_1ClientException.html 166,8 307,32
