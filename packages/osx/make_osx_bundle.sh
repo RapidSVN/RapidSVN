@@ -13,7 +13,7 @@ mkdir -p $BUNDLEDIR/MacOS
 mkdir -p $BUNDLEDIR/Resources
 cp ../../src/rapidsvn $BUNDLEDIR/MacOS/
 strip $BUNDLEDIR/MacOS/rapidsvn
-cp svn.icns $BUNDLEDIR/Resources/
+cp rapidsvn.icns $BUNDLEDIR/Resources/
 echo -n 'APPL????' > $BUNDLEDIR/PkgInfo
 
 echo -n \
@@ -30,7 +30,7 @@ echo -n \
 	<key>CFBundleExecutable</key>
 	<string>rapidsvn</string>
 	<key>CFBundleIconFile</key>
-	<string>svn.icns</string>
+	<string>rapidsvn.icns</string>
 	<key>CFBundleName</key>
 	<string>RapidSVN</string>
 	<key>CFBundlePackageType</key>
