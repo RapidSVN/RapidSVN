@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-10 10:15+0100\n"
-"PO-Revision-Date: 2006-02-10 11:27+0100\n"
+"PO-Revision-Date: 2006-02-13 16:33+0100\n"
 "Last-Translator: Olha <sleepy@adam-i-eva.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,180 +27,180 @@ msgstr "%s версия %d.%d.%d"
 
 #: ../rapidsvn_frame.cpp:360
 msgid "&About..."
-msgstr "О програ&мме..."
+msgstr "О программе..."
 
 #: ../utils.cpp:166
 msgid "&Add\tCTRL-A"
-msgstr "&Добавить\tCTRL-A"
+msgstr "Добавить\tCTRL-A"
 
 #: ../utils.cpp:249
 msgid "&Add Existing Working Copy..."
-msgstr "&Добавить существующую рабочую копию..."
+msgstr "Добавить существующую рабочую копию..."
 
 #: ../rapidsvn_frame.cpp:268
 msgid "&Author"
-msgstr "&Автор"
+msgstr "Автор"
 
 #: ../rapidsvn_frame.cpp:372
 msgid "&Bookmarks"
-msgstr "&Закладки"
+msgstr "Закладки"
 
 #: ../rapidsvn_frame.cpp:352
 msgid "&Contents\tF1"
-msgstr "&Содержание\tF1"
+msgstr "Содержание\tF1"
 
 #: ../utils.cpp:181
 msgid "&Copy...\tF5"
-msgstr "&Копировать...\tF5"
+msgstr "Копировать...\tF5"
 
 #: ../rapidsvn_frame.cpp:325
 msgid "&Create..."
-msgstr "&Создать..."
+msgstr "Создать..."
 
 #: ../rapidsvn_frame.cpp:273
 msgid "&Date"
-msgstr "&Дата"
+msgstr "Дата"
 
 #: ../utils.cpp:169
 msgid "&Delete\tDEL"
-msgstr "&Удалить\tDEL"
+msgstr "Удалить\tDEL"
 
 #: ../listed_dlg.cpp:58
 msgid "&Delete..."
-msgstr "&Удалить..."
+msgstr "Удалить..."
 
 #: ../utils.cpp:199
 msgid "&Diff to Base...\tCTRL+B"
-msgstr "&Сравнить с Base...\tCTRL+B"
+msgstr "Сравнить с Base...\tCTRL+B"
 
 #: ../utils.cpp:200
 msgid "&Diff to Head...\tCTRL+H"
-msgstr "&Сравнить с Head...\tCTRL+H"
+msgstr "Сравнить с Head...\tCTRL+H"
 
 #: ../utils.cpp:198
 msgid "&Diff...\tCTRL+D"
-msgstr "&Сравнить...\tCTRL+D"
+msgstr "Сравнить...\tCTRL+D"
 
 #: ../utils.cpp:267
 msgid "&Edit Bookmark..."
-msgstr "&Редактировать закладку..."
+msgstr "Редактировать закладку..."
 
 #: ../listed_dlg.cpp:55
 msgid "&Edit..."
-msgstr "&Правка..."
+msgstr "Правка..."
 
 #: ../utils.cpp:245
 msgid "&Edit...\tF3"
-msgstr "&Редактировать...\tF3"
+msgstr "Редактировать...\tF3"
 
 #: ../rapidsvn_frame.cpp:323
 msgid "&Export...\tCTRL-E"
-msgstr "&Экспорт...\tCTRL-E"
+msgstr "Экспорт...\tCTRL-E"
 
 #: ../rapidsvn_frame.cpp:373
 msgid "&Extras"
-msgstr "&Экстра"
+msgstr "Экстра"
 
 #: ../rapidsvn_frame.cpp:367
 msgid "&File"
-msgstr "&Файл"
+msgstr "Файл"
 
 #: ../rapidsvn_frame.cpp:240
 #: ../rapidsvn_frame.cpp:374
 msgid "&Help"
-msgstr "&Помощь"
+msgstr "Помощь"
 
 #: ../rapidsvn_frame.cpp:322
 msgid "&Import...\tCTRL-I"
-msgstr "&Импорт...\tCTRL-I"
+msgstr "Импорт...\tCTRL-I"
 
 #: ../rapidsvn_frame.cpp:353
 msgid "&Index\tShift+F1"
-msgstr "&Индекс\tShift+F1"
+msgstr "Индекс\tShift+F1"
 
 #: ../utils.cpp:204
 msgid "&Info..."
-msgstr "&Инфо..."
+msgstr "Инфо..."
 
 #: ../rapidsvn_frame.cpp:271
 msgid "&Last Changed"
-msgstr "&Последнее изменение"
+msgstr "Последнее изменение"
 
 #: ../utils.cpp:190
 msgid "&Lock..."
-msgstr "&Блокировать..."
+msgstr "Блокировать..."
 
 #: ../utils.cpp:202
 msgid "&Log...\tCTRL-L"
-msgstr "&Журнал...\tCTRL-L"
+msgstr "Журнал...\tCTRL-L"
 
 #: ../rapidsvn_frame.cpp:370
 msgid "&Modify"
-msgstr "&Операции"
+msgstr "Операции"
 
 #: ../listed_dlg.cpp:57
 msgid "&New..."
-msgstr "&Новый..."
+msgstr "Новый..."
 
 #: ../cert_dlg.cpp:135
 msgid "&Permanently"
-msgstr "&Постоянно"
+msgstr "Постоянно"
 
 #: ../rapidsvn_frame.cpp:270
 msgid "&Prop Status"
-msgstr "Статус &свойств"
+msgstr "Статус свойств"
 
 #: ../utils.cpp:161
 msgid "&Properties...\tCTRL-P"
-msgstr "&Свойства...\tCTRL-P"
+msgstr "Свойства...\tCTRL-P"
 
 #: ../rapidsvn_frame.cpp:371
 msgid "&Query"
-msgstr "&Запросы"
+msgstr "Запросы"
 
 #: ../utils.cpp:262
 msgid "&Remove Bookmark..."
-msgstr "&Удалить закладку..."
+msgstr "Удалить закладку..."
 
 #: ../rapidsvn_frame.cpp:369
 msgid "&Repository"
-msgstr "&Репозиторий"
+msgstr "Репозиторий"
 
 #: ../rapidsvn_frame.cpp:266
 msgid "&Revision"
-msgstr "&Ревизия"
+msgstr "Ревизия"
 
 #: ../rapidsvn_frame.cpp:269
 msgid "&Status"
-msgstr "&Статус"
+msgstr "Статус"
 
 #: ../utils.cpp:313
 msgid "&Stop"
-msgstr "&Стоп"
+msgstr "Стоп"
 
 #: ../utils.cpp:258
 msgid "&Switch Repository URL..."
-msgstr "&Переключить URL репозитория..."
+msgstr "Переключить URL репозитория..."
 
 #: ../cert_dlg.cpp:137
 msgid "&Temporarily"
-msgstr "&Временно"
+msgstr "Временно"
 
 #: ../utils.cpp:191
 msgid "&Unlock"
-msgstr "Ра&зблокировать"
+msgstr "Разблокировать"
 
 #: ../utils.cpp:283
 msgid "&Update...\tCTRL-U"
-msgstr "&Актуализировать (update)...\tCTRL-U"
+msgstr "Актуализировать (&update)...\tCTRL-U"
 
 #: ../rapidsvn_frame.cpp:368
 msgid "&View"
-msgstr "&Вид"
+msgstr "Вид"
 
 #: ../listed_dlg.cpp:56
 msgid "&View..."
-msgstr "&Вид..."
+msgstr "Вид..."
 
 #: ../cert_dlg.cpp:58
 msgid "- The certificate has an unknown error."
@@ -248,11 +248,11 @@ msgstr "Добавление"
 
 #: ../utils.cpp:254
 msgid "Add Existing &Repository..."
-msgstr "Добавить существующий &репозиторий..."
+msgstr "Добавить существующий репозиторий..."
 
 #: ../utils.cpp:168
 msgid "Add r&ecursive"
-msgstr "Добавить &рекурсивно"
+msgstr "Добавить рекурсивно"
 
 #: ../rapidsvn_frame.cpp:485
 msgid "Add selected"
@@ -382,7 +382,7 @@ msgstr "Закрыть"
 
 #: ../utils.cpp:288
 msgid "Co&mmit...\tCTRL-M"
-msgstr "Фиксировать из&менения (commit)...\tCTRL-M"
+msgstr "Фиксировать изменения (co&mmit)...\tCTRL-M"
 
 #: ../rapidsvn_frame.cpp:306
 msgid "Columns"
@@ -572,11 +572,11 @@ msgstr "Подтверждаете разблокировку выбранных
 
 #: ../utils.cpp:293
 msgid "E&xit\tCTRL-Q"
-msgstr "В&ыход\tCTRL-Q"
+msgstr "Выход\tCTRL-Q"
 
 #: ../rapidsvn_frame.cpp:272
 msgid "E&xtension"
-msgstr "Расш&ирение"
+msgstr "Расширение"
 
 #: ../export_dlg.cpp:145
 msgid "EOL:"
@@ -1001,11 +1001,11 @@ msgstr "Выход '%s'"
 
 #: ../utils.cpp:182
 msgid "M&ove...\tF6"
-msgstr "П&ереместить...\tF6"
+msgstr "Переместить...\tF6"
 
 #: ../utils.cpp:184
 msgid "Make &directory...\tF7"
-msgstr "Создать &каталог...\tF7"
+msgstr "Создать каталог...\tF7"
 
 #: ../mkdir_action.cpp:51
 msgid "Make directory"
@@ -1162,7 +1162,7 @@ msgstr ""
 
 #: ../rapidsvn_frame.cpp:274
 msgid "Pr&op Date"
-msgstr "Дата изм. с&в-в"
+msgstr "Дата изм. св-в"
 
 #: ../preferences_dlg.cpp:480
 msgid "Preferences"
@@ -1222,7 +1222,7 @@ msgstr "Занести файлы и каталоги в контроль вер
 
 #: ../rapidsvn_frame.cpp:267
 msgid "R&ep. Rev."
-msgstr "Рев. Р&еп."
+msgstr "Рев. Реп."
 
 #: ../rapidsvn_app.cpp:68
 #, c-format
@@ -1231,15 +1231,15 @@ msgstr "Помощь RapidSVN: %s"
 
 #: ../utils.cpp:183
 msgid "Re&name...\tCTRL-N"
-msgstr "Пере&именовать...\tCTRL-N"
+msgstr "Переименовать...\tCTRL-N"
 
 #: ../utils.cpp:176
 msgid "Re&solve conflicts\tCTRL-S"
-msgstr "&Разрешить конфликты\tCTRL-S"
+msgstr "Разрешить конфликты\tCTRL-S"
 
 #: ../utils.cpp:174
 msgid "Re&vert\tCTRL-V"
-msgstr "От&кат изменений\tCTRL-V"
+msgstr "Отмена изменений\tCTRL-V"
 
 #: ../filelist_ctrl.cpp:1201
 msgid "Ready"
