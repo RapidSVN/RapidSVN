@@ -204,7 +204,7 @@ AC_ARG_WITH(cppunit-config,
                             when determining the cpp Unit configuration; 
                             defaults to ""]],
 [
-  if test "$withval" == "no"; then
+  if test "$withval" = "no"; then
     CPPUNITCONFIG=
   elif test "$withval" != "yes"; then
     CPPUNITCONFIG=$withval
@@ -230,7 +230,7 @@ AC_ARG_WITH(xsltproc,
 [[  --with-xsltproc=FILE     Use the given path to xsltproc; 
                             defaults to "xsltproc"]],
 [
-  if test "$withval" == "no"; then
+  if test "$withval" = "no"; then
     XSLTPROC=
   elif test "$withval" != "yes"; then
     XSLTPROC=$withval
@@ -262,7 +262,7 @@ AC_ARG_WITH(docbook-xsl-manpages,
                                      otherwise you are using the wrong stylesheet
                                      resulting in an invalid manpage]],
 [
-  if test "$withval" == "no"; then
+  if test "$withval" = "no"; then
     DOCBOOK_MANPAGES=
   else
     DOCBOOK_MANPAGES=$withval
@@ -274,15 +274,18 @@ dnl remark: I didnt use a list if files for usage in
 dnl         a for .. do .. done loop since the line
 dnl         got too long (file not found error while
 dnl         executing)
-if test "$DOCBOOK_MANPAGES" == "yes"; then
+if test "$DOCBOOK_MANPAGES" = "yes"; then
   X1=/usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl
   X2=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook/docbook.xsl
   X3=/usr/share/sgml/docbook/yelp/docbook/manpages/docbook.xsl
-  X4=/usr/share/sgml/docbook/xsl-stylesheets*/manpages/docbook.xsl
+  X4=/usr/share/sgml/docbook/xsl-stylesheets/manpages/docbook.xsl
   X5=/usr/local/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
   X6=/usr/local/share/sgml/docbook/yelp/docbook/manpages/docbook.xsl
   X7=/usr/share/docbook-xsl/manpages/docbook.xsl
   X8=/usr/share/xml/docbook/stylesheet/nwalsh/current/manpages/docbook.xsl
+  X9=/usr/share/sgml/docbook/xsl-stylesheets*/manpages/docbook.xsl
+
+  DOCBOOK_MANPAGES=notfound
 
   if test -f $X1; then
     DOCBOOK_MANPAGES=$X1
@@ -301,14 +304,19 @@ if test "$DOCBOOK_MANPAGES" == "yes"; then
   elif test -f $X8; then
     DOCBOOK_MANPAGES=$X8
   else
-    DOCBOOK_MANPAGES=notfound
+    for X in $X9 ; do
+      if test -f $X; then
+        DOCBOOK_MANPAGES=$X
+	break
+      fi
+    done
   fi
 fi
 AC_MSG_CHECKING([docbook xsl stylesheet for manpages])
 if test -z "$DOCBOOK_MANPAGES"; then
    AC_MSG_RESULT([not used])
 elif test -f "$DOCBOOK_MANPAGES"; then
-   AC_MSG_RESULT([found])
+   AC_MSG_RESULT([found ($DOCBOOK_MANPAGES)])
 else
    AC_MSG_RESULT([not found])
    DOCBOOK_MANPAGES=""
@@ -329,7 +337,7 @@ AC_ARG_WITH(manpage,
 TARGET_MANPAGE=manpage-no
 MAN_MANS=
 AC_MSG_CHECKING([manpage creation])
-if test "$MANPAGE"=="no"; then
+if test "$MANPAGE" = "no"; then
   AC_MSG_RESULT([no])
 elif test "$XSLTPROC" -a "$DOCBOOK_MANPAGES" ; then
   AC_MSG_RESULT([yes])
@@ -348,7 +356,7 @@ AC_ARG_WITH(doxygen,
                           Used for creating API documentation; 
                           defaults to "doxygen"]],
 [
-  if test "$withval" == "no"; then
+  if test "$withval" = "no"; then
     DOXYGEN=
   elif test "$withval" != "yes"; then
     DOXYGEN=$withval
@@ -375,7 +383,7 @@ AC_ARG_WITH(dot,
                       This tool is needed by doxygen; 
                       defaults to "dot"]],
 [
-  if test "$withval" == "no"; then
+  if test "$withval" = "no"; then
     DOT=
   elif test "$withval" != "yes"; then
     DOT=$withval
