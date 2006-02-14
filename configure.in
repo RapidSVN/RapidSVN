@@ -278,11 +278,14 @@ if test "$DOCBOOK_MANPAGES" = "yes"; then
   X1=/usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl
   X2=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook/docbook.xsl
   X3=/usr/share/sgml/docbook/yelp/docbook/manpages/docbook.xsl
-  X4=/usr/share/sgml/docbook/xsl-stylesheets*/manpages/docbook.xsl
+  X4=/usr/share/sgml/docbook/xsl-stylesheets/manpages/docbook.xsl
   X5=/usr/local/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
   X6=/usr/local/share/sgml/docbook/yelp/docbook/manpages/docbook.xsl
   X7=/usr/share/docbook-xsl/manpages/docbook.xsl
   X8=/usr/share/xml/docbook/stylesheet/nwalsh/current/manpages/docbook.xsl
+  X9=/usr/share/sgml/docbook/xsl-stylesheets*/manpages/docbook.xsl
+
+  DOCBOOK_MANPAGES=notfound
 
   if test -f $X1; then
     DOCBOOK_MANPAGES=$X1
@@ -301,14 +304,19 @@ if test "$DOCBOOK_MANPAGES" = "yes"; then
   elif test -f $X8; then
     DOCBOOK_MANPAGES=$X8
   else
-    DOCBOOK_MANPAGES=notfound
+    for X in $X9 ; do
+      if test -f $X; then
+        DOCBOOK_MANPAGES=$X
+	break
+      fi
+    done
   fi
 fi
 AC_MSG_CHECKING([docbook xsl stylesheet for manpages])
 if test -z "$DOCBOOK_MANPAGES"; then
    AC_MSG_RESULT([not used])
 elif test -f "$DOCBOOK_MANPAGES"; then
-   AC_MSG_RESULT([found])
+   AC_MSG_RESULT([found ($DOCBOOK_MANPAGES)])
 else
    AC_MSG_RESULT([not found])
    DOCBOOK_MANPAGES=""
