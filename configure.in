@@ -210,7 +210,7 @@ AC_ARG_WITH(cppunit-config,
     CPPUNITCONFIG=$withval
   fi
 ])
-AC_MSG_CHECKING([cppunig-config])
+AC_MSG_CHECKING([cppunit-config])
 if test -z "$CPPUNITCONFIG" ; then
   AC_MSG_RESULT([not used])
 else
@@ -434,6 +434,13 @@ AC_SUBST(DOXYGEN)
 AC_SUBST(DOXYGEN_DIST)
 AC_SUBST(TARGET_DOXYGEN)
 
+if test "$CPPUNITCONFIG" ; then
+    CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
+    CPPUNIT_LIBS="`$CPPUNITCONFIG --libs`"
+    AC_SUBST(CPPUNIT_LIBS)
+    AC_SUBST(CPPUNIT_CXXFLAGS)
+fi
+
 AC_OUTPUT(Makefile \
           doc/Makefile \
           doc/manpage/Makefile \
@@ -451,13 +458,6 @@ AC_OUTPUT(Makefile \
           src/res/Makefile \
           src/svncpp/Makefile \
 	  src/tests/Makefile \
+	  src/tests/svncpp/Makefile \
 	  tools/Makefile)
 
-
-if test "$CPPUNITCONFIG" ; then
-    CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
-    CPPUNIT_LIBS="`$CPPUNITCONFIG --libs`"
-    AC_SUBST(CPPUNIT_LIBS)
-    AC_SUBST(CPPUNIT_CXXFLAGS)
-    AC_OUTPUT(src/tests/svncpp/Makefile)
-fi
