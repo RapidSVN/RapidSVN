@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RapidSVN 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-09 11:21+0100\n"
-"PO-Revision-Date: 2006-02-09 14:09+0100\n"
+"PO-Revision-Date: 2006-02-15 17:27+0100\n"
 "Last-Translator: XelaRellum <XelaRellum@web.de>\n"
 "Language-Team: Alexander Mueller <XelaRellum@web.de>\n"
 "MIME-Version: 1.0\n"
@@ -596,7 +596,7 @@ msgstr "Eigenschaft Bearbeiten"
 
 #: ../lock_dlg.cpp:46
 msgid "Enter a comment for this lock"
-msgstr "Geben Sie einen für diese Sperre ein"
+msgstr "Geben Sie einen Kommentar für diese Sperre ein"
 
 #: ../commit_dlg.cpp:55
 #: ../import_dlg.cpp:93
