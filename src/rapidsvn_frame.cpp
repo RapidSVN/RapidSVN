@@ -1694,6 +1694,9 @@ RapidSvnFrame::ShowInfo ()
 void
 RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 {
+  if (m->IsRunning ())
+    return;
+
   try
   {
     m_activePane = ACTIVEPANE_FOLDER_BROWSER;
