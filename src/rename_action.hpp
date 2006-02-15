@@ -22,8 +22,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _MOVE_ACTION_H_INCLUDED_
-#define _MOVE_ACTION_H_INCLUDED_
+#ifndef _RENAME_ACTION_H_INCLUDED_
+#define _RENAME_ACTION_H_INCLUDED_
 
 // svncpp
 #include "svncpp/targets.hpp"
@@ -31,20 +31,13 @@
 // app
 #include "action.hpp"
 
-enum
-{
-  MOVE_MOVE = 0,
-  MOVE_COPY
-};
-
 /**
  * this action class can be used to copy, move and rename
  * files and folders. Right now it supports only a single target
  */
-class MoveAction:public Action
+class RenameAction:public Action
 {
 private:
-  int m_kind;
   wxString m_destination;
   bool m_force;
 
@@ -53,9 +46,8 @@ public:
    * constructor
    *
    * @param parent parent window
-   * @param type kind of action (MOVE_MOVE, MOVE_COPY)
    */
-  MoveAction (wxWindow * parent, int kind);
+  RenameAction (wxWindow * parent);
 
   virtual bool Perform ();
   virtual bool Prepare ();
@@ -65,7 +57,7 @@ public:
    */
   static unsigned int GetBaseFlags ()
   {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
+    return SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
   }
 };
 

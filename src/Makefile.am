@@ -52,6 +52,7 @@ rapidsvn_SOURCES= \
 	proportional_splitter.cpp \
 	rapidsvn_app.cpp \
 	rapidsvn_frame.cpp \
+	rename_action.cpp \
 	report_dlg.cpp \
 	resolve_action.cpp \
 	revert_action.cpp \

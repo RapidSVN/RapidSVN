@@ -342,6 +342,10 @@ SOURCE=.\src\rapidsvn_frame.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\rename_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\report_dlg.cpp
 # End Source File
 # Begin Source File

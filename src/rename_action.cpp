@@ -30,40 +30,33 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "move_action.hpp"
+#include "rename_action.hpp"
 #include "destination_dlg.hpp"
 #include "utils.hpp"
 
-MoveAction::MoveAction (wxWindow * parent, int kind)
- : Action (parent, wxEmptyString, GetBaseFlags ()),
-   m_kind (kind)
+RenameAction::RenameAction (wxWindow * parent)
+ : Action (parent, wxEmptyString, GetBaseFlags ())
 {
-  if (kind == MOVE_MOVE)
-    SetName (_("Move"));
-  else
-    SetName (_("Copy"));
+  SetName (_("Rename"));
+
 }
 
 bool
-MoveAction::Prepare ()
+RenameAction::Prepare ()
 {
   if (!Action::Prepare ())
   {
     return false;
   }
 
-  // create flags for the dialog
-  int flags = 0;
-
-  if (m_kind == MOVE_MOVE)
-    flags = DestinationDlg::WITH_FORCE;
-
-  // create description for the dialog
+  // show destination dialog
   DestinationDlg dlg (GetParent (), GetName (),
-                      _("Select destination:"), flags);
-
+                      _("Enter new name:"), 
+                      DestinationDlg::WITH_FORCE);
   if (dlg.ShowModal () != wxID_OK)
+  {
     return false;
+  }
 
   m_destination = dlg.GetDestination ();
   m_force = dlg.GetForce ();
@@ -72,24 +65,23 @@ MoveAction::Prepare ()
 }
 
 bool
-MoveAction::Perform ()
+RenameAction::Perform ()
 {
   svn::Client client (GetContext ());
 
+  svn::Path srcPath = GetTarget ();
   svn::Path destPath (PathUtf8 (m_destination));
   svn::Revision unusedRevision;
-  std::vector<svn::Path> targets (GetTargets ().targets ());
-  std::vector<svn::Path>::iterator it;
 
-  for (it = targets.begin (); it != targets.end (); it++)
-  {
-    svn::Path srcPath (*it);
+  std::string basename;
+  std::string dirpath;
+  srcPath.split (dirpath, basename);
 
-    if (m_kind == MOVE_MOVE)
-      client.move (srcPath, unusedRevision, destPath, m_force);
-    else
-      client.copy (srcPath, unusedRevision, destPath);
-  }
+  svn::Path newDestPath (dirpath);
+  newDestPath.addComponent(destPath.c_str ());
+
+  client.move (srcPath, unusedRevision, newDestPath, m_force);
+
   return true;
 }
 /* -----------------------------------------------------------------

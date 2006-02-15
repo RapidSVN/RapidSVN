@@ -69,6 +69,7 @@
 #include "mkdir_action.hpp"
 #include "move_action.hpp"
 #include "property_action.hpp"
+#include "rename_action.hpp"
 #include "resolve_action.hpp"
 #include "revert_action.hpp"
 #include "switch_action.hpp"
@@ -1248,7 +1249,7 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       break;
 
     case ID_Rename:
-      baseActionFlags = MoveAction::GetBaseFlags ();
+      baseActionFlags = RenameAction::GetBaseFlags ();
       break;
 
     case ID_Switch:
@@ -1445,7 +1446,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
       break;
 
     case ID_Rename:
-      action = new MoveAction (this, MOVE_RENAME);
+      action = new RenameAction (this);
       break;
 
     case ID_Switch:
