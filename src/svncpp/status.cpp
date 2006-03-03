@@ -32,7 +32,7 @@
 
 namespace svn
 {
-  // Status::Data is defined in m_svn_status.hpp
+  // Status::Data is defined in m_svn_data.hpp
 
 
   Status::Status ()

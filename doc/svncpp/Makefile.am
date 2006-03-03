@@ -6,9 +6,7 @@ all: @TARGET_DOXYGEN@
 
 doxygen-no:
 
-doxygen-yes: html/index.html
-
-html/index.html: 
+doxygen-yes: 
 	$(DOXYGEN) svncpp.dox
 
 clean:
