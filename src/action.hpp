@@ -75,7 +75,7 @@ public:
   static const unsigned int UPDATE_LATER;
 
   /**
-   * if set then the tree will be updates as well.
+   * if set then the tree will be updated as well.
    */
   static const unsigned int UPDATE_TREE;
 

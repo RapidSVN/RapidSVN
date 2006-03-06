@@ -96,28 +96,24 @@ public:
   virtual ~FileListCtrl ();
 
   void ResetColumns ();
-  void DeleteAllItems();
+  void DeleteAllItems ();
 
   /**
-   * set visibility of column
+   * set visibility of a column
    *
    * @param col column number
    * @param visible
    */
-  void SetColumnVisible (const int col, const bool visible);
+  void
+  SetColumnVisible (const int col, const bool visible);
 
   /**
    * @param col column number
    * @retval true column visible
    * @retval false invisible
    */
-  const bool GetColumnVisible (const int col);
-
-  /**
-   * @param col column number
-   * @return returns name of the column
-   */
-  static wxString GetColumnCaption (const int col);
+  bool
+  GetColumnVisible (const int col) const;
 
   /**
    * set column width
@@ -125,7 +121,64 @@ public:
    * @param col column number
    * @param width
    */
-  void SetColumnWidth (const int col, const int width);
+  void
+  SetColumnWidth (const int col, const int width);
+
+  /**
+   * get number of soring column
+   *
+   * @return number of column
+   */
+  int
+  GetSortColumn () const;
+
+  /**
+   * set sorting column
+   *
+   * @param col column number
+   */
+  void
+  SetSortColumn (const int col);
+
+  /**
+   * know whether to use full path in sorting
+   *
+   * @return true = use full path
+   */
+  bool
+  GetIncludePath () const;
+
+  /**
+   * set whether to use full path in sorting
+   *
+   * @param value
+   */
+  void
+  SetIncludePath (bool value);
+
+  /**
+   * know whether sorting is ascending or descending
+   *
+   * @return true = ascending
+   */
+  bool
+  GetSortAscending () const;
+
+  /**
+   * set whether to sort ascending or descending
+   *
+   * @param ascending
+   */
+  void
+  SetSortAscending (bool ascending);
+
+  /**
+   * get the "flat" setting
+   *
+   * @return true = flat
+   */
+  bool
+  IsFlat () const;
 
   /**
    * change to either flat or single directory view
@@ -134,17 +187,21 @@ public:
    *
    * @param flat
    */
-  void SetFlat (const bool flat);
+  void
+  SetFlat (const bool flat);
 
   /**
    * shall we contact the repository when updating,
    * so we get information about out-dated-ness?
    */
+  bool
+  GetWithUpdate () const;
+
   void
   SetWithUpdate (bool value);
 
   bool
-  GetWithUpdate () const;
+  GetShowUnversioned () const;
 
   /**
    * shall we display unversioned file entries?
@@ -152,26 +209,23 @@ public:
   void
   SetShowUnversioned (bool value);
 
+  /**
+   * shall external definitions be ignored/not updated?
+   */
   bool
-  GetShowUnversioned () const;
+  GetIgnoreExternals () const;
 
   void
   SetIgnoreExternals (bool value);
 
-  bool
-  GetIgnoreExternals () const;
-
-  /**
-   * get the "flat" setting
-   *
-   * @return true=flat
-   */
-  bool IsFlat ();
-
   void UpdateFileList ();
   void UpdateFileList (const wxString & path);
-  const IndexArray GetSelectedItems () const;
-  const svn::Targets GetTargets () const;
+
+  const IndexArray
+  GetSelectedItems () const;
+
+  const svn::Targets
+  GetTargets () const;
 
   /**
    * determine the properties of what has been selected
@@ -180,12 +234,11 @@ public:
   unsigned int
   GetSelectionActionFlags () const;
 
-  void
-  SetContext (svn::Context * Context);
-
-
   svn::Context *
   GetContext () const;
+
+  void
+  SetContext (svn::Context * Context);
 
 private:
   struct Data;
@@ -198,6 +251,7 @@ private:
 
   void SetColumnImages ();
   void UpdateColumns ();
+  void ApplySortChanges ();
 
   // message handlers
   void OnKeyDown (wxKeyEvent & event);
@@ -206,6 +260,8 @@ private:
   void OnColumnLeftClick (wxListEvent & event);
   void OnColumnEndDrag (wxListEvent & event);
   void OnContextMenu (wxContextMenuEvent & event);
+
+  void CreateLables (const svn::Status & status, const svn::Path & basePath);
 
 private:
   DECLARE_EVENT_TABLE ()

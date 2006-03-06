@@ -14,6 +14,7 @@ rapidsvn_SOURCES= \
 	checkout_action.cpp \
 	checkout_dlg.cpp \
 	cleanup_action.cpp \
+	columns.cpp \
 	commit_action.cpp \
 	commit_dlg.cpp \
 	delete_action.cpp \

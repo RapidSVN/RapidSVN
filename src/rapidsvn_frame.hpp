@@ -67,13 +67,15 @@ public:
   virtual ~RapidSvnFrame ();
 
   /** Allow children to trim their popup menus using the frames logic */
-  void TrimDisabledMenuItems (wxMenu & menu);
+  void
+  TrimDisabledMenuItems (wxMenu & menu);
 
   /**
   * Change the active window, if the corresponding event is handled
   * in one of the sub-windows
   */
-  void SetActivePane (ActivePane value);
+  void
+  SetActivePane (ActivePane value);
 
 private:
   /** disallow default constructor */
@@ -94,12 +96,15 @@ private:
   // View menu
   void OnPreferences (wxCommandEvent & event);
   void OnRefresh (wxCommandEvent & event);
+  void OnColumnReset (wxCommandEvent & event);
+  void OnColumn (wxCommandEvent & event);
+  void OnIncludePath (wxCommandEvent & event);
+  void OnSortAscending (wxCommandEvent & event);
+  void OnColumnSorting (wxCommandEvent & event);
+  void OnFlatView (wxCommandEvent & event);
   void OnRefreshWithUpdate (wxCommandEvent & event);
   void OnShowUnversioned (wxCommandEvent & event);
   void OnIgnoreExternals (wxCommandEvent & event);
-  void OnColumn (wxCommandEvent & event);
-  void OnColumnReset (wxCommandEvent & event);
-  void OnFlatView (wxCommandEvent & event);
   void OnStop (wxCommandEvent & event);
 
   // Query menu
@@ -113,7 +118,7 @@ private:
   void OnCleanup (wxCommandEvent & event);
 
   // Help menu
-  void OnHelp(wxCommandEvent & event);
+//  void OnHelp(wxCommandEvent & event);
   void OnHelpContents (wxCommandEvent & event);
   void OnHelpIndex (wxCommandEvent & event);
   void OnHelpStartupTips (wxCommandEvent & event);
@@ -121,7 +126,6 @@ private:
 
   // toolbar events
   void OnToolEnter (wxCommandEvent & event);
-  void OnToolLeftClick (wxCommandEvent & event);
 
   // Events from action threads
   void OnActionEvent (wxCommandEvent & event);
@@ -138,6 +142,8 @@ private:
   void OnLogout (wxCommandEvent & event);
 
   void UpdateCurrentPath ();
+  void UpdateMenuSorting ();
+  void UpdateMenuAscending ();
 
   /**
    * Invoke the default action on the currently selected item(s)
@@ -160,8 +166,7 @@ private:
   void ShowInfo ();
 
   // Enable/disable action menu items
-  bool
-  RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags);
+  bool ValidateIDActionFlags (int id, unsigned int selectionActionFlags);
   void OnUpdateCommand (wxUpdateUIEvent & updateUIEvent);
 
   const svn::Targets
@@ -191,26 +196,6 @@ private:
   }
 
   void Perform (Action * action);
-
-  /**
-   * returns the visibility of a column in the filelist
-   *
-   * @param col column index
-   * @return visibility
-   * @retval true=visible
-   */
-  const int
-  GetColumnVisible (const int col) const;
-
-  /**
-   * sets the visibility of a column in the filelist
-   * the column menu entry is checked/unchecked as well
-   *
-   * @param col column index
-   * @param visible true=visible
-   */
-  void
-  SetColumnVisible (const int col, const bool visible);
 
 private:
   struct Data;

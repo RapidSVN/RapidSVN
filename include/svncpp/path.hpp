@@ -148,6 +148,30 @@ namespace svn
     void
     split (std::string & dir, std::string & filename, std::string & ext) const;
 
+    /**
+     * get a basename of a file
+     *
+     * @return basename filename without path
+     */
+    std::string
+    basename () const;
+
+    /**
+     * get a name of directory containing file
+     *
+     * @return dirpath path of directory
+     */
+    std::string
+    dirpath () const;
+
+    /**
+     * get a substring of a path, starting at index @index
+     *
+     * @param index 
+     * @return substr substring
+     */
+    std::string
+    substr (const size_t index) const;
 
     /**
      * returns the temporary directory

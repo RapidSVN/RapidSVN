@@ -181,6 +181,34 @@ namespace svn
     }
   }
 
+  std::string
+  Path::basename () const
+  {
+    std::string dir;
+    std::string filename;
+
+    split (dir, filename);
+
+    return filename;
+  }
+
+  std::string
+  Path::dirpath () const
+  {
+    std::string dir;
+    std::string filename;
+
+    split (dir, filename);
+
+    return dir;
+  }
+
+  std::string
+  Path::substr (const size_t count) const
+  {
+    return m_path.substr (count);
+  }
+
   /* ===================================================================
    * The next two Fixed_* functions are copies of the APR
    * apr_temp_dir_get functionality with a fix applied.

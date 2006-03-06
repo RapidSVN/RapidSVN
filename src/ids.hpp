@@ -94,7 +94,11 @@ enum
   ID_Verb_Min,
   ID_Verb_Max = ID_Verb_Min + 16,
   ID_Column_Reset,
+  ID_Include_Path,
+  ID_Sort_Ascending,
   ID_Column_Min,
+  ID_Column_Name,
+  ID_Column_Path,
   ID_Column_Rev,
   ID_Column_Cmt_Rev,
   ID_Column_Author,
@@ -104,6 +108,9 @@ enum
   ID_Column_Extension,
   ID_Column_Text_Time,
   ID_Column_Prop_Time,
+  ID_Column_LockOwner,
+  ID_Column_LockComment,
+  ID_Column_Checksum,
   ID_Column_Url,
   ID_Column_Repos,
   ID_Column_Uuid,
@@ -113,10 +120,41 @@ enum
   ID_Column_ConflictOld,
   ID_Column_ConflictNew,
   ID_Column_ConflictWrk,
-  ID_Column_LockOwner,
-  ID_Column_LockComment,
-  ID_Column_Checksum,
   ID_Column_Max,
+
+  /**
+   * ATTENTION!
+   *
+   * Don't forget to update ID_Column_* and ID_ColumnSort_*
+   * whenever changing one of them or making changes to
+   * the order of column in src/columns.cpp.
+   * This order should be the same in all 3 cases.
+   */
+  ID_ColumnSort_Min,
+  ID_ColumnSort_Name,
+  ID_ColumnSort_Path,
+  ID_ColumnSort_Rev,
+  ID_ColumnSort_Cmt_Rev,
+  ID_ColumnSort_Author,
+  ID_ColumnSort_Text_Status,
+  ID_ColumnSort_Prop_Status,
+  ID_ColumnSort_Cmt_Date,
+  ID_ColumnSort_Extension,
+  ID_ColumnSort_Text_Time,
+  ID_ColumnSort_Prop_Time,
+  ID_ColumnSort_LockOwner,
+  ID_ColumnSort_LockComment,
+  ID_ColumnSort_Checksum,
+  ID_ColumnSort_Url,
+  ID_ColumnSort_Repos,
+  ID_ColumnSort_Uuid,
+  //ID_ColumnSort_Kind, we dont need this, do we?
+  ID_ColumnSort_Schedule,
+  ID_ColumnSort_Copied, // combination of isCopied + copyfromUrl
+  ID_ColumnSort_ConflictOld,
+  ID_ColumnSort_ConflictNew,
+  ID_ColumnSort_ConflictWrk,
+  ID_ColumnSort_Max,
 
   ACTION_EVENT, // this one gets sent from the action threads
 // Ids used for communication events between threads and frame
@@ -132,7 +170,8 @@ enum
   TOKEN_MERGE,
   TOKEN_ADD_BOOKMARK,
   TOKEN_DELETE_ACTION,
-  ACTION_UPDATE,
+  TOKEN_UPDATE_SORTING,
+  TOKEN_UPDATE_ASCENDING,
   FILELIST_CTRL,
   FOLDER_BROWSER,
 };
