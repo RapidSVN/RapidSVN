@@ -143,7 +143,9 @@ private:
 
   void UpdateCurrentPath ();
   void UpdateMenuSorting ();
+  void UpdateMenuIncludePath ();
   void UpdateMenuAscending ();
+  void SetIncludePathVisibility (bool flatMode);
 
   /**
    * Invoke the default action on the currently selected item(s)

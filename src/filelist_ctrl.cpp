@@ -1648,7 +1648,7 @@ FileListCtrl::SetSortAscending (bool ascending)
   ApplySortChanges ();
 }
 
-inline bool
+bool
 FileListCtrl::IsFlat () const
 {
   return m->FlatMode;

@@ -344,7 +344,7 @@ public:
   }
 
   inline void
-  EnableColumnInMenu (int id, bool enable)
+  EnableMenuEntry (int id, bool enable)
   {
     MenuSorting->Enable (id, enable);
   }
@@ -658,16 +658,22 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   // Create the list control to display files
   m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL,
                                  wxDefaultPosition, wxDefaultSize);
-
   m->CheckMenu (ID_Flat,              false);
   m->CheckMenu (ID_RefreshWithUpdate, m_listCtrl->GetWithUpdate());
   m->CheckMenu (ID_ShowUnversioned,   m_listCtrl->GetShowUnversioned());
   if (svn::SUPPORTS_EXTERNALS)
     m->CheckMenu (ID_IgnoreExternals, m_listCtrl->GetIgnoreExternals());
-  m->CheckMenu (ID_Include_Path,      m_listCtrl->GetIncludePath());
   m->CheckMenu (ID_Sort_Ascending,    m_listCtrl->GetSortAscending());
-
   m->CheckSort (m_listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
+
+  bool isFlat = m_listCtrl->IsFlat ();
+  bool includePath = m_listCtrl->GetIncludePath ();
+  if (isFlat == false && includePath == true)
+    m->CheckMenu (ID_Include_Path, false);
+  else
+    m->CheckMenu (ID_Include_Path, includePath);
+  m->EnableMenuEntry (ID_Include_Path, isFlat ? true : false);
+
 
   // Create the browse control
   m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
@@ -681,7 +687,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
     {
       bool check = m_listCtrl->GetColumnVisible (col);
       m->CheckColumn (id, check);
-      m->EnableColumnInMenu (sortid, check);
+      m->EnableMenuEntry (sortid, check);
     }
   }
 
@@ -968,7 +974,7 @@ RapidSvnFrame::OnColumnReset (wxCommandEvent &)
       m->CheckColumn (id, visible);
 
     int sortid = id + Columns::SORT_COLUMN_OFFSET;
-    m->EnableColumnInMenu (sortid, visible);
+    m->EnableMenuEntry (sortid, visible);
   }
   UpdateFileList ();
 }
@@ -993,7 +999,7 @@ RapidSvnFrame::OnColumn (wxCommandEvent & event)
     m_listCtrl->SetColumnVisible (col, visible);
 
     int sortid = eventId + Columns::SORT_COLUMN_OFFSET;
-    m->EnableColumnInMenu (sortid, visible);
+    m->EnableMenuEntry (sortid, visible);
 
     UpdateMenuSorting ();
     UpdateMenuAscending ();
@@ -1031,14 +1037,16 @@ RapidSvnFrame::OnFlatView (wxCommandEvent & event)
 {
   bool newFlatMode = !m_folder_browser->IsFlat ();
 
-  // if this cannot be set (e.g. invalid selecttion
+  // if this cannot be set (e.g. invalid selection
   // like the root element, we uncheck this
   if (!m_folder_browser->SetFlat (newFlatMode))
     newFlatMode = false;
 
   m->CheckMenu (ID_Flat, newFlatMode);
   m_listCtrl->SetFlat (newFlatMode);
-    
+
+  SetIncludePathVisibility (newFlatMode);
+
   UpdateFileList ();
 }
 
@@ -1507,6 +1515,8 @@ RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
     bool flatMode = m_folder_browser->IsFlat ();
     m_listCtrl->SetFlat (flatMode);
     m->CheckMenu (ID_Flat, flatMode);
+
+    SetIncludePathVisibility (flatMode);
     
     // Disable menu entry if no path is selected (e.g. root)
     const wxString & path = m_folder_browser->GetPath ();  
@@ -2006,9 +2016,33 @@ RapidSvnFrame::UpdateMenuSorting ()
 }
 
 inline void
+RapidSvnFrame::UpdateMenuIncludePath ()
+{
+  m->CheckMenu (ID_Include_Path, m_listCtrl->GetIncludePath());
+}
+
+inline void
 RapidSvnFrame::UpdateMenuAscending ()
 {
   m->CheckMenu (ID_Sort_Ascending, m_listCtrl->GetSortAscending());
+}
+
+void
+RapidSvnFrame::SetIncludePathVisibility (bool flatMode)
+{
+  if (flatMode == false)
+  {
+    if (m_listCtrl->GetIncludePath () == true)
+      m->CheckMenu (ID_Include_Path, false);
+ 
+    UpdateMenuSorting ();
+    UpdateMenuAscending ();
+  }
+  else
+  {
+    UpdateMenuIncludePath ();
+  }
+  m->EnableMenuEntry (ID_Include_Path, flatMode);
 }
 
 /* -----------------------------------------------------------------
