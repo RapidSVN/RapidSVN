@@ -286,7 +286,8 @@ ComparePaths (const char * p1, const char * p2)
 }
 
 /**
- * compare two unsigned long numbers
+ * compare two timestamps (compatible with unsigned long numbers,
+ * but contain more digits)
  *
  * @param val1 value 1
  * @param val2 value 2
@@ -296,7 +297,7 @@ ComparePaths (const char * p1, const char * p2)
  * @retval -1 rev1 < rev2
  */
 static int
-Compare (unsigned long rev1, unsigned long rev2)
+Compare (const apr_time_t rev1, const apr_time_t rev2)
 {
   if (rev1 == rev2)
   {
