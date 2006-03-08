@@ -192,8 +192,16 @@ Listener::contextNotify (const char *path,
                          svn_wc_notify_state_t prop_state,
                          svn_revnum_t revision)
 {
+  // TODO - IMPORTANT: make next code clean and probably optimize it more.
+  // This function is a bottleneck of productivity causing miscellaneous
+  // actions become very-very slow compared to corresponding subversion
+  // commands (in command prompt).
+  // Now it is only temporary solution, not clean and not too safe. But it
+  // boosts execution of actions approximately 2-2.5 times.
+
   //TODO: An exact copy lives in action.cpp which is not used, unlike here
-  // I suspect we should get rid of one, but I'm not sure which at the  moment...
+  // I suspect we should get rid of one, but I'm not sure which at the moment...
+
   static const wxChar *
   ACTION_NAMES [] =
   {
@@ -224,29 +232,32 @@ Listener::contextNotify (const char *path,
     _("Failed to unlock")  // svn_wc_notify_failed_unlock
   };
   
-#if CHECK_SVN_SUPPORTS_LOCK
-  const int MAX_ACTION = svn_wc_notify_failed_unlock;
-#else
-  const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
-#endif
+// #if CHECK_SVN_SUPPORTS_LOCK
+//   const int MAX_ACTION = svn_wc_notify_failed_unlock;
+// #else
+//   const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
+// #endif
 
   // Map an action to string and trace the action and path
-  const wxChar * actionString = 0;
+//   const wxChar * actionString = 0;
 
-  if (action >= 0 && action <= MAX_ACTION)
-    actionString = ACTION_NAMES [action];
+//   if (action >= 0 && action <= MAX_ACTION)
+//     actionString = ACTION_NAMES [action];
 
-  if (actionString != 0)
+  if (ACTION_NAMES[action] != NULL)
   {
-    wxString msg, wxpath (Utf8ToLocal (path));
-    msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
+    // wxString msg, wxpath (Utf8ToLocal (path));
+    // msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
+
+    static wxString msg;
+    msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], path);
 
     Trace (msg);
   }
 
-  // Implement code to generate usefule messages that can be
+  // Implement code to generate useful messages that can be
   // transmitted with "Trace"
-  wxSafeYield ();
+//  wxSafeYield ();
 }
 
 
