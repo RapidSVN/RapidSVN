@@ -35,7 +35,7 @@
 #include "ids.hpp"
 #include "threaded_worker.hpp"
 #include "tracer.hpp"
-
+#include "utils.hpp"
 
 class ThreadedWorker::Data : public wxThread
 {
