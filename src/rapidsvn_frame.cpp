@@ -2000,12 +2000,12 @@ RapidSvnFrame::Perform (Action * action)
 
 
 void
-RapidSvnFrame::Trace (wxString msg)
+RapidSvnFrame::Trace (const wxString & msg)
 {
   if (m_log != NULL)
   {
-    msg += wxT('\n');
-    m_log->AppendText (msg);
+//    msg += wxT('\n');
+    m_log->AppendText (msg + wxT('\n'));
   }
 }
 

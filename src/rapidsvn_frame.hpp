@@ -231,7 +231,7 @@ private:
    * @param msg message to add
    */
   void
-  Trace (wxString msg) ;
+  Trace (const wxString & msg) ;
 
 private:
   DECLARE_EVENT_TABLE ()
