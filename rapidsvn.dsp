@@ -190,6 +190,10 @@ SOURCE=.\src\cleanup_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\columns.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\commit_action.cpp
 # End Source File
 # Begin Source File
