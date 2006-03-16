@@ -143,23 +143,23 @@ CreateActionWorker (wxWindow * parent)
 }
 
 
-class LogTracer:public wxTextCtrl, public Tracer
-{
+// class LogTracer:public wxTextCtrl, public Tracer
+// {
 
-public:
-  LogTracer (wxWindow * parent)
-    : wxTextCtrl (parent, -1, wxEmptyString,
-                  wxPoint (0, 0), wxDefaultSize,
-                  wxTE_MULTILINE | wxTE_READONLY)
-  {
-    SetMaxLength (0);
-  }
+// public:
+//   LogTracer (wxWindow * parent)
+//     : wxTextCtrl (parent, -1, wxEmptyString,
+//                   wxPoint (0, 0), wxDefaultSize,
+//                   wxTE_MULTILINE | wxTE_READONLY)
+//   {
+//     SetMaxLength (0);
+//   }
 
-  void Trace (const wxString & str)
-  {
-    AppendText (str + wxT("\n"));
-  }
-};
+//   void Trace (const wxString & str)
+//   {
+//     AppendText (str + wxT("\n"));
+//   }
+// };
 
 
 /**
@@ -310,6 +310,15 @@ public:
 #endif
     menuHelp->Append (ID_About, _("&About..."));
 
+#ifdef USE_DEBUG_TESTS
+    // Debug Menu
+    wxMenu *menuTests = new wxMenu;
+
+    menuTests->Append (ID_TestNewWxString, _("wxString Creation&Tracing Test"));
+    menuTests->Append (ID_TestListener, _("Listener Test"));
+    menuTests->Append (ID_TestCheckout, _("Checkout Test"));
+#endif
+
     // Create the menu bar and append the menus
     MenuBar = new wxMenuBar;
     // Under wxMac the menu might be empty, so
@@ -323,6 +332,9 @@ public:
     MenuBar->Append (menuBookmarks, _("&Bookmarks"));
     MenuBar->Append (menuExtras, _("&Extras"));
     MenuBar->Append (menuHelp, _("&Help"));
+#ifdef USE_DEBUG_TESTS
+    MenuBar->Append (menuTests, _("&Tests"));
+#endif
   }
 
   inline bool
@@ -563,6 +575,12 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_HelpIndex, RapidSvnFrame::OnHelpIndex)
   EVT_MENU (ID_HelpStartupTips, RapidSvnFrame::OnHelpStartupTips)
   EVT_MENU (ID_About, RapidSvnFrame::OnAbout)
+
+#ifdef USE_DEBUG_TESTS
+  EVT_MENU (ID_TestNewWxString, RapidSvnFrame::OnTestNewWxString)
+  EVT_MENU (ID_TestListener, RapidSvnFrame::OnTestListener)
+  EVT_MENU (ID_TestCheckout, RapidSvnFrame::OnTestCheckout)
+#endif
 
   EVT_MENU_RANGE (ID_File_Min, ID_File_Max, RapidSvnFrame::OnFileCommand)
   EVT_MENU_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnFileCommand)
@@ -1181,6 +1199,146 @@ RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 
   dlg.ShowModal ();
 }
+
+#ifdef USE_DEBUG_TESTS
+static void
+info_print_time (apr_time_t atime, const wxChar * desc, wxString & str)
+{
+  apr_time_exp_t extime;
+  apr_status_t apr_err;
+
+  /* if this returns an error, just don't print anything out */
+  apr_err = apr_time_exp_tz (&extime, atime, 0);
+  if (!apr_err)
+    str.Printf (wxT("%s: %02lu:%02lu:%02lu:%02lu"), desc,
+                (unsigned long) (extime.tm_hour),
+                (unsigned long) (extime.tm_min),
+                (unsigned long) (extime.tm_sec),
+                (unsigned long) (extime.tm_usec));
+}
+
+void
+RapidSvnFrame::PrintTimeMeasurements (apr_time_t start, apr_time_t end)
+{
+  wxString msg (wxEmptyString);
+  info_print_time (start, _("Test started at"), msg);
+  Trace (wxT("\n") + msg);
+
+  info_print_time (end, _("Test ended at"), msg);
+  Trace (msg);
+
+  apr_time_t duration = end - start;
+  info_print_time (duration, _("Test duration"), msg);
+  Trace (msg + wxT("\n"));
+}
+
+void
+RapidSvnFrame::TestNewWxString ()
+{
+  for (int i = 1; i <= 10000; i++)
+  {
+    wxString message;
+    message.Printf (wxT("Tracing a message from newely created wxString, round #%d"), i);
+    Trace (message);
+  }
+}
+
+void
+RapidSvnFrame::TestListener (int action)
+{
+  static const wxChar *
+  ACTION_NAMES [] =
+  {
+    _("Add"),              // svn_wc_notify_add,
+    _("Copy"),             // svn_wc_notify_copy,
+    _("Delete"),           // svn_wc_notify_delete,
+    _("Restore"),          // svn_wc_notify_restore,
+    _("Revert"),           // svn_wc_notify_revert,
+    NULL ,                 // NOT USED HERE svn_wc_notify_failed_revert,
+    _("Resolved"),         // svn_wc_notify_resolved,
+    _("Skip"),             // NOT USED HERE svn_wc_notify_skip,
+    _("Deleted"),          // svn_wc_notify_update_delete,
+    _("Added"),            // svn_wc_notify_update_add,
+    _("Updated"),          // svn_wc_notify_update_update,
+    NULL,                  // NOT USED HERE svn_wc_notify_update_completed,
+    NULL,                  // NOT USED HERE svn_wc_notify_update_external,
+    NULL,                  // NOT USED HERE svn_wc_notify_status_completed
+    NULL,                  // NOT USED HERE svn_wc_notify_status_external
+    _("Modified"),         // svn_wc_notify_commit_modified,
+    _("Added"),            // svn_wc_notify_commit_added,
+    _("Deleted"),          // svn_wc_notify_commit_deleted,
+    _("Replaced"),         // svn_wc_notify_commit_replaced,
+    NULL,                  // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
+    NULL,                  // NOT USED HERE svn_wc_notify_blame_revision
+    _("Locked"),           // svn_wc_notify_locked
+    _("Unlocked"),         // svn_wc_notify_unlocked
+    _("Failed to lock"),   // svn_wc_notify_failed_lock
+    _("Failed to unlock")  // svn_wc_notify_failed_unlock
+  };
+  
+  // Map an action to string and trace the action and path
+//   const wxChar * actionString = 0;
+
+//   if (action >= 0 && action <= MAX_ACTION)
+//     actionString = ACTION_NAMES [action];
+
+  if (ACTION_NAMES[action] != NULL)
+  {
+    // wxString msg, wxpath (Utf8ToLocal (path));
+    // msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
+
+    static wxString msg;
+    msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], "/home/sleepy/projects/rapidsvn/TRANSLATIONS");
+
+    Trace (msg);
+  }
+
+  // Implement code to generate useful messages that can be
+  // transmitted with "Trace"
+//  wxSafeYield ();
+}
+
+void
+RapidSvnFrame::OnTestNewWxString (wxCommandEvent & WXUNUSED (event))
+{
+  apr_time_t start = apr_time_now ();
+  TestNewWxString ();
+  apr_time_t end = apr_time_now ();
+
+  PrintTimeMeasurements (start, end);
+}
+
+void
+RapidSvnFrame::OnTestListener (wxCommandEvent & WXUNUSED (event))
+{
+  apr_time_t start = apr_time_now ();
+
+#if CHECK_SVN_SUPPORTS_LOCK
+  const int MAX_ACTION = svn_wc_notify_failed_unlock;
+#else
+  const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
+#endif
+
+  for (int j = 0; j < 1000; j++)
+    for (int i = 0; i < MAX_ACTION; i++)
+      TestListener (i);
+
+  apr_time_t end = apr_time_now ();
+  PrintTimeMeasurements (start, end);
+}
+
+void
+RapidSvnFrame::OnTestCheckout (wxCommandEvent & WXUNUSED (event))
+{
+  apr_time_t start = apr_time_now ();
+
+//  still an empty test... to be ended later.
+//  svn::Client client (GetContext ());
+
+  apr_time_t end = apr_time_now ();
+  PrintTimeMeasurements (start, end);
+}
+#endif
 
 void
 RapidSvnFrame::OnFileCommand (wxCommandEvent & event)

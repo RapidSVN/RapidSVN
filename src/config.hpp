@@ -45,6 +45,11 @@
 //#define USE_STARTUP_TIPS
 
 /**
+ * Do we want tests for debugging?
+ */
+//#define USE_DEBUG_TESTS
+
+/**
  * Do we want support for online help?
  */
 //#define USE_HTML_HELP

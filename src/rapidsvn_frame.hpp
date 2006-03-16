@@ -124,6 +124,14 @@ private:
   void OnHelpStartupTips (wxCommandEvent & event);
   void OnAbout (wxCommandEvent & event);
 
+  // Test menu
+  void OnTestNewWxString (wxCommandEvent & event);
+  void OnTestListener (wxCommandEvent & event);
+  void OnTestCheckout (wxCommandEvent & event);
+  void PrintTimeMeasurements (apr_time_t start, apr_time_t end);
+  void TestNewWxString ();
+  void TestListener (int action);
+
   // toolbar events
   void OnToolEnter (wxCommandEvent & event);
 
