@@ -250,7 +250,7 @@ Listener::contextNotify (const char *path,
     // msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
 
     static wxString msg;
-    msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], path);
+    msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], Utf8ToLocal (path).c_str ());
 
     Trace (msg);
   }
