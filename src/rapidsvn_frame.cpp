@@ -1218,11 +1218,13 @@ info_print_time (apr_time_t atime, const wxChar * desc, wxString & str)
 }
 
 void
-RapidSvnFrame::PrintTimeMeasurements (apr_time_t start, apr_time_t end)
+RapidSvnFrame::PrintTimeMeasurements (apr_time_t start, apr_time_t end, const char * name)
 {
-  wxString msg (wxEmptyString);
+  wxString msg (name);
+  Trace (wxT('\n') + msg);
+
   info_print_time (start, _("Test started at"), msg);
-  Trace (wxT("\n") + msg);
+  Trace (msg);
 
   info_print_time (end, _("Test ended at"), msg);
   Trace (msg);
@@ -1311,7 +1313,8 @@ RapidSvnFrame::OnTestNewWxString (wxCommandEvent & WXUNUSED (event))
   TestNewWxString ();
   apr_time_t end = apr_time_now ();
 
-  PrintTimeMeasurements (start, end);
+  const char * name = "Created 10 000 wxStrings and printed them with Trace ()";
+  PrintTimeMeasurements (start, end, name);
 }
 
 void
@@ -1327,10 +1330,14 @@ RapidSvnFrame::OnTestListener (wxCommandEvent & WXUNUSED (event))
 
   for (int j = 0; j < 1000; j++)
     for (int i = 0; i < MAX_ACTION; i++)
+    {
       TestListener (i);
+//      m_logTracer->Trace (wxT("Foobar rules!!!"));
+    }
 
   apr_time_t end = apr_time_now ();
-  PrintTimeMeasurements (start, end);
+  const char * name = "Tested Listener, 1000 loops through all the 22/26 actions";
+  PrintTimeMeasurements (start, end, name);
 }
 
 void
@@ -1353,7 +1360,8 @@ RapidSvnFrame::OnTestCheckout (wxCommandEvent & WXUNUSED (event))
 //                    pegRevision);
 
   apr_time_t end = apr_time_now ();
-  PrintTimeMeasurements (start, end);
+  const char * name = "Tested Checkout";
+  PrintTimeMeasurements (start, end, name);
 }
 #endif
 

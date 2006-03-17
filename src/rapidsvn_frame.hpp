@@ -128,7 +128,7 @@ private:
   void OnTestNewWxString (wxCommandEvent & event);
   void OnTestListener (wxCommandEvent & event);
   void OnTestCheckout (wxCommandEvent & event);
-  void PrintTimeMeasurements (apr_time_t start, apr_time_t end);
+  void PrintTimeMeasurements (apr_time_t start, apr_time_t end, const char * name);
   void TestNewWxString ();
   void TestListener (int action);
 
