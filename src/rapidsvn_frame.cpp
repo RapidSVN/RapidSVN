@@ -1284,11 +1284,17 @@ RapidSvnFrame::TestListener (int action)
 
   if (ACTION_NAMES[action] != NULL)
   {
-    // wxString msg, wxpath (Utf8ToLocal (path));
+    static wxString wxpath;
+
+#ifdef __WXMSW__
+    wxpath = Utf8ToLocal ("O:/rapidsvn/TRANSLATIONS");
+#else
+    wxpath = Utf8ToLocal ("/home/sleepy/projects/rapidsvn/TRANSLATIONS");
+#endif
     // msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
 
     static wxString msg;
-    msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], "/home/sleepy/projects/rapidsvn/TRANSLATIONS");
+    msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], wxpath.c_str ());
 
     Trace (msg);
   }
@@ -1332,8 +1338,19 @@ RapidSvnFrame::OnTestCheckout (wxCommandEvent & WXUNUSED (event))
 {
   apr_time_t start = apr_time_now ();
 
-//  still an empty test... to be ended later.
-//  svn::Client client (GetContext ());
+   Action * action = new CheckoutAction (this);
+
+   if (action)
+     Perform (action);
+
+//   svn::Client client (GetContext ());
+
+//   client.checkout ("http://rapidsvn.tigris.org/svn/rapidsvn/trunk", 
+//                    "/tmp/test", 
+//                    revision,
+//                    m_data.Recursive,
+//                    ignoreExternals,
+//                    pegRevision);
 
   apr_time_t end = apr_time_now ();
   PrintTimeMeasurements (start, end);
