@@ -1220,11 +1220,11 @@ info_print_time (apr_time_t atime, const wxChar * desc, wxString & str)
 void
 RapidSvnFrame::PrintTimeMeasurements (apr_time_t start, apr_time_t end, const char * name)
 {
-  wxString msg (name);
-  Trace (wxT('\n') + msg);
+  wxString msg (wxEmptyString);
+//  Trace (wxT('\n') + msg);
 
   info_print_time (start, _("Test started at"), msg);
-  Trace (msg);
+  Trace (wxT("\n") + msg);
 
   info_print_time (end, _("Test ended at"), msg);
   Trace (msg);
