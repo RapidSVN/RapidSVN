@@ -1235,8 +1235,11 @@ RapidSvnFrame::PrintTimeMeasurements (apr_time_t start, apr_time_t end, const wx
 }
 
 void
-RapidSvnFrame::TestNewWxString ()
+RapidSvnFrame::OnTestNewWxString (wxCommandEvent & WXUNUSED (event))
 {
+  apr_time_t start = apr_time_now ();
+
+  // starting the test
   for (int i = 1; i <= 10000; i++)
   {
     wxString message;
@@ -1250,76 +1253,7 @@ RapidSvnFrame::TestNewWxString ()
       wxSafeYield ();
     }
   }
-}
-
-void
-RapidSvnFrame::TestListener (int action, int loop)
-{
-  static const wxChar *
-  ACTION_NAMES [] =
-  {
-    _("Add"),              // svn_wc_notify_add,
-    _("Copy"),             // svn_wc_notify_copy,
-    _("Delete"),           // svn_wc_notify_delete,
-    _("Restore"),          // svn_wc_notify_restore,
-    _("Revert"),           // svn_wc_notify_revert,
-    NULL ,                 // NOT USED HERE svn_wc_notify_failed_revert,
-    _("Resolved"),         // svn_wc_notify_resolved,
-    _("Skip"),             // NOT USED HERE svn_wc_notify_skip,
-    _("Deleted"),          // svn_wc_notify_update_delete,
-    _("Added"),            // svn_wc_notify_update_add,
-    _("Updated"),          // svn_wc_notify_update_update,
-    NULL,                  // NOT USED HERE svn_wc_notify_update_completed,
-    NULL,                  // NOT USED HERE svn_wc_notify_update_external,
-    NULL,                  // NOT USED HERE svn_wc_notify_status_completed
-    NULL,                  // NOT USED HERE svn_wc_notify_status_external
-    _("Modified"),         // svn_wc_notify_commit_modified,
-    _("Added"),            // svn_wc_notify_commit_added,
-    _("Deleted"),          // svn_wc_notify_commit_deleted,
-    _("Replaced"),         // svn_wc_notify_commit_replaced,
-    NULL,                  // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
-    NULL,                  // NOT USED HERE svn_wc_notify_blame_revision
-    _("Locked"),           // svn_wc_notify_locked
-    _("Unlocked"),         // svn_wc_notify_unlocked
-    _("Failed to lock"),   // svn_wc_notify_failed_lock
-    _("Failed to unlock")  // svn_wc_notify_failed_unlock
-  };
-  
-  // Map an action to string and trace the action and path
-//   const wxChar * actionString = 0;
-
-//   if (action >= 0 && action <= MAX_ACTION)
-//     actionString = ACTION_NAMES [action];
-
-  if (ACTION_NAMES[action] != NULL)
-  {
-    static wxString wxpath;
-
-#ifdef __WXMSW__
-    wxpath = Utf8ToLocal ("O:/rapidsvn/TRANSLATIONS");
-#else
-    wxpath = Utf8ToLocal ("/home/sleepy/projects/rapidsvn/TRANSLATIONS");
-#endif
-    // msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
-
-    static wxString msg;
-    msg.Printf (wxT("%s: %s, %d"), ACTION_NAMES[action], wxpath.c_str (), loop);
-
-    Trace (msg);
-  }
-  static apr_time_t last_access = apr_time_now ();
-  if (apr_time_now () - last_access > 2500000)
-  {
-    last_access = apr_time_now ();
-    wxSafeYield ();
-  }
-}
-
-void
-RapidSvnFrame::OnTestNewWxString (wxCommandEvent & WXUNUSED (event))
-{
-  apr_time_t start = apr_time_now ();
-  TestNewWxString ();
+  // ending the test
   apr_time_t end = apr_time_now ();
 
   wxString name (wxT("Created 10 000 wxStrings and printed them with Trace ()"));
@@ -1331,6 +1265,8 @@ RapidSvnFrame::OnTestListener (wxCommandEvent & WXUNUSED (event))
 {
   apr_time_t start = apr_time_now ();
 
+  // starting the test
+
 #if CHECK_SVN_SUPPORTS_LOCK
   const int MAX_ACTION = svn_wc_notify_failed_unlock;
 #else
@@ -1341,11 +1277,62 @@ RapidSvnFrame::OnTestListener (wxCommandEvent & WXUNUSED (event))
   {
     for (int i = 0; i < MAX_ACTION; i++)
     {
-      TestListener (i, j);
+      static const wxChar *
+      ACTION_NAMES [] =
+      {
+        _("Add"),              // svn_wc_notify_add,
+        _("Copy"),             // svn_wc_notify_copy,
+        _("Delete"),           // svn_wc_notify_delete,
+        _("Restore"),          // svn_wc_notify_restore,
+        _("Revert"),           // svn_wc_notify_revert,
+        NULL ,                 // NOT USED HERE svn_wc_notify_failed_revert,
+        _("Resolved"),         // svn_wc_notify_resolved,
+        _("Skip"),             // NOT USED HERE svn_wc_notify_skip,
+        _("Deleted"),          // svn_wc_notify_update_delete,
+        _("Added"),            // svn_wc_notify_update_add,
+        _("Updated"),          // svn_wc_notify_update_update,
+        NULL,                  // NOT USED HERE svn_wc_notify_update_completed,
+        NULL,                  // NOT USED HERE svn_wc_notify_update_external,
+        NULL,                  // NOT USED HERE svn_wc_notify_status_completed
+        NULL,                  // NOT USED HERE svn_wc_notify_status_external
+        _("Modified"),         // svn_wc_notify_commit_modified,
+        _("Added"),            // svn_wc_notify_commit_added,
+        _("Deleted"),          // svn_wc_notify_commit_deleted,
+        _("Replaced"),         // svn_wc_notify_commit_replaced,
+        NULL,                  // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
+        NULL,                  // NOT USED HERE svn_wc_notify_blame_revision
+        _("Locked"),           // svn_wc_notify_locked
+        _("Unlocked"),         // svn_wc_notify_unlocked
+        _("Failed to lock"),   // svn_wc_notify_failed_lock
+        _("Failed to unlock")  // svn_wc_notify_failed_unlock
+      };
+    
+      if (ACTION_NAMES[i] != NULL)
+      {
+        static wxString wxpath;
+    
+#ifdef __WXMSW__
+        wxpath = Utf8ToLocal ("O:/rapidsvn/TRANSLATIONS");
+#else
+        wxpath = Utf8ToLocal ("/home/sleepy/projects/rapidsvn/TRANSLATIONS");
+#endif    
+        static wxString msg;
+        msg.Printf (wxT("%s: %s, %d"), ACTION_NAMES[i], wxpath.c_str (), j);
+    
+        Trace (msg);
+      }
+      static apr_time_t last_access = apr_time_now ();
+      if (apr_time_now () - last_access > 2500000)
+      {
+        last_access = apr_time_now ();
+        wxSafeYield ();
+      }
 //      m_logTracer->Trace (wxT("Foobar rules!!!"));
     }
   }
+  // ending the test
   apr_time_t end = apr_time_now ();
+
   wxString name (wxT("Tested Listener, 1000 loops through all the 22/26 actions"));
   PrintTimeMeasurements (start, end, name);
 }
@@ -2188,7 +2175,6 @@ RapidSvnFrame::Trace (const wxString & msg)
 {
   if (m_log != NULL)
   {
-//    msg += wxT('\n');
     m_log->AppendText (msg + wxT('\n'));
   }
 }
