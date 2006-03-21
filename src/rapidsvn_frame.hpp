@@ -128,9 +128,9 @@ private:
   void OnTestNewWxString (wxCommandEvent & event);
   void OnTestListener (wxCommandEvent & event);
   void OnTestCheckout (wxCommandEvent & event);
-  void PrintTimeMeasurements (apr_time_t start, apr_time_t end, const char * name);
+  void PrintTimeMeasurements (apr_time_t start, apr_time_t end, const wxString & name);
   void TestNewWxString ();
-  void TestListener (int action);
+  void TestListener (int action, int loop);
 
   // toolbar events
   void OnToolEnter (wxCommandEvent & event);

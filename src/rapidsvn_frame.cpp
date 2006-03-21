@@ -1218,10 +1218,10 @@ info_print_time (apr_time_t atime, const wxChar * desc, wxString & str)
 }
 
 void
-RapidSvnFrame::PrintTimeMeasurements (apr_time_t start, apr_time_t end, const char * name)
+RapidSvnFrame::PrintTimeMeasurements (apr_time_t start, apr_time_t end, const wxString & name)
 {
-  wxString msg (wxEmptyString);
-//  Trace (wxT('\n') + msg);
+  wxString msg (name);
+  Trace (wxT('\n') + msg);
 
   info_print_time (start, _("Test started at"), msg);
   Trace (wxT("\n") + msg);
@@ -1242,11 +1242,18 @@ RapidSvnFrame::TestNewWxString ()
     wxString message;
     message.Printf (wxT("Tracing a message from newely created wxString, round #%d"), i);
     Trace (message);
+
+    static apr_time_t last_access = apr_time_now ();
+    if (apr_time_now () - last_access > 2500000)
+    {
+      last_access = apr_time_now ();
+      wxSafeYield ();
+    }
   }
 }
 
 void
-RapidSvnFrame::TestListener (int action)
+RapidSvnFrame::TestListener (int action, int loop)
 {
   static const wxChar *
   ACTION_NAMES [] =
@@ -1296,14 +1303,16 @@ RapidSvnFrame::TestListener (int action)
     // msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
 
     static wxString msg;
-    msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], wxpath.c_str ());
+    msg.Printf (wxT("%s: %s, %d"), ACTION_NAMES[action], wxpath.c_str (), loop);
 
     Trace (msg);
   }
-
-  // Implement code to generate useful messages that can be
-  // transmitted with "Trace"
-//  wxSafeYield ();
+  static apr_time_t last_access = apr_time_now ();
+  if (apr_time_now () - last_access > 2500000)
+  {
+    last_access = apr_time_now ();
+    wxSafeYield ();
+  }
 }
 
 void
@@ -1313,7 +1322,7 @@ RapidSvnFrame::OnTestNewWxString (wxCommandEvent & WXUNUSED (event))
   TestNewWxString ();
   apr_time_t end = apr_time_now ();
 
-  const char * name = "Created 10 000 wxStrings and printed them with Trace ()";
+  wxString name (wxT("Created 10 000 wxStrings and printed them with Trace ()"));
   PrintTimeMeasurements (start, end, name);
 }
 
@@ -1328,15 +1337,16 @@ RapidSvnFrame::OnTestListener (wxCommandEvent & WXUNUSED (event))
   const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
 #endif
 
-  for (int j = 0; j < 1000; j++)
+  for (int j = 1; j <= 1000; j++)
+  {
     for (int i = 0; i < MAX_ACTION; i++)
     {
-      TestListener (i);
+      TestListener (i, j);
 //      m_logTracer->Trace (wxT("Foobar rules!!!"));
     }
-
+  }
   apr_time_t end = apr_time_now ();
-  const char * name = "Tested Listener, 1000 loops through all the 22/26 actions";
+  wxString name (wxT("Tested Listener, 1000 loops through all the 22/26 actions"));
   PrintTimeMeasurements (start, end, name);
 }
 
@@ -1350,17 +1360,8 @@ RapidSvnFrame::OnTestCheckout (wxCommandEvent & WXUNUSED (event))
    if (action)
      Perform (action);
 
-//   svn::Client client (GetContext ());
-
-//   client.checkout ("http://rapidsvn.tigris.org/svn/rapidsvn/trunk", 
-//                    "/tmp/test", 
-//                    revision,
-//                    m_data.Recursive,
-//                    ignoreExternals,
-//                    pegRevision);
-
   apr_time_t end = apr_time_now ();
-  const char * name = "Tested Checkout";
+  wxString name (wxT("Tested Checkout"));
   PrintTimeMeasurements (start, end, name);
 }
 #endif
