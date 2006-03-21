@@ -132,7 +132,7 @@ Listener::Trace (const wxString & msg)
     m->tracer->Trace (msg);
   }
 
-  wxSafeYield ();
+//  wxSafeYield ();
 }
 
 void
@@ -233,9 +233,9 @@ Listener::contextNotify (const char *path,
   };
   
 // #if CHECK_SVN_SUPPORTS_LOCK
-//   const int MAX_ACTION = svn_wc_notify_failed_unlock;
+//    const int MAX_ACTION = svn_wc_notify_failed_unlock;
 // #else
-//   const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
+//    const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
 // #endif
 
   // Map an action to string and trace the action and path
@@ -255,9 +255,23 @@ Listener::contextNotify (const char *path,
     Trace (msg);
   }
 
-  // Implement code to generate useful messages that can be
-  // transmitted with "Trace"
-//  wxSafeYield ();
+//   static int counter = 1;
+//   counter++;
+
+//   if (counter % 10 == 0)
+//   {
+//     wxSafeYield ();
+//   }
+
+  // wxSafeYield () slows down execution of actions considerably, so let's
+  // call it only every 2 seconds. As a result image will get updated only
+  // every 2 seconds
+  static apr_time_t last_access = apr_time_now ();
+  if (apr_time_now () - last_access > 2000000)
+  {
+    last_access = apr_time_now ();
+    wxSafeYield ();
+  }
 }
 
 
