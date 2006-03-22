@@ -46,7 +46,7 @@ struct ExportData
   wxString DestPath;
   wxString Revision;
   wxString PegRevision;
-  wxString NativeEol;
+  const char * Eol;
   bool Recursive;
   bool UseLatest;
   bool NotSpecified;

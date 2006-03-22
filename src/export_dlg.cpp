@@ -144,7 +144,6 @@ public:
     wxStaticText * labelEol = new wxStaticText (
       wnd, -1, _("EOL:"), wxDefaultPosition);
 
-    wxGenericValidator valNativeEol (&data.NativeEol);
     wxArrayString eol;
     eol.Add (_("native"));
     eol.Add (_("CRLF (Windows)"));
@@ -195,12 +194,8 @@ public:
 
     // the native eol combo
     wxBoxSizer *nativeEolSizer = new wxBoxSizer (wxHORIZONTAL);
-//    wxStaticBoxSizer *nativeEolSizer =
-//      new wxStaticBoxSizer (labelEol, wxHORIZONTAL);
     nativeEolSizer->Add (labelEol, 1, wxALL | wxEXPAND, 5);
     nativeEolSizer->Add (m_comboNativeEol, 1, wxALL | wxEXPAND, 5);
-//    eolSizer->Add (labelEol, 0, wxALL, 5);
-//    eolSizer->Add (nativeEol, 1, wxALL | wxEXPAND, 5);
 
     // Button row
     wxBoxSizer *buttonSizer  = new wxBoxSizer (wxHORIZONTAL);
@@ -276,7 +271,18 @@ public:
     {
       ok = false;
     }
-
+    else
+    {
+      wxString textEol = m_comboNativeEol->GetValue ();
+      if (textEol == wxT("CRLF (Windows)"))
+         data.Eol = "CRLF";
+      else if (textEol == wxT("LF (Unix)"))
+         data.Eol = "LF";
+      else if (textEol == wxT("CR (MacOS)"))
+         data.Eol = "CR";
+      else
+         data.Eol = NULL;
+    }
     m_buttonOk->Enable (ok);
     if (ok)
     {

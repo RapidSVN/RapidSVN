@@ -77,7 +77,6 @@ ExportAction::Perform ()
   TrimString(m_data.DestPath);
   UnixPath(m_data.DestPath);
   TrimString(m_data.SrcPath);
-  TrimString(m_data.NativeEol);
 
   long revnum = -1;
   svn::Revision revision (svn::Revision::HEAD);
@@ -111,11 +110,9 @@ ExportAction::Perform ()
 
   svn::Path srcPathUtf8 (PathUtf8 (m_data.SrcPath));
   svn::Path destPathUtf8 (PathUtf8 (m_data.DestPath));
-  std::string nativeEolUtf8 (LocalToUtf8 (m_data.NativeEol));
 
   if (svn::SUPPORTS_EXTERNALS)
   {
-//#if CHECK_SVN_SUPPORTS_EXTERNALS
     bool ignoreExternals = svn::SUPPORTS_EXTERNALS ? m_data.IgnoreExternals : false;
 
     client.doExport2 (srcPathUtf8.c_str (), 
@@ -125,7 +122,7 @@ ExportAction::Perform ()
                       pegRevision,
                       ignoreExternals,
                       m_data.Recursive,
-                      nativeEolUtf8.c_str ());
+                      m_data.Eol);
   }
   else
   {
