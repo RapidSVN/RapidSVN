@@ -897,9 +897,6 @@ RapidSvnFrame::UpdateFolderBrowser ()
 {
   wxBusyCursor busy;
 
-  m_currentPath.Clear ();
-  UpdateFileList ();
-
   m->SetRunning (true);
 
   try
