@@ -296,7 +296,7 @@ ThreadedWorker::Perform (Action * action_)
       m->state = ACTION_NONE;
       delete action_;
 
-      return true;
+      return false;
     }
   }
   catch (svn::ClientException & e)

@@ -152,7 +152,7 @@ SimpleWorker::Perform (Action * action)
       delete m->action;
       m->action = 0;
       m->state = ACTION_NONE;
-      return true;
+      return false;
     }
   }
   catch (svn::ClientException & e)
