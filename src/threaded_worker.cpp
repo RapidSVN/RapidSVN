@@ -49,7 +49,6 @@ public:
   ActionResult result;
   wxString actionName;
 
-
   /**
    * constructor
    */
@@ -78,7 +77,7 @@ public:
     context = 0;
     action = 0;
     tracer = 0;
-    ownContext =false;
+    ownContext = false;
     state = ACTION_NONE;
     result = ACTION_NOTHING;
 
@@ -154,8 +153,6 @@ public:
 
     try
     {
-      // this cursor stuff has to change...
-      wxBusyCursor wait;
       state = ACTION_RUNNING;
       if (!action->Perform ())
         result = ACTION_ERROR;
@@ -322,6 +319,7 @@ ThreadedWorker::Perform (Action * action_)
 
   m->actionName = action_->GetName ();
   m->action = action_;
+
   return true;
 }
 
@@ -342,7 +340,6 @@ ThreadedWorker::GetContext () const
 {
   return m->context;
 }
-
 
 /* -----------------------------------------------------------------
  * local variables:

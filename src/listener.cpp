@@ -32,11 +32,13 @@
 
 // app
 #include "listener.hpp"
-#include "cert_dlg.hpp"
 #include "tracer.hpp"
+#include "cert_dlg.hpp"
 #include "auth_dlg.hpp"
 #include "commit_dlg.hpp"
 #include "utils.hpp"
+#include "ids.hpp"
+#include "config.hpp"
 
 struct Listener::Data
 {
@@ -131,8 +133,6 @@ Listener::Trace (const wxString & msg)
   {
     m->tracer->Trace (msg);
   }
-
-//  wxSafeYield ();
 }
 
 void
@@ -231,47 +231,33 @@ Listener::contextNotify (const char *path,
     _("Failed to lock"),   // svn_wc_notify_failed_lock
     _("Failed to unlock")  // svn_wc_notify_failed_unlock
   };
-  
-// #if CHECK_SVN_SUPPORTS_LOCK
-//    const int MAX_ACTION = svn_wc_notify_failed_unlock;
-// #else
-//    const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
-// #endif
 
-  // Map an action to string and trace the action and path
-//   const wxChar * actionString = 0;
+#if CHECK_SVN_SUPPORTS_LOCK
+  static const int MAX_ACTION = svn_wc_notify_failed_unlock;
+#else
+  static const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
+#endif
 
-//   if (action >= 0 && action <= MAX_ACTION)
-//     actionString = ACTION_NAMES [action];
-
-  if (ACTION_NAMES[action] != NULL)
+  if (ACTION_NAMES[action] != NULL && action >= 0 && action <= MAX_ACTION)
   {
-    // wxString msg, wxpath (Utf8ToLocal (path));
-    // msg.Printf (wxT("%s: %s"), actionString, wxpath.c_str ());
-
     static wxString msg;
     msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], Utf8ToLocal (path).c_str ());
 
-    Trace (msg);
+    // wxSafeYield is now called from RapidSvnFrame (main thread)
+    wxCommandEvent event = CreateActionEvent (TOKEN_INFO);
+    event.SetString (msg);
+    wxPostEvent (m->parent, event);
+//    Trace (msg);
   }
 
-//   static int counter = 1;
-//   counter++;
-
-//   if (counter % 10 == 0)
-//   {
-//     wxSafeYield ();
-//   }
-
-  // wxSafeYield () slows down execution of actions considerably, so let's
-  // call it only every 2 seconds. As a result image will get updated only
-  // every 2 seconds
+#ifdef USE_SIMPLE_WORKER
   static apr_time_t last_access = apr_time_now ();
   if (apr_time_now () - last_access > 2000000)
   {
     last_access = apr_time_now ();
     wxSafeYield ();
   }
+#endif
 }
 
 
@@ -340,16 +326,7 @@ Listener::contextSslClientCertPwPrompt (std::string & password,
 bool
 Listener::contextCancel ()
 {
-  return false;
-
-// Commented out the following code, because
-// it caused a lot of flickering on Mac OS/X
-// in the menu bar and was really slow.
-//
-// On the other hand, until we have some real
-// threading this isnt of much use anyway 
-//  wxSafeYield ();
-//  return m->isCancelled;
+  return m->isCancelled;
 }
 
 

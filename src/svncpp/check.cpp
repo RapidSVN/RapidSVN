@@ -39,7 +39,6 @@
 
 namespace svn
 {
-
 #if CHECK_SVN_SUPPORTS_LOCK
   const bool SUPPORTS_LOCK = true;
 #else

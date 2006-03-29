@@ -1244,7 +1244,7 @@ RapidSvnFrame::OnTestNewWxString (wxCommandEvent & WXUNUSED (event))
     Trace (message);
 
     static apr_time_t last_access = apr_time_now ();
-    if (apr_time_now () - last_access > 2500000)
+    if (apr_time_now () - last_access > 2000000)
     {
       last_access = apr_time_now ();
       wxSafeYield ();
@@ -1318,8 +1318,9 @@ RapidSvnFrame::OnTestListener (wxCommandEvent & WXUNUSED (event))
     
         Trace (msg);
       }
+
       static apr_time_t last_access = apr_time_now ();
-      if (apr_time_now () - last_access > 2500000)
+      if (apr_time_now () - last_access > 2000000)
       {
         last_access = apr_time_now ();
         wxSafeYield ();
@@ -1339,13 +1340,13 @@ RapidSvnFrame::OnTestCheckout (wxCommandEvent & WXUNUSED (event))
 {
   apr_time_t start = apr_time_now ();
 
-   Action * action = new CheckoutAction (this);
+  Action * action = new CheckoutAction (this);
 
-   if (action)
-     Perform (action);
+  if (action)
+    Perform (action);
 
   apr_time_t end = apr_time_now ();
-  wxString name (wxT("Tested Checkout"));
+  wxString name (wxT("Tested Checkout (works only in single-threaded version)"));
   PrintTimeMeasurements (start, end, name);
 }
 #endif
@@ -1561,6 +1562,15 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
       Trace (_("Ready\n"));
       m->SetRunning (false);
+    }
+    break;
+
+  case TOKEN_CMD:
+  case TOKEN_CMD_DIFF:
+  case TOKEN_CMD_VIEW:
+    {
+      // execute the command sent
+      wxExecute (event.GetString ());
     }
     break;
 

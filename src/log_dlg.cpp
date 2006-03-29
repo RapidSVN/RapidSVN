@@ -271,8 +271,6 @@ public:
   void
   OnGet ()
   {
-    wxBusyCursor busy;
- 
     svn_revnum_t revnum = m_logList->GetSelectedRevision ();
  
     wxCommandEvent event = CreateActionEvent (TOKEN_GET);
@@ -290,8 +288,6 @@ public:
   void
   OnView ()
   {
-    wxBusyCursor busy;
- 
     svn_revnum_t revnum = m_logList->GetSelectedRevision ();
  
     wxCommandEvent event = CreateActionEvent (TOKEN_VIEW);
@@ -330,8 +326,6 @@ public:
       return;
     }
 
-    wxBusyCursor busy;
-
     wxCommandEvent event (CreateActionEvent (TOKEN_DIFF));
     DiffData * data = new DiffData ();
     data->compareType = DiffData::TWO_REVISIONS;
@@ -353,8 +347,6 @@ public:
                     _("Error"), wxOK | wxICON_ERROR, parent);
       return;
     }
-
-    wxBusyCursor busy;
 
     wxCommandEvent event (CreateActionEvent (TOKEN_MERGE));
     MergeData * data = new MergeData ();

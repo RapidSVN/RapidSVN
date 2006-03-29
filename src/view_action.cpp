@@ -32,23 +32,51 @@
 
 // app
 #include "exceptions.hpp"
+#include "get_data.hpp"
+#include "ids.hpp"
 #include "preferences.hpp"
 #include "utils.hpp"
 #include "view_action.hpp"
 
+struct ViewAction::Data 
+{
+private:
+  Action * action;
+
+public:
+  bool edit;
+  GetData data;
+  wxWindow * parent;
+
+  Data (Action * action_)
+    : action (action_)
+  {
+  }
+
+
+  Data (Action * action_, GetData & data_)
+    : action (action_), data (data_)
+  {
+  }
+};
+
 ViewAction::ViewAction (wxWindow * parent,
                         const GetData & data)
-  : Action (parent, _("View"), GetViewFlags ()),
-    m_edit (false), m_data (data)
+  : Action (parent, _("View"), GetViewFlags ())
 {
+  m = new Data (this);
+  m->parent = parent;
+  m->data = data;
+  m->edit = false;
 }
 
 
 ViewAction::ViewAction (wxWindow * parent)
-  : Action (parent, _("Edit"), GetEditFlags ()),
-    m_edit (true)
+  : Action (parent, _("Edit"), GetEditFlags ())
 {
-
+  m = new Data (this);
+  m->parent = parent;
+  m->edit = true;
 }
 
 bool
@@ -68,14 +96,14 @@ ViewAction::Perform ()
 
   wxString path;
 
-  if (m_edit)
+  if (m->edit)
     path = Utf8ToLocal (GetTarget ().c_str ());
   else
   {
-    svn::Path pathUtf8 (PathUtf8 (m_data.path));
+    svn::Path pathUtf8 (PathUtf8 (m->data.path));
     path = Utf8ToLocal  (
         GetPathAsTempFile(pathUtf8.c_str (),
-            m_data.revision).c_str ());
+            m->data.revision).c_str ());
   }
 
   wxString args (prefs.editorArgs);
@@ -87,7 +115,14 @@ ViewAction::Perform ()
     args.Replace (wxT("%1"), path, true);
 
   wxString cmd (prefs.editor + wxT(" ") + args);
-  wxExecute (cmd);
+
+  wxString msg;
+  msg.Printf (_("Execute editor: %s"), cmd.c_str ());
+  Trace (msg);
+
+  wxCommandEvent event = CreateActionEvent (TOKEN_CMD_VIEW);
+  event.SetString (cmd);
+  wxPostEvent (m->parent, event);
 
   return true;
 }

@@ -42,25 +42,24 @@
 #include "preferences.hpp"
 #include "utils.hpp"
 
-
 struct DiffAction::Data 
 {
 private:
-  Action * mAction;
+  Action * action;
 
 public:
   bool showDialog;
   DiffData diffData;
+  wxWindow * parent;
 
-
-  Data (Action * action)
-    : mAction (action), showDialog (true)
+  Data (Action * action_, wxWindow * parent_)
+    : action (action_), showDialog (true), parent (parent_)
   {
   }
 
 
-  Data (Action * action, DiffData & data)
-    : mAction (action), showDialog (false), diffData (data)
+  Data (Action * action_, wxWindow * parent_, DiffData & data)
+    : action (action_), showDialog (false), diffData (data), parent (parent_)
   {
   }
 
@@ -68,14 +67,14 @@ public:
   svn::Context * 
   GetContext ()
   {
-    return mAction->GetContext ();
+    return action->GetContext ();
   }
 
 
   void
   Trace (const wxString & msg)
   {
-    mAction->Trace (msg);
+    action->Trace (msg);
   }
 
 
@@ -178,25 +177,25 @@ public:
     {
     case DiffData::WITH_BASE:
       dstFile1 = path;
-      dstFile2 = mAction->GetPathAsTempFile (getPath1 (path), svn::Revision::BASE);
+      dstFile2 = action->GetPathAsTempFile (getPath1 (path), svn::Revision::BASE);
 
       break;
 
     case DiffData::WITH_HEAD:
       dstFile1 = path;
-      dstFile2 = mAction->GetPathAsTempFile (getPath1 (path), svn::Revision::HEAD);
+      dstFile2 = action->GetPathAsTempFile (getPath1 (path), svn::Revision::HEAD);
 
       break;
 
     case DiffData::WITH_DIFFERENT_REVISION:
       dstFile1 = path;
-      dstFile2 = mAction->GetPathAsTempFile (getPath1 (path), diffData.revision1);
+      dstFile2 = action->GetPathAsTempFile (getPath1 (path), diffData.revision1);
 
       break;
 
     case DiffData::TWO_REVISIONS:
-      dstFile1 = mAction->GetPathAsTempFile (getPath1 (path), diffData.revision1);
-      dstFile2 = mAction->GetPathAsTempFile (getPath2 (path), diffData.revision2);
+      dstFile1 = action->GetPathAsTempFile (getPath1 (path), diffData.revision1);
+      dstFile2 = action->GetPathAsTempFile (getPath2 (path), diffData.revision2);
 
       break;
 
@@ -227,7 +226,10 @@ public:
     wxString msg;
     msg.Printf (_("Execute diff tool: %s"), cmd.c_str ());
     Trace (msg);
-    wxExecute (cmd);
+
+    wxCommandEvent event = CreateActionEvent (TOKEN_CMD_DIFF);
+    event.SetString (cmd);
+    wxPostEvent (parent, event);
   }
 };
 
@@ -235,14 +237,14 @@ public:
 DiffAction::DiffAction (wxWindow * parent)
   : Action (parent, _("Diff"), GetBaseFlags ())
 {
-  m = new Data (this);
+  m = new Data (this, parent);
 }
 
 
 DiffAction::DiffAction (wxWindow * parent, DiffData & data)
   : Action (parent, _("Diff"), GetBaseFlags ())
 {
-  m = new Data (this, data);
+  m = new Data (this, parent, data);
 }
 
 

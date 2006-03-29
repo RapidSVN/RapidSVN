@@ -33,7 +33,7 @@
  * Do we want to use the simple single threaded or multi-threaded
  * action worker?
  */
-#define USE_SIMPLE_WORKER
+//#define USE_SIMPLE_WORKER
 
 #ifndef USE_SIMPLE_WORKER
 #define USE_THREADED_WORKER

@@ -59,6 +59,7 @@ public:
 protected:
   long m_verb_id;
   bool m_treat_as_folder;
+  wxWindow * m_parent;
 };
 
 #endif 

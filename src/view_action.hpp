@@ -27,7 +27,6 @@
 
 // app
 #include "action.hpp"
-#include "get_data.hpp"
 
 // forward declarations
 class wxWindow;
@@ -82,8 +81,8 @@ public:
   }
 
 private:
-  bool m_edit;
-  GetData m_data;
+  struct Data;
+  Data * m;
 };
 
 #endif

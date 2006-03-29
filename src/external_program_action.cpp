@@ -32,18 +32,18 @@
 
 // app
 #include "external_program_action.hpp"
+#include "ids.hpp"
 #include "preferences.hpp"
 #include "utils.hpp"
 #include "verblist.hpp"
 
-
 ExternalProgramAction::ExternalProgramAction (
   wxWindow * parent, long verb_id, bool treat_as_folder) 
  : Action (parent, _("Execute"), GetBaseFlags ()), 
-   m_verb_id (verb_id), m_treat_as_folder (treat_as_folder)
+   m_verb_id (verb_id), m_treat_as_folder (treat_as_folder),
+   m_parent (parent)
 {
 }
-
 
 bool
 ExternalProgramAction::Prepare ()
@@ -55,7 +55,7 @@ bool
 ExternalProgramAction::Perform ()
 {
   VerbList verb_list;
-  wxBusyCursor busy_cursor;
+//  wxBusyCursor busy_cursor;
 
   // The actual target
   svn::Path path = GetTarget ();
@@ -104,7 +104,15 @@ ExternalProgramAction::Perform ()
       else
         args.Replace (wxT("%1"), target_document, true);
     
-      wxExecute (prefs.explorer + wxT(" ") + args);
+      wxString cmd (prefs.explorer + wxT(" ") + args);
+
+      wxString msg;
+      msg.Printf (_("Execute file explorer: %s"), cmd.c_str ());
+      Trace (msg);
+
+      wxCommandEvent event = CreateActionEvent (TOKEN_CMD);
+      event.SetString (cmd);
+      wxPostEvent (m_parent, event);
     }
   }
   else
@@ -124,7 +132,15 @@ ExternalProgramAction::Perform ()
       else
         args.Replace (wxT("%1"), target_document, true);
    
-      wxExecute (prefs.editor + wxT(" ") + args);
+      wxString cmd (prefs.editor + wxT(" ") + args);
+
+      wxString msg;
+      msg.Printf (_("Execute editor: %s"), cmd.c_str ());
+      Trace (msg);
+
+      wxCommandEvent event = CreateActionEvent (TOKEN_CMD);
+      event.SetString (cmd);
+      wxPostEvent (m_parent, event);
     }
   }
 
