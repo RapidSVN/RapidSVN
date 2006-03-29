@@ -2166,7 +2166,8 @@ RapidSvnFrame::Perform (Action * action)
     action->SetTracer (m_logTracer, false);
     m_actionWorker->SetTracer (m_logTracer);
     m_actionWorker->SetContext (m_context, false);
-    if (!m_actionWorker->Perform (action))
+    if (!m_actionWorker->Perform (action) &&
+        m_actionWorker->GetState () != ACTION_RUNNING)
       m->SetRunning (false);
   }
   catch (...)
