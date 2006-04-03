@@ -119,7 +119,7 @@ public:
     {
         ExecuteAction ();
 
-        Sleep (0);
+        Sleep (100);
     }
 
     return 0;
