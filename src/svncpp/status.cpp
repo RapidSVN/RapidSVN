@@ -34,7 +34,6 @@ namespace svn
 {
   // Status::Data is defined in m_svn_data.hpp
 
-
   Status::Status ()
   {
     m = new Data;

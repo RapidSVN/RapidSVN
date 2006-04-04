@@ -166,6 +166,10 @@ SOURCE=.\src\action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\action_event.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\add_action.cpp
 # End Source File
 # Begin Source File
@@ -419,6 +423,10 @@ SOURCE=.\src\about_dlg.hpp
 # Begin Source File
 
 SOURCE=.\src\action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\action_event.hpp
 # End Source File
 # Begin Source File
 

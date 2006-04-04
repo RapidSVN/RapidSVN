@@ -31,6 +31,7 @@
 #include "svncpp/path.hpp"
 
 // app
+#include "action_event.hpp"
 #include "exceptions.hpp"
 #include "get_data.hpp"
 #include "ids.hpp"
@@ -120,9 +121,7 @@ ViewAction::Perform ()
   msg.Printf (_("Execute editor: %s"), cmd.c_str ());
   Trace (msg);
 
-  wxCommandEvent event = CreateActionEvent (TOKEN_CMD_VIEW);
-  event.SetString (cmd);
-  wxPostEvent (m->parent, event);
+  ActionEvent::Post (m->parent, TOKEN_CMD_VIEW, cmd);
 
   return true;
 }

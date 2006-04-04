@@ -51,7 +51,6 @@ public:
   }
 
 private:
-
   // hide default and copy constructor
   CleanupAction ();
   CleanupAction (const CleanupAction &);

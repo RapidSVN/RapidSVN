@@ -32,6 +32,7 @@
 
 // app
 #include "action.hpp"
+#include "action_event.hpp"
 #include "ids.hpp"
 #include "simple_worker.hpp"
 #include "tracer.hpp"
@@ -159,19 +160,23 @@ SimpleWorker::Perform (Action * action)
   {
     wxString msg, errtxt (Utf8ToLocal (e.message ()));
     msg.Printf ( _("Error while preparing action: %s"), errtxt.c_str () );
-    Trace (msg);
+    TraceError (msg);
     return false;
   }
   catch (...)
   {
-    Trace (_("Error while preparing action."));
+    TraceError (_("Error while preparing action."));
     return false;
   }
+
+  ActionEvent event (m->parent, TOKEN_ACTION_START);
 
   {
     wxString msg;
     msg.Printf (_("Execute: %s"), action->GetName ().c_str ());
-    PostStringEvent (TOKEN_ACTION_START, msg, ACTION_EVENT);
+
+    event.init (m->parent, TOKEN_ACTION_START, msg);
+    event.Post ();
   }
 
   unsigned int actionFlags = 0;
@@ -201,20 +206,25 @@ SimpleWorker::Perform (Action * action)
     wxString msg, errtxt (Utf8ToLocal (e.message ()));
     msg.Printf (_("Error while performing action: %s"),
                 errtxt.c_str ());
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
+
+    event.init (m->parent, TOKEN_SVN_INTERNAL_ERROR, msg);
+    event.Post ();
 
     return false;
   }
   catch (...)
   {
     wxString msg (_("Error while performing action."));
-    PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg, ACTION_EVENT);
+
+    event.init (m->parent, TOKEN_SVN_INTERNAL_ERROR, msg);
+    event.Post ();
 
     return false;
   }
 
-  PostDataEvent (TOKEN_ACTION_END, (void*) new unsigned int(actionFlags),
-                 ACTION_EVENT);
+  event.init (m->parent, TOKEN_ACTION_END, (void*) new unsigned int(actionFlags));
+  event.Post ();
+
   return true;
 }
 
@@ -225,34 +235,12 @@ SimpleWorker::SetTracer (Tracer * tracer)
 }
 
 void
-SimpleWorker::Trace (const wxString & message)
+SimpleWorker::TraceError (const wxString & message)
 {
   if (m->tracer)
   {
-    m->tracer->Trace (message);
+    m->tracer->TraceError (message);
   }
-}
-
-void
-SimpleWorker::PostStringEvent (int code, wxString str, int event_id)
-{
-  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, event_id);
-  event.SetInt (code);
-  event.SetString (str);
-
-  // send in a thread-safe way
-  wxPostEvent (m->parent, event);
-}
-
-void
-SimpleWorker::PostDataEvent (int code, void *data, int event_id)
-{
-  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, event_id);
-  event.SetInt (code);
-  event.SetClientData (data);
-
-  // send in a thread-safe way
-  wxPostEvent (m->parent, event);
 }
 
 void
@@ -266,7 +254,6 @@ SimpleWorker::GetContext () const
 {
   return m->context;
 }
-
 
 /* -----------------------------------------------------------------
  * local variables:

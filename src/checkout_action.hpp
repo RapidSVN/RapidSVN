@@ -29,7 +29,7 @@
 #include "action.hpp"
 #include "checkout_data.hpp"
 
-class CheckoutAction:public Action
+class CheckoutAction : public Action
 {
 public:
   /**

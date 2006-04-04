@@ -29,13 +29,13 @@
 #include "wx/listctrl.h"
 
 // app
+#include "action_event.hpp"
 #include "diff_data.hpp"
 #include "get_data.hpp"
-#include "merge_dlg.hpp"
 #include "ids.hpp"
 #include "log_dlg.hpp"
+#include "merge_dlg.hpp"
 #include "utils.hpp"
-
 
 enum
 {
@@ -272,14 +272,12 @@ public:
   OnGet ()
   {
     svn_revnum_t revnum = m_logList->GetSelectedRevision ();
- 
-    wxCommandEvent event = CreateActionEvent (TOKEN_GET);
+
     GetData * data = new GetData ();
     data->revision = revnum;
     data->path = path;
-    event.SetClientData (data);
 
-    wxPostEvent (parent, event);
+    ActionEvent::Post (parent, TOKEN_GET, data);
   }
 
   /**
@@ -290,13 +288,11 @@ public:
   {
     svn_revnum_t revnum = m_logList->GetSelectedRevision ();
  
-    wxCommandEvent event = CreateActionEvent (TOKEN_VIEW);
     GetData * data = new GetData ();
     data->revision = revnum;
     data->path = path;
-    event.SetClientData (data);
 
-    wxPostEvent (parent, event);
+    ActionEvent::Post (parent, TOKEN_VIEW, data);
   }
     
   void
@@ -326,14 +322,12 @@ public:
       return;
     }
 
-    wxCommandEvent event (CreateActionEvent (TOKEN_DIFF));
     DiffData * data = new DiffData ();
     data->compareType = DiffData::TWO_REVISIONS;
     data->revision1 = svn::Revision (array[0]);
     data->revision2 = svn::Revision (array[1]);
-    event.SetClientData (data);
 
-    wxPostEvent (parent, event);
+    ActionEvent::Post (parent, TOKEN_DIFF, data);
   }
 
   void
@@ -348,7 +342,6 @@ public:
       return;
     }
 
-    wxCommandEvent event (CreateActionEvent (TOKEN_MERGE));
     MergeData * data = new MergeData ();
     data->Path1 = path;
     data->Path2 = path;
@@ -363,9 +356,7 @@ public:
       data->Path2Rev << array[1];
     }
 
-    event.SetClientData (data);
-
-    wxPostEvent (parent, event);
+    ActionEvent::Post (parent, TOKEN_MERGE, data);
   }
 
   void 

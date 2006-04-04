@@ -239,6 +239,9 @@ private:
   void
   Trace (const wxString & msg) ;
 
+  void
+  TraceError (const wxString & msg) ;
+
 private:
   DECLARE_EVENT_TABLE ()
 };

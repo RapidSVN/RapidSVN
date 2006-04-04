@@ -35,6 +35,7 @@
 #include "svncpp/url.hpp"
 
 // app
+#include "action_event.hpp"
 #include "diff_action.hpp"
 #include "diff_data.hpp"
 #include "diff_dlg.hpp"
@@ -57,12 +58,10 @@ public:
   {
   }
 
-
   Data (Action * action_, wxWindow * parent_, DiffData & data)
     : action (action_), showDialog (false), diffData (data), parent (parent_)
   {
   }
-
 
   svn::Context * 
   GetContext ()
@@ -70,13 +69,11 @@ public:
     return action->GetContext ();
   }
 
-
   void
   Trace (const wxString & msg)
   {
     action->Trace (msg);
   }
-
 
   /**
    * retrieves the status information for a file
@@ -90,7 +87,6 @@ public:
     return status;
   }
 
-
   /**
    * retrieves the revision information for a file
    */
@@ -100,7 +96,6 @@ public:
     svn::Entry entry (status.entry ());
     return entry.revision ();
   }
-
 
   /**
    * retrieves the effective path for the first file
@@ -113,7 +108,6 @@ public:
     return path;
   }
 
-
   /**
    * retrieves the effective path for the second file
    */
@@ -125,7 +119,6 @@ public:
     else
       return path;
   }
-
 
   /** 
    * Check the status of a file. Only regular
@@ -142,7 +135,6 @@ public:
 
     return true;
   }
-
 
   /**
    * performs the diff operation on a single path:
@@ -171,7 +163,6 @@ public:
       Trace (msg);
       return;
     }
-
 
     switch (diffData.compareType)
     {
@@ -227,12 +218,9 @@ public:
     msg.Printf (_("Execute diff tool: %s"), cmd.c_str ());
     Trace (msg);
 
-    wxCommandEvent event = CreateActionEvent (TOKEN_CMD_DIFF);
-    event.SetString (cmd);
-    wxPostEvent (parent, event);
+    ActionEvent::Post (parent, TOKEN_CMD_DIFF, cmd);
   }
 };
-
 
 DiffAction::DiffAction (wxWindow * parent)
   : Action (parent, _("Diff"), GetBaseFlags ())
@@ -240,19 +228,16 @@ DiffAction::DiffAction (wxWindow * parent)
   m = new Data (this, parent);
 }
 
-
 DiffAction::DiffAction (wxWindow * parent, DiffData & data)
   : Action (parent, _("Diff"), GetBaseFlags ())
 {
   m = new Data (this, parent, data);
 }
 
-
 DiffAction::~DiffAction ()
 {
   delete m;
 }
-
 
 bool
 DiffAction::Prepare ()
@@ -293,7 +278,6 @@ DiffAction::Prepare ()
   return true;
 }
 
-
 bool
 DiffAction::Perform ()
 {
@@ -307,6 +291,7 @@ DiffAction::Perform ()
  
   return true;
 }
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

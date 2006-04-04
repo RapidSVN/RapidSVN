@@ -30,6 +30,7 @@
 #include "svncpp/client.hpp"
 
 // app
+#include "action_event.hpp"
 #include "checkout_action.hpp"
 #include "checkout_dlg.hpp"
 #include "ids.hpp"
@@ -127,10 +128,7 @@ CheckoutAction::Perform ()
   // now post event to add bookmark to bookmarks
   if (m_data.Bookmarks)
   {
-    wxCommandEvent event = CreateActionEvent (TOKEN_ADD_BOOKMARK);
-    event.SetString (m_data.DestFolder);
-
-    PostEvent (event);
+    ActionEvent::Post (GetParent (), TOKEN_ADD_BOOKMARK, m_data.DestFolder);
   }
  
   return true;

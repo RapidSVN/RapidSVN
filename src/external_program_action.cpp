@@ -32,6 +32,7 @@
 
 // app
 #include "external_program_action.hpp"
+#include "action_event.hpp"
 #include "ids.hpp"
 #include "preferences.hpp"
 #include "utils.hpp"
@@ -110,9 +111,7 @@ ExternalProgramAction::Perform ()
       msg.Printf (_("Execute file explorer: %s"), cmd.c_str ());
       Trace (msg);
 
-      wxCommandEvent event = CreateActionEvent (TOKEN_CMD);
-      event.SetString (cmd);
-      wxPostEvent (m_parent, event);
+      ActionEvent::Post (m_parent, TOKEN_CMD, cmd);
     }
   }
   else
@@ -138,9 +137,7 @@ ExternalProgramAction::Perform ()
       msg.Printf (_("Execute editor: %s"), cmd.c_str ());
       Trace (msg);
 
-      wxCommandEvent event = CreateActionEvent (TOKEN_CMD);
-      event.SetString (cmd);
-      wxPostEvent (m_parent, event);
+      ActionEvent::Post (m_parent, TOKEN_CMD, cmd);
     }
   }
 

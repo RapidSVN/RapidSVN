@@ -36,7 +36,6 @@
 // forward declarations
 class Tracer;
 class wxWindow;
-class wxEvent;
 
 namespace svn
 {
@@ -305,17 +304,6 @@ public:
     const svn::Revision & revision = svn::Revision::HEAD);
 
 protected:
-
-  /**
-   * thread-save method to post an event. The event will
-   * be sent to the actions parent
-   *
-   * @param event event to send
-   */
-  void
-  PostEvent (wxEvent & event);
-
-
   /**
    * sets the flags for this action - but passing into
    * the constructor is preferred
@@ -337,18 +325,6 @@ private:
    * private copy constructor
    */
   Action (const Action &);
-
-  /**
-   * thread-safe method to post a string event
-   * the event is posted to parent
-   */
-  void PostStringEvent (int code, wxString str, int event_id);
-
-  /**
-   * thread-safe method to post a data event
-   */
-  void PostDataEvent (int code, void *data, int event_id);
-
 };
 
 #endif

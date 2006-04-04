@@ -32,18 +32,19 @@
 
 // app
 #include "merge_action.hpp"
+#include "merge_dlg.hpp"
 #include "utils.hpp"
 
 MergeAction::MergeAction (wxWindow * parent)
-  : Action (parent, _("Merge"), GetBaseFlags ()),
-    m_calledByLogDlg (false)
+  : Action (parent, _("Merge"), GetBaseFlags ())
 {
+  m_data.calledByLogDlg = false;
 }
 
 MergeAction::MergeAction (wxWindow * parent, MergeData & data)
-  : Action (parent, _("Merge"), GetBaseFlags ()), m_data (data),
-    m_calledByLogDlg (true)
+  : Action (parent, _("Merge"), GetBaseFlags ()), m_data (data)
 {
+  m_data.calledByLogDlg = true;
 }
 
 bool
@@ -56,12 +57,12 @@ MergeAction::Prepare ()
 
   // Set default Destination to the selected path in the folder browser
   // or, if called by the log dialogue, to the source path
-  if (m_calledByLogDlg)
+  if (m_data.calledByLogDlg)
     m_data.Destination = m_data.Path1;
   else
     m_data.Destination = Utf8ToLocal (GetPath().c_str());
 
-  MergeDlg dlg (GetParent (), m_calledByLogDlg, m_data);
+  MergeDlg dlg (GetParent (), m_data.calledByLogDlg, m_data);
 
   if (dlg.ShowModal () != wxID_OK)
   {
@@ -86,7 +87,6 @@ MergeAction::Perform ()
     msg.Printf(_("Could not set working directory to %s"),
                path.GetPath (wxPATH_GET_VOLUME).c_str ());
     TraceError (msg);
-    //PostStringEvent (TOKEN_VSVN_INTERNAL_ERROR, msg, ACTION_EVENT);
     return false;
   }
 

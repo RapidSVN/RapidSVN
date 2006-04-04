@@ -1512,6 +1512,10 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
     Trace (event.GetString ());
     break;
 
+  case TOKEN_ERROR:
+    TraceError (event.GetString ());
+    break;
+
   case TOKEN_SVN_INTERNAL_ERROR:
   case TOKEN_INTERNAL_ERROR:
     Trace (event.GetString ());
@@ -1536,7 +1540,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       }
       else
       {
-        Trace (_("Internal Error: no client data for action event!"));
+        TraceError (_("Internal Error: no client data for action event!"));
       }
 
       if ((actionFlags & Action::UPDATE_LATER) != 0)
@@ -2177,13 +2181,23 @@ RapidSvnFrame::Perform (Action * action)
   }
 }
 
-
 void
 RapidSvnFrame::Trace (const wxString & msg)
 {
   if (m_log != NULL)
   {
     m_log->AppendText (msg + wxT('\n'));
+  }
+}
+
+void
+RapidSvnFrame::TraceError (const wxString & msg)
+{
+  if (m_log != NULL)
+  {
+    m_log->SetDefaultStyle(wxTextAttr(*wxRED));
+    m_log->AppendText (msg + wxT('\n'));
+    m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));
   }
 }
 

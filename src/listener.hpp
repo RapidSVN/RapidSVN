@@ -36,11 +36,11 @@
 // forward declarations
 class Tracer;
 class wxWindow;
+
 namespace svn
 {
   class Context;
 }
-
 
 /**
  * Class that listens to the @a svn::ContextListener interface
@@ -57,18 +57,15 @@ public:
    */
   Listener (wxWindow * parent);
 
-
   /**
    * destructor
    */
   virtual ~Listener ();
 
-
   /**
    * @return Tracer instance
    */
   Tracer * GetTracer ();
-
 
   /**
    * Sets the tracer passed as an argument.
@@ -77,7 +74,6 @@ public:
    */
   void SetTracer (Tracer * t, bool own);
 
-
   /**
    * set actions parent window
    *
@@ -85,12 +81,10 @@ public:
    */
   void SetParent (wxWindow * parent);
 
-
   /**
    * @return parent
    */
   wxWindow * GetParent ();
-
 
   /**
    * sets the context
@@ -99,13 +93,11 @@ public:
    */
   void SetContext (svn::Context * context);
 
-
   /**
    * @return the context of the action
    */
   svn::Context *
   GetContext ();
-
 
   /**
    * @see svn::ContextListener
@@ -156,13 +148,11 @@ public:
                                 const std::string & realm,
                                 bool & maySave);
 
-
   /**
    * @see svn::ContextListener
    */
   virtual bool
   contextCancel ();
-
 
   /**
    * shall the ongoing operation be cancelled?
@@ -176,7 +166,6 @@ public:
   void
   cancel (bool value);
 
-
   /**
    * @see cancel
    * @return check whether the ongoing operation is to be cancelled
@@ -188,8 +177,6 @@ public:
 
 protected:
   void Trace (const wxString & msg);
-
-  void TraceError (const wxString & msg);
 
 private:
   struct Data;

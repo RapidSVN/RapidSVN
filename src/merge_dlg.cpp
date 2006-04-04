@@ -42,13 +42,6 @@ BEGIN_EVENT_TABLE (MergeDlg, wxDialog)
   EVT_BUTTON (ID_BUTTON_BROWSE, MergeDlg::OnBrowse)
 END_EVENT_TABLE ()
 
-MergeData::MergeData()
-{
-  // Default values go here:
-  Recursive = true;
-  Force = false;
-}
-
 int
 MergeDlg::TestRev (wxString & val)
 {
@@ -68,8 +61,9 @@ MergeDlg::TestRev (wxString & val)
 MergeDlg::MergeDlg (wxWindow * parent, bool calledByLogDlg, MergeData & data)
            : wxDialog (parent, -1, _("Merge revisions"), wxDefaultPosition,
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-             m_data(data), m_calledByLogDlg (calledByLogDlg)
+             m_data(data)
 {
+  m_data.calledByLogDlg = calledByLogDlg;
   InitializeData ();
   CentreOnParent();
 }
@@ -170,7 +164,7 @@ MergeDlg::InitializeData ()
   grid->Add(Path2Rev, 0, wxLEFT, 20);
 
   // Row 4:
-  if (m_calledByLogDlg)
+  if (m_data.calledByLogDlg)
     grid->Add(new wxStaticText(this, -1, _("Destination file")), 0, 0, 5);
   else
     grid->Add(new wxStaticText(this, -1, _("Destination path")), 0, 0, 5);
@@ -185,7 +179,7 @@ MergeDlg::InitializeData ()
 
   // If called by the log dialogue, the source path and revision is
   // already given by the selected entries
-  if (m_calledByLogDlg)
+  if (m_data.calledByLogDlg)
   {
     Path1->Disable();
     Path2->Disable();

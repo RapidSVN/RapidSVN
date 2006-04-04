@@ -27,23 +27,9 @@
 #include "wx/wx.h"
 
 // app
+#include "action_event.hpp"
 #include "ids.hpp"
-#include "report_dlg.hpp"
 #include "tracer.hpp"
-#include "utils.hpp"
-
-TextCtrlTracer::TextCtrlTracer (wxTextCtrl * ctrl):m_txtCtrl (ctrl)
-{
-}
-
-void
-TextCtrlTracer::Trace (const wxString & str)
-{
-  wxMutexGuiEnter ();
-  m_txtCtrl->AppendText (str + wxT("\n"));
-  wxMutexGuiLeave ();
-}
-
 
 EventTracer::EventTracer (wxFrame * fr)
   : m_frame (fr)
@@ -51,47 +37,17 @@ EventTracer::EventTracer (wxFrame * fr)
 }
 
 void
-EventTracer::Trace (const wxString & str)
+EventTracer::Trace (const wxString & msg)
 {
-  wxCommandEvent event = CreateActionEvent (TOKEN_INFO);
-  event.SetString (str);
-
-  // send in a thread-safe way
-  wxPostEvent (m_frame, event);
-}
-
-ErrorTracer::ErrorTracer (wxWindow * parent)
-  : m_parent (parent)
-{
-}
-
-ErrorTracer::~ErrorTracer ()
-{
+  ActionEvent::Post (m_frame, TOKEN_INFO, msg);
 }
 
 void
-ErrorTracer::Trace (const wxString & str)
+EventTracer::TraceError (const wxString & msg)
 {
-  m_msgs += str + wxT("\n");
+  ActionEvent::Post (m_frame, TOKEN_ERROR, msg);
 }
 
-void
-ErrorTracer::ShowErrors ()
-{
-  ReportDlg rdlg (m_parent, _("Error"), m_msgs, ERROR_REPORT);
-  rdlg.ShowModal ();
-}
-
-StringTracer::StringTracer (wxString & str)
-  : m_msgs (str)
-{
-}
-
-void
-StringTracer::Trace (const wxString & str)
-{
-  m_msgs += str + wxT("\n");
-}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

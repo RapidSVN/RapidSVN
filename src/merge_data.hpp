@@ -22,43 +22,29 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _SWITCH_ACTION_H_INCLUDED_
-#define _SWITCH_ACTION_H_INCLUDED_
+#ifndef _MERGE_DATA_H_INCLUDED_
+#define _MERGE_DATA_H_INCLUDED_
 
-// svncpp
-#include "svncpp/targets.hpp"
+// wxWidgets
+#include "wx/string.h"
 
-// app
-#include "action.hpp"
-#include "update_data.hpp"
-
-/**
- * this action class can be used to copy, move and rename
- * files and folders. Right now it supports only a single target
- */
-class SwitchAction:public Action
+struct MergeData
 {
-public:
-  /**
-   * constructor
-   *
-   * @param parent parent window
-   */
-  SwitchAction (wxWindow * parent);
-
-  virtual bool Perform ();
-  virtual bool Prepare ();
-  
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
+  MergeData ()
   {
-    return SINGLE_TARGET|VERSIONED_WC_TYPE;
+    Recursive = true;
+    Force = false;
   }
 
-private:
-  UpdateData m_data;
+  wxString Path1;
+  wxString Path2;
+  wxString Path1Rev;
+  wxString Path2Rev;
+  wxString Destination;
+  bool Recursive;
+  bool Force;
+
+  bool calledByLogDlg;
 };
 
 #endif

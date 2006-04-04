@@ -32,6 +32,7 @@
 
 // app
 #include "action.hpp"
+#include "action_event.hpp"
 #include "ids.hpp"
 #include "threaded_worker.hpp"
 #include "tracer.hpp"
@@ -57,7 +58,6 @@ public:
     Init (parent);
   }
 
-
   /**
    * destructor
    */
@@ -65,7 +65,6 @@ public:
   {
     SetContext (0, false);
   }
-
 
   /**
    * initialize values
@@ -87,7 +86,6 @@ public:
     Run();
   }
 
-
   /**
    * set a context. if there is already a context and we
    * own this context, delete it
@@ -108,7 +106,6 @@ public:
     ownContext = own;
   }
 
-
   /**
    * thread execution starts here
    */
@@ -117,22 +114,19 @@ public:
   {
     while (!TestDestroy ())
     {
-        ExecuteAction ();
+      ExecuteAction ();
 
-        Sleep (100);
+      Sleep (100);
     }
-
     return 0;
   }
-
 
   void
   DeleteAction ()
   {
-    PostDataEvent (TOKEN_DELETE_ACTION, (void*)action);
+    ActionEvent::Post (parent, TOKEN_DELETE_ACTION, (void*)action);
     action = 0;
   }
-
 
   /**
    * executes the action if there is any
@@ -143,10 +137,14 @@ public:
     if (action == 0)
       return;
 
+    ActionEvent event (parent, TOKEN_ACTION_START);
+
     {
       wxString msg;
       msg.Printf (_("Execute: %s"), actionName.c_str ());
-      PostStringEvent (TOKEN_ACTION_START, msg);
+
+      event.init (parent, TOKEN_ACTION_START, msg);
+      event.Post ();
     }
 
     unsigned int actionFlags = 0;
@@ -167,7 +165,9 @@ public:
       wxString msg, errtxt (Utf8ToLocal (e.message ()));
       msg.Printf (_("Error while performing action: %s"),
                   errtxt.c_str ());
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg);
+
+      event.init (parent, TOKEN_SVN_INTERNAL_ERROR, msg);
+      event.Post ();
 
       state = ACTION_NONE;
       result= ACTION_ERROR;
@@ -177,7 +177,9 @@ public:
     catch (...)
     {
       wxString msg (_("Error while performing action."));
-      PostStringEvent (TOKEN_SVN_INTERNAL_ERROR, msg);
+
+      event.init (parent, TOKEN_SVN_INTERNAL_ERROR, msg);
+      event.Post ();
 
       state = ACTION_NONE;
       result= ACTION_ERROR;
@@ -185,10 +187,10 @@ public:
       return;
     }
 
-    PostDataEvent (TOKEN_ACTION_END, (void*) new unsigned int(actionFlags));
+    event.init (parent, TOKEN_ACTION_END, (void*) new unsigned int(actionFlags));
+    event.Post ();
     DeleteAction ();
   }
-
 
   /**
    * called when the thread exits - whether it terminates normally or is
@@ -199,40 +201,13 @@ public:
   {
   }
 
-
   void
-  PostStringEvent (int code, wxString str)
-  {
-    wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
-    event.SetInt (code);
-    event.SetString (str);
-
-    // send in a thread-safe way
-    wxPostEvent (parent, event);
-  }
-
-
-  void
-  PostDataEvent (int code, void *data)
-  {
-    wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
-    event.SetInt (code);
-    event.SetClientData (data);
-
-    // send in a thread-safe way
-    wxPostEvent (parent, event);
-  }
-
-
-  void
-  Trace (const wxString & message)
+  TraceError (const wxString & message)
   {
     if (tracer)
-      tracer->Trace (message);
+      tracer->TraceError (message);
   }
-
 };
-
 
 ThreadedWorker::ThreadedWorker (wxWindow * parent)
 {
@@ -268,14 +243,14 @@ ThreadedWorker::Perform (Action * action_)
   // is there already a thread running?
   if (m->action != 0)
   {
-    m->Trace (_("Internal Error: There is another action running"));
+    m->TraceError (_("Internal Error: There is another action running"));
     return false;
   }
 
   // is there a context? we need one
   if (m->context == 0)
   {
-    m->Trace (_("Internal Error: no context available"));
+    m->TraceError (_("Internal Error: no context available"));
     return false;
   }
 
@@ -300,7 +275,7 @@ ThreadedWorker::Perform (Action * action_)
   {
     wxString msg, errtxt (Utf8ToLocal (e.message ()));
     msg.Printf ( _("Error while preparing action: %s"), errtxt.c_str () );
-    m->Trace (msg);
+    m->TraceError (msg);
 
     m->result = ACTION_ERROR;
     m->state = ACTION_NONE;
@@ -309,7 +284,7 @@ ThreadedWorker::Perform (Action * action_)
   }
   catch (...)
   {
-    m->Trace (_("Error while preparing action."));
+    m->TraceError (_("Error while preparing action."));
 
     m->result = ACTION_ERROR;
     m->state = ACTION_NONE;

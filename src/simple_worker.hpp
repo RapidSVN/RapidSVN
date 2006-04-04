@@ -85,6 +85,7 @@ public:
    */
   virtual svn::Context * 
   GetContext () const;
+
 private:
   struct Data;
   Data * m;
@@ -101,29 +102,7 @@ private:
    *
    * @param message to send
    */
-  void Trace (const wxString & message);
-
-  /**
-   * Posts a string event. This is used the
-   * completion of an action or an error
-   * 
-   * @param code event code
-   * @param str string
-   * @param event_id
-   */
-  void
-  PostStringEvent (int code, wxString str, int event_id);
-
-  /**
-   * Posts a data event. This call is thread-safe
-   *
-   * @param code
-   * @param data
-   * @param event_id
-   */
-  void
-  PostDataEvent (int code, void * data, int event_id);
-
+  void TraceError (const wxString & message);
 };
 
 #endif

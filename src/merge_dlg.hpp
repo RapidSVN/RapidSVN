@@ -28,18 +28,8 @@
 // wxWidgets
 #include "wx/dialog.h"
 
-struct MergeData
-{
-  MergeData();
-
-  wxString Path1;
-  wxString Path2;
-  wxString Path1Rev;
-  wxString Path2Rev;
-  wxString Destination;
-  bool Recursive;
-  bool Force;
-};
+// app
+#include "merge_data.hpp"
 
 class MergeDlg:public wxDialog
 {
@@ -53,7 +43,6 @@ private:
   int TestRev (wxString & val);
 
   MergeData & m_data;
-  bool m_calledByLogDlg;
 
   DECLARE_EVENT_TABLE ()
 };

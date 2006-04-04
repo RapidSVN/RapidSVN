@@ -140,13 +140,6 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status);
 bool
 CheckRevision (const wxString & revstring);
 
-/**
- * Creates an action event with @a token.
- *
- * @param token 
- */
-wxCommandEvent 
-CreateActionEvent (int token);
 
 /**
  * Creates a menu item for @a id (with whistles and bells, uh,

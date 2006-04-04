@@ -30,7 +30,7 @@
 
 // app
 #include "action.hpp"
-#include "merge_dlg.hpp"
+#include "merge_data.hpp"
 
 class MergeAction:public Action
 {
@@ -59,11 +59,9 @@ public:
 
 private:
   MergeData m_data;
-  bool m_calledByLogDlg;
 };
 
 #endif
-
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

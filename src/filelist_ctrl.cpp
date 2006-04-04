@@ -35,7 +35,6 @@
 #include "wx/filename.h"
 #include "wx/imaglist.h"
 
-
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/entry.hpp"
@@ -43,14 +42,15 @@
 #include "svncpp/url.hpp"
 
 // app
-#include "ids.hpp"
-#include "filelist_ctrl.hpp"
-#include "utils.hpp"
-#include "preferences.hpp"
 #include "action.hpp"
+#include "action_event.hpp"
+#include "columns.hpp"
+#include "filelist_ctrl.hpp"
+#include "ids.hpp"
+#include "preferences.hpp"
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
-#include "columns.hpp"
+#include "utils.hpp"
 
 // Bitmaps
 #include "res/bitmaps/nonsvn_file.xpm"
@@ -953,7 +953,7 @@ FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
   m->ReadConfig ();
 
   m->DirtyColumns = true;
-  m->Parent = parent;  // used for wxPostEvent ()
+  m->Parent = parent;
 }
 
 FileListCtrl::~FileListCtrl ()
@@ -1307,13 +1307,11 @@ FileListCtrl::OnColumnLeftClick (wxListEvent & event)
 
   ApplySortChanges ();
 
-  // send an event in order to update SortAscending in RapidSvnFrame
-  wxCommandEvent eventAscending = CreateActionEvent (TOKEN_UPDATE_ASCENDING);
-  wxPostEvent (m->Parent, eventAscending);
+  ActionEvent Event (m->Parent, TOKEN_UPDATE_ASCENDING);
+  Event.Post ();
 
-  // send an event in order to update MenuSorting in RapidSvnFrame
-  wxCommandEvent eventSorting = CreateActionEvent (TOKEN_UPDATE_SORTING);
-  wxPostEvent (m->Parent, eventSorting);
+  Event.init (m->Parent, TOKEN_UPDATE_SORTING);
+  Event.Post ();
 }
 
 void

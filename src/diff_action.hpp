@@ -41,7 +41,6 @@ public:
    */
   DiffAction (wxWindow * parent);
 
-
   /**
    * Constructor, that takes read configured @a DiffData,
    * so no dialog will be displayed
@@ -50,7 +49,6 @@ public:
    * @param data diff data
    */
   DiffAction (wxWindow * parent, DiffData & data);
-
 
   /** Destructor */
   virtual ~DiffAction ();

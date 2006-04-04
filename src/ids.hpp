@@ -163,6 +163,7 @@ enum
 // Ids used for communication events between threads and frame
   TOKEN_BASE,
   TOKEN_INFO,
+  TOKEN_ERROR,
   TOKEN_SVN_INTERNAL_ERROR,
   TOKEN_INTERNAL_ERROR,
   TOKEN_ACTION_START,

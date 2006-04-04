@@ -31,14 +31,15 @@
 #include "svncpp/m_check.hpp"
 
 // app
+#include "action_event.hpp"
+#include "auth_dlg.hpp"
+#include "cert_dlg.hpp"
+#include "config.hpp"
+#include "commit_dlg.hpp"
+#include "ids.hpp"
 #include "listener.hpp"
 #include "tracer.hpp"
-#include "cert_dlg.hpp"
-#include "auth_dlg.hpp"
-#include "commit_dlg.hpp"
 #include "utils.hpp"
-#include "ids.hpp"
-#include "config.hpp"
 
 struct Listener::Data
 {
@@ -136,17 +137,10 @@ Listener::Trace (const wxString & msg)
 }
 
 void
-Listener::TraceError (const wxString & msg)
-{
-  Trace (msg);
-}
-
-void
 Listener::SetParent (wxWindow * parent)
 {
   m->parent = parent;
 }
-
 
 void
 Listener::SetContext (svn::Context * context)
@@ -159,7 +153,6 @@ Listener::GetContext ()
 {
   return m->context;
 }
-
 
 bool
 Listener::contextGetLogin (
@@ -243,11 +236,7 @@ Listener::contextNotify (const char *path,
     static wxString msg;
     msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], Utf8ToLocal (path).c_str ());
 
-    // wxSafeYield is now called from RapidSvnFrame (main thread)
-    wxCommandEvent event = CreateActionEvent (TOKEN_INFO);
-    event.SetString (msg);
-    wxPostEvent (m->parent, event);
-//    Trace (msg);
+    Trace (msg);
   }
 
 #ifdef USE_SIMPLE_WORKER

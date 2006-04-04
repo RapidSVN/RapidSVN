@@ -43,11 +43,6 @@ enum
  */
 class MoveAction:public Action
 {
-private:
-  int m_kind;
-  wxString m_destination;
-  bool m_force;
-
 public:
   /**
    * constructor
@@ -67,6 +62,11 @@ public:
   {
     return SINGLE_TARGET|MULTIPLE_TARGETS|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
   }
+
+private:
+  int m_kind;
+  wxString m_destination;
+  bool m_force;
 };
 
 #endif

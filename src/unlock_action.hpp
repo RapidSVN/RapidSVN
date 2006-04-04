@@ -33,7 +33,6 @@ namespace svn
 {
   class Targets;
 }
-//class Tracer;
 
 class UnlockAction : public Action
 {

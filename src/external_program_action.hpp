@@ -56,7 +56,7 @@ public:
     return UPDATE_LATER|SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
   }
 
-protected:
+private:
   long m_verb_id;
   bool m_treat_as_folder;
   wxWindow * m_parent;

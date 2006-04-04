@@ -224,15 +224,6 @@ CheckRevision (const wxString & revstring)
   return ParseRevision (revstring, revnum);
 }
 
-wxCommandEvent
-CreateActionEvent (int token)
-{
-  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
-  event.SetInt (token);
-
-  return event;
-}
-
 wxMenuItem *
 AppendMenuItem (wxMenu & menu, int id)
 {

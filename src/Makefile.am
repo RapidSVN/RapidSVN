@@ -8,6 +8,7 @@ bin_PROGRAMS=rapidsvn
 rapidsvn_SOURCES= \
 	about_dlg.cpp \
 	action.cpp \
+	action_event.cpp \
 	add_action.cpp \
 	auth_dlg.cpp \
 	cert_dlg.cpp \
