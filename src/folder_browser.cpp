@@ -79,13 +79,11 @@ enum
 
 static const unsigned int MAXLENGTH_BOOKMARK = 35;
 
-
 const static wxChar ConfigBookmarkFmt [] = wxT("/Bookmarks/Bookmark%ld");
 const static wxChar ConfigBookmarkCount [] = wxT("/Bookmarks/Count");
 const static wxChar ConfigFlatModeFmt [] = wxT("/Bookmarks/Bookmark%ldFlat");
 
 static const wxString EmptyString;
-
 
 // local functions
 static bool
@@ -93,7 +91,6 @@ IsValidSeparator (const wxString & sep)
 {
   return ((sep == wxT("/")) || (sep == wxT("\\")));
 }
-
 
 /** 
  * data structure that contains information about
@@ -105,18 +102,15 @@ public:
   svn::Context * context;
   bool flatMode;
 
-
   Bookmark (bool flatMode_=false)
     : context (0), flatMode (flatMode_)
   {
   }
 
-
   ~Bookmark ()
   {
     ClearContext ();
   }
-
 
   void
   ClearContext ()
@@ -128,19 +122,15 @@ public:
     }
   }
 
-
   void
   SetAuthCache (bool value)
   {
     if (context != 0)
       context->setAuthCache (value);
   }
-
 };
 
-
 static Bookmark InvalidBookmark;
-
 
 WX_DECLARE_STRING_HASH_MAP (Bookmark, BookmarkHashMap);
 
@@ -157,7 +147,6 @@ public:
   BookmarkHashMap bookmarks;
   svn::Context defaultContext;
   bool useAuthCache;
-
 
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
     : singleContext (0), window (window), listener (0), useAuthCache (true)
@@ -181,7 +170,7 @@ public:
 
     FolderItemData* data = new FolderItemData (FOLDER_TYPE_BOOKMARKS);
     rootId = treeCtrl->AddRoot (_("Bookmarks"), FOLDER_IMAGE_COMPUTER,
-                                    FOLDER_IMAGE_COMPUTER, data);
+                                FOLDER_IMAGE_COMPUTER, data);
     treeCtrl->SetItemHasChildren (rootId, TRUE);
   }
 
@@ -216,7 +205,6 @@ public:
       bookmarks [name].context = CreateContext ();
   }
 
-  
   /**
    * factory method to create a new context
    */
@@ -231,7 +219,6 @@ public:
     return context;
   }
 
-  
   const wxString
   GetPath ()
   {
@@ -280,8 +267,6 @@ public:
 
     return it->second.context;
   }
-
-
 
   void
   ShowMenu (wxPoint & pt)
@@ -349,7 +334,6 @@ public:
     // show menu
     window->PopupMenu (&menu, pt);
   }
-
 
   bool
   HasSubdirectories (const wxString & path)
@@ -599,10 +583,8 @@ public:
         newId, true );
       treeCtrl->SetItemImage (newId, open_image,
                                 wxTreeItemIcon_Expanded);
-
     }
   }
-
 
   /**
    * Finds the child entry with @a path
@@ -777,10 +759,8 @@ public:
         id = treeCtrl->GetNextChild (rootId, cookie);
       }
     }
-
     return success;
   }
-
 
   /**
    * Try to go up in the folder hierarchy until we
@@ -811,7 +791,6 @@ public:
       // step up one level
       id = treeCtrl->GetItemParent (id);
     }
-
     return bookmarkId;
   }
 
@@ -831,7 +810,6 @@ public:
     return data->getPath ();
   }
 
- 
   Bookmark &
   GetSelectedBookmark ()
   {
@@ -850,7 +828,6 @@ public:
 
     return it->second;
   }
-
 
   void
   SetAuthPerBookmark (const bool perBookmark)
@@ -893,7 +870,6 @@ public:
       it->second.ClearContext ();
   }
 
-
   void SetAuthCache (bool value)
   {
     useAuthCache = value;
@@ -909,7 +885,6 @@ public:
     for (; it!= bookmarks.end (); it++)
       it->second.SetAuthCache (value);
   }
-
 };
 
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
@@ -1094,7 +1069,6 @@ FolderBrowser::GetListener () const
   return m->listener;
 }
 
-
 void
 FolderBrowser::WriteConfig (wxConfigBase * cfg) const
 {
@@ -1123,12 +1097,10 @@ FolderBrowser::WriteConfig (wxConfigBase * cfg) const
   }
 }
 
-
 void
 FolderBrowser::ReadConfig (wxConfigBase * cfg)
 {
   wxASSERT (cfg);
-
 
   long item, count;
   cfg->Read (ConfigBookmarkCount, &count, 0);
@@ -1149,7 +1121,6 @@ FolderBrowser::ReadConfig (wxConfigBase * cfg)
   }
 }
 
-
 const bool
 FolderBrowser::IsFlat () const
 {
@@ -1160,7 +1131,6 @@ FolderBrowser::IsFlat () const
 
   return bookmark.flatMode;
 }
-
 
 bool
 FolderBrowser::SetFlat (bool flatMode) 
@@ -1174,7 +1144,6 @@ FolderBrowser::SetFlat (bool flatMode)
   return true;
 } 
   
-
 const bool
 FolderBrowser::GetAuthCache () const
 {
@@ -1206,4 +1175,3 @@ FolderBrowser::ExpandSelection ()
  * eval: (load-file "../rapidsvn-dev.el")
  * end:
  */
-

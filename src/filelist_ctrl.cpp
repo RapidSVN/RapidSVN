@@ -1184,7 +1184,6 @@ FileListCtrl::GetTargets () const
   IndexArray arr = GetSelectedItems ();
   size_t i;
 
-
   std::vector<svn::Path> v;
   v.reserve (arr.GetCount ());
 

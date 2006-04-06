@@ -170,7 +170,7 @@ public:
       event.Post ();
 
       state = ACTION_NONE;
-      result= ACTION_ERROR;
+      result = ACTION_ERROR;
       DeleteAction ();
       return;
     }
@@ -182,7 +182,7 @@ public:
       event.Post ();
 
       state = ACTION_NONE;
-      result= ACTION_ERROR;
+      result = ACTION_ERROR;
       DeleteAction ();
       return;
     }

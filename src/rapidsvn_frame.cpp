@@ -30,8 +30,8 @@
 
 // svncpp
 #include "svncpp/apr.hpp"
-#include "svncpp/context.hpp"
 #include "svncpp/check.hpp"
+#include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/targets.hpp"
 #include "svncpp/url.hpp"
@@ -39,6 +39,7 @@
 
 // app
 #include "rapidsvn_app.hpp"
+#include "columns.hpp"
 #include "config.hpp"
 #include "destination_dlg.hpp"
 #include "diff_data.hpp"
@@ -46,7 +47,6 @@
 #include "file_info.hpp"
 #include "listener.hpp"
 #include "folder_item_data.hpp"
-#include "columns.hpp"
 
 #ifdef USE_SIMPLE_WORKER
 #include "simple_worker.hpp"
@@ -125,7 +125,6 @@ const static wxChar TraceMisc[] = wxT("tracemisc");
   const static int SPLITTER_STYLE = wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
 #endif
 
-
 /**
  * Local helper function to create the action worker
  *
@@ -141,26 +140,6 @@ CreateActionWorker (wxWindow * parent)
   return new ThreadedWorker (parent);
 #endif
 }
-
-
-// class LogTracer:public wxTextCtrl, public Tracer
-// {
-
-// public:
-//   LogTracer (wxWindow * parent)
-//     : wxTextCtrl (parent, -1, wxEmptyString,
-//                   wxPoint (0, 0), wxDefaultSize,
-//                   wxTE_MULTILINE | wxTE_READONLY)
-//   {
-//     SetMaxLength (0);
-//   }
-
-//   void Trace (const wxString & str)
-//   {
-//     AppendText (str + wxT("\n"));
-//   }
-// };
-
 
 /**
  * class that hide implementation specific data and methods from
@@ -395,7 +374,6 @@ public:
     return m_running;
   }
 
-
   void
   RecreateToolbar ()
   {
@@ -512,7 +490,6 @@ public:
 
     toolBar->AddSeparator ();
   }
-
 
   void
   AddInfoTools (wxToolBarBase *toolBar)
@@ -877,14 +854,14 @@ RapidSvnFrame::UpdateFileList ()
         wxString msg, errtxt (Utf8ToLocal (e.message ()));
         msg.Printf (_("Error while updating filelist (%s)"),
                     errtxt.c_str ());
-        Trace (msg);
+        TraceError (msg);
 
         // probably unversioned resource
         m_listCtrl->Show (FALSE);
       }
       catch (...)
       {
-        Trace (_("Error while updating filelist"));
+        TraceError (_("Error while updating filelist"));
       }
     }
   }
@@ -1175,20 +1152,6 @@ RapidSvnFrame::OnHelpStartupTips (wxCommandEvent & WXUNUSED (event))
 #endif
 }
 
-// void RapidSvnFrame::OnHelp (wxCommandEvent &WXUNUSED(event))
-// {
-// #ifdef USE_HTML_HELP
-//     wxWindow *active = wxGetActiveWindow();
-//     wxString helptext;
-//     while (active && helptext.IsEmpty())
-//     {
-//         helptext = active->GetHelpText();
-//         active = GetParent();
-//     }
-//     wxGetApp ().GetHelpController().Display(helptext);
-// #endif
-// }
-
 void
 RapidSvnFrame::OnAbout (wxCommandEvent & WXUNUSED (event))
 {
@@ -1325,7 +1288,6 @@ RapidSvnFrame::OnTestListener (wxCommandEvent & WXUNUSED (event))
         last_access = apr_time_now ();
         wxSafeYield ();
       }
-//      m_logTracer->Trace (wxT("Foobar rules!!!"));
     }
   }
   // ending the test
@@ -1518,7 +1480,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_SVN_INTERNAL_ERROR:
   case TOKEN_INTERNAL_ERROR:
-    Trace (event.GetString ());
+    TraceError (event.GetString ());
     UpdateFileList ();
     Trace (_("Ready\n"));
     m->SetRunning (false);

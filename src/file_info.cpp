@@ -40,7 +40,6 @@
 #include "file_info.hpp"
 #include "utils.hpp"
 
-
 static void
 info_print_time (apr_time_t atime, const wxChar * desc, wxString & str)
 {
@@ -65,7 +64,6 @@ struct FileInfo::Data
   wxString info;
   bool withUpdate;
 
-
   Data (svn::Context * ctx, bool update)
     : context (ctx), withUpdate (update)
   {
@@ -77,7 +75,6 @@ struct FileInfo::Data
     info += line;
     info += wxT("\n");
   }
-
 
   void
   addInfoForStatus (const svn::Status & status)
