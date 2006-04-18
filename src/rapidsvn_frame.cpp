@@ -316,37 +316,37 @@ public:
 #endif
   }
 
-  inline bool
+  bool
   IsColumnChecked (int id)
   {
     return MenuColumns->IsChecked (id);
   }
 
-  inline void
+  void
   CheckColumn (int id, bool check)
   {
     MenuColumns->Check (id, check);
   }
 
-  inline void
+  void
   CheckSort (int id)
   {
     MenuSorting->Check (id, true);
   }
 
-  inline void
+  void
   EnableMenuEntry (int id, bool enable)
   {
     MenuSorting->Enable (id, enable);
   }
 
-  inline bool
+  bool
   IsMenuChecked (int id)
   {
     return MenuBar->IsChecked (id);
   }
 
-  inline void
+  void
   CheckMenu (int id, bool check)
   {
     MenuBar->Check (id, check);
@@ -368,7 +368,7 @@ public:
     MenuBar->Enable (ID_Stop, running);
   }
 
-  inline bool
+  bool
   IsRunning () const
   {
     return m_running;
@@ -571,6 +571,12 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_TREE_SEL_CHANGED (-1, RapidSvnFrame::OnFolderBrowserSelChanged)
   EVT_TREE_KEY_DOWN (-1, RapidSvnFrame::OnFolderBrowserKeyDown)
   EVT_LIST_ITEM_SELECTED (-1, RapidSvnFrame::OnFileListSelected)
+
+  EVT_MENU (SIG_GET_LOG_MSG, RapidSvnFrame::OnGetLogMessage)
+  EVT_MENU (SIG_GET_LOGIN, RapidSvnFrame::OnGetLogin)
+  EVT_MENU (SIG_SSL_TRUST_PROMPT, RapidSvnFrame::OnSslServerTrustPrompt)
+  EVT_MENU (SIG_SSL_CERT_PROMPT, RapidSvnFrame::OnSslClientCertPrompt)
+  EVT_MENU (SIG_SSL_CERT_PW_PROMPT, RapidSvnFrame::OnSslClientCertPwPrompt)
 END_EVENT_TABLE ()
 
 /** class implementation **/
@@ -893,7 +899,7 @@ RapidSvnFrame::UpdateFolderBrowser ()
   UpdateFileList ();
 }
 
-/* START OF SECTION EVENTS */
+/*** START OF SECTION EVENTS ***/
 
 void
 RapidSvnFrame::OnActivate (wxActivateEvent & event)
@@ -1698,7 +1704,42 @@ RapidSvnFrame::OnFileListSelected (wxListEvent & event)
   m_activePane = ACTIVEPANE_FILELIST;
 }
 
-/* END OF SECTION EVENTS */
+/**
+ * Helper functions allowing the listener from the worker thread 
+ * to get necessary information using GUI functions, which
+ * are only allowed to be called from the main thread
+ */
+void
+RapidSvnFrame::OnGetLogMessage (wxCommandEvent & event)
+{
+  m->listener.callbackGetLogMessage ();
+}
+
+void
+RapidSvnFrame::OnGetLogin (wxCommandEvent & event)
+{
+  m->listener.callbackGetLogin ();
+}
+
+void
+RapidSvnFrame::OnSslServerTrustPrompt (wxCommandEvent & event)
+{
+  m->listener.callbackSslServerTrustPrompt ();
+}
+
+void
+RapidSvnFrame::OnSslClientCertPrompt (wxCommandEvent & event)
+{
+  m->listener.callbackSslClientCertPrompt ();
+}
+
+void
+RapidSvnFrame::OnSslClientCertPwPrompt (wxCommandEvent & event)
+{
+  m->listener.callbackSslClientCertPwPrompt ();
+}
+
+/*** END OF SECTION EVENTS ***/
 
 
 void

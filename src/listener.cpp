@@ -25,6 +25,7 @@
 
 // wxWidgets
 #include "wx/wx.h"
+#include "wx/thread.h"
 #include "wx/utils.h"
 
 // svncpp
@@ -34,8 +35,8 @@
 #include "action_event.hpp"
 #include "auth_dlg.hpp"
 #include "cert_dlg.hpp"
-#include "config.hpp"
 #include "commit_dlg.hpp"
+#include "config.hpp"
 #include "ids.hpp"
 #include "listener.hpp"
 #include "tracer.hpp"
@@ -57,20 +58,17 @@ public:
    */
   Tracer * tracer;
 
-
   /**
    * If ownTracer is TRUE, then this class
    * is responsible for deleting the tracer.
    */
   bool ownTracer;
 
-
   /**
    * is ongoing operation to be cancelled?
    * will be evaluated by Listener::contextCancel
    */
   bool isCancelled;
-
 
   /**
    * the context under which the action will be
@@ -81,20 +79,61 @@ public:
 
   svn::Targets targets;
 
-  Data (wxWindow * parnt)
-    : parent (parnt), tracer (0), ownTracer (false),
-      isCancelled (false)
+  /**
+   * Mutex, condition and flag for protecting shared data
+   */
+  wxMutex mutex;
+  wxCondition * parentDoneSignal;
+  bool dataReceived;
+
+  /**
+   * Shared between two threads data
+   */
+  std::string message;
+  std::string username;
+  std::string password;
+  std::string certFile;
+
+  ContextListener::SslServerTrustAnswer sslAnswer;
+  ContextListener::SslServerTrustData sslData;
+  apr_uint32_t acceptedFailures;
+
+  Data (wxWindow * parent_)
+    : parent (parent_), tracer (NULL), ownTracer (false),
+      isCancelled (false), context (NULL), dataReceived (false)
   {
+    parentDoneSignal = new wxCondition (mutex);
   }
 
   virtual ~Data ()
   {
+    delete parentDoneSignal;
+
     if (tracer && ownTracer)
     {
       delete tracer;
     }
   }
 
+  void
+  SendEventToParent (int id) const
+  {
+    wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, id);
+    wxPostEvent (parent, event);
+  }
+
+  void
+  WaitForParent () const
+  {
+    // Initial condition check, do not remove or recompose it.
+    // Necessary for the case if these lines are called AFTER sending a signal
+    // by parent. If not perform this check, signal is lost and we will wait
+    // for the parent eternally.
+    if (!dataReceived)
+    {
+      parentDoneSignal->Wait();
+    }
+  }
 };
 
 Listener::Listener (wxWindow * parent)
@@ -106,7 +145,6 @@ Listener::~Listener ()
 {
   delete m;
 }
-
 
 void
 Listener::SetTracer (Tracer * t, bool own)
@@ -154,28 +192,6 @@ Listener::GetContext ()
   return m->context;
 }
 
-bool
-Listener::contextGetLogin (
-  const std::string & realm,
-  std::string & username,
-  std::string & password,
-  bool & maySave)
-{
-  // TODO: show realm
-  wxString LocalUsername (Utf8ToLocal (username));
-  wxString LocalPassword (Utf8ToLocal (password));
-  AuthDlg dlg (GetParent (), LocalUsername, LocalPassword);
-
-  bool ok = dlg.ShowModal () == wxID_OK;
-  if (ok)
-  {
-    LocalToUtf8 (dlg.GetUsername (), username);
-    LocalToUtf8 (dlg.GetPassword (), password);
-  }
-
-  return ok;
-}
-
 void
 Listener::contextNotify (const char *path,
                          svn_wc_notify_action_t action,
@@ -185,16 +201,6 @@ Listener::contextNotify (const char *path,
                          svn_wc_notify_state_t prop_state,
                          svn_revnum_t revision)
 {
-  // TODO - IMPORTANT: make next code clean and probably optimize it more.
-  // This function is a bottleneck of productivity causing miscellaneous
-  // actions become very-very slow compared to corresponding subversion
-  // commands (in command prompt).
-  // Now it is only temporary solution, not clean and not too safe. But it
-  // boosts execution of actions approximately 2-2.5 times.
-
-  //TODO: An exact copy lives in action.cpp which is not used, unlike here
-  // I suspect we should get rid of one, but I'm not sure which at the moment...
-
   static const wxChar *
   ACTION_NAMES [] =
   {
@@ -249,49 +255,161 @@ Listener::contextNotify (const char *path,
 #endif
 }
 
-
 bool
-Listener::contextGetLogMessage (std::string & msg)
+Listener::contextGetLogin (const std::string & realm,
+                           std::string & username,
+                           std::string & password,
+                           bool & maySave)
 {
-  CommitDlg dlg (GetParent (), true);
+  m->username = username;
+  m->password = password;
+
+  m->SendEventToParent (SIG_GET_LOGIN);
+  m->WaitForParent ();
+
+  // Parent has done its job and signalled. Performing main condition check.
+  bool success = m->dataReceived;
+  // Reset flag for next callbacks
+  m->dataReceived = false;
+
+  if (success)
+  {
+    username = m->username;
+    password = m->password;
+  }
+  return success;
+}
+
+void
+Listener::callbackGetLogin ()
+{
+  wxMutexLocker lock (m->mutex);
+
+  // TODO: show realm
+  wxString LocalUsername (Utf8ToLocal (m->username));
+  wxString LocalPassword (Utf8ToLocal (m->password));
+  AuthDlg dlg (GetParent (), LocalUsername, LocalPassword);
 
   bool ok = dlg.ShowModal () == wxID_OK;
   if (ok)
   {
-    LocalToUtf8 (dlg.GetMessage (), msg);
+    LocalToUtf8 (dlg.GetUsername (), m->username);
+    LocalToUtf8 (dlg.GetPassword (), m->password);
+    m->dataReceived = true;
   }
-  return ok;
+  m->parentDoneSignal->Broadcast ();
 }
 
+bool
+Listener::contextGetLogMessage (std::string & msg)
+{
+  m->message = msg;
+
+  m->SendEventToParent (SIG_GET_LOG_MSG);
+  m->WaitForParent ();
+
+  bool success = m->dataReceived;
+  m->dataReceived = false;
+
+  if (success)
+  {
+    msg = m->message;
+  }
+  return success;
+}
+
+void
+Listener::callbackGetLogMessage ()
+{
+  wxMutexLocker lock (m->mutex);
+  CommitDlg dlg (GetParent (), true);
+
+  bool ok = dlg.ShowModal () == wxID_OK;
+
+  if (ok)
+  {
+    LocalToUtf8 (dlg.GetMessage (), m->message);
+    m->dataReceived = true;
+  }
+  m->parentDoneSignal->Broadcast ();
+}
 
 svn::ContextListener::SslServerTrustAnswer
 Listener::contextSslServerTrustPrompt (
   const svn::ContextListener::SslServerTrustData & data,
   apr_uint32_t & acceptedFailures)
 {
-  CertDlg dlg (GetParent (), data);
+  m->sslAnswer = DONT_ACCEPT;
+  m->sslData = data;
 
-  dlg.ShowModal ();
-  acceptedFailures = dlg.AcceptedFailures ();
+  m->SendEventToParent (SIG_SSL_TRUST_PROMPT);
+  m->WaitForParent ();
 
-  return dlg.Answer ();
+  // Parent has done its job and signalled. Performing main condition check.
+  bool success = m->dataReceived;
+  // Reset flag for next callbacks
+  m->dataReceived = false;
+
+  if (success)
+  {
+    acceptedFailures = m->acceptedFailures;
+  }
+  return m->sslAnswer;
 }
 
+void
+Listener::callbackSslServerTrustPrompt ()
+{
+  wxMutexLocker lock (m->mutex);
+  CertDlg dlg (GetParent (), m->sslData);
+
+  bool ok = dlg.ShowModal () == wxID_OK;
+
+  if (ok)
+  {
+    m->acceptedFailures = dlg.AcceptedFailures ();
+    m->sslAnswer = dlg.Answer ();
+    m->dataReceived = true;
+  }
+  m->parentDoneSignal->Broadcast ();
+}
 
 bool
 Listener::contextSslClientCertPrompt (std::string & certFile)
 {
+  m->certFile = certFile;
+
+  m->SendEventToParent (SIG_SSL_CERT_PW_PROMPT);
+  m->WaitForParent ();
+
+  // Parent has done its job and signalled. Performing main condition check.
+  bool success = m->dataReceived;
+  // Reset flag for next callbacks
+  m->dataReceived = false;
+
+  if (success)
+  {
+    certFile = m->certFile;
+  }
+  return success;
+}
+
+void
+Listener::callbackSslClientCertPrompt ()
+{
+  wxMutexLocker lock (m->mutex);
+
   wxString filename = wxFileSelector (
     _("Select Certificate File"), wxT(""), wxT(""), wxT(""),
     wxT("*.*"), wxOPEN | wxFILE_MUST_EXIST,
     GetParent ());
 
-  if (filename.empty ())
-    return false;
-
-  //TODO
-  LocalToUtf8 (filename, certFile);
-  return true;
+  if (!filename.empty ())
+  {
+    LocalToUtf8 (filename, m->certFile);
+    m->dataReceived = true;
+  }
+  m->parentDoneSignal->Broadcast ();
 }
 
 bool
@@ -299,18 +417,41 @@ Listener::contextSslClientCertPwPrompt (std::string & password,
                                         const std::string & realm,
                                         bool & maySave)
 {
-  //TODO
-  wxString LocalPassword(Utf8ToLocal (password));
+  m->password = password;
+
+  m->SendEventToParent (SIG_SSL_CERT_PW_PROMPT);
+  m->WaitForParent ();
+
+  // Parent has done its job and signalled. Performing main condition check.
+  bool success = m->dataReceived;
+  // Reset flag for next callbacks
+  m->dataReceived = false;
+
+  if (success)
+  {
+    password = m->password;
+  }
+  return success;
+}
+
+void
+Listener::callbackSslClientCertPwPrompt ()
+{
+  wxMutexLocker lock (m->mutex);
+
+  wxString LocalPassword(Utf8ToLocal (m->password));
   AuthDlg dlg (GetParent (), wxEmptyString, LocalPassword,
                AuthDlg::HIDE_USERNAME);
 
-  if (dlg.ShowModal () != wxID_OK)
-    return false;
+  bool ok = dlg.ShowModal () == wxID_OK;
 
-  LocalToUtf8 (dlg.GetPassword (), password);
-  return true;
+  if (ok)
+  {
+    LocalToUtf8 (dlg.GetPassword (), m->password);    
+    m->dataReceived = true;
+  }
+  m->parentDoneSignal->Broadcast ();
 }
-
 
 bool
 Listener::contextCancel ()
@@ -318,20 +459,17 @@ Listener::contextCancel ()
   return m->isCancelled;
 }
 
-
 bool
 Listener::isCancelled () const
 {
   return m->isCancelled;
 }
 
-
 void
 Listener::cancel (bool value)
 {
   m->isCancelled = value;
 }
-
 
 /* -----------------------------------------------------------------
  * local variables:

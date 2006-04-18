@@ -65,8 +65,6 @@ enum
   ID_Checkout,
   ID_Cleanup,
   ID_Copy,
-  //ID_CopyTo,
-  ID_CopyHere,
   ID_Commit,
   ID_Default_Action,
   ID_Delete,
@@ -81,10 +79,8 @@ enum
   ID_Merge,
   ID_Mkdir,
   ID_Move,
-  //ID_MoveTo,
   ID_Property,
   ID_Rename,
-  //ID_RenameHere,
   ID_Resolve,
   ID_Revert,
   ID_Switch,
@@ -117,7 +113,6 @@ enum
   ID_Column_Url,
   ID_Column_Repos,
   ID_Column_Uuid,
-  //ID_Column_Kind, we dont need this, do we?
   ID_Column_Schedule,
   ID_Column_Copied, // combination of isCopied + copyfromUrl
   ID_Column_ConflictOld,
@@ -151,7 +146,6 @@ enum
   ID_ColumnSort_Url,
   ID_ColumnSort_Repos,
   ID_ColumnSort_Uuid,
-  //ID_ColumnSort_Kind, we dont need this, do we?
   ID_ColumnSort_Schedule,
   ID_ColumnSort_Copied, // combination of isCopied + copyfromUrl
   ID_ColumnSort_ConflictOld,
@@ -160,8 +154,7 @@ enum
   ID_ColumnSort_Max,
 
   ACTION_EVENT, // this one gets sent from the action threads
-// Ids used for communication events between threads and frame
-  TOKEN_BASE,
+  // Ids used for communication events between threads and frame
   TOKEN_INFO,
   TOKEN_ERROR,
   TOKEN_SVN_INTERNAL_ERROR,
@@ -179,6 +172,13 @@ enum
   TOKEN_DELETE_ACTION,
   TOKEN_UPDATE_SORTING,
   TOKEN_UPDATE_ASCENDING,
+
+  SIG_GET_LOG_MSG,
+  SIG_GET_LOGIN,
+  SIG_SSL_TRUST_PROMPT,
+  SIG_SSL_CERT_PROMPT,
+  SIG_SSL_CERT_PW_PROMPT,
+
   FILELIST_CTRL,
   FOLDER_BROWSER
 };

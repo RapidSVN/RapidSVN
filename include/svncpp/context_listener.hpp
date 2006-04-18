@@ -35,7 +35,6 @@
 // svncpp
 #include "svncpp/pool.hpp"
 
-
 namespace svn
 {
   /**
@@ -145,6 +144,35 @@ namespace svn
           realm (""), maySave (true)
       {
       }
+
+      SslServerTrustData (const SslServerTrustData & src)
+        : failures (src.failures)
+      {
+        hostname = src.hostname;
+        fingerprint = src.fingerprint;
+        validFrom = src.validFrom;
+        validUntil = src.validUntil;
+        issuerDName = src.issuerDName;
+        realm = src.realm;
+        maySave = src.maySave;
+      }
+
+      SslServerTrustData &
+      operator =(const SslServerTrustData & src)
+      {
+        if (this == &src)
+          return *this;
+
+        hostname = src.hostname;
+        fingerprint = src.fingerprint;
+        validFrom = src.validFrom;
+        validUntil = src.validUntil;
+        issuerDName = src.issuerDName;
+        realm = src.realm;
+        maySave = src.maySave;
+
+        return *this;
+      }        
     };
 
 

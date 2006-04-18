@@ -48,12 +48,13 @@ typedef enum
 }
 ActivePane;
 
-
 // forward declarations
 class svn::Targets;
 class wxFrame;
+class wxMenu;
+class wxString;
 
-class RapidSvnFrame:public wxFrame
+class RapidSvnFrame : public wxFrame
 {
 public:
   /**
@@ -118,7 +119,6 @@ private:
   void OnCleanup (wxCommandEvent & event);
 
   // Help menu
-//  void OnHelp(wxCommandEvent & event);
   void OnHelpContents (wxCommandEvent & event);
   void OnHelpIndex (wxCommandEvent & event);
   void OnHelpStartupTips (wxCommandEvent & event);
@@ -147,11 +147,12 @@ private:
   void OnLogin (wxCommandEvent & event);
   void OnLogout (wxCommandEvent & event);
 
-  void UpdateCurrentPath ();
-  void UpdateMenuSorting ();
-  void UpdateMenuIncludePath ();
-  void UpdateMenuAscending ();
-  void SetIncludePathVisibility (bool flatMode);
+  // Help listener to handle callbacks
+  void OnGetLogMessage (wxCommandEvent & event);
+  void OnGetLogin (wxCommandEvent & event);
+  void OnSslServerTrustPrompt (wxCommandEvent & event);
+  void OnSslClientCertPrompt (wxCommandEvent & event);
+  void OnSslClientCertPwPrompt (wxCommandEvent & event);
 
   /**
    * Invoke the default action on the currently selected item(s)
@@ -169,9 +170,12 @@ private:
   /** update the contents of the folder browser */
   void UpdateFolderBrowser ();
 
-  // utility functions
-  void ShowLog ();
-  void ShowInfo ();
+  // Auxiliary functions
+  void UpdateCurrentPath ();
+  void UpdateMenuSorting ();
+  void UpdateMenuIncludePath ();
+  void UpdateMenuAscending ();
+  void SetIncludePathVisibility (bool flatMode);
 
   // Enable/disable action menu items
   bool ValidateIDActionFlags (int id, unsigned int selectionActionFlags);
@@ -186,6 +190,10 @@ private:
    */
   unsigned int
   GetSelectionActionFlags () const;
+
+  // Utility functions
+  void ShowLog ();
+  void ShowInfo ();
 
   void DelEntries ();
   void MakeRevert ();
@@ -206,9 +214,8 @@ private:
   void Perform (Action * action);
 
 private:
-  struct Data;
-
   /** hide implementation data */
+  struct Data;
   Data * m;
 
   ActionWorker * m_actionWorker;
@@ -234,11 +241,16 @@ private:
   /**
    * add message to log window
    *
-   * @param msg message to add
+   * @param msg message to show
    */
   void
   Trace (const wxString & msg) ;
 
+  /**
+   * add error message to log window marked red
+   *
+   * @param msg error message to show
+   */
   void
   TraceError (const wxString & msg) ;
 

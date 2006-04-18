@@ -106,7 +106,10 @@ public:
   contextGetLogin (const std::string & realm,
                    std::string & username,
                    std::string & password,
-				           bool & maySave);
+	           bool & maySave);
+
+  virtual void
+  callbackGetLogin ();
 
   /**
    * @see svn::ContextListener
@@ -126,6 +129,9 @@ public:
   virtual bool
   contextGetLogMessage (std::string & msg);
 
+  virtual void
+  callbackGetLogMessage ();
+
   /**
    * @see svn::ContextListener
    */
@@ -134,11 +140,17 @@ public:
     const svn::ContextListener::SslServerTrustData & data,
     apr_uint32_t & acceptedFailures);
 
+  virtual void
+  callbackSslServerTrustPrompt ();
+
   /**
    * @see svn::ContextListener
    */
   virtual bool
   contextSslClientCertPrompt (std::string & certFile);
+
+  virtual void
+  callbackSslClientCertPrompt ();
 
   /**
    * @see svn::ContextListener
@@ -147,6 +159,8 @@ public:
   contextSslClientCertPwPrompt (std::string & password,
                                 const std::string & realm,
                                 bool & maySave);
+  virtual void
+  callbackSslClientCertPwPrompt ();
 
   /**
    * @see svn::ContextListener
@@ -179,8 +193,8 @@ protected:
   void Trace (const wxString & msg);
 
 private:
+  // implementation specific data
   struct Data;
-  // this structure contains implementation specific data
   Data * m;
 
   /**

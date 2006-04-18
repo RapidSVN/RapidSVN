@@ -165,7 +165,7 @@ namespace svn
     dirpath () const;
 
     /**
-     * get a substring of a path, starting at index @index
+     * get a substring of a path, starting at index
      *
      * @param index 
      * @return substr substring
