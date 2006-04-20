@@ -150,9 +150,6 @@ private:
   // Help listener to handle callbacks
   void OnGetLogMessage (wxCommandEvent & event);
   void OnGetLogin (wxCommandEvent & event);
-  void OnSslServerTrustPrompt (wxCommandEvent & event);
-  void OnSslClientCertPrompt (wxCommandEvent & event);
-  void OnSslClientCertPwPrompt (wxCommandEvent & event);
 
   /**
    * Invoke the default action on the currently selected item(s)

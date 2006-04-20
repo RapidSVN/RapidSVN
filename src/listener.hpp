@@ -140,17 +140,11 @@ public:
     const svn::ContextListener::SslServerTrustData & data,
     apr_uint32_t & acceptedFailures);
 
-  virtual void
-  callbackSslServerTrustPrompt ();
-
   /**
    * @see svn::ContextListener
    */
   virtual bool
   contextSslClientCertPrompt (std::string & certFile);
-
-  virtual void
-  callbackSslClientCertPrompt ();
 
   /**
    * @see svn::ContextListener
@@ -159,8 +153,6 @@ public:
   contextSslClientCertPwPrompt (std::string & password,
                                 const std::string & realm,
                                 bool & maySave);
-  virtual void
-  callbackSslClientCertPwPrompt ();
 
   /**
    * @see svn::ContextListener

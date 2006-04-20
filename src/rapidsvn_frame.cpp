@@ -574,9 +574,6 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
 
   EVT_MENU (SIG_GET_LOG_MSG, RapidSvnFrame::OnGetLogMessage)
   EVT_MENU (SIG_GET_LOGIN, RapidSvnFrame::OnGetLogin)
-  EVT_MENU (SIG_SSL_TRUST_PROMPT, RapidSvnFrame::OnSslServerTrustPrompt)
-  EVT_MENU (SIG_SSL_CERT_PROMPT, RapidSvnFrame::OnSslClientCertPrompt)
-  EVT_MENU (SIG_SSL_CERT_PW_PROMPT, RapidSvnFrame::OnSslClientCertPwPrompt)
 END_EVENT_TABLE ()
 
 /** class implementation **/
@@ -1719,24 +1716,6 @@ void
 RapidSvnFrame::OnGetLogin (wxCommandEvent & event)
 {
   m->listener.callbackGetLogin ();
-}
-
-void
-RapidSvnFrame::OnSslServerTrustPrompt (wxCommandEvent & event)
-{
-  m->listener.callbackSslServerTrustPrompt ();
-}
-
-void
-RapidSvnFrame::OnSslClientCertPrompt (wxCommandEvent & event)
-{
-  m->listener.callbackSslClientCertPrompt ();
-}
-
-void
-RapidSvnFrame::OnSslClientCertPwPrompt (wxCommandEvent & event)
-{
-  m->listener.callbackSslClientCertPwPrompt ();
 }
 
 /*** END OF SECTION EVENTS ***/

@@ -29,7 +29,6 @@
 // subversion api
 #include "svn_pools.h"
 
-
 namespace svn
 {
   /**
@@ -65,6 +64,7 @@ namespace svn
      * release pool and create a new one
      */
     void renew ();
+
   private:
     apr_pool_t * m_parent;
     apr_pool_t * m_pool;
@@ -72,8 +72,6 @@ namespace svn
     Pool& operator=(const Pool&);
 
     Pool (const Pool &);
-
-
   };
 }
 

@@ -339,77 +339,28 @@ Listener::contextSslServerTrustPrompt (
   const svn::ContextListener::SslServerTrustData & data,
   apr_uint32_t & acceptedFailures)
 {
-  m->sslAnswer = DONT_ACCEPT;
-  m->sslData = data;
+  CertDlg dlg (GetParent (), data);
 
-  m->SendEventToParent (SIG_SSL_TRUST_PROMPT);
-  m->WaitForParent ();
+  dlg.ShowModal ();
+  acceptedFailures = dlg.AcceptedFailures ();
 
-  // Parent has done its job and signalled. Performing main condition check.
-  bool success = m->dataReceived;
-  // Reset flag for next callbacks
-  m->dataReceived = false;
-
-  if (success)
-  {
-    acceptedFailures = m->acceptedFailures;
-  }
-  return m->sslAnswer;
-}
-
-void
-Listener::callbackSslServerTrustPrompt ()
-{
-  wxMutexLocker lock (m->mutex);
-  CertDlg dlg (GetParent (), m->sslData);
-
-  bool ok = dlg.ShowModal () == wxID_OK;
-
-  if (ok)
-  {
-    m->acceptedFailures = dlg.AcceptedFailures ();
-    m->sslAnswer = dlg.Answer ();
-    m->dataReceived = true;
-  }
-  m->parentDoneSignal->Broadcast ();
+  return dlg.Answer ();
 }
 
 bool
 Listener::contextSslClientCertPrompt (std::string & certFile)
 {
-  m->certFile = certFile;
-
-  m->SendEventToParent (SIG_SSL_CERT_PW_PROMPT);
-  m->WaitForParent ();
-
-  // Parent has done its job and signalled. Performing main condition check.
-  bool success = m->dataReceived;
-  // Reset flag for next callbacks
-  m->dataReceived = false;
-
-  if (success)
-  {
-    certFile = m->certFile;
-  }
-  return success;
-}
-
-void
-Listener::callbackSslClientCertPrompt ()
-{
-  wxMutexLocker lock (m->mutex);
-
   wxString filename = wxFileSelector (
     _("Select Certificate File"), wxT(""), wxT(""), wxT(""),
     wxT("*.*"), wxOPEN | wxFILE_MUST_EXIST,
     GetParent ());
 
-  if (!filename.empty ())
-  {
-    LocalToUtf8 (filename, m->certFile);
-    m->dataReceived = true;
-  }
-  m->parentDoneSignal->Broadcast ();
+  if (filename.empty ())
+    return false;
+
+  //TODO
+  LocalToUtf8 (filename, certFile);
+  return true;
 }
 
 bool
@@ -417,40 +368,16 @@ Listener::contextSslClientCertPwPrompt (std::string & password,
                                         const std::string & realm,
                                         bool & maySave)
 {
-  m->password = password;
-
-  m->SendEventToParent (SIG_SSL_CERT_PW_PROMPT);
-  m->WaitForParent ();
-
-  // Parent has done its job and signalled. Performing main condition check.
-  bool success = m->dataReceived;
-  // Reset flag for next callbacks
-  m->dataReceived = false;
-
-  if (success)
-  {
-    password = m->password;
-  }
-  return success;
-}
-
-void
-Listener::callbackSslClientCertPwPrompt ()
-{
-  wxMutexLocker lock (m->mutex);
-
-  wxString LocalPassword(Utf8ToLocal (m->password));
+  //TODO
+  wxString LocalPassword(Utf8ToLocal (password));
   AuthDlg dlg (GetParent (), wxEmptyString, LocalPassword,
                AuthDlg::HIDE_USERNAME);
 
-  bool ok = dlg.ShowModal () == wxID_OK;
+  if (dlg.ShowModal () != wxID_OK)
+    return false;
 
-  if (ok)
-  {
-    LocalToUtf8 (dlg.GetPassword (), m->password);    
-    m->dataReceived = true;
-  }
-  m->parentDoneSignal->Broadcast ();
+  LocalToUtf8 (dlg.GetPassword (), password);
+  return true;
 }
 
 bool
