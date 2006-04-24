@@ -144,14 +144,16 @@ public:
     wxStaticText * labelEol = new wxStaticText (
       wnd, -1, _("EOL:"), wxDefaultPosition);
 
-    wxArrayString eol;
-    eol.Add (_("native"));
-    eol.Add (_("CRLF (Windows)"));
-    eol.Add (_("LF (Unix)"));
-    eol.Add (_("CR (MacOS)"));
+    wxString eol [] =
+    {
+      _("native"),
+      _("CRLF (Windows)"),
+      _("LF (Unix)"),
+      _("CR (MacOS)")
+    };
     m_comboNativeEol = new wxComboBox (wnd, ID_NATIVE_EOL, _("native"), 
-                                       wxDefaultPosition, wxDefaultSize,
-                                       eol, wxCB_READONLY);
+                                       wxDefaultPosition, wxDefaultSize, 0,
+                                       eol, wxCB_DROPDOWN);
     m_comboNativeEol->SetHelpText (_("Enter what kind of symbol(s) do you want as EOL (end of line) in exported files."));
 
     m_buttonOk = new wxButton( wnd, wxID_OK, _("OK" ));
