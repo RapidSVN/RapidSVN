@@ -422,9 +422,11 @@ namespace svn
                  const char * message) throw (ClientException)
   {
     Pool pool;
-    m_context->setLogMessage (message);
-
     Targets targets (path.c_str ());
+
+    // Do not use setting the message, because it must be done by callback.
+    // Preserving "message" parameter for compatibility
+//    m_context->setLogMessage (message);
 
     svn_client_commit_info_t *commit_info = NULL;
     svn_error_t * error =  
@@ -442,7 +444,10 @@ namespace svn
                  const char * message) throw (ClientException)
   {
     Pool pool;
-    m_context->setLogMessage (message);
+
+    // Do not use setting the message, because it must be done by callback.
+    // Preserving "message" parameter for compatibility
+//    m_context->setLogMessage (message);
 
     svn_client_commit_info_t *commit_info = NULL;
     svn_error_t * error =  

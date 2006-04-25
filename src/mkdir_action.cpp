@@ -74,7 +74,7 @@ MkdirAction::Perform ()
   svn::Path targetUtf8 (PathUtf8 (m_target));
   pathUtf8.addComponent (targetUtf8.c_str ());
 
-  client.mkdir (pathUtf8, "");
+  client.mkdir (pathUtf8);
   return true;
 }
 /* -----------------------------------------------------------------

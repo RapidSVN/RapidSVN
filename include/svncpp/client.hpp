@@ -338,10 +338,10 @@ namespace svn
      */
     void 
     mkdir (const Path & path, 
-           const char * message) throw (ClientException);
+           const char * message = "") throw (ClientException);
     void 
     mkdir (const Targets & targets, 
-           const char * message) throw (ClientException);
+           const char * message = "") throw (ClientException);
 
     /**
      * Recursively cleans up a local directory, finishing any
