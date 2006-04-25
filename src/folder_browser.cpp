@@ -189,6 +189,8 @@ public:
   AddBookmark (wxString name, bool flatMode)
   {
     TrimString (name);
+    if (name.Last () == '/')
+      name.RemoveLast ();
 
     svn::Path nameUtf8 (PathUtf8 (name));
     if (!nameUtf8.isUrl())
@@ -407,7 +409,7 @@ public:
     FolderItemData* parentData = GetItemData (parentId);
     if(parentData)
     {
-        type = parentData->getFolderType ();
+      type = parentData->getFolderType ();
     }
 
     switch(type)
@@ -428,7 +430,7 @@ public:
                                                      data);
           treeCtrl->SetItemHasChildren (newId, TRUE);
           treeCtrl->SetItemImage (newId, FOLDER_IMAGE_BOOKMARK,
-                                    wxTreeItemIcon_Expanded);
+                                  wxTreeItemIcon_Expanded);
         }
       }
       break;
@@ -538,8 +540,7 @@ public:
         wxTreeItemId newId = treeCtrl->AppendItem(
           parentId, filename.GetFullName (), image, image, data);
 
-        treeCtrl->SetItemHasChildren (
-          newId, HasSubdirectories (path));
+        treeCtrl->SetItemHasChildren (newId, HasSubdirectories (path));
         treeCtrl->SetItemImage (newId, open_image, wxTreeItemIcon_Expanded);
       }
     }
@@ -562,9 +563,12 @@ public:
       svn::DirEntry entry = *it;
       int image = FOLDER_IMAGE_FOLDER;
       int open_image = FOLDER_IMAGE_OPEN_FOLDER;
+      int offset = 1;
 
       wxString fullPath = Utf8ToLocal (entry.name ());
-      wxString filename (fullPath.Mid (parentPath.Length () + 1));
+      if (parentPath.Last () == '/')
+        offset = 0;
+      wxString filename (fullPath.Mid (parentPath.Length () + offset));
       //parentHasSubdirectories = true;
 
       if (entry.kind () != svn_node_dir)
@@ -699,6 +703,7 @@ public:
 
       wxString prefix (path.Left (nodePath.length ()));
       wxString sep (path.Mid (nodePath.length (), 1));
+
       if ((!prefix.IsSameAs
           (Utf8ToLocal (nodePath.c_str()))) || !IsValidSeparator (sep))
        break;

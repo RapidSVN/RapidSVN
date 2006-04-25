@@ -32,6 +32,7 @@
 class wxImageList;
 class FolderItemData;
 class wxConfigBase;
+
 namespace svn
 {
   class Context;

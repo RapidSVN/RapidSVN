@@ -29,7 +29,6 @@
 // svncpp
 #include "svncpp/dirent.hpp"
 
-
 namespace svn
 {
   struct DirEntry::Data
