@@ -836,7 +836,9 @@ RapidSvnFrame::UpdateFileList ()
   if (m->dontUpdateFilelist)
     return;
 
-  m->SetRunning (true);
+  bool isRunning = m->IsRunning ();
+  if (!isRunning)
+    m->SetRunning (true);
 
   if (m_listCtrl && m_folder_browser)
   {
@@ -850,7 +852,6 @@ RapidSvnFrame::UpdateFileList ()
         m_listCtrl->SetContext (m_context);
         m_listCtrl->UpdateFileList (m_currentPath);
         m_listCtrl->Show (TRUE);
-
       }
       catch (svn::ClientException & e)
       {
@@ -868,8 +869,8 @@ RapidSvnFrame::UpdateFileList ()
       }
     }
   }
-
-  m->SetRunning (false);
+  if (!isRunning)
+    m->SetRunning (false);
 }
 
 void
@@ -877,7 +878,9 @@ RapidSvnFrame::UpdateFolderBrowser ()
 {
   wxBusyCursor busy;
 
-  m->SetRunning (true);
+  bool isRunning = m->IsRunning ();
+  if (!isRunning)
+    m->SetRunning (true);
 
   try
   {
@@ -890,7 +893,8 @@ RapidSvnFrame::UpdateFolderBrowser ()
   {
   }
 
-  m->SetRunning (false);
+  if (!isRunning)
+    m->SetRunning (false);
 
   m->dontUpdateFilelist = false;
   UpdateFileList ();
@@ -1484,6 +1488,10 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   case TOKEN_SVN_INTERNAL_ERROR:
   case TOKEN_INTERNAL_ERROR:
     TraceError (event.GetString ());
+    // Action is interrupted, so cancel listener 
+    // (in order to enable filelist update)
+    // and disable "Running" state
+    m->listener.cancel (false);
     UpdateFileList ();
     Trace (_("Ready\n"));
     m->SetRunning (false);
