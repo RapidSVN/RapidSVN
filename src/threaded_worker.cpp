@@ -116,7 +116,7 @@ public:
     {
       ExecuteAction ();
 
-      Sleep (100);
+      Sleep (10);
     }
     return 0;
   }
