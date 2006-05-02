@@ -1022,7 +1022,7 @@ FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePa
   }
   else
   {
-    wxString wxstr = Utf8ToLocal (fullPath.substr (pathUtf8Length));
+    wxString wxstr = svn::Url::unescape (Utf8ToLocal (fullPath.substr (pathUtf8Length)));
     values[COL_NAME] = wxFileNameFromPath (wxstr);
   }
 
@@ -1039,7 +1039,7 @@ FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePa
         values[COL_PATH]  = Utf8ToLocal (".");
     }
     else
-      values[COL_PATH]    = wxString (Utf8ToLocal (fullPath.substr (pathUtf8Length)));
+      values[COL_PATH]    = wxString (svn::Url::unescape (Utf8ToLocal (fullPath.substr (pathUtf8Length))));
     values[COL_EXTENSION] = Utf8ToLocal (ext.c_str ());
   }
 

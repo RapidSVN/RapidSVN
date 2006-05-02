@@ -29,7 +29,6 @@
 // subversion api
 #include "svn_client.h"
 
-
 namespace svn
 {
   class DirEntry
@@ -82,14 +81,11 @@ namespace svn
     const char *
     lastAuthor () const;
 
-
   private:
     struct Data;
     Data * m;
-
   };
 }
-
 #endif
 /* -----------------------------------------------------------------
  * local variables:

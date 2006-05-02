@@ -59,7 +59,7 @@ namespace svn
   }
 
   /**
-   * returns a url with forbidden charachters like spaces escaped
+   * returns a url with forbidden characters like spaces escaped
    *
    * @param url url to be escaped
    *
@@ -71,6 +71,22 @@ namespace svn
     Pool pool;
 
     return svn_path_uri_autoescape (url, pool);
+  }
+
+  /**
+   * returns a url with unescaped special characters, undo changes of the
+   * previous, escape function
+   *
+   * @param url url to be unescaped
+   *
+   * @return string unescaped url
+   */
+  std::string
+  Url::unescape (const char * url)
+  {
+    Pool pool;
+
+    return svn_path_uri_decode (url, pool);
   }
 
   /**

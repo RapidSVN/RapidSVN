@@ -26,9 +26,6 @@
 #pragma warning( disable: 4786 )// debug symbol truncated
 #endif
 
-// stl
-#include <string>
-
 // subversion api
 #include "svn_client.h"
 

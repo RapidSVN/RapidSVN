@@ -65,6 +65,14 @@ namespace svn
     escape (const char * url);
 
     /**
+     * returns a url with forbidden charachters like spaces unescaped
+     *
+     * Undo the changes done by the previous function, escape ()
+     */
+    static std::string
+    unescape (const char * url);
+
+    /**
      * returns a vector with url schemas that are
      * supported by svn 
      *

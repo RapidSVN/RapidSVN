@@ -565,10 +565,10 @@ public:
       int open_image = FOLDER_IMAGE_OPEN_FOLDER;
       int offset = 1;
 
-      wxString fullPath = Utf8ToLocal (entry.name ());
+      wxString fullPath = svn::Url::unescape (Utf8ToLocal (entry.name ()));
       if (parentPath.Last () == '/')
         offset = 0;
-      wxString filename (fullPath.Mid (parentPath.Length () + offset));
+      wxString filename (fullPath.Mid (parentPath.length () + offset));
       //parentHasSubdirectories = true;
 
       if (entry.kind () != svn_node_dir)
@@ -580,13 +580,11 @@ public:
                             filename, TRUE);
 
       wxTreeItemId newId =
-        treeCtrl->AppendItem(
-          parentId, filename,
-          image, image, data);
-      treeCtrl->SetItemHasChildren (
-        newId, true );
+        treeCtrl->AppendItem(parentId, filename,
+                             image, image, data);
+      treeCtrl->SetItemHasChildren (newId, true );
       treeCtrl->SetItemImage (newId, open_image,
-                                wxTreeItemIcon_Expanded);
+                              wxTreeItemIcon_Expanded);
     }
   }
 
