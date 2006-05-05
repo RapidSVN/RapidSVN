@@ -565,7 +565,7 @@ public:
       int open_image = FOLDER_IMAGE_OPEN_FOLDER;
       int offset = 1;
 
-      wxString fullPath = svn::Url::unescape (Utf8ToLocal (entry.name ()));
+      wxString fullPath = Utf8ToLocal (svn::Url::unescape (entry.name ()));
       if (parentPath.Last () == '/')
         offset = 0;
       wxString filename (fullPath.Mid (parentPath.length () + offset));
