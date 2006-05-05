@@ -206,7 +206,16 @@ namespace svn
   std::string
   Path::substr (const size_t count) const
   {
-    return m_path.substr (count);
+    if (m_path.length () > count)
+      return m_path.substr (count);
+    else
+      return "";
+  }
+
+  std::string
+  Path::unescape () const
+  {
+    return svn::Url::unescape (m_path.c_str ());
   }
 
   /* ===================================================================

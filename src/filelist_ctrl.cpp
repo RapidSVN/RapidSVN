@@ -1014,16 +1014,19 @@ FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePa
   svn::Path fullPath (status.path ());
 
   const size_t pathUtf8Length = basePathUtf8.length () + 1;
-  const bool isNative (!basePathUtf8.isUrl ());
+  const bool isUrl (basePathUtf8.isUrl ());
 
-  if (fullPath.length () <= pathUtf8Length)
-  {
+  const bool isDot = (fullPath.length () <= pathUtf8Length);
+  svn::Path path;
+
+  if (isDot)
     values[COL_NAME] = wxT(".");
-  }
   else
   {
-    wxString wxstr = svn::Url::unescape (Utf8ToLocal (fullPath.substr (pathUtf8Length)));
-    values[COL_NAME] = wxFileNameFromPath (wxstr);
+    path = (fullPath.substr (pathUtf8Length));
+    path = path.unescape ();
+
+    values[COL_NAME] = Utf8ToLocal (path.basename ());
   }
 
   if (m->ColumnVisible[COL_PATH] || m->ColumnVisible[COL_EXTENSION])
@@ -1031,16 +1034,17 @@ FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePa
     std::string dir, filename, ext;
     fullPath.split (dir, filename, ext);
 
-    if (isNative)
-    { 
-      if (fullPath.native ().length () > pathUtf8Length)
-        values[COL_PATH]  = Utf8ToLocal (fullPath.native ().substr (pathUtf8Length).c_str ());
-      else
-        values[COL_PATH]  = Utf8ToLocal (".");
-    }
+    if (isDot)
+      values[COL_PATH] = wxT(".");
     else
-      values[COL_PATH]    = wxString (svn::Url::unescape (Utf8ToLocal (fullPath.substr (pathUtf8Length))));
-    values[COL_EXTENSION] = Utf8ToLocal (ext.c_str ());
+    {
+      if (isUrl)
+        values[COL_PATH] = Utf8ToLocal (path.c_str ());
+      else
+        values[COL_PATH] = Utf8ToLocal (path.native ());
+    }
+
+   values[COL_EXTENSION] = Utf8ToLocal (ext);
   }
 
   int i = GetItemCount ();
@@ -1380,7 +1384,6 @@ FileListCtrl::OnContextMenu (wxContextMenuEvent & event)
   wxPoint clientPt (ScreenToClient (event.GetPosition ()));
   ShowMenu (clientPt);
 }
-
 
 void
 FileListCtrl::ShowMenu (wxPoint & pt)

@@ -29,7 +29,6 @@
 // stl
 #include <string>
 
-
 namespace svn
 {
   /**
@@ -39,7 +38,6 @@ namespace svn
   {
   private:
     std::string m_path;
-
     bool m_pathIsUrl;
 
     /**
@@ -117,7 +115,6 @@ namespace svn
     void
     addComponent (const char * component);
 
-
     /**
      * adds a new URL component to the path
      *
@@ -125,7 +122,6 @@ namespace svn
      */
     void
     addComponent (const std::string & component);
-
 
     /**
      * split path in its components
@@ -135,7 +131,6 @@ namespace svn
      */
     void
     split (std::string & dirpath, std::string & basename) const;
-
 
     /**
      * split path in its components including
@@ -174,16 +169,22 @@ namespace svn
     substr (const size_t index) const;
 
     /**
+     * return path as a string with unescaped special characters
+     *
+     * @return unescaped path
+     */
+    std::string
+    unescape () const;
+
+    /**
      * returns the temporary directory
      */
     static Path
     getTempDir ();
 
-
     /** return the length of the path-string */
     size_t 
     length () const;
-
 
     /** returns the path with native separators */
     std::string
