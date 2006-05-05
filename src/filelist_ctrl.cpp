@@ -937,7 +937,6 @@ BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_LEFT_DCLICK (FileListCtrl::OnDoubleClick)
   EVT_LIST_COL_CLICK (FILELIST_CTRL, FileListCtrl::OnColumnLeftClick)
   EVT_LIST_COL_END_DRAG (FILELIST_CTRL, FileListCtrl::OnColumnEndDrag)
-  EVT_LIST_ITEM_RIGHT_CLICK (FILELIST_CTRL, FileListCtrl::OnItemRightClk)
   EVT_CONTEXT_MENU (FileListCtrl::OnContextMenu)
 END_EVENT_TABLE ()
 
@@ -1344,41 +1343,6 @@ FileListCtrl::OnColumnEndDrag (wxListEvent & event)
 }
 
 void
-FileListCtrl::OnItemRightClk (wxListEvent & event)
-{
-  RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
-  frame->SetActivePane (ACTIVEPANE_FILELIST);
-
-#ifdef __WXGTK__
-  // wxGTK doesn't seem to correctly select an item upon right clicking - try doing it ourselves for now
-  wxPoint clientPt = event.GetPoint ();
-  int flags;
-  long id = HitTest (clientPt, flags);
-  if (id >= 0)
-  {
-    if (!IsSelected (id))
-    {
-      // Need to unselect all currently selected
-      long sel = GetFirstSelected ();
-      while (sel != -1)
-      {
-        Select (sel, false);
-        sel = GetNextSelected (sel);
-      }
-      // Finally select the one just clicked
-      Select (id);
-    }
-  }
-  // Show the menu now rather than waiting for OnContextMenu,
-  // and so don't Skip ().
-  ShowMenu (clientPt);
-#else
-  // Let the OnContextMenu handler do the menu on MouseUp
-  event.Skip ();
-#endif
-}
-
-void
 FileListCtrl::OnContextMenu (wxContextMenuEvent & event)
 {
   wxPoint clientPt (ScreenToClient (event.GetPosition ()));
@@ -1409,7 +1373,7 @@ FileListCtrl::ShowMenu (wxPoint & pt)
   RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
   frame->TrimDisabledMenuItems (menu);
 
-  PopupMenu (&menu, pt);
+  PopupMenu (&menu);
 }
 
 inline void
