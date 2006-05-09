@@ -31,7 +31,7 @@
 
 // svncpp
 #include "svncpp/status.hpp"
-#include "svncpp/pool.hpp"
+#include "svncpp/path.hpp"
 
 /**
  * Define an array of indexes of the selected items.
@@ -47,9 +47,10 @@ namespace svn
 {
   class Targets;
   class Context;
+  class Path;
 }
 
-class FileListCtrl:public wxListView
+class FileListCtrl : public wxListView
 {
 public:
   /**
@@ -241,8 +242,8 @@ public:
   SetContext (svn::Context * Context);
 
 private:
-  struct Data;
   /** private data for this class */
+  struct Data;
   Data * m;
 
   // utility methods

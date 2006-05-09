@@ -22,14 +22,12 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
-#ifndef _SVNCPP_URL_H_
-#define _SVNCPP_URL_H_
+#ifndef _SVNCPP_URL_HPP_
+#define _SVNCPP_URL_HPP_
 
 // stl
 #include <string>
 #include <vector>
-
 
 namespace svn
 {

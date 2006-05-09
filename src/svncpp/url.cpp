@@ -26,17 +26,12 @@
 #pragma warning( disable: 4786 )// debug symbol truncated
 #endif
 
-// stl
-#include <string>
-#include <vector>
-
 // subversion api
 #include "svn_path.h"
 
 // svncpp
 #include "svncpp/pool.hpp"
 #include "svncpp/url.hpp"
-
 
 namespace svn
 {

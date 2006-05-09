@@ -47,7 +47,6 @@ namespace svn
   class Path;
 }
 
-
 /**
  * declaration of an array with @a svn_revnum_t elements
  */

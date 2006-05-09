@@ -262,7 +262,8 @@ DiffAction::Prepare ()
 
     if (isRemote)
     {
-      DiffData::CompareType types [] = {
+      DiffData::CompareType types [] =
+      {
         DiffData::TWO_REVISIONS
       };
 
