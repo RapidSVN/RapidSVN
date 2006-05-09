@@ -28,13 +28,14 @@
 // wxWidgets
 #include "wx/wx.h"
 // apr
-//#include "apr_time.h"
+#include "apr_time.h"
 
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/path.hpp"
 #include "svncpp/status.hpp"
+#include "svncpp/url.hpp"
 
 // app
 #include "file_info.hpp"
@@ -91,20 +92,18 @@ struct FileInfo::Data
     svn_boolean_t text_conflict = FALSE;
     svn_boolean_t props_conflict = FALSE;
 
-    tmp = Utf8ToLocal (entry.name ());
-    str.Printf (_("Name: %s"), tmp.c_str ());
+    str.Printf (_("Name: %s"), Utf8ToLocal (svn::Url::unescape (entry.name ())).c_str ());
     addLine (str);
 
-    tmp = Utf8ToLocal (entry.url ());
-    str.Printf (_("URL: %s"), tmp.c_str ());
+    str.Printf (_("URL: %s"), Utf8ToLocal (svn::Url::unescape (entry.url ())).c_str ());
     addLine (str);
 
-    if (entry.repos ()) {
+    if (entry.repos ())
       tmp = Utf8ToLocal (entry.repos ());
-    } else {
+    else
       tmp = _("<None>");
-    }
-    str.Printf (_("Repository: %s"),  tmp.c_str ());
+
+    str.Printf (_("Repository: %s"), svn::Url::unescape (tmp).c_str ());
     addLine (str);
 
     if (entry.uuid ()) {
@@ -300,7 +299,7 @@ FileInfo::info () const
   {
     svn::Path path = *it;
 
-    m->createInfoForPath (client, path.c_str ());
+    m->createInfoForPath (client, path.unescape ().c_str ());
     m->addLine ();
   }
 
