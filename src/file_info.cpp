@@ -99,11 +99,11 @@ struct FileInfo::Data
     addLine (str);
 
     if (entry.repos ())
-      tmp = Utf8ToLocal (entry.repos ());
+      tmp = Utf8ToLocal (svn::Url::unescape (entry.repos ()));
     else
       tmp = _("<None>");
 
-    str.Printf (_("Repository: %s"), svn::Url::unescape (tmp).c_str ());
+    str.Printf (_("Repository: %s"), tmp.c_str ());
     addLine (str);
 
     if (entry.uuid ()) {
