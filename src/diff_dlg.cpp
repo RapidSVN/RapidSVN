@@ -50,15 +50,12 @@ enum
   ID_RevisionTwo
 };
 
-
 /* custom event to forward necessary updates */
 BEGIN_DECLARE_EVENT_TYPES()
     DECLARE_EVENT_TYPE(wxEVENT_UPDATE, wxEVT_USER_FIRST)
 END_DECLARE_EVENT_TYPES()
 
-
 DEFINE_EVENT_TYPE(wxEVENT_UPDATE)
-
 
 #define EVENT_UPDATE(id, fn) \
     DECLARE_EVENT_TABLE_ENTRY( \
@@ -66,7 +63,6 @@ DEFINE_EVENT_TYPE(wxEVENT_UPDATE)
         (wxObjectEventFunction)(wxEventFunction)(wxCommandEventFunction)&fn, \
         (wxObject *) NULL \
     ),
-
 
 /**
  * Panel that lets the user select either a revision or a date and
@@ -87,7 +83,6 @@ public:
     CheckControls ();
   }
 
-
   /**
    * Checks the controls for validity and
    * enables/disables controls as result of this check
@@ -99,7 +94,6 @@ public:
     CheckDateCtrls ();
     CheckUrlCtrls ();
   }
-
 
   /**
    * returns whether the controls contain valid entries
@@ -126,7 +120,6 @@ public:
     return valid;
   }
 
-
   const svn::Revision
   GetRevision () const
   {
@@ -151,20 +144,17 @@ public:
     }
   }
 
-
   bool
   GetUseUrl () const
   {
     return mCheckUseUrl->GetValue ();
   }
 
-
   const wxString
   GetUrl () const
   {
     return mTextUrl->GetValue ();
   }
-
 
   void
   SetRevision (const svn::Revision & revision)
@@ -198,13 +188,11 @@ public:
     }
   }
 
-
   void
   SetUseUrl (bool value)
   {
     mCheckUseUrl->SetValue (value);
   }
-
 
   void
   SetUrl (const wxString & url)
@@ -212,13 +200,11 @@ public:
     mTextUrl->SetValue (url);
   }
 
-
   void
   EnableUrl (bool enable)
   {
     // @todo
   }
-
 
 private:
   bool mEnableUrl;
@@ -306,7 +292,6 @@ private:
     mainSizer->Fit (this);
   }
 
-
   /** checks the revision controls for validity */
   void
   CheckRevisionCtrls ()
@@ -323,14 +308,12 @@ private:
     mTextRevision->Enable (!mCheckUseLatest->GetValue ());
   }
 
-
   /** checks the date control for validity */
   void
   CheckDateCtrls ()
   {
     mTextDate->Enable (mRadioUseDate->GetValue ());
   }
-
 
   /** checks the url controls for validity */
   void
@@ -347,7 +330,6 @@ private:
     mButtonBrowse->Enable (mEnableUrl);
   }
 
-
   /**
    * If anything has changed in the form,
    * e.g. a text has been entered, a radio button
@@ -361,16 +343,11 @@ private:
   OnCommand (wxCommandEvent & event)
   {
     CheckControls ();
-
-    wxCommandEvent updateEvent (wxEVENT_UPDATE);
-    wxPostEvent (GetParent (), updateEvent);
   }
-
 
 private:
   DECLARE_EVENT_TABLE ()
 };
-
 
 BEGIN_EVENT_TABLE (RevisionPanel, wxPanel)
   EVT_CHECKBOX (ID_UseUrl, RevisionPanel::OnCommand)
@@ -381,7 +358,6 @@ BEGIN_EVENT_TABLE (RevisionPanel, wxPanel)
   EVT_TEXT (ID_Date, RevisionPanel::OnCommand)
 END_EVENT_TABLE ()
 
-
 enum
 {
   COMPARE_WITH_BASE = 0,
@@ -391,12 +367,13 @@ enum
   COMPARE_COUNT
 };
 
-
-static const DiffData::CompareType COMPARE_TYPES [] = {
+static const DiffData::CompareType COMPARE_TYPES [] =
+{
   DiffData::WITH_BASE,
   DiffData::WITH_HEAD,
   DiffData::WITH_DIFFERENT_REVISION,
-  DiffData::TWO_REVISIONS};
+  DiffData::TWO_REVISIONS
+};
 
 /**
  * This panel contains all the controls relevant for
@@ -411,10 +388,9 @@ public:
   RevisionPanel * mRevisionTwo;
   wxString mCompareTypeLabels [COMPARE_COUNT];
 
-
   /** Constructor */
   Data (wxWindow * parent)
-    : wxPanel (parent), mParent (parent)
+    : wxPanel (parent), mParent (parent), mCompareType (-1)
   {
     mCompareTypeLabels [COMPARE_WITH_BASE] = _("Diff to BASE");
     mCompareTypeLabels [COMPARE_WITH_HEAD] = _("Diff to HEAD");
@@ -426,7 +402,6 @@ public:
     InitControls ();
     CheckControls ();
   }
-
 
   const DiffData
   GetDiffData () const
@@ -453,7 +428,6 @@ public:
     return diffData;
   }
 
-
   void
   SetData (const DiffData & diffData)
   {
@@ -463,14 +437,12 @@ public:
     SetCompareType (diffData.compareType);
   }
 
-
   void
   EnableUrl (bool value)
   {
     mRevisionOne->EnableUrl (value);
     mRevisionTwo->EnableUrl (value);
   }
-
 
   void
   AllowCompareTypes (const DiffData::CompareType types [],
@@ -497,7 +469,6 @@ public:
     SetCompareType (oldCompareType);
   }
 
-
   void
   AllowCompareTypes ()
   {
@@ -515,10 +486,10 @@ public:
     SetCompareType (oldCompareType);
   }
 
-
 private:
   wxWindow * mParent;
   wxButton * mButtonOK;
+  int mCompareType;
 
   void
   InitControls ()
@@ -571,8 +542,10 @@ private:
     mainSizer->Fit (this);
 
     AllowCompareTypes ();
+    // call this after AllowCompareTypes (), because ComboCmpType is not initialized yet.
+    // Set CompareType to BASE by default.
+    mCompareType = 0;
   }
-
 
   void
   CheckControls ()
@@ -607,7 +580,6 @@ private:
     mButtonOK->Enable (IsValid ());
   }
 
-
   bool
   IsValid () const
   {
@@ -621,7 +593,6 @@ private:
 
     return valid;
   }
-
 
   /**
    * Add a compare type to the combo box
@@ -640,7 +611,6 @@ private:
     }
   }
 
-
   /**
    * Get selected @a CompareType
    *
@@ -650,18 +620,17 @@ private:
   DiffData::CompareType
   GetCompareType () const
   {
-    int sel = mComboCmpType->GetSelection ();
-
-    if (sel < 0)
+    if (mCompareType < 0)
       return DiffData::INVALID_COMPARE_TYPE;
 
-    DiffData::CompareType* ct = (DiffData::CompareType*) mComboCmpType->GetClientData (sel);
+    DiffData::CompareType* ct =
+      (DiffData::CompareType*) mComboCmpType->GetClientData (mCompareType);
+
     if (!ct)
       return DiffData::INVALID_COMPARE_TYPE;
 
     return *ct;
   }
-
 
   /**
    * Select @a CompareType in the combo-box.
@@ -696,25 +665,22 @@ private:
     return found;
   }
 
-
   void
   OnCommand (wxCommandEvent & event)
   {
+    mCompareType = event.GetInt();
     CheckControls ();
   }
-
 
 private:
   DECLARE_EVENT_TABLE ()
 };
 
 
-
 BEGIN_EVENT_TABLE (DiffDlg::Data, wxPanel)
   EVT_COMBOBOX (ID_CompareType, Data::OnCommand)
   EVENT_UPDATE (-1, Data::OnCommand)
 END_EVENT_TABLE ()
-
 
 DiffDlg::DiffDlg (wxWindow * parent)
   : wxDialog (parent, -1, _("Diff"), wxDefaultPosition,
@@ -735,11 +701,9 @@ DiffDlg::DiffDlg (wxWindow * parent)
   CentreOnParent();
 }
 
-
 DiffDlg::~DiffDlg ()
 {
 }
-
 
 const DiffData
 DiffDlg::GetData () const
@@ -747,20 +711,17 @@ DiffDlg::GetData () const
   return m->GetDiffData ();
 }
 
-
 void
 DiffDlg::SetData (const DiffData & diffData)
 {
   m->SetData (diffData);
 }
 
-
 void
 DiffDlg::EnableUrl (bool value)
 {
   m->EnableUrl (value);
 }
-
 
 void
 DiffDlg::AllowCompareTypes (const DiffData::CompareType types [],
@@ -769,13 +730,11 @@ DiffDlg::AllowCompareTypes (const DiffData::CompareType types [],
   m->AllowCompareTypes (types, count);
 }
 
-
 void
 DiffDlg::AllowCompareTypes ()
 {
   m->AllowCompareTypes ();
 }
-
 
 /* -----------------------------------------------------------------
  * local variables:
