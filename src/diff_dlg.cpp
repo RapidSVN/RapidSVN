@@ -33,7 +33,6 @@
 #include "diff_dlg.hpp"
 #include "utils.hpp"
 
-
 /** event IDs for the controls used in this file */
 enum
 {
@@ -236,7 +235,6 @@ private:
   /** browse button if the user wants to search for a local file */
   wxButton * mButtonBrowse;
 
-
   /** Initialize and position the controls for the panel */
   void
   InitControls (const wxString & title)
@@ -261,8 +259,7 @@ private:
     gridSizer->Add (0,0);
 
     // second row: date
-    mRadioUseDate = new wxRadioButton (
-      this, ID_UseDate, _("Date:"));
+    mRadioUseDate = new wxRadioButton (this, ID_UseDate, _("Date:"));
     mTextDate = new wxTextCtrl (this, ID_Date, wxEmptyString);
 
     gridSizer->Add (mRadioUseDate);
@@ -540,6 +537,8 @@ private:
 
     mainSizer->SetSizeHints (this);
     mainSizer->Fit (this);
+
+    mButtonOK->SetDefault ();
 
     AllowCompareTypes ();
     // call this after AllowCompareTypes (), because ComboCmpType is not initialized yet.

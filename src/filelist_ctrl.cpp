@@ -92,7 +92,6 @@
 #include "res/bitmaps/replock_newer_file.xpm"
 #include "res/bitmaps/replock_modified_newer_file.xpm"
 
-
 /**
  * Tags for wxConfig file settings, defined here to avoid duplicate
  * hard coded strings.
@@ -107,7 +106,6 @@ static const wxChar ConfigShowUnversioned[]  = wxT("/FileListCtrl/ShowUnversione
 static const wxChar ConfigIgnoreExternals[]  = wxT("/FileListCtrl/IgnoreExternals");
 static const wxChar ConfigIncludePath[]      = wxT("/FileListCtrl/IncludePath");
 static const wxChar ConfigSortAscending[]    = wxT("/FileListCtrl/SortAscending");
-
 
 /**
  * test if the given status entry is a file or

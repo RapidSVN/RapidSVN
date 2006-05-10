@@ -94,7 +94,6 @@ private:
 class ProgramsPanel : public wxPanel
 {
 public:
-
   ProgramsPanel::ProgramsPanel (wxWindow* parent, Preferences * prefs)
     : wxPanel (parent), m_prefs (prefs)
   {
@@ -104,7 +103,6 @@ public:
   virtual ~ProgramsPanel ()
   {
   }
-
 
   /**
    * Show a dialog to select an executable file
@@ -128,7 +126,6 @@ public:
     textCtrl->SetValue (dlg.GetPath ());
     return true;
   }
-
 
   /**
    * Called when "browse-button" of Standard Editor field is clicked
@@ -229,7 +226,6 @@ private:
         new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition,
                         wxSize (200, -1),
                         0, valText);
-
       // button
       wxButton * button =
         CreateEllipsisButton(this, ID_StandardExplorerLookup);
@@ -262,7 +258,6 @@ private:
       sizerExplorer->Add (check, 1, wxEXPAND | wxALL, 5);
     }
 
-
     // Diff Tool
     wxStaticBox * boxDiffTool =
       new wxStaticBox (this, -1, _("Diff tool:"));
@@ -276,7 +271,6 @@ private:
         new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition,
                         wxSize (200, -1),
                         0, valText);
-
       // button
       wxButton * button =
         CreateEllipsisButton(this, ID_DiffToolLookup);
@@ -301,7 +295,6 @@ private:
       sizerDiffTool->Add (args, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
     }
 
-
     // Position main elements
     wxBoxSizer *panelsizer = new wxBoxSizer (wxHORIZONTAL);
 
@@ -321,7 +314,6 @@ private:
 
   DECLARE_EVENT_TABLE ()
 };
-
 
 BEGIN_EVENT_TABLE (ProgramsPanel, wxPanel)
   EVT_BUTTON (ID_StandardEditorLookup,
@@ -411,12 +403,11 @@ public:
     notebook->AddPage (authPanel, _("Authentication"));
 
     // buttons
-    button_sizer->Add (
-      new wxButton (wnd, wxID_OK, _("OK")),
-      0, wxALL, 10);
-    button_sizer->Add (
-      new wxButton (wnd, wxID_CANCEL, _("Cancel")),
-      0, wxALL, 10);
+    wxButton* ok = new wxButton (wnd, wxID_CANCEL, _("OK"));
+    button_sizer->Add (ok, 0, wxALL, 10);
+
+    wxButton* cancel = new wxButton (wnd, wxID_CANCEL, _("Cancel"));
+    button_sizer->Add (cancel, 0, wxALL, 10);
 
     // Externals
     // no useful entries in here yet
@@ -437,6 +428,8 @@ public:
     wnd->SetAutoLayout (true);
     topsizer->SetSizeHints (wnd);
     topsizer->Fit (wnd);
+
+    ok->SetDefault ();
   }
 
   bool

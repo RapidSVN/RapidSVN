@@ -77,7 +77,6 @@ public:
     info.m_width = 240;
     info.m_text = _("Value");
     InsertColumn (1, info);
-
   }
 
   /**
@@ -151,9 +150,7 @@ public:
     GetItem (item);
     value = item.m_text;
   }
-
 };
-
 
 /**
  * private class for the dialog.
@@ -563,7 +560,6 @@ ListEditorDlg::SetReadOnly (bool value)
   m->OnSelected ();
   m->editButton->SetLabel (value ? LABEL_VIEW : LABEL_EDIT);
 }
-
 
 /* -----------------------------------------------------------------
  * local variables:

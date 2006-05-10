@@ -131,6 +131,7 @@ public:
     mainSizer->SetSizeHints(window);
     mainSizer->Fit(window);
 
+    m_buttonOk->SetDefault ();
   }
 
   void

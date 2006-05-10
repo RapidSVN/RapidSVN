@@ -70,10 +70,11 @@ public:
     }
 
     // The buttons:
-    buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0,
-                     wxALL, 10);
-    buttonSizer->Add(new wxButton( window, wxID_CANCEL, _("Cancel")), 0,
-                     wxALL, 10);
+    wxButton * ok = new wxButton (window, wxID_OK, _("OK" ));
+    buttonSizer->Add (ok, 0, wxALL, 10);
+
+    wxButton * cancel = new wxButton (window, wxID_CANCEL, _("Cancel"));
+    buttonSizer->Add (cancel, 0, wxALL, 10);
 
     // Add all the sizers to the main sizer
     mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
@@ -83,10 +84,10 @@ public:
 
     mainSizer->SetSizeHints(window);
     mainSizer->Fit(window);
+
+    ok->SetDefault ();
   }
-
 };
-
 
 BEGIN_EVENT_TABLE (DestinationDlg, wxDialog)
 END_EVENT_TABLE ()

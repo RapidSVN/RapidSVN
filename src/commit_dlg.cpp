@@ -149,6 +149,8 @@ public:
 
     mainSizer->SetSizeHints (window);
     mainSizer->Fit (window);
+
+    ok->SetDefault ();
   }
 };
 

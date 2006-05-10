@@ -22,7 +22,6 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"
@@ -120,105 +119,115 @@ MergeDlg::OnOK (wxCommandEvent & event)
 void
 MergeDlg::InitializeData ()
 {
-  wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
 
   // Merge paths grid:
-  wxStaticBoxSizer *mergeSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _("Merge")), wxHORIZONTAL);
+  wxStaticBoxSizer * mergeSizer = new wxStaticBoxSizer(
+    new wxStaticBox (this, -1, _("Merge")), wxHORIZONTAL);
 
-  wxFlexGridSizer* grid = new wxFlexGridSizer(6, 2, 0, 0);
-  grid->AddGrowableCol(0);  // The first column can be expanded.
+  wxFlexGridSizer * grid = new wxFlexGridSizer (6, 2, 0, 0);
+  grid->AddGrowableCol (0);  // The first column can be expanded.
 
   // Row 0:
-  grid->Add(new wxStaticText(this, -1, _("First working copy or URL")), 0,
+  grid->Add (new wxStaticText (this, -1, _("First working copy or URL")), 0,
     0, 5);
-  grid->Add(new wxStaticText(this, -1, _("Revision")), 0,
+  grid->Add (new wxStaticText (this, -1, _("Revision")), 0,
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
 
   // Row 1:
-  wxTextCtrl *Path1 = new wxTextCtrl(this, -1, wxEmptyString,
-    wxDefaultPosition, wxSize(300, -1), 0,
-    wxTextValidator(wxFILTER_NONE, &m_data.Path1));
-  grid->Add(Path1, 1, wxBOTTOM | wxEXPAND, 10);
+  wxTextCtrl *Path1 = new wxTextCtrl (this, -1, wxEmptyString,
+    wxDefaultPosition, wxSize (300, -1), 0,
+    wxTextValidator (wxFILTER_NONE, &m_data.Path1));
+  grid->Add (Path1, 1, wxBOTTOM | wxEXPAND, 10);
 
-  wxTextCtrl *Path1Rev = new wxTextCtrl(this, -1, wxEmptyString,
+  wxTextCtrl *Path1Rev = new wxTextCtrl (this, -1, wxEmptyString,
     wxDefaultPosition, wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NUMERIC, &m_data.Path1Rev));
-  grid->Add(Path1Rev, 0, wxLEFT, 20);
+    wxTextValidator (wxFILTER_NUMERIC, &m_data.Path1Rev));
+  grid->Add (Path1Rev, 0, wxLEFT, 20);
 
   // Row 2:
-  grid->Add(new wxStaticText(this, -1, _("Second working copy or URL")), 0,
-    0, 5);
-  grid->Add(new wxStaticText(this, -1, _("Revision")), 0,
-    wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
+  grid->Add (new wxStaticText (this, -1, _("Second working copy or URL")),
+             0, 0, 5);
+  grid->Add (new wxStaticText (this, -1, _("Revision")), 0,
+             wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
 
   // Row 3:
-  wxTextCtrl *Path2 = new wxTextCtrl(this, -1, wxEmptyString,
-    wxDefaultPosition, wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NONE, &m_data.Path2));
-  grid->Add(Path2, 1, wxBOTTOM | wxEXPAND, 10);
+  wxTextCtrl * Path2 =
+    new wxTextCtrl (this, -1, wxEmptyString,
+                    wxDefaultPosition, wxDefaultSize,
+                    0, wxTextValidator (wxFILTER_NONE, &m_data.Path2));
+  grid->Add (Path2, 1, wxBOTTOM | wxEXPAND, 10);
 
-  wxTextCtrl *Path2Rev = new wxTextCtrl(this, -1, wxEmptyString,
-    wxDefaultPosition, wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NUMERIC, &m_data.Path2Rev));
-  grid->Add(Path2Rev, 0, wxLEFT, 20);
+  wxTextCtrl *Path2Rev =
+    new wxTextCtrl (this, -1, wxEmptyString,
+                    wxDefaultPosition, wxDefaultSize, 0,
+                    wxTextValidator (wxFILTER_NUMERIC, &m_data.Path2Rev));
+  grid->Add (Path2Rev, 0, wxLEFT, 20);
 
   // Row 4:
   if (m_data.calledByLogDlg)
-    grid->Add(new wxStaticText(this, -1, _("Destination file")), 0, 0, 5);
+    grid->Add (new wxStaticText(this, -1, _("Destination file")), 0, 0, 5);
   else
-    grid->Add(new wxStaticText(this, -1, _("Destination path")), 0, 0, 5);
-  grid->Add(new wxStaticText(this, -1, wxEmptyString), 0,
+    grid->Add (new wxStaticText(this, -1, _("Destination path")), 0, 0, 5);
+  grid->Add (new wxStaticText(this, -1, wxEmptyString), 0,
     wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
 
   // Row 5:
-  wxTextCtrl *Destination = new wxTextCtrl(this, -1, wxEmptyString,
-    wxDefaultPosition, wxDefaultSize, 0,
-    wxTextValidator(wxFILTER_NONE, &m_data.Destination));
-  grid->Add(Destination, 1, wxBOTTOM | wxEXPAND, 5);
+  wxTextCtrl * Destination =
+    new wxTextCtrl(this, -1, wxEmptyString,
+                   wxDefaultPosition, wxDefaultSize, 0,
+                   wxTextValidator (wxFILTER_NONE, &m_data.Destination));
+  grid->Add (Destination, 1, wxBOTTOM | wxEXPAND, 5);
 
   // If called by the log dialogue, the source path and revision is
   // already given by the selected entries
   if (m_data.calledByLogDlg)
   {
-    Path1->Disable();
-    Path2->Disable();
-    Path1Rev->Disable();
-    Path2Rev->Disable();
+    Path1->Disable ();
+    Path2->Disable ();
+    Path1Rev->Disable ();
+    Path2Rev->Disable ();
   }
 
-  wxButton* BrowseButton = new wxButton(this, ID_BUTTON_BROWSE, wxT("..."),
-    wxPoint(-1,-1), wxSize(20, -1));
-  grid->Add(BrowseButton, 0, wxALL, 5);
+  wxButton* BrowseButton =
+    new wxButton(this, ID_BUTTON_BROWSE, wxT("..."),
+                 wxPoint(-1,-1), wxSize(20, -1));
+  grid->Add (BrowseButton, 0, wxALL, 5);
 
-  mergeSizer->Add(grid, 1, wxALL | wxEXPAND, 5);
+  mergeSizer->Add (grid, 1, wxALL | wxEXPAND, 5);
 
   // Sundry items row:
-  wxBoxSizer *sundrySizer = new wxBoxSizer(wxHORIZONTAL);
-  wxCheckBox* Recursive = new wxCheckBox (this, -1, _("Recursive"),
-    wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_data.Recursive));
-  sundrySizer->Add(Recursive, 0, wxALL, 5);
-  wxCheckBox* Force = new wxCheckBox (this, -1, _("Force"),
-    wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_data.Force));
-  sundrySizer->Add(Force, 0, wxALL, 5);
+  wxBoxSizer *sundrySizer = new wxBoxSizer (wxHORIZONTAL);
+  wxCheckBox* Recursive =
+    new wxCheckBox (this, -1, _("Recursive"), wxDefaultPosition,
+                    wxDefaultSize, 0, wxGenericValidator(&m_data.Recursive));
+  sundrySizer->Add (Recursive, 0, wxALL, 5);
+  wxCheckBox* Force =
+    new wxCheckBox (this, -1, _("Force"), wxDefaultPosition, wxDefaultSize,
+                    0, wxGenericValidator(&m_data.Force));
+  sundrySizer->Add (Force, 0, wxALL, 5);
 
   // Button row
-  wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-  buttonSizer->Add(new wxButton(this, wxID_OK, _("OK" )), 0,
-    wxALL, 10);
-  buttonSizer->Add(new wxButton(this, wxID_CANCEL, _("Cancel")), 0,
-    wxALL, 10);
+  wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+
+  wxButton * ok = new wxButton (this, wxID_OK, _("OK" ));
+  buttonSizer->Add (ok, 0, wxALL, 10);
+
+  wxButton * cancel = new wxButton (this, wxID_CANCEL, _("Cancel"));
+  buttonSizer->Add (cancel, 0, wxALL, 10);
 
   // Add all sizers to main sizer
-  mainSizer->Add(mergeSizer, 0, wxALL | wxEXPAND, 5);
-  mainSizer->Add(sundrySizer, 0, wxALL | wxCENTER, 5);
-  mainSizer->Add(buttonSizer, 0, wxALL | wxCENTER, 5);
+  mainSizer->Add (mergeSizer, 0, wxALL | wxEXPAND, 5);
+  mainSizer->Add (sundrySizer, 0, wxALL | wxCENTER, 5);
+  mainSizer->Add (buttonSizer, 0, wxALL | wxCENTER, 5);
 
-  SetAutoLayout(true);
-  SetSizer(mainSizer);
+  SetAutoLayout (true);
+  SetSizer (mainSizer);
 
-  mainSizer->SetSizeHints(this);
-  mainSizer->Fit(this);
+  mainSizer->SetSizeHints (this);
+  mainSizer->Fit (this);
+
+  ok->SetDefault ();
 }
 
 /**
@@ -228,7 +237,7 @@ void
 MergeDlg::OnBrowse (wxCommandEvent & event)
 {
   // Transfer data from controls into m_pData:
-  TransferDataFromWindow();
+  TransferDataFromWindow ();
   wxDirDialog dialog (this,
                       _("Select a destination folder to merge to"),
                       wxGetHomeDir());
@@ -237,7 +246,7 @@ MergeDlg::OnBrowse (wxCommandEvent & event)
   {
     m_data.Destination = dialog.GetPath ();
     // Transfer data from m_pData back into controls:
-    TransferDataToWindow();
+    TransferDataToWindow ();
   }
 }
 

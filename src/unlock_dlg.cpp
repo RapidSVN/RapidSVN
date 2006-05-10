@@ -38,46 +38,49 @@ public:
   Data (wxWindow * window)
     : force (false)
   {
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
-    wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer * topSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
     wxStaticText * label =
       new wxStaticText (window, -1, _("Do you want to unlock the selected files/directories?"));
     topSizer->Add (label, 0, wxALL, 5);
 
     // The "force" check box:
-    wxCheckBox* check = new wxCheckBox(window, -1, _("Force unlocking even if you are not the lock owner"),
-      wxDefaultPosition, wxDefaultSize, 0,
-      wxGenericValidator(&force));
-
+    wxCheckBox * check =
+      new wxCheckBox (window, -1,
+                      _("Force unlocking even if you are not the lock owner"),
+                      wxDefaultPosition, wxDefaultSize, 0,
+                      wxGenericValidator(&force));
     // The buttons:
-    buttonSizer->Add(new wxButton( window, wxID_OK, _("OK" )), 0,
-                     wxALL, 10);
-    buttonSizer->Add(new wxButton( window, wxID_CANCEL, _("Cancel")), 0,
-                     wxALL, 10);
+    wxButton * ok = new wxButton (window, wxID_OK, _("OK" ));
+    buttonSizer->Add (ok, 0, wxALL, 10);
+
+    wxButton * cancel = new wxButton (window, wxID_CANCEL, _("Cancel"));
+    buttonSizer->Add (cancel, 0, wxALL, 10);
 
     // Add all the sizers to the main sizer
     mainSizer->Add (topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
     mainSizer->Add (check, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
     mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
 
-    window->SetAutoLayout(true);
-    window->SetSizer(mainSizer);
+    window->SetAutoLayout (true);
+    window->SetSizer (mainSizer);
 
-    mainSizer->SetSizeHints(window);
-    mainSizer->Fit(window);
+    mainSizer->SetSizeHints (window);
+    mainSizer->Fit (window);
+
+    ok->SetDefault ();
   }
 };
-
 
 BEGIN_EVENT_TABLE (UnlockDlg, wxDialog)
 END_EVENT_TABLE ()
 
-UnlockDlg::UnlockDlg(wxWindow* parent)
- : wxDialog(parent, -1, _("Unlock"),
-            wxDefaultPosition, wxDefaultSize,
-            wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+UnlockDlg::UnlockDlg (wxWindow * parent)
+ : wxDialog (parent, -1, _("Unlock"),
+             wxDefaultPosition, wxDefaultSize,
+             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   m = new Data (this);
 }

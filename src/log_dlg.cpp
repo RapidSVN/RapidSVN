@@ -61,7 +61,6 @@ public:
     DeleteAllItems ();
   }
 
-
   /**
    * Returns the revision for the given @a item
    *
@@ -103,7 +102,6 @@ public:
     return GetRevisionForItem (item);
   }
 
-
   /**
    * returns the selected revisions.
    * Like @a GetSelectedRevision, but can return 
@@ -116,14 +114,12 @@ public:
   GetSelectedRevisions () const
   {
     RevnumArray array;
-
-    long item=-1;
+    long item = -1;
 
     do
     {
       item = GetNextItem (item, wxLIST_NEXT_ALL,
                                wxLIST_STATE_SELECTED);
-
       if (item != -1)
       {
         svn_revnum_t revnum (GetRevisionForItem (item));
@@ -136,9 +132,9 @@ public:
     return array;
   }
 
-
 private:
   void OnSelected (wxListEvent& event);
+
   void InitializeList (const svn::LogEntries * entries)
   {
     SetSingleStyle (wxLC_REPORT);
@@ -175,13 +171,12 @@ private:
       SetItem (index, 3, Utf8ToLocal (entry.message.c_str ()));
       index++;
     }
- 
   }
-  
 };
 
 struct LogDlg::Data
 {
+private:
   LogList * m_logList;
   wxTextCtrl * m_logMsg;
   wxButton * m_buttonView;
@@ -189,13 +184,11 @@ struct LogDlg::Data
   wxButton * m_buttonDiff;
   wxButton * m_buttonMerge;
 
-private:
 public:
   const svn::LogEntries * entries;
   wxString path;
   wxWindow * parent;
   wxWindow * window;
-
 
   Data (wxWindow * parent_,
         wxWindow * wnd,
@@ -386,7 +379,6 @@ LogDlg::LogDlg (wxWindow * parent,
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   m = new Data (parent, this, path, entries);
-
   CentreOnParent ();
 }
 

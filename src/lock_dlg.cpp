@@ -58,28 +58,26 @@ public:
       new wxCheckBox (window, -1, _("Steal lock if it belongs to another user"),
                       wxDefaultPosition, wxDefaultSize, 0,
                       val);
-    wxButton* ok =
-      new wxButton (window, wxID_OK, _("OK" ));
-    wxButton* cancel =
-      new wxButton (window, wxID_CANCEL, _("Cancel"));
+    wxButton * ok = new wxButton (window, wxID_OK, _("OK" ));
+    wxButton * cancel = new wxButton (window, wxID_CANCEL, _("Cancel"));
 
     // position controls
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
 
     // The message field:
-    wxStaticBoxSizer *msgSizer =
+    wxStaticBoxSizer * msgSizer =
       new wxStaticBoxSizer (msgBox, wxHORIZONTAL);
     msgSizer->Add (msg, 1, wxALL | wxEXPAND, 5);
 
     // The buttons:
-    wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
+    wxBoxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
     buttonSizer->Add (checkStealLock, 1,
                       wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT,
                       10);
     buttonSizer->Add (ok, 0, wxALL, 10);
     buttonSizer->Add (cancel, 0, wxALL, 10);
 
-    wxBoxSizer *topSizer = new wxBoxSizer (wxHORIZONTAL);
+    wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
     topSizer->Add (msgSizer, 1, wxALL | wxEXPAND, 5);
 
     // Add all the sizers to the main sizer
@@ -91,13 +89,15 @@ public:
 
     mainSizer->SetSizeHints (window);
     mainSizer->Fit (window);
+
+    ok->SetDefault ();
   }
 };
 
 BEGIN_EVENT_TABLE (LockDlg, wxDialog)
 END_EVENT_TABLE ()
 
-LockDlg::LockDlg (wxWindow* parent)
+LockDlg::LockDlg (wxWindow * parent)
   : wxDialog(parent, -1, _("Lock"),
              wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)

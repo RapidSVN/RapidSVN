@@ -37,7 +37,6 @@
 #include "property_dlg.hpp"
 #include "utils.hpp"
 
-
 struct PropertyDlg::Data
 {
   wxWindow * window;
@@ -96,9 +95,7 @@ PropertyDlg::ReadFromGrid ()
       bool found = FindEntry (Utf8ToLocal (name)) != -1;
 
       if (!found)
-      {
         m->property.remove (name);
-      }
 
       it++;
     }
@@ -151,7 +148,6 @@ PropertyDlg::WriteToGrid ()
     it++;
   }
 }
-
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
