@@ -78,6 +78,12 @@ namespace svn
     Path& operator= (const Path&);
 
     /**
+     * Comparison operator
+     */
+    bool
+    operator== (const Path&) const;
+
+    /**
      * @return Path string
      */
     const std::string &

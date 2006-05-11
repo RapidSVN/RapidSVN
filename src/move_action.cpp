@@ -85,6 +85,9 @@ MoveAction::Perform ()
   {
     svn::Path srcPath (*it);
 
+    if (srcPath == GetPath ())
+      srcPath = ".";
+
     if (m_kind == MOVE_MOVE)
       client.move (srcPath, unusedRevision, destPath, m_force);
     else

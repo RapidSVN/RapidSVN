@@ -34,7 +34,6 @@
 #include "svncpp/pool.hpp"
 #include "svncpp/url.hpp"
 
-
 namespace svn
 {
   Path::Path (const char * path)
@@ -100,6 +99,15 @@ namespace svn
   }
 
   bool
+  Path::operator== (const Path& path) const
+  {
+    if (path.path () == this->path ())
+      return true;
+
+    return false;
+  }
+
+  bool
   Path::isset () const
   {
     return m_path.length () > 0;
@@ -136,13 +144,11 @@ namespace svn
     }
   }
 
-
   void 
   Path::addComponent (const std::string & component)
   {
     addComponent (component.c_str ());
   }
-
 
   void
   Path::split (std::string & dirpath, std::string & basename) const
@@ -157,7 +163,6 @@ namespace svn
     dirpath = cdirpath;
     basename = cbasename;
   }
-
 
   void
   Path::split (std::string & dir, std::string & filename, std::string & ext) const
@@ -312,7 +317,6 @@ end:
     }
     return APR_EGENERAL;
   }
-
   /* ===================================================================
    * End of inserted fixed APR code
    */
@@ -331,13 +335,11 @@ end:
     return tempdir;
   }
 
-
   size_t 
   Path::length () const
   {
     return m_path.length ();
   }
-
 
   std::string
   Path::native () const
@@ -346,7 +348,6 @@ end:
 
     return svn_path_local_style (m_path.c_str (), pool);
   }
-
 }
 
 /* -----------------------------------------------------------------
