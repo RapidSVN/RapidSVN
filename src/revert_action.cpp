@@ -22,7 +22,6 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
 // wxWidgets
 #include "wx/wx.h"
 
@@ -41,22 +40,17 @@ bool
 RevertAction::Prepare ()
 {
   if (!Action::Prepare ())
-  {
     return false;
-  }
 
   wxMessageDialog dlg (GetParent (),
                        _("Do you want to revert local changes?"),
                        _("Revert"), wxYES_NO | wxICON_QUESTION);
 
   if (dlg.ShowModal () != wxID_YES)
-  {
     return false;
-  }
 
   return true;
 }
-
 
 bool
 RevertAction::Perform ()
@@ -66,7 +60,6 @@ RevertAction::Perform ()
 
   return true;
 }
-
 
 /* -----------------------------------------------------------------
  * local variables:

@@ -69,12 +69,13 @@ public:
     if (withUrl ())
     {
       wxStaticBox * box = new wxStaticBox (window, -1, _("URL"));
-      wxStaticBoxSizer * sizer =
-        new wxStaticBoxSizer (box, wxHORIZONTAL);
+      wxStaticBoxSizer * sizer = new wxStaticBoxSizer (box, wxHORIZONTAL);
+
       HistoryValidator val (HISTORY_REPOSITORY, &data.url);
-      m_comboUrl =
-        new wxComboBox (window, ID_URL, wxEmptyString, wxDefaultPosition,
-                        wxSize (235, -1), 0, 0, wxCB_DROPDOWN, val);
+      m_comboUrl = new wxComboBox (window, ID_URL, wxEmptyString,
+                                   wxDefaultPosition, wxSize (235, -1),
+                                   0, 0, wxCB_DROPDOWN, val);
+
       sizer->Add (m_comboUrl, 1, wxALL | wxEXPAND, 5);
       middleSizer->Add (sizer, 1, wxALL | wxEXPAND, 5);
     }
@@ -83,8 +84,8 @@ public:
     if (withRevision ())
     {
       wxStaticBox * box = new wxStaticBox (window, -1, _("Revision"));
-      wxStaticBoxSizer *revSizer =
-        new wxStaticBoxSizer (box, wxHORIZONTAL);
+      wxStaticBoxSizer *revSizer = new wxStaticBoxSizer (box, wxHORIZONTAL);
+
       wxTextValidator val (wxFILTER_NUMERIC, &data.revision);
       m_textRevision = new wxTextCtrl (window, ID_REVISION, wxEmptyString,
                                        wxDefaultPosition,
@@ -179,7 +180,6 @@ public:
   {
     return (m_flags & WITHOUT_RECURSIVE) == 0;
   }
-
 };
 
 BEGIN_EVENT_TABLE (UpdateDlg, wxDialog)

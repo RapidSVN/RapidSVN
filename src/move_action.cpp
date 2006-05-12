@@ -95,6 +95,7 @@ MoveAction::Perform ()
   }
   return true;
 }
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

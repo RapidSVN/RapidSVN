@@ -47,7 +47,7 @@ public:
                  const wxSize & size = wxDefaultSize,
                  const wxString & name = wxT("FolderBrowser"));
 
-  virtual ~ FolderBrowser ();
+  virtual ~FolderBrowser ();
 
   virtual void 
   Refresh ();
@@ -147,7 +147,6 @@ public:
   const bool
   GetAuthPerBookmark () const;
 
-
   /**
    * check if authentication credentials should be cached or not
    */
@@ -163,10 +162,8 @@ public:
   void
   SetListener (svn::ContextListener * listener);
 
-
   svn::ContextListener *
   GetListener () const;
-
 
   /**
    * Writes configuration including bookmarks
@@ -177,7 +174,6 @@ public:
   void
   WriteConfig (wxConfigBase * cfg) const;
 
-
   /**
    * Read configuration
    *
@@ -185,7 +181,6 @@ public:
    */
   void
   ReadConfig (wxConfigBase * cfg);
-
 
   /**
    * Expand the selected leaf of the tree.
@@ -218,16 +213,10 @@ private:
   DECLARE_EVENT_TABLE ()
 
   void OnSize (wxSizeEvent & event);
-
   void OnExpandItem (wxTreeEvent & event);
-
   void OnCollapseItem (wxTreeEvent & event);
-
-  void OnItemRightClk (wxTreeEvent & event);
-
   void OnContextMenu (wxContextMenuEvent & event);
 };
-
 
 #endif
 /* -----------------------------------------------------------------

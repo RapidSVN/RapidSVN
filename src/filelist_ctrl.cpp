@@ -520,7 +520,6 @@ CompareItems (svn::Status * ps1, svn::Status * ps2,
   return res;
 }
 
-
 /**
  * The index from where there will be only images
  * not related to the status.
@@ -540,7 +539,6 @@ enum
   IMG_INDX_COUNT
 };
 
-
 /**
  * structure that maps a status entry to an 
  * according XPM icon.
@@ -555,7 +553,6 @@ struct MapItem
   {
   }
 };
-
 
 /** array of icons and corresponding status */
 static const MapItem MAP_ICON_ARRAY [] =
@@ -620,7 +617,6 @@ static const MapItem MAP_REPLOCK_ICON_ARRAY [] =
 static const size_t MAP_REPLOCK_ICON_COUNT = 
   sizeof (MAP_REPLOCK_ICON_ARRAY) / sizeof (MAP_REPLOCK_ICON_ARRAY [0]);
 
-
 /**
  * private struct that hide implementation details
  * to users of @a FileListCtrl
@@ -681,7 +677,6 @@ public:
   void
   WriteConfig ();
 };
-
 
 /** default constructor */
 FileListCtrl::Data::Data ()

@@ -38,7 +38,6 @@
 #include "svncpp/path.hpp"
 #include "svncpp/pool.hpp"
 
-
 namespace svn
 {
   Targets::Targets (const std::vector<Path> & targets)

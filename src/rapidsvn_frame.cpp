@@ -157,6 +157,7 @@ public:
 
   bool updateAfterActivate;
   bool dontUpdateFilelist;
+  bool skipFilelistUpdate;
   const wxLocale & locale;
 
 private:
@@ -174,8 +175,8 @@ public:
   Data (wxFrame * parent, const wxLocale & locale_)
     : MenuColumns (0), MenuSorting (0), MenuBar (0), listener (parent),
       updateAfterActivate (false), dontUpdateFilelist (false),
-      locale (locale_), m_running (false), m_toolbar_rows (1),
-      m_parent (parent)
+      skipFilelistUpdate (false), locale (locale_), m_running (false),
+      m_toolbar_rows (1), m_parent (parent)
   {
     InitializeMenu ();
   }
@@ -729,7 +730,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   UpdateFolderBrowser ();
 
   // Set sash position for every splitter.
-  // Note: to not revert the order of Split calls, as the panels will be messed up.
+  // Note: do not revert the order of Split calls, as the panels will be messed up.
   m_horiz_splitter->SplitHorizontally (m_info_panel, m_log, hpos);
   m_vert_splitter->SplitVertically (m_folder_browser, m_listCtrl, vpos);
 }
@@ -884,20 +885,26 @@ RapidSvnFrame::UpdateFolderBrowser ()
 
   try
   {
-    m->dontUpdateFilelist = true;
+    if (!m->skipFilelistUpdate)
+      m->dontUpdateFilelist = true;
 
     if (m_folder_browser)
       m_folder_browser->Refresh ();
   }
   catch (...)
   {
+    m->skipFilelistUpdate = false;
   }
 
   if (!isRunning)
     m->SetRunning (false);
 
-  m->dontUpdateFilelist = false;
-  UpdateFileList ();
+  if (!m->skipFilelistUpdate)
+  {
+    m->dontUpdateFilelist = false;
+    UpdateFileList ();
+  }
+  m->skipFilelistUpdate = false;
 }
 
 /*** START OF SECTION EVENTS ***/
@@ -1679,8 +1686,6 @@ RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 
     UpdateCurrentPath ();
     UpdateFileList ();
-
-    m_folder_browser->ExpandSelection ();
   }
   catch(...)
   {
@@ -1758,6 +1763,8 @@ directory to the bookmarks!"),
 
   // add
   m_folder_browser->AddBookmark (dialog.GetPath ());
+
+  m->skipFilelistUpdate = true;
   UpdateFolderBrowser ();
 
   wxLogStatus (_("Added working copy to bookmarks '%s'"),
@@ -1781,6 +1788,8 @@ RapidSvnFrame::AddRepoBookmark ()
   // add
   wxString url = dialog.GetData ().url;
   m_folder_browser->AddBookmark (url);
+
+  m->skipFilelistUpdate = true;
   UpdateFolderBrowser ();
 
   wxLogStatus (_("Added repository to bookmarks '%s'"),

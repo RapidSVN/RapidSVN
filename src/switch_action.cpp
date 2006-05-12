@@ -29,6 +29,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/status.hpp"
+#include "svncpp/url.hpp"
 
 // app
 #include "switch_action.hpp"
@@ -54,7 +55,7 @@ SwitchAction::Prepare ()
     svn::Path path = GetTarget ();
     svn::Client client (GetContext ());
     svn::Status status (client.singleStatus (path.c_str ()));
-    url = Utf8ToLocal (status.entry ().url ());
+    url = Utf8ToLocal (svn::Url::unescape (status.entry ().url ()));
   }
 
   // create flags for the dialog
