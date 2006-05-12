@@ -22,7 +22,6 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
 // wxWidgets
 #include "wx/wx.h"
 
@@ -77,29 +76,8 @@ DeleteAction::Perform ()
     svn::Status status (client.singleStatus (path.c_str ()));
     wxString wxpath = Utf8ToLocal(path.c_str ());
 
-    // if the file is versioned then it will be
-    // handled by subversion
-    if (status.isVersioned ())
-      client.remove (path, m_force);
-    else if (wxDirExists (wxpath))
-    {
-      // we dont want to delete unversioned directories...
-      wxString msg;
-      msg.Printf (_("Skipping unversioned directory: %s"),
-                  wxpath.c_str ());
-      Trace (msg);
-    }
-    else if (wxFileExists (wxpath))
-    {
-      wxString msg;
-      msg.Printf (_("Deleting unversioned file: %s"),
-                  wxpath.c_str ());
-      Trace (msg);
-
-      wxRemoveFile (wxpath);
-    }
+    client.remove (path, m_force);
   }
-
 
   return true;
 }
