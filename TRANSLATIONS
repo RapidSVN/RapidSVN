@@ -38,7 +38,7 @@ translation:
    (only strings that should be translated are marked by
    _("my string")), open a shell and chdir to "src/locale";
    now run:
-   
+
      ../../tools/update-pot.sh
 
 
@@ -48,7 +48,7 @@ translation:
 
    Change to "src/locale/<language>" and merge the
    information:
-   
+
      ../../../tools/update-po.sh
 
 
@@ -67,8 +67,8 @@ translation:
 
    Change to the directory "src/locale" and
    compile the translations:
-     
-     ../../compile-po.sh
+
+     ../../tools/compile-po.sh
 
 
 5. Check the result in RapidSVN
