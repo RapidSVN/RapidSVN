@@ -459,15 +459,18 @@ CompareItems (svn::Status * ps1, svn::Status * ps2,
 {
   int res = 0;
 
+  size_t length1 (Utf8ToLocal (ps1->path ()).length ());
+  size_t length2 (Utf8ToLocal (ps2->path ()).length ());
+
   // Directories always precede files AND
   // Current working directory '.' always first
   if (IsDir (ps1) &&
-      (!IsDir (ps2) || ((std::string) ps1->path ()).length () <= RootPathLength))
+      (!IsDir (ps2) || (length1 <= RootPathLength)))
   {
     res = -1;
   }
   else if (IsDir (ps2) &&
-           (!IsDir (ps1) || ((std::string) ps2->path ()).length () <= RootPathLength))
+           (!IsDir (ps1) || (length2 <= RootPathLength)))
   {
     res = 1;
   }
@@ -923,7 +926,6 @@ FileListCtrl::Data::WriteConfig ()
     config->Write (key, (long) ColumnVisible[col]);
   }
 }
-
 
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
