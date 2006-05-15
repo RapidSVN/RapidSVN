@@ -67,6 +67,14 @@ PathTestCase::testSplit ()
   pathTest.split (dirpath, basename);
   CPPUNIT_ASSERT (dirpath == "/some/path/to");
   CPPUNIT_ASSERT (basename == "repository");
+
+  svn::Path test1 = "file.txt";
+  std::string dir, file, ext;
+
+  test1.split (dir, file, ext);
+  CPPUNIT_ASSERT (strcmp (file.c_str (), "file") == 0);  
+  CPPUNIT_ASSERT (strcmp (dir.c_str (), "") == 0);  
+  CPPUNIT_ASSERT (strcmp (ext.c_str (), ".txt") == 0);
 }
 
 void
@@ -100,6 +108,31 @@ PathTestCase::testIsUrl ()
   svn::Path pathOne = "file:///this.is/a/url";
   CPPUNIT_ASSERT (pathOne.isUrl ());
   CPPUNIT_ASSERT (strcmp (pathOne.c_str (), "file:///this.is/a/url") == 0);
+}
+
+void
+PathTestCase::testSubstr ()
+{
+  svn::Path test ("/home/sleepy/tmp/sf âê/Bla Bla Blubb");
+  int length = 25;
+  std::string result = "";
+
+  result = test.substr (length);
+  CPPUNIT_ASSERT (result == "Bla Bla Blubb");
+}
+
+void
+PathTestCase::testUnescape ()
+{
+  svn::Path test ("/home/sleepy/tmp/sf%20x%20y");
+  CPPUNIT_ASSERT (test.unescape () == "/home/sleepy/tmp/sf x y");
+}
+
+void
+PathTestCase::testLength ()
+{
+  svn::Path test ("/tmp/sf%20x%20y");
+  CPPUNIT_ASSERT (test.length () == 15);
 }
 
 /* -----------------------------------------------------------------
