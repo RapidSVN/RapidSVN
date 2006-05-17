@@ -598,7 +598,7 @@ public:
     wxTreeItemId id = treeCtrl->GetFirstChild (parentId, cookie);
     wxTreeItemId childId;
 
-    while (id.IsOk ())
+    do
     {
       const FolderItemData * data = GetItemData (id);
 
@@ -608,7 +608,7 @@ public:
       if (!data->isReal ())
         break;
 
-      const svn::Path nodePath (LocalToUtf8(data->getPath ()));
+      const svn::Path nodePath (LocalToUtf8 (data->getPath ()));
       if (nodePath.length () == 0)
         break;
 
@@ -620,18 +620,18 @@ public:
       }
 
       // second check: match until path delimiter
-      wxString prefix (path.Left (nodePath.length ()));
-      wxString sep = path.Mid (nodePath.length (), 1);
+      wxString prefix (path.Left (Utf8ToLocal (nodePath.c_str()).length ()));
+      wxString sep (path.Mid (Utf8ToLocal (nodePath.c_str()).length (), 1));
 
       if (prefix.IsSameAs (Utf8ToLocal (nodePath.c_str ())) &&
-           IsValidSeparator (sep))
+          IsValidSeparator (sep))
       {
         childId = id;
         break;
       }
 
       id = treeCtrl->GetNextChild (parentId, cookie);
-    } // while (id.IsOk ())
+    } while (id.IsOk ());
 
     return childId;
   }
@@ -657,10 +657,6 @@ public:
       treeCtrl->SelectItem (treeCtrl->GetRootItem ());
       return true;
     }
-    
-    // Convert the input string to subversion internal representation
-    svn::Path pathPUtf8 (PathUtf8 (pathP));
-    const wxString path = Utf8ToLocal (pathPUtf8.c_str());
 
     wxTreeItemId bookmarkId = GetSelectedBookmarkId ();
 
@@ -669,9 +665,10 @@ public:
       return false;
 
     // begin searching in the folder hierarchy
-    bool success=false;
+    bool success = false;
     wxTreeItemId id = bookmarkId;
-    while (id.IsOk ())
+
+		do
     {
       const FolderItemData * data = GetItemData (id);
 
@@ -685,22 +682,23 @@ public:
         break;
 
       if (!data->isReal ())
-        break;
+			  break;
 
       const svn::Path nodePath (LocalToUtf8 (data->getPath ()));
       if (nodePath.length () == 0)
-        break;
+				break;
 
       // check if @a path and @a nodePath match already
       // in this case we are done
-      if (path.IsSameAs (Utf8ToLocal (nodePath.c_str())))
+      if (pathP.IsSameAs (Utf8ToLocal (nodePath.c_str())))
       {
         success = true;
         break;
+
       }
 
-      wxString prefix (path.Left (nodePath.length ()));
-      wxString sep (path.Mid (nodePath.length (), 1));
+      wxString prefix (pathP.Left (Utf8ToLocal (nodePath.c_str ()).length()));
+      wxString sep (pathP.Mid (Utf8ToLocal (nodePath.c_str ()).length(), 1));
 
       if ((!prefix.IsSameAs
           (Utf8ToLocal (nodePath.c_str()))) || !IsValidSeparator (sep))
@@ -714,8 +712,8 @@ public:
       if (!treeCtrl->IsExpanded (id))
         treeCtrl->Expand (id);
 
-      id = FindClosestChild (id, path);
-    } // while (id.IsOk ())
+      id = FindClosestChild (id, pathP);
+    } while (id.IsOk ());
 
     if (success)
       treeCtrl->SelectItem (id);
