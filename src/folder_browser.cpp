@@ -281,7 +281,7 @@ public:
 
     // create menu
     wxMenu menu;
-    int type =  data->getFolderType ();
+    int type = data->getFolderType ();
 
     AppendMenuItem (menu, ID_AddWcBookmark);
     AppendMenuItem (menu, ID_Checkout);
@@ -290,7 +290,7 @@ public:
     AppendMenuItem (menu, ID_CreateRepository);
     AppendMenuItem (menu, ID_Switch);
 
-    if (type==FOLDER_TYPE_BOOKMARK)
+    if (type == FOLDER_TYPE_BOOKMARK)
     {
       menu.AppendSeparator ();
       AppendMenuItem (menu, ID_EditBookmark);
@@ -322,7 +322,7 @@ public:
       item->Enable (enabled);
     }
 
-    if ((type==FOLDER_TYPE_BOOKMARK)||(type==FOLDER_TYPE_NORMAL))
+    if (type == FOLDER_TYPE_BOOKMARK || type == FOLDER_TYPE_NORMAL)
     {
       menu.AppendSeparator ();
       AppendMenuItem (menu, ID_Update);

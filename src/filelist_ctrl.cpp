@@ -1050,7 +1050,7 @@ FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePa
     InsertItem (i, values[COL_NAME], imageIndex);
 
     // The item data will be used to sort the list:
-    SetItemData (i, (long)new svn::Status (status));    // The control now owns this data
+    SetItemData (i, (long) new svn::Status (status));    // The control now owns this data
     // and must delete it in due course.
 
     if (status.isVersioned ())
