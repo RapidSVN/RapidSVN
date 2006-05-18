@@ -929,7 +929,7 @@ FileListCtrl::Data::WriteConfig ()
 
 BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_KEY_DOWN (FileListCtrl::OnKeyDown)
-  EVT_LEFT_DCLICK (FileListCtrl::OnDoubleClick)
+  EVT_LIST_ITEM_ACTIVATED (FILELIST_CTRL, FileListCtrl::OnDoubleClick)
   EVT_LIST_COL_CLICK (FILELIST_CTRL, FileListCtrl::OnColumnLeftClick)
   EVT_LIST_COL_END_DRAG (FILELIST_CTRL, FileListCtrl::OnColumnEndDrag)
   EVT_CONTEXT_MENU (FileListCtrl::OnContextMenu)
@@ -1273,14 +1273,9 @@ FileListCtrl::OnKeyDown (wxKeyEvent & event)
 }
 
 void
-FileListCtrl::OnDoubleClick (wxMouseEvent & event)
+FileListCtrl::OnDoubleClick (wxListEvent & event)
 {
-  int flag;
-
-  // Don't post if the click didn't hit anything
-  if (HitTest (ScreenToClient (wxGetMousePosition ()), flag) >= 0)
-    if (!PostMenuEvent (this, ID_Default_Action))
-      event.Skip ();
+  PostMenuEvent (this, ID_Default_Action);
 }
 
 void

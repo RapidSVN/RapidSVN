@@ -256,7 +256,7 @@ private:
 
   // message handlers
   void OnKeyDown (wxKeyEvent & event);
-  void OnDoubleClick (wxMouseEvent & event);
+  void OnDoubleClick (wxListEvent & event);
   void OnColumnLeftClick (wxListEvent & event);
   void OnColumnEndDrag (wxListEvent & event);
   void OnContextMenu (wxContextMenuEvent & event);
