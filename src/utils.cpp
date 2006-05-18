@@ -492,7 +492,6 @@ Utf8ToLocal (const char* srcUtf8)
   return dst;
 }
 
-
 wxFileName
 Utf8ToFileName (const char * srcUtf8)
 {
@@ -504,7 +503,6 @@ Utf8ToFileName (const char * srcUtf8)
 
   return dst;
 }
-
 
 wxString
 Utf8ToLocal (const std::string& srcUtf8)

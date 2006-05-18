@@ -232,7 +232,7 @@ namespace svn
 
     /**
      * Updates the file or directory.
-     * @param Targets target files.
+     * @param targets target files.
      * @param revision the revision number to checkout. 
      *                 Revision::HEAD will checkout the 
      *                 latest revision.
@@ -241,8 +241,10 @@ namespace svn
      * @exception ClientException
      */
     void
-    update2 (const Targets & targets, const Revision & revision, 
-             bool recurse, bool ignore_externals) throw (ClientException);
+    update2 (const Targets & targets,
+             const Revision & revision, 
+             bool recurse,
+             bool ignore_externals) throw (ClientException);
 
     /**
      * Retrieves the contents for a specific @a revision of
@@ -250,6 +252,7 @@ namespace svn
      *
      * @param path path of file or directory
      * @param revision revision to retrieve
+     * @param peg_revision peg revision to retrieve, by default is the latest one
      * @return contents of the file
      */
     std::string
@@ -300,6 +303,7 @@ namespace svn
      * @param targets files to commit.
      * @param message log message.
      * @param recurse whether the operation should be done recursively.
+     * @param keep_locks whether to preserve locks or to release them after commit
      * @exception ClientException
      */
     svn_revnum_t
