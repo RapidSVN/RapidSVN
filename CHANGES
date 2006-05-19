@@ -1,3 +1,56 @@
+Version 0.9.2 (released May 19 2006)
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.2
+
+User-visible changes:
+
+* 305 New: Display changes in directories
+* 362 New: Improve menu accessibility in localizations
+* 363 New: Run all actions in the background
+* 367 New: Allow multiple targets for copy and move
+* 372 New: Add French translation
+* 392 New: Update RapidSVN website
+* 171 Fixed: svn_path_join: Assertion `is_canonical (base, blen)' failed
+* 176 Fixed: Repository name with Accent
+* 215 Fixed: Double click on a directory doesn't work
+* 306 Fixed: Recursive Add on a folder causes the navigation to stop work
+* 333 Fixed: make error if xsl-stylesheets arent found
+* 358 Fixed: Invalid shell syntax in configure.in
+* 364 Fixed: Mac+GTK: Update, etc very vers slow
+* 366 Fixed: Improve sorting
+* 371 Fixed: Execution is too slow compared to command-line SVN
+* 375 Fixed: Delete folder does not work
+* 379 Fixed: Export doesn't work - wrong parameter format
+* 380 Fixed: Action canceling with button causes disfunctionality
+* 381 Fixed: 'Refresh View' updates file list and hides it afterwards
+* 382 Fixed: rapidsvn: Assertion `is_canonical (path->data, path->len)' failed
+* 383 Fixed: Rapid forgets that action is running if try to start the second one
+* 384 Fixed: First character omitted from repos folders
+* 386 Fixed: Diretory names truncated with svn://
+* 387 Fixed: Cannot create a directory directly in repository
+* 388 Fixed: Cannot create a new tag
+* 389 Fixed: Directories shown empty when "Refresh with update"
+* 393 Fixed: No SSL support in multithreaded Rapid
+* 394 Fixed: Compile error with wxGTK 2.4.2
+* 395 Fixed: 'Refresh View' invalid behaviour towards actions
+* 396 Fixed: Filelist or/and folder browser not updated after actions
+* 397 Fixed: Directory names sometimes not shown in repository
+* 398 Fixed: Context menu doesn't hide when it has to
+* 399 Fixed: Diff window controls activate inappropriately
+* 400 Fixed: Repository Bookmark shows incorrect names
+* 401 Fixed: Urls and paths displayed incorrectly in file info
+* 403 Fixed: Copying current directory to its child not forbidden
+
+Developer-visible changes:
+
+* 376 New: Add hideable menu tests for debugging
+* 357 Fixed: doc/manpages/rapidsvn.xml not included in distribution
+* 359 Fixed: ´make dist´ fails in packages/os
+* 365 Fixed: "make dist" fails if cppunit is not installed
+
+Work in progress (not completed):
+* 402 Improve interface accesibility (tabs, default buttons etc)
+* 404 Update translations
+
 Version 0.9.1 (released Feb 10 2006)
 http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.1
 
