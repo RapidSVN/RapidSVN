@@ -20,25 +20,35 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classsvn_1_1Path.html">Path</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a3">operator=</a> (const <a class="el" href="classsvn_1_1Path.html">Path</a> &amp;)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const std::string &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a4">path</a> () const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a4">operator==</a> (const <a class="el" href="classsvn_1_1Path.html">Path</a> &amp;) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a5">c_str</a> () const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const std::string &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a5">path</a> () const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a6">isset</a> () const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a6">c_str</a> () const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a7">isUrl</a> () const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a7">isset</a> () const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a8">addComponent</a> (const char *component)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a8">isUrl</a> () const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a9">addComponent</a> (const std::string &amp;component)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a9">addComponent</a> (const char *component)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a10">split</a> (std::string &amp;dirpath, std::string &amp;basename) const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a10">addComponent</a> (const std::string &amp;component)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a11">split</a> (std::string &amp;dir, std::string &amp;filename, std::string &amp;ext) const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a11">split</a> (std::string &amp;dirpath, std::string &amp;basename) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a12">length</a> () const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a12">split</a> (std::string &amp;dir, std::string &amp;filename, std::string &amp;ext) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a13">native</a> () const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a13">basename</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a14">dirpath</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a15">substr</a> (const size_t index) const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a16">unescape</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a17">length</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#a18">native</a> () const </td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="classsvn_1_1Path.html">Path</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#e0">getTempDir</a> ()</td></tr>
@@ -152,7 +162,7 @@ Copy constructor<p>
   </tr>
 </table>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="a9"></a><!-- doxytag: member="svn::Path::addComponent" ref="a9" args="(const std::string &amp;component)" --><p>
+<a class="anchor" name="a10"></a><!-- doxytag: member="svn::Path::addComponent" ref="a10" args="(const std::string &amp;component)" --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -186,7 +196,7 @@ adds a new URL component to the path<p>
     </td>
   </tr>
 </table>
-<a class="anchor" name="a8"></a><!-- doxytag: member="svn::Path::addComponent" ref="a8" args="(const char *component)" --><p>
+<a class="anchor" name="a9"></a><!-- doxytag: member="svn::Path::addComponent" ref="a9" args="(const char *component)" --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -220,7 +230,36 @@ adds a new URL component to the path<p>
     </td>
   </tr>
 </table>
-<a class="anchor" name="a5"></a><!-- doxytag: member="svn::Path::c_str" ref="a5" args="() const " --><p>
+<a class="anchor" name="a13"></a><!-- doxytag: member="svn::Path::basename" ref="a13" args="() const " --><p>
+<table class="mdTable" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="mdRow">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top">std::string svn::Path::basename           </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap>          </td>
+          <td class="md" valign="top">&nbsp;)&nbsp;</td>
+          <td class="md" nowrap> const</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing="5" cellpadding="0" border="0">
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+get a basename of a file<p>
+<dl compact><dt><b>Returns:</b></dt><dd>basename filename without path</dd></dl>
+    </td>
+  </tr>
+</table>
+<a class="anchor" name="a6"></a><!-- doxytag: member="svn::Path::c_str" ref="a6" args="() const " --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -245,6 +284,35 @@ adds a new URL component to the path<p>
 
 <p>
 <dl compact><dt><b>Returns:</b></dt><dd><a class="el" href="classsvn_1_1Path.html">Path</a> string as c string</dd></dl>
+    </td>
+  </tr>
+</table>
+<a class="anchor" name="a14"></a><!-- doxytag: member="svn::Path::dirpath" ref="a14" args="() const " --><p>
+<table class="mdTable" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="mdRow">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top">std::string svn::Path::dirpath           </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap>          </td>
+          <td class="md" valign="top">&nbsp;)&nbsp;</td>
+          <td class="md" nowrap> const</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing="5" cellpadding="0" border="0">
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+get a name of directory containing file<p>
+<dl compact><dt><b>Returns:</b></dt><dd>dirpath path of directory</dd></dl>
     </td>
   </tr>
 </table>
@@ -275,7 +343,7 @@ adds a new URL component to the path<p>
 returns the temporary directory    </td>
   </tr>
 </table>
-<a class="anchor" name="a6"></a><!-- doxytag: member="svn::Path::isset" ref="a6" args="() const " --><p>
+<a class="anchor" name="a7"></a><!-- doxytag: member="svn::Path::isset" ref="a7" args="() const " --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -304,7 +372,7 @@ check whether a path is set. Right now this checks only if the string is non- em
     </td>
   </tr>
 </table>
-<a class="anchor" name="a7"></a><!-- doxytag: member="svn::Path::isUrl" ref="a7" args="() const " --><p>
+<a class="anchor" name="a8"></a><!-- doxytag: member="svn::Path::isUrl" ref="a8" args="() const " --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -333,7 +401,7 @@ shows whether we have a path or url<p>
     </td>
   </tr>
 </table>
-<a class="anchor" name="a12"></a><!-- doxytag: member="svn::Path::length" ref="a12" args="() const " --><p>
+<a class="anchor" name="a17"></a><!-- doxytag: member="svn::Path::length" ref="a17" args="() const " --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -360,7 +428,7 @@ shows whether we have a path or url<p>
 return the length of the path-string     </td>
   </tr>
 </table>
-<a class="anchor" name="a13"></a><!-- doxytag: member="svn::Path::native" ref="a13" args="() const " --><p>
+<a class="anchor" name="a18"></a><!-- doxytag: member="svn::Path::native" ref="a18" args="() const " --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -415,7 +483,35 @@ returns the path with native separators     </td>
 Assignment operator    </td>
   </tr>
 </table>
-<a class="anchor" name="a4"></a><!-- doxytag: member="svn::Path::path" ref="a4" args="() const " --><p>
+<a class="anchor" name="a4"></a><!-- doxytag: member="svn::Path::operator==" ref="a4" args="(const Path &amp;) const " --><p>
+<table class="mdTable" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="mdRow">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top">bool svn::Path::operator==           </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="md" nowrap valign="top">const <a class="el" href="classsvn_1_1Path.html">Path</a> &amp;&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap>          </td>
+          <td class="md" valign="top">&nbsp;)&nbsp;</td>
+          <td class="md" nowrap> const</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing="5" cellpadding="0" border="0">
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+Comparison operator    </td>
+  </tr>
+</table>
+<a class="anchor" name="a5"></a><!-- doxytag: member="svn::Path::path" ref="a5" args="() const " --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -443,7 +539,7 @@ Assignment operator    </td>
     </td>
   </tr>
 </table>
-<a class="anchor" name="a11"></a><!-- doxytag: member="svn::Path::split" ref="a11" args="(std::string &amp;dir, std::string &amp;filename, std::string &amp;ext) const " --><p>
+<a class="anchor" name="a12"></a><!-- doxytag: member="svn::Path::split" ref="a12" args="(std::string &amp;dir, std::string &amp;filename, std::string &amp;ext) const " --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -494,7 +590,7 @@ split path in its components including file extension<p>
     </td>
   </tr>
 </table>
-<a class="anchor" name="a10"></a><!-- doxytag: member="svn::Path::split" ref="a10" args="(std::string &amp;dirpath, std::string &amp;basename) const " --><p>
+<a class="anchor" name="a11"></a><!-- doxytag: member="svn::Path::split" ref="a11" args="(std::string &amp;dirpath, std::string &amp;basename) const " --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -538,9 +634,73 @@ split path in its components<p>
     </td>
   </tr>
 </table>
+<a class="anchor" name="a15"></a><!-- doxytag: member="svn::Path::substr" ref="a15" args="(const size_t index) const " --><p>
+<table class="mdTable" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="mdRow">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top">std::string svn::Path::substr           </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="md" nowrap valign="top">const size_t&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap> <em>index</em>          </td>
+          <td class="md" valign="top">&nbsp;)&nbsp;</td>
+          <td class="md" nowrap> const</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing="5" cellpadding="0" border="0">
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+get a substring of a path, starting at index<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>index</em>&nbsp;</td><td></td></tr>
+  </table>
+</dl>
+<dl compact><dt><b>Returns:</b></dt><dd>substr substring</dd></dl>
+    </td>
+  </tr>
+</table>
+<a class="anchor" name="a16"></a><!-- doxytag: member="svn::Path::unescape" ref="a16" args="() const " --><p>
+<table class="mdTable" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="mdRow">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top">std::string svn::Path::unescape           </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap>          </td>
+          <td class="md" valign="top">&nbsp;)&nbsp;</td>
+          <td class="md" nowrap> const</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing="5" cellpadding="0" border="0">
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+return path as a string with unescaped special characters<p>
+<dl compact><dt><b>Returns:</b></dt><dd>unescaped path</dd></dl>
+    </td>
+  </tr>
+</table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="path_8hpp-source.html">path.hpp</a></ul>
-<hr size="1"><address style="align: right;"><small>Generated on Fri Feb 10 23:45:31 2006 for SvnCpp by&nbsp;
+<hr size="1"><address style="align: right;"><small>Generated on Sun May 21 18:51:37 2006 for SvnCpp by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.4 </small></address>
 </body>

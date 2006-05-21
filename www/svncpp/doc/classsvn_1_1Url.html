@@ -21,7 +21,9 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Url.html#e1">escape</a> (const char *url)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Url.html#e2">supportedSchemas</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Url.html#e2">unescape</a> (const char *url)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static std::vector&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Url.html#e3">supportedSchemas</a> ()</td></tr>
 
 </table>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
@@ -138,7 +140,7 @@ Checks if <em>url</em> is valid<p>
 Example of a valid URL: <a href="http://svn.collab.net/repos/svn">http://svn.collab.net/repos/svn</a> Example of an invalid URL: /home/foo/bar    </td>
   </tr>
 </table>
-<a class="anchor" name="e2"></a><!-- doxytag: member="svn::Url::supportedSchemas" ref="e2" args="()" --><p>
+<a class="anchor" name="e3"></a><!-- doxytag: member="svn::Url::supportedSchemas" ref="e3" args="()" --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -168,9 +170,38 @@ returns a vector with url schemas that are supported by svn<p>
     </td>
   </tr>
 </table>
+<a class="anchor" name="e2"></a><!-- doxytag: member="svn::Url::unescape" ref="e2" args="(const char *url)" --><p>
+<table class="mdTable" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="mdRow">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top">static std::string svn::Url::unescape           </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="md" nowrap valign="top">const char *&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap> <em>url</em>          </td>
+          <td class="md" valign="top">&nbsp;)&nbsp;</td>
+          <td class="md" nowrap><code> [static]</code></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing="5" cellpadding="0" border="0">
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+returns a url with forbidden charachters like spaces unescaped<p>
+Undo the changes done by the previous function, escape ()    </td>
+  </tr>
+</table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="url_8hpp-source.html">url.hpp</a></ul>
-<hr size="1"><address style="align: right;"><small>Generated on Fri Feb 10 23:45:31 2006 for SvnCpp by&nbsp;
+<hr size="1"><address style="align: right;"><small>Generated on Sun May 21 18:51:37 2006 for SvnCpp by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.4 </small></address>
 </body>

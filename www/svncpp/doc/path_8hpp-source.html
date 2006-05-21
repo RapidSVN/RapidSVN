@@ -38,75 +38,82 @@
 <a name="l00029"></a>00029 <span class="comment">// stl</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00031"></a>00031 
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>svn
-<a name="l00034"></a>00034 {
-<a name="l00038"></a><a class="code" href="classsvn_1_1Path.html">00038</a>   <span class="keyword">class </span><a class="code" href="classsvn_1_1Path.html">Path</a>
-<a name="l00039"></a>00039   {
-<a name="l00040"></a>00040   <span class="keyword">private</span>:
-<a name="l00041"></a>00041     std::string m_path;
+<a name="l00032"></a>00032 <span class="keyword">namespace </span>svn
+<a name="l00033"></a>00033 {
+<a name="l00037"></a><a class="code" href="classsvn_1_1Path.html">00037</a>   <span class="keyword">class </span><a class="code" href="classsvn_1_1Path.html">Path</a>
+<a name="l00038"></a>00038   {
+<a name="l00039"></a>00039   <span class="keyword">private</span>:
+<a name="l00040"></a>00040     std::string m_path;
+<a name="l00041"></a>00041     <span class="keywordtype">bool</span> m_pathIsUrl;
 <a name="l00042"></a>00042 
-<a name="l00043"></a>00043     <span class="keywordtype">bool</span> m_pathIsUrl;
-<a name="l00044"></a>00044 
-<a name="l00050"></a>00050     <span class="keywordtype">void</span> init (<span class="keyword">const</span> <span class="keywordtype">char</span> * <a class="code" href="classsvn_1_1Path.html#a4">path</a>);
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052   <span class="keyword">public</span>:
-<a name="l00060"></a>00060     <a class="code" href="classsvn_1_1Path.html#a0">Path</a> (<span class="keyword">const</span> std::string &amp; path = <span class="stringliteral">""</span>);
-<a name="l00061"></a>00061     
-<a name="l00068"></a>00068     <a class="code" href="classsvn_1_1Path.html#a0">Path</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * path);
-<a name="l00069"></a>00069 
-<a name="l00075"></a>00075     <a class="code" href="classsvn_1_1Path.html#a0">Path</a> (<span class="keyword">const</span> <a class="code" href="classsvn_1_1Path.html">Path</a> &amp; path);
-<a name="l00076"></a>00076 
-<a name="l00080"></a>00080     <a class="code" href="classsvn_1_1Path.html">Path</a>&amp; <a class="code" href="classsvn_1_1Path.html#a3">operator= </a>(<span class="keyword">const</span> <a class="code" href="classsvn_1_1Path.html">Path</a>&amp;);
-<a name="l00081"></a>00081 
-<a name="l00085"></a>00085     <span class="keyword">const</span> std::string &amp;
-<a name="l00086"></a>00086     <a class="code" href="classsvn_1_1Path.html#a4">path</a> () <span class="keyword">const</span>;
-<a name="l00087"></a>00087 
-<a name="l00091"></a>00091     <span class="keyword">const</span> <span class="keywordtype">char</span> * 
-<a name="l00092"></a>00092     <a class="code" href="classsvn_1_1Path.html#a5">c_str</a> () <span class="keyword">const</span>;
-<a name="l00093"></a>00093 
-<a name="l00101"></a>00101     <span class="keywordtype">bool</span> 
-<a name="l00102"></a>00102     <a class="code" href="classsvn_1_1Path.html#a6">isset</a> () <span class="keyword">const</span>;
-<a name="l00103"></a>00103 
-<a name="l00109"></a>00109     <span class="keyword">const</span> <span class="keywordtype">bool</span>
-<a name="l00110"></a>00110     <a class="code" href="classsvn_1_1Path.html#a7">isUrl</a> () <span class="keyword">const</span>;
-<a name="l00111"></a>00111 
-<a name="l00117"></a>00117     <span class="keywordtype">void</span>
-<a name="l00118"></a>00118     <a class="code" href="classsvn_1_1Path.html#a8">addComponent</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * component);
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120 
-<a name="l00126"></a>00126     <span class="keywordtype">void</span>
-<a name="l00127"></a>00127     <a class="code" href="classsvn_1_1Path.html#a8">addComponent</a> (<span class="keyword">const</span> std::string &amp; component);
-<a name="l00128"></a>00128 
-<a name="l00129"></a>00129 
-<a name="l00136"></a>00136     <span class="keywordtype">void</span>
-<a name="l00137"></a>00137     <a class="code" href="classsvn_1_1Path.html#a10">split</a> (std::string &amp; dirpath, std::string &amp; basename) <span class="keyword">const</span>;
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139 
-<a name="l00148"></a>00148     <span class="keywordtype">void</span>
-<a name="l00149"></a>00149     <a class="code" href="classsvn_1_1Path.html#a10">split</a> (std::string &amp; dir, std::string &amp; filename, std::string &amp; ext) <span class="keyword">const</span>;
-<a name="l00150"></a>00150 
+<a name="l00048"></a>00048     <span class="keywordtype">void</span> init (<span class="keyword">const</span> <span class="keywordtype">char</span> * <a class="code" href="classsvn_1_1Path.html#a5">path</a>);
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050   <span class="keyword">public</span>:
+<a name="l00058"></a>00058     <a class="code" href="classsvn_1_1Path.html#a0">Path</a> (<span class="keyword">const</span> std::string &amp; path = <span class="stringliteral">""</span>);
+<a name="l00059"></a>00059     
+<a name="l00066"></a>00066     <a class="code" href="classsvn_1_1Path.html#a0">Path</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * path);
+<a name="l00067"></a>00067 
+<a name="l00073"></a>00073     <a class="code" href="classsvn_1_1Path.html#a0">Path</a> (<span class="keyword">const</span> <a class="code" href="classsvn_1_1Path.html">Path</a> &amp; path);
+<a name="l00074"></a>00074 
+<a name="l00078"></a>00078     <a class="code" href="classsvn_1_1Path.html">Path</a>&amp; <a class="code" href="classsvn_1_1Path.html#a3">operator= </a>(<span class="keyword">const</span> <a class="code" href="classsvn_1_1Path.html">Path</a>&amp;);
+<a name="l00079"></a>00079 
+<a name="l00083"></a>00083     <span class="keywordtype">bool</span>
+<a name="l00084"></a>00084     <a class="code" href="classsvn_1_1Path.html#a4">operator== </a>(<span class="keyword">const</span> <a class="code" href="classsvn_1_1Path.html">Path</a>&amp;) <span class="keyword">const</span>;
+<a name="l00085"></a>00085 
+<a name="l00089"></a>00089     <span class="keyword">const</span> std::string &amp;
+<a name="l00090"></a>00090     <a class="code" href="classsvn_1_1Path.html#a5">path</a> () <span class="keyword">const</span>;
+<a name="l00091"></a>00091 
+<a name="l00095"></a>00095     <span class="keyword">const</span> <span class="keywordtype">char</span> * 
+<a name="l00096"></a>00096     <a class="code" href="classsvn_1_1Path.html#a6">c_str</a> () <span class="keyword">const</span>;
+<a name="l00097"></a>00097 
+<a name="l00105"></a>00105     <span class="keywordtype">bool</span> 
+<a name="l00106"></a>00106     <a class="code" href="classsvn_1_1Path.html#a7">isset</a> () <span class="keyword">const</span>;
+<a name="l00107"></a>00107 
+<a name="l00113"></a>00113     <span class="keyword">const</span> <span class="keywordtype">bool</span>
+<a name="l00114"></a>00114     <a class="code" href="classsvn_1_1Path.html#a8">isUrl</a> () <span class="keyword">const</span>;
+<a name="l00115"></a>00115 
+<a name="l00121"></a>00121     <span class="keywordtype">void</span>
+<a name="l00122"></a>00122     <a class="code" href="classsvn_1_1Path.html#a9">addComponent</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * component);
+<a name="l00123"></a>00123 
+<a name="l00129"></a>00129     <span class="keywordtype">void</span>
+<a name="l00130"></a>00130     <a class="code" href="classsvn_1_1Path.html#a9">addComponent</a> (<span class="keyword">const</span> std::string &amp; component);
+<a name="l00131"></a>00131 
+<a name="l00138"></a>00138     <span class="keywordtype">void</span>
+<a name="l00139"></a>00139     <a class="code" href="classsvn_1_1Path.html#a11">split</a> (std::string &amp; <a class="code" href="classsvn_1_1Path.html#a14">dirpath</a>, std::string &amp; <a class="code" href="classsvn_1_1Path.html#a13">basename</a>) <span class="keyword">const</span>;
+<a name="l00140"></a>00140 
+<a name="l00149"></a>00149     <span class="keywordtype">void</span>
+<a name="l00150"></a>00150     <a class="code" href="classsvn_1_1Path.html#a11">split</a> (std::string &amp; dir, std::string &amp; filename, std::string &amp; ext) <span class="keyword">const</span>;
 <a name="l00151"></a>00151 
-<a name="l00155"></a>00155     <span class="keyword">static</span> <a class="code" href="classsvn_1_1Path.html">Path</a>
-<a name="l00156"></a>00156     <a class="code" href="classsvn_1_1Path.html#e0">getTempDir</a> ();
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158 
-<a name="l00160"></a>00160     size_t 
-<a name="l00161"></a>00161     <a class="code" href="classsvn_1_1Path.html#a12">length</a> () <span class="keyword">const</span>;
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163 
+<a name="l00157"></a>00157     std::string
+<a name="l00158"></a>00158     <a class="code" href="classsvn_1_1Path.html#a13">basename</a> () <span class="keyword">const</span>;
+<a name="l00159"></a>00159 
 <a name="l00165"></a>00165     std::string
-<a name="l00166"></a>00166     <a class="code" href="classsvn_1_1Path.html#a13">native</a> () <span class="keyword">const</span>;
-<a name="l00167"></a>00167   };
-<a name="l00168"></a>00168 }
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170 <span class="preprocessor">#endif</span>
-<a name="l00171"></a>00171 <span class="preprocessor"></span><span class="comment">/* -----------------------------------------------------------------</span>
-<a name="l00172"></a>00172 <span class="comment"> * local variables:</span>
-<a name="l00173"></a>00173 <span class="comment"> * eval: (load-file "../../rapidsvn-dev.el")</span>
-<a name="l00174"></a>00174 <span class="comment"> * end:</span>
-<a name="l00175"></a>00175 <span class="comment"> */</span>
-</pre></div><hr size="1"><address style="align: right;"><small>Generated on Fri Feb 10 23:45:26 2006 for SvnCpp by&nbsp;
+<a name="l00166"></a>00166     <a class="code" href="classsvn_1_1Path.html#a14">dirpath</a> () <span class="keyword">const</span>;
+<a name="l00167"></a>00167 
+<a name="l00174"></a>00174     std::string
+<a name="l00175"></a>00175     <a class="code" href="classsvn_1_1Path.html#a15">substr</a> (<span class="keyword">const</span> size_t index) <span class="keyword">const</span>;
+<a name="l00176"></a>00176 
+<a name="l00182"></a>00182     std::string
+<a name="l00183"></a>00183     <a class="code" href="classsvn_1_1Path.html#a16">unescape</a> () <span class="keyword">const</span>;
+<a name="l00184"></a>00184 
+<a name="l00188"></a>00188     <span class="keyword">static</span> <a class="code" href="classsvn_1_1Path.html">Path</a>
+<a name="l00189"></a>00189     <a class="code" href="classsvn_1_1Path.html#e0">getTempDir</a> ();
+<a name="l00190"></a>00190 
+<a name="l00192"></a>00192     size_t 
+<a name="l00193"></a>00193     <a class="code" href="classsvn_1_1Path.html#a17">length</a> () <span class="keyword">const</span>;
+<a name="l00194"></a>00194 
+<a name="l00196"></a>00196     std::string
+<a name="l00197"></a>00197     <a class="code" href="classsvn_1_1Path.html#a18">native</a> () <span class="keyword">const</span>;
+<a name="l00198"></a>00198   };
+<a name="l00199"></a>00199 }
+<a name="l00200"></a>00200 
+<a name="l00201"></a>00201 <span class="preprocessor">#endif</span>
+<a name="l00202"></a>00202 <span class="preprocessor"></span><span class="comment">/* -----------------------------------------------------------------</span>
+<a name="l00203"></a>00203 <span class="comment"> * local variables:</span>
+<a name="l00204"></a>00204 <span class="comment"> * eval: (load-file "../../rapidsvn-dev.el")</span>
+<a name="l00205"></a>00205 <span class="comment"> * end:</span>
+<a name="l00206"></a>00206 <span class="comment"> */</span>
+</pre></div><hr size="1"><address style="align: right;"><small>Generated on Sun May 21 18:51:33 2006 for SvnCpp by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.4 </small></address>
 </body>

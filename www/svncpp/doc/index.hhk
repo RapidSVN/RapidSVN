@@ -8,7 +8,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1ContextListener.html#w3w1"><param name="Name" value="ACCEPT_TEMPORARILY"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogChangePathEntry.html#o1"><param name="Name" value="action"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a13"><param name="Name" value="add"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a9"><param name="Name" value="addComponent"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a10"><param name="Name" value="addComponent"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Wc.html#s0"><param name="Name" value="ADM_DIR_NAME"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a18"><param name="Name" value="annotate"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#a6"><param name="Name" value="AnnotatedFile"></OBJECT>
@@ -22,7 +22,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogEntry.html#o1"><param name="Name" value="svn::LogEntry"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#s1"><param name="Name" value="BASE"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a5"><param name="Name" value="c_str"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a13"><param name="Name" value="basename"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a6"><param name="Name" value="c_str"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a16"><param name="Name" value="cat"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogEntry.html#o3"><param name="Name" value="changedPaths"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a6"><param name="Name" value="checkout"></OBJECT>
@@ -64,6 +65,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a33"><param name="Name" value="diff"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#a5"><param name="Name" value="DirEntries"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#a0"><param name="Name" value="DirEntry"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a14"><param name="Name" value="dirpath"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a27"><param name="Name" value="doExport2"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a26"><param name="Name" value="doExport"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1ContextListener.html#w3w0"><param name="Name" value="DONT_ACCEPT"></OBJECT>
@@ -98,10 +100,10 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#a12"><param name="Name" value="isDeleted"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#a12"><param name="Name" value="isLocked"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#a13"><param name="Name" value="isRepLock"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a6"><param name="Name" value="isset"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a7"><param name="Name" value="isset"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#o5"><param name="Name" value="issuerDName"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#a9"><param name="Name" value="isSwitched"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a7"><param name="Name" value="isUrl"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a8"><param name="Name" value="isUrl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#a6"><param name="Name" value="IsValid"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#a3"><param name="Name" value="isValid"></OBJECT>
   <UL>
@@ -116,7 +118,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#a8"><param name="Name" value="svn::Revision"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#a11"><param name="Name" value="lastAuthor"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a12"><param name="Name" value="length"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a17"><param name="Name" value="length"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1AnnotateLine.html#a7"><param name="Name" value="line"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1AnnotateLine.html#a3"><param name="Name" value="lineNumber"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a35"><param name="Name" value="list"></OBJECT>
@@ -146,7 +148,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#a4"><param name="Name" value="svn::Entry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1PropertyEntry.html#o0"><param name="Name" value="svn::PropertyEntry"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a13"><param name="Name" value="native"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a18"><param name="Name" value="native"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Pool.html#a3"><param name="Name" value="operator apr_pool_t *"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Targets.html#a8"><param name="Name" value="operator const std::vector"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Context.html#a5"><param name="Name" value="operator svn_client_ctx_t *"></OBJECT>
@@ -154,8 +156,13 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#a26"><param name="Name" value="operator svn_wc_entry_t *"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#a5"><param name="Name" value="operator!="></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#a4"><param name="Name" value="operator=="></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#a3"><param name="Name" value="operator="></OBJECT>
   <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#a4"><param name="Name" value="svn::DateTime"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a4"><param name="Name" value="svn::Path"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#a2"><param name="Name" value="operator="></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#a2"><param name="Name" value="svn::ContextListener::SslServerTrustData"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#a3"><param name="Name" value="svn::DateTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#a4"><param name="Name" value="svn::DirEntry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#a27"><param name="Name" value="svn::Entry"></OBJECT>
@@ -165,7 +172,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogChangePathEntry.html#o0"><param name="Name" value="path"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogChangePathEntry.html#o0"><param name="Name" value="svn::LogChangePathEntry"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a4"><param name="Name" value="svn::Path"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a5"><param name="Name" value="svn::Path"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a0"><param name="Name" value="Path"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#a3"><param name="Name" value="path"></OBJECT>
@@ -224,14 +231,15 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#a7"><param name="Name" value="svn::DirEntry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Targets.html#a7"><param name="Name" value="svn::Targets"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a11"><param name="Name" value="split"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a12"><param name="Name" value="split"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1ContextListener.html#w3"><param name="Name" value="SslServerTrustAnswer"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#a0"><param name="Name" value="SslServerTrustData"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#s0"><param name="Name" value="START"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a4"><param name="Name" value="status"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#a0"><param name="Name" value="Status"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#a4"><param name="Name" value="StatusEntries"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#e2"><param name="Name" value="supportedSchemas"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a15"><param name="Name" value="substr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#e3"><param name="Name" value="supportedSchemas"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#a2"><param name="Name" value="SUPPORTS_EXTERNALS"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#a0"><param name="Name" value="SUPPORTS_LOCK"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#a1"><param name="Name" value="SUPPORTS_PEG"></OBJECT>
@@ -323,6 +331,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#o1"><param name="Name" value="hostname"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#o5"><param name="Name" value="issuerDName"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#o7"><param name="Name" value="maySave"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#a2"><param name="Name" value="operator="></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#o6"><param name="Name" value="realm"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#a0"><param name="Name" value="SslServerTrustData"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#o3"><param name="Name" value="validFrom"></OBJECT>
@@ -423,17 +432,22 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html"><param name="Name" value="svn::Path"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a9"><param name="Name" value="addComponent"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a5"><param name="Name" value="c_str"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a10"><param name="Name" value="addComponent"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a13"><param name="Name" value="basename"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a6"><param name="Name" value="c_str"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a14"><param name="Name" value="dirpath"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#e0"><param name="Name" value="getTempDir"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a6"><param name="Name" value="isset"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a7"><param name="Name" value="isUrl"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a12"><param name="Name" value="length"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a13"><param name="Name" value="native"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a7"><param name="Name" value="isset"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a8"><param name="Name" value="isUrl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a17"><param name="Name" value="length"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a18"><param name="Name" value="native"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a3"><param name="Name" value="operator="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a4"><param name="Name" value="path"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a4"><param name="Name" value="operator=="></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a5"><param name="Name" value="path"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a0"><param name="Name" value="Path"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a11"><param name="Name" value="split"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a12"><param name="Name" value="split"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a15"><param name="Name" value="substr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a16"><param name="Name" value="unescape"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Pool.html"><param name="Name" value="svn::Pool"></OBJECT>
   <UL>
@@ -506,7 +520,8 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#e1"><param name="Name" value="escape"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#e0"><param name="Name" value="isValid"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#e2"><param name="Name" value="supportedSchemas"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#e3"><param name="Name" value="supportedSchemas"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#e2"><param name="Name" value="unescape"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#a0"><param name="Name" value="Url"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#a1"><param name="Name" value="~Url"></OBJECT>
   </UL>
@@ -535,6 +550,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#a5"><param name="Name" value="textStatus"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#a20"><param name="Name" value="textTime"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#a10"><param name="Name" value="time"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a16"><param name="Name" value="unescape"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#a16"><param name="Name" value="svn::Path"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#e2"><param name="Name" value="svn::Url"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a11"><param name="Name" value="unlock"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a15"><param name="Name" value="update2"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#a14"><param name="Name" value="update"></OBJECT>

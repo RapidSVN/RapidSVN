@@ -56,9 +56,9 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Client.html#a21">move</a> (const <a class="el" href="classsvn_1_1Path.html">Path</a> &amp;srcPath, const <a class="el" href="classsvn_1_1Revision.html">Revision</a> &amp;srcRevision, const <a class="el" href="classsvn_1_1Path.html">Path</a> &amp;destPath, bool force)  throw (ClientException)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Client.html#a22">mkdir</a> (const <a class="el" href="classsvn_1_1Path.html">Path</a> &amp;path, const char *message)  throw (ClientException)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Client.html#a22">mkdir</a> (const <a class="el" href="classsvn_1_1Path.html">Path</a> &amp;path, const char *message=&quot;&quot;)  throw (ClientException)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Client.html#a23">mkdir</a> (const <a class="el" href="classsvn_1_1Targets.html">Targets</a> &amp;targets, const char *message)  throw (ClientException)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Client.html#a23">mkdir</a> (const <a class="el" href="classsvn_1_1Targets.html">Targets</a> &amp;targets, const char *message=&quot;&quot;)  throw (ClientException)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Client.html#a24">cleanup</a> (const <a class="el" href="classsvn_1_1Path.html">Path</a> &amp;path)  throw (ClientException)</td></tr>
 
@@ -300,6 +300,7 @@ Retrieves the contents for a specific <em>revision</em> of a <em>path</em> <p>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>path</em>&nbsp;</td><td>path of file or directory </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>revision</em>&nbsp;</td><td>revision to retrieve </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>peg_revision</em>&nbsp;</td><td>peg revision to retrieve, by default is the latest one </td></tr>
   </table>
 </dl>
 <dl compact><dt><b>Returns:</b></dt><dd>contents of the file</dd></dl>
@@ -472,6 +473,7 @@ Commits changes to the repository. This usually requires authentication, see Aut
     <tr><td valign="top"></td><td valign="top"><em>targets</em>&nbsp;</td><td>files to commit. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>message</em>&nbsp;</td><td>log message. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>recurse</em>&nbsp;</td><td>whether the operation should be done recursively. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>keep_locks</em>&nbsp;</td><td>whether to preserve locks or to release them after commit </td></tr>
   </table>
 </dl>
 <dl compact><dt><b>Exceptions:</b></dt><dd>
@@ -1313,7 +1315,7 @@ Merge changes from two paths into a new local path. <dl compact><dt><b>Exception
     </td>
   </tr>
 </table>
-<a class="anchor" name="a23"></a><!-- doxytag: member="svn::Client::mkdir" ref="a23" args="(const Targets &amp;targets, const char *message)" --><p>
+<a class="anchor" name="a23"></a><!-- doxytag: member="svn::Client::mkdir" ref="a23" args="(const Targets &amp;targets, const char *message=&quot;&quot;)" --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -1328,7 +1330,7 @@ Merge changes from two paths into a new local path. <dl compact><dt><b>Exception
           <td class="md" nowrap align="right"></td>
           <td class="md"></td>
           <td class="md" nowrap>const char *&nbsp;</td>
-          <td class="mdname" nowrap> <em>message</em></td>
+          <td class="mdname" nowrap> <em>message</em> = <code>&quot;&quot;</code></td>
         </tr>
         <tr>
           <td class="md"></td>
@@ -1350,7 +1352,7 @@ Merge changes from two paths into a new local path. <dl compact><dt><b>Exception
     </td>
   </tr>
 </table>
-<a class="anchor" name="a22"></a><!-- doxytag: member="svn::Client::mkdir" ref="a22" args="(const Path &amp;path, const char *message)" --><p>
+<a class="anchor" name="a22"></a><!-- doxytag: member="svn::Client::mkdir" ref="a22" args="(const Path &amp;path, const char *message=&quot;&quot;)" --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -1365,7 +1367,7 @@ Merge changes from two paths into a new local path. <dl compact><dt><b>Exception
           <td class="md" nowrap align="right"></td>
           <td class="md"></td>
           <td class="md" nowrap>const char *&nbsp;</td>
-          <td class="mdname" nowrap> <em>message</em></td>
+          <td class="mdname" nowrap> <em>message</em> = <code>&quot;&quot;</code></td>
         </tr>
         <tr>
           <td class="md"></td>
@@ -2444,7 +2446,7 @@ Updates the file or directory. <dl compact><dt><b>Parameters:</b></dt><dd>
 <p>
 Updates the file or directory. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em><a class="el" href="classsvn_1_1Targets.html">Targets</a></em>&nbsp;</td><td>target files. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>targets</em>&nbsp;</td><td>target files. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>revision</em>&nbsp;</td><td>the revision number to checkout. <a class="el" href="classsvn_1_1Revision.html#s2">Revision::HEAD</a> will checkout the latest revision. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>recurse</em>&nbsp;</td><td>recursively update. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>ignore_externals</em>&nbsp;</td><td>don't affect external destinations. </td></tr>
@@ -2460,7 +2462,7 @@ Updates the file or directory. <dl compact><dt><b>Parameters:</b></dt><dd>
 </table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="client_8hpp-source.html">client.hpp</a></ul>
-<hr size="1"><address style="align: right;"><small>Generated on Fri Feb 10 23:45:31 2006 for SvnCpp by&nbsp;
+<hr size="1"><address style="align: right;"><small>Generated on Sun May 21 18:51:37 2006 for SvnCpp by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.4 </small></address>
 </body>

@@ -38,25 +38,25 @@
 <a name="l00029"></a>00029 <span class="comment">// subversion api</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include "svn_pools.h"</span>
 <a name="l00031"></a>00031 
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>svn
-<a name="l00034"></a>00034 {
-<a name="l00038"></a><a class="code" href="classsvn_1_1Pool.html">00038</a>   <span class="keyword">class </span><a class="code" href="classsvn_1_1Pool.html">Pool</a>
-<a name="l00039"></a>00039   {
-<a name="l00040"></a>00040   <span class="keyword">public</span>:
-<a name="l00046"></a>00046     <a class="code" href="classsvn_1_1Pool.html#a0">Pool</a> (apr_pool_t * parent = (apr_pool_t *)0);
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048     <span class="keyword">virtual</span> <a class="code" href="classsvn_1_1Pool.html#a1">~ Pool</a> ();
-<a name="l00049"></a>00049 
-<a name="l00053"></a>00053     apr_pool_t * 
-<a name="l00054"></a>00054     <a class="code" href="classsvn_1_1Pool.html#a2">pool</a> () <span class="keyword">const</span>;
-<a name="l00055"></a>00055 
-<a name="l00059"></a><a class="code" href="classsvn_1_1Pool.html#a3">00059</a>     <a class="code" href="classsvn_1_1Pool.html#a3">operator apr_pool_t * </a>()<span class="keyword"> const </span>
-<a name="l00060"></a>00060 <span class="keyword">    </span>{
-<a name="l00061"></a>00061       <span class="keywordflow">return</span> m_pool;
-<a name="l00062"></a>00062     }
-<a name="l00063"></a>00063 
-<a name="l00067"></a>00067     <span class="keywordtype">void</span> <a class="code" href="classsvn_1_1Pool.html#a4">renew</a> ();
+<a name="l00032"></a>00032 <span class="keyword">namespace </span>svn
+<a name="l00033"></a>00033 {
+<a name="l00037"></a><a class="code" href="classsvn_1_1Pool.html">00037</a>   <span class="keyword">class </span><a class="code" href="classsvn_1_1Pool.html">Pool</a>
+<a name="l00038"></a>00038   {
+<a name="l00039"></a>00039   <span class="keyword">public</span>:
+<a name="l00045"></a>00045     <a class="code" href="classsvn_1_1Pool.html#a0">Pool</a> (apr_pool_t * parent = (apr_pool_t *)0);
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047     <span class="keyword">virtual</span> <a class="code" href="classsvn_1_1Pool.html#a1">~ Pool</a> ();
+<a name="l00048"></a>00048 
+<a name="l00052"></a>00052     apr_pool_t * 
+<a name="l00053"></a>00053     <a class="code" href="classsvn_1_1Pool.html#a2">pool</a> () <span class="keyword">const</span>;
+<a name="l00054"></a>00054 
+<a name="l00058"></a><a class="code" href="classsvn_1_1Pool.html#a3">00058</a>     <a class="code" href="classsvn_1_1Pool.html#a3">operator apr_pool_t * </a>()<span class="keyword"> const </span>
+<a name="l00059"></a>00059 <span class="keyword">    </span>{
+<a name="l00060"></a>00060       <span class="keywordflow">return</span> m_pool;
+<a name="l00061"></a>00061     }
+<a name="l00062"></a>00062 
+<a name="l00066"></a>00066     <span class="keywordtype">void</span> <a class="code" href="classsvn_1_1Pool.html#a4">renew</a> ();
+<a name="l00067"></a>00067 
 <a name="l00068"></a>00068   <span class="keyword">private</span>:
 <a name="l00069"></a>00069     apr_pool_t * m_parent;
 <a name="l00070"></a>00070     apr_pool_t * m_pool;
@@ -64,19 +64,17 @@
 <a name="l00072"></a>00072     <a class="code" href="classsvn_1_1Pool.html">Pool</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classsvn_1_1Pool.html">Pool</a>&amp;);
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074     <a class="code" href="classsvn_1_1Pool.html#a0">Pool</a> (<span class="keyword">const</span> <a class="code" href="classsvn_1_1Pool.html">Pool</a> &amp;);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077   };
-<a name="l00078"></a>00078 }
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080 <span class="preprocessor">#endif</span>
-<a name="l00081"></a>00081 <span class="preprocessor"></span>
-<a name="l00082"></a>00082 <span class="comment">/* -----------------------------------------------------------------</span>
-<a name="l00083"></a>00083 <span class="comment"> * local variables:</span>
-<a name="l00084"></a>00084 <span class="comment"> * eval: (load-file "../../rapidsvn-dev.el")</span>
-<a name="l00085"></a>00085 <span class="comment"> * end:</span>
-<a name="l00086"></a>00086 <span class="comment"> */</span>
-</pre></div><hr size="1"><address style="align: right;"><small>Generated on Fri Feb 10 23:45:26 2006 for SvnCpp by&nbsp;
+<a name="l00075"></a>00075   };
+<a name="l00076"></a>00076 }
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078 <span class="preprocessor">#endif</span>
+<a name="l00079"></a>00079 <span class="preprocessor"></span>
+<a name="l00080"></a>00080 <span class="comment">/* -----------------------------------------------------------------</span>
+<a name="l00081"></a>00081 <span class="comment"> * local variables:</span>
+<a name="l00082"></a>00082 <span class="comment"> * eval: (load-file "../../rapidsvn-dev.el")</span>
+<a name="l00083"></a>00083 <span class="comment"> * end:</span>
+<a name="l00084"></a>00084 <span class="comment"> */</span>
+</pre></div><hr size="1"><address style="align: right;"><small>Generated on Sun May 21 18:51:33 2006 for SvnCpp by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.4 </small></address>
 </body>
