@@ -391,6 +391,20 @@ public:
   }
 
   void
+  OnTreeKeyDown (wxTreeEvent & event)
+  {
+    int code = event.GetKeyCode ();
+
+    if (treeCtrl->GetSelection ().IsOk () &&
+        !treeCtrl->IsExpanded (treeCtrl->GetSelection ()))
+    {
+      if (code == '-' || code == WXK_LEFT)
+        treeCtrl->Collapse (treeCtrl->GetItemParent (treeCtrl->GetSelection ()));
+    }
+    event.Skip ();
+  }
+
+  void
   OnExpandItem (wxTreeEvent & event)
   {
     wxTreeItemId parentId = event.GetItem ();
@@ -891,6 +905,7 @@ public:
 BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
   EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
   EVT_TREE_ITEM_COLLAPSED (-1, FolderBrowser::OnCollapseItem)
+  EVT_TREE_KEY_DOWN (-1, FolderBrowser::OnTreeKeyDown)
   EVT_SIZE (FolderBrowser::OnSize)
   EVT_CONTEXT_MENU (FolderBrowser::OnContextMenu)
 END_EVENT_TABLE ()
@@ -982,6 +997,12 @@ FolderBrowser::OnSize (wxSizeEvent & WXUNUSED (event))
     wxSize size = GetClientSize ();
     m->treeCtrl->SetSize (0, 0, size.x, size.y);
   }
+}
+
+void
+FolderBrowser::OnTreeKeyDown (wxTreeEvent & event)
+{
+  m->OnTreeKeyDown (event);
 }
 
 void

@@ -213,6 +213,7 @@ private:
   DECLARE_EVENT_TABLE ()
 
   void OnSize (wxSizeEvent & event);
+  void OnTreeKeyDown (wxTreeEvent & event);
   void OnExpandItem (wxTreeEvent & event);
   void OnCollapseItem (wxTreeEvent & event);
   void OnContextMenu (wxContextMenuEvent & event);
