@@ -299,9 +299,9 @@ public:
     * @return temporary filename
     */
   svn::Path
-  Action::GetPathAsTempFile (
-    const svn::Path & path,
-    const svn::Revision & revision = svn::Revision::HEAD);
+  GetPathAsTempFile (
+		const svn::Path & path,
+		const svn::Revision & revision = svn::Revision::HEAD);
 
 protected:
   /**
