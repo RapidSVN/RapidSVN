@@ -94,7 +94,7 @@ private:
 class ProgramsPanel : public wxPanel
 {
 public:
-  ProgramsPanel::ProgramsPanel (wxWindow* parent, Preferences * prefs)
+  ProgramsPanel (wxWindow* parent, Preferences * prefs)
     : wxPanel (parent), m_prefs (prefs)
   {
     InitializeData ();
