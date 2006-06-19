@@ -111,20 +111,23 @@ class VersionChecker:
 
     def checkRapidsvnIss(self):
         fname = RAPIDSVN_ISS_FILE
+        replace(fname, "AppName=[^\n]*", 
+                 "AppName=RapidSVN-%s" % (self.version.str), 
+                 "AppName")
         replace(fname, "AppVerName=[^\n]*", 
-                 "AppVerName=RapidSVN %s" % (self.version.str), 
+                 "AppVerName=RapidSVN-%s" % (self.version.str), 
                  "AppVerName")
         replace(fname, "OutputBaseFilename=[^\n]*", \
                 "OutputBaseFilename=RapidSVN-%s" % (self.version.str),
                 "OutputBaseFilename")
         replace(fname, "DefaultDirName=[^\n]*", \
-                "DefaultDirName={pf}\RapidSVN %s" % (self.version.str),
+                "DefaultDirName={pf}\RapidSVN-%s" % (self.version.str),
                 "DefaultDirName")
         replace(fname, "DefaultGroupName=[^\n]*", \
-                "DefaultGroupName=RapidSVN %s" % (self.version.str),
+                "DefaultGroupName=RapidSVN-%s" % (self.version.str),
                 "DefaultGroupName")
         replace(fname, "userdesktop}\\\\RapidSVN[^\"]*\"", \
-                "userdesktop}\RapidSVN %s\"" % (self.version.str),
+                "userdesktop}\RapidSVN-%s\"" % (self.version.str),
                 "[Icons]\\{userdesktop}")
                 
     def checkRapidsvnRc(self):
