@@ -58,9 +58,11 @@ Contents:
         - Apache Portable Runtime (included with Subversion)
         - Neon (included with Subversion)
         - wxWidgets (for the graphical user interface)
+        - LibIntl (Windows only)
         
         Optional libraries/applications:
         - InnoSetup: installer for Windows
+        - Berkeley DB: repository access for BDB repositories
         - doxygen: for code documentation
         - graphviz: for code documentation (needed with doxygen)
         - cppunit: for the regression tests
@@ -163,7 +165,8 @@ Contents:
         The directory that contains OpenSSL in our example will be:
           C:\ZLib-1.2.3
           
-          
+
+
 3.1.3   Building Subversion 1.3.0
 
     A. Unpack
@@ -182,6 +185,11 @@ Contents:
         to the source tree. After this, the Berkeley DB directory
         should be:
           C:\Subversion-1.3.0\db4-win32
+          
+        Unpack the LibIntl "svn-win32-libintl.zip" package provided on the 
+        Subversion site and unpack it to a directory so after unpacking
+        you have a directory like:
+          C:\svn-win32-libintl
 
 
     B. Patch
@@ -219,6 +227,7 @@ Contents:
         C:\Subversion-1.3.0> python gen-make.py -t dsp \
           --with-openssl=C:\openssl-0.9.8a \
           --with-zlib=C:\zlib-1.2.3
+          --with-libintl=C:\svn-win32-libintl
         
         
     D. Compile
@@ -296,6 +305,7 @@ Contents:
         OPENSSL=C:\openssl-0.9.8a
         SUBVERSION=C:\subversion-1.3.0
         WX=C:\wxWidgets-2.6.2
+        LIBINTL=C:\svn-win32-libintl
         
         The directory that contains RapidSVN in our example will be:
           C:\RapidSVN
