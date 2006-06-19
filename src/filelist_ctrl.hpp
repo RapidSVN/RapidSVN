@@ -241,6 +241,11 @@ public:
   void
   SetContext (svn::Context * Context);
 
+  /**
+   * Makes sure the columns are updated correctly
+   */
+  void UpdateColumns ();
+
 private:
   /** private data for this class */
   struct Data;
@@ -251,7 +256,6 @@ private:
   void DeleteItem (long item);
 
   void SetColumnImages ();
-  void UpdateColumns ();
   void ApplySortChanges ();
 
   // message handlers

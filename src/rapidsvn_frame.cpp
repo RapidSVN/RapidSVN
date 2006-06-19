@@ -844,30 +844,55 @@ RapidSvnFrame::UpdateFileList ()
   if (m_listCtrl && m_folder_browser)
   {
     wxBusyCursor busy;
-    if (m_currentPath.length () == 0)
-      m_listCtrl->Show (FALSE);
-    else
+
+    try
     {
-      try
+      // HIDE
+      m_listCtrl->Show (FALSE);
+
+      // UPDATE
+      /**
+       * @todo THIS IS A WORKAOUND:
+       * Without real information to display in the 
+       * filelist (e.g. the "Bookmarks" symbol) we 
+       * could simply show a grey background.
+       * In the past we simpy used Show (FALSE).
+       * But this caused in the right area not being
+       * updated at all. 
+       * Either we have to so something special with 
+       * wxWidgets or this is a wxWidgets bug and will
+       * be fixed in there
+       */
+      if (m_currentPath.length () == 0)
+      {
+        // calling "UpdateColumns" should be necessary
+        // only for the first call. But without any
+        // items this call should be cheap.
+        m_listCtrl->DeleteAllItems ();
+        m_listCtrl->UpdateColumns ();
+      }
+      else
       {
         m_listCtrl->SetContext (m_context);
         m_listCtrl->UpdateFileList (m_currentPath);
-        m_listCtrl->Show (TRUE);
       }
-      catch (svn::ClientException & e)
-      {
-        wxString msg, errtxt (Utf8ToLocal (e.message ()));
-        msg.Printf (_("Error while updating filelist (%s)"),
-                    errtxt.c_str ());
-        TraceError (msg);
 
-        // probably unversioned resource
-        m_listCtrl->Show (FALSE);
-      }
-      catch (...)
-      {
-        TraceError (_("Error while updating filelist"));
-      }
+      // SHOW
+      m_listCtrl->Show (TRUE);
+    }
+    catch (svn::ClientException & e)
+    {
+      wxString msg, errtxt (Utf8ToLocal (e.message ()));
+      msg.Printf (_("Error while updating filelist (%s)"),
+                  errtxt.c_str ());
+      TraceError (msg);
+
+      // probably unversioned resource
+      m_listCtrl->Show (FALSE);
+    }
+    catch (...)
+    {
+      TraceError (_("Error while updating filelist"));
     }
   }
   if (!isRunning)
