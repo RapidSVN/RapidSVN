@@ -7,8 +7,21 @@ AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
 
 abs_srcdir="`cd $srcdir && pwd`"
-CPPFLAGS="$CPPFLAGS -Wall -g -fexceptions -I$abs_srcdir/include"
-CXXFLAGS="$CXXFLAGS -Wall -g -fexceptions"
+CPPFLAGS="$CPPFLAGS -I$abs_srcdir/include"
+
+dnl
+dnl GCC specifics
+dnl
+AC_MSG_CHECKING([for gcc/g++])
+if test "$GXX" == "yes" ; then
+   AC_MSG_RESULT([found (using "-Wall" and "-fexceptions")])
+   CPPFLAGS="$CPPFLAGS -Wall -fexceptions"
+   CXXFLAGS="$CXXFLAGS -Wall -fexceptions"
+else
+   AC_MSG_RESULT([non gcc/g++ compiler])
+fi
+
+
 
 dnl
 dnl APR
