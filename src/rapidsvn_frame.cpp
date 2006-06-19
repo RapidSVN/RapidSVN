@@ -93,6 +93,8 @@
 
 // Bitmaps
 #include "res/bitmaps/rapidsvn_16x16.xpm"
+#include "res/bitmaps/rapidsvn_32x32.xpm"
+#include "res/bitmaps/rapidsvn_48x48.xpm"
 #include "res/bitmaps/refresh.xpm"
 #include "res/bitmaps/update.xpm"
 #include "res/bitmaps/commit.xpm"
@@ -596,12 +598,15 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   // call to Get().
   wxConfigBase *cfg = wxConfigBase::Get ();
 
-// @todo Would be good to have an icon bundle here
-//#ifdef __WXMSW__
-//  SetIcons (wxIconBundle (wxT("rapidsvn.exe"), 0));
-//#else
+#ifdef __WXMSW__
+  wxIconBundle iconBundle;
+  iconBundle.AddIcon (wxIcon (rapidsvn_16x16_xpm));
+  iconBundle.AddIcon (wxIcon (rapidsvn_32x32_xpm));
+  iconBundle.AddIcon (wxIcon (rapidsvn_48x48_xpm));
+  SetIcons (iconBundle);
+#else
   SetIcon (wxIcon (rapidsvn_16x16_xpm));
-//#endif
+#endif
 
   // toolbar rows
   m_toolbar_rows = 1;
