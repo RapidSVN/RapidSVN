@@ -403,7 +403,7 @@ public:
     notebook->AddPage (authPanel, _("Authentication"));
 
     // buttons
-    wxButton* ok = new wxButton (wnd, wxID_CANCEL, _("OK"));
+    wxButton* ok = new wxButton (wnd, wxID_OK, _("OK"));
     button_sizer->Add (ok, 0, wxALL, 10);
 
     wxButton* cancel = new wxButton (wnd, wxID_CANCEL, _("Cancel"));
