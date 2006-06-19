@@ -598,15 +598,14 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   // call to Get().
   wxConfigBase *cfg = wxConfigBase::Get ();
 
-#ifdef __WXMSW__
+  // Now set icons for the application
+  // (several sizes are available OS/windowing system
+  // picks whatever it thinks is suitable)
   wxIconBundle iconBundle;
   iconBundle.AddIcon (wxIcon (rapidsvn_16x16_xpm));
   iconBundle.AddIcon (wxIcon (rapidsvn_32x32_xpm));
   iconBundle.AddIcon (wxIcon (rapidsvn_48x48_xpm));
   SetIcons (iconBundle);
-#else
-  SetIcon (wxIcon (rapidsvn_16x16_xpm));
-#endif
 
   // toolbar rows
   m_toolbar_rows = 1;
