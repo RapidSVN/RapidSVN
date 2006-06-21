@@ -5,16 +5,16 @@
 ;          before running this script
 
 [Setup]
-AppName=RapidSVN
-AppVerName=RapidSVN 0.9.2
+AppName=RapidSVN-0.9.3
+AppVerName=RapidSVN-0.9.3
 AppPublisherURL=http://rapidsvn.tigris.org/
 AppSupportURL=http://rapidsvn.tigris.org/
 AppUpdatesURL=http://rapidsvn.tigris.org/
-DefaultDirName={pf}\RapidSVN 0.9.2
-DefaultGroupName=RapidSVN 0.9.2
+DefaultDirName={pf}\RapidSVN-0.9.3
+DefaultGroupName=RapidSVN-0.9.3
 LicenseFile=..\..\GPL.txt
 InfoBeforeFile=..\..\README
-OutputBaseFilename=RapidSVN-0.9.2
+OutputBaseFilename=RapidSVN-0.9.3
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
@@ -60,7 +60,7 @@ Source: "tmp\intl3_svn.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Compone
 
 [Icons]
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin";
-Name: "{userdesktop}\RapidSVN 0.9.2"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon
+Name: "{userdesktop}\RapidSVN-0.9.3"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\bin\rapidsvn.exe"; Description: "Launch RapidSVN"; WorkingDir: "{app}\bin"; Flags: nowait postinstall skipifsilent
