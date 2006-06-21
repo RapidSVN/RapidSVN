@@ -3,12 +3,12 @@
 # romjerome <gnupower@hotmail.fr>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: RapidSVN 0.9.1\n"
+"Project-Id-Version: rapidsvn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-15 10:25+0200\n"
-"PO-Revision-Date: 2006-05-19 10:20+0100\n"
-"Last-Translator: Olha <sleepy@adam-i-eva.com>\n"
-"Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
+"PO-Revision-Date: 2006-06-20 09:51+0200\n"
+"Last-Translator: Jérôme Rapinat <gnupower@hotmail.fr>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -681,14 +681,14 @@ msgstr "Executer outil diff : %s"
 
 #: ../external_program_action.cpp:137
 #: ../view_action.cpp:121
-#, fuzzy, c-format
+#, c-format
 msgid "Execute editor: %s"
-msgstr "Executer editor : %s"
+msgstr "Executer editeur : %s"
 
 #: ../external_program_action.cpp:111
-#, fuzzy, c-format
+#, c-format
 msgid "Execute file explorer: %s"
-msgstr "Execute file explorer: %s"
+msgstr "Executer l'explorer de fichier: %s"
 
 #: ../simple_worker.cpp:176
 #: ../threaded_worker.cpp:144
@@ -1487,14 +1487,12 @@ msgid "Skipped: %s"
 msgstr "Passé: %s"
 
 #: ../rapidsvn_frame.cpp:236
-#, fuzzy
 msgid "Sort"
-msgstr "Sort"
+msgstr "Trier"
 
 #: ../rapidsvn_frame.cpp:212
-#, fuzzy
 msgid "Sort Ascending"
-msgstr "Sort Ascending"
+msgstr "Tri ascendant"
 
 #: ../preferences_dlg.cpp:173
 msgid "Standard editor:"
@@ -1742,7 +1740,6 @@ msgstr "bouché"
 
 #: ../filelist_ctrl.cpp:1115
 #: ../filelist_ctrl.cpp:1129
-#, fuzzy
 msgid "outdated"
 msgstr "dépassé"
 
@@ -1771,27 +1768,4 @@ msgstr "sans version"
 #: ../rapidsvn_frame.cpp:297
 msgid "wxString Creation&Tracing Test"
 msgstr "wxString Creation&Tracing Test"
-
-#~ msgid "&Author"
-#~ msgstr "&Auteur"
-#~ msgid "&Date"
-#~ msgstr "&Date"
-#~ msgid "&Last Changed"
-#~ msgstr "&dernier changement"
-#~ msgid "&Prop Status"
-#~ msgstr "&Prop Statut"
-#~ msgid "&Revision"
-#~ msgstr "&Numéro de version"
-#~ msgid "&Status"
-#~ msgstr "&Statut"
-#~ msgid "Deleting unversioned file: %s"
-#~ msgstr "Supprime fichier sans version: %s"
-#~ msgid "E&xtension"
-#~ msgstr "E&xtension"
-#~ msgid "Pr&op Date"
-#~ msgstr "Pr&op Date"
-#~ msgid "R&ep. Rev."
-#~ msgstr "R&ep. Rev."
-#~ msgid "Skipping unversioned directory: %s"
-#~ msgstr "Ignorer les répertoires sans versions: %s"
 
