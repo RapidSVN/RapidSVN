@@ -29,8 +29,4 @@ copy %SUBVERSION%\apr-iconv\Release\iconv\*.so tmp
 rem Copy Libintl DLL
 copy %LIBINTL%\bin\intl3_svn.dll tmp
 
-rem Copy OpenSSL DLLs
-copy %OPENSSL%\bin\ssleay32.dll tmp
-copy %OPENSSL%\bin\libeay32.dll tmp
-
 pause

@@ -58,10 +58,6 @@ Source: "tmp\*.so"; DestDir: "{app}\bin\iconv"; Flags: ignoreversion; Components
 ; LibIntl
 Source: "tmp\intl3_svn.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 
-; OpenSSL
-Source: "tmp\libeay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "tmp\ssleay32.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-
 [Icons]
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin";
 Name: "{userdesktop}\RapidSVN-0.9.3"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon
