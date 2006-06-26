@@ -1584,6 +1584,23 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
     {
       // execute the command sent
       wxExecute (event.GetString ());
+      /**
+       * @todo Would be good to be able to interpret the return value
+       *       to see if the command could be executed. 
+       *       The documentation on @a wxExecute teaches us 0 means
+       *       process couldnt be created. But with Linux/wxGTK I got
+       *       a positive integer even if the command couldnt be found.
+       *       Another way to check this might be to explicitely scan 
+       *       the PATH variable to find the executable if a relative
+       *       pathname is given.
+       */
+      // not working code
+      // if (result != 0)
+      // {
+      //  // 0 as return value means the command couldnt be executed
+      //  TraceError (wxString::Format (_("Execution of command failed: '%s'"), 
+      //                                event.GetString ().c_str ()));
+      // }
     }
     break;
 
@@ -2226,9 +2243,11 @@ RapidSvnFrame::TraceError (const wxString & msg)
   if (m_log != NULL)
   {
     m_log->SetDefaultStyle(wxTextAttr(*wxRED));
-    m_log->AppendText (msg + wxT('\n'));
+    m_log->AppendText (wxString::Format (_("Error: %s\n"), msg.c_str ()));
     m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));
   }
+
+  wxMessageBox (msg, _("RapidSVN Error"), wxICON_ERROR | wxOK);
 }
 
 inline void
