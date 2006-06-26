@@ -245,6 +245,14 @@ DiffAction::Prepare ()
   if (!Action::Prepare ())
     return false;
 
+  Preferences prefs;
+
+  if (prefs.diffTool.Length () == 0)
+  {
+    TraceError (_("No diff tool set in the preferences"));
+    return false;
+  }
+
   if (m->showDialog)
   {
     // check the first target and try to
