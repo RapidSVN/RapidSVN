@@ -6,7 +6,7 @@
 
 [Setup]
 AppName=RapidSVN-0.9.3
-AppVerName=RapidSVN-0.9.3
+AppVerName=RapidSVN-0.9.3-1
 AppPublisherURL=http://rapidsvn.tigris.org/
 AppSupportURL=http://rapidsvn.tigris.org/
 AppUpdatesURL=http://rapidsvn.tigris.org/
@@ -14,7 +14,7 @@ DefaultDirName={pf}\RapidSVN-0.9.3
 DefaultGroupName=RapidSVN-0.9.3
 LicenseFile=..\..\GPL.txt
 InfoBeforeFile=..\..\README
-OutputBaseFilename=RapidSVN-0.9.3
+OutputBaseFilename=RapidSVN-0.9.3-1
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
@@ -47,7 +47,7 @@ Source: "..\..\FDL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: mai
 Source: "msvcp60.dll"; DestDir: "{app}\bin"; Flags: onlyifdoesntexist; Components: main
 
 ; Berkeley DB
-Source: "tmp\libdb44.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\libdb43.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 
 ; APR
 Source: "tmp\libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
