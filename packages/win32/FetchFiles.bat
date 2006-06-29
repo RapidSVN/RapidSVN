@@ -18,7 +18,7 @@ del tmp\lib*.dll
 del tmp\*.so
 
 rem Copy Berkeley DB
-copy %SUBVERSION%\db4-win32\bin\libdb44.dll tmp
+copy %SUBVERSION%\db4-win32\bin\libdb43.dll tmp
 
 rem Copy APR DLLs
 copy %SUBVERSION%\apr\Release\libapr.dll tmp
