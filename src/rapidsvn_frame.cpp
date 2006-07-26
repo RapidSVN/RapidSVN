@@ -694,7 +694,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
     }
   }
 
-  UpdateFileList ();
+  RefreshFileList ();
 
   wxSizer *sizer = new wxBoxSizer (wxVERTICAL);
   sizer->Add (m_vert_splitter, 1, wxEXPAND);
@@ -731,7 +731,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
     m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
   }
   UpdateCurrentPath ();
-  UpdateFolderBrowser ();
+  RefreshFolderBrowser ();
 
   // Set sash position for every splitter.
   // Note: do not revert the order of Split calls, as the panels will be messed up.
@@ -836,7 +836,7 @@ RapidSvnFrame::TrimDisabledMenuItems (wxMenu & menu)
 }
 
 void
-RapidSvnFrame::UpdateFileList ()
+RapidSvnFrame::RefreshFileList ()
 {
   if (m->dontUpdateFilelist)
     return;
@@ -878,7 +878,7 @@ RapidSvnFrame::UpdateFileList ()
       else
       {
         m_listCtrl->SetContext (m_context);
-        m_listCtrl->UpdateFileList (m_currentPath);
+        m_listCtrl->RefreshFileList (m_currentPath);
       }
 
       // SHOW
@@ -904,7 +904,7 @@ RapidSvnFrame::UpdateFileList ()
 }
 
 void
-RapidSvnFrame::UpdateFolderBrowser ()
+RapidSvnFrame::RefreshFolderBrowser ()
 {
   wxBusyCursor busy;
 
@@ -918,7 +918,7 @@ RapidSvnFrame::UpdateFolderBrowser ()
       m->dontUpdateFilelist = true;
 
     if (m_folder_browser)
-      m_folder_browser->Refresh ();
+      m_folder_browser->RefreshFolderBrowser ();
   }
   catch (...)
   {
@@ -931,7 +931,7 @@ RapidSvnFrame::UpdateFolderBrowser ()
   if (!m->skipFilelistUpdate)
   {
     m->dontUpdateFilelist = false;
-    UpdateFileList ();
+    RefreshFileList ();
   }
   m->skipFilelistUpdate = false;
 }
@@ -945,7 +945,7 @@ RapidSvnFrame::OnActivate (wxActivateEvent & event)
   {
     m->updateAfterActivate = false;
 
-    UpdateFileList ();
+    RefreshFileList ();
   }
 
   // wxMac needs this, otherwise the menu doesn't show:
@@ -993,7 +993,7 @@ RapidSvnFrame::OnPreferences (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
 {
-  UpdateFolderBrowser ();
+  RefreshFolderBrowser ();
 }
 
 void
@@ -1011,7 +1011,7 @@ RapidSvnFrame::OnColumnReset (wxCommandEvent &)
     int sortid = id + Columns::SORT_COLUMN_OFFSET;
     m->EnableMenuEntry (sortid, visible);
   }
-  UpdateFileList ();
+  RefreshFileList ();
 }
 
 void
@@ -1039,7 +1039,7 @@ RapidSvnFrame::OnColumn (wxCommandEvent & event)
     UpdateMenuSorting ();
     UpdateMenuAscending ();
 
-    UpdateFileList ();
+    RefreshFileList ();
   }
 }
 
@@ -1082,7 +1082,7 @@ RapidSvnFrame::OnFlatView (wxCommandEvent & event)
 
   SetIncludePathVisibility (newFlatMode);
 
-  UpdateFileList ();
+  RefreshFileList ();
 }
 
 
@@ -1091,7 +1091,7 @@ RapidSvnFrame::OnRefreshWithUpdate (wxCommandEvent & WXUNUSED (event))
 {
   bool checked = m->IsMenuChecked (ID_RefreshWithUpdate);
   m_listCtrl->SetWithUpdate (checked);
-  UpdateFolderBrowser ();
+  RefreshFolderBrowser ();
 }
 
 
@@ -1100,7 +1100,7 @@ RapidSvnFrame::OnShowUnversioned (wxCommandEvent & WXUNUSED (event))
 {
   bool checked = m->IsMenuChecked (ID_ShowUnversioned);
   m_listCtrl->SetShowUnversioned (checked);
-  UpdateFileList ();
+  RefreshFileList ();
 }
 
 void
@@ -1110,7 +1110,7 @@ RapidSvnFrame::OnIgnoreExternals (wxCommandEvent & WXUNUSED (event))
   {
     bool checked = m->IsMenuChecked (ID_IgnoreExternals);
     m_listCtrl->SetIgnoreExternals (checked);
-    UpdateFileList ();
+    RefreshFileList ();
   }
 }
 
@@ -1528,7 +1528,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
     // (in order to enable filelist update)
     // and disable "Running" state
     m->listener.cancel (false);
-    UpdateFileList ();
+    RefreshFileList ();
     Trace (_("Ready\n"));
     m->SetRunning (false);
     break;
@@ -1564,12 +1564,12 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
         if ((actionFlags & Action::UPDATE_TREE) != 0)
         {
           Trace (_("Updating..."));
-          UpdateFolderBrowser ();
+          RefreshFolderBrowser ();
         }
         else if ((actionFlags & Action::DONT_UPDATE) == 0)
         {
           Trace (_("Updating..."));
-          UpdateFileList ();
+          RefreshFileList ();
         }
       }
 
@@ -1627,7 +1627,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       const wxString bookmark = event.GetString ();
 
       m_folder_browser->AddBookmark (bookmark);
-      m_folder_browser->Refresh ();
+      m_folder_browser->RefreshFolderBrowser ();
       m_folder_browser->SelectBookmark (bookmark);
     }
     break;
@@ -1731,7 +1731,7 @@ RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
     m->MenuBar->Enable (ID_Flat, !path.IsEmpty ());
 
     UpdateCurrentPath ();
-    UpdateFileList ();
+    RefreshFileList ();
 
     m_folder_browser->ExpandSelection ();
   }
@@ -1813,7 +1813,7 @@ directory to the bookmarks!"),
   m_folder_browser->AddBookmark (dialog.GetPath ());
 
   m->skipFilelistUpdate = true;
-  UpdateFolderBrowser ();
+  RefreshFolderBrowser ();
 
   wxLogStatus (_("Added working copy to bookmarks '%s'"),
                dialog.GetPath ().c_str ());
@@ -1838,7 +1838,7 @@ RapidSvnFrame::AddRepoBookmark ()
   m_folder_browser->AddBookmark (url);
 
   m->skipFilelistUpdate = true;
-  UpdateFolderBrowser ();
+  RefreshFolderBrowser ();
 
   wxLogStatus (_("Added repository to bookmarks '%s'"),
                url.c_str ());
@@ -1888,7 +1888,7 @@ RapidSvnFrame::EditBookmark ()
 
     m_folder_browser->RemoveBookmark ();
     m_folder_browser->AddBookmark (newPath);
-    UpdateFolderBrowser ();
+    RefreshFolderBrowser ();
     m_folder_browser->SelectBookmark (newPath);
   }
 }

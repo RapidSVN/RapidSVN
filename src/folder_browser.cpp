@@ -922,7 +922,7 @@ FolderBrowser::~FolderBrowser ()
 }
 
 void
-FolderBrowser::Refresh ()
+FolderBrowser::RefreshFolderBrowser ()
 {
   // remember selected
   wxString bookmarkPath = m->GetSelectedBookmarkPath ();

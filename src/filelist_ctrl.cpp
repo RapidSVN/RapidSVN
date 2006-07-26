@@ -959,15 +959,15 @@ FileListCtrl::~FileListCtrl ()
 }
 
 void
-FileListCtrl::UpdateFileList (const wxString & path)
+FileListCtrl::RefreshFileList (const wxString & path)
 {
   m->Path = path;
 
-  UpdateFileList ();
+  RefreshFileList ();
 }
 
 void
-FileListCtrl::UpdateFileList ()
+FileListCtrl::RefreshFileList ()
 {
   svn::Path pathUtf8 (PathUtf8 (m->Path));
 

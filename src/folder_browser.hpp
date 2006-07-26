@@ -49,8 +49,8 @@ public:
 
   virtual ~FolderBrowser ();
 
-  virtual void 
-  Refresh ();
+  void 
+  RefreshFolderBrowser ();
 
   /**
    * remove the selected bookmark from bookmarks

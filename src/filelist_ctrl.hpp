@@ -219,8 +219,8 @@ public:
   void
   SetIgnoreExternals (bool value);
 
-  void UpdateFileList ();
-  void UpdateFileList (const wxString & path);
+  void RefreshFileList ();
+  void RefreshFileList (const wxString & path);
 
   const IndexArray
   GetSelectedItems () const;

@@ -161,11 +161,15 @@ private:
    */
   bool InvokeDefaultAction ();
 
-  /** update the contents of the filelist */
-  void UpdateFileList ();
+  /** 
+   * Update the contents of the filelist 
+   */
+  void RefreshFileList ();
 
-  /** update the contents of the folder browser */
-  void UpdateFolderBrowser ();
+  /** 
+   * Update the contents of the folder browser 
+   */
+  void RefreshFolderBrowser ();
 
   // Auxiliary functions
   void UpdateCurrentPath ();
