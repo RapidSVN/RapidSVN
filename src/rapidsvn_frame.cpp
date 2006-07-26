@@ -117,8 +117,10 @@ const static wxChar ConfigTop[] = wxT("/MainFrame/Top");
 const static wxChar ConfigWidth[] = wxT("/MainFrame/Width");
 const static wxChar ConfigHeight[] = wxT("/MainFrame/Height");
 const static wxChar ConfigMaximized[] = wxT("/MainFrame/Maximized");
-const static wxChar ConfigSplitterHoriz[] = wxT("/MainFrame/SplitterHoriz");
-const static wxChar ConfigSplitterVert[] = wxT("/MainFrame/SplitterVert");
+/** changed name to "SplitterHoriz2" since meaning of value changed for 0.9.4 */
+const static wxChar ConfigSplitterHoriz[] = wxT("/MainFrame/SplitterHoriz2");
+/** changed name to "SplitterVert2" since meaning of value changed for 0.9.4 */
+const static wxChar ConfigSplitterVert[] = wxT("/MainFrame/SplitterVert2");
 
 const static wxChar TraceMisc[] = wxT("tracemisc");
 
@@ -154,6 +156,9 @@ struct RapidSvnFrame::Data
 public:
   FolderBrowser * folderBrowser;
   FileListCtrl * listCtrl;
+  wxSplitterWindow * horizSplitter;
+  wxSplitterWindow * vertSplitter;
+
 
   wxMenu * MenuColumns;
   wxMenu * MenuSorting;
@@ -181,7 +186,8 @@ public:
   svn::Apr apr;
 
   Data (wxFrame * parent, const wxLocale & locale_)
-    : folderBrowser (0), listCtrl (0), MenuColumns (0), 
+    : folderBrowser (0), listCtrl (0), 
+      horizSplitter (0), vertSplitter (0), MenuColumns (0), 
       MenuSorting (0), MenuBar (0), listener (parent),
       updateAfterActivate (false), dontUpdateFilelist (false),
       skipFilelistUpdate (false), locale (locale_), 
@@ -653,27 +659,31 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->RecreateToolbar ();
   m->SetRunning (false);
 
-  m_horiz_splitter =
-#if wxCHECK_VERSION(2, 6, 0)
-    new wxSplitterWindow (this,
-                                    SPLITTER_WINDOW,
-                                    wxDefaultPosition,
-                                    wxDefaultSize,
-                                    SPLITTER_STYLE);
-  m_horiz_splitter->SetSashGravity(1.0f);
-#else
-    new ProportionalSplitterWindow (1.0f, this,
-                                    SPLITTER_WINDOW,
-                                    wxDefaultPosition,
-                                    wxDefaultSize,
-                                    SPLITTER_STYLE);
-#endif
+  /// @todo Do we really need wxSplitterWindow?
+  ///       I dont see the benefits
+  /// Maybe we can get rid of #409 without this?
+  m->horizSplitter = new ProportionalSplitterWindow (
+    1.0f, this, -1, wxDefaultPosition, wxDefaultSize, SPLITTER_STYLE);
+// TODO #if wxCHECK_VERSION(2, 6, 0)
+// TODO     new wxSplitterWindow (this,
+// TODO                                     SPLITTER_WINDOW,
+// TODO                                     wxDefaultPosition,
+// TODO                                     wxDefaultSize,
+// TODO                                     SPLITTER_STYLE);
+// TODO   m->horizSplitter->SetSashGravity(1.0f);
+// TODO #else
+// TODO     new ProportionalSplitterWindow (1.0f, this,
+// TODO                                     SPLITTER_WINDOW,
+// TODO                                     wxDefaultPosition,
+// TODO                                     wxDefaultSize,
+// TODO                                     SPLITTER_STYLE);
+// TODO #endif
 
-  m_info_panel = new wxPanel (m_horiz_splitter, -1,
+  m_info_panel = new wxPanel (m->horizSplitter, -1,
                               wxDefaultPosition, wxDefaultSize,
                               wxTAB_TRAVERSAL | wxCLIP_CHILDREN);
 
-  m_log = new wxTextCtrl (m_horiz_splitter, -1, wxEmptyString,
+  m_log = new wxTextCtrl (m->horizSplitter, -1, wxEmptyString,
                           wxPoint (0, 0), wxDefaultSize,
                           wxTE_MULTILINE | wxTE_READONLY);
 
@@ -684,18 +694,20 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->listener.SetTracer (m_logTracer, false);
 
 
-  m_vert_splitter = new wxSplitterWindow (m_info_panel,
-                                          SPLITTER_WINDOW,
-                                          wxDefaultPosition,
-                                          wxDefaultSize,
-                                          SPLITTER_STYLE);
-#if wxCHECK_VERSION(2, 6, 0)
-  // Not a complete solution, but a workaround for now...
-  m_vert_splitter->SetSashGravity(0.2f);
-#endif
+  m->vertSplitter = new ProportionalSplitterWindow (
+    0.8f, m_info_panel, -1, wxDefaultPosition, wxDefaultSize, SPLITTER_STYLE);
+// TODO   m->vertSplitter = new wxSplitterWindow (m_info_panel,
+// TODO                                           SPLITTER_WINDOW,
+// TODO                                           wxDefaultPosition,
+// TODO                                           wxDefaultSize,
+// TODO                                           SPLITTER_STYLE);
+// TODO #if wxCHECK_VERSION(2, 6, 0)
+// TODO   // Not a complete solution, but a workaround for now...
+// TODO   m->vertSplitter->SetSashGravity(0.2f);
+// TODO #endif
 
   // Create the list control to display files
-  m->listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL,
+  m->listCtrl = new FileListCtrl (m->vertSplitter, FILELIST_CTRL,
                                  wxDefaultPosition, wxDefaultSize);
   m->CheckMenu (ID_Flat,              false);
   m->CheckMenu (ID_RefreshWithUpdate, m->listCtrl->GetWithUpdate());
@@ -715,7 +727,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
 
 
   // Create the browse control
-  m->folderBrowser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
+  m->folderBrowser = new FolderBrowser (m->vertSplitter, FOLDER_BROWSER);
 
   // Adapt the menu entries
   for (int col=0; col < FileListCtrl::COL_COUNT; col++)
@@ -733,7 +745,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   RefreshFileList ();
 
   wxSizer *sizer = new wxBoxSizer (wxVERTICAL);
-  sizer->Add (m_vert_splitter, 1, wxEXPAND);
+  sizer->Add (m->vertSplitter, 1, wxEXPAND);
 
   m_info_panel->SetAutoLayout (true);
   m_info_panel->SetSizer (sizer);
@@ -771,8 +783,8 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
 
   // Set sash position for every splitter.
   // Note: do not revert the order of Split calls, as the panels will be messed up.
-  m_horiz_splitter->SplitHorizontally (m_info_panel, m_log, hpos);
-  m_vert_splitter->SplitVertically (m->folderBrowser, m->listCtrl, vpos);
+  m->horizSplitter->SplitHorizontally (m_info_panel, m_log, hpos);
+  m->vertSplitter->SplitVertically (m->folderBrowser, m->listCtrl, vpos);
 }
 
 RapidSvnFrame::~RapidSvnFrame ()
@@ -810,9 +822,9 @@ RapidSvnFrame::~RapidSvnFrame ()
 
   // Save splitter positions
   cfg->Write (ConfigSplitterVert,
-                  (long) m_vert_splitter->GetSashPosition ());
+              (long) m->vertSplitter->GetSashPosition ());
   cfg->Write (ConfigSplitterHoriz,
-                  (long) m_horiz_splitter->GetSashPosition ());
+              (long) m->horizSplitter->GetSashPosition ());
 
   m->folderBrowser->WriteConfig (cfg);
 

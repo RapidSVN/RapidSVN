@@ -29,15 +29,12 @@
 #include "wx/frame.h"
 #include "wx/textctrl.h"
 #include "wx/toolbar.h"
-#include "wx/splitter.h"
 
 // app
 #include "action_worker.hpp"
 #include "tracer.hpp"
 #include "log_action.hpp"
 #include "utils.hpp"
-
-#define SPLITTER_WINDOW   100
 
 typedef enum
 {
@@ -214,9 +211,6 @@ private:
   Data * m;
 
   ActionWorker * m_actionWorker;
-
-  wxSplitterWindow *m_horiz_splitter;
-  wxSplitterWindow *m_vert_splitter;
 
   wxPanel *m_info_panel;
 
