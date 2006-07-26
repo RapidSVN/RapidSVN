@@ -622,23 +622,22 @@ public:
       if (!data->isReal ())
         break;
 
-      const svn::Path nodePath (LocalToUtf8 (data->getPath ()));
+      const wxString nodePath (data->getPath ());
       if (nodePath.length () == 0)
         break;
 
       // first check: full match?
-      if (path.IsSameAs (Utf8ToLocal (nodePath.c_str ())))
+      if (path == nodePath)
       {
         childId = id;
         break;
       }
 
       // second check: match until path delimiter
-      wxString prefix (path.Left (Utf8ToLocal (nodePath.c_str()).length ()));
-      wxString sep (path.Mid (Utf8ToLocal (nodePath.c_str()).length (), 1));
+      wxString prefix (path.Left (nodePath.length ()));
+      wxString sep (path.Mid (nodePath.length (), 1));
 
-      if (prefix.IsSameAs (Utf8ToLocal (nodePath.c_str ())) &&
-          IsValidSeparator (sep))
+      if ((prefix == nodePath) && IsValidSeparator (sep))
       {
         childId = id;
         break;
@@ -698,24 +697,23 @@ public:
       if (!data->isReal ())
 			  break;
 
-      const svn::Path nodePath (LocalToUtf8 (data->getPath ()));
+      const wxString nodePath (data->getPath ());
       if (nodePath.length () == 0)
 				break;
 
       // check if @a path and @a nodePath match already
       // in this case we are done
-      if (pathP.IsSameAs (Utf8ToLocal (nodePath.c_str())))
+      if (pathP == nodePath)
       {
         success = true;
         break;
 
       }
 
-      wxString prefix (pathP.Left (Utf8ToLocal (nodePath.c_str ()).length()));
-      wxString sep (pathP.Mid (Utf8ToLocal (nodePath.c_str ()).length(), 1));
+      wxString prefix (pathP.Left (nodePath.length()));
+      wxString sep (pathP.Mid (nodePath.length(), 1));
 
-      if ((!prefix.IsSameAs
-          (Utf8ToLocal (nodePath.c_str()))) || !IsValidSeparator (sep))
+      if ((prefix != nodePath) || !IsValidSeparator (sep))
        break;
 
       if (!data->hasChildren ())
