@@ -849,11 +849,11 @@ RapidSvnFrame::RefreshFileList ()
   {
     wxBusyCursor busy;
 
+    // HIDE
+    m_listCtrl->Show (FALSE);
+
     try
     {
-      // HIDE
-      m_listCtrl->Show (FALSE);
-
       // UPDATE
       /**
        * @todo THIS IS A WORKAOUND:
@@ -881,8 +881,6 @@ RapidSvnFrame::RefreshFileList ()
         m_listCtrl->RefreshFileList (m_currentPath);
       }
 
-      // SHOW
-      m_listCtrl->Show (TRUE);
     }
     catch (svn::ClientException & e)
     {
@@ -891,13 +889,26 @@ RapidSvnFrame::RefreshFileList ()
                   errtxt.c_str ());
       TraceError (msg);
 
-      // probably unversioned resource
-      m_listCtrl->Show (FALSE);
+      // calling "UpdateColumns" should be necessary
+      // only for the first call. But without any
+      // items this call should be cheap.
+      m_listCtrl->DeleteAllItems ();
+      m_listCtrl->UpdateColumns ();
+
     }
     catch (...)
     {
       TraceError (_("Error while updating filelist"));
+
+      // calling "UpdateColumns" should be necessary
+      // only for the first call. But without any
+      // items this call should be cheap.
+      m_listCtrl->DeleteAllItems ();
+      m_listCtrl->UpdateColumns ();
     }
+
+    // SHOW
+    m_listCtrl->Show (TRUE);
   }
   if (!isRunning)
     m->SetRunning (false);
