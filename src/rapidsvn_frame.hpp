@@ -35,8 +35,6 @@
 #include "action_worker.hpp"
 #include "tracer.hpp"
 #include "log_action.hpp"
-#include "filelist_ctrl.hpp"
-#include "folder_browser.hpp"
 #include "utils.hpp"
 
 #define SPLITTER_WINDOW   100
@@ -53,6 +51,7 @@ class svn::Targets;
 class wxFrame;
 class wxMenu;
 class wxString;
+class wxListEvent;
 
 class RapidSvnFrame : public wxFrame
 {
@@ -207,11 +206,6 @@ private:
   void Contents ();
   void ShowPreferences ();
 
-  FolderBrowser *GetFolderBrowser ()
-  {
-    return m_folder_browser;
-  }
-
   void Perform (Action * action);
 
 private:
@@ -220,9 +214,6 @@ private:
   Data * m;
 
   ActionWorker * m_actionWorker;
-
-  FolderBrowser * m_folder_browser;
-  FileListCtrl *m_listCtrl;
 
   wxSplitterWindow *m_horiz_splitter;
   wxSplitterWindow *m_vert_splitter;
@@ -234,7 +225,6 @@ private:
 
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
-  wxString m_currentPath;
   wxString m_title;
   svn::Context * m_context;
   ActivePane m_activePane;

@@ -47,6 +47,8 @@
 #include "file_info.hpp"
 #include "listener.hpp"
 #include "folder_item_data.hpp"
+#include "folder_browser.hpp"
+#include "filelist_ctrl.hpp"
 
 #ifdef USE_SIMPLE_WORKER
 #include "simple_worker.hpp"
@@ -150,6 +152,9 @@ CreateActionWorker (wxWindow * parent)
 struct RapidSvnFrame::Data
 {
 public:
+  FolderBrowser * folderBrowser;
+  FileListCtrl * listCtrl;
+
   wxMenu * MenuColumns;
   wxMenu * MenuSorting;
   wxMenuBar * MenuBar;
@@ -161,6 +166,7 @@ public:
   bool dontUpdateFilelist;
   bool skipFilelistUpdate;
   const wxLocale & locale;
+  wxString currentPath;
 
 private:
   bool m_running;
@@ -175,9 +181,11 @@ public:
   svn::Apr apr;
 
   Data (wxFrame * parent, const wxLocale & locale_)
-    : MenuColumns (0), MenuSorting (0), MenuBar (0), listener (parent),
+    : folderBrowser (0), listCtrl (0), MenuColumns (0), 
+      MenuSorting (0), MenuBar (0), listener (parent),
       updateAfterActivate (false), dontUpdateFilelist (false),
-      skipFilelistUpdate (false), locale (locale_), m_running (false),
+      skipFilelistUpdate (false), locale (locale_), 
+      currentPath (wxT("")), m_running (false),
       m_toolbar_rows (1), m_parent (parent)
   {
     InitializeMenu ();
@@ -519,7 +527,35 @@ public:
 
     toolBar->AddSeparator ();
   }
+
+
+  /** 
+   * Checks whether @ref currenPath is an URL
+   *
+   * @retval true valid URL
+   */
+  bool
+  IsUrl () const
+  {
+    return svn::Url::isValid (LocalToUtf8(currentPath).c_str ());
+  }
+
+
+  /**
+   * Checks whether the selected bookmark is "flat"
+   *
+   * @retval true yes, it's flat
+   */
+  bool
+  IsFlat () const
+  {
+    if (!listCtrl)
+      return 0;
+
+    return listCtrl->IsFlat ();
+  }
 };
+
 
 BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_ACTIVATE (RapidSvnFrame::OnActivate)
@@ -584,7 +620,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                               const wxLocale & locale)
   : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_FRAME_STYLE),
-    m_folder_browser (NULL), m_listCtrl (NULL), m_title (title), m_context (0),
+    m_title (title), m_context (0),
     m_activePane (ACTIVEPANE_FOLDER_BROWSER)
 {
   m = new Data (this, locale);
@@ -659,18 +695,18 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
 #endif
 
   // Create the list control to display files
-  m_listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL,
+  m->listCtrl = new FileListCtrl (m_vert_splitter, FILELIST_CTRL,
                                  wxDefaultPosition, wxDefaultSize);
   m->CheckMenu (ID_Flat,              false);
-  m->CheckMenu (ID_RefreshWithUpdate, m_listCtrl->GetWithUpdate());
-  m->CheckMenu (ID_ShowUnversioned,   m_listCtrl->GetShowUnversioned());
+  m->CheckMenu (ID_RefreshWithUpdate, m->listCtrl->GetWithUpdate());
+  m->CheckMenu (ID_ShowUnversioned,   m->listCtrl->GetShowUnversioned());
   if (svn::SUPPORTS_EXTERNALS)
-    m->CheckMenu (ID_IgnoreExternals, m_listCtrl->GetIgnoreExternals());
-  m->CheckMenu (ID_Sort_Ascending,    m_listCtrl->GetSortAscending());
-  m->CheckSort (m_listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
+    m->CheckMenu (ID_IgnoreExternals, m->listCtrl->GetIgnoreExternals());
+  m->CheckMenu (ID_Sort_Ascending,    m->listCtrl->GetSortAscending());
+  m->CheckSort (m->listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
 
-  bool isFlat = m_listCtrl->IsFlat ();
-  bool includePath = m_listCtrl->GetIncludePath ();
+  bool isFlat = m->listCtrl->IsFlat ();
+  bool includePath = m->listCtrl->GetIncludePath ();
   if (isFlat == false && includePath == true)
     m->CheckMenu (ID_Include_Path, false);
   else
@@ -679,7 +715,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
 
 
   // Create the browse control
-  m_folder_browser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
+  m->folderBrowser = new FolderBrowser (m_vert_splitter, FOLDER_BROWSER);
 
   // Adapt the menu entries
   for (int col=0; col < FileListCtrl::COL_COUNT; col++)
@@ -688,7 +724,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
     int sortid = id + Columns::SORT_COLUMN_OFFSET;
     if (id != ID_Column_Name && id != ID_Column_Path)
     {
-      bool check = m_listCtrl->GetColumnVisible (col);
+      bool check = m->listCtrl->GetColumnVisible (col);
       m->CheckColumn (id, check);
       m->EnableMenuEntry (sortid, check);
     }
@@ -723,12 +759,12 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   int hpos = cfg->Read (ConfigSplitterHoriz, (3 * h) / 4);
 
   // initialize the folder browser
-  m_folder_browser->ReadConfig (cfg);
+  m->folderBrowser->ReadConfig (cfg);
   {
     Preferences prefs;
-    m_folder_browser->SetListener        (&m->listener);
-    m_folder_browser->SetAuthCache       (prefs.useAuthCache);
-    m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
+    m->folderBrowser->SetListener        (&m->listener);
+    m->folderBrowser->SetAuthCache       (prefs.useAuthCache);
+    m->folderBrowser->SetAuthPerBookmark (prefs.authPerBookmark);
   }
   UpdateCurrentPath ();
   RefreshFolderBrowser ();
@@ -736,7 +772,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   // Set sash position for every splitter.
   // Note: do not revert the order of Split calls, as the panels will be messed up.
   m_horiz_splitter->SplitHorizontally (m_info_panel, m_log, hpos);
-  m_vert_splitter->SplitVertically (m_folder_browser, m_listCtrl, vpos);
+  m_vert_splitter->SplitVertically (m->folderBrowser, m->listCtrl, vpos);
 }
 
 RapidSvnFrame::~RapidSvnFrame ()
@@ -778,7 +814,7 @@ RapidSvnFrame::~RapidSvnFrame ()
   cfg->Write (ConfigSplitterHoriz,
                   (long) m_horiz_splitter->GetSashPosition ());
 
-  m_folder_browser->WriteConfig (cfg);
+  m->folderBrowser->WriteConfig (cfg);
 
   delete m;
 }
@@ -845,12 +881,12 @@ RapidSvnFrame::RefreshFileList ()
   if (!isRunning)
     m->SetRunning (true);
 
-  if (m_listCtrl && m_folder_browser)
+  if (m->listCtrl && m->folderBrowser)
   {
     wxBusyCursor busy;
 
     // HIDE
-    m_listCtrl->Show (FALSE);
+    m->listCtrl->Show (FALSE);
 
     try
     {
@@ -867,18 +903,18 @@ RapidSvnFrame::RefreshFileList ()
        * wxWidgets or this is a wxWidgets bug and will
        * be fixed in there
        */
-      if (m_currentPath.length () == 0)
+      if (m->currentPath.length () == 0)
       {
         // calling "UpdateColumns" should be necessary
         // only for the first call. But without any
         // items this call should be cheap.
-        m_listCtrl->DeleteAllItems ();
-        m_listCtrl->UpdateColumns ();
+        m->listCtrl->DeleteAllItems ();
+        m->listCtrl->UpdateColumns ();
       }
       else
       {
-        m_listCtrl->SetContext (m_context);
-        m_listCtrl->RefreshFileList (m_currentPath);
+        m->listCtrl->SetContext (m_context);
+        m->listCtrl->RefreshFileList (m->currentPath);
       }
 
     }
@@ -892,8 +928,8 @@ RapidSvnFrame::RefreshFileList ()
       // calling "UpdateColumns" should be necessary
       // only for the first call. But without any
       // items this call should be cheap.
-      m_listCtrl->DeleteAllItems ();
-      m_listCtrl->UpdateColumns ();
+      m->listCtrl->DeleteAllItems ();
+      m->listCtrl->UpdateColumns ();
 
     }
     catch (...)
@@ -903,12 +939,12 @@ RapidSvnFrame::RefreshFileList ()
       // calling "UpdateColumns" should be necessary
       // only for the first call. But without any
       // items this call should be cheap.
-      m_listCtrl->DeleteAllItems ();
-      m_listCtrl->UpdateColumns ();
+      m->listCtrl->DeleteAllItems ();
+      m->listCtrl->UpdateColumns ();
     }
 
     // SHOW
-    m_listCtrl->Show (TRUE);
+    m->listCtrl->Show (TRUE);
   }
   if (!isRunning)
     m->SetRunning (false);
@@ -928,8 +964,8 @@ RapidSvnFrame::RefreshFolderBrowser ()
     if (!m->skipFilelistUpdate)
       m->dontUpdateFilelist = true;
 
-    if (m_folder_browser)
-      m_folder_browser->RefreshFolderBrowser ();
+    if (m->folderBrowser)
+      m->folderBrowser->RefreshFolderBrowser ();
   }
   catch (...)
   {
@@ -952,11 +988,20 @@ RapidSvnFrame::RefreshFolderBrowser ()
 void
 RapidSvnFrame::OnActivate (wxActivateEvent & event)
 {
-  if (event.GetActive () && m->updateAfterActivate)
+  // in the past we used to refresh only if we had
+  // had an action which changed stuff.
+  //
+  // now we refresh every time - but only for
+  // working copies and if NOT flat
+  if (event.GetActive ())
   {
-    m->updateAfterActivate = false;
+    if (m->updateAfterActivate || 
+        (!m->IsUrl () && !m->IsFlat ()))
+    {
+      m->updateAfterActivate = false;
 
-    RefreshFileList ();
+      RefreshFileList ();
+    }
   }
 
   // wxMac needs this, otherwise the menu doesn't show:
@@ -1010,10 +1055,10 @@ RapidSvnFrame::OnRefresh (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnColumnReset (wxCommandEvent &)
 {
-  m_listCtrl->ResetColumns ();
+  m->listCtrl->ResetColumns ();
   for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
   {
-    bool visible = m_listCtrl->GetColumnVisible (col);
+    bool visible = m->listCtrl->GetColumnVisible (col);
     int id = m->ColumnList [col].id;
 
     if (id != ID_Column_Name && id != ID_Column_Path)
@@ -1042,7 +1087,7 @@ RapidSvnFrame::OnColumn (wxCommandEvent & event)
     // Enable/disable the corresponding column. Automatically define
     // a new sorting column after an old one is disabled.
     bool visible = m->IsColumnChecked(eventId);
-    m_listCtrl->SetColumnVisible (col, visible);
+    m->listCtrl->SetColumnVisible (col, visible);
 
     int sortid = eventId + Columns::SORT_COLUMN_OFFSET;
     m->EnableMenuEntry (sortid, visible);
@@ -1057,13 +1102,13 @@ RapidSvnFrame::OnColumn (wxCommandEvent & event)
 void
 RapidSvnFrame::OnIncludePath (wxCommandEvent & WXUNUSED (event))
 {
-  m_listCtrl->SetIncludePath (!m_listCtrl->GetIncludePath ());
+  m->listCtrl->SetIncludePath (!m->listCtrl->GetIncludePath ());
 }
 
 void
 RapidSvnFrame::OnSortAscending (wxCommandEvent & event)
 {
-  m_listCtrl->SetSortAscending (!m_listCtrl->GetSortAscending ());
+  m->listCtrl->SetSortAscending (!m->listCtrl->GetSortAscending ());
 }
 
 void
@@ -1072,8 +1117,8 @@ RapidSvnFrame::OnColumnSorting (wxCommandEvent & event)
   // we dont want to list FileListCtrl::COL_NAME/COL_PATH/... here
   int col = event.m_id - ID_ColumnSort_Name;
 
-  m_listCtrl->SetSortColumn (col);
-  m_listCtrl->SetSortAscending (true);
+  m->listCtrl->SetSortColumn (col);
+  m->listCtrl->SetSortAscending (true);
 
   UpdateMenuAscending ();
 }
@@ -1081,15 +1126,15 @@ RapidSvnFrame::OnColumnSorting (wxCommandEvent & event)
 void
 RapidSvnFrame::OnFlatView (wxCommandEvent & event)
 {
-  bool newFlatMode = !m_folder_browser->IsFlat ();
+  bool newFlatMode = !m->folderBrowser->IsFlat ();
 
   // if this cannot be set (e.g. invalid selection
   // like the root element, we uncheck this
-  if (!m_folder_browser->SetFlat (newFlatMode))
+  if (!m->folderBrowser->SetFlat (newFlatMode))
     newFlatMode = false;
 
   m->CheckMenu (ID_Flat, newFlatMode);
-  m_listCtrl->SetFlat (newFlatMode);
+  m->listCtrl->SetFlat (newFlatMode);
 
   SetIncludePathVisibility (newFlatMode);
 
@@ -1101,7 +1146,7 @@ void
 RapidSvnFrame::OnRefreshWithUpdate (wxCommandEvent & WXUNUSED (event))
 {
   bool checked = m->IsMenuChecked (ID_RefreshWithUpdate);
-  m_listCtrl->SetWithUpdate (checked);
+  m->listCtrl->SetWithUpdate (checked);
   RefreshFolderBrowser ();
 }
 
@@ -1110,7 +1155,7 @@ void
 RapidSvnFrame::OnShowUnversioned (wxCommandEvent & WXUNUSED (event))
 {
   bool checked = m->IsMenuChecked (ID_ShowUnversioned);
-  m_listCtrl->SetShowUnversioned (checked);
+  m->listCtrl->SetShowUnversioned (checked);
   RefreshFileList ();
 }
 
@@ -1120,7 +1165,7 @@ RapidSvnFrame::OnIgnoreExternals (wxCommandEvent & WXUNUSED (event))
   if (svn::SUPPORTS_EXTERNALS)
   {
     bool checked = m->IsMenuChecked (ID_IgnoreExternals);
-    m_listCtrl->SetIgnoreExternals (checked);
+    m->listCtrl->SetIgnoreExternals (checked);
     RefreshFileList ();
   }
 }
@@ -1128,7 +1173,7 @@ RapidSvnFrame::OnIgnoreExternals (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnLogin (wxCommandEvent & event)
 {
-  svn::Context * context = m_folder_browser->GetContext ();
+  svn::Context * context = m->folderBrowser->GetContext ();
 
   if (context == 0)
     return;
@@ -1149,7 +1194,7 @@ RapidSvnFrame::OnLogin (wxCommandEvent & event)
 void
 RapidSvnFrame::OnLogout (wxCommandEvent & event)
 {
-  svn::Context * context = m_folder_browser->GetContext ();
+  svn::Context * context = m->folderBrowser->GetContext ();
 
   if (context == 0)
     return;
@@ -1449,7 +1494,7 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
       break;
 
     case ID_Mkdir:
-      action = new MkdirAction (this, m_currentPath);
+      action = new MkdirAction (this, m->currentPath);
       break;
 
     case ID_Merge:
@@ -1637,9 +1682,9 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
     {
       const wxString bookmark = event.GetString ();
 
-      m_folder_browser->AddBookmark (bookmark);
-      m_folder_browser->RefreshFolderBrowser ();
-      m_folder_browser->SelectBookmark (bookmark);
+      m->folderBrowser->AddBookmark (bookmark);
+      m->folderBrowser->RefreshFolderBrowser ();
+      m->folderBrowser->SelectBookmark (bookmark);
     }
     break;
 
@@ -1731,20 +1776,20 @@ RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
     m_activePane = ACTIVEPANE_FOLDER_BROWSER;
 
     // Update the menu and list control flat-mode setting 
-    bool flatMode = m_folder_browser->IsFlat ();
-    m_listCtrl->SetFlat (flatMode);
+    bool flatMode = m->folderBrowser->IsFlat ();
+    m->listCtrl->SetFlat (flatMode);
     m->CheckMenu (ID_Flat, flatMode);
 
     SetIncludePathVisibility (flatMode);
     
     // Disable menu entry if no path is selected (e.g. root)
-    const wxString & path = m_folder_browser->GetPath ();  
+    const wxString & path = m->folderBrowser->GetPath ();  
     m->MenuBar->Enable (ID_Flat, !path.IsEmpty ());
 
     UpdateCurrentPath ();
     RefreshFileList ();
 
-    m_folder_browser->ExpandSelection ();
+    m->folderBrowser->ExpandSelection ();
   }
   catch(...)
   {
@@ -1821,7 +1866,7 @@ directory to the bookmarks!"),
   }
 
   // add
-  m_folder_browser->AddBookmark (dialog.GetPath ());
+  m->folderBrowser->AddBookmark (dialog.GetPath ());
 
   m->skipFilelistUpdate = true;
   RefreshFolderBrowser ();
@@ -1846,7 +1891,7 @@ RapidSvnFrame::AddRepoBookmark ()
 
   // add
   wxString url = dialog.GetData ().url;
-  m_folder_browser->AddBookmark (url);
+  m->folderBrowser->AddBookmark (url);
 
   m->skipFilelistUpdate = true;
   RefreshFolderBrowser ();
@@ -1858,8 +1903,8 @@ RapidSvnFrame::AddRepoBookmark ()
 inline void
 RapidSvnFrame::RemoveBookmark ()
 {
-  wxASSERT (m_folder_browser);
-  if( m_folder_browser->RemoveBookmark() )
+  wxASSERT (m->folderBrowser);
+  if( m->folderBrowser->RemoveBookmark() )
   {
     wxLogStatus (_("Removed bookmark"));
   }
@@ -1868,15 +1913,15 @@ RapidSvnFrame::RemoveBookmark ()
 void
 RapidSvnFrame::EditBookmark ()
 {
-  wxASSERT (m_folder_browser);
+  wxASSERT (m->folderBrowser);
 
-  const FolderItemData * bookmark = m_folder_browser->GetSelection ();
+  const FolderItemData * bookmark = m->folderBrowser->GetSelection ();
 
   // if nothing is selected, or the wrong type,
   // just exit (this should be handled by the routine
   // that is responsible for greying out menu entries,
   // but hey: nobody is perfect
-  if (!m_folder_browser)
+  if (!m->folderBrowser)
     return;
 
   if (bookmark->getFolderType () != FOLDER_TYPE_BOOKMARK)
@@ -1897,10 +1942,10 @@ RapidSvnFrame::EditBookmark ()
     if (oldPath == newPath)
       return;
 
-    m_folder_browser->RemoveBookmark ();
-    m_folder_browser->AddBookmark (newPath);
+    m->folderBrowser->RemoveBookmark ();
+    m->folderBrowser->AddBookmark (newPath);
     RefreshFolderBrowser ();
-    m_folder_browser->SelectBookmark (newPath);
+    m->folderBrowser->SelectBookmark (newPath);
   }
 }
 
@@ -1909,10 +1954,10 @@ RapidSvnFrame::GetActionTargets () const
 {
   //is there nothing selected in the list control,
   //or is the active window *not* the list control?
-  if (m_listCtrl->GetSelectedItemCount () <= 0 ||
+  if (m->listCtrl->GetSelectedItemCount () <= 0 ||
       m_activePane != ACTIVEPANE_FILELIST)
   {
-    wxString path = m_folder_browser->GetPath ();
+    wxString path = m->folderBrowser->GetPath ();
 
     svn::Path pathUtf8 (PathUtf8 (path));
     if (!pathUtf8.isUrl ())
@@ -1927,7 +1972,7 @@ RapidSvnFrame::GetActionTargets () const
   else
   {
     //no, build the file list from the list control
-    return m_listCtrl->GetTargets ();
+    return m->listCtrl->GetTargets ();
   }
 }
 
@@ -1938,13 +1983,13 @@ RapidSvnFrame::GetSelectionActionFlags () const
 
   //is there nothing selected in the list control,
   //or is the active window *not* the list control?
-  if (m_listCtrl->GetSelectedItemCount () <= 0 ||
+  if (m->listCtrl->GetSelectedItemCount () <= 0 ||
       m_activePane != ACTIVEPANE_FILELIST)
   {
     //yes, so examine the folder browser
 
     flags |= Action::IS_DIR;
-    wxString path = m_folder_browser->GetPath ();
+    wxString path = m->folderBrowser->GetPath ();
 
     svn::Path pathUtf8 (PathUtf8 (path));
     if (pathUtf8.length () > 0)
@@ -1970,7 +2015,7 @@ RapidSvnFrame::GetSelectionActionFlags () const
   else
   {
     //no, ask the list control
-    flags = m_listCtrl->GetSelectionActionFlags ();
+    flags = m->listCtrl->GetSelectionActionFlags ();
   }
 
   return flags;
@@ -2122,8 +2167,8 @@ void
 RapidSvnFrame::ShowInfo ()
 {
   bool withUpdate = false;
-  if (m_listCtrl)
-    withUpdate = m_listCtrl->GetWithUpdate ();
+  if (m->listCtrl)
+    withUpdate = m->listCtrl->GetWithUpdate ();
 
   FileInfo fileInfo (m_context, withUpdate);
 
@@ -2161,27 +2206,27 @@ RapidSvnFrame::ShowPreferences ()
 
   if (ok)
   {
-    m_folder_browser->SetAuthCache (prefs.useAuthCache);
-    m_folder_browser->SetAuthPerBookmark (prefs.authPerBookmark);
+    m->folderBrowser->SetAuthCache (prefs.useAuthCache);
+    m->folderBrowser->SetAuthPerBookmark (prefs.authPerBookmark);
   }
 }
 
 void
 RapidSvnFrame::UpdateCurrentPath ()
 {
-  if (m_folder_browser == 0)
+  if (m->folderBrowser == 0)
   {
-    m_currentPath.Clear ();
+    m->currentPath.Clear ();
     m_context = 0;
   }
   else
   {
-    m_currentPath = m_folder_browser->GetPath ();
-    m_context = m_folder_browser->GetContext ();
+    m->currentPath = m->folderBrowser->GetPath ();
+    m_context = m->folderBrowser->GetContext ();
   }
 
-  if (m_currentPath.Length () > 0)
-    SetTitle (m_title + wxT(" - ") + m_currentPath);
+  if (m->currentPath.Length () > 0)
+    SetTitle (m_title + wxT(" - ") + m->currentPath);
   else
     SetTitle (m_title);
 }
@@ -2203,7 +2248,7 @@ RapidSvnFrame::InvokeDefaultAction ()
   if (selectionActionFlags & Action::IS_DIR)
   {
     // go one folder deeper...
-    m_folder_browser->SelectFolder (Utf8ToLocal(targets[0].c_str ()));
+    m->folderBrowser->SelectFolder (Utf8ToLocal(targets[0].c_str ()));
   }
   else
   {
@@ -2221,7 +2266,7 @@ RapidSvnFrame::Perform (Action * action)
     m->SetRunning (true);
     m->listener.cancel (false);
 
-    svn::Path currentPathUtf8 (PathUtf8 (m_currentPath));
+    svn::Path currentPathUtf8 (PathUtf8 (m->currentPath));
     action->SetPath (currentPathUtf8);
     action->SetContext (m_context);
     action->SetTargets (GetActionTargets ());
@@ -2264,19 +2309,19 @@ RapidSvnFrame::TraceError (const wxString & msg)
 inline void
 RapidSvnFrame::UpdateMenuSorting ()
 {
-  m->CheckSort (m_listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
+  m->CheckSort (m->listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
 }
 
 inline void
 RapidSvnFrame::UpdateMenuIncludePath ()
 {
-  m->CheckMenu (ID_Include_Path, m_listCtrl->GetIncludePath());
+  m->CheckMenu (ID_Include_Path, m->listCtrl->GetIncludePath());
 }
 
 inline void
 RapidSvnFrame::UpdateMenuAscending ()
 {
-  m->CheckMenu (ID_Sort_Ascending, m_listCtrl->GetSortAscending());
+  m->CheckMenu (ID_Sort_Ascending, m->listCtrl->GetSortAscending());
 }
 
 void
@@ -2284,7 +2329,7 @@ RapidSvnFrame::SetIncludePathVisibility (bool flatMode)
 {
   if (flatMode == false)
   {
-    if (m_listCtrl->GetIncludePath () == true)
+    if (m->listCtrl->GetIncludePath () == true)
       m->CheckMenu (ID_Include_Path, false);
  
     UpdateMenuSorting ();
