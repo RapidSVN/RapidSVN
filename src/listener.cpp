@@ -152,8 +152,13 @@ public:
    */
   void signalDone ()
   {
-    if (!::wxIsMainThread ())
-      parentDoneSignal->Broadcast ();
+    /** 
+     * @todo we have to see whether this works in Linux
+     * as well. Maybe we may call this only if 
+     * @ref sendSignalAndWait was called from a different
+     * thread.
+     */
+    parentDoneSignal->Broadcast ();
   }
 
 
