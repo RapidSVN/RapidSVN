@@ -127,7 +127,7 @@ namespace svn
     {
     public:
       /** bit coded failures */
-      const apr_uint32_t failures;
+      apr_uint32_t failures;
 
       /** certificate information */
       std::string hostname;
@@ -170,6 +170,7 @@ namespace svn
         issuerDName = src.issuerDName;
         realm = src.realm;
         maySave = src.maySave;
+        failures = src.failures;
 
         return *this;
       }        
