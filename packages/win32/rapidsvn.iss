@@ -22,6 +22,7 @@ Name: "de"; MessagesFile: "compiler:Languages\German.isl"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "fr"; MessagesFile: "compiler:Languages\French.isl"
 Name: "uk"; MessagesFile: "Ukrainian-5-5.1.0.isl"
+Name: "zh_CN"; MessagesFile: "ChineseSimp-11-5.1.0.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
@@ -33,10 +34,16 @@ Name: main; Description: RapidSVN Application; Types: compact custom full; Flags
 ; RapidSVN application files
 Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; OnlyBelowVersion: 0,4.0; Components: main
 Source: "..\..\Unicode_Release\rapidsvn.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; MinVersion: 0,4.0; Components: main
+Source: "..\..\src\locale\de\rapidsvn.po"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\uk\rapidsvn.po"; DestDir: "{app}\bin\locale\uk"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\uk\rapidsvn.mo"; DestDir: "{app}\bin\locale\uk"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\ru\rapidsvn.po"; DestDir: "{app}\bin\locale\ru"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\ru\rapidsvn.mo"; DestDir: "{app}\bin\locale\ru"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\fr\rapidsvn.po"; DestDir: "{app}\bin\locale\fr"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\fr\rapidsvn.mo"; DestDir: "{app}\bin\locale\fr"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\zh_CN\rapidsvn.po"; DestDir: "{app}\bin\locale\zh_CN"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\zh_CN\rapidsvn.mo"; DestDir: "{app}\bin\locale\zh_CN"; Flags: ignoreversion; Components: main
 Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\GPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
