@@ -36,6 +36,7 @@
 // forward declarations
 class Tracer;
 class wxWindow;
+class wxCommandEvent;
 
 namespace svn
 {
@@ -108,9 +109,6 @@ public:
                    std::string & password,
 	           bool & maySave);
 
-  virtual void
-  callbackGetLogin ();
-
   /**
    * @see svn::ContextListener
    */
@@ -128,9 +126,6 @@ public:
    */
   virtual bool
   contextGetLogMessage (std::string & msg);
-
-  virtual void
-  callbackGetLogMessage ();
 
   /**
    * @see svn::ContextListener
@@ -180,6 +175,16 @@ public:
    */
   bool
   isCancelled () const;
+
+  /**
+   * handles @a event that is passed from the parent frame
+   * to this class.
+   *
+   * @param event forwarded event
+   */
+  void
+  handleEvent (wxCommandEvent & event);
+
 
 protected:
   void Trace (const wxString & msg);

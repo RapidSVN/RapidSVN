@@ -617,8 +617,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_TREE_KEY_DOWN (-1, RapidSvnFrame::OnFolderBrowserKeyDown)
   EVT_LIST_ITEM_SELECTED (-1, RapidSvnFrame::OnFileListSelected)
 
-  EVT_MENU (SIG_GET_LOG_MSG, RapidSvnFrame::OnGetLogMessage)
-  EVT_MENU (SIG_GET_LOGIN, RapidSvnFrame::OnGetLogin)
+  EVT_MENU_RANGE (LISTENER_MIN, LISTENER_MAX, RapidSvnFrame::OnListenerEvent)
 END_EVENT_TABLE ()
 
 /** class implementation **/
@@ -1830,21 +1829,11 @@ RapidSvnFrame::OnFileListSelected (wxListEvent & event)
   m_activePane = ACTIVEPANE_FILELIST;
 }
 
-/**
- * Helper functions allowing the listener from the worker thread 
- * to get necessary information using GUI functions, which
- * are only allowed to be called from the main thread
- */
-void
-RapidSvnFrame::OnGetLogMessage (wxCommandEvent & event)
-{
-  m->listener.callbackGetLogMessage ();
-}
 
 void
-RapidSvnFrame::OnGetLogin (wxCommandEvent & event)
+RapidSvnFrame::OnListenerEvent (wxCommandEvent & event)
 {
-  m->listener.callbackGetLogin ();
+  m->listener.handleEvent (event);
 }
 
 /*** END OF SECTION EVENTS ***/

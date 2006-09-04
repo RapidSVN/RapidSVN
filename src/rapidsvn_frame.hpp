@@ -131,6 +131,7 @@ private:
 
   // Events from action threads
   void OnActionEvent (wxCommandEvent & event);
+  void OnListenerEvent (wxCommandEvent & event);
 
   // Folder Browser
   void AddWcBookmark ();
@@ -142,10 +143,6 @@ private:
   void OnFileListSelected (wxListEvent & event);
   void OnLogin (wxCommandEvent & event);
   void OnLogout (wxCommandEvent & event);
-
-  // Help listener to handle callbacks
-  void OnGetLogMessage (wxCommandEvent & event);
-  void OnGetLogin (wxCommandEvent & event);
 
   /**
    * Invoke the default action on the currently selected item(s)

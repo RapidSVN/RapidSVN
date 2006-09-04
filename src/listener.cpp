@@ -94,9 +94,10 @@ public:
   std::string password;
   std::string certFile;
 
-  ContextListener::SslServerTrustAnswer sslAnswer;
-  ContextListener::SslServerTrustData sslData;
+  svn::ContextListener::SslServerTrustAnswer sslServerTrustAnswer;
+  svn::ContextListener::SslServerTrustData sslServerTrustData;
   apr_uint32_t acceptedFailures;
+
 
   Data (wxWindow * parent_)
     : parent (parent_), tracer (NULL), ownTracer (false),
@@ -115,25 +116,166 @@ public:
     }
   }
 
+  /**
+   * in a multi threading environment, we have
+   * to forward the request as an event to
+   * the main thread; this one handles the event
+   * and returns the result.
+   *
+   * if we are already in the main thread we
+   * can skip the shit and wait here
+   */
   void
-  SendEventToParent (int id) const
+  sendSignalAndWait (int id)
   {
     wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, id);
-    wxPostEvent (parent, event);
-  }
 
-  void
-  WaitForParent () const
-  {
-    // Initial condition check, do not remove or recompose it.
-    // Necessary for the case if these lines are called AFTER sending a signal
-    // by parent. If not perform this check, signal is lost and we will wait
-    // for the parent eternally.
-    if (!dataReceived)
+    if (::wxIsMainThread ())
     {
-      parentDoneSignal->Wait();
+      // single threaded environment or
+      // already in the main thread
+      handleEvent (event);
+    }
+    else
+    {
+      wxPostEvent (parent, event);
+      parentDoneSignal->Wait ();    
     }
   }
+
+  
+  /**
+   * The callback functions will call this
+   * function to signal they are done;
+   * if we are already in the main thread
+   * we do nothing.
+   */
+  void signalDone ()
+  {
+    if (!::wxIsMainThread ())
+      parentDoneSignal->Broadcast ();
+  }
+
+
+  void
+  callbackSslClientCertPrompt ()
+  {
+    wxMutexLocker lock (mutex);
+    wxString localCertFile = wxFileSelector (
+      _("Select Certificate File"), wxT(""), wxT(""), wxT(""),
+      wxT("*.*"), wxOPEN | wxFILE_MUST_EXIST, parent);
+    LocalToUtf8 (localCertFile, certFile);
+
+    dataReceived = !localCertFile.empty ();
+
+    signalDone ();
+  }
+
+
+  void
+  callbackGetLogin ()
+  {
+    wxMutexLocker lock (mutex);
+
+    // TODO: show realm
+    wxString LocalUsername (Utf8ToLocal (username));
+    wxString LocalPassword (Utf8ToLocal (password));
+    AuthDlg dlg (parent, LocalUsername, LocalPassword);
+
+    bool ok = dlg.ShowModal () == wxID_OK;
+    if (ok)
+    {
+      LocalToUtf8 (dlg.GetUsername (), username);
+      LocalToUtf8 (dlg.GetPassword (), password);
+      dataReceived = true;
+    }
+
+    signalDone ();
+  }
+
+
+  void
+  callbackGetLogMessage ()
+  {
+    wxMutexLocker lock (mutex);
+    CommitDlg dlg (parent, true);
+
+    bool ok = dlg.ShowModal () == wxID_OK;
+
+    if (ok)
+    {
+      LocalToUtf8 (dlg.GetMessage (), message);
+      dataReceived = true;
+    }
+
+    signalDone ();
+  }
+
+
+  void
+  callbackSslServerTrustPrompt ()
+  {
+    wxMutexLocker lock (mutex);
+    CertDlg dlg (parent, sslServerTrustData);
+
+    dlg.ShowModal ();
+    acceptedFailures = dlg.AcceptedFailures ();
+
+    sslServerTrustAnswer = dlg.Answer ();
+    dataReceived = true;
+
+    signalDone ();
+  }
+
+
+  void
+  callbackSslClientCertPwPrompt ()
+  {
+    wxMutexLocker lock (mutex);
+    wxString LocalPassword(Utf8ToLocal (password));
+    AuthDlg dlg (parent, wxEmptyString, LocalPassword,
+                 AuthDlg::HIDE_USERNAME);
+
+    dataReceived = dlg.ShowModal () == wxID_OK;
+
+    if (dataReceived)
+      LocalToUtf8 (dlg.GetPassword (), password);
+
+    signalDone ();
+  }
+
+
+  void 
+  handleEvent (wxCommandEvent & event)
+  {
+    switch (event.m_id)
+    {
+    case SIG_GET_LOG_MSG:
+      callbackGetLogMessage ();
+      break;
+
+    case SIG_GET_LOGIN:
+      callbackGetLogin ();
+      break;
+
+    case SIG_SSL_SERVER_TRUST_PROMPT:
+      callbackSslServerTrustPrompt ();
+      break;
+
+    case SIG_SSL_CLIENT_CERT_PROMPT:
+      callbackSslClientCertPrompt ();
+      break;
+
+    case SIG_SSL_CLIENT_CERT_PW_PROMPT:
+      callbackSslClientCertPwPrompt ();
+      break;
+
+    default:
+      // Oh well, no default reaction *sigh* 
+      ;
+    }
+  }
+
 };
 
 Listener::Listener (wxWindow * parent)
@@ -264,8 +406,7 @@ Listener::contextGetLogin (const std::string & realm,
   m->username = username;
   m->password = password;
 
-  m->SendEventToParent (SIG_GET_LOGIN);
-  m->WaitForParent ();
+  m->sendSignalAndWait (SIG_GET_LOGIN);
 
   // Parent has done its job and signalled. Performing main condition check.
   bool success = m->dataReceived;
@@ -280,33 +421,12 @@ Listener::contextGetLogin (const std::string & realm,
   return success;
 }
 
-void
-Listener::callbackGetLogin ()
-{
-  wxMutexLocker lock (m->mutex);
-
-  // TODO: show realm
-  wxString LocalUsername (Utf8ToLocal (m->username));
-  wxString LocalPassword (Utf8ToLocal (m->password));
-  AuthDlg dlg (GetParent (), LocalUsername, LocalPassword);
-
-  bool ok = dlg.ShowModal () == wxID_OK;
-  if (ok)
-  {
-    LocalToUtf8 (dlg.GetUsername (), m->username);
-    LocalToUtf8 (dlg.GetPassword (), m->password);
-    m->dataReceived = true;
-  }
-  m->parentDoneSignal->Broadcast ();
-}
-
 bool
 Listener::contextGetLogMessage (std::string & msg)
 {
   m->message = msg;
 
-  m->SendEventToParent (SIG_GET_LOG_MSG);
-  m->WaitForParent ();
+  m->sendSignalAndWait (SIG_GET_LOG_MSG);
 
   bool success = m->dataReceived;
   m->dataReceived = false;
@@ -318,65 +438,55 @@ Listener::contextGetLogMessage (std::string & msg)
   return success;
 }
 
-void
-Listener::callbackGetLogMessage ()
-{
-  wxMutexLocker lock (m->mutex);
-  CommitDlg dlg (GetParent (), true);
-
-  bool ok = dlg.ShowModal () == wxID_OK;
-
-  if (ok)
-  {
-    LocalToUtf8 (dlg.GetMessage (), m->message);
-    m->dataReceived = true;
-  }
-  m->parentDoneSignal->Broadcast ();
-}
 
 svn::ContextListener::SslServerTrustAnswer
 Listener::contextSslServerTrustPrompt (
   const svn::ContextListener::SslServerTrustData & data,
   apr_uint32_t & acceptedFailures)
 {
-  CertDlg dlg (GetParent (), data);
+  m->sslServerTrustData = data;
+  m->sendSignalAndWait (SIG_SSL_SERVER_TRUST_PROMPT);
+  m->dataReceived = false;
 
-  dlg.ShowModal ();
-  acceptedFailures = dlg.AcceptedFailures ();
-
-  return dlg.Answer ();
+  return m->sslServerTrustAnswer;
 }
+
 
 bool
 Listener::contextSslClientCertPrompt (std::string & certFile)
 {
-  wxString filename = wxFileSelector (
-    _("Select Certificate File"), wxT(""), wxT(""), wxT(""),
-    wxT("*.*"), wxOPEN | wxFILE_MUST_EXIST,
-    GetParent ());
+  m->sendSignalAndWait (SIG_SSL_CLIENT_CERT_PROMPT);
 
-  if (filename.empty ())
+  bool success = m->dataReceived;
+  m->dataReceived = false;
+
+  if (!success)
     return false;
 
-  //TODO
-  LocalToUtf8 (filename, certFile);
+  certFile = m->certFile;
+
   return true;
 }
+
 
 bool
 Listener::contextSslClientCertPwPrompt (std::string & password,
                                         const std::string & realm,
                                         bool & maySave)
 {
-  //TODO
-  wxString LocalPassword(Utf8ToLocal (password));
-  AuthDlg dlg (GetParent (), wxEmptyString, LocalPassword,
-               AuthDlg::HIDE_USERNAME);
+  /// @todo @ref realm isnt used yet
+  /// @todo @ref maySave isnt used yet
+  m->password = password;
+  
+  m->sendSignalAndWait (SIG_SSL_CLIENT_CERT_PW_PROMPT);
 
-  if (dlg.ShowModal () != wxID_OK)
+  bool success = m->dataReceived;
+  m->dataReceived = false;
+
+  if(!success)
     return false;
 
-  LocalToUtf8 (dlg.GetPassword (), password);
+  password = m->password;
   return true;
 }
 
@@ -396,6 +506,12 @@ void
 Listener::cancel (bool value)
 {
   m->isCancelled = value;
+}
+
+void
+Listener::handleEvent (wxCommandEvent & event)
+{
+  m->handleEvent (event);
 }
 
 /* -----------------------------------------------------------------
