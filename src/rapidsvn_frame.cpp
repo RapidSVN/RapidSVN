@@ -658,18 +658,17 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->RecreateToolbar ();
   m->SetRunning (false);
 
-  /// @todo Do we really need wxSplitterWindow?
+  /// @todo Do we really need ProportionalSplitterWindow?
   ///       I dont see the benefits
   /// Maybe we can get rid of #409 without this?
-  m->horizSplitter = new ProportionalSplitterWindow (
-    1.0f, this, -1, wxDefaultPosition, wxDefaultSize, SPLITTER_STYLE);
+// TODO  m->horizSplitter = new ProportionalSplitterWindow (
+// TODO    1.0f, this, -1, wxDefaultPosition, wxDefaultSize, SPLITTER_STYLE);
 // TODO #if wxCHECK_VERSION(2, 6, 0)
-// TODO     new wxSplitterWindow (this,
-// TODO                                     SPLITTER_WINDOW,
-// TODO                                     wxDefaultPosition,
-// TODO                                     wxDefaultSize,
-// TODO                                     SPLITTER_STYLE);
-// TODO   m->horizSplitter->SetSashGravity(1.0f);
+  m->horizSplitter = new wxSplitterWindow (this, -1, 
+                                           wxDefaultPosition, 
+                                           wxDefaultSize,
+                                           SPLITTER_STYLE);
+  m->horizSplitter->SetSashGravity(1.0f);
 // TODO #else
 // TODO     new ProportionalSplitterWindow (1.0f, this,
 // TODO                                     SPLITTER_WINDOW,
@@ -693,16 +692,15 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->listener.SetTracer (m_logTracer, false);
 
 
-  m->vertSplitter = new ProportionalSplitterWindow (
-    0.8f, m_info_panel, -1, wxDefaultPosition, wxDefaultSize, SPLITTER_STYLE);
-// TODO   m->vertSplitter = new wxSplitterWindow (m_info_panel,
-// TODO                                           SPLITTER_WINDOW,
-// TODO                                           wxDefaultPosition,
-// TODO                                           wxDefaultSize,
-// TODO                                           SPLITTER_STYLE);
+// TODO   m->vertSplitter = new ProportionalSplitterWindow (
+// TODO     0.8f, m_info_panel, -1, wxDefaultPosition, wxDefaultSize, SPLITTER_STYLE);
+  m->vertSplitter = new wxSplitterWindow (m_info_panel, -1,
+                                          wxDefaultPosition,
+                                          wxDefaultSize,
+                                          SPLITTER_STYLE);
 // TODO #if wxCHECK_VERSION(2, 6, 0)
-// TODO   // Not a complete solution, but a workaround for now...
-// TODO   m->vertSplitter->SetSashGravity(0.2f);
+  // Not a complete solution, but a workaround for now...
+  m->vertSplitter->SetSashGravity(0.2f);
 // TODO #endif
 
   // Create the list control to display files
@@ -765,7 +763,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
 
   // Get sash position for every splitter from configuration.
   int w,h;
-  GetSize (&w, &h);
+  GetClientSize (&w, &h);
   int vpos = cfg->Read (ConfigSplitterVert, w / 3);
   int hpos = cfg->Read (ConfigSplitterHoriz, (3 * h) / 4);
 
