@@ -658,24 +658,15 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->RecreateToolbar ();
   m->SetRunning (false);
 
-  /// @todo Do we really need ProportionalSplitterWindow?
-  ///       I dont see the benefits
-  /// Maybe we can get rid of #409 without this?
-// TODO  m->horizSplitter = new ProportionalSplitterWindow (
-// TODO    1.0f, this, -1, wxDefaultPosition, wxDefaultSize, SPLITTER_STYLE);
-// TODO #if wxCHECK_VERSION(2, 6, 0)
+  // Note: In the past here was an #if that checked
+  // the wxWidgets version, since wxSplitterWindow
+  // wasnt available below 2.4.2 (if I remember this correctly).
+  // But today we only use wxSplitterWindow
   m->horizSplitter = new wxSplitterWindow (this, -1, 
                                            wxDefaultPosition, 
                                            wxDefaultSize,
                                            SPLITTER_STYLE);
   m->horizSplitter->SetSashGravity(1.0f);
-// TODO #else
-// TODO     new ProportionalSplitterWindow (1.0f, this,
-// TODO                                     SPLITTER_WINDOW,
-// TODO                                     wxDefaultPosition,
-// TODO                                     wxDefaultSize,
-// TODO                                     SPLITTER_STYLE);
-// TODO #endif
 
   m_info_panel = new wxPanel (m->horizSplitter, -1,
                               wxDefaultPosition, wxDefaultSize,
@@ -692,16 +683,11 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->listener.SetTracer (m_logTracer, false);
 
 
-// TODO   m->vertSplitter = new ProportionalSplitterWindow (
-// TODO     0.8f, m_info_panel, -1, wxDefaultPosition, wxDefaultSize, SPLITTER_STYLE);
   m->vertSplitter = new wxSplitterWindow (m_info_panel, -1,
                                           wxDefaultPosition,
                                           wxDefaultSize,
                                           SPLITTER_STYLE);
-// TODO #if wxCHECK_VERSION(2, 6, 0)
-  // Not a complete solution, but a workaround for now...
   m->vertSplitter->SetSashGravity(0.2f);
-// TODO #endif
 
   // Create the list control to display files
   m->listCtrl = new FileListCtrl (m->vertSplitter, FILELIST_CTRL,
