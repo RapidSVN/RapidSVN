@@ -33,7 +33,7 @@
 #include "about_dlg.hpp"
 #include "svn_version.h"
 #include "version.hpp"
-#include "res/bitmaps/logo.xpm"
+#include "res/bitmaps/logo.png.h"
 #include "utils.hpp"
 
 AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
@@ -96,7 +96,7 @@ Canonical Name: %s\n"));
 
   // create controls
   wxStaticBitmap * logo =
-    new wxStaticBitmap (this, -1, wxBitmap (logo_xpm));
+    new wxStaticBitmap (this, -1, EMBEDDED_BITMAP(logo_png));
   wxStaticText * labelCopy = new wxStaticText (this, -1, copy);
   wxStaticText * labelBuilt = new wxStaticText (this, -1, built);
   wxStaticText * labelInfo = new wxStaticText (this, -1, info);
