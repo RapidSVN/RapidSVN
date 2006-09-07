@@ -50,16 +50,15 @@
 
 // bitmaps
 #include "res/bitmaps/computer.xpm"
-#include "res/bitmaps/versioned_folder.xpm"
-#include "res/bitmaps/open_folder.xpm"
-#include "res/bitmaps/folder.xpm"
-#include "res/bitmaps/nonsvn_open_folder.xpm"
-#include "res/bitmaps/earth.xpm"
-#include "res/bitmaps/modified_versioned_folder.xpm"
-#include "res/bitmaps/modified_open_folder.xpm"
-#include "res/bitmaps/bookmark.xpm"
-#include "res/bitmaps/externals_folder.xpm"
-#include "res/bitmaps/open_externals_folder.xpm"
+#include "res/bitmaps/folder.png.h"
+#include "res/bitmaps/open_folder.png.h"
+#include "res/bitmaps/nonsvn_folder.png.h"
+#include "res/bitmaps/nonsvn_open_folder.png.h"
+#include "res/bitmaps/modified_folder.png.h"
+#include "res/bitmaps/modified_open_folder.png.h"
+#include "res/bitmaps/bookmark.png.h"
+#include "res/bitmaps/externals_folder.png.h"
+#include "res/bitmaps/externals_open_folder.png.h"
 
 enum
 {
@@ -68,7 +67,6 @@ enum
   FOLDER_IMAGE_OPEN_FOLDER,
   FOLDER_IMAGE_NONSVN_FOLDER,
   FOLDER_IMAGE_NONSVN_OPEN_FOLDER,
-  FOLDER_IMAGE_EARTH,
   FOLDER_IMAGE_MODIFIED_FOLDER,
   FOLDER_IMAGE_MODIFIED_OPEN_FOLDER,
   FOLDER_IMAGE_BOOKMARK,
@@ -153,16 +151,15 @@ public:
   {
     imageList = new wxImageList (16, 16, TRUE);
     imageList->Add (wxIcon (computer_xpm));
-    imageList->Add (wxIcon (versioned_folder_xpm));
-    imageList->Add (wxIcon (open_folder_xpm));
-    imageList->Add (wxIcon (folder_xpm));
-    imageList->Add (wxIcon (nonsvn_open_folder_xpm));
-    imageList->Add (wxIcon (earth_xpm));
-    imageList->Add (wxIcon (modified_versioned_folder_xpm));
-    imageList->Add (wxIcon (modified_open_folder_xpm));
-    imageList->Add (wxIcon (bookmark_xpm));
-    imageList->Add (wxIcon (externals_folder_xpm));
-    imageList->Add (wxIcon (open_externals_folder_xpm));
+    imageList->Add (EMBEDDED_BITMAP(folder_png));
+    imageList->Add (EMBEDDED_BITMAP(open_folder_png));
+    imageList->Add (EMBEDDED_BITMAP(nonsvn_folder_png));
+    imageList->Add (EMBEDDED_BITMAP(nonsvn_open_folder_png));
+    imageList->Add (EMBEDDED_BITMAP(modified_folder_png));
+    imageList->Add (EMBEDDED_BITMAP(modified_open_folder_png));
+    imageList->Add (EMBEDDED_BITMAP(bookmark_png));
+    imageList->Add (EMBEDDED_BITMAP(externals_folder_png));
+    imageList->Add (EMBEDDED_BITMAP(externals_open_folder_png));
 
     treeCtrl = new wxTreeCtrl (window, -1, pos, size,
                                wxTR_HAS_BUTTONS|wxTR_SINGLE);

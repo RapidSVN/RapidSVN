@@ -29,6 +29,7 @@
 #include "wx/wx.h"
 #include "wx/datetime.h"
 #include "wx/filename.h"
+#include "wx/mstream.h"
 
 // apr
 #include "apr_strings.h"
@@ -583,6 +584,14 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
       // Failed assembling verbs.
       // TODO: Report this error in the status bar?
     }
+}
+
+
+wxBitmap 
+EmbeddedBitmap (const unsigned char * data, size_t len)
+{
+  wxMemoryInputStream is (data, len);
+  return wxBitmap (wxImage (is, wxBITMAP_TYPE_ANY, -1), -1);
 }
 
 /* -----------------------------------------------------------------

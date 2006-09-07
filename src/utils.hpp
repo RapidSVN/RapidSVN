@@ -301,6 +301,30 @@ Utf8ToLocal (const std::string & srcUtf8);
 wxFileName
 Utf8ToFileName (const char * nameUtf8);
 
+/**
+ * Convert a character array to a wxBitmap.
+ * You have to ensure the contents of the array string
+ * contains a valid image 
+ *
+ * @remark The suggestion to this code is from
+ *         http://www.wxwidgest.org/index.php/Embedding_PNG_Images
+ *
+ * @see EMBEDDED_BITMAP
+ *
+ * @para data array with the bitmap data
+ * @para len number of elements in the array
+ * @return the bitmap
+ */
+wxBitmap 
+EmbeddedBitmap (const unsigned char * data, size_t len);
+
+/**
+ * Macro that saves you from having to 
+ * add the @a len parameter to @ref EmbeddedBitmap
+ */
+#define EMBEDDED_BITMAP(data) EmbeddedBitmap (data, sizeof (data))
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

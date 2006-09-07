@@ -61,6 +61,9 @@ bool RapidSvnApp::OnInit ()
   m_locale.AddCatalogLookupPathPrefix (wxT("locale"));
   m_locale.AddCatalog (wxT("rapidsvn"));
 
+  // Add support for PNG
+  wxImage::AddHandler(new wxPNGHandler);
+
 #ifdef  USE_HTML_HELP
   // Initialise the HTML help
   wxFileSystem::AddHandler (new wxZipFSHandler);
