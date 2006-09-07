@@ -48,16 +48,16 @@
 #include "verblist.hpp"
 
 // bitmaps
-#include "res/bitmaps/add.xpm"
-#include "res/bitmaps/commit.xpm"
-#include "res/bitmaps/delete.xpm"
-#include "res/bitmaps/info.xpm"
-#include "res/bitmaps/log.xpm"
-#include "res/bitmaps/resolve.xpm"
-#include "res/bitmaps/revert.xpm"
-#include "res/bitmaps/update.xpm"
-#include "res/bitmaps/add_wc_bookmark.xpm"
-#include "res/bitmaps/remove_bookmark.xpm"
+#include "res/bitmaps/add.png.h"
+#include "res/bitmaps/commit.png.h"
+#include "res/bitmaps/delete.png.h"
+#include "res/bitmaps/info.png.h"
+#include "res/bitmaps/log.png.h"
+#include "res/bitmaps/resolve.png.h"
+#include "res/bitmaps/revert.png.h"
+#include "res/bitmaps/update.png.h"
+// #include "res/bitmaps/add_wc_bookmark.png.h"
+// #include "res/bitmaps/remove_bookmark.png.h"
 
 /** configuration options */
 
@@ -68,7 +68,7 @@
  * Set this option to "false" if you encounter this.
  * Default: true
  */
-static const bool UseBitmapMenus = false;
+static const bool UseBitmapMenus = true;
 
 static wxMenuItem *
 CreateMenuItem (
@@ -160,22 +160,22 @@ AppendModifyMenu (wxMenu * parentMenu)
   parentMenu->AppendSeparator ();
 
   AppendMenuItem (parentMenu, ID_Property, _("&Properties...\tCTRL-P"),
-                  wxBitmap (info_xpm));
+                  EMBEDDED_BITMAP(info_png));
 
   parentMenu->AppendSeparator ();
 
   AppendMenuItem (parentMenu, ID_Add, _("&Add\tCTRL-A"),
-                  wxBitmap (add_xpm));
+                  EMBEDDED_BITMAP(add_png));
   AppendMenuItem (parentMenu, ID_AddRecursive, _("Add r&ecursive"));
   AppendMenuItem (parentMenu, ID_Delete, _("&Delete\tDEL"),
-                  wxBitmap (delete_xpm));
+                  EMBEDDED_BITMAP(delete_png));
 
   parentMenu->AppendSeparator ();
 
   AppendMenuItem (parentMenu, ID_Revert, _("Re&vert\tCTRL-V"),
-                  wxBitmap (revert_xpm));
+                  EMBEDDED_BITMAP(revert_png));
   AppendMenuItem (parentMenu, ID_Resolve, _("Re&solve conflicts\tCTRL-S"),
-                  wxBitmap (resolve_xpm));
+                  EMBEDDED_BITMAP(resolve_png));
 
   parentMenu->AppendSeparator ();
 
@@ -201,9 +201,9 @@ AppendQueryMenu (wxMenu * parentMenu)
   AppendMenuItem (parentMenu, ID_DiffHead, _("&Diff to Head...\tCTRL+H"));
   parentMenu->AppendSeparator ();
   AppendMenuItem (parentMenu, ID_Log, _("&Log...\tCTRL-L"),
-                  wxBitmap (log_xpm));
+                  EMBEDDED_BITMAP(log_png));
   AppendMenuItem (parentMenu, ID_Info, _("&Info..."),
-                  wxBitmap (info_xpm));
+                  EMBEDDED_BITMAP(info_png));
 }
 
 void
@@ -239,7 +239,7 @@ AppendMenuItem (wxMenu & menu, int id)
 
   case ID_AddWcBookmark:
     caption = _("&Add Existing Working Copy...");
-    bitmap = wxBitmap (add_wc_bookmark_xpm);
+    // bitmap = EMBEDDED_BITMAP(add_wc_bookmark_png);
     break;
 
   case ID_AddRepoBookmark:
@@ -252,7 +252,7 @@ AppendMenuItem (wxMenu & menu, int id)
 
   case ID_RemoveBookmark:
     caption = _("&Remove Bookmark...");
-    bitmap = wxBitmap (remove_bookmark_xpm);
+    // bitmap = EMBEDDED_BITMAP(remove_bookmark_png);
     break;
 
   case ID_EditBookmark:
@@ -273,12 +273,12 @@ AppendMenuItem (wxMenu & menu, int id)
 
   case ID_Update:
     caption = _("&Update...\tCTRL-U");
-    bitmap = wxBitmap (update_xpm);
+    bitmap = EMBEDDED_BITMAP(update_png);
     break;
 
   case ID_Commit:
     caption = _("Co&mmit...\tCTRL-M");
-    bitmap = wxBitmap (commit_xpm);
+    bitmap = EMBEDDED_BITMAP(commit_png);
     break;
 
   case ID_Quit:
