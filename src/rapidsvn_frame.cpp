@@ -97,16 +97,17 @@
 #include "res/bitmaps/rapidsvn_16x16.xpm"
 #include "res/bitmaps/rapidsvn_32x32.xpm"
 #include "res/bitmaps/rapidsvn_48x48.xpm"
-#include "res/bitmaps/refresh.xpm"
-#include "res/bitmaps/update.xpm"
-#include "res/bitmaps/commit.xpm"
-#include "res/bitmaps/add.xpm"
-#include "res/bitmaps/delete.xpm"
-#include "res/bitmaps/revert.xpm"
-#include "res/bitmaps/resolve.xpm"
-#include "res/bitmaps/log.xpm"
-#include "res/bitmaps/info.xpm"
-#include "res/bitmaps/stop.xpm"
+
+#include "res/bitmaps/refresh.png.h"
+#include "res/bitmaps/update.png.h"
+#include "res/bitmaps/commit.png.h"
+#include "res/bitmaps/add.png.h"
+#include "res/bitmaps/delete.png.h"
+#include "res/bitmaps/revert.png.h"
+#include "res/bitmaps/resolve.png.h"
+#include "res/bitmaps/log.png.h"
+#include "res/bitmaps/info.png.h"
+#include "res/bitmaps/stop.png.h"
 
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
@@ -411,7 +412,7 @@ public:
 
     // Set toolbar refresh button.
     toolBar->AddTool (ID_Refresh,
-                      wxBitmap (refresh_xpm),
+                      EMBEDDED_BITMAP(refresh_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -424,7 +425,7 @@ public:
 
     // STOP button
     toolBar->AddTool (ID_Stop,
-                      wxBitmap (stop_xpm),
+                      EMBEDDED_BITMAP(stop_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -446,7 +447,7 @@ public:
     wxASSERT (toolBar);
 
     toolBar->AddTool (ID_Add,
-                      wxBitmap (add_xpm),
+                      EMBEDDED_BITMAP(add_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -456,7 +457,7 @@ public:
                       _("Put files and directories under revision control"));
 
     toolBar->AddTool (ID_Delete,
-                      wxBitmap (delete_xpm),
+                      EMBEDDED_BITMAP(delete_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -466,7 +467,7 @@ public:
                       _("Delete files and directories from version control"));
 
     toolBar->AddTool (ID_Update,
-                      wxBitmap (update_xpm),
+                      EMBEDDED_BITMAP(update_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -476,7 +477,7 @@ public:
                       _("Bring changes from the repository into the working copy"));
 
     toolBar->AddTool (ID_Commit,
-                      wxBitmap (commit_xpm),
+                      EMBEDDED_BITMAP(commit_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -486,7 +487,7 @@ public:
                       _("Send changes from your working copy to the repository"));
 
     toolBar->AddTool (ID_Revert,
-                      wxBitmap (revert_xpm),
+                      EMBEDDED_BITMAP(revert_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -496,7 +497,7 @@ public:
                       _("Restore pristine working copy file (undo all local edits)"));
 
     toolBar->AddTool (ID_Resolve,
-                      wxBitmap (resolve_xpm),
+                      EMBEDDED_BITMAP(resolve_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -512,7 +513,7 @@ public:
   AddInfoTools (wxToolBarBase *toolBar)
   {
     toolBar->AddTool (ID_Info,
-                      wxBitmap (info_xpm),
+                      EMBEDDED_BITMAP(info_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
@@ -522,7 +523,7 @@ public:
                       _("Display info about selected entries"));
 
     toolBar->AddTool (ID_Log,
-                      wxBitmap (log_xpm),
+                      EMBEDDED_BITMAP(log_png),
                       wxNullBitmap,
                       FALSE,
                       -1,
