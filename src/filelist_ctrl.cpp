@@ -53,44 +53,45 @@
 #include "utils.hpp"
 
 // Bitmaps
-#include "res/bitmaps/nonsvn_file.xpm"
-#include "res/bitmaps/normal_file.xpm"
-#include "res/bitmaps/added_file.xpm"
-#include "res/bitmaps/missing_file.xpm"
-#include "res/bitmaps/deleted_file.xpm"
-#include "res/bitmaps/replaced_file.xpm"
-#include "res/bitmaps/modified_file.xpm"
-#include "res/bitmaps/merged_file.xpm"
-#include "res/bitmaps/conflicted_file.xpm"
-#include "res/bitmaps/folder.xpm"
-#include "res/bitmaps/versioned_folder.xpm"
-#include "res/bitmaps/sort_down.xpm"
-#include "res/bitmaps/sort_up.xpm"
-#include "res/bitmaps/modified_versioned_folder.xpm"
-#include "res/bitmaps/newer_file.xpm"
-#include "res/bitmaps/newer_folder.xpm"
-#include "res/bitmaps/modified_newer_file.xpm"
-#include "res/bitmaps/externals_folder.xpm"
+#include "res/bitmaps/sort_down.png.h"
+#include "res/bitmaps/sort_up.png.h"
 
-#include "res/bitmaps/locked_normal_file.xpm"
-#include "res/bitmaps/locked_missing_file.xpm"
-#include "res/bitmaps/locked_deleted_file.xpm"
-#include "res/bitmaps/locked_replaced_file.xpm"
-#include "res/bitmaps/locked_modified_file.xpm"
-#include "res/bitmaps/locked_merged_file.xpm"
-#include "res/bitmaps/locked_conflicted_file.xpm"
-#include "res/bitmaps/locked_newer_file.xpm"
-#include "res/bitmaps/locked_modified_newer_file.xpm"
+#include "res/bitmaps/nonsvn_file.png.h"
+#include "res/bitmaps/normal_file.png.h"
+#include "res/bitmaps/added_file.png.h"
+#include "res/bitmaps/missing_file.png.h"
+#include "res/bitmaps/deleted_file.png.h"
+#include "res/bitmaps/replaced_file.png.h"
+#include "res/bitmaps/modified_file.png.h"
+#include "res/bitmaps/merged_file.png.h"
+#include "res/bitmaps/conflicted_file.png.h"
+#include "res/bitmaps/nonsvn_folder.png.h"
+#include "res/bitmaps/folder.png.h"
+#include "res/bitmaps/modified_folder.png.h"
+#include "res/bitmaps/newer_file.png.h"
+#include "res/bitmaps/newer_folder.png.h"
+#include "res/bitmaps/modified_newer_file.png.h"
+#include "res/bitmaps/externals_folder.png.h"
 
-#include "res/bitmaps/replock_normal_file.xpm"
-#include "res/bitmaps/replock_missing_file.xpm"
-#include "res/bitmaps/replock_deleted_file.xpm"
-#include "res/bitmaps/replock_replaced_file.xpm"
-#include "res/bitmaps/replock_modified_file.xpm"
-#include "res/bitmaps/replock_merged_file.xpm"
-#include "res/bitmaps/replock_conflicted_file.xpm"
-#include "res/bitmaps/replock_newer_file.xpm"
-#include "res/bitmaps/replock_modified_newer_file.xpm"
+#include "res/bitmaps/locked_file.png.h"
+#include "res/bitmaps/locked_missing_file.png.h"
+#include "res/bitmaps/locked_deleted_file.png.h"
+#include "res/bitmaps/locked_replaced_file.png.h"
+#include "res/bitmaps/locked_modified_file.png.h"
+#include "res/bitmaps/locked_merged_file.png.h"
+#include "res/bitmaps/locked_conflicted_file.png.h"
+#include "res/bitmaps/locked_newer_file.png.h"
+#include "res/bitmaps/locked_modified_newer_file.png.h"
+
+#include "res/bitmaps/rep_locked_file.png.h"
+#include "res/bitmaps/rep_locked_missing_file.png.h"
+#include "res/bitmaps/rep_locked_deleted_file.png.h"
+#include "res/bitmaps/rep_locked_replaced_file.png.h"
+#include "res/bitmaps/rep_locked_modified_file.png.h"
+#include "res/bitmaps/rep_locked_merged_file.png.h"
+#include "res/bitmaps/rep_locked_conflicted_file.png.h"
+#include "res/bitmaps/rep_locked_newer_file.png.h"
+#include "res/bitmaps/rep_locked_modified_newer_file.png.h"
 
 /**
  * Tags for wxConfig file settings, defined here to avoid duplicate
@@ -549,38 +550,41 @@ enum
 struct MapItem
 {
   int status;
-  const char ** xpm_data;
+  const unsigned char * data;
+  size_t len;
 
-  MapItem (int status_, const char **xpm_data_)
-    : status (status_), xpm_data (xpm_data_)
+  MapItem (int status_, const unsigned char *data_, size_t len_)
+    : status (status_), data (data_), len (len_)
   {
   }
 };
 
+#define MAP_ITEM(status,data) MapItem(status, data, sizeof(data)) 
+
 /** array of icons and corresponding status */
 static const MapItem MAP_ICON_ARRAY [] =
 {
-  MapItem (svn_wc_status_unversioned,           (const char**)nonsvn_file_xpm),
-  MapItem (svn_wc_status_normal,                (const char**)normal_file_xpm),
-  MapItem (svn_wc_status_added,                 (const char**)added_file_xpm),
-  MapItem (svn_wc_status_missing,               (const char**)missing_file_xpm),
-  MapItem (svn_wc_status_deleted,               (const char**)deleted_file_xpm),
-  MapItem (svn_wc_status_replaced,              (const char**)replaced_file_xpm),
-  MapItem (svn_wc_status_modified,              (const char**)modified_file_xpm),
-  MapItem (svn_wc_status_merged,                (const char**)merged_file_xpm),
-  MapItem (svn_wc_status_conflicted,            (const char**)conflicted_file_xpm),
+  MAP_ITEM(svn_wc_status_unversioned,           nonsvn_file_png),
+  MAP_ITEM(svn_wc_status_normal,                normal_file_png),
+  MAP_ITEM(svn_wc_status_added,                 added_file_png),
+  MAP_ITEM(svn_wc_status_missing,               missing_file_png),
+  MAP_ITEM(svn_wc_status_deleted,               deleted_file_png),
+  MAP_ITEM(svn_wc_status_replaced,              replaced_file_png),
+  MAP_ITEM(svn_wc_status_modified,              modified_file_png),
+  MAP_ITEM(svn_wc_status_merged,                merged_file_png),
+  MAP_ITEM(svn_wc_status_conflicted,            conflicted_file_png),
 
-  MapItem (IMG_INDX_FOLDER,                     (const char**)folder_xpm),
-  MapItem (IMG_INDX_VERSIONED_FOLDER,           (const char**)versioned_folder_xpm),
+  MAP_ITEM(IMG_INDX_FOLDER,                     nonsvn_folder_png),
+  MAP_ITEM(IMG_INDX_VERSIONED_FOLDER,           folder_png),
 
-  MapItem (IMG_INDX_SORT_DOWN,                  (const char**)sort_down_xpm),
-  MapItem (IMG_INDX_SORT_UP,                    (const char**)sort_up_xpm),
+  MAP_ITEM(IMG_INDX_SORT_DOWN,                  sort_down_png),
+  MAP_ITEM(IMG_INDX_SORT_UP,                    sort_up_png),
 
-  MapItem (IMG_INDX_MODIFIED_VERSIONED_FOLDER,  (const char**)modified_versioned_folder_xpm),
-  MapItem (IMG_INDX_NEWER_FILE,                 (const char**)newer_file_xpm),
-  MapItem (IMG_INDX_NEWER_FOLDER,               (const char**)newer_folder_xpm),
-  MapItem (IMG_INDX_MODIFIED_NEWER,             (const char**)modified_newer_file_xpm),
-  MapItem (IMG_INDX_EXTERNALS_FOLDER,           (const char**)externals_folder_xpm)
+  MAP_ITEM(IMG_INDX_MODIFIED_VERSIONED_FOLDER,  modified_folder_png),
+  MAP_ITEM(IMG_INDX_NEWER_FILE,                 newer_file_png),
+  MAP_ITEM(IMG_INDX_NEWER_FOLDER,               newer_folder_png),
+  MAP_ITEM(IMG_INDX_MODIFIED_NEWER,             modified_newer_file_png),
+  MAP_ITEM(IMG_INDX_EXTERNALS_FOLDER,           externals_folder_png)
 };
 
 static const size_t MAP_ICON_COUNT = 
@@ -589,15 +593,15 @@ static const size_t MAP_ICON_COUNT =
 /** the same for icons with local lock */
 static const MapItem MAP_LOCK_ICON_ARRAY [] =
 {
-  MapItem (svn_wc_status_normal,                (const char**)locked_normal_file_xpm),
-  MapItem (svn_wc_status_missing,               (const char**)locked_missing_file_xpm),
-  MapItem (svn_wc_status_deleted,               (const char**)locked_deleted_file_xpm),
-  MapItem (svn_wc_status_replaced,              (const char**)locked_replaced_file_xpm),
-  MapItem (svn_wc_status_modified,              (const char**)locked_modified_file_xpm),
-  MapItem (svn_wc_status_merged,                (const char**)locked_merged_file_xpm),
-  MapItem (svn_wc_status_conflicted,            (const char**)locked_conflicted_file_xpm),
-  MapItem (IMG_INDX_NEWER_FILE,                 (const char**)locked_newer_file_xpm),
-  MapItem (IMG_INDX_MODIFIED_NEWER,             (const char**)locked_modified_newer_file_xpm)
+  MAP_ITEM(svn_wc_status_normal,                locked_file_png),
+  MAP_ITEM(svn_wc_status_missing,               locked_missing_file_png),
+  MAP_ITEM(svn_wc_status_deleted,               locked_deleted_file_png),
+  MAP_ITEM(svn_wc_status_replaced,              locked_replaced_file_png),
+  MAP_ITEM(svn_wc_status_modified,              locked_modified_file_png),
+  MAP_ITEM(svn_wc_status_merged,                locked_merged_file_png),
+  MAP_ITEM(svn_wc_status_conflicted,            locked_conflicted_file_png),
+  MAP_ITEM(IMG_INDX_NEWER_FILE,                 locked_newer_file_png),
+  MAP_ITEM(IMG_INDX_MODIFIED_NEWER,             locked_modified_newer_file_png)
 };
 
 static const size_t MAP_LOCK_ICON_COUNT = 
@@ -606,15 +610,15 @@ static const size_t MAP_LOCK_ICON_COUNT =
 /** the same for icons with repository lock */
 static const MapItem MAP_REPLOCK_ICON_ARRAY [] =
 {
-  MapItem (svn_wc_status_normal,                (const char**)replock_normal_file_xpm),
-  MapItem (svn_wc_status_missing,               (const char**)replock_missing_file_xpm),
-  MapItem (svn_wc_status_deleted,               (const char**)replock_deleted_file_xpm),
-  MapItem (svn_wc_status_replaced,              (const char**)replock_replaced_file_xpm),
-  MapItem (svn_wc_status_modified,              (const char**)replock_modified_file_xpm),
-  MapItem (svn_wc_status_merged,                (const char**)replock_merged_file_xpm),
-  MapItem (svn_wc_status_conflicted,            (const char**)replock_conflicted_file_xpm),
-  MapItem (IMG_INDX_NEWER_FILE,                 (const char**)replock_newer_file_xpm),
-  MapItem (IMG_INDX_MODIFIED_NEWER,             (const char**)replock_modified_newer_file_xpm)
+  MAP_ITEM(svn_wc_status_normal,                rep_locked_file_png),
+  MAP_ITEM(svn_wc_status_missing,               rep_locked_missing_file_png),
+  MAP_ITEM(svn_wc_status_deleted,               rep_locked_deleted_file_png),
+  MAP_ITEM(svn_wc_status_replaced,              rep_locked_replaced_file_png),
+  MAP_ITEM(svn_wc_status_modified,              rep_locked_modified_file_png),
+  MAP_ITEM(svn_wc_status_merged,                rep_locked_merged_file_png),
+  MAP_ITEM(svn_wc_status_conflicted,            rep_locked_conflicted_file_png),
+  MAP_ITEM(IMG_INDX_NEWER_FILE,                 rep_locked_newer_file_png),
+  MAP_ITEM(IMG_INDX_MODIFIED_NEWER,             rep_locked_modified_newer_file_png)
 };
 
 static const size_t MAP_REPLOCK_ICON_COUNT = 
@@ -702,7 +706,7 @@ FileListCtrl::Data::Data ()
     const MapItem & item = MAP_ICON_ARRAY [i];
 
     ImageIndexArray [item.status + lock_offset] = i;
-    ImageListSmall->Add (wxIcon (item.xpm_data));
+    ImageListSmall->Add (EmbeddedBitmap(item.data, item.len));
   }
 
   lock_offset += IMG_INDX_COUNT;
@@ -711,7 +715,7 @@ FileListCtrl::Data::Data ()
     const MapItem & item = MAP_LOCK_ICON_ARRAY [i];
 
     ImageIndexArray [item.status + lock_offset] = MAP_ICON_COUNT + i;
-    ImageListSmall->Add (wxIcon (item.xpm_data));
+    ImageListSmall->Add (EmbeddedBitmap(item.data, item.len));
   }
 
   lock_offset += IMG_INDX_COUNT;
@@ -720,7 +724,7 @@ FileListCtrl::Data::Data ()
     const MapItem & item = MAP_REPLOCK_ICON_ARRAY [i];
 
     ImageIndexArray [item.status + lock_offset] = MAP_LOCK_ICON_COUNT + MAP_ICON_COUNT + i;
-    ImageListSmall->Add (wxIcon (item.xpm_data));
+    ImageListSmall->Add (EmbeddedBitmap(item.data, item.len));
   }
 }
 
