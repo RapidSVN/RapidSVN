@@ -49,7 +49,7 @@
 #include "rapidsvn_frame.hpp"
 
 // bitmaps
-#include "res/bitmaps/computer.xpm"
+#include "res/bitmaps/computer.png.h"
 #include "res/bitmaps/folder.png.h"
 #include "res/bitmaps/open_folder.png.h"
 #include "res/bitmaps/nonsvn_folder.png.h"
@@ -150,7 +150,7 @@ public:
     : singleContext (0), window (window), listener (0), useAuthCache (true)
   {
     imageList = new wxImageList (16, 16, TRUE);
-    imageList->Add (wxIcon (computer_xpm));
+    imageList->Add (EMBEDDED_BITMAP(computer_png));
     imageList->Add (EMBEDDED_BITMAP(folder_png));
     imageList->Add (EMBEDDED_BITMAP(open_folder_png));
     imageList->Add (EMBEDDED_BITMAP(nonsvn_folder_png));
