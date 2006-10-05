@@ -1,2 +1,3 @@
-EXTRA_DIST=${wildcard *.ico} ${wildcard bitmaps/*.bmp} ${wildcard bitmaps/*.xpm} ${wildcard bitmaps/*.py} ${wildcard *.icns}
-
+EXTRA_DIST=${wildcard *.ico} {wildcard *.icns} \
+	${wildcard bitmaps/*.xpm} ${wildcard bitmaps/*.h} \
+	${wildcard bitmaps/*.png}
