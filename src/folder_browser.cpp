@@ -513,8 +513,8 @@ public:
       svn::Status& status = *it;
 
       // Convert path from UTF8 to Local
-      wxFileName filename (Utf8ToFileName (status.path ()));
-      wxString path (filename.GetFullPath ());
+      svn::Path filename (status.path ());
+      wxString path (Utf8ToLocal (filename.native ()));
 
       // Only display versioned directories and exclude parent itself
       if (((status.entry ().kind () == svn_node_dir) ||
@@ -542,14 +542,15 @@ public:
           image = FOLDER_IMAGE_MODIFIED_FOLDER;
           open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
         }
-
-        wxFileName filename (path);
         FolderItemData * data = new FolderItemData (
           FOLDER_TYPE_NORMAL, path, 
-          filename.GetFullName (), TRUE);
+          Utf8ToLocal (filename.basename ()), 
+          TRUE);
 
         wxTreeItemId newId = treeCtrl->AppendItem(
-          parentId, filename.GetFullName (), image, image, data);
+          parentId, 
+          Utf8ToLocal (filename.basename ()), 
+          image, image, data);
 
         treeCtrl->SetItemHasChildren (newId, HasSubdirectories (path));
         treeCtrl->SetItemImage (newId, open_image, wxTreeItemIcon_Expanded);
