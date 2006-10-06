@@ -30,6 +30,7 @@
 #include "wx/datetime.h"
 #include "wx/filename.h"
 #include "wx/mstream.h"
+#include "wx/image.h"
 
 // apr
 #include "apr_strings.h"

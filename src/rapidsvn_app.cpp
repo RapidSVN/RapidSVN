@@ -29,6 +29,7 @@
 #include <wx/fs_zip.h> // ZIP filesystem support
 #include <wx/tipdlg.h>
 #include <wx/cshelp.h>
+#include <wx/image.h>
 
 //app
 #include "config.hpp"
