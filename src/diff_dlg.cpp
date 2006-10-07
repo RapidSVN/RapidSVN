@@ -503,8 +503,8 @@ private:
         COMPARE_COUNT, mCompareTypeLabels, 
         wxCB_READONLY);
 
-      typeSizer->Add (label);
-      typeSizer->Add (mComboCmpType, 0, wxEXPAND);
+      typeSizer->Add (label, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL);
+      typeSizer->Add (mComboCmpType, 1, wxEXPAND);
     }
 
     // second row: first revision/url
@@ -689,7 +689,7 @@ DiffDlg::DiffDlg (wxWindow * parent)
 
   // Add all sizers to main sizer
   wxBoxSizer *mainSizer = new wxBoxSizer (wxVERTICAL);
-  mainSizer->Add (m, 0, wxALL, 5);
+  mainSizer->Add (m, 1, wxEXPAND|wxALL, 5);
 
   SetAutoLayout(true);
   SetSizer(mainSizer);
