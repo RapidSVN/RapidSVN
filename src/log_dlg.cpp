@@ -234,7 +234,7 @@ public:
     buttonSizer->Add (m_buttonMerge, 0, wxALL | wxEXPAND, 5);
 
     wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
-    topSizer->Add (logSizer, 1, wxALL, 5);
+    topSizer->Add (logSizer, 1, wxEXPAND | wxALL, 5);
     topSizer->Add (buttonSizer, 0, wxALL, 5);
 
 
@@ -245,8 +245,8 @@ public:
     messageSizer->Add (m_logMsg, 1, wxALL | wxEXPAND, 2);
 
     wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-    mainSizer->Add (topSizer, 0, wxALL | wxEXPAND, 5);
-    mainSizer->Add (messageSizer, 1, wxALL | wxEXPAND, 5);
+    mainSizer->Add (topSizer, 1, wxALL | wxEXPAND, 5);
+    mainSizer->Add (messageSizer, 0, wxALL | wxEXPAND, 5);
 
     wnd->SetAutoLayout (true);
     wnd->SetSizer (mainSizer);
