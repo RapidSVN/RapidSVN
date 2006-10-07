@@ -569,7 +569,7 @@ public:
       client.ls (parentPathUtf8.c_str (), rev, false);
     svn::DirEntries::const_iterator it;
 
-    //bool parentHasSubdirectories = false;
+    bool parentHasSubdirectories = false;
     for (it = entries.begin (); it != entries.end (); it++)
     {
       svn::DirEntry entry = *it;
@@ -581,10 +581,11 @@ public:
       if (parentPath.Last () == '/')
         offset = 0;
       wxString filename (fullPath.Mid (parentPath.length () + offset));
-      //parentHasSubdirectories = true;
 
       if (entry.kind () != svn_node_dir)
         continue;
+
+      parentHasSubdirectories = true;
 
       FolderItemData * data =
         new FolderItemData (FOLDER_TYPE_NORMAL,
@@ -598,7 +599,10 @@ public:
       treeCtrl->SetItemImage (newId, open_image,
                               wxTreeItemIcon_Expanded);
     }
-  }
+
+    // Remove the "expansion" image from the folder if is has no children
+    if (!parentHasSubdirectories)
+      treeCtrl->SetItemHasChildren (parentId, FALSE);  }
 
   /**
    * Finds the child entry with @a path
