@@ -53,7 +53,7 @@ private:
   wxCheckBox * m_checkNotSpecified;
   wxTextCtrl * m_textRevision;
   wxTextCtrl * m_textPegRevision;
-  wxTextCtrl * m_textDest;
+  wxComboBox * m_comboDest;
   wxComboBox * m_comboRepUrl;
   wxButton * m_buttonOk;
 
@@ -72,11 +72,11 @@ public:
     m_comboRepUrl->SetHelpText (_("Enter the repository URL (not local path) here."));
     wxStaticBox * destBox =
       new wxStaticBox (wnd, 0, _("Destination Directory"));
-    wxTextValidator valDest (wxFILTER_NONE, &data.DestFolder);
-    m_textDest =
-      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
-                      wxSize(205, -1), 0, valDest);
-    m_textDest->SetHelpText (_("Enter the local path where you want the code checked out to here."));
+    HistoryValidator valWorkingDir (HISTORY_WORKING_DIRECTORY, &data.DestFolder);
+    m_comboDest =
+      new wxComboBox (wnd, -1, wxEmptyString, wxDefaultPosition,
+                      wxSize(205, -1), 0, 0, wxCB_DROPDOWN, valWorkingDir);
+    m_comboDest->SetHelpText (_("Enter the local path where you want the code checked out to here."));
     wxButton * browse =
       new wxButton (wnd, ID_BUTTON_BROWSE, wxT("..."),
                    wxDefaultPosition, wxSize(20, -1) );
@@ -149,7 +149,7 @@ public:
     // Destination row
     wxStaticBoxSizer * destSizer =
       new wxStaticBoxSizer (destBox, wxHORIZONTAL);
-    destSizer->Add (m_textDest, 1, wxALL | wxEXPAND, 5);
+    destSizer->Add (m_comboDest, 1, wxALL | wxEXPAND, 5);
     destSizer->Add (browse, 0, wxALL, 5);
 
     // Revision row
@@ -235,7 +235,7 @@ public:
       ok = CheckRevision (m_textPegRevision->GetValue ());
     }
 
-    if (m_textDest->GetValue ().Length () <= 0)
+    if (m_comboDest->GetValue ().Length () <= 0)
     {
       ok = false;
     }
@@ -300,6 +300,7 @@ CheckoutDlg::OnBrowse (wxCommandEvent & event)
     m->data.DestFolder = dialog.GetPath ();
     // Transfer data from m_pData back into controls:
     TransferDataToWindow();
+    m->CheckControls ();
   }
 }
 

@@ -42,6 +42,12 @@ extern const wxChar HISTORY_COMMIT_LOG[];
 extern const wxChar HISTORY_REPOSITORY[];
 
 
+/**
+ * History entry for working directory paths
+ */
+extern const wxChar HISTORY_WORKING_DIRECTORY[];
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

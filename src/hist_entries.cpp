@@ -32,6 +32,7 @@ const wxChar HISTORY_COMMIT_LOG[] = wxT("History/CommitLog");
 
 const wxChar HISTORY_REPOSITORY[] = wxT("History/Repositories");
 
+const wxChar HISTORY_WORKING_DIRECTORY[] = wxT("History/WorkingDirectories");
 
 /* -----------------------------------------------------------------
  * local variables:
