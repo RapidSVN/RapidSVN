@@ -178,6 +178,7 @@ private:
   bool m_running;
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
   wxFrame * m_parent;
+  bool m_isErrorDialogActive;
 
 public:
 
@@ -193,7 +194,8 @@ public:
       updateAfterActivate (false), dontUpdateFilelist (false),
       skipFilelistUpdate (false), locale (locale_), 
       currentPath (wxT("")), m_running (false),
-      m_toolbar_rows (1), m_parent (parent)
+      m_toolbar_rows (1), m_parent (parent), 
+      m_isErrorDialogActive (false)
   {
     InitializeMenu ();
   }
@@ -560,6 +562,38 @@ public:
       return 0;
 
     return listCtrl->IsFlat ();
+  }
+
+
+  /**
+   * Checks whether there is an error dialog showing
+   * at the moment (not an action dialog).
+   *
+   * This information is used to decide whether to refresh
+   * in @ref RapidSvnFrame::OnActivate
+   *
+   * @retval true there is an error dialog showing
+   */
+  bool
+  IsErrorDialogActive () const
+  {
+    return m_isErrorDialogActive;
+  }
+
+
+  /**
+   * Shows an error dialog
+   *
+   * @see IsErrorDialogActive
+   *
+   * @param msg Error message to display
+   */
+  void
+  ShowErrorDialog (const wxString & msg)
+  {
+    m_isErrorDialogActive = true;
+    wxMessageBox (msg, _("RapidSVN Error"), wxICON_ERROR | wxOK);
+    m_isErrorDialogActive = false;
   }
 };
 
@@ -995,7 +1029,8 @@ RapidSvnFrame::OnActivate (wxActivateEvent & event)
     if (m->updateAfterActivate || 
         (!m->IsUrl () && 
          !m->IsFlat () && 
-         !m->IsRunning ()))
+         !m->IsRunning () &&
+         !m->IsErrorDialogActive ()))
     {
       m->updateAfterActivate = false;
 
@@ -2292,7 +2327,7 @@ RapidSvnFrame::TraceError (const wxString & msg)
     m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));
   }
 
-  wxMessageBox (msg, _("RapidSVN Error"), wxICON_ERROR | wxOK);
+  m->ShowErrorDialog (msg);
 }
 
 inline void
