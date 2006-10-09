@@ -159,7 +159,8 @@ public:
   FileListCtrl * listCtrl;
   wxSplitterWindow * horizSplitter;
   wxSplitterWindow * vertSplitter;
-
+  wxTextCtrl * log;
+  EventTracer * logTracer;
 
   wxMenu * MenuColumns;
   wxMenu * MenuSorting;
@@ -189,12 +190,14 @@ public:
 
   Data (wxFrame * parent, const wxLocale & locale_)
     : folderBrowser (0), listCtrl (0), 
-      horizSplitter (0), vertSplitter (0), MenuColumns (0), 
-      MenuSorting (0), MenuBar (0), listener (parent),
+      horizSplitter (0), vertSplitter (0), 
+      log (0), logTracer (0),
+      MenuColumns (0), MenuSorting (0), MenuBar (0), 
+      listener (parent),
       updateAfterActivate (false), dontUpdateFilelist (false),
       skipFilelistUpdate (false), locale (locale_), 
       currentPath (wxT("")), m_running (false),
-      m_toolbar_rows (1), m_parent (parent), 
+      m_toolbar_rows (1), m_parent (parent),
       m_isErrorDialogActive (false)
   {
     InitializeMenu ();
@@ -595,6 +598,44 @@ public:
     wxMessageBox (msg, _("RapidSVN Error"), wxICON_ERROR | wxOK);
     m_isErrorDialogActive = false;
   }
+
+
+  /**
+   * add message to log window
+   *
+   * @param msg message to show
+   */
+  void
+  Trace (const wxString & msg)
+  {
+    if (!log)
+      return;
+
+    log->AppendText (msg + wxT('\n'));
+  }
+  
+  /**
+   * add error message to log window marked red
+   *
+   * @param msg error message to show
+   * @param showDialog show an error dialog with the message
+   *                   (besides logging this)
+   */
+  void
+  TraceError (const wxString & msg, bool showDialog=true)
+  {
+    if (!log)
+      return;
+
+    log->SetDefaultStyle(wxTextAttr(*wxRED));
+    log->AppendText (wxString::Format (_("Error: %s\n"), msg.c_str ()));
+    log->SetDefaultStyle(wxTextAttr(*wxBLACK));
+
+    if (showDialog)
+      ShowErrorDialog (msg);
+  }
+
+
 };
 
 
@@ -707,15 +748,15 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                               wxDefaultPosition, wxDefaultSize,
                               wxTAB_TRAVERSAL | wxCLIP_CHILDREN);
 
-  m_log = new wxTextCtrl (m->horizSplitter, -1, wxEmptyString,
+  m->log = new wxTextCtrl (m->horizSplitter, -1, wxEmptyString,
                           wxPoint (0, 0), wxDefaultSize,
                           wxTE_MULTILINE | wxTE_READONLY);
 
   // as much as the widget can stand
-  m_log->SetMaxLength (0);
+  m->log->SetMaxLength (0);
 
-  m_logTracer = new EventTracer (this);
-  m->listener.SetTracer (m_logTracer, false);
+  m->logTracer = new EventTracer (this);
+  m->listener.SetTracer (m->logTracer, false);
 
 
   m->vertSplitter = new wxSplitterWindow (m_info_panel, -1,
@@ -801,7 +842,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
 
   // Set sash position for every splitter.
   // Note: do not revert the order of Split calls, as the panels will be messed up.
-  m->horizSplitter->SplitHorizontally (m_info_panel, m_log, hpos);
+  m->horizSplitter->SplitHorizontally (m_info_panel, m->log, hpos);
   m->vertSplitter->SplitVertically (m->folderBrowser, m->listCtrl, vpos);
 }
 
@@ -811,8 +852,8 @@ RapidSvnFrame::~RapidSvnFrame ()
   if (cfg == NULL)
     return;
 
-  if (m_logTracer)
-    delete m_logTracer;
+  if (m->logTracer)
+    delete m->logTracer;
 
   if (m_actionWorker)
     delete m_actionWorker;
@@ -953,7 +994,7 @@ RapidSvnFrame::RefreshFileList ()
       wxString msg, errtxt (Utf8ToLocal (e.message ()));
       msg.Printf (_("Error while updating filelist (%s)"),
                   errtxt.c_str ());
-      TraceError (msg);
+      m->TraceError (msg, false);
 
       // calling "UpdateColumns" should be necessary
       // only for the first call. But without any
@@ -964,7 +1005,7 @@ RapidSvnFrame::RefreshFileList ()
     }
     catch (...)
     {
-      TraceError (_("Error while updating filelist"));
+      m->TraceError (_("Error while updating filelist"), false);
 
       // calling "UpdateColumns" should be necessary
       // only for the first call. But without any
@@ -1587,7 +1628,7 @@ http://subversion.tigris.org"),
       break;
 
     default:
-      m_logTracer->Trace (_("Unimplemented action!"));
+      m->logTracer->Trace (_("Unimplemented action!"));
       break;
     }
   }
@@ -1604,27 +1645,27 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   switch (token)
   {
   case TOKEN_INFO:
-    Trace (event.GetString ());
+    m->Trace (event.GetString ());
     break;
 
   case TOKEN_ERROR:
-    TraceError (event.GetString ());
+    m->TraceError (event.GetString ());
     break;
 
   case TOKEN_SVN_INTERNAL_ERROR:
   case TOKEN_INTERNAL_ERROR:
-    TraceError (event.GetString ());
+    m->TraceError (event.GetString ());
     // Action is interrupted, so cancel listener 
     // (in order to enable filelist update)
     // and disable "Running" state
     m->listener.cancel (false);
     RefreshFileList ();
-    Trace (_("Ready\n"));
+    m->Trace (_("Ready\n"));
     m->SetRunning (false);
     break;
 
   case TOKEN_ACTION_START:
-    Trace (event.GetString ());
+    m->Trace (event.GetString ());
     wxLogStatus (event.GetString ());
     break;
 
@@ -1639,7 +1680,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       }
       else
       {
-        TraceError (_("Internal Error: no client data for action event!"));
+        m->TraceError (_("Internal Error: no client data for action event!"));
       }
 
       if ((actionFlags & Action::UPDATE_LATER) != 0)
@@ -1653,17 +1694,17 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       {
         if ((actionFlags & Action::UPDATE_TREE) != 0)
         {
-          Trace (_("Updating..."));
+          m->Trace (_("Updating..."));
           RefreshFolderBrowser ();
         }
         else if ((actionFlags & Action::DONT_UPDATE) == 0)
         {
-          Trace (_("Updating..."));
+          m->Trace (_("Updating..."));
           RefreshFileList ();
         }
       }
 
-      Trace (_("Ready\n"));
+      m->Trace (_("Ready\n"));
       m->SetRunning (false);
     }
     break;
@@ -1827,7 +1868,7 @@ RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
   }
   catch(...)
   {
-    Trace (_("Exception occured during filelist update"));
+    m->Trace (_("Exception occured during filelist update"));
   }
 }
 
@@ -2214,7 +2255,7 @@ RapidSvnFrame::ShowInfo ()
   }
   catch (svn::ClientException & e)
   {
-    Trace (Utf8ToLocal (e.message ()));
+    m->Trace (Utf8ToLocal (e.message ()));
     return;
   }
 
@@ -2294,8 +2335,8 @@ RapidSvnFrame::Perform (Action * action)
     action->SetPath (currentPathUtf8);
     action->SetContext (m_context);
     action->SetTargets (GetActionTargets ());
-    action->SetTracer (m_logTracer, false);
-    m_actionWorker->SetTracer (m_logTracer);
+    action->SetTracer (m->logTracer, false);
+    m_actionWorker->SetTracer (m->logTracer);
     m_actionWorker->SetContext (m_context, false);
     if (!m_actionWorker->Perform (action) &&
         m_actionWorker->GetState () != ACTION_RUNNING)
@@ -2306,28 +2347,6 @@ RapidSvnFrame::Perform (Action * action)
     m->SetRunning (false);
     throw; // svn::Excepton (e);
   }
-}
-
-void
-RapidSvnFrame::Trace (const wxString & msg)
-{
-  if (m_log != NULL)
-  {
-    m_log->AppendText (msg + wxT('\n'));
-  }
-}
-
-void
-RapidSvnFrame::TraceError (const wxString & msg)
-{
-  if (m_log != NULL)
-  {
-    m_log->SetDefaultStyle(wxTextAttr(*wxRED));
-    m_log->AppendText (wxString::Format (_("Error: %s\n"), msg.c_str ()));
-    m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));
-  }
-
-  m->ShowErrorDialog (msg);
 }
 
 inline void

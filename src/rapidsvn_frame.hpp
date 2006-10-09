@@ -211,30 +211,11 @@ private:
 
   wxPanel *m_info_panel;
 
-  wxTextCtrl *m_log;
-  EventTracer *m_logTracer;
-
   size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
   wxString m_title;
   svn::Context * m_context;
   ActivePane m_activePane;
-
-  /**
-   * add message to log window
-   *
-   * @param msg message to show
-   */
-  void
-  Trace (const wxString & msg) ;
-
-  /**
-   * add error message to log window marked red
-   *
-   * @param msg error message to show
-   */
-  void
-  TraceError (const wxString & msg) ;
 
 private:
   DECLARE_EVENT_TABLE ()
