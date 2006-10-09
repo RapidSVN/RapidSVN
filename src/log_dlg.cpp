@@ -308,17 +308,26 @@ public:
   {
     RevnumArray array (m_logList->GetSelectedRevisions ());
 
-    if (array.Count () != 2)
+    DiffData * data = 0;
+    if (array.Count () == 2)
     {
-      wxMessageBox (_("Invalid selection. Exactly two revisions needed for diff."),
+      data = new DiffData ();
+      data->compareType = DiffData::TWO_REVISIONS;
+      data->revision1 = svn::Revision (array[0]);
+      data->revision2 = svn::Revision (array[1]);
+    }
+    else if (array.Count () == 1)
+    {
+      data = new DiffData ();
+      data->compareType = DiffData::WITH_DIFFERENT_REVISION;
+      data->revision1 = svn::Revision (array[0]);
+    }
+    else
+    {
+      wxMessageBox (_("Invalid selection. At least one revisions is needed for diff and no more than two."),
                     _("Error"), wxOK | wxICON_ERROR, parent);
       return;
     }
-
-    DiffData * data = new DiffData ();
-    data->compareType = DiffData::TWO_REVISIONS;
-    data->revision1 = svn::Revision (array[0]);
-    data->revision2 = svn::Revision (array[1]);
 
     ActionEvent::Post (parent, TOKEN_DIFF, data);
   }
@@ -359,7 +368,16 @@ public:
 
     m_buttonGet  ->Enable (count == 1);
     m_buttonView ->Enable (count == 1);
-    m_buttonDiff ->Enable (count == 2);
+    // If the bookmark is a working copy, then we can compare a revision against the local copy
+    svn::Path bookmarkFilePath (PathUtf8 (path));
+    if (bookmarkFilePath.isUrl())
+    {
+      m_buttonDiff ->Enable ((count == 2));
+    }
+    else
+    {
+      m_buttonDiff ->Enable ((count == 1) || (count == 2));
+    }
     m_buttonMerge->Enable (count == 2);
   }
 };
