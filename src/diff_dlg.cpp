@@ -397,6 +397,7 @@ public:
       _("Diff two revisions/dates");
 
     InitControls ();
+    SetCompareType (DiffData::WITH_DIFFERENT_REVISION);
     CheckControls ();
   }
 
@@ -463,7 +464,13 @@ public:
       AddCompareType (types [i]);
 
     // try to set old selection
-    SetCompareType (oldCompareType);
+    bool returnValue = SetCompareType (oldCompareType);
+    if (!returnValue)
+    {
+      mCompareType = 0;
+      SetCompareType (types[0]);
+      CheckControls ();
+    }
   }
 
   void
@@ -542,8 +549,8 @@ private:
 
     AllowCompareTypes ();
     // call this after AllowCompareTypes (), because ComboCmpType is not initialized yet.
-    // Set CompareType to BASE by default.
-    mCompareType = 0;
+    // Set CompareType to "Diff to another rev/date" by default.
+    mCompareType = 2;
   }
 
   void
