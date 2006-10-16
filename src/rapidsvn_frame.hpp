@@ -170,6 +170,7 @@ private:
   void UpdateMenuIncludePath ();
   void UpdateMenuAscending ();
   void SetIncludePathVisibility (bool flatMode);
+  void OnSize (wxSizeEvent & sizeEvent);
 
   // Enable/disable action menu items
   bool ValidateIDActionFlags (int id, unsigned int selectionActionFlags);

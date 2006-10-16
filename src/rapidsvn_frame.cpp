@@ -696,6 +696,8 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_LIST_ITEM_SELECTED (-1, RapidSvnFrame::OnFileListSelected)
 
   EVT_MENU_RANGE (LISTENER_MIN, LISTENER_MAX, RapidSvnFrame::OnListenerEvent)
+
+  EVT_SIZE(RapidSvnFrame::OnSize)
 END_EVENT_TABLE ()
 
 /** class implementation **/
@@ -744,7 +746,6 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                                            wxDefaultPosition, 
                                            wxDefaultSize,
                                            SPLITTER_STYLE);
-  m->horizSplitter->SetSashGravity(1.0f);
 
   m_info_panel = new wxPanel (m->horizSplitter, -1,
                               wxDefaultPosition, wxDefaultSize,
@@ -765,7 +766,6 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                                           wxDefaultPosition,
                                           wxDefaultSize,
                                           SPLITTER_STYLE);
-  m->vertSplitter->SetSashGravity(0.2f);
 
   // Create the list control to display files
   m->listCtrl = new FileListCtrl (m->vertSplitter, FILELIST_CTRL,
@@ -2417,6 +2417,18 @@ RapidSvnFrame::SetIncludePathVisibility (bool flatMode)
     UpdateMenuIncludePath ();
   }
   m->EnableMenuEntry (ID_Include_Path, flatMode);
+}
+
+void
+RapidSvnFrame::OnSize (wxSizeEvent & sizeEvent)
+{
+  if (!this->IsMaximized () && IsShown ())
+  {
+    m->vertSplitter->SetSashGravity (0.0f);
+    m->horizSplitter->SetSashGravity (1.0f);
+  }
+
+  sizeEvent.Skip ();
 }
 
 /* -----------------------------------------------------------------
