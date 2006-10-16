@@ -36,6 +36,7 @@
 #include "log_dlg.hpp"
 #include "merge_dlg.hpp"
 #include "utils.hpp"
+#include "annotate_data.hpp"
 
 enum
 {
@@ -183,6 +184,7 @@ private:
   wxButton * m_buttonGet;
   wxButton * m_buttonDiff;
   wxButton * m_buttonMerge;
+  wxButton * m_buttonAnnotate;
 
 public:
   const svn::LogEntries * entries;
@@ -208,17 +210,19 @@ public:
                                wxDefaultPosition, wxSize (420, 110), 
                                wxTE_READONLY | wxTE_MULTILINE );
 
-    wxButton * buttonClose = new wxButton (wnd, wxID_OK, _("Close"));
-    m_buttonView  = new wxButton (wnd, ID_View,  _("View"));
-    m_buttonGet   = new wxButton (wnd, ID_Get,   _("Get"));
-    m_buttonDiff  = new wxButton (wnd, ID_Diff,  _("Diff"));
-    m_buttonMerge = new wxButton (wnd, ID_Merge, _("Merge"));
+    wxButton * buttonClose = new wxButton (wnd, wxID_OK, _("&Close"));
+    m_buttonView  = new wxButton (wnd, ID_View,  _("&View"));
+    m_buttonGet   = new wxButton (wnd, ID_Get,   _("&Get"));
+    m_buttonDiff  = new wxButton (wnd, ID_Diff,  _("&Diff"));
+    m_buttonMerge = new wxButton (wnd, ID_Merge, _("&Merge"));
+    m_buttonAnnotate = new wxButton (wnd, ID_Annotate, _("&Annotate"));
 
     // View/Get/Diff disabled for Alpha 3 Milestone
     m_buttonView ->Enable (false);
     m_buttonGet  ->Enable (false);
     m_buttonDiff ->Enable (false);
     m_buttonMerge->Enable (false);
+    m_buttonAnnotate->Enable (false);
 
     // position controls
 
@@ -232,6 +236,7 @@ public:
     buttonSizer->Add (m_buttonGet,   0, wxALL | wxEXPAND, 5);
     buttonSizer->Add (m_buttonDiff,  0, wxALL | wxEXPAND, 5);
     buttonSizer->Add (m_buttonMerge, 0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add (m_buttonAnnotate, 0, wxALL | wxEXPAND, 5);
 
     wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
     topSizer->Add (logSizer, 1, wxEXPAND | wxALL, 5);
@@ -361,6 +366,33 @@ public:
     ActionEvent::Post (parent, TOKEN_MERGE, data);
   }
 
+  void
+  OnAnnotate ()
+  {
+    RevnumArray array (m_logList->GetSelectedRevisions ());
+
+    AnnotateData * data = 0;
+    if (array.Count () == 2)
+    {
+      data = new AnnotateData ();
+      data->startRevision = svn::Revision ((array[0] < array[1] ? array[0] : array[1])); // min
+      data->endRevision = svn::Revision ((array[0] < array[1] ? array[1] : array[0]));  // max
+    }
+    else if (array.Count () == 1)
+    {
+      data = new AnnotateData ();
+      data->endRevision = svn::Revision (array[0]);
+    }
+    else
+    {
+      wxMessageBox (_("Invalid selection. At least one revisions is needed for annotate and no more than two."),
+                    _("Error"), wxOK | wxICON_ERROR, parent);
+      return;
+    }
+
+    ActionEvent::Post (parent, TOKEN_ANNOTATE, data);
+  }
+
   void 
   CheckButtons ()
   {
@@ -379,6 +411,7 @@ public:
       m_buttonDiff ->Enable ((count == 1) || (count == 2));
     }
     m_buttonMerge->Enable (count == 2);
+    m_buttonAnnotate->Enable ((count == 1) || (count == 2));
   }
 };
 
@@ -387,6 +420,7 @@ BEGIN_EVENT_TABLE (LogDlg, wxDialog)
   EVT_BUTTON (ID_View,  LogDlg::OnView)
   EVT_BUTTON (ID_Diff,  LogDlg::OnDiff)
   EVT_BUTTON (ID_Merge, LogDlg::OnMerge)
+  EVT_BUTTON (ID_Annotate, LogDlg::OnAnnotate)
   EVT_LIST_ITEM_SELECTED (LOG_LIST, LogDlg::OnSelected)
 END_EVENT_TABLE ()
 
@@ -434,6 +468,12 @@ void
 LogDlg::OnMerge (wxCommandEvent & event)
 {
   m->OnMerge ();
+}
+
+void
+LogDlg::OnAnnotate (wxCommandEvent & event)
+{
+  m->OnAnnotate ();
 }
 
 /* -----------------------------------------------------------------

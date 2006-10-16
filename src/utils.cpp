@@ -57,6 +57,7 @@
 #include "res/bitmaps/resolve.png.h"
 #include "res/bitmaps/revert.png.h"
 #include "res/bitmaps/update.png.h"
+#include "res/bitmaps/annotate.png.h"
 // #include "res/bitmaps/add_wc_bookmark.png.h"
 // #include "res/bitmaps/remove_bookmark.png.h"
 
@@ -205,6 +206,8 @@ AppendQueryMenu (wxMenu * parentMenu)
                   EMBEDDED_BITMAP(log_png));
   AppendMenuItem (parentMenu, ID_Info, _("&Info..."),
                   EMBEDDED_BITMAP(info_png));
+  AppendMenuItem (parentMenu, ID_Annotate, _("&Annotate..."),
+                  EMBEDDED_BITMAP(annotate_png));
 }
 
 void

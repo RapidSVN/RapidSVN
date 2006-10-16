@@ -49,6 +49,7 @@
 #include "folder_item_data.hpp"
 #include "folder_browser.hpp"
 #include "filelist_ctrl.hpp"
+#include "annotate_data.hpp"
 
 #ifdef USE_SIMPLE_WORKER
 #include "simple_worker.hpp"
@@ -79,6 +80,7 @@
 #include "unlock_action.hpp"
 #include "update_action.hpp"
 #include "view_action.hpp"
+#include "annotate_action.hpp"
 
 // dialogs
 #include "about_dlg.hpp"
@@ -1627,6 +1629,13 @@ http://subversion.tigris.org"),
         wxOK);
       break;
 
+    case ID_Annotate:
+      {
+        AnnotateData data;
+        action = new AnnotateAction (this, data);
+        break;
+      }
+
     default:
       m->logTracer->Trace (_("Unimplemented action!"));
       break;
@@ -1831,6 +1840,23 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_UPDATE_SORTING:
     UpdateMenuSorting ();
+    break;
+
+  case TOKEN_ANNOTATE:
+    {
+      AnnotateData * pData = static_cast<AnnotateData *>(event.GetClientData ());
+
+      if (pData != 0)
+      {
+        // copy and delete data
+        AnnotateData data (*pData);
+        delete pData;
+        Action * action;
+
+        action = new AnnotateAction (this, data);
+        Perform (action);
+      }
+    }
     break;
   }
 }
@@ -2208,6 +2234,10 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
 
     case ID_Edit:
       baseActionFlags = ViewAction::GetEditFlags ();
+      break;
+
+    case ID_Annotate:
+      baseActionFlags = AnnotateAction::GetBaseFlags ();
       break;
 
     default:

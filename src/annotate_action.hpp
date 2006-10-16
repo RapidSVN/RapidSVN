@@ -22,91 +22,56 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+#ifndef _ANNOTATE_ACTION_H_INCLUDED_
+#define _ANNOTATE_ACTION_H_INCLUDED_
 
-#ifndef _LOG_DLG_H_INCLUDED_
-#define _LOG_DLG_H_INCLUDED_
+// app
+#include "action.hpp"
+#include "annotate_data.hpp"
+#include "annotate_dlg.hpp"
 
-// wxWidgets
-#include "wx/dialog.h"
+// forward declarations
+class wxWindow;
 
-// svncpp
-#include "svncpp/client.hpp"
-
-//forward declarations
-class wxTextCtrl;
-class LogList;
-class wxListEvent;
-
-class LogDlg : public wxDialog
+/**
+ * This action downloads a specific revision 
+ * of a file (specified in @a GetData) and 
+ * displays the file
+ */
+class AnnotateAction:public Action
 {
 public:
   /**
-   * constructor. the @a entries are NOT owned by
-   * this class.
+   * Constructor. This constructor creates an
+   * action, that will not prompt for
+   * input in Prepare. Instead, the settings
+   * in @a data will be used
    *
    * @param parent parent window
-   * @param path path of selected item
-   * @param entries log entries
+   * @param data update data
    */
-  LogDlg (wxWindow * parent,
-          const char * path,
-          const svn::LogEntries * entries);
+  AnnotateAction (wxWindow * parent,
+              const AnnotateData & data);
+
+  /** Desctructor */
+  virtual ~AnnotateAction ();
+
+  virtual bool Perform ();
+  virtual bool Prepare ();
 
   /**
-   * destructor
+   * Describe which targets the action can perform upon
+   * when viewing a file
    */
-  virtual ~LogDlg ();
+  static unsigned int GetBaseFlags ()
+  {
+    return SINGLE_TARGET|UPDATE_LATER|VERSIONED_WC_TYPE|RESPOSITORY_TYPE|UNVERSIONED_WC_TYPE;
+  }
 
 private:
-  /** hide implementation details */
   struct Data;
   Data * m;
-
-
-  /**
-   * Event handler for the "Get" button
-   * @param event
-   */
-  void OnGet (wxCommandEvent & event);
-
-
-  /**
-   * Event handler for the "View" button
-   * @param event
-   */
-  void OnView (wxCommandEvent & event);
-
-
-  /**
-   * Event handler that will be called whenever
-   * the selection in the list of revision changes
-   *
-   * @param event
-   */
-  void OnSelected (wxListEvent& event);
-
-
-  /**
-   * Event handler for the "Diff" button
-   * @param event
-   */
-  void OnDiff (wxCommandEvent & event);
-
-
-  /**
-   * Event handler for the "Merge" button
-   * @param event
-   */
-  void OnMerge (wxCommandEvent & event);
-
-
-  /**
-   * Event handler for the "Annotate" button
-   * @param event
-   */
-  void OnAnnotate (wxCommandEvent & event);
-
-  DECLARE_EVENT_TABLE ()
+  AnnotateDlg dlg;
 };
 
 #endif

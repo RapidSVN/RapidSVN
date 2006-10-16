@@ -1,0 +1,119 @@
+/*
+ * ====================================================================
+ * Copyright (c) 2002-2006 The RapidSvn Group.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program (in the file GPL.txt); if not, write to 
+ * the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, 
+ * Boston, MA  02110-1301  USA
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals.  For exact contribution history, see the revision
+ * history and logs, available at http://rapidsvn.tigris.org/.
+ * ====================================================================
+ */
+
+// wxWidgets
+#include "wx/wx.h"
+//#include "wx/textctrl.h"
+//#include "wx/button.h"
+//#include "wx/sizer.h"
+//#include "wx/font.h"
+
+// app
+#include "annotate_dlg.hpp"
+#include "utils.hpp"
+
+BEGIN_EVENT_TABLE (AnnotateDlg, wxDialog)
+  EVT_BUTTON (-1, AnnotateDlg::OnButton)
+END_EVENT_TABLE ()
+
+AnnotateDlg::AnnotateDlg (wxWindow * parent,
+                      const wxString & caption)
+  : wxDialog (parent, -1, caption, wxDefaultPosition, wxDefaultSize,
+              wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+{
+  m_button = new wxButton (this, wxID_OK, _("OK"));
+
+  m_list = new wxListCtrl (this, -1, wxDefaultPosition, wxSize (565, 450),
+      wxLC_REPORT);
+
+  m_list->InsertColumn (0, _("Revision"), wxLIST_FORMAT_RIGHT);
+  m_list->InsertColumn (1, _("Author"), wxLIST_FORMAT_RIGHT);
+  m_list->InsertColumn (2, _("Line"), wxLIST_FORMAT_RIGHT);
+  m_list->InsertColumn (3, wxT("")); // Empty spacer column
+  m_list->InsertColumn (4, wxT(""));
+
+  m_list->SetColumnWidth (0, 75);
+  m_list->SetColumnWidth (1, 100);
+  m_list->SetColumnWidth (2, 50);
+  m_list->SetColumnWidth (3, 10);
+  m_list->SetColumnWidth (4, 150);
+
+  wxBoxSizer * topsizer = new wxBoxSizer (wxVERTICAL);
+
+  topsizer->Add (m_list, 1,       // make vertically stretchable
+                 wxEXPAND |     // make horizontally stretchable
+                 wxALL,         // and make border all around
+                 5);            // set border width to 10
+
+  wxBoxSizer * button_sizer = new wxBoxSizer (wxHORIZONTAL);
+
+  button_sizer->Add (m_button, 0, // make horizontally unstretchable
+                     wxALL,     // make border all around (implicit top alignment)
+                     5);        // set border width to 10
+
+  topsizer->Add (button_sizer, 0,       // make vertically unstretchable
+                 wxALIGN_CENTER);       // no border and centre horizontally
+
+
+  SetAutoLayout (TRUE);         // tell dialog to use sizer
+  SetSizer (topsizer);          // actually set the sizer
+
+  topsizer->Fit (this);         // set size to minimum size as calculated by the sizer
+  topsizer->SetSizeHints (this);        // set size hints to honour mininum size
+
+  Maximize ();
+}
+
+void
+AnnotateDlg::OnButton (wxCommandEvent & event)
+{
+  event.Skip ();
+}
+
+void
+AnnotateDlg::AddAnnotateLine (int revision, const wxString & author,
+    const wxString & line)
+{
+  int index = m_list->GetItemCount ();
+  wxString rev = wxString::Format (wxT("%ld"), (long) revision);
+
+  m_list->InsertItem (index, rev);
+  m_list->SetItem (index, 1, author);
+  m_list->SetItem (index, 2, wxString::Format (wxT("%ld"), (long) index + 1));
+  m_list->SetItem (index, 3, wxT(""));
+  m_list->SetItem (index, 4, line);
+}
+
+void
+AnnotateDlg::AutoSizeColumn ()
+{
+  m_list->SetColumnWidth (4, wxLIST_AUTOSIZE);
+}
+
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../rapidsvn-dev.el")
+ * end:
+ */

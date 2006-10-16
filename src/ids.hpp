@@ -87,6 +87,7 @@ enum
   ID_Update,
   ID_Unlock,
   ID_Edit,
+  ID_Annotate,
   ID_File_Max,
 
   // Reserve space for 16 file verbs (I've never seen any files with more)
@@ -172,6 +173,7 @@ enum
   TOKEN_DELETE_ACTION,
   TOKEN_UPDATE_SORTING,
   TOKEN_UPDATE_ASCENDING,
+  TOKEN_ANNOTATE,
 
   LISTENER_MIN,
   SIG_GET_LOG_MSG,

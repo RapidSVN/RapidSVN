@@ -10,6 +10,8 @@ rapidsvn_SOURCES= \
 	action.cpp \
 	action_event.cpp \
 	add_action.cpp \
+	annotate_action.cpp \
+	annotate_dlg.cpp \
 	auth_dlg.cpp \
 	cert_dlg.cpp \
 	checkout_action.cpp \
