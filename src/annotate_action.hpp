@@ -65,7 +65,10 @@ public:
    */
   static unsigned int GetBaseFlags ()
   {
-    return SINGLE_TARGET|UPDATE_LATER|VERSIONED_WC_TYPE|RESPOSITORY_TYPE|UNVERSIONED_WC_TYPE;
+    return SINGLE_TARGET|
+      UPDATE_LATER|
+      VERSIONED_WC_TYPE|
+      RESPOSITORY_TYPE;
   }
 
 private:

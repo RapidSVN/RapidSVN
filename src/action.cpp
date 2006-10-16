@@ -123,8 +123,11 @@ const unsigned int Action::IS_DIR               = 0x0100;
 const unsigned int Action::UPDATE_TREE          = 0x0200;
 
 // combined flags
-const unsigned int Action::TARGET_QUANTITY_MASK = SINGLE_TARGET|MULTIPLE_TARGETS;
-const unsigned int Action::TARGET_TYPE_MASK     = RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
+const unsigned int Action::TARGET_QUANTITY_MASK = SINGLE_TARGET|
+                                                  MULTIPLE_TARGETS;
+const unsigned int Action::TARGET_TYPE_MASK     = RESPOSITORY_TYPE|
+                                                  VERSIONED_WC_TYPE|
+                                                  UNVERSIONED_WC_TYPE;
 
 
 Action::Action (wxWindow * parent, const wxString & name, unsigned int flgs)

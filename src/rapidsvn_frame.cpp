@@ -2224,7 +2224,11 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
 
     case ID_Info:
       // Not actually part of the Action hierarchy, but here for completeness
-      baseActionFlags = Action::SINGLE_TARGET|Action::MULTIPLE_TARGETS|Action::RESPOSITORY_TYPE|Action::VERSIONED_WC_TYPE|Action::UNVERSIONED_WC_TYPE;
+      baseActionFlags = Action::SINGLE_TARGET|
+        Action::MULTIPLE_TARGETS|
+        Action::RESPOSITORY_TYPE|
+        Action::VERSIONED_WC_TYPE|
+        Action::UNVERSIONED_WC_TYPE;
       break;
 
     case ID_Unlock:
