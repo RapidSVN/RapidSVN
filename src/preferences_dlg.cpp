@@ -310,6 +310,7 @@ private:
 
     SetSizer (panelsizer);
     SetAutoLayout (true);
+    Fit ();
   }
 
   DECLARE_EVENT_TABLE ()
