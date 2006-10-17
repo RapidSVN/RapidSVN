@@ -307,7 +307,7 @@ Utf8ToFileName (const char * nameUtf8);
  * contains a valid image 
  *
  * @remark The suggestion to this code is from
- *         http://www.wxwidgest.org/index.php/Embedding_PNG_Images
+ *         http://www.wxwidgets.org/index.php/Embedding_PNG_Images
  *
  * @see EMBEDDED_BITMAP
  *
