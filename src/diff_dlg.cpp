@@ -27,6 +27,7 @@
 #include "wx/wx.h"
 #include "wx/sizer.h"
 #include "wx/valgen.h"
+#include "wx/datectrl.h"
 
 // app
 #include "diff_data.hpp"
@@ -110,7 +111,7 @@ public:
         valid = CheckRevision (mTextRevision->GetValue ());
     }
     else
-      valid = CheckDateTime (mTextDate->GetValue ());
+      valid = CheckDateTime (mDatePicker->GetValue ().Format (wxT("%c")));
 
     if (valid)
       if (mCheckUseUrl->GetValue ())
@@ -137,7 +138,7 @@ public:
     {
       apr_time_t time=0;
 
-      ParseDateTime (mTextDate->GetValue (), time);
+      ParseDateTime (mDatePicker->GetValue ().Format (wxT("%c")), time);
       svn::DateTime datetime(time);
       return svn::Revision (datetime);
     }
@@ -162,15 +163,16 @@ public:
     if (revision.kind () == svn_opt_revision_date)
     {
       mRadioUseDate->SetValue (true);
-      mTextDate->SetValue (
-        FormatDateTime (revision.date (), wxT("%c")));
+      wxDateTime date;
+      date.ParseDateTime (FormatDateTime (revision.date (),
+         wxT("%c")). c_str ());
+      mDatePicker->SetValue (date);
       mTextRevision->SetValue (wxEmptyString);
       mCheckUseLatest->SetValue (true);
     }
     else
     {
       mRadioUseRevision->SetValue (true);
-      mTextDate->SetValue (wxEmptyString);
 
       if (revision.kind () == svn_opt_revision_head)
       {
@@ -224,7 +226,7 @@ private:
   wxRadioButton * mRadioUseDate;
 
   /** text control with a date */
-  wxTextCtrl * mTextDate;
+  wxDatePickerCtrlBase * mDatePicker;
 
   /** check box: use URL if checked */
   wxCheckBox * mCheckUseUrl;
@@ -260,10 +262,12 @@ private:
 
     // second row: date
     mRadioUseDate = new wxRadioButton (this, ID_UseDate, _("Date:"));
-    mTextDate = new wxTextCtrl (this, ID_Date, wxEmptyString);
+    mDatePicker = new wxDatePickerCtrl (this, ID_Date, wxDefaultDateTime,
+                                        wxDefaultPosition, wxDefaultSize,
+                                        wxDP_DROPDOWN|wxDP_SHOWCENTURY);
 
     gridSizer->Add (mRadioUseDate);
-    gridSizer->Add (mTextDate);
+    gridSizer->Add (mDatePicker);
     gridSizer->Add (0,0);
 
     // third row: url
@@ -309,7 +313,7 @@ private:
   void
   CheckDateCtrls ()
   {
-    mTextDate->Enable (mRadioUseDate->GetValue ());
+    mDatePicker->Enable (mRadioUseDate->GetValue ());
   }
 
   /** checks the url controls for validity */
