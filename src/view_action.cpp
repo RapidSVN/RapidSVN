@@ -103,8 +103,8 @@ ViewAction::Perform ()
   {
     svn::Path pathUtf8 (PathUtf8 (m->data.path));
     path = Utf8ToLocal  (
-        GetPathAsTempFile(pathUtf8.c_str (),
-            m->data.revision).c_str ());
+      GetPathAsTempFile(pathUtf8.c_str (),
+                        m->data.revision).c_str ());
   }
 
   wxString args (prefs.editorArgs);
