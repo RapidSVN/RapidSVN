@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RapidSVN 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-15 10:25+0200\n"
-"PO-Revision-Date: 2006-08-13 13:38+0800\n"
+"PO-Revision-Date: 2006-09-24 10:15+0800\n"
 "Last-Translator: SiC <sic666@163.com>\n"
 "Language-Team: RapidSVN i18n\n"
 "MIME-Version: 1.0\n"
@@ -438,7 +438,7 @@ msgstr "已复制"
 #: ../file_info.cpp:174
 #, c-format
 msgid "Copied From Rev: %ld"
-msgstr "已复制, 来自修订版本: %ld"
+msgstr "已复制, 来自版本: %ld"
 
 #: ../file_info.cpp:171
 #, c-format
@@ -781,7 +781,7 @@ msgstr "获取"
 #: ../action.cpp:306
 #, c-format
 msgid "Get file %s rev. %s"
-msgstr "获取文件 %s 修订版本 %s"
+msgstr "获取文件 %s (版本 %s)"
 
 #: ../action.cpp:299
 msgid "HEAD"
@@ -790,7 +790,7 @@ msgstr "HEAD"
 #: ../log_dlg.cpp:202
 #, c-format
 msgid "History: %d revisions"
-msgstr "历史: %d 次修订"
+msgstr "历史: %d 次版本更新"
 
 #: ../cert_dlg.cpp:108
 msgid "Hostname:"
@@ -799,12 +799,12 @@ msgstr "主机名:"
 #: ../checkout_dlg.cpp:90
 #: ../export_dlg.cpp:93
 msgid "If not using the latest version of the files, specify which revision to use here."
-msgstr "如果不想使用最新版本的文件, 请在此处指定要使用的修订版本."
+msgstr "如果不想使用最新版本的文件, 请在此处指定要使用的版本."
 
 #: ../checkout_dlg.cpp:106
 #: ../export_dlg.cpp:109
 msgid "If the files were renamed or moved some time, specify which peg revision to use here."
-msgstr "如果文件被改名或移动了, 请指定这里要使用的定位版本(peg)."
+msgstr "如果文件被改名或移动了多次, 请指定这里要使用的定位版本(peg)."
 
 #: ../rapidsvn_frame.cpp:242
 msgid "Ignore Externals"
@@ -846,15 +846,15 @@ msgstr "内部错误: 不存在上下文"
 
 #: ../merge_action.cpp:98
 msgid "Invalid revision number detected"
-msgstr "检测到无效的修订版本号"
+msgstr "检测到无效的版本号"
 
 #: ../log_dlg.cpp:313
 msgid "Invalid selection. Exactly two revisions needed for diff."
-msgstr "无效的选择. 必须指定要比较的两个修订版本."
+msgstr "选择无效. 必须指定要比较的两个版本."
 
 #: ../log_dlg.cpp:333
 msgid "Invalid selection. Exactly two revisions needed for merge."
-msgstr "无效的选择. 必须指定要合并的两个修订版本."
+msgstr "选择无效. 必须指定要合并的两个版本."
 
 #: ../cert_dlg.cpp:112
 msgid "Issue:"
@@ -884,7 +884,7 @@ msgstr "最后修改日期"
 #: ../file_info.cpp:182
 #, c-format
 msgid "Last Changed Rev: %ld"
-msgstr "最后修订版本: %ld"
+msgstr "最后修改的版本: %ld"
 
 #: ../rapidsvn_frame.cpp:298
 msgid "Listener Test"
@@ -1016,7 +1016,7 @@ msgstr "合并"
 
 #: ../merge_dlg.cpp:61
 msgid "Merge revisions"
-msgstr "合并修订版本"
+msgstr "合并版本"
 
 #: ../rapidsvn_frame.cpp:260
 msgid "Merge..."
@@ -1280,7 +1280,7 @@ msgstr "重命名"
 
 #: ../columns.cpp:49
 msgid "Rep. Rev."
-msgstr "文档库修订版本"
+msgstr "文档库版本"
 
 #: ../listener.cpp:225
 #: ../rapidsvn_frame.cpp:1275
@@ -1355,28 +1355,28 @@ msgstr "复原选定的项目"
 #: ../merge_dlg.cpp:151
 #: ../update_dlg.cpp:86
 msgid "Revision"
-msgstr "修订版本"
+msgstr "版本"
 
 #: ../merge_dlg.cpp:52
 msgid "Revision must be an unsigned number!"
-msgstr "修订版本必须为正整数!"
+msgstr "版本号必须为正整数!"
 
 #: ../diff_dlg.cpp:512
 msgid "Revision or date #&1:"
-msgstr "修订版本或日期 #&1:"
+msgstr "版本或日期 #&1:"
 
 #: ../diff_dlg.cpp:516
 msgid "Revision or date #&2:"
-msgstr "修订版本或日期 #&2:"
+msgstr "版本或日期 #&2:"
 
 #: ../diff_dlg.cpp:247
 msgid "Revision:"
-msgstr "修订版本:"
+msgstr "版本:"
 
 #: ../file_info.cpp:117
 #, c-format
 msgid "Revision: %ld"
-msgstr "修订版本: %ld"
+msgstr "版本: %ld"
 
 #: ../cert_dlg.cpp:67
 msgid "SSL Certificate"
@@ -1478,7 +1478,7 @@ msgstr "显示选定项目的历史记录信息."
 
 #: ../rapidsvn_frame.cpp:240
 msgid "Show unversioned entries"
-msgstr "显示未受版本控制的项目"
+msgstr "显示不在版本控制中的项目"
 
 #: ../listener.cpp:214
 #: ../rapidsvn_frame.cpp:1264
@@ -1767,7 +1767,7 @@ msgstr "未知值"
 
 #: ../utils.cpp:411
 msgid "unversioned"
-msgstr "未加入版本控制"
+msgstr "不在版本控制中"
 
 #: ../rapidsvn_frame.cpp:297
 msgid "wxString Creation&Tracing Test"
