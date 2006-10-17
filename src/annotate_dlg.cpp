@@ -25,6 +25,7 @@
 
 // wxWidgets
 #include "wx/wx.h"
+#include "wx/listctrl.h"
 //#include "wx/textctrl.h"
 //#include "wx/button.h"
 //#include "wx/sizer.h"
