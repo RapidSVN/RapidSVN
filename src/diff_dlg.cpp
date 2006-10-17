@@ -251,7 +251,7 @@ private:
     mTextRevision = new wxTextCtrl (this, ID_Revision, wxEmptyString);
     mCheckUseLatest = new wxCheckBox (
       this, ID_UseLatest, _("Use latest"));
-    mCheckUseLatest->SetValue (true);
+    mCheckUseLatest->SetValue (false);
     wxBoxSizer * revisionSizer = new wxBoxSizer (wxHORIZONTAL);
     revisionSizer->Add (mTextRevision);
     revisionSizer->Add (mCheckUseLatest, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
@@ -344,6 +344,11 @@ private:
   OnCommand (wxCommandEvent & event)
   {
     CheckControls ();
+
+    // forward event
+    wxCommandEvent newEvent (wxEVENT_UPDATE, -1);
+    GetParent ()->ProcessEvent (newEvent);
+
   }
 
 private:
@@ -682,6 +687,12 @@ private:
     CheckControls ();
   }
 
+  void
+  OnUpdate (wxCommandEvent & event)
+  {
+    CheckControls ();
+  }
+
 private:
   DECLARE_EVENT_TABLE ()
 };
@@ -689,7 +700,7 @@ private:
 
 BEGIN_EVENT_TABLE (DiffDlg::Data, wxPanel)
   EVT_COMBOBOX (ID_CompareType, Data::OnCommand)
-  EVENT_UPDATE (-1, Data::OnCommand)
+  EVENT_UPDATE (-1, Data::OnUpdate)
 END_EVENT_TABLE ()
 
 DiffDlg::DiffDlg (wxWindow * parent)
