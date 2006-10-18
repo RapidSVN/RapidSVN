@@ -26,10 +26,6 @@
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/listctrl.h"
-//#include "wx/textctrl.h"
-//#include "wx/button.h"
-//#include "wx/sizer.h"
-//#include "wx/font.h"
 
 // app
 #include "annotate_dlg.hpp"
@@ -46,7 +42,7 @@ AnnotateDlg::AnnotateDlg (wxWindow * parent,
 {
   m_button = new wxButton (this, wxID_OK, _("OK"));
 
-  m_list = new wxListCtrl (this, -1, wxDefaultPosition, wxSize (565, 450),
+  m_list = new wxListView (this, -1, wxDefaultPosition, wxSize (565, 450),
       wxLC_REPORT);
 
   m_list->InsertColumn (0, _("Revision"), wxLIST_FORMAT_RIGHT);
@@ -54,6 +50,14 @@ AnnotateDlg::AnnotateDlg (wxWindow * parent,
   m_list->InsertColumn (2, _("Line"), wxLIST_FORMAT_RIGHT);
   m_list->InsertColumn (3, wxT("")); // Empty spacer column
   m_list->InsertColumn (4, wxT(""));
+
+  // On Windows, the first column isn't properly right aligned
+  //  in the previous InsertColumn call.  Here we set it again
+  //  to be sure that it is right aligned
+  wxListItem item;
+  m_list->GetColumn (0, item);
+  item.SetAlign (wxLIST_FORMAT_RIGHT);
+  m_list->SetColumn (0, item);
 
   m_list->SetColumnWidth (0, 75);
   m_list->SetColumnWidth (1, 100);
@@ -104,7 +108,13 @@ AnnotateDlg::AddAnnotateLine (int revision, const wxString & author,
   m_list->SetItem (index, 1, author);
   m_list->SetItem (index, 2, wxString::Format (wxT("%ld"), (long) index + 1));
   m_list->SetItem (index, 3, wxT(""));
-  m_list->SetItem (index, 4, line);
+  // Windows displays the link breaks as squares.  Format the line
+  //  to avoid that
+  wxString formattedLine = line;
+  formattedLine.Replace (wxT("\r"), wxT(""));
+  formattedLine.Replace (wxT("\n"), wxT(""));
+  formattedLine.Replace (wxT("\t"), wxT(" "));
+  m_list->SetItem (index, 4, formattedLine);
 }
 
 void

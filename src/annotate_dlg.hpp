@@ -30,8 +30,7 @@
 
 // forward declarations
 class wxButton;
-//class wxTextCtrl;
-class wxListCtrl;
+class wxListView;
 
 class AnnotateDlg:public wxDialog
 {
@@ -46,8 +45,7 @@ public:
 
 private:
   wxButton *m_button;
-  //wxTextCtrl *m_text;
-  wxListCtrl *m_list;
+  wxListView *m_list;
 
  DECLARE_EVENT_TABLE ()
 };
