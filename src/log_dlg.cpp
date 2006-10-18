@@ -372,20 +372,14 @@ public:
     RevnumArray array (m_logList->GetSelectedRevisions ());
 
     AnnotateData * data = 0;
-    if (array.Count () == 2)
-    {
-      data = new AnnotateData ();
-      data->startRevision = svn::Revision ((array[0] < array[1] ? array[0] : array[1])); // min
-      data->endRevision = svn::Revision ((array[0] < array[1] ? array[1] : array[0]));  // max
-    }
-    else if (array.Count () == 1)
+    if (array.Count () == 1)
     {
       data = new AnnotateData ();
       data->endRevision = svn::Revision (array[0]);
     }
     else
     {
-      wxMessageBox (_("Invalid selection. At least one revisions is needed for annotate and no more than two."),
+      wxMessageBox (_("Invalid selection. Only one revision may be selected for annotate"),
                     _("Error"), wxOK | wxICON_ERROR, parent);
       return;
     }
@@ -411,7 +405,7 @@ public:
       m_buttonDiff ->Enable ((count == 1) || (count == 2));
     }
     m_buttonMerge->Enable (count == 2);
-    m_buttonAnnotate->Enable ((count == 1) || (count == 2));
+    m_buttonAnnotate->Enable (count == 1);
   }
 };
 
