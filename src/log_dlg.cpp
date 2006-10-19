@@ -375,6 +375,7 @@ public:
     if (array.Count () == 1)
     {
       data = new AnnotateData ();
+      data->path = path;
       data->endRevision = svn::Revision (array[0]);
     }
     else

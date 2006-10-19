@@ -35,6 +35,7 @@ struct AnnotateData
 {
 public:
 
+  wxString path;
   svn::Revision startRevision;
   svn::Revision endRevision;
 

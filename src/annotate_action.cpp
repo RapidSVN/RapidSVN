@@ -104,7 +104,20 @@ AnnotateAction::Prepare ()
     wxBusyCursor busyCursor;
     
     // Now Annotate
-    svn::AnnotatedFile * annotatedFile = m->GetAnnotatedFile (GetTarget ());
+    // If the data's path variable is set, then use that value
+    // Otherwise use the value of GetTarget()
+    // The data's path variable is set on the log dialog
+    svn::AnnotatedFile * annotatedFile = NULL;
+    svn::Path path;
+    if (m->data.path.IsEmpty ())
+    {
+      path = GetTarget ();
+    }
+    else
+    {
+      path = PathUtf8 (m->data.path);
+    }
+    annotatedFile = m->GetAnnotatedFile (path);
     svn::AnnotatedFile::const_iterator it;
     for (it=annotatedFile->begin (); it!=annotatedFile->end (); it++)
     {
