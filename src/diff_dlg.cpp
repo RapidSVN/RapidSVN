@@ -416,6 +416,17 @@ public:
     DiffData diffData;
     diffData.compareType = GetCompareType ();
 
+    if (mRevisionOne->GetUseUrl ())
+    {
+      diffData.useUrl1 = true;
+      diffData.url1 = mRevisionOne->GetUrl ();
+    }
+    if (mRevisionTwo->GetUseUrl ())
+    {
+      diffData.useUrl2 = true;
+      diffData.url2 = mRevisionTwo->GetUrl ();
+    }
+		
     switch (diffData.compareType)
     {
     case DiffData::WITH_DIFFERENT_REVISION:

@@ -115,7 +115,7 @@ public:
   getPath2 (const svn::Path & path)
   {
     if (diffData.useUrl2)
-      return PathUtf8 (diffData.url1);
+      return PathUtf8 (diffData.url2);
     else
       return path;
   }
