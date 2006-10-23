@@ -111,7 +111,7 @@ public:
         valid = CheckRevision (mTextRevision->GetValue ());
     }
     else
-      valid = CheckDateTime (mDatePicker->GetValue ().Format (wxT("%c")));
+      valid = CheckDateTime (mDatePicker->GetValue ().Format (wxT("%Y-%m-%d %H:%M:%S")));
 
     if (valid)
       if (mCheckUseUrl->GetValue ())
@@ -137,8 +137,7 @@ public:
     else
     {
       apr_time_t time=0;
-
-      ParseDateTime (mDatePicker->GetValue ().Format (wxT("%c")), time);
+      apr_time_ansi_put (&time, mDatePicker->GetValue ().GetTicks ());
       svn::DateTime datetime(time);
       return svn::Revision (datetime);
     }
@@ -165,7 +164,7 @@ public:
       mRadioUseDate->SetValue (true);
       wxDateTime date;
       date.ParseDateTime (FormatDateTime (revision.date (),
-         wxT("%c")). c_str ());
+        wxT("%Y-%m-%d %H:%M:%S")). c_str ());
       mDatePicker->SetValue (date);
       mTextRevision->SetValue (wxEmptyString);
       mCheckUseLatest->SetValue (true);
@@ -253,7 +252,7 @@ private:
       this, ID_UseLatest, _("Use latest"));
     mCheckUseLatest->SetValue (false);
     wxBoxSizer * revisionSizer = new wxBoxSizer (wxHORIZONTAL);
-    revisionSizer->Add (mTextRevision);
+    revisionSizer->Add (mTextRevision, 1, wxEXPAND);
     revisionSizer->Add (mCheckUseLatest, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
 
     gridSizer->Add (mRadioUseRevision);
@@ -267,7 +266,7 @@ private:
                                         wxDP_DROPDOWN|wxDP_SHOWCENTURY);
 
     gridSizer->Add (mRadioUseDate);
-    gridSizer->Add (mDatePicker);
+    gridSizer->Add (mDatePicker, 0, wxEXPAND);
     gridSizer->Add (0,0);
 
     // third row: url
