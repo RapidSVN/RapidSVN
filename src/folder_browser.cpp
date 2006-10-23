@@ -59,6 +59,7 @@
 #include "res/bitmaps/bookmark.png.h"
 #include "res/bitmaps/externals_folder.png.h"
 #include "res/bitmaps/externals_open_folder.png.h"
+#include "res/bitmaps/repository_bookmark.png.h"
 
 enum
 {
@@ -70,6 +71,7 @@ enum
   FOLDER_IMAGE_MODIFIED_FOLDER,
   FOLDER_IMAGE_MODIFIED_OPEN_FOLDER,
   FOLDER_IMAGE_BOOKMARK,
+  FOLDER_IMAGE_REPOSITORY_BOOKMARK,
   FOLDER_IMAGE_EXTERNALS_FOLDER,
   FOLDER_IMAGE_OPEN_EXTERNALS_FOLDER,
   FOLDER_IMAGE_COUNT
@@ -158,6 +160,7 @@ public:
     imageList->Add (EMBEDDED_BITMAP(modified_folder_png));
     imageList->Add (EMBEDDED_BITMAP(modified_open_folder_png));
     imageList->Add (EMBEDDED_BITMAP(bookmark_png));
+    imageList->Add (EMBEDDED_BITMAP(repository_bookmark_png));
     imageList->Add (EMBEDDED_BITMAP(externals_folder_png));
     imageList->Add (EMBEDDED_BITMAP(externals_open_folder_png));
 
@@ -432,15 +435,20 @@ public:
         for (; it!= bookmarks.end (); it++)
         {
           const wxString & path = it->first;
+          svn::Path pathUtf8 (PathUtf8 (path));
+          int image;
+
+          if (pathUtf8.isUrl ())
+            image = FOLDER_IMAGE_REPOSITORY_BOOKMARK;
+          else
+            image = FOLDER_IMAGE_BOOKMARK;
 
           FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK,
                                                     path, path, TRUE);
           wxTreeItemId newId = treeCtrl->AppendItem (parentId, path,
-                                                     FOLDER_IMAGE_BOOKMARK,
-                                                     FOLDER_IMAGE_BOOKMARK,
-                                                     data);
+                                                     image, image, data);
           treeCtrl->SetItemHasChildren (newId, TRUE);
-          treeCtrl->SetItemImage (newId, FOLDER_IMAGE_BOOKMARK,
+          treeCtrl->SetItemImage (newId, image,
                                   wxTreeItemIcon_Expanded);
         }
       }
