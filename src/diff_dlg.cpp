@@ -64,6 +64,55 @@ DEFINE_EVENT_TYPE(wxEVENT_UPDATE)
         (wxObject *) NULL \
     ),
 
+
+/**
+ * Tries to interpret @a datestring as a date
+ * (using to current locales) 
+ *
+ * @param datestring string with date (and time)
+ * @param date apr date
+ * @return success?
+ * @retval true valid date
+ */
+static bool
+ParseDateTime (const wxString & datestring, apr_time_t & date)
+{
+  wxString value (datestring);
+
+  TrimString (value);
+
+  if (value.Length () <= 0)
+    return false;
+
+  // parse the string using the current locale setting
+  // (we check only if the complete parsing failed,
+  //  not if only the partial string could be parsed)
+  wxDateTime dateTime;
+  if (0 != dateTime.ParseFormat (datestring, wxT("%Y-%m-%d %H:%M:%S")))
+    return false;
+
+  apr_time_ansi_put (&date, dateTime.GetTicks ());
+  return true;
+}
+
+
+/**
+ * Checks whether the given @a datestring is a valid date/time string
+ * for the current locale
+ *
+ * @retval true valid
+ */
+static bool
+CheckDateTime (const wxString & datestring)
+{
+  apr_time_t time;
+
+  return ParseDateTime (datestring, time);
+}
+
+
+
+
 /**
  * Panel that lets the user select either a revision or a date and
  * optionally another URL (if she doesnt want to compare against

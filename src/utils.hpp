@@ -164,29 +164,6 @@ ParseRevision (const wxString & revstring, svn_revnum_t & revnum);
 
 
 /**
- * Tries to interpret @a datestring as a date
- * (using to current locales) 
- *
- * @param datestring string with date (and time)
- * @param date apr date
- * @return success?
- * @retval true valid date
- */
-bool 
-ParseDateTime (const wxString & datestring, apr_time_t & time);
-
-
-/**
- * Checks whether the given @a datestring is a valid date/time string
- * for the current locale
- *
- * @retval true valid
- */
-bool
-CheckDateTime (const wxString & datestring);
-
-
-/**
  * Format a date/time value to standard format
  *
  * @param data 
