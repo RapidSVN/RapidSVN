@@ -51,15 +51,18 @@
 // bitmaps
 #include "res/bitmaps/add.png.h"
 #include "res/bitmaps/commit.png.h"
+#include "res/bitmaps/copy.png.h"
 #include "res/bitmaps/delete.png.h"
 #include "res/bitmaps/info.png.h"
 #include "res/bitmaps/log.png.h"
+#include "res/bitmaps/move.png.h"
+#include "res/bitmaps/refresh.png.h"
+#include "res/bitmaps/rename.png.h"
 #include "res/bitmaps/resolve.png.h"
 #include "res/bitmaps/revert.png.h"
+#include "res/bitmaps/stop.png.h"
 #include "res/bitmaps/update.png.h"
 #include "res/bitmaps/annotate.png.h"
-// #include "res/bitmaps/add_wc_bookmark.png.h"
-// #include "res/bitmaps/remove_bookmark.png.h"
 
 /** configuration options */
 
@@ -181,9 +184,12 @@ AppendModifyMenu (wxMenu * parentMenu)
 
   parentMenu->AppendSeparator ();
 
-  AppendMenuItem (parentMenu, ID_Copy, _("&Copy...\tF5"));
-  AppendMenuItem (parentMenu, ID_Move, _("M&ove...\tF6"));
-  AppendMenuItem (parentMenu, ID_Rename, _("Re&name...\tCTRL-N"));
+  AppendMenuItem (parentMenu, ID_Copy, _("&Copy...\tF5"),
+                  EMBEDDED_BITMAP(copy_png));
+  AppendMenuItem (parentMenu, ID_Move, _("M&ove...\tF6"),
+                  EMBEDDED_BITMAP(move_png));
+  AppendMenuItem (parentMenu, ID_Rename, _("Re&name...\tCTRL-N"),
+                  EMBEDDED_BITMAP(rename_png));
   AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory...\tF7"));
 
   if (svn::SUPPORTS_LOCK)
@@ -291,6 +297,7 @@ AppendMenuItem (wxMenu & menu, int id)
 
   case ID_Refresh:
     caption = _("Refresh View\tCTRL-R");
+    bitmap = EMBEDDED_BITMAP(refresh_png);
     break;
 
   case ID_Preferences:
@@ -307,13 +314,15 @@ AppendMenuItem (wxMenu & menu, int id)
 
   case ID_Stop:
     caption = _("&Stop");
+    bitmap = EMBEDDED_BITMAP(stop_png);
     break;
 
   case ID_Explore:
     caption = _("Explore...\tF2");
   }
-  wxMenuItem * item = AppendMenuItem (&menu, id, caption, bitmap);
 
+  wxMenuItem * item = AppendMenuItem (&menu, id, caption, bitmap);
+  
   return item;
 }
 
