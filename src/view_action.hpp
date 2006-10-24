@@ -77,7 +77,7 @@ public:
    */
   static unsigned int GetEditFlags ()
   {
-    return SINGLE_TARGET|UPDATE_LATER|VERSIONED_WC_TYPE;
+    return SINGLE_TARGET|UPDATE_LATER|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
   }
 
 private:
