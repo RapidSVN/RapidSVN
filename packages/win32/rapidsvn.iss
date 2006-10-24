@@ -54,7 +54,7 @@ Source: "..\..\FDL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: mai
 Source: "msvcp60.dll"; DestDir: "{app}\bin"; Flags: onlyifdoesntexist; Components: main
 
 ; Berkeley DB
-Source: "tmp\libdb43.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\libdb44.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 
 ; APR
 Source: "tmp\libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
