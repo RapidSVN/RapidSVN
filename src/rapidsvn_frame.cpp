@@ -1889,8 +1889,6 @@ RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 
     UpdateCurrentPath ();
     RefreshFileList ();
-
-    m->folderBrowser->ExpandSelection ();
   }
   catch(...)
   {
