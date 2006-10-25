@@ -1866,12 +1866,11 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
       if (pData != 0)
       {
-        // copy and delete data
-        LogData data (*pData);
-        delete pData;
-
-        LogDlg dlg (this, data.target.c_str (), data.logEntries);
+        LogDlg dlg (this, pData->target.c_str (), pData->logEntries);
         dlg.ShowModal ();
+
+        delete pData->logEntries;
+        delete pData;
       }
     }
     break;

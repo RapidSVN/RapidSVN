@@ -23,6 +23,10 @@
  * ====================================================================
  */
 
+#if defined( _MSC_VER) && _MSC_VER <= 1200
+#pragma warning( disable: 4786 )// debug symbol truncated
+#endif
+
 // wx windows
 #include "wx/wx.h"
 #include "wx/valgen.h"
@@ -137,6 +141,17 @@ public:
     return array;
   }
 
+
+  void
+  DeleteAllItems ()
+  {
+    // Delete the item data before deleting the items:
+    while (GetItemCount () > 0)
+      DeleteItem (0);
+
+    wxListCtrl::DeleteAllItems ();
+  }
+
 private:
   void OnSelected (wxListEvent& event);
 
@@ -200,6 +215,16 @@ public:
     DeleteAllItems ();
   }
 
+  void
+  DeleteAllItems ()
+  {
+    // Delete the item data before deleting the items:
+    while (GetItemCount () > 0)
+      DeleteItem (0);
+
+    wxListCtrl::DeleteAllItems ();
+  }
+  
   void SetValue (const std::list<svn::LogChangePathEntry> & changedPaths)
   {
     DeleteAllItems ();
@@ -252,6 +277,7 @@ private:
   wxButton * m_buttonMerge;
   wxButton * m_buttonAnnotate;
   AffectedList * m_affectedList;
+  wxNotebook * m_notebook;
 
 public:
   Data (wxWindow * parent_,
@@ -268,13 +294,13 @@ public:
 
     m_logList = new LogList (wnd, entries);
 
-    wxNotebook * notebook = new wxNotebook (wnd, -1);
-    m_logMsg = new wxTextCtrl (notebook, LOG_MSG, wxEmptyString, 
+    m_notebook = new wxNotebook (wnd, -1);
+    m_logMsg = new wxTextCtrl (m_notebook, LOG_MSG, wxEmptyString, 
                                wxDefaultPosition, wxSize (420, 210), 
                                wxTE_READONLY | wxTE_MULTILINE );
-    notebook->AddPage (m_logMsg, _("Log Message:"));
-    m_affectedList = new AffectedList (notebook);
-    notebook->AddPage (m_affectedList, _("Affected Files/Dirs"));
+    m_notebook->AddPage (m_logMsg, _("Log Message:"));
+    m_affectedList = new AffectedList (m_notebook);
+    m_notebook->AddPage (m_affectedList, _("Affected Files/Dirs"));
 
     wxButton * buttonClose = new wxButton (wnd, wxID_OK, _("&Close"));
     m_buttonView  = new wxButton (wnd, ID_View,  _("&View"));
@@ -310,7 +336,7 @@ public:
 
     wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
     mainSizer->Add (topSizer, 1, wxALL | wxEXPAND, 5);
-    mainSizer->Add (notebook, 0, wxALL | wxEXPAND, 5);
+    mainSizer->Add (m_notebook, 0, wxALL | wxEXPAND, 5);
 
     wnd->SetAutoLayout (true);
     wnd->SetSizer (mainSizer);
@@ -360,13 +386,18 @@ public:
     wxString message (Utf8ToLocal (entry.message.c_str ()));
     message.Trim (false);
 
-    m_logMsg->Show (false);
-    m_logMsg->SetValue (message);
-    m_logMsg->Show (true);
+    // TODO we have to doublecheck this with wxMSW and wxGTK
+    //int selection = m_notebook->GetSelection ();
 
-    m_affectedList->Show (false);
+    //m_logMsg->Show (false);
+    m_logMsg->SetValue (message);
+    //m_logMsg->Show (true);
+
+    //m_affectedList->Show (false);
     m_affectedList->SetValue (entry.changedPaths);
-    m_affectedList->Show (true);
+    //m_affectedList->Show (true);
+
+    //m_notebook->SetSelection (selection);
 
     CheckButtons ();
   }
