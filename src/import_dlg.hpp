@@ -30,6 +30,12 @@
 
 // forward declarations
 struct ImportData;
+// svncpp
+namespace svn
+{
+  class Path;
+}
+
 
 class ImportDlg:public wxDialog
 {
@@ -38,8 +44,9 @@ public:
    * Constructor
    *
    * @param parent window
+   * @param selectedUrl Use this value to pre-fill the URL
    */
-  ImportDlg (wxWindow *parent);
+  ImportDlg (wxWindow *parent, const svn::Path & selectedUrl);
 
   /**
    * Destructor

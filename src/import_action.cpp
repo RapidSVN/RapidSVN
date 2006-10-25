@@ -47,7 +47,16 @@ ImportAction::Prepare ()
     return false;
   }
 
-  ImportDlg dlg (GetParent ());
+  const std::vector<svn::Path> & v = GetTargets ();
+
+  svn::Path selectedPath ("");
+
+  if (v.size () == 1)
+  {
+    selectedPath = v [0];
+  }
+
+  ImportDlg dlg (GetParent (), selectedPath);
 
   if (dlg.ShowModal () != wxID_OK)
   {

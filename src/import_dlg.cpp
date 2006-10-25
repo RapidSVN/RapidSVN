@@ -27,6 +27,9 @@
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
+// svncpp
+#include "svncpp/path.hpp"
+
 // app
 #include "hist_entries.hpp"
 #include "hist_val.hpp"
@@ -143,13 +146,16 @@ BEGIN_EVENT_TABLE (ImportDlg, wxDialog)
   EVT_BUTTON (ID_BUTTON_BROWSE, ImportDlg::OnBrowse)
 END_EVENT_TABLE ()
 
-ImportDlg::ImportDlg (wxWindow * parent)
+ImportDlg::ImportDlg (wxWindow * parent, const svn::Path & selectedUrl)
   : wxDialog (parent, -1, _("Import"),
               wxDefaultPosition,
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   m = new Data (this);
   CentreOnParent();
+
+  if (selectedUrl.isUrl ())
+    m->data.Repository = Utf8ToLocal (selectedUrl.c_str ());
 }
 
 ImportDlg::~ImportDlg ()

@@ -48,6 +48,7 @@ public:
    * Constructor
    *
    * @param parent window
+   * @param selectedUrl Use this value to pre-fill the URL
    */
   ExportDlg (wxWindow *parent, const svn::Path & selectedUrl);
 
