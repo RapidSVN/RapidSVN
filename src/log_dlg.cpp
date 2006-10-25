@@ -28,6 +28,10 @@
 #include "wx/valgen.h"
 #include "wx/listctrl.h"
 
+
+// svncpp
+#include "svncpp/log_entry.hpp"
+
 // app
 #include "action_event.hpp"
 #include "diff_data.hpp"
@@ -175,8 +179,70 @@ private:
   }
 };
 
+
+class AffectedList : public wxListCtrl
+{
+public:
+  AffectedList (wxWindow * parent)
+    : wxListCtrl (parent, -1, wxDefaultPosition, 
+                  wxSize (365, 150), wxLC_REPORT)
+  {
+    InsertColumn (0, _("Action"));
+    InsertColumn (1, _("Path"));
+    InsertColumn (2, _("Copied from Path"));
+    InsertColumn (3, _("Copied from Rev"));
+    
+    CentreOnParent ();
+  }
+
+  virtual ~AffectedList ()
+  {
+    DeleteAllItems ();
+  }
+
+  void SetValue (const std::list<svn::LogChangePathEntry> & changedPaths)
+  {
+    DeleteAllItems ();
+    int i=0;
+    char actionBuffer [2];
+    actionBuffer [1] = 0;
+
+    std::list<svn::LogChangePathEntry>::const_iterator it;
+
+    for (it=changedPaths.begin (); it!=changedPaths.end (); it++)
+    {
+      const svn::LogChangePathEntry & changedPath = *it;
+      actionBuffer [0] = changedPath.action;
+      
+      wxString label (Utf8ToLocal (actionBuffer));
+      wxString copyFromRev (wxEmptyString);
+
+      if (changedPath.copyFromRevision != -1)
+        copyFromRev.Printf (wxT("%ld"), changedPath.copyFromRevision);
+
+      InsertItem (i, label);
+      SetItem (i, 1, Utf8ToLocal (changedPath.path.c_str ()));
+      SetItem (i, 2, Utf8ToLocal (changedPath.copyFromPath.c_str ()));
+      SetItem (i, 3, copyFromRev);
+
+      i++;
+    }
+
+    // now refresh the column width
+    i=GetColumnCount ();
+    while(i-- > 0)
+      SetColumnWidth (i, -1);
+  }
+};
+
 struct LogDlg::Data
 {
+public:
+  const svn::LogEntries * entries;
+  wxString path;
+  wxWindow * parent;
+  wxWindow * window;
+
 private:
   LogList * m_logList;
   wxTextCtrl * m_logMsg;
@@ -185,13 +251,9 @@ private:
   wxButton * m_buttonDiff;
   wxButton * m_buttonMerge;
   wxButton * m_buttonAnnotate;
+  AffectedList * m_affectedList;
 
 public:
-  const svn::LogEntries * entries;
-  wxString path;
-  wxWindow * parent;
-  wxWindow * window;
-
   Data (wxWindow * parent_,
         wxWindow * wnd,
         const char * path_,
@@ -206,9 +268,13 @@ public:
 
     m_logList = new LogList (wnd, entries);
 
-    m_logMsg = new wxTextCtrl (wnd, LOG_MSG, wxEmptyString, 
-                               wxDefaultPosition, wxSize (420, 110), 
+    wxNotebook * notebook = new wxNotebook (wnd, -1);
+    m_logMsg = new wxTextCtrl (notebook, LOG_MSG, wxEmptyString, 
+                               wxDefaultPosition, wxSize (420, 210), 
                                wxTE_READONLY | wxTE_MULTILINE );
+    notebook->AddPage (m_logMsg, _("Log Message:"));
+    m_affectedList = new AffectedList (notebook);
+    notebook->AddPage (m_affectedList, _("Affected Files/Dirs"));
 
     wxButton * buttonClose = new wxButton (wnd, wxID_OK, _("&Close"));
     m_buttonView  = new wxButton (wnd, ID_View,  _("&View"));
@@ -242,16 +308,9 @@ public:
     topSizer->Add (logSizer, 1, wxEXPAND | wxALL, 5);
     topSizer->Add (buttonSizer, 0, wxALL, 5);
 
-
-    wxStaticBox * boxMessage = 
-      new wxStaticBox (wnd, -1, _("Log Message:"));
-    wxStaticBoxSizer *messageSizer = 
-      new wxStaticBoxSizer (boxMessage, wxHORIZONTAL);
-    messageSizer->Add (m_logMsg, 1, wxALL | wxEXPAND, 2);
-
     wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
     mainSizer->Add (topSizer, 1, wxALL | wxEXPAND, 5);
-    mainSizer->Add (messageSizer, 0, wxALL | wxEXPAND, 5);
+    mainSizer->Add (notebook, 0, wxALL | wxEXPAND, 5);
 
     wnd->SetAutoLayout (true);
     wnd->SetSizer (mainSizer);
@@ -304,6 +363,10 @@ public:
     m_logMsg->Show (false);
     m_logMsg->SetValue (message);
     m_logMsg->Show (true);
+
+    m_affectedList->Show (false);
+    m_affectedList->SetValue (entry.changedPaths);
+    m_affectedList->Show (true);
 
     CheckButtons ();
   }

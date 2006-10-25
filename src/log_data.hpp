@@ -23,41 +23,28 @@
  * ====================================================================
  */
 
+#ifndef _LOG_DATA_H_INCLUDED_
+#define _LOG_DATA_H_INCLUDED_
+
 // wxWidgets
-#include "wx/wx.h"
-#include "wx/intl.h"
+#include "wx/dialog.h"
 
 // svncpp
 #include "svncpp/client.hpp"
-#include "svncpp/revision.hpp"
 
-// app
-#include "action_event.hpp"
-#include "ids.hpp"
-#include "log_action.hpp"
-#include "log_data.hpp"
-
-LogAction::LogAction (wxWindow * parent)
-  : Action (parent, _("Log"), GetBaseFlags ())
+struct LogData
 {
-}
+public:
+  const svn::LogEntries * logEntries;
+  svn::Path target;
 
-bool
-LogAction::Perform ()
-{
-  svn::Client client (GetContext ());
+  LogData (const svn::LogEntries * logEntries_, const svn::Path & target_)
+    : logEntries (logEntries_), target (target_)
+  {
+  }
+};
 
-  svn::Path target = GetTarget ();
-  const svn::LogEntries * entries = 
-    client.log (target.c_str (), svn::Revision::START,
-                svn::Revision::HEAD, true, false);
-  
-  LogData * data = new LogData (entries, target);
-  ActionEvent::Post (GetParent (), TOKEN_LOG, data);
-  
-  return true;
-}
-
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -37,11 +37,6 @@ public:
   /**
    * @see Action
    */
-  virtual bool Prepare ();
-
-  /**
-   * @see Action
-   */
   virtual bool Perform ();
 
   /**

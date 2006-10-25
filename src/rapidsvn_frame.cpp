@@ -50,6 +50,7 @@
 #include "folder_browser.hpp"
 #include "filelist_ctrl.hpp"
 #include "annotate_data.hpp"
+#include "log_data.hpp"
 
 #ifdef USE_SIMPLE_WORKER
 #include "simple_worker.hpp"
@@ -89,6 +90,7 @@
 #include "preferences.hpp"
 #include "preferences_dlg.hpp"
 #include "update_dlg.hpp"
+#include "log_dlg.hpp"
 
 #include "rapidsvn_frame.hpp"
 
@@ -1855,6 +1857,21 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
         action = new AnnotateAction (this, data);
         Perform (action);
+      }
+    }
+    break;
+  case TOKEN_LOG:
+    {
+      LogData * pData = static_cast<LogData *>(event.GetClientData ());
+
+      if (pData != 0)
+      {
+        // copy and delete data
+        LogData data (*pData);
+        delete pData;
+
+        LogDlg dlg (this, data.target.c_str (), data.logEntries);
+        dlg.ShowModal ();
       }
     }
     break;
