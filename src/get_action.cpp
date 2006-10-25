@@ -52,10 +52,14 @@ GetAction::Perform ()
 {
   svn::Client client (GetContext ());
 
+  wxString msg;
+  msg.Printf (wxT("Getting: %s, Revision %d"), m_data.path.c_str(), m_data.revision.revnum());
+  Trace(msg);
+
   wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
   client.update (svn::Path (LocalToUtf8 (m_data.path)),
                  m_data.revision,
-                 false);
+                 true);
 
   return true;
 }
