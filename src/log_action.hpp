@@ -44,7 +44,7 @@ public:
    */
   static unsigned int GetBaseFlags ()
   {
-    return SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
+    return DONT_UPDATE|SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
   }
 };
 
