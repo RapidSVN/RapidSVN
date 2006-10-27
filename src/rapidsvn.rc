@@ -1,6 +1,6 @@
 /*
  * ====================================================================
- * Copyright (c) 2002-2004 The RapidSvn Group.  All rights reserved.
+ * Copyright (c) 2002-2006 The RapidSvn Group.  All rights reserved.
  *
  * This software is licensed as described in the file LICENSE.txt,
  * which you should have received as part of this distribution.
@@ -14,12 +14,7 @@
 logo ICON    "res/rapidsvn.ico"
 
 #include "wx/msw/wx.rc"
-
-#define VERSION_MAJOR 0
-#define VERSION_MINOR 9
-#define VERSION_MICRO 3
-
-#define VERSION_STRING "0.9.3\0"
+#include "version.hpp"
 
 #ifndef _DEBUG
 #  define VERSION_FILEFLAGS 0x0L
@@ -28,8 +23,8 @@ logo ICON    "res/rapidsvn.ico"
 #endif /* _DEBUG */
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION VERSION_MAJOR,VERSION_MINOR,VERSION_MICRO,0
- PRODUCTVERSION VERSION_MAJOR,VERSION_MINOR,VERSION_MICRO
+ FILEVERSION RAPIDSVN_VER_MAJOR, RAPIDSVN_VER_MINOR, RAPIDSVN_VER_MICRO, RAPIDSVN_VER_PATCH
+ PRODUCTVERSION RAPIDSVN_VER_MAJOR,RAPIDSVN_VER_MINOR,RAPIDSVN_VER_MICRO
  FILEFLAGSMASK 0x3fL
  FILEFLAGS VERSION_FILEFLAGS
  FILEOS 0x40004L
@@ -43,8 +38,8 @@ BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "The RapidSvn Group\0"
             VALUE "FileDescription", "RapidSvn\0"
-            VALUE "FileVersion", VERSION_STRING
-            VALUE "ProductVersion", VERSION_STRING
+            VALUE "FileVersion", RAPIDSVN_VER_STR
+            VALUE "ProductVersion", RAPIDSVN_VER_STR
             VALUE "InternalName", "RAPIDSVN\0"
             VALUE "LegalCopyright", "(c) Copyright 2002-2004 The RapidSvn Group\0"
             VALUE "LegalTrademarks", "\0"
@@ -59,18 +54,3 @@ BEGIN
         VALUE "Translation", 0x409, 1200
     END
 END
-
-/*
-refresh              BITMAP    "res/bitmaps/refresh.bmp"
-browse               BITMAP    "res/bitmaps/browse.bmp"
-add                  BITMAP    "res/bitmaps/add.bmp"
-delete               BITMAP    "res/bitmaps/delete.bmp"
-update               BITMAP    "res/bitmaps/update.bmp"
-commit               BITMAP    "res/bitmaps/commit.bmp"
-revert               BITMAP    "res/bitmaps/revert.bmp"
-info                 BITMAP    "res/bitmaps/info.bmp"
-log                  BITMAP    "res/bitmaps/log.bmp"
-resolve              BITMAP    "res/bitmaps/resolve.bmp"
-folderup             BITMAP    "res/bitmaps/folderup.bmp"
-*/
-

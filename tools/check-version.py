@@ -44,7 +44,6 @@ CONFIGURE_IN_FILE = "configure.in"
 VERSION_HPP_FILE = "src/version.hpp"
 RAPIDSVN_ISS_FILE = "packages/win32/rapidsvn.iss"
 DEBIAN_FILES_FILE = "packages/debian/files"
-RAPIDSVN_RC_FILE = "src/rapidsvn.rc"
 MAKE_OSX_BUNDLE_FILE = "packages/osx/make_osx_bundle.sh"
 
 class Version:
@@ -52,6 +51,7 @@ class Version:
         self.major = ""
         self.minor = ""
         self.micro = ""
+        self.patch = ""
         self.str = ""
         self.milestone = ""
 
@@ -63,7 +63,10 @@ class Version:
         self.major = version.attributes["major"].value
         self.minor = version.attributes["minor"].value
         self.micro = version.attributes["micro"].value
+        self.patch = version.attributes["patch"].value
         self.str = "%s.%s.%s" % (self.major, self.minor, self.micro)
+        if len(self.patch) > 0:
+          self.str += "-" + self.patch;
         self.milestone = version.attributes["milestone"].value
 
 def replace(fname, regex, newval, what):
@@ -104,6 +107,19 @@ class VersionChecker:
                 "_VER_MICRO[^\n]*", 
                 "_VER_MICRO %s" % (self.version.micro), 
                 "RAPIDSVN_VER_MICRO")
+        if len(self.version.patch) > 0:
+          patch = self.version.patch
+        else:
+          patch = 0
+        replace(VERSION_HPP_FILE, 
+                "_VER_PATCH[^\n]*", 
+                "_VER_PATCH %s" % (patch), 
+                "RAPIDSVN_VER_PATCH")
+        replace(VERSION_HPP_FILE,
+                "_VER_STR[^\n]*", 
+                "_VER_STR \"%s\"" % (self.version.str), 
+                "RAPIDSVN_VER_STR")
+                
         replace(VERSION_HPP_FILE, 
                 "_VER_MILESTONE[^\n]*", 
                 "_VER_MILESTONE \"%s\"" % (self.version.milestone), 
@@ -130,21 +146,6 @@ class VersionChecker:
                 "userdesktop}\RapidSVN-%s\"" % (self.version.str),
                 "[Icons]\\{userdesktop}")
                 
-    def checkRapidsvnRc(self):
-        fname = RAPIDSVN_RC_FILE
-        replace(fname, "#define VERSION_MAJOR.*", 
-                "#define VERSION_MAJOR %s" % (self.version.major),
-                "VERSION_MAJOR")
-        replace(fname, "#define VERSION_MINOR.*",
-                "#define VERSION_MINOR %s" % (self.version.minor),
-                "VERSION_MINOR")
-        replace(fname, "#define VERSION_MICRO.*",
-                "#define VERSION_MICRO %s" % (self.version.micro),
-                "VERSION_MICRO")
-        replace(fname, "#define VERSION_STRING.*",
-                "#define VERSION_STRING \"%s\\0\"" % (self.version.str),
-                "VERSION_STRING")
-
     def checkDebianFiles(self):
         fname = DEBIAN_FILES_FILE
         replace(fname, "rapidsvn_[^\n]*", \
@@ -174,13 +175,14 @@ class VersionChecker:
         print "  Major: ", self.version.major
         print "  Minor: ", self.version.minor
         print "  Micro: ", self.version.micro
+        print "  Patch: ", self.version.patch
+        print "  Str:   ", self.version.str
         print "  Milestone: ", self.version.milestone
 
         self.checkConfigureIn()
         self.checkVersionHpp()
         self.checkRapidsvnIss()
         self.checkDebianFiles()
-        self.checkRapidsvnRc()
         self.checkMakeOsXBundle()
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@
 #ifndef _RAPIDSVN_VERSION_H_INCLUDED_
 #define _RAPIDSVN_VERSION_H_INCLUDED_
 
-#define APPLICATION_NAME _("RapidSVN")
+#define APPLICATION_NAME wxT("RapidSVN")
 
 #define RAPIDSVN_COPYRIGHT "(C) 2002-2006 The RapidSvn Group. All rights reserved."
 
@@ -36,20 +36,32 @@
  * sure all the places with version information are updated.
  */
 
-/* Version numbers: <major>.<minor>.<micro>-<release> */
+/* Version numbers: <major>.<minor>.<micro>-<patch> */
 
-/* Major version number.
-   Modify when incompatible changes are made to published interfaces. */
+/**
+ * Major version number.
+ */
 #define RAPIDSVN_VER_MAJOR 0
 
-/* Minor version number.
-   Modify when new functionality is added or new interfaces are
-   defined, but all changes are backward compatible. */
+/** 
+ * Minor version number.
+ */
 #define RAPIDSVN_VER_MINOR 9
 
-/* Patch number.
-   Modify for every released patch. */
+/** 
+ * Micro version number. 
+ */
 #define RAPIDSVN_VER_MICRO 3
+
+/**
+ * Patch string. Can be empty
+ */
+#define RAPIDSVN_VER_PATCH 0
+
+/**
+ * Combined version string
+ */
+#define RAPIDSVN_VER_STR "0.9.3"
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
