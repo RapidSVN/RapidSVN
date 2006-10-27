@@ -258,7 +258,15 @@ DiffAction::Prepare ()
     // check the first target and try to
     // determine whether we are on a local
     // or remote location
-    svn::Path target = GetTarget ();
+    svn::Path target;
+    if (m->diffData.path.IsEmpty ())
+    {
+      target = GetTarget ();
+    }
+    else
+    {
+      target = PathUtf8 (m->diffData.path);
+    }
     bool isRemote = svn::Url::isValid (target.c_str ());
 
     DiffDlg dlg (GetParent ());
@@ -290,12 +298,20 @@ DiffAction::Prepare ()
 bool
 DiffAction::Perform ()
 {
-  const std::vector<svn::Path> & v = GetTargets ();
-  std::vector<svn::Path>::const_iterator it;
-
-  for (it=v.begin (); it != v.end (); it++)
+  if (m->diffData.path.IsEmpty ())
   {
-    m->diffTarget (*it);
+    const std::vector<svn::Path> & v = GetTargets ();
+    std::vector<svn::Path>::const_iterator it;
+
+    for (it=v.begin (); it != v.end (); it++)
+    {
+      m->diffTarget (*it);
+    }
+  }
+  else
+  {
+    svn::Path target = PathUtf8 (m->diffData.path);
+    m->diffTarget (target);
   }
  
   return true;

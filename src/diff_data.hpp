@@ -53,6 +53,7 @@ public:
   bool useUrl2;
   wxString url2;
 
+  wxString path;
   svn::Revision revision1;
   svn::Revision revision2;
 

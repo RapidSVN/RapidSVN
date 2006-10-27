@@ -411,6 +411,7 @@ public:
     if (array.Count () == 2)
     {
       data = new DiffData ();
+      data->path = path;
       data->compareType = DiffData::TWO_REVISIONS;
       data->revision1 = svn::Revision (array[0]);
       data->revision2 = svn::Revision (array[1]);
@@ -418,6 +419,7 @@ public:
     else if (array.Count () == 1)
     {
       data = new DiffData ();
+      data->path = path;
       data->compareType = DiffData::WITH_DIFFERENT_REVISION;
       data->revision1 = svn::Revision (array[0]);
     }
