@@ -1,1 +1,8 @@
-EXTRA_DIST=de/rapidsvn.po pt_BR/rapidsvn.po ru/rapidsvn.po uk/rapidsvn.po fr/rapidsvn.po zh_CN/rapidsvn.po rapidsvn.pot
+EXTRA_DIST=rapidsvn.pot \
+	de/rapidsvn.po \
+	fr/rapidsvn.po \
+	it_IT/rapidsvn.po \
+	pt_BR/rapidsvn.po \
+	ru/rapidsvn.po \
+	uk/rapidsvn.po \
+	zh_CN/rapidsvn.po
