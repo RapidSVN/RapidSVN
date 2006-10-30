@@ -65,6 +65,7 @@ class Version:
         self.micro = version.attributes["micro"].value
         self.patch = version.attributes["patch"].value
         self.str = "%s.%s.%s" % (self.major, self.minor, self.micro)
+        self.str_nopatch=self.str
         if len(self.patch) > 0:
           self.str += "-" + self.patch;
         self.milestone = version.attributes["milestone"].value
@@ -128,7 +129,7 @@ class VersionChecker:
     def checkRapidsvnIss(self):
         fname = RAPIDSVN_ISS_FILE
         replace(fname, "AppName=[^\n]*", 
-                 "AppName=RapidSVN-%s" % (self.version.str), 
+                 "AppName=RapidSVN-%s" % (self.version.str_nopatch), 
                  "AppName")
         replace(fname, "AppVerName=[^\n]*", 
                  "AppVerName=RapidSVN-%s" % (self.version.str), 
@@ -137,13 +138,13 @@ class VersionChecker:
                 "OutputBaseFilename=RapidSVN-%s" % (self.version.str),
                 "OutputBaseFilename")
         replace(fname, "DefaultDirName=[^\n]*", \
-                "DefaultDirName={pf}\RapidSVN-%s" % (self.version.str),
+                "DefaultDirName={pf}\RapidSVN-%s" % (self.version.str_nopatch),
                 "DefaultDirName")
         replace(fname, "DefaultGroupName=[^\n]*", \
-                "DefaultGroupName=RapidSVN-%s" % (self.version.str),
+                "DefaultGroupName=RapidSVN-%s" % (self.version.str_nopatch),
                 "DefaultGroupName")
         replace(fname, "userdesktop}\\\\RapidSVN[^\"]*\"", \
-                "userdesktop}\RapidSVN-%s\"" % (self.version.str),
+                "userdesktop}\RapidSVN-%s\"" % (self.version.str_nopatch),
                 "[Icons]\\{userdesktop}")
                 
     def checkDebianFiles(self):
