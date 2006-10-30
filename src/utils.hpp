@@ -302,6 +302,15 @@ EmbeddedBitmap (const unsigned char * data, size_t len);
 #define EMBEDDED_BITMAP(data) EmbeddedBitmap (data, sizeof (data))
 
 
+/**
+ * Opens a webpage in the default Browser.
+ *
+ * @param url URL to open
+ */
+void
+OpenURL (const wxString & url);
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

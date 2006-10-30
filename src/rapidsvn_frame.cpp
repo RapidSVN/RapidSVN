@@ -305,11 +305,9 @@ public:
     // Help Menu
     wxMenu *menuHelp = new wxMenu;
 
-#ifdef  USE_HTML_HELP
     menuHelp->Append (ID_HelpContents, _("&Contents\tF1"));
     menuHelp->Append (ID_HelpIndex, _("&Index\tShift+F1"));
     menuHelp->AppendSeparator ();
-#endif
 #ifdef USE_STARTUP_TIPS
     menuHelp->Append (ID_HelpStartupTips, _("Show Startup Tips"));
     menuHelp->AppendSeparator ();
@@ -1302,17 +1300,37 @@ RapidSvnFrame::OnUpdateCommand (wxUpdateUIEvent & updateUIEvent)
 void
 RapidSvnFrame::OnHelpContents (wxCommandEvent & WXUNUSED (event))
 {
-#ifdef  USE_HTML_HELP
-  ::wxGetApp ().GetHelpController().DisplayContents();
-#endif
+  try
+  {
+    OpenURL (wxT("http://www.rapidsvn.org/help/index.php?id=OnlineHelp:Contents"));
+  }
+  catch(...)
+  {
+    m->Trace (_("An error occured while launching the browser"));
+  }
+    
+// WE DONT USE THIS CODE NOW
+//#ifdef  USE_HTML_HELP
+//  ::wxGetApp ().GetHelpController().DisplayContents();
+//#endif
+//#endif
 }
 
 void
 RapidSvnFrame::OnHelpIndex (wxCommandEvent & WXUNUSED (event))
 {
-#ifdef  USE_HTML_HELP
-  ::wxGetApp ().GetHelpController().DisplayIndex();
-#endif
+  try
+  {
+    OpenURL (wxT("http://www.rapidsvn.org/help/index.php?id=OnlineHelp:Index"));
+  }
+  catch(...)
+  {
+    m->Trace (_("An error occured while launching the browser"));
+  }
+
+//#ifdef  USE_HTML_HELP
+//  ::wxGetApp ().GetHelpController().DisplayIndex();
+//#endif
 }
 
 void

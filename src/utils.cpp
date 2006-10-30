@@ -576,6 +576,23 @@ EmbeddedBitmap (const unsigned char * data, size_t len)
   return wxBitmap (wxImage (is, wxBITMAP_TYPE_ANY, -1), -1);
 }
 
+
+void
+OpenURL (const wxString & url)
+{
+#ifdef _WIN32
+  // Right now @ref wxLaunchDefaultBrowser works only on
+  // Windows, we have to work on this and detect
+  // the browser on Mac OS and Linux as well
+  wxLaunchDefaultBrowser (url);
+#else
+  // Well, maybe we can run Firefox?
+  wxString args;
+  args.Printf (wxT("firefox \"%s\""), url.c_str ());
+  wxExecute (args, wxEXEC_ASYNC | wxEXEC_NOHIDE);
+#endif
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
