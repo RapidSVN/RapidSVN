@@ -1,9 +1,54 @@
-PROJECT CONTRIBUTORS
+PROJECT AUTHORS
 
-* Paul Marculescu - original author
-* Brent R. Matzelle - developer and project leader
-* Alexander Mueller - developer and project leader
-* John Mears - developer
-* Jorgen Havsberg Seland - developer
-* Tristan Keen - developer
-* Olha Honcharova - developer
+The information in here is gathered from the commit
+log (brought this file up to date with revision 7579).
+People are ordered in chronological appearance. 
+
+People with commit access to the repository:
+
+ Brent R. Matzelle      - developer and project leader
+ Alexander Mueller      - developer and project leader
+ John Mears             - developer
+ Jorgen Havsberg Seland - developer
+ Timothee Besset        - developer
+ Tristan Keen           - developer
+ Olha Honcharova        - developer
+
+Contributors for the project:
+
+ Paul Marculescu       - original author
+ David Summers         - Red Hat package
+ Ben Collins Sussman   - source code
+ Garrett Rooney        - source code
+ Scott Lamb            - configure system
+ Peter Johnson         - source code
+ Brandon Ehle          - source code
+ Martin Ayotte         - source code
+ Eric Hanchrow         - configure system, source code
+ Ignacio Alles         - source code
+ Martin Furter         - source code
+ Barry Scott           - source code
+ Niklaus Giger         - readme
+ Alex A. Besogonov     - source code
+ GCS                   - debian package
+ Jens Meyer auf'm Hofe - source code
+ Glenn Schrader        - configure system
+ Frank Richter         - source code
+ Wolfgang Fritz        - source code
+ Paulo Abreu           - Mac OS/X package
+ William Garrison      - source code
+ Pavel Roskin          - configure system
+ Christian Renz        - source code
+ Raijko Albrecht       - source code
+ Mike Canann           - source code
+ Olaf Lenz             - source code
+ Tuncay Goncuoglu      - Red Hat package
+ Walter Mundt          - source code
+ Birgit Duerr          - logo and other graphics
+ Cory Omand            - configure system
+ Matthias Klose        - source code
+ SiC                   - graphics and translation
+ Jose Carlos Medeiros  - translation
+ Matti Picus           - source code
+ Joe Blough            - source code
+ Tommaso Massimi       - translation
