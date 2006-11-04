@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 20001102//EN' 'http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd'>
+<svg height="477" width="608" xmlns="http://www.w3.org/2000/svg">
+<rect height="84" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="168" x="254" y="14"/>
+<rect height="2" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="168" x="254" y="14"/>
+<rect height="2" style="fill: none; stroke:#000000; stroke-width:1" width="168" x="254" y="14"/>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="168" x="254" y="16"/>
+<text style="font-family:Dialog; font-size:10;" x="297" y="29">
+FileSystemModel</text>
+<rect height="23" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="167" x="255" y="74"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="255" x2="422" y1="74" y2="74"/>
+<text style="font-family:Dialog; font-size:10;" x="258" y="88">
+Create(projectPath : string) : void</text>
+<rect height="36" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="167" x="255" y="37"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="255" x2="422" y1="37" y2="37"/>
+<text style="font-family:Dialog; font-size:10;" x="258" y="51">
+m_nodes</text>
+<text style="font-family:Dialog; font-size:10;" x="258" y="64">
+m_path : string</text>
+<rect height="84" style="fill: none; stroke:#000000; stroke-width:1" width="168" x="254" y="14"/>
+<rect height="64" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="90" x="166" y="398"/>
+<rect height="2" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="90" x="166" y="398"/>
+<rect height="2" style="fill: none; stroke:#000000; stroke-width:1" width="90" x="166" y="398"/>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="90" x="166" y="400"/>
+<text style="font-family:Dialog; font-size:10;" x="170" y="413">
+FileSystemFolder</text>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="89" x="167" y="442"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="167" x2="256" y1="442" y2="442"/>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="89" x="167" y="421"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="167" x2="256" y1="421" y2="421"/>
+<rect height="64" style="fill: none; stroke:#000000; stroke-width:1" width="90" x="166" y="398"/>
+<rect height="65" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="108" x="318" y="398"/>
+<rect height="2" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="108" x="318" y="398"/>
+<rect height="2" style="fill: none; stroke:#000000; stroke-width:1" width="108" x="318" y="398"/>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="108" x="318" y="400"/>
+<text style="font-family:Dialog; font-size:10;" x="322" y="413">
+FileSystemBookmark</text>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="107" x="319" y="443"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="319" x2="426" y1="443" y2="443"/>
+<rect height="21" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="107" x="319" y="421"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="319" x2="426" y1="421" y2="421"/>
+<text style="font-family:Dialog; font-size:10;" x="322" y="435">
+m_url : string</text>
+<rect height="65" style="fill: none; stroke:#000000; stroke-width:1" width="108" x="318" y="398"/>
+<rect height="65" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="100" x="494" y="398"/>
+<rect height="2" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="100" x="494" y="398"/>
+<rect height="2" style="fill: none; stroke:#000000; stroke-width:1" width="100" x="494" y="398"/>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="100" x="494" y="400"/>
+<text style="font-family:Dialog; font-size:10;" x="506" y="413">
+FileSystemEntry</text>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="99" x="495" y="443"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="495" x2="594" y1="443" y2="443"/>
+<rect height="21" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="99" x="495" y="421"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="495" x2="594" y1="421" y2="421"/>
+<text style="font-family:Dialog; font-size:10;" x="498" y="435">
+m_entry : svn.Entry</text>
+<rect height="65" style="fill: none; stroke:#000000; stroke-width:1" width="100" x="494" y="398"/>
+<rect height="105" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="159" x="262" y="214"/>
+<rect height="2" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="159" x="262" y="214"/>
+<rect height="2" style="fill: none; stroke:#000000; stroke-width:1" width="159" x="262" y="214"/>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="159" x="262" y="216"/>
+<text style="font-family:Dialog; font-size:10;" x="303" y="229">
+FileSystemNode</text>
+<rect height="47" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="158" x="263" y="272"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="263" x2="421" y1="272" y2="272"/>
+<text style="font-family:Dialog; font-size:10;" x="266" y="286">
+beginChildren() : iterator</text>
+<text style="font-family:Dialog; font-size:10;" x="266" y="299">
+endChildren() : iteratur</text>
+<text style="font-family:Dialog; font-size:10;" x="266" y="312">
+Create(caption : string) : void</text>
+<rect height="34" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="158" x="263" y="237"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="263" x2="421" y1="237" y2="237"/>
+<text style="font-family:Dialog; font-size:10;" x="266" y="251">
+m_children : 0..FileSystemNode</text>
+<text style="font-family:Dialog; font-size:10;" x="266" y="264">
+m_caption : string</text>
+<rect height="105" style="fill: none; stroke:#000000; stroke-width:1" width="159" x="262" y="214"/>
+<polyline points="262,319 214,391 214,398" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polygon points="214,398 207,386 221,386" style="fill:#ffffff; stroke:#ffffff; stroke-width:1"/>
+<polygon points="214,398 207,386 221,386" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polyline points="350,319 350,398" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polygon points="350,398 343,386 357,386" style="fill:#ffffff; stroke:#ffffff; stroke-width:1"/>
+<polygon points="350,398 343,386 357,386" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polyline points="421,319 494,398" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polygon points="494,398 480,393 490,384" style="fill:#ffffff; stroke:#ffffff; stroke-width:1"/>
+<polygon points="494,398 480,393 490,384" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polyline points="344,98 344,214" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polygon points="344,98 349,108 344,118 339,108" style="fill:#000000; stroke:#000000; stroke-width:1"/>
+<polygon points="344,98 349,108 344,118 339,108" style="fill:none; stroke:#000000; stroke-width:1"/>
+<text style="font-family:Dialog; font-size:10;" x="350" y="118">
+0..*</text>
+<rect height="64" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="90" x="14" y="398"/>
+<rect height="2" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="90" x="14" y="398"/>
+<rect height="2" style="fill: none; stroke:#000000; stroke-width:1" width="90" x="14" y="398"/>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="90" x="14" y="400"/>
+<text style="font-family:Dialog; font-size:10;" x="22" y="413">
+FileSystemRoot</text>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="89" x="15" y="442"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="15" x2="104" y1="442" y2="442"/>
+<rect height="20" style="fill:#ffffff; stroke:#ffffff; stroke-width:1" width="89" x="15" y="421"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="15" x2="104" y1="421" y2="421"/>
+<rect height="64" style="fill: none; stroke:#000000; stroke-width:1" width="90" x="14" y="398"/>
+<polyline points="262,319 104,398" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polygon points="104,398 111,386 117,398" style="fill:#ffffff; stroke:#ffffff; stroke-width:1"/>
+<polygon points="104,398 111,386 117,398" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polygon points="74,14 214,14 224,24 224,71 74,71 74,14" style="fill:#ffffff; stroke:#ffffff; stroke-width:1"/>
+<polyline points="74,14 214,14 224,24 224,71 74,71 74,14" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polygon points="214,14 224,24 214,24 214,14" style="fill:#b2b2b2; stroke:#b2b2b2; stroke-width:1"/>
+<polyline points="214,14 224,24 214,24 214,14" style="fill:none; stroke:#000000; stroke-width:1"/>
+<text style="font-family:Dialog; font-size:10;" x="76" y="29">
+On Creation this class reads</text>
+<text style="font-family:Dialog; font-size:10;" x="76" y="42">
+its nodes from a project </text>
+<text style="font-family:Dialog; font-size:10;" x="76" y="55">
+file. It hosts a hierarchy </text>
+<text style="font-family:Dialog; font-size:10;" x="76" y="68">
+of nodes</text>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="225" x2="230" y1="42" y2="42"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="235" x2="240" y1="42" y2="42"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="245" x2="250" y1="42" y2="42"/>
+<polygon points="82,214 230,214 240,224 240,283 82,283 82,214" style="fill:#ffffff; stroke:#ffffff; stroke-width:1"/>
+<polyline points="82,214 230,214 240,224 240,283 82,283 82,214" style="fill:none; stroke:#000000; stroke-width:1"/>
+<polygon points="230,214 240,224 230,224 230,214" style="fill:#b2b2b2; stroke:#b2b2b2; stroke-width:1"/>
+<polyline points="230,214 240,224 230,224 230,214" style="fill:none; stroke:#000000; stroke-width:1"/>
+<text style="font-family:Dialog; font-size:10;" x="84" y="229">
+This is the base class of</text>
+<text style="font-family:Dialog; font-size:10;" x="84" y="242">
+every node in the hierarchy</text>
+<text style="font-family:Dialog; font-size:10;" x="84" y="255">
+After adding, before deletion,</text>
+<text style="font-family:Dialog; font-size:10;" x="84" y="268">
+on change this class notifys </text>
+<text style="font-family:Dialog; font-size:10;" x="84" y="281">
+its parent</text>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="241" x2="246" y1="224" y2="224"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="251" x2="256" y1="224" y2="224"/>
+<line style="fill:#000000; stroke:#000000; stroke-width:1" x1="261" x2="262" y1="224" y2="224"/>
+</svg>
