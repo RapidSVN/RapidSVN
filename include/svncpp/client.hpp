@@ -275,10 +275,13 @@ namespace svn
      *                of the file file will be safed.
      * @param path path or url 
      * @param revision
+     * @param peg_revision peg revision to retrieve, by default is the latest one
      */
     void
-    get (Path & dstPath, const Path & path,
-         const Revision & revision) throw (ClientException);
+    get (Path & dstPath, 
+         const Path & path,
+         const Revision & revision, 
+         const Revision & peg_revision = Revision ()) throw (ClientException);
 
 
     /**

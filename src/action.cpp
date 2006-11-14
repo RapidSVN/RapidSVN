@@ -293,7 +293,7 @@ Action::SetFlags (unsigned int flags)
 
 svn::Path
 Action::GetPathAsTempFile (const svn::Path & path,
-           const svn::Revision & revision)
+           const svn::Revision & revision, const svn::Revision & peg_revision)
 {
   svn::Client client (GetContext ());
 
@@ -311,7 +311,7 @@ Action::GetPathAsTempFile (const svn::Path & path,
   Trace (msg);
 
   svn::Path dstPath ("");
-  client.get (dstPath, path, revision);
+  client.get (dstPath, path, revision, peg_revision);
 
   // Remember this temporary file so we can delete it when the application exits
   ::wxGetApp ().OptionallyRegisterTempFile (

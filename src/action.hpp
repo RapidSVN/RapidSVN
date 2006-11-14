@@ -301,7 +301,8 @@ public:
   svn::Path
   GetPathAsTempFile (
 		const svn::Path & path,
-		const svn::Revision & revision = svn::Revision::HEAD);
+		const svn::Revision & revision = svn::Revision::HEAD,
+		const svn::Revision & peg_revision = svn::Revision::BASE);
 
 protected:
   /**

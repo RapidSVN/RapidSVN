@@ -38,6 +38,11 @@
 #include "svncpp/exception.hpp"
 #include "svncpp/pool.hpp"
 #include "svncpp/status.hpp"
+#include "m_check.hpp"
+
+#ifndef CHECK_SVN_SUPPORTS_PEG
+#error "CHECK_SVN_SUPPORTS_PEG not defined"
+#endif
 
 
 namespace svn
@@ -164,7 +169,8 @@ namespace svn
   void
   Client::get (Path & dstPath,
                const Path & path,
-               const Revision & revision) throw (ClientException)
+               const Revision & revision,
+               const Revision & peg_revision) throw (ClientException)
   {
     Pool pool;
 
@@ -178,9 +184,22 @@ namespace svn
     svn_stream_t * stream = svn_stream_from_aprfile (file, pool);
     if (stream != 0)
     {
+#if CHECK_SVN_SUPPORTS_PEG
+      svn_error_t * error = svn_client_cat2 (
+        stream, 
+        path.c_str (), 
+        peg_revision.revision() , 
+        revision.revision (),
+        *m_context, 
+        pool);
+#else
       svn_error_t * error = svn_client_cat (
-        stream, path.c_str (), revision.revision (), 
-        *m_context, pool);
+        stream, 
+        path.c_str (), 
+        revision.revision (),
+        *m_context, 
+        pool);
+#endif
       if (error != 0)
         throw ClientException (error);
 
