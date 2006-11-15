@@ -31,6 +31,7 @@
 #include "wx/wx.h"
 #include "wx/valgen.h"
 #include "wx/listctrl.h"
+#include "wx/splitter.h"
 
 
 // svncpp
@@ -255,8 +256,8 @@ public:
 
     // now refresh the column width
     i=GetColumnCount ();
-    while(i-- > 0)
-      SetColumnWidth (i, -1);
+    while (i-- > 0)
+      SetColumnWidth (i, (i == 0) ? wxLIST_AUTOSIZE_USEHEADER : wxLIST_AUTOSIZE);
   }
 };
 
@@ -288,13 +289,17 @@ public:
       parent (parent_), window (wnd)
   {
     // create controls
+    wxSplitterWindow* splitterWindow = new wxSplitterWindow (wnd, -1, wxDefaultPosition, wxDefaultSize, 0);
+    wxPanel* topPanel = new wxPanel (splitterWindow, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxPanel* bottomPanel = new wxPanel(splitterWindow, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+
     wxString history;
     history.Printf (_("History: %d revisions"), entries->size ());
-    wxStaticText * historyLabel = new wxStaticText (wnd, -1, history);
+    wxStaticText * historyLabel = new wxStaticText (topPanel, -1, history);
 
-    m_logList = new LogList (wnd, entries);
+    m_logList = new LogList (topPanel, entries);
 
-    m_notebook = new wxNotebook (wnd, -1);
+    m_notebook = new wxNotebook (bottomPanel, -1);
     m_logMsg = new wxTextCtrl (m_notebook, LOG_MSG, wxEmptyString, 
                                wxDefaultPosition, wxSize (420, 210), 
                                wxTE_READONLY | wxTE_MULTILINE );
@@ -302,12 +307,12 @@ public:
     m_affectedList = new AffectedList (m_notebook);
     m_notebook->AddPage (m_affectedList, _("Affected Files/Dirs"));
 
-    wxButton * buttonClose = new wxButton (wnd, wxID_OK, _("&Close"));
-    m_buttonView  = new wxButton (wnd, ID_View,  _("&View"));
-    m_buttonGet   = new wxButton (wnd, ID_Get,   _("&Get"));
-    m_buttonDiff  = new wxButton (wnd, ID_Diff,  _("&Diff"));
-    m_buttonMerge = new wxButton (wnd, ID_Merge, _("&Merge"));
-    m_buttonAnnotate = new wxButton (wnd, ID_Annotate, _("&Annotate"));
+    wxButton * buttonClose = new wxButton (topPanel, wxID_OK, _("&Close"));
+    m_buttonView  = new wxButton (topPanel, ID_View,  _("&View"));
+    m_buttonGet   = new wxButton (topPanel, ID_Get,   _("&Get"));
+    m_buttonDiff  = new wxButton (topPanel, ID_Diff,  _("&Diff"));
+    m_buttonMerge = new wxButton (topPanel, ID_Merge, _("&Merge"));
+    m_buttonAnnotate = new wxButton (topPanel, ID_Annotate, _("&Annotate"));
 
     // View/Get/Diff disabled for Alpha 3 Milestone
     m_buttonView ->Enable (false);
@@ -335,8 +340,13 @@ public:
     topSizer->Add (buttonSizer, 0, wxALL, 5);
 
     wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-    mainSizer->Add (topSizer, 1, wxALL | wxEXPAND, 5);
-    mainSizer->Add (m_notebook, 0, wxALL | wxEXPAND, 5);
+    topPanel->SetSizer (topSizer);
+    wxBoxSizer * bottomSizer = new wxBoxSizer (wxHORIZONTAL);
+    bottomSizer->Add (m_notebook, 1, wxALL | wxEXPAND, 5);
+    bottomPanel->SetSizer (bottomSizer);
+    splitterWindow->SplitHorizontally (topPanel, bottomPanel, -100);
+    splitterWindow->SetSashGravity (0.9);
+    mainSizer->Add (splitterWindow, 1, wxEXPAND, 0);
 
     wnd->SetAutoLayout (true);
     wnd->SetSizer (mainSizer);
