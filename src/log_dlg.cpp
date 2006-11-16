@@ -340,12 +340,12 @@ public:
     topSizer->Add (buttonSizer, 0, wxALL, 5);
 
     wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-    topPanel->SetSizer (topSizer);
+    topPanel->SetSizerAndFit (topSizer);
     wxBoxSizer * bottomSizer = new wxBoxSizer (wxHORIZONTAL);
     bottomSizer->Add (m_notebook, 1, wxALL | wxEXPAND, 5);
-    bottomPanel->SetSizer (bottomSizer);
+    bottomPanel->SetSizerAndFit (bottomSizer);
     splitterWindow->SplitHorizontally (topPanel, bottomPanel, -100);
-    splitterWindow->SetSashGravity (0.9);
+    splitterWindow->SetSashGravity (0.5);
     mainSizer->Add (splitterWindow, 1, wxEXPAND, 0);
 
     wnd->SetAutoLayout (true);
@@ -529,7 +529,7 @@ LogDlg::LogDlg (wxWindow * parent,
                 const char * path,
                 const svn::LogEntries * entries)
   : wxDialog (parent, -1, _("Log History"), wxDefaultPosition, 
-              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
 {
   m = new Data (parent, this, path, entries);
   CentreOnParent ();
