@@ -46,7 +46,7 @@ AboutDlg::AboutDlg (wxWindow * parent, const wxLocale & locale)
   // format string
   const wxString version (wxString::Format (
     _("%s Version %s"),
-    APPLICATION_NAME, Utf8ToLocal (RAPIDSVN_VER_STR)));
+    APPLICATION_NAME, Utf8ToLocal (RAPIDSVN_VER_STR).c_str ()));
 
   // TODO: Make these two constants in version.hpp translatable and wxT()'ed respectively.
   // Until then use the kludge of pretending they're UTF8 to save some silly looking ifdef's
