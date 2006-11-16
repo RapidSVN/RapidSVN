@@ -26,6 +26,9 @@
 #pragma warning( disable: 4786 )// debug symbol truncated
 #endif
 
+// Stdlib (for strcmp)
+#include "string.h"
+
 // Subversion api
 #include "svn_client.h"
 #include "svn_sorts.h"
@@ -220,71 +223,26 @@ namespace svn
       return localStatus (path, descend, get_all, update, 
                           no_ignore, m_context, ignore_externals);
   }
-  
-  static Status
-  localSingleStatus (const char * path, Context * context)
-  {
-    svn_error_t *error;
-    StatusEntries entries;
-    Pool pool;
-    svn_revnum_t revnum;
-    Revision rev (Revision::HEAD);
-
-#if (CHECK_SVN_VERSION(1,2))
-    error = svn_client_status2 (
-      &revnum,   // revnum
-      path,      // path
-      rev,       // revision
-      StatusEntriesFunc, // status func
-      &entries,  // status baton
-      false,     // recurse
-      true,      // get_all
-      false,     // update
-      false,     // no_ignore
-      true,      // ignore_externals
-      *context,  // client ctx
-      pool);
-#else
-    error = svn_client_status (
-      &revnum,   // revnum
-      path,      // path
-      rev,       // revision
-      StatusEntriesFunc, // status func
-      &entries,  // status baton
-      false,     // recurse
-      true,      // get_all
-      false,     // update
-      false,     // no_ignore
-      *context,  // client ctx
-      pool);
-#endif
-
-    if (error != NULL)
-      throw ClientException (error);
-
-    return entries[0];
-  };
-
-  static Status
-  remoteSingleStatus (Client * client, const char * path, Context * context)
-  {
-    Revision rev (Revision::HEAD);
-
-    DirEntries dirEntries = client->list (path, rev, false);
-
-    if (dirEntries.size () == 0)
-      return Status ();
-    else
-      return dirEntryToStatus (path, dirEntries [0]);
-  }
 
   Status 
   Client::singleStatus (const char * path) throw (ClientException)
   {
-    if (Url::isValid (path))
-      return remoteSingleStatus (this, path, m_context);
-    else
-      return localSingleStatus (path, m_context);
+    Revision rev (Revision::HEAD);
+    StatusEntries entries = status (path, false);
+
+    // now seach the returned list of entries for @a path
+    StatusEntries::const_iterator it=entries.begin ();
+
+    for(; it!=entries.end (); it++)
+    {
+      Status status=*it;
+
+      if (strcmp (status.path (), path) == 0)
+        return status;
+    }
+
+    // if we come to this point we havent found a thing
+    return Status ();
   }
 
 #if CHECK_SVN_SUPPORTS_PEG
