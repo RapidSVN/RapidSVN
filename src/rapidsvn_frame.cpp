@@ -2379,12 +2379,7 @@ RapidSvnFrame::InvokeDefaultAction ()
   if (selectionActionFlags & Action::IS_DIR)
   {
     // go one folder deeper...
-	/** 
-	 * @todo get rid of all that conversions between wxString/Path
-     *       and native/internal representations of Paths
-	 */
-	wxFileName path (Utf8ToLocal(targets[0].c_str ()));
-    m->folderBrowser->SelectFolder (path.GetFullPath (wxPATH_NATIVE));
+    m->folderBrowser->SelectFolder (PathToNative (targets [0]));
   }
   else
   {

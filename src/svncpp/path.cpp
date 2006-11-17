@@ -344,9 +344,14 @@ end:
   std::string
   Path::native () const
   {
-    Pool pool;
-
-    return svn_path_local_style (m_path.c_str (), pool);
+    // dont try to convert the path if we have an URL
+    if (m_pathIsUrl)
+      return m_path.c_str ();
+    else
+    {
+      Pool pool;
+      return svn_path_local_style (m_path.c_str (), pool);
+    }
   }
 }
 

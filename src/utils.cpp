@@ -593,6 +593,14 @@ OpenURL (const wxString & url)
 #endif
 }
 
+
+wxString
+PathToNative (const svn::Path & path)
+{
+  return Utf8ToLocal (path.native ());
+}
+
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

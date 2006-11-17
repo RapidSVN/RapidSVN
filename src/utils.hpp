@@ -244,6 +244,17 @@ LocalToUtf8 (const wxString & srcLocal, std::string & dstUtf8);
 svn::Path
 PathUtf8 (const wxString & path);
 
+
+/**
+ * converts an utf8 path to a string in local encoding
+ * with native path separators
+ * 
+ * @param path source
+ * @param path string in local encoding
+ */
+wxString
+PathToNative (const svn::Path & path);
+
 /**
  * converts a string from utf to the local encoding 
  * (like Ansi on Windows)
