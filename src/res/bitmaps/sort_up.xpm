@@ -1,0 +1,26 @@
+/* XPM */
+static char *sort_up[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 4 1",
+"  c black",
+". c #80808000",
+"X c #8080FF00",
+"o c None",
+/* pixels */
+"oooooooooooooooo",
+"oooooooooooooooo",
+"oooooooooooooooo",
+"oooooooooooooo.X",
+"oooooooooooo.X.X",
+"oooooooooo.X.X.X",
+"oooooooo.X.X.X.X",
+"oooooo.X.X.X.X.X",
+"oooooo.X.X.X.X.X",
+"oooooooooooooooo",
+"oooooooooooooooo",
+"oooooooooooooooo",
+"oooooooooooooooo",
+"oooooooooooooooo",
+"oooooooooooooooo",
+"oooooooooooooooo"
+};
