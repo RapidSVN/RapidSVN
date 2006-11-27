@@ -61,7 +61,7 @@
  * @todo Once finished, remove all the #if stuff and
  *       let remain only the working portion
  */
-#define USE_XPM 1
+#define USE_XPM 0
 #if USE_XPM
 #include "res/bitmaps/sort_down.xpm"
 #include "res/bitmaps/sort_up.xpm"
