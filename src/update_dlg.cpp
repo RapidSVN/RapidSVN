@@ -41,7 +41,8 @@ enum
 {
   ID_USELATEST = 100,
   ID_REVISION,
-  ID_URL
+  ID_URL,
+  ID_IGNOREEXTERNALS
 };
 
 struct UpdateDlg::Data
@@ -49,6 +50,7 @@ struct UpdateDlg::Data
 private:
   wxTextCtrl * m_textRevision;
   wxCheckBox * m_checkUseLatest;
+  wxCheckBox * m_checkIgnoreExternals;
   wxComboBox * m_comboUrl;
   wxButton * m_buttonOk;
   const int m_flags;
@@ -63,6 +65,7 @@ public:
 
     wxBoxSizer *mainSizer = new wxBoxSizer (wxVERTICAL);
     wxBoxSizer *middleSizer = new wxBoxSizer (wxVERTICAL);
+    wxBoxSizer *optionSizer = new wxBoxSizer (wxHORIZONTAL);
     wxBoxSizer *buttonSizer = new wxBoxSizer (wxHORIZONTAL);
 
     // The URL fields:
@@ -93,26 +96,39 @@ public:
       revSizer->Add (m_textRevision, 1,
                      wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
 
-      wxGenericValidator valCheck (&data.useLatest);
+      wxGenericValidator valUseLatest (&data.useLatest);
       m_checkUseLatest = new wxCheckBox (window, ID_USELATEST,
                                          _("Use latest"),
                                          wxDefaultPosition,
-                                         wxDefaultSize, 0, valCheck);
+                                         wxDefaultSize, 0, valUseLatest);
       revSizer->Add (m_checkUseLatest, 0,
                      wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
+
       middleSizer->Add (revSizer, 1, wxALL | wxEXPAND, 5);
     }
 
     // The recursive checkbox
+    
     if (withRecursive ())
     {
       wxGenericValidator val (&data.recursive);
       wxCheckBox * checkRecursive =
         new wxCheckBox (window, -1, _("Recursive"),
                         wxDefaultPosition, wxDefaultSize, 0, val);
-      middleSizer->Add (checkRecursive, 0,
+      optionSizer->Add (checkRecursive, 0,
                         wxALIGN_CENTER_HORIZONTAL | wxALL , 5);
     }
+
+    // The "ignore externals" checkbox
+    wxGenericValidator valIgnoreExternals (&data.ignoreExternals);
+    m_checkIgnoreExternals = new wxCheckBox (window, ID_IGNOREEXTERNALS,
+                                             _("Ignore externals"),
+                                             wxDefaultPosition,
+                                             wxDefaultSize, 0,
+                                             valIgnoreExternals);
+    optionSizer->Add (m_checkIgnoreExternals, 0,
+                      wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
+
 
     // The buttons:
     m_buttonOk = new wxButton (window, wxID_OK, _("OK" ));
@@ -121,8 +137,8 @@ public:
     buttonSizer->Add (button, 0, wxALL, 10);
 
     // Add all the sizers to the main sizer
-    //mainSizer->Add (topSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
     mainSizer->Add (middleSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
+    mainSizer->Add (optionSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
     mainSizer->Add (5, 5, 1, wxEXPAND);
     mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
 

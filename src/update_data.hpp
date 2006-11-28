@@ -31,7 +31,8 @@
 struct UpdateData
 {
   UpdateData()
-    : revision (wxEmptyString), url (wxEmptyString), useLatest (true), recursive (true)
+    : revision (wxEmptyString), url (wxEmptyString), 
+      useLatest (true), recursive (true), ignoreExternals (false)
   {
   }
 
