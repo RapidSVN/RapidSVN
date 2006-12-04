@@ -573,7 +573,9 @@ wxBitmap
 EmbeddedBitmap (const unsigned char * data, size_t len)
 {
   wxMemoryInputStream is (data, len);
-  return wxBitmap (wxImage (is, wxBITMAP_TYPE_ANY, -1), -1);
+  wxImage img (is, wxBITMAP_TYPE_ANY, -1);
+  img.ConvertAlphaToMask ();
+  return wxBitmap (img, -1);
 }
 
 
