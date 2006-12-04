@@ -53,56 +53,6 @@
 #include "utils.hpp"
 
 // Bitmaps
-
-/** 
- * This define is used for the time to transition from
- * PNG images back to XPM, at least for use in wxImageList
- *
- * @todo Once finished, remove all the #if stuff and
- *       let remain only the working portion
- */
-#define USE_XPM 0
-#if USE_XPM
-#include "res/bitmaps/sort_down.xpm"
-#include "res/bitmaps/sort_up.xpm"
-
-#include "res/bitmaps/nonsvn_file.xpm"
-#include "res/bitmaps/normal_file.xpm"
-#include "res/bitmaps/added_file.xpm"
-#include "res/bitmaps/missing_file.xpm"
-#include "res/bitmaps/deleted_file.xpm"
-#include "res/bitmaps/replaced_file.xpm"
-#include "res/bitmaps/modified_file.xpm"
-#include "res/bitmaps/merged_file.xpm"
-#include "res/bitmaps/conflicted_file.xpm"
-#include "res/bitmaps/nonsvn_folder.xpm"
-#include "res/bitmaps/folder.xpm"
-#include "res/bitmaps/modified_folder.xpm"
-#include "res/bitmaps/newer_file.xpm"
-#include "res/bitmaps/newer_folder.xpm"
-#include "res/bitmaps/modified_newer_file.xpm"
-#include "res/bitmaps/externals_folder.xpm"
-
-#include "res/bitmaps/locked_file.xpm"
-#include "res/bitmaps/locked_missing_file.xpm"
-#include "res/bitmaps/locked_deleted_file.xpm"
-#include "res/bitmaps/locked_replaced_file.xpm"
-#include "res/bitmaps/locked_modified_file.xpm"
-#include "res/bitmaps/locked_merged_file.xpm"
-#include "res/bitmaps/locked_conflicted_file.xpm"
-#include "res/bitmaps/locked_newer_file.xpm"
-#include "res/bitmaps/locked_modified_newer_file.xpm"
-
-#include "res/bitmaps/rep_locked_file.xpm"
-#include "res/bitmaps/rep_locked_missing_file.xpm"
-#include "res/bitmaps/rep_locked_deleted_file.xpm"
-#include "res/bitmaps/rep_locked_replaced_file.xpm"
-#include "res/bitmaps/rep_locked_modified_file.xpm"
-#include "res/bitmaps/rep_locked_merged_file.xpm"
-#include "res/bitmaps/rep_locked_conflicted_file.xpm"
-#include "res/bitmaps/rep_locked_newer_file.xpm"
-#include "res/bitmaps/rep_locked_modified_newer_file.xpm"
-#else
 #include "res/bitmaps/sort_down.png.h"
 #include "res/bitmaps/sort_up.png.h"
 
@@ -142,7 +92,6 @@
 #include "res/bitmaps/rep_locked_conflicted_file.png.h"
 #include "res/bitmaps/rep_locked_newer_file.png.h"
 #include "res/bitmaps/rep_locked_modified_newer_file.png.h"
-#endif
 
 /**
  * Tags for wxConfig file settings, defined here to avoid duplicate
@@ -596,20 +545,8 @@ enum
 
 /**
  * structure that maps a status entry to an 
- * according XPM icon.
+ * according icon.
  */
-#if USE_XPM
-struct MapItem
-{
-  int status;
-  char ** xpm_data;
-
-  MapItem (int status_, char **xpm_data_)
-    : status (status_), xpm_data (xpm_data_)
-  {
-  }
-};
-#else
 struct MapItem
 {
   int status;
@@ -623,35 +560,8 @@ struct MapItem
 };
 
 #define MAP_ITEM(status,data) MapItem(status, data, sizeof(data)) 
-#endif
 
 /** array of icons and corresponding status */
-#if USE_XPM
-static const MapItem MAP_ICON_ARRAY [] =
-{
-  MapItem (svn_wc_status_unversioned,           nonsvn_file),
-  MapItem (svn_wc_status_normal,                normal_file),
-  MapItem (svn_wc_status_added,                 added_file),
-  MapItem (svn_wc_status_missing,               missing_file),
-  MapItem (svn_wc_status_deleted,               deleted_file),
-  MapItem (svn_wc_status_replaced,              replaced_file),
-  MapItem (svn_wc_status_modified,              modified_file),
-  MapItem (svn_wc_status_merged,                merged_file),
-  MapItem (svn_wc_status_conflicted,            conflicted_file),
-
-  MapItem (IMG_INDX_FOLDER,                     nonsvn_folder),
-  MapItem (IMG_INDX_VERSIONED_FOLDER,           folder),
-
-  MapItem (IMG_INDX_SORT_DOWN,                  sort_down),
-  MapItem (IMG_INDX_SORT_UP,                    sort_up),
-
-  MapItem (IMG_INDX_MODIFIED_VERSIONED_FOLDER,  modified_folder),
-  MapItem (IMG_INDX_NEWER_FILE,                 newer_file),
-  MapItem (IMG_INDX_NEWER_FOLDER,               newer_folder),
-  MapItem (IMG_INDX_MODIFIED_NEWER,             modified_newer_file),
-  MapItem (IMG_INDX_EXTERNALS_FOLDER,           externals_folder)
-};
-#else
 static const MapItem MAP_ICON_ARRAY [] =
 {
   MAP_ITEM(svn_wc_status_unversioned,           nonsvn_file_png),
@@ -677,26 +587,11 @@ static const MapItem MAP_ICON_ARRAY [] =
   MAP_ITEM(IMG_INDX_EXTERNALS_FOLDER,           externals_folder_png)
 };
 
-#endif
 
 static const size_t MAP_ICON_COUNT = 
   sizeof (MAP_ICON_ARRAY) / sizeof (MAP_ICON_ARRAY [0]);
 
 /** the same for icons with local lock */
-#if USE_XPM
-static const MapItem MAP_LOCK_ICON_ARRAY [] =
-{
-  MapItem (svn_wc_status_normal,                locked_file),
-  MapItem (svn_wc_status_missing,               locked_missing_file),
-  MapItem (svn_wc_status_deleted,               locked_deleted_file),
-  MapItem (svn_wc_status_replaced,              locked_replaced_file),
-  MapItem (svn_wc_status_modified,              locked_modified_file),
-  MapItem (svn_wc_status_merged,                locked_merged_file),
-  MapItem (svn_wc_status_conflicted,            locked_conflicted_file),
-  MapItem (IMG_INDX_NEWER_FILE,                 locked_newer_file),
-  MapItem (IMG_INDX_MODIFIED_NEWER,             locked_modified_newer_file)
-};
-#else
 static const MapItem MAP_LOCK_ICON_ARRAY [] =
 {
   MAP_ITEM(svn_wc_status_normal,                locked_file_png),
@@ -709,26 +604,11 @@ static const MapItem MAP_LOCK_ICON_ARRAY [] =
   MAP_ITEM(IMG_INDX_NEWER_FILE,                 locked_newer_file_png),
   MAP_ITEM(IMG_INDX_MODIFIED_NEWER,             locked_modified_newer_file_png)
 };
-#endif
 
 static const size_t MAP_LOCK_ICON_COUNT = 
   sizeof (MAP_LOCK_ICON_ARRAY) / sizeof (MAP_LOCK_ICON_ARRAY [0]);
 
 /** the same for icons with repository lock */
-#if USE_XPM
-static const MapItem MAP_REPLOCK_ICON_ARRAY [] =
-{
-  MapItem (svn_wc_status_normal,                rep_locked_file),
-  MapItem (svn_wc_status_missing,               rep_locked_missing_file),
-  MapItem (svn_wc_status_deleted,               rep_locked_deleted_file),
-  MapItem (svn_wc_status_replaced,              rep_locked_replaced_file),
-  MapItem (svn_wc_status_modified,              rep_locked_modified_file),
-  MapItem (svn_wc_status_merged,                rep_locked_merged_file),
-  MapItem (svn_wc_status_conflicted,            rep_locked_conflicted_file),
-  MapItem (IMG_INDX_NEWER_FILE,                 rep_locked_newer_file),
-  MapItem (IMG_INDX_MODIFIED_NEWER,             rep_locked_modified_newer_file)
-};
-#else
 static const MapItem MAP_REPLOCK_ICON_ARRAY [] =
 {
   MAP_ITEM(svn_wc_status_normal,                rep_locked_file_png),
@@ -741,7 +621,6 @@ static const MapItem MAP_REPLOCK_ICON_ARRAY [] =
   MAP_ITEM(IMG_INDX_NEWER_FILE,                 rep_locked_newer_file_png),
   MAP_ITEM(IMG_INDX_MODIFIED_NEWER,             rep_locked_modified_newer_file_png)
 };
-#endif
 
 static const size_t MAP_REPLOCK_ICON_COUNT = 
   sizeof (MAP_REPLOCK_ICON_ARRAY) / sizeof (MAP_REPLOCK_ICON_ARRAY [0]);
@@ -828,11 +707,7 @@ FileListCtrl::Data::Data ()
     const MapItem & item = MAP_ICON_ARRAY [i];
 
     ImageIndexArray [item.status + lock_offset] = i;
-#if USE_XPM    
-    ImageListSmall->Add (wxIcon (item.xpm_data));
-#else
     ImageListSmall->Add (EmbeddedBitmap(item.data, item.len));
-#endif
   }
 
   lock_offset += IMG_INDX_COUNT;
@@ -841,11 +716,7 @@ FileListCtrl::Data::Data ()
     const MapItem & item = MAP_LOCK_ICON_ARRAY [i];
 
     ImageIndexArray [item.status + lock_offset] = MAP_ICON_COUNT + i;
-#if USE_XPM    
-    ImageListSmall->Add (wxIcon (item.xpm_data));
-#else
     ImageListSmall->Add (EmbeddedBitmap(item.data, item.len));
-#endif
   }
 
   lock_offset += IMG_INDX_COUNT;
@@ -854,11 +725,7 @@ FileListCtrl::Data::Data ()
     const MapItem & item = MAP_REPLOCK_ICON_ARRAY [i];
 
     ImageIndexArray [item.status + lock_offset] = MAP_LOCK_ICON_COUNT + MAP_ICON_COUNT + i;
-#if USE_XPM    
-    ImageListSmall->Add (wxIcon (item.xpm_data));
-#else
     ImageListSmall->Add (EmbeddedBitmap(item.data, item.len));
-#endif
   }
 }
 

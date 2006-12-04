@@ -49,27 +49,6 @@
 #include "rapidsvn_frame.hpp"
 
 // bitmaps
-/** 
- * This define is used for the time to transition from
- * PNG images back to XPM, at least for use in wxImageList
- *
- * @todo Once finished, remove all the #if stuff and
- *       let remain only the working portion
- */
-#define USE_XPM 0
-#if USE_XPM
-#include "res/bitmaps/computer.xpm"
-#include "res/bitmaps/folder.xpm"
-#include "res/bitmaps/open_folder.xpm"
-#include "res/bitmaps/nonsvn_folder.xpm"
-#include "res/bitmaps/nonsvn_open_folder.xpm"
-#include "res/bitmaps/modified_folder.xpm"
-#include "res/bitmaps/modified_open_folder.xpm"
-#include "res/bitmaps/bookmark.xpm"
-#include "res/bitmaps/externals_folder.xpm"
-#include "res/bitmaps/externals_open_folder.xpm"
-#include "res/bitmaps/repository_bookmark.xpm"
-#else
 #include "res/bitmaps/computer.png.h"
 #include "res/bitmaps/folder.png.h"
 #include "res/bitmaps/open_folder.png.h"
@@ -81,7 +60,6 @@
 #include "res/bitmaps/externals_folder.png.h"
 #include "res/bitmaps/externals_open_folder.png.h"
 #include "res/bitmaps/repository_bookmark.png.h"
-#endif 
 
 enum
 {
@@ -174,19 +152,6 @@ public:
     : singleContext (0), window (window), listener (0), useAuthCache (true)
   {
     imageList = new wxImageList (16, 16, TRUE);
-#if USE_XPM
-    imageList->Add (wxIcon (computer));
-    imageList->Add (wxIcon (folder));
-    imageList->Add (wxIcon (open_folder));
-    imageList->Add (wxIcon (nonsvn_folder));
-    imageList->Add (wxIcon (nonsvn_open_folder));
-    imageList->Add (wxIcon (modified_folder));
-    imageList->Add (wxIcon (modified_open_folder));
-    imageList->Add (wxIcon (bookmark));
-    imageList->Add (wxIcon (repository_bookmark));
-    imageList->Add (wxIcon (externals_folder));
-    imageList->Add (wxIcon (externals_open_folder));
-#else
     imageList->Add (EMBEDDED_BITMAP(computer_png));
     imageList->Add (EMBEDDED_BITMAP(folder_png));
     imageList->Add (EMBEDDED_BITMAP(open_folder_png));
@@ -198,7 +163,6 @@ public:
     imageList->Add (EMBEDDED_BITMAP(repository_bookmark_png));
     imageList->Add (EMBEDDED_BITMAP(externals_folder_png));
     imageList->Add (EMBEDDED_BITMAP(externals_open_folder_png));
-#endif 
 
     treeCtrl = new wxTreeCtrl (window, -1, pos, size,
                                wxTR_HAS_BUTTONS|wxTR_SINGLE);
