@@ -54,8 +54,9 @@ SwitchAction::Prepare ()
   {
     svn::Path path = GetTarget ();
     svn::Client client (GetContext ());
-    svn::Status status (client.singleStatus (path.c_str ()));
-    url = Utf8ToLocal (svn::Url::unescape (status.entry ().url ()));
+    svn::Entry entry (client.info (path.c_str ()));
+    const char* urlCharBuffer = entry.url ();
+    url = Utf8ToLocal (svn::Url::unescape (urlCharBuffer));
   }
 
   // create flags for the dialog
