@@ -344,12 +344,19 @@ end:
   std::string
   Path::native () const
   {
-    // dont try to convert the path if we have an URL
+    Pool pool;
+
     if (m_pathIsUrl)
-      return m_path.c_str ();
+    {
+      // this converts something like
+      // http://foo/my%20location 
+      // to 
+      // http://foo/my location
+      return svn_path_uri_decode (m_path.c_str (), pool); 
+    }
     else
     {
-      Pool pool;
+      // On Windows, p://foo/bar will be converted to p:\foo\bar
       return svn_path_local_style (m_path.c_str (), pool);
     }
   }
