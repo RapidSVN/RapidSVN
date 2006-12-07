@@ -119,10 +119,45 @@ namespace svn
     return m_pathIsUrl;
   }
 
+  static bool 
+  isAbsolute (const char * path)
+  {
+    if (0 == path)
+      return false;
+
+    std::string p (path);
+
+    if (0 == p.length ())
+      return false;
+
+    // a path that begins with "/" is absolute
+    if ('/' == p [0])
+      return true;
+
+    // a path with a ":" like "http://xxx" or
+    // "c:/foo" is absolute too
+    if (p.find (":", 0) != std::string::npos)
+      return true;
+
+    // Well it's relative
+    return false;
+  }
+
   void
   Path::addComponent (const char * component)
   {
     Pool pool;
+
+    if (0 == component)
+      return;
+
+    // if the @a component is absolute, simply
+    // use it
+    if (isAbsolute (component))
+    {
+      m_path = component;
+      return;
+    }
 
     if (Url::isValid (m_path.c_str ()))
     {

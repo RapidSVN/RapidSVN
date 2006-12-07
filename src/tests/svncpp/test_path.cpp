@@ -80,17 +80,87 @@ PathTestCase::testSplit ()
 void
 PathTestCase::testAddComponent ()
 {
-  svn::Path pathTest = "/some/path/to/repository";
+  svn::Path pathTest = "/some/path/to/foo";
   std::string newBasename = "newname";
 
   pathTest.addComponent (newBasename);
-  CPPUNIT_ASSERT (strcmp (pathTest.c_str(), "/some/path/to/repository/newname") == 0);
+  CPPUNIT_ASSERT (0 == strcmp (pathTest.c_str(), 
+                               "/some/path/to/foo/newname"));
 
   svn::Path urlTest = "http://some/url/to/repository";
   std::string newFile = "newname";
 
   urlTest.addComponent (newFile);
-  CPPUNIT_ASSERT (strcmp (urlTest.c_str(), "http://some/url/to/repository/newname") == 0);
+  CPPUNIT_ASSERT (0 == strcmp (urlTest.c_str(), 
+                               "http://some/url/to/repository/newname"));
+
+  // Now test every possible combination:
+  // * add another absolute UNIX path to a UNIX path
+  // * add another absolute Win path to a UNIX path
+  // * add another absolute URL to a UNIX path
+  // * ...
+  // we always expect as a result the path that was added
+  // (because it's absolute it will replace the existing path)
+  static const char * url1 = "http://this/is/a/new/url";
+  static const char * unix1 = "/this/is/a/new/unix/path";
+  static const char * win1 = "c:/this/is/a/new/win/path";
+  static const char * url2 = "http://some/url/to/foo";
+  static const char * unix2 = "/some/path/to/foo";
+  static const char * win2 = "c:/some/path/to/foo";
+
+  // URL1+URL2=URL2
+  svn::Path path (url1);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url1));
+  path.addComponent (url2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url2));
+
+  // URL1+WIN2=WIN2
+  path = url1;
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url1));
+  path.addComponent (win2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win2));
+
+  // URL1+UNIX2=UNIX2
+  path = url1;
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url1));
+  path.addComponent (unix2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix2));
+
+  // WIN1+URL2=URL2
+  path = win1;
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win1));
+  path.addComponent (url2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url2));
+
+  // WIN1+WIN2=WIN2
+  path = win1;
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win1));
+  path.addComponent (win2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win2));
+
+  // WIN1+UNIX2=UNIX2
+  path = win1;
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win1));
+  path.addComponent (unix2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix2));
+
+  // UNIX1+URL2=URL2
+  path = unix1;
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix1));
+  path.addComponent (url2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url2));
+
+  // UNIX1+WIN2=WIN2
+  path = unix1;
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix1));
+  path.addComponent (win2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win2));
+
+  // UNIX1+UNIX2=UNIX2
+  path = unix1;
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix1));
+  path.addComponent (unix2);
+  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix2));
 }
 
 void
