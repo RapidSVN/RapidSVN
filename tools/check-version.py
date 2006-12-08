@@ -170,6 +170,9 @@ class VersionChecker:
                 "<key>CFBundleLongVersionString</key>" \
                 "<string>%s, (c) 2005 RapidSVN</string>" % \
                 (self.version.str), "CFBundleLongVersionString")
+        replace(fname, "DISKIMAGE=.*", \
+                "DISKIMAGE=RapidSVN-%s" % (self.version.str), \
+                "DISKIMAGE")
 
     def run(self):
         print "Version information:"

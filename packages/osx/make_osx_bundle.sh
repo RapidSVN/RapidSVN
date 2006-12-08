@@ -4,8 +4,9 @@
 #
 
 # Remove any old stuff. We wanna create a FRESH bundle
+DISKIMAGE=RapidSVN-0.9.4
 test -e RapidSVN.app && rm -rf RapidSVN.app
-test -e RapidSVN.dmg && rm -rf RapidSVN.dmg
+test -e $DISKIMAGE && rm -rf $DISKIMAGE
 
 # Create the bundle
 BUNDLEDIR=RapidSVN.app/Contents
@@ -37,10 +38,10 @@ echo -n \
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key><string>0.9.3</string>
-	<key>CFBundleShortVersionString</key><string>0.9.3</string>
-	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.9.3, (c) 2005 RapidSVN</string>
-	<key>CFBundleLongVersionString</key><string>0.9.3, (c) 2005 RapidSVN</string>
+	<key>CFBundleVersion</key><string>0.9.4</string>
+	<key>CFBundleShortVersionString</key><string>0.9.4</string>
+	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.9.4, (c) 2005 RapidSVN</string>
+	<key>CFBundleLongVersionString</key><string>0.9.4, (c) 2005 RapidSVN</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2002-2006 RapidSVN</string>
 	<key>LSRequiresCarbon</key>
@@ -52,4 +53,4 @@ echo -n \
 " > $BUNDLEDIR/Info.plist
 
 # Now create the disk image from the bundle
-hdiutil create -srcfolder RapidSVN.app RapidSVN.dmg
+hdiutil create -srcfolder RapidSVN.app $DISKIMAGE
