@@ -460,7 +460,6 @@ AC_OUTPUT(Makefile \
           doc/svncpp/Makefile \
           include/Makefile \
           include/svncpp/Makefile \
-	  notes/Makefile \
 	  packages/Makefile \
 	  packages/debian/Makefile \
 	  packages/osx/Makefile \
