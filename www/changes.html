@@ -1,461 +1,1068 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
-<head><title>RapidSVN CHANGES</title>
+<head>
+<title>RapidSVN CHANGES</title>
 </head>
 <body>
-
-<h3><a name="0.9.4">Version 0.9.4 (released December 8th 2006)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.4">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.4</a>
-
-<p><b>User-visible changes</b>
+<h3><a id="r0.9.4">Version 0.9.4 (released December 8th
+2006)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.4">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.4</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=446">446</a>&nbsp;New Feature: Support for Subversion 1.4.2
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=368">368</a>&nbsp;New Feature: Show affected files/dirs in Log dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=425">425</a>&nbsp;New Feature: Show dialog for errors
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=447">447</a>&nbsp;New Feature: Add Annotate functionality
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=439">439</a>&nbsp;New Feature: Translation for Simplified Chinese
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=441">441</a>&nbsp;New Feature: Translation for Brazilian Portuguese
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=453">453</a>&nbsp;New Feature: Translation for Italian and Portuguese (while updating translations)
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=446">446</a>&nbsp;New
+Feature: Support for Subversion 1.4.2</li>
 
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=213">213</a>&nbsp;Enhancement: Different icon for a repository bookmark
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=292">292</a>&nbsp;Enhancement: Enable recursive update for get action
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=295">295</a>&nbsp;Enhancement: Import dialog uses URL of the current selection
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=245">245</a>&nbsp;Enhancement: Checkout Dialog remembers previous working copies
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=417">417</a>&nbsp;Enhancement: Mac: Change 48x48 Icon
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=420">420</a>&nbsp;Enhancement: Dont expand folders while navigating with the keyboard
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=433">433</a>&nbsp;Enhancement: Make "Diff to another rev/date" the default option for diff dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=434">434</a>&nbsp;Enhancement: Allow compare with ONE other revision in log dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=442">442</a>&nbsp;Enhancement: Update the indicator if a repository folder has no children
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=468">468</a>&nbsp;Enhancement: Resizeable log dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=444">444</a>&nbsp;Enhancement: Log history window resizing
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=454">454</a>&nbsp;Enhancement: Allow editing for unversioned files
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=368">368</a>&nbsp;New
+Feature: Show affected files/dirs in Log dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=425">425</a>&nbsp;New
+Feature: Show dialog for errors</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=447">447</a>&nbsp;New
+Feature: Add Annotate functionality</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=439">439</a>&nbsp;New
+Feature: Translation for Simplified Chinese</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=441">441</a>&nbsp;New
+Feature: Translation for Brazilian Portuguese</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=453">453</a>&nbsp;New
+Feature: Translation for Italian and Portuguese (while updating
+translations)</li>
 
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=175">175</a>&nbsp;Fixed: File modified status didnt refresh automatically
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=322">322</a>&nbsp;Fixed: Unable to expand directory in tree view
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=354">354</a>&nbsp;Fixed: RapidSVN didnt show an error if no diff tool is configured
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=373">373</a>&nbsp;Fixed: Update didnt pull svn:externals
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=374">374</a>&nbsp;Fixed: Edit action failed after folder change
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=407">407</a>&nbsp;Fixed: View (in log dialog) failed after folder change
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=431">431</a>&nbsp;Fixed: Diff (in log dialog) failed after folder change
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=409">409</a>&nbsp;Fixed: Sash location setting not correct under wxGTK
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=423">423</a>&nbsp;Fixed: wxGTK: Selecting Diff options worked only with Mouse
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=426">426</a>&nbsp;Fixed: Win32: Working copies on network share not accessible
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=429">429</a>&nbsp;Fixed: Refresh caused folder browser to lose the selected folder
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=436">436</a>&nbsp;Fixed: UI dead when a repository refused anonymous
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=437">437</a>&nbsp;Fixed: Diff tool arguments hidden in Program Preferences
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=438">438</a>&nbsp;Fixed: RapidSvn Authentication failure after change of system password
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=443">443</a>&nbsp;Fixed: Diff dialog fields didnt resize
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=448">448</a>&nbsp;Fixed: HistoryValidator didnt set text control value
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=459">459</a>&nbsp;Fixed: Double-click on child in list view does not work
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=464">464</a>&nbsp;Fixed: RapidSVN crashed on SSL certificate dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=465">465</a>&nbsp;Fixed: Move directory into subdirectory failed
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=469">469</a>&nbsp;Fixed: Switch URL crashed from Folder Browser
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=470">470</a>&nbsp;Fixed: Double-click on child URL in list view didnt work
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=471">471</a>&nbsp;Fixed: Https crashed on Windows
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=472">472</a>&nbsp;Fixed: Win2K: Icons in folder browser and filelist have black border
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=213">213</a>&nbsp;Enhancement:
+Different icon for a repository bookmark</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=292">292</a>&nbsp;Enhancement:
+Enable recursive update for get action</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=295">295</a>&nbsp;Enhancement:
+Import dialog uses URL of the current selection</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=245">245</a>&nbsp;Enhancement:
+Checkout Dialog remembers previous working copies</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=417">417</a>&nbsp;Enhancement:
+Mac: Change 48x48 Icon</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=420">420</a>&nbsp;Enhancement:
+Dont expand folders while navigating with the keyboard</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=433">433</a>&nbsp;Enhancement:
+Make "Diff to another rev/date" the default option for diff
+dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=434">434</a>&nbsp;Enhancement:
+Allow compare with ONE other revision in log dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=442">442</a>&nbsp;Enhancement:
+Update the indicator if a repository folder has no children</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=468">468</a>&nbsp;Enhancement:
+Resizeable log dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=444">444</a>&nbsp;Enhancement:
+Log history window resizing</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=454">454</a>&nbsp;Enhancement:
+Allow editing for unversioned files</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=175">175</a>&nbsp;Fixed:
+File modified status didnt refresh automatically</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=322">322</a>&nbsp;Fixed:
+Unable to expand directory in tree view</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=354">354</a>&nbsp;Fixed:
+RapidSVN didnt show an error if no diff tool is configured</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=373">373</a>&nbsp;Fixed:
+Update didnt pull svn:externals</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=374">374</a>&nbsp;Fixed:
+Edit action failed after folder change</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=407">407</a>&nbsp;Fixed:
+View (in log dialog) failed after folder change</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=431">431</a>&nbsp;Fixed:
+Diff (in log dialog) failed after folder change</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=409">409</a>&nbsp;Fixed:
+Sash location setting not correct under wxGTK</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=423">423</a>&nbsp;Fixed:
+wxGTK: Selecting Diff options worked only with Mouse</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=426">426</a>&nbsp;Fixed:
+Win32: Working copies on network share not accessible</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=429">429</a>&nbsp;Fixed:
+Refresh caused folder browser to lose the selected folder</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=436">436</a>&nbsp;Fixed:
+UI dead when a repository refused anonymous</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=437">437</a>&nbsp;Fixed:
+Diff tool arguments hidden in Program Preferences</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=438">438</a>&nbsp;Fixed:
+RapidSvn Authentication failure after change of system
+password</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=443">443</a>&nbsp;Fixed:
+Diff dialog fields didnt resize</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=448">448</a>&nbsp;Fixed:
+HistoryValidator didnt set text control value</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=459">459</a>&nbsp;Fixed:
+Double-click on child in list view does not work</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=464">464</a>&nbsp;Fixed:
+RapidSVN crashed on SSL certificate dialog</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=465">465</a>&nbsp;Fixed:
+Move directory into subdirectory failed</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=469">469</a>&nbsp;Fixed:
+Switch URL crashed from Folder Browser</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=470">470</a>&nbsp;Fixed:
+Double-click on child URL in list view didnt work</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=471">471</a>&nbsp;Fixed:
+Https crashed on Windows</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=472">472</a>&nbsp;Fixed:
+Win2K: Icons in folder browser and filelist have black border</li>
 </ul>
-</p>
+<br>
 
-<p><b>Developer-visible changes</b>
+<br>
+<p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=346">346</a>&nbsp;Fixed: Could not compile rapidsvn-0.9.0 with GCC 4.1.0-beta20051230
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=408">408</a>&nbsp;Fixed: Solaris Compilation with Sun compiler and linker broken
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=346">346</a>&nbsp;Fixed:
+Could not compile rapidsvn-0.9.0 with GCC 4.1.0-beta20051230</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=408">408</a>&nbsp;Fixed:
+Solaris Compilation with Sun compiler and linker broken</li>
 </ul>
-</p>
-
-<p><b>Work in progress (not completed)</b>
+<br>
+<br>
+<p><b>Work in progress (not completed)</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=7">7</a>&nbsp;Create user documentation
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=41">41</a>&nbsp;Icons for all cmds
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=451">451</a>&nbsp;Use wxWidgets date picker control for date fields on Diff dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=331">331</a>&nbsp;Display svn:externals properly
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=377">377</a>&nbsp;Mac: OpenSSL not supported
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=419">419</a>&nbsp;Win32: OpenSSL was not static in Installer
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=7">7</a>&nbsp;Create
+user documentation</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=41">41</a>&nbsp;Icons
+for all cmds</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=451">451</a>&nbsp;Use
+wxWidgets date picker control for date fields on Diff dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=331">331</a>&nbsp;Display
+svn:externals properly</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=377">377</a>&nbsp;Mac:
+OpenSSL not supported</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=419">419</a>&nbsp;Win32:
+OpenSSL was not static in Installer</li>
 </ul>
-</p>
+<br>
 
-
-
-<h3><a name="0.9.3-1">Version 0.9.3-1 (released June 29 2006)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3-1">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3-1</a>
-
-
-<p><b>User-visible changes</b>
+<br>
+<h3><a id="r0.9.3-1">Version 0.9.3-1 (released June 29
+2006)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3-1">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3-1</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=427">427</a>&nbsp;Win32: Incompatible update to Bdb 4.4 while SVN is using 4.3
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=427">427</a>&nbsp;Win32:
+Incompatible update to Bdb 4.4 while SVN is using 4.3</li>
 </ul>
-</p>
+<br>
+<br>
+<h3><a id="r0.9.3">Version 0.9.3 (released June 22 2006)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3</a>
 
-<h3><a name="0.9.3">Version 0.9.3 (released June 22 2006)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3</a>
-
-
-<p><b>User-visible changes</b>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=414">414</a>&nbsp;Fixed: View-Preferences-Programs did not save
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=377">377</a>&nbsp;Fixed: Mac: OpenSSL not supported
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=411">411</a>&nbsp;Fixed: Main view window not drawn when 'Bookmarks' is selected
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=418">418</a>&nbsp;Fixed: Expand item in tree view when selected was BROKEN
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=416">416</a>&nbsp;Fixed: Win32: RapidSVN icon not shown when using ALT-TAB
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=415">415</a>&nbsp;New: Support Subversion 1.3.2 (with Berkeley DB 4.4)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=402">402</a>&nbsp;Improved: interface accesibility (tabs, default buttons etc)
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=414">414</a>&nbsp;Fixed:
+View-Preferences-Programs did not save</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=377">377</a>&nbsp;Fixed:
+Mac: OpenSSL not supported</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=411">411</a>&nbsp;Fixed:
+Main view window not drawn when 'Bookmarks' is selected</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=418">418</a>&nbsp;Fixed:
+Expand item in tree view when selected was BROKEN</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=416">416</a>&nbsp;Fixed:
+Win32: RapidSVN icon not shown when using ALT-TAB</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=415">415</a>&nbsp;New:
+Support Subversion 1.3.2 (with Berkeley DB 4.4)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=402">402</a>&nbsp;Improved:
+interface accesibility (tabs, default buttons etc)</li>
 </ul>
-</p>
-
-<p><b>Developer-visible changes</b>
+<br>
+<br>
+<p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=385">385</a>&nbsp;Fixed: autogen.sh missing in source tarball
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=294">294</a>&nbsp;Fixed: svn_subr_version not supported in subversion 1.2
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=412">412</a>&nbsp;Fixed: Compile error with GCC 4.1.1
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=385">385</a>&nbsp;Fixed:
+autogen.sh missing in source tarball</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=294">294</a>&nbsp;Fixed:
+svn_subr_version not supported in subversion 1.2</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=412">412</a>&nbsp;Fixed:
+Compile error with GCC 4.1.1</li>
 </ul>
-</p>
-
-<p><b>Work in progress (not completed)</b>
+<br>
+<br>
+<p><b>Work in progress (not completed)</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=175">175</a>&nbsp;File modified status doesn't update
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=408">408</a>&nbsp;Solaris Compilation with Sun compiler and linker broken
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=331">331</a>&nbsp;Display svn:externals properly
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=346">346</a>&nbsp;Linux: Can not compile rapidsvn-0.9.0 with GCC 4.1.0-beta20051230
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=175">175</a>&nbsp;File
+modified status doesn't update</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=408">408</a>&nbsp;Solaris
+Compilation with Sun compiler and linker broken</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=331">331</a>&nbsp;Display
+svn:externals properly</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=346">346</a>&nbsp;Linux:
+Can not compile rapidsvn-0.9.0 with GCC 4.1.0-beta20051230</li>
 </ul>
-</p>
-
-
-<h3><a name="0.9.2">Version 0.9.2 (released May 19 2006)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.2">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.2</a>
-
-
-<p><b>User-visible changes</b>
+<br>
+<br>
+<h3><a id="r0.9.2">Version 0.9.2 (released May 19 2006)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.2">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.2</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=362">362</a>&nbsp;New: Improve menu accessibility in localizations
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=363">363</a>&nbsp;New: Run all actions in the background
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=367">367</a>&nbsp;New: Allow multiple targets for copy and move
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=372">372</a>&nbsp;New: Add French translation
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=171">171</a>&nbsp;Fixed: svn_path_join: Assertion "is_canonical (base, blen)" failed
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=176">176</a>&nbsp;Fixed: Repository name with Accent
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=215">215</a>&nbsp;Fixed: Double click on a directory doesn't work
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=364">364</a>&nbsp;Fixed: Mac+GTK: Update, etc very vers slow
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=366">366</a>&nbsp;Fixed: Improve sorting
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=371">371</a>&nbsp;Fixed: Execution is too slow compared to command-line SVN
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=375">375</a>&nbsp;Fixed: Delete folder does not work
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=379">379</a>&nbsp;Fixed: Export doesn't work - wrong parameter format
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=380">380</a>&nbsp;Fixed: Action canceling with button causes disfunctionality
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=381">381</a>&nbsp;Fixed: "Refresh View" updates file list and hides it afterwards
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=383">383</a>&nbsp;Fixed: Rapid forgets that action is running if try to start the second one
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=384">384</a>&nbsp;Fixed: First character omitted from repos folders
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=387">387</a>&nbsp;Fixed: Cannot create a directory directly in repository
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=388">388</a>&nbsp;Fixed: Cannot create a new tag
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=393">393</a>&nbsp;Fixed: No SSL support in multithreaded Rapid
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=395">395</a>&nbsp;Fixed: "Refresh View" invalid behaviour towards actions
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=396">396</a>&nbsp;Fixed: Filelist or/and folder browser not updated after actions
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=397">397</a>&nbsp;Fixed: Directory names sometimes not shown in repository
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=398">398</a>&nbsp;Fixed: Context menu doesn't hide when it has to
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=399">399</a>&nbsp;Fixed: Diff window controls activate inappropriately
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=400">400</a>&nbsp;Fixed: Repository Bookmark shows incorrect names
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=401">401</a>&nbsp;Fixed: Urls and paths displayed incorrectly in file info
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=403">403</a>&nbsp;Fixed: Copying current directory to its child not forbidden
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=362">362</a>&nbsp;New:
+Improve menu accessibility in localizations</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=363">363</a>&nbsp;New:
+Run all actions in the background</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=367">367</a>&nbsp;New:
+Allow multiple targets for copy and move</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=372">372</a>&nbsp;New:
+Add French translation</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=171">171</a>&nbsp;Fixed:
+svn_path_join: Assertion "is_canonical (base, blen)" failed</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=176">176</a>&nbsp;Fixed:
+Repository name with Accent</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=215">215</a>&nbsp;Fixed:
+Double click on a directory doesn't work</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=364">364</a>&nbsp;Fixed:
+Mac+GTK: Update, etc very vers slow</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=366">366</a>&nbsp;Fixed:
+Improve sorting</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=371">371</a>&nbsp;Fixed:
+Execution is too slow compared to command-line SVN</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=375">375</a>&nbsp;Fixed:
+Delete folder does not work</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=379">379</a>&nbsp;Fixed:
+Export doesn't work - wrong parameter format</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=380">380</a>&nbsp;Fixed:
+Action canceling with button causes disfunctionality</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=381">381</a>&nbsp;Fixed:
+"Refresh View" updates file list and hides it afterwards</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=383">383</a>&nbsp;Fixed:
+Rapid forgets that action is running if try to start the second
+one</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=384">384</a>&nbsp;Fixed:
+First character omitted from repos folders</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=387">387</a>&nbsp;Fixed:
+Cannot create a directory directly in repository</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=388">388</a>&nbsp;Fixed:
+Cannot create a new tag</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=393">393</a>&nbsp;Fixed:
+No SSL support in multithreaded Rapid</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=395">395</a>&nbsp;Fixed:
+"Refresh View" invalid behaviour towards actions</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=396">396</a>&nbsp;Fixed:
+Filelist or/and folder browser not updated after actions</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=397">397</a>&nbsp;Fixed:
+Directory names sometimes not shown in repository</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=398">398</a>&nbsp;Fixed:
+Context menu doesn't hide when it has to</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=399">399</a>&nbsp;Fixed:
+Diff window controls activate inappropriately</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=400">400</a>&nbsp;Fixed:
+Repository Bookmark shows incorrect names</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=401">401</a>&nbsp;Fixed:
+Urls and paths displayed incorrectly in file info</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=403">403</a>&nbsp;Fixed:
+Copying current directory to its child not forbidden</li>
 </ul>
-</p>
-
-<p><b>Developer-visible changes</b>
+<br>
+<br>
+<p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=394">394</a>&nbsp;Fixed: Compile error with wxGTK 2.4.2
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=333">333</a>&nbsp;Fixed: make error if xsl-stylesheets arent found
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=358">358</a>&nbsp;Fixed: Invalid shell syntax in configure.in
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=376">376</a>&nbsp;New: Add hideable menu tests for debugging
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=357">357</a>&nbsp;Fixed: doc/manpages/rapidsvn.xml not included in distribution
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=359">359</a>&nbsp;Fixed: "make dist" fails in packages/os
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=365">365</a>&nbsp;Fixed: "make dist" fails if cppunit is not installed
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=394">394</a>&nbsp;Fixed:
+Compile error with wxGTK 2.4.2</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=333">333</a>&nbsp;Fixed:
+make error if xsl-stylesheets arent found</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=358">358</a>&nbsp;Fixed:
+Invalid shell syntax in configure.in</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=376">376</a>&nbsp;New:
+Add hideable menu tests for debugging</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=357">357</a>&nbsp;Fixed:
+doc/manpages/rapidsvn.xml not included in distribution</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=359">359</a>&nbsp;Fixed:
+"make dist" fails in packages/os</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=365">365</a>&nbsp;Fixed:
+"make dist" fails if cppunit is not installed</li>
 </ul>
-</p>
+<br>
+<br>
+<p><b>Work in progress (not completed)</b></p>
 
-<p><b>Work in progress (not completed)</b>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=402">402</a>&nbsp;Improve interface accesibility (tabs, default buttons etc)
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=402">402</a>&nbsp;Improve
+interface accesibility (tabs, default buttons etc)</li>
 </ul>
-</p>
-
-
-<h3><a name="0.9.1">Version 0.9.1 (released Feb 10 2006)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.1">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.1</a>
-
-
-<p><b>User-visible changes</b>
+<br>
+<br>
+<h3><a id="r0.9.1">Version 0.9.1 (released Feb 10 2006)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.1">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.1</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=95">95</a>&nbsp;New: Bookmark editor
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=258">258</a>&nbsp;New: Added column for log messages in Log dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=282">282</a>&nbsp;New: Support LOCK / UNLOCK
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=326">326</a>&nbsp;New: pre-initialize repository URL in checkout dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=337">337</a>&nbsp;New: Added Russian translation
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=338">338</a>&nbsp;New: Added Ukrainian translation
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=341">341</a>&nbsp;New: Added Unicode build to Windows installer
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=351">351</a>&nbsp;New: Added "Export" menu entry and dialog 
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=327">327</a>&nbsp;Fixed: invalid logout menu item in folder browser context menu
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=335">335</a>&nbsp;Fixed: URLs didnt support spaces
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=336">336</a>&nbsp;Fixed: RapidSVN didnt use SVN stored credentials
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=339">339</a>&nbsp;Fixed: Directory entries with a '.' were truncated in folder browser
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=340">340</a>&nbsp;Fixed: Column names were not localized.
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=343">343</a>&nbsp;Fixed: Crash / segfault at startup on Fedora Core 4
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=345">345</a>&nbsp;Fixed: Some menu entries on bookmarks were invisible
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=350">350</a>&nbsp;Fixed: RapidSVN crashed when clicking Help in Checkout Menu
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=352">352</a>&nbsp;Fixed: wrong libeay32.dll was used on Windows XP / Windows Server 2003
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=353">353</a>&nbsp;Fixed: Unicode Debug build crashed on Windows because of linker ambiguities
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=95">95</a>&nbsp;New:
+Bookmark editor</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=258">258</a>&nbsp;New:
+Added column for log messages in Log dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=282">282</a>&nbsp;New:
+Support LOCK / UNLOCK</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=326">326</a>&nbsp;New:
+pre-initialize repository URL in checkout dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=337">337</a>&nbsp;New:
+Added Russian translation</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=338">338</a>&nbsp;New:
+Added Ukrainian translation</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=341">341</a>&nbsp;New:
+Added Unicode build to Windows installer</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=351">351</a>&nbsp;New:
+Added "Export" menu entry and dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=327">327</a>&nbsp;Fixed:
+invalid logout menu item in folder browser context menu</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=335">335</a>&nbsp;Fixed:
+URLs didnt support spaces</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=336">336</a>&nbsp;Fixed:
+RapidSVN didnt use SVN stored credentials</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=339">339</a>&nbsp;Fixed:
+Directory entries with a '.' were truncated in folder browser</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=340">340</a>&nbsp;Fixed:
+Column names were not localized.</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=343">343</a>&nbsp;Fixed:
+Crash / segfault at startup on Fedora Core 4</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=345">345</a>&nbsp;Fixed:
+Some menu entries on bookmarks were invisible</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=350">350</a>&nbsp;Fixed:
+RapidSVN crashed when clicking Help in Checkout Menu</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=352">352</a>&nbsp;Fixed:
+wrong libeay32.dll was used on Windows XP / Windows Server
+2003</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=353">353</a>&nbsp;Fixed:
+Unicode Debug build crashed on Windows because of linker
+ambiguities</li>
 </ul>
-</p>
+<br>
 
-<p><b>Developer-visible changes</b>
+<br>
+<p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=332">332</a>&nbsp;New: Include "packages" in source tarball
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=330">330</a>&nbsp;New: Supported URL schemas were not detected
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=279">279</a>&nbsp;New: Ensure Compatibility with wxWidgets 2.6.0
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=283">283</a>&nbsp;New: Added Client::lock, Client::unlock, Status::locked
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=287">287</a>&nbsp;New: Support Subversion 1.2
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=348">348</a>&nbsp;Fixed: Removed warnings about abstract classes without virtual destructors
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=349">349</a>&nbsp;Fixed: Warnings at compile time
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=332">332</a>&nbsp;New:
+Include "packages" in source tarball</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=330">330</a>&nbsp;New:
+Supported URL schemas were not detected</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=279">279</a>&nbsp;New:
+Ensure Compatibility with wxWidgets 2.6.0</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=283">283</a>&nbsp;New:
+Added Client::lock, Client::unlock, Status::locked</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=287">287</a>&nbsp;New:
+Support Subversion 1.2</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=348">348</a>&nbsp;Fixed:
+Removed warnings about abstract classes without virtual
+destructors</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=349">349</a>&nbsp;Fixed:
+Warnings at compile time</li>
 </ul>
-</p>
-
-<p><b>Work in progress (not completed)</b>
+<br>
+<br>
+<p><b>Work in progress (not completed)</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=80">80</a>&nbsp;Remember filenames, log entries between calls
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=261">261</a>&nbsp;Additional bookmark operations
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=80">80</a>&nbsp;Remember
+filenames, log entries between calls</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=261">261</a>&nbsp;Additional
+bookmark operations</li>
+
 </ul>
-</p>
-
-
-<h3><a name="0.9.0">Version 0.9.0 (released Oct 18 2005)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.0</a>
-
-<p><b>User-visible changes</b>
+<br>
+<br>
+<h3><a id="r0.9.0">Version 0.9.0 (released Oct 18 2005)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.0</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=285">285</a>&nbsp;New: Changed license to GPL / LGPL
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=68">68</a>&nbsp;New: commit log ctrl
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=95">95</a>&nbsp;New: Create a bookmark editor
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=249">249</a>&nbsp;New: Bookmark based configuration for flat view
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=253">253</a>&nbsp;New: Expand item in tree view when selected
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=258">258</a>&nbsp;New: Added column for log messages in Log dialog
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=307">307</a>&nbsp;New: No prefix in path column (Flat mode)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=273">273</a>&nbsp;Change titlebar info to "RapidSVN - &lt;location&gt;"
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=205">205</a>&nbsp;Fixed: Show log entries for copied branches
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=274">274</a>&nbsp;Fixed: Import and Info had the same shorcut
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=275">275</a>&nbsp;Fixed: Window Frame Positioning incorrect on restart
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=303">303</a>&nbsp;Fixed: GUI minimized and then closed does not show GUI on restart
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=286">286</a>&nbsp;Fixed: Detection of supported schemas doesnt work with subversion-1.2
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=285">285</a>&nbsp;New:
+Changed license to GPL / LGPL</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=68">68</a>&nbsp;New:
+commit log ctrl</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=95">95</a>&nbsp;New:
+Create a bookmark editor</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=249">249</a>&nbsp;New:
+Bookmark based configuration for flat view</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=253">253</a>&nbsp;New:
+Expand item in tree view when selected</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=258">258</a>&nbsp;New:
+Added column for log messages in Log dialog</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=307">307</a>&nbsp;New:
+No prefix in path column (Flat mode)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=273">273</a>&nbsp;Change
+titlebar info to "RapidSVN - &lt;location&gt;"</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=205">205</a>&nbsp;Fixed:
+Show log entries for copied branches</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=274">274</a>&nbsp;Fixed:
+Import and Info had the same shorcut</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=275">275</a>&nbsp;Fixed:
+Window Frame Positioning incorrect on restart</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=303">303</a>&nbsp;Fixed:
+GUI minimized and then closed does not show GUI on restart</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=286">286</a>&nbsp;Fixed:
+Detection of supported schemas doesnt work with subversion-1.2</li>
 </ul>
-</p>
+<br>
 
-<p><b>Developer-visible changes</b>
+<br>
+<p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=281">281</a>&nbsp;New (Mac): Create package directory for osx and include it in "check-version"
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=276">276</a>&nbsp;Fixed: Compilation error in path.cpp because of missing APR_STATUS_
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=277">277</a>&nbsp;Fixed: Build error on wxMac because of wxString/libtoolize
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=278">278</a>&nbsp;Fixed (Mac): autogen.sh on OSX needs 'glibtoolize' instead of 'libtoolize
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=280">280</a>&nbsp;Fixed: configure didnt detect missing docbook-xsl
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=284">284</a>&nbsp;Fixed (Mac): Menu flickering when list view changes
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=288">288</a>&nbsp;Fixed: Performance while expand item in tree view
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=289">289</a>&nbsp;Fixed: Diff working copy against BASE file
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=293">293</a>&nbsp;Fixed: Segmentation fault in client error handling
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=321">321</a>&nbsp;Fixed: segmentation fault in src/svncpp/context.cpp
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=328">328</a>&nbsp;Fixed: Change MSVC project to support Subversion 1.2.3.
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=329">329</a>&nbsp;Fixed: Add ICONV files to installer
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=281">281</a>&nbsp;New
+(Mac): Create package directory for osx and include it in
+"check-version"</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=276">276</a>&nbsp;Fixed:
+Compilation error in path.cpp because of missing APR_STATUS_</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=277">277</a>&nbsp;Fixed:
+Build error on wxMac because of wxString/libtoolize</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=278">278</a>&nbsp;Fixed
+(Mac): autogen.sh on OSX needs 'glibtoolize' instead of
+'libtoolize</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=280">280</a>&nbsp;Fixed:
+configure didnt detect missing docbook-xsl</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=284">284</a>&nbsp;Fixed
+(Mac): Menu flickering when list view changes</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=288">288</a>&nbsp;Fixed:
+Performance while expand item in tree view</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=289">289</a>&nbsp;Fixed:
+Diff working copy against BASE file</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=293">293</a>&nbsp;Fixed:
+Segmentation fault in client error handling</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=321">321</a>&nbsp;Fixed:
+segmentation fault in src/svncpp/context.cpp</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=328">328</a>&nbsp;Fixed:
+Change MSVC project to support Subversion 1.2.3.</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=329">329</a>&nbsp;Fixed:
+Add ICONV files to installer</li>
 </ul>
-</p>
-
-<p><b>Work in progress (not completed)</b>
+<br>
+<br>
+<p><b>Work in progress (not completed)</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=80">80</a>&nbsp;Remember filenames, log entries between calls
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=261">261</a>&nbsp;Additional bookmark operations
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=279">279</a>&nbsp;Ensure Compatibility with wxWidgets 2.6.0
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=287">287</a>&nbsp;Support Subversion 1.2
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=80">80</a>&nbsp;Remember
+filenames, log entries between calls</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=261">261</a>&nbsp;Additional
+bookmark operations</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=279">279</a>&nbsp;Ensure
+Compatibility with wxWidgets 2.6.0</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=287">287</a>&nbsp;Support
+Subversion 1.2</li>
 </ul>
-</p>
-
-<h3><a name="0.8.0">Version 0.8.0 (released Apr 19 2005)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.8.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.8.0</a>
-
-<p><b>User-visible changes</b>
+<br>
+<br>
+<h3><a id="r0.8.0">Version 0.8.0 (released Apr 19 2005)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.8.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.8.0</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=243">243</a>&nbsp;New: Native Support for Mac OS X (no X11)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=252">252</a>&nbsp;New: Fast diff to head revision
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=202">202</a>&nbsp;New: New column on the filelist pane: file's extension
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=238">238</a>&nbsp;New: Ability to access FSFS
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=250">250</a>&nbsp;New: Show versioned files only
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=259">259</a>&nbsp;Dont truncate entries in tree
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=211">211</a>&nbsp; 	Fixed: Filenames with special chars (Umlauts) dont work
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=212">212</a>&nbsp;Fixed: Commit messages with special chars (umlauts) dont work
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=221">221</a>&nbsp;Fixed: Slow response to right click on files
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=230">230</a>&nbsp;Fixed: Crash when trying to expand a node in the tree view
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=234">234</a>&nbsp;Fixed: No update when adding a new directory
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=237">237</a>&nbsp;Fixed: Folder Browser forgets location on refresh
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=242">242</a>&nbsp;Fixed: No German User-Interface
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=255">255</a>&nbsp;Fixed: Info report contains an invalid URL
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=257">257</a>&nbsp;Fixed: Path for repositories in wrong format (only Windows)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=263">263</a>&nbsp;Fixed: No URL edit field visible with wxX11
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=244">244</a>&nbsp;Fixed: Crash while setting program path in Preferences
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=243">243</a>&nbsp;New:
+Native Support for Mac OS X (no X11)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=252">252</a>&nbsp;New:
+Fast diff to head revision</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=202">202</a>&nbsp;New:
+New column on the filelist pane: file's extension</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=238">238</a>&nbsp;New:
+Ability to access FSFS</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=250">250</a>&nbsp;New:
+Show versioned files only</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=259">259</a>&nbsp;Dont
+truncate entries in tree</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=211">211</a>&nbsp;
+Fixed: Filenames with special chars (Umlauts) dont work</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=212">212</a>&nbsp;Fixed:
+Commit messages with special chars (umlauts) dont work</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=221">221</a>&nbsp;Fixed:
+Slow response to right click on files</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=230">230</a>&nbsp;Fixed:
+Crash when trying to expand a node in the tree view</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=234">234</a>&nbsp;Fixed:
+No update when adding a new directory</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=237">237</a>&nbsp;Fixed:
+Folder Browser forgets location on refresh</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=242">242</a>&nbsp;Fixed:
+No German User-Interface</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=255">255</a>&nbsp;Fixed:
+Info report contains an invalid URL</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=257">257</a>&nbsp;Fixed:
+Path for repositories in wrong format (only Windows)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=263">263</a>&nbsp;Fixed:
+No URL edit field visible with wxX11</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=244">244</a>&nbsp;Fixed:
+Crash while setting program path in Preferences</li>
 </ul>
-</p>
-
-<p><b>Developer-visible changes</b>
+<br>
+<br>
+<p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=270">270</a>&nbsp;Added Full Unicode support
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=256">256</a>&nbsp;Switched to Subversion 1.1 for Windows
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=222">222</a>&nbsp;Fixed: Cannot compile rapidsvn on unicode-enabled wxGTK systems
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=235">235</a>&nbsp;Fixed: Suse 9.1 complaints during build (wx with Unicode)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=248">248</a>&nbsp;Fixed: Compiler error for threaded_worker.cpp
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=267">267</a>&nbsp;Fixed: configure and out-of-tree builds
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=270">270</a>&nbsp;Added
+Full Unicode support</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=256">256</a>&nbsp;Switched
+to Subversion 1.1 for Windows</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=222">222</a>&nbsp;Fixed:
+Cannot compile rapidsvn on unicode-enabled wxGTK systems</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=235">235</a>&nbsp;Fixed:
+Suse 9.1 complaints during build (wx with Unicode)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=248">248</a>&nbsp;Fixed:
+Compiler error for threaded_worker.cpp</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=267">267</a>&nbsp;Fixed:
+configure and out-of-tree builds</li>
 </ul>
-</p>
+<br>
 
-<h3><a name="0.7.0">Version 0.7.0 (released Sep 02 2004)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.7.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.7.0</a>
-
-<p><b>User-visible changes</b>
+<br>
+<h3><a id="r0.7.0">Version 0.7.0 (released Sep 02 2004)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.7.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.7.0</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=179">179</a>&nbsp;Direct text editor access from RapidSVN
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=172">172</a>&nbsp;Options are now configurable in View/Diff tool preferences
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=192">192</a>&nbsp;Added STOP button
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=190">190</a>&nbsp;Added Documentation for Release Management
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=191">191</a>&nbsp;New merge button in log dialogue
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=220">220</a>&nbsp;Tweaked: Remember window status "Maximized"
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=195">195</a>&nbsp;Tweaked: Commits are now recursive as default (in dialog)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=206">206</a>&nbsp;Tweaked: Changed menu entries for "Add Working Copy" and 
-        "Add Repository" menu items confusing
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=165">165</a>&nbsp; 	Fixed: Space in dir name became %20 on rename
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=194">194</a>&nbsp;Fixed: Copy didnt work with URL destination
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=196">196</a>&nbsp;Fixed: Win32 build files were missing from tar.gz source kits
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=167">167</a>&nbsp;Fixed: crash on expand bottom bookmark
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=214">214</a>&nbsp;Fixed: Incorrect info for repository directories
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=197">197</a>&nbsp;Fixed: Commit/Update used active file instead of folder in 
-               folder browser menu (when right-clicking in the folder browser)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=207">207</a>&nbsp;Fixed: TextViewer (called by LogDlg) removed (see #179)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=189">189</a>&nbsp;Fixed: Sort order; group unversioned items with other modified
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=198">198</a>&nbsp;Fixed: folder double-clicking on Win32
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=179">179</a>&nbsp;Direct
+text editor access from RapidSVN</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=172">172</a>&nbsp;Options
+are now configurable in View/Diff tool preferences</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=192">192</a>&nbsp;Added
+STOP button</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=190">190</a>&nbsp;Added
+Documentation for Release Management</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=191">191</a>&nbsp;New
+merge button in log dialogue</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=220">220</a>&nbsp;Tweaked:
+Remember window status "Maximized"</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=195">195</a>&nbsp;Tweaked:
+Commits are now recursive as default (in dialog)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=206">206</a>&nbsp;Tweaked:
+Changed menu entries for "Add Working Copy" and "Add Repository"
+menu items confusing</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=165">165</a>&nbsp;
+
+Fixed: Space in dir name became %20 on rename</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=194">194</a>&nbsp;Fixed:
+Copy didnt work with URL destination</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=196">196</a>&nbsp;Fixed:
+Win32 build files were missing from tar.gz source kits</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=167">167</a>&nbsp;Fixed:
+crash on expand bottom bookmark</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=214">214</a>&nbsp;Fixed:
+Incorrect info for repository directories</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=197">197</a>&nbsp;Fixed:
+Commit/Update used active file instead of folder in folder browser
+menu (when right-clicking in the folder browser)</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=207">207</a>&nbsp;Fixed:
+TextViewer (called by LogDlg) removed (see #179)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=189">189</a>&nbsp;Fixed:
+Sort order; group unversioned items with other modified</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=198">198</a>&nbsp;Fixed:
+folder double-clicking on Win32</li>
 </ul>
-</p>
-
-<p><b>Developer-visible changes</b>
+<br>
+<br>
+<p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=201">201</a>&nbsp;Fixed: Client::log("") failed
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=204">204</a>&nbsp;Fixed: cat couldnt return binary data
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=218">218</a>&nbsp;Fixed: Default config dir created against user wishes
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=219">219</a>&nbsp;Fixed: Auth code ddidnt not use users config_dir
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=224">224</a>&nbsp;Fixed: make fails on Suse 9.1
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=208">208</a>&nbsp;Fixed: install svncpp headers (with make install)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=199">199</a>&nbsp;Fixed: Correctly disable VC7 warning 4290
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=200">200</a>&nbsp;Fixed: VC7 wants some more Exception ctors
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=201">201</a>&nbsp;Fixed:
+Client::log("") failed</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=204">204</a>&nbsp;Fixed:
+cat couldnt return binary data</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=218">218</a>&nbsp;Fixed:
+Default config dir created against user wishes</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=219">219</a>&nbsp;Fixed:
+Auth code ddidnt not use users config_dir</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=224">224</a>&nbsp;Fixed:
+make fails on Suse 9.1</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=208">208</a>&nbsp;Fixed:
+install svncpp headers (with make install)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=199">199</a>&nbsp;Fixed:
+Correctly disable VC7 warning 4290</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=200">200</a>&nbsp;Fixed:
+VC7 wants some more Exception ctors</li>
 </ul>
-</p>
-
-<h3><a name="0.6.0">Version 0.6.0 (released May 24 2004)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.6.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.6.0</a>
-
-<p><b>User-visible changes</b>
+<br>
+<br>
+<h3><a id="r0.6.0">Version 0.6.0 (released May 24 2004)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.6.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.6.0</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=180">180</a>&nbsp; Configure script failed on Solaris because of "find -maxdepth"
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=183">183</a>&nbsp;Save preferences "Flat view" and "Refresh with Update"
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=149">149</a>&nbsp;RapidSVN supported for AMD64
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=184">184</a>&nbsp;New icon for out-of-date files
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=186">186</a>&nbsp;Implemented Diff command for the Log dialog.
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=157">157</a>&nbsp;Fixed: diff could not open file on Linux
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=145">145</a>&nbsp;Fixed: sort-order for status in file-list
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=158">158</a>&nbsp;Fixed: crash when adding a bookmark
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=160">160</a>&nbsp;Fixed: double click on file in repos doesn't work
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=166">166</a>&nbsp;Fixed: trailing spaces on repository URL not trimmed
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=177">177</a>&nbsp;Fixed: status for 'out-of-date' files not being displayed
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=185">185</a>&nbsp;Fixed: Text/Property status display for 'out-of-date' files
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=148">148</a>&nbsp;Fixed: date display in log dlg
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=180">180</a>&nbsp;
+Configure script failed on Solaris because of "find -maxdepth"</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=183">183</a>&nbsp;Save
+preferences "Flat view" and "Refresh with Update"</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=149">149</a>&nbsp;RapidSVN
+supported for AMD64</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=184">184</a>&nbsp;New
+icon for out-of-date files</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=186">186</a>&nbsp;Implemented
+Diff command for the Log dialog.</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=157">157</a>&nbsp;Fixed:
+diff could not open file on Linux</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=145">145</a>&nbsp;Fixed:
+sort-order for status in file-list</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=158">158</a>&nbsp;Fixed:
+crash when adding a bookmark</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=160">160</a>&nbsp;Fixed:
+double click on file in repos doesn't work</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=166">166</a>&nbsp;Fixed:
+trailing spaces on repository URL not trimmed</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=177">177</a>&nbsp;Fixed:
+status for 'out-of-date' files not being displayed</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=185">185</a>&nbsp;Fixed:
+Text/Property status display for 'out-of-date' files</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=148">148</a>&nbsp;Fixed:
+date display in log dlg</li>
+
 </ul>
-</p>
-
-<p><b>Developer-visible changes</b>
+<br>
+<br>
+<p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=164">164</a>&nbsp;Fixed: ls return path wrong for current dir
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=169">169</a>&nbsp;Fixed: Context inits apr after using apr function
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=162">162</a>&nbsp;Conform with Subversion 1.0.0
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=168">168</a>&nbsp;add changed path support to log
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=164">164</a>&nbsp;Fixed:
+ls return path wrong for current dir</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=169">169</a>&nbsp;Fixed:
+Context inits apr after using apr function</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=162">162</a>&nbsp;Conform
+with Subversion 1.0.0</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=168">168</a>&nbsp;add
+changed path support to log</li>
+
 </ul>
-</p>
-<h3><a name="0.5.0">Version 0.5.0 (released February 3 2004)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.5.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.5.0</a>
-
-<p><b>User-visible changes</b>
+<br>
+<br>
+<h3><a id="r0.5.0">Version 0.5.0 (released February 3
+2004)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.5.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.5.0</a>
+<p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=4">4</a>&nbsp;Added file diff
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=131">131</a>&nbsp;Added an "add all" menu item
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=138">138</a>&nbsp;Added the possibility to trust an unknown SSL server temporarily/permanent
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=139">139</a>&nbsp;All error flags and the realm of a SSL certificate are shown now
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=141">141</a>&nbsp;Added keyboard shortcuts to menus
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=113">113</a>&nbsp;Deletion of unknown files is now possible
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=129">129</a>&nbsp;Newer files are shown with special icon
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=130">130</a>&nbsp;Added "Refresh remote" menu item
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=147">147</a>&nbsp;We dont update filelist after non-modifying operations anymore
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=4">4</a>&nbsp;Added
+file diff</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=131">131</a>&nbsp;Added
+an "add all" menu item</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=138">138</a>&nbsp;Added
+the possibility to trust an unknown SSL server
+temporarily/permanent</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=139">139</a>&nbsp;All
+error flags and the realm of a SSL certificate are shown now</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=141">141</a>&nbsp;Added
+keyboard shortcuts to menus</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=113">113</a>&nbsp;Deletion
+of unknown files is now possible</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=129">129</a>&nbsp;Newer
+files are shown with special icon</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=130">130</a>&nbsp;Added
+"Refresh remote" menu item</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=147">147</a>&nbsp;We
+dont update filelist after non-modifying operations anymore</li>
+
+</ul>
+<p><b>Developer-visible changes</b></p>
+<ul>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=117">117</a>&nbsp;#include
+"svncpp" name space</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=137">137</a>&nbsp;Annotate
+support added (in svncpp)</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=152">152</a>&nbsp;RapidSVN
+compatible with subversion 0.36.0</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=154">154</a>&nbsp;RapidSVN
+compatible with subversion 0.37.0</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=143">143</a>&nbsp;Turned
+off MSVC 7.1 warnings for exception specs</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=146">146</a>&nbsp;Cancel
+support added (only in svncpp, not in RapidSVN app yet)</li>
+</ul>
+<br>
+<br>
+<p><b>Bugfixes for the following errors</b></p>
+<ul>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=108">108</a>&nbsp;Disallowed
+modifying a property in a repository</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=111">111</a>&nbsp;Shortcut
+for Commit didnt work</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=112">112</a>&nbsp;Right-clicking
+in filelist forgot multiple selections</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=127">127</a>&nbsp;Folder
+browser collapsed after refresh</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=140">140</a>&nbsp;Folder
+browser didnt use authentication context</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=150">150</a>&nbsp;Move
+and Rename dialog captions were switched over</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=153">153</a>&nbsp;Auth
+provider fix for HTTPS</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=155">155</a>&nbsp;HTTPS
+and other misc fixes against r7000</li>
+</ul>
+<br>
+
+<br>
+<h3><a id="r0.4.0">Version 0.4.0 (released December 5
+2003)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.4.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.4.0</a>
+<p><b>User-visible changes</b></p>
+<ul>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=93">93</a>&nbsp;ui&nbsp;Renamed
+workspace to "Bookmarks"</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=94">94</a>&nbsp;ui&nbsp;Renamed
+menu "Create" to "Repository"</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=96">96</a>&nbsp;ui&nbsp;Created
+icons for bookmarks</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=97">97</a>&nbsp;ui&nbsp;Supported
+URL schemes are listed in the About box</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=98">98</a>&nbsp;ui&nbsp;Created
+"Bookmarks" menu</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=100">100</a>&nbsp;ui&nbsp;Beautified
+long bookmarks in Folder Browser</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=114">114</a>&nbsp;ui&nbsp;Modified
+folders dont dont have appropriate icons</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=120">120</a>&nbsp;svncpp&nbsp;Added
+support to enable/disable authentication caching</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=122">122</a>&nbsp;docs&nbsp;Updated
+info in README</li>
+</ul>
+<br>
+<br>
+<p><b>Developer-visible changes</b></p>
+<ul>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=91">91</a>&nbsp;config&nbsp;Search
+for --with- in several places</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=92">92</a>&nbsp;src&nbsp;Store
+version number in one single file</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=109">109</a>&nbsp;svncpp&nbsp;Improved
+compatibility with SWIG</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=124">124</a>&nbsp;config&nbsp;Added
+detection of neon to configure script</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=125">125</a>&nbsp;svncpp&nbsp;Added
+support for "relocate". Added support for multiple targets for
+"mkdir"</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=136">136</a>&nbsp;svncpp&nbsp;Patch
+to conform with subversion 0.34.0</li>
 </ul>
 
-<p><b>Developer-visible changes</b>
+<br>
+<br>
+<p><b>Bugfixes for the following errors</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=117">117</a>&nbsp;#include "svncpp" name space
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=137">137</a>&nbsp;Annotate support added (in svncpp)
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=152">152</a>&nbsp;RapidSVN compatible with subversion 0.36.0
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=154">154</a>&nbsp;RapidSVN compatible with subversion 0.37.0
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=143">143</a>&nbsp;Turned off MSVC 7.1 warnings for exception specs
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=146">146</a>&nbsp;Cancel support added (only in svncpp, not in RapidSVN app yet)
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=89">89</a>&nbsp;ui&nbsp;Property
+editor "forgets" last entry in list.</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=90">90</a>&nbsp;src&nbsp;Committing
+fails if there is an umlaut in the log message</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=101">101</a>&nbsp;packages&nbsp;RapidSVN
+Installer doesnt install SSL libs</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=102">102</a>&nbsp;svncpp&nbsp;Items
+in subdirectories not handled properly in "flat" view mode</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=104">104</a>&nbsp;src&nbsp;Opening
+files with name containing spaces failes</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=110">110</a>&nbsp;svncpp&nbsp;client.hpp
+defined mkdir with no implementation</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=121">121</a>&nbsp;config&nbsp;Build
+system broken due to a libtool bug</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=123">123</a>&nbsp;ui&nbsp;No
+menu events with wxGTK 2.4.1</li>
+
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=133">133</a>&nbsp;svncpp&nbsp;retrieveLogin
+crash on NULL username</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=134">134</a>&nbsp;svncpp&nbsp;Fix
+for svn_client_status crash</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=116">116</a>&nbsp;svncpp&nbsp;reposPropStatus()
+is not const</li>
+<li><a href=
+"http://rapidsvn.tigris.org/issues/show_bug.cgi?id=118">118</a>&nbsp;svncpp&nbsp;Client::cat
+does not check error</li>
 </ul>
-</p>
 
-<p><b>Bugfixes for the following errors</b>
-<ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=108">108</a>&nbsp;Disallowed modifying a property in a repository
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=111">111</a>&nbsp;Shortcut for Commit didnt work
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=112">112</a>&nbsp;Right-clicking in filelist forgot multiple selections
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=127">127</a>&nbsp;Folder browser collapsed after refresh
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=140">140</a>&nbsp;Folder browser didnt use authentication context
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=150">150</a>&nbsp;Move and Rename dialog captions were switched over
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=153">153</a>&nbsp;Auth provider fix for HTTPS
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=155">155</a>&nbsp;HTTPS and other misc fixes against r7000
-</ul>
-</p>
-
-<h3><a name="0.4.0">Version 0.4.0 (released December 5 2003)</a></h3>
-<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.4.0">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.4.0</a>
-
-<p><b>User-visible changes</b>
-<ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=93">93</a>&nbsp;ui&nbsp;Renamed workspace to "Bookmarks"
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=94">94</a>&nbsp;ui&nbsp;Renamed menu "Create" to "Repository"
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=96">96</a>&nbsp;ui&nbsp;Created icons for bookmarks
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=97">97</a>&nbsp;ui&nbsp;Supported URL schemes are listed in the About box
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=98">98</a>&nbsp;ui&nbsp;Created "Bookmarks" menu
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=100">100</a>&nbsp;ui&nbsp;Beautified long bookmarks in Folder Browser
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=114">114</a>&nbsp;ui&nbsp;Modified folders dont dont have appropriate icons
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=120">120</a>&nbsp;svncpp&nbsp;Added support to enable/disable authentication caching
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=122">122</a>&nbsp;docs&nbsp;Updated info in README
-</ul>
-</p>
-
-<p><b>Developer-visible changes</b>
-<ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=91">91</a>&nbsp;config&nbsp;Search for --with-<option> in several places
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=92">92</a>&nbsp;src&nbsp;Store version number in one single file
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=109">109</a>&nbsp;svncpp&nbsp;Improved compatibility with SWIG
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=124">124</a>&nbsp;config&nbsp;Added detection of neon to configure script
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=125">125</a>&nbsp;svncpp&nbsp;Added support for "relocate". Added support for multiple targets for "mkdir"
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=136">136</a>&nbsp;svncpp&nbsp;Patch to conform with subversion 0.34.0
-</ul> 
-</p>
-
-<p><b>Bugfixes for the following errors</b>
-<ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=89">89</a>&nbsp;ui&nbsp;Property editor "forgets" last entry in list.
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=90">90</a>&nbsp;src&nbsp;Committing fails if there is an umlaut in the log message
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=101">101</a>&nbsp;packages&nbsp;RapidSVN Installer doesnt install SSL libs
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=102">102</a>&nbsp;svncpp&nbsp;Items in subdirectories not handled properly in "flat" view mode
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=104">104</a>&nbsp;src&nbsp;Opening files with name containing spaces failes
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=110">110</a>&nbsp;svncpp&nbsp;client.hpp defined mkdir with no implementation
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=121">121</a>&nbsp;config&nbsp;Build system broken due to a libtool bug
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=123">123</a>&nbsp;ui&nbsp;No menu events with wxGTK 2.4.1
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=133">133</a>&nbsp;svncpp&nbsp;retrieveLogin crash on NULL username
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=134">134</a>&nbsp;svncpp&nbsp;Fix for svn_client_status crash
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=116">116</a>&nbsp;svncpp&nbsp;reposPropStatus() is not const
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=118">118</a>&nbsp;svncpp&nbsp;Client::cat does not check error
-</ul>
-</p>
+<br>
+<br>
 </body>
 </html>
