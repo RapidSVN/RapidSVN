@@ -14,7 +14,6 @@ main="SvnCpp","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x3
 
 [FILES]
 index.html
-files.html
 annotate__line_8hpp-source.html
 apr_8hpp-source.html
 check_8hpp-source.html
@@ -53,6 +52,7 @@ status_8hpp.html
 targets_8hpp.html
 url_8hpp.html
 wc_8hpp.html
+deprecated.html
 annotated.html
 hierarchy.html
 functions.html
@@ -61,7 +61,7 @@ functions_vars.html
 functions_enum.html
 functions_eval.html
 functions_rela.html
-deprecated.html
+inherits.html
 namespaces.html
 namespacesvn.html
 classsvn_1_1AnnotateLine.html
@@ -86,14 +86,14 @@ classsvn_1_1Status.html
 classsvn_1_1Targets.html
 classsvn_1_1Url.html
 classsvn_1_1Wc.html
-globals.html
-globals_vars.html
-globals_type.html
 namespacemembers.html
 namespacemembers_vars.html
 namespacemembers_type.html
+files.html
+globals.html
+globals_vars.html
+globals_type.html
 pages.html
-inherits.html
 tabs.css
 tab_b.gif
 tab_l.gif

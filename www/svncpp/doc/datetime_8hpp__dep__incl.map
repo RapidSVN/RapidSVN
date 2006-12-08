@@ -1,4 +1,4 @@
 base referer
-rect $revision_8hpp.html 154,32 248,56
-rect $client_8hpp.html 297,8 374,32
-rect $wc_8hpp.html 304,56 368,80
+rect $revision_8hpp.html 170,30 274,54
+rect $client_8hpp.html 324,6 412,30
+rect $wc_8hpp.html 334,54 403,78
