@@ -1,3 +1,66 @@
+Version 0.9.4 (released December 8th 2006)
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.4
+
+User-visible changes
+
+    * 446 New Feature: Support for Subversion 1.4.2
+    * 368 New Feature: Show affected files/dirs in Log dialog
+    * 425 New Feature: Show dialog for errors
+    * 447 New Feature: Add Annotate functionality
+    * 439 New Feature: Translation for Simplified Chinese
+    * 441 New Feature: Translation for Brazilian Portuguese
+    * 453 New Feature: Translation for Italian and Portuguese (while updating translations)
+    * 213 Enhancement: Different icon for a repository bookmark
+    * 292 Enhancement: Enable recursive update for get action
+    * 295 Enhancement: Import dialog uses URL of the current selection
+    * 245 Enhancement: Checkout Dialog remembers previous working copies
+    * 417 Enhancement: Mac: Change 48x48 Icon
+    * 420 Enhancement: Dont expand folders while navigating with the keyboard
+    * 433 Enhancement: Make "Diff to another rev/date" the default option for diff dialog
+    * 434 Enhancement: Allow compare with ONE other revision in log dialog
+    * 442 Enhancement: Update the indicator if a repository folder has no children
+    * 468 Enhancement: Resizeable log dialog
+    * 444 Enhancement: Log history window resizing
+    * 454 Enhancement: Allow editing for unversioned files
+    * 175 Fixed: File modified status didnt refresh automatically
+    * 322 Fixed: Unable to expand directory in tree view
+    * 354 Fixed: RapidSVN didnt show an error if no diff tool is configured
+    * 373 Fixed: Update didnt pull svn:externals
+    * 374 Fixed: Edit action failed after folder change
+    * 407 Fixed: View (in log dialog) failed after folder change
+    * 431 Fixed: Diff (in log dialog) failed after folder change
+    * 409 Fixed: Sash location setting not correct under wxGTK
+    * 423 Fixed: wxGTK: Selecting Diff options worked only with Mouse
+    * 426 Fixed: Win32: Working copies on network share not accessible
+    * 429 Fixed: Refresh caused folder browser to lose the selected folder
+    * 436 Fixed: UI dead when a repository refused anonymous
+    * 437 Fixed: Diff tool arguments hidden in Program Preferences
+    * 438 Fixed: RapidSvn Authentication failure after change of system password
+    * 443 Fixed: Diff dialog fields didnt resize
+    * 448 Fixed: HistoryValidator didnt set text control value
+    * 459 Fixed: Double-click on child in list view does not work
+    * 464 Fixed: RapidSVN crashed on SSL certificate dialog
+    * 465 Fixed: Move directory into subdirectory failed
+    * 469 Fixed: Switch URL crashed from Folder Browser
+    * 470 Fixed: Double-click on child URL in list view didnt work
+    * 471 Fixed: Https crashed on Windows
+    * 472 Fixed: Win2K: Icons in folder browser and filelist have black border 
+
+Developer-visible changes
+
+    * 346 Fixed: Could not compile rapidsvn-0.9.0 with GCC 4.1.0-beta20051230
+    * 408 Fixed: Solaris Compilation with Sun compiler and linker broken 
+
+Work in progress (not completed)
+
+    * 7 Create user documentation
+    * 41 Icons for all cmds
+    * 451 Use wxWidgets date picker control for date fields on Diff dialog
+    * 331 Display svn:externals properly
+    * 377 Mac: OpenSSL not supported
+    * 419 Win32: OpenSSL was not static in Installer 
+
+
 Version 0.9.3-1 (released June 29 2006)
 http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.3-1
 
