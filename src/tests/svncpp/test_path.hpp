@@ -39,6 +39,7 @@ class PathTestCase : public CppUnit::TestCase
   CPPUNIT_TEST (testSubstr);  
   CPPUNIT_TEST (testUnescape);
   CPPUNIT_TEST (testLength);  
+  CPPUNIT_TEST (testGetTempDir);
   CPPUNIT_TEST_SUITE_END ();
 
 public:
@@ -53,6 +54,7 @@ protected:
   void testSubstr ();
   void testUnescape ();
   void testLength ();  
+  void testGetTempDir ();
 };
 
 /* -----------------------------------------------------------------

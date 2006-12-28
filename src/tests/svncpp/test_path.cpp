@@ -25,7 +25,11 @@
 
 // app
 #include "test_path.hpp"
+
+// ansi c lib
 #include <string>
+#include <stdio.h>
+
 
 //svncpp
 #include "svncpp/path.hpp"
@@ -204,6 +208,25 @@ PathTestCase::testLength ()
   svn::Path test ("/tmp/sf%20x%20y");
   CPPUNIT_ASSERT (test.length () == 15);
 }
+
+void
+PathTestCase::testGetTempDir ()
+{
+  svn::Path path (svn::Path::getTempDir ());
+
+  // did we receive a path?
+  CPPUNIT_ASSERT (path.length () > 0);
+
+  // now, can we create a file in there?
+  path.addComponent ("foo.txt");
+
+  FILE * f = fopen (path.native ().c_str (), "w");
+  CPPUNIT_ASSERT (f != NULL);
+
+  fputs ("This is a teststring\n", f);
+  fclose (f);
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:
