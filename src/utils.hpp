@@ -280,16 +280,6 @@ wxString
 Utf8ToLocal (const std::string & srcUtf8);
 
 /**
- * converts a filename from utf8
- * to the local encoding and returns
- * this as a @a wxFileName instance
- *
- * @param nameUtf8
- */
-wxFileName
-Utf8ToFileName (const char * nameUtf8);
-
-/**
  * Convert a character array to a wxBitmap.
  * You have to ensure the contents of the array string
  * contains a valid image 

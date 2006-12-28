@@ -475,18 +475,6 @@ Utf8ToLocal (const char* srcUtf8)
   return dst;
 }
 
-wxFileName
-Utf8ToFileName (const char * srcUtf8)
-{
-#if wxUSE_UNICODE
-  wxString dst (srcUtf8, wxConvUTF8);
-#else
-  wxString dst (wxConvUTF8.cMB2WC(srcUtf8), *GetWXLocalConv ());
-#endif
-
-  return dst;
-}
-
 wxString
 Utf8ToLocal (const std::string& srcUtf8)
 {
