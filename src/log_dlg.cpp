@@ -497,20 +497,20 @@ public:
   void 
   CheckButtons ()
   {
+    svn::Path pathUtf8 (PathUtf8 (path));
+    bool isUrl = pathUtf8.isUrl ();
     int count = m_logList->GetSelectedItemCount ();
 
-    m_buttonGet  ->Enable (count == 1);
+    m_buttonGet  ->Enable ((count == 1) && (!isUrl));
     m_buttonView ->Enable (count == 1);
-    // If the bookmark is a working copy, then we can compare a revision against the local copy
-    svn::Path bookmarkFilePath (PathUtf8 (path));
-    if (bookmarkFilePath.isUrl())
-    {
+
+    // If the bookmark is a working copy, then we can 
+    // compare a revision against the local copy
+    if (isUrl)
       m_buttonDiff ->Enable ((count == 2));
-    }
     else
-    {
       m_buttonDiff ->Enable ((count == 1) || (count == 2));
-    }
+
     m_buttonMerge->Enable (count == 2);
     m_buttonAnnotate->Enable (count == 1);
   }
