@@ -253,7 +253,7 @@ public:
   void 
   handleEvent (wxCommandEvent & event)
   {
-    switch (event.m_id)
+    switch (event.GetId ())
     {
     case SIG_GET_LOG_MSG:
       callbackGetLogMessage ();

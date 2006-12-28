@@ -1150,7 +1150,7 @@ RapidSvnFrame::OnColumnReset (wxCommandEvent &)
 void
 RapidSvnFrame::OnColumn (wxCommandEvent & event)
 {
-  int eventId = event.m_id;
+  int eventId = event.GetId ();
   int col = 0;
   while (col < FileListCtrl::COL_COUNT &&
          m->ColumnList[col].id != eventId)
@@ -1192,7 +1192,7 @@ void
 RapidSvnFrame::OnColumnSorting (wxCommandEvent & event)
 {
   // we dont want to list FileListCtrl::COL_NAME/COL_PATH/... here
-  int col = event.m_id - ID_ColumnSort_Name;
+  int col = event.GetId () - ID_ColumnSort_Name;
 
   m->listCtrl->SetSortColumn (col);
   m->listCtrl->SetSortAscending (true);
@@ -1294,7 +1294,7 @@ RapidSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnUpdateCommand (wxUpdateUIEvent & updateUIEvent)
 {
-  updateUIEvent.Enable (ValidateIDActionFlags (updateUIEvent.m_id, GetSelectionActionFlags ()));
+  updateUIEvent.Enable (ValidateIDActionFlags (updateUIEvent.GetId (), GetSelectionActionFlags ()));
 }
 
 void
@@ -1514,13 +1514,13 @@ RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 {
   Action* action = NULL;
 
-  if ((event.m_id >= ID_Verb_Min) && (event.m_id <= ID_Verb_Max))
+  if ((event.GetId () >= ID_Verb_Min) && (event.GetId () <= ID_Verb_Max))
   {
-    action = new ExternalProgramAction (this, event.m_id - ID_Verb_Min, false);
+    action = new ExternalProgramAction (this, event.GetId () - ID_Verb_Min, false);
   }
   else
   {
-    switch (event.m_id)
+    switch (event.GetId ())
     {
     case ID_Explore:
       action = new ExternalProgramAction (this, -1, true);

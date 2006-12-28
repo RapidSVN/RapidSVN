@@ -23,11 +23,11 @@
  * ====================================================================
  */
 
-// svncpp
-#include "svncpp/client.hpp"
-
 // wxWidgets
 #include "wx/intl.h"
+
+// svncpp
+#include "svncpp/client.hpp"
 
 // app
 #include "ids.hpp"

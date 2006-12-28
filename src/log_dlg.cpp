@@ -32,6 +32,7 @@
 #include "wx/valgen.h"
 #include "wx/listctrl.h"
 #include "wx/splitter.h"
+#include "wx/notebook.h"
 
 
 // svncpp

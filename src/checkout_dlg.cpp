@@ -256,7 +256,6 @@ public:
 
 BEGIN_EVENT_TABLE (CheckoutDlg, wxDialog)
   EVT_BUTTON (ID_BUTTON_BROWSE, CheckoutDlg::OnBrowse)
-  EVT_BUTTON (wxID_OK, CheckoutDlg::OnOK)
   EVT_CHECKBOX (ID_USELATEST, CheckoutDlg::OnUseLatest)
   EVT_TEXT (-1, CheckoutDlg::OnText)
 //  EVT_BUTTON (wxID_HELP, CheckoutDlg::OnHelp)

@@ -295,7 +295,6 @@ public:
 
 BEGIN_EVENT_TABLE (ExportDlg, wxDialog)
   EVT_BUTTON (ID_BUTTON_BROWSE, ExportDlg::OnBrowse)
-  EVT_BUTTON (wxID_OK, ExportDlg::OnOK)
   EVT_CHECKBOX (ID_USE_LATEST, ExportDlg::OnUseLatest)
   EVT_CHECKBOX (ID_NOT_SPECIFIED, ExportDlg::OnNotSpecified)
   EVT_COMBOBOX (ID_NATIVE_EOL, ExportDlg::OnNativeEol)

@@ -114,9 +114,14 @@ public:
    */
   bool SelectExecutable (const wxString & title, wxTextCtrl * textCtrl)
   {
+#if wxCHECK_VERSION (2, 7, 0)
+    wxFileDialog dlg (this, title, wxEmptyString, wxEmptyString, _("*.*"), wxFD_OPEN);
+#else
     wxFileDialog dlg (this, title);
 
     dlg.SetStyle (wxHIDE_READONLY | wxOPEN);
+#endif
+
     dlg.SetWildcard (EXECUTABLE_WILDCARD);
     dlg.SetPath (textCtrl->GetValue ());
 
