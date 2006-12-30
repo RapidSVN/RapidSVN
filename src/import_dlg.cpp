@@ -196,11 +196,7 @@ ImportDlg::OnOk (wxCommandEvent &event)
     }
   }
 
-#if wxCHECK_VERSION (2, 7, 0)
   wxDialog::EndModal (wxID_OK);
-#else
-  wxDialog::OnOK (event);
-#endif
 }
 
 void
