@@ -88,7 +88,7 @@ ParseDateTime (const wxString & datestring, apr_time_t & date)
   // (we check only if the complete parsing failed,
   //  not if only the partial string could be parsed)
   wxDateTime dateTime;
-  if (0 != dateTime.ParseFormat (datestring, wxT("%Y-%m-%d %H:%M:%S")))
+  if (0 == dateTime.ParseFormat (datestring, wxT("%Y-%m-%d %H:%M:%S")))
     return false;
 
   apr_time_ansi_put (&date, dateTime.GetTicks ());
