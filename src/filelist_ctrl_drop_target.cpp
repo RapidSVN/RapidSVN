@@ -37,8 +37,9 @@
 
 #include "utils.hpp"
 
-FileListCtrlDropTarget::FileListCtrlDropTarget (FolderBrowser * browser_, FileListCtrl * parent_)
-  : browser(browser_), parent(parent_)
+FileListCtrlDropTarget::FileListCtrlDropTarget (FolderBrowser * browser, 
+                                                FileListCtrl * parent)
+  : m_browser (browser), m_parent (parent)
 {
 }
 
@@ -47,21 +48,26 @@ FileListCtrlDropTarget::GetDestinationPath (const wxPoint & point)
 {
   wxString path = wxEmptyString;
   int flags = wxLIST_HITTEST_ONITEM;
-  long destinationItem = parent->HitTest (point, flags);
+  long destinationItem = m_parent->HitTest (point, flags);
   if (destinationItem != wxNOT_FOUND)  // Did we land on an item??
   {
-    svn::Status * status = (svn::Status*)parent->GetItemData (destinationItem);
-    if ((status->isVersioned ()) && (status->entry ().kind() == svn_node_dir))
+    svn::Status * status = 
+      (svn::Status*)m_parent->GetItemData (destinationItem);
+    if (status->isVersioned () && 
+        (status->entry ().kind() == svn_node_dir))
+    {
       path = Utf8ToLocal (status->path ());
+    }
   }
 
-  // If the path is still empty, then the hit test was on an unversioned item,
-  //  it wasn't on an item at all, or it wasn't a directory
+  // If the path is still empty, then the hit test was on an 
+  // unversioned item, it wasn't on an item at all, or it 
+  // wasn't a directory:
   // Get the path from the folder browser
   if (path.IsEmpty ())
   {
     // Get the path from the folder browser
-    path = browser->GetSelection ()->getPath ();
+    path = m_browser->GetSelection ()->getPath ();
   }
 
   return path;

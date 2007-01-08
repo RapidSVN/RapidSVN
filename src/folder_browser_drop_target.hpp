@@ -33,11 +33,13 @@ class FolderBrowser;
 class FolderBrowserDropTarget : public RapidSvnDropTarget
 {
 public:
-  FolderBrowserDropTarget (FolderBrowser * parent_);
-  virtual wxString GetDestinationPath (const wxPoint & point);
+  FolderBrowserDropTarget (FolderBrowser * parent);
+
+  virtual wxString 
+  GetDestinationPath (const wxPoint & point);
 
 private:
-  FolderBrowser * parent;
+  FolderBrowser * m_parent;
 };
 
 #endif

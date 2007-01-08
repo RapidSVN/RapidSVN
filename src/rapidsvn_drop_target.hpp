@@ -32,9 +32,14 @@
 class RapidSvnDropTarget : public wxFileDropTarget
 {
 public:
-  virtual bool OnDropFiles (wxCoord x, wxCoord y, const wxArrayString& filenames);
-  virtual wxString GetDestinationPath () { return m_destination; }
-  virtual wxString GetDestinationPath (const wxPoint & point) = 0;
+  virtual bool 
+  OnDropFiles (wxCoord x, wxCoord y, const wxArrayString& filenames);
+
+  virtual wxString 
+  GetDestinationPath () { return m_destination; }
+
+  virtual wxString 
+  GetDestinationPath (const wxPoint & point) = 0;
 
 private:
   wxString m_destination;

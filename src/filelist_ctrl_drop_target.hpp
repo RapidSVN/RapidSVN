@@ -34,12 +34,18 @@ class FileListCtrl;
 class FileListCtrlDropTarget : public RapidSvnDropTarget
 {
 public:
-  FileListCtrlDropTarget (FolderBrowser * browser_, FileListCtrl * parent_);
-  virtual wxString GetDestinationPath (const wxPoint & point);
+  FileListCtrlDropTarget (FolderBrowser * browser, 
+                          FileListCtrl * parent);
+  
+  virtual 
+  ~FileListCtrlDropTarget () {}
+
+  virtual wxString 
+  GetDestinationPath (const wxPoint & point);
 
 private:
-  FolderBrowser * browser;
-  FileListCtrl * parent;
+  FolderBrowser * m_browser;
+  FileListCtrl * m_parent;
 };
 
 #endif

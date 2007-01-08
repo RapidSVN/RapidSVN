@@ -28,8 +28,8 @@
 #include "folder_browser.hpp"
 #include "folder_item_data.hpp"
 
-FolderBrowserDropTarget::FolderBrowserDropTarget (FolderBrowser * parent_)
-  : parent(parent_)
+FolderBrowserDropTarget::FolderBrowserDropTarget (FolderBrowser * parent)
+  : m_parent (parent)
 {
 }
 
@@ -37,7 +37,7 @@ wxString
 FolderBrowserDropTarget::GetDestinationPath (const wxPoint & point)
 {
   wxString path = wxEmptyString;
-  const FolderItemData * folderData = parent->HitTest (point);
+  const FolderItemData * folderData = m_parent->HitTest (point);
   if (folderData != NULL)
   {
     path = folderData->getPath ();

@@ -35,7 +35,8 @@
 #include "action_event.hpp"
 
 bool
-RapidSvnDropTarget::OnDropFiles (wxCoord x, wxCoord y, const wxArrayString& filenames)
+RapidSvnDropTarget::OnDropFiles (wxCoord x, wxCoord y, 
+                                 const wxArrayString & filenames)
 {
   m_destination = GetDestinationPath (wxPoint (x, y));
 
@@ -46,12 +47,13 @@ RapidSvnDropTarget::OnDropFiles (wxCoord x, wxCoord y, const wxArrayString& file
       DragAndDropData* data = new DragAndDropData();
       data->m_files = filenames;
       data->m_destination = m_destination;
-      ActionEvent::Post (wxGetApp ().GetTopWindow (), TOKEN_DRAG_N_DROP, data);
+      ActionEvent::Post (wxGetApp ().GetTopWindow (),
+                         TOKEN_DRAG_N_DROP, data);
     }
   }
   else
   {
-    wxMessageBox(_("Unknown destination path"));
+    wxMessageBox (_("Unknown destination path"));
     return false;
   }
 
