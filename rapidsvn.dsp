@@ -234,6 +234,14 @@ SOURCE=.\src\diff_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\dnd_dlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\drag_n_drop_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\exceptions.cpp
 # End Source File
 # Begin Source File
@@ -258,7 +266,15 @@ SOURCE=.\src\filelist_ctrl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\filelist_ctrl_drop_target.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\folder_browser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\folder_browser_drop_target.cpp
 # End Source File
 # Begin Source File
 
@@ -351,6 +367,10 @@ SOURCE=.\src\proportional_splitter.cpp
 # Begin Source File
 
 SOURCE=.\src\rapidsvn_app.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\rapidsvn_drop_target.cpp
 # End Source File
 # Begin Source File
 
