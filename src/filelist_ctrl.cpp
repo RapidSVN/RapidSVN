@@ -34,6 +34,7 @@
 #include "wx/confbase.h"
 #include "wx/filename.h"
 #include "wx/imaglist.h"
+#include "wx/dnd.h"
 
 // svncpp
 #include "svncpp/client.hpp"
@@ -51,6 +52,7 @@
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
 #include "utils.hpp"
+#include "rapidsvn_drop_target.hpp"
 
 // Bitmaps
 #include "res/bitmaps/sort_down.png.h"
@@ -937,6 +939,7 @@ BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_LIST_ITEM_ACTIVATED (FILELIST_CTRL, FileListCtrl::OnDoubleClick)
   EVT_LIST_COL_CLICK (FILELIST_CTRL, FileListCtrl::OnColumnLeftClick)
   EVT_LIST_COL_END_DRAG (FILELIST_CTRL, FileListCtrl::OnColumnEndDrag)
+  EVT_LIST_BEGIN_DRAG (FILELIST_CTRL, FileListCtrl::OnBeginDrag)
   EVT_CONTEXT_MENU (FileListCtrl::OnContextMenu)
 END_EVENT_TABLE ()
 
@@ -1655,6 +1658,28 @@ void
 FileListCtrl::SetIgnoreExternals (bool value)
 {
   m->IgnoreExternals = value;
+}
+
+void
+FileListCtrl::OnBeginDrag (wxListEvent & event)
+{
+  IndexArray arr = GetSelectedItems ();
+
+  wxFileDataObject data;
+  for (unsigned int i = 0; i < arr.GetCount (); i++)
+  {
+    const int index = arr.Item (i);
+    svn::Status * status = (svn::Status*)GetItemData (index);
+    data.AddFile (Utf8ToLocal (status->path ()));
+  }
+  
+  wxDropSource dropSource (this);
+  dropSource.SetData (data);
+  /** 
+   * @todo we dont seem to need result
+   * wxDragResult result = dropSource.DoDragDrop (true);
+   */
+  dropSource.DoDragDrop (true);
 }
 
 /* -----------------------------------------------------------------

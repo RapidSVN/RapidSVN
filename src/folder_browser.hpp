@@ -84,6 +84,15 @@ public:
   GetSelection () const;
 
   /**
+   * returns the "context" of the item at point.
+   * returns NULL if no item is at that location
+   *
+   * @return context of selection
+   */
+  const FolderItemData * 
+  HitTest (const wxPoint & point) const;
+
+  /**
    * return the authentication context of the current selection
    *
    * @return authentication context
@@ -217,6 +226,7 @@ private:
   void OnExpandItem (wxTreeEvent & event);
   void OnCollapseItem (wxTreeEvent & event);
   void OnContextMenu (wxContextMenuEvent & event);
+  void OnBeginDrag (wxTreeEvent & event);
 };
 
 #endif

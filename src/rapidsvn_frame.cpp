@@ -51,6 +51,7 @@
 #include "filelist_ctrl.hpp"
 #include "annotate_data.hpp"
 #include "log_data.hpp"
+#include "drag_n_drop_data.hpp"
 
 #ifdef USE_SIMPLE_WORKER
 #include "simple_worker.hpp"
@@ -82,6 +83,7 @@
 #include "update_action.hpp"
 #include "view_action.hpp"
 #include "annotate_action.hpp"
+#include "drag_n_drop_action.hpp"
 
 // dialogs
 #include "about_dlg.hpp"
@@ -93,6 +95,9 @@
 #include "log_dlg.hpp"
 
 #include "rapidsvn_frame.hpp"
+
+#include "filelist_ctrl_drop_target.hpp"
+#include "folder_browser_drop_target.hpp"
 
 // controls
 #include "proportional_splitter.hpp"
@@ -846,6 +851,10 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   // Note: do not revert the order of Split calls, as the panels will be messed up.
   m->horizSplitter->SplitHorizontally (m_info_panel, m->log, hpos);
   m->vertSplitter->SplitVertically (m->folderBrowser, m->listCtrl, vpos);
+
+  // Initialize for drag and drop
+  m->folderBrowser->SetDropTarget (new FolderBrowserDropTarget (m->folderBrowser));
+  m->listCtrl->SetDropTarget (new FileListCtrlDropTarget (m->folderBrowser, m->listCtrl));
 }
 
 RapidSvnFrame::~RapidSvnFrame ()
@@ -1889,6 +1898,21 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
         delete pData->logEntries;
         delete pData;
+      }
+    }
+    break;
+  case TOKEN_DRAG_N_DROP:
+    {
+      DragAndDropData * pData = static_cast<DragAndDropData *>(event.GetClientData ());
+      if (pData != 0)
+      {
+        // copy and delete data
+        DragAndDropData data (*pData);
+        delete pData;
+        Action * action;
+
+        action = new DragAndDropAction (this, data);
+        Perform (action);
       }
     }
     break;

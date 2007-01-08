@@ -31,6 +31,7 @@
 #include "wx/treectrl.h"
 #include "wx/confbase.h"
 #include "wx/hashmap.h"
+#include "wx/dnd.h"
 
 // svncpp
 #include "svncpp/context.hpp"
@@ -47,6 +48,7 @@
 #include "utils.hpp"
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
+#include "rapidsvn_drop_target.hpp"
 
 // bitmaps
 #include "res/bitmaps/computer.png.h"
@@ -244,6 +246,20 @@ public:
     {
       return NULL;
     }
+    else
+    {
+      FolderItemData* data = GetItemData (id);
+      return data;
+    }
+  }
+
+  const FolderItemData *
+  HitTest (const wxPoint & point) const
+  {
+    const wxTreeItemId id = treeCtrl->HitTest (point);
+
+    if(!id.IsOk ())
+      return 0;
     else
     {
       FolderItemData* data = GetItemData (id);
@@ -916,6 +932,7 @@ BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
   EVT_TREE_KEY_DOWN (-1, FolderBrowser::OnTreeKeyDown)
   EVT_SIZE (FolderBrowser::OnSize)
   EVT_CONTEXT_MENU (FolderBrowser::OnContextMenu)
+  EVT_TREE_BEGIN_DRAG (-1, FolderBrowser::OnBeginDrag)
 END_EVENT_TABLE ()
 
 FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
@@ -995,6 +1012,12 @@ const FolderItemData *
 FolderBrowser::GetSelection () const
 {
   return m->GetSelection ();
+}
+
+const FolderItemData *
+FolderBrowser::HitTest (const wxPoint & point) const
+{
+  return m->HitTest (point);
 }
 
 void
@@ -1173,6 +1196,30 @@ FolderBrowser::ExpandSelection ()
     return;
 
   m->treeCtrl->Expand (id);
+}
+
+void
+FolderBrowser::OnBeginDrag (wxTreeEvent & event)
+{
+  wxFileDataObject data;
+  const wxTreeItemId id = event.GetItem ();
+  if(!id.IsOk())
+  {
+    data.AddFile (GetPath ());
+  }
+  else
+  {
+    FolderItemData* itemData = m->GetItemData (id);
+    data.AddFile (itemData->getPath ());
+  }
+
+  wxDropSource dropSource (this);
+  dropSource.SetData (data);
+  /** 
+   * @todo we dont seem to need result
+   * wxDragResult result = dropSource.DoDragDrop (true);
+   */
+  dropSource.DoDragDrop (true);
 }
 
 /* -----------------------------------------------------------------
