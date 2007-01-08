@@ -293,9 +293,16 @@ Action::SetFlags (unsigned int flags)
 
 svn::Path
 Action::GetPathAsTempFile (const svn::Path & path,
-           const svn::Revision & revision, const svn::Revision & peg_revision)
+           const svn::Revision & revision)
 {
   svn::Client client (GetContext ());
+  
+
+  svn::Revision peg_revision;
+  if (path.isUrl())
+    peg_revision = svn::Revision::HEAD;
+  else
+    peg_revision = svn::Revision::BASE;
 
   wxString revStr;
   if (revision.kind () == revision.HEAD)
