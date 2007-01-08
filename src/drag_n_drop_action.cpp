@@ -53,7 +53,7 @@ public:
     wxString newDirectory = wxFileName (m_destDir).GetFullPath ();
     if (::wxDirExists (newDirectory) == false)
     {
-      ::wxMkDir (newDirectory);
+      ::wxMkdir (newDirectory);
     }
   }
 
@@ -70,7 +70,7 @@ public:
     wxString newDirectory = ConvertToDestinationPath (dirname);
     if (::wxDirExists (newDirectory) == false)
     {
-      ::wxMkDir (newDirectory);
+      ::wxMkdir (newDirectory);
     }
     return wxDIR_CONTINUE;
   }
@@ -159,12 +159,12 @@ DragAndDropAction::Perform ()
     switch (m->m_action)
     {
     case DragAndDropDialog::RESULT_COPY:
-      msg.Printf (_("Copying file: %s"), PathToNative (srcPath));
+      msg.Printf (_("Copying file: %s"), PathToNative (srcPath).c_str ());
       Trace (msg);
       client.copy (srcPath, unusedRevision, destPath);
       break;
     case DragAndDropDialog::RESULT_MOVE:
-      msg.Printf (_("Moving file: %s"), PathToNative (srcPath));
+      msg.Printf (_("Moving file: %s"), PathToNative (srcPath).c_str ());
       Trace (msg);
       client.move (srcPath, unusedRevision, destPath, false);
       break;
@@ -175,7 +175,7 @@ DragAndDropAction::Perform ()
       if (destPath.isUrl ())
       {
         msg.Printf (_("Importing file into repository: %s"), 
-                    PathToNative (srcPath));
+                    PathToNative (srcPath).c_str ());
         Trace (msg);
         client.import (srcPath, destPath,
                        LocalToUtf8(m->m_logMessage).c_str (), 
@@ -186,26 +186,27 @@ DragAndDropAction::Perform ()
         // If the src file is just a file, then use ::wxCopyFile
         //  otherwise is wxDirTraverser to copy the whole directory
         msg.Printf (_("Copying file into working directory: %s"), 
-                    Utf8ToLocal (srcPath.c_str ()));
+                    PathToNative (srcPath).c_str ());
         Trace (msg);
         if (::wxDirExists (m->m_files [i]))
         {
           msg.Printf (_("Adding directory to repository: %s"), 
-                      Utf8ToLocal (srcPath.c_str ()));
+                      PathToNative (srcPath).c_str ());
           wxDir dir (m->m_files [i]);
           if (dir.IsOpened ())
           {
             DragAndDropImportTraverser dirTraverser (
-              m->m_files [i], Utf8ToLocal (destPath.c_str ()));
+              m->m_files [i], PathToNative (destPath));
             dir.Traverse (dirTraverser);
           }
         }
         else
         {
+          wxString srcNative (PathToNative (srcPath));
           msg.Printf (_("Adding file to repository: %s"), 
-                      Utf8ToLocal (srcPath.c_str ()));
-          ::wxCopyFile (Utf8ToLocal (srcPath.c_str ()), 
-                        Utf8ToLocal (destPath.c_str ()));
+                      srcNative.c_str ());
+          ::wxCopyFile (srcNative, 
+                        PathToNative (destPath));
         }
         Trace (msg);
         client.add (destPath, m->m_recursiveAdd);
