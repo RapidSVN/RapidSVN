@@ -76,18 +76,6 @@ public:
   }
 
   /**
-   * retrieves the status information for a file
-   */
-  svn::Status 
-  getStatus (const svn::Path & path)
-  {
-    svn::Client client (GetContext ());
-    svn::Status status (client.singleStatus (path.c_str ()));
-
-    return status;
-  }
-
-  /**
    * retrieves the revision information for a file
    */
   svn::Revision
@@ -125,12 +113,15 @@ public:
    * versioned files will pass this check
    */
   bool
-  checkStatus (const svn::Status & status)
+  checkPath (const svn::Path & path)
   {
-    if (!status.isVersioned ())
+    svn::Client client (GetContext ());
+    svn::Entry entry (client.info (path.c_str ()));
+
+    if (!entry.isValid ())
       return false;
 
-    if (status.entry ().kind () != svn_node_file)
+    if (entry.kind () != svn_node_file)
       return false;
 
     return true;
@@ -154,9 +145,8 @@ public:
   diffTarget (const svn::Path & path)
   {
     svn::Path dstFile1, dstFile2;
-    svn::Status status (getStatus (path));
 
-    if (!checkStatus (status))
+    if (!checkPath (path))
     {
       wxString msg, wxpath (Utf8ToLocal (path.c_str ()));
       msg.Printf (_("Skipped: %s"), wxpath.c_str());
