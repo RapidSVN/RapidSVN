@@ -13,7 +13,7 @@ dnl
 dnl GCC specifics
 dnl
 AC_MSG_CHECKING([for gcc/g++])
-if test "$GXX" == "yes" ; then
+if test "$GXX" = "yes" ; then
    AC_MSG_RESULT([found (using "-Wall" and "-fexceptions")])
    CPPFLAGS="$CPPFLAGS -Wall -fexceptions"
    CXXFLAGS="$CXXFLAGS -Wall -fexceptions"
