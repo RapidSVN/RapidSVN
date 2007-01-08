@@ -602,6 +602,15 @@ namespace svn
   }
 
   void
+  Client::import (const Path & path, 
+                  const Path & url, 
+                  const char * message, 
+                  bool recurse) throw (ClientException)
+  {
+    import (path, url.c_str (), message, recurse);
+  }
+
+  void
   Client::merge (const Path & path1, const Revision & revision1, 
                  const Path & path2, const Revision & revision2,
                  const Path & localPath, bool force, 

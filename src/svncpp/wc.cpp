@@ -40,12 +40,18 @@ namespace svn
   bool 
   Wc::checkWc (const char * dir)
   {
-    Pool pool;
     Path path (dir);
+    return Wc::checkWc (path);
+  }
+
+  bool
+  Wc::checkWc (const Path & dir)
+  {
+    Pool pool;
     int wc;
 
     svn_error_t * error =
-      svn_wc_check_wc (path.c_str (), &wc, pool);
+      svn_wc_check_wc (dir.c_str (), &wc, pool);
 
     if ((error != NULL) || (wc == 0))
     {

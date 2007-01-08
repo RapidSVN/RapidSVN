@@ -429,6 +429,11 @@ namespace svn
             const char * url,
             const char * message, 
             bool recurse) throw (ClientException);
+    void
+    import (const Path & path,
+            const Path & url,
+            const char * message,
+            bool recurse) throw (ClientException);
 
 
     /**

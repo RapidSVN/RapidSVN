@@ -47,6 +47,9 @@ namespace svn
     static bool 
     checkWc (const char * dir);
 
+    static bool
+    checkWc (const Path & dir);
+
     /**
      * ensure that an administrative area exists for @a dir, so that @a dir
      * is a working copy subdir based on @a url at @a revision.
