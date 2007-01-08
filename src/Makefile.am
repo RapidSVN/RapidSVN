@@ -25,13 +25,17 @@ rapidsvn_SOURCES= \
 	destination_dlg.cpp \
 	diff_action.cpp \
 	diff_dlg.cpp \
+	dnd_dlg.cpp \
+	drag_n_drop_action.cpp \
 	exceptions.cpp \
 	export_action.cpp \
 	export_dlg.cpp \
 	external_program_action.cpp \
 	filelist_ctrl.cpp \
+	filelist_ctrl_drop_target.cpp \
 	file_info.cpp \
 	folder_browser.cpp \
+	folder_browser_drop_target.cpp \
 	folder_item_data.cpp \
 	get_action.cpp \
 	hist_entries.cpp \
@@ -55,6 +59,7 @@ rapidsvn_SOURCES= \
 	property_dlg.cpp \
 	proportional_splitter.cpp \
 	rapidsvn_app.cpp \
+	rapidsvn_drop_target.cpp \
 	rapidsvn_frame.cpp \
 	rename_action.cpp \
 	report_dlg.cpp \
