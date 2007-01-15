@@ -65,6 +65,8 @@ static const wxChar CONF_DIFF_TOOL[] =
   wxT("/Preferences/DiffTool");
 static const wxChar CONF_DIFF_TOOL_ARGS[] =
   wxT("/Preferences/DiffToolArgs");
+static const wxChar CONF_USE_LAST_COMMIT_MESSAGE[] =
+  wxT("/Preferences/UseLastCommitMessage");
 
 Preferences::Preferences ()
   : editor (DEFAULT_EDITOR), editorAlways (false), editorArgs (wxEmptyString),
@@ -101,6 +103,8 @@ Preferences::Read ()
   config->Read (CONF_PURGE_TEMP_FILES,  &purgeTempFiles);
   config->Read (CONF_AUTH_PER_BOOKMARK, &authPerBookmark);
   config->Read (CONF_USE_AUTH_CACHE,    &useAuthCache);
+  
+  config->Read (CONF_USE_LAST_COMMIT_MESSAGE, &useLastCommitMessage);
 }
 
 void Preferences::Write () const
@@ -122,6 +126,8 @@ void Preferences::Write () const
 
   config->Write (CONF_AUTH_PER_BOOKMARK, authPerBookmark);
   config->Write (CONF_USE_AUTH_CACHE, useAuthCache);
+
+  config->Write (CONF_USE_LAST_COMMIT_MESSAGE, useLastCommitMessage);
 }
 
 /* -----------------------------------------------------------------

@@ -101,6 +101,11 @@ public:
    */
   bool useAuthCache;
 
+  /**
+   * Default commit comment to last comment used
+   */
+  bool useLastCommitMessage;
+
 private:
   void Read ();
   void Write () const;

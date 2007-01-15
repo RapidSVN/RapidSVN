@@ -74,6 +74,15 @@ public:
 
       mainsizer->Add (20, 20);
       mainsizer->Add (check, 0, wxALL, 5);
+      
+      wxGenericValidator valDefaultCommitCheck (&m_prefs->useLastCommitMessage);
+      wxCheckBox * checkDefaultCommitComment =
+        new wxCheckBox (this, -1,
+                        _("Commit log message: default to most recent"),
+                        wxDefaultPosition,
+                        wxDefaultSize, 0, valDefaultCommitCheck);
+
+      mainsizer->Add (checkDefaultCommitComment, 0, wxALL, 5);
     }
 
     SetSizer (mainsizer);

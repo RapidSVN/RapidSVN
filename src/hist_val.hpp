@@ -52,7 +52,8 @@ public:
    */
   HistoryValidator (const wxString & settingName, 
                     wxString * value = 0,
-                    bool dontUpdate = false);
+                    bool dontUpdate = false,
+                    bool useMostRecent = true);
 
 
   /** create a clone of the instane */
@@ -95,6 +96,10 @@ private:
 
   /** do we want to update the history manager? */
   bool m_dontUpdate;
+
+  /** do we want to set the most recent value by default */
+  bool m_useMostRecent;
+
 
   
   /** disallow assignment operator */

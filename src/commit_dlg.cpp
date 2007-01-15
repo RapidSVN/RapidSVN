@@ -34,6 +34,7 @@
 #include "commit_dlg.hpp"
 #include "hist_val.hpp"
 #include "hist_entries.hpp"
+#include "preferences.hpp"
 
 static const int ID_HISTORY_COMBO_BOX = 1;
 
@@ -63,7 +64,9 @@ public:
                     window->GetCharHeight () * 10);
 
     {
-      HistoryValidator val (HISTORY_COMMIT_LOG, &message);
+      Preferences prefs;
+      HistoryValidator val (HISTORY_COMMIT_LOG, &message, false, 
+                            prefs.useLastCommitMessage);
       msg = new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
                             msgSize, wxTE_MULTILINE, val);
     }

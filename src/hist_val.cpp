@@ -41,9 +41,10 @@ IMPLEMENT_CLASS (HistoryValidator, wxValidator)
 
 HistoryValidator::HistoryValidator (const wxString & settingName,
                                     wxString * value,
-                                    bool dontUpdate)
+                                    bool dontUpdate,
+                                    bool useMostRecent)
  :  wxValidator (), m_settingName (settingName), m_value (value),
-    m_dontUpdate (dontUpdate)
+    m_dontUpdate (dontUpdate), m_useMostRecent (useMostRecent)
 {
 }
 
@@ -62,6 +63,7 @@ HistoryValidator::Copy(const HistoryValidator & val)
   m_settingName = val.m_settingName;
   m_value = val.m_value;
   m_dontUpdate = val.m_dontUpdate;
+  m_useMostRecent = val.m_useMostRecent;
 
   return true;
 }
@@ -111,7 +113,7 @@ HistoryValidator::TransferToWindow()
     }
 
     // if we have an entry, select it
-    if (count > 0)
+    if ((count > 0) && m_useMostRecent)
       comboBox->SetSelection (0, 0);
 
     return true;
@@ -120,7 +122,7 @@ HistoryValidator::TransferToWindow()
   {
     wxTextCtrl * textCtrl = (wxTextCtrl *)m_validatorWindow;
 
-    if (list.Count () == 0)
+    if ((list.Count () == 0) || !m_useMostRecent)
       textCtrl->SetValue (wxT(""));
     else
     {
