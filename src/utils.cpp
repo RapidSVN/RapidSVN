@@ -169,7 +169,7 @@ AppendModifyMenu (wxMenu * parentMenu)
 
   parentMenu->AppendSeparator ();
 
-  AppendMenuItem (parentMenu, ID_Add, _("&Add\tCTRL-A"),
+  AppendMenuItem (parentMenu, ID_Add, _("&Add\tINS"),
                   EMBEDDED_BITMAP(add_png));
   AppendMenuItem (parentMenu, ID_AddRecursive, _("Add r&ecursive"));
   AppendMenuItem (parentMenu, ID_Delete, _("&Delete\tDEL"),
