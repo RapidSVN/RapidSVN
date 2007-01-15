@@ -118,18 +118,31 @@ DragAndDropAction::Prepare ()
     src = _("Multiple Files");
   else if (m->m_files.GetCount () == 1)
     src = m->m_files[0];
-  return false; // No files dragged
+  else
+    return false; // No files dragged
 
-  bool showMoveButton = ::wxGetKeyState (WXK_CONTROL);
+  // If the ctrl key is down, then assume the user 
+  //  wants to copy rather than move files
+  bool showMoveButton = (::wxGetKeyState (WXK_CONTROL) == false);
+
+  // Check if the file being dragged-and-dropped is already 
+  // under source control or is being imported into the repository
   svn::Path srcSvnPath (PathUtf8 (m->m_files[0]));
   bool importFiles = 
     !srcSvnPath.isUrl () && 
     !svn::Wc::checkWc (srcSvnPath);
+
+  // Present the confirmation dialog to the user
   DragAndDropDialog dlg (m_parent, src, m->m_destination, 
                          showMoveButton, importFiles);
   m->m_action = dlg.ShowModal ();
 
-  if (m->m_action == DragAndDropDialog::RESULT_IMPORT)
+  if (DragAndDropDialog::RESULT_CANCEL == m->m_action)
+    return false;
+
+  // Imports require additional information from the user
+  //  so present the commit dialog to get that information
+  if (DragAndDropDialog::RESULT_IMPORT == m->m_action)
   {
     CommitDlg commitDlg (m_parent);
     if (commitDlg.ShowModal () != wxID_OK)
