@@ -19,6 +19,12 @@ def run(cmd, args, silent=0):
   if not silent:
     print t
   return t
+  
+def getEnviron(key):
+  try:
+    return os.environ[key]
+  except:
+    raise Exception("Environment variable '%d' not set!" % (key))
 
 def readLastSuccessfulRevision():
   try:
@@ -52,21 +58,28 @@ def buildInstaller():
   for n in x: os.unlink(n)
 
   print "Build installer"
-  run("cmd", "/c FetchFiles.bat", 1)
-
-  innosetup=os.environ["INNOSETUP"]
-  run("\"%s\iscc.exe\"", "rapidsvn.iss")
-
+  os.system("cmd.exe /c FetchFiles.bat")
+  innosetup=getEnviron("INNOSETUP")
+  os.system("\"%s\iscc.exe\" rapidsvn.iss" % innosetup)
+  
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
   if not len(n):
     print "Hm, seems like we have a build error: aborting"
     sys.exit(1)
-  e=os.path.splitext(n)
-  pkg="%s-%d%s" % (e[0],currentRevision,e[1])
-  os.rename(n, pkg)
+  old=n[0]
+  e=os.path.splitext(old)
+  print e
+  pkg="%s-%s%s" % (e[0],currentRevision,e[1])
+  os.rename(old, pkg)
   print "The new package is: %s" % (pkg)
   os.chdir("../..")
+  return "packages/win32/%s" % (pkg)
+  
+def uploadInstaller(pkg):
+  putty=getEnviron("PUTTY")
+  url="rapidsvn_ftp@rapidsvn.org:/httpdocs/download/nightly/win32"
+  os.system("\"%s/pscp.exe\" %s %s" % (putty, pkg, url))
 
 if __name__ == '__main__':
   # Check whether we are in the project dir
@@ -87,11 +100,11 @@ if __name__ == '__main__':
     print "No newer revision detected, aborting (last successful=%d, current=%d)" % (lastSuccessfulRevision, currentRevision)
     sys.exit(0)
     
-  buildApplication();
-  buildInstaller();
+  buildApplication()
+  pkg=buildInstaller()
+  uploadInstaller(pkg)
   
-  #remeber revision
-  os.open("FILENAME", "w").write(currentRevision)
+  #remember revision
+  open(FILENAME, "w").write(currentRevision)
 
-  #TODO: upload to server
   print "Done"
