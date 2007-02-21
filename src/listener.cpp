@@ -378,11 +378,7 @@ Listener::contextNotify (const char *path,
     _("Failed to unlock")  // svn_wc_notify_failed_unlock
   };
 
-#if CHECK_SVN_SUPPORTS_LOCK
   static const int MAX_ACTION = svn_wc_notify_failed_unlock;
-#else
-  static const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
-#endif
 
   if (ACTION_NAMES[action] != NULL && action >= 0 && action <= MAX_ACTION)
   {

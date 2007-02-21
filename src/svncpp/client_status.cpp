@@ -42,8 +42,6 @@
 #include "svncpp/status.hpp"
 #include "svncpp/targets.hpp"
 #include "svncpp/url.hpp"
-#include "m_svn_status.hpp"
-#include "m_converter.hpp"
 
 namespace svn
 {
@@ -69,7 +67,7 @@ namespace svn
       {
         char *path;
         void *val;
-        apr_hash_this (hi, (const void **) &path, NULL, &val);
+        apr_hash_this (hi, (const void **)&path, NULL, &val);
 
         svn_log_changed_path_t *log_item = reinterpret_cast<svn_log_changed_path_t *> (val);
         
@@ -86,12 +84,11 @@ namespace svn
 
   static void StatusEntriesFunc (void *baton,
                                  const char *path,
-                                 svn::SvnStatus *status)
+                                 svn_wc_status2_t *status)
   {
     StatusEntries * entries = static_cast<StatusEntries *>(baton);
 
-    static Converter converter;
-    entries->push_back (converter.toStatus (path, status));
+    entries->push_back (Status (path, status));
   }
 
   static StatusEntries
@@ -109,7 +106,6 @@ namespace svn
     Revision rev (Revision::HEAD);
     Pool pool;
 
-#if (CHECK_SVN_VERSION(1,2))
     error = svn_client_status2 (
       &revnum,    // revnum
       path,       // path
@@ -123,20 +119,6 @@ namespace svn
       ignore_externals, // ignore_externals
       *context,   // client ctx
       pool);
-#else
-    error = svn_client_status (
-      &revnum,    // revnum
-      path,       // path
-      rev,        // revision
-      StatusEntriesFunc, // status func
-      &entries,   // status baton
-      descend,    // recurse
-      get_all,
-      update,
-      no_ignore,
-      *context,   //client ctx
-      pool);
-#endif
 
     if (error!=NULL)
       throw ClientException (error);
@@ -168,9 +150,9 @@ namespace svn
     e->cmt_date = dirEntry.time ();
     e->cmt_author = dirEntry.lastAuthor ();
 
-    svn::SvnStatus * s =
-      static_cast<svn::SvnStatus *> (
-        apr_pcalloc (pool, sizeof (svn::SvnStatus)));
+    svn_wc_status2_t * s =
+      static_cast<svn_wc_status2_t *> (
+        apr_pcalloc (pool, sizeof (svn_wc_status2_t)));
     s->entry = e;
     s->text_status = svn_wc_status_normal;
     s->prop_status = svn_wc_status_normal;
@@ -179,8 +161,7 @@ namespace svn
     s->repos_text_status = svn_wc_status_normal;
     s->repos_prop_status = svn_wc_status_normal;
 
-    static Converter converter;
-    return converter.toStatus (url.c_str (), s);
+    return Status (url.c_str (), s);
   }
 
   static StatusEntries
@@ -245,7 +226,6 @@ namespace svn
     return Status ();
   }
 
-#if CHECK_SVN_SUPPORTS_PEG
   const LogEntries *
   Client::log (const char * path, const Revision & revisionStart, 
                const Revision & revisionEnd, bool discoverChangedPaths,
@@ -277,37 +257,6 @@ namespace svn
 
     return entries;
   }
-#else
-  const LogEntries *
-  Client::log (const char * path, const Revision & revisionStart, 
-               const Revision & revisionEnd, bool discoverChangedPaths,
-               bool strictNodeHistory ) throw (ClientException)
-  {
-    Pool pool;
-    Targets target (path);
-    LogEntries * entries = new LogEntries ();
-    svn_error_t *error;
-
-    error = svn_client_log (
-      target.array (pool), 
-      revisionStart.revision (), 
-      revisionEnd.revision (), 
-      discoverChangedPaths ? 1 : 0,
-      strictNodeHistory ? 1 : 0,
-      logReceiver,
-      entries, 
-      *m_context, // client ctx
-      pool);
-
-    if (error != NULL)
-    {
-      delete entries;
-      throw ClientException (error);
-    }
-
-    return entries;
-  }
-#endif
 
   Entry
   Client::info (const char * path)

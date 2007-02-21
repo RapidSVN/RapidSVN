@@ -3,9 +3,9 @@ EXTRA_DIST=svncpp.dsp
 
 lib_LTLIBRARIES=libsvncpp.la
 
+libsvncpp_la_LDFLAGS=-version-info 1:0:0
 libsvncpp_la_SOURCES= \
 	apr.cpp \
-	check.cpp \
 	client.cpp \
 	client_annotate.cpp \
 	client_cat.cpp \

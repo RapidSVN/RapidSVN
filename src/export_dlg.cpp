@@ -100,26 +100,17 @@ public:
 
     wxStaticBox* pegRevisionBox =
       new wxStaticBox (wnd, -1, _("Peg Revision"));
-    if (svn::SUPPORTS_PEG)
-    {
-      wxTextValidator valPegRevision (wxFILTER_NUMERIC, &data.PegRevision);
-      m_textPegRevision =
-        new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
-                        wxSize(50, -1), 0, valPegRevision);
-      m_textPegRevision->SetHelpText(_("If the files were renamed or moved some time, specify which peg revision to use here."));
-    }
-    else
-    {
-      pegRevisionBox->Hide ();
-    }
+    wxTextValidator valPegRevision (wxFILTER_NUMERIC, &data.PegRevision);
+    m_textPegRevision =
+      new wxTextCtrl (wnd, -1, wxEmptyString, wxDefaultPosition,
+                      wxSize(50, -1), 0, valPegRevision);
+    m_textPegRevision->SetHelpText(_("If the files were renamed or moved some time, specify which peg revision to use here."));
 
     wxGenericValidator valNotSpecified (&data.NotSpecified);
     m_checkNotSpecified =
       new wxCheckBox (wnd, ID_NOT_SPECIFIED, _("Not specified"),
                       wxDefaultPosition, wxDefaultSize, 0, valNotSpecified);
     m_checkNotSpecified->SetHelpText(_("Set this to use BASE/HEAD (current) peg revision of the files."));
-    if (!svn::SUPPORTS_PEG)
-      m_checkNotSpecified->Hide ();
 
     wxCheckBox* recursive =
       new wxCheckBox (wnd, -1, _("Recursive"),
@@ -138,9 +129,6 @@ public:
                       wxDefaultPosition, wxDefaultSize, 0,
                       wxGenericValidator(&data.IgnoreExternals));
     ignoreExternals->SetHelpText(_("Set to ignore external definitions and the external working copies managed by them."));
-    if (!svn::SUPPORTS_EXTERNALS)
-      ignoreExternals->Hide ();
-
     wxStaticText * labelEol = new wxStaticText (
       wnd, -1, _("EOL:"), wxDefaultPosition);
 
@@ -184,15 +172,12 @@ public:
 
     wxBoxSizer *preSizer = new wxBoxSizer (wxHORIZONTAL);
     // Peg revision row
-    if (svn::SUPPORTS_PEG)
-    {
-      wxStaticBoxSizer *pegRevisionSizer =
-        new wxStaticBoxSizer (pegRevisionBox, wxHORIZONTAL);
-      pegRevisionSizer->Add (m_textPegRevision, 1, wxALL | wxEXPAND, 5);
-      pegRevisionSizer->Add (m_checkNotSpecified, 0,
-                             wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
-      preSizer->Add (pegRevisionSizer, 1, wxALL | wxEXPAND, 0);
-    }
+    wxStaticBoxSizer *pegRevisionSizer =
+      new wxStaticBoxSizer (pegRevisionBox, wxHORIZONTAL);
+    pegRevisionSizer->Add (m_textPegRevision, 1, wxALL | wxEXPAND, 5);
+    pegRevisionSizer->Add (m_checkNotSpecified, 0,
+                           wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
+    preSizer->Add (pegRevisionSizer, 1, wxALL | wxEXPAND, 0);
 
     // the native eol combo
     wxBoxSizer *nativeEolSizer = new wxBoxSizer (wxHORIZONTAL);
@@ -214,16 +199,14 @@ public:
     wxBoxSizer *extrasSizer = new wxBoxSizer (wxHORIZONTAL);
     extrasSizer->Add(recursive, 0, wxALL | wxCENTER, 5);
     extrasSizer->Add(overwrite, 0, wxALL | wxCENTER, 5);
-    if (svn::SUPPORTS_EXTERNALS)
-      extrasSizer->Add(ignoreExternals, 0, wxALL | wxCENTER, 5);
+    extrasSizer->Add(ignoreExternals, 0, wxALL | wxCENTER, 5);
 
     // Add all sizers to main sizer
     wxBoxSizer *mainSizer    = new wxBoxSizer (wxVERTICAL);
     mainSizer->Add (urlSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (destSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (reSizer, 0, wxALL | wxEXPAND, 5);
-    if (svn::SUPPORTS_PEG)
-      mainSizer->Add (preSizer, 0, wxALL | wxEXPAND, 5);
+    mainSizer->Add (preSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (nativeEolSizer, 0, wxALL | wxEXPAND, 5);
     mainSizer->Add (extrasSizer, 0, wxALL | wxCENTER, 5);
     mainSizer->Add (buttonSizer, 0, wxALL | wxCENTER, 5);
@@ -242,11 +225,7 @@ public:
     bool notSpecified = m_checkNotSpecified->IsChecked ();
 
     m_textRevision->Enable (!useLatest);
-
-    if (svn::SUPPORTS_PEG)
-    {
-      m_textPegRevision->Enable (!notSpecified);
-    }
+    m_textPegRevision->Enable (!notSpecified);
 
     bool ok = true;
     if (!useLatest)
@@ -254,7 +233,7 @@ public:
       ok = CheckRevision (m_textRevision->GetValue ());
     }
 
-    if (!notSpecified && svn::SUPPORTS_PEG)
+    if (!notSpecified)
     {
       ok = CheckRevision (m_textPegRevision->GetValue ());
     }

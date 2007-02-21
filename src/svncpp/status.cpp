@@ -23,66 +23,55 @@
  * ====================================================================
  */
 
+// stl
+#include <string>
+
 // svncpp
 #include "svncpp/status.hpp"
 
-#include "m_svn_status.hpp"
-#include "m_svn_data.hpp"
-#include "m_converter.hpp"
-
 namespace svn
 {
-  // Status::Data is defined in m_svn_data.hpp
-
-  Status::Status ()
+  struct Status::Data
   {
-    m = new Data;
+    svn_wc_status2_t *status;
+    std::string path;
+    Pool pool;
+    bool isVersioned;
 
-    m->status = 0;
-    m->path = "";
+    Data (const char * path_, const svn_wc_status2_t * status_)
+      : status (0), path ("") 
+    {
+      if (path_ != 0)
+        path = path_;
+
+      if (status_ != 0)
+      {
+        status = svn_wc_dup_status2 (
+          const_cast<svn_wc_status2_t *> (status_), pool);
+        isVersioned = status_->text_status > svn_wc_status_unversioned;
+      }
+    }
+
+    Data (const Data * src)
+      : status (0), path (src->path)
+    {
+      if (src->status != 0)
+      {
+        status = svn_wc_dup_status2 (src->status, pool);
+        isVersioned = status->text_status > svn_wc_status_unversioned;
+      }
+    }
+
+  };
+
+  Status::Status (const char * path, const svn_wc_status2_t * status)
+    : m (new Data (path, status))
+  {
   }
 
   Status::Status (const Status & src)
+    : m (new Data (src.m))
   {
-    m = new Data;
-
-    m->status = 0;
-    m->path = "";
-
-    if (&src != this)
-    {
-      m->path = src.m->path;
-
-      m->status = (SvnStatus *)
-        apr_pcalloc (m->pool, sizeof (SvnStatus));
-  
-      if (!src.m->status)
-      {
-        m->isVersioned = false;
-      }
-      else
-      {
-        m->isVersioned = src.m->status->text_status > svn_wc_status_unversioned;
-  
-        // now duplicate the contents
-        if (src.m->status->entry)
-          m->status->entry = svn_wc_entry_dup (src.m->status->entry, m->pool);
-  
-        m->status->text_status = src.m->status->text_status;
-        m->status->prop_status = src.m->status->prop_status;
-        m->status->locked = src.m->status->locked;
-        m->status->copied = src.m->status->copied;
-        m->status->switched = src.m->status->switched;
-        m->status->repos_text_status = src.m->status->repos_text_status;
-        m->status->repos_prop_status = src.m->status->repos_prop_status;
-  
-        // duplicate the contents of repos_lock structure
-#if CHECK_SVN_SUPPORTS_LOCK
-        if (src.m->status->repos_lock)
-          m->status->repos_lock = svn_lock_dup (src.m->status->repos_lock, m->pool);
-#endif
-      }
-    }
   }
 
   Status::~Status ()
@@ -99,6 +88,9 @@ namespace svn
   const Entry 
   Status::entry () const
   {
+    if (0 == m->status)
+      return Entry ();
+
     return Entry (m->status->entry);
   }
 
@@ -147,132 +139,76 @@ namespace svn
   const bool
   Status::isLocked () const
   {
-#if CHECK_SVN_SUPPORTS_LOCK
     if (m->status->repos_lock && (m->status->repos_lock->token != 0))
       return true;
     else if (m->status->entry)
       return m->status->entry->lock_token != 0;
     else
       return false;
-#else
-    return false;
-#endif
   }
 
   const bool
   Status::isRepLock () const
   {
-#if CHECK_SVN_SUPPORTS_LOCK
     if (m->status->entry && (m->status->entry->lock_token != 0))
       return false;
     else if (m->status->repos_lock && (m->status->repos_lock->token != 0))
       return true;
     else
       return false;
-#else
-    return false;
-#endif
   }
 
   const char *
   Status::lockToken () const
   {
-#if CHECK_SVN_SUPPORTS_LOCK
     if (m->status->repos_lock && m->status->repos_lock->token != 0)
       return m->status->repos_lock->token;
     else if (m->status->entry)
       return m->status->entry->lock_token;
     else
       return "";
-#else
-    return "";
-#endif
   }
 
   const char *
   Status::lockOwner () const
   {
-#if CHECK_SVN_SUPPORTS_LOCK
     if (m->status->repos_lock && m->status->repos_lock->token != 0)
       return m->status->repos_lock->owner;
     else if (m->status->entry)
       return m->status->entry->lock_owner;
     else
       return "";
-#else
-    return "";
-#endif
   }
 
   const char *
   Status::lockComment () const
   {
-#if CHECK_SVN_SUPPORTS_LOCK
     if (m->status->repos_lock && m->status->repos_lock->token != 0)
       return m->status->repos_lock->comment;
     else if (m->status->entry)
       return m->status->entry->lock_comment;
     else
       return "";
-#else
-    return "";
-#endif
   }
 
   const apr_time_t
   Status::lockCreationDate () const
   {
-#if CHECK_SVN_SUPPORTS_LOCK
     if (m->status->repos_lock && m->status->repos_lock->token != 0)
       return m->status->repos_lock->creation_date;
     else if (m->status->entry)
       return m->status->entry->lock_creation_date;
     else
       return 0;
-#else
-    return 0;
-#endif
   }
 
   Status &
   Status::operator=(const Status & src)
   {
-    if (this == &src)
-      return *this;
-
-    delete m;
-    m = new Data;
-
-    m->path = src.m->path;
- 
-    m->status = (SvnStatus *)
-      apr_pcalloc (m->pool, sizeof (SvnStatus));
-
-    if (!src.m->status)
+    if (this != &src)
     {
-      m->isVersioned = false;
-    }
-    else
-    {
-      m->isVersioned = src.m->status->text_status > svn_wc_status_unversioned;
-
-      // now duplicate the contents
-      if (src.m->status->entry)
-        m->status->entry = svn_wc_entry_dup (src.m->status->entry, m->pool);
-
-      m->status->text_status = src.m->status->text_status;
-      m->status->prop_status = src.m->status->prop_status;
-      m->status->locked = src.m->status->locked;
-      m->status->copied = src.m->status->copied;
-      m->status->switched = src.m->status->switched;
-      m->status->repos_text_status = src.m->status->repos_text_status;
-      m->status->repos_prop_status = src.m->status->repos_prop_status;
-
-      // duplicate the contents of repos_lock structure
-#if CHECK_SVN_SUPPORTS_LOCK
-      if (src.m->status->repos_lock)
-      m->status->repos_lock = svn_lock_dup (src.m->status->repos_lock, m->pool);
-#endif
+      delete m;
+      m = new Data (src.m);
     }
 
     return *this;

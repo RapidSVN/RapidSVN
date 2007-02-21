@@ -217,21 +217,6 @@ namespace svn
 
     /**
      * Updates the file or directory.
-     * @param path target file.
-     * @param revision the revision number to checkout. 
-     *                 Revision::HEAD will checkout the 
-     *                 latest revision.
-     * @param recurse recursively update.
-     * @exception ClientException
-     *
-     * @deprecated
-     */
-    svn_revnum_t 
-    update (const Path & path, const Revision & revision, 
-            bool recurse) throw (ClientException);
-
-    /**
-     * Updates the file or directory.
      * @param targets target files.
      * @param revision the revision number to checkout. 
      *                 Revision::HEAD will checkout the 
@@ -239,12 +224,20 @@ namespace svn
      * @param recurse recursively update.
      * @param ignore_externals don't affect external destinations.
      * @exception ClientException
+     *
+     * @return a vector with resulting revisions
      */
-    void
-    update2 (const Targets & targets,
-             const Revision & revision, 
-             bool recurse,
-             bool ignore_externals) throw (ClientException);
+    std::vector<svn_revnum_t>
+    update (const Targets & targets,
+            const Revision & revision, 
+            bool recurse,
+            bool ignore_externals) throw (ClientException);
+
+    svn_revnum_t
+    update (const Path & path,
+            const Revision & revision, 
+            bool recurse,
+            bool ignore_externals) throw (ClientException);
 
     /**
      * Retrieves the contents for a specific @a revision of
@@ -252,7 +245,8 @@ namespace svn
      *
      * @param path path of file or directory
      * @param revision revision to retrieve
-     * @param peg_revision peg revision to retrieve, by default is the latest one
+     * @param peg_revision peg revision to retrieve, 
+     *        by default is the latest one
      * @return contents of the file
      */
     std::string
@@ -340,15 +334,13 @@ namespace svn
      * is a URL then authentication is usually required, see Auth.
      * 
      * @param path
-     * @param message log message.
      * @exception ClientException
      */
     void 
-    mkdir (const Path & path, 
-           const char * message = "") throw (ClientException);
+    mkdir (const Path & path) throw (ClientException);
+
     void 
-    mkdir (const Targets & targets, 
-           const char * message = "") throw (ClientException);
+    mkdir (const Targets & targets) throw (ClientException);
 
     /**
      * Recursively cleans up a local directory, finishing any
@@ -367,22 +359,6 @@ namespace svn
     resolved (const Path & path, bool recurse) throw (ClientException);
 
     /**
-     * Exports the contents of either a subversion repository into a 
-     * 'clean' directory (meaning a directory with no administrative 
-     * directories).
-     * @exception ClientException
-     * @param srcPath source path
-     * @param destPath a destination path that must not already exist.
-     * @param revision revision to use for the export
-     * @param force force export
-     */
-    svn_revnum_t
-    doExport (const Path & srcPath, 
-              const Path & destPath, 
-              const Revision & revision, 
-              bool force = false) throw (ClientException);
-
-    /**
      * Export into file or directory TO_PATH from local or remote FROM_PATH
      * @param from_path path to import
      * @param to_path where to import
@@ -396,14 +372,14 @@ namespace svn
      * @exception ClientException
      */
     void
-    doExport2 (const Path & from_path,
-               const Path & to_path,
-               const Revision & revision,
-               bool overwrite = false,
-               const Revision & peg_revision = Revision (),
-               bool ignore_externals = false,
-               bool recurse = true,
-               const char * native_eol = NULL) throw (ClientException);
+    doExport (const Path & from_path,
+              const Path & to_path,
+              const Revision & revision,
+              bool overwrite = false,
+              const Revision & peg_revision = Revision (),
+              bool ignore_externals = false,
+              bool recurse = true,
+              const char * native_eol = NULL) throw (ClientException);
 
     /**
      * Update local copy to mirror a new url. This excapsulates the 
@@ -507,34 +483,6 @@ namespace svn
           const Revision & revision1, const Revision & revision2,
           const bool recurse, const bool ignoreAncestry,
           const bool noDiffDeleted) throw (ClientException);
-
-    /**
-     * lists entries in @a pathOrUrl no matter whether local or
-     * repository
-     *
-     * @remark Please do not use the method anymore. Since it
-     *         tries to return entries with absolute paths
-     *         it has to add @a pathOrUrl to the beginning of
-     *         the enrties. This works fine if @a pathOrUrl 
-     *         points to a directory. But if it point to a file
-     *         "file:///foo/bar.txt", the path of the returned 
-     *         entry will be "file:///foo/bar.txt/bar.txt".
-     *         Please use @a list instead.
-     *
-     * @deprecated
-     *
-     * @see list
-     *
-     * @param pathOrUrl
-     * @param revision
-     * @param recurse
-     * @return a vector of directory entries, each
-     *         with an absolute path
-     */
-    DirEntries
-    ls (const char * pathOrUrl,
-        svn_opt_revision_t * revision,
-        bool recurse) throw (ClientException);
 
     /**
      * lists entries in @a pathOrUrl no matter whether local or

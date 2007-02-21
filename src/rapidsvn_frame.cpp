@@ -269,8 +269,7 @@ public:
     menuView->AppendCheckItem (ID_Flat, _("Flat Mode"));
     menuView->AppendCheckItem (ID_RefreshWithUpdate, _("Refresh with Update"));
     menuView->AppendCheckItem (ID_ShowUnversioned, _("Show unversioned entries"));
-    if (svn::SUPPORTS_EXTERNALS)
-      menuView->AppendCheckItem (ID_IgnoreExternals, _("Ignore Externals"));
+    menuView->AppendCheckItem (ID_IgnoreExternals, _("Ignore Externals"));
 
     // Preferences menu item goes to its own place on MacOSX,
     // so no separator is necessary.
@@ -666,9 +665,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_Flat, RapidSvnFrame::OnFlatView)
   EVT_MENU (ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
   EVT_MENU (ID_ShowUnversioned, RapidSvnFrame::OnShowUnversioned)
-#if CHECK_SVN_SUPPORTS_EXTERNALS
-    EVT_MENU (ID_IgnoreExternals, RapidSvnFrame::OnIgnoreExternals)
-#endif
+  EVT_MENU (ID_IgnoreExternals, RapidSvnFrame::OnIgnoreExternals)
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
   EVT_MENU (ID_Stop, RapidSvnFrame::OnStop)
@@ -778,8 +775,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->CheckMenu (ID_Flat,              false);
   m->CheckMenu (ID_RefreshWithUpdate, m->listCtrl->GetWithUpdate());
   m->CheckMenu (ID_ShowUnversioned,   m->listCtrl->GetShowUnversioned());
-  if (svn::SUPPORTS_EXTERNALS)
-    m->CheckMenu (ID_IgnoreExternals, m->listCtrl->GetIgnoreExternals());
+  m->CheckMenu (ID_IgnoreExternals, m->listCtrl->GetIgnoreExternals());
   m->CheckMenu (ID_Sort_Ascending,    m->listCtrl->GetSortAscending());
   m->CheckSort (m->listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
 
@@ -1248,12 +1244,9 @@ RapidSvnFrame::OnShowUnversioned (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnIgnoreExternals (wxCommandEvent & WXUNUSED (event))
 {
-  if (svn::SUPPORTS_EXTERNALS)
-  {
-    bool checked = m->IsMenuChecked (ID_IgnoreExternals);
-    m->listCtrl->SetIgnoreExternals (checked);
-    RefreshFileList ();
-  }
+  bool checked = m->IsMenuChecked (ID_IgnoreExternals);
+  m->listCtrl->SetIgnoreExternals (checked);
+  RefreshFileList ();
 }
 
 void
@@ -1432,11 +1425,7 @@ RapidSvnFrame::OnTestListener (wxCommandEvent & WXUNUSED (event))
 
   // starting the test
 
-#if CHECK_SVN_SUPPORTS_LOCK
   const int MAX_ACTION = svn_wc_notify_failed_unlock;
-#else
-  const int MAX_ACTION = svn_wc_notify_commit_postfix_txdelta;
-#endif
 
   for (int j = 1; j <= 1000; j++)
   {
@@ -2224,8 +2213,7 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       break;
 
     case ID_Lock:
-      if (svn::SUPPORTS_LOCK)
-        baseActionFlags = LockAction::GetBaseFlags ();
+      baseActionFlags = LockAction::GetBaseFlags ();
       break;
 
     case ID_Log:
@@ -2288,8 +2276,7 @@ RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
       break;
 
     case ID_Unlock:
-      if (svn::SUPPORTS_LOCK)
-        baseActionFlags = UnlockAction::GetBaseFlags ();
+      baseActionFlags = UnlockAction::GetBaseFlags ();
       break;
 
     case ID_Edit:

@@ -79,8 +79,8 @@ UpdateAction::Perform ()
   wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
   svn::Client client (GetContext ());
 
-  client.update2 (GetTargets (), revision, m_data.recursive, 
-                  m_data.ignoreExternals);
+  client.update (GetTargets (), revision, m_data.recursive, 
+                 m_data.ignoreExternals);
 
   return true;
 }

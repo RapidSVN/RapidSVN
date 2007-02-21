@@ -100,7 +100,7 @@ CheckoutAction::Perform ()
 
   revnum = -1;
   // Did the user request a specific peg revision?:
-  if (svn::SUPPORTS_PEG && !m_data.NotSpecified)
+  if (!m_data.NotSpecified)
   {
     TrimString(m_data.PegRevision);
     if (!m_data.PegRevision.IsEmpty ())
@@ -116,7 +116,7 @@ CheckoutAction::Perform ()
   svn::Path repUrlUtf8 (PathUtf8 (m_data.RepUrl));
   svn::Path destFolderUtf8 (PathUtf8 (m_data.DestFolder));
 
-  bool ignoreExternals = svn::SUPPORTS_EXTERNALS ? m_data.IgnoreExternals : false;
+  bool ignoreExternals = m_data.IgnoreExternals;
 
   client.checkout (repUrlUtf8.c_str (), 
                    destFolderUtf8, 

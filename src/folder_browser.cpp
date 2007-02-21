@@ -590,7 +590,7 @@ public:
     svn::Revision rev (svn::Revision::HEAD);
     svn::Path parentPathUtf8 (PathUtf8 (parentPath));
     svn::DirEntries entries =
-      client.ls (parentPathUtf8.c_str (), rev, false);
+      client.list (parentPathUtf8.c_str (), rev, false);
     svn::DirEntries::const_iterator it;
 
     bool parentHasSubdirectories = false;

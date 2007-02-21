@@ -160,7 +160,6 @@ namespace svn
    * @param recurse
    * @return PropertiesList
    */
-#if CHECK_SVN_VERSION(1,2)
   void
   Client::propset (const char * propName,
                    const char * propValue,
@@ -185,30 +184,6 @@ namespace svn
     if (error != NULL)
       throw ClientException (error);
   }
-#else
-  void
-  Client::propset (const char * propName,
-                   const char * propValue,
-                   const Path & path,
-                   const Revision & revision,
-                   bool recurse,
-                   bool skip_checks)
-  {
-    Pool pool;
-
-    const svn_string_t * propval =
-      svn_string_create ((const char *) propValue, pool);
-
-    svn_error_t * error = 
-      svn_client_propset (propName,
-                          propval,
-                          path.c_str (),
-                          recurse,
-                          pool);
-    if (error != NULL)
-      throw ClientException (error);
-  }
-#endif
 
   /**
    * delete property in @a path no matter whether local or

@@ -78,24 +78,18 @@ namespace svn
       svn_client_proplist_item_t *item = 
         ((svn_client_proplist_item_t **)props->elts)[j];
 
-/*      const char *node_name_native;
-      svn_utf_cstring_from_utf8_stringbuf (&node_name_native,
-                                           item->node_name,
-                                           pool );*/
-
       apr_hash_index_t *hi;
 
       for (hi = apr_hash_first (pool, item->prop_hash); hi; 
            hi = apr_hash_next (hi))
       {
         const void *key;
-//        const char *key_native;
         void *val;
 
         apr_hash_this (hi, &key, NULL, &val);
-//        svn_utf_cstring_from_utf8 (&key_native, (char *)key, pool);
 
-        m_entries.push_back (PropertyEntry ((const char *)key, getValue ((const char *)key).c_str ()));
+        m_entries.push_back (PropertyEntry (
+          (const char *)key, getValue ((const char *)key).c_str ()));
       } 
     }
   }
@@ -115,8 +109,6 @@ namespace svn
                         *m_context,
                         pool);
 
-    //svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (name);
-
     apr_hash_index_t *hi;
     hi = apr_hash_first (pool, props); 
     if( !hi )
@@ -130,16 +122,9 @@ namespace svn
     apr_hash_this (hi, &key, NULL, &val);
     propval = (const svn_string_t *)val;
 
-    /* If this is a special Subversion property, it is stored as
-       UTF8, so convert to the native format. */
-    //TODO we are doing this now all the time
-    //if (is_svn_prop)
-//    svn_utf_string_from_utf8 (&propval, propval, pool);
-
     return propval->data;
   }
 
-#if (CHECK_SVN_VERSION(1,2))
   void
   Property::set (const char * name, const char * value)
   {
@@ -147,9 +132,6 @@ namespace svn
 
     const svn_string_t * propval =
       svn_string_create ((const char *) value, pool);
-
-//    const char *pname_utf8;
-  //  svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
 
     bool recurse = false;
     bool skip_checks = false;
@@ -166,33 +148,11 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
-#else
-  void
-  Property::set (const char * name, const char * value)
-  {
-    Pool pool;
-
-    const svn_string_t * propval =
-      svn_string_create ((const char *) value, pool);
-
-//    const char *pname_utf8;
-  //  svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
-
-    svn_error_t * error = 
-      svn_client_propset (name, propval, m_path.c_str (),
-                          false, pool);
-    if(error != NULL)
-      throw ClientException (error);
-  }
-#endif
 
   void 
   Property::remove (const char * name)
   {
     Pool pool;
-
-//    const char *pname_utf8;
-  //  svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
 
     svn_error_t * error = 
       svn_client_propset (name, 
@@ -203,20 +163,6 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
-
-  /* REMOVE
-  bool
-  PropertyValue::isSvnProperty (const char * name)
-  {
-    Pool pool;
-
-    const char *pname_utf8;
-    svn_utf_cstring_to_utf8 (&pname_utf8, name, pool);
-    svn_boolean_t is_svn_prop = svn_prop_is_svn_prop (pname_utf8);
-
-    return is_svn_prop;
-  }
-  */
 
 }
 /* -----------------------------------------------------------------

@@ -44,8 +44,11 @@ namespace svn
   public:
     /**
      * default constructor
+     *
+     * @param path
+     * @param status
      */
-    Status ();
+    Status (const char * path = 0, const svn_wc_status2_t * status = 0);
 
     /**
      * copy constructor
@@ -153,8 +156,6 @@ namespace svn
      */
     Status &
     operator = (const Status &);
-
-    friend class Converter;
 
   private:
     struct Data;

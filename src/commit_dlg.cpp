@@ -101,9 +101,6 @@ public:
                         val);
     }
 
-    if (!svn::SUPPORTS_LOCK)
-      checkKeepLocks->Hide ();
-
     wxButton* ok =
       new wxButton (window, wxID_OK, _("OK" ));
     wxButton* cancel =

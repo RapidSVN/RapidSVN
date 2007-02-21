@@ -59,7 +59,7 @@ GetAction::Perform ()
   wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
   client.update (svn::Path (LocalToUtf8 (m_data.path)),
                  m_data.revision,
-                 true);
+                 true, false);
 
   return true;
 }

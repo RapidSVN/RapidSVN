@@ -192,13 +192,10 @@ AppendModifyMenu (wxMenu * parentMenu)
                   EMBEDDED_BITMAP(rename_png));
   AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory...\tF7"));
 
-  if (svn::SUPPORTS_LOCK)
-  {
-    parentMenu->AppendSeparator ();
+  parentMenu->AppendSeparator ();
 
-    AppendMenuItem (parentMenu, ID_Lock, _("&Lock..."));
-    AppendMenuItem (parentMenu, ID_Unlock, _("&Unlock"));
-  }
+  AppendMenuItem (parentMenu, ID_Lock, _("&Lock..."));
+  AppendMenuItem (parentMenu, ID_Unlock, _("&Unlock"));
 }
 
 void

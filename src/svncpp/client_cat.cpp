@@ -31,7 +31,6 @@
 
 // Subversion api
 #include "svn_client.h"
-//#include "svn_io.h"
 
 // svncpp
 #include "svncpp/client.hpp"
@@ -40,14 +39,8 @@
 #include "svncpp/status.hpp"
 #include "m_check.hpp"
 
-#ifndef CHECK_SVN_SUPPORTS_PEG
-#error "CHECK_SVN_SUPPORTS_PEG not defined"
-#endif
-
-
 namespace svn
 {
-#if CHECK_SVN_SUPPORTS_PEG
   std::string
   Client::cat (const Path & path, 
                const Revision & revision,
@@ -71,30 +64,6 @@ namespace svn
 
     return std::string (stringbuf->data, stringbuf->len);
   }
-#else
-  std::string
-  Client::cat (const Path & path, 
-               const Revision & revision,
-               const Revision & peg_revision) throw (ClientException)
-  {
-    Pool pool;
-    
-    svn_stringbuf_t * stringbuf = svn_stringbuf_create ("", pool);
-    svn_stream_t * stream = svn_stream_from_stringbuf (stringbuf, pool);
-
-    svn_error_t * error;
-    error = svn_client_cat (stream,
-                            path.c_str (),
-                            revision.revision (), 
-                            *m_context, 
-                            pool);
-
-    if (error != 0)
-      throw ClientException (error);
-
-    return std::string (stringbuf->data, stringbuf->len);
-  }
-#endif
 
   /**
    * Create a new temporary file in @a dstPath. If @a dstPath
@@ -184,7 +153,6 @@ namespace svn
     svn_stream_t * stream = svn_stream_from_aprfile (file, pool);
     if (stream != 0)
     {
-#if CHECK_SVN_SUPPORTS_PEG
       svn_error_t * error = svn_client_cat2 (
         stream, 
         path.c_str (), 
@@ -192,14 +160,7 @@ namespace svn
         revision.revision (),
         *m_context, 
         pool);
-#else
-      svn_error_t * error = svn_client_cat (
-        stream, 
-        path.c_str (), 
-        revision.revision (),
-        *m_context, 
-        pool);
-#endif
+
       if (error != 0)
         throw ClientException (error);
 

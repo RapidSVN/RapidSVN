@@ -95,7 +95,7 @@ ExportAction::Perform ()
 
   revnum = -1;
   // Did the user request a specific peg revision?:
-  if (svn::SUPPORTS_PEG && !m_data.NotSpecified)
+  if (!m_data.NotSpecified)
   {
     TrimString(m_data.PegRevision);
     if (!m_data.PegRevision.IsEmpty ())
@@ -111,26 +111,14 @@ ExportAction::Perform ()
   svn::Path srcPathUtf8 (PathUtf8 (m_data.SrcPath));
   svn::Path destPathUtf8 (PathUtf8 (m_data.DestPath));
 
-  if (svn::SUPPORTS_EXTERNALS)
-  {
-    bool ignoreExternals = svn::SUPPORTS_EXTERNALS ? m_data.IgnoreExternals : false;
-
-    client.doExport2 (srcPathUtf8.c_str (), 
-                      destPathUtf8, 
-                      revision,
-                      m_data.Overwrite,
-                      pegRevision,
-                      ignoreExternals,
-                      m_data.Recursive,
-                      m_data.Eol);
-  }
-  else
-  {
-    client.doExport (srcPathUtf8.c_str (), 
-                     destPathUtf8, 
-                     revision,
-                     m_data.Overwrite);
-  }
+  client.doExport (srcPathUtf8.c_str (), 
+                   destPathUtf8, 
+                   revision,
+                   m_data.Overwrite,
+                   pegRevision,
+                   m_data.IgnoreExternals,
+                   m_data.Recursive,
+                   m_data.Eol);
   return true;
 }
 
