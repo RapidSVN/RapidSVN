@@ -23,9 +23,6 @@
  * ====================================================================
  */
 
-//svncpp
-#include "svncpp/check.hpp"
-
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"

@@ -43,7 +43,6 @@
 #include <map>
 
 // svncpp
-#include "svncpp/check.hpp"
 #include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/path.hpp"

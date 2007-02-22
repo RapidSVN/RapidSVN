@@ -30,7 +30,6 @@
 #include "svn_client.h"
 
 // svncpp
-#include "svncpp/check.hpp"
 #include "svncpp/client.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/pool.hpp"

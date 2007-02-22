@@ -31,7 +31,6 @@
 
 // svncpp
 #include "svncpp/path.hpp"
-#include "svncpp/check.hpp"
 
 // app
 #include "hist_entries.hpp"

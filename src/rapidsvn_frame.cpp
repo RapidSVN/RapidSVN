@@ -30,7 +30,6 @@
 
 // svncpp
 #include "svncpp/apr.hpp"
-#include "svncpp/check.hpp"
 #include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
 #include "svncpp/targets.hpp"

@@ -37,7 +37,6 @@
 #include "apr_time.h"
 
 // svncpp
-#include "svncpp/check.hpp"
 #include "svncpp/client.hpp"
 #include "svncpp/status.hpp"
 #include "svncpp/path.hpp"

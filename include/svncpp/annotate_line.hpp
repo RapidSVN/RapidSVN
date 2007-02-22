@@ -25,6 +25,10 @@
 #ifndef _SVNCPP_ANNOTATE_LINE_HPP_
 #define _SVNCPP_ANNOTATE_LINE_HPP_
 
+// subversion api
+#include "svn_types.h"
+
+
 namespace svn
 {
   /**

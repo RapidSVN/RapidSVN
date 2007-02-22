@@ -139,10 +139,6 @@ SOURCE=.\apr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\check.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
