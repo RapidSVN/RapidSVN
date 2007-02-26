@@ -51,7 +51,6 @@
 #include "svncpp/apr.hpp"
 #include "svncpp/context.hpp"
 #include "svncpp/context_listener.hpp"
-#include "svncpp/check.hpp"
 
 namespace svn
 {
