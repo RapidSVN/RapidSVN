@@ -213,7 +213,8 @@ VerbList::~VerbList()
   delete m;
 }
 
-void VerbList::InitFromDocument (const wxString & document_path, bool isAFolder)
+void 
+VerbList::InitFromDocument (const wxString & document_path, bool isAFolder)
 {
 
   // Algorithm:
@@ -251,8 +252,10 @@ void VerbList::InitFromDocument (const wxString & document_path, bool isAFolder)
       return;
 
     wxRegKey ext_key (regKeyHKCR, extension_key_name);
-    if (!ext_key.QueryValue (NULL, progid_key_name))
-      return;
+    if (!ext_key.HasValue (NULL))
+      return; 
+
+    ext_key.QueryValue (NULL, progid_key_name);
   }
 
   // Get information on progid (name, verbs)
