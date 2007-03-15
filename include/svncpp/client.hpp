@@ -56,14 +56,17 @@ namespace svn
 {
   // forward declarations
   class Context;
+  class DirEntry;
+  class Info;
   class Status;
   class Targets;
-  class DirEntry;
 
+  typedef std::vector<AnnotateLine> AnnotatedFile;
+  typedef std::vector<DirEntry> DirEntries;
+  typedef std::vector<Info> InfoVector;
   typedef std::vector<LogEntry> LogEntries;
   typedef std::vector<Status> StatusEntries;
-  typedef std::vector<DirEntry> DirEntries;
-  typedef std::vector<AnnotateLine> AnnotatedFile;
+
 
   // map of property names to values
   typedef std::map<std::string,std::string> PropertiesMap;
@@ -150,7 +153,7 @@ namespace svn
               const Revision & revision, 
               bool recurse,
               bool ignore_externals = false,
-              const Revision & peg_revision = Revision ()) throw (ClientException);
+              const Revision & peg_revision = Revision::UNSPECIFIED) throw (ClientException);
   
     /**
      * relocate wc @a from to @a to
@@ -251,7 +254,7 @@ namespace svn
     std::string
     cat (const Path & path, 
          const Revision & revision,
-         const Revision & peg_revision = Revision ()) throw (ClientException);
+         const Revision & peg_revision = Revision::UNSPECIFIED) throw (ClientException);
 
 
     /**
@@ -274,7 +277,7 @@ namespace svn
     get (Path & dstPath, 
          const Path & path,
          const Revision & revision, 
-         const Revision & peg_revision = Revision ()) throw (ClientException);
+         const Revision & peg_revision = Revision::UNSPECIFIED) throw (ClientException);
 
 
     /**
@@ -375,7 +378,7 @@ namespace svn
               const Path & to_path,
               const Revision & revision,
               bool overwrite = false,
-              const Revision & peg_revision = Revision (),
+              const Revision & peg_revision = Revision::UNSPECIFIED,
               bool ignore_externals = false,
               bool recurse = true,
               const char * native_eol = NULL) throw (ClientException);
@@ -423,15 +426,25 @@ namespace svn
            bool notice_ancestry = false,
            bool dry_run = false) throw (ClientException);
 
+
     /**
-     * Retrieve information for the given path
-     * from the wc
+     * retrieve information about the given path
+     * or URL
      *
-     * @param path
-     * @return Entry
+     * @see Client::status
+     * @see Info
+     *
+     * @param pathOrUrl
+     * @param pegRevision
+     * @param revision
+     * @param recurse
      */
-    Entry
-    info (const char * path);
+    InfoVector
+    info (const Path & pathOrUrl,
+          bool recurse=false,
+          const Revision & revision = Revision::UNSPECIFIED,
+          const Revision & pegRevision = Revision::UNSPECIFIED) throw (ClientException);
+
 
     /**
      * Retrieve log information for the given path

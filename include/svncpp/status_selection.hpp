@@ -23,14 +23,14 @@
  * ====================================================================
  */
 
-#ifndef _SVNCPP_TARGETS_HPP_
-#define _SVNCPP_TARGETS_HPP_
+#ifndef _SVNCPP_STATUS_SELECTION_HPP_
+#define _SVNCPP_STATUS_SELECTION_HPP_
 
 // stl
 #include <vector>
 
-// apr api
-#include "apr_tables.h"
+// svncpp
+#include "svncpp/status.hpp"
 
 
 namespace svn
@@ -38,47 +38,36 @@ namespace svn
   // forward declarations
   class Path;
   class Pool;
+  class Targets;
 
   /**
-   * Encapsulation for Subversion target arrays handling
+   * Container for a vector full of @ref Status
    */
-  class Targets
+  class StatusSel
   {
   public:
     /** 
-     * Constructor
-     *
-     * @param targets vector of paths
+     * default constructor
      */
-    Targets (const std::vector<Path> & targets);
+    StatusSel ();
     
     /**
-     * Constructor from an APR array containing
-     * char *.
-     *
-     * @param targets APR array header
+     * Destructor
      */
-    Targets (const apr_array_header_t * targets);
-
-    /**
-     * Constructor. Initializes list with just
-     * one entry
-     *
-     * @param target
-     */
-    Targets (const char * target = 0);
+    virtual ~ StatusSel ();
 
     /**
      * Copy Constructor
      *
-     * @param targets Source
+     * @param src Source
      */
-    Targets (const Targets & targets);
+    StatusSel (const StatusSel & src);
 
     /**
-     * Destructor
+     * Assignment operator
      */
-    virtual ~Targets ();
+    StatusSel &
+    operator = (const StatusSel & src);
 
     /**
      * Returns an apr array containing
@@ -94,60 +83,77 @@ namespace svn
      *
      * @return vector of paths
      */
-    const std::vector<Path> &
-    targets() const;
+    const Targets & 
+    targets () const;
+
+    /**
+     * returns the first target in the list
+     * or an empty Path if no entries
+     * are present
+     * @return the first @ref Path in the list
+     */
+    const Path &
+    target () const;
 
     /**
      * @return the number of targets
      */
     size_t size () const;
+    
+    /**
+     * reserves @a size 
+     */
+    void
+    reserve (size_t size);
+    
+    /**
+     * add and check the next entry 
+     *
+     * @param status @ref Status to add
+     */
+    void
+    push_back (const Status & status);
+    
+    /**
+     * cleans out all entries
+     */
+    void
+    clear ();
 
     /**
      * operator to return the vector
      *
      * @return vector with targets
      */
-    operator const std::vector<Path> & () const
-    {
-      return m_targets;
-    }
+    operator const std::vector<Path> & () const;
 
-    /**
-     * returns one single target. in fact,
-     * the first in the vector, it there are more
-     * than one. if there is no target returns
-     * an empty path
-     *
-     * @return single path
-     */
-    const Path
-    target () const;
+    /** at least one target is a file */
+    bool 
+    hasFiles () const;
 
-    /**
-     * adds a @ref Path to the existing entries
-     *
-     * @remark you have to make sure the path is
-     *         unique
-     */
-    void
-    push_back (const Path & path);
+    /** at least one target is a directory */
+    bool 
+    hasDirs () const;
 
-    
-    /**
-     * clears all entries 
-     */
-    void
-    clear ();
+    /** at least one target is versioned */
+    bool 
+    hasVersioned () const;
 
-    /**
-     * reserve the size for following calls
-     * to @ref push_back
-     */
-    void
-    reserve (size_t size);
+    /** at least one target is unversioned */
+    bool 
+    hasUnversioned () const;
+
+    /** at least one target is a repository URL */
+    bool 
+    hasUrl () const;
+
+    /** at least one target is a local file or dir */
+    bool 
+    hasLocal () const;
 
   private:
-    std::vector<Path> m_targets;
+    struct Data;
+    Data * m;
   };
 }
 

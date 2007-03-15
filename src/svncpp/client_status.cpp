@@ -38,6 +38,7 @@
 #include "svncpp/client.hpp"
 #include "svncpp/dirent.hpp"
 #include "svncpp/exception.hpp"
+#include "svncpp/info.hpp"
 #include "svncpp/pool.hpp"
 #include "svncpp/status.hpp"
 #include "svncpp/targets.hpp"
@@ -82,9 +83,10 @@ namespace svn
     return NULL;
   }
 
-  static void StatusEntriesFunc (void *baton,
-                                 const char *path,
-                                 svn_wc_status2_t *status)
+  static void 
+  statusEntriesFunc (void *baton,
+                     const char *path,
+                     svn_wc_status2_t *status)
   {
     StatusEntries * entries = static_cast<StatusEntries *>(baton);
 
@@ -110,7 +112,7 @@ namespace svn
       &revnum,    // revnum
       path,       // path
       rev,        // revision
-      StatusEntriesFunc, // status func
+      statusEntriesFunc, // status func
       &entries,   // status baton
       descend,    // recurse
       get_all,
@@ -258,27 +260,50 @@ namespace svn
     return entries;
   }
 
-  Entry
-  Client::info (const char * path)
+
+  /** 
+   * callback function for Client::info, will be
+   * called for every entry svn_client_info wants to
+   * return
+   */
+  static svn_error_t *
+  infoReceiverFunc (void * baton, const char * path,
+                    const svn_info_t * info,
+                    apr_pool_t * pool)
+  {
+    InfoVector * infoVector = static_cast<InfoVector *>(baton);
+
+    infoVector->push_back (Info (path, info));
+
+    return 0;
+  }
+
+
+  InfoVector
+  Client::info (const Path & pathOrUrl,
+                bool recurse,
+                const Revision & revision,
+                const Revision & pegRevision)
   {
     Pool pool;
-    svn_wc_adm_access_t * adm_access;
-
+    InfoVector infoVector;
+    
     svn_error_t * error =
-      svn_wc_adm_probe_open (&adm_access, NULL, path, FALSE,
-                             FALSE, pool);
-    if (error != NULL)
+      svn_client_info (pathOrUrl.c_str (),
+                       pegRevision.revision (),
+                       revision.revision (),
+                       infoReceiverFunc,
+                       &infoVector,
+                       recurse,
+                       *m_context,
+                       pool);
+
+    if (error != 0)
       throw ClientException (error);
 
-    const svn_wc_entry_t * entry;
-    error = svn_wc_entry (&entry, path, adm_access, FALSE, pool);
-
-    if (error != NULL)
-      throw ClientException (error);
-
-    // entry may be NULL
-    return Entry( entry );
+    return infoVector;
   }
+
 }
 
 /* -----------------------------------------------------------------

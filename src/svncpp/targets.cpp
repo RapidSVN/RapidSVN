@@ -125,6 +125,24 @@ namespace svn
       return "";
     }
   }
+
+  void
+  Targets::push_back (const Path & path)
+  {
+    m_targets.push_back (path);
+  }
+
+  void
+  Targets::clear ()
+  {
+    m_targets.clear ();
+  }
+
+  void
+  Targets::reserve (size_t size)
+  {
+    m_targets.reserve (size);
+  }
 }
 
 /* -----------------------------------------------------------------

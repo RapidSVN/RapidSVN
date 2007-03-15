@@ -81,6 +81,32 @@ namespace svn
     return *this;
   }
 
+  const svn_node_kind_t
+  Info::
+  kind () const
+  {
+    if (0 == m->info)
+      return svn_node_none;
+    else
+      return m->info->kind;
+  }
+
+  bool 
+  Info::isValid () const
+  {
+    return m->info != 0;
+  }
+
+
+  const char * 
+  Info::url () const
+  {
+    if (0 == m->info)
+      return 0;
+    else
+      return m->info->URL;
+  }
+
 }
 
 /* -----------------------------------------------------------------

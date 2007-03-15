@@ -191,6 +191,10 @@ SOURCE=.\exception.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\info.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\log_entry.cpp
 # End Source File
 # Begin Source File
@@ -271,6 +275,10 @@ SOURCE=..\..\include\svncpp\exception.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\include\svncpp\info.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\include\svncpp\log_entry.hpp
 # End Source File
 # Begin Source File
@@ -292,6 +300,10 @@ SOURCE=..\..\include\svncpp\revision.hpp
 # Begin Source File
 
 SOURCE=..\..\include\svncpp\status.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\include\svncpp\status_selection.hpp
 # End Source File
 # Begin Source File
 

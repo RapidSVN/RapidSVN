@@ -28,6 +28,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/info.hpp"
 #include "svncpp/status.hpp"
 #include "svncpp/url.hpp"
 
@@ -50,14 +51,13 @@ SwitchAction::Prepare ()
   }
 
   // first try to get the URL for the target
-  wxString url;
-  {
-    svn::Path path = GetTarget ();
-    svn::Client client (GetContext ());
-    svn::Entry entry (client.info (path.c_str ()));
-    const char* urlCharBuffer = entry.url ();
-    url = Utf8ToLocal (svn::Url::unescape (urlCharBuffer));
-  }
+  svn::Path path = GetTarget ();
+  svn::Client client (GetContext ());
+  svn::InfoVector infoVector (client.info (path.c_str ()));
+  if (infoVector.size () != 1)
+    return false;
+
+  wxString url (Utf8ToLocal (svn::Url::unescape (infoVector[0].url ())));
 
   // create flags for the dialog
   int flags = UpdateDlg::WITH_URL;

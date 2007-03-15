@@ -31,6 +31,7 @@
 #include "svncpp/client.hpp"
 #include "svncpp/entry.hpp"
 #include "svncpp/exception.hpp"
+#include "svncpp/info.hpp"
 #include "svncpp/status.hpp"
 #include "svncpp/url.hpp"
 
@@ -116,12 +117,15 @@ public:
   checkPath (const svn::Path & path)
   {
     svn::Client client (GetContext ());
-    svn::Entry entry (client.info (path.c_str ()));
-
-    if (!entry.isValid ())
+    svn::InfoVector infoVector (client.info (path.c_str ()));
+    if (infoVector.size () != 1)
       return false;
 
-    if (entry.kind () != svn_node_file)
+    const svn::Info info = infoVector[0];
+    if (!info.isValid ())
+      return false;
+
+    if (info.kind () != svn_node_file)
       return false;
 
     return true;

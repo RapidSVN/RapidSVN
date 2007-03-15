@@ -213,6 +213,12 @@ namespace svn
 
     return *this;
   }
+
+  bool
+  Status::isset () const
+  {
+    return m->path.length () > 0;
+  }
 }
 /* -----------------------------------------------------------------
  * local variables:

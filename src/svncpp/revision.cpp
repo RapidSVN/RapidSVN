@@ -29,10 +29,12 @@
 
 namespace svn
 {
-  const svn_opt_revision_kind Revision::START = svn_opt_revision_number;
-  const svn_opt_revision_kind Revision::BASE = svn_opt_revision_base;
-  const svn_opt_revision_kind Revision::HEAD = svn_opt_revision_head;
-  const svn_opt_revision_kind Revision::WORKING = svn_opt_revision_working;
+  const Revision Revision::START (svn_opt_revision_number);
+  const Revision Revision::BASE (svn_opt_revision_base);
+  const Revision Revision::HEAD (svn_opt_revision_head);
+  const Revision Revision::WORKING (svn_opt_revision_working);
+  const Revision Revision::UNSPECIFIED (svn_opt_revision_unspecified);
+
 
   Revision::Revision (const svn_opt_revision_t * revision)
   {

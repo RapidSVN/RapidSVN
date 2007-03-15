@@ -49,10 +49,11 @@ namespace svn
     init (const svn_opt_revision_t * revision);
 
   public:
-    static const svn_opt_revision_kind START;
-    static const svn_opt_revision_kind BASE;
-    static const svn_opt_revision_kind HEAD;
-    static const svn_opt_revision_kind WORKING;
+    static const Revision START;
+    static const Revision BASE;
+    static const Revision HEAD;
+    static const Revision WORKING;
+    static const Revision UNSPECIFIED;
 
     /**
      * Constructor
@@ -115,6 +116,15 @@ namespace svn
      */
     const svn_opt_revision_kind 
     kind () const;
+
+    /**
+     * @see kind (). Same function
+     * but with operator overloading
+     */
+    operator svn_opt_revision_kind () const
+    {
+      return kind ();
+    }
 
     /**
      * @return date

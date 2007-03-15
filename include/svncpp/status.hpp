@@ -157,6 +157,14 @@ namespace svn
     Status &
     operator = (const Status &);
 
+    /** 
+     * check whether the instance contains real data
+     * or nothing if it has constructed with the default
+     * constructor
+     */
+    bool
+    isset () const;
+
   private:
     struct Data;
     Data * m;
