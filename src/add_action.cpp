@@ -28,6 +28,8 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/status_selection.hpp"
+#include "svncpp/targets.hpp"
 
 // app
 #include "ids.hpp"
@@ -45,7 +47,7 @@ public:
 };
 
 AddAction::AddAction (wxWindow * parent, bool recursive)
-  : Action (parent, _("Add"), GetBaseFlags ()),
+  : Action (parent, _("Add"), 0),
     m (new Data (recursive))
 {
 }
@@ -67,7 +69,7 @@ AddAction::Perform ()
 {
   svn::Client client (GetContext ());
 
-  const std::vector<svn::Path> & v = GetTargets ();
+  const std::vector<svn::Path> & v = GetTargets ().targets ();
   std::vector<svn::Path>::const_iterator it;
 
   for (it = v.begin (); it != v.end (); it++)
@@ -79,6 +81,23 @@ AddAction::Perform ()
 
   return true;
 }
+
+
+bool
+AddAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  if (0 == statusSel.size ())
+    return false;
+
+  if (statusSel.hasUrl ())
+    return false;
+
+  if (statusSel.hasVersioned ())
+    return false;
+
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

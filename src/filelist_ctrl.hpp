@@ -29,10 +29,6 @@
 #include "wx/listctrl.h"
 #include "wx/dynarray.h"
 
-// svncpp
-#include "svncpp/status.hpp"
-#include "svncpp/path.hpp"
-
 /**
  * Define an array of indexes of the selected items.
  */
@@ -45,9 +41,10 @@ WX_DEFINE_ARRAY (long, IndexArray);
 // forward declarations
 namespace svn
 {
-  class Targets;
   class Context;
   class Path;
+  class Status;
+  class StatusSel;
 }
 
 class FileListCtrl : public wxListView
@@ -225,15 +222,23 @@ public:
   const IndexArray
   GetSelectedItems () const;
 
-  const svn::Targets
-  GetTargets () const;
+//TODO  const svn::Targets
+//TODO  GetTargets () const;
 
+  /** 
+   * the selected @ref Status instances
+   */
+  const svn::StatusSel &
+  GetStatusSel () const;
+
+#if 0
   /**
    * determine the properties of what has been selected
    * in terms of the relevant Action Flags.
    */
   unsigned int
   GetSelectionActionFlags () const;
+#endif
 
   svn::Context *
   GetContext () const;

@@ -219,6 +219,10 @@ SOURCE=.\status.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\status_selection.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\targets.cpp
 # End Source File
 # Begin Source File

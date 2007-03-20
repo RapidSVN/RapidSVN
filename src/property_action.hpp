@@ -26,23 +26,28 @@
 #ifndef _PROPERTY_ACTION_H_INCLUDED_
 #define _PROPERTY_ACTION_H_INCLUDED_
 
+// app
 #include "action.hpp"
+
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
 
 class PropertyAction : public Action
 {
 public:
   PropertyAction (wxWindow * parent);
 
-  virtual bool Prepare ();
-  virtual bool Perform ();
+  virtual bool 
+  Prepare ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
-  }
+  virtual bool 
+  Perform ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 };
 
 #endif

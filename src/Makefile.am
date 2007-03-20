@@ -9,6 +9,7 @@ rapidsvn_SOURCES= \
 	about_dlg.cpp \
 	action.cpp \
 	action_event.cpp \
+	action_factory.cpp \
 	add_action.cpp \
 	annotate_action.cpp \
 	annotate_dlg.cpp \

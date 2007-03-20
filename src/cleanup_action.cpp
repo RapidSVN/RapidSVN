@@ -28,6 +28,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "cleanup_action.hpp"
@@ -36,7 +37,7 @@
 #include "utils.hpp"
 
 CleanupAction::CleanupAction (wxWindow * parent)
-  : Action (parent, _("Cleanup"), GetBaseFlags ())
+  : Action (parent, _("Cleanup"), 0)
 {
 }
 
@@ -57,6 +58,22 @@ CleanupAction::Perform ()
 
   return true;
 }
+
+bool
+CleanupAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  if (statusSel.size () != 1)
+    return false;
+
+  if (statusSel.hasUnversioned ())
+    return false;
+
+  if (statusSel.hasUrl ())
+    return false;
+
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

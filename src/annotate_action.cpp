@@ -29,6 +29,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/path.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "action_event.hpp"
@@ -77,7 +78,7 @@ public:
 
 AnnotateAction::AnnotateAction (wxWindow * parent,
                         const AnnotateData & data)
-  : Action (parent, _("Annotate"), GetBaseFlags ()),
+  : Action (parent, _("Annotate"), UPDATE_LATER),
     dlg (parent, _("Annotate"))
 {
   m = new Data (this);
@@ -140,6 +141,20 @@ AnnotateAction::Perform ()
   return true;
 }
 
+bool
+AnnotateAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  if (statusSel.size () != 1)
+    return false;
+
+  if (statusSel.hasUnversioned ())
+    return false;
+
+  if (statusSel.hasDirs ())
+    return false;
+
+  return true;
+}
 
 /* -----------------------------------------------------------------
  * local variables:

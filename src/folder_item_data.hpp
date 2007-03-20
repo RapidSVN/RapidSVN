@@ -29,6 +29,9 @@
 #include "wx/wx.h"
 #include "wx/treectrl.h"
 
+// svncpp
+#include "svncpp/status.hpp"
+
 enum
 {
   FOLDER_TYPE_INVALID,
@@ -120,11 +123,24 @@ public:
     }
   }
 
+  const svn::Status &
+  getStatus () const
+  {
+    return m_status;
+  }
+
+  void
+  setStatus (const svn::Status & status)
+  {
+    m_status = status;
+  }
+
 private:
   int m_folderType;
   wxString m_path;
   wxString m_name;
   bool m_hasChildren;
+  svn::Status m_status;
 
   /**
    * disallow assignment operator

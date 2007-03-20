@@ -31,7 +31,10 @@
 #include "annotate_dlg.hpp"
 
 // forward declarations
-class wxWindow;
+namespace svn
+{
+  class StatusSel;
+}
 
 /**
  * This action downloads a specific revision 
@@ -56,20 +59,15 @@ public:
   /** Desctructor */
   virtual ~AnnotateAction ();
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
 
-  /**
-   * Describe which targets the action can perform upon
-   * when viewing a file
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|
-      UPDATE_LATER|
-      VERSIONED_WC_TYPE|
-      RESPOSITORY_TYPE;
-  }
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
+
 
 private:
   struct Data;

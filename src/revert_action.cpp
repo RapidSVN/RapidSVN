@@ -32,7 +32,7 @@
 #include "revert_action.hpp"
 
 RevertAction::RevertAction (wxWindow * parent)
-  : Action (parent, _("Revert"), GetBaseFlags ())
+  : Action (parent, _("Revert"))
 {
 }
 
@@ -58,6 +58,12 @@ RevertAction::Perform ()
   svn::Client client (GetContext ());
   client.revert (GetTargets (), false);
 
+  return true;
+}
+
+bool
+RevertAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
   return true;
 }
 

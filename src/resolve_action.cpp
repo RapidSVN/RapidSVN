@@ -28,12 +28,13 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/targets.hpp"
 
 // app
 #include "resolve_action.hpp"
 
 ResolveAction::ResolveAction (wxWindow * parent)
-  : Action (parent, _("Resolve"), GetBaseFlags ())
+  : Action (parent, _("Resolve"))
 {
 }
 
@@ -60,6 +61,13 @@ ResolveAction::Perform ()
 
   return true;
 }
+
+bool
+ResolveAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

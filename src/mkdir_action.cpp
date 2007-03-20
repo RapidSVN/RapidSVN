@@ -35,7 +35,7 @@
 #include "utils.hpp"
 
 MkdirAction::MkdirAction (wxWindow * parent, const wxString & path)
- : Action (parent, _("Mkdir"), GetBaseFlags ()),
+ : Action (parent, _("Mkdir"), UPDATE_TREE),
    m_path (path)
 {
 }
@@ -77,6 +77,13 @@ MkdirAction::Perform ()
   client.mkdir (pathUtf8);
   return true;
 }
+
+bool
+MkdirAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -38,7 +38,7 @@
 #include "utils.hpp"
 
 SwitchAction::SwitchAction (wxWindow * parent)
- : Action (parent, _("Switch URL"), GetBaseFlags ())
+ : Action (parent, _("Switch URL"))
 {
 }
 
@@ -97,6 +97,13 @@ SwitchAction::Perform ()
 
   return true;
 }
+
+bool
+SwitchAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

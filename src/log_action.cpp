@@ -30,6 +30,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/revision.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "action_event.hpp"
@@ -38,7 +39,7 @@
 #include "log_data.hpp"
 
 LogAction::LogAction (wxWindow * parent)
-  : Action (parent, _("Log"), GetBaseFlags ())
+  : Action (parent, _("Log"), DONT_UPDATE)
 {
 }
 
@@ -55,6 +56,18 @@ LogAction::Perform ()
   LogData * data = new LogData (entries, target);
   ActionEvent::Post (GetParent (), TOKEN_LOG, data);
   
+  return true;
+}
+
+bool
+LogAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  if (1 != statusSel.size ())
+    return false;
+
+  if (statusSel.hasUnversioned ())
+    return false;
+
   return true;
 }
 

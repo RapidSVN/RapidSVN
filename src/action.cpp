@@ -29,6 +29,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "action.hpp"
@@ -93,7 +94,7 @@ public:
   svn::Path path;
 
 
-  svn::Targets targets;
+  svn::StatusSel statusSel;
 
   Data (wxWindow * parnt, const wxString & nam, unsigned int flgs)
     :  parent (parnt), name (nam), flags (flgs),
@@ -113,21 +114,7 @@ public:
 
 const unsigned int Action::DONT_UPDATE          = 0x0001;
 const unsigned int Action::UPDATE_LATER         = 0x0002;
-const unsigned int Action::WITHOUT_TARGET       = 0x0004;
-const unsigned int Action::SINGLE_TARGET        = 0x0008;
-const unsigned int Action::MULTIPLE_TARGETS     = 0x0010;
-const unsigned int Action::RESPOSITORY_TYPE     = 0x0020;
-const unsigned int Action::VERSIONED_WC_TYPE    = 0x0040;
-const unsigned int Action::UNVERSIONED_WC_TYPE  = 0x0080;
-const unsigned int Action::IS_DIR               = 0x0100;
-const unsigned int Action::UPDATE_TREE          = 0x0200;
-
-// combined flags
-const unsigned int Action::TARGET_QUANTITY_MASK = SINGLE_TARGET|
-                                                  MULTIPLE_TARGETS;
-const unsigned int Action::TARGET_TYPE_MASK     = RESPOSITORY_TYPE|
-                                                  VERSIONED_WC_TYPE|
-                                                  UNVERSIONED_WC_TYPE;
+const unsigned int Action::UPDATE_TREE          = 0x0004;
 
 
 Action::Action (wxWindow * parent, const wxString & name, unsigned int flgs)
@@ -212,59 +199,29 @@ Action::GetContext ()
 }
 
 void
-Action::SetTargets (const svn::Targets & targets)
+Action::SetStatusSel (const svn::StatusSel & statusSel)
 {
-  m->targets = targets;
+  m->statusSel = statusSel;
 }
 
 const svn::Targets &
-Action::GetTargets ()
+Action::GetTargets () const
 {
-  return m->targets;
+  return m->statusSel.targets ();
 }
 
 bool
 Action::Prepare ()
 {
-  bool result = true;
+  wxSetWorkingDirectory (Utf8ToLocal(m->path.c_str ()));
 
-  if ((GetFlags () & Action::WITHOUT_TARGET) == 0)
-  {
-    unsigned int quantityFlags = GetFlags() & Action::TARGET_QUANTITY_MASK;
-    if (quantityFlags == Action::SINGLE_TARGET)
-    {
-      if (m->targets.size () != 1)
-      {
-        wxMessageBox (_("Please select only one file or directory."),
-                      _("Error"),
-                      wxOK | wxICON_HAND);
-        result = false;
-      }
-    }
-    else
-    {
-      if (m->targets.size () < 1)
-      {
-        wxMessageBox (_("Nothing selected."),
-                      _("Error"),
-                      wxOK | wxICON_HAND);
-        result = false;
-      }
-    }
-  }
-
-  if (result)
-  {
-    wxSetWorkingDirectory (Utf8ToLocal(m->path.c_str ()));
-  }
-
-  return result;
+  return true;
 }
 
 const svn::Path
-Action::GetTarget ()
+Action::GetTarget () const
 {
-  return m->targets.target ();
+  return m->statusSel.target ();
 }
 
 const wxString &
@@ -283,12 +240,6 @@ unsigned int
 Action::GetFlags () const
 {
   return m->flags;
-}
-
-void
-Action::SetFlags (unsigned int flags)
-{
-  m->flags = flags;
 }
 
 svn::Path
@@ -325,6 +276,12 @@ Action::GetPathAsTempFile (const svn::Path & path,
       Utf8ToLocal (dstPath.c_str ()));
 
   return dstPath;
+}
+
+const svn::StatusSel &
+Action::GetStatusSel (void) const
+{
+  return m->statusSel;
 }
 
 /* -----------------------------------------------------------------

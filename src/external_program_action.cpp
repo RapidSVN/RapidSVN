@@ -22,13 +22,16 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-// svncpp
-#include "svncpp/url.hpp"
 
 // wx
 #include "wx/wx.h"
 #include "wx/filename.h"
 #include "wx/intl.h"
+
+// svncpp
+#include "svncpp/url.hpp"
+#include "svncpp/status_selection.hpp"
+
 
 // app
 #include "external_program_action.hpp"
@@ -40,8 +43,9 @@
 
 ExternalProgramAction::ExternalProgramAction (
   wxWindow * parent, long verb_id, bool treat_as_folder) 
- : Action (parent, _("Execute"), GetBaseFlags ()), 
-   m_verb_id (verb_id), m_treat_as_folder (treat_as_folder),
+ : Action (parent, _("Execute"), UPDATE_LATER), 
+   m_verb_id (verb_id), 
+   m_treat_as_folder (treat_as_folder),
    m_parent (parent)
 {
 }
@@ -140,6 +144,21 @@ ExternalProgramAction::Perform ()
       ActionEvent::Post (m_parent, TOKEN_CMD, cmd);
     }
   }
+
+  return true;
+}
+
+bool
+ExternalProgramAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  // works with all kinds of files and dirs,
+  // but only ONE is allowed
+  if (1 != statusSel.size ())
+    return false;
+
+  // directories are allowed only local
+  if (statusSel.hasUrl () && statusSel.hasDirs ())
+    return false;
 
   return true;
 }

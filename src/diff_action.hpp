@@ -28,7 +28,11 @@
 // app
 #include "action.hpp"
 
-// forward declaration
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
 struct DiffData;
 
 class DiffAction:public Action
@@ -53,16 +57,14 @@ public:
   /** Destructor */
   virtual ~DiffAction ();
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
+  
+  virtual bool 
+  Prepare ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return DONT_UPDATE|SINGLE_TARGET|MULTIPLE_TARGETS|RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
-  }
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   struct Data;

@@ -33,6 +33,12 @@
 #include "drag_n_drop_action.hpp"
 #include "drag_n_drop_data.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 
 /**
  * this action class can be used to copy, move and rename
@@ -51,16 +57,14 @@ public:
   
   virtual ~DragAndDropAction();
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
-  
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
-  }
+  virtual bool 
+  Perform ();
+
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   wxWindow * m_parent;

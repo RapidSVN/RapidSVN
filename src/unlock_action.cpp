@@ -28,7 +28,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
-#include "svncpp/targets.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "unlock_action.hpp"
@@ -37,7 +37,7 @@
 #include "utils.hpp"
 
 UnlockAction::UnlockAction (wxWindow * parent)
-  : Action (parent, _("Unlock"), GetBaseFlags ())
+  : Action (parent, _("Unlock"))
 {
 }
 
@@ -66,10 +66,16 @@ UnlockAction::Perform ()
 {
   svn::Client client (GetContext ());
 
-  const svn::Targets & targets = GetTargets ();
+  const svn::Targets & statusSel = GetTargets ();
 
-  client.unlock (targets, m_force);
+  client.unlock (statusSel, m_force);
 
+  return true;
+}
+
+bool
+UnlockAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
   return true;
 }
 

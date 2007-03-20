@@ -28,6 +28,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/targets.hpp"
 
 // app
 #include "import_dlg.hpp"
@@ -35,7 +36,7 @@
 #include "utils.hpp"
 
 ImportAction::ImportAction (wxWindow * parent)
-  :Action (parent, _("Import"), GetBaseFlags ())
+  :Action (parent, _("Import"))
 {
 }
 
@@ -79,6 +80,12 @@ ImportAction::Perform ()
   client.import (pathUtf8, repositoryUtf8.c_str (),
                  LogMessageUtf8.c_str (), m_data.Recursive);
 
+  return true;
+}
+
+bool
+ImportAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
   return true;
 }
 

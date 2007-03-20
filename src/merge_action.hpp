@@ -32,6 +32,12 @@
 #include "action.hpp"
 #include "merge_data.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 class MergeAction:public Action
 {
 public:
@@ -46,16 +52,14 @@ public:
    */
   MergeAction (wxWindow * frame, MergeData & data);
 
-  virtual bool Prepare ();
-  virtual bool Perform ();
+  virtual bool 
+  Prepare ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return WITHOUT_TARGET;
-  }
+  virtual bool 
+  Perform ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   MergeData m_data;

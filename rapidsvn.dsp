@@ -170,6 +170,10 @@ SOURCE=.\src\action_event.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\action_factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\add_action.cpp
 # End Source File
 # Begin Source File
@@ -455,6 +459,10 @@ SOURCE=.\src\action.hpp
 # Begin Source File
 
 SOURCE=.\src\action_event.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\action_factory.hpp
 # End Source File
 # Begin Source File
 

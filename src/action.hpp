@@ -27,7 +27,6 @@
 
 // svncpp
 #include "svncpp/path.hpp"
-#include "svncpp/targets.hpp"
 #include "svncpp/revision.hpp"
 
 // wxWidgets
@@ -40,6 +39,8 @@ class wxWindow;
 namespace svn
 {
   class Context;
+  class StatusSel;
+  class Targets;
 }
 
 /**
@@ -79,84 +80,14 @@ public:
   static const unsigned int UPDATE_TREE;
 
   /**
-   * the action does not depend on the currently selected
-   * target - so can proceed regardless
-   *
-   * @remarks Shouldn't be used with any of the @a TARGET_QUANTITY_MASK flags
-   */
-  static const unsigned int WITHOUT_TARGET;
-
-  /**
-   * the action can act on a single target
-   *
-   * @see TARGET_QUANTITY_MASK
-   */
-  static const unsigned int SINGLE_TARGET;
-
-  /**
-   * the action can act on multiple targets simultaneously
-   *
-   * @see TARGET_QUANTITY_MASK
-   */
-  static const unsigned int MULTIPLE_TARGETS;
-
-  /**
-   * covers both target quantity flags for some
-   * bitwise actsions, but not @a WITHOUT_TARGET
-   *
-   * @see SINGLE_TARGET
-   * @see MULTIPLE_TARGETS
-   */
-  static const unsigned int TARGET_QUANTITY_MASK;
-
-  /**
-   * the action can work with Url type paths
-   * from the repository
-   *
-   * @see TARGET_TYPE_MASK
-   */
-  static const unsigned int RESPOSITORY_TYPE;
-
-  /**
-   * the action can work with versioned
-   * files from the working copies
-   *
-   * @see TARGET_TYPE_MASK
-   */
-  static const unsigned int VERSIONED_WC_TYPE;
-
-  /**
-   * the action can work with un-versioned
-   * files from the working copies
-   *
-   * @see TARGET_TYPE_MASK
-   */
-  static const unsigned int UNVERSIONED_WC_TYPE;
-
-  /**
-   * covers the three target types for some
-   * bitwise actsions, but not @a IS_DIR
-   *
-   * @see RESPOSITORY_TYPE
-   * @see VERSIONED_WC_TYPE
-   * @see UNVERSIONED_WC_TYPE
-   */
-  static const unsigned int TARGET_TYPE_MASK;
-
-  /**
-   * used by the framework to indicate a target is a directory,
-   * either repository or working copy
-   */
-  static const unsigned int IS_DIR;
-
-  /**
    * constructor
    *
    * @param parent parent window
    * @param name of the action
-   * @param options
+   * @param flags
    */
-  Action (wxWindow * parent, const wxString & name, unsigned int flgs);
+  Action (wxWindow * parent, const wxString & name, 
+          unsigned int flags = 0);
 
   /**
    * destructor
@@ -240,25 +171,33 @@ public:
   GetPath ();
 
   /**
-   * sets the targets for the action.
-   * Not every action will need targets.
+   * sets a selection of @ref Status for the action.
+   * Not every action will need it.
+   *
+   * The contents of @a statusSel will be copied
    *
    * @param targets
    */
   void
-  SetTargets (const svn::Targets & targets);
+  SetStatusSel (const svn::StatusSel & statusSel);
+
+  /**
+   * @return the status selection for this action
+   */
+  const svn::StatusSel &
+  GetStatusSel () const;
 
   /**
    * @return the targets for this action
    */
   const svn::Targets &
-  GetTargets ();
+  GetTargets () const;
 
   /**
    * @return a single target for this action
    */
   const svn::Path
-  GetTarget ();
+  GetTarget () const;
 
 
   /**
@@ -302,14 +241,6 @@ public:
   GetPathAsTempFile (
 		const svn::Path & path,
 		const svn::Revision & revision = svn::Revision::HEAD);
-
-protected:
-  /**
-   * sets the flags for this action - but passing into
-   * the constructor is preferred
-   */
-  void
-  SetFlags (unsigned int flags);
 
 private:
   struct Data;

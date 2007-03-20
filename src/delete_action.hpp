@@ -32,22 +32,25 @@
 #include "action.hpp"
 #include "delete_dlg.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 class DeleteAction:public Action
 {
 public:
   DeleteAction (wxWindow * parent);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET| MULTIPLE_TARGETS| RESPOSITORY_TYPE|
-           VERSIONED_WC_TYPE| UNVERSIONED_WC_TYPE| UPDATE_TREE;
-  }
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   bool m_force;

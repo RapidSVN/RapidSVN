@@ -39,7 +39,8 @@
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/entry.hpp"
-#include "svncpp/targets.hpp"
+#include "svncpp/status.hpp"
+#include "svncpp/status_selection.hpp"
 #include "svncpp/url.hpp"
 
 // app
@@ -650,6 +651,8 @@ public:
   bool ShowUnversioned;
   bool IgnoreExternals;
 
+  svn::StatusSel statusSel;
+
   /**
    * This table holds information about image index in a image list.
    * It will be accessed using a status code as a first index and locked
@@ -991,11 +994,11 @@ FileListCtrl::RefreshFileList ()
 
   svn::Client client (m->Context);
 
-  const svn::StatusEntries statusVector =
+  const svn::StatusEntries statusSelector =
     client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate, false, m->IgnoreExternals);
 
   svn::StatusEntries::const_iterator it;
-  for (it = statusVector.begin (); it != statusVector.end (); it++)
+  for (it = statusSelector.begin (); it != statusSelector.end (); it++)
   {
     const svn::Status & status = *it;
 
@@ -1184,6 +1187,7 @@ FileListCtrl::GetSelectedItems () const
   return indx_arr;
 }
 
+#if 0
 const svn::Targets
 FileListCtrl::GetTargets () const
 {
@@ -1206,13 +1210,17 @@ FileListCtrl::GetTargets () const
 
   return svn::Targets (v);
 }
+#endif
 
-unsigned int
-FileListCtrl::GetSelectionActionFlags () const
+const svn::StatusSel &
+FileListCtrl::GetStatusSel () const
 {
+  m->statusSel.clear ();
+
   IndexArray arr = GetSelectedItems ();
-  size_t i, counter = 0;
-  unsigned int flags = 0;
+  size_t i;
+
+  m->statusSel.reserve (arr.GetCount ());
 
   for (i = 0; i < arr.GetCount (); i++)
   {
@@ -1222,34 +1230,10 @@ FileListCtrl::GetSelectionActionFlags () const
     if (status == 0)
       continue;
 
-    ++counter;
-    if (IsDir (status))
-    {
-      flags |= Action::IS_DIR;
-    }
-    if (svn::Url::isValid (status->path ()))
-    {
-      flags |= Action::RESPOSITORY_TYPE;
-    }
-    else
-    {
-      if (status->isVersioned ())
-      {
-        flags |= Action::VERSIONED_WC_TYPE;
-      }
-      else
-      {
-        flags |= Action::UNVERSIONED_WC_TYPE;
-      }
-    }
+    m->statusSel.push_back (*status);
   }
 
-  if (counter)
-  {
-    flags |= counter == 1 ? Action::SINGLE_TARGET : Action::MULTIPLE_TARGETS;
-  }
-
-  return flags;
+  return m->statusSel;
 }
 
 svn::Context *

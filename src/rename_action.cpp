@@ -35,7 +35,7 @@
 #include "utils.hpp"
 
 RenameAction::RenameAction (wxWindow * parent)
- : Action (parent, wxEmptyString, GetBaseFlags ())
+ : Action (parent, wxEmptyString, UPDATE_TREE)
 {
   SetName (_("Rename"));
 
@@ -84,6 +84,13 @@ RenameAction::Perform ()
 
   return true;
 }
+
+bool
+RenameAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

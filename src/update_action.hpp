@@ -29,25 +29,25 @@
 #include "action.hpp"
 #include "update_data.hpp"
 
-class svn::Targets;
-class Tracer;
-class wxWindow;
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
 
 class UpdateAction:public Action
 {
 public:
   UpdateAction (wxWindow * parent);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|VERSIONED_WC_TYPE;
-  }
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   UpdateData m_data;

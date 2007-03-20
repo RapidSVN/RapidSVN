@@ -29,7 +29,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/pool.hpp"
-#include "svncpp/targets.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "commit_action.hpp"
@@ -38,7 +38,7 @@
 #include "utils.hpp"
 
 CommitAction::CommitAction (wxWindow * parent)
-  : Action (parent, _("Commit"), GetBaseFlags ())
+  : Action (parent, _("Commit"), 0)
 {
 }
 
@@ -69,14 +69,14 @@ CommitAction::Perform ()
 {
   svn::Client client (GetContext ());
 
-  const svn::Targets & targets = GetTargets ();
+  const svn::StatusSel & statusSel = GetStatusSel ();
 
   std::string messageUtf8 (LocalToUtf8 (m_message));
 
   svn::Pool pool;
 
-  long revision = 
-    client.commit (targets.array (pool), messageUtf8.c_str (),
+  svn_revnum_t revision = 
+    client.commit (statusSel.targets (), messageUtf8.c_str (),
                    m_recursive, m_keepLocks);
 
   wxString str;
@@ -86,6 +86,21 @@ CommitAction::Perform ()
                           wxT("."),
                           _("Committed revision"), revision);
   Trace (str);
+
+  return true;
+}
+
+bool
+CommitAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  if (0 == statusSel.size ())
+    return false;
+
+  if (statusSel.hasUnversioned ())
+    return false;
+
+  if (statusSel.hasUrl ())
+    return false;
 
   return true;
 }

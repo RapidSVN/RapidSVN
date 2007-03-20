@@ -22,55 +22,53 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+#ifndef _ACTION_FACTORY_H_
+#define _ACTION_FACTORY_H_
 
-// wxWidgets
-#include "wx/wx.h"
+// forward declarations
+class Action;
+class wxWindow;
 
-// svncpp
-#include "svncpp/client.hpp"
-#include "svncpp/path.hpp"
-
-// app
-#include "ids.hpp"
-#include "get_action.hpp"
-#include "utils.hpp"
-
-GetAction::GetAction (wxWindow * parent, const GetData & data)
-  : Action (parent, _("Update")),
-    m_data (data)
+namespace svn
 {
+  class StatusSel;
 }
 
-bool
-GetAction::Prepare ()
+/**
+ * this is a factory class that checks, whether
+ * an @ref Action for a @a id is valid and next,
+ * creates a new @ref Action instance (an inherited 
+ * @ref Action of course, like @ref CheckoutAction
+ */
+class ActionFactory
 {
-  return true;
-}
+public:
+  /** 
+   * check whether the selection of @a statusSel can
+   * be used for the action identified by @a id
+   *
+   * @param id id of the action
+   * @param targets
+   * @retval true valid
+   */
+  static bool 
+  CheckIdForStatusSel (int id, const svn::StatusSel & statusSel);
 
-bool
-GetAction::Perform ()
-{
-  svn::Client client (GetContext ());
 
-  wxString msg;
-  msg.Printf (wxT("Getting: %s, Revision %d"), m_data.path.c_str(), 
-              m_data.revision.revnum());
-  Trace(msg);
+  /**
+   * creates a new action instance. The correct action is
+   * derived from the id. @a ID_Checkout belongs to @ref CheckoutAction
+   * and so on
+   *
+   * @param parent parent window for the new action
+   * @param id the id of the action
+   */
+  static Action *
+  CreateAction (wxWindow * parent, int id);
+};
 
-  wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
-  client.update (svn::Path (LocalToUtf8 (m_data.path)),
-                 m_data.revision,
-                 true, false);
 
-  return true;
-}
-
-bool
-GetAction::CheckStatusSel (const svn::StatusSel & statusSel)
-{
-  return true;
-}
-
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

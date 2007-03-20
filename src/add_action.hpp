@@ -31,6 +31,12 @@
 // app
 #include "action.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 class AddAction:public Action
 {
 public:
@@ -43,14 +49,15 @@ public:
   AddAction (wxWindow * parent, bool recursive=false);
   virtual ~AddAction ();
 
-  virtual bool Prepare ();
-  virtual bool Perform ();
+  virtual bool 
+  Prepare ();
 
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|UNVERSIONED_WC_TYPE;
-  }
-  
+  virtual bool 
+  Perform ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
+
 private:
   struct Data;
   Data * m;

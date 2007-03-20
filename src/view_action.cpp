@@ -29,6 +29,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/path.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "action_event.hpp"
@@ -63,7 +64,7 @@ public:
 
 ViewAction::ViewAction (wxWindow * parent,
                         const GetData & data)
-  : Action (parent, _("View"), GetViewFlags ())
+  : Action (parent, _("View"), DONT_UPDATE)
 {
   m = new Data (this);
   m->parent = parent;
@@ -73,7 +74,7 @@ ViewAction::ViewAction (wxWindow * parent,
 
 
 ViewAction::ViewAction (wxWindow * parent)
-  : Action (parent, _("Edit"), GetEditFlags ())
+  : Action (parent, _("Edit"), UPDATE_LATER)
 {
   m = new Data (this);
   m->parent = parent;
@@ -122,6 +123,18 @@ ViewAction::Perform ()
   Trace (msg);
 
   ActionEvent::Post (m->parent, TOKEN_CMD_VIEW, cmd);
+
+  return true;
+}
+
+bool
+ViewAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  if (1 != statusSel.size ())
+    return false;
+
+  if (statusSel.hasDirs ())
+    return false;
 
   return true;
 }

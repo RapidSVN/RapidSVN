@@ -28,6 +28,12 @@
 // app
 #include "action.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 class ExternalProgramAction:public Action
 {
 public:
@@ -45,16 +51,14 @@ public:
   ExternalProgramAction (wxWindow * parent, long verb_id, 
     bool treat_as_folder);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return UPDATE_LATER|SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
-  }
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   long m_verb_id;

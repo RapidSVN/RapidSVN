@@ -25,24 +25,29 @@
 #ifndef _EXPORT_ACTION_H_INCLUDED_
 #define _EXPORT_ACTION_H_INCLUDED_
 
+// app
 #include "action.hpp"
 #include "export_data.hpp"
+
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
 
 class ExportAction : public Action
 {
 public:
   ExportAction (wxWindow * parent);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
-  
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return WITHOUT_TARGET;
-  }
+  virtual bool 
+  Perform ();
+
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   ExportData m_data;

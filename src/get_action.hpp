@@ -30,7 +30,10 @@
 #include "get_data.hpp"
 
 // forward declarations
-class wxWindow;
+namespace svn
+{
+  class StatusSel;
+}
 
 /**
  * This class works very much like UpdateAction.
@@ -54,16 +57,14 @@ public:
    */
   GetAction (wxWindow * parent, const GetData & data);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return WITHOUT_TARGET;
-  }
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   GetData m_data;

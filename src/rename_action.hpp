@@ -31,6 +31,12 @@
 // app
 #include "action.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 /**
  * this action class can be used to copy, move and rename
  * files and folders. Right now it supports only a single target
@@ -49,16 +55,14 @@ public:
    */
   RenameAction (wxWindow * parent);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
+
+  virtual bool 
+  Prepare ();
   
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
-  }
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 };
 
 #endif

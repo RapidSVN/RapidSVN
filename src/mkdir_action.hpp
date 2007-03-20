@@ -28,6 +28,12 @@
 // app
 #include "action.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 class MkdirAction:public Action
 {
 private:
@@ -44,18 +50,15 @@ public:
    */
   MkdirAction (wxWindow * parent, const wxString & path);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET| MULTIPLE_TARGETS|
-           RESPOSITORY_TYPE| VERSIONED_WC_TYPE| UNVERSIONED_WC_TYPE|
-           UPDATE_TREE;
-  }
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
+
 };
 
 #endif

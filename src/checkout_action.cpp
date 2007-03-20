@@ -28,6 +28,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/targets.hpp"
 
 // app
 #include "action_event.hpp"
@@ -37,7 +38,7 @@
 #include "utils.hpp"
 
 CheckoutAction::CheckoutAction (wxWindow * parent)
-  : Action (parent, _("Checkout"), GetBaseFlags ())
+  : Action (parent, _("Checkout"), 0)
 {
 }
 
@@ -133,6 +134,13 @@ CheckoutAction::Perform ()
  
   return true;
 }
+
+bool
+CheckoutAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

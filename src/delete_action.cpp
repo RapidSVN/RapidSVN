@@ -38,7 +38,7 @@
 #include "utils.hpp"
 
 DeleteAction::DeleteAction (wxWindow * parent)
-  : Action (parent, _("Delete"), GetBaseFlags ())
+  : Action (parent, _("Delete"), UPDATE_TREE)
 {
 }
 
@@ -81,6 +81,13 @@ DeleteAction::Perform ()
 
   return true;
 }
+
+bool
+DeleteAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

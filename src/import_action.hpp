@@ -25,24 +25,29 @@
 #ifndef _IMPORT_ACTION_H_INCLUDED_
 #define _IMPORT_ACTION_H_INCLUDED_
 
+// app
 #include "action.hpp"
 #include "import_data.hpp"
+
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
 
 class ImportAction:public Action
 {
 public:
   ImportAction (wxWindow * parent);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
-  
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return WITHOUT_TARGET;
-  }
+  virtual bool 
+  Perform ();
+
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   ImportData m_data;

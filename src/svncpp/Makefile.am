@@ -26,6 +26,7 @@ libsvncpp_la_SOURCES= \
 	property.cpp \
 	revision.cpp \
 	status.cpp \
+	status_selection.cpp \
 	targets.cpp \
 	url.cpp \
 	wc.cpp

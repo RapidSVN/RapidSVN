@@ -29,7 +29,10 @@
 #include "action.hpp"
 
 // forward declarations
-class wxWindow;
+namespace svn
+{
+  class StatusSel;
+}
 
 /**
  * This action downloads a specific revision 
@@ -59,26 +62,15 @@ public:
   ViewAction (wxWindow * parent);
 
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
+  
+  virtual bool 
+  Prepare ();
+  
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
-  /**
-   * Describe which targets the action can perform upon
-   * when viewing a file
-   */
-  static unsigned int GetViewFlags ()
-  {
-    return DONT_UPDATE|WITHOUT_TARGET;
-  }
-
-  /**
-   * Describe which targets the action can perform upon
-   * when editing a file
-   */
-  static unsigned int GetEditFlags ()
-  {
-    return SINGLE_TARGET|UPDATE_LATER|VERSIONED_WC_TYPE|UNVERSIONED_WC_TYPE;
-  }
 
 private:
   struct Data;

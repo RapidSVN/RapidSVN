@@ -38,6 +38,7 @@
 #include "svncpp/client.hpp"
 #include "svncpp/dirent.hpp"
 #include "svncpp/status.hpp"
+#include "svncpp/status_selection.hpp"
 #include "svncpp/url.hpp"
 #include "svncpp/wc.hpp"
 
@@ -94,6 +95,7 @@ IsValidSeparator (const wxString & sep)
   return ((sep == wxT("/")) || (sep == wxT("\\")));
 }
 
+
 /** 
  * data structure that contains information about
  * a single bookmark
@@ -149,6 +151,7 @@ public:
   BookmarkHashMap bookmarks;
   svn::Context defaultContext;
   bool useAuthCache;
+  svn::StatusSel statusSel;
 
   Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
     : singleContext (0), window (window), listener (0), useAuthCache (true)
@@ -475,12 +478,8 @@ public:
       try
       {
         const wxString& parentPath = parentData->getPath ();
-        svn::Path parentPathUtf8 (PathUtf8 (parentPath));
 
-        if (parentPathUtf8.isUrl ())
-          RefreshRepository (parentPath, parentId);
-        else
-          RefreshLocal (parentPath, parentId);
+        Refresh (parentPath, parentId);
       }
       catch (svn::ClientException & e)
       {
@@ -512,7 +511,7 @@ public:
   }
 
   void
-  RefreshLocal (const wxString & parentPath,
+  Refresh (const wxString & parentPath,
                 const wxTreeItemId & parentId)
   {
     // If the parent is already expanded, 
@@ -540,10 +539,20 @@ public:
       svn::Path filename (status.path ());
       wxString path (Utf8ToLocal (filename.native ()));
 
-      // Only display versioned directories and exclude parent itself
-      if (((status.entry ().kind () == svn_node_dir) ||
-           (status.textStatus () == svn_wc_status_external)) && 
-          (parentPath != path))
+      // Only display versioned directories
+      if ((status.entry ().kind () != svn_node_dir) &&
+          (status.textStatus () != svn_wc_status_external)) 
+        continue;
+           
+      if (parentPath == path)
+      {
+        // we update the information about the parent on
+        // every occassion
+        FolderItemData * data = GetItemData (parentId);
+        if (0 != data)
+          data->setStatus (status);
+      }
+      else
       {
         int image = FOLDER_IMAGE_FOLDER;
         int open_image = FOLDER_IMAGE_OPEN_FOLDER;
@@ -566,67 +575,27 @@ public:
           image = FOLDER_IMAGE_MODIFIED_FOLDER;
           open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
         }
+
         FolderItemData * data = new FolderItemData (
           FOLDER_TYPE_NORMAL, path, 
           Utf8ToLocal (filename.basename ()), 
           TRUE);
+        data->setStatus (status);
 
         wxTreeItemId newId = treeCtrl->AppendItem(
           parentId, 
           Utf8ToLocal (filename.basename ()), 
           image, image, data);
 
-        treeCtrl->SetItemHasChildren (newId, HasSubdirectories (path));
+        bool hasSubDirs = true;
+        if (!filename.isUrl ())
+          hasSubDirs = HasSubdirectories (path);
+        treeCtrl->SetItemHasChildren (newId, hasSubDirs);
         treeCtrl->SetItemImage (newId, open_image, wxTreeItemIcon_Expanded);
       }
     }
   }
 
-  void
-  RefreshRepository (const wxString & parentPath,
-                     const wxTreeItemId & parentId)
-  {
-    svn::Client client (GetContext ());
-    svn::Revision rev (svn::Revision::HEAD);
-    svn::Path parentPathUtf8 (PathUtf8 (parentPath));
-    svn::DirEntries entries =
-      client.list (parentPathUtf8.c_str (), rev, false);
-    svn::DirEntries::const_iterator it;
-
-    bool parentHasSubdirectories = false;
-    for (it = entries.begin (); it != entries.end (); it++)
-    {
-      svn::DirEntry entry = *it;
-      int image = FOLDER_IMAGE_FOLDER;
-      int open_image = FOLDER_IMAGE_OPEN_FOLDER;
-      int offset = 1;
-
-      wxString fullPath = Utf8ToLocal (svn::Url::unescape (entry.name ()));
-      if (parentPath.Last () == '/')
-        offset = 0;
-      wxString filename (fullPath.Mid (parentPath.length () + offset));
-
-      if (entry.kind () != svn_node_dir)
-        continue;
-
-      parentHasSubdirectories = true;
-
-      FolderItemData * data =
-        new FolderItemData (FOLDER_TYPE_NORMAL,
-                            fullPath,
-                            filename, TRUE);
-
-      wxTreeItemId newId =
-        treeCtrl->AppendItem(parentId, filename,
-                             image, image, data);
-      treeCtrl->SetItemHasChildren (newId, true );
-      treeCtrl->SetItemImage (newId, open_image,
-                              wxTreeItemIcon_Expanded);
-    }
-
-    // Remove the "expansion" image from the folder if is has no children
-    if (!parentHasSubdirectories)
-      treeCtrl->SetItemHasChildren (parentId, FALSE);  }
 
   /**
    * Finds the child entry with @a path
@@ -1220,6 +1189,22 @@ FolderBrowser::OnBeginDrag (wxTreeEvent & event)
    * wxDragResult result = dropSource.DoDragDrop (true);
    */
   dropSource.DoDragDrop (true);
+}
+
+const svn::StatusSel &
+FolderBrowser::GetStatusSel () const
+{
+  m->statusSel.clear ();
+
+  const FolderItemData * itemData = m->GetSelection ();
+
+  if (itemData != 0)
+  {
+    const svn::Status & status = itemData->getStatus ();
+    m->statusSel.push_back (status);
+  }
+
+  return m->statusSel;
 }
 
 /* -----------------------------------------------------------------

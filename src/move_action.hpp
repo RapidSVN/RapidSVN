@@ -31,6 +31,12 @@
 // app
 #include "action.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 enum
 {
   MOVE_MOVE = 0,
@@ -52,16 +58,14 @@ public:
    */
   MoveAction (wxWindow * parent, int kind);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
+
+  virtual bool 
+  Prepare ();
   
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
-  }
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   int m_kind;

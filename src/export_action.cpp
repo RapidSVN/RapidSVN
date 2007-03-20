@@ -29,6 +29,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/m_check.hpp"
+#include "svncpp/targets.hpp"
 
 // app
 #include "export_action.hpp"
@@ -37,7 +38,7 @@
 #include "utils.hpp"
 
 ExportAction::ExportAction (wxWindow * parent)
-  :Action (parent, _("Export"), GetBaseFlags ())
+  :Action (parent, _("Export"), DONT_UPDATE)
 {
 }
 
@@ -119,6 +120,12 @@ ExportAction::Perform ()
                    m_data.IgnoreExternals,
                    m_data.Recursive,
                    m_data.Eol);
+  return true;
+}
+
+bool
+ExportAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
   return true;
 }
 

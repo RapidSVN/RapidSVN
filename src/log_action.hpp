@@ -29,6 +29,12 @@
 // app
 #include "action.hpp"
 
+// forward declarations
+namespace svn
+{
+  class StatusSel;
+}
+
 class LogAction : public Action
 {
 public:
@@ -37,15 +43,11 @@ public:
   /**
    * @see Action
    */
-  virtual bool Perform ();
+  virtual bool 
+  Perform ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return DONT_UPDATE|SINGLE_TARGET|RESPOSITORY_TYPE|VERSIONED_WC_TYPE;
-  }
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 };
 
 #endif

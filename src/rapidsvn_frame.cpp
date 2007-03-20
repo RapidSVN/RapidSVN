@@ -32,6 +32,7 @@
 #include "svncpp/apr.hpp"
 #include "svncpp/context.hpp"
 #include "svncpp/exception.hpp"
+#include "svncpp/status_selection.hpp"
 #include "svncpp/targets.hpp"
 #include "svncpp/url.hpp"
 #include "svncpp/wc.hpp"
@@ -42,6 +43,7 @@
 #include "config.hpp"
 #include "destination_dlg.hpp"
 #include "diff_data.hpp"
+#include "get_data.hpp"
 #include "ids.hpp"
 #include "file_info.hpp"
 #include "listener.hpp"
@@ -51,6 +53,18 @@
 #include "annotate_data.hpp"
 #include "log_data.hpp"
 #include "drag_n_drop_data.hpp"
+#include "action_factory.hpp"
+#include "update_data.hpp"
+
+// actions
+#include "view_action.hpp"
+#include "get_action.hpp"
+#include "diff_action.hpp"
+#include "merge_action.hpp"
+#include "annotate_action.hpp"
+#include "drag_n_drop_action.hpp"
+#include "external_program_action.hpp"
+#include "mkdir_action.hpp"
 
 #ifdef USE_SIMPLE_WORKER
 #include "simple_worker.hpp"
@@ -58,31 +72,6 @@
 #include "threaded_worker.hpp"
 #endif
 
-// actions
-#include "add_action.hpp"
-#include "checkout_action.hpp"
-#include "cleanup_action.hpp"
-#include "commit_action.hpp"
-#include "delete_action.hpp"
-#include "diff_action.hpp"
-#include "external_program_action.hpp"
-#include "get_action.hpp"
-#include "import_action.hpp"
-#include "export_action.hpp"
-#include "lock_action.hpp"
-#include "merge_action.hpp"
-#include "mkdir_action.hpp"
-#include "move_action.hpp"
-#include "property_action.hpp"
-#include "rename_action.hpp"
-#include "resolve_action.hpp"
-#include "revert_action.hpp"
-#include "switch_action.hpp"
-#include "unlock_action.hpp"
-#include "update_action.hpp"
-#include "view_action.hpp"
-#include "annotate_action.hpp"
-#include "drag_n_drop_action.hpp"
 
 // dialogs
 #include "about_dlg.hpp"
@@ -182,6 +171,7 @@ public:
   bool skipFilelistUpdate;
   const wxLocale & locale;
   wxString currentPath;
+  ActivePane activePane;
 
 private:
   bool m_running;
@@ -205,6 +195,7 @@ public:
       updateAfterActivate (false), dontUpdateFilelist (false),
       skipFilelistUpdate (false), locale (locale_), 
       currentPath (wxT("")), m_running (false),
+      activePane (ACTIVEPANE_FOLDER_BROWSER),
       m_toolbar_rows (1), m_parent (parent),
       m_isErrorDialogActive (false)
   {
@@ -641,6 +632,51 @@ public:
   }
 
 
+#if 0
+  const svn::Targets
+  GetTargets () const
+  {
+    //is there nothing selected in the list control,
+    //or is the active window *not* the list control?
+    if (listCtrl->GetSelectedItemCount () <= 0 ||
+        activePane != ACTIVEPANE_FILELIST)
+    {
+      wxString path = folderBrowser->GetPath ();
+
+      svn::Path pathUtf8 (PathUtf8 (path));
+      if (!pathUtf8.isUrl ())
+      {
+        wxFileName fname (path);
+        path = fname.GetFullPath ();
+        pathUtf8 = PathUtf8 (path);
+      }
+
+      return svn::Targets (pathUtf8.c_str ());
+    }
+    else
+    {
+      //no, build the file list from the list control
+      return listCtrl->GetTargets ();
+    }
+  }
+#endif 
+
+  const svn::StatusSel &
+  GetStatusSel ()  const
+  {
+    //is there nothing selected in the list control,
+    //or is the active window *not* the list control?
+    if (listCtrl->GetSelectedItemCount () <= 0 ||
+        activePane != ACTIVEPANE_FILELIST)
+    {
+      return folderBrowser->GetStatusSel ();
+    }
+    else
+    {
+      //no, build the file list from the list control
+      return listCtrl->GetStatusSel ();
+    }
+  }
 };
 
 
@@ -706,8 +742,7 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                               const wxLocale & locale)
   : wxFrame ((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_FRAME_STYLE),
-    m_title (title), m_context (0),
-    m_activePane (ACTIVEPANE_FOLDER_BROWSER)
+    m_title (title), m_context (0)
 {
   m = new Data (this, locale);
   m_actionWorker = CreateActionWorker (this);
@@ -899,7 +934,7 @@ RapidSvnFrame::~RapidSvnFrame ()
 void
 RapidSvnFrame::SetActivePane (ActivePane value)
 {
-  m_activePane = value;
+  m->activePane = value;
 }
 
 void
@@ -907,11 +942,13 @@ RapidSvnFrame::TrimDisabledMenuItems (wxMenu & menu)
 {
   // Check for disabled items
   size_t pos = menu.GetMenuItemCount ();
-  unsigned int selectionActionFlags = GetSelectionActionFlags ();
+// TODO  unsigned int selectionActionFlags = GetSelectionActionFlags ();
+  const svn::StatusSel & statusSel = m->GetStatusSel ();
   while (pos-- > 0)
   {
     wxMenuItem *pItem = menu.FindItemByPosition (pos);
-    if (!pItem->IsSeparator () && !ValidateIDActionFlags (pItem->GetId (), selectionActionFlags))
+    if (!pItem->IsSeparator () && 
+        !ActionFactory::CheckIdForStatusSel (pItem->GetId (), statusSel))
     {
       menu.Destroy (pItem);
     }
@@ -919,6 +956,10 @@ RapidSvnFrame::TrimDisabledMenuItems (wxMenu & menu)
 
   // Trim unnecessary separators
   pos = menu.GetMenuItemCount ();
+
+  if (0 == pos)
+    return;
+
   bool sepNeeded = false;
   while (pos-- > 0)
   {
@@ -1295,7 +1336,9 @@ RapidSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnUpdateCommand (wxUpdateUIEvent & updateUIEvent)
 {
-  updateUIEvent.Enable (ValidateIDActionFlags (updateUIEvent.GetId (), GetSelectionActionFlags ()));
+  updateUIEvent.Enable (
+    ActionFactory::CheckIdForStatusSel (
+      updateUIEvent.GetId (), m->GetStatusSel ()));
 }
 
 void
@@ -1509,132 +1552,12 @@ RapidSvnFrame::OnTestCheckout (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnFileCommand (wxCommandEvent & event)
 {
-  Action* action = NULL;
+  int id = event.GetId ();
 
-  if ((event.GetId () >= ID_Verb_Min) && (event.GetId () <= ID_Verb_Max))
+  switch (id)
   {
-    action = new ExternalProgramAction (this, event.GetId () - ID_Verb_Min, false);
-  }
-  else
-  {
-    switch (event.GetId ())
-    {
-    case ID_Explore:
-      action = new ExternalProgramAction (this, -1, true);
-      break;
-
-    case ID_Default_Action:
-      InvokeDefaultAction();
-      break;
-
-    case ID_Update:
-      action = new UpdateAction(this);
-      break;
-
-    case ID_Commit:
-      action = new CommitAction(this);
-      break;
-
-    case ID_Add:
-      action = new AddAction (this);
-      break;
-
-    case ID_AddRecursive:
-      action = new AddAction (this, true);
-      break;
-
-    case ID_Import:
-      action = new ImportAction (this);
-      break;
-
-    case ID_Export:
-      action = new ExportAction (this);
-      break;
-
-    case ID_Checkout:
-      action = new CheckoutAction (this);
-      break;
-
-    case ID_Cleanup:
-      action = new CleanupAction (this);
-      break;
-
-    case ID_Lock:
-      action = new LockAction (this);
-      break;
-
-    case ID_Log:
-      action = new LogAction (this);
-      break;
-
-    case ID_Revert:
-      action = new RevertAction (this);
-      break;
-
-    case ID_Resolve:
-      action = new ResolveAction (this);
-      break;
-
-    case ID_Delete:
-      action = new DeleteAction (this);
-      break;
-
-    case ID_Copy:
-      action = new MoveAction (this, MOVE_COPY);
-      break;
-
-    case ID_Move:
-      action = new MoveAction (this, MOVE_MOVE);
-      break;
-
-    case ID_Mkdir:
-      action = new MkdirAction (this, m->currentPath);
-      break;
-
-    case ID_Merge:
-      action = new MergeAction (this);
-      break;
-
-    case ID_Property:
-      action = new PropertyAction (this);
-      break;
-
-    case ID_Rename:
-      action = new RenameAction (this);
-      break;
-
-    case ID_Switch:
-      action = new SwitchAction (this);
-      break;
-
-    case ID_Diff:
-      action = new DiffAction (this);
-      break;
-
-    case ID_DiffBase:
-      {
-        DiffData data (svn::Revision::BASE);
-        action = new DiffAction (this, data);
-        break;
-      }
-
-    case ID_DiffHead:
-      {
-        DiffData data (svn::Revision::HEAD);
-        action = new DiffAction (this, data);
-        break;
-      }
-
-    case ID_Unlock:
-      action = new UnlockAction (this);
-      break;
-
-    case ID_Edit:
-      action = new ViewAction (this);
-      break;
-
-    case ID_CreateRepository:
-      wxMessageBox ( 
+  case ID_CreateRepository:
+    wxMessageBox ( 
 _("Please use the command line utility 'svnadmin'\n\
 to create a new repository.\n\n\
 This command line utility is not part of the\n\
@@ -1642,25 +1565,29 @@ RapidSVN distribution.\n\n\
 More information about subversion:\n\
 http://svnbook.red-bean.com/\n\
 http://subversion.tigris.org"),
-        _("Information"),
-        wxOK);
-      break;
+    _("Information"),
+    wxOK);
+    break;
 
-    case ID_Annotate:
-      {
-        AnnotateData data;
-        action = new AnnotateAction (this, data);
-        break;
-      }
+  case ID_Default_Action:
+    InvokeDefaultAction();
+    break;
 
-    default:
+  case ID_Mkdir:
+    Perform (new MkdirAction (this, m->currentPath));
+
+    break;
+
+  default:
+    // Let the action factory decide
+    Action * action = ActionFactory::CreateAction (this, id);
+
+    if (action)
+      Perform (action);
+    else
       m->logTracer->Trace (_("Unimplemented action!"));
-      break;
-    }
   }
 
-  if (action)
-    Perform (action);
 }
 
 void
@@ -1920,7 +1847,7 @@ RapidSvnFrame::OnFolderBrowserSelChanged (wxTreeEvent & event)
 
   try
   {
-    m_activePane = ACTIVEPANE_FOLDER_BROWSER;
+    m->activePane = ACTIVEPANE_FOLDER_BROWSER;
 
     // Update the menu and list control flat-mode setting 
     bool flatMode = m->folderBrowser->IsFlat ();
@@ -1960,7 +1887,7 @@ RapidSvnFrame::OnFolderBrowserKeyDown (wxTreeEvent & event)
 void
 RapidSvnFrame::OnFileListSelected (wxListEvent & event)
 {
-  m_activePane = ACTIVEPANE_FILELIST;
+  m->activePane = ACTIVEPANE_FILELIST;
 }
 
 
@@ -2084,33 +2011,7 @@ RapidSvnFrame::EditBookmark ()
   }
 }
 
-const svn::Targets
-RapidSvnFrame::GetActionTargets () const
-{
-  //is there nothing selected in the list control,
-  //or is the active window *not* the list control?
-  if (m->listCtrl->GetSelectedItemCount () <= 0 ||
-      m_activePane != ACTIVEPANE_FILELIST)
-  {
-    wxString path = m->folderBrowser->GetPath ();
-
-    svn::Path pathUtf8 (PathUtf8 (path));
-    if (!pathUtf8.isUrl ())
-    {
-      wxFileName fname (path);
-      path = fname.GetFullPath ();
-      pathUtf8 = PathUtf8 (path);
-    }
-
-    return svn::Targets (pathUtf8.c_str ());
-  }
-  else
-  {
-    //no, build the file list from the list control
-    return m->listCtrl->GetTargets ();
-  }
-}
-
+#if 0
 unsigned int
 RapidSvnFrame::GetSelectionActionFlags () const
 {
@@ -2155,154 +2056,8 @@ RapidSvnFrame::GetSelectionActionFlags () const
 
   return flags;
 }
+#endif
 
-/* ValidateIDActionFlags and OnFileCommand could be refactored into a single class factory (big switch statement)
-   and GetFlags/Perform calls, but that seems a little messy, so keeping them separate for now. */
-bool
-RapidSvnFrame::ValidateIDActionFlags (int id, unsigned int selectionActionFlags)
-{
-  unsigned int baseActionFlags = 0;
-  if ((id >= ID_Verb_Min) && (id <= ID_Verb_Max))
-  {
-    baseActionFlags = ExternalProgramAction::GetBaseFlags ();
-  }
-  else
-  {
-    switch (id)
-    {
-    case ID_Explore:
-      // Special case of ExternalProgramAction - needs to be a working copy, not just single target
-      baseActionFlags = ExternalProgramAction::GetBaseFlags () & ~Action::RESPOSITORY_TYPE;
-      break;
-
-    case ID_Default_Action:
-      baseActionFlags = ExternalProgramAction::GetBaseFlags ();
-      break;
-
-    case ID_Update:
-      baseActionFlags = UpdateAction::GetBaseFlags ();
-      break;
-
-    case ID_Commit:
-      baseActionFlags = CommitAction::GetBaseFlags ();
-      break;
-
-    case ID_Add:
-      baseActionFlags = AddAction::GetBaseFlags ();
-      break;
-
-    case ID_AddRecursive:
-      baseActionFlags = AddAction::GetBaseFlags ();
-      break;
-
-    case ID_Import:
-      baseActionFlags = ImportAction::GetBaseFlags ();
-      break;
-
-    case ID_Export:
-      baseActionFlags = ExportAction::GetBaseFlags ();
-      break;
-
-    case ID_Checkout:
-      baseActionFlags = CheckoutAction::GetBaseFlags ();
-      break;
-
-    case ID_Cleanup:
-      baseActionFlags = CleanupAction::GetBaseFlags ();
-      break;
-
-    case ID_Lock:
-      baseActionFlags = LockAction::GetBaseFlags ();
-      break;
-
-    case ID_Log:
-      baseActionFlags = LogAction::GetBaseFlags ();
-      break;
-
-    case ID_Revert:
-      baseActionFlags = RevertAction::GetBaseFlags ();
-      break;
-
-    case ID_Resolve:
-      baseActionFlags = ResolveAction::GetBaseFlags ();
-      break;
-
-    case ID_Delete:
-      baseActionFlags = DeleteAction::GetBaseFlags ();
-      break;
-
-    case ID_Copy:
-      baseActionFlags = MoveAction::GetBaseFlags ();
-      break;
-
-    case ID_Move:
-      baseActionFlags = MoveAction::GetBaseFlags ();
-      break;
-
-    case ID_Mkdir:
-      baseActionFlags = MkdirAction::GetBaseFlags ();
-      break;
-
-    case ID_Merge:
-      baseActionFlags = MergeAction::GetBaseFlags ();
-      break;
-
-    case ID_Property:
-      baseActionFlags = PropertyAction::GetBaseFlags ();
-      break;
-
-    case ID_Rename:
-      baseActionFlags = RenameAction::GetBaseFlags ();
-      break;
-
-    case ID_Switch:
-      baseActionFlags = SwitchAction::GetBaseFlags ();
-      break;
-
-    case ID_Diff:
-    case ID_DiffBase:
-    case ID_DiffHead:
-      baseActionFlags = DiffAction::GetBaseFlags ();
-      break;
-
-    case ID_Info:
-      // Not actually part of the Action hierarchy, but here for completeness
-      baseActionFlags = Action::SINGLE_TARGET|
-        Action::MULTIPLE_TARGETS|
-        Action::RESPOSITORY_TYPE|
-        Action::VERSIONED_WC_TYPE|
-        Action::UNVERSIONED_WC_TYPE;
-      break;
-
-    case ID_Unlock:
-      baseActionFlags = UnlockAction::GetBaseFlags ();
-      break;
-
-    case ID_Edit:
-      baseActionFlags = ViewAction::GetEditFlags ();
-      break;
-
-    case ID_Annotate:
-      baseActionFlags = AnnotateAction::GetBaseFlags ();
-      break;
-
-    default:
-      // If unrecognised, by default return true
-      return true;
-      break;
-    }
-  }
-
-  if (baseActionFlags & Action::WITHOUT_TARGET)
-  {
-    return true;
-  }
-
-  // Check the sole quantity flag in selectedActionFlags is in baseActionFlags
-  // then check any type flags in selectedActionFlags are in baseActionFlags, but selectedActionFlags doesn't include any other types
-  return (selectionActionFlags & baseActionFlags & Action::TARGET_QUANTITY_MASK) != 0
-            && (selectionActionFlags & baseActionFlags & Action::TARGET_TYPE_MASK) == (selectionActionFlags & Action::TARGET_TYPE_MASK);
-}
 
 void
 RapidSvnFrame::ShowInfo ()
@@ -2315,7 +2070,7 @@ RapidSvnFrame::ShowInfo ()
 
   try
   {
-    std::vector<svn::Path> vector = GetActionTargets ().targets ();
+    std::vector<svn::Path> vector = m->GetStatusSel ().targets ();
     std::vector<svn::Path>::const_iterator it;
 
     for (it = vector.begin (); it != vector.end (); it++)
@@ -2375,21 +2130,20 @@ RapidSvnFrame::UpdateCurrentPath ()
 bool
 RapidSvnFrame::InvokeDefaultAction ()
 {
-  unsigned int selectionActionFlags = GetSelectionActionFlags ();
-  std::vector<svn::Path> targets = GetActionTargets ().targets ();
+  const svn::StatusSel & statusSel = m->GetStatusSel ();
 
   // the default action will be invoked only for a single file
   // or folder.
   // if more or less than one file or folder is selected nothing
   // will happen.
 
-  if (targets.size () != 1)
+  if (1 != statusSel.size ())
     return false;
 
-  if (selectionActionFlags & Action::IS_DIR)
+  if (statusSel.hasDirs ())
   {
     // go one folder deeper...
-    m->folderBrowser->SelectFolder (PathToNative (targets [0]));
+    m->folderBrowser->SelectFolder (PathToNative (statusSel.target ()));
   }
   else
   {
@@ -2410,7 +2164,7 @@ RapidSvnFrame::Perform (Action * action)
     svn::Path currentPathUtf8 (PathUtf8 (m->currentPath));
     action->SetPath (currentPathUtf8);
     action->SetContext (m_context);
-    action->SetTargets (GetActionTargets ());
+    action->SetStatusSel (m->GetStatusSel ());
     action->SetTracer (m->logTracer, false);
     m_actionWorker->SetTracer (m->logTracer);
     m_actionWorker->SetContext (m_context, false);

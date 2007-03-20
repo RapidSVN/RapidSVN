@@ -31,25 +31,22 @@
 // forward declarations
 namespace svn
 {
-  class Targets;
+  class StatusSel;
 }
-class Tracer;
 
 class CommitAction : public Action
 {
 public:
   CommitAction (wxWindow * parent);
 
-  virtual bool Perform ();
-  virtual bool Prepare ();
+  virtual bool 
+  Perform ();
 
-  /**
-   * Describe which targets the action can perform upon
-   */
-  static unsigned int GetBaseFlags ()
-  {
-    return SINGLE_TARGET|MULTIPLE_TARGETS|VERSIONED_WC_TYPE|UPDATE_TREE;
-  }
+  virtual bool 
+  Prepare ();
+
+  static bool
+  CheckStatusSel (const svn::StatusSel & statusSel);
 
 private:
   bool m_recursive;

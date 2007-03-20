@@ -173,18 +173,7 @@ private:
   void OnSize (wxSizeEvent & sizeEvent);
 
   // Enable/disable action menu items
-  bool ValidateIDActionFlags (int id, unsigned int selectionActionFlags);
   void OnUpdateCommand (wxUpdateUIEvent & updateUIEvent);
-
-  const svn::Targets
-  GetActionTargets() const;
-
-  /**
-   * determine the properties of what has been selected
-   * in terms of the relevant Action Flags.
-   */
-  unsigned int
-  GetSelectionActionFlags () const;
 
   // Utility functions
   void ShowLog ();
@@ -216,7 +205,6 @@ private:
 
   wxString m_title;
   svn::Context * m_context;
-  ActivePane m_activePane;
 
 private:
   DECLARE_EVENT_TABLE ()

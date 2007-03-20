@@ -89,7 +89,7 @@ private:
 
 DragAndDropAction::DragAndDropAction (wxWindow * parent, 
                                       DragAndDropData & data)
- : Action (parent, wxEmptyString, GetBaseFlags ()),
+ : Action (parent, wxEmptyString, 0),
    m_parent (parent)
 {
   m = new DragAndDropData();
@@ -232,6 +232,12 @@ DragAndDropAction::Perform ()
     };
   }
 
+  return true;
+}
+
+bool
+DragAndDropAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
   return true;
 }
 

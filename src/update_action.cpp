@@ -29,7 +29,7 @@
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/path.hpp"
-#include "svncpp/targets.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "update_action.hpp"
@@ -37,7 +37,7 @@
 #include "utils.hpp"
 
 UpdateAction::UpdateAction (wxWindow * parent)
-  : Action (parent, _("Update"), GetBaseFlags ())
+  : Action (parent, _("Update"))
 {
 }
 
@@ -84,6 +84,25 @@ UpdateAction::Perform ()
 
   return true;
 }
+
+bool
+UpdateAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  // no Update for repositories
+  if (statusSel.hasUrl ())
+    return false;
+
+  // we NEED statusSel
+  if (0 == statusSel.size ())
+    return false;
+
+  // No unversioned files allowed
+  if (statusSel.hasUnversioned ())
+    return false;
+
+  return true;
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

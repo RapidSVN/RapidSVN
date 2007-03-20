@@ -33,6 +33,7 @@
 #include "svncpp/exception.hpp"
 #include "svncpp/info.hpp"
 #include "svncpp/status.hpp"
+#include "svncpp/targets.hpp"
 #include "svncpp/url.hpp"
 
 // app
@@ -217,13 +218,13 @@ public:
 };
 
 DiffAction::DiffAction (wxWindow * parent)
-  : Action (parent, _("Diff"), GetBaseFlags ())
+  : Action (parent, _("Diff"), DONT_UPDATE)
 {
   m = new Data (this, parent);
 }
 
 DiffAction::DiffAction (wxWindow * parent, DiffData & data)
-  : Action (parent, _("Diff"), GetBaseFlags ())
+  : Action (parent, _("Diff"), DONT_UPDATE)
 {
   m = new Data (this, parent, data);
 }
@@ -308,6 +309,12 @@ DiffAction::Perform ()
     m->diffTarget (target);
   }
  
+  return true;
+}
+
+bool
+DiffAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
   return true;
 }
 

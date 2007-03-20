@@ -28,7 +28,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
-#include "svncpp/targets.hpp"
+#include "svncpp/status_selection.hpp"
 
 // app
 #include "lock_action.hpp"
@@ -38,7 +38,7 @@
 
 
 LockAction::LockAction (wxWindow * parent)
-  : Action (parent, _("Lock"), GetBaseFlags ())
+  : Action (parent, _("Lock"))
 {
 }
 
@@ -68,13 +68,24 @@ LockAction::Perform ()
 {
   svn::Client client (GetContext ());
 
-  const svn::Targets & targets = GetTargets ();
   std::string messageUtf8 (LocalToUtf8 (m_message));
-
-  client.lock (targets, m_stealLock, messageUtf8.c_str ());
+  client.lock (GetTargets (), m_stealLock, messageUtf8.c_str ());
 
   return true;
 }
+
+bool
+LockAction::CheckStatusSel (const svn::StatusSel & statusSel)
+{
+  if (0 == statusSel.size ())
+    return false;
+
+  if (statusSel.hasUnversioned ())
+    return false;
+
+  return true;
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

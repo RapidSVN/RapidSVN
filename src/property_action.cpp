@@ -35,7 +35,7 @@
  * right now this supports only one target
  */
 PropertyAction::PropertyAction (wxWindow * parent)
-  : Action (parent, _("Property"), GetBaseFlags ())
+  : Action (parent, _("Property"))
 {
 }
 
@@ -54,6 +54,12 @@ PropertyAction::Prepare ()
 
 bool
 PropertyAction::Perform ()
+{
+  return true;
+}
+
+bool
+PropertyAction::CheckStatusSel (const svn::StatusSel & statusSel)
 {
   return true;
 }

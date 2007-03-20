@@ -37,6 +37,7 @@ namespace svn
 {
   class Context;
   class ContextListener;
+  class StatusSel;
 };
 
 class FolderBrowser : public wxControl
@@ -82,6 +83,12 @@ public:
    */
   const FolderItemData * 
   GetSelection () const;
+
+  /** 
+   * the selected @ref Status instances
+   */
+  const svn::StatusSel &
+  GetStatusSel () const;
 
   /**
    * returns the "context" of the item at point.
