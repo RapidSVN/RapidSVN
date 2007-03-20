@@ -110,27 +110,6 @@ public:
       return path;
   }
 
-  /** 
-   * Check the status of a file. Only regular
-   * versioned files will pass this check
-   */
-  bool
-  checkPath (const svn::Path & path)
-  {
-    svn::Client client (GetContext ());
-    svn::InfoVector infoVector (client.info (path.c_str ()));
-    if (infoVector.size () != 1)
-      return false;
-
-    const svn::Info & info = infoVector[0];
-    if (!info.isValid ())
-      return false;
-
-    if (info.kind () != svn_node_file)
-      return false;
-
-    return true;
-  }
 
   /**
    * performs the diff operation on a single path:
@@ -150,14 +129,6 @@ public:
   diffTarget (const svn::Path & path)
   {
     svn::Path dstFile1, dstFile2;
-
-    if (!checkPath (path))
-    {
-      wxString msg, wxpath (Utf8ToLocal (path.c_str ()));
-      msg.Printf (_("Skipped: %s"), wxpath.c_str());
-      Trace (msg);
-      return;
-    }
 
     switch (diffData.compareType)
     {
