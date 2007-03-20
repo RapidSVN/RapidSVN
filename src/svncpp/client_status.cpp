@@ -207,27 +207,6 @@ namespace svn
                           no_ignore, m_context, ignore_externals);
   }
 
-  Status 
-  Client::singleStatus (const char * path) throw (ClientException)
-  {
-    Revision rev (Revision::HEAD);
-    StatusEntries entries = status (path, false);
-
-    // now seach the returned list of entries for @a path
-    StatusEntries::const_iterator it=entries.begin ();
-
-    for(; it!=entries.end (); it++)
-    {
-      Status status=*it;
-
-      if (strcmp (status.path (), path) == 0)
-        return status;
-    }
-
-    // if we come to this point we havent found a thing
-    return Status ();
-  }
-
   const LogEntries *
   Client::log (const char * path, const Revision & revisionStart, 
                const Revision & revisionEnd, bool discoverChangedPaths,

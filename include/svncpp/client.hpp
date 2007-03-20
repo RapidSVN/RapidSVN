@@ -126,17 +126,6 @@ namespace svn
             const bool ignore_externals = false) throw (ClientException);
 
     /**
-     * Returns the status of a single file in the path.
-     *
-     * Throws an exception if an error occurs
-     *
-     * @param path File to gather status.
-     * @return a Status with Statis.isVersioned = FALSE
-     */
-    Status 
-    singleStatus (const char * path) throw (ClientException);
-
-    /**
      * Executes a revision checkout.
      * @param moduleName name of the module to checkout.
      * @param destPath destination directory for checkout.

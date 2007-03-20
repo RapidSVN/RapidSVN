@@ -73,8 +73,6 @@ DeleteAction::Perform ()
   for (it=v.begin (); it!=v.end (); it++)
   {
     svn::Path path (*it);
-    svn::Status status (client.singleStatus (path.c_str ()));
-    wxString wxpath = Utf8ToLocal(path.c_str ());
 
     client.remove (path, m_force);
   }
