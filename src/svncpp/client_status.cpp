@@ -283,7 +283,7 @@ namespace svn
   Client::info (const Path & pathOrUrl,
                 bool recurse,
                 const Revision & revision,
-                const Revision & pegRevision)
+                const Revision & pegRevision) throw (ClientException)
   {
     Pool pool;
     InfoVector infoVector;

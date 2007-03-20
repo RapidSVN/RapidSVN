@@ -121,7 +121,7 @@ public:
     if (infoVector.size () != 1)
       return false;
 
-    const svn::Info info = infoVector[0];
+    const svn::Info & info = infoVector[0];
     if (!info.isValid ())
       return false;
 

@@ -19,6 +19,7 @@ libsvncpp_la_SOURCES= \
 	dirent.cpp \
 	exception.cpp \
 	entry.cpp \
+	info.cpp \
 	log_entry.cpp \
 	path.cpp \
 	pool.cpp \
