@@ -9,6 +9,7 @@ import os
 import sys
 import re
 import glob
+import msgfmt
 
 FILENAME="last-successful-revision.txt"
 
@@ -46,6 +47,21 @@ def buildApplication():
 
   print "Build rapidsvn"
   run("msdev", "rapidsvn.dsp /MAKE ALL")
+  
+  
+def buildMessages():
+  # First we have to check which translations we have
+  l=glob.glob('src/locale/[a-z]*')
+  dirs=[]
+  for f in l:
+    if os.path.isdir(f):
+      dirs.append(f)
+  for f in dirs:
+    po=f+"/rapidsvn.po"
+    mo=f+"/rapidsvn.mo"
+    if os.path.isfile(po):
+      print "Compiling message catalog %s into %s" % (po, mo)
+      msgfmt.make(po,mo)
   
 
 def buildInstaller():
@@ -101,6 +117,7 @@ if __name__ == '__main__':
     sys.exit(0)
     
   buildApplication()
+  buildMessages()
   pkg=buildInstaller()
   uploadInstaller(pkg)
   
