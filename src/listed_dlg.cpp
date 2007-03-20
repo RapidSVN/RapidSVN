@@ -29,6 +29,9 @@
 #include "wx/listctrl.h"
 #include "wx/valgen.h"
 
+// stl
+#include <vector>
+
 // svncpp
 #include "svncpp/exception.hpp"
 
@@ -93,10 +96,13 @@ public:
   {
     long id = FindItem (-1, name, false);
 
-    if (id == -1)
+    if (-1 != id)
+      m_values [id] = value;
+    else
     {
       id = GetItemCount ();
       InsertItem (id, name);
+      m_values.push_back (value);
     }
 
     wxListItem item;
@@ -142,14 +148,11 @@ public:
     name = GetItemText (id);
 
     // get value
-    wxListItem item;
-    item.m_itemId = id;
-    item.m_col = 1;
-    item.m_mask = wxLIST_MASK_TEXT;
-
-    GetItem (item);
-    value = item.m_text;
+    value = m_values[id];
   }
+
+private:
+  std::vector<wxString> m_values;
 };
 
 /**
