@@ -23,6 +23,7 @@ Name: "fr"; MessagesFile: "compiler:Languages\French.isl"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "es"; MessagesFile: "SpanishStd-5-5.1.11.isl"
 Name: "uk"; MessagesFile: "Ukrainian-5-5.1.0.isl"
 Name: "zh_CN"; MessagesFile: "ChineseSimp-11-5.1.0.isl"
 
@@ -46,6 +47,8 @@ Source: "..\..\src\locale\pt_BR\rapidsvn.po"; DestDir: "{app}\bin\locale\pt_BR";
 Source: "..\..\src\locale\pt_BR\rapidsvn.mo"; DestDir: "{app}\bin\locale\pt_BR"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\ru\rapidsvn.po"; DestDir: "{app}\bin\locale\ru"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\ru\rapidsvn.mo"; DestDir: "{app}\bin\locale\ru"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\es\rapidsvn.po"; DestDir: "{app}\bin\locale\es"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\es\rapidsvn.mo"; DestDir: "{app}\bin\locale\es"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\uk\rapidsvn.po"; DestDir: "{app}\bin\locale\uk"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\uk\rapidsvn.mo"; DestDir: "{app}\bin\locale\uk"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\zh_CN\rapidsvn.po"; DestDir: "{app}\bin\locale\zh_CN"; Flags: ignoreversion; Components: main
