@@ -10,13 +10,12 @@ import sys
 import re
 import glob
 import msgfmt
+from subprocess import Popen, PIPE
 
 FILENAME="last-successful-revision.txt"
 
-def run(cmd, args, silent=0):
-  f=os.popen("%s %s" % (cmd, args), "r")
-  t=f.read()
-  f.close()
+def run(cmd, args, silent=False):
+  t=Popen("%s %s" % (cmd, args), stdout=PIPE).communicate()[0]
   if not silent:
     print t
   return t
@@ -74,9 +73,9 @@ def buildInstaller():
   for n in x: os.unlink(n)
 
   print "Build installer"
-  os.system("cmd.exe /c FetchFiles.bat")
+  run("cmd.exe", "/c FetchFiles.bat")
   innosetup=getEnviron("INNOSETUP")
-  os.system("\"%s\iscc.exe\" rapidsvn.iss" % innosetup)
+  run("\"%s\iscc.exe\"" % innosetup, "rapidsvn.iss")
   
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
@@ -95,7 +94,7 @@ def buildInstaller():
 def uploadInstaller(pkg):
   putty=getEnviron("PUTTY")
   url="rapidsvn_ftp@rapidsvn.org:/httpdocs/download/nightly/win32"
-  os.system("\"%s/pscp.exe\" %s %s" % (putty, pkg, url))
+  run("\"%s/pscp.exe\"" % (putty),  "%s %s" % (pkg, url))
 
 if __name__ == '__main__':
   # Check whether we are in the project dir
