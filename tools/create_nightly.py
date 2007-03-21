@@ -15,7 +15,10 @@ from subprocess import Popen, PIPE
 FILENAME="last-successful-revision.txt"
 
 def run(cmd, args, silent=False):
-  t=Popen("%s %s" % (cmd, args), stdout=PIPE).communicate()[0]
+  p=Popen("%s %s" % (cmd, args), stdout=PIPE)
+  t=p.communicate()[0]
+  # wait until the command has finished
+  os.waitpid(p.pid, 0)
   if not silent:
     print t
   return t
