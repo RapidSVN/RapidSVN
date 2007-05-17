@@ -27,7 +27,7 @@
 
 #define APPLICATION_NAME wxT("RapidSVN")
 
-#define RAPIDSVN_COPYRIGHT "(C) 2002-2006 The RapidSvn Group. All rights reserved."
+#define RAPIDSVN_COPYRIGHT "(C) 2002-2007 The RapidSvn Group. All rights reserved."
 
 /* Symbols that define the version number.
  * The numbers are maintained in the file version.xml (in the
