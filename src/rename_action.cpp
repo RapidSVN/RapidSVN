@@ -49,10 +49,13 @@ RenameAction::Prepare ()
     return false;
   }
 
+  wxString oldName (Utf8ToLocal (GetTarget ().basename ().c_str ()));
+
   // show destination dialog
   DestinationDlg dlg (GetParent (), GetName (),
                       _("Enter new name:"), 
-                      DestinationDlg::WITH_FORCE);
+                      DestinationDlg::WITH_FORCE,
+                      oldName);
   if (dlg.ShowModal () != wxID_OK)
   {
     return false;
