@@ -106,15 +106,20 @@ HistoryValidator::TransferToWindow()
       comboBox->Append (value);
     }
 
-    if (m_value != 0)
+    if (!m_useMostRecent)
+      comboBox->SetValue (wxEmptyString);
+    else
     {
-      if (comboBox->FindString (*m_value) != wxNOT_FOUND)
-        comboBox->SetValue (*m_value);
-    }
+      if (m_value != 0)
+      {
+        if (comboBox->FindString (*m_value) != wxNOT_FOUND)
+          comboBox->SetValue (*m_value);
+      }
 
-    // if we have an entry, select it
-    if ((count > 0) && m_useMostRecent)
-      comboBox->SetSelection (0, 0);
+      // if we have an entry, select it
+      if ((count > 0))
+        comboBox->SetSelection (0, 0);
+    }
 
     return true;
   }

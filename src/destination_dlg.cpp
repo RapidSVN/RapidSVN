@@ -29,6 +29,7 @@
 
 // app
 #include "destination_dlg.hpp"
+#include "hist_val.hpp"
 
 struct DestinationDlg::Data
 {
@@ -37,7 +38,8 @@ public:
   bool force;
 
   Data (wxWindow * window, const wxString & descr,
-        int flags, const wxString & dest)
+        int flags, const wxString & dest,
+        const wxString history)
     : destination (dest), force (false)
   {
     bool withForce = (flags & WITH_FORCE) != 0;
@@ -51,12 +53,25 @@ public:
     mainSizer->Add (labelDescr, 0, wxALL, 5);
 
     // The destination:
-    wxTextValidator val (wxFILTER_NONE, &destination);
-    wxTextCtrl * textDest =
-      new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
-                      wxSize (200, -1), 0, val);
+    if (wxEmptyString == history)
+    {
+      wxTextValidator val (wxFILTER_NONE, &destination);
+      wxTextCtrl * textDest =
+        new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
+                        wxSize (200, -1), 0, val);
 
-    mainSizer->Add (textDest, 0, wxALL | wxEXPAND, 5);
+      mainSizer->Add (textDest, 0, wxALL | wxEXPAND, 5);
+    }
+    else
+    {
+      HistoryValidator valDest (history, &destination, false, false);
+      wxComboBox * comboDest =
+        new wxComboBox (window, -1, wxEmptyString, wxDefaultPosition,
+                        wxSize (200, -1), 0, 0, wxCB_DROPDOWN, valDest);
+
+      mainSizer->Add (comboDest, 0, wxALL | wxEXPAND, 5);
+    }
+      
 
     // The force check
     if (withForce)
@@ -97,15 +112,16 @@ const int DestinationDlg::WITH_FORCE=1;
 const int DIALOG_FLAGS = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
 
 DestinationDlg::DestinationDlg (wxWindow* parent,
-                               const wxString & title,
-                               const wxString & descr,
-                               const int flags,
-                               const wxString & dst)
+                                const wxString & title,
+                                const wxString & descr,
+                                const int flags,
+                                const wxString & dst,
+                                const wxString & history)
  : wxDialog(parent, -1, title,
             wxDefaultPosition, wxDefaultSize,
             DIALOG_FLAGS)
 {
-  m = new Data (this, descr, flags, dst);
+  m = new Data (this, descr, flags, dst, history);
 }
 
 DestinationDlg::DestinationDlg ()
@@ -122,12 +138,13 @@ DestinationDlg::~DestinationDlg ()
 void
 DestinationDlg::Create (wxWindow* parent, const wxString & title,
                         const wxString & descr, const int flags,
-                        const wxString & dst)
+                        const wxString & dst,
+                        const wxString & history)
 {
   wxDialog::Create (parent, -1, title, wxDefaultPosition,
                     wxDefaultSize, DIALOG_FLAGS);
 
-  m = new Data (this, descr, flags, dst);
+  m = new Data (this, descr, flags, dst, history);
 }
 
 const wxString &

@@ -34,6 +34,8 @@ const wxChar HISTORY_REPOSITORY[] = wxT("History/Repositories");
 
 const wxChar HISTORY_WORKING_DIRECTORY[] = wxT("History/WorkingDirectories");
 
+const wxChar HISTORY_COPYMOVE_DESTINATION [] = wxT("History/CopyMoveDestination");
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

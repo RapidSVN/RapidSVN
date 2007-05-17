@@ -45,11 +45,15 @@ public:
    * @param title title caption
    * @param descr descriptive label
    * @param flags WITH_FORCE add a force checkbox. See @a GetForce
-   * @param dsr default destination
+   * @param dst default value
+   * @param history if this parameter is used a combo box with
+   *                previous entries will be used instead of the edit
+   *                box @see HistoryValidator
    */
   DestinationDlg (wxWindow* parent, const wxString & title,
                   const wxString & descr = wxEmptyString, const int flags=0,
-                  const wxString & dst = wxEmptyString);
+                  const wxString & dst = wxEmptyString,
+                  const wxString & history = wxEmptyString);
 
   /**
    * default constructor. Use @a Create to initialize the dialog
@@ -67,7 +71,8 @@ public:
   void
   Create (wxWindow* parent, const wxString & title,
           const wxString & descr = wxEmptyString, const int flags=0,
-          const wxString & dst = wxEmptyString);
+          const wxString & dst = wxEmptyString,
+          const wxString & history = wxEmptyString);
 
   /**
    * get destination

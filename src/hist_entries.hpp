@@ -33,19 +33,26 @@
 /**
  * History entry for commit log messages
  */
-extern const wxChar HISTORY_COMMIT_LOG[];
+extern const wxChar HISTORY_COMMIT_LOG [];
 
 
 /**
  * History entry for repository paths
  */
-extern const wxChar HISTORY_REPOSITORY[];
+extern const wxChar HISTORY_REPOSITORY [];
 
 
 /**
  * History entry for working directory paths
  */
-extern const wxChar HISTORY_WORKING_DIRECTORY[];
+extern const wxChar HISTORY_WORKING_DIRECTORY [];
+
+
+/**
+ * History entry for destinations of copy/move
+ * operations
+ */
+extern const wxChar HISTORY_COPYMOVE_DESTINATION [];
 
 
 #endif

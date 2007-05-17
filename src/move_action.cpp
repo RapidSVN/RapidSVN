@@ -30,8 +30,9 @@
 #include "svncpp/client.hpp"
 
 // app
-#include "move_action.hpp"
 #include "destination_dlg.hpp"
+#include "hist_entries.hpp"
+#include "move_action.hpp"
 #include "utils.hpp"
 
 MoveAction::MoveAction (wxWindow * parent, int kind)
@@ -60,7 +61,9 @@ MoveAction::Prepare ()
 
   // create description for the dialog
   DestinationDlg dlg (GetParent (), GetName (),
-                      _("Select destination:"), flags);
+                      _("Select destination:"), flags,
+                      wxEmptyString,
+                      HISTORY_COPYMOVE_DESTINATION);
 
   if (dlg.ShowModal () != wxID_OK)
     return false;
