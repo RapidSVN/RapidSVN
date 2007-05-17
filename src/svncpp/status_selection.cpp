@@ -104,13 +104,8 @@ namespace svn
       if (!status_.isset ())
         return;
 
-      targets.push_back (status_.path ());
-      status.push_back (status_);
-
       if (!status_.isVersioned ())
       {
-        hasUnversioned = true;
-
         // for an unversioned entry we do not know
         // whether it's a file or a directory so
         // we have to check using APR
@@ -119,8 +114,13 @@ namespace svn
         apr_status_t apr_status = apr_stat (
           &finfo, status_.path (), APR_FINFO_TYPE, pool);
 
+        // if we get an error the file might
+        // have been deleted in the meantime
+        // anyhow: we dont want to display it
         if (apr_status != APR_SUCCESS)
-          throw new ClientException (apr_status);
+          return;
+
+        hasUnversioned = true;
 
         if (APR_DIR == finfo.filetype)
           hasDirs = true;
@@ -141,6 +141,11 @@ namespace svn
         else
           hasFiles = true;
       }
+
+      // add stuff only now (because of possible apr_error
+      // which causes the function to exit)
+      targets.push_back (status_.path ());
+      status.push_back (status_);
     }
   };
 
