@@ -66,10 +66,6 @@ MkdirAction::Perform ()
 {
   svn::Client client (GetContext ());
 
-  // add target to path
-  wxString newDir (m_path + m_target);
-  // TODO: What is newDir for???
-
   svn::Path pathUtf8 (PathUtf8 (m_path));
   svn::Path targetUtf8 (PathUtf8 (m_target));
   pathUtf8.addComponent (targetUtf8.c_str ());
