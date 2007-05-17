@@ -34,13 +34,31 @@
 
 // app
 #include "switch_action.hpp"
-#include "update_dlg.hpp"
+#include "switch_dlg.hpp"
 #include "utils.hpp"
+
+struct SwitchAction::Data
+{
+public:
+  wxString old_url;
+  wxString new_url;
+  svn::Revision revision;
+  bool recursive;
+  bool relocate;
+};
 
 SwitchAction::SwitchAction (wxWindow * parent)
  : Action (parent, _("Switch URL"))
 {
+  m = new Data ();
 }
+
+
+SwitchAction::~SwitchAction ()
+{
+  delete m;
+}
+
 
 bool
 SwitchAction::Prepare ()
@@ -53,25 +71,23 @@ SwitchAction::Prepare ()
   // first try to get the URL for the target
   svn::Path path = GetTarget ();
   svn::Client client (GetContext ());
-  svn::InfoVector infoVector (client.info (path.c_str ()));
+  svn::InfoVector infoVector (client.info (path));
   if (infoVector.size () != 1)
     return false;
 
-  wxString url (Utf8ToLocal (svn::Url::unescape (infoVector[0].url ())));
+  m->old_url = Utf8ToLocal (svn::Url::unescape (infoVector[0].url ()));
 
-  // create flags for the dialog
-  int flags = UpdateDlg::WITH_URL;
-
-  UpdateDlg dlg (GetParent (), _("Switch URL"), flags,
-                 true);
-  dlg.GetData ().url = url;
+  SwitchDlg dlg (GetParent (), m->old_url, true, false);
 
   if (dlg.ShowModal () != wxID_OK)
   {
     return false;
   }
 
-  m_data = dlg.GetData ();
+  m->new_url = dlg.GetUrl ();
+  m->revision = dlg.GetRevision ();
+  m->recursive = dlg.GetRecursive ();
+  m->relocate = dlg.GetRelocate ();
 
   return true;
 }
@@ -80,21 +96,19 @@ bool
 SwitchAction::Perform ()
 {
   svn::Path path = GetTarget ();
-  svn::Path urlUtf8 (PathUtf8 (m_data.url));
-  svn::Revision revision (svn::Revision::HEAD);
-
-  if (!m_data.useLatest)
-  {
-    svn_revnum_t revnum;
-    TrimString (m_data.revision);
-    m_data.revision.ToLong (&revnum);
-    revision = revnum;
-  }
-
   svn::Client client (GetContext ());
-  client.doSwitch (path, urlUtf8.c_str (), revision,
-                   m_data.recursive);
 
+  if (m->relocate)
+    client.relocate (path, 
+                     LocalToUtf8 (m->old_url).c_str (),
+                     LocalToUtf8 (m->new_url).c_str (),
+                     m->recursive);
+  else
+    client.doSwitch (path,  
+                     LocalToUtf8 (m->new_url).c_str (), 
+                     m->revision,
+                     m->recursive);
+  
   return true;
 }
 

@@ -22,49 +22,60 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _SWITCH_ACTION_H_INCLUDED_
-#define _SWITCH_ACTION_H_INCLUDED_
+#ifndef _SWITCH_DLG_H_INCLUDED_
+#define _SWITCH_DLG_H_INCLUDED_
 
-// svncpp
-#include "svncpp/targets.hpp"
-
-// app
-#include "action.hpp"
+// wxWidgets
+#include "wx/dialog.h"
 
 // forward declarations
+
 namespace svn
 {
-  class StatusSel;
+  class Revision;
 }
 
-/**
- * this action class can be used to copy, move and rename
- * files and folders. Right now it supports only a single target
- */
-class SwitchAction:public Action
+class SwitchDlg:public wxDialog
 {
 public:
   /**
    * constructor
    *
    * @param parent parent window
+   * @param flags flags for the window (@a WITH_URL)
+   * @param recursive default flag for the "recursive" check
    */
-  SwitchAction (wxWindow * parent);
+  SwitchDlg (wxWindow* parent, const wxString & url,
+             bool recursive, bool relocate);
 
-  virtual ~SwitchAction ();
+  /**
+   * destructor
+   */
+  virtual ~SwitchDlg ();
 
-  virtual bool 
-  Perform ();
+  const wxString & 
+  GetUrl () const;
 
-  virtual bool 
-  Prepare ();
+  svn::Revision
+  GetRevision () const;
+  
+  bool 
+  GetRecursive () const;
 
-  static bool
-  CheckStatusSel (const svn::StatusSel & statusSel);
+  bool 
+  GetRelocate () const;
 
 private:
   struct Data;
   Data * m;
+
+  void
+  OnUseLatest(wxCommandEvent &event);
+
+  void
+  OnText (wxCommandEvent & event);
+
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

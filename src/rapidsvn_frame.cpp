@@ -194,8 +194,9 @@ public:
       listener (parent),
       updateAfterActivate (false), dontUpdateFilelist (false),
       skipFilelistUpdate (false), locale (locale_), 
-      currentPath (wxT("")), m_running (false),
+      currentPath (wxT("")), 
       activePane (ACTIVEPANE_FOLDER_BROWSER),
+      m_running (false),
       m_toolbar_rows (1), m_parent (parent),
       m_isErrorDialogActive (false)
   {
@@ -1336,9 +1337,21 @@ RapidSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnUpdateCommand (wxUpdateUIEvent & updateUIEvent)
 {
-  updateUIEvent.Enable (
-    ActionFactory::CheckIdForStatusSel (
-      updateUIEvent.GetId (), m->GetStatusSel ()));
+  try
+  {
+    updateUIEvent.Enable (
+      ActionFactory::CheckIdForStatusSel (
+        updateUIEvent.GetId (), m->GetStatusSel ()));
+  }
+  catch (svn::ClientException & e)
+  {
+    m->Trace (Utf8ToLocal (e.message ()));
+    return;
+  }
+  catch (...)
+  {
+    m->Trace (_("An error occurred while checking valid actions"));
+  }
 }
 
 void

@@ -68,6 +68,7 @@ rapidsvn_SOURCES= \
 	revert_action.cpp \
 	simple_worker.cpp \
 	switch_action.cpp \
+	switch_dlg.cpp \
 	threaded_worker.cpp \
 	tracer.cpp \
 	trace_update.cpp \
