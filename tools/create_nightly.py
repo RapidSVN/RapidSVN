@@ -17,8 +17,7 @@ FILENAME="last-successful-revision.txt"
 def run(cmd, args, silent=False):
   p=Popen("%s %s" % (cmd, args), stdout=PIPE)
   t=p.communicate()[0]
-  # wait until the command has finished
-  os.waitpid(p.pid, 0)
+
   if not silent:
     print t
   return t
@@ -41,14 +40,8 @@ def readCurrentRevision():
   return m.group(1)
   
 def buildApplication():
-  print "Clean existing stuff"
-  run("msdev", "rapidsvn.dsw /MAKE ALL /CLEAN")
-
-  print "Build svncpp"
-  run("msdev", "src\svncpp\svncpp.dsp /MAKE ALL")
-
-  print "Build rapidsvn"
-  run("msdev", "rapidsvn.dsp /MAKE ALL")
+  print "Rebuild rapidsvn"
+  run("msdev", "rapidsvn.dsw /MAKE ALL /REBUILD")
   
   
 def buildMessages():
