@@ -406,6 +406,10 @@ SOURCE=.\src\switch_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\switch_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\threaded_worker.cpp
 # End Source File
 # Begin Source File
