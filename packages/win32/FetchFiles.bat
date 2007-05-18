@@ -29,4 +29,4 @@ copy %SUBVERSION%\apr-iconv\Release\iconv\*.so tmp
 rem Copy Libintl DLL
 copy %LIBINTL%\bin\intl3_svn.dll tmp
 
-pause
+rem pause
