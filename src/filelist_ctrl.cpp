@@ -105,7 +105,6 @@ static const wxChar ConfigSortOrder[]        = wxT("/FileListCtrl/SortOrder");
 static const wxChar ConfigColumnWidthFmt[]   = wxT("/FileListCtrl/Column%sWidth");
 static const wxChar ConfigColumnVisibleFmt[] = wxT("/FileListCtrl/Column%sVisible");
 static const wxChar ConfigWithUpdate[]       = wxT("/FileListCtrl/WithUpdate");
-static const wxChar ConfigFlatView[]         = wxT("/FileListCtrl/FlatView");
 static const wxChar ConfigShowUnversioned[]  = wxT("/FileListCtrl/ShowUnversioned");
 static const wxChar ConfigIgnoreExternals[]  = wxT("/FileListCtrl/IgnoreExternals");
 static const wxChar ConfigIncludePath[]      = wxT("/FileListCtrl/IncludePath");
@@ -890,7 +889,6 @@ FileListCtrl::Data::ReadConfig ()
   SortAscending = config->Read (ConfigSortOrder, (long) 1) ? true : false;
 
   config->Read (ConfigIncludePath,     &IncludePath,     (bool) true);
-  config->Read (ConfigFlatView,        &FlatMode);
   config->Read (ConfigWithUpdate,      &WithUpdate);
   config->Read (ConfigShowUnversioned, &ShowUnversioned, (bool) true); 
   config->Read (ConfigIgnoreExternals, &IgnoreExternals, (bool) false);
@@ -920,7 +918,6 @@ FileListCtrl::Data::WriteConfig ()
   config->Write (ConfigSortColumn, (long) SortColumn);
   config->Write (ConfigIncludePath,       IncludePath);
   config->Write (ConfigSortOrder, (long) (SortAscending ? 1 : 0));
-  config->Write (ConfigFlatView,          FlatMode);
   config->Write (ConfigWithUpdate,        WithUpdate);
   config->Write (ConfigShowUnversioned,   ShowUnversioned);
   config->Write (ConfigIgnoreExternals,   IgnoreExternals);

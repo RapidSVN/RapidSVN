@@ -67,6 +67,8 @@ static const wxChar CONF_DIFF_TOOL_ARGS[] =
   wxT("/Preferences/DiffToolArgs");
 static const wxChar CONF_USE_LAST_COMMIT_MESSAGE[] =
   wxT("/Preferences/UseLastCommitMessage");
+static const wxChar CONF_RESET_FLAT_MODE_ON_START[] =
+  wxT("/Preferences/ResetFlatModeOnStart");
 
 Preferences::Preferences ()
   : editor (DEFAULT_EDITOR), editorAlways (false), editorArgs (wxEmptyString),
@@ -105,6 +107,7 @@ Preferences::Read ()
   config->Read (CONF_USE_AUTH_CACHE,    &useAuthCache);
   
   config->Read (CONF_USE_LAST_COMMIT_MESSAGE, &useLastCommitMessage);
+  config->Read (CONF_RESET_FLAT_MODE_ON_START, &resetFlatModeOnStart, false);
 }
 
 void Preferences::Write () const
@@ -128,6 +131,7 @@ void Preferences::Write () const
   config->Write (CONF_USE_AUTH_CACHE, useAuthCache);
 
   config->Write (CONF_USE_LAST_COMMIT_MESSAGE, useLastCommitMessage);
+  config->Write (CONF_RESET_FLAT_MODE_ON_START, resetFlatModeOnStart);
 }
 
 /* -----------------------------------------------------------------

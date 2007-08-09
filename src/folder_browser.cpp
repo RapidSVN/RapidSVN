@@ -50,6 +50,7 @@
 #include "rapidsvn_app.hpp"
 #include "rapidsvn_frame.hpp"
 #include "rapidsvn_drop_target.hpp"
+#include "preferences.hpp"
 
 // bitmaps
 #include "res/bitmaps/computer.png.h"
@@ -676,7 +677,7 @@ public:
     bool success = false;
     wxTreeItemId id = bookmarkId;
 
-		do
+    do
     {
       const FolderItemData * data = GetItemData (id);
 
@@ -690,11 +691,11 @@ public:
         break;
 
       if (!data->isReal ())
-			  break;
+        break;
 
       const wxString nodePath (data->getPath ());
       if (nodePath.length () == 0)
-				break;
+        break;
 
       // check if @a path and @a nodePath match already
       // in this case we are done
@@ -1099,6 +1100,7 @@ FolderBrowser::ReadConfig (wxConfigBase * cfg)
 {
   wxASSERT (cfg);
 
+  Preferences prefs;
   long item, count;
   cfg->Read (ConfigBookmarkCount, &count, 0);
   for (item = 0; item < count; item++)
@@ -1110,8 +1112,9 @@ FolderBrowser::ReadConfig (wxConfigBase * cfg)
     keyFlatMode.Printf (ConfigFlatModeFmt, item);
     cfg->Read (keyPath, &path, wxEmptyString);
 
-    long flatMode;
-    cfg->Read (keyFlatMode, &flatMode, 0); 
+    long flatMode=0;
+    if (!prefs.resetFlatModeOnStart)
+      cfg->Read (keyFlatMode, &flatMode, 0); 
 
     if (path.Length () > 0)
       m->bookmarks [path] = Bookmark (flatMode != 0);

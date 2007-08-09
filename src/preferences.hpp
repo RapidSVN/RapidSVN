@@ -106,6 +106,11 @@ public:
    */
   bool useLastCommitMessage;
 
+   /**
+   * always save state of flat mode as reset/false
+   */
+  bool resetFlatModeOnStart;
+
 private:
   void Read ();
   void Write () const;

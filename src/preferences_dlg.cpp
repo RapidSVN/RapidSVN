@@ -83,6 +83,15 @@ public:
                         wxDefaultSize, 0, valDefaultCommitCheck);
 
       mainsizer->Add (checkDefaultCommitComment, 0, wxALL, 5);
+
+      wxGenericValidator valResetFlatModeCheck (&m_prefs->resetFlatModeOnStart);
+      wxCheckBox * checkResetFlatMode =
+        new wxCheckBox (this, -1,
+                        _("Reset Flat Mode on every program start"),
+                        wxDefaultPosition,
+                        wxDefaultSize, 0, valResetFlatModeCheck);
+
+      mainsizer->Add (checkResetFlatMode, 0, wxALL, 5);
     }
 
     SetSizer (mainsizer);
