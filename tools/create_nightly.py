@@ -108,7 +108,7 @@ if __name__ == '__main__':
   if "" == lastSuccessfulRevision:
     print "No successful previous build detected"
   elif currentRevision <= lastSuccessfulRevision:
-    print "No newer revision detected, aborting (last successful=%d, current=%d)" % (lastSuccessfulRevision, currentRevision)
+    print "No newer revision detected, aborting (last successful=%s, current=%s)" % (lastSuccessfulRevision, currentRevision)
     sys.exit(0)
     
   buildApplication()
