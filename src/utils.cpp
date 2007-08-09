@@ -388,7 +388,7 @@ StatusDescription (const svn_wc_status_kind kind)
     break;
   case svn_wc_status_unversioned:
     return _("unversioned");
-	break;
+  break;
   case svn_wc_status_normal:
     return _("normal");
     break;

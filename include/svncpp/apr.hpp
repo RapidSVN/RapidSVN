@@ -32,31 +32,31 @@
 namespace svn
 {
 
-	/**
-	 * APR class. Include this class in your application for apr
-	 * support.
-	 */
-	class Apr
-	{
-	public:
-		/**
-		 * Default constructor. Initializes APR
-		 */
-		Apr ();
+  /**
+   * APR class. Include this class in your application for apr
+   * support.
+   */
+  class Apr
+  {
+  public:
+    /**
+     * Default constructor. Initializes APR
+     */
+    Apr ();
 
-		/**
-		 * Destructor. Terminates APR
-		 */
-		~Apr ();
+    /**
+     * Destructor. Terminates APR
+     */
+    ~Apr ();
 
-	private:
-		/** Disallow copy constructor */
-		Apr (const Apr &);
+  private:
+    /** Disallow copy constructor */
+    Apr (const Apr &);
 
-		/** Disallow assignment operator */
-		Apr &
-		operator = (const Apr &);
-	};
+    /** Disallow assignment operator */
+    Apr &
+    operator = (const Apr &);
+  };
 }
 
 #endif

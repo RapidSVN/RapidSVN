@@ -474,7 +474,7 @@ public:
       diffData.useUrl2 = true;
       diffData.url2 = mRevisionTwo->GetUrl ();
     }
-		
+    
     switch (diffData.compareType)
     {
     case DiffData::WITH_DIFFERENT_REVISION:

@@ -107,7 +107,7 @@ public:
   contextGetLogin (const std::string & realm,
                    std::string & username,
                    std::string & password,
-	           bool & maySave);
+                   bool & maySave);
 
   /**
    * @see svn::ContextListener

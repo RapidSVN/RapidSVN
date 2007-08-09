@@ -239,8 +239,8 @@ public:
     */
   svn::Path
   GetPathAsTempFile (
-		const svn::Path & path,
-		const svn::Revision & revision = svn::Revision::HEAD);
+    const svn::Path & path,
+    const svn::Revision & revision = svn::Revision::HEAD);
 
 private:
   struct Data;

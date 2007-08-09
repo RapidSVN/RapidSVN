@@ -35,13 +35,19 @@
  */
 namespace svn
 {
-	Apr::Apr ()
-	{
-		apr_initialize ();
-	}
+  Apr::Apr ()
+  {
+    apr_initialize ();
+  }
 
-	Apr::~Apr ()
-	{
-		apr_terminate ();
-	}
+  Apr::~Apr ()
+  {
+    apr_terminate ();
+  }
 }
+
+/* -----------------------------------------------------------------
+ * local variables:
+ * eval: (load-file "../../rapidsvn-dev.el")
+ * end:
+ */
