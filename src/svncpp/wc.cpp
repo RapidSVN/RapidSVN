@@ -35,8 +35,6 @@
 
 namespace svn
 {
-  const char * Wc::ADM_DIR_NAME = SVN_WC_ADM_DIR_NAME;
-
   bool 
   Wc::checkWc (const char * dir)
   {
@@ -79,6 +77,27 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+
+  void
+  Wc::setAdmDir (const char * dir)
+  {
+    Pool pool;
+
+    svn_error_t * error = 
+      svn_wc_set_adm_dir (dir, pool);
+
+    if(error != NULL)
+      throw ClientException (error);
+  }
+
+  bool
+  Wc::isAdmDir (const char * name)
+  {
+    Pool pool;
+
+    return 0 != svn_wc_is_adm_dir (name, pool);
+  }
+
 }
 
 /* -----------------------------------------------------------------

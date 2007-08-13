@@ -32,6 +32,9 @@
 
 namespace svn
 {
+  // forward declarations
+  class Path;
+
   /**
    * Class that deals with a working copy
    */
@@ -63,7 +66,22 @@ namespace svn
     ensureAdm (const char * dir, const char * uuid, 
                const char * url, const Revision & revision);
 
-    static const char * ADM_DIR_NAME;
+    /**
+     * use \a dir as name for the subversion administrative directory
+     * instead of the standard ".svn"
+     *
+     * @param dir
+     */
+    static void 
+    setAdmDir (const char * dir);
+
+    /**
+     * checks whether @a name is an administrative directory
+     * 
+     * @remarks @a name may only be a filename, not an absolute path
+     */
+    static bool
+    isAdmDir (const char * name);
 
   private:
   };

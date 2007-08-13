@@ -374,7 +374,7 @@ public:
 
     while (ok)
     {
-      if (filename != Utf8ToLocal (svn::Wc::ADM_DIR_NAME))
+      if (!svn::Wc::isAdmDir (LocalToUtf8 (filename).c_str ()))
         return true;
       ok = dir.GetNext (&filename);
     }

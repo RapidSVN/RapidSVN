@@ -31,6 +31,9 @@
 #include <wx/cshelp.h>
 #include <wx/image.h>
 
+// svncpp
+#include "svncpp/wc.hpp"
+
 //app
 #include "config.hpp"
 #include "hist_mgr.hpp"
@@ -64,6 +67,10 @@ bool RapidSvnApp::OnInit ()
 
   // Add support for PNG
   wxImage::AddHandler(new wxPNGHandler);
+
+  // Add support for SVN_ASP_DOT_NET_HACK
+  if (wxGetEnv (wxT("SVN_ASP_DOT_NET_HACK"), 0))
+    svn::Wc::setAdmDir ("_svn");
 
 #ifdef  USE_HTML_HELP
   // Initialise the HTML help
