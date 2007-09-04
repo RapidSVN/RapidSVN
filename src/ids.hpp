@@ -40,6 +40,7 @@ enum
   ID_RefreshWithUpdate,
   ID_ShowUnversioned,
   ID_IgnoreExternals,
+  ID_ShowIgnored,
   ID_HelpContents,
   ID_HelpIndex,
   ID_HelpStartupTips,
@@ -88,6 +89,7 @@ enum
   ID_Unlock,
   ID_Edit,
   ID_Annotate,
+  ID_Ignore,
   ID_File_Max,
 
   // Reserve space for 16 file verbs (I've never seen any files with more)

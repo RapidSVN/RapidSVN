@@ -469,6 +469,83 @@ namespace svn
     if(error != NULL)
       throw ClientException (error);
   }
+
+  void
+  Client::ignore (const Path & path) throw (ClientException)
+  {
+    static const char s_svnIgnore[] = "svn:ignore";
+    Pool pool;
+  
+    std::string dirpath, basename;
+    path.split (dirpath, basename);
+
+    Revision revision;
+    apr_hash_t *props;
+    svn_error_t * error =
+      svn_client_propget (&props,
+                          s_svnIgnore,
+                          dirpath.c_str (), 
+                          Revision::UNSPECIFIED.revision (),
+                          false, // recursive
+                          *m_context,
+                          pool);
+    if (error != NULL)
+      throw ClientException (error);
+
+    PathPropertiesMapList path_prop_map_list;
+
+    apr_hash_index_t *hi;
+    for (hi = apr_hash_first (pool, props); hi; 
+         hi = apr_hash_next (hi))
+    {
+      PropertiesMap prop_map;
+
+      const void *key;
+      void *val;
+
+      apr_hash_this (hi, &key, NULL, &val);
+
+      prop_map [std::string (s_svnIgnore)] = std::string (((const svn_string_t *)val)->data);
+
+      path_prop_map_list.push_back (PathPropertiesMapEntry ((const char *)key, prop_map));
+    }
+
+    std::string str = basename;
+    for (PathPropertiesMapList::const_iterator i=path_prop_map_list.begin (), ei=path_prop_map_list.end ();i!=ei;++i)
+    {
+      if (dirpath != i->first)
+        continue;
+      for (PropertiesMap::const_iterator j=i->second.begin (), ej=i->second.end (); j != ej; ++j)
+      {
+        if (s_svnIgnore != j->first)
+          continue;
+        str += "\n"+j->second;
+      }
+    }
+    const svn_string_t * propval =
+      svn_string_create (str.c_str (), pool);
+    error =
+      svn_client_propset2 (s_svnIgnore,
+                           propval,
+                           dirpath.c_str (),
+                           false,
+                           false,
+                           *m_context,
+                           pool);
+    if (error != NULL)
+      throw ClientException (error);
+  }
+
+  void
+  Client::ignore (const Targets & targets) throw (ClientException)
+  {
+    // it's slow, but simple
+    for (std::vector<Path>::const_iterator i=targets.targets ().begin (), e=targets.targets ().end ();i!=e;++i)
+    {
+      ignore (*i);
+    }
+  }
+
 }
 
 /* -----------------------------------------------------------------

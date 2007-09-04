@@ -28,6 +28,8 @@
 // stl
 #include <exception>
 #include <map>
+#include <deque> 
+#include <algorithm>
 
 // wxWidgets
 #include "wx/wx.h"
@@ -109,6 +111,7 @@ static const wxChar ConfigShowUnversioned[]  = wxT("/FileListCtrl/ShowUnversione
 static const wxChar ConfigIgnoreExternals[]  = wxT("/FileListCtrl/IgnoreExternals");
 static const wxChar ConfigIncludePath[]      = wxT("/FileListCtrl/IncludePath");
 static const wxChar ConfigSortAscending[]    = wxT("/FileListCtrl/SortAscending");
+static const wxChar ConfigShowIgnored[]      = wxT("/FileListCtrl/ShowIgnored");
 
 /**
  * test if the given status entry is a file or
@@ -649,6 +652,7 @@ public:
   bool WithUpdate;
   bool ShowUnversioned;
   bool IgnoreExternals;
+  bool ShowIgnored;
 
   svn::StatusSel statusSel;
 
@@ -696,7 +700,7 @@ FileListCtrl::Data::Data ()
     IncludePath (true), SortAscending (true),
     DirtyColumns (true), FlatMode (false),
     WithUpdate (false), ShowUnversioned (true),
-    IgnoreExternals (false)
+    IgnoreExternals (false), ShowIgnored(false)
 {
   ImageListSmall = new wxImageList (16, 16, TRUE);
 
@@ -892,6 +896,7 @@ FileListCtrl::Data::ReadConfig ()
   config->Read (ConfigWithUpdate,      &WithUpdate);
   config->Read (ConfigShowUnversioned, &ShowUnversioned, (bool) true); 
   config->Read (ConfigIgnoreExternals, &IgnoreExternals, (bool) false);
+  config->Read (ConfigShowIgnored,     &ShowIgnored,     (bool) false);
 
   for (int col = 0; col < COL_COUNT; col++)
   {
@@ -921,6 +926,7 @@ FileListCtrl::Data::WriteConfig ()
   config->Write (ConfigWithUpdate,        WithUpdate);
   config->Write (ConfigShowUnversioned,   ShowUnversioned);
   config->Write (ConfigIgnoreExternals,   IgnoreExternals);
+  config->Write (ConfigShowIgnored,       ShowIgnored);
 
   // loop through all the columns
   for (int col=0; col < COL_COUNT; col++)
@@ -979,6 +985,21 @@ FileListCtrl::RefreshFileList ()
 {
   svn::Path pathUtf8 (PathUtf8 (m->Path));
 
+  // store selection
+  std::deque<std::string> selection;
+  long i;
+  for (i=GetFirstSelected (); i != -1; i = GetNextSelected (i))
+  {
+    svn::Status const* status = reinterpret_cast<svn::Status const*>(GetItemData (i));
+    selection.push_back (status->path ());
+  }
+  std::sort (selection.begin (), selection.end ());
+  std::deque<std::string>::const_iterator selBegin = selection.begin (), selEnd = selection.end ();
+  // store scroll position
+  //int scrollPos = GetScrollPos (wxVERTICAL);
+  long topItem = GetTopItem ();
+  // freeze update to speed up processing.
+  Freeze ();
   // delete all the items in the list to display the new ones
   DeleteAllItems ();
 
@@ -986,13 +1007,10 @@ FileListCtrl::RefreshFileList ()
 
   wxLogStatus (_("Listing entries in '%s'"), m->Path.c_str ());
 
-  // Hide the list to speed up inserting
-  Hide ();
-
   svn::Client client (m->Context);
 
   const svn::StatusEntries statusSelector =
-    client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate, false, m->IgnoreExternals);
+    client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate, m->ShowIgnored, m->IgnoreExternals);
 
   svn::StatusEntries::const_iterator it;
   for (it = statusSelector.begin (); it != statusSelector.end (); it++)
@@ -1000,11 +1018,27 @@ FileListCtrl::RefreshFileList ()
     const svn::Status & status = *it;
 
     CreateLables (status, pathUtf8);
+    // trying to restore selection
+    if (std::binary_search (selBegin, selEnd, status.path ()))
+    {
+      i=GetItemCount ()-1;
+      wxASSERT(i >= 0);
+      Select (i, true);
+    }
   }
 
   SortItems (Data::CompareFunction, (long) this->m);
 
-  Show ();
+  // reenable window update after Freeze()
+  Thaw();
+  // trying to restore scroll position, update must be enabled before
+  // because under WinXP call to ScrollList sometimes ignored without
+  // report about failure, mainly this related for relatively big lists
+  // and only for positions closer to the end of it
+  wxRect ir, cr;
+  GetItemRect (topItem, ir);
+  GetItemRect (GetTopItem (), cr);
+  ScrollList (0, ir.GetTop () - cr.GetTop ());
 
   wxLogStatus (_("Ready"),"");
 }
@@ -1639,6 +1673,18 @@ void
 FileListCtrl::SetIgnoreExternals (bool value)
 {
   m->IgnoreExternals = value;
+}
+
+bool
+FileListCtrl::GetShowIgnored () const
+{
+  return m->ShowIgnored;
+}
+
+void
+FileListCtrl::SetShowIgnored (bool value)
+{
+  m->ShowIgnored = value;
 }
 
 void

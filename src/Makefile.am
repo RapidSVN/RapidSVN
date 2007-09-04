@@ -42,6 +42,7 @@ rapidsvn_SOURCES= \
 	hist_entries.cpp \
 	hist_mgr.cpp \
 	hist_val.cpp \
+	ignore_action.cpp \
 	import_action.cpp \
 	import_dlg.cpp \
 	listed_dlg.cpp \

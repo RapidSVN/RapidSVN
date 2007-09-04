@@ -173,6 +173,7 @@ AppendModifyMenu (wxMenu * parentMenu)
   AppendMenuItem (parentMenu, ID_AddRecursive, _("Add r&ecursive"));
   AppendMenuItem (parentMenu, ID_Delete, _("&Delete\tDEL"),
                   EMBEDDED_BITMAP(delete_png));
+  AppendMenuItem (parentMenu, ID_Ignore, _("&Ignore\tCTRL-DEL"));
 
   parentMenu->AppendSeparator ();
 
@@ -422,6 +423,8 @@ StatusDescription (const svn_wc_status_kind kind)
   case svn_wc_status_incomplete:
     return _("incomplete");
     break;
+  case svn_wc_status_ignored:
+    return _("ignored");
   default:
     return _("unknown value");
     break;

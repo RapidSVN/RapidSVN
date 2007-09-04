@@ -261,6 +261,7 @@ public:
     menuView->AppendCheckItem (ID_RefreshWithUpdate, _("Refresh with Update"));
     menuView->AppendCheckItem (ID_ShowUnversioned, _("Show unversioned entries"));
     menuView->AppendCheckItem (ID_IgnoreExternals, _("Ignore Externals"));
+    menuView->AppendCheckItem (ID_ShowIgnored, _("Show ignored entries"));
 
     // Preferences menu item goes to its own place on MacOSX,
     // so no separator is necessary.
@@ -702,6 +703,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
   EVT_MENU (ID_ShowUnversioned, RapidSvnFrame::OnShowUnversioned)
   EVT_MENU (ID_IgnoreExternals, RapidSvnFrame::OnIgnoreExternals)
+  EVT_MENU (ID_ShowIgnored, RapidSvnFrame::OnShowIgnored)
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
   EVT_MENU (ID_Stop, RapidSvnFrame::OnStop)
@@ -810,7 +812,8 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->CheckMenu (ID_Flat,              false);
   m->CheckMenu (ID_RefreshWithUpdate, m->listCtrl->GetWithUpdate());
   m->CheckMenu (ID_ShowUnversioned,   m->listCtrl->GetShowUnversioned());
-  m->CheckMenu (ID_IgnoreExternals, m->listCtrl->GetIgnoreExternals());
+  m->CheckMenu (ID_IgnoreExternals,   m->listCtrl->GetIgnoreExternals());
+  m->CheckMenu (ID_ShowIgnored,       m->listCtrl->GetShowIgnored());
   m->CheckMenu (ID_Sort_Ascending,    m->listCtrl->GetSortAscending());
   m->CheckSort (m->listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
 
@@ -1004,9 +1007,6 @@ RapidSvnFrame::RefreshFileList ()
   {
     wxBusyCursor busy;
 
-    // HIDE
-    m->listCtrl->Show (FALSE);
-
     try
     {
       // UPDATE
@@ -1062,8 +1062,6 @@ RapidSvnFrame::RefreshFileList ()
       m->listCtrl->UpdateColumns ();
     }
 
-    // SHOW
-    m->listCtrl->Show (TRUE);
   }
   if (!isRunning)
     m->SetRunning (false);
@@ -1287,6 +1285,14 @@ RapidSvnFrame::OnIgnoreExternals (wxCommandEvent & WXUNUSED (event))
 {
   bool checked = m->IsMenuChecked (ID_IgnoreExternals);
   m->listCtrl->SetIgnoreExternals (checked);
+  RefreshFileList ();
+}
+
+void
+RapidSvnFrame::OnShowIgnored (wxCommandEvent & WXUNUSED (event))
+{
+  bool checked = m->IsMenuChecked (ID_ShowIgnored);
+  m->listCtrl->SetShowIgnored (checked);
   RefreshFileList ();
 }
 

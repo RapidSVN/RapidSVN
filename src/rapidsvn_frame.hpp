@@ -102,6 +102,7 @@ private:
   void OnRefreshWithUpdate (wxCommandEvent & event);
   void OnShowUnversioned (wxCommandEvent & event);
   void OnIgnoreExternals (wxCommandEvent & event);
+  void OnShowIgnored (wxCommandEvent & event);
   void OnStop (wxCommandEvent & event);
 
   // Query menu

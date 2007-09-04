@@ -448,6 +448,10 @@ SOURCE=.\src\verblist.cpp
 
 SOURCE=.\src\view_action.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\src\ignore_action.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -751,6 +755,10 @@ SOURCE=.\src\version.hpp
 # Begin Source File
 
 SOURCE=.\src\view_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\ignore_action.hpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"

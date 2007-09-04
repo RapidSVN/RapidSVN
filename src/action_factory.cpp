@@ -63,7 +63,7 @@
 #include "view_action.hpp"
 #include "annotate_action.hpp"
 #include "drag_n_drop_action.hpp"
-
+#include "ignore_action.hpp"
 
 bool 
 ActionFactory::CheckIdForStatusSel (int id, const svn::StatusSel & statusSel)
@@ -184,6 +184,9 @@ ActionFactory::CheckIdForStatusSel (int id, const svn::StatusSel & statusSel)
 
   case ID_Annotate:
     result = AnnotateAction::CheckStatusSel (statusSel);
+    break;
+  case ID_Ignore:
+    result = IgnoreAction::CheckStatusSel (statusSel);
     break;
   };
 
@@ -316,6 +319,9 @@ ActionFactory::CreateAction (wxWindow * parent, int id)
         action = new AnnotateAction (parent, data);
         break;
       }
+    case ID_Ignore:
+      action = new IgnoreAction (parent);
+      break;
     }
   }
 

@@ -216,6 +216,15 @@ public:
   void
   SetIgnoreExternals (bool value);
 
+  /**
+   * shall we display ignored file entries?
+   */
+  bool
+  GetShowIgnored () const;
+
+  void
+  SetShowIgnored (bool value);
+
   void RefreshFileList ();
   void RefreshFileList (const wxString & path);
 

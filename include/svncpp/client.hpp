@@ -31,8 +31,8 @@
 #pragma warning (disable: 4786)
 #endif
 
-// Ignore MSVC 7 compiler warning: C++ exception specification
-#if defined (_MSC_VER) && _MSC_VER > 1200 && _MSC_VER <= 1310
+// Ignore MSVC 7,8 compiler warning: C++ exception specification
+#if defined (_MSC_VER) && _MSC_VER > 1200 && _MSC_VER <= 1400
 #pragma warning (disable: 4290)
 #endif
 
@@ -631,6 +631,25 @@ namespace svn
                 bool force = false);
 
 
+    /**
+     * Add a single file into ignore list.
+	 *
+     * @param path path to the file 
+     * @exception ClientException
+	 * @see svn:ignore property description
+     */
+    void 
+    ignore (const Path & path) throw (ClientException);
+
+    /**
+     * Add files into ignore list.
+     *
+     * @param targets targets to treat as ignored 
+     * @exception ClientException
+	 * @see svn:ignore property description
+     */
+    void 
+    ignore (const Targets & targets) throw (ClientException);
   private:
     Context * m_context;
 
