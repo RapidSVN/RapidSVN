@@ -395,20 +395,11 @@ public:
     const svn::LogEntry & entry = (*entries)[index];
 
     wxString message (Utf8ToLocal (entry.message.c_str ()));
-    message.Trim (false);
+    message.Trim ();
 
-    // TODO we have to doublecheck this with wxMSW and wxGTK
-    //int selection = m_notebook->GetSelection ();
-
-    //m_logMsg->Show (false);
     m_logMsg->SetValue (message);
-    //m_logMsg->Show (true);
 
-    //m_affectedList->Show (false);
     m_affectedList->SetValue (entry.changedPaths);
-    //m_affectedList->Show (true);
-
-    //m_notebook->SetSelection (selection);
 
     CheckButtons ();
   }

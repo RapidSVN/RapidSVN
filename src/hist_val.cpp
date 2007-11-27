@@ -158,7 +158,7 @@ HistoryValidator::TransferFromWindow()
     wxComboBox * comboBox = (wxComboBox *)m_validatorWindow;
 
     wxString lastValue (comboBox->GetValue ());
-    TrimString (lastValue);
+    lastValue.Trim ();
 
     if (!m_dontUpdate && (lastValue.Length () > 0))
       TheHistoryManager.AddEntryToList (m_settingName, lastValue);
@@ -173,7 +173,7 @@ HistoryValidator::TransferFromWindow()
     wxTextCtrl * textCtrl = (wxTextCtrl *)m_validatorWindow;
 
     wxString lastValue (textCtrl->GetValue ());
-    TrimString (lastValue);
+    lastValue.Trim ();
 
     if (!m_dontUpdate && (lastValue.Length () > 0))
       TheHistoryManager.AddEntryToList (m_settingName, lastValue);

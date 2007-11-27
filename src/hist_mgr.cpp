@@ -275,8 +275,7 @@ private:
       cfg->Read (valueStr, &value);
 
       // trim it and append it to the list (only if non-empty)
-      TrimString (value);
-
+      value.Trim ();
       if (value.Length () > 0)
         list.Add (value);
     }

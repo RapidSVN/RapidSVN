@@ -171,7 +171,7 @@ ImportDlg::OnOk (wxCommandEvent &event)
 
   TrimString (m->data.Repository);
   TrimString (m->data.Path);
-  TrimString (m->data.LogMessage);
+  m->data.LogMessage.Trim ();
 
   if (m->data.Repository.IsEmpty ())
   {
