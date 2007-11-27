@@ -161,6 +161,177 @@ namespace svn
     return stringbuf->data;
   }
 
+  std::string
+  Client::diff (const Path & tmpPath, const Path & path1, 
+                const Path & path2, const Revision & revision1, 
+		const Revision & revision2, const bool recurse,
+		const bool ignoreAncestry, const bool noDiffDeleted) 
+                throw (ClientException)
+  {
+    Pool pool;
+    svn_error_t * error;
+    apr_status_t status;
+    apr_file_t * outfile = NULL;
+    const char * outfileName = NULL;
+    apr_file_t * errfile = NULL;
+    const char * errfileName = NULL;
+    apr_array_header_t * options;
+    svn_stringbuf_t * stringbuf;
+
+    // svn_client_diff needs an options array, even if it is empty
+    options = apr_array_make (pool, 0, 0);
+
+    // svn_client_diff needs a temporary file to write diff output to
+    error = svn_io_open_unique_file (&outfile, &outfileName,
+                                     tmpPath.c_str(), ".tmp",
+                                     FALSE, pool);
+
+    if (error != NULL)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      throw ClientException (error);
+    }
+
+    // and another one to write errors to
+    error = svn_io_open_unique_file (&errfile, &errfileName,
+                                     tmpPath.c_str(), ".tmp",
+                                     FALSE, pool);
+
+    if (error != NULL)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      throw ClientException (error);
+    }
+
+    // run diff
+    error = svn_client_diff (options,
+                             path1.c_str (), revision1.revision (),
+                             path2.c_str (), revision2.revision (),
+                             recurse, ignoreAncestry, noDiffDeleted,
+                             outfile, errfile,
+                             *m_context,
+                             pool);
+
+    if (error != NULL)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      throw ClientException (error);
+    }
+
+    // then we reopen outfile for reading
+    status = apr_file_close (outfile);
+    if (status)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      fail (pool, status, "failed to close '%s'", outfileName);
+    }
+
+    status = apr_file_open (&outfile, outfileName, APR_READ, APR_OS_DEFAULT, pool);
+    if (status)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      fail (pool, status, "failed to open '%s'", outfileName);
+    }
+
+    // now we can read the diff output from outfile and return that
+    error = svn_stringbuf_from_aprfile (&stringbuf, outfile, pool);
+
+    if (error != NULL)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      throw ClientException (error);
+    }
+
+    diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+    return stringbuf->data;
+  }
+
+  std::string
+  Client::diff (const Path & tmpPath, const Path & path, 
+                const Revision & pegRevision,
+                const Revision & revision1, const Revision & revision2,
+                const bool recurse, const bool ignoreAncestry,
+                const bool noDiffDeleted) throw (ClientException)
+  {
+    Pool pool;
+    svn_error_t * error;
+    apr_status_t status;
+    apr_file_t * outfile = NULL;
+    const char * outfileName = NULL;
+    apr_file_t * errfile = NULL;
+    const char * errfileName = NULL;
+    apr_array_header_t * options;
+    svn_stringbuf_t * stringbuf;
+
+    // svn_client_diff needs an options array, even if it is empty
+    options = apr_array_make (pool, 0, 0);
+
+    // svn_client_diff needs a temporary file to write diff output to
+    error = svn_io_open_unique_file (&outfile, &outfileName,
+                                     tmpPath.c_str(), ".tmp",
+                                     FALSE, pool);
+
+    if (error != NULL)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      throw ClientException (error);
+    }
+
+    // and another one to write errors to
+    error = svn_io_open_unique_file (&errfile, &errfileName,
+                                     tmpPath.c_str(), ".tmp",
+                                     FALSE, pool);
+
+    if (error != NULL)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      throw ClientException (error);
+    }
+
+    // run diff
+    error = svn_client_diff_peg (options,
+                             path.c_str (), pegRevision.revision(),
+                             revision1.revision (), revision2.revision (),
+                             recurse, ignoreAncestry, noDiffDeleted,
+                             outfile, errfile,
+                             *m_context,
+                             pool);
+
+    if (error != NULL)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      throw ClientException (error);
+    }
+
+    // then we reopen outfile for reading
+    status = apr_file_close (outfile);
+    if (status)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      fail (pool, status, "failed to close '%s'", outfileName);
+    }
+
+    status = apr_file_open (&outfile, outfileName, APR_READ, APR_OS_DEFAULT, pool);
+    if (status)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      fail (pool, status, "failed to open '%s'", outfileName);
+    }
+
+    // now we can read the diff output from outfile and return that
+    error = svn_stringbuf_from_aprfile (&stringbuf, outfile, pool);
+
+    if (error != NULL)
+    {
+      diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+      throw ClientException (error);
+    }
+
+    diffCleanup (outfile, outfileName, errfile, errfileName, pool);
+    return stringbuf->data;
+  }
+
+
 }
 
 /* -----------------------------------------------------------------
