@@ -55,6 +55,12 @@ extern const wxChar HISTORY_WORKING_DIRECTORY [];
 extern const wxChar HISTORY_COPYMOVE_DESTINATION [];
 
 
+/**
+ * History entry for Diff URLs
+ */
+extern const wxChar HISTORY_DIFF_URL [];
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

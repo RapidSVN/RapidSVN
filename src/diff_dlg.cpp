@@ -33,6 +33,8 @@
 #include "diff_data.hpp"
 #include "diff_dlg.hpp"
 #include "utils.hpp"
+#include "hist_entries.hpp"
+#include "hist_val.hpp"
 
 /** event IDs for the controls used in this file */
 enum
@@ -124,9 +126,10 @@ public:
   /** Constructor */
   RevisionPanel (wxWindow * parent,
                 wxWindowID id,
-                const wxString & title)
+                const wxString & title, 
+                const wxString & defaultUrl)
    : wxPanel (parent, id, wxDefaultPosition, wxDefaultSize),
-     mEnableUrl (true)
+     mEnableUrl (true), mUrl (defaultUrl)
   {
     InitControls (title);
     CheckControls ();
@@ -153,6 +156,8 @@ public:
   IsValid ()
   {
     bool valid = true;
+    if (mCheckUseUrl->GetValue ())
+      mUrl = m_comboUrl->GetValue ();
 
     if (mRadioUseRevision->GetValue ())
     {
@@ -164,7 +169,7 @@ public:
 
     if (valid)
       if (mCheckUseUrl->GetValue ())
-        valid = mTextUrl->GetValue ().Trim ().Length () > 0;
+        valid = mUrl.Trim ().Length () > 0;
 
     return valid;
   }
@@ -201,7 +206,7 @@ public:
   const wxString
   GetUrl () const
   {
-    return mTextUrl->GetValue ();
+    return mUrl;
   }
 
   void
@@ -213,7 +218,7 @@ public:
       mRadioUseDate->SetValue (true);
       wxDateTime date;
       date.ParseDateTime (FormatDateTime (revision.date (),
-        wxT("%Y-%m-%d %H:%M:%S")). c_str ());
+        wxT("%Y-%m-%d %H:%M:%S")).c_str ());
       mDatePicker->SetValue (date);
       mTextRevision->SetValue (wxEmptyString);
       mCheckUseLatest->SetValue (true);
@@ -246,7 +251,7 @@ public:
   void
   SetUrl (const wxString & url)
   {
-    mTextUrl->SetValue (url);
+    mUrl = url;
   }
 
   void
@@ -257,6 +262,8 @@ public:
 
 private:
   bool mEnableUrl;
+
+  wxString mUrl;
 
   /** radio button: if checked use revision */
   wxRadioButton * mRadioUseRevision;
@@ -280,10 +287,10 @@ private:
   wxCheckBox * mCheckUseUrl;
 
   /** text control for an optional URL */
-  wxTextCtrl * mTextUrl;
+  wxComboBox * m_comboUrl;
 
   /** browse button if the user wants to search for a local file */
-  wxButton * mButtonBrowse;
+  //wxButton * mButtonBrowse;
 
   /** Initialize and position the controls for the panel */
   void
@@ -321,11 +328,15 @@ private:
     // third row: url
     mCheckUseUrl = new wxCheckBox (
       this, ID_UseUrl, _("Use URL/Path:"));
-    mTextUrl = new wxTextCtrl (this, ID_Url, wxEmptyString);
-    mButtonBrowse = CreateEllipsisButton (this, ID_Browse);
+    HistoryValidator valModule (HISTORY_DIFF_URL, &mUrl);
+    m_comboUrl =
+      new wxComboBox (this, ID_Url, mUrl, wxDefaultPosition,
+                      wxSize (235, -1), 0, 0, wxCB_DROPDOWN, valModule);
+
+    //mButtonBrowse = CreateEllipsisButton (this, ID_Browse);
     gridSizer->Add (mCheckUseUrl);
-    gridSizer->Add (mTextUrl, 0, wxEXPAND);
-    gridSizer->Add (mButtonBrowse);
+    gridSizer->Add (m_comboUrl, 0, wxEXPAND);
+    //gridSizer->Add (mButtonBrowse);
 
     // create the static box that surrounds the controls
     // and add those controls
@@ -370,13 +381,13 @@ private:
   {
     if (!mCheckUseUrl->GetValue ())
     {
-      mTextUrl->Enable (false);
-      mButtonBrowse->Enable (false);
+      m_comboUrl->Enable (false);
+      //mButtonBrowse->Enable (false);
       return;
     }
 
-    mTextUrl->Enable (mEnableUrl);
-    mButtonBrowse->Enable (mEnableUrl);
+    m_comboUrl->Enable (mEnableUrl);
+    //mButtonBrowse->Enable (mEnableUrl);
   }
 
   /**
@@ -410,6 +421,7 @@ BEGIN_EVENT_TABLE (RevisionPanel, wxPanel)
   EVT_RADIOBUTTON (ID_UseDate, RevisionPanel::OnCommand)
   EVT_TEXT (ID_Revision, RevisionPanel::OnCommand)
   EVT_TEXT (ID_Date, RevisionPanel::OnCommand)
+  EVT_TEXT (ID_Url, RevisionPanel::OnCommand)
 END_EVENT_TABLE ()
 
 enum
@@ -441,10 +453,12 @@ public:
   RevisionPanel * mRevisionOne;
   RevisionPanel * mRevisionTwo;
   wxString mCompareTypeLabels [COMPARE_COUNT];
+  wxString mDefaultUrl;
 
   /** Constructor */
-  Data (wxWindow * parent)
-    : wxPanel (parent), mParent (parent), mCompareType (-1)
+  Data (wxDialog * parent, const wxString & defaultUrl)
+    : wxPanel (parent), mDefaultUrl (defaultUrl), mParent (parent), 
+      mCompareType (-1)
   {
     mCompareTypeLabels [COMPARE_WITH_BASE] = _("Diff to BASE");
     mCompareTypeLabels [COMPARE_WITH_HEAD] = _("Diff to HEAD");
@@ -559,9 +573,9 @@ public:
   }
 
 private:
-  wxWindow * mParent;
-  wxButton * mButtonOK;
+  wxDialog * mParent;
   int mCompareType;
+  wxButton * mButtonOK;
 
   void
   InitControls ()
@@ -584,11 +598,11 @@ private:
 
     // second row: first revision/url
     mRevisionOne = new RevisionPanel (
-      this, ID_RevisionOne, _("Revision or date #&1:"));
+      this, ID_RevisionOne, _("Revision or date #&1:"), mDefaultUrl);
 
     // third row: second revision/url
     mRevisionTwo = new RevisionPanel (
-      this, ID_RevisionTwo, _("Revision or date #&2:"));
+      this, ID_RevisionTwo, _("Revision or date #&2:"), mDefaultUrl);
 
     // fourth row: buttons
     wxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
@@ -762,11 +776,11 @@ BEGIN_EVENT_TABLE (DiffDlg::Data, wxPanel)
   EVENT_UPDATE (-1, Data::OnUpdate)
 END_EVENT_TABLE ()
 
-DiffDlg::DiffDlg (wxWindow * parent)
+DiffDlg::DiffDlg (wxWindow * parent, const wxString & selectedUrl)
   : wxDialog (parent, -1, _("Diff"), wxDefaultPosition,
               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data (this);
+  m = new Data (this, selectedUrl);
 
   // Add all sizers to main sizer
   wxBoxSizer *mainSizer = new wxBoxSizer (wxVERTICAL);

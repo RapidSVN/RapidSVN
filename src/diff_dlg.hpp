@@ -46,7 +46,7 @@ public:
    *
    * @param parent parent window
    */
-  DiffDlg (wxWindow *parent);
+  DiffDlg (wxWindow *parent, const wxString & selectedUrl);
 
   /**
    * destructor

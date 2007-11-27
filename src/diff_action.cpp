@@ -235,7 +235,12 @@ DiffAction::Prepare ()
     }
     bool isRemote = svn::Url::isValid (target.c_str ());
 
-    DiffDlg dlg (GetParent ());
+    // If there is more than one target, don't set the
+    //  default URL
+    wxString defaultUrl (wxEmptyString);
+    if (GetTargets ().size () == 1)
+      defaultUrl = Utf8ToLocal (target.c_str ());
+    DiffDlg dlg (GetParent (), defaultUrl);
 
     size_t count = GetTargets ().size ();
 
