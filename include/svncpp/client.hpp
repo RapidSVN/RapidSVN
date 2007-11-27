@@ -95,6 +95,12 @@ namespace svn
     getContext () const;
 
     /**
+     * @return returns the Client context
+     */
+    Context * 
+    getContext();
+
+    /**
      * sets the client context
      * you have to make sure the old context
      * is de-allocated

@@ -47,6 +47,12 @@ namespace svn
     return m_context;
   }
 
+  Context *
+  Client::getContext ()
+  {
+    return m_context;
+  }
+
   void
   Client::setContext (Context * context)
   {
