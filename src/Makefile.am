@@ -86,5 +86,6 @@ rapidsvn_LDADD= -lsvncpp \
 	$(SVN_LIBS) \
 	$(NEON_LIBS) \
 	$(APR_LIBS) \
-	$(WX_LIBS)
+	$(WX_LIBS) \
+	$(EXTRA_LIBS)
 rapidsvn_DEPENDENCIES=svncpp/libsvncpp.la
