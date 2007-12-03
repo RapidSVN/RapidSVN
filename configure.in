@@ -1,4 +1,6 @@
 AC_INIT(src/rapidsvn_app.cpp)
+AC_CANONICAL_SYSTEM
+
 AM_INIT_AUTOMAKE(rapidsvn, 0.9.5)
 
 AC_PROG_CXX
@@ -207,6 +209,21 @@ esac
 CPPFLAGS="$CPPFLAGS `$WX_CONFIG --cppflags`"
 CXXFLAGS="$CXXFLAGS `$WX_CONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
 WX_LIBS="`$WX_CONFIG --libs`"
+
+dnl
+dnl Platform specific specials
+dnl
+AC_MSG_CHECKING([for platform specifics])	
+EXTRA_LIBS=""
+case "$target" in
+    *-*-darwin* )
+        AC_MSG_RESULT([darwin])
+        EXTRA_LIBS="-framework Security"
+	;;
+    *)
+        AC_MSG_RESULT([no])
+        ;;
+esac
 
 dnl
 dnl CppUnit
@@ -439,6 +456,7 @@ AC_SUBST(APR_LIBS)
 AC_SUBST(WX_LIBS)
 AC_SUBST(SVN_LIBS)
 AC_SUBST(NEON_LIBS)
+AC_SUBST(EXTRA_LIBS)
 AC_SUBST(DOCBOOK_MANPAGES)
 AC_SUBST(XSLTPROC)
 AC_SUBST(TARGET_MANPAGE)
