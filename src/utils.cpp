@@ -284,7 +284,7 @@ AppendMenuItem (wxMenu & menu, int id)
     break;
 
   case ID_Commit:
-    caption = _("Co&mmit...\tCTRL-M");
+    caption = _("Co&mmit...\tCTRL-ENTER");
     bitmap = EMBEDDED_BITMAP(commit_png);
     break;
 
