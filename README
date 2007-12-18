@@ -46,11 +46,11 @@ BUILDING AND INSTALLING
 
   If you are building wxWidgets on linux, you will need to specify 
   the --disable-no-exceptions parameter to configure (see 
-  http://www.wxWidgets.org/faqgen.htm#exceptions). For development
+  http://www.wxwidgets.org/docs/faqgen.htm#exceptions). For development
   you will probably also want --enable-debug.
 
 * Download the latest Subversion source tree.  Here are the directions: 
-  http://subversion.tigris.org/project_source.html
+  http://subversion.tigris.org/project_packages.html
 
 * Once you have Subversion the download all the files just as the directions in 
   the Subversion INSTALL file so you have the directory structure below. Note: 
@@ -72,11 +72,14 @@ BUILDING AND INSTALLING
   enormous, around 400 MB.  It would be best if you just got this from
   an MSDN CD if possible.
 
-  If you have the cvs client installed on your machine then you can download the
+* If you have the cvs client installed on your machine then you can download the
   apr libraries with the following commands:
   % cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic co apr
   % cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic co apr-util
   % cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic co apr-iconv
+  
+  Otherwise, you can get the most recent versions here:
+  http://apr.apache.org/download.cgi
 
 * Two environmental variables must be set as well: 
   SUBVERSION - SVN libraries root directory
