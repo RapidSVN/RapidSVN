@@ -1,6 +1,6 @@
 /*
  * ====================================================================
- * Copyright (c) 2002-2006 The RapidSvn Group.  All rights reserved.
+ * Copyright (c) 2002-2008 The RapidSvn Group.  All rights reserved.
  *
  * This software is licensed as described in the file LICENSE.txt,
  * which you should have received as part of this distribution.
@@ -13,7 +13,6 @@
 
 logo ICON    "res/rapidsvn.ico"
 
-#include "wx/msw/wx.rc"
 #include "version.hpp"
 
 #ifndef _DEBUG
@@ -26,7 +25,7 @@ VS_VERSION_INFO VERSIONINFO
  FILEVERSION RAPIDSVN_VER_MAJOR, RAPIDSVN_VER_MINOR, RAPIDSVN_VER_MICRO, RAPIDSVN_VER_PATCH
  PRODUCTVERSION RAPIDSVN_VER_MAJOR,RAPIDSVN_VER_MINOR,RAPIDSVN_VER_MICRO
  FILEFLAGSMASK 0x3fL
- FILEFLAGS VERSION_FILEFLAGS
+ FILEFLAGS 0L
  FILEOS 0x40004L
  FILETYPE 0x1L
  FILESUBTYPE 0x0L
@@ -41,7 +40,7 @@ BEGIN
             VALUE "FileVersion", RAPIDSVN_VER_STR
             VALUE "ProductVersion", RAPIDSVN_VER_STR
             VALUE "InternalName", "RAPIDSVN\0"
-            VALUE "LegalCopyright", "(c) Copyright 2002-2004 The RapidSvn Group\0"
+            VALUE "LegalCopyright", "(c) Copyright 2002-2008 The RapidSvn Group\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "rapidsvn.exe\0"
             VALUE "PrivateBuild", "\0"
