@@ -280,7 +280,7 @@ private:
   void OnContextMenu (wxContextMenuEvent & event);
   void OnBeginDrag (wxListEvent & event);
 
-  void CreateLables (const svn::Status & status, const svn::Path & basePath);
+  void CreateLables (const svn::Status & status, const svn::Path & basePath, bool isRelative);
 
 private:
   DECLARE_EVENT_TABLE ()

@@ -1005,16 +1005,35 @@ FileListCtrl::RefreshFileList ()
   wxLogStatus (_("Listing entries in '%s'"), m->Path.c_str ());
 
   svn::Client client (m->Context);
+  svn::StatusEntries statusSelector;
 
-  const svn::StatusEntries statusSelector =
-    client.status (pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate, m->ShowIgnored, m->IgnoreExternals);
+  // Workaround for issue 324 (only local+non-flat+update): 
+  //   we chdir to the requested dir and pass "." to svn
+  bool isRelative;
+  if (!pathUtf8.isUrl () && m->WithUpdate && !m->FlatMode)
+  {
+    isRelative = true;
+    ::wxSetWorkingDirectory (m->Path);
+
+    // "" is the canonical expression for "."
+    statusSelector = client.status (
+      "", m->FlatMode, true, m->WithUpdate, 
+      m->ShowIgnored, m->IgnoreExternals);
+  }
+  else
+  {
+    isRelative = false;
+    statusSelector = client.status (
+      pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate, 
+      m->ShowIgnored, m->IgnoreExternals);
+  }
 
   svn::StatusEntries::const_iterator it;
   for (it = statusSelector.begin (); it != statusSelector.end (); it++)
   {
     const svn::Status & status = *it;
 
-    CreateLables (status, pathUtf8);
+    CreateLables (status, pathUtf8, isRelative);
     // trying to restore selection
     if (std::binary_search (selBegin, selEnd, status.path ()))
     {
@@ -1041,14 +1060,28 @@ FileListCtrl::RefreshFileList ()
 }
 
 void
-FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePathUtf8)
+FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePathUtf8,
+                            bool isRelative)
 {
   wxString values[COL_COUNT];
-  svn::Path fullPath (status.path ());
+  svn::Path fullPath;
+  size_t pathUtf8Length;
 
-  const size_t pathUtf8Length = basePathUtf8.length () + 1;
+  if (isRelative)
+  {
+    fullPath = basePathUtf8;
+    fullPath.addComponent (status.path ());
+
+    pathUtf8Length = 0;
+  }
+  else
+  {
+    fullPath = status.path ();
+
+    pathUtf8Length = basePathUtf8.length () + 1;
+  }
+
   const bool isUrl (basePathUtf8.isUrl ());
-
   const bool isDot = (fullPath.length () <= pathUtf8Length);
   svn::Path path;
 

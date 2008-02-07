@@ -151,6 +151,10 @@ namespace svn
     if (0 == component)
       return;
 
+    // in case of an empty string, return
+    if (*component == 0)
+      return;
+
     // if the @a component is absolute, simply
     // use it
     if (isAbsolute (component))
