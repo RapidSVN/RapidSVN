@@ -56,6 +56,7 @@
 #include "property_action.hpp"
 #include "rename_action.hpp"
 #include "resolve_action.hpp"
+#include "userresolve_action.hpp"
 #include "revert_action.hpp"
 #include "switch_action.hpp"
 #include "unlock_action.hpp"
@@ -125,6 +126,10 @@ ActionFactory::CheckIdForStatusSel (int id, const svn::StatusSel & statusSel)
 
   case ID_Revert:
     result = RevertAction::CheckStatusSel (statusSel);
+    break;
+
+  case ID_UserResolve:
+    result = UserResolveAction::CheckStatusSel (statusSel);
     break;
 
   case ID_Resolve:
@@ -253,6 +258,10 @@ ActionFactory::CreateAction (wxWindow * parent, int id)
 
     case ID_Revert:
       action = new RevertAction (parent);
+      break;
+
+    case ID_UserResolve:
+      action = new UserResolveAction (parent);
       break;
 
     case ID_Resolve:

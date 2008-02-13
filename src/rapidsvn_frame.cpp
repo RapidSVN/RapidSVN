@@ -1683,6 +1683,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
 
   case TOKEN_CMD:
   case TOKEN_CMD_DIFF:
+  case TOKEN_CMD_MERGE:
   case TOKEN_CMD_VIEW:
     {
       // execute the command sent

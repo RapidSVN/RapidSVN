@@ -302,6 +302,10 @@ SOURCE=.\src\hist_val.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\ignore_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\import_action.cpp
 # End Source File
 # Begin Source File
@@ -438,6 +442,10 @@ SOURCE=.\src\update_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\userresolve_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\utils.cpp
 # End Source File
 # Begin Source File
@@ -447,10 +455,6 @@ SOURCE=.\src\verblist.cpp
 # Begin Source File
 
 SOURCE=.\src\view_action.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\ignore_action.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -606,6 +610,10 @@ SOURCE=.\src\ids.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\ignore_action.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\import_action.hpp
 # End Source File
 # Begin Source File
@@ -755,10 +763,6 @@ SOURCE=.\src\version.hpp
 # Begin Source File
 
 SOURCE=.\src\view_action.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\ignore_action.hpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"

@@ -86,6 +86,16 @@ public:
   wxString diffToolArgs;
 
   /**
+   * location of the merge-tool executable
+   */
+  wxString mergeTool;
+
+  /**
+   * arguments to pass to the merge tool
+   */
+  wxString mergeToolArgs;
+
+  /**
    * delete all temporary files made by the program upon exit
    */
   bool purgeTempFiles;

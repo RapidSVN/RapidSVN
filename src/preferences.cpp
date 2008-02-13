@@ -65,6 +65,10 @@ static const wxChar CONF_DIFF_TOOL[] =
   wxT("/Preferences/DiffTool");
 static const wxChar CONF_DIFF_TOOL_ARGS[] =
   wxT("/Preferences/DiffToolArgs");
+static const wxChar CONF_MERGE_TOOL[] =
+  wxT("/Preferences/MergeTool");
+static const wxChar CONF_MERGE_TOOL_ARGS[] =
+  wxT("/Preferences/MergeToolArgs");
 static const wxChar CONF_USE_LAST_COMMIT_MESSAGE[] =
   wxT("/Preferences/UseLastCommitMessage");
 static const wxChar CONF_RESET_FLAT_MODE_ON_START[] =
@@ -74,7 +78,8 @@ Preferences::Preferences ()
   : editor (DEFAULT_EDITOR), editorAlways (false), editorArgs (wxEmptyString),
     explorer (DEFAULT_EXPLORER), explorerAlways (false),
     explorerArgs (wxEmptyString), diffTool (DEFAULT_DIFF_TOOL),
-    diffToolArgs (wxEmptyString), purgeTempFiles (true),
+    diffToolArgs (wxEmptyString), mergeTool (wxEmptyString), 
+    mergeToolArgs(wxEmptyString), purgeTempFiles (true),
     authPerBookmark (false), useAuthCache (true)
 {
   Read ();
@@ -102,6 +107,9 @@ Preferences::Read ()
   diffTool = config->Read (CONF_DIFF_TOOL, diffTool);
   diffToolArgs = config->Read (CONF_DIFF_TOOL_ARGS, diffToolArgs);
 
+  mergeTool = config->Read(CONF_MERGE_TOOL, mergeTool);
+  mergeToolArgs = config->Read(CONF_MERGE_TOOL_ARGS, mergeToolArgs);
+
   config->Read (CONF_PURGE_TEMP_FILES,  &purgeTempFiles);
   config->Read (CONF_AUTH_PER_BOOKMARK, &authPerBookmark);
   config->Read (CONF_USE_AUTH_CACHE,    &useAuthCache);
@@ -124,6 +132,9 @@ void Preferences::Write () const
 
   config->Write (CONF_DIFF_TOOL, diffTool);
   config->Write (CONF_DIFF_TOOL_ARGS, diffToolArgs);
+
+  config->Write (CONF_MERGE_TOOL, mergeTool);
+  config->Write (CONF_MERGE_TOOL_ARGS, mergeToolArgs);
 
   config->Write (CONF_PURGE_TEMP_FILES, purgeTempFiles);
 

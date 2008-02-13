@@ -40,7 +40,8 @@ enum
 {
   ID_StandardEditorLookup = wxID_HIGHEST,
   ID_StandardExplorerLookup,
-  ID_DiffToolLookup
+  ID_DiffToolLookup,
+  ID_MergeToolLookup,
 };
 
 /****************************************************************************/
@@ -176,11 +177,23 @@ public:
       mTextDiffTool);
   }
 
+  /**
+   * Called when "browse-button" of Merge-Tool field is clicked
+   */
+  void
+  OnMergeToolLookup (wxCommandEvent & event)
+  {
+    SelectExecutable (
+      _("Select merge tool executable"),
+      mTextMergeTool);
+  }
+
 private:
   Preferences * m_prefs;
   wxTextCtrl * mTextEditor;
   wxTextCtrl * mTextExplorer;
   wxTextCtrl * mTextDiffTool;
+  wxTextCtrl * mTextMergeTool;
 
   void InitializeData ()
   {
@@ -311,6 +324,43 @@ private:
       sizerDiffTool->Add (args, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
     }
 
+    // Merge Tool
+    wxStaticBox * boxMergeTool =
+      new wxStaticBox (this, -1, _("Merge tool:"));
+
+    wxStaticBoxSizer * sizerMergeTool =
+      new wxStaticBoxSizer (boxMergeTool, wxVERTICAL);
+    {
+      // text ctrl
+      wxTextValidator valText (wxFILTER_NONE, &m_prefs->mergeTool);
+      mTextMergeTool =
+        new wxTextCtrl (this, -1, wxEmptyString, wxDefaultPosition,
+                        wxSize (200, -1),
+                        0, valText);
+      // button
+      wxButton * button =
+        CreateEllipsisButton(this, ID_MergeToolLookup);
+
+      // arguments
+      wxStaticText * labelArgs = new wxStaticText (
+        this, -1, _("Program arguments (%1=base, %2=theirs %3=mine %4=result):"),
+        wxDefaultPosition);
+      wxTextValidator valArgs (wxFILTER_NONE, &m_prefs->mergeToolArgs);
+      wxTextCtrl * args = new wxTextCtrl (
+        this, -1, wxEmptyString, wxDefaultPosition,
+        wxSize (200, -1), 0, valArgs);
+
+      // position controls
+      wxFlexGridSizer * sizer = new wxFlexGridSizer (2);
+      sizer->Add (mTextMergeTool, 1,
+                  wxALIGN_CENTER | wxEXPAND | wxALL, 5);
+      sizer->AddGrowableCol (0);
+      sizer->Add (button, 0, wxALIGN_CENTER);
+      sizerMergeTool->Add (sizer, 1, wxEXPAND);
+      sizerMergeTool->Add (labelArgs, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
+      sizerMergeTool->Add (args, 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
+    }
+
     // Position main elements
     wxBoxSizer *panelsizer = new wxBoxSizer (wxHORIZONTAL);
 
@@ -323,6 +373,8 @@ private:
     leftsizer->Add (sizerExplorer, 0, wxEXPAND);
     leftsizer->Add (5, 5);
     leftsizer->Add (sizerDiffTool, 0, wxEXPAND);
+    leftsizer->Add (5, 5);
+    leftsizer->Add (sizerMergeTool, 0, wxEXPAND);
 
     SetSizer (panelsizer);
     SetAutoLayout (true);
@@ -339,6 +391,8 @@ BEGIN_EVENT_TABLE (ProgramsPanel, wxPanel)
     ProgramsPanel::OnStandardFileExplorerLookup)
   EVT_BUTTON (ID_DiffToolLookup,
   ProgramsPanel::OnDiffToolLookup)
+  EVT_BUTTON (ID_MergeToolLookup,
+  ProgramsPanel::OnMergeToolLookup)
 END_EVENT_TABLE ()
 
 /* AuthPanel **************************************************************/

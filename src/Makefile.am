@@ -77,6 +77,7 @@ rapidsvn_SOURCES= \
 	unlock_dlg.cpp \
 	update_action.cpp \
 	update_dlg.cpp \
+	userresolve_action.cpp \
 	utils.cpp \
 	verblist.cpp \
 	view_action.cpp 

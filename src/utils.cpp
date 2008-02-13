@@ -179,6 +179,7 @@ AppendModifyMenu (wxMenu * parentMenu)
 
   AppendMenuItem (parentMenu, ID_Revert, _("Re&vert\tCTRL-V"),
                   EMBEDDED_BITMAP(revert_png));
+  AppendMenuItem (parentMenu, ID_UserResolve, _("In&teractive Resolve...\tCTRL-T"));					
   AppendMenuItem (parentMenu, ID_Resolve, _("Re&solve conflicts\tCTRL-S"),
                   EMBEDDED_BITMAP(resolve_png));
 
