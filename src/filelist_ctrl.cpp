@@ -650,6 +650,7 @@ public:
   bool ShowUnversioned;
   bool IgnoreExternals;
   bool ShowIgnored;
+  bool IsRelative;
 
   svn::StatusSel statusSel;
 
@@ -697,7 +698,8 @@ FileListCtrl::Data::Data ()
     IncludePath (true), SortAscending (true),
     DirtyColumns (true), FlatMode (false),
     WithUpdate (false), ShowUnversioned (true),
-    IgnoreExternals (false), ShowIgnored(false)
+    IgnoreExternals (false), ShowIgnored(false),
+    IsRelative (false)
 {
   ImageListSmall = new wxImageList (16, 16, TRUE);
 
@@ -867,11 +869,15 @@ FileListCtrl::Data::CompareFunction (long item1, long item2, long sortData)
   svn::Status * ps2 = (svn::Status *) item2;
   Data *data = (Data *) (sortData);
 
+  // depening on absolute or relative we have to adapt the
+  // length we take for "."
+  size_t compareLength = data->IsRelative ? 0 : data->Path.length ();
+
   if (ps1 && ps2)
     return CompareItems (ps1, ps2, data->SortColumn,
                          data->SortAscending,
                          data->IncludePath,
-                         data->Path.length ());
+                         compareLength);
   else
     return 0;
 }
@@ -1009,10 +1015,9 @@ FileListCtrl::RefreshFileList ()
 
   // Workaround for issue 324 (only local+non-flat+update): 
   //   we chdir to the requested dir and pass "." to svn
-  bool isRelative;
   if (!pathUtf8.isUrl () && m->WithUpdate && !m->FlatMode)
   {
-    isRelative = true;
+    m->IsRelative = true;
     ::wxSetWorkingDirectory (m->Path);
 
     // "" is the canonical expression for "."
@@ -1022,7 +1027,7 @@ FileListCtrl::RefreshFileList ()
   }
   else
   {
-    isRelative = false;
+    m->IsRelative = false;
     statusSelector = client.status (
       pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate, 
       m->ShowIgnored, m->IgnoreExternals);
@@ -1033,7 +1038,7 @@ FileListCtrl::RefreshFileList ()
   {
     const svn::Status & status = *it;
 
-    CreateLables (status, pathUtf8, isRelative);
+    CreateLables (status, pathUtf8);
     // trying to restore selection
     if (std::binary_search (selBegin, selEnd, status.path ()))
     {
@@ -1060,40 +1065,51 @@ FileListCtrl::RefreshFileList ()
 }
 
 void
-FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePathUtf8,
-                            bool isRelative)
+FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePathUtf8)
 {
   wxString values[COL_COUNT];
   svn::Path fullPath;
-  size_t pathUtf8Length;
+  bool isDot;;
+  svn::Path pathUtf8;
 
-  if (isRelative)
+  if (m->IsRelative)
   {
-    fullPath = basePathUtf8;
-    fullPath.addComponent (status.path ());
+    const char * path = status.path ();
+    pathUtf8 = path;
 
-    pathUtf8Length = 0;
+    fullPath = basePathUtf8;
+
+    // since we have a relative path, we know
+    // that an empty string means "."
+    isDot = '\0' == *path;
+    if (isDot)
+      values[COL_NAME] = wxT(".");
+    else
+    {
+      values[COL_NAME] = Utf8ToLocal (pathUtf8.basename ());
+      fullPath.addComponent (path);
+    }
   }
   else
   {
     fullPath = status.path ();
+    
+    size_t basePathUtf8Length = basePathUtf8.length () + 1;
+    pathUtf8 = (fullPath.substr (basePathUtf8Length));
+    pathUtf8 = pathUtf8.unescape ();
 
-    pathUtf8Length = basePathUtf8.length () + 1;
+    // if we have a basePathUtf8 like
+    // /home/foo/dir
+    // then we know /home/foo/dir means "."
+    // and /home/foo/dir/file1 is "file1"
+    isDot = fullPath.length () <= basePathUtf8Length;
+    if (isDot)
+      values[COL_NAME] = wxT(".");
+    else
+      values[COL_NAME] = Utf8ToLocal (pathUtf8.basename ());
   }
 
   const bool isUrl (basePathUtf8.isUrl ());
-  const bool isDot = (fullPath.length () <= pathUtf8Length);
-  svn::Path path;
-
-  if (isDot)
-    values[COL_NAME] = wxT(".");
-  else
-  {
-    path = (fullPath.substr (pathUtf8Length));
-    path = path.unescape ();
-
-    values[COL_NAME] = Utf8ToLocal (path.basename ());
-  }
 
   if (m->ColumnVisible[COL_PATH] || m->ColumnVisible[COL_EXTENSION])
   {
@@ -1105,9 +1121,9 @@ FileListCtrl::CreateLables (const svn::Status & status, const svn::Path & basePa
     else
     {
       if (isUrl)
-        values[COL_PATH] = Utf8ToLocal (path.c_str ());
+        values[COL_PATH] = Utf8ToLocal (pathUtf8.c_str ());
       else
-        values[COL_PATH] = Utf8ToLocal (path.native ());
+        values[COL_PATH] = Utf8ToLocal (pathUtf8.native ());
     }
 
    values[COL_EXTENSION] = Utf8ToLocal (ext);
