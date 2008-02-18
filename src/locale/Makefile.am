@@ -6,4 +6,5 @@ EXTRA_DIST=rapidsvn.pot \
 	ru/rapidsvn.po \
 	es/rapidsvn.po \
 	uk/rapidsvn.po \
-	zh_CN/rapidsvn.po
+	zh_CN/rapidsvn.po\
+    ja/rapidsvn.po
