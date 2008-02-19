@@ -26,6 +26,7 @@ Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "es"; MessagesFile: "SpanishStd-5-5.1.11.isl"
 Name: "uk"; MessagesFile: "Ukrainian-5-5.1.0.isl"
 Name: "zh_CN"; MessagesFile: "ChineseSimp-11-5.1.0.isl"
+Name: "ja"; MessagesFile: "Japanese-5-5.1.11.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
