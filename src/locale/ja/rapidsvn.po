@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.5\n"
 "POT-Creation-Date: 2008-02-18 19:50+0900\n"
-"PO-Revision-Date: 2008-02-18 21:24+0900\n"
+"PO-Revision-Date: 2008-02-20 12:06+0900\n"
 "Last-Translator: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
 "Language-Team: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgstr "閉じる(&C)"
 
 #: ../rapidsvn_frame.cpp:304
 msgid "&Contents\tF1"
-msgstr "内容(&C)\tF1"
+msgstr "コンテンツ(&C)\tF1"
 
 #: ../utils.cpp:188
 msgid "&Copy...\tF5"
@@ -99,7 +99,7 @@ msgstr "比較(&D)"
 
 #: ../utils.cpp:206
 msgid "&Diff to Base...\tCTRL+B"
-msgstr "ベースとの差分(&D)...\tCTRL+B"
+msgstr "BASEと比較(&D)...\tCTRL+B"
 
 #: ../utils.cpp:207
 msgid "&Diff to Head...\tCTRL+H"
@@ -152,7 +152,7 @@ msgstr "インポート(&I)...\tCTRL-I"
 
 #: ../rapidsvn_frame.cpp:305
 msgid "&Index\tShift+F1"
-msgstr "インデックス(&I)\tShift+F1"
+msgstr "目次(&I)\tShift+F1"
 
 #: ../utils.cpp:211
 msgid "&Info..."
@@ -1003,7 +1003,7 @@ msgstr "無効な選択。注釈には1つのリビジョンしか選べませ�
 
 #: ../cert_dlg.cpp:112
 msgid "Issue:"
-msgstr "問題点:"
+msgstr "発行元:"
 
 #: ../commit_dlg.cpp:96
 msgid "Keep locks"

@@ -11,10 +11,10 @@ LanguageID=$0411
 LanguageCodePage=932
 
 ; If you don't need to support Windows 9x, commenting the following 4 lines gives better looking (banners not stretched).
-DialogFontName=‚l‚r ‚oƒSƒVƒbƒN
-DialogFontSize=9
-TitleFontName=‚l‚r ‚oƒSƒVƒbƒN
-TitleFontSize=29
+;DialogFontName=‚l‚r ‚oƒSƒVƒbƒN
+;DialogFontSize=9
+;TitleFontName=‚l‚r ‚oƒSƒVƒbƒN
+;TitleFontSize=29
 
 ; Required for Win2K/older to display the welcome message with correct font.
 WelcomeFontName=‚l‚r ‚oƒSƒVƒbƒN

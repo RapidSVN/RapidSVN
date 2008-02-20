@@ -54,6 +54,8 @@ Source: "..\..\src\locale\uk\rapidsvn.po"; DestDir: "{app}\bin\locale\uk"; Flags
 Source: "..\..\src\locale\uk\rapidsvn.mo"; DestDir: "{app}\bin\locale\uk"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\zh_CN\rapidsvn.po"; DestDir: "{app}\bin\locale\zh_CN"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\zh_CN\rapidsvn.mo"; DestDir: "{app}\bin\locale\zh_CN"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\ja\rapidsvn.po"; DestDir: "{app}\bin\locale\ja"; Flags: ignoreversion; Components: main
+Source: "..\..\src\locale\ja\rapidsvn.mo"; DestDir: "{app}\bin\locale\ja"; Flags: ignoreversion; Components: main
 Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\GPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
