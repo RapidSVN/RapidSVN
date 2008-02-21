@@ -80,7 +80,7 @@
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND | wxALL</property>
                     <property name="proportion">1</property>
-                    <object class="wxNotebook" expanded="1">
+                    <object class="wxNotebook" expanded="0">
                         <property name="bg"></property>
                         <property name="bitmapsize"></property>
                         <property name="context_help"></property>
@@ -1379,7 +1379,7 @@
                                                 <property name="bitmap"></property>
                                                 <property name="label">Merge Tool</property>
                                                 <property name="select">0</property>
-                                                <object class="wxPanel" expanded="1">
+                                                <object class="wxPanel" expanded="0">
                                                     <property name="bg"></property>
                                                     <property name="context_help"></property>
                                                     <property name="enabled">1</property>
@@ -1516,7 +1516,7 @@
                                                                         <property name="window_extra_style"></property>
                                                                         <property name="window_name"></property>
                                                                         <property name="window_style"></property>
-                                                                        <event name="OnButtonClick">OnButtonEditorClick</event>
+                                                                        <event name="OnButtonClick">OnButtonMergeToolClick</event>
                                                                         <event name="OnChar"></event>
                                                                         <event name="OnEnterWindow"></event>
                                                                         <event name="OnEraseBackground"></event>

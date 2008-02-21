@@ -70,6 +70,7 @@ class PreferencesDlgBase : public wxDialog
 		virtual void OnButtonEditorClick( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnButtonExplorerClick( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnButtonDiffToolClick( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonMergeToolClick( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ){ event.Skip(); }
 		
 	
