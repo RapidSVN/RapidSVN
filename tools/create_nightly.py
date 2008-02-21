@@ -55,6 +55,8 @@ def buildMessages():
     po=f+"/rapidsvn.po"
     mo=f+"/rapidsvn.mo"
     if os.path.isfile(po):
+      # Clear dictionary that was used by msgfmt in previous conversion
+      global MESSAGES = {}
       print "Compiling message catalog %s into %s" % (po, mo)
       msgfmt.make(po,mo)
   
