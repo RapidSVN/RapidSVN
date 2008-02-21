@@ -386,6 +386,10 @@ SOURCE=.\src\rapidsvn_frame.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\rapidsvn_generated.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\rename_action.cpp
 # End Source File
 # Begin Source File
@@ -691,6 +695,10 @@ SOURCE=.\src\rapidsvn_app.hpp
 # Begin Source File
 
 SOURCE=.\src\rapidsvn_frame.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\rapidsvn_generated.h
 # End Source File
 # Begin Source File
 

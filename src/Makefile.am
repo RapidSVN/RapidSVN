@@ -63,6 +63,7 @@ rapidsvn_SOURCES= \
 	rapidsvn_app.cpp \
 	rapidsvn_drop_target.cpp \
 	rapidsvn_frame.cpp \
+	rapidsvn_generated.cpp \
 	rename_action.cpp \
 	report_dlg.cpp \
 	resolve_action.cpp \

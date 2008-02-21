@@ -26,7 +26,7 @@
 #define _PREFERENCES_DLG_H_INCLUDED_
 
 // wxWidgets
-#include "wx/dialog.h"
+#include "rapidsvn_generated.h"
 
 // forward declarations
 struct Preferences;
@@ -34,7 +34,7 @@ struct Preferences;
 /**
  * Preferences dialog that displays the preference pages.
  */
-class PreferencesDlg : public wxDialog
+class PreferencesDlg : public PreferencesDlgBase
 {
 public:
   /**
@@ -80,11 +80,7 @@ private:
   PreferencesDlg &
   operator = (const PreferencesDlg & src);
 
-  struct Data;
-  Data * m;
-
-private:
-  DECLARE_EVENT_TABLE ()
+  Preferences * m_prefs;
 };
 
 #endif // _PREFERENCES_DLG_H_INCLUDED_
