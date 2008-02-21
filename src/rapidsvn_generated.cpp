@@ -64,7 +64,7 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_panelEditor->SetSizer( bSizer5 );
 	m_panelEditor->Layout();
 	bSizer5->Fit( m_panelEditor );
-	m_notebook2->AddPage( m_panelEditor, _("Standard Editor"), false );
+	m_notebook2->AddPage( m_panelEditor, _("Standard Editor"), true );
 	m_panelExplorer = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer51;
 	bSizer51 = new wxBoxSizer( wxVERTICAL );
@@ -124,7 +124,7 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_panelMergeTool->SetSizer( bSizer521 );
 	m_panelMergeTool->Layout();
 	bSizer521->Fit( m_panelMergeTool );
-	m_notebook2->AddPage( m_panelMergeTool, _("Merge Tool"), true );
+	m_notebook2->AddPage( m_panelMergeTool, _("Merge Tool"), false );
 	
 	bSizer4->Add( m_notebook2, 1, wxEXPAND | wxALL, 5 );
 	
