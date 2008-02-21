@@ -18,11 +18,10 @@
 #include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
-#include <wx/filepicker.h>
-#include <wx/stattext.h>
 #include <wx/textctrl.h>
-#include <wx/notebook.h>
 #include <wx/button.h>
+#include <wx/stattext.h>
+#include <wx/notebook.h>
 #include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -43,18 +42,22 @@ class PreferencesDlgBase : public wxDialog
 		wxPanel* m_panelPrograms;
 		wxNotebook* m_notebook2;
 		wxPanel* m_panelEditor;
-		wxFilePickerCtrl* m_filePickerEditor;
+		wxTextCtrl* m_textEditor;
+		wxButton* m_buttonEditor;
 		wxTextCtrl* m_textEditorArgs;
 		wxCheckBox* m_checkEditorAlways;
 		wxPanel* m_panelExplorer;
-		wxFilePickerCtrl* m_filePickerExplorer;
+		wxTextCtrl* m_textExplorer;
+		wxButton* m_buttonExplorer;
 		wxTextCtrl* m_textExplorerArgs;
 		wxCheckBox* m_checkExplorerAlways;
 		wxPanel* m_panelDiffTool;
-		wxFilePickerCtrl* m_filePickerDiffTool;
+		wxTextCtrl* m_textDiffTool;
+		wxButton* m_buttonDiffTool;
 		wxTextCtrl* m_textDiffToolArgs;
 		wxPanel* m_panelMergeTool;
-		wxFilePickerCtrl* m_filePickeMergeTool;
+		wxTextCtrl* m_textMergeTool;
+		wxButton* m_buttonMergeTool;
 		wxStaticText* m_staticMergeToolArgs;
 		wxTextCtrl* m_textMergeToolArgs;
 		wxPanel* m_panelAuth;
@@ -64,6 +67,9 @@ class PreferencesDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnButtonEditorClick( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonExplorerClick( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonDiffToolClick( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ){ event.Skip(); }
 		
 	

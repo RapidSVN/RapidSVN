@@ -5,6 +5,8 @@
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
+#include <wx/wx.h>
+
 #include "rapidsvn_generated.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -43,87 +45,119 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	
 	m_notebook2 = new wxNotebook( m_panelPrograms, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelEditor = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizer5;
-	bSizer5 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* sizerPanelEditor;
+	sizerPanelEditor = new wxBoxSizer( wxVERTICAL );
 	
-	m_filePickerEditor = new wxFilePickerCtrl( m_panelEditor, wxID_ANY, wxEmptyString, _("Select standard editor executable"), wxT("*.*"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
-	bSizer5->Add( m_filePickerEditor, 0, wxALL|wxEXPAND, 5 );
+	wxBoxSizer* sizerEditor;
+	sizerEditor = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textEditor = new wxTextCtrl( m_panelEditor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerEditor->Add( m_textEditor, 1, wxALL, 5 );
+	
+	m_buttonEditor = new wxButton( m_panelEditor, wxID_ANY, _("Browse"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerEditor->Add( m_buttonEditor, 0, wxALL, 5 );
+	
+	sizerPanelEditor->Add( sizerEditor, 0, wxEXPAND, 5 );
 	
 	wxStaticText* m_staticEditorArgs;
 	m_staticEditorArgs = new wxStaticText( m_panelEditor, wxID_ANY, _("Program arguments (%1=selected file):"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticEditorArgs->Wrap( -1 );
-	bSizer5->Add( m_staticEditorArgs, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
+	sizerPanelEditor->Add( m_staticEditorArgs, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
 	
 	m_textEditorArgs = new wxTextCtrl( m_panelEditor, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer5->Add( m_textEditorArgs, 0, wxALL|wxEXPAND, 5 );
+	sizerPanelEditor->Add( m_textEditorArgs, 0, wxALL|wxEXPAND, 5 );
 	
 	m_checkEditorAlways = new wxCheckBox( m_panelEditor, wxID_ANY, _("Use always"), wxDefaultPosition, wxDefaultSize, 0 );
 	
-	bSizer5->Add( m_checkEditorAlways, 0, wxALL, 5 );
+	sizerPanelEditor->Add( m_checkEditorAlways, 0, wxALL, 5 );
 	
-	m_panelEditor->SetSizer( bSizer5 );
+	m_panelEditor->SetSizer( sizerPanelEditor );
 	m_panelEditor->Layout();
-	bSizer5->Fit( m_panelEditor );
+	sizerPanelEditor->Fit( m_panelEditor );
 	m_notebook2->AddPage( m_panelEditor, _("Standard Editor"), true );
 	m_panelExplorer = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizer51;
-	bSizer51 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* sizerPanelExplorer;
+	sizerPanelExplorer = new wxBoxSizer( wxVERTICAL );
 	
-	m_filePickerExplorer = new wxFilePickerCtrl( m_panelExplorer, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*.*"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
-	bSizer51->Add( m_filePickerExplorer, 0, wxALL|wxEXPAND, 5 );
+	wxBoxSizer* sizerExplorer;
+	sizerExplorer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textExplorer = new wxTextCtrl( m_panelExplorer, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerExplorer->Add( m_textExplorer, 1, wxALL, 5 );
+	
+	m_buttonExplorer = new wxButton( m_panelExplorer, wxID_ANY, _("Browse"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerExplorer->Add( m_buttonExplorer, 0, wxALL, 5 );
+	
+	sizerPanelExplorer->Add( sizerExplorer, 0, wxEXPAND, 0 );
 	
 	wxStaticText* m_staticExplorerArgs;
 	m_staticExplorerArgs = new wxStaticText( m_panelExplorer, wxID_ANY, _("Program arguments (%1=selected directory):"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticExplorerArgs->Wrap( -1 );
-	bSizer51->Add( m_staticExplorerArgs, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
+	sizerPanelExplorer->Add( m_staticExplorerArgs, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
 	
 	m_textExplorerArgs = new wxTextCtrl( m_panelExplorer, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer51->Add( m_textExplorerArgs, 0, wxALL|wxEXPAND, 5 );
+	sizerPanelExplorer->Add( m_textExplorerArgs, 0, wxALL|wxEXPAND, 5 );
 	
 	m_checkExplorerAlways = new wxCheckBox( m_panelExplorer, wxID_ANY, _("Use always"), wxDefaultPosition, wxDefaultSize, 0 );
 	
-	bSizer51->Add( m_checkExplorerAlways, 0, wxALL, 5 );
+	sizerPanelExplorer->Add( m_checkExplorerAlways, 0, wxALL, 5 );
 	
-	m_panelExplorer->SetSizer( bSizer51 );
+	m_panelExplorer->SetSizer( sizerPanelExplorer );
 	m_panelExplorer->Layout();
-	bSizer51->Fit( m_panelExplorer );
+	sizerPanelExplorer->Fit( m_panelExplorer );
 	m_notebook2->AddPage( m_panelExplorer, _("Standard Explorer"), false );
 	m_panelDiffTool = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizer52;
-	bSizer52 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* sizerPanelDiffTool;
+	sizerPanelDiffTool = new wxBoxSizer( wxVERTICAL );
 	
-	m_filePickerDiffTool = new wxFilePickerCtrl( m_panelDiffTool, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*.*"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
-	bSizer52->Add( m_filePickerDiffTool, 0, wxALL|wxEXPAND, 5 );
+	wxBoxSizer* sizerDiffTool;
+	sizerDiffTool = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textDiffTool = new wxTextCtrl( m_panelDiffTool, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerDiffTool->Add( m_textDiffTool, 1, wxALL, 5 );
+	
+	m_buttonDiffTool = new wxButton( m_panelDiffTool, wxID_ANY, _("Browse"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerDiffTool->Add( m_buttonDiffTool, 0, wxALL, 5 );
+	
+	sizerPanelDiffTool->Add( sizerDiffTool, 0, wxEXPAND, 5 );
 	
 	wxStaticText* m_staticDiffToolArgs;
 	m_staticDiffToolArgs = new wxStaticText( m_panelDiffTool, wxID_ANY, _("Program arguments (%1=file1, %2=file2):"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticDiffToolArgs->Wrap( -1 );
-	bSizer52->Add( m_staticDiffToolArgs, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
+	sizerPanelDiffTool->Add( m_staticDiffToolArgs, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
 	
 	m_textDiffToolArgs = new wxTextCtrl( m_panelDiffTool, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer52->Add( m_textDiffToolArgs, 0, wxALL|wxEXPAND, 5 );
+	sizerPanelDiffTool->Add( m_textDiffToolArgs, 0, wxALL|wxEXPAND, 5 );
 	
-	m_panelDiffTool->SetSizer( bSizer52 );
+	m_panelDiffTool->SetSizer( sizerPanelDiffTool );
 	m_panelDiffTool->Layout();
-	bSizer52->Fit( m_panelDiffTool );
+	sizerPanelDiffTool->Fit( m_panelDiffTool );
 	m_notebook2->AddPage( m_panelDiffTool, _("Diff Tool"), false );
 	m_panelMergeTool = new wxPanel( m_notebook2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizer521;
-	bSizer521 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* sizerPanelMergeTool;
+	sizerPanelMergeTool = new wxBoxSizer( wxVERTICAL );
 	
-	m_filePickeMergeTool = new wxFilePickerCtrl( m_panelMergeTool, wxID_ANY, wxEmptyString, _("Select a file"), wxT("*.*"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
-	bSizer521->Add( m_filePickeMergeTool, 0, wxALL|wxEXPAND, 5 );
+	wxBoxSizer* sizerMergeTool;
+	sizerMergeTool = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textMergeTool = new wxTextCtrl( m_panelMergeTool, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	sizerMergeTool->Add( m_textMergeTool, 1, wxALL, 5 );
+	
+	m_buttonMergeTool = new wxButton( m_panelMergeTool, wxID_ANY, _("Browse"), wxDefaultPosition, wxDefaultSize, 0 );
+	sizerMergeTool->Add( m_buttonMergeTool, 0, wxALL, 5 );
+	
+	sizerPanelMergeTool->Add( sizerMergeTool, 0, wxEXPAND, 5 );
 	
 	m_staticMergeToolArgs = new wxStaticText( m_panelMergeTool, wxID_ANY, _("Program arguments (%1=base, %2=theirs %3=mine %4=result):"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticMergeToolArgs->Wrap( -1 );
-	bSizer521->Add( m_staticMergeToolArgs, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
+	sizerPanelMergeTool->Add( m_staticMergeToolArgs, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
 	
 	m_textMergeToolArgs = new wxTextCtrl( m_panelMergeTool, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer521->Add( m_textMergeToolArgs, 0, wxALL|wxEXPAND, 5 );
+	sizerPanelMergeTool->Add( m_textMergeToolArgs, 0, wxALL|wxEXPAND, 5 );
 	
-	m_panelMergeTool->SetSizer( bSizer521 );
+	m_panelMergeTool->SetSizer( sizerPanelMergeTool );
 	m_panelMergeTool->Layout();
-	bSizer521->Fit( m_panelMergeTool );
+	sizerPanelMergeTool->Fit( m_panelMergeTool );
 	m_notebook2->AddPage( m_panelMergeTool, _("Merge Tool"), false );
 	
 	bSizer4->Add( m_notebook2, 1, wxEXPAND | wxALL, 5 );
@@ -168,11 +202,19 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	mainSizer->Fit( this );
 	
 	// Connect Events
+	m_buttonEditor->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonEditorClick ), NULL, this );
+	m_buttonExplorer->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonExplorerClick ), NULL, this );
+	m_buttonDiffTool->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonDiffToolClick ), NULL, this );
+	m_buttonMergeTool->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonEditorClick ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnOK ), NULL, this );
 }
 
 PreferencesDlgBase::~PreferencesDlgBase()
 {
 	// Disconnect Events
+	m_buttonEditor->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonEditorClick ), NULL, this );
+	m_buttonExplorer->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonExplorerClick ), NULL, this );
+	m_buttonDiffTool->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonDiffToolClick ), NULL, this );
+	m_buttonMergeTool->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonEditorClick ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnOK ), NULL, this );
 }
