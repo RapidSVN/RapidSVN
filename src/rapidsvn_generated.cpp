@@ -165,8 +165,13 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	
 	this->SetSizer( mainSizer );
 	this->Layout();
+	
+	// Connect Events
+	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnOK ), NULL, this );
 }
 
 PreferencesDlgBase::~PreferencesDlgBase()
 {
+	// Disconnect Events
+	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnOK ), NULL, this );
 }

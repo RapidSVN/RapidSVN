@@ -62,6 +62,10 @@ class PreferencesDlgBase : public wxFrame
 		wxCheckBox* m_checkUseAuthCache;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnOK( wxCommandEvent& event ){ event.Skip(); }
+		
 	
 	public:
 		PreferencesDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
