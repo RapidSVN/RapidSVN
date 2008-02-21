@@ -63,6 +63,12 @@ public:
    */
   virtual bool TransferDataToWindow ();
 
+protected:
+  virtual void OnButtonEditorClick (wxCommandEvent& event);
+  virtual void OnButtonExplorerClick (wxCommandEvent& event);
+  virtual void OnButtonDiffToolClick (wxCommandEvent& event);
+  virtual void OnButtonMergeToolClick (wxCommandEvent& event);
+
 private:
   /**
    * disallow default constructor
@@ -81,6 +87,8 @@ private:
   operator = (const PreferencesDlg & src);
 
   Preferences * m_prefs;
+
+  bool SelectExecutable (const wxString & title, wxTextCtrl * textCtrl);
 };
 
 #endif // _PREFERENCES_DLG_H_INCLUDED_

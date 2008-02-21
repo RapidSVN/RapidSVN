@@ -69,18 +69,18 @@ PreferencesDlg::TransferDataFromWindow ()
   m_prefs->resetFlatModeOnStart = m_checkResetFlatMode->GetValue ();
 
   // Programs
-  m_prefs->editor = m_filePickerEditor->GetPath ();
+  m_prefs->editor = m_textEditor->GetValue ();
   m_prefs->editorArgs = m_textEditorArgs->GetValue ();
   m_prefs->editorAlways = m_checkEditorAlways->GetValue ();
 
-  m_prefs->explorer = m_filePickerExplorer->GetPath ();
+  m_prefs->explorer = m_textExplorer->GetValue ();
   m_prefs->explorerArgs = m_textExplorerArgs->GetValue ();
   m_prefs->explorerAlways = m_checkExplorerAlways->GetValue ();
 
-  m_prefs->diffTool = m_filePickerDiffTool->GetPath ();
+  m_prefs->diffTool = m_textDiffTool->GetValue ();
   m_prefs->diffToolArgs = m_textDiffToolArgs->GetValue ();
 
-  m_prefs->mergeTool = m_filePickeMergeTool->GetPath ();
+  m_prefs->mergeTool = m_textMergeTool->GetValue ();
   m_prefs->mergeToolArgs = m_textMergeToolArgs->GetValue ();
 
   // Authentication
@@ -102,18 +102,18 @@ PreferencesDlg::TransferDataToWindow ()
   m_checkResetFlatMode->SetValue (m_prefs->resetFlatModeOnStart);
 
   // Programs
-  m_filePickerEditor->SetPath (m_prefs->editor);
+  m_textEditor->SetValue (m_prefs->editor);
   m_textEditorArgs->SetValue (m_prefs->editorArgs);
   m_checkEditorAlways->SetValue (m_prefs->editorAlways);
 
-  m_filePickerExplorer->SetPath (m_prefs->explorer);
+  m_textExplorer->SetValue (m_prefs->explorer);
   m_textExplorerArgs->SetValue (m_prefs->explorerArgs);
   m_checkExplorerAlways->SetValue (m_prefs->explorerAlways);
 
-  m_filePickerDiffTool->SetPath (m_prefs->diffTool);
+  m_textDiffTool->SetValue (m_prefs->diffTool);
   m_textDiffToolArgs->SetValue (m_prefs->diffToolArgs);
 
-  m_filePickeMergeTool->SetPath (m_prefs->mergeTool);
+  m_textMergeTool->SetValue (m_prefs->mergeTool);
   m_textMergeToolArgs->SetValue (m_prefs->mergeToolArgs);
 
   // Authentication
@@ -122,6 +122,55 @@ PreferencesDlg::TransferDataToWindow ()
 
   return true;
 }
+
+bool 
+PreferencesDlg::SelectExecutable (const wxString & title, wxTextCtrl * textCtrl)
+{
+  wxFileDialog dlg (this, title, wxEmptyString, wxEmptyString, 
+                    EXECUTABLE_WILDCARD, wxOPEN);
+  dlg.SetPath (textCtrl->GetValue ());
+
+  if (dlg.ShowModal () != wxID_OK)
+    return false;
+
+  textCtrl->SetValue (dlg.GetPath ());
+  return true;  
+}
+
+
+void 
+PreferencesDlg::OnButtonEditorClick (wxCommandEvent& event)
+{
+  SelectExecutable (
+    _("Select standard editor executable"),
+    m_textEditor);
+}
+
+void
+PreferencesDlg::OnButtonExplorerClick (wxCommandEvent& event)
+{
+  SelectExecutable (
+    _("Select standard file explorer executable"),
+    m_textExplorer);
+}
+
+void
+PreferencesDlg::OnButtonDiffToolClick (wxCommandEvent& event)
+{
+  SelectExecutable (
+    _("Select diff tool executable"),
+    m_textDiffTool);
+}
+
+void
+PreferencesDlg::OnButtonMergeToolClick (wxCommandEvent& event)
+{
+  SelectExecutable (
+    _("Select merge tool executable"),
+    m_textMergeTool);
+}
+
+
 
 /* -----------------------------------------------------------------
  * local variables:
