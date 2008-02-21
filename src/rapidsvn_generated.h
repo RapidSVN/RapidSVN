@@ -23,14 +23,14 @@
 #include <wx/textctrl.h>
 #include <wx/notebook.h>
 #include <wx/button.h>
-#include <wx/frame.h>
+#include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class PreferencesDlgBase
 ///////////////////////////////////////////////////////////////////////////////
-class PreferencesDlgBase : public wxFrame 
+class PreferencesDlgBase : public wxDialog 
 {
 	private:
 	
@@ -68,7 +68,7 @@ class PreferencesDlgBase : public wxFrame
 		
 	
 	public:
-		PreferencesDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		PreferencesDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~PreferencesDlgBase();
 	
 };
