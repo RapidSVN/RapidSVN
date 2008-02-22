@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # ====================================================================
-# Copyright (c) 2002-2006 The RapidSvn Group.  All rights reserved.
+# Copyright (c) 2002-2008 The RapidSvn Group.  All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@
 
 from xml.dom.minidom import parse
 import re
+from datetime import date
 
 # The following files are being checked/patched:
 VERSION_FILE = "version.xml"
@@ -56,6 +57,7 @@ class Version:
         self.milestone = ""
 
         self.readFromFile(filename)
+        self.year = date.today().year
 
     def readFromFile(self, filename):
         dom = parse(filename)
@@ -164,12 +166,14 @@ class VersionChecker:
         replace(fname, "<key>CFBundleGetInfoString</key>.*", \
                 "<key>CFBundleGetInfoString</key>" \
                 "<string>RapidSVN version %s, " \
-                "(c) 2005 RapidSVN</string>" % (self.version.str), \
+                "(c) %d RapidSVN</string>" % (self.version.str, \
+                self.version.year), \
                 "CFBundleGetInfoString")
         replace(fname, "<key>CFBundleLongVersionString</key>.*", \
                 "<key>CFBundleLongVersionString</key>" \
-                "<string>%s, (c) 2005 RapidSVN</string>" % \
-                (self.version.str), "CFBundleLongVersionString")
+                "<string>%s, (c) %d RapidSVN</string>" % \
+                (self.version.str, self.version.year), \
+                "CFBundleLongVersionString")
         replace(fname, "DISKIMAGE=.*", \
                 "DISKIMAGE=RapidSVN-%s" % (self.version.str), \
                 "DISKIMAGE")
