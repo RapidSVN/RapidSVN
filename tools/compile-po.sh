@@ -47,4 +47,11 @@ for DIR in ?? ; do
   msgfmt -o $MO $PO
 done
 
+for DIR in ??_?? ; do
+  PO="$DIR/rapidsvn.po"
+  MO="$DIR/rapidsvn.mo"
+  echo $DIR
+  msgfmt -o $MO $PO
+done
+
 # end of file
