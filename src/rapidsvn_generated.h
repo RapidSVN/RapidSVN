@@ -23,6 +23,11 @@
 #include <wx/stattext.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
+#include <wx/combobox.h>
+#include <wx/radiobut.h>
+#include <wx/datectrl.h>
+#include <wx/dateevt.h>
+#include <wx/statbox.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -77,6 +82,57 @@ class PreferencesDlgBase : public wxDialog
 	public:
 		PreferencesDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~PreferencesDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class DiffDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class DiffDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxComboBox* m_comboCompare;
+		wxRadioButton* m_radioUseRevision1;
+		wxTextCtrl* m_textRevision1;
+		wxCheckBox* m_checkUseLatest1;
+		wxRadioButton* m_radioUseDate1;
+		wxDatePickerCtrl* m_datePicker1;
+		wxCheckBox* m_checkUsePath1;
+		wxComboBox* m_comboPath1;
+		wxRadioButton* m_radioUseRevision2;
+		wxTextCtrl* m_textRevision2;
+		wxCheckBox* m_checkUseLatest2;
+		wxRadioButton* m_radioUseDate2;
+		wxDatePickerCtrl* m_datePicker2;
+		wxCheckBox* m_checkUsePath2;
+		wxComboBox* m_comboPath2;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnComboCompare( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnRadioUseRevision1( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnTextRevision1( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCheckUseLatest1( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnRadioUseDate1( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnDatePicker1( wxDateEvent& event ){ event.Skip(); }
+		virtual void OnUsePath1( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboPath1( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnRadioUseRevision2( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnTextRevision2( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCheckUseLatest2( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnRadioUseDate2( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnDatePicker2( wxDateEvent& event ){ event.Skip(); }
+		virtual void OnCheckUsePath2( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboPath2( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonOK( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		DiffDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Diff"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		~DiffDlgBase();
 	
 };
 

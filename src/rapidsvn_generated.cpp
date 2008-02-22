@@ -218,3 +218,163 @@ PreferencesDlgBase::~PreferencesDlgBase()
 	m_buttonMergeTool->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnButtonMergeToolClick ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnOK ), NULL, this );
 }
+
+DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* mainSizer;
+	mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	wxBoxSizer* compareSizer;
+	compareSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	wxStaticText* labelCompare;
+	labelCompare = new wxStaticText( this, wxID_ANY, _("Compare:"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelCompare->Wrap( -1 );
+	compareSizer->Add( labelCompare, 0, 0, 5 );
+	
+	m_comboCompare = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN );
+	m_comboCompare->Append( _("Diff to BASE") );
+	m_comboCompare->Append( _("Diff to HEAD") );
+	m_comboCompare->Append( _("Diff to another revision/date") );
+	m_comboCompare->Append( _("Diff two revisions/dates") );
+	compareSizer->Add( m_comboCompare, 1, 0, 5 );
+	
+	mainSizer->Add( compareSizer, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* sbSizer1;
+	sbSizer1 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision or date #1:") ), wxVERTICAL );
+	
+	wxFlexGridSizer* fgSizer1;
+	fgSizer1 = new wxFlexGridSizer( 3, 2, 0, 0 );
+	fgSizer1->SetFlexibleDirection( wxBOTH );
+	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_radioUseRevision1 = new wxRadioButton( this, wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer1->Add( m_radioUseRevision1, 0, 0, 5 );
+	
+	wxBoxSizer* bSizer16;
+	bSizer16 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textRevision1 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer16->Add( m_textRevision1, 0, wxEXPAND, 5 );
+	
+	m_checkUseLatest1 = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	bSizer16->Add( m_checkUseLatest1, 0, 0, 5 );
+	
+	fgSizer1->Add( bSizer16, 1, wxEXPAND, 5 );
+	
+	m_radioUseDate1 = new wxRadioButton( this, wxID_ANY, _("Date:"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer1->Add( m_radioUseDate1, 0, 0, 5 );
+	
+	m_datePicker1 = new wxDatePickerCtrl( this, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT );
+	fgSizer1->Add( m_datePicker1, 0, wxEXPAND, 5 );
+	
+	m_checkUsePath1 = new wxCheckBox( this, wxID_ANY, _("Use URL/path:"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	fgSizer1->Add( m_checkUsePath1, 0, 0, 5 );
+	
+	m_comboPath1 = new wxComboBox( this, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizer1->Add( m_comboPath1, 0, wxEXPAND, 5 );
+	
+	sbSizer1->Add( fgSizer1, 1, wxEXPAND, 5 );
+	
+	mainSizer->Add( sbSizer1, 1, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* sbSizer2;
+	sbSizer2 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision or date #1:") ), wxVERTICAL );
+	
+	wxFlexGridSizer* fgSizer2;
+	fgSizer2 = new wxFlexGridSizer( 3, 2, 0, 0 );
+	fgSizer2->SetFlexibleDirection( wxBOTH );
+	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_radioUseRevision2 = new wxRadioButton( this, wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer2->Add( m_radioUseRevision2, 0, 0, 5 );
+	
+	wxBoxSizer* bSizer161;
+	bSizer161 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textRevision2 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer161->Add( m_textRevision2, 0, wxEXPAND, 5 );
+	
+	m_checkUseLatest2 = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	bSizer161->Add( m_checkUseLatest2, 0, 0, 5 );
+	
+	fgSizer2->Add( bSizer161, 1, wxEXPAND, 5 );
+	
+	m_radioUseDate2 = new wxRadioButton( this, wxID_ANY, _("Date:"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer2->Add( m_radioUseDate2, 0, 0, 5 );
+	
+	m_datePicker2 = new wxDatePickerCtrl( this, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT );
+	fgSizer2->Add( m_datePicker2, 0, wxEXPAND, 5 );
+	
+	m_checkUsePath2 = new wxCheckBox( this, wxID_ANY, _("Use URL/path:"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	fgSizer2->Add( m_checkUsePath2, 0, 0, 5 );
+	
+	m_comboPath2 = new wxComboBox( this, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizer2->Add( m_comboPath2, 0, wxEXPAND, 5 );
+	
+	sbSizer2->Add( fgSizer2, 1, wxEXPAND, 5 );
+	
+	mainSizer->Add( sbSizer2, 1, wxEXPAND, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	buttonSizer->Add( m_buttonOK, 0, wxALL, 5 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 5 );
+	
+	mainSizer->Add( buttonSizer, 0, wxALIGN_CENTER, 5 );
+	
+	this->SetSizer( mainSizer );
+	this->Layout();
+	mainSizer->Fit( this );
+	
+	// Connect Events
+	m_comboCompare->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( DiffDlgBase::OnComboCompare ), NULL, this );
+	m_radioUseRevision1->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( DiffDlgBase::OnRadioUseRevision1 ), NULL, this );
+	m_textRevision1->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( DiffDlgBase::OnTextRevision1 ), NULL, this );
+	m_checkUseLatest1->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnCheckUseLatest1 ), NULL, this );
+	m_radioUseDate1->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( DiffDlgBase::OnRadioUseDate1 ), NULL, this );
+	m_datePicker1->Connect( wxEVT_DATE_CHANGED, wxDateEventHandler( DiffDlgBase::OnDatePicker1 ), NULL, this );
+	m_checkUsePath1->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnUsePath1 ), NULL, this );
+	m_comboPath1->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( DiffDlgBase::OnComboPath1 ), NULL, this );
+	m_radioUseRevision2->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( DiffDlgBase::OnRadioUseRevision2 ), NULL, this );
+	m_textRevision2->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( DiffDlgBase::OnTextRevision2 ), NULL, this );
+	m_checkUseLatest2->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnCheckUseLatest2 ), NULL, this );
+	m_radioUseDate2->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( DiffDlgBase::OnRadioUseDate2 ), NULL, this );
+	m_datePicker2->Connect( wxEVT_DATE_CHANGED, wxDateEventHandler( DiffDlgBase::OnDatePicker2 ), NULL, this );
+	m_checkUsePath2->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnCheckUsePath2 ), NULL, this );
+	m_comboPath2->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( DiffDlgBase::OnComboPath2 ), NULL, this );
+	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DiffDlgBase::OnButtonOK ), NULL, this );
+}
+
+DiffDlgBase::~DiffDlgBase()
+{
+	// Disconnect Events
+	m_comboCompare->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( DiffDlgBase::OnComboCompare ), NULL, this );
+	m_radioUseRevision1->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( DiffDlgBase::OnRadioUseRevision1 ), NULL, this );
+	m_textRevision1->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( DiffDlgBase::OnTextRevision1 ), NULL, this );
+	m_checkUseLatest1->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnCheckUseLatest1 ), NULL, this );
+	m_radioUseDate1->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( DiffDlgBase::OnRadioUseDate1 ), NULL, this );
+	m_datePicker1->Disconnect( wxEVT_DATE_CHANGED, wxDateEventHandler( DiffDlgBase::OnDatePicker1 ), NULL, this );
+	m_checkUsePath1->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnUsePath1 ), NULL, this );
+	m_comboPath1->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( DiffDlgBase::OnComboPath1 ), NULL, this );
+	m_radioUseRevision2->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( DiffDlgBase::OnRadioUseRevision2 ), NULL, this );
+	m_textRevision2->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( DiffDlgBase::OnTextRevision2 ), NULL, this );
+	m_checkUseLatest2->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnCheckUseLatest2 ), NULL, this );
+	m_radioUseDate2->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler( DiffDlgBase::OnRadioUseDate2 ), NULL, this );
+	m_datePicker2->Disconnect( wxEVT_DATE_CHANGED, wxDateEventHandler( DiffDlgBase::OnDatePicker2 ), NULL, this );
+	m_checkUsePath2->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnCheckUsePath2 ), NULL, this );
+	m_comboPath2->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( DiffDlgBase::OnComboPath2 ), NULL, this );
+	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DiffDlgBase::OnButtonOK ), NULL, this );
+}
