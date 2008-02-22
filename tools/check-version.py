@@ -166,12 +166,12 @@ class VersionChecker:
         replace(fname, "<key>CFBundleGetInfoString</key>.*", \
                 "<key>CFBundleGetInfoString</key>" \
                 "<string>RapidSVN version %s, " \
-                "(c) %d RapidSVN</string>" % (self.version.str, \
+                "(c) 2002-%d RapidSVN</string>" % (self.version.str, \
                 self.version.year), \
                 "CFBundleGetInfoString")
         replace(fname, "<key>CFBundleLongVersionString</key>.*", \
                 "<key>CFBundleLongVersionString</key>" \
-                "<string>%s, (c) %d RapidSVN</string>" % \
+                "<string>%s, (c) 2002-%d RapidSVN</string>" % \
                 (self.version.str, self.version.year), \
                 "CFBundleLongVersionString")
         replace(fname, "DISKIMAGE=.*", \
