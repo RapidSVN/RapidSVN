@@ -1,12 +1,13 @@
-# 
+#!/bin/bash 
 # Script to generate the RapidSVN.app bundle and
 # a disk image ready for distribution
 #
 
 # Remove any old stuff. We wanna create a FRESH bundle
 DISKIMAGE=RapidSVN-0.9.5
+DISKIMAGE_FILE=$DISKIMAGE.dmg
 test -e RapidSVN.app && rm -rf RapidSVN.app
-test -e $DISKIMAGE && rm -rf $DISKIMAGE
+test -e $DISKIMAGE_FILE && rm -f $DISKIMAGE_FILE
 
 # Create the bundle
 BUNDLEDIR=RapidSVN.app/Contents
@@ -41,7 +42,7 @@ echo -n \
 	<key>CFBundleVersion</key><string>0.9.5</string>
 	<key>CFBundleShortVersionString</key><string>0.9.5</string>
 	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.9.5, (c) 2002-2007 RapidSVN</string>
-	<key>CFBundleLongVersionString</key><string>0.9.5, (c) 2002-2007 RapidSVN</string>
+	<key>CFBundleLongVersionString</key><string>0.9.5, (c) 2002-2008 RapidSVN</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2002-2007 RapidSVN</string>
 	<key>LSRequiresCarbon</key>
@@ -53,4 +54,7 @@ echo -n \
 " > $BUNDLEDIR/Info.plist
 
 # Now create the disk image from the bundle
-hdiutil create -srcfolder RapidSVN.app $DISKIMAGE
+hdiutil create -quiet -srcfolder RapidSVN.app $DISKIMAGE
+
+test -e $DISKIMAGE_FILE && echo Success!!
+
