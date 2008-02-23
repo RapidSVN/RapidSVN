@@ -36,689 +36,110 @@
 #include "hist_entries.hpp"
 #include "hist_val.hpp"
 
-/** event IDs for the controls used in this file */
-enum
+
+struct DiffDlg::Data
 {
-  ID_UseLatest = wxID_HIGHEST,
-  ID_Browse,
-  ID_UseDate,
-  ID_Date,
-  ID_UseRevision,
-  ID_Revision,
-  ID_UseUrl,
-  ID_Url,
-  ID_CompareType,
-  ID_RevisionOne,
-  ID_RevisionTwo
-};
+  bool enableUrl;
+  size_t compareTypesCount;
+  DiffData::CompareType compareTypes [DiffData::COMPARE_TYPE_COUNT-1];
+  DiffData diffData;
 
-/* custom event to forward necessary updates */
-BEGIN_DECLARE_EVENT_TYPES()
-    DECLARE_EVENT_TYPE(wxEVENT_UPDATE, wxEVT_USER_FIRST)
-END_DECLARE_EVENT_TYPES()
-
-DEFINE_EVENT_TYPE(wxEVENT_UPDATE)
-
-#define EVENT_UPDATE(id, fn) \
-    DECLARE_EVENT_TABLE_ENTRY( \
-        wxEVENT_UPDATE, id, -1, \
-        (wxObjectEventFunction)(wxEventFunction)(wxCommandEventFunction)&fn, \
-        (wxObject *) NULL \
-    ),
-
-
-/**
- * Tries to interpret @a datestring as a date
- * (using to current locales) 
- *
- * @param datestring string with date (and time)
- * @param date apr date
- * @return success?
- * @retval true valid date
- */
-static bool
-ParseDateTime (const wxString & datestring, apr_time_t & date)
-{
-  wxString value (datestring);
-
-  TrimString (value);
-
-  if (value.Length () <= 0)
-    return false;
-
-  // parse the string using the current locale setting
-  // (we check only if the complete parsing failed,
-  //  not if only the partial string could be parsed)
-  wxDateTime dateTime;
-  if (0 == dateTime.ParseFormat (datestring, wxT("%Y-%m-%d %H:%M:%S")))
-    return false;
-
-  apr_time_ansi_put (&date, dateTime.GetTicks ());
-  return true;
-}
-
-
-/**
- * Checks whether the given @a datestring is a valid date/time string
- * for the current locale
- *
- * @retval true valid
- */
-static bool
-CheckDateTime (const wxString & datestring)
-{
-  apr_time_t time;
-
-  return ParseDateTime (datestring, time);
-}
-
-
-
-
-/**
- * Panel that lets the user select either a revision or a date and
- * optionally another URL (if she doesnt want to compare against
- * the same URL as the working copy)
- */
-class RevisionPanel : public wxPanel
-{
-public:
-  /** Constructor */
-  RevisionPanel (wxWindow * parent,
-                wxWindowID id,
-                const wxString & title, 
-                const wxString & defaultUrl)
-   : wxPanel (parent, id, wxDefaultPosition, wxDefaultSize),
-     mEnableUrl (true), mUrl (defaultUrl)
+  struct RevisionControls 
   {
-    InitControls (title);
-    CheckControls ();
+    wxRadioButton * radioUseRevision;
+    wxTextCtrl * textRevision;
+    wxCheckBox * checkUseLatest;
+    wxRadioButton * radioUseDate;
+    wxDatePickerCtrl * datePicker;
+    wxCheckBox * checkUsePath;
+    wxComboBox * comboPath;
+  } revCtrlsArray[2];
+  wxComboBox * comboCompare;
+
+  Data ()
+    : enableUrl (true), compareTypesCount (0)
+  {
   }
 
-  /**
-   * Checks the controls for validity and
-   * enables/disables controls as result of this check
-   */
-  void
-  CheckControls ()
-  {
-    CheckRevisionCtrls ();
-    CheckDateCtrls ();
-    CheckUrlCtrls ();
-  }
-
-  /**
-   * returns whether the controls contain valid entries
-   *
-   * @retval true everything is fine
-   */
   bool
-  IsValid ()
+  TransferRevisionFromWindow (int no, bool enabled, svn::Revision & revision)
   {
-    bool valid = true;
-    if (mCheckUseUrl->GetValue ())
-      mUrl = m_comboUrl->GetValue ();
+    struct RevisionControls * revCtrls = &revCtrlsArray[no];
 
-    if (mRadioUseRevision->GetValue ())
+    // first we enable/disable controls according to settings
+    revCtrls->radioUseRevision->Enable (enabled);
+    bool useRevision = enabled && revCtrls->radioUseRevision->GetValue ();
+    revCtrls->checkUseLatest->Enable (useRevision);
+    bool useLatest = useRevision && revCtrls->checkUseLatest->GetValue ();
+    revCtrls->textRevision->Enable (!useLatest);
+
+    revCtrls->radioUseDate->Enable (enabled);
+    bool useDate = enabled && revCtrls->radioUseDate->GetValue ();
+    revCtrls->datePicker->Enable (useDate);
+
+    bool enablePath = enabled && enableUrl;
+    revCtrls->checkUsePath->Enable (enablePath);
+    bool usePath = enablePath && revCtrls->checkUsePath->GetValue ();
+    revCtrls->comboPath->Enable (usePath); 
+
+    // now transfer values
+    bool isValid = true;
+    if (revCtrls->radioUseRevision->GetValue ())
     {
-      if (!mCheckUseLatest->GetValue ())
-        valid = CheckRevision (mTextRevision->GetValue ());
-    }
-    else
-      valid = CheckDateTime (mDatePicker->GetValue ().Format (wxT("%Y-%m-%d %H:%M:%S")));
-
-    if (valid)
-      if (mCheckUseUrl->GetValue ())
-        valid = mUrl.Trim ().Length () > 0;
-
-    return valid;
-  }
-
-  const svn::Revision
-  GetRevision () const
-  {
-    if (mRadioUseRevision->GetValue ())
-    {
-      if (mCheckUseLatest->GetValue ())
-        return svn::Revision (svn::Revision::HEAD);
+      if (revCtrls->checkUseLatest->GetValue ())
+        revision = svn::Revision (svn::Revision::HEAD);
       else
       {
         svn_revnum_t revnum;
-        ParseRevision (mTextRevision->GetValue (), revnum);
-        return svn::Revision (revnum);
+        bool isValidRevision = ParseRevision (
+          revCtrls->textRevision->GetValue (), revnum);
+        revision = svn::Revision (revnum);
+
+        if (useRevision && !isValidRevision)
+          isValid = false;
       }
     }
     else
     {
       apr_time_t time=0;
-      apr_time_ansi_put (&time, mDatePicker->GetValue ().GetTicks ());
+      apr_time_ansi_put (
+        &time, revCtrls->datePicker->GetValue ().GetTicks ());
       svn::DateTime datetime(time);
-      return svn::Revision (datetime);
-    }
-  }
-
-  bool
-  GetUseUrl () const
-  {
-    return mCheckUseUrl->GetValue ();
-  }
-
-  const wxString
-  GetUrl () const
-  {
-    return mUrl;
-  }
-
-  void
-  SetRevision (const svn::Revision & revision)
-  {
-    // set revnum
-    if (revision.kind () == svn_opt_revision_date)
-    {
-      mRadioUseDate->SetValue (true);
-      wxDateTime date;
-      date.ParseDateTime (FormatDateTime (revision.date (),
-        wxT("%Y-%m-%d %H:%M:%S")).c_str ());
-      mDatePicker->SetValue (date);
-      mTextRevision->SetValue (wxEmptyString);
-      mCheckUseLatest->SetValue (true);
-    }
-    else
-    {
-      mRadioUseRevision->SetValue (true);
-
-      if (revision.kind () == svn_opt_revision_head)
-      {
-        mTextRevision->SetValue (wxEmptyString);
-        mCheckUseLatest->SetValue (true);
-      }
-      else
-      {
-        wxString value;
-        value.Printf (wxT("%") wxT(SVN_REVNUM_T_FMT), revision.revnum ());
-        mTextRevision->SetValue (value);
-        mCheckUseLatest->SetValue (false);
-      }
-    }
-  }
-
-  void
-  SetUseUrl (bool value)
-  {
-    mCheckUseUrl->SetValue (value);
-  }
-
-  void
-  SetUrl (const wxString & url)
-  {
-    mUrl = url;
-  }
-
-  void
-  EnableUrl (bool enable)
-  {
-    // @todo
-  }
-
-private:
-  bool mEnableUrl;
-
-  wxString mUrl;
-
-  /** radio button: if checked use revision */
-  wxRadioButton * mRadioUseRevision;
-
-  /** text control with the revision number */
-  wxTextCtrl * mTextRevision;
-
-  /**
-   * check box: if not checked use revision number
-   * (otherwise HEAD)
-   */
-  wxCheckBox * mCheckUseLatest;
-
-  /** radio button: if checked use date */
-  wxRadioButton * mRadioUseDate;
-
-  /** text control with a date */
-  wxDatePickerCtrlBase * mDatePicker;
-
-  /** check box: use URL if checked */
-  wxCheckBox * mCheckUseUrl;
-
-  /** text control for an optional URL */
-  wxComboBox * m_comboUrl;
-
-  /** browse button if the user wants to search for a local file */
-  //wxButton * mButtonBrowse;
-
-  /** Initialize and position the controls for the panel */
-  void
-  InitControls (const wxString & title)
-  {
-    wxFlexGridSizer * gridSizer = new wxFlexGridSizer (3, 5, 5);
-    gridSizer->AddGrowableCol (1);
-
-    // first row: revision
-    mRadioUseRevision = new wxRadioButton (
-      this, ID_UseRevision, _("Revision:"));
-    mRadioUseRevision->SetValue (true);
-    mTextRevision = new wxTextCtrl (this, ID_Revision, wxEmptyString);
-    mCheckUseLatest = new wxCheckBox (
-      this, ID_UseLatest, _("Use latest"));
-    mCheckUseLatest->SetValue (false);
-    wxBoxSizer * revisionSizer = new wxBoxSizer (wxHORIZONTAL);
-    revisionSizer->Add (mTextRevision, 1, wxEXPAND);
-    revisionSizer->Add (mCheckUseLatest, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-
-    gridSizer->Add (mRadioUseRevision);
-    gridSizer->Add (revisionSizer);
-    gridSizer->Add (0,0);
-
-    // second row: date
-    mRadioUseDate = new wxRadioButton (this, ID_UseDate, _("Date:"));
-    mDatePicker = new wxDatePickerCtrl (this, ID_Date, wxDefaultDateTime,
-                                        wxDefaultPosition, wxDefaultSize,
-                                        wxDP_DROPDOWN|wxDP_SHOWCENTURY);
-
-    gridSizer->Add (mRadioUseDate);
-    gridSizer->Add (mDatePicker, 0, wxEXPAND);
-    gridSizer->Add (0,0);
-
-    // third row: url
-    mCheckUseUrl = new wxCheckBox (
-      this, ID_UseUrl, _("Use URL/Path:"));
-    HistoryValidator valModule (HISTORY_DIFF_URL, &mUrl);
-    m_comboUrl =
-      new wxComboBox (this, ID_Url, mUrl, wxDefaultPosition,
-                      wxSize (235, -1), 0, 0, wxCB_DROPDOWN, valModule);
-
-    //mButtonBrowse = CreateEllipsisButton (this, ID_Browse);
-    gridSizer->Add (mCheckUseUrl);
-    gridSizer->Add (m_comboUrl, 0, wxEXPAND);
-    //gridSizer->Add (mButtonBrowse);
-
-    // create the static box that surrounds the controls
-    // and add those controls
-    wxSizer * mainSizer = new wxStaticBoxSizer (
-      new wxStaticBox (this, -1, title),
-      wxVERTICAL);
-    mainSizer->Add (gridSizer, 0, wxEXPAND);
-
-    this->SetAutoLayout (true);
-    this->SetSizer (mainSizer);
-
-    mainSizer->SetSizeHints (this);
-    mainSizer->Fit (this);
-  }
-
-  /** checks the revision controls for validity */
-  void
-  CheckRevisionCtrls ()
-  {
-    if (!mRadioUseRevision->GetValue ())
-    {
-      mTextRevision->Enable (false);
-      mCheckUseLatest->Enable (false);
-
-      return;
+      revision =  svn::Revision (datetime);
     }
 
-    mCheckUseLatest->Enable (true);
-    mTextRevision->Enable (!mCheckUseLatest->GetValue ());
+    return isValid;
   }
 
-  /** checks the date control for validity */
-  void
-  CheckDateCtrls ()
-  {
-    mDatePicker->Enable (mRadioUseDate->GetValue ());
-  }
-
-  /** checks the url controls for validity */
-  void
-  CheckUrlCtrls ()
-  {
-    if (!mCheckUseUrl->GetValue ())
-    {
-      m_comboUrl->Enable (false);
-      //mButtonBrowse->Enable (false);
-      return;
-    }
-
-    m_comboUrl->Enable (mEnableUrl);
-    //mButtonBrowse->Enable (mEnableUrl);
-  }
-
-  /**
-   * If anything has changed in the form,
-   * e.g. a text has been entered, a radio button
-   * or checkbox has been clicked, this method
-   * is executed to check all the controls for validity.
-   *
-   * An wxEVENT_UPDATE event is then sent to the parent of
-   * this panel.
-   */
-  void
-  OnCommand (wxCommandEvent & event)
-  {
-    CheckControls ();
-
-    // forward event
-    wxCommandEvent newEvent (wxEVENT_UPDATE, -1);
-    GetParent ()->ProcessEvent (newEvent);
-
-  }
-
-private:
-  DECLARE_EVENT_TABLE ()
-};
-
-BEGIN_EVENT_TABLE (RevisionPanel, wxPanel)
-  EVT_CHECKBOX (ID_UseUrl, RevisionPanel::OnCommand)
-  EVT_CHECKBOX (ID_UseLatest, RevisionPanel::OnCommand)
-  EVT_RADIOBUTTON (ID_UseRevision, RevisionPanel::OnCommand)
-  EVT_RADIOBUTTON (ID_UseDate, RevisionPanel::OnCommand)
-  EVT_TEXT (ID_Revision, RevisionPanel::OnCommand)
-  EVT_TEXT (ID_Date, RevisionPanel::OnCommand)
-  EVT_TEXT (ID_Url, RevisionPanel::OnCommand)
-END_EVENT_TABLE ()
-
-enum
-{
-  COMPARE_WITH_BASE = 0,
-  COMPARE_WITH_HEAD,
-  COMPARE_WITH_DIFFERENT_REVISION,
-  COMPARE_TWO_REVISIONS,
-  COMPARE_COUNT
-};
-
-static const DiffData::CompareType COMPARE_TYPES [] =
-{
-  DiffData::WITH_BASE,
-  DiffData::WITH_HEAD,
-  DiffData::WITH_DIFFERENT_REVISION,
-  DiffData::TWO_REVISIONS
-};
-
-/**
- * This panel contains all the controls relevant for
- * the diff dialog. We are using a separate class to
- * hide implementation details
- */
-class DiffDlg::Data : public wxPanel
-{
-public:
-  wxComboBox * mComboCmpType;
-  RevisionPanel * mRevisionOne;
-  RevisionPanel * mRevisionTwo;
-  wxString mCompareTypeLabels [COMPARE_COUNT];
-  wxString mDefaultUrl;
-
-  /** Constructor */
-  Data (wxDialog * parent, const wxString & defaultUrl)
-    : wxPanel (parent), mDefaultUrl (defaultUrl), mParent (parent), 
-      mCompareType (-1)
-  {
-    mCompareTypeLabels [COMPARE_WITH_BASE] = _("Diff to BASE");
-    mCompareTypeLabels [COMPARE_WITH_HEAD] = _("Diff to HEAD");
-    mCompareTypeLabels [COMPARE_WITH_DIFFERENT_REVISION] =  
-      _("Diff to another revision/date");
-    mCompareTypeLabels [COMPARE_TWO_REVISIONS] = 
-      _("Diff two revisions/dates");
-
-    InitControls ();
-    SetCompareType (DiffData::WITH_DIFFERENT_REVISION);
-    CheckControls ();
-  }
-
-  const DiffData
-  GetDiffData () const
-  {
-    DiffData diffData;
-    diffData.compareType = GetCompareType ();
-
-    if (mRevisionOne->GetUseUrl ())
-    {
-      diffData.useUrl1 = true;
-      diffData.url1 = mRevisionOne->GetUrl ();
-    }
-    if (mRevisionTwo->GetUseUrl ())
-    {
-      diffData.useUrl2 = true;
-      diffData.url2 = mRevisionTwo->GetUrl ();
-    }
-    
-    switch (diffData.compareType)
-    {
-    case DiffData::WITH_DIFFERENT_REVISION:
-      diffData.revision1 = mRevisionOne->GetRevision ();
-      break;
-
-    case DiffData::TWO_REVISIONS:
-      diffData.revision1 = mRevisionOne->GetRevision ();
-      diffData.revision2 = mRevisionTwo->GetRevision ();
-      break;
-    case DiffData::WITH_HEAD:
-    case DiffData::WITH_BASE:
-    default:
-      // nothing special
-      break;
-    }
-    return diffData;
-  }
-
-  void
-  SetData (const DiffData & diffData)
-  {
-    mRevisionOne->SetRevision (diffData.revision1);
-    mRevisionTwo->SetRevision (diffData.revision2);
-
-    SetCompareType (diffData.compareType);
-  }
-
-  void
-  EnableUrl (bool value)
-  {
-    mRevisionOne->EnableUrl (value);
-    mRevisionTwo->EnableUrl (value);
-  }
-
-  void
-  AllowCompareTypes (const DiffData::CompareType types [],
-                     size_t count)
-  {
-    if (count == 0)
-    {
-      AllowCompareTypes ();
-      return;
-    }
-
-    // remember old selection and clear contents
-    DiffData::CompareType oldCompareType = GetCompareType ();
-    mComboCmpType->Clear ();
-
-    // otherwise allow only the types that were passed
-    // as parameters
-    size_t i;
-
-    for (i=0; i<count; i++)
-      AddCompareType (types [i]);
-
-    // try to set old selection
-    bool returnValue = SetCompareType (oldCompareType);
-    if (!returnValue)
-    {
-      mCompareType = 0;
-      SetCompareType (types[0]);
-      CheckControls ();
-    }
-  }
-
-  void
-  AllowCompareTypes ()
-  {
-    // remember old selection and clear contents
-    DiffData::CompareType oldCompareType = GetCompareType ();
-    mComboCmpType->Clear ();
-
-    // fill list
-    AddCompareType (DiffData::WITH_BASE);
-    AddCompareType (DiffData::WITH_HEAD);
-    AddCompareType (DiffData::WITH_DIFFERENT_REVISION);
-    AddCompareType (DiffData::TWO_REVISIONS);
-
-    // try to set remembered value
-    SetCompareType (oldCompareType);
-  }
-
-private:
-  wxDialog * mParent;
-  int mCompareType;
-  wxButton * mButtonOK;
-
-  void
-  InitControls ()
-  {
-    // first row: label + combo with selection of options
-    wxFlexGridSizer * typeSizer = new wxFlexGridSizer (2, 5, 5);
-    typeSizer->AddGrowableCol (1);
-    {
-      wxStaticText * label = new wxStaticText (
-        this, -1, _("Compare:"));
-
-      mComboCmpType = new wxComboBox (
-        this, ID_CompareType, wxEmptyString, wxDefaultPosition, wxDefaultSize,
-        COMPARE_COUNT, mCompareTypeLabels, 
-        wxCB_READONLY);
-
-      typeSizer->Add (label, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL);
-      typeSizer->Add (mComboCmpType, 1, wxEXPAND);
-    }
-
-    // second row: first revision/url
-    mRevisionOne = new RevisionPanel (
-      this, ID_RevisionOne, _("Revision or date #&1:"), mDefaultUrl);
-
-    // third row: second revision/url
-    mRevisionTwo = new RevisionPanel (
-      this, ID_RevisionTwo, _("Revision or date #&2:"), mDefaultUrl);
-
-    // fourth row: buttons
-    wxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
-    {
-      mButtonOK = new wxButton (this, wxID_OK, _("OK"));
-      wxButton * buttonCancel = new wxButton (this, wxID_CANCEL, _("Cancel"));
-
-      buttonSizer->Add (mButtonOK, 0, wxALL, 5);
-      buttonSizer->Add (buttonCancel, 0, wxALL, 5);
-    }
-
-    // create the static box for the diff options
-    wxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-    mainSizer->Add (typeSizer, 0, wxEXPAND);
-    mainSizer->Add (mRevisionOne, 0, wxEXPAND);
-    mainSizer->Add (mRevisionTwo, 0, wxEXPAND);
-    mainSizer->Add (buttonSizer, 0, wxALIGN_CENTER);
-
-    this->SetAutoLayout (true);
-    this->SetSizer (mainSizer);
-
-    mainSizer->SetSizeHints (this);
-    mainSizer->Fit (this);
-
-    mButtonOK->SetDefault ();
-
-    AllowCompareTypes ();
-    // call this after AllowCompareTypes (), because ComboCmpType is not initialized yet.
-    // Set CompareType to "Diff to another rev/date" by default.
-    mCompareType = 2;
-  }
-
-  void
-  CheckControls ()
-  {
-    bool one = false;
-    bool two = false;
-
-    switch (GetCompareType ())
-    {
-    case DiffData::WITH_BASE:
-      one = two = false;
-      break;
-
-    case DiffData::WITH_HEAD:
-      one = two = false;
-      break;
-
-    case DiffData::WITH_DIFFERENT_REVISION:
-      one = true;
-      break;
-
-    case DiffData::TWO_REVISIONS:
-      one = two = true;
-      break;
-
-    default:
-      one = two = false;
-    }
-    mRevisionOne->Enable (one);
-    mRevisionTwo->Enable (two);
-
-    mButtonOK->Enable (IsValid ());
-  }
-
-  bool
-  IsValid () const
-  {
-    bool valid = true;
-
-    if (mRevisionOne->IsEnabled ())
-      valid &= mRevisionOne->IsValid ();
-
-    if (mRevisionTwo->IsEnabled ())
-      valid &= mRevisionTwo->IsValid ();
-
-    return valid;
-  }
-
+  
   /**
    * Add a compare type to the combo box
    */
   void
   AddCompareType (DiffData::CompareType compareType)
   {
-    for (int i=0; i < COMPARE_COUNT; i++)
+    compareTypes[compareTypesCount] = compareType;
+    compareTypesCount++;
+    
+    switch (compareType)
     {
-      if (COMPARE_TYPES [i] == compareType)
-      {
-        mComboCmpType->Append (mCompareTypeLabels [i],
-                               (void*) & (COMPARE_TYPES [i]));
-        break;
-      }
+    case DiffData::WITH_BASE:
+      comboCompare->Append (_("Diff to BASE"));
+      break;
+    case DiffData::WITH_HEAD:
+      comboCompare->Append (_("Diff to HEAD"));
+      break;
+    case DiffData::WITH_DIFFERENT_REVISION:
+      comboCompare->Append (_("Diff to another revision/date"));
+      break;
+    case DiffData::TWO_REVISIONS:
+      comboCompare->Append (_("Diff two revisions/dates"));
+      break;
+    default:
+      comboCompare->Append (wxT("Invalid value"));
     }
   }
-
-  /**
-   * Get selected @a CompareType
-   *
-   * @retval INVALID_COMPARE_TYPE if nothing was
-   *         selected or invalid result of @a GetClientData
-   */
-  DiffData::CompareType
-  GetCompareType () const
-  {
-    if (mCompareType < 0)
-      return DiffData::INVALID_COMPARE_TYPE;
-
-    DiffData::CompareType* ct =
-      (DiffData::CompareType*) mComboCmpType->GetClientData (mCompareType);
-
-    if (!ct)
-      return DiffData::INVALID_COMPARE_TYPE;
-
-    return *ct;
-  }
+    
 
   /**
    * Select @a CompareType in the combo-box.
@@ -732,106 +153,258 @@ private:
   {
     bool found = false;
 
-    const int c = mComboCmpType->GetCount ();
-
-    for (int i=0; i < c; i++)
+    diffData.compareType = compareType;
+    for (size_t i=0; i < compareTypesCount; i++)
     {
-      DiffData::CompareType* ct = (DiffData::CompareType*) mComboCmpType->GetClientData (i);
-      if (ct && compareType == *ct)
+      if (compareTypes[i] == compareType)
       {
-        mComboCmpType->SetSelection (i);
+        comboCompare->SetSelection (i);
         found = true;
         break;
       }
     }
 
     if (!found)
-      mComboCmpType->SetSelection (0);
-
-    CheckControls ();
+    {
+      diffData.compareType = compareTypes[0];
+      comboCompare->SetSelection (0);
+    }
 
     return found;
   }
-
-  void
-  OnCommand (wxCommandEvent & event)
-  {
-    mCompareType = event.GetInt();
-    CheckControls ();
-  }
-
-  void
-  OnUpdate (wxCommandEvent & event)
-  {
-    CheckControls ();
-  }
-
-private:
-  DECLARE_EVENT_TABLE ()
 };
 
-
-BEGIN_EVENT_TABLE (DiffDlg::Data, wxPanel)
-  EVT_COMBOBOX (ID_CompareType, Data::OnCommand)
-  EVENT_UPDATE (-1, Data::OnUpdate)
-END_EVENT_TABLE ()
-
 DiffDlg::DiffDlg (wxWindow * parent, const wxString & selectedUrl)
-  : wxDialog (parent, -1, _("Diff"), wxDefaultPosition,
-              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+  : DiffDlgBase (parent, -1, _("Diff"), wxDefaultPosition,
+                 wxDefaultSize, wxDEFAULT_DIALOG_STYLE),
+    m (new Data ())
 {
-  m = new Data (this, selectedUrl);
+  // Create the control mapping for the use 
+  // with @ref Data::SetRevision and @ref Data::GetRevision
+  m->comboCompare = m_comboCompare;
+  m->revCtrlsArray[0].radioUseRevision = m_radioUseRevision1;
+  m->revCtrlsArray[0].textRevision = m_textRevision1;
+  m->revCtrlsArray[0].checkUseLatest = m_checkUseLatest1;
+  m->revCtrlsArray[0].radioUseDate = m_radioUseDate1;
+  m->revCtrlsArray[0].datePicker = m_datePicker1;
+  m->revCtrlsArray[0].checkUsePath = m_checkUsePath1;
+  m->revCtrlsArray[0].comboPath = m_comboPath1;
 
-  // Add all sizers to main sizer
-  wxBoxSizer *mainSizer = new wxBoxSizer (wxVERTICAL);
-  mainSizer->Add (m, 1, wxEXPAND|wxALL, 5);
+  m->revCtrlsArray[1].radioUseRevision = m_radioUseRevision2;
+  m->revCtrlsArray[1].textRevision = m_textRevision2;
+  m->revCtrlsArray[1].checkUseLatest = m_checkUseLatest2;
+  m->revCtrlsArray[1].radioUseDate = m_radioUseDate2;
+  m->revCtrlsArray[1].datePicker = m_datePicker2;
+  m->revCtrlsArray[1].checkUsePath = m_checkUsePath2;
+  m->revCtrlsArray[1].comboPath = m_comboPath2;
 
-  SetAutoLayout(true);
-  SetSizer(mainSizer);
+  CentreOnParent ();
 
-  mainSizer->SetSizeHints(this);
-  mainSizer->Fit(this);
+  // fill list
+  AllowCompareTypes ();
+  m->SetCompareType (DiffData::WITH_DIFFERENT_REVISION);
+  m_radioUseRevision1->SetValue (true);
+  m_radioUseRevision2->SetValue (true);
 
-  CentreOnParent();
+  TransferDataFromWindow ();
 }
 
 DiffDlg::~DiffDlg ()
 {
+  delete m;
 }
 
 const DiffData
 DiffDlg::GetData () const
 {
-  return m->GetDiffData ();
-}
-
-void
-DiffDlg::SetData (const DiffData & diffData)
-{
-  m->SetData (diffData);
+  return m->diffData;
 }
 
 void
 DiffDlg::EnableUrl (bool value)
 {
-  m->EnableUrl (value);
+  m->enableUrl = value;
+
+  TransferDataFromWindow();
 }
 
 void
 DiffDlg::AllowCompareTypes (const DiffData::CompareType types [],
                             size_t count)
 {
-  m->AllowCompareTypes (types, count);
+  if (count == 0)
+  {
+    AllowCompareTypes ();
+    return;
+  }
+
+  // remember old selection and clear contents
+  DiffData::CompareType oldCompareType = m->diffData.compareType;
+  m_comboCompare->Clear ();
+  m->compareTypesCount = 0;
+
+  // otherwise allow only the types that were passed
+  // as parameters
+  size_t i;
+
+  for (i=0; i<count; i++)
+    m->AddCompareType (types [i]);
+
+  // try to set old selection
+  m->SetCompareType (oldCompareType);
+  TransferDataFromWindow ();
 }
 
 void
 DiffDlg::AllowCompareTypes ()
 {
-  m->AllowCompareTypes ();
+  // remember old selection and clear contents
+  DiffData::CompareType oldCompareType = m->diffData.compareType;
+  m_comboCompare->Clear ();
+  m->compareTypesCount = 0;
+
+  m->AddCompareType (DiffData::WITH_BASE);
+  m->AddCompareType (DiffData::WITH_HEAD);
+  m->AddCompareType (DiffData::WITH_DIFFERENT_REVISION);
+  m->AddCompareType (DiffData::TWO_REVISIONS);
+
+  m->SetCompareType (oldCompareType);
+  TransferDataFromWindow ();
 }
+
+bool 
+DiffDlg::TransferDataFromWindow ()
+{
+  bool revision1 = false;
+  bool revision2 = false;
+
+  m->diffData.compareType = 
+    m->compareTypes[m_comboCompare->GetSelection ()];
+
+  switch (m->diffData.compareType)
+  {
+  case DiffData::WITH_DIFFERENT_REVISION:
+    revision1 = true;
+    revision2 = false;
+    break;
+  case DiffData::TWO_REVISIONS:
+    revision1 = true;
+    revision2 = true;
+  default:
+    ; // Values are already false
+  }
+
+  // retrieve revisions / dates
+  bool isValid = 
+    m->TransferRevisionFromWindow (0, revision1, m->diffData.revision1) &&
+    m->TransferRevisionFromWindow (1, revision2, m->diffData.revision2);
+
+  // and now the urls (without check)
+  m->diffData.useUrl1 = m_checkUsePath1->GetValue ();
+  m->diffData.url1 = m_comboPath1->GetValue ();
+  m->diffData.useUrl2 = m_checkUsePath2->GetValue ();
+  m->diffData.url2 = m_comboPath2->GetValue ();
+
+  m_buttonOK->Enable (isValid);
+  
+  return isValid;
+}
+  
+
+void
+DiffDlg::OnComboCompare (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnRadioUseRevision1 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnTextRevision1 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnCheckUseLatest1 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnRadioUseDate1 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnDatePicker1( wxDateEvent& event )
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnUsePath1 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnComboPath1 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnRadioUseRevision2 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnTextRevision2 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnCheckUseLatest2 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnRadioUseDate2 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnDatePicker2 (wxDateEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnCheckUsePath2 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
+void
+DiffDlg::OnComboPath2 (wxCommandEvent& event)
+{
+  TransferDataFromWindow ();
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
  * end:
  */
+

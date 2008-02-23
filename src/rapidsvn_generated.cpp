@@ -234,14 +234,10 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	labelCompare->Wrap( -1 );
 	compareSizer->Add( labelCompare, 0, 0, 5 );
 	
-	m_comboCompare = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN );
-	m_comboCompare->Append( _("Diff to BASE") );
-	m_comboCompare->Append( _("Diff to HEAD") );
-	m_comboCompare->Append( _("Diff to another revision/date") );
-	m_comboCompare->Append( _("Diff two revisions/dates") );
+	m_comboCompare = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY ); 
 	compareSizer->Add( m_comboCompare, 1, 0, 5 );
 	
-	mainSizer->Add( compareSizer, 0, wxEXPAND, 5 );
+	mainSizer->Add( compareSizer, 0, wxALL|wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSizer1;
 	sbSizer1 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision or date #1:") ), wxVERTICAL );
@@ -251,7 +247,7 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizer1->SetFlexibleDirection( wxBOTH );
 	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_radioUseRevision1 = new wxRadioButton( this, wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_radioUseRevision1 = new wxRadioButton( this, wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP );
 	fgSizer1->Add( m_radioUseRevision1, 0, 0, 5 );
 	
 	wxBoxSizer* bSizer16;
@@ -281,7 +277,7 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	
 	sbSizer1->Add( fgSizer1, 1, wxEXPAND, 5 );
 	
-	mainSizer->Add( sbSizer1, 1, wxEXPAND, 5 );
+	mainSizer->Add( sbSizer1, 1, wxALL|wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSizer2;
 	sbSizer2 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision or date #1:") ), wxVERTICAL );
@@ -291,7 +287,7 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizer2->SetFlexibleDirection( wxBOTH );
 	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_radioUseRevision2 = new wxRadioButton( this, wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_radioUseRevision2 = new wxRadioButton( this, wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP );
 	fgSizer2->Add( m_radioUseRevision2, 0, 0, 5 );
 	
 	wxBoxSizer* bSizer161;
@@ -321,7 +317,7 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	
 	sbSizer2->Add( fgSizer2, 1, wxEXPAND, 5 );
 	
-	mainSizer->Add( sbSizer2, 1, wxEXPAND, 5 );
+	mainSizer->Add( sbSizer2, 1, wxALL|wxEXPAND, 5 );
 	
 	wxBoxSizer* buttonSizer;
 	buttonSizer = new wxBoxSizer( wxHORIZONTAL );

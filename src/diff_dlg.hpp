@@ -28,6 +28,9 @@
 // wxWidgets
 #include "wx/wx.h"
 
+// application
+#include "rapidsvn_generated.h"
+
 
 // forward declarations
 struct DiffData;
@@ -38,7 +41,7 @@ struct DiffData;
  * comparing files against different revisions
  * and/or urls
  */
-class DiffDlg : public wxDialog
+class DiffDlg : public DiffDlgBase
 {
 public:
   /**
@@ -59,13 +62,6 @@ public:
    */
   const DiffData
   GetData () const;
-
-
-  /**
-   * sets the diff data
-   */
-  void
-  SetData (const DiffData & diffData);
 
 
   /**
@@ -97,6 +93,25 @@ public:
   void
   AllowCompareTypes ();
 
+  virtual bool TransferDataFromWindow ();
+
+protected:
+  // Event handlers
+  virtual void OnComboCompare (wxCommandEvent& event);
+  virtual void OnRadioUseRevision1 (wxCommandEvent& event);
+  virtual void OnTextRevision1 (wxCommandEvent& event);
+  virtual void OnCheckUseLatest1 (wxCommandEvent& event);
+  virtual void OnRadioUseDate1 (wxCommandEvent& event);
+  virtual void OnDatePicker1( wxDateEvent& event );
+  virtual void OnUsePath1 (wxCommandEvent& event);
+  virtual void OnComboPath1 (wxCommandEvent& event);
+  virtual void OnRadioUseRevision2 (wxCommandEvent& event);
+  virtual void OnTextRevision2 (wxCommandEvent& event);
+  virtual void OnCheckUseLatest2 (wxCommandEvent& event);
+  virtual void OnRadioUseDate2 (wxCommandEvent& event);
+  virtual void OnDatePicker2 (wxDateEvent& event );
+  virtual void OnCheckUsePath2 (wxCommandEvent& event);
+  virtual void OnComboPath2 (wxCommandEvent& event);
 
 private:
   /** hide implementation details */
