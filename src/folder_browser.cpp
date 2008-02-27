@@ -419,7 +419,15 @@ public:
         !treeCtrl->IsExpanded (treeCtrl->GetSelection ()))
     {
       if (code == '-' || code == WXK_LEFT)
-        treeCtrl->Collapse (treeCtrl->GetItemParent (treeCtrl->GetSelection ()));
+      {
+        wxTreeItemId parentId (
+          treeCtrl->GetItemParent(treeCtrl->GetSelection ()));
+
+        // make sure parentId is okay
+        // -> otherwise segfault (at least on wxGTK)
+        if (parentId.IsOk ())
+          treeCtrl->Collapse (parentId);
+      }
     }
     event.Skip ();
   }
