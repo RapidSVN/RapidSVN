@@ -77,7 +77,7 @@ UserResolveAction::Perform ()
 
     if (wxFileExists (resultPath) && wxFileExists (minePath))
     {
-      wxString search = resultPath + _(".r*");
+      wxString search = resultPath + wxT(".r*");
 
       wxFileSystem fileSystem;
 
