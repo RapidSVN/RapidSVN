@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb  1 2008)
+// C++ code generated with wxFormBuilder (version Feb 21 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -280,7 +280,7 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	mainSizer->Add( sbSizer1, 1, wxALL|wxEXPAND, 5 );
 	
 	wxStaticBoxSizer* sbSizer2;
-	sbSizer2 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision or date #1:") ), wxVERTICAL );
+	sbSizer2 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision or date #2:") ), wxVERTICAL );
 	
 	wxFlexGridSizer* fgSizer2;
 	fgSizer2 = new wxFlexGridSizer( 3, 2, 0, 0 );
