@@ -73,7 +73,7 @@ UserResolveAction::Perform ()
     const svn::Path & path = *it;
     
     wxString resultPath = Utf8ToLocal (path.native ().c_str ());
-    wxString minePath   = resultPath + _(".mine");
+    wxString minePath   = resultPath + wxT(".mine");
 
     if (wxFileExists (resultPath) && wxFileExists (minePath))
     {
