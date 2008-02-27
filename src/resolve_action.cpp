@@ -28,6 +28,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/status_selection.hpp"
 #include "svncpp/targets.hpp"
 
 // app
@@ -65,6 +66,19 @@ ResolveAction::Perform ()
 bool
 ResolveAction::CheckStatusSel (const svn::StatusSel & statusSel)
 {
+  // allow only local+versioned files
+  if (!statusSel.hasVersioned ())
+    return false;
+
+  if (statusSel.hasUnversioned ())
+    return false;
+
+  if (!statusSel.hasLocal ())
+    return false;
+
+  if (!statusSel.hasFiles ())
+    return false;
+
   return true;
 }
 

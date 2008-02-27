@@ -31,6 +31,7 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/status_selection.hpp"
 #include "svncpp/targets.hpp"
 
 // app
@@ -140,6 +141,19 @@ UserResolveAction::Perform ()
 bool
 UserResolveAction::CheckStatusSel (const svn::StatusSel & statusSel)
 {
+  // well, we allow only a single+versioned+local file
+  if (!statusSel.hasVersioned ())
+    return false;
+
+  if (statusSel.size () != 1)
+    return false;
+
+  if (!statusSel.hasLocal ())
+    return false;
+
+  if (!statusSel.hasFiles ())
+    return false;
+
   return true;
 }
 
