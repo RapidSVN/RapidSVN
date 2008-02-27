@@ -51,14 +51,33 @@ DragAndDropDialog::DragAndDropDialog (wxWindow *parent, wxString src, wxString d
 void
 DragAndDropDialog::CreateControls ()
 {
-  wxString msg = wxEmptyString;
+  wxString msg;
   if (m_showImport)
   {
-    msg = _("Are you sure that you want to import\n\n  \"") + m_src + _("\"\n\ninto\n\n  \"") + m_dest + _("\"?");
+    const wxString fmt (_("\
+Are you sure that you want to import\n\
+\n\
+  %s\n\
+\n\
+into\n\
+\n\
+  %s?"));
+    msg = wxString::Format (
+      fmt, m_src.c_str (), m_dest.c_str ());
   }
   else
   {
-    msg = _("Would you like to move or copy\n\n  \"") + m_src + _("\"\n\ninto\n\n  \"") + m_dest + _("\"?");
+    const wxString fmt (_("\
+Would you like to move or copy\n\
+\n\
+\n\
+  %s\n\
+\n\
+into\n\
+\n\
+  %s?"));
+    msg = wxString::Format (
+      fmt, m_src.c_str (), m_dest.c_str ());
   }
 
   DragAndDropDialog* itemDialog1 = this;
