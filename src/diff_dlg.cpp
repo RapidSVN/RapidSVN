@@ -34,6 +34,7 @@
 #include "diff_dlg.hpp"
 #include "utils.hpp"
 #include "hist_entries.hpp"
+#include "hist_mgr.hpp"
 #include "hist_val.hpp"
 
 
@@ -43,6 +44,7 @@ struct DiffDlg::Data
   size_t compareTypesCount;
   DiffData::CompareType compareTypes [DiffData::COMPARE_TYPE_COUNT-1];
   DiffData diffData;
+  wxComboBox * comboCompareTypes;
 
   struct RevisionControls 
   {
@@ -71,7 +73,7 @@ struct DiffDlg::Data
     bool useRevision = enabled && revCtrls->radioUseRevision->GetValue ();
     revCtrls->checkUseLatest->Enable (useRevision);
     bool useLatest = useRevision && revCtrls->checkUseLatest->GetValue ();
-    revCtrls->textRevision->Enable (!useLatest);
+    revCtrls->textRevision->Enable (enabled && !useLatest);
 
     revCtrls->radioUseDate->Enable (enabled);
     bool useDate = enabled && revCtrls->radioUseDate->GetValue ();
@@ -95,7 +97,7 @@ struct DiffDlg::Data
           revCtrls->textRevision->GetValue (), revnum);
         revision = svn::Revision (revnum);
 
-        if (useRevision && !isValidRevision)
+        if (enabled && !isValidRevision)
           isValid = false;
       }
     }
@@ -198,6 +200,21 @@ DiffDlg::DiffDlg (wxWindow * parent, const wxString & selectedUrl)
   m->revCtrlsArray[1].checkUsePath = m_checkUsePath2;
   m->revCtrlsArray[1].comboPath = m_comboPath2;
 
+  m_comboPath1->SetValue (selectedUrl);
+  m_comboPath2->SetValue (selectedUrl);
+  HistoryValidator valModule1 (
+    HISTORY_DIFF_URL, &m->diffData.url1, true, true);
+  valModule1.SetWindow (this);
+  m_comboPath1->SetValidator (valModule1);
+
+  HistoryValidator valModule2 (
+    HISTORY_DIFF_URL, &m->diffData.url2, true, true);
+  valModule2.SetWindow (this);
+
+  m_comboPath2->SetValidator (valModule2);
+
+  TransferDataToWindow ();
+
   CentreOnParent ();
 
   // fill list
@@ -295,11 +312,20 @@ DiffDlg::TransferDataFromWindow ()
   }
 
   // retrieve revisions / dates
-  bool isValid = 
-    m->TransferRevisionFromWindow (0, revision1, m->diffData.revision1) &&
-    m->TransferRevisionFromWindow (1, revision2, m->diffData.revision2);
+  bool isValid = true;
 
-  // and now the urls (without check)
+  if (!m->TransferRevisionFromWindow (
+        0, revision1, m->diffData.revision1))
+  {
+    isValid = false;
+  }
+
+  if (!m->TransferRevisionFromWindow (
+        1, revision2, m->diffData.revision2))
+  {
+    isValid = false;
+  }
+
   m->diffData.useUrl1 = m_checkUsePath1->GetValue ();
   m->diffData.url1 = m_comboPath1->GetValue ();
   m->diffData.useUrl2 = m_checkUsePath2->GetValue ();
@@ -401,6 +427,16 @@ DiffDlg::OnComboPath2 (wxCommandEvent& event)
   TransferDataFromWindow ();
 }
 
+void 
+DiffDlg::OnButtonOK (wxCommandEvent& event)
+{
+  TheHistoryManager.AddEntryToList (HISTORY_DIFF_URL,
+                                    m_comboPath1->GetValue ());
+  TheHistoryManager.AddEntryToList (HISTORY_DIFF_URL,
+                                    m_comboPath2->GetValue ());
+
+  event.Skip ();
+}
 
 /* -----------------------------------------------------------------
  * local variables:

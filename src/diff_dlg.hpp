@@ -112,7 +112,8 @@ protected:
   virtual void OnDatePicker2 (wxDateEvent& event );
   virtual void OnCheckUsePath2 (wxCommandEvent& event);
   virtual void OnComboPath2 (wxCommandEvent& event);
-
+  virtual void OnButtonOK (wxCommandEvent& event);
+  
 private:
   /** hide implementation details */
   class Data;
