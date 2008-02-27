@@ -259,7 +259,7 @@ AppendMenuItem (wxMenu & menu, int id)
     break;
 
   case ID_RemoveBookmark:
-    caption = _("&Remove Bookmark...");
+    caption = _("&Remove Bookmark");
     // bitmap = EMBEDDED_BITMAP(remove_bookmark_png);
     break;
 
