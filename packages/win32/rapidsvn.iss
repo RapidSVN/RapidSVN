@@ -24,7 +24,7 @@ Name: "it"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "es"; MessagesFile: "SpanishStd-5-5.1.11.isl"
-Name: "uk"; MessagesFile: "Ukrainian-5-5.1.0.isl"
+Name: "uk"; MessagesFile: "Ukrainian-6-5.1.11.isl"
 Name: "zh_CN"; MessagesFile: "ChineseSimp-11-5.1.0.isl"
 Name: "ja"; MessagesFile: "Japanese-5-5.1.11.isl"
 
