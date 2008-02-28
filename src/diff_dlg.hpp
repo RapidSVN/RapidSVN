@@ -116,7 +116,7 @@ protected:
   
 private:
   /** hide implementation details */
-  class Data;
+  struct Data;
   Data * m;
 };
 
