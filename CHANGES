@@ -1,3 +1,58 @@
+Version 0.9.6 (released March 3rd 2008)
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.6
+
+User-visible changes
+
+    * 18 New Feature: Add menu shortcut to set "svn:ignore" properties
+    * 302 New Feature: Add a "relocate" option to the "switch" command
+    * 421 New Feature: Add history for Copy/Move
+    * 451 New Feature: Use date picker control for date fields on Diff dialog
+    * 490 New Feature: Support Respect SVN_ASP_DOT_NET_HACK environment setting
+    * 528 New Feature: Add option to reset "flat mode" at startup
+    * 532 New Feature: Add "Edit Conflicts" command (using a 3 file diff tool)
+    * 41 Enhancement: Icons for all cmds
+    * 422 Enhancement: Pre-fill Name for Rename Command
+    * 478 Enhancement: don't show old commit message in commit dialog
+    * 483 Enhancement: Change shortcut for Add to INSERT
+    * 549 Enhancement: Change Shortcut for Commit to CTRL+ENTER
+    * 563 Enhancement: Untangle the preferences dialog (using wxFormBuilder)
+    * 567 Enhancement: Remove ellipsis from "Remove Bookmark..."
+    * 324 Fixed: Files wont be displayed with flag "Refresh with Update"
+    * 452 Fixed: UseUrl fields on Diff Dialog are ignored
+    * 473 Fixed: view and diff from remote repositories fails
+    * 476 Fixed: Edit is enabled on folder
+    * 492 Fixed: HKCR error when trying to access repository files
+    * 493 Fixed: Get in Log dialog doesnt work for repository entries
+    * 495 Fixed: Crash: Click on empty filelist column header
+    * 518 Fixed: Mac: Unable to use Diff Dialog in UI
+    * 522 Fixed: Diff Dialog: dates dont work (OK greyed out)
+    * 533 Fixed: Dont trim leading spaces from commit messages
+    * 541 Fixed: Collapsing of root node of "Bookmarks" tree crashes RapidSVN
+
+Developer-visible changes
+
+    * 489 Support wxWidgets 2.8.0
+    * 502 Pass ritcher data in application
+    * 503 Remove compatibilty with way old Subversion API for cleaner design
+    * 536 Add a non-const getContext
+    * 537 Extended diff functionality
+    * 558 Support Subversion 1.4.6
+    * 377 Fixed: Mac: OpenSSL not supported
+    * 419 Fixed: Windows: OpenSSL was not static in Installer
+    * 485 Fixed: svn:externals long string cut off
+    * 486 Fixed: svn::Client::singleStatus returns an empty svn::Status on 
+                 remote repositories
+    * 488 Fixed: Compiler Error: OnOK is not a member of CheckoutDlg
+    * 497 Fixed: configure script uses test ==
+    * 511 Fixed: configure script doesn't find Subversion libraries on x86_64
+
+Work in progress (not completed)
+
+    * 7 Create user documentation
+    * 236 Drag and drop moves
+    * 331 Fixed: Display svn:externals properly
+
+
 Version 0.9.4 (released December 8th 2006)
 http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.4
 
