@@ -7,6 +7,62 @@
 <title>RapidSVN CHANGES</title>
 </head>
 <body>
+<h3><a id="r0.9.6" name="r0.9.6">Version 0.9.6 (released March
+3rd 2008)</a></h3>
+<a href=
+"http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.6">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.6</a>
+<p><b>User-visible changes</b></p>
+<ul>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=18">18</a>&nbsp;New Feature: Add menu shortcut to set "svn:ignore" properties</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=302">302</a>&nbsp;New Feature: Add a "relocate" option to the "switch" command</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=421">421</a>&nbsp;New Feature: Add history for Copy/Move</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=451">451</a>&nbsp;New Feature: Use date picker control for date fields on Diff dialog</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=490">490</a>&nbsp;New Feature: Support Respect SVN_ASP_DOT_NET_HACK environment setting</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=528">528</a>&nbsp;New Feature: Add option to reset "flat mode" at startup</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=532">532</a>&nbsp;New Feature: Add "Edit Conflicts" command (using a 3 file diff tool)</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=41">41</a>&nbsp;Enhancement: Icons for all cmds</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=422">422</a>&nbsp;Enhancement: Pre-fill Name for Rename Command</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=478">478</a>&nbsp;Enhancement: don't show old commit message in commit dialog</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=483">483</a>&nbsp;Enhancement: Change shortcut for Add to INSERT</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=549">549</a>&nbsp;Enhancement: Change Shortcut for Commit to CTRL+ENTER</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=563">563</a>&nbsp;Enhancement: Untangle the preferences dialog (using wxFormBuilder)</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=567">567</a>&nbsp;Enhancement: Remove ellipsis from "Remove Bookmark..."</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=324">324</a>&nbsp;Fixed: Files wont be displayed with flag "Refresh with Update"</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=452">452</a>&nbsp;Fixed: UseUrl fields on Diff Dialog are ignored</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=473">473</a>&nbsp;Fixed: view and diff from remote repositories fails</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=476">476</a>&nbsp;Fixed: Edit is enabled on folder</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=492">492</a>&nbsp;Fixed: HKCR error when trying to access repository files</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=493">493</a>&nbsp;Fixed: Get in Log dialog doesnt work for repository entries</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=495">495</a>&nbsp;Fixed: Crash: Click on empty filelist column header</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=518">518</a>&nbsp;Fixed: Mac: Unable to use Diff Dialog in UI</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=522">522</a>&nbsp;Fixed: Diff Dialog: dates dont work (OK greyed out)</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=533">533</a>&nbsp;Fixed: Dont trim leading spaces from commit messages</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=541">541</a>&nbsp;Fixed: Collapsing of root node of "Bookmarks" tree crashes RapidSVN</li>
+</ul>
+<p><b>Developer-visible changes</b></p>
+<ul>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=489">489</a>&nbsp;Support wxWidgets 2.8.0</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=502">502</a>&nbsp;Pass ritcher data in application</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=503">503</a>&nbsp;Remove compatibilty with way old Subversion API for cleaner design</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=536">536</a>&nbsp;Add a non-const getContext</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=537">537</a>&nbsp;Extended diff functionality</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=558">558</a>&nbsp;Support Subversion 1.4.6</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=377">377</a>&nbsp;Fixed: Mac: OpenSSL not supported</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=419">419</a>&nbsp;Fixed: Windows: OpenSSL was not static in Installer</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=485">485</a>&nbsp;Fixed: svn:externals long string cut off</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=486">486</a>&nbsp;Fixed: svn::Client::singleStatus returns an empty svn::Status on </li>
+                 remote repositories
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=488">488</a>&nbsp;Fixed: Compiler Error: OnOK is not a member of CheckoutDlg</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=497">497</a>&nbsp;Fixed: configure script uses test ==</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=511">511</a>&nbsp;Fixed: configure script doesn't find Subversion libraries on x86_64</li>
+</ul>
+<p><b>Work in progress (not completed)</b></p>
+<ul>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=7">7</a>&nbsp;Create user documentation</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=236">236</a>&nbsp;Drag and drop moves</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=331">331</a>&nbsp;Fixed: Display svn:externals properly</li>
+</ul>
+
 <h3><a id="r0.9.4" name="r0.9.4">Version 0.9.4 (released December
 8th 2006)</a></h3>
 <a href=
