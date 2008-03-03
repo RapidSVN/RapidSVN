@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ====================================================================
-# Copyright (c) 2002-2006 The RapidSvn Group.  All rights reserved.
+# Copyright (c) 2002-2008 The RapidSvn Group.  All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,6 +37,8 @@ find . -name "*.py" | xargs svn ps svn:eol-style native
 find . -name "*.sh" | xargs svn ps svn:eol-style native
 find . -name "*.txt" | xargs svn ps svn:eol-style native
 find . -name "*.html" | xargs svn ps svn:eol-style native
+find . -name "*.map" | xargs svn ps svn:eol-style native
+find . -name "*.md5" | xargs svn ps svn:eol-style native
 
 # images
 find . -name "*.png" | xargs svn ps svn:mime-type image/png
