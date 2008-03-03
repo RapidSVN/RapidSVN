@@ -51,7 +51,7 @@
 /** 
  * Micro version number. 
  */
-#define RAPIDSVN_VER_MICRO 5
+#define RAPIDSVN_VER_MICRO 6
 
 /**
  * Patch string. Can be empty
@@ -61,7 +61,7 @@
 /**
  * Combined version string
  */
-#define RAPIDSVN_VER_STR "0.9.5"
+#define RAPIDSVN_VER_STR "0.9.6"
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
