@@ -1,3 +1,2 @@
-base referer
-rect $client_8hpp.html 161,6 249,30
-rect $wc_8hpp.html 171,54 240,78
+<area shape="rect" href="$client_8hpp.html" title="client.hpp" alt="" coords="5,84,88,111">
+<area shape="rect" href="$wc_8hpp.html" title="wc.hpp" alt="" coords="112,84,179,111">

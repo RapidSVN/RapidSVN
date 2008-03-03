@@ -1,3 +1,2 @@
-base referer
-rect $client_8hpp.html 147,6 235,30
-rect $property_8hpp.html 138,54 244,78
+<area shape="rect" href="$client_8hpp.html" title="client.hpp" alt="" coords="5,84,88,111">
+<area shape="rect" href="$property_8hpp.html" title="property.hpp" alt="" coords="112,84,216,111">

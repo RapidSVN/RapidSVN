@@ -17,6 +17,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::DirEntry"><param name="Local" value="classsvn_1_1DirEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Entry"><param name="Local" value="classsvn_1_1Entry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Exception"><param name="Local" value="classsvn_1_1Exception.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Info"><param name="Local" value="classsvn_1_1Info.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::LogChangePathEntry"><param name="Local" value="structsvn_1_1LogChangePathEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::LogEntry"><param name="Local" value="structsvn_1_1LogEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Path"><param name="Local" value="classsvn_1_1Path.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -25,6 +26,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::PropertyEntry"><param name="Local" value="structsvn_1_1PropertyEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Revision"><param name="Local" value="classsvn_1_1Revision.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Status"><param name="Local" value="classsvn_1_1Status.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::StatusSel"><param name="Local" value="classsvn_1_1StatusSel.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Targets"><param name="Local" value="classsvn_1_1Targets.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Url"><param name="Local" value="classsvn_1_1Url.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Wc"><param name="Local" value="classsvn_1_1Wc.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -44,6 +46,7 @@
     <UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::ClientException"><param name="Local" value="classsvn_1_1ClientException.html"><param name="ImageNumber" value="11"></OBJECT>
     </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Info"><param name="Local" value="classsvn_1_1Info.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::LogChangePathEntry"><param name="Local" value="structsvn_1_1LogChangePathEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::LogEntry"><param name="Local" value="structsvn_1_1LogEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Path"><param name="Local" value="classsvn_1_1Path.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -52,6 +55,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::PropertyEntry"><param name="Local" value="structsvn_1_1PropertyEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Revision"><param name="Local" value="classsvn_1_1Revision.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Status"><param name="Local" value="classsvn_1_1Status.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::StatusSel"><param name="Local" value="classsvn_1_1StatusSel.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Targets"><param name="Local" value="classsvn_1_1Targets.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Url"><param name="Local" value="classsvn_1_1Url.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Wc"><param name="Local" value="classsvn_1_1Wc.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -67,7 +71,6 @@
   <UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="annotate_line.hpp"><param name="Local" value="annotate__line_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="apr.hpp"><param name="Local" value="apr_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Name" value="check.hpp"><param name="Local" value="check_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="client.hpp"><param name="Local" value="client_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="context.hpp"><param name="Local" value="context_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="context_listener.hpp"><param name="Local" value="context__listener_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -75,17 +78,18 @@
   <LI><OBJECT type="text/sitemap"><param name="Name" value="dirent.hpp"><param name="Local" value="dirent_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="entry.hpp"><param name="Local" value="entry_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="exception.hpp"><param name="Local" value="exception_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="info.hpp"><param name="Local" value="info_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="log_entry.hpp"><param name="Local" value="log__entry_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="path.hpp"><param name="Local" value="path_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="pool.hpp"><param name="Local" value="pool_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="property.hpp"><param name="Local" value="property_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="revision.hpp"><param name="Local" value="revision_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="status.hpp"><param name="Local" value="status_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="status_selection.hpp"><param name="Local" value="status__selection_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="targets.hpp"><param name="Local" value="targets_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="url.hpp"><param name="Local" value="url_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="wc.hpp"><param name="Local" value="wc_8hpp.html"><param name="ImageNumber" value="11"></OBJECT>
   </UL>
-<LI><OBJECT type="text/sitemap"><param name="Name" value="Globals"><param name="Local" value="globals.html"><param name="ImageNumber" value="11"></OBJECT>
 <LI><OBJECT type="text/sitemap"><param name="Name" value="Related Pages"><param name="Local" value="pages.html"><param name="ImageNumber" value="1"></OBJECT>
   <UL>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="Deprecated List"><param name="Local" value="deprecated.html"><param name="ImageNumber" value="11"></OBJECT>
