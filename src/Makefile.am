@@ -2,8 +2,10 @@ SUBDIRS=svncpp
 
 DIST_SUBDIRS=${SUBDIRS} locale res tests
 
-noinst_HEADERS=${wildcard *.hpp}
+noinst_HEADERS=${wildcard *.hpp} ${wildcard *.h}
 bin_PROGRAMS=rapidsvn
+
+EXTRA_DIST=${wildcard *.fbp}
 
 rapidsvn_SOURCES= \
 	about_dlg.cpp \
