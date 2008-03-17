@@ -27,7 +27,7 @@
 #include "test_path.hpp"
 
 // ansi c lib
-#include <string>
+#include <cstring>
 #include <stdio.h>
 
 
