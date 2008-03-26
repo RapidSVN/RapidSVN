@@ -144,18 +144,17 @@ struct FolderBrowser::Data
 private:
   svn::Context * singleContext;
 public:
-  wxWindow * window;
   svn::ContextListener * listener;
+  bool useAuthCache;
   wxTreeCtrl* treeCtrl;
   wxTreeItemId rootId;
   wxImageList* imageList;
   BookmarkHashMap bookmarks;
   svn::Context defaultContext;
-  bool useAuthCache;
   svn::StatusSel statusSel;
 
-  Data (wxWindow * window, const wxPoint & pos, const wxSize & size)
-    : singleContext (0), window (window), listener (0), useAuthCache (true)
+  Data (wxTreeCtrl * treeCtrl_)
+    : singleContext (0), listener (0), useAuthCache (true), treeCtrl (treeCtrl_)
   {
     imageList = new wxImageList (16, 16, TRUE);
     imageList->Add (EMBEDDED_BITMAP(computer_png));
@@ -170,8 +169,6 @@ public:
     imageList->Add (EMBEDDED_BITMAP(externals_folder_png));
     imageList->Add (EMBEDDED_BITMAP(externals_open_folder_png));
 
-    treeCtrl = new wxTreeCtrl (window, -1, pos, size,
-                               wxTR_HAS_BUTTONS|wxTR_SINGLE);
     treeCtrl->AssignImageList (imageList);
 
     FolderItemData* data = new FolderItemData (FOLDER_TYPE_BOOKMARKS);
@@ -354,7 +351,7 @@ public:
     frame->TrimDisabledMenuItems (menu);
 
     // show menu
-    window->PopupMenu (&menu, pt);
+    treeCtrl->PopupMenu (&menu, pt);
   }
 
   bool
@@ -904,11 +901,10 @@ public:
   }
 };
 
-BEGIN_EVENT_TABLE (FolderBrowser, wxControl)
+BEGIN_EVENT_TABLE (FolderBrowser, wxTreeCtrl)
   EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
   EVT_TREE_ITEM_COLLAPSED (-1, FolderBrowser::OnCollapseItem)
   EVT_TREE_KEY_DOWN (-1, FolderBrowser::OnTreeKeyDown)
-  EVT_SIZE (FolderBrowser::OnSize)
   EVT_CONTEXT_MENU (FolderBrowser::OnContextMenu)
   EVT_TREE_BEGIN_DRAG (-1, FolderBrowser::OnBeginDrag)
 END_EVENT_TABLE ()
@@ -916,9 +912,9 @@ END_EVENT_TABLE ()
 FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
                               const wxPoint & pos, const wxSize & size,
                               const wxString & name)
-  : wxControl (parent, id, pos, size, wxCLIP_CHILDREN, wxDefaultValidator, name)
+  : wxTreeCtrl (parent, id, pos, size, wxTR_HAS_BUTTONS | wxTR_SINGLE, wxDefaultValidator, name)
 {
-  m = new Data (this, pos, size);
+  m = new Data (this);
 }
 
 FolderBrowser::~FolderBrowser ()
@@ -987,7 +983,7 @@ FolderBrowser::GetPath () const
 }
 
 const FolderItemData *
-FolderBrowser::GetSelection () const
+FolderBrowser::GetSelectedItemData () const
 {
   return m->GetSelection ();
 }
@@ -996,16 +992,6 @@ const FolderItemData *
 FolderBrowser::HitTest (const wxPoint & point) const
 {
   return m->HitTest (point);
-}
-
-void
-FolderBrowser::OnSize (wxSizeEvent & WXUNUSED (event))
-{
-  if(m->treeCtrl)
-  {
-    wxSize size = GetClientSize ();
-    m->treeCtrl->SetSize (0, 0, size.x, size.y);
-  }
 }
 
 void

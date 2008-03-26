@@ -40,7 +40,7 @@ namespace svn
   class StatusSel;
 };
 
-class FolderBrowser : public wxControl
+class FolderBrowser : public wxTreeCtrl
 {
 public:
   FolderBrowser (wxWindow * parent,  const wxWindowID id = -1,
@@ -82,7 +82,7 @@ public:
    * @return context of selection
    */
   const FolderItemData * 
-  GetSelection () const;
+  GetSelectedItemData () const;
 
   /** 
    * the selected @ref Status instances
@@ -109,12 +109,17 @@ public:
   GetContext ();
 
   /**
-   * selects @a path in the current folder.
-   * If the tree leaf is closed it will be opened.
+   * Tries to select @a path in the current selected bookmark.
+   * If it cannot be found in there (because it is deeper in
+   * the folder hierarchy) then we try to open folder nodes
+   * until we find the path. If the path as whole is not found
+   * (folder removed or deleted) we open up the directory structure
+   * as close as possible.
    *
-   * @param path path in the current folder
-   * @retval true on success
-   * @retval false if entry was not found
+   * If @a path is an empty string, select the root
+   *
+   * @param path
+   * @retval true selection successful
    */
   bool
   SelectFolder (const wxString & path);
@@ -228,7 +233,6 @@ private:
 private:
   DECLARE_EVENT_TABLE ()
 
-  void OnSize (wxSizeEvent & event);
   void OnTreeKeyDown (wxTreeEvent & event);
   void OnExpandItem (wxTreeEvent & event);
   void OnCollapseItem (wxTreeEvent & event);
