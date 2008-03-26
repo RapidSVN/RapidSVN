@@ -67,7 +67,7 @@ FileListCtrlDropTarget::GetDestinationPath (const wxPoint & point)
   if (path.IsEmpty ())
   {
     // Get the path from the folder browser
-    path = m_browser->GetSelection ()->getPath ();
+    path = m_browser->GetSelectedItemData ()->getPath ();
   }
 
   return path;
