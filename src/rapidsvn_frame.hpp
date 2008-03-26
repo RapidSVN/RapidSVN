@@ -125,7 +125,8 @@ private:
   void OnTestNewWxString (wxCommandEvent & event);
   void OnTestListener (wxCommandEvent & event);
   void OnTestCheckout (wxCommandEvent & event);
-  void PrintTimeMeasurements (apr_time_t start, apr_time_t end, const wxString & name);
+  void PrintTimeMeasurements (apr_time_t start, apr_time_t end, 
+                              const wxString & name);
 
   // toolbar events
   void OnToolEnter (wxCommandEvent & event);
@@ -134,16 +135,26 @@ private:
   void OnActionEvent (wxCommandEvent & event);
   void OnListenerEvent (wxCommandEvent & event);
 
-  // Folder Browser
+  // Bookmarks 
   void AddWcBookmark ();
   void AddRepoBookmark ();
   void RemoveBookmark ();
   void EditBookmark ();
-  void OnFolderBrowserSelChanged (wxTreeEvent & event);
-  void OnFolderBrowserKeyDown (wxTreeEvent & event);
-  void OnFileListSelected (wxListEvent & event);
+
+  // Authentication 
   void OnLogin (wxCommandEvent & event);
   void OnLogout (wxCommandEvent & event);
+
+  // Folder Browser event handlers
+  void OnFolderBrowserSelChanged (wxTreeEvent & event);
+  void OnFolderBrowserKeyDown (wxTreeEvent & event);
+  void OnFolderBrowserFocused (wxFocusEvent & event);
+
+  // File List event handles
+  void OnFileListSelected (wxListEvent & event);
+  void OnFileListFocused (wxFocusEvent & event);
+
+  
 
   /**
    * Invoke the default action on the currently selected item(s)
