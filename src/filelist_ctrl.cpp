@@ -950,6 +950,7 @@ BEGIN_EVENT_TABLE (FileListCtrl, wxListCtrl)
   EVT_LIST_COL_END_DRAG (FILELIST_CTRL, FileListCtrl::OnColumnEndDrag)
   EVT_LIST_BEGIN_DRAG (FILELIST_CTRL, FileListCtrl::OnBeginDrag)
   EVT_CONTEXT_MENU (FileListCtrl::OnContextMenu)
+  EVT_SET_FOCUS (FileListCtrl::OnSetFocus)
 END_EVENT_TABLE ()
 
 FileListCtrl::FileListCtrl (wxWindow * parent, const wxWindowID id,
@@ -1754,6 +1755,16 @@ FileListCtrl::OnBeginDrag (wxListEvent & event)
    */
   dropSource.DoDragDrop (true);
 }
+
+void 
+FileListCtrl::OnSetFocus (wxFocusEvent & event)
+{
+  // forward this event to the parent
+  wxCommandEvent newEvent (wxEVT_COMMAND_MENU_SELECTED, event.GetId ());
+  wxPostEvent (GetParent (), newEvent);
+
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

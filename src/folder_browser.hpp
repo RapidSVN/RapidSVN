@@ -238,6 +238,7 @@ private:
   void OnCollapseItem (wxTreeEvent & event);
   void OnContextMenu (wxContextMenuEvent & event);
   void OnBeginDrag (wxTreeEvent & event);
+  void OnSetFocus (wxFocusEvent & event);
 };
 
 #endif

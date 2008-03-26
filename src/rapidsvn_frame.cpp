@@ -124,9 +124,9 @@ const static wxChar TraceMisc[] = wxT("tracemisc");
 
 // Platform specific constants.
 #ifdef __WXMSW__
-  const static int SPLITTER_STYLE = wxSP_FULLSASH | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
+const static int SPLITTER_STYLE = wxSP_FULLSASH | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
 #else
-  const static int SPLITTER_STYLE = wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
+const static int SPLITTER_STYLE = wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
 #endif
 
 /**
@@ -737,7 +737,10 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
 
   EVT_MENU_RANGE (LISTENER_MIN, LISTENER_MAX, RapidSvnFrame::OnListenerEvent)
 
-  EVT_SIZE(RapidSvnFrame::OnSize)
+  EVT_SIZE (RapidSvnFrame::OnSize)
+
+  EVT_MENU (FOLDER_BROWSER, RapidSvnFrame::OnFocusChanged)
+  EVT_MENU (FILELIST_CTRL, RapidSvnFrame::OnFocusChanged)
 END_EVENT_TABLE ()
 
 /** class implementation **/
@@ -1997,7 +2000,7 @@ RapidSvnFrame::EditBookmark ()
 {
   wxASSERT (m->folderBrowser);
 
-  const FolderItemData * bookmark = m->folderBrowser->GetSelection ();
+  const FolderItemData * bookmark = m->folderBrowser->GetSelectedItemData ();
 
   // if nothing is selected, or the wrong type,
   // just exit (this should be handled by the routine
@@ -2246,6 +2249,25 @@ RapidSvnFrame::OnSize (wxSizeEvent & sizeEvent)
 
   sizeEvent.Skip ();
 }
+
+void 
+RapidSvnFrame::OnFocusChanged (wxCommandEvent & event)
+{
+  switch (event.GetId ())
+  {
+  case FOLDER_BROWSER:
+    SetActivePane (ACTIVEPANE_FOLDER_BROWSER);
+    break;
+    
+  case FILELIST_CTRL:
+    SetActivePane (ACTIVEPANE_FILELIST);
+    break;
+
+  default:
+    ; // unknown/not interesting
+  }
+}
+  
 
 /* -----------------------------------------------------------------
  * local variables:

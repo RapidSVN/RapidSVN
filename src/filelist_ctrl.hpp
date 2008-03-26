@@ -279,6 +279,7 @@ private:
   void OnColumnEndDrag (wxListEvent & event);
   void OnContextMenu (wxContextMenuEvent & event);
   void OnBeginDrag (wxListEvent & event);
+  void OnSetFocus (wxFocusEvent & event);
 
   void CreateLables (const svn::Status & status, const svn::Path & basePath);
 

@@ -82,6 +82,7 @@ private:
   RapidSvnFrame (const RapidSvnFrame &);
 
   void OnActivate (wxActivateEvent & event);
+  void OnFocusChanged (wxCommandEvent & event);
 
   // File menu
   void OnAddWcBookmark (wxCommandEvent & event);
@@ -148,11 +149,9 @@ private:
   // Folder Browser event handlers
   void OnFolderBrowserSelChanged (wxTreeEvent & event);
   void OnFolderBrowserKeyDown (wxTreeEvent & event);
-  void OnFolderBrowserFocused (wxFocusEvent & event);
 
   // File List event handles
   void OnFileListSelected (wxListEvent & event);
-  void OnFileListFocused (wxFocusEvent & event);
 
   
 

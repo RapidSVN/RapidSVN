@@ -907,6 +907,7 @@ BEGIN_EVENT_TABLE (FolderBrowser, wxTreeCtrl)
   EVT_TREE_KEY_DOWN (-1, FolderBrowser::OnTreeKeyDown)
   EVT_CONTEXT_MENU (FolderBrowser::OnContextMenu)
   EVT_TREE_BEGIN_DRAG (-1, FolderBrowser::OnBeginDrag)
+  EVT_SET_FOCUS (FolderBrowser::OnSetFocus)
 END_EVENT_TABLE ()
 
 FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
@@ -1202,6 +1203,15 @@ FolderBrowser::GetStatusSel () const
   }
 
   return m->statusSel;
+}
+
+
+void
+FolderBrowser::OnSetFocus (wxFocusEvent & event)
+{
+  // forward this event to the parent
+  wxCommandEvent newEvent (wxEVT_COMMAND_MENU_SELECTED, event.GetId ());
+  wxPostEvent (GetParent (), newEvent);
 }
 
 /* -----------------------------------------------------------------
