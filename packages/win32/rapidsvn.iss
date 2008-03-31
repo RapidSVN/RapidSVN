@@ -59,7 +59,6 @@ Source: "..\..\src\locale\ja\rapidsvn.mo"; DestDir: "{app}\bin\locale\ja"; Flags
 Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\GPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
-Source: "..\..\LGPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\FDL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 
 ; Microsoft Runtime DLL
