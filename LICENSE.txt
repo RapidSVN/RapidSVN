@@ -9,15 +9,14 @@ information on the RapidSvn Group, please see
 <http://rapidsvn.tigris.org/>.
 
 RapidSVN is licensed under the GNU General Public License.
-Svncpp is licensed under the GNU Lesser General Public License.
 All documentation included in this distribution and on the website
 is licensed under the GNU Free Documentation License.
 
 
-=== RapidSVN: GNU General Public License ===
-This program is free software; you can redistribute it and/or modify
+=== Source Code: GNU General Public License ===
+This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
+the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -26,26 +25,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program (in the file GPL.txt); if not, write to 
-the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, 
-Boston, MA  02110-1301  USA
-
-
-=== Svncpp: GNU Lesser General Public License ===
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library (in the file LGPL.txt); if not, 
-write to the Free Software Foundation, Inc., 51 Franklin St, 
-Fifth Floor, Boston, MA  02110-1301  USA
+along with this program (in the file GPL.txt.  
+If not, see <http://www.gnu.org/licenses/>.
 
 
 === Documentation: GNU Free Documentation License ===
