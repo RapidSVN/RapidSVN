@@ -1763,6 +1763,8 @@ FileListCtrl::OnSetFocus (wxFocusEvent & event)
   wxCommandEvent newEvent (wxEVT_COMMAND_MENU_SELECTED, event.GetId ());
   wxPostEvent (GetParent (), newEvent);
 
+  // don't stop default process
+  event.Skip();
 }
 
 

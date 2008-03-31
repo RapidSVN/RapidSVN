@@ -1212,6 +1212,9 @@ FolderBrowser::OnSetFocus (wxFocusEvent & event)
   // forward this event to the parent
   wxCommandEvent newEvent (wxEVT_COMMAND_MENU_SELECTED, event.GetId ());
   wxPostEvent (GetParent (), newEvent);
+
+  // don't stop default process
+  event.Skip();
 }
 
 /* -----------------------------------------------------------------
