@@ -34,8 +34,8 @@
 #pragma warning (disable: 4290)
 #endif
 
-// Ignore MSVC 7,8 compiler warnings
-#if defined (_MSC_VER) && _MSC_VER > 1200 && _MSC_VER <= 1400
+// Ignore MSVC 7,8,9 compiler warnings
+#if defined (_MSC_VER) && _MSC_VER > 1200 && _MSC_VER <= 1500
 // C++ exception specification
 #pragma warning (disable: 4290)
 #endif
