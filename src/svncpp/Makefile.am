@@ -3,7 +3,7 @@ EXTRA_DIST=svncpp.dsp
 
 lib_LTLIBRARIES=libsvncpp.la
 
-libsvncpp_la_LDFLAGS=-version-info 1:0:0
+libsvncpp_la_LDFLAGS=-version-info 2:0:0
 libsvncpp_la_SOURCES= \
 	apr.cpp \
 	client.cpp \
