@@ -341,23 +341,19 @@ wxString
 FormatDateTime (apr_time_t date, wxString fmt)
 {
   wxString wxstrtime;
-
-  if (date == 0)
-    return wxstrtime;
-
-  apr_time_exp_t exp_time;
-  char timestr[80];
-
-  apr_time_exp_lt (&exp_time, date);
-  apr_size_t size;
-  apr_status_t apr_err =
-    apr_strftime (timestr, &size, sizeof (timestr),
-                  "%x %X", &exp_time);
-
-  /* if that failed, just leave the string empty */
+  apr_time_exp_t te;
+  apr_status_t apr_err = apr_time_exp_lt(&te, date);
   if (!apr_err)
-    wxstrtime = wxString::FromAscii(timestr)  ;
-
+  {
+    wxDateTime wxdate = wxDateTime(
+      (wxDateTime::wxDateTime_t)te.tm_mday,
+	  (wxDateTime::Month)te.tm_mon,
+	  (int)te.tm_year + 1900,
+      (wxDateTime::wxDateTime_t)te.tm_hour,
+	  (wxDateTime::wxDateTime_t)te.tm_min,
+	  (wxDateTime::wxDateTime_t)te.tm_sec);
+    wxstrtime = wxdate.Format(fmt);
+  }
   return wxstrtime;
 }
 

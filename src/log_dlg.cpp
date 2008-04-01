@@ -183,9 +183,6 @@ private:
 
       rev.Printf (wxT("%ld"), (long) entry.revision);
 
-      //TODO perform date formatting. but dont use
-      //subversion but wxDateTime
-      //wxString date (entry.date.c_str ());
       InsertItem (index, rev);
       SetItem (index, 1, Utf8ToLocal (entry.author.c_str ()));
       SetItem (index, 2, dateStr);
