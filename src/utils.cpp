@@ -341,6 +341,9 @@ wxString
 FormatDateTime (apr_time_t date, wxString fmt)
 {
   wxString wxstrtime;
+  if(date == 0){
+	return wxstrtime;
+  }
   apr_time_exp_t te;
   apr_status_t apr_err = apr_time_exp_lt(&te, date);
   if (!apr_err)
