@@ -45,6 +45,7 @@ VERSION_HPP_FILE = "src/version.hpp"
 RAPIDSVN_ISS_FILE = "packages/win32/rapidsvn.iss"
 DEBIAN_FILES_FILE = "packages/debian/files"
 MAKE_OSX_BUNDLE_FILE = "packages/osx/make_osx_bundle.sh"
+SVNCPP_VERSION_HPP_FILE = "include/svncpp/version.hpp"
 
 class Version:
     def __init__(self, filename):
@@ -54,6 +55,7 @@ class Version:
         self.patch = ""
         self.str = ""
         self.milestone = ""
+	self.number = 0x000000
 
         self.readFromFile(filename)
         self.year = date.today().year
@@ -70,6 +72,10 @@ class Version:
         if len(self.patch) > 0:
           self.str += "-" + self.patch;
         self.milestone = version.attributes["milestone"].value
+	self.number = (int('0' + self.major, 10) << 24) + \
+            (int(self.minor, 10) << 16) + \
+            (int('0' + self.micro, 10) << 8) + \
+            int('0' + self.patch, 10)
 
 def replace(fname, regex, newval, what):
     s = open(fname, "r").read()
@@ -177,6 +183,11 @@ class VersionChecker:
                 "DISKIMAGE=RapidSVN-%s" % (self.version.str), \
                 "DISKIMAGE")
 
+    def checkSvncppVersionHpp(self):
+	replace(SVNCPP_VERSION_HPP_FILE, 'SVNCPP_VERSION .*', \
+            "SVNCPP_VERSION 0x%08x" % self.version.number, \
+            'SVNCPP_VERSION')
+
     def run(self):
         print "Version information:"
         print "  Major: ", self.version.major
@@ -184,6 +195,7 @@ class VersionChecker:
         print "  Micro: ", self.version.micro
         print "  Patch: ", self.version.patch
         print "  Str:   ", self.version.str
+        print "  Number: 0x%08x" % self.version.number
         print "  Milestone: ", self.version.milestone
 
         self.checkConfigureIn()
@@ -191,6 +203,7 @@ class VersionChecker:
         self.checkRapidsvnIss()
         self.checkDebianFiles()
         self.checkMakeOsXBundle()
+        self.checkSvncppVersionHpp()
 
 if __name__ == "__main__":
     vc = VersionChecker()
