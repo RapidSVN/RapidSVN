@@ -1001,6 +1001,7 @@ FileListCtrl::RefreshFileList ()
   // store scroll position
   //int scrollPos = GetScrollPos (wxVERTICAL);
   long topItem = GetTopItem ();
+  long focusedItem = GetFocusedItem ();
   // freeze update to speed up processing.
   Freeze ();
   // delete all the items in the list to display the new ones
@@ -1060,6 +1061,8 @@ FileListCtrl::RefreshFileList ()
   GetItemRect (topItem, ir);
   GetItemRect (GetTopItem (), cr);
   ScrollList (0, ir.GetTop () - cr.GetTop ());
+
+  Focus(focusedItem);
 
   wxLogStatus (_("Ready"),"");
 }

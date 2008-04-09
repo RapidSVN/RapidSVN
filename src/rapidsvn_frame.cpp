@@ -1113,6 +1113,7 @@ RapidSvnFrame::OnActivate (wxActivateEvent & event)
   // now we refresh every time - but only for
   // working copies and if NOT flat
   // and NOT if another action is running.
+  wxFrame::OnActivate(event);
   if (event.GetActive ())
   {
     if (m->updateAfterActivate || 
