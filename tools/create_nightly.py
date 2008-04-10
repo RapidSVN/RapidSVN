@@ -32,12 +32,16 @@ import sys
 import re
 import glob
 import msgfmt
+import platform
 from subprocess import Popen, PIPE
 
 FILENAME="last-successful-revision.txt"
 
-def run(cmd, args, silent=False):
-  p=Popen("%s %s" % (cmd, args), stdout=PIPE)
+def run(cmd, args=[], silent=False):
+  cmd_args=[cmd]
+  cmd_args.extend(args)
+  #print cmd_args
+  p=Popen(cmd_args, stdout=PIPE)
   t=p.communicate()[0]
 
   if not silent:
@@ -57,13 +61,13 @@ def readLastSuccessfulRevision():
     return ""
     
 def readCurrentRevision():
-  t=run("svn", "info .", 1)
+  t=run("svn", ["info",  "."], 1)
   m=re.search("Revision: ([0-9]+)",t)
   return m.group(1)
   
 def buildApplication():
-  print "Rebuild rapidsvn"
-  run("msdev", "rapidsvn.dsw /MAKE ALL /REBUILD")
+  print "Rebuild rapidsvn (using msdev"
+  run('msdev', ['rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'])
   
   
 def buildMessages():
@@ -93,9 +97,9 @@ def buildInstaller():
   for n in x: os.unlink(n)
 
   print "Build installer"
-  run("cmd.exe", "/c FetchFiles.bat")
+  run('cmd.exe', ['/c', 'FetchFiles.bat'])
   innosetup=getEnviron("INNOSETUP")
-  run("\"%s\iscc.exe\"" % innosetup, "rapidsvn.iss")
+  run("\"%s\iscc.exe\"" % innosetup, ['rapidsvn.iss'])
   
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
@@ -110,20 +114,68 @@ def buildInstaller():
   print "The new package is: %s" % (pkg)
   os.chdir("../..")
   return "packages/win32/%s" % (pkg)
+
+def makeApplication():
+  print 'Rebuild rapidsvn (using make)'
+  if not os.path.isfile('config.status'):
+    print 'You have to run "configure" at least once!'
+    sys.exit(1)
+  run('./autogen.sh', silent=True)
+  run('./config.status', silent=True)
+  run('make', ['clean'], silent=True)
+  run('make', ['all'], silent=True)
+
+def buildMacDiskImage():
+  print 'Build Mac Disk Image'
+  os.chdir('packages/osx')
+  run('./make_osx_bundle.sh', silent=True)
+
+  #Get the name of the package and rename it
+  n=glob.glob("RapidSVN*dmg")
+  if not len(n):
+    print "Hm, seems like we have a build error: aborting"
+    sys.exit(1)
+  old=n[0]
+  e=os.path.splitext(old)
+  print e
+  pkg="%s-%s%s" % (e[0],currentRevision,e[1])
+  os.rename(old, pkg)
+  print "The new package is: %s" % (pkg)
+  os.chdir("../..")
+  return "packages/osx/%s" % (pkg)
   
 def uploadInstaller(pkg):
-  putty=getEnviron("PUTTY")
-  url="rapidsvn_ftp@rapidsvn.org:/httpdocs/download/nightly/win32"
-  run("\"%s/pscp.exe\"" % (putty),  "%s %s" % (pkg, url))
+  dir=''
+  scp='scp'
+  if platform.system() == 'Windows':
+    putty=getEnviron("PUTTY")
+    scp="\"%s/pscp.exe\"" % (putty)
+    dir='win32'
+  elif platform.system() == 'Darwin':
+    scp='scp'
+    dir='osx'
+    
+  url="rapidsvn_ftp@rapidsvn.org:/httpdocs/download/nightly/%s" % (dir)
+  run(scp,  [pkg, url])
+    
 
 if __name__ == '__main__':
   # Check whether we are in the project dir
   if not os.path.exists("HACKING.txt"):
     print "Wrong directory to start this script!"
     sys.exit(1)
-    
+
+  system=platform.system()
+  if system=='Windows':
+    print 'Nightly build for Windows'
+  elif system=='Darwin':
+    print 'Nightly build for Mac OS/X'
+  else:
+    print "Nighlty build not supported for %d" % system
+    sys.exit(1)
+
   print "Update working copy"
-  run("svn", "-q up")
+  run('svn', ['-q', 'up'])
 
   # Now decide whether or not we have to create a nightly build
   lastSuccessfulRevision=readLastSuccessfulRevision()
@@ -135,9 +187,15 @@ if __name__ == '__main__':
     print "No newer revision detected, aborting (last successful=%s, current=%s)" % (lastSuccessfulRevision, currentRevision)
     sys.exit(0)
     
-  buildApplication()
   buildMessages()
-  pkg=buildInstaller()
+  
+  pkg = ''
+  if system == 'Darwin':
+    makeApplication()
+    pkg=buildMacDiskImage()
+  else:   
+    buildApplication()
+    pkg=buildInstaller()
   uploadInstaller(pkg)
   
   #remember revision
