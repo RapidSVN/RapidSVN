@@ -7,12 +7,13 @@
 DISKIMAGE=RapidSVN-0.9.7
 DISKIMAGE_FILE=$DISKIMAGE.dmg
 test -e RapidSVN.app && rm -rf RapidSVN.app
-test -e $DISKIMAGE_FILE && rm -f $DISKIMAGE_FILE
+rm *.dmg
 
 # Create the bundle
 BUNDLEDIR=RapidSVN.app/Contents
 mkdir -p $BUNDLEDIR/MacOS
 mkdir -p $BUNDLEDIR/Resources
+
 cp ../../src/rapidsvn $BUNDLEDIR/MacOS/
 strip $BUNDLEDIR/MacOS/rapidsvn
 cp rapidsvn.icns $BUNDLEDIR/Resources/
