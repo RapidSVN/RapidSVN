@@ -186,9 +186,48 @@ private:
       InsertItem (index, rev);
       SetItem (index, 1, Utf8ToLocal (entry.author.c_str ()));
       SetItem (index, 2, dateStr);
-      SetItem (index, 3, Utf8ToLocal (entry.message.c_str ()));
+      SetItem (index, 3, NewLinesToSpaces (Utf8ToLocal (entry.message.c_str ())));
       index++;
     }
+  }
+
+  wxString 
+  NewLinesToSpaces (const wxString& str)
+  {
+    /*
+    wxString result = str;
+    result.Replace (wxT("\n"), wxT(" "));
+    return result;
+    */
+
+    wxString result;
+    if (str.Length () == 0)
+    {
+      return result;
+    }
+
+    result.Alloc (str.Length ());
+    wxChar last = 0;
+
+    for (size_t idx = 0; idx < str.Length (); idx++)
+    {
+      switch (str[idx])
+      {
+      case wxT('\r'):
+      case wxT('\n'):
+        if (last != wxT(' '))
+        {
+          result += wxT(' ');
+        }
+        break;
+
+      default:
+        result += str[idx];
+        break;
+      }
+    }
+
+    return result;
   }
 };
 
