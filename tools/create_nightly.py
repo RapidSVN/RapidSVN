@@ -125,6 +125,11 @@ def makeApplication():
   run('make', ['clean'], silent=True)
   run('make', ['all'], silent=True)
 
+  n=glob.glob('src/rapidsvn')
+  if not len(n):
+    print "Hm, seems like we have a build error: aborting"
+    sys.exit(1)
+
 def buildMacDiskImage():
   print 'Build Mac Disk Image'
   os.chdir('packages/osx')
