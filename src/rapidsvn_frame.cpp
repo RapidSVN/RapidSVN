@@ -386,6 +386,11 @@ public:
 
     toolBar->EnableTool (ID_Stop, running);
     MenuBar->Enable (ID_Stop, running);
+
+    if (folderBrowser)
+      folderBrowser->Enable (!running);
+    if (listCtrl)
+      listCtrl->Enable (!running);
   }
 
   bool
@@ -1346,6 +1351,11 @@ RapidSvnFrame::OnInfo (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnUpdateCommand (wxUpdateUIEvent & updateUIEvent)
 {
+  if (m->IsRunning()) {
+    updateUIEvent.Enable(false);
+    return;
+  }
+
   try
   {
     updateUIEvent.Enable (
