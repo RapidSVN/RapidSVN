@@ -337,7 +337,90 @@ Contents:
         Now open the Innosetup project and compile the installer:
           C:\RapidSVN\packages\win32\rapidsvn.iss
 
-
+
+3.2     Building on Windows using Cygwin and Gtk as X11 application
+
+        Notation: This build is for only development. It would generate
+        too many non-standard dependencies on your executable binary.
+
+3.2.1   Installing All dependencies
+
+        Install all below tools and dependencies via setup.exe of Cygwin.
+        
+        gcc
+        g++
+        make
+        libtool
+        autoconf
+        automake
+        pkg-config
+        
+        xorg-x11-devel
+        gtk2-x11-devel
+        glib2-devel
+        pango-devel
+        atk-devel
+        zlib
+        png-devel
+        libjpeg-devel
+        tiff-devel
+        
+        libapr1
+        libaprutil1
+        libiconv2-devel
+        libexpat0
+        openssl-devel
+        libneon26
+        subversion-devel
+        
+        All other dependencies will be automaticaly selected.
+
+3.2.4   Building wxWidgets as wxGtk
+
+        Extract wxWidgets source package. You should build it as wxGtk
+        which requires X11 server. Because wxMSW(using win32api) would
+        conflict with exsisting your Subversion which configured for
+        Cygwin.
+        
+        If you are using version 2.8.7 or lesser you might need to patch.
+        http://svn.wxwidgets.org/viewvc/wx/wxWidgets/branches/WX_2_8_BRANCH/src/unix/displayx11.cpp?r1=49879&r2=50143
+        
+         mkdir build/cygwin-gtk
+         cd build/cygwin-gtk
+         ../../configure --with-gtk=2
+         make
+         make install
+        
+        wxGtk would be installed into /usr/local by default with name of
+        ansi-release. But you can cofigure as you like.
+        
+        After installation, dlls are generated in the same directory of
+        libraries. You should move them to your bin directory.
+        
+         mv /usr/local/lib/cygwx*.dll /usr/local/bin
+        
+3.2.4   Building and installing RapidSVN
+
+        ...is same as Linux/Unix section. See 2.2 - 2.4.
+        
+        If your configure script failed, retry like:
+        ./configure --with-apr-confg=apr-1-config --with-apu-config=apu-1-config
+
+3.2.4   Using or testing RapidSVN
+
+        X11 server is required before starting RapidSVN. (Xming is
+        recommended instead of CygwinX.)
+        
+        And DISPLAY environment variable should be set to connect to X11
+        server form X client.
+        
+         DISPLAY=localhost:0
+         export DISPLAY
+        
+        Well, raunch RapidSVN now.
+        
+         src/rapidsvn.exe&
+
 4       Building on Mac OS/X
 
         Basically, building on Mac OS/X the same mechanisms are used 
