@@ -289,6 +289,11 @@ public:
   void
   ShowMenu (wxPoint & pt)
   {
+    // select right-clicked item
+    const wxTreeItemId id = treeCtrl->HitTest(pt);
+    if(id.IsOk () && !(id == treeCtrl->GetSelection ()))
+      treeCtrl->SelectItem (id);
+
     const FolderItemData * data = GetSelection ();
     if (!data)
       return;
