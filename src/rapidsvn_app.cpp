@@ -71,6 +71,7 @@ bool RapidSvnApp::OnInit ()
   if (wxGetEnv (wxT("SVN_ASP_DOT_NET_HACK"), 0))
     svn::Wc::setAdmDir ("_svn");
 
+#ifdef _WIN32
   // Avoiding to conflict with different versioned apr-iconv.
   wxString apr_iconv_path;
   if (wxGetEnv (wxT("APR_ICONV_PATH"), &apr_iconv_path))
@@ -78,6 +79,7 @@ bool RapidSvnApp::OnInit ()
     wxSetEnv (wxT("__SAVED_APR_ICONV_PATH"), apr_iconv_path.c_str ());
     wxSetEnv (wxT("APR_ICONV_PATH"), ".");
   }
+#endif
 
 #ifdef  USE_HTML_HELP
   // Initialise the HTML help
