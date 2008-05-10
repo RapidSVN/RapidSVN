@@ -80,7 +80,8 @@ CheckoutAction::Perform ()
   svn::Client client (GetContext ());
 
   TrimString(m_data.DestFolder);
-  UnixPath(m_data.DestFolder);
+  wxString dest_folder (m_data.DestFolder);
+  UnixPath(dest_folder);
   TrimString(m_data.RepUrl);
 
   long revnum = -1;
@@ -114,7 +115,7 @@ CheckoutAction::Perform ()
   wxSetWorkingDirectory (m_data.DestFolder);
 
   svn::Path repUrlUtf8 (PathUtf8 (m_data.RepUrl));
-  svn::Path destFolderUtf8 (PathUtf8 (m_data.DestFolder));
+  svn::Path destFolderUtf8 (PathUtf8 (dest_folder));
 
   bool ignoreExternals = m_data.IgnoreExternals;
 

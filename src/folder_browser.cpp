@@ -744,6 +744,9 @@ public:
     if (!treeCtrl)
       return 0;
 
+    if (!id)
+      return 0;
+
     return static_cast<FolderItemData *>(treeCtrl->GetItemData (id));
   }
 
@@ -765,7 +768,11 @@ public:
         break;
 
       // bookmark match?
+#ifdef __WXMSW__
+      if (data->getPath ().Lower () == bookmarkPath.Lower ())
+#else
       if (data->getPath () == bookmarkPath)
+#endif
       {
         // select bookmark
         success = true;

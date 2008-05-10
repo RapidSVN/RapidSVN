@@ -1744,8 +1744,10 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       const wxString bookmark = event.GetString ();
 
       m->folderBrowser->AddBookmark (bookmark);
-      m->folderBrowser->RefreshFolderBrowser ();
+      RefreshFolderBrowser ();
       m->folderBrowser->SelectBookmark (bookmark);
+      UpdateCurrentPath ();
+      RefreshFileList ();
     }
     break;
 
@@ -1968,6 +1970,10 @@ directory to the bookmarks!"),
 
   wxLogStatus (_("Added working copy to bookmarks '%s'"),
                dialog.GetPath ().c_str ());
+
+  m->folderBrowser->SelectBookmark (dialog.GetPath ());
+  //UpdateCurrentPath ();
+  //RefreshFileList ();
 }
 
 void
@@ -1993,6 +1999,10 @@ RapidSvnFrame::AddRepoBookmark ()
 
   wxLogStatus (_("Added repository to bookmarks '%s'"),
                url.c_str ());
+
+  m->folderBrowser->SelectBookmark (url);
+  //UpdateCurrentPath ();
+  //RefreshFileList ();
 }
 
 inline void
