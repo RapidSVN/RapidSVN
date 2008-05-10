@@ -1699,8 +1699,25 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
   case TOKEN_CMD_MERGE:
   case TOKEN_CMD_VIEW:
     {
+      // recover initial environment
+      wxString apr_iconv_path;
+      bool saved_apr_iconv_path = false;
+      if (wxGetEnv (wxT("__SAVED_APR_ICONV_PATH"), &apr_iconv_path))
+      {
+        saved_apr_iconv_path = true;
+        wxSetEnv (wxT("APR_ICONV_PATH"), apr_iconv_path.c_str ());
+        wxUnsetEnv (wxT("__SAVED_APR_ICONV_PATH"));
+      }
+      
       // execute the command sent
       wxExecute (event.GetString ());
+      
+      // set custom environment again
+      if (saved_apr_iconv_path)
+      {
+        wxSetEnv (wxT("__SAVED_APR_ICONV_PATH"), apr_iconv_path.c_str ());
+        wxSetEnv (wxT("APR_ICONV_PATH"), ".");
+      }
       /**
        * @todo Would be good to be able to interpret the return value
        *       to see if the command could be executed. 
