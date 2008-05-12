@@ -25,6 +25,7 @@
 #include "wx/confbase.h"
 #include "wx/wx.h"
 #include "wx/filename.h"
+#include "wx/stdpaths.h"
 #include <wx/tipdlg.h>
 
 // svncpp
@@ -1717,7 +1718,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       if (saved_apr_iconv_path)
       {
         wxSetEnv (wxT("__SAVED_APR_ICONV_PATH"), apr_iconv_path.c_str ());
-        wxSetEnv (wxT("APR_ICONV_PATH"), ".");
+        wxSetEnv (wxT("APR_ICONV_PATH"), wxStandardPaths::Get ().GetDataDir () + "\\iconv");
       }
 #endif
       /**

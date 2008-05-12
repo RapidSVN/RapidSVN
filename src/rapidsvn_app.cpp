@@ -25,6 +25,7 @@
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/confbase.h"
+#include "wx/stdpaths.h"
 #include <wx/fs_zip.h> // ZIP filesystem support
 #include <wx/tipdlg.h>
 #include <wx/cshelp.h>
@@ -77,7 +78,7 @@ bool RapidSvnApp::OnInit ()
   if (wxGetEnv (wxT("APR_ICONV_PATH"), &apr_iconv_path))
   {
     wxSetEnv (wxT("__SAVED_APR_ICONV_PATH"), apr_iconv_path.c_str ());
-    wxSetEnv (wxT("APR_ICONV_PATH"), ".");
+	wxSetEnv (wxT("APR_ICONV_PATH"), wxStandardPaths::Get ().GetDataDir () + "\\iconv");
   }
 #endif
 
