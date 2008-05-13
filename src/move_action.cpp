@@ -78,7 +78,7 @@ MoveAction::Perform ()
 {
   svn::Client client (GetContext ());
   svn::Path destPath (GetPath().path());
-  destPath.addComponent(LocalToUtf8 (m_destination));
+  destPath.addComponent((PathUtf8 (m_destination)).c_str ());
   svn::Revision unusedRevision;
   std::vector<svn::Path> targets (GetTargets ().targets ());
   std::vector<svn::Path>::iterator it;
