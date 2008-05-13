@@ -2221,7 +2221,6 @@ RapidSvnFrame::Perform (Action * action)
 {
   try
   {
-    m->SetRunning (true);
     m->listener.cancel (false);
 
     svn::Path currentPathUtf8 (PathUtf8 (m->currentPath));
@@ -2231,13 +2230,11 @@ RapidSvnFrame::Perform (Action * action)
     action->SetTracer (m->logTracer, false);
     m_actionWorker->SetTracer (m->logTracer);
     m_actionWorker->SetContext (m_context, false);
-    if (!m_actionWorker->Perform (action) &&
-        m_actionWorker->GetState () != ACTION_RUNNING)
-      m->SetRunning (false);
+    if (m_actionWorker->Perform (action))
+      m->SetRunning (true);
   }
   catch (...)
   {
-    m->SetRunning (false);
     throw; // svn::Excepton (e);
   }
 }
