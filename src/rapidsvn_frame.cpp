@@ -1718,7 +1718,7 @@ RapidSvnFrame::OnActionEvent (wxCommandEvent & event)
       if (saved_apr_iconv_path)
       {
         wxSetEnv (wxT("__SAVED_APR_ICONV_PATH"), apr_iconv_path.c_str ());
-        wxSetEnv (wxT("APR_ICONV_PATH"), wxStandardPaths::Get ().GetDataDir () + "\\iconv");
+        wxSetEnv (wxT("APR_ICONV_PATH"), wxStandardPaths::Get ().GetDataDir () + wxT("\\iconv"));
       }
 #endif
       /**
