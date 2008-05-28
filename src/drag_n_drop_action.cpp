@@ -127,9 +127,47 @@ DragAndDropAction::Prepare ()
   // Check if the file being dragged-and-dropped is already 
   // under source control or is being imported into the repository
   svn::Path srcSvnPath (PathUtf8 (m->m_files[0]));
-  bool importFiles = 
-    !srcSvnPath.isUrl () && 
-    !svn::Wc::checkWc (srcSvnPath);
+  svn::Path destSvnPath (PathUtf8 (m->m_destination));
+
+  if (wxString (destSvnPath.c_str()) == srcSvnPath.dirpath ())
+    return false;
+
+  bool importFiles = false;
+  bool incrementRevision = false;
+  if (destSvnPath.isUrl ())
+  {
+    //into repository
+    incrementRevision = true;
+    if (srcSvnPath.isUrl ())
+    {
+      //from repository
+      // TODO if src.baseURL != dest.baseURL : return
+    }
+    else
+    {
+      //from local file manager or working copy
+      importFiles = true;
+    }
+  }
+  else
+  {
+    //into working copy
+    if (srcSvnPath.isUrl ())
+    {
+      //from repository
+      return false;
+    }
+    else if (svn::Wc::checkWc (srcSvnPath.dirpath()))
+    {
+      //from the same working copy
+      // TOTO append condition like: && src.baseURL == dest.baseURL
+    }
+    else {
+      //from local file manager or another working copy
+      importFiles = true;
+    }
+    m->m_recursiveAdd = true;
+  }
 
   // Present the confirmation dialog to the user
   DragAndDropDialog dlg (m_parent, src, m->m_destination, 
@@ -141,7 +179,7 @@ DragAndDropAction::Prepare ()
 
   // Imports require additional information from the user
   //  so present the commit dialog to get that information
-  if (DragAndDropDialog::RESULT_IMPORT == m->m_action)
+  if (DragAndDropDialog::RESULT_IMPORT == m->m_action && incrementRevision)
   {
     CommitDlg commitDlg (m_parent);
     if (commitDlg.ShowModal () != wxID_OK)
