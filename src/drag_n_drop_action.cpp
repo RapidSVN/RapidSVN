@@ -129,7 +129,7 @@ DragAndDropAction::Prepare ()
   svn::Path srcSvnPath (PathUtf8 (m->m_files[0]));
   svn::Path destSvnPath (PathUtf8 (m->m_destination));
 
-  if (wxString (destSvnPath.c_str()) == srcSvnPath.dirpath ())
+  if (Utf8ToLocal (destSvnPath.c_str()) == Utf8ToLocal (srcSvnPath.dirpath ()))
     return false;
 
   bool importFiles = false;
