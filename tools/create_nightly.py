@@ -96,10 +96,11 @@ def buildInstaller():
   x=glob.glob("Output/*")
   for n in x: os.unlink(n)
 
-  print "Build installer"
+  print "Fetching files for installer"
   run('cmd.exe', ['/c', 'FetchFiles.bat'])
-  innosetup=getEnviron("INNOSETUP")
-  run("\"%s\iscc.exe\"" % innosetup, ['rapidsvn.iss'])
+  innosetup="%s\iscc.exe" % getEnviron("INNOSETUP")
+  print "Build installer (using %s)" %innosetup
+  run(innosetup, ['rapidsvn.iss'])
   
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
