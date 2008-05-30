@@ -155,7 +155,7 @@ def uploadInstaller(pkg):
   scp='scp'
   if platform.system() == 'Windows':
     putty=getEnviron("PUTTY")
-    scp="\"%s/pscp.exe\"" % (putty)
+    scp="%s/pscp.exe" % (putty)
     dir='win32'
   elif platform.system() == 'Darwin':
     scp='scp'
