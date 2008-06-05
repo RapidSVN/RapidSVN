@@ -235,7 +235,7 @@ DragAndDropAction::Prepare ()
           return false;      
       }
 
-      importFiles = false;
+      importFiles = true;
       incrementRevision = true;
     }
   }
