@@ -32,6 +32,7 @@
 #include "svncpp/client.hpp"
 #include "svncpp/wc.hpp"
 #include "svncpp/path.hpp"
+#include "svncpp/status.hpp"
 
 // app
 #include "drag_n_drop_action.hpp"
@@ -105,6 +106,64 @@ DragAndDropAction::~DragAndDropAction ()
 }
 
 bool
+DragAndDropAction::IsInSameTree(const wxString & srcPath, const wxString & destPath)
+{
+  //Detect a common part of both path as base path.
+  // e.g.
+  //               WC                    Repository
+  // src:  /home/foo/wc/filename    http://foo/trunk/filename
+  // dest: /home/foo/wc/folder      http://foo/trunk/folder
+  // base: /home/foo/wc             http://foo/trunk/
+
+  size_t limit = srcPath.Len();
+  size_t destlen = destPath.Len();
+  if (destlen < limit)
+    limit = destlen;
+  
+  size_t i;
+  for (i = 0; i < limit; i++)
+  {
+    if (srcPath[i] != destPath[i])
+      break;
+  }
+  const wxString matching = srcPath.SubString (0, i);
+  int last_slash = matching.Find (wxT('/'), true);
+#ifdef __WXMSW__
+  if (last_slash == wxNOT_FOUND)
+    last_slash = matching.Find (wxT('\\'), true);
+#endif
+  if (last_slash == wxNOT_FOUND)
+    return false;
+  const svn::Path base = PathUtf8 (matching.SubString (0, last_slash-1));
+  
+  // 1. If base path is local folder which is not WC, srcPath and destPath
+  //    are in different WC folders each other. 
+  if (!base.isUrl() && !svn::Wc::checkWc(base.c_str()))
+    return false;
+
+#if 0
+  // 2. If real operation like "svn status" to base path may failed,
+  //    it would be considered not as svn path. Because two pathes are
+  //    from different repository.
+  svn::Client client (GetContext ());
+  svn::StatusEntries entries;
+  try
+  {
+    // It costs too much for URL.
+    entries = client.status (base.c_str ());
+    if (entries.begin () == entries.end ())
+      return false;
+  }
+  catch (svn::ClientException)
+  {
+    return false;
+  }
+#endif
+
+  return true;
+}
+
+bool
 DragAndDropAction::Prepare ()
 {
   if (!Action::Prepare ())
@@ -129,42 +188,78 @@ DragAndDropAction::Prepare ()
   svn::Path srcSvnPath (PathUtf8 (m->m_files[0]));
   svn::Path destSvnPath (PathUtf8 (m->m_destination));
 
-  if (Utf8ToLocal (destSvnPath.c_str()) == Utf8ToLocal (srcSvnPath.dirpath ()))
-    return false;
-
   bool importFiles = false;
   bool incrementRevision = false;
+  
+  // ==DragDrop action patterns==
+  // Any entry    -> Same folder        : Nothing to be done
+  // Any folder   -> Itself             : Unexpected!
+  // Repository   -> Same repository    : Copy/Move action (immediate commit)
+  // Repository   -> Other repository   : Unexpected!
+  // WC folder    -> Repository         : Unexpected!
+  // WC file      -> Repository         : Import action (immediate commit)
+  // Plain file   -> Repository         : Import action (immediate commit)
+  // Repository   -> WC folder          : Unexpected!
+  // Any wc entry -> Same working copy  : Copy/Move action (uncommitied)
+  // WC folder    -> Other working copy : Unexpected!
+  // WC file      -> Other working copy : Add action (called as import but uncommitied)
+  // Plain file   -> WC folder          : Add action (called as import but uncommitied)
+  
+  wxArrayString::iterator it;
+  for (it = m->m_files.begin (); it != m->m_files.end(); it++)
+  {
+    if (Utf8ToLocal (PathUtf8 (*it).dirpath ()) ==
+       Utf8ToLocal (PathUtf8 (m->m_destination).c_str ()))
+      return false;
+    if (*it == m->m_destination)
+      return false;
+  }
+  
   if (destSvnPath.isUrl ())
   {
-    //into repository
-    incrementRevision = true;
+    //Drop into repository.
+
     if (srcSvnPath.isUrl ())
     {
-      //from repository
-      // TODO if src.baseURL != dest.baseURL : return
+      if (!IsInSameTree (m->m_files[0], m->m_destination))
+        return false;
+
+      importFiles = false;
+      incrementRevision = true;
     }
     else
     {
-      //from local file manager or working copy
-      importFiles = true;
+      for (it = m->m_files.begin (); it != m->m_files.end(); it++)
+      {
+        if (svn::Wc::checkWc (PathUtf8 (*it)))
+          return false;      
+      }
+
+      importFiles = false;
+      incrementRevision = true;
     }
   }
   else
   {
-    //into working copy
+    //Drop into working copy.
+
     if (srcSvnPath.isUrl ())
-    {
-      //from repository
       return false;
-    }
-    else if (svn::Wc::checkWc (srcSvnPath.dirpath()))
+    else if (svn::Wc::checkWc (srcSvnPath.dirpath ()) &&
+      IsInSameTree (m->m_files[0], m->m_destination))
     {
-      //from the same working copy
-      // TOTO append condition like: && src.baseURL == dest.baseURL
+      importFiles = false;
+      incrementRevision = false;
     }
     else {
-      //from local file manager or another working copy
+      for (it = m->m_files.begin (); it != m->m_files.end(); it++)
+      {
+        if (svn::Wc::checkWc (PathUtf8 (*it)))
+          return false;
+      }
+
       importFiles = true;
+      incrementRevision = false;
     }
     m->m_recursiveAdd = true;
   }

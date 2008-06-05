@@ -68,6 +68,9 @@ public:
 private:
   wxWindow * m_parent;
   DragAndDropData * m;
+  
+  bool
+  IsInSameTree (const wxString & srcPath, const wxString & destPath);
 };
 
 #endif
