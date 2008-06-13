@@ -79,6 +79,24 @@ namespace svn
   typedef std::vector<PathPropertiesMapEntry> PathPropertiesMapList;
 
   /**
+   * These flags can be passed to the status function to filter
+   * the files
+   *
+   * @see status
+   */
+  struct StatusFilter
+  {
+  public:
+    bool showUnversioned;
+    bool showUnmodified;
+    bool showModified;    ///< this includes @a showConflicted as well 
+    bool showConflicted;
+    bool showIgnored;
+    bool showExternals;
+  };
+
+
+  /**
    * Subversion client API.
    */
   class Client
@@ -133,6 +151,31 @@ namespace svn
             const bool update = false,
             const bool no_ignore = false,
             const bool ignore_externals = false) throw (ClientException);
+
+    /**
+     * Enumerates all files/dirs matchin the parameter @a filter 
+     * at @a path and returns them in the vector @a statusEntries
+     *
+     * Throws an exception if an error occurs
+     *
+     * @since New in 0.9.7
+     *
+     * @param path Path to explore.
+     * @param filter use a combination of the @a SHOW_* values to filter the
+     *        output
+     * @param descend Recurse into subdirectories if existant.
+     * @param update Query the repository for updates.
+     * @param entries vector with Status entries
+     *
+     * @return current revnum
+     */
+    svn_revnum_t
+    status (const char * path,
+            const StatusFilter & filter,
+            const bool descend,
+            const bool update,
+            StatusEntries & entries) throw (ClientException);
+    
 
     /**
      * Executes a revision checkout.

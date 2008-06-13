@@ -165,21 +165,19 @@ namespace svn
     return Status (url.c_str (), s);
   }
 
-  static StatusEntries
+
+  static svn_revnum_t
   remoteStatus (Client * client,
                 const char * path,
                 const bool descend,
-                const bool get_all,
-                const bool update,
-                const bool no_ignore,
+                StatusEntries & entries,
                 Context * context)
   {
     Revision rev (Revision::HEAD);
     DirEntries dirEntries = client->list (path, rev, descend);
     DirEntries::const_iterator it;
+    svn_revnum_t revnum = 0;
     
-    StatusEntries entries;
-
     for (it = dirEntries.begin (); it != dirEntries.end (); it++)
     {
       const DirEntry & dirEntry = *it;
@@ -187,7 +185,11 @@ namespace svn
       entries.push_back (dirEntryToStatus (path, dirEntry));
     }
 
-    return entries;
+    if (dirEntries.size () > 0)
+      revnum = dirEntries[0].createdRev ();
+      
+
+    return revnum;
   }
 
   StatusEntries 
@@ -199,12 +201,137 @@ namespace svn
                   const bool ignore_externals) throw (ClientException)
   {
     if (Url::isValid (path))
-      return remoteStatus (this, path, descend, get_all, update, 
-                           no_ignore, m_context);
+    {
+      StatusEntries entries;
+      remoteStatus (this, path, descend, entries, m_context);
+      return entries;
+    }
     else
       return localStatus (path, descend, get_all, update, 
                           no_ignore, m_context, ignore_externals);
   }
+
+  struct StatusFilter;
+
+  struct StatusBaton
+  {
+  public:
+    const StatusFilter & filter;
+    StatusEntries & entries;
+
+    StatusBaton (const StatusFilter & filter_, StatusEntries & entries_)
+      : filter (filter_), entries (entries_)
+    {
+    }
+  };
+
+
+  static void 
+  filteredStatusFunc (void *baton_,
+                      const char *path,
+                      svn_wc_status2_t *status)
+  {
+    StatusBaton * baton = static_cast<StatusBaton *>(baton_);
+
+    // now we have to decide whether to return the entry or not
+    if (0 == status)
+      return;
+
+    bool useStatus = false;
+
+    bool isUnversioned = 0 == status->entry; 
+    if (isUnversioned)
+    { // unversioned
+      if (baton->filter.showUnversioned)
+        useStatus = true;
+    }
+    else
+    {
+      bool isUnmodified = 
+        ((svn_wc_status_normal == status->text_status) &&
+         (svn_wc_status_normal == status->prop_status));
+
+      if (isUnmodified)
+      {
+        if (baton->filter.showUnmodified)
+          useStatus = true;
+      }
+      else
+      {
+        // so here we know its modified.
+        // what are we interested in?
+        if (baton->filter.showModified)
+          useStatus = true;
+        else if (baton->filter.showConflicted)
+        {
+          if (svn_wc_status_conflicted == status->text_status)
+            useStatus = true;
+        }
+      }
+    }
+    
+    if (useStatus)
+      baton->entries.push_back (Status (path, status));
+  }
+
+  static svn_revnum_t
+  localFilteredStatus (const char * path,
+                       const StatusFilter & filter,
+                       const bool descend,
+                       const bool update,
+                       StatusEntries & entries,
+                       Context * context)
+  {
+    svn_error_t *error;
+    svn_revnum_t revnum;
+    Revision rev (Revision::HEAD);
+    Pool pool;
+    StatusBaton baton (filter, entries);
+
+    error = svn_client_status2 (
+      &revnum,    // revnum
+      path,       // path
+      rev,        // revision
+      filteredStatusFunc, // status func
+      &baton,   // status baton
+      descend,    // recurse
+      filter.showUnmodified,
+      update,     // need 'update' to be true to get repository lock info
+      !filter.showIgnored, // no_ignores
+      !filter.showExternals, // ignore_externals
+      *context,   // client ctx
+      pool);
+
+    if (error!=NULL)
+      throw ClientException (error);
+
+    return revnum;
+  }
+
+
+  svn_revnum_t
+  Client::status (const char * path,
+                  const StatusFilter & filter,
+                  const bool descend,
+                  const bool update,
+                  StatusEntries & entries) throw (ClientException)
+  {
+    entries.clear ();
+
+    if (Url::isValid (path))
+      return remoteStatus (this, path, descend, 
+                           entries, m_context);
+    else
+    {
+      // remote URLs only need a subset of the filters:
+      // we dont expect any modified, conflicting, unknown,
+      // ignored entries. And externals arent visible there anyhow
+      return localFilteredStatus (
+        path, filter, descend, update, entries, m_context);
+    }
+  }
+
+
 
   const LogEntries *
   Client::log (const char * path, const Revision & revisionStart, 
