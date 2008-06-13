@@ -260,6 +260,9 @@ public:
     menuView->AppendCheckItem (ID_Flat, _("Flat Mode"));
     menuView->AppendCheckItem (ID_RefreshWithUpdate, _("Refresh with Update"));
     menuView->AppendCheckItem (ID_ShowUnversioned, _("Show unversioned entries"));
+    menuView->AppendCheckItem (ID_ShowUnmodified, _("Show unmodified entries"));
+    menuView->AppendCheckItem (ID_ShowModified, _("Show modified entries"));
+    menuView->AppendCheckItem (ID_ShowConflicted, _("Show conflicted entries"));
     menuView->AppendCheckItem (ID_IgnoreExternals, _("Ignore Externals"));
     menuView->AppendCheckItem (ID_ShowIgnored, _("Show ignored entries"));
 
@@ -709,6 +712,10 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
   EVT_MENU (ID_ShowUnversioned, RapidSvnFrame::OnShowUnversioned)
   EVT_MENU (ID_IgnoreExternals, RapidSvnFrame::OnIgnoreExternals)
   EVT_MENU (ID_ShowIgnored, RapidSvnFrame::OnShowIgnored)
+  EVT_MENU (ID_ShowUnmodified, RapidSvnFrame::OnShowUnmodified)
+  EVT_MENU (ID_ShowModified, RapidSvnFrame::OnShowModified)
+  EVT_MENU (ID_ShowConflicted, RapidSvnFrame::OnShowConflicted)
+
   EVT_MENU (ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU (ID_Logout, RapidSvnFrame::OnLogout)
   EVT_MENU (ID_Stop, RapidSvnFrame::OnStop)
@@ -820,10 +827,16 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
   m->CheckMenu (ID_Flat,              false);
   m->CheckMenu (ID_RefreshWithUpdate, m->listCtrl->GetWithUpdate());
   m->CheckMenu (ID_ShowUnversioned,   m->listCtrl->GetShowUnversioned());
+  m->CheckMenu (ID_ShowUnmodified,    true);
+  m->CheckMenu (ID_ShowModified,      true);
+  m->CheckMenu (ID_ShowConflicted,    true);
   m->CheckMenu (ID_IgnoreExternals,   m->listCtrl->GetIgnoreExternals());
   m->CheckMenu (ID_ShowIgnored,       m->listCtrl->GetShowIgnored());
   m->CheckMenu (ID_Sort_Ascending,    m->listCtrl->GetSortAscending());
   m->CheckSort (m->listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
+  m->listCtrl->SetShowUnmodified (true);
+  m->listCtrl->SetShowModified (true);
+  m->listCtrl->SetShowConflicted (true);
 
   bool isFlat = m->listCtrl->IsFlat ();
   bool includePath = m->listCtrl->GetIncludePath ();
@@ -1286,6 +1299,30 @@ RapidSvnFrame::OnShowUnversioned (wxCommandEvent & WXUNUSED (event))
 {
   bool checked = m->IsMenuChecked (ID_ShowUnversioned);
   m->listCtrl->SetShowUnversioned (checked);
+  RefreshFileList ();
+}
+
+void 
+RapidSvnFrame::OnShowUnmodified (wxCommandEvent & WXUNUSED (event))
+{
+  bool checked = m->IsMenuChecked (ID_ShowUnmodified);
+  m->listCtrl->SetShowUnmodified (checked);
+  RefreshFileList ();
+}
+
+void 
+RapidSvnFrame::OnShowModified (wxCommandEvent & WXUNUSED (event))
+{
+  bool checked = m->IsMenuChecked (ID_ShowModified);
+  m->listCtrl->SetShowModified (checked);
+  RefreshFileList ();
+}
+
+void 
+RapidSvnFrame::OnShowConflicted (wxCommandEvent & WXUNUSED (event))
+{
+  bool checked = m->IsMenuChecked (ID_ShowConflicted);
+  m->listCtrl->SetShowConflicted (checked);
   RefreshFileList ();
 }
 

@@ -206,6 +206,15 @@ public:
   void
   SetShowUnversioned (bool value);
 
+  void
+  SetShowUnmodified (bool value);
+
+  void 
+  SetShowModified (bool value);
+  
+  void
+  SetShowConflicted (bool value);
+
   /**
    * shall external definitions be ignored/not updated?
    */

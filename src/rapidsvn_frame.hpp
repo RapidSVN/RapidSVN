@@ -101,6 +101,9 @@ private:
   void OnFlatView (wxCommandEvent & event);
   void OnRefreshWithUpdate (wxCommandEvent & event);
   void OnShowUnversioned (wxCommandEvent & event);
+  void OnShowUnmodified (wxCommandEvent & event);
+  void OnShowModified (wxCommandEvent & event);
+  void OnShowConflicted (wxCommandEvent & event);
   void OnIgnoreExternals (wxCommandEvent & event);
   void OnShowIgnored (wxCommandEvent & event);
   void OnStop (wxCommandEvent & event);

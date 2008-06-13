@@ -297,7 +297,7 @@ namespace svn
       descend,    // recurse
       filter.showUnmodified,
       update,     // need 'update' to be true to get repository lock info
-      !filter.showIgnored, // no_ignores
+      filter.showIgnored, // no_ignores
       !filter.showExternals, // ignore_externals
       *context,   // client ctx
       pool);

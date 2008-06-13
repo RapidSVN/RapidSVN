@@ -647,6 +647,9 @@ public:
   bool FlatMode;
   bool WithUpdate;
   bool ShowUnversioned;
+  bool ShowUnmodified;
+  bool ShowModified;
+  bool ShowConflicted;
   bool IgnoreExternals;
   bool ShowIgnored;
   bool IsRelative;
@@ -1013,6 +1016,13 @@ FileListCtrl::RefreshFileList ()
 
   svn::Client client (m->Context);
   svn::StatusEntries statusSelector;
+  svn::StatusFilter filter;
+  filter.showUnversioned = m->ShowUnversioned;
+  filter.showUnmodified = m->ShowUnmodified;
+  filter.showModified = m->ShowModified;
+  filter.showConflicted = m->ShowConflicted;
+  filter.showIgnored = m->ShowIgnored;
+  filter.showExternals = !m->IgnoreExternals;
 
   // Workaround for issue 324 (only local+non-flat+update): 
   //   we chdir to the requested dir and pass "." to svn
@@ -1022,16 +1032,14 @@ FileListCtrl::RefreshFileList ()
     ::wxSetWorkingDirectory (m->Path);
 
     // "" is the canonical expression for "."
-    statusSelector = client.status (
-      "", m->FlatMode, true, m->WithUpdate, 
-      m->ShowIgnored, m->IgnoreExternals);
+    client.status ("", filter, m->FlatMode, 
+                   m->WithUpdate, statusSelector);
   }
   else
   {
     m->IsRelative = false;
-    statusSelector = client.status (
-      pathUtf8.c_str (), m->FlatMode, true, m->WithUpdate, 
-      m->ShowIgnored, m->IgnoreExternals);
+    client.status (pathUtf8.c_str (), filter, m->FlatMode, 
+                   m->WithUpdate, statusSelector);
   }
 
   svn::StatusEntries::const_iterator it;
@@ -1711,6 +1719,26 @@ FileListCtrl::SetShowUnversioned (bool value)
 {
   m->ShowUnversioned = value;
 }
+
+void
+FileListCtrl::SetShowUnmodified (bool value)
+{
+  m->ShowUnmodified = value;
+}
+
+
+void 
+FileListCtrl::SetShowModified (bool value)
+{
+  m->ShowModified = value;
+}
+  
+void
+FileListCtrl::SetShowConflicted (bool value)
+{
+  m->ShowConflicted = value;
+}
+
 
 bool
 FileListCtrl::GetIgnoreExternals () const
