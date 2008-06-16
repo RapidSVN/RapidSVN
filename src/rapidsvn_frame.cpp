@@ -106,6 +106,11 @@
 #include "res/bitmaps/info.png.h"
 #include "res/bitmaps/stop.png.h"
 
+#include "res/bitmaps/nonsvn_file.png.h"
+#include "res/bitmaps/normal_file.png.h"
+#include "res/bitmaps/modified_file.png.h"
+#include "res/bitmaps/conflicted_file.png.h"
+
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
 
@@ -172,6 +177,10 @@ public:
   const wxLocale & locale;
   wxString currentPath;
   ActivePane activePane;
+  bool showUnversioned;
+  bool showUnmodified;
+  bool showModified;
+  bool showConflicted;
 
 private:
   bool m_running;
@@ -196,6 +205,8 @@ public:
       skipFilelistUpdate (false), locale (locale_), 
       currentPath (wxT("")), 
       activePane (ACTIVEPANE_FOLDER_BROWSER),
+      showUnversioned (false), showUnmodified (false),
+      showModified (false), showConflicted (false),
       m_running (false),
       m_toolbar_rows (1), m_parent (parent),
       m_isErrorDialogActive (false)
@@ -377,6 +388,28 @@ public:
   }
 
   void
+  SetMenuAndTool (int id, bool & toggleValue, bool newValue)
+  {
+    toggleValue = newValue;
+ 
+    // first update the menu entry
+    MenuBar->Check (id, toggleValue);
+
+    // next update the tool
+    wxToolBarBase * toolBar = m_parent->GetToolBar ();
+    if (toolBar != 0)
+      toolBar->ToggleTool (id, toggleValue);
+  }
+
+  bool
+  ToggleMenuAndTool (int id, bool & toggleValue)
+  {
+    SetMenuAndTool (id, toggleValue, !toggleValue);
+
+    return toggleValue;
+  }
+
+  void
   SetRunning (bool running)
   {
     if (running && ! m_running)
@@ -420,6 +453,20 @@ public:
 
     AddActionTools (toolBar);
     AddInfoTools (toolBar);
+
+    toolBar->AddCheckTool (ID_ShowUnversioned, 
+                           _("Show unversioned entries"),
+                           EMBEDDED_BITMAP(nonsvn_file_png));
+    toolBar->AddCheckTool (ID_ShowUnmodified,  
+                           _("Show unmodified entries"),
+                           EMBEDDED_BITMAP(normal_file_png));
+    toolBar->AddCheckTool (ID_ShowModified,    
+                           _("Show modified entries"),
+                           EMBEDDED_BITMAP(modified_file_png));
+    toolBar->AddCheckTool (ID_ShowConflicted,  
+                           _("Show conflicted entries"),
+                           EMBEDDED_BITMAP(conflicted_file_png));
+    toolBar->AddSeparator ();
 
     // Set toolbar refresh button.
     toolBar->AddTool (ID_Refresh,
@@ -826,10 +873,11 @@ RapidSvnFrame::RapidSvnFrame (const wxString & title,
                                  wxDefaultPosition, wxDefaultSize);
   m->CheckMenu (ID_Flat,              false);
   m->CheckMenu (ID_RefreshWithUpdate, m->listCtrl->GetWithUpdate());
-  m->CheckMenu (ID_ShowUnversioned,   m->listCtrl->GetShowUnversioned());
-  m->CheckMenu (ID_ShowUnmodified,    true);
-  m->CheckMenu (ID_ShowModified,      true);
-  m->CheckMenu (ID_ShowConflicted,    true);
+  m->SetMenuAndTool (ID_ShowUnversioned, m->showUnversioned,  
+                     m->listCtrl->GetShowUnversioned());
+  m->SetMenuAndTool (ID_ShowUnmodified, m->showUnmodified, true);
+  m->SetMenuAndTool (ID_ShowModified, m->showModified, true);
+  m->SetMenuAndTool (ID_ShowConflicted, m->showConflicted, true);
   m->CheckMenu (ID_IgnoreExternals,   m->listCtrl->GetIgnoreExternals());
   m->CheckMenu (ID_ShowIgnored,       m->listCtrl->GetShowIgnored());
   m->CheckMenu (ID_Sort_Ascending,    m->listCtrl->GetSortAscending());
@@ -1297,7 +1345,7 @@ RapidSvnFrame::OnRefreshWithUpdate (wxCommandEvent & WXUNUSED (event))
 void
 RapidSvnFrame::OnShowUnversioned (wxCommandEvent & WXUNUSED (event))
 {
-  bool checked = m->IsMenuChecked (ID_ShowUnversioned);
+  bool checked = m->ToggleMenuAndTool (ID_ShowUnversioned, m->showUnversioned);
   m->listCtrl->SetShowUnversioned (checked);
   RefreshFileList ();
 }
@@ -1305,7 +1353,7 @@ RapidSvnFrame::OnShowUnversioned (wxCommandEvent & WXUNUSED (event))
 void 
 RapidSvnFrame::OnShowUnmodified (wxCommandEvent & WXUNUSED (event))
 {
-  bool checked = m->IsMenuChecked (ID_ShowUnmodified);
+  bool checked = m->ToggleMenuAndTool (ID_ShowUnmodified, m->showUnmodified);
   m->listCtrl->SetShowUnmodified (checked);
   RefreshFileList ();
 }
@@ -1313,7 +1361,7 @@ RapidSvnFrame::OnShowUnmodified (wxCommandEvent & WXUNUSED (event))
 void 
 RapidSvnFrame::OnShowModified (wxCommandEvent & WXUNUSED (event))
 {
-  bool checked = m->IsMenuChecked (ID_ShowModified);
+  bool checked = m->ToggleMenuAndTool (ID_ShowModified, m->showModified);
   m->listCtrl->SetShowModified (checked);
   RefreshFileList ();
 }
@@ -1321,7 +1369,7 @@ RapidSvnFrame::OnShowModified (wxCommandEvent & WXUNUSED (event))
 void 
 RapidSvnFrame::OnShowConflicted (wxCommandEvent & WXUNUSED (event))
 {
-  bool checked = m->IsMenuChecked (ID_ShowConflicted);
+  bool checked = m->ToggleMenuAndTool (ID_ShowConflicted, m->showConflicted);
   m->listCtrl->SetShowConflicted (checked);
   RefreshFileList ();
 }
