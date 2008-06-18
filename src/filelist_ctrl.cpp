@@ -1488,48 +1488,37 @@ FileListCtrl::UpdateColumns ()
   if (!m->DirtyColumns)
     return;
 
+  // delete all items
+  DeleteAllItems ();
+
+  // adapt the column count
+  while (GetColumnCount () > 0)
+  {
+    DeleteColumn (0);
+  }
+
   // rebuild the index of columns
+  wxListItem item;
+  item.SetMask (wxLIST_MASK_TEXT | wxLIST_MASK_WIDTH);
+  item.SetImage (-1);
+
   int index = 0;
-  int count = 0;
   int col;
   for (col = 0; col < COL_COUNT; col++)
   {
     if (m->ColumnVisible[col])
     {
-      m->ColumnIndex[col] = index++;
-      count++;
+      m->ColumnIndex[col] = index;
+
+      item.SetText (m->ColumnList[col].caption);
+      item.SetWidth (m->ColumnWidth[col]);
+      InsertColumn (index, item);
+
+      index++;
     }
     else
     {
       m->ColumnIndex[col] = -1;
-    }
-  }
-
-  // delete all items
-  DeleteAllItems ();
-
-  // adapt the column count
-  while (GetColumnCount () > count)
-  {
-    DeleteColumn (0);
-  }
-
-  while (GetColumnCount () < count)
-  {
-    InsertColumn (0, wxEmptyString);
-  }
-
-  // Now set the captions and widths
-  for (col = 0; col < COL_COUNT; col++)
-  {
-    int index = m->ColumnIndex[col];
-    if (index != -1)
-    {
-      wxListItem item;
-      item.m_mask = wxLIST_MASK_TEXT | wxLIST_MASK_WIDTH;
-      item.m_text = m->ColumnList[col].caption;
-      item.m_width = m->ColumnWidth[col];
-      SetColumn (index, item);
     }
   }
 
