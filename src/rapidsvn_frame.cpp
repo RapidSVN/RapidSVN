@@ -455,17 +455,30 @@ public:
     AddInfoTools (toolBar);
 
     toolBar->AddCheckTool (ID_ShowUnversioned, 
+                           wxEmptyString,
+                           EMBEDDED_BITMAP(nonsvn_file_png),
+                           wxNullBitmap,
                            _("Show unversioned entries"),
-                           EMBEDDED_BITMAP(nonsvn_file_png));
+                           _("Display unversioned files/directories"));
+                           wxEmptyString,
     toolBar->AddCheckTool (ID_ShowUnmodified,  
+                           wxEmptyString,
+                           EMBEDDED_BITMAP(normal_file_png),
+                           wxNullBitmap,
                            _("Show unmodified entries"),
-                           EMBEDDED_BITMAP(normal_file_png));
+                           _("Display unmodified files/directories"));
     toolBar->AddCheckTool (ID_ShowModified,    
+                           wxEmptyString,
+                           EMBEDDED_BITMAP(modified_file_png),
+                           wxNullBitmap,
                            _("Show modified entries"),
-                           EMBEDDED_BITMAP(modified_file_png));
+                           _("Display modified files/directories"));
     toolBar->AddCheckTool (ID_ShowConflicted,  
+                           wxEmptyString,
+                           EMBEDDED_BITMAP(conflicted_file_png),
+                           wxNullBitmap,
                            _("Show conflicted entries"),
-                           EMBEDDED_BITMAP(conflicted_file_png));
+                           _("Display conflicted files/directories"));
     toolBar->AddSeparator ();
 
     // Set toolbar refresh button.
