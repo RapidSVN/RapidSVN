@@ -57,7 +57,19 @@ namespace svn
       if (src->status != 0)
       {
         status = svn_wc_dup_status2 (src->status, pool);
-        isVersioned = status->text_status > svn_wc_status_unversioned;
+
+        switch (status->text_status)
+        {
+        case svn_wc_status_none:
+        case svn_wc_status_unversioned:
+        case svn_wc_status_ignored:
+        case svn_wc_status_obstructed:
+          isVersioned = false;
+          break;
+
+        default:
+          isVersioned = true;
+        }
       }
     }
 
