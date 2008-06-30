@@ -1007,60 +1007,71 @@ FileListCtrl::RefreshFileList ()
   long focusedItem = GetFocusedItem ();
   // freeze update to speed up processing.
   Freeze ();
-  // delete all the items in the list to display the new ones
-  DeleteAllItems ();
-
-  UpdateColumns ();
-
-  wxLogStatus (_("Listing entries in '%s'"), m->Path.c_str ());
-
-  svn::Client client (m->Context);
-  svn::StatusEntries statusSelector;
-  svn::StatusFilter filter;
-  filter.showUnversioned = m->ShowUnversioned;
-  filter.showUnmodified = m->ShowUnmodified;
-  filter.showModified = m->ShowModified;
-  filter.showConflicted = m->ShowConflicted;
-  filter.showIgnored = m->ShowIgnored;
-  filter.showExternals = !m->IgnoreExternals;
-
-  // Workaround for issue 324 (only local+non-flat+update): 
-  //   we chdir to the requested dir and pass "." to svn
-  if (!pathUtf8.isUrl () && m->WithUpdate && !m->FlatMode)
+  try
   {
-    m->IsRelative = true;
-    ::wxSetWorkingDirectory (m->Path);
+    // delete all the items in the list to display the new ones
+    DeleteAllItems ();
 
-    // "" is the canonical expression for "."
-    client.status ("", filter, m->FlatMode, 
-                   m->WithUpdate, statusSelector);
-  }
-  else
-  {
-    m->IsRelative = false;
-    client.status (pathUtf8.c_str (), filter, m->FlatMode, 
-                   m->WithUpdate, statusSelector);
-  }
+    UpdateColumns ();
 
-  svn::StatusEntries::const_iterator it;
-  for (it = statusSelector.begin (); it != statusSelector.end (); it++)
-  {
-    const svn::Status & status = *it;
+    wxLogStatus (_("Listing entries in '%s'"), m->Path.c_str ());
 
-    CreateLables (status, pathUtf8);
-    // trying to restore selection
-    if (std::binary_search (selBegin, selEnd, status.path ()))
+    svn::Client client (m->Context);
+    svn::StatusEntries statusSelector;
+    svn::StatusFilter filter;
+    filter.showUnversioned = m->ShowUnversioned;
+    filter.showUnmodified = m->ShowUnmodified;
+    filter.showModified = m->ShowModified;
+    filter.showConflicted = m->ShowConflicted;
+    filter.showIgnored = m->ShowIgnored;
+    filter.showExternals = !m->IgnoreExternals;
+
+    // Workaround for issue 324 (only local+non-flat+update): 
+    //   we chdir to the requested dir and pass "." to svn
+    if (!pathUtf8.isUrl () && m->WithUpdate && !m->FlatMode)
     {
-      i=GetItemCount ()-1;
-      wxASSERT(i >= 0);
-      Select (i, true);
+      m->IsRelative = true;
+      ::wxSetWorkingDirectory (m->Path);
+
+      // "" is the canonical expression for "."
+      client.status ("", filter, m->FlatMode, 
+                     m->WithUpdate, statusSelector);
     }
+    else
+    {
+      m->IsRelative = false;
+      client.status (pathUtf8.c_str (), filter, m->FlatMode, 
+                     m->WithUpdate, statusSelector);
+    }
+
+    svn::StatusEntries::const_iterator it;
+    for (it = statusSelector.begin (); it != statusSelector.end (); it++)
+    {
+      const svn::Status & status = *it;
+
+      CreateLables (status, pathUtf8);
+      // trying to restore selection
+      if (std::binary_search (selBegin, selEnd, status.path ()))
+      {
+        i=GetItemCount ()-1;
+        wxASSERT(i >= 0);
+        Select (i, true);
+      }
+    }
+
+    SortItems (Data::CompareFunction, (long) this->m);
+
+    // reenable window update after Freeze()
+    Thaw();
+  }
+  catch (...)
+  {
+    // reenable window update after Freeze()
+    Thaw();
+
+    throw;
   }
 
-  SortItems (Data::CompareFunction, (long) this->m);
-
-  // reenable window update after Freeze()
-  Thaw();
   // trying to restore scroll position, update must be enabled before
   // because under WinXP call to ScrollList sometimes ignored without
   // report about failure, mainly this related for relatively big lists
