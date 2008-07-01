@@ -2307,7 +2307,9 @@ RapidSvnFrame::InvokeDefaultAction ()
   if (statusSel.hasDirs ())
   {
     // go one folder deeper...
-    m->folderBrowser->SelectFolder (PathToNative (statusSel.target ()));
+    m->folderBrowser->SelectFolder (
+      FullNativePath (statusSel.target (), m->currentPath, m->listCtrl->IsFlat ())
+    );
   }
   else
   {

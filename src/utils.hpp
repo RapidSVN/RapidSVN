@@ -310,7 +310,28 @@ EmbeddedBitmap (const unsigned char * data, size_t len);
 void
 OpenURL (const wxString & url);
 
-
+/**
+ * Converts svn::Path to native full path expression
+ * (e.g. C:\foo\bar) using view mode and current folder
+ * selection status.
+ *
+ * [Path Type / Flat Mode]
+ * URL /  -  : Outputs URL always.
+ * WS  / No  : Input path may be relative (if reflesh with update
+ *             checed), but all files must be in FolderBrowser
+ *             selected path.
+ * WS  / Yes : FolderBrowser selection is not reliable because 
+ *             various pathes are shown in file list. But input
+ *             path is always full path in this mode.
+ *
+ * @param target svn::Path formatted path object
+ * @param base path of current selection status in FolderBrowser
+ * @param flat true if flat mode is selected
+ *
+ * @return native file path (if in WS) or URL (if in repository)
+ */
+wxString
+FullNativePath(const svn::Path & target, const wxString & base, bool flat);
 #endif
 /* -----------------------------------------------------------------
  * local variables:

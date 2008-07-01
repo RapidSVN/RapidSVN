@@ -1774,7 +1774,7 @@ FileListCtrl::OnBeginDrag (wxListEvent & event)
   {
     const int index = arr.Item (i);
     svn::Status * status = (svn::Status*)GetItemData (index);
-    data.AddFile (Utf8ToLocal (status->path ()));
+    data.AddFile (FullNativePath (status->path (), m->Path, m->FlatMode));
   }
   
   wxDropSource dropSource (this);
@@ -1783,7 +1783,7 @@ FileListCtrl::OnBeginDrag (wxListEvent & event)
    * @todo we dont seem to need result
    * wxDragResult result = dropSource.DoDragDrop (true);
    */
-  dropSource.DoDragDrop (true);
+  dropSource.DoDragDrop ();
 }
 
 void 

@@ -27,6 +27,7 @@
 
 // svncpp
 #include "svncpp/status.hpp"
+#include "svncpp/path.hpp"
 
 // app
 #include "filelist_ctrl_drop_target.hpp"
@@ -55,7 +56,8 @@ FileListCtrlDropTarget::GetDestinationPath (const wxPoint & point)
     if (status->isVersioned () && 
         (status->entry ().kind() == svn_node_dir))
     {
-      path = Utf8ToLocal (status->path ());
+      path = FullNativePath (svn::Path (status->path ()),
+        m_browser->GetSelectedItemData ()->getPath (), m_parent->IsFlat ());
     }
   }
 

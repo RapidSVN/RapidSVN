@@ -589,7 +589,28 @@ PathToNative (const svn::Path & path)
   return Utf8ToLocal (path.native ());
 }
 
-
+wxString
+FullNativePath(const svn::Path & target, const wxString & base, bool flat)
+{
+  if (target.isUrl())
+  {
+    return PathToNative (target);
+  }
+  else
+  {
+    if (flat)
+    {
+      wxFileName filename = wxFileName::FileName (PathToNative (target));
+      filename.Normalize ();
+      return filename.GetFullPath();
+    }
+    else
+    {
+      return base + wxFileName::GetPathSeparator () +
+        wxFileName::FileName (PathToNative (target)).GetFullName ();
+    }
+  }
+}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
