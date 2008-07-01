@@ -424,6 +424,9 @@ public:
     toolBar->EnableTool (ID_Stop, running);
     MenuBar->Enable (ID_Stop, running);
 
+    m_parent->SetCursor (wxCursor::wxCursor (running ? wxCURSOR_WAIT : wxCURSOR_ARROW));
+    toolBar->SetCursor (wxCursor::wxCursor (wxCURSOR_ARROW));
+
     if (folderBrowser)
       folderBrowser->Enable (!running);
     if (listCtrl)
