@@ -423,6 +423,8 @@ public:
 
     toolBar->EnableTool (ID_Stop, running);
     MenuBar->Enable (ID_Stop, running);
+    
+    m_parent->SetCursor (running ? *wxHOURGLASS_CURSOR : *wxSTANDARD_CURSOR);
 
     if (folderBrowser)
     {
