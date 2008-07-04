@@ -65,16 +65,7 @@ bool
 DeleteAction::Perform ()
 {
   svn::Client client (GetContext ());
-
-  const std::vector<svn::Path> & v = GetTargets ();
-  std::vector<svn::Path>::const_iterator it;
-
-  for (it=v.begin (); it!=v.end (); it++)
-  {
-    svn::Path path (*it);
-
-    client.remove (path, m_force);
-  }
+  client.remove (GetTargets (), m_force);
 
   return true;
 }
