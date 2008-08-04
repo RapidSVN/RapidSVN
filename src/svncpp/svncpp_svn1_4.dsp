@@ -1,4 +1,4 @@
-# Microsoft Developer Studio Project File - Name="svncpp" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="svncpp_svn1_4" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** NICHT BEARBEITEN **
 
@@ -13,14 +13,14 @@ CFG=svncpp - Win32 Unicode Debug
 !MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
 !MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
 !MESSAGE 
-!MESSAGE NMAKE /f "svncpp.mak" CFG="svncpp - Win32 Unicode Debug"
+!MESSAGE NMAKE /f "svncpp.mak" CFG="svncpp_svn1_4 - Win32 Unicode Debug"
 !MESSAGE 
 !MESSAGE Für die Konfiguration stehen zur Auswahl:
 !MESSAGE 
-!MESSAGE "svncpp - Win32 Release" (basierend auf  "Win32 (x86) Static Library")
-!MESSAGE "svncpp - Win32 Debug" (basierend auf  "Win32 (x86) Static Library")
-!MESSAGE "svncpp - Win32 Unicode Debug" (basierend auf  "Win32 (x86) Static Library")
-!MESSAGE "svncpp - Win32 Unicode Release" (basierend auf  "Win32 (x86) Static Library")
+!MESSAGE "svncpp_svn1_4 - Win32 Release" (basierend auf  "Win32 (x86) Static Library")
+!MESSAGE "svncpp_svn1_4 - Win32 Debug" (basierend auf  "Win32 (x86) Static Library")
+!MESSAGE "svncpp_svn1_4 - Win32 Unicode Debug" (basierend auf  "Win32 (x86) Static Library")
+!MESSAGE "svncpp_svn1_4 - Win32 Unicode Release" (basierend auf  "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -30,7 +30,7 @@ CFG=svncpp - Win32 Unicode Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "svncpp - Win32 Release"
+!IF  "$(CFG)" == "svncpp_svn1_4 - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -53,7 +53,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF  "$(CFG)" == "svncpp - Win32 Debug"
+!ELSEIF  "$(CFG)" == "svncpp_svn1_4 - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -76,7 +76,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF  "$(CFG)" == "svncpp - Win32 Unicode Debug"
+!ELSEIF  "$(CFG)" == "svncpp_svn1_4 - Win32 Unicode Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -99,7 +99,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF  "$(CFG)" == "svncpp - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "svncpp_svn1_4 - Win32 Unicode Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -126,10 +126,10 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "svncpp - Win32 Release"
-# Name "svncpp - Win32 Debug"
-# Name "svncpp - Win32 Unicode Debug"
-# Name "svncpp - Win32 Unicode Release"
+# Name "svncpp_svn1_4 - Win32 Release"
+# Name "svncpp_svn1_4 - Win32 Debug"
+# Name "svncpp_svn1_4 - Win32 Unicode Debug"
+# Name "svncpp_svn1_4 - Win32 Unicode Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
