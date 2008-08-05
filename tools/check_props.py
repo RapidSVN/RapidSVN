@@ -28,22 +28,39 @@
 # Remark: execute this script in <rapidsvn tree>
 #
 # Usage:
-# >check-props.sh
+# python check_props.py
+from os.path import walk
+from subprocess import Popen
 
-# text files get native line endings
-find . -name "*.?pp" | xargs svn ps svn:eol-style native
-find . -name "*.py" | xargs svn ps svn:eol-style native
-find . -name "*.sh" | xargs svn ps svn:eol-style native
-find . -name "*.txt" | xargs svn ps svn:eol-style native
-find . -name "*.html" | xargs svn ps svn:eol-style native
-find . -name "*.map" | xargs svn ps svn:eol-style native
-find . -name "*.md5" | xargs svn ps svn:eol-style native
+def set_prop(filename, prop, value):
+  args=['svn', 'ps', prop, value, filename]
+  p=Popen(args, stdout=None)
+  t=p.communicate()[0]
 
-# images
-find . -name "*.png" | xargs svn ps svn:mime-type image/png
-find . -name "*.ico" | xargs svn ps svn:mime-type image/x-icon
-find . -name "*.xpm" | xargs svn ps svn:mime-type image/x-xpm
-find . -name "*.xpm" | xargs svn ps svn:eol-style native
+TEXT_EXTENSIONS=['.cpp', '.hpp', '.py', '.sh', '.txt', '.html', '.map', '.md5', '.xpm']
 
+def is_text(fname):
+  fname = fname.lower()
+  for ext in TEXT_EXTENSIONS:
+    if fname.endswith(ext):
+      return True
+  
+  return False
 
-# end of file
+MIME_TYPES={
+  '.png': 'image/png',
+  '.ico': 'image/x-icon',
+  '.xpm': 'image/x-xpm'
+}
+
+def walk_func(arg, dirname, fnames):
+  for fname in fnames:
+    fpath = dirname + '/' + fname
+    if is_text(fname):
+      set_prop(fpath, 'svn:eol-style', 'native')
+      
+    ext=fname[-4:].lower()
+    if MIME_TYPES.has_key(ext):
+      set_prop(fpath, 'svn:mime-type', MIME_TYPES[ext])
+
+walk('.', walk_func, None)
