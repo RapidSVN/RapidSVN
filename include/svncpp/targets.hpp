@@ -26,7 +26,7 @@
 #define _SVNCPP_TARGETS_HPP_
 
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // apr api
 #include "apr_tables.h"

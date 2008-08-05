@@ -26,7 +26,7 @@
 #define _SVNCPP_CONTEXT_LISTENER_HPP_ 
 
 // stl
-#include <string>
+#include "svncpp/string_wrapper.hpp"
 
 // Subversion api
 #include "svn_client.h"

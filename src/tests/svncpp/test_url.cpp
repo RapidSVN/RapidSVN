@@ -24,7 +24,7 @@
 
 // app
 #include "test_url.hpp"
-#include <string>
+#include "svncpp/string_wrapper.hpp"
 
 //svncpp
 #include "svncpp/url.hpp"

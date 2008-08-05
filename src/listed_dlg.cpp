@@ -29,7 +29,7 @@
 #include "wx/valgen.h"
 
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // svncpp
 #include "svncpp/exception.hpp"

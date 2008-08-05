@@ -26,7 +26,7 @@
  */
 
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // wx
 #include "wx/wx.h"

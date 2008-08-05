@@ -26,7 +26,7 @@
 #define _SVNCPP_STATUS_SELECTION_HPP_
 
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // svncpp
 #include "svncpp/status.hpp"

@@ -41,9 +41,9 @@
 
 
 // stl
-#include <vector>
-#include <utility>
-#include <map>
+#include "svncpp/vector_wrapper.hpp"
+#include "svncpp/utility_wrapper.hpp"
+#include "svncpp/map_wrapper.hpp"
 
 // svncpp
 #include "svncpp/context.hpp"

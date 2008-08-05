@@ -23,7 +23,7 @@
  */
 
 // stl
-#include <string>
+#include "svncpp/string_wrapper.hpp"
 
 // svncpp
 #include "svncpp/status.hpp"

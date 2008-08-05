@@ -26,7 +26,7 @@
 #endif
 // stl
 #include <exception>
-#include <map>
+#include "svncpp/map_wrapper.hpp"
 #include <deque> 
 #include <algorithm>
 

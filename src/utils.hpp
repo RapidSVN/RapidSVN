@@ -25,7 +25,7 @@
 #define _RAPIDSVN_UTILS_H_INCLUDED_
 
 // stl
-#include <string>
+#include "svncpp/string_wrapper.hpp"
 
 // wx
 #include "wx/dynarray.h"

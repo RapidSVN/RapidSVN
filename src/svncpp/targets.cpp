@@ -23,7 +23,7 @@
  */
 
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // subversion api
 #include "svn_types.h"

@@ -30,7 +30,7 @@
 #include "svncpp/status_selection.hpp"
 
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // app
 #include "ignore_action.hpp"

@@ -22,58 +22,38 @@
  * ====================================================================
  */
 
-// stl
-#include "svncpp/string_wrapper.hpp"
+#ifndef _SVNCPP_UTILITY_WRAPPER_H_
+#define _SVNCPP_UTILITY_WRAPPER_H_
 
-// svncpp
-#include "svncpp/log_entry.hpp"
-#include "svncpp/pool.hpp"
+// Ignore MSVC 6 compiler warning
+#if defined (_MSC_VER) && _MSC_VER <= 1200
+// debug symbol truncated
+#pragma warning (disable: 4786)
+// C++ exception specification
+#pragma warning (disable: 4290)
+// conflict between signed and unsigned
+#pragma warning (disable: 4018)
+#endif
 
-// subversion api
-#include "svn_time.h"
+// Ignore MSVC 7,8,9 compiler warnings
+#if defined (_MSC_VER) && _MSC_VER > 1200 && _MSC_VER <= 1500
+// C++ exception specification
+#pragma warning (disable: 4290)
+#endif
+
+#include <utility>
+
+// re-enable warnings that are us
+#if defined (_MSC_VER) && _MSC_VER <= 1200
+#pragma warning (default: 4018)
+#endif
+
+#if defined (_MSC_VER) && _MSC_VER > 1200 && _MSC_VER <= 1500
+#endif
 
 
-namespace svn
-{
-  LogChangePathEntry::LogChangePathEntry (
-    const char *path_,
-    char action_,
-    const char *copyFromPath_,
-    const svn_revnum_t copyFromRevision_)
-   : path (path_), action(action_), 
-     copyFromPath (copyFromPath_ != NULL ? copyFromPath_ : ""),
-     copyFromRevision (copyFromRevision_)
-  {
-  }
 
-
-  LogEntry::LogEntry ()
-  {
-  }
-
-
-  LogEntry::LogEntry (
-    const svn_revnum_t revision_,
-    const char * author_,
-    const char * date_,
-    const char * message_)
-  {
-    date = 0;
-
-    if (date_ != 0)
-    {
-      Pool pool;
-
-      if (svn_time_from_cstring (&date, date_, pool) != 0)
-        date = 0;
-    }
-
-    revision = revision_;
-    author = author_ == 0 ? "" : author_;
-    message = message_ == 0 ? "" : message_;
-  }
-}
-
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../../rapidsvn-dev.el")

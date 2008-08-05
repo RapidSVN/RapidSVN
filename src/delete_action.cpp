@@ -29,7 +29,7 @@
 #include "svncpp/status.hpp"
 
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // app
 #include "delete_action.hpp"

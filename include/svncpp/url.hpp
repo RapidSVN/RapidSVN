@@ -25,8 +25,8 @@
 #define _SVNCPP_URL_HPP_
 
 // stl
-#include <string>
-#include <vector>
+#include "svncpp/string_wrapper.hpp"
+#include "svncpp/vector_wrapper.hpp"
 
 namespace svn
 {

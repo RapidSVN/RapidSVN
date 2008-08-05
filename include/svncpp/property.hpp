@@ -38,8 +38,8 @@
 
 
 // stl 
-#include <vector>
-#include <string>
+#include "svncpp/vector_wrapper.hpp"
+#include "svncpp/string_wrapper.hpp"
 
 // svncpp
 #include "svncpp/context.hpp"

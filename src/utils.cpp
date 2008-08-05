@@ -22,7 +22,7 @@
  * ====================================================================
  */
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // wxWidgets
 #include "wx/wx.h"

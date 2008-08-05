@@ -23,7 +23,7 @@
  */
 
 // stl
-#include <vector>
+#include "svncpp/vector_wrapper.hpp"
 
 // subversion api
 #include "svn_types.h"
@@ -32,6 +32,7 @@
 #include "apr_file_info.h"
 
 // svncpp
+
 #include "svncpp/exception.hpp"
 #include "svncpp/path.hpp"
 #include "svncpp/pool.hpp"
