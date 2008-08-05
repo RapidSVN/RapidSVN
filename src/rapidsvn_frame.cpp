@@ -738,6 +738,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
 
   EVT_MENU (ID_Preferences, RapidSvnFrame::OnPreferences)
   EVT_MENU (ID_Refresh, RapidSvnFrame::OnRefresh)
+  EVT_UPDATE_UI (ID_Refresh, RapidSvnFrame::OnUpdateCommand)
 
   EVT_MENU (ID_Column_Reset, RapidSvnFrame::OnColumnReset)
   EVT_MENU_RANGE (ID_Column_Min, ID_Column_Max, RapidSvnFrame::OnColumn)
@@ -777,6 +778,7 @@ BEGIN_EVENT_TABLE (RapidSvnFrame, wxFrame)
 
   EVT_UPDATE_UI_RANGE (ID_File_Min, ID_File_Max, RapidSvnFrame::OnUpdateCommand)
   EVT_UPDATE_UI_RANGE (ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnUpdateCommand)
+  EVT_UPDATE_UI_RANGE (ID_Filter_Min, ID_Filter_Max, RapidSvnFrame::OnUpdateCommand)
 
   EVT_MENU (ACTION_EVENT, RapidSvnFrame::OnActionEvent)
 
