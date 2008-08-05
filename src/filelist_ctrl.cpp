@@ -1286,31 +1286,6 @@ FileListCtrl::GetSelectedItems () const
   return indx_arr;
 }
 
-#if 0
-const svn::Targets
-FileListCtrl::GetTargets () const
-{
-  IndexArray arr = GetSelectedItems ();
-  size_t i;
-
-  std::vector<svn::Path> v;
-  v.reserve (arr.GetCount ());
-
-  for (i = 0; i < arr.GetCount (); i++)
-  {
-    const int index = arr.Item (i);
-    svn::Status * status = (svn::Status*)GetItemData (index);
-
-    if (status == 0)
-      continue;
-
-    v.push_back (status->path ());
-  }
-
-  return svn::Targets (v);
-}
-#endif
-
 const svn::StatusSel &
 FileListCtrl::GetStatusSel () const
 {

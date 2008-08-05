@@ -141,25 +141,6 @@ DragAndDropAction::IsInSameTree(const wxString & srcPath, const wxString & destP
   if (!base.isUrl() && !svn::Wc::checkWc(base.c_str()))
     return false;
 
-#if 0
-  // 2. If real operation like "svn status" to base path may failed,
-  //    it would be considered not as svn path. Because two pathes are
-  //    from different repository.
-  svn::Client client (GetContext ());
-  svn::StatusEntries entries;
-  try
-  {
-    // It costs too much for URL.
-    entries = client.status (base.c_str ());
-    if (entries.begin () == entries.end ())
-      return false;
-  }
-  catch (svn::ClientException)
-  {
-    return false;
-  }
-#endif
-
   return true;
 }
 

@@ -239,23 +239,11 @@ public:
   const IndexArray
   GetSelectedItems () const;
 
-//TODO  const svn::Targets
-//TODO  GetTargets () const;
-
   /** 
    * the selected @ref Status instances
    */
   const svn::StatusSel &
   GetStatusSel () const;
-
-#if 0
-  /**
-   * determine the properties of what has been selected
-   * in terms of the relevant Action Flags.
-   */
-  unsigned int
-  GetSelectionActionFlags () const;
-#endif
 
   svn::Context *
   GetContext () const;

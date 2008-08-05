@@ -709,36 +709,6 @@ public:
       ShowErrorDialog (msg);
   }
 
-
-#if 0
-  const svn::Targets
-  GetTargets () const
-  {
-    //is there nothing selected in the list control,
-    //or is the active window *not* the list control?
-    if (listCtrl->GetSelectedItemCount () <= 0 ||
-        activePane != ACTIVEPANE_FILELIST)
-    {
-      wxString path = folderBrowser->GetPath ();
-
-      svn::Path pathUtf8 (PathUtf8 (path));
-      if (!pathUtf8.isUrl ())
-      {
-        wxFileName fname (path);
-        path = fname.GetFullPath ();
-        pathUtf8 = PathUtf8 (path);
-      }
-
-      return svn::Targets (pathUtf8.c_str ());
-    }
-    else
-    {
-      //no, build the file list from the list control
-      return listCtrl->GetTargets ();
-    }
-  }
-#endif 
-
   const svn::StatusSel &
   GetStatusSel ()  const
   {
@@ -2179,53 +2149,6 @@ RapidSvnFrame::EditBookmark ()
     m->folderBrowser->SelectBookmark (newPath);
   }
 }
-
-#if 0
-unsigned int
-RapidSvnFrame::GetSelectionActionFlags () const
-{
-  unsigned int flags = 0;
-
-  //is there nothing selected in the list control,
-  //or is the active window *not* the list control?
-  if (m->listCtrl->GetSelectedItemCount () <= 0 ||
-      m_activePane != ACTIVEPANE_FILELIST)
-  {
-    //yes, so examine the folder browser
-
-    flags |= Action::IS_DIR;
-    wxString path = m->folderBrowser->GetPath ();
-
-    svn::Path pathUtf8 (PathUtf8 (path));
-    if (pathUtf8.length () > 0)
-    {
-      flags |= Action::SINGLE_TARGET;
-      if (pathUtf8.isUrl ())
-      {
-        flags |= Action::RESPOSITORY_TYPE;
-      }
-      else
-      {
-        if (svn::Wc::checkWc (pathUtf8.c_str ()))
-        {
-          flags |= Action::VERSIONED_WC_TYPE;
-        }
-        else
-        {
-          flags |= Action::UNVERSIONED_WC_TYPE;
-        }
-      }
-    }
-  }
-  else
-  {
-    //no, ask the list control
-    flags = m->listCtrl->GetSelectionActionFlags ();
-  }
-
-  return flags;
-}
-#endif
 
 
 void
