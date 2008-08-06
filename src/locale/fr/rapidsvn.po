@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rapidsvn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-28 00:03+0100\n"
+"POT-Creation-Date: 2008-08-06 09:43+0200\n"
 "PO-Revision-Date: 2006-11-06 16:59+0100\n"
 "Last-Translator: Jérôme Rapinat <gnupower@hotmail.fr>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -13,215 +13,215 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../exceptions.cpp:56
+#: ../exceptions.cpp:55
 #, c-format
 msgid "%s  code: %ld"
 msgstr "%s  code : %ld"
 
-#: ../about_dlg.cpp:48
+#: ../about_dlg.cpp:47
 #, fuzzy, c-format
 msgid "%s Version %s"
 msgstr "%s Version %d.%d.%d"
 
-#: ../rapidsvn_frame.cpp:311
+#: ../rapidsvn_frame.cpp:325
 msgid "&About..."
 msgstr "&À propos..."
 
-#: ../utils.cpp:171
+#: ../utils.cpp:170
 msgid "&Add\tINS"
 msgstr ""
 
-#: ../utils.cpp:249
+#: ../utils.cpp:248
 msgid "&Add Existing Working Copy..."
 msgstr "&Ajouter une copie existante..."
 
-#: ../log_dlg.cpp:316
+#: ../log_dlg.cpp:351
 msgid "&Annotate"
 msgstr "&Annoter"
 
-#: ../utils.cpp:213
+#: ../utils.cpp:212
 msgid "&Annotate..."
 msgstr "&Annoter..."
 
-#: ../rapidsvn_frame.cpp:332
+#: ../rapidsvn_frame.cpp:346
 msgid "&Bookmarks"
 msgstr "&Signets"
 
-#: ../log_dlg.cpp:311
+#: ../log_dlg.cpp:346
 msgid "&Close"
 msgstr "&Fermer"
 
-#: ../rapidsvn_frame.cpp:304
+#: ../rapidsvn_frame.cpp:318
 msgid "&Contents\tF1"
 msgstr "&Contenu\tF1"
 
-#: ../utils.cpp:188
+#: ../utils.cpp:187
 msgid "&Copy...\tF5"
 msgstr "&Copier...\tF5"
 
-#: ../rapidsvn_frame.cpp:278
+#: ../rapidsvn_frame.cpp:292
 msgid "&Create..."
 msgstr "&Créer..."
 
-#: ../utils.cpp:174
+#: ../utils.cpp:173
 msgid "&Delete\tDEL"
 msgstr "&Supprimer\tDEL"
 
-#: ../listed_dlg.cpp:61
+#: ../listed_dlg.cpp:60
 msgid "&Delete..."
 msgstr "&Supprimer..."
 
-#: ../log_dlg.cpp:314
+#: ../log_dlg.cpp:349
 msgid "&Diff"
 msgstr "&Diff"
 
-#: ../utils.cpp:206
+#: ../utils.cpp:205
 msgid "&Diff to Base...\tCTRL+B"
 msgstr "&Diff d'après Base...\tCTRL+B"
 
-#: ../utils.cpp:207
+#: ../utils.cpp:206
 msgid "&Diff to Head...\tCTRL+H"
 msgstr "&Diff d'après Head...\tCTRL+H"
 
-#: ../utils.cpp:205
+#: ../utils.cpp:204
 msgid "&Diff...\tCTRL+D"
 msgstr "&Diff...\tCTRL+D"
 
-#: ../utils.cpp:267
+#: ../utils.cpp:266
 msgid "&Edit Bookmark..."
 msgstr "&Editer le signet..."
 
-#: ../listed_dlg.cpp:58
+#: ../listed_dlg.cpp:57
 msgid "&Edit..."
 msgstr "&Editer..."
 
-#: ../utils.cpp:245
+#: ../utils.cpp:244
 msgid "&Edit...\tF3"
 msgstr "&Editer...\tF3"
 
-#: ../rapidsvn_frame.cpp:276
+#: ../rapidsvn_frame.cpp:290
 msgid "&Export...\tCTRL-E"
 msgstr "&Exporter...\tCTRL-E"
 
-#: ../rapidsvn_frame.cpp:333
+#: ../rapidsvn_frame.cpp:347
 msgid "&Extras"
 msgstr "&Extras"
 
-#: ../rapidsvn_frame.cpp:327
+#: ../rapidsvn_frame.cpp:341
 msgid "&File"
 msgstr "&Fichier"
 
-#: ../log_dlg.cpp:313
+#: ../log_dlg.cpp:348
 msgid "&Get"
 msgstr "&Obtenir"
 
-#: ../rapidsvn_frame.cpp:215 ../rapidsvn_frame.cpp:334
+#: ../rapidsvn_frame.cpp:226 ../rapidsvn_frame.cpp:348
 msgid "&Help"
 msgstr "&Aide"
 
-#: ../utils.cpp:176
+#: ../utils.cpp:175
 #, fuzzy
 msgid "&Ignore\tCTRL-DEL"
 msgstr "&Exporter...\tCTRL-E"
 
-#: ../rapidsvn_frame.cpp:275
+#: ../rapidsvn_frame.cpp:289
 msgid "&Import...\tCTRL-I"
 msgstr "&Importer...\tCTRL-I"
 
-#: ../rapidsvn_frame.cpp:305
+#: ../rapidsvn_frame.cpp:319
 msgid "&Index\tShift+F1"
 msgstr "&Index\tShift+F1"
 
-#: ../utils.cpp:211
+#: ../utils.cpp:210
 msgid "&Info..."
 msgstr "&Info..."
 
-#: ../utils.cpp:198
+#: ../utils.cpp:197
 msgid "&Lock..."
 msgstr "&Vérouiller..."
 
-#: ../utils.cpp:209
+#: ../utils.cpp:208
 msgid "&Log...\tCTRL-L"
 msgstr "&Log...\tCTRL-L"
 
-#: ../log_dlg.cpp:315
+#: ../log_dlg.cpp:350
 msgid "&Merge"
 msgstr "&Fusionner"
 
-#: ../rapidsvn_frame.cpp:330
+#: ../rapidsvn_frame.cpp:344
 msgid "&Modify"
 msgstr "&Modifier"
 
-#: ../listed_dlg.cpp:60
+#: ../listed_dlg.cpp:59
 msgid "&New..."
 msgstr "&Nouveau..."
 
-#: ../cert_dlg.cpp:135
+#: ../cert_dlg.cpp:134
 msgid "&Permanently"
 msgstr "De façon &permanente"
 
-#: ../utils.cpp:166
+#: ../utils.cpp:165
 msgid "&Properties...\tCTRL-P"
 msgstr "&Propriétés...\tCTRL-P"
 
-#: ../rapidsvn_frame.cpp:331
+#: ../rapidsvn_frame.cpp:345
 msgid "&Query"
 msgstr "&Informations"
 
-#: ../utils.cpp:262
+#: ../utils.cpp:261
 #, fuzzy
 msgid "&Remove Bookmark"
 msgstr "&Enlever le signet"
 
-#: ../rapidsvn_frame.cpp:329
+#: ../rapidsvn_frame.cpp:343
 msgid "&Repository"
 msgstr "&Dépôt"
 
-#: ../utils.cpp:314
+#: ../utils.cpp:313
 msgid "&Stop"
 msgstr "&Stop"
 
-#: ../utils.cpp:258
+#: ../utils.cpp:257
 msgid "&Switch Repository URL..."
 msgstr "&Aller vers dépôt URL..."
 
-#: ../cert_dlg.cpp:137
+#: ../cert_dlg.cpp:136
 msgid "&Temporarily"
 msgstr "&Temporairement"
 
-#: ../rapidsvn_frame.cpp:336
+#: ../rapidsvn_frame.cpp:350
 msgid "&Tests"
 msgstr "&Tests"
 
-#: ../utils.cpp:199
+#: ../utils.cpp:198
 msgid "&Unlock"
 msgstr "&Déverrouiller"
 
-#: ../utils.cpp:283
+#: ../utils.cpp:282
 msgid "&Update...\tCTRL-U"
 msgstr "&Mise à jour...\tCTRL-U"
 
-#: ../log_dlg.cpp:312 ../rapidsvn_frame.cpp:328
+#: ../log_dlg.cpp:347 ../rapidsvn_frame.cpp:342
 msgid "&View"
 msgstr "&Affichage"
 
-#: ../listed_dlg.cpp:59
+#: ../listed_dlg.cpp:58
 msgid "&View..."
 msgstr "&Affichage..."
 
-#: ../cert_dlg.cpp:81
+#: ../cert_dlg.cpp:80
 msgid "- The certificate has an unknown error."
 msgstr "- Erreur inconnue avec le certificat."
 
-#: ../cert_dlg.cpp:80
+#: ../cert_dlg.cpp:79
 msgid "- The certificate has expired."
 msgstr "- Le certificat a expiré."
 
-#: ../cert_dlg.cpp:78
+#: ../cert_dlg.cpp:77
 msgid "- The certificate hostname does not match."
 msgstr "- Le nom de serveur du certificat ne correspond pas."
 
-#: ../cert_dlg.cpp:77
+#: ../cert_dlg.cpp:76
 msgid ""
 "- The certificate is not issued by a trusted authority.\n"
 "  Use the fingerprint to validate the certificate manually!"
@@ -229,93 +229,93 @@ msgstr ""
 "- Le certificate n'est pas délivré par un tiers de confiance.\n"
 "  Utiliser l'empreinte pour valider le certificate manuellement!"
 
-#: ../cert_dlg.cpp:79
+#: ../cert_dlg.cpp:78
 msgid "- The certificate is not yet valid."
 msgstr "- Le certificate n'est pas encore valide."
 
-#: ../file_info.cpp:104 ../file_info.cpp:112 ../file_info.cpp:197
+#: ../file_info.cpp:105 ../file_info.cpp:113 ../file_info.cpp:198
 msgid "<None>"
 msgstr "<Aucun>"
 
-#: ../about_dlg.cpp:59
+#: ../about_dlg.cpp:58
 msgid "ANSI"
 msgstr "ANSI"
 
-#: ../about_dlg.cpp:43
+#: ../about_dlg.cpp:42
 #, c-format
 msgid "About %s"
 msgstr "À propos de %s"
 
-#: ../log_dlg.cpp:207
+#: ../log_dlg.cpp:242
 msgid "Action"
 msgstr "Action"
 
-#: ../add_action.cpp:50 ../listener.cpp:354 ../rapidsvn_frame.cpp:1498
+#: ../add_action.cpp:49 ../listener.cpp:353 ../rapidsvn_frame.cpp:1590
 msgid "Add"
 msgstr "Ajouter"
 
-#: ../utils.cpp:254
+#: ../utils.cpp:253
 msgid "Add Existing &Repository..."
 msgstr "Ajouter un &dépôt existant..."
 
-#: ../utils.cpp:173
+#: ../utils.cpp:172
 msgid "Add r&ecursive"
 msgstr "Ajouter r&écursivement"
 
-#: ../rapidsvn_frame.cpp:459
+#: ../rapidsvn_frame.cpp:535
 msgid "Add selected"
 msgstr "Ajouter la sélection"
 
-#: ../checkout_dlg.cpp:117
+#: ../checkout_dlg.cpp:116
 msgid "Add to bookmarks"
 msgstr "Ajouter aux signets"
 
-#: ../listener.cpp:363 ../listener.cpp:370 ../rapidsvn_frame.cpp:1507
-#: ../rapidsvn_frame.cpp:1514
+#: ../listener.cpp:362 ../listener.cpp:369 ../rapidsvn_frame.cpp:1599
+#: ../rapidsvn_frame.cpp:1606
 msgid "Added"
 msgstr "Ajouté"
 
-#: ../rapidsvn_frame.cpp:1981
+#: ../rapidsvn_frame.cpp:2098
 #, c-format
 msgid "Added repository to bookmarks '%s'"
 msgstr "Dépôt ajouté aux signets '%s'"
 
-#: ../rapidsvn_frame.cpp:1956
+#: ../rapidsvn_frame.cpp:2069
 #, c-format
 msgid "Added working copy to bookmarks '%s'"
 msgstr "Copie de travail ajoutée aux signets '%s'"
 
-#: ../drag_n_drop_action.cpp:206
+#: ../drag_n_drop_action.cpp:319
 #, c-format
 msgid "Adding directory to repository: %s"
 msgstr ""
 
-#: ../drag_n_drop_action.cpp:219
+#: ../drag_n_drop_action.cpp:332
 #, fuzzy, c-format
 msgid "Adding file to repository: %s"
 msgstr "Dépôt : %s"
 
-#: ../log_dlg.cpp:309
+#: ../log_dlg.cpp:344
 msgid "Affected Files/Dirs"
 msgstr "Fichiers/répertoires affectés"
 
-#: ../preferences_dlg.cpp:44
+#: ../preferences_dlg.cpp:43
 msgid "All files|*"
 msgstr "Tous les fichiers|*"
 
-#: ../rapidsvn_frame.cpp:1372 ../rapidsvn_frame.cpp:1391
+#: ../rapidsvn_frame.cpp:1464 ../rapidsvn_frame.cpp:1483
 msgid "An error occured while launching the browser"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1359
+#: ../rapidsvn_frame.cpp:1451
 msgid "An error occurred while checking valid actions"
 msgstr ""
 
-#: ../annotate_action.cpp:81 ../annotate_action.cpp:82
+#: ../annotate_action.cpp:80 ../annotate_action.cpp:81
 msgid "Annotate"
 msgstr "Annoter"
 
-#: ../dnd_dlg.cpp:57
+#: ../dnd_dlg.cpp:56
 #, c-format
 msgid ""
 "Are you sure that you want to import\n"
@@ -327,27 +327,27 @@ msgid ""
 "  %s?"
 msgstr ""
 
-#: ../auth_dlg.cpp:118 ../rapidsvn_generated.cpp:184
+#: ../auth_dlg.cpp:117 ../rapidsvn_generated.cpp:184
 msgid "Authentication"
 msgstr "Authentification"
 
-#: ../annotate_dlg.cpp:49 ../columns.cpp:50
+#: ../annotate_dlg.cpp:48 ../columns.cpp:49
 msgid "Author"
 msgstr "Auteur"
 
-#: ../action.cpp:262
+#: ../action.cpp:261
 msgid "BASE"
 msgstr "BASE"
 
-#: ../rapidsvn_frame.cpp:2014
+#: ../rapidsvn_frame.cpp:2135
 msgid "Bookmark"
 msgstr "Signet"
 
-#: ../folder_browser.cpp:178
+#: ../folder_browser.cpp:174
 msgid "Bookmarks"
 msgstr "Signets"
 
-#: ../rapidsvn_frame.cpp:480
+#: ../rapidsvn_frame.cpp:556
 msgid "Bring changes from the repository into the working copy"
 msgstr "Importer les changements du dépôt dans la copie de travail"
 
@@ -356,7 +356,7 @@ msgstr "Importer les changements du dépôt dans la copie de travail"
 msgid "Browse"
 msgstr ""
 
-#: ../about_dlg.cpp:72
+#: ../about_dlg.cpp:71
 #, c-format
 msgid ""
 "Built with:\n"
@@ -367,63 +367,63 @@ msgstr ""
 "wxWidgets %d.%d.%d (%s)\n"
 "Subversion %d.%d.%d\n"
 
-#: ../export_dlg.cpp:139
+#: ../export_dlg.cpp:138
 msgid "CR (MacOS)"
 msgstr "CR (MacOS)"
 
-#: ../export_dlg.cpp:137
+#: ../export_dlg.cpp:136
 msgid "CRLF (Windows)"
 msgstr "CRLF (Windows)"
 
-#: ../auth_dlg.cpp:74 ../cert_dlg.cpp:139 ../checkout_dlg.cpp:128
-#: ../commit_dlg.cpp:104 ../delete_dlg.cpp:58 ../destination_dlg.cpp:91
-#: ../dnd_dlg.cpp:113 ../export_dlg.cpp:147 ../import_dlg.cpp:131
-#: ../listed_dlg.cpp:187 ../listed_dlg.cpp:343 ../lock_dlg.cpp:62
-#: ../merge_dlg.cpp:216 ../rapidsvn_generated.cpp:195
-#: ../rapidsvn_generated.cpp:329 ../switch_dlg.cpp:140 ../unlock_dlg.cpp:59
-#: ../update_dlg.cpp:136
+#: ../auth_dlg.cpp:73 ../cert_dlg.cpp:138 ../checkout_dlg.cpp:127
+#: ../commit_dlg.cpp:103 ../delete_dlg.cpp:57 ../destination_dlg.cpp:90
+#: ../dnd_dlg.cpp:112 ../export_dlg.cpp:146 ../import_dlg.cpp:130
+#: ../listed_dlg.cpp:186 ../listed_dlg.cpp:342 ../lock_dlg.cpp:61
+#: ../merge_dlg.cpp:215 ../rapidsvn_generated.cpp:195
+#: ../rapidsvn_generated.cpp:329 ../switch_dlg.cpp:139 ../unlock_dlg.cpp:58
+#: ../update_dlg.cpp:135
 msgid "Cancel"
 msgstr "Annuler"
 
-#: ../cert_dlg.cpp:129
+#: ../cert_dlg.cpp:128
 msgid "Certificate Information:"
 msgstr "Information du certificat :"
 
-#: ../rapidsvn_frame.cpp:277
+#: ../rapidsvn_frame.cpp:291
 msgid "Check&out...\tCTRL-O"
 msgstr "&Récupérer...\tCTRL-O"
 
-#: ../checkout_action.cpp:41 ../checkout_dlg.cpp:251
+#: ../checkout_action.cpp:40 ../checkout_dlg.cpp:250
 msgid "Checkout"
 msgstr "Récupérer"
 
-#: ../utils.cpp:275
+#: ../utils.cpp:274
 msgid "Checkout New Working Copy..."
 msgstr "Récupérer une nouvelle copie de travail..."
 
-#: ../rapidsvn_frame.cpp:319
+#: ../rapidsvn_frame.cpp:333
 msgid "Checkout Test"
 msgstr "Test de récupération"
 
-#: ../columns.cpp:59
+#: ../columns.cpp:58
 msgid "Checksum"
 msgstr "Somme de contrôle"
 
-#: ../file_info.cpp:199
+#: ../file_info.cpp:200
 #, c-format
 msgid "Checksum: %s"
 msgstr "Somme de contrôle : %s"
 
-#: ../cleanup_action.cpp:40 ../utils.cpp:306
+#: ../cleanup_action.cpp:39 ../utils.cpp:305
 msgid "Cleanup"
 msgstr "Nettoyer"
 
-#: ../utils.cpp:288
+#: ../utils.cpp:287
 #, fuzzy
 msgid "Co&mmit...\tCTRL-ENTER"
 msgstr "Pu&blication...\tCTRL-M"
 
-#: ../rapidsvn_frame.cpp:257
+#: ../rapidsvn_frame.cpp:268
 msgid "Columns"
 msgstr "Colonnes"
 
@@ -431,11 +431,11 @@ msgstr "Colonnes"
 msgid "Combo!"
 msgstr ""
 
-#: ../commit_action.cpp:41 ../commit_dlg.cpp:160
+#: ../commit_action.cpp:40 ../commit_dlg.cpp:159
 msgid "Commit"
 msgstr "Publication"
 
-#: ../commit_dlg.cpp:160
+#: ../commit_dlg.cpp:159
 msgid "Commit Log Message"
 msgstr "Message de publication"
 
@@ -443,11 +443,11 @@ msgstr "Message de publication"
 msgid "Commit log message: default to most recent"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:489
+#: ../rapidsvn_frame.cpp:565
 msgid "Commit selected"
 msgstr "Publication de la sélection"
 
-#: ../commit_action.cpp:87
+#: ../commit_action.cpp:86
 msgid "Committed revision"
 msgstr "Version envoyée"
 
@@ -455,90 +455,90 @@ msgstr "Version envoyée"
 msgid "Compare:"
 msgstr "Comparer :"
 
-#: ../columns.cpp:65
+#: ../columns.cpp:64
 msgid "Conflict BASE"
 msgstr "Conflit BASE"
 
-#: ../file_info.cpp:205
+#: ../file_info.cpp:206
 #, c-format
 msgid "Conflict BASE File: %s"
 msgstr "Conflit fichier BASE : %s"
 
-#: ../columns.cpp:66
+#: ../columns.cpp:65
 msgid "Conflict HEAD"
 msgstr "Conflit HEAD"
 
-#: ../file_info.cpp:215
+#: ../file_info.cpp:216
 #, c-format
 msgid "Conflict HEAD File: %s"
 msgstr "Conflit fichier HEAD : %s"
 
-#: ../file_info.cpp:223
+#: ../file_info.cpp:224
 #, c-format
 msgid "Conflict Properties File: %s"
 msgstr "Conflit fichier de propriétés : %s"
 
-#: ../columns.cpp:67
+#: ../columns.cpp:66
 msgid "Conflict Work"
 msgstr "Conflit Travail"
 
-#: ../file_info.cpp:210
+#: ../file_info.cpp:211
 #, c-format
 msgid "Conflict Working File: %s"
 msgstr "Conflit Fichier Travail : %s"
 
-#: ../columns.cpp:64
+#: ../columns.cpp:63
 msgid "Copied"
 msgstr "Copié"
 
-#: ../file_info.cpp:174
+#: ../file_info.cpp:175
 #, c-format
 msgid "Copied From Rev: %ld"
 msgstr "Copié depuis Rev: %ld"
 
-#: ../file_info.cpp:171
+#: ../file_info.cpp:172
 #, c-format
 msgid "Copied From URL: %s"
 msgstr "Copié depuis URL : %s"
 
-#: ../log_dlg.cpp:209
+#: ../log_dlg.cpp:244
 msgid "Copied from Path"
 msgstr "Copié depuis le chemin"
 
-#: ../log_dlg.cpp:210
+#: ../log_dlg.cpp:245
 msgid "Copied from Rev"
 msgstr "Copié depuis la révision"
 
-#: ../dnd_dlg.cpp:109 ../listener.cpp:355 ../move_action.cpp:45
-#: ../rapidsvn_frame.cpp:1499
+#: ../dnd_dlg.cpp:108 ../listener.cpp:354 ../move_action.cpp:44
+#: ../rapidsvn_frame.cpp:1591
 msgid "Copy"
 msgstr "Copie"
 
-#: ../dnd_dlg.cpp:38
+#: ../dnd_dlg.cpp:37
 #, fuzzy
 msgid "Copy/Move"
 msgstr "Copie"
 
-#: ../drag_n_drop_action.cpp:201
+#: ../drag_n_drop_action.cpp:314
 #, fuzzy, c-format
 msgid "Copying file into working directory: %s"
 msgstr "Impossible de changer de répertoire vers %s"
 
-#: ../drag_n_drop_action.cpp:175
+#: ../drag_n_drop_action.cpp:288
 #, fuzzy, c-format
 msgid "Copying file: %s"
 msgstr "Conflit Fichier Travail : %s"
 
-#: ../merge_action.cpp:87
+#: ../merge_action.cpp:86
 #, c-format
 msgid "Could not set working directory to %s"
 msgstr "Impossible de changer de répertoire vers %s"
 
-#: ../utils.cpp:271
+#: ../utils.cpp:270
 msgid "Create New Repository..."
 msgstr "Créer un nouveau dépôt..."
 
-#: ../columns.cpp:55 ../log_dlg.cpp:166
+#: ../columns.cpp:54 ../log_dlg.cpp:165
 msgid "Date"
 msgstr "Date"
 
@@ -546,37 +546,37 @@ msgstr "Date"
 msgid "Date:"
 msgstr "Date :"
 
-#: ../delete_action.cpp:41 ../delete_dlg.cpp:80 ../listener.cpp:356
-#: ../rapidsvn_frame.cpp:1500
+#: ../delete_action.cpp:40 ../delete_dlg.cpp:79 ../listener.cpp:355
+#: ../rapidsvn_frame.cpp:1592
 msgid "Delete"
 msgstr "Supprimer"
 
-#: ../rapidsvn_frame.cpp:470
+#: ../rapidsvn_frame.cpp:546
 msgid "Delete files and directories from version control"
 msgstr "Supprimer fichier et répertoire du contrôle de version"
 
-#: ../rapidsvn_frame.cpp:469
+#: ../rapidsvn_frame.cpp:545
 msgid "Delete selected"
 msgstr "Supprimer la sélection"
 
-#: ../listener.cpp:362 ../listener.cpp:371 ../rapidsvn_frame.cpp:1506
-#: ../rapidsvn_frame.cpp:1515
+#: ../listener.cpp:361 ../listener.cpp:370 ../rapidsvn_frame.cpp:1598
+#: ../rapidsvn_frame.cpp:1607
 msgid "Deleted"
 msgstr "Supprimé"
 
-#: ../checkout_dlg.cpp:73 ../export_dlg.cpp:76
+#: ../checkout_dlg.cpp:72 ../export_dlg.cpp:75
 msgid "Destination Directory"
 msgstr "Répertoire de destination"
 
-#: ../merge_dlg.cpp:169
+#: ../merge_dlg.cpp:168
 msgid "Destination file"
 msgstr "Fichier de destination"
 
-#: ../merge_dlg.cpp:171
+#: ../merge_dlg.cpp:170
 msgid "Destination path"
 msgstr "Chemin de destination"
 
-#: ../diff_action.cpp:192 ../diff_action.cpp:198 ../diff_dlg.cpp:180
+#: ../diff_action.cpp:191 ../diff_action.cpp:197 ../diff_dlg.cpp:179
 msgid "Diff"
 msgstr "Diff"
 
@@ -585,19 +585,19 @@ msgstr "Diff"
 msgid "Diff Tool"
 msgstr "Outil de diff :"
 
-#: ../diff_dlg.cpp:129
+#: ../diff_dlg.cpp:128
 msgid "Diff to BASE"
 msgstr "Diff d'après BASE"
 
-#: ../diff_dlg.cpp:132
+#: ../diff_dlg.cpp:131
 msgid "Diff to HEAD"
 msgstr "Diff d'après HEAD"
 
-#: ../diff_dlg.cpp:135
+#: ../diff_dlg.cpp:134
 msgid "Diff to another revision/date"
 msgstr "Diff d'après une autre révision/date"
 
-#: ../diff_dlg.cpp:138
+#: ../diff_dlg.cpp:137
 msgid "Diff two revisions/dates"
 msgstr "Diff deux révision/dates"
 
@@ -605,229 +605,247 @@ msgstr "Diff deux révision/dates"
 msgid "Different login for each bookmark in the bookmarks list"
 msgstr "Login différents pour chaque signet dans la liste"
 
-#: ../mkdir_action.cpp:52
+#: ../mkdir_action.cpp:51
 msgid "Directory:"
 msgstr "Répertoire :"
 
-#: ../rapidsvn_frame.cpp:526
+#: ../rapidsvn_frame.cpp:489
+#, fuzzy
+msgid "Display conflicted files/directories"
+msgstr "Voulez vous déverrouiller les fichiers/répertoires sélectionnés ?"
+
+#: ../rapidsvn_frame.cpp:602
 msgid "Display info about selected entries"
 msgstr "Affiche les informations sur les éléments sélectionnés"
 
-#: ../delete_dlg.cpp:46
+#: ../rapidsvn_frame.cpp:483
+msgid "Display modified files/directories"
+msgstr ""
+
+#: ../rapidsvn_frame.cpp:477
+msgid "Display unmodified files/directories"
+msgstr ""
+
+#: ../rapidsvn_frame.cpp:470
+#, fuzzy
+msgid "Display unversioned files/directories"
+msgstr "Montrer les entrées non versionnées"
+
+#: ../delete_dlg.cpp:45
 msgid "Do you want to delete the selected files/directories?"
 msgstr "Voulez vous supprimer les fichiers/répertoires sélectionnés ?"
 
-#: ../revert_action.cpp:46
+#: ../revert_action.cpp:45
 msgid "Do you want to revert local changes?"
 msgstr "Voulez vous revenir sur les changements locaux ?"
 
-#: ../unlock_dlg.cpp:46
+#: ../unlock_dlg.cpp:45
 msgid "Do you want to unlock the selected files/directories?"
 msgstr "Voulez vous déverrouiller les fichiers/répertoires sélectionnés ?"
 
-#: ../utils.cpp:293
+#: ../utils.cpp:292
 msgid "E&xit\tCTRL-Q"
 msgstr "&Quitter\tCTRL-Q"
 
-#: ../export_dlg.cpp:132
+#: ../export_dlg.cpp:131
 msgid "EOL:"
 msgstr "EOL :"
 
-#: ../view_action.cpp:77
+#: ../view_action.cpp:76
 msgid "Edit"
 msgstr "Editer"
 
-#: ../rapidsvn_frame.cpp:2014
+#: ../rapidsvn_frame.cpp:2135
 msgid "Edit Bookmark"
 msgstr "Editer le signet"
 
-#: ../property_dlg.cpp:65
+#: ../property_dlg.cpp:64
 msgid "Edit Property"
 msgstr "Editer les propriétés"
 
-#: ../lock_dlg.cpp:46
+#: ../lock_dlg.cpp:45
 msgid "Enter a comment for this lock"
 msgstr "Entrer un commentaire pour ce verrou"
 
-#: ../commit_dlg.cpp:53 ../import_dlg.cpp:96
+#: ../commit_dlg.cpp:52 ../import_dlg.cpp:95
 msgid "Enter log message"
 msgstr "Entrer un message de log"
 
-#: ../rename_action.cpp:56
+#: ../rename_action.cpp:55
 msgid "Enter new name:"
 msgstr "Entrer un nouveau nom :"
 
-#: ../export_dlg.cpp:81
+#: ../export_dlg.cpp:80
 msgid "Enter the local path where you want the code be exported."
 msgstr "Entrer le chemin local vers lequel le code sera exporté."
 
-#: ../checkout_dlg.cpp:78
+#: ../checkout_dlg.cpp:77
 msgid "Enter the local path where you want the code checked out to here."
 msgstr "Entrer le chemin local vers lequel le code sera récupéré."
 
-#: ../checkout_dlg.cpp:71 ../export_dlg.cpp:74
+#: ../checkout_dlg.cpp:70 ../export_dlg.cpp:73
 msgid "Enter the repository URL (not local path) here."
 msgstr "Entrer l'URL de dépôt (pas de chemin local) ici."
 
-#: ../export_dlg.cpp:144
+#: ../export_dlg.cpp:143
 msgid ""
 "Enter what kind of symbol(s) do you want as EOL (end of line) in exported "
 "files."
 msgstr ""
 "Quels caratère(s) de fin de ligne voulez vous dans les fichiers exportés ?"
 
-#: ../import_dlg.cpp:179 ../import_dlg.cpp:192 ../log_dlg.cpp:431
-#: ../log_dlg.cpp:446 ../log_dlg.cpp:482 ../merge_dlg.cpp:53
-#: ../merge_dlg.cpp:92 ../merge_dlg.cpp:108 ../property_dlg.cpp:121
-#: ../rapidsvn_frame.cpp:1946
+#: ../import_dlg.cpp:178 ../import_dlg.cpp:191 ../log_dlg.cpp:466
+#: ../log_dlg.cpp:481 ../log_dlg.cpp:517 ../merge_dlg.cpp:52
+#: ../merge_dlg.cpp:91 ../merge_dlg.cpp:107 ../property_dlg.cpp:120
+#: ../rapidsvn_frame.cpp:2059
 msgid "Error"
 msgstr "Erreur"
 
-#: ../file_info.cpp:268
+#: ../file_info.cpp:269
 msgid "Error retrieving status:"
 msgstr "Erreur de récupération du statut :"
 
-#: ../property_dlg.cpp:121
+#: ../property_dlg.cpp:120
 msgid "Error setting the property values"
 msgstr "Erreur lors de la modification des propriétés"
 
-#: ../cert_dlg.cpp:98
+#: ../cert_dlg.cpp:97
 #, c-format
 msgid "Error validating server certificate for '%s':"
 msgstr "Erreur de validation du certificat du serveur pour '%s' :"
 
-#: ../simple_worker.cpp:217 ../threaded_worker.cpp:179
+#: ../simple_worker.cpp:216 ../threaded_worker.cpp:178
 msgid "Error while performing action."
 msgstr "Erreur pendant l'exécution de l'action."
 
-#: ../simple_worker.cpp:207 ../threaded_worker.cpp:166
+#: ../simple_worker.cpp:206 ../threaded_worker.cpp:165
 #, c-format
 msgid "Error while performing action: %s"
 msgstr "Erreur pendant l'exécution de l'action : %s"
 
-#: ../simple_worker.cpp:168 ../threaded_worker.cpp:287
+#: ../simple_worker.cpp:167 ../threaded_worker.cpp:286
 msgid "Error while preparing action."
 msgstr "Erreur pendant la préparation de l'action."
 
-#: ../simple_worker.cpp:162 ../threaded_worker.cpp:277
+#: ../simple_worker.cpp:161 ../threaded_worker.cpp:276
 #, c-format
 msgid "Error while preparing action: %s"
 msgstr "Erreur pendant la préparation de l'action : %s"
 
-#: ../folder_browser.cpp:496
+#: ../folder_browser.cpp:497
 #, c-format
 msgid "Error while refreshing filelist (%s)"
 msgstr "Erreur pendant le raffraichissement de la liste de fichier (%s)"
 
-#: ../rapidsvn_frame.cpp:1056
+#: ../rapidsvn_frame.cpp:1118
 msgid "Error while updating filelist"
 msgstr "Erreur pendant la mise à jour de la liste de fichier"
 
-#: ../rapidsvn_frame.cpp:1043
+#: ../rapidsvn_frame.cpp:1105
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "Erreur pendant la mise à jour de la liste de fichier (%s)"
 
-#: ../rapidsvn_frame.cpp:629
+#: ../rapidsvn_frame.cpp:705
 #, c-format
 msgid "Error: %s\n"
 msgstr "Erreur : %s\n"
 
-#: ../rapidsvn_frame.cpp:1888
+#: ../rapidsvn_frame.cpp:2001
 msgid "Exception occured during filelist update"
 msgstr ""
 "Une exception a été levée pendant la mise à jour de la liste de fichier"
 
-#: ../preferences_dlg.cpp:39
+#: ../preferences_dlg.cpp:38
 msgid "Executable Files|*.exe;*.com;*.bat|All files (*.*)|*.*"
 msgstr "Fichiers executables|*.exe;*.com;*.bat|Tous les fichiers (*.*)|*.*"
 
-#: ../external_program_action.cpp:46
+#: ../external_program_action.cpp:45
 msgid "Execute"
 msgstr "Executer"
 
-#: ../diff_action.cpp:184
+#: ../diff_action.cpp:183
 #, c-format
 msgid "Execute diff tool: %s"
 msgstr "Executer l'outil de diff : %s"
 
-#: ../external_program_action.cpp:141 ../view_action.cpp:122
+#: ../external_program_action.cpp:140 ../view_action.cpp:121
 #, c-format
 msgid "Execute editor: %s"
 msgstr "Executer l'éditeur : %s"
 
-#: ../external_program_action.cpp:115
+#: ../external_program_action.cpp:114
 #, c-format
 msgid "Execute file explorer: %s"
 msgstr "Executer l'explorateur de fichiers : %s"
 
-#: ../userresolve_action.cpp:129
+#: ../userresolve_action.cpp:128
 #, fuzzy, c-format
 msgid "Execute merge tool: %s"
 msgstr "Executer l'outil de diff : %s"
 
-#: ../simple_worker.cpp:176 ../threaded_worker.cpp:144
+#: ../simple_worker.cpp:175 ../threaded_worker.cpp:143
 #, c-format
 msgid "Execute: %s"
 msgstr "Executer : %s"
 
-#: ../utils.cpp:319
+#: ../utils.cpp:318
 msgid "Explore...\tF2"
 msgstr "Explorateur...\tF2"
 
-#: ../export_action.cpp:41 ../export_dlg.cpp:289
+#: ../export_action.cpp:40 ../export_dlg.cpp:288
 msgid "Export"
 msgstr "Exporter"
 
-#: ../columns.cpp:54
+#: ../columns.cpp:53
 msgid "Extension"
 msgstr "Extension"
 
-#: ../listener.cpp:377 ../rapidsvn_frame.cpp:1521
+#: ../listener.cpp:376 ../rapidsvn_frame.cpp:1613
 msgid "Failed to lock"
 msgstr "Echec du verrouillage"
 
-#: ../listener.cpp:378 ../rapidsvn_frame.cpp:1522
+#: ../listener.cpp:377 ../rapidsvn_frame.cpp:1614
 msgid "Failed to unlock"
 msgstr "Echec du déverrouillage"
 
-#: ../import_dlg.cpp:121
+#: ../import_dlg.cpp:120
 msgid "File"
 msgstr "Fichier"
 
-#: ../import_dlg.cpp:191
+#: ../import_dlg.cpp:190
 msgid "File path required when importing a file!"
 msgstr "Un chemin est nécessaire pour importer un fichier!"
 
-#: ../cert_dlg.cpp:124
+#: ../cert_dlg.cpp:123
 msgid "Fingerprint:"
 msgstr "Empreinte :"
 
-#: ../merge_dlg.cpp:91
+#: ../merge_dlg.cpp:90
 msgid "First path or URL is required for merge!"
 msgstr "Un Premier chemin ou une URL est nécessaire pour fusionner!"
 
-#: ../merge_dlg.cpp:132
+#: ../merge_dlg.cpp:131
 msgid "First working copy or URL"
 msgstr "Première copie de travail ou URL"
 
-#: ../rapidsvn_frame.cpp:260
+#: ../rapidsvn_frame.cpp:271
 msgid "Flat Mode"
 msgstr "Mode à plat"
 
-#: ../about_dlg.cpp:69
+#: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "Pour plus d'information voir :"
 
-#: ../destination_dlg.cpp:81 ../merge_dlg.cpp:206
+#: ../destination_dlg.cpp:80 ../merge_dlg.cpp:205
 msgid "Force"
 msgstr "Forcer"
 
-#: ../delete_dlg.cpp:50
+#: ../delete_dlg.cpp:49
 msgid "Force removal"
 msgstr "Forcer l'effacement"
 
-#: ../export_dlg.cpp:124
+#: ../export_dlg.cpp:123
 msgid ""
 "Force to execute even if destination directory not empty, causes overwriting "
 "of files with the same names."
@@ -835,7 +853,7 @@ msgstr ""
 "Forcer l'execution même si le répertoire de destination n'est pas vide, "
 "causant un écrasement des fichiers ayant les mêmes noms."
 
-#: ../unlock_dlg.cpp:52
+#: ../unlock_dlg.cpp:51
 msgid "Force unlocking even if you are not the lock owner"
 msgstr ""
 "Forcer le déverrouillage même si vous n'êtes pas le propriétaire du verrou"
@@ -844,25 +862,25 @@ msgstr ""
 msgid "General"
 msgstr "Général"
 
-#: ../action.cpp:267
+#: ../action.cpp:266
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "Obtenir le fichier %s rev. %s"
 
-#: ../action.cpp:260
+#: ../action.cpp:259
 msgid "HEAD"
 msgstr "HEAD"
 
-#: ../log_dlg.cpp:298
+#: ../log_dlg.cpp:333
 #, c-format
 msgid "History: %d revisions"
 msgstr "Historique : %d révisions"
 
-#: ../cert_dlg.cpp:108
+#: ../cert_dlg.cpp:107
 msgid "Hostname:"
 msgstr "Hostname :"
 
-#: ../checkout_dlg.cpp:89 ../export_dlg.cpp:92
+#: ../checkout_dlg.cpp:88 ../export_dlg.cpp:91
 msgid ""
 "If not using the latest version of the files, specify which revision to use "
 "here."
@@ -870,7 +888,7 @@ msgstr ""
 "Si vous ne souhaitez pas la dernière version des fichiers, spécifiez quelle "
 "révision utiliser."
 
-#: ../checkout_dlg.cpp:103 ../export_dlg.cpp:106
+#: ../checkout_dlg.cpp:102 ../export_dlg.cpp:105
 msgid ""
 "If the files were renamed or moved some time, specify which peg revision to "
 "use here."
@@ -878,63 +896,63 @@ msgstr ""
 "Si les fichiers ont été renommés ou supprimés, spécifier quelle révision "
 "stable utiliser."
 
-#: ../ignore_action.cpp:41
+#: ../ignore_action.cpp:40
 #, fuzzy
 msgid "Ignore"
 msgstr "Informations"
 
-#: ../rapidsvn_frame.cpp:263
+#: ../rapidsvn_frame.cpp:277
 msgid "Ignore Externals"
 msgstr "Ignorer les liens externes"
 
-#: ../checkout_dlg.cpp:123 ../export_dlg.cpp:127 ../update_dlg.cpp:125
+#: ../checkout_dlg.cpp:122 ../export_dlg.cpp:126 ../update_dlg.cpp:124
 msgid "Ignore externals"
 msgstr "Ignorer les liens externes"
 
-#: ../dnd_dlg.cpp:38 ../dnd_dlg.cpp:98 ../import_action.cpp:39
-#: ../import_dlg.cpp:150
+#: ../dnd_dlg.cpp:37 ../dnd_dlg.cpp:97 ../import_action.cpp:38
+#: ../import_dlg.cpp:149
 msgid "Import"
 msgstr "Importer"
 
-#: ../drag_n_drop_action.cpp:190
+#: ../drag_n_drop_action.cpp:303
 #, c-format
 msgid "Importing file into repository: %s"
 msgstr ""
 
-#: ../utils.cpp:182
+#: ../utils.cpp:181
 #, fuzzy
 msgid "In&teractive Resolve...\tCTRL-T"
 msgstr "&Propriétés...\tCTRL-P"
 
-#: ../rapidsvn_frame.cpp:2104
+#: ../rapidsvn_frame.cpp:2178
 msgid "Info"
 msgstr "Informations"
 
-#: ../rapidsvn_frame.cpp:525
+#: ../rapidsvn_frame.cpp:601
 msgid "Info selected"
 msgstr "Informations sur la sélection"
 
-#: ../rapidsvn_frame.cpp:1587
+#: ../rapidsvn_frame.cpp:1679
 msgid "Information"
 msgstr "Information"
 
-#: ../threaded_worker.cpp:246
+#: ../threaded_worker.cpp:245
 msgid "Internal Error: There is another action running"
 msgstr "Erreur interne : Une autre action est déjà lancée"
 
-#: ../rapidsvn_frame.cpp:1655
+#: ../rapidsvn_frame.cpp:1747
 msgid "Internal Error: no client data for action event!"
 msgstr "Erreur interne : aucune donnée client pour cette action"
 
-#: ../threaded_worker.cpp:253
+#: ../threaded_worker.cpp:252
 msgid "Internal Error: no context available"
 msgstr "Erreur interne : aucun contexte disponible"
 
-#: ../merge_action.cpp:98
+#: ../merge_action.cpp:97
 msgid "Invalid revision number detected"
 msgstr "Numéro de révision invalide détecté"
 
-#: ../log_dlg.cpp:430
+#: ../log_dlg.cpp:465
 msgid ""
 "Invalid selection. At least one revisions is needed for diff and no more "
 "than two."
@@ -942,59 +960,59 @@ msgstr ""
 "Sélection invalide. Au moins une révision est nécessaire pour diff et pas "
 "plus de deux."
 
-#: ../log_dlg.cpp:445
+#: ../log_dlg.cpp:480
 msgid "Invalid selection. Exactly two revisions needed for merge."
 msgstr "Sélection invalide. Deux révisions sont nécessaires pour fusionner"
 
-#: ../log_dlg.cpp:481
+#: ../log_dlg.cpp:516
 msgid "Invalid selection. Only one revision may be selected for annotate"
 msgstr ""
 "Sélection invalide. Une seule révision peut être sélectionnée pour annoter"
 
-#: ../cert_dlg.cpp:112
+#: ../cert_dlg.cpp:111
 msgid "Issue:"
 msgstr "Emission :"
 
-#: ../commit_dlg.cpp:96
+#: ../commit_dlg.cpp:95
 msgid "Keep locks"
 msgstr "Garder les verrous"
 
-#: ../export_dlg.cpp:138
+#: ../export_dlg.cpp:137
 msgid "LF (Unix)"
 msgstr "LF (Unix)"
 
-#: ../columns.cpp:53
+#: ../columns.cpp:52
 msgid "Last Changed"
 msgstr "Dernier changement"
 
-#: ../file_info.cpp:179
+#: ../file_info.cpp:180
 #, c-format
 msgid "Last Changed Author: %s"
 msgstr "Auteur du dernier changement : %s"
 
-#: ../file_info.cpp:185
+#: ../file_info.cpp:186
 msgid "Last Changed Date"
 msgstr "Date du dernier changement"
 
-#: ../file_info.cpp:182
+#: ../file_info.cpp:183
 #, c-format
 msgid "Last Changed Rev: %ld"
 msgstr "Révision du dernier changement : %ld"
 
-#: ../annotate_dlg.cpp:50
+#: ../annotate_dlg.cpp:49
 msgid "Line"
 msgstr "Ligne"
 
-#: ../rapidsvn_frame.cpp:318
+#: ../rapidsvn_frame.cpp:332
 msgid "Listener Test"
 msgstr "Listener Test"
 
-#: ../filelist_ctrl.cpp:1011
+#: ../filelist_ctrl.cpp:1017
 #, c-format
 msgid "Listing entries in '%s'"
 msgstr "Entrées listées dans '%s'"
 
-#: ../about_dlg.cpp:77
+#: ../about_dlg.cpp:76
 #, c-format
 msgid ""
 "Locale Information:\n"
@@ -1007,27 +1025,27 @@ msgstr ""
 "Système: %s\n"
 "Nom canonique: %s\n"
 
-#: ../rapidsvn_app.cpp:180 ../rapidsvn_app.cpp:188
+#: ../rapidsvn_app.cpp:190 ../rapidsvn_app.cpp:198
 msgid "Locate help"
 msgstr "Localiser l'aide"
 
-#: ../rapidsvn_app.cpp:248
+#: ../rapidsvn_app.cpp:258
 msgid "Locate tips"
 msgstr "Localiser les astuces"
 
-#: ../rapidsvn_app.cpp:240
+#: ../rapidsvn_app.cpp:250
 msgid "Locate tips file"
 msgstr "Localiser le fichier astuces"
 
-#: ../lock_action.cpp:41 ../lock_dlg.cpp:101
+#: ../lock_action.cpp:40 ../lock_dlg.cpp:100
 msgid "Lock"
 msgstr "Verrouiller"
 
-#: ../columns.cpp:58
+#: ../columns.cpp:57
 msgid "Lock Comment"
 msgstr "Commentaire de verrouillage"
 
-#: ../file_info.cpp:241
+#: ../file_info.cpp:242
 #, c-format
 msgid ""
 "Lock Comment:\n"
@@ -1036,74 +1054,74 @@ msgstr ""
 "Commentaire de verrouillage:\n"
 "%s"
 
-#: ../file_info.cpp:245
+#: ../file_info.cpp:246
 msgid "Lock Creation Date"
 msgstr "Date de création du verrou"
 
-#: ../columns.cpp:57
+#: ../columns.cpp:56
 msgid "Lock Owner"
 msgstr "Propriétaire du verrou"
 
-#: ../file_info.cpp:236
+#: ../file_info.cpp:237
 #, c-format
 msgid "Lock Owner: %s"
 msgstr "Propriétaire du verrou : %s"
 
-#: ../file_info.cpp:231
+#: ../file_info.cpp:232
 #, c-format
 msgid "Lock Token: %s"
 msgstr "Marque de verrou : %s"
 
-#: ../listener.cpp:375 ../rapidsvn_frame.cpp:1519
+#: ../listener.cpp:374 ../rapidsvn_frame.cpp:1611
 msgid "Locked"
 msgstr "Verrouillé"
 
-#: ../log_action.cpp:42
+#: ../log_action.cpp:41
 msgid "Log"
 msgstr "Log"
 
-#: ../log_dlg.cpp:523
+#: ../log_dlg.cpp:558
 msgid "Log History"
 msgstr "Historique de log"
 
-#: ../log_dlg.cpp:167
+#: ../log_dlg.cpp:166
 msgid "Log Message"
 msgstr "Message de log"
 
-#: ../log_dlg.cpp:307
+#: ../log_dlg.cpp:342
 msgid "Log Message:"
 msgstr "Message de log :"
 
-#: ../rapidsvn_frame.cpp:535
+#: ../rapidsvn_frame.cpp:611
 msgid "Log selected"
 msgstr "Log de la sélection"
 
-#: ../utils.cpp:279
+#: ../utils.cpp:278
 msgid "Login..."
 msgstr "Connexion..."
 
-#: ../folder_browser.cpp:332
+#: ../folder_browser.cpp:333
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: ../folder_browser.cpp:337
+#: ../folder_browser.cpp:338
 #, c-format
 msgid "Logout '%s'"
 msgstr "Déconnection '%s'"
 
-#: ../utils.cpp:190
+#: ../utils.cpp:189
 msgid "M&ove...\tF6"
 msgstr "D&éplacer...\tF6"
 
-#: ../utils.cpp:194
+#: ../utils.cpp:193
 msgid "Make &directory...\tF7"
 msgstr "Créer &répertoire...\tF7"
 
-#: ../mkdir_action.cpp:51
+#: ../mkdir_action.cpp:50
 msgid "Make directory"
 msgstr "Créer répertoire"
 
-#: ../merge_action.cpp:39 ../merge_action.cpp:45 ../merge_dlg.cpp:126
+#: ../merge_action.cpp:38 ../merge_action.cpp:44 ../merge_dlg.cpp:125
 msgid "Merge"
 msgstr "Fusionner"
 
@@ -1112,54 +1130,54 @@ msgstr "Fusionner"
 msgid "Merge Tool"
 msgstr "Fusionner"
 
-#: ../merge_dlg.cpp:61
+#: ../merge_dlg.cpp:60
 msgid "Merge revisions"
 msgstr "Fusionner révisions"
 
-#: ../rapidsvn_frame.cpp:282
+#: ../rapidsvn_frame.cpp:296
 msgid "Merge..."
 msgstr "Fusionner..."
 
-#: ../mkdir_action.cpp:38
+#: ../mkdir_action.cpp:37
 msgid "Mkdir"
 msgstr "Mkdir"
 
-#: ../listener.cpp:369 ../rapidsvn_frame.cpp:1513
+#: ../listener.cpp:368 ../rapidsvn_frame.cpp:1605
 msgid "Modified"
 msgstr "Modifié"
 
-#: ../dnd_dlg.cpp:105 ../move_action.cpp:43
+#: ../dnd_dlg.cpp:104 ../move_action.cpp:42
 msgid "Move"
 msgstr "Déplacer"
 
-#: ../drag_n_drop_action.cpp:180
+#: ../drag_n_drop_action.cpp:293
 #, fuzzy, c-format
 msgid "Moving file: %s"
 msgstr "Conflit Fichier Travail : %s"
 
-#: ../drag_n_drop_action.cpp:118
+#: ../drag_n_drop_action.cpp:157
 msgid "Multiple Files"
 msgstr ""
 
-#: ../columns.cpp:46 ../listed_dlg.cpp:76 ../listed_dlg.cpp:172
-#: ../listed_dlg.cpp:325
+#: ../columns.cpp:45 ../listed_dlg.cpp:75 ../listed_dlg.cpp:171
+#: ../listed_dlg.cpp:324
 msgid "Name"
 msgstr "Nom"
 
-#: ../file_info.cpp:95
+#: ../file_info.cpp:96
 #, c-format
 msgid "Name: %s"
 msgstr "Nom : %s"
 
-#: ../property_dlg.cpp:64
+#: ../property_dlg.cpp:63
 msgid "New Property"
 msgstr "Nouvelle propriété"
 
-#: ../diff_action.cpp:218
+#: ../diff_action.cpp:217
 msgid "No diff tool set in the preferences"
 msgstr "Pas d'outil de diff défini dans les préférences"
 
-#: ../rapidsvn_app.cpp:188
+#: ../rapidsvn_app.cpp:198
 msgid ""
 "No help file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1167,12 +1185,12 @@ msgstr ""
 "Aucun fichier d'aide n'a été choisi, voulez vous être\n"
 "de nouveau interrogé lors du prochain démarrage?"
 
-#: ../userresolve_action.cpp:63
+#: ../userresolve_action.cpp:62
 #, fuzzy
 msgid "No merge tool set in the preferences"
 msgstr "Pas d'outil de diff défini dans les préférences"
 
-#: ../rapidsvn_app.cpp:248
+#: ../rapidsvn_app.cpp:258
 msgid ""
 "No tips file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1180,54 +1198,54 @@ msgstr ""
 "Aucune fichier d'astuce n'a été choisi, voulez vous être\n"
 "de nouveau interrogé au prochain démarrage?"
 
-#: ../file_info.cpp:120
+#: ../file_info.cpp:121
 #, c-format
 msgid "Node Kind: %s"
 msgstr "Type de noeud : %s"
 
-#: ../checkout_dlg.cpp:107 ../export_dlg.cpp:110
+#: ../checkout_dlg.cpp:106 ../export_dlg.cpp:109
 msgid "Not specified"
 msgstr "Non spécifié"
 
-#: ../file_info.cpp:88
+#: ../file_info.cpp:89
 msgid "Not versioned"
 msgstr "Non versionné"
 
-#: ../about_dlg.cpp:100 ../annotate_dlg.cpp:43 ../auth_dlg.cpp:72
-#: ../checkout_dlg.cpp:127 ../commit_dlg.cpp:102 ../delete_dlg.cpp:55
-#: ../destination_dlg.cpp:88 ../export_dlg.cpp:146 ../import_dlg.cpp:129
-#: ../listed_dlg.cpp:186 ../listed_dlg.cpp:342 ../lock_dlg.cpp:61
-#: ../merge_dlg.cpp:213 ../rapidsvn_generated.cpp:191
-#: ../rapidsvn_generated.cpp:325 ../report_dlg.cpp:58 ../switch_dlg.cpp:138
-#: ../unlock_dlg.cpp:56 ../update_dlg.cpp:134
+#: ../about_dlg.cpp:99 ../annotate_dlg.cpp:42 ../auth_dlg.cpp:71
+#: ../checkout_dlg.cpp:126 ../commit_dlg.cpp:101 ../delete_dlg.cpp:54
+#: ../destination_dlg.cpp:87 ../export_dlg.cpp:145 ../import_dlg.cpp:128
+#: ../listed_dlg.cpp:185 ../listed_dlg.cpp:341 ../lock_dlg.cpp:60
+#: ../merge_dlg.cpp:212 ../rapidsvn_generated.cpp:191
+#: ../rapidsvn_generated.cpp:325 ../report_dlg.cpp:57 ../switch_dlg.cpp:137
+#: ../unlock_dlg.cpp:55 ../update_dlg.cpp:133
 msgid "OK"
 msgstr "OK"
 
-#: ../utils.cpp:550
+#: ../utils.cpp:549
 msgid "Open..."
 msgstr "Ouvrir..."
 
-#: ../export_dlg.cpp:121
+#: ../export_dlg.cpp:120
 msgid "Overwrite"
 msgstr "Écraser"
 
-#: ../auth_dlg.cpp:63
+#: ../auth_dlg.cpp:62
 msgid "Password"
 msgstr "Mot de passe"
 
-#: ../columns.cpp:47 ../import_dlg.cpp:81 ../log_dlg.cpp:208
+#: ../columns.cpp:46 ../import_dlg.cpp:80 ../log_dlg.cpp:243
 msgid "Path"
 msgstr "Chemin"
 
-#: ../import_dlg.cpp:113
+#: ../import_dlg.cpp:112
 msgid "Path type:"
 msgstr "Type de chemin :"
 
-#: ../checkout_dlg.cpp:98 ../export_dlg.cpp:101
+#: ../checkout_dlg.cpp:97 ../export_dlg.cpp:100
 msgid "Peg Revision"
 msgstr "Révision stable"
 
-#: ../rapidsvn_frame.cpp:1580
+#: ../rapidsvn_frame.cpp:1672
 msgid ""
 "Please use the command line utility 'svnadmin'\n"
 "to create a new repository.\n"
@@ -1249,11 +1267,11 @@ msgstr ""
 "http://svnbook.red-bean.com/\n"
 "http://subversion.tigris.org"
 
-#: ../preferences_dlg.cpp:49
+#: ../preferences_dlg.cpp:48
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../utils.cpp:302
+#: ../utils.cpp:301
 msgid "Preferences..."
 msgstr "Préférences..."
 
@@ -1278,27 +1296,27 @@ msgstr "Arguments du programme (%1=fichier sélectionné) :"
 msgid "Programs"
 msgstr "Programmes"
 
-#: ../columns.cpp:56
+#: ../columns.cpp:55
 msgid "Prop Date"
 msgstr "Prop Date"
 
-#: ../columns.cpp:52
+#: ../columns.cpp:51
 msgid "Prop Status"
 msgstr "Statut des propriétés"
 
-#: ../file_info.cpp:191
+#: ../file_info.cpp:192
 msgid "Properties Last Updated"
 msgstr "Dernière mise à jour des propriétés"
 
-#: ../property_dlg.cpp:63
+#: ../property_dlg.cpp:62
 msgid "Properties:"
 msgstr "Propriétés :"
 
-#: ../property_action.cpp:38
+#: ../property_action.cpp:37
 msgid "Property"
 msgstr "Propriété"
 
-#: ../property_dlg.cpp:55
+#: ../property_dlg.cpp:54
 msgid "Property Editor"
 msgstr "Editeur de Propriété"
 
@@ -1306,115 +1324,115 @@ msgstr "Editeur de Propriété"
 msgid "Purge temporary files on program exit"
 msgstr "Effacer les fichiers temporaires à la sortie du programme"
 
-#: ../rapidsvn_frame.cpp:460
+#: ../rapidsvn_frame.cpp:536
 msgid "Put files and directories under revision control"
 msgstr "Placer les fichiers et répertoires sous contrôle de version"
 
-#: ../rapidsvn_frame.cpp:596
+#: ../rapidsvn_frame.cpp:672
 msgid "RapidSVN Error"
 msgstr "Erreur RapidSVN"
 
-#: ../rapidsvn_app.cpp:79
+#: ../rapidsvn_app.cpp:89
 #, c-format
 msgid "RapidSVN Help: %s"
 msgstr "Aide RapidSVN : %s"
 
-#: ../utils.cpp:192
+#: ../utils.cpp:191
 msgid "Re&name...\tCTRL-N"
 msgstr "Re&nommer...\tCTRL-N"
 
-#: ../utils.cpp:183
+#: ../utils.cpp:182
 msgid "Re&solve conflicts\tCTRL-S"
 msgstr "Ré&soudre les conflits\tCTRL-S"
 
-#: ../utils.cpp:180
+#: ../utils.cpp:179
 msgid "Re&vert\tCTRL-V"
 msgstr "Ren&verser\tCTRL-V"
 
-#: ../filelist_ctrl.cpp:1064
+#: ../filelist_ctrl.cpp:1086
 msgid "Ready"
 msgstr "Prêt"
 
-#: ../rapidsvn_frame.cpp:1635 ../rapidsvn_frame.cpp:1679
+#: ../rapidsvn_frame.cpp:1727 ../rapidsvn_frame.cpp:1771
 msgid "Ready\n"
 msgstr "Prêt\n"
 
-#: ../commit_dlg.cpp:72
+#: ../commit_dlg.cpp:71
 msgid "Recent entries:"
 msgstr "Entrées récentes :"
 
-#: ../checkout_dlg.cpp:112 ../commit_dlg.cpp:87 ../export_dlg.cpp:115
-#: ../import_dlg.cpp:109 ../merge_dlg.cpp:202 ../switch_dlg.cpp:118
-#: ../update_dlg.cpp:116
+#: ../checkout_dlg.cpp:111 ../commit_dlg.cpp:86 ../export_dlg.cpp:114
+#: ../import_dlg.cpp:108 ../merge_dlg.cpp:201 ../switch_dlg.cpp:117
+#: ../update_dlg.cpp:115
 msgid "Recursive"
 msgstr "Récursivement"
 
-#: ../rapidsvn_frame.cpp:424
+#: ../rapidsvn_frame.cpp:500
 msgid "Refresh"
 msgstr "Raffraichir"
 
-#: ../utils.cpp:297
+#: ../utils.cpp:296
 msgid "Refresh View\tCTRL-R"
 msgstr "Raffraichir la vue\tCTRL-R"
 
-#: ../rapidsvn_frame.cpp:425
+#: ../rapidsvn_frame.cpp:501
 msgid "Refresh the file list"
 msgstr "Raffraichir la liste des fichiers"
 
-#: ../rapidsvn_frame.cpp:261
+#: ../rapidsvn_frame.cpp:272
 msgid "Refresh with Update"
 msgstr "Raffraichir avec mise à jour"
 
-#: ../switch_dlg.cpp:128
+#: ../switch_dlg.cpp:127
 #, fuzzy
 msgid "Relocate"
 msgstr "Remplacé"
 
-#: ../rapidsvn_frame.cpp:510
+#: ../rapidsvn_frame.cpp:586
 msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr ""
 "Enlever les états 'en conflit' pour les fichiers et répertoires de la copie "
 "de travail "
 
-#: ../rapidsvn_frame.cpp:1991
+#: ../rapidsvn_frame.cpp:2112
 msgid "Removed bookmark"
 msgstr "Signet enlevé"
 
-#: ../rename_action.cpp:40
+#: ../rename_action.cpp:39
 msgid "Rename"
 msgstr "Renommer"
 
-#: ../columns.cpp:49
+#: ../columns.cpp:48
 msgid "Rep. Rev."
 msgstr "Dernière révision"
 
-#: ../listener.cpp:372 ../rapidsvn_frame.cpp:1516
+#: ../listener.cpp:371 ../rapidsvn_frame.cpp:1608
 msgid "Replaced"
 msgstr "Remplacé"
 
-#: ../columns.cpp:61
+#: ../columns.cpp:60
 msgid "Repository"
 msgstr "Dépôt"
 
-#: ../import_dlg.cpp:68 ../rapidsvn_frame.cpp:1967
+#: ../import_dlg.cpp:67 ../rapidsvn_frame.cpp:2084
 msgid "Repository URL"
 msgstr "URL du dépôt"
 
-#: ../import_dlg.cpp:178
+#: ../import_dlg.cpp:177
 msgid "Repository URL is required for import!"
 msgstr "L'URL du dépôt est requise pour l'import !"
 
-#: ../file_info.cpp:114
+#: ../file_info.cpp:115
 #, c-format
 msgid "Repository UUID: %s"
 msgstr "UUID du dépôt : %s"
 
-#: ../file_info.cpp:106
+#: ../file_info.cpp:107
 #, c-format
 msgid "Repository: %s"
 msgstr "Dépôt : %s"
 
-#: ../utils.cpp:310
+#: ../utils.cpp:309
 msgid "Reset Columns"
 msgstr "Effacer colonnes"
 
@@ -1422,44 +1440,44 @@ msgstr "Effacer colonnes"
 msgid "Reset Flat Mode on every program start"
 msgstr ""
 
-#: ../resolve_action.cpp:38 ../userresolve_action.cpp:45
+#: ../resolve_action.cpp:37 ../userresolve_action.cpp:44
 msgid "Resolve"
 msgstr "Resoudre"
 
-#: ../rapidsvn_frame.cpp:509
+#: ../rapidsvn_frame.cpp:585
 msgid "Resolve selected"
 msgstr "Resoudre la sélection"
 
-#: ../listener.cpp:360 ../rapidsvn_frame.cpp:1504
+#: ../listener.cpp:359 ../rapidsvn_frame.cpp:1596
 msgid "Resolved"
 msgstr "Résolu"
 
-#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1501
+#: ../listener.cpp:356 ../rapidsvn_frame.cpp:1593
 msgid "Restore"
 msgstr "Restorer"
 
-#: ../rapidsvn_frame.cpp:500
+#: ../rapidsvn_frame.cpp:576
 msgid "Restore pristine working copy file (undo all local edits)"
 msgstr ""
 "Restorer le fichier original de la copie de travail (annuler toute édition "
 "locale)"
 
-#: ../listener.cpp:358 ../rapidsvn_frame.cpp:1502 ../revert_action.cpp:35
-#: ../revert_action.cpp:47
+#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1594 ../revert_action.cpp:34
+#: ../revert_action.cpp:46
 msgid "Revert"
 msgstr "Renverser"
 
-#: ../rapidsvn_frame.cpp:499
+#: ../rapidsvn_frame.cpp:575
 msgid "Revert selected"
 msgstr "Renverser la sélection"
 
-#: ../annotate_dlg.cpp:48 ../checkout_dlg.cpp:84 ../columns.cpp:48
-#: ../export_dlg.cpp:87 ../log_dlg.cpp:164 ../merge_dlg.cpp:134
-#: ../merge_dlg.cpp:151 ../switch_dlg.cpp:92 ../update_dlg.cpp:89
+#: ../annotate_dlg.cpp:47 ../checkout_dlg.cpp:83 ../columns.cpp:47
+#: ../export_dlg.cpp:86 ../log_dlg.cpp:163 ../merge_dlg.cpp:133
+#: ../merge_dlg.cpp:150 ../switch_dlg.cpp:91 ../update_dlg.cpp:88
 msgid "Revision"
 msgstr "Révision"
 
-#: ../merge_dlg.cpp:52
+#: ../merge_dlg.cpp:51
 msgid "Revision must be an unsigned number!"
 msgstr "La révision doit être positive!"
 
@@ -1477,98 +1495,98 @@ msgstr "Révision ou date #&2 :"
 msgid "Revision:"
 msgstr "Révision :"
 
-#: ../file_info.cpp:117
+#: ../file_info.cpp:118
 #, c-format
 msgid "Revision: %ld"
 msgstr "Révision : %ld"
 
-#: ../cert_dlg.cpp:67
+#: ../cert_dlg.cpp:66
 msgid "SSL Certificate"
 msgstr "Certificat SSL"
 
-#: ../columns.cpp:63
+#: ../columns.cpp:62
 msgid "Schedule"
 msgstr "Calendrier"
 
-#: ../file_info.cpp:144
+#: ../file_info.cpp:145
 #, c-format
 msgid "Schedule: %s"
 msgstr "Calendrier : %s"
 
-#: ../merge_dlg.cpp:107
+#: ../merge_dlg.cpp:106
 msgid "Second path or URL is required for merge!"
 msgstr "Un second chemin ou une URL est nécessaire pour fusionner!"
 
-#: ../merge_dlg.cpp:149
+#: ../merge_dlg.cpp:148
 msgid "Second working copy or URL"
 msgstr "Seconde copie de travail ou URL"
 
-#: ../listener.cpp:170
+#: ../listener.cpp:169
 msgid "Select Certificate File"
 msgstr "Sélectionner le fichier de certificat"
 
-#: ../checkout_dlg.cpp:274 ../export_dlg.cpp:312
+#: ../checkout_dlg.cpp:273 ../export_dlg.cpp:311
 msgid "Select a destination directory"
 msgstr "Sélectionner un répertoire de destination"
 
-#: ../merge_dlg.cpp:242
+#: ../merge_dlg.cpp:241
 msgid "Select a destination folder to merge to"
 msgstr "Sélectionner un répertoire de destination pour fusionner avec"
 
-#: ../rapidsvn_frame.cpp:1926
+#: ../rapidsvn_frame.cpp:2039
 msgid "Select a directory"
 msgstr "Sélectionner un répertoire"
 
-#: ../import_dlg.cpp:211
+#: ../import_dlg.cpp:210
 msgid "Select a directory to import"
 msgstr "Sélectionner un répertoire pour l'import"
 
-#: ../import_dlg.cpp:220
+#: ../import_dlg.cpp:219
 msgid "Select a file to import"
 msgstr "Sélectionner un fichier à importer"
 
-#: ../move_action.cpp:64
+#: ../move_action.cpp:63
 msgid "Select destination:"
 msgstr "Sélectionner une destination :"
 
-#: ../preferences_dlg.cpp:161
+#: ../preferences_dlg.cpp:160
 msgid "Select diff tool executable"
 msgstr "Sélectionner un programme de diff"
 
-#: ../preferences_dlg.cpp:169
+#: ../preferences_dlg.cpp:168
 #, fuzzy
 msgid "Select merge tool executable"
 msgstr "Sélectionner un programme de diff"
 
-#: ../preferences_dlg.cpp:145
+#: ../preferences_dlg.cpp:144
 msgid "Select standard editor executable"
 msgstr "Sélectionner un éditeur de fichier"
 
-#: ../preferences_dlg.cpp:153
+#: ../preferences_dlg.cpp:152
 msgid "Select standard file explorer executable"
 msgstr "Sélectionner un gestionnaire de fichier"
 
-#: ../rapidsvn_frame.cpp:490
+#: ../rapidsvn_frame.cpp:566
 msgid "Send changes from your working copy to the repository"
 msgstr "Envoyer les changements depuis la copie de travail vers le dépôt"
 
-#: ../checkout_dlg.cpp:95 ../export_dlg.cpp:98
+#: ../checkout_dlg.cpp:94 ../export_dlg.cpp:97
 msgid "Set this to get the latest version of the files in the repository."
 msgstr "Obtenir la dernière version des fichiers du dépôt"
 
-#: ../checkout_dlg.cpp:109 ../export_dlg.cpp:112
+#: ../checkout_dlg.cpp:108 ../export_dlg.cpp:111
 msgid "Set this to use BASE/HEAD (current) peg revision of the files."
 msgstr "Utiliser la révision stable BASE/HEAD (courante) des fichiers"
 
-#: ../checkout_dlg.cpp:120
+#: ../checkout_dlg.cpp:119
 msgid "Set to automatically create a new working copy bookmark."
 msgstr "Créer automatiquement un nouveau signet de la copie de travail"
 
-#: ../checkout_dlg.cpp:115 ../export_dlg.cpp:118
+#: ../checkout_dlg.cpp:114 ../export_dlg.cpp:117
 msgid "Set to get all subdirectories from the URL also."
 msgstr "Obtenir également tous les sous-répertoires de l'URL."
 
-#: ../checkout_dlg.cpp:126 ../export_dlg.cpp:130
+#: ../checkout_dlg.cpp:125 ../export_dlg.cpp:129
 msgid ""
 "Set to ignore external definitions and the external working copies managed "
 "by them."
@@ -1576,32 +1594,47 @@ msgstr ""
 "Ignorer les définitions externes et les copies de travail externes gérées "
 "par elles."
 
-#: ../rapidsvn_frame.cpp:308
+#: ../rapidsvn_frame.cpp:322
 msgid "Show Startup Tips"
 msgstr "Montrer les astuces de démarrage"
 
-#: ../rapidsvn_frame.cpp:264
+#: ../rapidsvn_frame.cpp:276 ../rapidsvn_frame.cpp:488
+#, fuzzy
+msgid "Show conflicted entries"
+msgstr "Montrer les entrées non versionnées"
+
+#: ../rapidsvn_frame.cpp:278
 #, fuzzy
 msgid "Show ignored entries"
 msgstr "Montrer les entrées non versionnées"
 
-#: ../rapidsvn_frame.cpp:536
+#: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
+#, fuzzy
+msgid "Show modified entries"
+msgstr "Montrer les entrées non versionnées"
+
+#: ../rapidsvn_frame.cpp:612
 msgid "Show the log messages for the selected entries"
 msgstr "Montrer les messages de log pour les entrées sélectionnées"
 
-#: ../rapidsvn_frame.cpp:262
+#: ../rapidsvn_frame.cpp:274 ../rapidsvn_frame.cpp:476
+#, fuzzy
+msgid "Show unmodified entries"
+msgstr "Montrer les entrées non versionnées"
+
+#: ../rapidsvn_frame.cpp:273 ../rapidsvn_frame.cpp:469
 msgid "Show unversioned entries"
 msgstr "Montrer les entrées non versionnées"
 
-#: ../listener.cpp:361 ../rapidsvn_frame.cpp:1505
+#: ../listener.cpp:360 ../rapidsvn_frame.cpp:1597
 msgid "Skip"
 msgstr "Passer"
 
-#: ../rapidsvn_frame.cpp:258
+#: ../rapidsvn_frame.cpp:269
 msgid "Sort"
 msgstr "Trier"
 
-#: ../rapidsvn_frame.cpp:234
+#: ../rapidsvn_frame.cpp:245
 msgid "Sort Ascending"
 msgstr "Tri ascendant"
 
@@ -1615,19 +1648,19 @@ msgstr "Editeur standard :"
 msgid "Standard Explorer"
 msgstr "Gestionnaire de fichier standard :"
 
-#: ../columns.cpp:51
+#: ../columns.cpp:50
 msgid "Status"
 msgstr "Statut"
 
-#: ../lock_dlg.cpp:58
+#: ../lock_dlg.cpp:57
 msgid "Steal lock if it belongs to another user"
 msgstr "Voler le verrou s'il appartient à un autre utilisateur"
 
-#: ../rapidsvn_frame.cpp:437
+#: ../rapidsvn_frame.cpp:513
 msgid "Stop"
 msgstr "Arrêter"
 
-#: ../rapidsvn_frame.cpp:438
+#: ../rapidsvn_frame.cpp:514
 msgid "Stop the current action"
 msgstr "Arrêter l'action courante"
 
@@ -1635,37 +1668,37 @@ msgstr "Arrêter l'action courante"
 msgid "Store authentication credentials on hard disk"
 msgstr "Garder les crédits d'authentification sur le disque dur"
 
-#: ../switch_action.cpp:51 ../switch_dlg.cpp:193
+#: ../switch_action.cpp:50 ../switch_dlg.cpp:192
 msgid "Switch URL"
 msgstr "Changer d'URL"
 
-#: ../rapidsvn_frame.cpp:283
+#: ../rapidsvn_frame.cpp:297
 msgid "Switch URL...\tCTRL-S"
 msgstr "Changer d'URL...\tCTRL-S"
 
-#: ../rapidsvn_frame.cpp:1452
+#: ../rapidsvn_frame.cpp:1544
 msgid "Test duration"
 msgstr "Durée du test"
 
-#: ../rapidsvn_frame.cpp:1448
+#: ../rapidsvn_frame.cpp:1540
 msgid "Test ended at"
 msgstr "Test terminé à"
 
-#: ../rapidsvn_frame.cpp:1445
+#: ../rapidsvn_frame.cpp:1537
 msgid "Test started at"
 msgstr "Test commencé à"
 
-#: ../file_info.cpp:188
+#: ../file_info.cpp:189
 msgid "Text Last Updated"
 msgstr "Dernière mise à jour du texte"
 
-#: ../view_action.cpp:97
+#: ../view_action.cpp:96
 msgid "The Editor is not configured. Please check Edit->Preferences>Programs"
 msgstr ""
 "L'éditeur n'est pas configuré. S'il vous plaît, vérifiez Affichage-"
 ">Préférences->Programmes"
 
-#: ../cert_dlg.cpp:71
+#: ../cert_dlg.cpp:70
 msgid ""
 "There were errors validating the server certificate.\n"
 "Do you want to trust this certificate?"
@@ -1673,68 +1706,68 @@ msgstr ""
 "Le certificat du serveur n'a pas pu être validé.\n"
 "Voulez vous accepter ce certificat?"
 
-#: ../commit_dlg.cpp:53
+#: ../commit_dlg.cpp:52
 msgid "This action has resulted in a Commit - please enter a log message"
 msgstr ""
 "Cette action conduit à une publication - s'il vous plaît, entrer un message "
 "de log"
 
-#: ../import_dlg.cpp:117
+#: ../import_dlg.cpp:116
 msgid "Tree"
 msgstr "Arbre"
 
-#: ../checkout_dlg.cpp:66 ../columns.cpp:60 ../export_dlg.cpp:69
-#: ../switch_dlg.cpp:78 ../update_dlg.cpp:74
+#: ../checkout_dlg.cpp:65 ../columns.cpp:59 ../export_dlg.cpp:68
+#: ../switch_dlg.cpp:77 ../update_dlg.cpp:73
 msgid "URL"
 msgstr "URL"
 
-#: ../file_info.cpp:98
+#: ../file_info.cpp:99
 #, c-format
 msgid "URL: %s"
 msgstr "URL : %s"
 
-#: ../columns.cpp:62
+#: ../columns.cpp:61
 msgid "UUID"
 msgstr "UUID"
 
-#: ../about_dlg.cpp:57
+#: ../about_dlg.cpp:56
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../rapidsvn_frame.cpp:1607
+#: ../rapidsvn_frame.cpp:1699
 msgid "Unimplemented action!"
 msgstr "Action non implémentée!"
 
-#: ../rapidsvn_drop_target.cpp:56
+#: ../rapidsvn_drop_target.cpp:55
 #, fuzzy
 msgid "Unknown destination path"
 msgstr "Chemin de destination"
 
-#: ../unlock_action.cpp:40 ../unlock_dlg.cpp:81
+#: ../unlock_action.cpp:39 ../unlock_dlg.cpp:80
 msgid "Unlock"
 msgstr "Déverrouiller"
 
-#: ../listener.cpp:376 ../rapidsvn_frame.cpp:1520
+#: ../listener.cpp:375 ../rapidsvn_frame.cpp:1612
 msgid "Unlocked"
 msgstr "Déverrouillé"
 
-#: ../get_action.cpp:39 ../update_action.cpp:40 ../update_action.cpp:52
+#: ../get_action.cpp:38 ../update_action.cpp:39 ../update_action.cpp:51
 msgid "Update"
 msgstr "Mise à jour"
 
-#: ../rapidsvn_frame.cpp:479
+#: ../rapidsvn_frame.cpp:555
 msgid "Update selected"
 msgstr "Mise à jour de la sélection"
 
-#: ../listener.cpp:364 ../rapidsvn_frame.cpp:1508
+#: ../listener.cpp:363 ../rapidsvn_frame.cpp:1600
 msgid "Updated"
 msgstr "Mis à jour"
 
-#: ../rapidsvn_frame.cpp:1669 ../rapidsvn_frame.cpp:1674
+#: ../rapidsvn_frame.cpp:1761 ../rapidsvn_frame.cpp:1766
 msgid "Updating..."
 msgstr "Mise à jour..."
 
-#: ../rapidsvn_frame.cpp:233
+#: ../rapidsvn_frame.cpp:244
 msgid "Use Path for Sorting"
 msgstr "Utiliser le chemin pour trier"
 
@@ -1747,32 +1780,32 @@ msgstr "Utiliser URL/Chemin :"
 msgid "Use always"
 msgstr "Toujours utiliser"
 
-#: ../checkout_dlg.cpp:93 ../export_dlg.cpp:96 ../rapidsvn_generated.cpp:259
-#: ../rapidsvn_generated.cpp:299 ../switch_dlg.cpp:104 ../update_dlg.cpp:101
+#: ../checkout_dlg.cpp:92 ../export_dlg.cpp:95 ../rapidsvn_generated.cpp:259
+#: ../rapidsvn_generated.cpp:299 ../switch_dlg.cpp:103 ../update_dlg.cpp:100
 msgid "Use latest"
 msgstr "Utiliser le dernier"
 
-#: ../auth_dlg.cpp:55 ../log_dlg.cpp:165
+#: ../auth_dlg.cpp:54 ../log_dlg.cpp:164
 msgid "User"
 msgstr "Utilisateur"
 
-#: ../cert_dlg.cpp:116
+#: ../cert_dlg.cpp:115
 msgid "Valid from:"
 msgstr "Valide depuis :"
 
-#: ../cert_dlg.cpp:120
+#: ../cert_dlg.cpp:119
 msgid "Valid until:"
 msgstr "Valide jusqu'à :"
 
-#: ../listed_dlg.cpp:81 ../listed_dlg.cpp:173 ../listed_dlg.cpp:325
+#: ../listed_dlg.cpp:80 ../listed_dlg.cpp:172 ../listed_dlg.cpp:324
 msgid "Value"
 msgstr "Valeur"
 
-#: ../view_action.cpp:67
+#: ../view_action.cpp:66
 msgid "View"
 msgstr "Affichage"
 
-#: ../dnd_dlg.cpp:70
+#: ../dnd_dlg.cpp:69
 #, c-format
 msgid ""
 "Would you like to move or copy\n"
@@ -1785,105 +1818,105 @@ msgid ""
 "  %s?"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:1944
+#: ../rapidsvn_frame.cpp:2057
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr ""
 "Vous ne pouvez pas ajouter un répertoire administratif subversion aux "
 "signets!"
 
-#: ../file_info.cpp:152 ../filelist_ctrl.cpp:1172
+#: ../file_info.cpp:153 ../filelist_ctrl.cpp:1194
 msgid "add"
 msgstr "ajouter"
 
-#: ../utils.cpp:398
+#: ../utils.cpp:397
 msgid "added"
 msgstr "ajouté"
 
-#: ../utils.cpp:416
+#: ../utils.cpp:415
 msgid "conflicted"
 msgstr "en conflit"
 
-#: ../file_info.cpp:156 ../filelist_ctrl.cpp:1175
+#: ../file_info.cpp:157 ../filelist_ctrl.cpp:1197
 msgid "delete"
 msgstr "supprimer"
 
-#: ../utils.cpp:404
+#: ../utils.cpp:403
 msgid "deleted"
 msgstr "supprimé"
 
-#: ../file_info.cpp:128
+#: ../file_info.cpp:129
 msgid "directory"
 msgstr "répertoire"
 
-#: ../utils.cpp:422
+#: ../utils.cpp:421
 msgid "external"
 msgstr "externe"
 
-#: ../file_info.cpp:124
+#: ../file_info.cpp:125
 msgid "file"
 msgstr "fichier"
 
-#: ../utils.cpp:428
+#: ../utils.cpp:427
 msgid "ignored"
 msgstr ""
 
-#: ../utils.cpp:425
+#: ../utils.cpp:424
 msgid "incomplete"
 msgstr "incomplet"
 
-#: ../utils.cpp:413
+#: ../utils.cpp:412
 msgid "merged"
 msgstr "fusionné"
 
-#: ../utils.cpp:401
+#: ../utils.cpp:400
 msgid "missing"
 msgstr "manquant"
 
-#: ../utils.cpp:410
+#: ../utils.cpp:409
 msgid "modified"
 msgstr "modifié"
 
-#: ../export_dlg.cpp:136 ../export_dlg.cpp:141
+#: ../export_dlg.cpp:135 ../export_dlg.cpp:140
 msgid "native"
 msgstr "natif"
 
-#: ../file_info.cpp:134 ../utils.cpp:389
+#: ../file_info.cpp:135 ../utils.cpp:388
 msgid "none"
 msgstr "aucun"
 
-#: ../file_info.cpp:148 ../utils.cpp:395
+#: ../file_info.cpp:149 ../utils.cpp:394
 msgid "normal"
 msgstr "normal"
 
-#: ../utils.cpp:419
+#: ../utils.cpp:418
 msgid "obstructed"
 msgstr "bouché"
 
-#: ../filelist_ctrl.cpp:1205 ../filelist_ctrl.cpp:1219
+#: ../filelist_ctrl.cpp:1227 ../filelist_ctrl.cpp:1241
 msgid "outdated"
 msgstr "dépassé"
 
-#: ../file_info.cpp:160 ../filelist_ctrl.cpp:1178
+#: ../file_info.cpp:161 ../filelist_ctrl.cpp:1200
 msgid "replace"
 msgstr "remplacer"
 
-#: ../utils.cpp:407
+#: ../utils.cpp:406
 msgid "replaced"
 msgstr "remplacé"
 
-#: ../file_info.cpp:139 ../file_info.cpp:164
+#: ../file_info.cpp:140 ../file_info.cpp:165
 msgid "unknown"
 msgstr "inconnu"
 
-#: ../utils.cpp:430
+#: ../utils.cpp:429
 msgid "unknown value"
 msgstr "valeur inconnue"
 
-#: ../utils.cpp:392
+#: ../utils.cpp:391
 msgid "unversioned"
 msgstr "non versionné"
 
-#: ../rapidsvn_frame.cpp:317
+#: ../rapidsvn_frame.cpp:331
 msgid "wxString Creation&Tracing Test"
 msgstr "wxString Creation&Tracing Test"
 
