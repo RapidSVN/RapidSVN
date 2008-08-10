@@ -19,6 +19,21 @@ strip $BUNDLEDIR/MacOS/rapidsvn
 cp rapidsvn.icns $BUNDLEDIR/Resources/
 echo -n 'APPL????' > $BUNDLEDIR/PkgInfo
 
+mkdir -p $BUNDLEDIR/Resources/locale
+
+pushd ../../src/locale
+for DIR in ??; do
+  mkdir -p ../../packages/osx/$BUNDLEDIR/Resources/locale/$DIR
+  cp $DIR/rapidsvn.po ../../packages/osx/$BUNDLEDIR/Resources/locale/$DIR
+  cp $DIR/rapidsvn.mo ../../packages/osx/$BUNDLEDIR/Resources/locale/$DIR
+done
+for DIR in ??_??; do
+  mkdir -p ../../packages/osx/$BUNDLEDIR/Resources/locale/$DIR
+  cp $DIR/rapidsvn.po ../../packages/osx/$BUNDLEDIR/Resources/locale/$DIR
+  cp $DIR/rapidsvn.mo ../../packages/osx/$BUNDLEDIR/Resources/locale/$DIR
+done
+popd
+
 echo -n \
 "<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">

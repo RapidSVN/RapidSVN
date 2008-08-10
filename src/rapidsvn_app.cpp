@@ -63,6 +63,12 @@ bool RapidSvnApp::OnInit ()
 
   m_locale.Init ();
   m_locale.AddCatalogLookupPathPrefix (wxT("locale"));
+#ifdef __WXMAC__
+  m_locale.AddCatalogLookupPathPrefix (
+    wxStandardPaths::Get ().GetResourcesDir () +
+    wxFileName::GetPathSeparator () +
+    wxT("locale"));
+#endif //__WXMAC__
   m_locale.AddCatalog (wxT("rapidsvn"));
 
   // Add support for PNG
