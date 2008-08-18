@@ -614,7 +614,6 @@ msgid "Directory:"
 msgstr "ディレクトリ:"
 
 #: ../rapidsvn_frame.cpp:489
-#, fuzzy
 msgid "Display conflicted files/directories"
 msgstr "競合ファイル/ディレクトリを表示します"
 
@@ -631,7 +630,6 @@ msgid "Display unmodified files/directories"
 msgstr "未変更ファイル/ディレクトリを表示します"
 
 #: ../rapidsvn_frame.cpp:470
-#, fuzzy
 msgid "Display unversioned files/directories"
 msgstr "バージョン管理されていないファイル/ディレクトリを表示します"
 
@@ -1588,7 +1586,6 @@ msgid "Show Startup Tips"
 msgstr "起動時にヒントを表示"
 
 #: ../rapidsvn_frame.cpp:276 ../rapidsvn_frame.cpp:488
-#, fuzzy
 msgid "Show conflicted entries"
 msgstr "競合エントリを表示"
 
@@ -1597,7 +1594,6 @@ msgid "Show ignored entries"
 msgstr "無視エントリを表示"
 
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
-#, fuzzy
 msgid "Show modified entries"
 msgstr "変更エントリを表示"
 
@@ -1606,7 +1602,6 @@ msgid "Show the log messages for the selected entries"
 msgstr "選択されたエントリのログメッセージを表示"
 
 #: ../rapidsvn_frame.cpp:274 ../rapidsvn_frame.cpp:476
-#, fuzzy
 msgid "Show unmodified entries"
 msgstr "未変更エントリを表示"
 
