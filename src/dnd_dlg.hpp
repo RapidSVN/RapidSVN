@@ -28,11 +28,13 @@
 #include "wx/wx.h"
 #include "wx/dialog.h"
 
-#define ID_DND_DLG 10018
-#define ID_BUTTON_IMPORT 10019
-#define ID_BUTTON_COPY 10020
-#define ID_BUTTON_MOVE 10021
-#define ID_BUTTON_CANCEL 10022
+enum
+{
+  ID_DND_DLG=10018,
+  ID_BUTTON_IMPORT,
+  ID_BUTTON_COPY,
+  ID_BUTTON_MOVE
+};
 
 class DragAndDropDialog : public wxDialog
 {

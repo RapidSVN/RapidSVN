@@ -30,7 +30,7 @@ BEGIN_EVENT_TABLE (DragAndDropDialog, wxDialog)
   EVT_BUTTON (ID_BUTTON_IMPORT, DragAndDropDialog::OnImport)
   EVT_BUTTON (ID_BUTTON_MOVE, DragAndDropDialog::OnMove)
   EVT_BUTTON (ID_BUTTON_COPY, DragAndDropDialog::OnCopy)
-  EVT_BUTTON (ID_BUTTON_CANCEL, DragAndDropDialog::OnCancel)
+  EVT_BUTTON (wxID_CANCEL, DragAndDropDialog::OnCancel)
 END_EVENT_TABLE ()
 
 DragAndDropDialog::DragAndDropDialog (wxWindow *parent, wxString src, wxString dest, bool showMove, bool showImport)
@@ -38,7 +38,7 @@ DragAndDropDialog::DragAndDropDialog (wxWindow *parent, wxString src, wxString d
              wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m_decision = DragAndDropDialog::RESULT_CANCEL;
+  m_decision = wxID_CANCEL;
   m_src = src;
   m_dest = dest;
   m_showImport = showImport;
@@ -109,7 +109,7 @@ into\n\
     itemBoxSizer4->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
   }
 
-  wxButton* itemButton7 = new wxButton( itemDialog1, ID_BUTTON_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+  wxButton* itemButton7 = new wxButton( itemDialog1, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
   itemBoxSizer4->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
   GetSizer()->Fit(this);
