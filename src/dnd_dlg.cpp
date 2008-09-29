@@ -109,7 +109,7 @@ into\n\
     itemBoxSizer4->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
   }
 
-  wxButton* itemButton7 = new wxButton( itemDialog1, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+  wxButton* itemButton7 = new wxButton (itemDialog1, wxID_CANCEL, _("Cancel"));
   itemBoxSizer4->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
   GetSizer()->Fit(this);
