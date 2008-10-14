@@ -162,7 +162,7 @@ def uploadInstaller(pkg):
     scp='scp'
     dir='osx'
     
-  url="rapidsvn_ftp@rapidsvn.org:/httpdocs/download/nightly/%s" % (dir)
+  url="rapidsvn@rapidsvn.org:/httpdocs/download/nightly/%s" % (dir)
   run(scp,  [pkg, url])
     
 
