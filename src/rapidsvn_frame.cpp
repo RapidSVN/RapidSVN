@@ -1506,9 +1506,7 @@ RapidSvnFrame::OnHelpStartupTips(wxCommandEvent & WXUNUSED(event))
 void
 RapidSvnFrame::OnAbout(wxCommandEvent & WXUNUSED(event))
 {
-  AboutDlg dlg(this, m->locale);
-
-  dlg.ShowModal();
+  ShowAboutDlg (m->locale);
 }
 
 #ifdef USE_DEBUG_TESTS
