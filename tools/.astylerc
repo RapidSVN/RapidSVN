@@ -1,0 +1,5 @@
+--indent-namespaces
+--unpad=paren
+--convert-tabs
+--indent=spaces=2
+--mode=c
