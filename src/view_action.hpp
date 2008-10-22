@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,8 +34,8 @@ namespace svn
 }
 
 /**
- * This action downloads a specific revision 
- * of a file (specified in @a GetData) and 
+ * This action downloads a specific revision
+ * of a file (specified in @a GetData) and
  * displays the file
  */
 class ViewAction:public Action
@@ -51,24 +51,24 @@ public:
    * @param title title of the action
    * @param data update data
    */
-  ViewAction (wxWindow * parent,
-              const GetData & data);
+  ViewAction(wxWindow * parent,
+             const GetData & data);
 
   /**
-   * Constructor. 
+   * Constructor.
    * An editor for the target will be called.
    */
-  ViewAction (wxWindow * parent);
+  ViewAction(wxWindow * parent);
 
 
-  virtual bool 
-  Perform ();
-  
-  virtual bool 
-  Prepare ();
-  
+  virtual bool
+  Perform();
+
+  virtual bool
+  Prepare();
+
   static bool
-  CheckStatusSel (const svn::StatusSel & statusSel);
+  CheckStatusSel(const svn::StatusSel & statusSel);
 
 
 private:

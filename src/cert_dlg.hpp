@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,26 +39,26 @@ namespace svn
 class CertDlg : public wxDialog
 {
 public:
-  CertDlg (wxWindow * parent,
-    const svn::ContextListener::SslServerTrustData & data);
+  CertDlg(wxWindow * parent,
+          const svn::ContextListener::SslServerTrustData & data);
 
-  virtual ~CertDlg ();
+  virtual ~CertDlg();
 
   svn::ContextListener::SslServerTrustAnswer
-  Answer () const;
+  Answer() const;
 
   wxUint32
-  AcceptedFailures () const;
+  AcceptedFailures() const;
 
 private:
   struct Data;
   Data * m;
 
 private:
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 
-  void OnPerm (wxCommandEvent & event);
-  void OnTemp (wxCommandEvent & event);
+  void OnPerm(wxCommandEvent & event);
+  void OnTemp(wxCommandEvent & event);
 };
 
 #endif

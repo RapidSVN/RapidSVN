@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,63 +36,63 @@
 #include "ids.hpp"
 #include "utils.hpp"
 
-CheckoutAction::CheckoutAction (wxWindow * parent)
-  : Action (parent, _("Checkout"), 0)
+CheckoutAction::CheckoutAction(wxWindow * parent)
+    : Action(parent, _("Checkout"), 0)
 {
 }
 
 bool
-CheckoutAction::Prepare ()
+CheckoutAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  const std::vector<svn::Path> & v = GetTargets ();
+  const std::vector<svn::Path> & v = GetTargets();
 
-  svn::Path selectedUrl ("");
+  svn::Path selectedUrl("");
 
-  if (v.size () == 1)
+  if (v.size() == 1)
   {
-    svn::Path selectedPath (v [0]);
+    svn::Path selectedPath(v [0]);
 
-    if (selectedPath.isUrl ())
+    if (selectedPath.isUrl())
     {
       selectedUrl = selectedPath;
     }
   }
 
-  CheckoutDlg dlg (GetParent (), selectedUrl);
+  CheckoutDlg dlg(GetParent(), selectedUrl);
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_data = dlg.GetData ();
+  m_data = dlg.GetData();
   return true;
 }
 
 bool
-CheckoutAction::Perform ()
+CheckoutAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
   TrimString(m_data.DestFolder);
-  wxString dest_folder (m_data.DestFolder);
+  wxString dest_folder(m_data.DestFolder);
   UnixPath(dest_folder);
   TrimString(m_data.RepUrl);
 
   long revnum = -1;
-  svn::Revision revision (svn::Revision::HEAD);
+  svn::Revision revision(svn::Revision::HEAD);
   svn::Revision pegRevision;
 
   // Did the user request a specific revision?:
   if (!m_data.UseLatest)
   {
     TrimString(m_data.Revision);
-    if (!m_data.Revision.IsEmpty ())
+    if (!m_data.Revision.IsEmpty())
     {
       m_data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
     }
@@ -104,39 +104,39 @@ CheckoutAction::Perform ()
   if (!m_data.NotSpecified)
   {
     TrimString(m_data.PegRevision);
-    if (!m_data.PegRevision.IsEmpty ())
+    if (!m_data.PegRevision.IsEmpty())
     {
       m_data.PegRevision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
     }
     if (revnum != -1)
       pegRevision = svn::Revision(revnum);
   }
-  
-  wxSetWorkingDirectory (m_data.DestFolder);
 
-  svn::Path repUrlUtf8 (PathUtf8 (m_data.RepUrl));
-  svn::Path destFolderUtf8 (PathUtf8 (dest_folder));
+  wxSetWorkingDirectory(m_data.DestFolder);
+
+  svn::Path repUrlUtf8(PathUtf8(m_data.RepUrl));
+  svn::Path destFolderUtf8(PathUtf8(dest_folder));
 
   bool ignoreExternals = m_data.IgnoreExternals;
 
-  client.checkout (repUrlUtf8.c_str (), 
-                   destFolderUtf8, 
-                   revision,
-                   m_data.Recursive,
-                   ignoreExternals,
-                   pegRevision);
+  client.checkout(repUrlUtf8.c_str(),
+                  destFolderUtf8,
+                  revision,
+                  m_data.Recursive,
+                  ignoreExternals,
+                  pegRevision);
 
   // now post event to add bookmark to bookmarks
   if (m_data.Bookmarks)
   {
-    ActionEvent::Post (GetParent (), TOKEN_ADD_BOOKMARK, m_data.DestFolder);
+    ActionEvent::Post(GetParent(), TOKEN_ADD_BOOKMARK, m_data.DestFolder);
   }
- 
+
   return true;
 }
 
 bool
-CheckoutAction::CheckStatusSel (const svn::StatusSel & statusSel)
+CheckoutAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -32,9 +32,9 @@
  * Define an array of indexes of the selected items.
  */
 #ifdef WX_DEFINE_ARRAY_LONG
-WX_DEFINE_ARRAY_LONG (long, IndexArray);
+WX_DEFINE_ARRAY_LONG(long, IndexArray);
 #else
-WX_DEFINE_ARRAY (long, IndexArray);
+WX_DEFINE_ARRAY(long, IndexArray);
 #endif
 
 // forward declarations
@@ -87,13 +87,13 @@ public:
   } FileListColumns;
 
 
-  FileListCtrl (wxWindow * parent, const wxWindowID id,
-                const wxPoint & pos, const wxSize & size);
+  FileListCtrl(wxWindow * parent, const wxWindowID id,
+               const wxPoint & pos, const wxSize & size);
 
-  virtual ~FileListCtrl ();
+  virtual ~FileListCtrl();
 
-  void ResetColumns ();
-  void DeleteAllItems ();
+  void ResetColumns();
+  void DeleteAllItems();
 
   /**
    * set visibility of a column
@@ -102,7 +102,7 @@ public:
    * @param visible
    */
   void
-  SetColumnVisible (const int col, const bool visible);
+  SetColumnVisible(const int col, const bool visible);
 
   /**
    * @param col column number
@@ -110,7 +110,7 @@ public:
    * @retval false invisible
    */
   bool
-  GetColumnVisible (const int col) const;
+  GetColumnVisible(const int col) const;
 
   /**
    * set column width
@@ -119,7 +119,7 @@ public:
    * @param width
    */
   void
-  SetColumnWidth (const int col, const int width);
+  SetColumnWidth(const int col, const int width);
 
   /**
    * get number of soring column
@@ -127,7 +127,7 @@ public:
    * @return number of column
    */
   int
-  GetSortColumn () const;
+  GetSortColumn() const;
 
   /**
    * set sorting column
@@ -135,7 +135,7 @@ public:
    * @param col column number
    */
   void
-  SetSortColumn (const int col);
+  SetSortColumn(const int col);
 
   /**
    * know whether to use full path in sorting
@@ -143,7 +143,7 @@ public:
    * @return true = use full path
    */
   bool
-  GetIncludePath () const;
+  GetIncludePath() const;
 
   /**
    * set whether to use full path in sorting
@@ -151,7 +151,7 @@ public:
    * @param value
    */
   void
-  SetIncludePath (bool value);
+  SetIncludePath(bool value);
 
   /**
    * know whether sorting is ascending or descending
@@ -159,7 +159,7 @@ public:
    * @return true = ascending
    */
   bool
-  GetSortAscending () const;
+  GetSortAscending() const;
 
   /**
    * set whether to sort ascending or descending
@@ -167,7 +167,7 @@ public:
    * @param ascending
    */
   void
-  SetSortAscending (bool ascending);
+  SetSortAscending(bool ascending);
 
   /**
    * get the "flat" setting
@@ -175,7 +175,7 @@ public:
    * @return true = flat
    */
   bool
-  IsFlat () const;
+  IsFlat() const;
 
   /**
    * change to either flat or single directory view
@@ -185,76 +185,76 @@ public:
    * @param flat
    */
   void
-  SetFlat (const bool flat);
+  SetFlat(const bool flat);
 
   /**
    * shall we contact the repository when updating,
    * so we get information about out-dated-ness?
    */
   bool
-  GetWithUpdate () const;
+  GetWithUpdate() const;
 
   void
-  SetWithUpdate (bool value);
+  SetWithUpdate(bool value);
 
   bool
-  GetShowUnversioned () const;
+  GetShowUnversioned() const;
 
   /**
    * shall we display unversioned file entries?
    */
   void
-  SetShowUnversioned (bool value);
+  SetShowUnversioned(bool value);
 
   void
-  SetShowUnmodified (bool value);
+  SetShowUnmodified(bool value);
 
-  void 
-  SetShowModified (bool value);
-  
   void
-  SetShowConflicted (bool value);
+  SetShowModified(bool value);
+
+  void
+  SetShowConflicted(bool value);
 
   /**
    * shall external definitions be ignored/not updated?
    */
   bool
-  GetIgnoreExternals () const;
+  GetIgnoreExternals() const;
 
   void
-  SetIgnoreExternals (bool value);
+  SetIgnoreExternals(bool value);
 
   /**
    * shall we display ignored file entries?
    */
   bool
-  GetShowIgnored () const;
+  GetShowIgnored() const;
 
   void
-  SetShowIgnored (bool value);
+  SetShowIgnored(bool value);
 
-  void RefreshFileList ();
-  void RefreshFileList (const wxString & path);
+  void RefreshFileList();
+  void RefreshFileList(const wxString & path);
 
   const IndexArray
-  GetSelectedItems () const;
+  GetSelectedItems() const;
 
-  /** 
+  /**
    * the selected @ref Status instances
    */
   const svn::StatusSel &
-  GetStatusSel () const;
+  GetStatusSel() const;
 
   svn::Context *
-  GetContext () const;
+  GetContext() const;
 
   void
-  SetContext (svn::Context * Context);
+  SetContext(svn::Context * Context);
 
   /**
    * Makes sure the columns are updated correctly
    */
-  void UpdateColumns ();
+  void UpdateColumns();
 
 private:
   /** private data for this class */
@@ -262,25 +262,25 @@ private:
   Data * m;
 
   // utility methods
-  void ShowMenu (wxPoint & pt);
-  void DeleteItem (long item);
+  void ShowMenu(wxPoint & pt);
+  void DeleteItem(long item);
 
-  void SetColumnImages ();
-  void ApplySortChanges ();
+  void SetColumnImages();
+  void ApplySortChanges();
 
   // message handlers
-  void OnKeyDown (wxKeyEvent & event);
-  void OnDoubleClick (wxListEvent & event);
-  void OnColumnLeftClick (wxListEvent & event);
-  void OnColumnEndDrag (wxListEvent & event);
-  void OnContextMenu (wxContextMenuEvent & event);
-  void OnBeginDrag (wxListEvent & event);
-  void OnSetFocus (wxFocusEvent & event);
+  void OnKeyDown(wxKeyEvent & event);
+  void OnDoubleClick(wxListEvent & event);
+  void OnColumnLeftClick(wxListEvent & event);
+  void OnColumnEndDrag(wxListEvent & event);
+  void OnContextMenu(wxContextMenuEvent & event);
+  void OnBeginDrag(wxListEvent & event);
+  void OnSetFocus(wxFocusEvent & event);
 
-  void CreateLables (const svn::Status & status, const svn::Path & basePath);
+  void CreateLables(const svn::Status & status, const svn::Path & basePath);
 
 private:
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

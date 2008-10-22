@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -31,18 +31,18 @@
 
 namespace svn
 {
-  DateTime::DateTime ()
-  : m_time(APR_DATE_BAD)
+  DateTime::DateTime()
+      : m_time(APR_DATE_BAD)
   {
   }
 
-  DateTime::DateTime (const apr_time_t time)
-  : m_time(time)
+  DateTime::DateTime(const apr_time_t time)
+      : m_time(time)
   {
   }
 
-  DateTime::DateTime (const DateTime & dateTime)
-  : m_time(dateTime.m_time)
+  DateTime::DateTime(const DateTime & dateTime)
+      : m_time(dateTime.m_time)
   {
   }
 
@@ -66,19 +66,19 @@ namespace svn
   }
 
   const bool
-  DateTime::IsValid () const
+  DateTime::IsValid() const
   {
     return m_time != APR_DATE_BAD;
   }
 
   const apr_time_t
-  DateTime::GetAPRTimeT () const
+  DateTime::GetAPRTimeT() const
   {
     return m_time;
   }
 
   const bool
-  DateTime::SetRFC822Date (const char* date)
+  DateTime::SetRFC822Date(const char* date)
   {
     m_time = apr_date_parse_rfc(date);
     return IsValid();

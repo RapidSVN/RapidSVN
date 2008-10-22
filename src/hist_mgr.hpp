@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -31,8 +31,8 @@
 /**
  * This class manages lists of historical entries. Such a list
  * has an unique identifier and a list of strings associated to it.
- * 
- * You can read them with @a ReadList and write them back with 
+ *
+ * You can read them with @a ReadList and write them back with
  * @a WriteList.
  *
  */
@@ -40,14 +40,14 @@ class HistoryManager
 {
 public:
   /** Default constructor */
-  HistoryManager ();
+  HistoryManager();
 
 
   /** Destructor */
-  virtual ~ HistoryManager ();
+  virtual ~ HistoryManager();
 
 
-  /** 
+  /**
    * Read a list of strings identified by @a id
    * from the configuration file and write the
    * results to @a list.
@@ -58,20 +58,20 @@ public:
    * @param id unique identier for the list
    * @return list of entries
    */
-  const wxArrayString & 
-  ReadList (const wxString & id);
+  const wxArrayString &
+  ReadList(const wxString & id);
 
 
   /**
    * Add an entry to an existing list. If the
    * list doesnt exist already a new one is created
-   * 
+   *
    * @param id unique identifier for the list
    * @param entry string to add
    */
   void
-  AddEntryToList (const wxString & id,
-                  const wxString & entry);
+  AddEntryToList(const wxString & id,
+                 const wxString & entry);
 
 
   /**
@@ -82,8 +82,8 @@ public:
    * @param list string list
    */
   void
-  WriteList (const wxString & id, 
-             const wxArrayString & list);
+  WriteList(const wxString & id,
+            const wxArrayString & list);
 
 
   /**
@@ -91,7 +91,7 @@ public:
    * written to the configuration files
    */
   void
-  Cleanup ();
+  Cleanup();
 
 
 private:
@@ -100,7 +100,7 @@ private:
   Data * m;
 
   /** disallow copy constructor */
-  HistoryManager (const HistoryManager &);
+  HistoryManager(const HistoryManager &);
 
 
   /** disallow assignment operator */

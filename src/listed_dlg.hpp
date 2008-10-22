@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -35,45 +35,45 @@ class wxListEvent;
 class ListEditorDlg : public wxDialog
 {
 public:
-  ListEditorDlg (wxWindow * parent, const wxString & title);
+  ListEditorDlg(wxWindow * parent, const wxString & title);
 
   /**
    * destructor
    */
-  virtual ~ListEditorDlg ();
+  virtual ~ListEditorDlg();
 
   void
-  SetAddTitle (const wxString & title);
+  SetAddTitle(const wxString & title);
 
   void
-  SetEditTitle (const wxString & title);
+  SetEditTitle(const wxString & title);
 
   void
-  SetValueCaption (const wxString & caption);
+  SetValueCaption(const wxString & caption);
 
   void
-  SetNameCaption (const wxString & caption);
+  SetNameCaption(const wxString & caption);
 
   void
-  SetCaption (const wxString & caption);
+  SetCaption(const wxString & caption);
 
   void
-  DeleteAllEntries ();
+  DeleteAllEntries();
 
   long
-  SetEntry (const wxString & name, const wxString & value);
+  SetEntry(const wxString & name, const wxString & value);
 
   void
-  GetEntryAtIndex (long id, wxString & name, wxString & value) const;
+  GetEntryAtIndex(long id, wxString & name, wxString & value) const;
 
   long
-  GetEntryCount () const;
+  GetEntryCount() const;
 
   long
-  FindEntry (const wxString & name) const;
+  FindEntry(const wxString & name) const;
 
   virtual int
-  ShowModal ();
+  ShowModal();
 
   /**
    * enables or disables the saving/modification
@@ -84,10 +84,10 @@ public:
 
 protected:
   virtual void
-  ReadFromGrid () = 0;
+  ReadFromGrid() = 0;
 
   virtual void
-  WriteToGrid () = 0;
+  WriteToGrid() = 0;
 
 private:
   struct Data;
@@ -96,12 +96,12 @@ private:
   /**
    * disallow default constructor
    */
-  ListEditorDlg ();
+  ListEditorDlg();
 
   /**
    * disallow copy constructor
    */
-  ListEditorDlg (const ListEditorDlg &);
+  ListEditorDlg(const ListEditorDlg &);
 
   /**
    * disallow assignment operator
@@ -110,28 +110,28 @@ private:
   operator = (const ListEditorDlg &);
 
   void
-  CheckButtons ();
+  CheckButtons();
 
   void
-  OnClose (wxCommandEvent & event);
+  OnClose(wxCommandEvent & event);
 
   void
-  OnOK (wxCommandEvent & event);
+  OnOK(wxCommandEvent & event);
 
   void
-  OnNew (wxCommandEvent & event);
+  OnNew(wxCommandEvent & event);
 
   void
-  OnEdit (wxCommandEvent & event);
+  OnEdit(wxCommandEvent & event);
 
   void
-  OnDelete (wxCommandEvent & event);
+  OnDelete(wxCommandEvent & event);
 
   void
-  OnSelected (wxListEvent & event);
+  OnSelected(wxListEvent & event);
 
 private:
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

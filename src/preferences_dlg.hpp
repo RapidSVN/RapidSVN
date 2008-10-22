@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,12 +39,12 @@ public:
   /**
    * constructor
    */
-  PreferencesDlg (wxWindow* parent, Preferences * prefs);
+  PreferencesDlg(wxWindow* parent, Preferences * prefs);
 
   /**
    * destructor
    */
-  virtual ~PreferencesDlg ();
+  virtual ~PreferencesDlg();
 
   /**
    * A specialised version of TransferDataFromWindow that calls
@@ -52,7 +52,7 @@ public:
    * is not the default base class behaviour.
    * @return true if transfer succeeded.
    */
-  virtual bool TransferDataFromWindow ();
+  virtual bool TransferDataFromWindow();
 
   /**
    * A specialised version of TransferDataToWindow that calls
@@ -60,24 +60,24 @@ public:
    * is not the default base class behaviour.
    * @return true if transfer succeeded.
    */
-  virtual bool TransferDataToWindow ();
+  virtual bool TransferDataToWindow();
 
 protected:
-  virtual void OnButtonEditorClick (wxCommandEvent& event);
-  virtual void OnButtonExplorerClick (wxCommandEvent& event);
-  virtual void OnButtonDiffToolClick (wxCommandEvent& event);
-  virtual void OnButtonMergeToolClick (wxCommandEvent& event);
+  virtual void OnButtonEditorClick(wxCommandEvent& event);
+  virtual void OnButtonExplorerClick(wxCommandEvent& event);
+  virtual void OnButtonDiffToolClick(wxCommandEvent& event);
+  virtual void OnButtonMergeToolClick(wxCommandEvent& event);
 
 private:
   /**
    * disallow default constructor
    */
-  PreferencesDlg ();
+  PreferencesDlg();
 
   /**
    * disallow copy constructor
    */
-  PreferencesDlg (const PreferencesDlg &);
+  PreferencesDlg(const PreferencesDlg &);
 
   /**
    * disallow assignment operator
@@ -87,7 +87,7 @@ private:
 
   Preferences * m_prefs;
 
-  bool SelectExecutable (const wxString & title, wxTextCtrl * textCtrl);
+  bool SelectExecutable(const wxString & title, wxTextCtrl * textCtrl);
 };
 
 #endif // _PREFERENCES_DLG_H_INCLUDED_

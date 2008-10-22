@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -90,13 +90,13 @@ static const wxString EmptyString;
 
 // local functions
 static bool
-IsValidSeparator (const wxString & sep)
+IsValidSeparator(const wxString & sep)
 {
   return ((sep == wxT("/")) || (sep == wxT("\\")));
 }
 
 
-/** 
+/**
  * data structure that contains information about
  * a single bookmark
  */
@@ -106,18 +106,18 @@ public:
   svn::Context * context;
   bool flatMode;
 
-  Bookmark (bool flatMode_=false)
-    : context (0), flatMode (flatMode_)
+  Bookmark(bool flatMode_=false)
+      : context(0), flatMode(flatMode_)
   {
   }
 
-  ~Bookmark ()
+  ~Bookmark()
   {
-    ClearContext ();
+    ClearContext();
   }
 
   void
-  ClearContext ()
+  ClearContext()
   {
     if (context != 0)
     {
@@ -127,16 +127,16 @@ public:
   }
 
   void
-  SetAuthCache (bool value)
+  SetAuthCache(bool value)
   {
     if (context != 0)
-      context->setAuthCache (value);
+      context->setAuthCache(value);
   }
 };
 
 static Bookmark InvalidBookmark;
 
-WX_DECLARE_STRING_HASH_MAP (Bookmark, BookmarkHashMap);
+WX_DECLARE_STRING_HASH_MAP(Bookmark, BookmarkHashMap);
 
 struct FolderBrowser::Data
 {
@@ -152,33 +152,33 @@ public:
   svn::Context defaultContext;
   svn::StatusSel statusSel;
 
-  Data (wxTreeCtrl * treeCtrl_)
-    : singleContext (0), listener (0), useAuthCache (true), treeCtrl (treeCtrl_)
+  Data(wxTreeCtrl * treeCtrl_)
+      : singleContext(0), listener(0), useAuthCache(true), treeCtrl(treeCtrl_)
   {
-    imageList = new wxImageList (16, 16, TRUE);
-    imageList->Add (EMBEDDED_BITMAP(computer_png));
-    imageList->Add (EMBEDDED_BITMAP(folder_png));
-    imageList->Add (EMBEDDED_BITMAP(open_folder_png));
-    imageList->Add (EMBEDDED_BITMAP(nonsvn_folder_png));
-    imageList->Add (EMBEDDED_BITMAP(nonsvn_open_folder_png));
-    imageList->Add (EMBEDDED_BITMAP(modified_folder_png));
-    imageList->Add (EMBEDDED_BITMAP(modified_open_folder_png));
-    imageList->Add (EMBEDDED_BITMAP(bookmark_png));
-    imageList->Add (EMBEDDED_BITMAP(repository_bookmark_png));
-    imageList->Add (EMBEDDED_BITMAP(externals_folder_png));
-    imageList->Add (EMBEDDED_BITMAP(externals_open_folder_png));
+    imageList = new wxImageList(16, 16, TRUE);
+    imageList->Add(EMBEDDED_BITMAP(computer_png));
+    imageList->Add(EMBEDDED_BITMAP(folder_png));
+    imageList->Add(EMBEDDED_BITMAP(open_folder_png));
+    imageList->Add(EMBEDDED_BITMAP(nonsvn_folder_png));
+    imageList->Add(EMBEDDED_BITMAP(nonsvn_open_folder_png));
+    imageList->Add(EMBEDDED_BITMAP(modified_folder_png));
+    imageList->Add(EMBEDDED_BITMAP(modified_open_folder_png));
+    imageList->Add(EMBEDDED_BITMAP(bookmark_png));
+    imageList->Add(EMBEDDED_BITMAP(repository_bookmark_png));
+    imageList->Add(EMBEDDED_BITMAP(externals_folder_png));
+    imageList->Add(EMBEDDED_BITMAP(externals_open_folder_png));
 
-    treeCtrl->AssignImageList (imageList);
+    treeCtrl->AssignImageList(imageList);
 
-    FolderItemData* data = new FolderItemData (FOLDER_TYPE_BOOKMARKS);
-    rootId = treeCtrl->AddRoot (_("Bookmarks"), FOLDER_IMAGE_COMPUTER,
-                                FOLDER_IMAGE_COMPUTER, data);
-    treeCtrl->SetItemHasChildren (rootId, TRUE);
+    FolderItemData* data = new FolderItemData(FOLDER_TYPE_BOOKMARKS);
+    rootId = treeCtrl->AddRoot(_("Bookmarks"), FOLDER_IMAGE_COMPUTER,
+                               FOLDER_IMAGE_COMPUTER, data);
+    treeCtrl->SetItemHasChildren(rootId, TRUE);
   }
 
-  ~Data ()
+  ~Data()
   {
-    DeleteAllItems ();
+    DeleteAllItems();
   }
 
   /**
@@ -188,136 +188,136 @@ public:
    * @param name full path/url of the bookmark
    */
   void
-  AddBookmark (wxString name, bool flatMode)
+  AddBookmark(wxString name, bool flatMode)
   {
-    TrimString (name);
-    if (name.Last () == '/')
-      name.RemoveLast ();
+    TrimString(name);
+    if (name.Last() == '/')
+      name.RemoveLast();
 
-    svn::Path nameUtf8 (PathUtf8 (name));
+    svn::Path nameUtf8(PathUtf8(name));
     if (!nameUtf8.isUrl())
     {
-      wxFileName filename (name);
-      name = filename.GetFullPath (wxPATH_NATIVE);
+      wxFileName filename(name);
+      name = filename.GetFullPath(wxPATH_NATIVE);
     }
 
-    name = BeautifyPath (name);
+    name = BeautifyPath(name);
 
-    bookmarks [name] = Bookmark (flatMode);
-    
+    bookmarks [name] = Bookmark(flatMode);
+
     if (singleContext == 0)
-      bookmarks [name].context = CreateContext ();
+      bookmarks [name].context = CreateContext();
   }
 
   /**
    * factory method to create a new context
    */
   svn::Context *
-  CreateContext ()
+  CreateContext()
   {
-    svn::Context * context = new svn::Context ();
+    svn::Context * context = new svn::Context();
 
-    context->setAuthCache (useAuthCache);
-    context->setListener (listener);
+    context->setAuthCache(useAuthCache);
+    context->setListener(listener);
 
     return context;
   }
 
   const wxString
-  GetPath ()
+  GetPath()
   {
-    const wxTreeItemId id = treeCtrl->GetSelection ();
+    const wxTreeItemId id = treeCtrl->GetSelection();
 
-    if(!id.IsOk())
+    if (!id.IsOk())
     {
       return wxEmptyString;
     }
 
-    FolderItemData* data = GetItemData (id);
-    return data->getPath ();
+    FolderItemData* data = GetItemData(id);
+    return data->getPath();
   }
 
   const FolderItemData *
-  GetSelection () const
+  GetSelection() const
   {
-    const wxTreeItemId id = treeCtrl->GetSelection ();
+    const wxTreeItemId id = treeCtrl->GetSelection();
 
-    if(!id.IsOk())
+    if (!id.IsOk())
     {
       return NULL;
     }
     else
     {
-      FolderItemData* data = GetItemData (id);
+      FolderItemData* data = GetItemData(id);
       return data;
     }
   }
 
   const FolderItemData *
-  HitTest (const wxPoint & point) const
+  HitTest(const wxPoint & point) const
   {
-    const wxTreeItemId id = treeCtrl->HitTest (point);
+    const wxTreeItemId id = treeCtrl->HitTest(point);
 
-    if(!id.IsOk ())
+    if (!id.IsOk())
       return 0;
     else
     {
-      FolderItemData* data = GetItemData (id);
+      FolderItemData* data = GetItemData(id);
       return data;
     }
   }
 
   svn::Context *
-  GetContext () 
+  GetContext()
   {
     if (singleContext != 0)
       return singleContext;
 
-    const wxString & path = GetSelectedBookmarkPath ();
+    const wxString & path = GetSelectedBookmarkPath();
 
-    if (path.Length () == 0)
+    if (path.Length() == 0)
       return &defaultContext;
 
-    BookmarkHashMap::iterator it = bookmarks.find (path);
+    BookmarkHashMap::iterator it = bookmarks.find(path);
 
-    if (it == bookmarks.end ())
+    if (it == bookmarks.end())
       return 0;
 
     return it->second.context;
   }
 
   void
-  ShowMenu (wxPoint & pt)
+  ShowMenu(wxPoint & pt)
   {
     // select right-clicked item
     const wxTreeItemId id = treeCtrl->HitTest(pt);
-    if(id.IsOk () && !(id == treeCtrl->GetSelection ()))
-      treeCtrl->SelectItem (id);
+    if (id.IsOk() && !(id == treeCtrl->GetSelection()))
+      treeCtrl->SelectItem(id);
 
-    const FolderItemData * data = GetSelection ();
+    const FolderItemData * data = GetSelection();
     if (!data)
       return;
 
-    const svn::Context * context = GetContext ();
+    const svn::Context * context = GetContext();
 
     // create menu
     wxMenu menu;
-    int type = data->getFolderType ();
+    int type = data->getFolderType();
 
-    AppendMenuItem (menu, ID_AddWcBookmark);
-    AppendMenuItem (menu, ID_Checkout);
-    menu.AppendSeparator ();
-    AppendMenuItem (menu, ID_AddRepoBookmark);
-    AppendMenuItem (menu, ID_CreateRepository);
-    AppendMenuItem (menu, ID_Switch);
+    AppendMenuItem(menu, ID_AddWcBookmark);
+    AppendMenuItem(menu, ID_Checkout);
+    menu.AppendSeparator();
+    AppendMenuItem(menu, ID_AddRepoBookmark);
+    AppendMenuItem(menu, ID_CreateRepository);
+    AppendMenuItem(menu, ID_Switch);
 
     if (type == FOLDER_TYPE_BOOKMARK)
     {
-      menu.AppendSeparator ();
-      AppendMenuItem (menu, ID_EditBookmark);
-      AppendMenuItem (menu, ID_RemoveBookmark);
-      menu.AppendSeparator ();
-      AppendMenuItem (menu, ID_Login);
+      menu.AppendSeparator();
+      AppendMenuItem(menu, ID_EditBookmark);
+      AppendMenuItem(menu, ID_RemoveBookmark);
+      menu.AppendSeparator();
+      AppendMenuItem(menu, ID_Login);
 
       wxString label;
       wxString username;
@@ -325,49 +325,49 @@ public:
 
       if (context != 0)
       {
-        username = Utf8ToLocal (context->getUsername ());
+        username = Utf8ToLocal(context->getUsername());
       }
 
-      if (username.length () == 0)
+      if (username.length() == 0)
       {
         label = _("Logout");
       }
       else
       {
         enabled = true;
-        label.Printf (_("Logout '%s'"), username.c_str ());
+        label.Printf(_("Logout '%s'"), username.c_str());
       }
 
-      wxMenuItem * item = new wxMenuItem (&menu, ID_Logout, label);
-      menu.Append (item);
-      item->Enable (enabled);
+      wxMenuItem * item = new wxMenuItem(&menu, ID_Logout, label);
+      menu.Append(item);
+      item->Enable(enabled);
     }
 
     if (type == FOLDER_TYPE_BOOKMARK || type == FOLDER_TYPE_NORMAL)
     {
-      menu.AppendSeparator ();
-      AppendMenuItem (menu, ID_Update);
-      AppendMenuItem (menu, ID_Commit);
+      menu.AppendSeparator();
+      AppendMenuItem(menu, ID_Update);
+      AppendMenuItem(menu, ID_Commit);
     }
 
     // Check for disabled items
-    RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp ().GetTopWindow ();
-    frame->TrimDisabledMenuItems (menu);
+    RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp().GetTopWindow();
+    frame->TrimDisabledMenuItems(menu);
 
     // show menu
-    treeCtrl->PopupMenu (&menu, pt);
+    treeCtrl->PopupMenu(&menu, pt);
   }
 
   bool
-  HasSubdirectories (const wxString & path)
+  HasSubdirectories(const wxString & path)
   {
     wxString filename;
 
-    wxDir dir (path);
+    wxDir dir(path);
 
     bool ok = dir.GetFirst(&filename, wxEmptyString,
-                             wxDIR_DIRS);
-    if(!dir.IsOpened ())
+                           wxDIR_DIRS);
+    if (!dir.IsOpened())
       return false;
 
     if (!ok)
@@ -375,21 +375,21 @@ public:
 
     while (ok)
     {
-      if (!svn::Wc::isAdmDir (LocalToUtf8 (filename).c_str ()))
+      if (!svn::Wc::isAdmDir(LocalToUtf8(filename).c_str()))
         return true;
-      ok = dir.GetNext (&filename);
+      ok = dir.GetNext(&filename);
     }
 
     return false;
   }
 
-  void Delete (const wxTreeItemId & id)
+  void Delete(const wxTreeItemId & id)
   {
-    if( treeCtrl )
+    if (treeCtrl)
     {
       wxTreeItemData * data = treeCtrl->GetItemData(id);
 
-      if( data )
+      if (data)
       {
         delete data;
         treeCtrl->SetItemData(id, NULL);
@@ -399,175 +399,175 @@ public:
     }
   }
 
-  void DeleteAllItems ()
+  void DeleteAllItems()
   {
     if (treeCtrl)
     {
-        // this deletes all children and
-        // all of the itemdata
+      // this deletes all children and
+      // all of the itemdata
 #ifndef __WXMAC__ //wxMac crashes here
-      treeCtrl->Collapse (rootId);
+      treeCtrl->Collapse(rootId);
 #endif
     }
   }
 
   void
-  OnTreeKeyDown (wxTreeEvent & event)
+  OnTreeKeyDown(wxTreeEvent & event)
   {
-    int code = event.GetKeyCode ();
+    int code = event.GetKeyCode();
 
-    if (treeCtrl->GetSelection ().IsOk () &&
-        !treeCtrl->IsExpanded (treeCtrl->GetSelection ()))
+    if (treeCtrl->GetSelection().IsOk() &&
+        !treeCtrl->IsExpanded(treeCtrl->GetSelection()))
     {
       if (code == '-' || code == WXK_LEFT)
       {
-        wxTreeItemId parentId (
-          treeCtrl->GetItemParent(treeCtrl->GetSelection ()));
+        wxTreeItemId parentId(
+          treeCtrl->GetItemParent(treeCtrl->GetSelection()));
 
         // make sure parentId is okay
         // -> otherwise segfault (at least on wxGTK)
-        if (parentId.IsOk ())
-          treeCtrl->Collapse (parentId);
+        if (parentId.IsOk())
+          treeCtrl->Collapse(parentId);
       }
     }
-    event.Skip ();
+    event.Skip();
   }
 
   void
-  OnExpandItem (wxTreeEvent & event)
+  OnExpandItem(wxTreeEvent & event)
   {
-    wxTreeItemId parentId = event.GetItem ();
+    wxTreeItemId parentId = event.GetItem();
     int type = FOLDER_TYPE_INVALID;
 
-    // If the parent is already expanded, 
+    // If the parent is already expanded,
     // nothing has to be done here
-    if (treeCtrl->IsExpanded (parentId))
+    if (treeCtrl->IsExpanded(parentId))
       return;
 
-    if(!rootId.IsOk ())
+    if (!rootId.IsOk())
     {
-      rootId = treeCtrl->GetRootItem ();
+      rootId = treeCtrl->GetRootItem();
     }
 
-    FolderItemData* parentData = GetItemData (parentId);
-    if(parentData)
+    FolderItemData* parentData = GetItemData(parentId);
+    if (parentData)
     {
-      type = parentData->getFolderType ();
+      type = parentData->getFolderType();
     }
 
-    switch(type)
+    switch (type)
     {
-      case FOLDER_TYPE_BOOKMARKS:
+    case FOLDER_TYPE_BOOKMARKS:
+    {
+      BookmarkHashMap::iterator it = bookmarks.begin();
+
+      for (; it!= bookmarks.end(); it++)
       {
-        BookmarkHashMap::iterator it = bookmarks.begin ();
+        const wxString & path = it->first;
+        svn::Path pathUtf8(PathUtf8(path));
+        int image;
 
-        for (; it!= bookmarks.end (); it++)
-        {
-          const wxString & path = it->first;
-          svn::Path pathUtf8 (PathUtf8 (path));
-          int image;
+        if (pathUtf8.isUrl())
+          image = FOLDER_IMAGE_REPOSITORY_BOOKMARK;
+        else
+          image = FOLDER_IMAGE_BOOKMARK;
 
-          if (pathUtf8.isUrl ())
-            image = FOLDER_IMAGE_REPOSITORY_BOOKMARK;
-          else
-            image = FOLDER_IMAGE_BOOKMARK;
-
-          FolderItemData* data= new FolderItemData (FOLDER_TYPE_BOOKMARK,
-                                                    path, path, TRUE);
-          wxTreeItemId newId = treeCtrl->AppendItem (parentId, path,
-                                                     image, image, data);
-          treeCtrl->SetItemHasChildren (newId, TRUE);
-          treeCtrl->SetItemImage (newId, image,
-                                  wxTreeItemIcon_Expanded);
-        }
+        FolderItemData* data= new FolderItemData(FOLDER_TYPE_BOOKMARK,
+            path, path, TRUE);
+        wxTreeItemId newId = treeCtrl->AppendItem(parentId, path,
+                             image, image, data);
+        treeCtrl->SetItemHasChildren(newId, TRUE);
+        treeCtrl->SetItemImage(newId, image,
+                               wxTreeItemIcon_Expanded);
       }
-      break;
+    }
+    break;
 
-      case FOLDER_TYPE_BOOKMARK:
-      case FOLDER_TYPE_NORMAL:
+    case FOLDER_TYPE_BOOKMARK:
+    case FOLDER_TYPE_NORMAL:
       try
       {
-        const wxString& parentPath = parentData->getPath ();
+        const wxString& parentPath = parentData->getPath();
 
-        Refresh (parentPath, parentId);
+        Refresh(parentPath, parentId);
       }
       catch (svn::ClientException & e)
       {
-        wxString errtxt (Utf8ToLocal (e.message ()));
+        wxString errtxt(Utf8ToLocal(e.message()));
         wxLogError(_("Error while refreshing filelist (%s)"),
-                    errtxt.c_str ());
+                   errtxt.c_str());
       }
       break;
     }
 
-    treeCtrl->SortChildren (parentId);
+    treeCtrl->SortChildren(parentId);
   }
 
   void
-  OnCollapseItem (wxTreeEvent & event)
+  OnCollapseItem(wxTreeEvent & event)
   {
-    wxTreeItemId parentId = event.GetItem ();
+    wxTreeItemId parentId = event.GetItem();
 
     wxTreeItemIdValue cookie;
-    wxTreeItemId id = treeCtrl->GetFirstChild (parentId, cookie);
+    wxTreeItemId id = treeCtrl->GetFirstChild(parentId, cookie);
 
-    while(id.IsOk())
+    while (id.IsOk())
     {
-      Delete (id);
-      id=treeCtrl->GetFirstChild (parentId, cookie);
+      Delete(id);
+      id=treeCtrl->GetFirstChild(parentId, cookie);
     }
 
-    treeCtrl->SetItemHasChildren (parentId, TRUE);
+    treeCtrl->SetItemHasChildren(parentId, TRUE);
   }
 
   void
-  Refresh (const wxString & parentPath,
-                const wxTreeItemId & parentId)
+  Refresh(const wxString & parentPath,
+          const wxTreeItemId & parentId)
   {
-    // If the parent is already expanded, 
+    // If the parent is already expanded,
     // nothing has to be done here
-    if (treeCtrl->IsExpanded (parentId))
+    if (treeCtrl->IsExpanded(parentId))
       return;
 
-    svn::Client client (GetContext ());
-    svn::Path parentPathUtf8 (PathUtf8 (parentPath));
+    svn::Client client(GetContext());
+    svn::Path parentPathUtf8(PathUtf8(parentPath));
 
     // Get status array for parent and all entries within it
-    svn::StatusEntries entries = 
-      client.status (parentPathUtf8.c_str (),
-                     false,      // Not recursive
-                     true,       // Get all entries
-                     false,      // Dont update from repository
-                     false);     // Use global ignores
+    svn::StatusEntries entries =
+      client.status(parentPathUtf8.c_str(),
+                    false,      // Not recursive
+                    true,       // Get all entries
+                    false,      // Dont update from repository
+                    false);     // Use global ignores
 
     svn::StatusEntries::iterator it;
-    for (it = entries.begin (); it != entries.end (); it++)
+    for (it = entries.begin(); it != entries.end(); it++)
     {
       svn::Status& status = *it;
 
       // Convert path from UTF8 to Local
-      svn::Path filename (status.path ());
-      wxString path (Utf8ToLocal (filename.native ()));
+      svn::Path filename(status.path());
+      wxString path(Utf8ToLocal(filename.native()));
 
       // Only display versioned directories
-      if ((status.entry ().kind () != svn_node_dir) &&
-          (status.textStatus () != svn_wc_status_external)) 
+      if ((status.entry().kind() != svn_node_dir) &&
+          (status.textStatus() != svn_wc_status_external))
         continue;
-           
+
       if (parentPath == path)
       {
         // we update the information about the parent on
         // every occassion
-        FolderItemData * data = GetItemData (parentId);
+        FolderItemData * data = GetItemData(parentId);
         if (0 != data)
-          data->setStatus (status);
+          data->setStatus(status);
       }
       else
       {
         int image = FOLDER_IMAGE_FOLDER;
         int open_image = FOLDER_IMAGE_OPEN_FOLDER;
 
-        if (status.textStatus () == svn_wc_status_external)
+        if (status.textStatus() == svn_wc_status_external)
         {
           image = FOLDER_IMAGE_EXTERNALS_FOLDER;
           open_image = FOLDER_IMAGE_OPEN_EXTERNALS_FOLDER;
@@ -579,29 +579,29 @@ public:
         }
 
 
-        if ((status.textStatus () == svn_wc_status_modified) ||
-            (status.propStatus () == svn_wc_status_modified))
+        if ((status.textStatus() == svn_wc_status_modified) ||
+            (status.propStatus() == svn_wc_status_modified))
         {
           image = FOLDER_IMAGE_MODIFIED_FOLDER;
           open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
         }
 
-        FolderItemData * data = new FolderItemData (
-          FOLDER_TYPE_NORMAL, path, 
-          Utf8ToLocal (filename.basename ()), 
+        FolderItemData * data = new FolderItemData(
+          FOLDER_TYPE_NORMAL, path,
+          Utf8ToLocal(filename.basename()),
           TRUE);
-        data->setStatus (status);
+        data->setStatus(status);
 
         wxTreeItemId newId = treeCtrl->AppendItem(
-          parentId, 
-          Utf8ToLocal (filename.basename ()), 
-          image, image, data);
+                               parentId,
+                               Utf8ToLocal(filename.basename()),
+                               image, image, data);
 
         bool hasSubDirs = true;
-        if (!filename.isUrl ())
-          hasSubDirs = HasSubdirectories (path);
-        treeCtrl->SetItemHasChildren (newId, hasSubDirs);
-        treeCtrl->SetItemImage (newId, open_image, wxTreeItemIcon_Expanded);
+        if (!filename.isUrl())
+          hasSubDirs = HasSubdirectories(path);
+        treeCtrl->SetItemHasChildren(newId, hasSubDirs);
+        treeCtrl->SetItemImage(newId, open_image, wxTreeItemIcon_Expanded);
       }
     }
   }
@@ -611,24 +611,24 @@ public:
    * Finds the child entry with @a path
    */
   wxTreeItemId
-  FindClosestChild (const wxTreeItemId & parentId, const wxString & path)
+  FindClosestChild(const wxTreeItemId & parentId, const wxString & path)
   {
     wxTreeItemIdValue cookie;
-    wxTreeItemId id = treeCtrl->GetFirstChild (parentId, cookie);
+    wxTreeItemId id = treeCtrl->GetFirstChild(parentId, cookie);
     wxTreeItemId childId;
 
     do
     {
-      const FolderItemData * data = GetItemData (id);
+      const FolderItemData * data = GetItemData(id);
 
       if (data == 0)
         break;
 
-      if (!data->isReal ())
+      if (!data->isReal())
         break;
 
-      const wxString nodePath (data->getPath ());
-      if (nodePath.length () == 0)
+      const wxString nodePath(data->getPath());
+      if (nodePath.length() == 0)
         break;
 
       // first check: full match?
@@ -639,17 +639,17 @@ public:
       }
 
       // second check: match until path delimiter
-      wxString prefix (path.Left (nodePath.length ()));
-      wxString sep (path.Mid (nodePath.length (), 1));
+      wxString prefix(path.Left(nodePath.length()));
+      wxString sep(path.Mid(nodePath.length(), 1));
 
-      if ((prefix == nodePath) && IsValidSeparator (sep))
+      if ((prefix == nodePath) && IsValidSeparator(sep))
       {
         childId = id;
         break;
       }
 
-      id = treeCtrl->GetNextChild (parentId, cookie);
-    } while (id.IsOk ());
+      id = treeCtrl->GetNextChild(parentId, cookie);
+    } while (id.IsOk());
 
     return childId;
   }
@@ -668,18 +668,18 @@ public:
    * @retval true selection successful
    */
   bool
-  SelectFolder (const wxString & pathP)
+  SelectFolder(const wxString & pathP)
   {
-    if (pathP.Length () == 0)
+    if (pathP.Length() == 0)
     {
-      treeCtrl->SelectItem (treeCtrl->GetRootItem ());
+      treeCtrl->SelectItem(treeCtrl->GetRootItem());
       return true;
     }
 
-    wxTreeItemId bookmarkId = GetSelectedBookmarkId ();
+    wxTreeItemId bookmarkId = GetSelectedBookmarkId();
 
     // found a valid bookmark? otherwise quit
-    if (!bookmarkId.IsOk ())
+    if (!bookmarkId.IsOk())
       return false;
 
     // begin searching in the folder hierarchy
@@ -688,7 +688,7 @@ public:
 
     do
     {
-      const FolderItemData * data = GetItemData (id);
+      const FolderItemData * data = GetItemData(id);
 
       // first some validity checkings:
       // - there has to be a valid @a data item
@@ -699,11 +699,11 @@ public:
       if (data == 0)
         break;
 
-      if (!data->isReal ())
+      if (!data->isReal())
         break;
 
-      const wxString nodePath (data->getPath ());
-      if (nodePath.length () == 0)
+      const wxString nodePath(data->getPath());
+      if (nodePath.length() == 0)
         break;
 
       // check if @a path and @a nodePath match already
@@ -715,31 +715,31 @@ public:
 
       }
 
-      wxString prefix (pathP.Left (nodePath.length()));
-      wxString sep (pathP.Mid (nodePath.length(), 1));
+      wxString prefix(pathP.Left(nodePath.length()));
+      wxString sep(pathP.Mid(nodePath.length(), 1));
 
-      if ((prefix != nodePath) || !IsValidSeparator (sep))
-       break;
+      if ((prefix != nodePath) || !IsValidSeparator(sep))
+        break;
 
-      if (!data->hasChildren ())
+      if (!data->hasChildren())
         break;
 
       // try to find @a path in one of the children
       // make sure node is open
-      if (!treeCtrl->IsExpanded (id))
-        treeCtrl->Expand (id);
+      if (!treeCtrl->IsExpanded(id))
+        treeCtrl->Expand(id);
 
-      id = FindClosestChild (id, pathP);
-    } while (id.IsOk ());
+      id = FindClosestChild(id, pathP);
+    } while (id.IsOk());
 
     if (success)
-      treeCtrl->SelectItem (id);
+      treeCtrl->SelectItem(id);
 
     return success;
   }
 
   FolderItemData *
-  GetItemData (const wxTreeItemId & id) const
+  GetItemData(const wxTreeItemId & id) const
   {
     if (!treeCtrl)
       return 0;
@@ -747,19 +747,19 @@ public:
     if (!id)
       return 0;
 
-    return static_cast<FolderItemData *>(treeCtrl->GetItemData (id));
+    return static_cast<FolderItemData *>(treeCtrl->GetItemData(id));
   }
 
   bool
-  SelectBookmark (const wxString & bookmarkPath)
+  SelectBookmark(const wxString & bookmarkPath)
   {
     wxTreeItemIdValue cookie;
-    wxTreeItemId id = treeCtrl->GetFirstChild (rootId, cookie);
+    wxTreeItemId id = treeCtrl->GetFirstChild(rootId, cookie);
 
     bool success = false;
     while (!success)
     {
-      FolderItemData * data = GetItemData (id);
+      FolderItemData * data = GetItemData(id);
 
       // if id is not valid, data will be 0
       // This is the case if there are no
@@ -769,19 +769,19 @@ public:
 
       // bookmark match?
 #ifdef __WXMSW__
-      if (data->getPath ().Lower () == bookmarkPath.Lower ())
+      if (data->getPath().Lower() == bookmarkPath.Lower())
 #else
-      if (data->getPath () == bookmarkPath)
+      if (data->getPath() == bookmarkPath)
 #endif
       {
         // select bookmark
         success = true;
-        treeCtrl->SelectItem (id);
+        treeCtrl->SelectItem(id);
       }
       else
       {
         // otherwise move to next
-        id = treeCtrl->GetNextChild (rootId, cookie);
+        id = treeCtrl->GetNextChild(rootId, cookie);
       }
     }
     return success;
@@ -794,74 +794,74 @@ public:
    * @return id of bookmark for selected node
    */
   wxTreeItemId
-  GetSelectedBookmarkId () const
+  GetSelectedBookmarkId() const
   {
-    wxTreeItemId id = treeCtrl->GetSelection ();
+    wxTreeItemId id = treeCtrl->GetSelection();
     const FolderItemData * data;
     wxTreeItemId bookmarkId;
 
-    while (id.IsOk ())
+    while (id.IsOk())
     {
-      data = GetItemData (id);
+      data = GetItemData(id);
 
       if (data == 0)
         break;
 
-      if (data->getFolderType () == FOLDER_TYPE_BOOKMARK)
+      if (data->getFolderType() == FOLDER_TYPE_BOOKMARK)
       {
         bookmarkId = id;
         break;
       }
 
       // step up one level
-      id = treeCtrl->GetItemParent (id);
+      id = treeCtrl->GetItemParent(id);
     }
     return bookmarkId;
   }
 
 
-  const wxString & 
-  GetSelectedBookmarkPath () const
+  const wxString &
+  GetSelectedBookmarkPath() const
   {
-    wxTreeItemId id = GetSelectedBookmarkId ();
+    wxTreeItemId id = GetSelectedBookmarkId();
 
-    if (!id.IsOk ())
+    if (!id.IsOk())
       return EmptyString;
 
-    FolderItemData * data = GetItemData (id);
+    FolderItemData * data = GetItemData(id);
 
-    wxASSERT (data);
+    wxASSERT(data);
 
-    return data->getPath ();
+    return data->getPath();
   }
 
   Bookmark &
-  GetSelectedBookmark ()
+  GetSelectedBookmark()
   {
-    const wxString & path = GetSelectedBookmarkPath ();
+    const wxString & path = GetSelectedBookmarkPath();
 
     // empty string means there isnt a bookmark
     // for the selecttion, e.g. the root of the tree
-    if (path.Length () == 0)
+    if (path.Length() == 0)
       return InvalidBookmark;
 
     // check whether we can find the bookmark
-    BookmarkHashMap::iterator it = bookmarks.find (path);
+    BookmarkHashMap::iterator it = bookmarks.find(path);
 
-    if (it == bookmarks.end ())
+    if (it == bookmarks.end())
       return InvalidBookmark;
 
     return it->second;
   }
 
   void
-  SetAuthPerBookmark (const bool perBookmark)
+  SetAuthPerBookmark(const bool perBookmark)
   {
     if (!perBookmark)
     {
       // one Context for all
-      ClearContexts ();
-      singleContext = CreateContext ();
+      ClearContexts();
+      singleContext = CreateContext();
     }
     else
     {
@@ -871,266 +871,266 @@ public:
         singleContext = 0;
       }
 
-      BookmarkHashMap::iterator it = bookmarks.begin ();
+      BookmarkHashMap::iterator it = bookmarks.begin();
 
-      for (; it!=bookmarks.end (); it++)
+      for (; it!=bookmarks.end(); it++)
       {
-        it->second.context = CreateContext ();
+        it->second.context = CreateContext();
       }
     }
   }
 
   const bool
-  GetAuthPerBookmark () const
+  GetAuthPerBookmark() const
   {
     return singleContext == 0;
   }
 
 
-  void ClearContexts ()
+  void ClearContexts()
   {
-    BookmarkHashMap::iterator it = bookmarks.begin ();
+    BookmarkHashMap::iterator it = bookmarks.begin();
 
-    for (; it!=bookmarks.end (); it++)
-      it->second.ClearContext ();
+    for (; it!=bookmarks.end(); it++)
+      it->second.ClearContext();
   }
 
-  void SetAuthCache (bool value)
+  void SetAuthCache(bool value)
   {
     useAuthCache = value;
 
     // make sure the already existing contexts
     // are using the new setting
-    defaultContext.setAuthCache (value);
+    defaultContext.setAuthCache(value);
     if (singleContext != 0)
-       singleContext->setAuthCache (value);
+      singleContext->setAuthCache(value);
 
-    BookmarkHashMap::iterator it = bookmarks.begin ();
+    BookmarkHashMap::iterator it = bookmarks.begin();
 
-    for (; it!= bookmarks.end (); it++)
-      it->second.SetAuthCache (value);
+    for (; it!= bookmarks.end(); it++)
+      it->second.SetAuthCache(value);
   }
 };
 
-BEGIN_EVENT_TABLE (FolderBrowser, wxTreeCtrl)
-  EVT_TREE_ITEM_EXPANDING (-1, FolderBrowser::OnExpandItem)
-  EVT_TREE_ITEM_COLLAPSED (-1, FolderBrowser::OnCollapseItem)
-  EVT_TREE_KEY_DOWN (-1, FolderBrowser::OnTreeKeyDown)
-  EVT_CONTEXT_MENU (FolderBrowser::OnContextMenu)
-  EVT_TREE_BEGIN_DRAG (-1, FolderBrowser::OnBeginDrag)
-  EVT_SET_FOCUS (FolderBrowser::OnSetFocus)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(FolderBrowser, wxTreeCtrl)
+  EVT_TREE_ITEM_EXPANDING(-1, FolderBrowser::OnExpandItem)
+  EVT_TREE_ITEM_COLLAPSED(-1, FolderBrowser::OnCollapseItem)
+  EVT_TREE_KEY_DOWN(-1, FolderBrowser::OnTreeKeyDown)
+  EVT_CONTEXT_MENU(FolderBrowser::OnContextMenu)
+  EVT_TREE_BEGIN_DRAG(-1, FolderBrowser::OnBeginDrag)
+  EVT_SET_FOCUS(FolderBrowser::OnSetFocus)
+END_EVENT_TABLE()
 
-FolderBrowser::FolderBrowser (wxWindow * parent, const wxWindowID id,
-                              const wxPoint & pos, const wxSize & size,
-                              const wxString & name)
-  : wxTreeCtrl (parent, id, pos, size, wxTR_HAS_BUTTONS | wxTR_SINGLE, wxDefaultValidator, name)
+FolderBrowser::FolderBrowser(wxWindow * parent, const wxWindowID id,
+                             const wxPoint & pos, const wxSize & size,
+                             const wxString & name)
+    : wxTreeCtrl(parent, id, pos, size, wxTR_HAS_BUTTONS | wxTR_SINGLE, wxDefaultValidator, name)
 {
-  m = new Data (this);
+  m = new Data(this);
 }
 
-FolderBrowser::~FolderBrowser ()
+FolderBrowser::~FolderBrowser()
 {
   delete m;
 }
 
 void
-FolderBrowser::RefreshFolderBrowser ()
+FolderBrowser::RefreshFolderBrowser()
 {
   // remember selected
-  wxString bookmarkPath = m->GetSelectedBookmarkPath ();
-  wxString path = m->GetPath ();
+  wxString bookmarkPath = m->GetSelectedBookmarkPath();
+  wxString path = m->GetPath();
 
   // refresh contents
-  m->treeCtrl->Collapse (m->rootId);
-  m->treeCtrl->Expand (m->rootId);
+  m->treeCtrl->Collapse(m->rootId);
+  m->treeCtrl->Expand(m->rootId);
 
   // now try to find the remembered selection
-  if (bookmarkPath.Length () == 0)
+  if (bookmarkPath.Length() == 0)
     return;
 
-  if(!m->SelectBookmark (bookmarkPath))
+  if (!m->SelectBookmark(bookmarkPath))
     return;
 
-  wxTreeItemId bookmarkId = m->treeCtrl->GetSelection ();
-  if (m->treeCtrl->ItemHasChildren (bookmarkId))
-    m->treeCtrl->Expand (bookmarkId);
+  wxTreeItemId bookmarkId = m->treeCtrl->GetSelection();
+  if (m->treeCtrl->ItemHasChildren(bookmarkId))
+    m->treeCtrl->Expand(bookmarkId);
 
-  SelectFolder (path);
+  SelectFolder(path);
 }
 
 const bool
-FolderBrowser::RemoveBookmark ()
+FolderBrowser::RemoveBookmark()
 {
-  wxTreeItemId id = m->treeCtrl->GetSelection ();
+  wxTreeItemId id = m->treeCtrl->GetSelection();
 
-  if(!id.IsOk ())
+  if (!id.IsOk())
     return false;
 
-  FolderItemData* data = (FolderItemData*) m->treeCtrl->GetItemData (id);
+  FolderItemData* data = (FolderItemData*) m->treeCtrl->GetItemData(id);
 
-  if (data->getFolderType () != FOLDER_TYPE_BOOKMARK)
+  if (data->getFolderType() != FOLDER_TYPE_BOOKMARK)
     return false;
 
-  SelectFolder (wxEmptyString);
+  SelectFolder(wxEmptyString);
 
-  wxString path = data->getPath ();
-  m->Delete (id);
-  m->bookmarks.erase (path);
+  wxString path = data->getPath();
+  m->Delete(id);
+  m->bookmarks.erase(path);
 
   return true;
 }
 
 void
-FolderBrowser::AddBookmark (const wxString & path)
+FolderBrowser::AddBookmark(const wxString & path)
 {
-  m->AddBookmark (path, false);
+  m->AddBookmark(path, false);
 }
 
 const
 wxString
-FolderBrowser::GetPath () const
+FolderBrowser::GetPath() const
 {
-  return m->GetPath ();
+  return m->GetPath();
 }
 
 const FolderItemData *
-FolderBrowser::GetSelectedItemData () const
+FolderBrowser::GetSelectedItemData() const
 {
-  return m->GetSelection ();
+  return m->GetSelection();
 }
 
 const FolderItemData *
-FolderBrowser::HitTest (const wxPoint & point) const
+FolderBrowser::HitTest(const wxPoint & point) const
 {
-  return m->HitTest (point);
+  return m->HitTest(point);
 }
 
 void
-FolderBrowser::OnTreeKeyDown (wxTreeEvent & event)
+FolderBrowser::OnTreeKeyDown(wxTreeEvent & event)
 {
-  m->OnTreeKeyDown (event);
+  m->OnTreeKeyDown(event);
 }
 
 void
-FolderBrowser::OnExpandItem (wxTreeEvent & event)
+FolderBrowser::OnExpandItem(wxTreeEvent & event)
 {
-  m->OnExpandItem (event);
+  m->OnExpandItem(event);
 }
 
 void
-FolderBrowser::OnCollapseItem (wxTreeEvent & event)
+FolderBrowser::OnCollapseItem(wxTreeEvent & event)
 {
-  m->OnCollapseItem (event);
+  m->OnCollapseItem(event);
 }
 
 void
-FolderBrowser::OnContextMenu (wxContextMenuEvent & event)
+FolderBrowser::OnContextMenu(wxContextMenuEvent & event)
 {
-  wxPoint clientPt = ScreenToClient (event.GetPosition ());
-  m->ShowMenu (clientPt);
+  wxPoint clientPt = ScreenToClient(event.GetPosition());
+  m->ShowMenu(clientPt);
 }
 
 bool
-FolderBrowser::SelectFolder (const wxString & path)
+FolderBrowser::SelectFolder(const wxString & path)
 {
-  return m->SelectFolder (path);
+  return m->SelectFolder(path);
 }
 
 svn::Context *
-FolderBrowser::GetContext ()
+FolderBrowser::GetContext()
 {
-  return m->GetContext ();
+  return m->GetContext();
 }
 
 void
-FolderBrowser::SetAuthPerBookmark (const bool value)
+FolderBrowser::SetAuthPerBookmark(const bool value)
 {
-  m->SetAuthPerBookmark (value);
+  m->SetAuthPerBookmark(value);
 }
 
 const bool
-FolderBrowser::GetAuthPerBookmark () const
+FolderBrowser::GetAuthPerBookmark() const
 {
-  return m->GetAuthPerBookmark ();
+  return m->GetAuthPerBookmark();
 }
 
 bool
-FolderBrowser::SelectBookmark (const wxString & bookmarkPath)
+FolderBrowser::SelectBookmark(const wxString & bookmarkPath)
 {
-  return m->SelectBookmark (bookmarkPath);
+  return m->SelectBookmark(bookmarkPath);
 }
 
 void
-FolderBrowser::SetListener (svn::ContextListener * listener)
+FolderBrowser::SetListener(svn::ContextListener * listener)
 {
   m->listener = listener;
 }
 
 svn::ContextListener *
-FolderBrowser::GetListener () const
+FolderBrowser::GetListener() const
 {
   return m->listener;
 }
 
 void
-FolderBrowser::WriteConfig (wxConfigBase * cfg) const
+FolderBrowser::WriteConfig(wxConfigBase * cfg) const
 {
-  wxASSERT (cfg);
+  wxASSERT(cfg);
 
-  cfg->Write (ConfigBookmarkCount, (long)m->bookmarks.size ());
+  cfg->Write(ConfigBookmarkCount, (long)m->bookmarks.size());
 
   // Save the bookmarks contents
   long item = 0;
 
-  BookmarkHashMap::iterator it = m->bookmarks.begin ();
+  BookmarkHashMap::iterator it = m->bookmarks.begin();
 
-  for (; it != m->bookmarks.end (); it++)
+  for (; it != m->bookmarks.end(); it++)
   {
     wxString keyPath, keyFlatMode;
-    keyPath.Printf (ConfigBookmarkFmt, item);
-    keyFlatMode.Printf (ConfigFlatModeFmt, item);
+    keyPath.Printf(ConfigBookmarkFmt, item);
+    keyFlatMode.Printf(ConfigFlatModeFmt, item);
 
-    cfg->Write (keyPath, it->first);
+    cfg->Write(keyPath, it->first);
     if (it->second.flatMode)
-      cfg->Write (keyFlatMode, (long)1);
+      cfg->Write(keyFlatMode, (long)1);
     else
-      cfg->Write (keyFlatMode, (long)0);
+      cfg->Write(keyFlatMode, (long)0);
 
     item++;
   }
 }
 
 void
-FolderBrowser::ReadConfig (wxConfigBase * cfg)
+FolderBrowser::ReadConfig(wxConfigBase * cfg)
 {
-  wxASSERT (cfg);
+  wxASSERT(cfg);
 
   Preferences prefs;
   long item, count;
-  cfg->Read (ConfigBookmarkCount, &count, 0);
+  cfg->Read(ConfigBookmarkCount, &count, 0);
   for (item = 0; item < count; item++)
   {
     wxString keyPath, keyFlatMode;
     wxString path;
 
-    keyPath.Printf (ConfigBookmarkFmt, item);
-    keyFlatMode.Printf (ConfigFlatModeFmt, item);
-    cfg->Read (keyPath, &path, wxEmptyString);
+    keyPath.Printf(ConfigBookmarkFmt, item);
+    keyFlatMode.Printf(ConfigFlatModeFmt, item);
+    cfg->Read(keyPath, &path, wxEmptyString);
 
     long flatMode=0;
     if (!prefs.resetFlatModeOnStart)
-      cfg->Read (keyFlatMode, &flatMode, 0); 
+      cfg->Read(keyFlatMode, &flatMode, 0);
 
-    if (path.Length () > 0)
-      m->bookmarks [path] = Bookmark (flatMode != 0);
+    if (path.Length() > 0)
+      m->bookmarks [path] = Bookmark(flatMode != 0);
   }
 }
 
 const bool
-FolderBrowser::IsFlat () const
+FolderBrowser::IsFlat() const
 {
-  Bookmark & bookmark = m->GetSelectedBookmark ();
+  Bookmark & bookmark = m->GetSelectedBookmark();
 
   if (&bookmark == &InvalidBookmark)
     return false;
@@ -1139,78 +1139,78 @@ FolderBrowser::IsFlat () const
 }
 
 bool
-FolderBrowser::SetFlat (bool flatMode) 
+FolderBrowser::SetFlat(bool flatMode)
 {
-  Bookmark & bookmark = m->GetSelectedBookmark ();
+  Bookmark & bookmark = m->GetSelectedBookmark();
 
   if (&bookmark == &InvalidBookmark)
     return false;
 
   bookmark.flatMode = flatMode;
   return true;
-} 
-  
+}
+
 const bool
-FolderBrowser::GetAuthCache () const
+FolderBrowser::GetAuthCache() const
 {
   return m->useAuthCache;
 }
- 
+
 void
-FolderBrowser::SetAuthCache (const bool value)
+FolderBrowser::SetAuthCache(const bool value)
 {
-  m->SetAuthCache (value);
+  m->SetAuthCache(value);
 }
 
 void
-FolderBrowser::ExpandSelection ()
+FolderBrowser::ExpandSelection()
 {
   if (!m->treeCtrl)
     return;
 
-  wxTreeItemId id (m->treeCtrl->GetSelection ());
+  wxTreeItemId id(m->treeCtrl->GetSelection());
 
-  if (!id.IsOk ())
+  if (!id.IsOk())
     return;
 
-  m->treeCtrl->Expand (id);
+  m->treeCtrl->Expand(id);
 }
 
 void
-FolderBrowser::OnBeginDrag (wxTreeEvent & event)
+FolderBrowser::OnBeginDrag(wxTreeEvent & event)
 {
   wxFileDataObject data;
-  const wxTreeItemId id = event.GetItem ();
-  if(!id.IsOk())
+  const wxTreeItemId id = event.GetItem();
+  if (!id.IsOk())
   {
-    data.AddFile (GetPath ());
+    data.AddFile(GetPath());
   }
   else
   {
-    FolderItemData* itemData = m->GetItemData (id);
-    data.AddFile (itemData->getPath ());
+    FolderItemData* itemData = m->GetItemData(id);
+    data.AddFile(itemData->getPath());
   }
 
-  wxDropSource dropSource (this);
-  dropSource.SetData (data);
-  /** 
+  wxDropSource dropSource(this);
+  dropSource.SetData(data);
+  /**
    * @todo we dont seem to need result
    * wxDragResult result = dropSource.DoDragDrop (true);
    */
-  dropSource.DoDragDrop (true);
+  dropSource.DoDragDrop(true);
 }
 
 const svn::StatusSel &
-FolderBrowser::GetStatusSel () const
+FolderBrowser::GetStatusSel() const
 {
-  m->statusSel.clear ();
+  m->statusSel.clear();
 
-  const FolderItemData * itemData = m->GetSelection ();
+  const FolderItemData * itemData = m->GetSelection();
 
   if (itemData != 0)
   {
-    const svn::Status & status = itemData->getStatus ();
-    m->statusSel.push_back (status);
+    const svn::Status & status = itemData->getStatus();
+    m->statusSel.push_back(status);
   }
 
   return m->statusSel;
@@ -1218,11 +1218,11 @@ FolderBrowser::GetStatusSel () const
 
 
 void
-FolderBrowser::OnSetFocus (wxFocusEvent & event)
+FolderBrowser::OnSetFocus(wxFocusEvent & event)
 {
   // forward this event to the parent
-  wxCommandEvent newEvent (wxEVT_COMMAND_MENU_SELECTED, event.GetId ());
-  wxPostEvent (GetParent (), newEvent);
+  wxCommandEvent newEvent(wxEVT_COMMAND_MENU_SELECTED, event.GetId());
+  wxPostEvent(GetParent(), newEvent);
 
   // don't stop default process
   event.Skip();

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -47,14 +47,14 @@ public:
    * @param path path of selected item
    * @param entries log entries
    */
-  LogDlg (wxWindow * parent,
-          const char * path,
-          const svn::LogEntries * entries);
+  LogDlg(wxWindow * parent,
+         const char * path,
+         const svn::LogEntries * entries);
 
   /**
    * destructor
    */
-  virtual ~LogDlg ();
+  virtual ~LogDlg();
 
 private:
   /** hide implementation details */
@@ -66,14 +66,14 @@ private:
    * Event handler for the "Get" button
    * @param event
    */
-  void OnGet (wxCommandEvent & event);
+  void OnGet(wxCommandEvent & event);
 
 
   /**
    * Event handler for the "View" button
    * @param event
    */
-  void OnView (wxCommandEvent & event);
+  void OnView(wxCommandEvent & event);
 
 
   /**
@@ -82,30 +82,30 @@ private:
    *
    * @param event
    */
-  void OnSelected (wxListEvent& event);
+  void OnSelected(wxListEvent& event);
 
 
   /**
    * Event handler for the "Diff" button
    * @param event
    */
-  void OnDiff (wxCommandEvent & event);
+  void OnDiff(wxCommandEvent & event);
 
 
   /**
    * Event handler for the "Merge" button
    * @param event
    */
-  void OnMerge (wxCommandEvent & event);
+  void OnMerge(wxCommandEvent & event);
 
 
   /**
    * Event handler for the "Annotate" button
    * @param event
    */
-  void OnAnnotate (wxCommandEvent & event);
+  void OnAnnotate(wxCommandEvent & event);
 
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

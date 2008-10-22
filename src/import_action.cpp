@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,56 +34,56 @@
 #include "import_action.hpp"
 #include "utils.hpp"
 
-ImportAction::ImportAction (wxWindow * parent)
-  :Action (parent, _("Import"))
+ImportAction::ImportAction(wxWindow * parent)
+    :Action(parent, _("Import"))
 {
 }
 
 bool
-ImportAction::Prepare ()
+ImportAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  const std::vector<svn::Path> & v = GetTargets ();
+  const std::vector<svn::Path> & v = GetTargets();
 
-  svn::Path selectedPath ("");
+  svn::Path selectedPath("");
 
-  if (v.size () == 1)
+  if (v.size() == 1)
   {
     selectedPath = v [0];
   }
 
-  ImportDlg dlg (GetParent (), selectedPath);
+  ImportDlg dlg(GetParent(), selectedPath);
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_data = dlg.GetData ();
+  m_data = dlg.GetData();
   return true;
 }
 
 bool
-ImportAction::Perform ()
+ImportAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  svn::Path pathUtf8 (PathUtf8 (m_data.Path));
-  svn::Path repositoryUtf8 (PathUtf8 (m_data.Repository));
-  std::string LogMessageUtf8 (LocalToUtf8(m_data.LogMessage));
+  svn::Path pathUtf8(PathUtf8(m_data.Path));
+  svn::Path repositoryUtf8(PathUtf8(m_data.Repository));
+  std::string LogMessageUtf8(LocalToUtf8(m_data.LogMessage));
 
-  client.import (pathUtf8, repositoryUtf8.c_str (),
-                 LogMessageUtf8.c_str (), m_data.Recursive);
+  client.import(pathUtf8, repositoryUtf8.c_str(),
+                LogMessageUtf8.c_str(), m_data.Recursive);
 
   return true;
 }
 
 bool
-ImportAction::CheckStatusSel (const svn::StatusSel & statusSel)
+ImportAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

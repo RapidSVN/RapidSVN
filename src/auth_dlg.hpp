@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -32,24 +32,24 @@ class AuthDlg:public wxDialog
 public:
   static const int HIDE_USERNAME;
 
-  AuthDlg (wxWindow * parent,
-           const wxString & username = wxEmptyString,
-           const wxString & password = wxEmptyString,
-           int flags = 0);
+  AuthDlg(wxWindow * parent,
+          const wxString & username = wxEmptyString,
+          const wxString & password = wxEmptyString,
+          int flags = 0);
 
-  virtual ~AuthDlg ();
-
-  const wxString &
-  GetUsername () const;
+  virtual ~AuthDlg();
 
   const wxString &
-  GetPassword () const;
+  GetUsername() const;
+
+  const wxString &
+  GetPassword() const;
 
 private:
   struct Data;
   Data * m;
 
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

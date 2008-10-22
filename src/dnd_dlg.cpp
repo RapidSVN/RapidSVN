@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -26,17 +26,17 @@
 #include "dnd_dlg.hpp"
 
 
-BEGIN_EVENT_TABLE (DragAndDropDialog, wxDialog)
-  EVT_BUTTON (ID_BUTTON_IMPORT, DragAndDropDialog::OnImport)
-  EVT_BUTTON (ID_BUTTON_MOVE, DragAndDropDialog::OnMove)
-  EVT_BUTTON (ID_BUTTON_COPY, DragAndDropDialog::OnCopy)
-  EVT_BUTTON (wxID_CANCEL, DragAndDropDialog::OnCancel)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(DragAndDropDialog, wxDialog)
+  EVT_BUTTON(ID_BUTTON_IMPORT, DragAndDropDialog::OnImport)
+  EVT_BUTTON(ID_BUTTON_MOVE, DragAndDropDialog::OnMove)
+  EVT_BUTTON(ID_BUTTON_COPY, DragAndDropDialog::OnCopy)
+  EVT_BUTTON(wxID_CANCEL, DragAndDropDialog::OnCancel)
+END_EVENT_TABLE()
 
-DragAndDropDialog::DragAndDropDialog (wxWindow *parent, wxString src, wxString dest, bool showMove, bool showImport)
-: wxDialog(parent, -1, ((showImport) ? _("Import") : _("Copy/Move")),
-             wxDefaultPosition, wxDefaultSize,
-             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+DragAndDropDialog::DragAndDropDialog(wxWindow *parent, wxString src, wxString dest, bool showMove, bool showImport)
+    : wxDialog(parent, -1, ((showImport) ? _("Import") : _("Copy/Move")),
+               wxDefaultPosition, wxDefaultSize,
+               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   m_decision = wxID_CANCEL;
   m_src = src;
@@ -44,16 +44,16 @@ DragAndDropDialog::DragAndDropDialog (wxWindow *parent, wxString src, wxString d
   m_showImport = showImport;
   m_showMove = showMove;
 
-  CreateControls ();
+  CreateControls();
 }
 
 void
-DragAndDropDialog::CreateControls ()
+DragAndDropDialog::CreateControls()
 {
   wxString msg;
   if (m_showImport)
   {
-    const wxString fmt (_("\
+    const wxString fmt(_("\
 Are you sure that you want to import\n\
 \n\
   %s\n\
@@ -61,12 +61,12 @@ Are you sure that you want to import\n\
 into\n\
 \n\
   %s?"));
-    msg = wxString::Format (
-      fmt, m_src.c_str (), m_dest.c_str ());
+    msg = wxString::Format(
+            fmt, m_src.c_str(), m_dest.c_str());
   }
   else
   {
-    const wxString fmt (_("\
+    const wxString fmt(_("\
 Would you like to move or copy\n\
 \n\
 \n\
@@ -75,8 +75,8 @@ Would you like to move or copy\n\
 into\n\
 \n\
   %s?"));
-    msg = wxString::Format (
-      fmt, m_src.c_str (), m_dest.c_str ());
+    msg = wxString::Format(
+            fmt, m_src.c_str(), m_dest.c_str());
   }
 
   DragAndDropDialog* itemDialog1 = this;
@@ -84,32 +84,32 @@ into\n\
   wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
   itemDialog1->SetSizer(itemBoxSizer2);
 
-  wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, msg, wxDefaultPosition, wxDefaultSize, 0 );
+  wxStaticText* itemStaticText3 = new wxStaticText(itemDialog1, wxID_STATIC, msg, wxDefaultPosition, wxDefaultSize, 0);
   itemBoxSizer2->Add(itemStaticText3, 1, wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE, 5);
 
-  itemBoxSizer2->AddSpacer (10);
+  itemBoxSizer2->AddSpacer(10);
 
   wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
   itemBoxSizer2->Add(itemBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
   if (m_showImport)
   {
-    wxButton* itemButton5 = new wxButton( itemDialog1, ID_BUTTON_IMPORT, _("Import"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton5 = new wxButton(itemDialog1, ID_BUTTON_IMPORT, _("Import"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer4->Add(itemButton5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
   }
   else
   {
     if (m_showMove)
     {
-      wxButton* itemButton5 = new wxButton( itemDialog1, ID_BUTTON_MOVE, _("Move"), wxDefaultPosition, wxDefaultSize, 0 );
+      wxButton* itemButton5 = new wxButton(itemDialog1, ID_BUTTON_MOVE, _("Move"), wxDefaultPosition, wxDefaultSize, 0);
       itemBoxSizer4->Add(itemButton5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     }
 
-    wxButton* itemButton6 = new wxButton( itemDialog1, ID_BUTTON_COPY, _("Copy"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton6 = new wxButton(itemDialog1, ID_BUTTON_COPY, _("Copy"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer4->Add(itemButton6, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
   }
 
-  wxButton* itemButton7 = new wxButton (itemDialog1, wxID_CANCEL, _("Cancel"));
+  wxButton* itemButton7 = new wxButton(itemDialog1, wxID_CANCEL, _("Cancel"));
   itemBoxSizer4->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
   GetSizer()->Fit(this);
@@ -117,31 +117,31 @@ into\n\
 }
 
 void
-DragAndDropDialog::OnImport (wxCommandEvent & event)
+DragAndDropDialog::OnImport(wxCommandEvent & event)
 {
   m_decision = DragAndDropDialog::RESULT_IMPORT;
-  EndModal (m_decision);
+  EndModal(m_decision);
 }
 
 void
-DragAndDropDialog::OnMove (wxCommandEvent & event)
+DragAndDropDialog::OnMove(wxCommandEvent & event)
 {
   m_decision = DragAndDropDialog::RESULT_MOVE;
-  EndModal (m_decision);
+  EndModal(m_decision);
 }
 
 void
-DragAndDropDialog::OnCopy (wxCommandEvent & event)
+DragAndDropDialog::OnCopy(wxCommandEvent & event)
 {
   m_decision = DragAndDropDialog::RESULT_COPY;
-  EndModal (m_decision);
+  EndModal(m_decision);
 }
 
 void
-DragAndDropDialog::OnCancel (wxCommandEvent & event)
+DragAndDropDialog::OnCancel(wxCommandEvent & event)
 {
   m_decision = DragAndDropDialog::RESULT_CANCEL;
-  EndModal (m_decision);
+  EndModal(m_decision);
 }
 
 /* -----------------------------------------------------------------

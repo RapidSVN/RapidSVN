@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -23,7 +23,7 @@
  */
 
 #ifndef _SVNCPP_CONTEXT_HPP_
-#define _SVNCPP_CONTEXT_HPP_ 
+#define _SVNCPP_CONTEXT_HPP_
 
 // stl
 #include "svncpp/string_wrapper.hpp"
@@ -49,37 +49,37 @@ namespace svn
   {
   public:
     /**
-     * default constructor 
+     * default constructor
      *
      * @param configDir location where the
      *                  subversion api stores its
      *                  configuration
      */
-    Context (const std::string & configDir = "");
+    Context(const std::string & configDir = "");
 
     /**
      * copy constructor
      *
-     * @param src 
+     * @param src
      */
-    Context (const Context &src);
+    Context(const Context &src);
 
     /**
      * destructor
      */
-    virtual ~Context ();
+    virtual ~Context();
 
     /**
      * enable/disable authentication caching
-     * 
+     *
      * @param value true=enable/false=disable
      */
-    void setAuthCache (bool value);
+    void setAuthCache(bool value);
 
     /**
      * set username/password for authentication
      */
-    void setLogin (const char * username, const char * password);
+    void setLogin(const char * username, const char * password);
 
     /**
      * operator to get svn_client_ctx object
@@ -89,36 +89,36 @@ namespace svn
     /**
      * return the svn_client_ctx object
      */
-    svn_client_ctx_t * ctx ();
+    svn_client_ctx_t * ctx();
 
     /**
      * this will be called at the beginning of an action.
      * the log message will be reset.
      */
-    void reset ();
+    void reset();
 
     /**
      * set log message
      *
      * @param msg
      */
-    void setLogMessage (const char * msg);
+    void setLogMessage(const char * msg);
 
     /**
      * get log message
      *
      * @return log message
      */
-    const char * 
-    getLogMessage () const;
-    
+    const char *
+    getLogMessage() const;
+
     /**
      * get username
      *
      * @return username
      */
-    const char * 
-    getUsername () const;
+    const char *
+    getUsername() const;
 
     /**
      * get password
@@ -126,7 +126,7 @@ namespace svn
      * @return password
      */
     const char *
-    getPassword () const;
+    getPassword() const;
 
     /**
      * set the listener for the context. The listener will be
@@ -135,16 +135,16 @@ namespace svn
      *
      * @param listener
      */
-    void 
-    setListener (ContextListener * listener);
+    void
+    setListener(ContextListener * listener);
 
     /**
      * get the listener
      *
      * @return the listener
      */
-    ContextListener * 
-    getListener () const;
+    ContextListener *
+    getListener() const;
 
   private:
     struct Data;

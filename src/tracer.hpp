@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -40,9 +40,9 @@ class wxString;
 class Tracer
 {
 public:
-  virtual void Trace (const wxString &) = 0;
-  virtual void TraceError (const wxString &) = 0;
-  virtual ~Tracer () { }
+  virtual void Trace(const wxString &) = 0;
+  virtual void TraceError(const wxString &) = 0;
+  virtual ~Tracer() { }
 };
 
 /**
@@ -54,10 +54,10 @@ private:
   wxFrame * m_frame;
 
 public:
-  EventTracer (wxFrame * fr);
+  EventTracer(wxFrame * fr);
 
-  void Trace (const wxString & msg);
-  void TraceError (const wxString & msg);
+  void Trace(const wxString & msg);
+  void TraceError(const wxString & msg);
 };
 
 #endif

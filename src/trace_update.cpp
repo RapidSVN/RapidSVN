@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -72,12 +72,12 @@ struct FileBaton
  */
 
 static DirBaton *
-make_dir_baton (const char *path,
-                void *edit_baton, void *parent_dir_baton, apr_pool_t * pool)
+make_dir_baton(const char *path,
+               void *edit_baton, void *parent_dir_baton, apr_pool_t * pool)
 {
   EditBaton *eb = (EditBaton *) edit_baton;
   DirBaton *pb = (DirBaton *) parent_dir_baton;
-  DirBaton *new_db = (DirBaton *) apr_pcalloc (pool, sizeof (*new_db));
+  DirBaton *new_db = (DirBaton *) apr_pcalloc(pool, sizeof(*new_db));
   const char *full_path;
 
   // A path relative to nothing
@@ -85,9 +85,9 @@ make_dir_baton (const char *path,
     return NULL;
 
   if (pb)
-    full_path = svn_path_join (eb->path, path, pool);
+    full_path = svn_path_join(eb->path, path, pool);
   else
-    full_path = apr_pstrdup (pool, eb->path);
+    full_path = apr_pstrdup(pool, eb->path);
 
   new_db->edit_baton = eb;
   new_db->parent_baton = pb;
@@ -97,14 +97,14 @@ make_dir_baton (const char *path,
 }
 
 static FileBaton *
-make_file_baton (const char *path,
-                 void *parent_dir_baton,
-                 svn_boolean_t added, apr_pool_t * pool)
+make_file_baton(const char *path,
+                void *parent_dir_baton,
+                svn_boolean_t added, apr_pool_t * pool)
 {
   DirBaton *pb = (DirBaton *) parent_dir_baton;
   EditBaton *eb = pb->edit_baton;
-  FileBaton *new_fb = (FileBaton *) apr_pcalloc (pool, sizeof (FileBaton));
-  const char *full_path = svn_path_join (eb->path, path, pool);
+  FileBaton *new_fb = (FileBaton *) apr_pcalloc(pool, sizeof(FileBaton));
+  const char *full_path = svn_path_join(eb->path, path, pool);
 
   new_fb->edit_baton = eb;
   new_fb->parent_baton = pb;
@@ -121,15 +121,15 @@ make_file_baton (const char *path,
  */
 
 static svn_error_t *
-open_root (void *edit_baton,
-           svn_revnum_t base_revision, apr_pool_t * pool, void **root_baton)
+open_root(void *edit_baton,
+          svn_revnum_t base_revision, apr_pool_t * pool, void **root_baton)
 {
-  *root_baton = make_dir_baton (NULL, edit_baton, NULL, pool);
+  *root_baton = make_dir_baton(NULL, edit_baton, NULL, pool);
   return SVN_NO_ERROR;
 }
 
 static svn_error_t *
-set_target_revision (void *edit_baton, svn_revnum_t target_revision, apr_pool_t *)
+set_target_revision(void *edit_baton, svn_revnum_t target_revision, apr_pool_t *)
 {
   EditBaton *eb = (EditBaton *) edit_baton;
 
@@ -138,36 +138,36 @@ set_target_revision (void *edit_baton, svn_revnum_t target_revision, apr_pool_t 
 }
 
 static svn_error_t *
-open_directory (const char *path,
-                void *parent_baton,
-                svn_revnum_t base_revision,
-                apr_pool_t * pool, void **child_baton)
+open_directory(const char *path,
+               void *parent_baton,
+               svn_revnum_t base_revision,
+               apr_pool_t * pool, void **child_baton)
 {
   DirBaton *pb = (DirBaton *) parent_baton;
   EditBaton *eb = pb->edit_baton;
-  DirBaton *new_db = make_dir_baton (path, eb, pb, pool);
+  DirBaton *new_db = make_dir_baton(path, eb, pb, pool);
 
   *child_baton = new_db;
   return SVN_NO_ERROR;
 }
 
 static svn_error_t *
-add_directory (const char *path,
-               void *parent_baton,
-               const char *copyfrom_path,
-               svn_revnum_t copyfrom_revision,
-               apr_pool_t * pool, void **child_baton)
+add_directory(const char *path,
+              void *parent_baton,
+              const char *copyfrom_path,
+              svn_revnum_t copyfrom_revision,
+              apr_pool_t * pool, void **child_baton)
 {
   DirBaton *pb = (DirBaton *) parent_baton;
   EditBaton *eb = pb->edit_baton;
-  DirBaton *new_db = make_dir_baton (path, eb, pb, pool);
+  DirBaton *new_db = make_dir_baton(path, eb, pb, pool);
 
   eb->changed = TRUE;
 
   {
-    wxString wxpath (Utf8ToLocal (new_db->path));
-    wxString str = wxString::Format (wxT("A  %s"), wxpath.c_str ());
-    eb->tracer->Trace (str);
+    wxString wxpath(Utf8ToLocal(new_db->path));
+    wxString str = wxString::Format(wxT("A  %s"), wxpath.c_str());
+    eb->tracer->Trace(str);
   }
 
   *child_baton = new_db;
@@ -175,7 +175,7 @@ add_directory (const char *path,
 }
 
 static svn_error_t *
-close_directory (void *dir_baton, apr_pool_t *)
+close_directory(void *dir_baton, apr_pool_t *)
 {
   DirBaton *db = (DirBaton *) dir_baton;
   EditBaton *eb = db->edit_baton;
@@ -186,19 +186,19 @@ close_directory (void *dir_baton, apr_pool_t *)
     // Check for conflicted state.
     const svn_wc_entry_t *entry;
     svn_boolean_t merged, tc, pc;
-    apr_pool_t *subpool = svn_pool_create (eb->pool);
+    apr_pool_t *subpool = svn_pool_create(eb->pool);
     svn_wc_adm_access_t *adm_access;
 
-    SVN_ERR (svn_wc_adm_probe_open (&adm_access, NULL, db->path, FALSE,
-                                    FALSE, subpool));
+    SVN_ERR(svn_wc_adm_probe_open(&adm_access, NULL, db->path, FALSE,
+                                  FALSE, subpool));
 
-    SVN_ERR (svn_wc_entry (&entry, db->path, adm_access, FALSE, subpool));
-    SVN_ERR (svn_wc_conflicted_p (&tc, &pc, db->path, entry, subpool));
+    SVN_ERR(svn_wc_entry(&entry, db->path, adm_access, FALSE, subpool));
+    SVN_ERR(svn_wc_conflicted_p(&tc, &pc, db->path, entry, subpool));
 
     if (!pc)
     {
-      SVN_ERR (svn_wc_props_modified_p (&merged, db->path,
-                                        adm_access, subpool));
+      SVN_ERR(svn_wc_props_modified_p(&merged, db->path,
+                                      adm_access, subpool));
     }
 
     if (pc)
@@ -208,26 +208,26 @@ close_directory (void *dir_baton, apr_pool_t *)
     else
       statchar_buf[1] = wxT('U');
     {
-      wxString wxpath (Utf8ToLocal (db->path));
-      wxString str = wxString::Format (wxT("%s %s"), statchar_buf, wxpath.c_str ());
-      eb->tracer->Trace (str);
+      wxString wxpath(Utf8ToLocal(db->path));
+      wxString str = wxString::Format(wxT("%s %s"), statchar_buf, wxpath.c_str());
+      eb->tracer->Trace(str);
     }
 
     /* Destroy the subpool. */
-    svn_pool_destroy (subpool);
+    svn_pool_destroy(subpool);
   }
 
   return SVN_NO_ERROR;
 }
 
 static svn_error_t *
-open_file (const char *path,
-           void *parent_baton,
-           svn_revnum_t ancestor_revision,
-           apr_pool_t * pool, void **file_baton)
+open_file(const char *path,
+          void *parent_baton,
+          svn_revnum_t ancestor_revision,
+          apr_pool_t * pool, void **file_baton)
 {
   DirBaton *pb = (DirBaton *) parent_baton;
-  FileBaton *new_fb = make_file_baton (path, pb, FALSE, pool);
+  FileBaton *new_fb = make_file_baton(path, pb, FALSE, pool);
 
   *file_baton = new_fb;
 
@@ -235,14 +235,14 @@ open_file (const char *path,
 }
 
 static svn_error_t *
-add_file (const char *path,
-          void *parent_baton,
-          const char *copyfrom_path,
-          svn_revnum_t copyfrom_revision,
-          apr_pool_t * pool, void **file_baton)
+add_file(const char *path,
+         void *parent_baton,
+         const char *copyfrom_path,
+         svn_revnum_t copyfrom_revision,
+         apr_pool_t * pool, void **file_baton)
 {
   DirBaton *pb = (DirBaton *) parent_baton;
-  FileBaton *new_fb = make_file_baton (path, pb, TRUE, pool);
+  FileBaton *new_fb = make_file_baton(path, pb, TRUE, pool);
 
   new_fb->edit_baton->changed = TRUE;
   *file_baton = new_fb;
@@ -251,7 +251,7 @@ add_file (const char *path,
 }
 
 static svn_error_t *
-close_file (void *file_baton, const char *, apr_pool_t *)
+close_file(void *file_baton, const char *, apr_pool_t *)
 {
   FileBaton *fb = (FileBaton *) file_baton;
   EditBaton *eb = fb->edit_baton;
@@ -267,21 +267,21 @@ close_file (void *file_baton, const char *, apr_pool_t *)
     /* First, check for conflicted state. */
     const svn_wc_entry_t *entry;
     svn_boolean_t merged, tc, pc;
-    apr_pool_t *subpool = svn_pool_create (eb->pool);
-    const char *pdir = svn_path_dirname (fb->path, subpool);
+    apr_pool_t *subpool = svn_pool_create(eb->pool);
+    const char *pdir = svn_path_dirname(fb->path, subpool);
     svn_wc_adm_access_t *adm_access;
 
-    SVN_ERR (svn_wc_adm_probe_open (&adm_access, NULL, fb->path, FALSE,
-                                    FALSE, subpool));
+    SVN_ERR(svn_wc_adm_probe_open(&adm_access, NULL, fb->path, FALSE,
+                                  FALSE, subpool));
 
-    SVN_ERR (svn_wc_entry (&entry, fb->path, adm_access, FALSE, subpool));
+    SVN_ERR(svn_wc_entry(&entry, fb->path, adm_access, FALSE, subpool));
     if (entry)
     {
-      SVN_ERR (svn_wc_conflicted_p (&tc, &pc, pdir, entry, subpool));
+      SVN_ERR(svn_wc_conflicted_p(&tc, &pc, pdir, entry, subpool));
       if (fb->text_changed)
       {
         if (!tc)
-          SVN_ERR (svn_wc_text_modified_p (&merged, fb->path, TRUE, adm_access, subpool));
+          SVN_ERR(svn_wc_text_modified_p(&merged, fb->path, TRUE, adm_access, subpool));
 
         if (tc)
           statchar_buf[0] = wxT('C');
@@ -294,7 +294,7 @@ close_file (void *file_baton, const char *, apr_pool_t *)
       if (fb->prop_changed)
       {
         if (!pc)
-          SVN_ERR (svn_wc_props_modified_p (&merged, fb->path, NULL, subpool));
+          SVN_ERR(svn_wc_props_modified_p(&merged, fb->path, NULL, subpool));
 
         if (pc)
           statchar_buf[1] = wxT('C');
@@ -306,26 +306,26 @@ close_file (void *file_baton, const char *, apr_pool_t *)
     }
 
     /* Destroy the subpool. */
-    svn_pool_destroy (subpool);
+    svn_pool_destroy(subpool);
   }
 
   {
-    wxString wxpath (Utf8ToLocal (fb->path));
-    wxString str = wxString::Format (wxT("%s %s"), statchar_buf, wxpath.c_str ());
-    eb->tracer->Trace (str);
+    wxString wxpath(Utf8ToLocal(fb->path));
+    wxString str = wxString::Format(wxT("%s %s"), statchar_buf, wxpath.c_str());
+    eb->tracer->Trace(str);
   }
 
   return SVN_NO_ERROR;
 }
 
 static svn_error_t *
-change_file_prop (void *file_baton,
-                  const char *name,
-                  const svn_string_t * value, apr_pool_t * pool)
+change_file_prop(void *file_baton,
+                 const char *name,
+                 const svn_string_t * value, apr_pool_t * pool)
 {
   FileBaton *fb = (FileBaton *) file_baton;
 
-  if (svn_wc_is_normal_prop (name))
+  if (svn_wc_is_normal_prop(name))
   {
     fb->prop_changed = TRUE;
     fb->edit_baton->changed = TRUE;
@@ -335,13 +335,13 @@ change_file_prop (void *file_baton,
 }
 
 static svn_error_t *
-change_dir_prop (void *parent_baton,
-                 const char *name,
-                 const svn_string_t * value, apr_pool_t * pool)
+change_dir_prop(void *parent_baton,
+                const char *name,
+                const svn_string_t * value, apr_pool_t * pool)
 {
   DirBaton *db = (DirBaton *) parent_baton;
 
-  if (svn_wc_is_normal_prop (name))
+  if (svn_wc_is_normal_prop(name))
   {
     db->prop_changed = TRUE;
     db->edit_baton->changed = TRUE;
@@ -351,8 +351,8 @@ change_dir_prop (void *parent_baton,
 }
 
 static svn_error_t *
-delete_entry (const char *path,
-              svn_revnum_t revision, void *parent_baton, apr_pool_t * pool)
+delete_entry(const char *path,
+             svn_revnum_t revision, void *parent_baton, apr_pool_t * pool)
 {
   DirBaton *pb = (DirBaton *) parent_baton;
   EditBaton *eb = pb->edit_baton;
@@ -360,17 +360,17 @@ delete_entry (const char *path,
   eb->changed = TRUE;
 
   {
-    wxString wxpath (Utf8ToLocal (svn_path_join (eb->path, path, pool)));
+    wxString wxpath(Utf8ToLocal(svn_path_join(eb->path, path, pool)));
     wxString str =
-      wxString::Format (wxT("D  %s"), wxpath.c_str ());
-    eb->tracer->Trace (str);
+      wxString::Format(wxT("D  %s"), wxpath.c_str());
+    eb->tracer->Trace(str);
   }
   return SVN_NO_ERROR;
 }
 
 static svn_error_t *
-apply_textdelta (void *file_baton, const char *, apr_pool_t *,
-                 svn_txdelta_window_handler_t * handler, void **handler_baton)
+apply_textdelta(void *file_baton, const char *, apr_pool_t *,
+                svn_txdelta_window_handler_t * handler, void **handler_baton)
 {
   FileBaton *fb = (FileBaton *) file_baton;
 
@@ -383,7 +383,7 @@ apply_textdelta (void *file_baton, const char *, apr_pool_t *,
 }
 
 static svn_error_t *
-close_edit (void *edit_baton, apr_pool_t *)
+close_edit(void *edit_baton, apr_pool_t *)
 {
   EditBaton *eb = (EditBaton *) edit_baton;
 
@@ -392,55 +392,55 @@ close_edit (void *edit_baton, apr_pool_t *)
     if (eb->is_checkout)
     {
       wxString str =
-        wxString::Format (wxT("Checked out revision %")
-                          wxT(SVN_REVNUM_T_FMT)
-                          wxT("."),
-                          eb->revision);
-      eb->tracer->Trace (str);
+        wxString::Format(wxT("Checked out revision %")
+                         wxT(SVN_REVNUM_T_FMT)
+                         wxT("."),
+                         eb->revision);
+      eb->tracer->Trace(str);
     }
     else
     {
       if (eb->changed)
       {
         wxString str =
-          wxString::Format (wxT("Updated to revision %")
-                            wxT(SVN_REVNUM_T_FMT)
-                            wxT("."),
-                            eb->revision);
-        eb->tracer->Trace (str);
+          wxString::Format(wxT("Updated to revision %")
+                           wxT(SVN_REVNUM_T_FMT)
+                           wxT("."),
+                           eb->revision);
+        eb->tracer->Trace(str);
       }
 
       else
       {
-        wxString str = wxString::Format (wxT("At revision %")
-                                         wxT(SVN_REVNUM_T_FMT)
-                                         wxT("."),
-                                         eb->revision);
-        eb->tracer->Trace (str);
+        wxString str = wxString::Format(wxT("At revision %")
+                                        wxT(SVN_REVNUM_T_FMT)
+                                        wxT("."),
+                                        eb->revision);
+        eb->tracer->Trace(str);
       }
     }
   }
 
-  svn_pool_destroy (eb->pool);
+  svn_pool_destroy(eb->pool);
 
   return SVN_NO_ERROR;
 }
 
 svn_error_t *
-get_trace_update_editor (const svn_delta_editor_t ** editor,
-                         void **edit_baton,
-                         const char *initial_path,
-                         svn_boolean_t is_checkout,
-                         svn_boolean_t no_final_line,
-                         Tracer * tracer, apr_pool_t * pool)
+get_trace_update_editor(const svn_delta_editor_t ** editor,
+                        void **edit_baton,
+                        const char *initial_path,
+                        svn_boolean_t is_checkout,
+                        svn_boolean_t no_final_line,
+                        Tracer * tracer, apr_pool_t * pool)
 {
-  apr_pool_t *subpool = svn_pool_create (pool);
-  EditBaton *eb = (EditBaton *) apr_pcalloc (subpool, sizeof (EditBaton));
-  svn_delta_editor_t *te = svn_delta_default_editor (pool);
+  apr_pool_t *subpool = svn_pool_create(pool);
+  EditBaton *eb = (EditBaton *) apr_pcalloc(subpool, sizeof(EditBaton));
+  svn_delta_editor_t *te = svn_delta_default_editor(pool);
 
   // Set up the edit context.
   eb->pool = subpool;
-  eb->path = apr_pstrdup (subpool, initial_path);
+  eb->path = apr_pstrdup(subpool, initial_path);
   eb->revision = SVN_INVALID_REVNUM;
   eb->is_checkout = is_checkout;
   eb->tracer = tracer;

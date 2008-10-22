@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,10 +36,10 @@ public:
   wxString destination;
   bool force;
 
-  Data (wxWindow * window, const wxString & descr,
-        int flags, const wxString & dest,
-        const wxString history)
-    : destination (dest), force (false)
+  Data(wxWindow * window, const wxString & descr,
+       int flags, const wxString & dest,
+       const wxString history)
+      : destination(dest), force(false)
   {
     bool withForce = (flags & WITH_FORCE) != 0;
 
@@ -48,50 +48,50 @@ public:
 
     // The description:
     wxStaticText * labelDescr =
-      new wxStaticText (window, -1, descr);
-    mainSizer->Add (labelDescr, 0, wxALL, 5);
+      new wxStaticText(window, -1, descr);
+    mainSizer->Add(labelDescr, 0, wxALL, 5);
 
     // The destination:
     if (wxEmptyString == history)
     {
-      wxTextValidator val (wxFILTER_NONE, &destination);
+      wxTextValidator val(wxFILTER_NONE, &destination);
       wxTextCtrl * textDest =
-        new wxTextCtrl (window, -1, wxEmptyString, wxDefaultPosition,
-                        wxSize (200, -1), 0, val);
+        new wxTextCtrl(window, -1, wxEmptyString, wxDefaultPosition,
+                       wxSize(200, -1), 0, val);
 
-      mainSizer->Add (textDest, 0, wxALL | wxEXPAND, 5);
+      mainSizer->Add(textDest, 0, wxALL | wxEXPAND, 5);
     }
     else
     {
-      HistoryValidator valDest (history, &destination, false, false);
+      HistoryValidator valDest(history, &destination, false, false);
       wxComboBox * comboDest =
-        new wxComboBox (window, -1, wxEmptyString, wxDefaultPosition,
-                        wxSize (200, -1), 0, 0, wxCB_DROPDOWN, valDest);
+        new wxComboBox(window, -1, wxEmptyString, wxDefaultPosition,
+                       wxSize(200, -1), 0, 0, wxCB_DROPDOWN, valDest);
 
-      mainSizer->Add (comboDest, 0, wxALL | wxEXPAND, 5);
+      mainSizer->Add(comboDest, 0, wxALL | wxEXPAND, 5);
     }
-      
+
 
     // The force check
     if (withForce)
     {
-      wxGenericValidator val (&force);
+      wxGenericValidator val(&force);
       wxCheckBox * check =
-        new wxCheckBox (window, -1, _("Force"),
-                        wxDefaultPosition, wxDefaultSize,
-                        0, val);
-      mainSizer->Add (check, 0, wxALL | wxALIGN_CENTER_HORIZONTAL);
+        new wxCheckBox(window, -1, _("Force"),
+                       wxDefaultPosition, wxDefaultSize,
+                       0, val);
+      mainSizer->Add(check, 0, wxALL | wxALIGN_CENTER_HORIZONTAL);
     }
 
     // The buttons:
-    wxButton * ok = new wxButton (window, wxID_OK, _("OK" ));
-    buttonSizer->Add (ok, 0, wxALL, 10);
+    wxButton * ok = new wxButton(window, wxID_OK, _("OK"));
+    buttonSizer->Add(ok, 0, wxALL, 10);
 
-    wxButton * cancel = new wxButton (window, wxID_CANCEL, _("Cancel"));
-    buttonSizer->Add (cancel, 0, wxALL, 10);
+    wxButton * cancel = new wxButton(window, wxID_CANCEL, _("Cancel"));
+    buttonSizer->Add(cancel, 0, wxALL, 10);
 
     // Add all the sizers to the main sizer
-    mainSizer->Add (buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
+    mainSizer->Add(buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
 
     window->SetAutoLayout(true);
     window->SetSizer(mainSizer);
@@ -99,61 +99,61 @@ public:
     mainSizer->SetSizeHints(window);
     mainSizer->Fit(window);
 
-    ok->SetDefault ();
+    ok->SetDefault();
   }
 };
 
-BEGIN_EVENT_TABLE (DestinationDlg, wxDialog)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(DestinationDlg, wxDialog)
+END_EVENT_TABLE()
 
 const int DestinationDlg::WITH_FORCE=1;
 
 const int DIALOG_FLAGS = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
 
-DestinationDlg::DestinationDlg (wxWindow* parent,
-                                const wxString & title,
-                                const wxString & descr,
-                                const int flags,
-                                const wxString & dst,
-                                const wxString & history)
- : wxDialog(parent, -1, title,
-            wxDefaultPosition, wxDefaultSize,
-            DIALOG_FLAGS)
+DestinationDlg::DestinationDlg(wxWindow* parent,
+                               const wxString & title,
+                               const wxString & descr,
+                               const int flags,
+                               const wxString & dst,
+                               const wxString & history)
+    : wxDialog(parent, -1, title,
+               wxDefaultPosition, wxDefaultSize,
+               DIALOG_FLAGS)
 {
-  m = new Data (this, descr, flags, dst, history);
+  m = new Data(this, descr, flags, dst, history);
 }
 
-DestinationDlg::DestinationDlg ()
-  : wxDialog (), m (0)
+DestinationDlg::DestinationDlg()
+    : wxDialog(), m(0)
 {
 }
 
-DestinationDlg::~DestinationDlg ()
+DestinationDlg::~DestinationDlg()
 {
   if (m)
     delete m;
 }
 
 void
-DestinationDlg::Create (wxWindow* parent, const wxString & title,
-                        const wxString & descr, const int flags,
-                        const wxString & dst,
-                        const wxString & history)
+DestinationDlg::Create(wxWindow* parent, const wxString & title,
+                       const wxString & descr, const int flags,
+                       const wxString & dst,
+                       const wxString & history)
 {
-  wxDialog::Create (parent, -1, title, wxDefaultPosition,
-                    wxDefaultSize, DIALOG_FLAGS);
+  wxDialog::Create(parent, -1, title, wxDefaultPosition,
+                   wxDefaultSize, DIALOG_FLAGS);
 
-  m = new Data (this, descr, flags, dst, history);
+  m = new Data(this, descr, flags, dst, history);
 }
 
 const wxString &
-DestinationDlg::GetDestination () const
+DestinationDlg::GetDestination() const
 {
   return m->destination;
 }
 
 bool
-DestinationDlg::GetForce () const
+DestinationDlg::GetForce() const
 {
   return m->force;
 }

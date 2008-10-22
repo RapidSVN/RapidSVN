@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -35,45 +35,45 @@
 #include "ids.hpp"
 #include "utils.hpp"
 
-UnlockAction::UnlockAction (wxWindow * parent)
-  : Action (parent, _("Unlock"))
+UnlockAction::UnlockAction(wxWindow * parent)
+    : Action(parent, _("Unlock"))
 {
 }
 
 bool
-UnlockAction::Prepare ()
+UnlockAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  UnlockDlg dlg(GetParent ());
+  UnlockDlg dlg(GetParent());
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_force = dlg.GetForce ();
+  m_force = dlg.GetForce();
 
   return true;
 }
 
 bool
-UnlockAction::Perform ()
+UnlockAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  const svn::Targets & statusSel = GetTargets ();
+  const svn::Targets & statusSel = GetTargets();
 
-  client.unlock (statusSel, m_force);
+  client.unlock(statusSel, m_force);
 
   return true;
 }
 
 bool
-UnlockAction::CheckStatusSel (const svn::StatusSel & statusSel)
+UnlockAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

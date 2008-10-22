@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,8 +39,8 @@ enum
 class DragAndDropDialog : public wxDialog
 {
 public:
-  DragAndDropDialog (wxWindow *parent, wxString src, wxString dest, bool bShowMove = true, bool bShowImport = false);
-  int GetDecision ();
+  DragAndDropDialog(wxWindow *parent, wxString src, wxString dest, bool bShowMove = true, bool bShowImport = false);
+  int GetDecision();
 
   enum {
     RESULT_CANCEL = 1,
@@ -50,19 +50,19 @@ public:
   };
 
   void
-  OnImport (wxCommandEvent & event);
+  OnImport(wxCommandEvent & event);
 
   void
-  OnMove (wxCommandEvent & event);
+  OnMove(wxCommandEvent & event);
 
   void
-  OnCopy (wxCommandEvent & event);
+  OnCopy(wxCommandEvent & event);
 
   void
-  OnCancel (wxCommandEvent & event);
+  OnCancel(wxCommandEvent & event);
 
 private:
-  void CreateControls ();
+  void CreateControls();
 
   int m_decision;
   wxString m_src;
@@ -70,7 +70,7 @@ private:
   bool m_showImport;
   bool m_showMove;
 
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

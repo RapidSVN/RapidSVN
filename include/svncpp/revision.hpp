@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -23,7 +23,7 @@
  */
 
 #ifndef _SVNCPP_REVISION_HPP_
-#define _SVNCPP_REVISION_HPP_ 
+#define _SVNCPP_REVISION_HPP_
 
 // subversion api
 #include "svn_types.h"
@@ -45,7 +45,7 @@ namespace svn
     svn_opt_revision_t m_revision;
 
     void
-    init (const svn_opt_revision_t * revision);
+    init(const svn_opt_revision_t * revision);
 
   public:
     static const Revision START;
@@ -59,41 +59,41 @@ namespace svn
      *
      * @param revision revision information
      */
-    Revision (const svn_opt_revision_t * revision);
+    Revision(const svn_opt_revision_t * revision);
 
     /**
      * Constructor
      *
      * @param revnum revision number
      */
-    Revision (const svn_revnum_t revnum);
+    Revision(const svn_revnum_t revnum);
 
     /**
      * Constructor
      *
      * @param kind
      */
-    Revision (const svn_opt_revision_kind kind = svn_opt_revision_unspecified);
+    Revision(const svn_opt_revision_kind kind = svn_opt_revision_unspecified);
 
     /**
      * Constructor
      *
      * @param dateTime DateTime wrapper for apr_time_t
      */
-    Revision (const DateTime dateTime);
+    Revision(const DateTime dateTime);
 
     /**
      * Copy constructor
      *
      * @param revision Source
      */
-    Revision (const Revision & revision);
+    Revision(const Revision & revision);
 
     /**
      * @return revision information
      */
     const svn_opt_revision_t *
-    revision () const;
+    revision() const;
 
     /**
      * @see revision (). Same function
@@ -107,29 +107,29 @@ namespace svn
     /**
      * @return revision numver
      */
-    const svn_revnum_t 
-    revnum () const;
+    const svn_revnum_t
+    revnum() const;
 
     /**
      * @return revision kind
      */
-    const svn_opt_revision_kind 
-    kind () const;
+    const svn_opt_revision_kind
+    kind() const;
 
     /**
      * @see kind (). Same function
      * but with operator overloading
      */
-    operator svn_opt_revision_kind () const
+    operator svn_opt_revision_kind() const
     {
-      return kind ();
+      return kind();
     }
 
     /**
      * @return date
      */
     const apr_time_t
-    date () const;
+    date() const;
   };
 }
 

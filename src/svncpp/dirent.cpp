@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -32,7 +32,7 @@ namespace svn
 {
   struct DirEntry::Data
   {
-  public:
+public:
     std::string name;
     svn_node_kind_t kind;
     svn_filesize_t size;
@@ -41,98 +41,98 @@ namespace svn
     apr_time_t time;
     std::string lastAuthor;
 
-    Data ()
-      : kind (svn_node_unknown), size (0), hasProps(false), 
-        createdRev (0), time (0)
+    Data()
+        : kind(svn_node_unknown), size(0), hasProps(false),
+        createdRev(0), time(0)
     {
     }
 
-    Data (const char * _name, svn_dirent_t * dirEntry)
-      : name (_name), kind (dirEntry->kind), size (dirEntry->size), 
-        hasProps (dirEntry->has_props != 0), 
-        createdRev (dirEntry->created_rev), time (dirEntry->time)
+    Data(const char * _name, svn_dirent_t * dirEntry)
+        : name(_name), kind(dirEntry->kind), size(dirEntry->size),
+        hasProps(dirEntry->has_props != 0),
+        createdRev(dirEntry->created_rev), time(dirEntry->time)
     {
       lastAuthor = dirEntry->last_author == 0 ? "" : dirEntry->last_author;
     }
 
-    Data (const DirEntry & src)
+    Data(const DirEntry & src)
     {
-      init (src);
+      init(src);
     }
 
     void
-    init (const DirEntry & src)
+    init(const DirEntry & src)
     {
-      name = src.name ();
-      kind = src.kind ();
-      size = src.size ();
-      hasProps = src.hasProps ();
-      createdRev = src.createdRev ();
-      time = src.time ();
-      lastAuthor = src.lastAuthor ();
+      name = src.name();
+      kind = src.kind();
+      size = src.size();
+      hasProps = src.hasProps();
+      createdRev = src.createdRev();
+      time = src.time();
+      lastAuthor = src.lastAuthor();
     }
   };
 
-  DirEntry::DirEntry ()
-    : m (new Data ())
+  DirEntry::DirEntry()
+      : m(new Data())
   {
   }
 
-  DirEntry::DirEntry (const char * name, svn_dirent_t * DirEntry)
-    : m (new Data (name, DirEntry))
+  DirEntry::DirEntry(const char * name, svn_dirent_t * DirEntry)
+      : m(new Data(name, DirEntry))
   {
   }
 
-  DirEntry::DirEntry (const DirEntry & src)
-    : m (new Data (src))
+  DirEntry::DirEntry(const DirEntry & src)
+      : m(new Data(src))
   {
   }
 
-  DirEntry::~DirEntry ()
+  DirEntry::~DirEntry()
   {
     delete m;
   }
 
   svn_node_kind_t
-  DirEntry::kind () const
+  DirEntry::kind() const
   {
     return m->kind;
   }
 
   svn_filesize_t
-  DirEntry::size () const
+  DirEntry::size() const
   {
     return m->size;
   }
 
   bool
-  DirEntry::hasProps () const
+  DirEntry::hasProps() const
   {
     return m->hasProps;
   }
 
   svn_revnum_t
-  DirEntry::createdRev () const
+  DirEntry::createdRev() const
   {
     return m->createdRev;
   }
 
   apr_time_t
-  DirEntry::time () const
+  DirEntry::time() const
   {
     return m->time;
   }
 
   const char *
-  DirEntry::lastAuthor () const
+  DirEntry::lastAuthor() const
   {
-    return m->lastAuthor.c_str ();
+    return m->lastAuthor.c_str();
   }
 
   const char *
-  DirEntry::name () const
+  DirEntry::name() const
   {
-    return m->name.c_str ();
+    return m->name.c_str();
   }
 
   DirEntry &
@@ -141,7 +141,7 @@ namespace svn
     if (this == &dirEntry)
       return *this;
 
-    m->init (dirEntry);
+    m->init(dirEntry);
     return *this;
   }
 }

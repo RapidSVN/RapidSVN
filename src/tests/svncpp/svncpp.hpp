@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,54 +34,54 @@
  */
 class SvnCppTestCase : public CppUnit::TestCase
 {
-  CPPUNIT_TEST_SUITE( SvnCppTestCase );
-  CPPUNIT_TEST( testStatus );
-  CPPUNIT_TEST( testCheckout );
-  CPPUNIT_TEST( testDeleteRevert );
-  CPPUNIT_TEST( testAdd );
-  CPPUNIT_TEST( testUpdate );
-  CPPUNIT_TEST( testCommit );
-  CPPUNIT_TEST( testCopy );
-  CPPUNIT_TEST( testMove );
-  CPPUNIT_TEST( testMkdir );
-  CPPUNIT_TEST( testExport );
-  CPPUNIT_TEST( testProperty );
-  CPPUNIT_TEST( testLog );
+  CPPUNIT_TEST_SUITE(SvnCppTestCase);
+  CPPUNIT_TEST(testStatus);
+  CPPUNIT_TEST(testCheckout);
+  CPPUNIT_TEST(testDeleteRevert);
+  CPPUNIT_TEST(testAdd);
+  CPPUNIT_TEST(testUpdate);
+  CPPUNIT_TEST(testCommit);
+  CPPUNIT_TEST(testCopy);
+  CPPUNIT_TEST(testMove);
+  CPPUNIT_TEST(testMkdir);
+  CPPUNIT_TEST(testExport);
+  CPPUNIT_TEST(testProperty);
+  CPPUNIT_TEST(testLog);
   CPPUNIT_TEST_SUITE_END();
 
 private:
   svn::Notify notify;
 
 public:
-  void setUp ();
+  void setUp();
 
 protected:
   /**
    * Tests all of the status methods.
    */
-  void testStatus ();
+  void testStatus();
 
-  void testCheckout ();
+  void testCheckout();
 
-  void testDeleteRevert ();
+  void testDeleteRevert();
 
-  void testAdd ();
+  void testAdd();
 
-  void testUpdate ();
+  void testUpdate();
 
-  void testCommit ();
+  void testCommit();
 
-  void testCopy ();
+  void testCopy();
 
-  void testMove ();
+  void testMove();
 
-  void testProperty ();
+  void testProperty();
 
-  void testMkdir ();
+  void testMkdir();
 
-  void testExport ();
+  void testExport();
 
-  void testLog ();
+  void testLog();
 };
 
 /**

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -45,7 +45,7 @@ struct DiffDlg::Data
   DiffData diffData;
   wxComboBox * comboCompareTypes;
 
-  struct RevisionControls 
+  struct RevisionControls
   {
     wxRadioButton * radioUseRevision;
     wxTextCtrl * textRevision;
@@ -57,44 +57,44 @@ struct DiffDlg::Data
   } revCtrlsArray[2];
   wxComboBox * comboCompare;
 
-  Data ()
-    : enableUrl (true), compareTypesCount (0)
+  Data()
+      : enableUrl(true), compareTypesCount(0)
   {
   }
 
   bool
-  TransferRevisionFromWindow (int no, bool enabled, svn::Revision & revision)
+  TransferRevisionFromWindow(int no, bool enabled, svn::Revision & revision)
   {
     struct RevisionControls * revCtrls = &revCtrlsArray[no];
 
     // first we enable/disable controls according to settings
-    revCtrls->radioUseRevision->Enable (enabled);
-    bool useRevision = enabled && revCtrls->radioUseRevision->GetValue ();
-    revCtrls->checkUseLatest->Enable (useRevision);
-    bool useLatest = useRevision && revCtrls->checkUseLatest->GetValue ();
-    revCtrls->textRevision->Enable (enabled && !useLatest);
+    revCtrls->radioUseRevision->Enable(enabled);
+    bool useRevision = enabled && revCtrls->radioUseRevision->GetValue();
+    revCtrls->checkUseLatest->Enable(useRevision);
+    bool useLatest = useRevision && revCtrls->checkUseLatest->GetValue();
+    revCtrls->textRevision->Enable(enabled && !useLatest);
 
-    revCtrls->radioUseDate->Enable (enabled);
-    bool useDate = enabled && revCtrls->radioUseDate->GetValue ();
-    revCtrls->datePicker->Enable (useDate);
+    revCtrls->radioUseDate->Enable(enabled);
+    bool useDate = enabled && revCtrls->radioUseDate->GetValue();
+    revCtrls->datePicker->Enable(useDate);
 
     bool enablePath = enabled && enableUrl;
-    revCtrls->checkUsePath->Enable (enablePath);
-    bool usePath = enablePath && revCtrls->checkUsePath->GetValue ();
-    revCtrls->comboPath->Enable (usePath); 
+    revCtrls->checkUsePath->Enable(enablePath);
+    bool usePath = enablePath && revCtrls->checkUsePath->GetValue();
+    revCtrls->comboPath->Enable(usePath);
 
     // now transfer values
     bool isValid = true;
-    if (revCtrls->radioUseRevision->GetValue ())
+    if (revCtrls->radioUseRevision->GetValue())
     {
-      if (revCtrls->checkUseLatest->GetValue ())
-        revision = svn::Revision (svn::Revision::HEAD);
+      if (revCtrls->checkUseLatest->GetValue())
+        revision = svn::Revision(svn::Revision::HEAD);
       else
       {
         svn_revnum_t revnum;
-        bool isValidRevision = ParseRevision (
-          revCtrls->textRevision->GetValue (), revnum);
-        revision = svn::Revision (revnum);
+        bool isValidRevision = ParseRevision(
+                                 revCtrls->textRevision->GetValue(), revnum);
+        revision = svn::Revision(revnum);
 
         if (enabled && !isValidRevision)
           isValid = false;
@@ -103,44 +103,44 @@ struct DiffDlg::Data
     else
     {
       apr_time_t time=0;
-      apr_time_ansi_put (
-        &time, revCtrls->datePicker->GetValue ().GetTicks ());
+      apr_time_ansi_put(
+        &time, revCtrls->datePicker->GetValue().GetTicks());
       svn::DateTime datetime(time);
-      revision =  svn::Revision (datetime);
+      revision =  svn::Revision(datetime);
     }
 
     return isValid;
   }
 
-  
+
   /**
    * Add a compare type to the combo box
    */
   void
-  AddCompareType (DiffData::CompareType compareType)
+  AddCompareType(DiffData::CompareType compareType)
   {
     compareTypes[compareTypesCount] = compareType;
     compareTypesCount++;
-    
+
     switch (compareType)
     {
     case DiffData::WITH_BASE:
-      comboCompare->Append (_("Diff to BASE"));
+      comboCompare->Append(_("Diff to BASE"));
       break;
     case DiffData::WITH_HEAD:
-      comboCompare->Append (_("Diff to HEAD"));
+      comboCompare->Append(_("Diff to HEAD"));
       break;
     case DiffData::WITH_DIFFERENT_REVISION:
-      comboCompare->Append (_("Diff to another revision/date"));
+      comboCompare->Append(_("Diff to another revision/date"));
       break;
     case DiffData::TWO_REVISIONS:
-      comboCompare->Append (_("Diff two revisions/dates"));
+      comboCompare->Append(_("Diff two revisions/dates"));
       break;
     default:
-      comboCompare->Append (wxT("Invalid value"));
+      comboCompare->Append(wxT("Invalid value"));
     }
   }
-    
+
 
   /**
    * Select @a CompareType in the combo-box.
@@ -150,7 +150,7 @@ struct DiffDlg::Data
    * @retval true found!
    */
   bool
-  SetCompareType (DiffData::CompareType compareType)
+  SetCompareType(DiffData::CompareType compareType)
   {
     bool found = false;
 
@@ -159,7 +159,7 @@ struct DiffDlg::Data
     {
       if (compareTypes[i] == compareType)
       {
-        comboCompare->SetSelection (i);
+        comboCompare->SetSelection(i);
         found = true;
         break;
       }
@@ -168,19 +168,19 @@ struct DiffDlg::Data
     if (!found)
     {
       diffData.compareType = compareTypes[0];
-      comboCompare->SetSelection (0);
+      comboCompare->SetSelection(0);
     }
 
     return found;
   }
 };
 
-DiffDlg::DiffDlg (wxWindow * parent, const wxString & selectedUrl)
-  : DiffDlgBase (parent, -1, _("Diff"), wxDefaultPosition,
-                 wxDefaultSize, wxDEFAULT_DIALOG_STYLE),
-    m (new Data ())
+DiffDlg::DiffDlg(wxWindow * parent, const wxString & selectedUrl)
+    : DiffDlgBase(parent, -1, _("Diff"), wxDefaultPosition,
+                  wxDefaultSize, wxDEFAULT_DIALOG_STYLE),
+    m(new Data())
 {
-  // Create the control mapping for the use 
+  // Create the control mapping for the use
   // with @ref Data::SetRevision and @ref Data::GetRevision
   m->comboCompare = m_comboCompare;
   m->revCtrlsArray[0].radioUseRevision = m_radioUseRevision1;
@@ -199,45 +199,45 @@ DiffDlg::DiffDlg (wxWindow * parent, const wxString & selectedUrl)
   m->revCtrlsArray[1].checkUsePath = m_checkUsePath2;
   m->revCtrlsArray[1].comboPath = m_comboPath2;
 
-  m_comboPath1->SetValue (selectedUrl);
-  m_comboPath2->SetValue (selectedUrl);
-  HistoryValidator valModule1 (
+  m_comboPath1->SetValue(selectedUrl);
+  m_comboPath2->SetValue(selectedUrl);
+  HistoryValidator valModule1(
     HISTORY_DIFF_URL, &m->diffData.url1, true, true);
-  valModule1.SetWindow (this);
-  m_comboPath1->SetValidator (valModule1);
+  valModule1.SetWindow(this);
+  m_comboPath1->SetValidator(valModule1);
 
-  HistoryValidator valModule2 (
+  HistoryValidator valModule2(
     HISTORY_DIFF_URL, &m->diffData.url2, true, true);
-  valModule2.SetWindow (this);
+  valModule2.SetWindow(this);
 
-  m_comboPath2->SetValidator (valModule2);
+  m_comboPath2->SetValidator(valModule2);
 
-  TransferDataToWindow ();
+  TransferDataToWindow();
 
-  CentreOnParent ();
+  CentreOnParent();
 
   // fill list
-  AllowCompareTypes ();
-  m->SetCompareType (DiffData::WITH_DIFFERENT_REVISION);
-  m_radioUseRevision1->SetValue (true);
-  m_radioUseRevision2->SetValue (true);
+  AllowCompareTypes();
+  m->SetCompareType(DiffData::WITH_DIFFERENT_REVISION);
+  m_radioUseRevision1->SetValue(true);
+  m_radioUseRevision2->SetValue(true);
 
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
-DiffDlg::~DiffDlg ()
+DiffDlg::~DiffDlg()
 {
   delete m;
 }
 
 const DiffData
-DiffDlg::GetData () const
+DiffDlg::GetData() const
 {
   return m->diffData;
 }
 
 void
-DiffDlg::EnableUrl (bool value)
+DiffDlg::EnableUrl(bool value)
 {
   m->enableUrl = value;
 
@@ -245,18 +245,18 @@ DiffDlg::EnableUrl (bool value)
 }
 
 void
-DiffDlg::AllowCompareTypes (const DiffData::CompareType types [],
-                            size_t count)
+DiffDlg::AllowCompareTypes(const DiffData::CompareType types [],
+                           size_t count)
 {
   if (count == 0)
   {
-    AllowCompareTypes ();
+    AllowCompareTypes();
     return;
   }
 
   // remember old selection and clear contents
   DiffData::CompareType oldCompareType = m->diffData.compareType;
-  m_comboCompare->Clear ();
+  m_comboCompare->Clear();
   m->compareTypesCount = 0;
 
   // otherwise allow only the types that were passed
@@ -264,38 +264,38 @@ DiffDlg::AllowCompareTypes (const DiffData::CompareType types [],
   size_t i;
 
   for (i=0; i<count; i++)
-    m->AddCompareType (types [i]);
+    m->AddCompareType(types [i]);
 
   // try to set old selection
-  m->SetCompareType (oldCompareType);
-  TransferDataFromWindow ();
+  m->SetCompareType(oldCompareType);
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::AllowCompareTypes ()
+DiffDlg::AllowCompareTypes()
 {
   // remember old selection and clear contents
   DiffData::CompareType oldCompareType = m->diffData.compareType;
-  m_comboCompare->Clear ();
+  m_comboCompare->Clear();
   m->compareTypesCount = 0;
 
-  m->AddCompareType (DiffData::WITH_BASE);
-  m->AddCompareType (DiffData::WITH_HEAD);
-  m->AddCompareType (DiffData::WITH_DIFFERENT_REVISION);
-  m->AddCompareType (DiffData::TWO_REVISIONS);
+  m->AddCompareType(DiffData::WITH_BASE);
+  m->AddCompareType(DiffData::WITH_HEAD);
+  m->AddCompareType(DiffData::WITH_DIFFERENT_REVISION);
+  m->AddCompareType(DiffData::TWO_REVISIONS);
 
-  m->SetCompareType (oldCompareType);
-  TransferDataFromWindow ();
+  m->SetCompareType(oldCompareType);
+  TransferDataFromWindow();
 }
 
-bool 
-DiffDlg::TransferDataFromWindow ()
+bool
+DiffDlg::TransferDataFromWindow()
 {
   bool revision1 = false;
   bool revision2 = false;
 
-  m->diffData.compareType = 
-    m->compareTypes[m_comboCompare->GetSelection ()];
+  m->diffData.compareType =
+    m->compareTypes[m_comboCompare->GetSelection()];
 
   switch (m->diffData.compareType)
   {
@@ -313,128 +313,128 @@ DiffDlg::TransferDataFromWindow ()
   // retrieve revisions / dates
   bool isValid = true;
 
-  if (!m->TransferRevisionFromWindow (
+  if (!m->TransferRevisionFromWindow(
         0, revision1, m->diffData.revision1))
   {
     isValid = false;
   }
 
-  if (!m->TransferRevisionFromWindow (
+  if (!m->TransferRevisionFromWindow(
         1, revision2, m->diffData.revision2))
   {
     isValid = false;
   }
 
-  m->diffData.useUrl1 = m_checkUsePath1->GetValue ();
-  m->diffData.url1 = m_comboPath1->GetValue ();
-  m->diffData.useUrl2 = m_checkUsePath2->GetValue ();
-  m->diffData.url2 = m_comboPath2->GetValue ();
+  m->diffData.useUrl1 = m_checkUsePath1->GetValue();
+  m->diffData.url1 = m_comboPath1->GetValue();
+  m->diffData.useUrl2 = m_checkUsePath2->GetValue();
+  m->diffData.url2 = m_comboPath2->GetValue();
 
-  m_buttonOK->Enable (isValid);
-  
+  m_buttonOK->Enable(isValid);
+
   return isValid;
 }
-  
+
 
 void
-DiffDlg::OnComboCompare (wxCommandEvent& event)
+DiffDlg::OnComboCompare(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnRadioUseRevision1 (wxCommandEvent& event)
+DiffDlg::OnRadioUseRevision1(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnTextRevision1 (wxCommandEvent& event)
+DiffDlg::OnTextRevision1(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnCheckUseLatest1 (wxCommandEvent& event)
+DiffDlg::OnCheckUseLatest1(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnRadioUseDate1 (wxCommandEvent& event)
+DiffDlg::OnRadioUseDate1(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnDatePicker1( wxDateEvent& event )
+DiffDlg::OnDatePicker1(wxDateEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnUsePath1 (wxCommandEvent& event)
+DiffDlg::OnUsePath1(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnComboPath1 (wxCommandEvent& event)
+DiffDlg::OnComboPath1(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnRadioUseRevision2 (wxCommandEvent& event)
+DiffDlg::OnRadioUseRevision2(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnTextRevision2 (wxCommandEvent& event)
+DiffDlg::OnTextRevision2(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnCheckUseLatest2 (wxCommandEvent& event)
+DiffDlg::OnCheckUseLatest2(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnRadioUseDate2 (wxCommandEvent& event)
+DiffDlg::OnRadioUseDate2(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnDatePicker2 (wxDateEvent& event)
+DiffDlg::OnDatePicker2(wxDateEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnCheckUsePath2 (wxCommandEvent& event)
+DiffDlg::OnCheckUsePath2(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnComboPath2 (wxCommandEvent& event)
+DiffDlg::OnComboPath2(wxCommandEvent& event)
 {
-  TransferDataFromWindow ();
+  TransferDataFromWindow();
 }
 
-void 
-DiffDlg::OnButtonOK (wxCommandEvent& event)
+void
+DiffDlg::OnButtonOK(wxCommandEvent& event)
 {
-  TheHistoryManager.AddEntryToList (HISTORY_DIFF_URL,
-                                    m_comboPath1->GetValue ());
-  TheHistoryManager.AddEntryToList (HISTORY_DIFF_URL,
-                                    m_comboPath2->GetValue ());
+  TheHistoryManager.AddEntryToList(HISTORY_DIFF_URL,
+                                   m_comboPath1->GetValue());
+  TheHistoryManager.AddEntryToList(HISTORY_DIFF_URL,
+                                   m_comboPath2->GetValue());
 
-  event.Skip ();
+  event.Skip();
 }
 
 /* -----------------------------------------------------------------

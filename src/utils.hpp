@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -50,9 +50,9 @@ namespace svn
  * declaration of an array with @a svn_revnum_t elements
  */
 #ifdef WX_DEFINE_ARRAY_LONG
-WX_DEFINE_ARRAY_LONG (svn_revnum_t, RevnumArray);
+WX_DEFINE_ARRAY_LONG(svn_revnum_t, RevnumArray);
 #else
-WX_DEFINE_ARRAY (svn_revnum_t, RevnumArray);
+WX_DEFINE_ARRAY(svn_revnum_t, RevnumArray);
 #endif
 
 
@@ -65,38 +65,38 @@ WX_DEFINE_ARRAY (svn_revnum_t, RevnumArray);
  * @param path Native path to convert
  * @return string with all backslashes converted to forward slashes
  */
-wxString & 
-UnixPath (wxString & path);
+wxString &
+UnixPath(wxString & path);
 
 /**
  * Trim whitespace at start and end of string
  * (Convenience function for trimming first left, then right)
  */
-void 
-TrimString (wxString & str);
+void
+TrimString(wxString & str);
 
 /**
- * Post a menu command event with the given ID. 
+ * Post a menu command event with the given ID.
  *
  * Used for converting non-command events to command events so they'll move up
  * the GUI hierarchy.
  */
-bool 
-PostMenuEvent (wxEvtHandler *source, long id);
+bool
+PostMenuEvent(wxEvtHandler *source, long id);
 
 /**
  * Create a correctly sized button with an ellipsis (three dots)
  */
 wxButton *
-CreateEllipsisButton (wxWindow *parent, long id);
+CreateEllipsisButton(wxWindow *parent, long id);
 
 /**
  * Append entries for the "Modify" menu
  *
  * @param parentMenu menu that will receive the items
  */
-void 
-AppendModifyMenu (wxMenu * parentMenu);
+void
+AppendModifyMenu(wxMenu * parentMenu);
 
 /**
  * Append entries for the "Repository" menu
@@ -104,15 +104,15 @@ AppendModifyMenu (wxMenu * parentMenu);
  * @param parentMenu menu that will receive the items
  */
 void
-AppendBookmarksMenu (wxMenu * parentMenu);
+AppendBookmarksMenu(wxMenu * parentMenu);
 
 /**
  * Append entries for the "Query" menu
  *
  * @param parentMenu menu that will receive the items
  */
-void 
-AppendQueryMenu (wxMenu * parentMenu);
+void
+AppendQueryMenu(wxMenu * parentMenu);
 
 
 /**
@@ -125,7 +125,7 @@ AppendQueryMenu (wxMenu * parentMenu);
  * @param status status instance of the selected item
  */
 void
-AppendVerbMenu (wxMenu * parentMenu, svn::Status * status);
+AppendVerbMenu(wxMenu * parentMenu, svn::Status * status);
 
 
 /**
@@ -136,7 +136,7 @@ AppendVerbMenu (wxMenu * parentMenu, svn::Status * status);
  * @return true if valid revision
  */
 bool
-CheckRevision (const wxString & revstring);
+CheckRevision(const wxString & revstring);
 
 
 /**
@@ -147,7 +147,7 @@ CheckRevision (const wxString & revstring);
  * @param id menu item to create
  */
 wxMenuItem *
-AppendMenuItem (wxMenu & menu, int id);
+AppendMenuItem(wxMenu & menu, int id);
 
 
 /**
@@ -159,18 +159,18 @@ AppendMenuItem (wxMenu & menu, int id);
  * @retval true valid revision number
  */
 bool
-ParseRevision (const wxString & revstring, svn_revnum_t & revnum);
+ParseRevision(const wxString & revstring, svn_revnum_t & revnum);
 
 
 /**
  * Format a date/time value to standard format
  *
- * @param data 
+ * @param data
  * @param fmt format string
  * @return formatted date/time string
  */
 wxString
-FormatDateTime (apr_time_t date, wxString fmt = wxT("%x %X"));
+FormatDateTime(apr_time_t date, wxString fmt = wxT("%x %X"));
 
 
 /**
@@ -184,7 +184,7 @@ FormatDateTime (apr_time_t date, wxString fmt = wxT("%x %X"));
  * 2. Local Windows path (uppercase drive letter)
  *    Before:  d:\Documents and Settings\alex\Application Data
  *    After:   D:\Documents and Settings\alex\Application Data
- * 
+ *
  * 3. Repository URL (lowercase url schema)
  *    Before:  https://svn.collab.net/repos/rapidsvn/trunk/src/svncpp
  *    After:   https://svn.collab.net/repos/rapidsvn/trunk/src/svncpp
@@ -196,22 +196,22 @@ FormatDateTime (apr_time_t date, wxString fmt = wxT("%x %X"));
  * @param path input path
  * @return beatified path
  */
-wxString 
-BeautifyPath (const wxString & path);
+wxString
+BeautifyPath(const wxString & path);
 
 
 /**
- * creates a textual description for a status value 
+ * creates a textual description for a status value
  *
  * @param kind
  * @return brief textual description
  */
 wxString
-StatusDescription (const svn_wc_status_kind kind);
+StatusDescription(const svn_wc_status_kind kind);
 
 
 /**
- * converts a string from local encoding (like Ansi on 
+ * converts a string from local encoding (like Ansi on
  * Windows) to utf8
  *
  * @see Utf8ToLocal
@@ -220,10 +220,10 @@ StatusDescription (const svn_wc_status_kind kind);
  * @return string in utf8 encoding
  */
 std::string
-LocalToUtf8 (const wxString & srcLocal);
+LocalToUtf8(const wxString & srcLocal);
 
 /**
- * converts a string from local encoding (like Ansi on 
+ * converts a string from local encoding (like Ansi on
  * Windows) to utf8
  *
  * @see Utf8ToLocal
@@ -232,7 +232,7 @@ LocalToUtf8 (const wxString & srcLocal);
  * @param dstUtf8 string in utf8 encoding
  */
 void
-LocalToUtf8 (const wxString & srcLocal, std::string & dstUtf8);
+LocalToUtf8(const wxString & srcLocal, std::string & dstUtf8);
 
 /**
  * converts a string from local encoding to a utf8 path
@@ -241,21 +241,21 @@ LocalToUtf8 (const wxString & srcLocal, std::string & dstUtf8);
  * @return path in utf8
  */
 svn::Path
-PathUtf8 (const wxString & path);
+PathUtf8(const wxString & path);
 
 
 /**
  * converts an utf8 path to a string in local encoding
  * with native path separators
- * 
+ *
  * @param path source
  * @param path string in local encoding
  */
 wxString
-PathToNative (const svn::Path & path);
+PathToNative(const svn::Path & path);
 
 /**
- * converts a string from utf to the local encoding 
+ * converts a string from utf to the local encoding
  * (like Ansi on Windows)
  *
  * @see LocalToUtf8
@@ -264,10 +264,10 @@ PathToNative (const svn::Path & path);
  * @return string in local encoding
  */
 wxString
-Utf8ToLocal (const char* srcUtf8);
+Utf8ToLocal(const char* srcUtf8);
 
 /**
- * converts a string from utf to the local encoding 
+ * converts a string from utf to the local encoding
  * (like Ansi on Windows)
  *
  * @see LocalToUtf8
@@ -276,12 +276,12 @@ Utf8ToLocal (const char* srcUtf8);
  * @return string in local encoding
  */
 wxString
-Utf8ToLocal (const std::string & srcUtf8);
+Utf8ToLocal(const std::string & srcUtf8);
 
 /**
  * Convert a character array to a wxBitmap.
  * You have to ensure the contents of the array string
- * contains a valid image 
+ * contains a valid image
  *
  * @remark The suggestion to this code is from
  *         http://www.wxwidgets.org/index.php/Embedding_PNG_Images
@@ -292,11 +292,11 @@ Utf8ToLocal (const std::string & srcUtf8);
  * @para len number of elements in the array
  * @return the bitmap
  */
-wxBitmap 
-EmbeddedBitmap (const unsigned char * data, size_t len);
+wxBitmap
+EmbeddedBitmap(const unsigned char * data, size_t len);
 
 /**
- * Macro that saves you from having to 
+ * Macro that saves you from having to
  * add the @a len parameter to @ref EmbeddedBitmap
  */
 #define EMBEDDED_BITMAP(data) EmbeddedBitmap (data, sizeof (data))
@@ -308,7 +308,7 @@ EmbeddedBitmap (const unsigned char * data, size_t len);
  * @param url URL to open
  */
 void
-OpenURL (const wxString & url);
+OpenURL(const wxString & url);
 
 /**
  * Converts svn::Path to native full path expression
@@ -320,7 +320,7 @@ OpenURL (const wxString & url);
  * WS  / No  : Input path may be relative (if reflesh with update
  *             checed), but all files must be in FolderBrowser
  *             selected path.
- * WS  / Yes : FolderBrowser selection is not reliable because 
+ * WS  / Yes : FolderBrowser selection is not reliable because
  *             various pathes are shown in file list. But input
  *             path is always full path in this mode.
  *

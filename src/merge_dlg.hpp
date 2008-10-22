@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -33,17 +33,17 @@
 class MergeDlg:public wxDialog
 {
 public:
-  MergeDlg (wxWindow *parent, bool calledByLogDlg, MergeData & data);
-  void OnOK (wxCommandEvent& event);
-  void OnBrowse (wxCommandEvent & event);
+  MergeDlg(wxWindow *parent, bool calledByLogDlg, MergeData & data);
+  void OnOK(wxCommandEvent& event);
+  void OnBrowse(wxCommandEvent & event);
 
 private:
-  void InitializeData ();
-  int TestRev (wxString & val);
+  void InitializeData();
+  int TestRev(wxString & val);
 
   MergeData & m_data;
 
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

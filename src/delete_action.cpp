@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,42 +36,42 @@
 #include "delete_dlg.hpp"
 #include "utils.hpp"
 
-DeleteAction::DeleteAction (wxWindow * parent)
-  : Action (parent, _("Delete"), UPDATE_TREE)
+DeleteAction::DeleteAction(wxWindow * parent)
+    : Action(parent, _("Delete"), UPDATE_TREE)
 {
 }
 
 bool
-DeleteAction::Prepare ()
+DeleteAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  DeleteDlg dlg (GetParent ());
+  DeleteDlg dlg(GetParent());
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_force = dlg.GetForce ();
+  m_force = dlg.GetForce();
 
   return true;
 }
 
 bool
-DeleteAction::Perform ()
+DeleteAction::Perform()
 {
-  svn::Client client (GetContext ());
-  client.remove (GetTargets (), m_force);
+  svn::Client client(GetContext());
+  client.remove(GetTargets(), m_force);
 
   return true;
 }
 
 bool
-DeleteAction::CheckStatusSel (const svn::StatusSel & statusSel)
+DeleteAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

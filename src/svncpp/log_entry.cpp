@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -35,24 +35,24 @@
 
 namespace svn
 {
-  LogChangePathEntry::LogChangePathEntry (
+  LogChangePathEntry::LogChangePathEntry(
     const char *path_,
     char action_,
     const char *copyFromPath_,
     const svn_revnum_t copyFromRevision_)
-   : path (path_), action(action_), 
-     copyFromPath (copyFromPath_ != NULL ? copyFromPath_ : ""),
-     copyFromRevision (copyFromRevision_)
+      : path(path_), action(action_),
+      copyFromPath(copyFromPath_ != NULL ? copyFromPath_ : ""),
+      copyFromRevision(copyFromRevision_)
   {
   }
 
 
-  LogEntry::LogEntry ()
+  LogEntry::LogEntry()
   {
   }
 
 
-  LogEntry::LogEntry (
+  LogEntry::LogEntry(
     const svn_revnum_t revision_,
     const char * author_,
     const char * date_,
@@ -64,7 +64,7 @@ namespace svn
     {
       Pool pool;
 
-      if (svn_time_from_cstring (&date, date_, pool) != 0)
+      if (svn_time_from_cstring(&date, date_, pool) != 0)
         date = 0;
     }
 

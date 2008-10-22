@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -35,10 +35,10 @@
 class ProportionalSplitterWindow : public wxSplitterWindow
 {
 public:
-  ProportionalSplitterWindow (float proportion, wxWindow *parent, 
-    wxWindowID id = -1, const wxPoint& pos = wxDefaultPosition, 
-    const wxSize& size = wxDefaultSize, long style = wxSP_3D, 
-    const wxString& name = wxT("splitter"));
+  ProportionalSplitterWindow(float proportion, wxWindow *parent,
+                             wxWindowID id = -1, const wxPoint& pos = wxDefaultPosition,
+                             const wxSize& size = wxDefaultSize, long style = wxSP_3D,
+                             const wxString& name = wxT("splitter"));
 
   /**
    * We need to update the old length when the window is resplit, as
@@ -54,7 +54,7 @@ protected:
   float m_proportion;
   int m_old_length_tot;
 
-  void OnSize (wxSizeEvent & event);
+  void OnSize(wxSizeEvent & event);
 
   /*
    * Get the relevant length component from the given size

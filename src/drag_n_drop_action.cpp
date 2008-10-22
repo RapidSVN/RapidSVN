@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -43,54 +43,54 @@
 class DragAndDropImportTraverser : public wxDirTraverser
 {
 public:
-  DragAndDropImportTraverser (const wxString& rootSrcDir, 
-                              const wxString& destDir)
+  DragAndDropImportTraverser(const wxString& rootSrcDir,
+                             const wxString& destDir)
   {
     m_rootSrcDir = rootSrcDir;
     m_destDir = destDir;
 
     // Create the initial destionation directory
-    wxString newDirectory = wxFileName (m_destDir).GetFullPath ();
-    if (::wxDirExists (newDirectory) == false)
+    wxString newDirectory = wxFileName(m_destDir).GetFullPath();
+    if (::wxDirExists(newDirectory) == false)
     {
-      ::wxMkdir (newDirectory);
+      ::wxMkdir(newDirectory);
     }
   }
 
-  virtual wxDirTraverseResult OnFile (const wxString& filename)
+  virtual wxDirTraverseResult OnFile(const wxString& filename)
   {
     // ::wxCopyFile (filename, (destDir + dirname - rootSrcDir))
-    ::wxCopyFile (filename, ConvertToDestinationPath (filename));
+    ::wxCopyFile(filename, ConvertToDestinationPath(filename));
     return wxDIR_CONTINUE;
   }
 
-  virtual wxDirTraverseResult OnDir (const wxString& dirname)
+  virtual wxDirTraverseResult OnDir(const wxString& dirname)
   {
     // ::wxMkDir (destDir + (dirname - rootSrcDir))
-    wxString newDirectory = ConvertToDestinationPath (dirname);
-    if (::wxDirExists (newDirectory) == false)
+    wxString newDirectory = ConvertToDestinationPath(dirname);
+    if (::wxDirExists(newDirectory) == false)
     {
-      ::wxMkdir (newDirectory);
+      ::wxMkdir(newDirectory);
     }
     return wxDIR_CONTINUE;
   }
 
 private:
 
-  wxString ConvertToDestinationPath (const wxString& fullPath)
+  wxString ConvertToDestinationPath(const wxString& fullPath)
   {
-    return wxFileName (m_destDir + wxFileName::GetPathSeparator () +
-      fullPath.Mid (m_destDir.Len ()-1)).GetFullPath ();
+    return wxFileName(m_destDir + wxFileName::GetPathSeparator() +
+                      fullPath.Mid(m_destDir.Len()-1)).GetFullPath();
   }
 
   wxString m_rootSrcDir;
   wxString m_destDir;
 };
 
-DragAndDropAction::DragAndDropAction (wxWindow * parent, 
-                                      DragAndDropData & data)
- : Action (parent, wxEmptyString, 0),
-   m_parent (parent)
+DragAndDropAction::DragAndDropAction(wxWindow * parent,
+                                     DragAndDropData & data)
+    : Action(parent, wxEmptyString, 0),
+    m_parent(parent)
 {
   m = new DragAndDropData();
   m->m_files = data.m_files;
@@ -100,7 +100,7 @@ DragAndDropAction::DragAndDropAction (wxWindow * parent,
   m->m_recursiveAdd = false;
 }
 
-DragAndDropAction::~DragAndDropAction ()
+DragAndDropAction::~DragAndDropAction()
 {
   delete m;
 }
@@ -119,25 +119,25 @@ DragAndDropAction::IsInSameTree(const wxString & srcPath, const wxString & destP
   size_t destlen = destPath.Len();
   if (destlen < limit)
     limit = destlen;
-  
+
   size_t i;
   for (i = 0; i < limit; i++)
   {
     if (srcPath[i] != destPath[i])
       break;
   }
-  const wxString matching = srcPath.SubString (0, i);
-  int last_slash = matching.Find (wxT('/'), true);
+  const wxString matching = srcPath.SubString(0, i);
+  int last_slash = matching.Find(wxT('/'), true);
 #ifdef __WXMSW__
   if (last_slash == wxNOT_FOUND)
-    last_slash = matching.Find (wxT('\\'), true);
+    last_slash = matching.Find(wxT('\\'), true);
 #endif
   if (last_slash == wxNOT_FOUND)
     return false;
-  const svn::Path base = PathUtf8 (matching.SubString (0, last_slash-1));
-  
+  const svn::Path base = PathUtf8(matching.SubString(0, last_slash-1));
+
   // 1. If base path is local folder which is not WC, srcPath and destPath
-  //    are in different WC folders each other. 
+  //    are in different WC folders each other.
   if (!base.isUrl() && !svn::Wc::checkWc(base.c_str()))
     return false;
 
@@ -145,33 +145,33 @@ DragAndDropAction::IsInSameTree(const wxString & srcPath, const wxString & destP
 }
 
 bool
-DragAndDropAction::Prepare ()
+DragAndDropAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
   wxString src = wxEmptyString;
-  if (m->m_files.GetCount () > 1)
+  if (m->m_files.GetCount() > 1)
     src = _("Multiple Files");
-  else if (m->m_files.GetCount () == 1)
+  else if (m->m_files.GetCount() == 1)
     src = m->m_files[0];
   else
     return false; // No files dragged
 
-  // If the ctrl key is down, then assume the user 
+  // If the ctrl key is down, then assume the user
   //  wants to copy rather than move files
-  bool showMoveButton = (::wxGetKeyState (WXK_CONTROL) == false);
+  bool showMoveButton = (::wxGetKeyState(WXK_CONTROL) == false);
 
-  // Check if the file being dragged-and-dropped is already 
+  // Check if the file being dragged-and-dropped is already
   // under source control or is being imported into the repository
-  svn::Path srcSvnPath (PathUtf8 (m->m_files[0]));
-  svn::Path destSvnPath (PathUtf8 (m->m_destination));
+  svn::Path srcSvnPath(PathUtf8(m->m_files[0]));
+  svn::Path destSvnPath(PathUtf8(m->m_destination));
 
   bool importFiles = false;
   bool incrementRevision = false;
-  
+
   // ==DragDrop action patterns==
   // Any entry    -> Same folder        : Nothing to be done
   // Any folder   -> Itself             : Unexpected!
@@ -185,24 +185,24 @@ DragAndDropAction::Prepare ()
   // WC folder    -> Other working copy : Unexpected!
   // WC file      -> Other working copy : Add action (called as import but uncommitied)
   // Plain file   -> WC folder          : Add action (called as import but uncommitied)
-  
+
   wxArrayString::iterator it;
-  for (it = m->m_files.begin (); it != m->m_files.end(); it++)
+  for (it = m->m_files.begin(); it != m->m_files.end(); it++)
   {
-    if (Utf8ToLocal (PathUtf8 (*it).dirpath ()) ==
-       Utf8ToLocal (PathUtf8 (m->m_destination).c_str ()))
+    if (Utf8ToLocal(PathUtf8(*it).dirpath()) ==
+        Utf8ToLocal(PathUtf8(m->m_destination).c_str()))
       return false;
     if (*it == m->m_destination)
       return false;
   }
-  
-  if (destSvnPath.isUrl ())
+
+  if (destSvnPath.isUrl())
   {
     //Drop into repository.
 
-    if (srcSvnPath.isUrl ())
+    if (srcSvnPath.isUrl())
     {
-      if (!IsInSameTree (m->m_files[0], m->m_destination))
+      if (!IsInSameTree(m->m_files[0], m->m_destination))
         return false;
 
       importFiles = false;
@@ -210,10 +210,10 @@ DragAndDropAction::Prepare ()
     }
     else
     {
-      for (it = m->m_files.begin (); it != m->m_files.end(); it++)
+      for (it = m->m_files.begin(); it != m->m_files.end(); it++)
       {
-        if (svn::Wc::checkWc (PathUtf8 (*it)))
-          return false;      
+        if (svn::Wc::checkWc(PathUtf8(*it)))
+          return false;
       }
 
       importFiles = true;
@@ -224,18 +224,18 @@ DragAndDropAction::Prepare ()
   {
     //Drop into working copy.
 
-    if (srcSvnPath.isUrl ())
+    if (srcSvnPath.isUrl())
       return false;
-    else if (svn::Wc::checkWc (srcSvnPath.dirpath ()) &&
-      IsInSameTree (m->m_files[0], m->m_destination))
+    else if (svn::Wc::checkWc(srcSvnPath.dirpath()) &&
+             IsInSameTree(m->m_files[0], m->m_destination))
     {
       importFiles = false;
       incrementRevision = false;
     }
     else {
-      for (it = m->m_files.begin (); it != m->m_files.end(); it++)
+      for (it = m->m_files.begin(); it != m->m_files.end(); it++)
       {
-        if (svn::Wc::checkWc (PathUtf8 (*it)))
+        if (svn::Wc::checkWc(PathUtf8(*it)))
           return false;
       }
 
@@ -246,9 +246,9 @@ DragAndDropAction::Prepare ()
   }
 
   // Present the confirmation dialog to the user
-  DragAndDropDialog dlg (m_parent, src, m->m_destination, 
-                         showMoveButton, importFiles);
-  m->m_action = dlg.ShowModal ();
+  DragAndDropDialog dlg(m_parent, src, m->m_destination,
+                        showMoveButton, importFiles);
+  m->m_action = dlg.ShowModal();
 
   if (DragAndDropDialog::RESULT_CANCEL == m->m_action)
     return false;
@@ -257,85 +257,85 @@ DragAndDropAction::Prepare ()
   //  so present the commit dialog to get that information
   if (DragAndDropDialog::RESULT_IMPORT == m->m_action && incrementRevision)
   {
-    CommitDlg commitDlg (m_parent);
-    if (commitDlg.ShowModal () != wxID_OK)
+    CommitDlg commitDlg(m_parent);
+    if (commitDlg.ShowModal() != wxID_OK)
       return false;
 
-    m->m_logMessage = commitDlg.GetMessage ();
-    m->m_recursiveAdd = commitDlg.GetRecursive ();
+    m->m_logMessage = commitDlg.GetMessage();
+    m->m_recursiveAdd = commitDlg.GetRecursive();
   }
 
   return true;
 }
 
 bool
-DragAndDropAction::Perform ()  
+DragAndDropAction::Perform()
 {
-  ::wxBusyCursor ();
+  ::wxBusyCursor();
   svn::Revision unusedRevision;
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
   wxString msg = wxEmptyString;
   for (unsigned int i=0; i<m->m_files.GetCount(); i++)
   {
-    svn::Path srcPath = PathUtf8 (m->m_files [i]);
-    wxFileName srcFilename (m->m_files[i]);
-    svn::Path destPath = PathUtf8 (m->m_destination);
-    destPath.addComponent (LocalToUtf8 (srcFilename.GetFullName ()));
+    svn::Path srcPath = PathUtf8(m->m_files [i]);
+    wxFileName srcFilename(m->m_files[i]);
+    svn::Path destPath = PathUtf8(m->m_destination);
+    destPath.addComponent(LocalToUtf8(srcFilename.GetFullName()));
     switch (m->m_action)
     {
     case DragAndDropDialog::RESULT_COPY:
-      msg.Printf (_("Copying file: %s"), PathToNative (srcPath).c_str ());
-      Trace (msg);
-      client.copy (srcPath, unusedRevision, destPath);
+      msg.Printf(_("Copying file: %s"), PathToNative(srcPath).c_str());
+      Trace(msg);
+      client.copy(srcPath, unusedRevision, destPath);
       break;
     case DragAndDropDialog::RESULT_MOVE:
-      msg.Printf (_("Moving file: %s"), PathToNative (srcPath).c_str ());
-      Trace (msg);
-      client.move (srcPath, unusedRevision, destPath, false);
+      msg.Printf(_("Moving file: %s"), PathToNative(srcPath).c_str());
+      Trace(msg);
+      client.move(srcPath, unusedRevision, destPath, false);
       break;
     case DragAndDropDialog::RESULT_IMPORT:
       // Imports only work when the destination directory is a URL.
       // For imports into a WC, copy the files to the WC and mark
       //  them to be added to the repository
-      if (destPath.isUrl ())
+      if (destPath.isUrl())
       {
-        msg.Printf (_("Importing file into repository: %s"), 
-                    PathToNative (srcPath).c_str ());
-        Trace (msg);
-        client.import (srcPath, destPath,
-                       LocalToUtf8(m->m_logMessage).c_str (), 
-                       srcFilename.IsDir () && m->m_recursiveAdd);
+        msg.Printf(_("Importing file into repository: %s"),
+                   PathToNative(srcPath).c_str());
+        Trace(msg);
+        client.import(srcPath, destPath,
+                      LocalToUtf8(m->m_logMessage).c_str(),
+                      srcFilename.IsDir() && m->m_recursiveAdd);
       }
       else
       {
         // If the src file is just a file, then use ::wxCopyFile
         //  otherwise is wxDirTraverser to copy the whole directory
-        msg.Printf (_("Copying file into working directory: %s"), 
-                    PathToNative (srcPath).c_str ());
-        Trace (msg);
-        if (::wxDirExists (m->m_files [i]))
+        msg.Printf(_("Copying file into working directory: %s"),
+                   PathToNative(srcPath).c_str());
+        Trace(msg);
+        if (::wxDirExists(m->m_files [i]))
         {
-          msg.Printf (_("Adding directory to repository: %s"), 
-                      PathToNative (srcPath).c_str ());
-          wxDir dir (m->m_files [i]);
-          if (dir.IsOpened ())
+          msg.Printf(_("Adding directory to repository: %s"),
+                     PathToNative(srcPath).c_str());
+          wxDir dir(m->m_files [i]);
+          if (dir.IsOpened())
           {
-            DragAndDropImportTraverser dirTraverser (
-              m->m_files [i], PathToNative (destPath));
-            dir.Traverse (dirTraverser);
+            DragAndDropImportTraverser dirTraverser(
+              m->m_files [i], PathToNative(destPath));
+            dir.Traverse(dirTraverser);
           }
         }
         else
         {
-          wxString srcNative (PathToNative (srcPath));
-          msg.Printf (_("Adding file to repository: %s"), 
-                      srcNative.c_str ());
-          ::wxCopyFile (srcNative, 
-                        PathToNative (destPath));
+          wxString srcNative(PathToNative(srcPath));
+          msg.Printf(_("Adding file to repository: %s"),
+                     srcNative.c_str());
+          ::wxCopyFile(srcNative,
+                       PathToNative(destPath));
         }
-        Trace (msg);
-        client.add (destPath, m->m_recursiveAdd);
+        Trace(msg);
+        client.add(destPath, m->m_recursiveAdd);
       }
       break;
     case DragAndDropDialog::RESULT_CANCEL:
@@ -349,7 +349,7 @@ DragAndDropAction::Perform ()
 }
 
 bool
-DragAndDropAction::CheckStatusSel (const svn::StatusSel & statusSel)
+DragAndDropAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

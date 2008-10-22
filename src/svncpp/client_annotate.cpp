@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -35,45 +35,45 @@
 namespace svn
 {
   static svn_error_t *
-  annotateReceiver (void *baton,
-                    apr_int64_t line_no,
-                    svn_revnum_t revision,
-                    const char *author,
-                    const char *date,
-                    const char *line,
-                    apr_pool_t *pool)
+  annotateReceiver(void *baton,
+                   apr_int64_t line_no,
+                   svn_revnum_t revision,
+                   const char *author,
+                   const char *date,
+                   const char *line,
+                   apr_pool_t *pool)
   {
     AnnotatedFile * entries = (AnnotatedFile *) baton;
-    entries->push_back (
-      AnnotateLine (line_no, revision, 
-                    author?author:"unknown", 
-                    date?date:"unknown date", 
-                    line?line:"???"));
+    entries->push_back(
+      AnnotateLine(line_no, revision,
+                   author?author:"unknown",
+                   date?date:"unknown date",
+                   line?line:"???"));
 
     return NULL;
   }
 
   AnnotatedFile *
-  Client::annotate (const Path & path, 
-            const Revision & revisionStart, 
-            const Revision & revisionEnd) throw (ClientException)
+  Client::annotate(const Path & path,
+                   const Revision & revisionStart,
+                   const Revision & revisionEnd) throw(ClientException)
   {
     Pool pool;
     AnnotatedFile * entries = new AnnotatedFile;
     svn_error_t *error;
-    error = svn_client_blame (
-      path.c_str (),
-      revisionStart.revision (), 
-      revisionEnd.revision (), 
-      annotateReceiver,
-      entries, 
-      *m_context, // client ctx
-      pool);
+    error = svn_client_blame(
+              path.c_str(),
+              revisionStart.revision(),
+              revisionEnd.revision(),
+              annotateReceiver,
+              entries,
+              *m_context, // client ctx
+              pool);
 
     if (error != NULL)
     {
       delete entries;
-      throw ClientException (error);
+      throw ClientException(error);
     }
 
     return entries;

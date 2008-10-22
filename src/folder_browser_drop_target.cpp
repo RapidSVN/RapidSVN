@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -27,19 +27,19 @@
 #include "folder_browser.hpp"
 #include "folder_item_data.hpp"
 
-FolderBrowserDropTarget::FolderBrowserDropTarget (FolderBrowser * parent)
-  : m_parent (parent)
+FolderBrowserDropTarget::FolderBrowserDropTarget(FolderBrowser * parent)
+    : m_parent(parent)
 {
 }
 
 wxString
-FolderBrowserDropTarget::GetDestinationPath (const wxPoint & point)
+FolderBrowserDropTarget::GetDestinationPath(const wxPoint & point)
 {
   wxString path = wxEmptyString;
-  const FolderItemData * folderData = m_parent->HitTest (point);
+  const FolderItemData * folderData = m_parent->HitTest(point);
   if (folderData != NULL)
   {
-    path = folderData->getPath ();
+    path = folderData->getPath();
   }
 
   return path;

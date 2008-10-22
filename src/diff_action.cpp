@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -44,7 +44,7 @@
 #include "preferences.hpp"
 #include "utils.hpp"
 
-struct DiffAction::Data 
+struct DiffAction::Data
 {
 private:
   Action * action;
@@ -54,57 +54,57 @@ public:
   DiffData diffData;
   wxWindow * parent;
 
-  Data (Action * action_, wxWindow * parent_)
-    : action (action_), showDialog (true), parent (parent_)
+  Data(Action * action_, wxWindow * parent_)
+      : action(action_), showDialog(true), parent(parent_)
   {
   }
 
-  Data (Action * action_, wxWindow * parent_, DiffData & data)
-    : action (action_), showDialog (false), diffData (data), parent (parent_)
+  Data(Action * action_, wxWindow * parent_, DiffData & data)
+      : action(action_), showDialog(false), diffData(data), parent(parent_)
   {
   }
 
-  svn::Context * 
-  GetContext ()
+  svn::Context *
+  GetContext()
   {
-    return action->GetContext ();
+    return action->GetContext();
   }
 
   void
-  Trace (const wxString & msg)
+  Trace(const wxString & msg)
   {
-    action->Trace (msg);
+    action->Trace(msg);
   }
 
   /**
    * retrieves the revision information for a file
    */
   svn::Revision
-  getRevision (const svn::Path & path, const svn::Status & status) 
+  getRevision(const svn::Path & path, const svn::Status & status)
   {
-    svn::Entry entry (status.entry ());
-    return entry.revision ();
+    svn::Entry entry(status.entry());
+    return entry.revision();
   }
 
   /**
    * retrieves the effective path for the first file
    */
-  svn::Path 
-  getPath1 (const svn::Path & path)
+  svn::Path
+  getPath1(const svn::Path & path)
   {
     if (diffData.useUrl1)
-      return PathUtf8 (diffData.url1);
+      return PathUtf8(diffData.url1);
     return path;
   }
 
   /**
    * retrieves the effective path for the second file
    */
-  svn::Path 
-  getPath2 (const svn::Path & path)
+  svn::Path
+  getPath2(const svn::Path & path)
   {
     if (diffData.useUrl2)
-      return PathUtf8 (diffData.url2);
+      return PathUtf8(diffData.url2);
     else
       return path;
   }
@@ -124,8 +124,8 @@ public:
    *
    * 3. run the diff tool
    */
-  void 
-  diffTarget (const svn::Path & path)
+  void
+  diffTarget(const svn::Path & path)
   {
     svn::Path dstFile1, dstFile2;
 
@@ -133,25 +133,25 @@ public:
     {
     case DiffData::WITH_BASE:
       dstFile1 = path;
-      dstFile2 = action->GetPathAsTempFile (getPath1 (path), svn::Revision::BASE);
+      dstFile2 = action->GetPathAsTempFile(getPath1(path), svn::Revision::BASE);
 
       break;
 
     case DiffData::WITH_HEAD:
       dstFile1 = path;
-      dstFile2 = action->GetPathAsTempFile (getPath1 (path), svn::Revision::HEAD);
+      dstFile2 = action->GetPathAsTempFile(getPath1(path), svn::Revision::HEAD);
 
       break;
 
     case DiffData::WITH_DIFFERENT_REVISION:
       dstFile1 = path;
-      dstFile2 = action->GetPathAsTempFile (getPath1 (path), diffData.revision1);
+      dstFile2 = action->GetPathAsTempFile(getPath1(path), diffData.revision1);
 
       break;
 
     case DiffData::TWO_REVISIONS:
-      dstFile1 = action->GetPathAsTempFile (getPath1 (path), diffData.revision1);
-      dstFile2 = action->GetPathAsTempFile (getPath2 (path), diffData.revision2);
+      dstFile1 = action->GetPathAsTempFile(getPath1(path), diffData.revision1);
+      dstFile2 = action->GetPathAsTempFile(getPath2(path), diffData.revision2);
 
       break;
 
@@ -162,59 +162,59 @@ public:
 
     // prepare command line to execute
     Preferences prefs;
-    wxString args (prefs.diffToolArgs);
-    wxString dstFile1Native (Utf8ToLocal (dstFile1.native ().c_str ()));
-    wxString dstFile2Native (Utf8ToLocal (dstFile2.native ().c_str ()));
+    wxString args(prefs.diffToolArgs);
+    wxString dstFile1Native(Utf8ToLocal(dstFile1.native().c_str()));
+    wxString dstFile2Native(Utf8ToLocal(dstFile2.native().c_str()));
 
-    TrimString (args);
+    TrimString(args);
 
-    if (args.Length () == 0)
-      args.Printf (wxT("\"%s\" \"%s\""), dstFile1Native.c_str (), 
-                   dstFile2Native.c_str ());
+    if (args.Length() == 0)
+      args.Printf(wxT("\"%s\" \"%s\""), dstFile1Native.c_str(),
+                  dstFile2Native.c_str());
     else
     {
-      args.Replace (wxT("%1"), dstFile1Native.c_str (), true);
-      args.Replace (wxT("%2"), dstFile2Native.c_str (), true);
+      args.Replace(wxT("%1"), dstFile1Native.c_str(), true);
+      args.Replace(wxT("%2"), dstFile2Native.c_str(), true);
     }
 
-    wxString cmd (prefs.diffTool + wxT(" ") + args);
+    wxString cmd(prefs.diffTool + wxT(" ") + args);
 
     wxString msg;
-    msg.Printf (_("Execute diff tool: %s"), cmd.c_str ());
-    Trace (msg);
+    msg.Printf(_("Execute diff tool: %s"), cmd.c_str());
+    Trace(msg);
 
-    ActionEvent::Post (parent, TOKEN_CMD_DIFF, cmd);
+    ActionEvent::Post(parent, TOKEN_CMD_DIFF, cmd);
   }
 };
 
-DiffAction::DiffAction (wxWindow * parent)
-  : Action (parent, _("Diff"), DONT_UPDATE)
+DiffAction::DiffAction(wxWindow * parent)
+    : Action(parent, _("Diff"), DONT_UPDATE)
 {
-  m = new Data (this, parent);
+  m = new Data(this, parent);
 }
 
-DiffAction::DiffAction (wxWindow * parent, DiffData & data)
-  : Action (parent, _("Diff"), DONT_UPDATE)
+DiffAction::DiffAction(wxWindow * parent, DiffData & data)
+    : Action(parent, _("Diff"), DONT_UPDATE)
 {
-  m = new Data (this, parent, data);
+  m = new Data(this, parent, data);
 }
 
-DiffAction::~DiffAction ()
+DiffAction::~DiffAction()
 {
   delete m;
 }
 
 bool
-DiffAction::Prepare ()
+DiffAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
     return false;
 
   Preferences prefs;
 
-  if (prefs.diffTool.Length () == 0)
+  if (prefs.diffTool.Length() == 0)
   {
-    TraceError (_("No diff tool set in the preferences"));
+    TraceError(_("No diff tool set in the preferences"));
     return false;
   }
 
@@ -224,27 +224,27 @@ DiffAction::Prepare ()
     // determine whether we are on a local
     // or remote location
     svn::Path target;
-    if (m->diffData.path.IsEmpty ())
+    if (m->diffData.path.IsEmpty())
     {
-      target = GetTarget ();
+      target = GetTarget();
     }
     else
     {
-      target = PathUtf8 (m->diffData.path);
+      target = PathUtf8(m->diffData.path);
     }
-    bool isRemote = svn::Url::isValid (target.c_str ());
+    bool isRemote = svn::Url::isValid(target.c_str());
 
     // If there is more than one target, don't set the
     //  default URL
-    wxString defaultUrl (wxEmptyString);
-    if (GetTargets ().size () == 1)
-      defaultUrl = Utf8ToLocal (target.c_str ());
-    DiffDlg dlg (GetParent (), defaultUrl);
+    wxString defaultUrl(wxEmptyString);
+    if (GetTargets().size() == 1)
+      defaultUrl = Utf8ToLocal(target.c_str());
+    DiffDlg dlg(GetParent(), defaultUrl);
 
-    size_t count = GetTargets ().size ();
+    size_t count = GetTargets().size();
 
     if (count != 1)
-      dlg.EnableUrl (false);
+      dlg.EnableUrl(false);
 
     if (isRemote)
     {
@@ -253,42 +253,42 @@ DiffAction::Prepare ()
         DiffData::TWO_REVISIONS
       };
 
-      dlg.AllowCompareTypes (types, WXSIZEOF (types));
+      dlg.AllowCompareTypes(types, WXSIZEOF(types));
     }
 
-    if( dlg.ShowModal () != wxID_OK )
+    if (dlg.ShowModal() != wxID_OK)
       return false;
 
-    m->diffData = dlg.GetData ();
+    m->diffData = dlg.GetData();
   }
 
   return true;
 }
 
 bool
-DiffAction::Perform ()
+DiffAction::Perform()
 {
-  if (m->diffData.path.IsEmpty ())
+  if (m->diffData.path.IsEmpty())
   {
-    const std::vector<svn::Path> & v = GetTargets ();
+    const std::vector<svn::Path> & v = GetTargets();
     std::vector<svn::Path>::const_iterator it;
 
-    for (it=v.begin (); it != v.end (); it++)
+    for (it=v.begin(); it != v.end(); it++)
     {
-      m->diffTarget (*it);
+      m->diffTarget(*it);
     }
   }
   else
   {
-    svn::Path target = PathUtf8 (m->diffData.path);
-    m->diffTarget (target);
+    svn::Path target = PathUtf8(m->diffData.path);
+    m->diffTarget(target);
   }
- 
+
   return true;
 }
 
 bool
-DiffAction::CheckStatusSel (const svn::StatusSel & statusSel)
+DiffAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

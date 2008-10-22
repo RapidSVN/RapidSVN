@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -37,34 +37,34 @@
 #include "log_action.hpp"
 #include "log_data.hpp"
 
-LogAction::LogAction (wxWindow * parent)
-  : Action (parent, _("Log"), DONT_UPDATE)
+LogAction::LogAction(wxWindow * parent)
+    : Action(parent, _("Log"), DONT_UPDATE)
 {
 }
 
 bool
-LogAction::Perform ()
+LogAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  svn::Path target = GetTarget ();
-  const svn::LogEntries * entries = 
-    client.log (target.c_str (), svn::Revision::START,
-                svn::Revision::HEAD, true, false);
-  
-  LogData * data = new LogData (entries, target);
-  ActionEvent::Post (GetParent (), TOKEN_LOG, data);
-  
+  svn::Path target = GetTarget();
+  const svn::LogEntries * entries =
+    client.log(target.c_str(), svn::Revision::START,
+               svn::Revision::HEAD, true, false);
+
+  LogData * data = new LogData(entries, target);
+  ActionEvent::Post(GetParent(), TOKEN_LOG, data);
+
   return true;
 }
 
 bool
-LogAction::CheckStatusSel (const svn::StatusSel & statusSel)
+LogAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  if (1 != statusSel.size ())
+  if (1 != statusSel.size())
     return false;
 
-  if (statusSel.hasUnversioned ())
+  if (statusSel.hasUnversioned())
     return false;
 
   return true;

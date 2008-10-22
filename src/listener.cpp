@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -98,14 +98,14 @@ public:
   apr_uint32_t acceptedFailures;
 
 
-  Data (wxWindow * parent_)
-    : parent (parent_), tracer (NULL), ownTracer (false),
-      isCancelled (false), context (NULL), dataReceived (false)
+  Data(wxWindow * parent_)
+      : parent(parent_), tracer(NULL), ownTracer(false),
+      isCancelled(false), context(NULL), dataReceived(false)
   {
-    parentDoneSignal = new wxCondition (mutex);
+    parentDoneSignal = new wxCondition(mutex);
   }
 
-  virtual ~Data ()
+  virtual ~Data()
   {
     delete parentDoneSignal;
 
@@ -125,227 +125,227 @@ public:
    * can skip the shit and wait here
    */
   void
-  sendSignalAndWait (int id)
+  sendSignalAndWait(int id)
   {
-    wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, id);
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED, id);
 
-    if (::wxIsMainThread ())
+    if (::wxIsMainThread())
     {
       // single threaded environment or
       // already in the main thread
-      handleEvent (event);
+      handleEvent(event);
     }
     else
     {
-      wxPostEvent (parent, event);
-      parentDoneSignal->Wait ();    
+      wxPostEvent(parent, event);
+      parentDoneSignal->Wait();
     }
   }
 
-  
+
   /**
    * The callback functions will call this
    * function to signal they are done;
    * if we are already in the main thread
    * we do nothing.
    */
-  void signalDone ()
+  void signalDone()
   {
-    /** 
+    /**
      * @todo we have to see whether this works in Linux
-     * as well. Maybe we may call this only if 
+     * as well. Maybe we may call this only if
      * @ref sendSignalAndWait was called from a different
      * thread.
      */
-    parentDoneSignal->Broadcast ();
+    parentDoneSignal->Broadcast();
   }
 
 
   void
-  callbackSslClientCertPrompt ()
+  callbackSslClientCertPrompt()
   {
-    wxMutexLocker lock (mutex);
-    wxString localCertFile = wxFileSelector (
-      _("Select Certificate File"), wxT(""), wxT(""), wxT(""),
-      wxT("*.*"), wxOPEN | wxFILE_MUST_EXIST, parent);
-    LocalToUtf8 (localCertFile, certFile);
+    wxMutexLocker lock(mutex);
+    wxString localCertFile = wxFileSelector(
+                               _("Select Certificate File"), wxT(""), wxT(""), wxT(""),
+                               wxT("*.*"), wxOPEN | wxFILE_MUST_EXIST, parent);
+    LocalToUtf8(localCertFile, certFile);
 
-    dataReceived = !localCertFile.empty ();
+    dataReceived = !localCertFile.empty();
 
-    signalDone ();
+    signalDone();
   }
 
 
   void
-  callbackGetLogin ()
+  callbackGetLogin()
   {
-    wxMutexLocker lock (mutex);
+    wxMutexLocker lock(mutex);
 
     // TODO: show realm
-    wxString LocalUsername (Utf8ToLocal (username));
-    wxString LocalPassword (Utf8ToLocal (password));
-    AuthDlg dlg (parent, LocalUsername, LocalPassword);
+    wxString LocalUsername(Utf8ToLocal(username));
+    wxString LocalPassword(Utf8ToLocal(password));
+    AuthDlg dlg(parent, LocalUsername, LocalPassword);
 
-    bool ok = dlg.ShowModal () == wxID_OK;
+    bool ok = dlg.ShowModal() == wxID_OK;
     if (ok)
     {
-      LocalToUtf8 (dlg.GetUsername (), username);
-      LocalToUtf8 (dlg.GetPassword (), password);
+      LocalToUtf8(dlg.GetUsername(), username);
+      LocalToUtf8(dlg.GetPassword(), password);
       dataReceived = true;
     }
 
-    signalDone ();
+    signalDone();
   }
 
 
   void
-  callbackGetLogMessage ()
+  callbackGetLogMessage()
   {
-    wxMutexLocker lock (mutex);
-    CommitDlg dlg (parent, true);
+    wxMutexLocker lock(mutex);
+    CommitDlg dlg(parent, true);
 
-    bool ok = dlg.ShowModal () == wxID_OK;
+    bool ok = dlg.ShowModal() == wxID_OK;
 
     if (ok)
     {
-      LocalToUtf8 (dlg.GetMessage (), message);
+      LocalToUtf8(dlg.GetMessage(), message);
       dataReceived = true;
     }
 
-    signalDone ();
+    signalDone();
   }
 
 
   void
-  callbackSslServerTrustPrompt ()
+  callbackSslServerTrustPrompt()
   {
-    wxMutexLocker lock (mutex);
-    CertDlg dlg (parent, sslServerTrustData);
+    wxMutexLocker lock(mutex);
+    CertDlg dlg(parent, sslServerTrustData);
 
-    dlg.ShowModal ();
-    acceptedFailures = dlg.AcceptedFailures ();
+    dlg.ShowModal();
+    acceptedFailures = dlg.AcceptedFailures();
 
-    sslServerTrustAnswer = dlg.Answer ();
+    sslServerTrustAnswer = dlg.Answer();
     dataReceived = true;
 
-    signalDone ();
+    signalDone();
   }
 
 
   void
-  callbackSslClientCertPwPrompt ()
+  callbackSslClientCertPwPrompt()
   {
-    wxMutexLocker lock (mutex);
-    wxString LocalPassword(Utf8ToLocal (password));
-    AuthDlg dlg (parent, wxEmptyString, LocalPassword,
-                 AuthDlg::HIDE_USERNAME);
+    wxMutexLocker lock(mutex);
+    wxString LocalPassword(Utf8ToLocal(password));
+    AuthDlg dlg(parent, wxEmptyString, LocalPassword,
+                AuthDlg::HIDE_USERNAME);
 
-    dataReceived = dlg.ShowModal () == wxID_OK;
+    dataReceived = dlg.ShowModal() == wxID_OK;
 
     if (dataReceived)
-      LocalToUtf8 (dlg.GetPassword (), password);
+      LocalToUtf8(dlg.GetPassword(), password);
 
-    signalDone ();
+    signalDone();
   }
 
 
-  void 
-  handleEvent (wxCommandEvent & event)
+  void
+  handleEvent(wxCommandEvent & event)
   {
-    switch (event.GetId ())
+    switch (event.GetId())
     {
     case SIG_GET_LOG_MSG:
-      callbackGetLogMessage ();
+      callbackGetLogMessage();
       break;
 
     case SIG_GET_LOGIN:
-      callbackGetLogin ();
+      callbackGetLogin();
       break;
 
     case SIG_SSL_SERVER_TRUST_PROMPT:
-      callbackSslServerTrustPrompt ();
+      callbackSslServerTrustPrompt();
       break;
 
     case SIG_SSL_CLIENT_CERT_PROMPT:
-      callbackSslClientCertPrompt ();
+      callbackSslClientCertPrompt();
       break;
 
     case SIG_SSL_CLIENT_CERT_PW_PROMPT:
-      callbackSslClientCertPwPrompt ();
+      callbackSslClientCertPwPrompt();
       break;
 
     default:
-      // Oh well, no default reaction *sigh* 
+      // Oh well, no default reaction *sigh*
       ;
     }
   }
 
 };
 
-Listener::Listener (wxWindow * parent)
+Listener::Listener(wxWindow * parent)
 {
-  m = new Data (parent);
+  m = new Data(parent);
 }
 
-Listener::~Listener ()
+Listener::~Listener()
 {
   delete m;
 }
 
 void
-Listener::SetTracer (Tracer * t, bool own)
+Listener::SetTracer(Tracer * t, bool own)
 {
   m->tracer = t;
   m->ownTracer = own;
 }
 
 Tracer *
-Listener::GetTracer ()
+Listener::GetTracer()
 {
   return m->tracer;
 }
 
 wxWindow *
-Listener::GetParent ()
+Listener::GetParent()
 {
   return m->parent;
 }
 
 void
-Listener::Trace (const wxString & msg)
+Listener::Trace(const wxString & msg)
 {
   if (m->tracer)
   {
-    m->tracer->Trace (msg);
+    m->tracer->Trace(msg);
   }
 }
 
 void
-Listener::SetParent (wxWindow * parent)
+Listener::SetParent(wxWindow * parent)
 {
   m->parent = parent;
 }
 
 void
-Listener::SetContext (svn::Context * context)
+Listener::SetContext(svn::Context * context)
 {
   m->context = context;
 }
 
 svn::Context *
-Listener::GetContext ()
+Listener::GetContext()
 {
   return m->context;
 }
 
 void
-Listener::contextNotify (const char *path,
-                         svn_wc_notify_action_t action,
-                         svn_node_kind_t kind,
-                         const char *mime_type,
-                         svn_wc_notify_state_t content_state,
-                         svn_wc_notify_state_t prop_state,
-                         svn_revnum_t revision)
+Listener::contextNotify(const char *path,
+                        svn_wc_notify_action_t action,
+                        svn_node_kind_t kind,
+                        const char *mime_type,
+                        svn_wc_notify_state_t content_state,
+                        svn_wc_notify_state_t prop_state,
+                        svn_revnum_t revision)
 {
   static const wxChar *
   ACTION_NAMES [] =
@@ -382,31 +382,31 @@ Listener::contextNotify (const char *path,
   if (ACTION_NAMES[action] != NULL && action >= 0 && action <= MAX_ACTION)
   {
     static wxString msg;
-    msg.Printf (wxT("%s: %s"), ACTION_NAMES[action], Utf8ToLocal (path).c_str ());
+    msg.Printf(wxT("%s: %s"), ACTION_NAMES[action], Utf8ToLocal(path).c_str());
 
-    Trace (msg);
+    Trace(msg);
   }
 
 #ifdef USE_SIMPLE_WORKER
-  static apr_time_t last_access = apr_time_now ();
-  if (apr_time_now () - last_access > 2000000)
+  static apr_time_t last_access = apr_time_now();
+  if (apr_time_now() - last_access > 2000000)
   {
-    last_access = apr_time_now ();
-    wxSafeYield ();
+    last_access = apr_time_now();
+    wxSafeYield();
   }
 #endif
 }
 
 bool
-Listener::contextGetLogin (const std::string & realm,
-                           std::string & username,
-                           std::string & password,
-                           bool & maySave)
+Listener::contextGetLogin(const std::string & realm,
+                          std::string & username,
+                          std::string & password,
+                          bool & maySave)
 {
   m->username = username;
   m->password = password;
 
-  m->sendSignalAndWait (SIG_GET_LOGIN);
+  m->sendSignalAndWait(SIG_GET_LOGIN);
 
   // Parent has done its job and signalled. Performing main condition check.
   bool success = m->dataReceived;
@@ -422,11 +422,11 @@ Listener::contextGetLogin (const std::string & realm,
 }
 
 bool
-Listener::contextGetLogMessage (std::string & msg)
+Listener::contextGetLogMessage(std::string & msg)
 {
   m->message = msg;
 
-  m->sendSignalAndWait (SIG_GET_LOG_MSG);
+  m->sendSignalAndWait(SIG_GET_LOG_MSG);
 
   bool success = m->dataReceived;
   m->dataReceived = false;
@@ -440,12 +440,12 @@ Listener::contextGetLogMessage (std::string & msg)
 
 
 svn::ContextListener::SslServerTrustAnswer
-Listener::contextSslServerTrustPrompt (
+Listener::contextSslServerTrustPrompt(
   const svn::ContextListener::SslServerTrustData & data,
   apr_uint32_t & acceptedFailures)
 {
   m->sslServerTrustData = data;
-  m->sendSignalAndWait (SIG_SSL_SERVER_TRUST_PROMPT);
+  m->sendSignalAndWait(SIG_SSL_SERVER_TRUST_PROMPT);
   m->dataReceived = false;
 
   return m->sslServerTrustAnswer;
@@ -453,9 +453,9 @@ Listener::contextSslServerTrustPrompt (
 
 
 bool
-Listener::contextSslClientCertPrompt (std::string & certFile)
+Listener::contextSslClientCertPrompt(std::string & certFile)
 {
-  m->sendSignalAndWait (SIG_SSL_CLIENT_CERT_PROMPT);
+  m->sendSignalAndWait(SIG_SSL_CLIENT_CERT_PROMPT);
 
   bool success = m->dataReceived;
   m->dataReceived = false;
@@ -470,20 +470,20 @@ Listener::contextSslClientCertPrompt (std::string & certFile)
 
 
 bool
-Listener::contextSslClientCertPwPrompt (std::string & password,
-                                        const std::string & realm,
-                                        bool & maySave)
+Listener::contextSslClientCertPwPrompt(std::string & password,
+                                       const std::string & realm,
+                                       bool & maySave)
 {
   /// @todo @ref realm isnt used yet
   /// @todo @ref maySave isnt used yet
   m->password = password;
-  
-  m->sendSignalAndWait (SIG_SSL_CLIENT_CERT_PW_PROMPT);
+
+  m->sendSignalAndWait(SIG_SSL_CLIENT_CERT_PW_PROMPT);
 
   bool success = m->dataReceived;
   m->dataReceived = false;
 
-  if(!success)
+  if (!success)
     return false;
 
   password = m->password;
@@ -491,27 +491,27 @@ Listener::contextSslClientCertPwPrompt (std::string & password,
 }
 
 bool
-Listener::contextCancel ()
+Listener::contextCancel()
 {
   return m->isCancelled;
 }
 
 bool
-Listener::isCancelled () const
+Listener::isCancelled() const
 {
   return m->isCancelled;
 }
 
 void
-Listener::cancel (bool value)
+Listener::cancel(bool value)
 {
   m->isCancelled = value;
 }
 
 void
-Listener::handleEvent (wxCommandEvent & event)
+Listener::handleEvent(wxCommandEvent & event)
 {
-  m->handleEvent (event);
+  m->handleEvent(event);
 }
 
 /* -----------------------------------------------------------------

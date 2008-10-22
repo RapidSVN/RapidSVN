@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -45,22 +45,22 @@ namespace svn
   class StatusSel
   {
   public:
-    /** 
+    /**
      * default constructor
      */
-    StatusSel ();
-    
+    StatusSel();
+
     /**
      * Destructor
      */
-    virtual ~ StatusSel ();
+    virtual ~ StatusSel();
 
     /**
      * Copy Constructor
      *
      * @param src Source
      */
-    StatusSel (const StatusSel & src);
+    StatusSel(const StatusSel & src);
 
     /**
      * Assignment operator
@@ -75,15 +75,15 @@ namespace svn
      * @param pool Pool used for conversion
      */
     const apr_array_header_t *
-    array (const Pool & pool) const;
+    array(const Pool & pool) const;
 
     /**
      * Returns a vector of paths
      *
      * @return vector of paths
      */
-    const Targets & 
-    targets () const;
+    const Targets &
+    targets() const;
 
     /**
      * returns the first target in the list
@@ -92,32 +92,32 @@ namespace svn
      * @return the first @ref Path in the list
      */
     const Path &
-    target () const;
+    target() const;
 
     /**
      * @return the number of targets
      */
-    size_t size () const;
-    
+    size_t size() const;
+
     /**
-     * reserves @a size 
+     * reserves @a size
      */
     void
-    reserve (size_t size);
-    
+    reserve(size_t size);
+
     /**
-     * add and check the next entry 
+     * add and check the next entry
      *
      * @param status @ref Status to add
      */
     void
-    push_back (const Status & status);
-    
+    push_back(const Status & status);
+
     /**
      * cleans out all entries
      */
     void
-    clear ();
+    clear();
 
     /**
      * operator to return the vector
@@ -127,28 +127,28 @@ namespace svn
     operator const std::vector<Path> & () const;
 
     /** at least one target is a file */
-    bool 
-    hasFiles () const;
+    bool
+    hasFiles() const;
 
     /** at least one target is a directory */
-    bool 
-    hasDirs () const;
+    bool
+    hasDirs() const;
 
     /** at least one target is versioned */
-    bool 
-    hasVersioned () const;
+    bool
+    hasVersioned() const;
 
     /** at least one target is unversioned */
-    bool 
-    hasUnversioned () const;
+    bool
+    hasUnversioned() const;
 
     /** at least one target is a repository URL */
-    bool 
-    hasUrl () const;
+    bool
+    hasUrl() const;
 
     /** at least one target is a local file or dir */
-    bool 
-    hasLocal () const;
+    bool
+    hasLocal() const;
 
   private:
     struct Data;

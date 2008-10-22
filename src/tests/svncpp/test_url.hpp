@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -29,17 +29,17 @@
  */
 class UrlTestCase : public CppUnit::TestCase
 {
-  CPPUNIT_TEST_SUITE (UrlTestCase);
-  CPPUNIT_TEST (testIsValid);
-  CPPUNIT_TEST (testEscape);
-  CPPUNIT_TEST_SUITE_END ();
+  CPPUNIT_TEST_SUITE(UrlTestCase);
+  CPPUNIT_TEST(testIsValid);
+  CPPUNIT_TEST(testEscape);
+  CPPUNIT_TEST_SUITE_END();
 
 public:
-  void setUp ();
+  void setUp();
 
 protected:
-  void testIsValid ();
-  void testEscape ();
+  void testIsValid();
+  void testEscape();
 };
 
 /* -----------------------------------------------------------------

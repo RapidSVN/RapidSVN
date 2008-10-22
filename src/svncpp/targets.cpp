@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,83 +39,83 @@
 
 namespace svn
 {
-  Targets::Targets (const std::vector<Path> & targets)
+  Targets::Targets(const std::vector<Path> & targets)
   {
     m_targets = targets;
   }
-  
-  Targets::Targets (const apr_array_header_t * apr_targets)
+
+  Targets::Targets(const apr_array_header_t * apr_targets)
   {
     int i;
-    
-    m_targets.clear ();
-    m_targets.reserve (apr_targets->nelts);
-    
+
+    m_targets.clear();
+    m_targets.reserve(apr_targets->nelts);
+
     for (i = 0; i < apr_targets->nelts; i++)
     {
-      const char ** target = 
-        &APR_ARRAY_IDX (apr_targets, i, const char *);
-      
-      m_targets.push_back (Path (*target));
-    }
-  }
-  
-  Targets::Targets (const Targets & targets)
-  {
-    m_targets = targets.targets ();
-  }
-  
-  Targets::Targets (const char * target)
-  {
-    if (target != 0)
-    {
-      m_targets.push_back (target);
+      const char ** target =
+        &APR_ARRAY_IDX(apr_targets, i, const char *);
+
+      m_targets.push_back(Path(*target));
     }
   }
 
-  Targets::~Targets ()
+  Targets::Targets(const Targets & targets)
+  {
+    m_targets = targets.targets();
+  }
+
+  Targets::Targets(const char * target)
+  {
+    if (target != 0)
+    {
+      m_targets.push_back(target);
+    }
+  }
+
+  Targets::~Targets()
   {
   }
 
   const apr_array_header_t *
-  Targets::array (const Pool & pool) const
+  Targets::array(const Pool & pool) const
   {
     std::vector<Path>::const_iterator it;
-    
-    apr_pool_t *apr_pool = pool.pool ();
-    apr_array_header_t *apr_targets = 
-      apr_array_make (apr_pool,
-                      m_targets.size(),
-                      sizeof (const char *));
-    
-    for (it = m_targets.begin (); it != m_targets.end (); it++)
+
+    apr_pool_t *apr_pool = pool.pool();
+    apr_array_header_t *apr_targets =
+      apr_array_make(apr_pool,
+                     m_targets.size(),
+                     sizeof(const char *));
+
+    for (it = m_targets.begin(); it != m_targets.end(); it++)
     {
       const Path &path = *it;
       const char * target =
-        apr_pstrdup (apr_pool, path.c_str());
-      
-      (*((const char **) apr_array_push (apr_targets))) = target;
+        apr_pstrdup(apr_pool, path.c_str());
+
+      (*((const char **) apr_array_push(apr_targets))) = target;
     }
-    
+
     return apr_targets;
   }
-  
+
   const std::vector<Path> &
-  Targets::targets () const
+  Targets::targets() const
   {
     return m_targets;
   }
 
-  size_t 
-  Targets::size () const
+  size_t
+  Targets::size() const
   {
-    return m_targets.size ();
+    return m_targets.size();
   }
 
   const Path
-  Targets::target () const
+  Targets::target() const
   {
-    if (m_targets.size () > 0)
+    if (m_targets.size() > 0)
     {
       return m_targets[0];
     }
@@ -126,21 +126,21 @@ namespace svn
   }
 
   void
-  Targets::push_back (const Path & path)
+  Targets::push_back(const Path & path)
   {
-    m_targets.push_back (path);
+    m_targets.push_back(path);
   }
 
   void
-  Targets::clear ()
+  Targets::clear()
   {
-    m_targets.clear ();
+    m_targets.clear();
   }
 
   void
-  Targets::reserve (size_t size)
+  Targets::reserve(size_t size)
   {
-    m_targets.reserve (size);
+    m_targets.reserve(size);
   }
 }
 

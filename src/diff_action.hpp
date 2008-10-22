@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -42,7 +42,7 @@ public:
    *
    * @param parent parent window
    */
-  DiffAction (wxWindow * parent);
+  DiffAction(wxWindow * parent);
 
   /**
    * Constructor, that takes read configured @a DiffData,
@@ -51,19 +51,19 @@ public:
    * @param parent parent window
    * @param data diff data
    */
-  DiffAction (wxWindow * parent, DiffData & data);
+  DiffAction(wxWindow * parent, DiffData & data);
 
   /** Destructor */
-  virtual ~DiffAction ();
+  virtual ~DiffAction();
 
-  virtual bool 
-  Perform ();
-  
-  virtual bool 
-  Prepare ();
+  virtual bool
+  Perform();
+
+  virtual bool
+  Prepare();
 
   static bool
-  CheckStatusSel (const svn::StatusSel & statusSel);
+  CheckStatusSel(const svn::StatusSel & statusSel);
 
 private:
   struct Data;

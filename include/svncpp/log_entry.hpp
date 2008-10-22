@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -40,10 +40,10 @@ namespace svn
 
   struct LogChangePathEntry
   {
-    LogChangePathEntry (const char *path_,
-                        char action_,
-                        const char *copyFromPath_,
-                        const svn_revnum_t copyFromRevision_);
+    LogChangePathEntry(const char *path_,
+                       char action_,
+                       const char *copyFromPath_,
+                       const svn_revnum_t copyFromRevision_);
 
     std::string path;
     char action;
@@ -54,13 +54,13 @@ namespace svn
 
   struct LogEntry
   {
-  public:
-    LogEntry ();
+public:
+    LogEntry();
 
-    LogEntry (const svn_revnum_t revision,
-              const char * author,
-              const char * date,
-              const char * message);
+    LogEntry(const svn_revnum_t revision,
+             const char * author,
+             const char * date,
+             const char * message);
 
     svn_revnum_t revision;
     std::string author;

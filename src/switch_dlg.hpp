@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -44,25 +44,25 @@ public:
    * @param flags flags for the window (@a WITH_URL)
    * @param recursive default flag for the "recursive" check
    */
-  SwitchDlg (wxWindow* parent, const wxString & url,
-             bool recursive, bool relocate);
+  SwitchDlg(wxWindow* parent, const wxString & url,
+            bool recursive, bool relocate);
 
   /**
    * destructor
    */
-  virtual ~SwitchDlg ();
+  virtual ~SwitchDlg();
 
-  const wxString & 
-  GetUrl () const;
+  const wxString &
+  GetUrl() const;
 
   svn::Revision
-  GetRevision () const;
-  
-  bool 
-  GetRecursive () const;
+  GetRevision() const;
 
-  bool 
-  GetRelocate () const;
+  bool
+  GetRecursive() const;
+
+  bool
+  GetRelocate() const;
 
 private:
   struct Data;
@@ -72,7 +72,7 @@ private:
   OnUseLatest(wxCommandEvent &event);
 
   void
-  OnText (wxCommandEvent & event);
+  OnText(wxCommandEvent & event);
 
   DECLARE_EVENT_TABLE()
 };

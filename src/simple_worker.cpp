@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -51,24 +51,24 @@ public:
   /**
    * constructor
    */
-  Data (wxWindow * parent)
+  Data(wxWindow * parent)
   {
-    Init (parent);
+    Init(parent);
   }
 
   /**
    * destructor
    */
-  virtual ~Data ()
+  virtual ~Data()
   {
-    SetContext (0, false);
+    SetContext(0, false);
   }
 
   /**
    * initialize values
    */
   void
-  Init (wxWindow * parent)
+  Init(wxWindow * parent)
   {
     this->parent = parent;
     context = 0;
@@ -87,7 +87,7 @@ public:
    * @param own own new context
    */
   void
-  SetContext (svn::Context * ctx, bool own)
+  SetContext(svn::Context * ctx, bool own)
   {
     if (own && (ownContext != 0))
     {
@@ -100,45 +100,45 @@ public:
   }
 };
 
-SimpleWorker::SimpleWorker (wxWindow * parent)
+SimpleWorker::SimpleWorker(wxWindow * parent)
 {
-  m = new Data (parent);
+  m = new Data(parent);
 }
 
-SimpleWorker::~SimpleWorker ()
+SimpleWorker::~SimpleWorker()
 {
   delete m;
 }
 
 void
-SimpleWorker::Create (wxWindow * parent)
+SimpleWorker::Create(wxWindow * parent)
 {
-  m->Init (parent);
+  m->Init(parent);
 }
 
 ActionState
-SimpleWorker::GetState ()
+SimpleWorker::GetState()
 {
   return m->state;
 }
 
 ActionResult
-SimpleWorker::GetResult ()
+SimpleWorker::GetResult()
 {
   return m->result;
 }
 
 bool
-SimpleWorker::Perform (Action * action)
+SimpleWorker::Perform(Action * action)
 {
   // is there a context? we need one
   if (m->context == 0)
   {
-    SetContext (new svn::Context (), true);
+    SetContext(new svn::Context(), true);
   }
 
-  action->SetContext (m->context);
-  m->context->reset ();
+  action->SetContext(m->context);
+  m->context->reset();
 
   m->result = ACTION_NOTHING;
   m->action = action;
@@ -146,7 +146,7 @@ SimpleWorker::Perform (Action * action)
 
   try
   {
-    if (!m->action->Prepare ())
+    if (!m->action->Prepare())
     {
       m->result = ACTION_ABORTED;
       delete m->action;
@@ -157,25 +157,25 @@ SimpleWorker::Perform (Action * action)
   }
   catch (svn::ClientException & e)
   {
-    wxString msg, errtxt (Utf8ToLocal (e.message ()));
-    msg.Printf ( _("Error while preparing action: %s"), errtxt.c_str () );
-    TraceError (msg);
+    wxString msg, errtxt(Utf8ToLocal(e.message()));
+    msg.Printf(_("Error while preparing action: %s"), errtxt.c_str());
+    TraceError(msg);
     return false;
   }
   catch (...)
   {
-    TraceError (_("Error while preparing action."));
+    TraceError(_("Error while preparing action."));
     return false;
   }
 
-  ActionEvent event (m->parent, TOKEN_ACTION_START);
+  ActionEvent event(m->parent, TOKEN_ACTION_START);
 
   {
     wxString msg;
-    msg.Printf (_("Execute: %s"), action->GetName ().c_str ());
+    msg.Printf(_("Execute: %s"), action->GetName().c_str());
 
-    event.init (m->parent, TOKEN_ACTION_START, msg);
-    event.Post ();
+    event.init(m->parent, TOKEN_ACTION_START, msg);
+    event.Post();
   }
 
   unsigned int actionFlags = 0;
@@ -185,7 +185,7 @@ SimpleWorker::Perform (Action * action)
     // this cursor stuff has to change...
     wxBusyCursor wait;
     m->state = ACTION_RUNNING;
-    bool result = m->action->Perform ();
+    bool result = m->action->Perform();
     if (!result)
     {
       m->result = ACTION_ERROR;
@@ -194,7 +194,7 @@ SimpleWorker::Perform (Action * action)
     {
       m->result = ACTION_SUCCESS;
     }
-    actionFlags = m->action->GetFlags ();
+    actionFlags = m->action->GetFlags();
 
     delete m->action;
     m->action = 0;
@@ -202,54 +202,54 @@ SimpleWorker::Perform (Action * action)
   }
   catch (svn::ClientException & e)
   {
-    wxString msg, errtxt (Utf8ToLocal (e.message ()));
-    msg.Printf (_("Error while performing action: %s"),
-                errtxt.c_str ());
+    wxString msg, errtxt(Utf8ToLocal(e.message()));
+    msg.Printf(_("Error while performing action: %s"),
+               errtxt.c_str());
 
-    event.init (m->parent, TOKEN_SVN_INTERNAL_ERROR, msg);
-    event.Post ();
+    event.init(m->parent, TOKEN_SVN_INTERNAL_ERROR, msg);
+    event.Post();
 
     return false;
   }
   catch (...)
   {
-    wxString msg (_("Error while performing action."));
+    wxString msg(_("Error while performing action."));
 
-    event.init (m->parent, TOKEN_SVN_INTERNAL_ERROR, msg);
-    event.Post ();
+    event.init(m->parent, TOKEN_SVN_INTERNAL_ERROR, msg);
+    event.Post();
 
     return false;
   }
 
-  event.init (m->parent, TOKEN_ACTION_END, (void*) new unsigned int(actionFlags));
-  event.Post ();
+  event.init(m->parent, TOKEN_ACTION_END, (void*) new unsigned int(actionFlags));
+  event.Post();
 
   return true;
 }
 
 void
-SimpleWorker::SetTracer (Tracer * tracer)
+SimpleWorker::SetTracer(Tracer * tracer)
 {
   m->tracer = tracer;
 }
 
 void
-SimpleWorker::TraceError (const wxString & message)
+SimpleWorker::TraceError(const wxString & message)
 {
   if (m->tracer)
   {
-    m->tracer->TraceError (message);
+    m->tracer->TraceError(message);
   }
 }
 
 void
-SimpleWorker::SetContext (svn::Context * context, bool own)
+SimpleWorker::SetContext(svn::Context * context, bool own)
 {
-  m->SetContext (context, own);
+  m->SetContext(context, own);
 }
 
 svn::Context *
-SimpleWorker::GetContext () const
+SimpleWorker::GetContext() const
 {
   return m->context;
 }

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,38 +34,38 @@
 #include "get_action.hpp"
 #include "utils.hpp"
 
-GetAction::GetAction (wxWindow * parent, const GetData & data)
-  : Action (parent, _("Update")),
-    m_data (data)
+GetAction::GetAction(wxWindow * parent, const GetData & data)
+    : Action(parent, _("Update")),
+    m_data(data)
 {
 }
 
 bool
-GetAction::Prepare ()
+GetAction::Prepare()
 {
   return true;
 }
 
 bool
-GetAction::Perform ()
+GetAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
   wxString msg;
-  msg.Printf (wxT("Getting: %s, Revision %d"), m_data.path.c_str(), 
-              m_data.revision.revnum());
+  msg.Printf(wxT("Getting: %s, Revision %d"), m_data.path.c_str(),
+             m_data.revision.revnum());
   Trace(msg);
 
-  wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
-  client.update (svn::Path (LocalToUtf8 (m_data.path)),
-                 m_data.revision,
-                 true, false);
+  wxSetWorkingDirectory(Utf8ToLocal(GetPath().c_str()));
+  client.update(svn::Path(LocalToUtf8(m_data.path)),
+                m_data.revision,
+                true, false);
 
   return true;
 }
 
 bool
-GetAction::CheckStatusSel (const svn::StatusSel & statusSel)
+GetAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

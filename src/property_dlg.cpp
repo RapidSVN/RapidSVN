@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -42,30 +42,30 @@ struct PropertyDlg::Data
   svn::Property property;
 
 public:
-  Data (wxWindow * wnd, svn::Context * context, const char * target)
-    : window (wnd), property (context, target)
+  Data(wxWindow * wnd, svn::Context * context, const char * target)
+      : window(wnd), property(context, target)
   {
   }
 };
 
-PropertyDlg::PropertyDlg (wxWindow * parent,
-                          svn::Context * context,
-                          const svn::Path & target)
-  : ListEditorDlg (parent, _("Property Editor"))
+PropertyDlg::PropertyDlg(wxWindow * parent,
+                         svn::Context * context,
+                         const svn::Path & target)
+    : ListEditorDlg(parent, _("Property Editor"))
 {
-  const char * target_ = target.c_str ();
+  const char * target_ = target.c_str();
   // the property list is read-only when working
   // on a repository
   const bool readOnly = svn::Url::isValid(target_);
-  m = new Data (this, context, target_);
+  m = new Data(this, context, target_);
 
-  SetCaption (_("Properties:"));
-  SetAddTitle (_("New Property"));
-  SetEditTitle (_("Edit Property"));
-  SetReadOnly (readOnly);
+  SetCaption(_("Properties:"));
+  SetAddTitle(_("New Property"));
+  SetEditTitle(_("Edit Property"));
+  SetReadOnly(readOnly);
 }
 
-PropertyDlg::~PropertyDlg ()
+PropertyDlg::~PropertyDlg()
 {
   delete m;
 }
@@ -78,46 +78,46 @@ PropertyDlg::~PropertyDlg ()
  * @see WriteToGrid
  */
 void
-PropertyDlg::ReadFromGrid ()
+PropertyDlg::ReadFromGrid()
 {
   try
   {
     const std::vector<svn::PropertyEntry> & entries =
-      m->property.entries ();
-    std::vector<svn::PropertyEntry>::const_iterator it = entries.begin ();
+      m->property.entries();
+    std::vector<svn::PropertyEntry>::const_iterator it = entries.begin();
 
     // first check for deleted properties
-    while (it != entries.end ())
+    while (it != entries.end())
     {
       const svn::PropertyEntry & entry = *it;
-      const char * name = entry.name.c_str ();
-      bool found = FindEntry (Utf8ToLocal (name)) != -1;
+      const char * name = entry.name.c_str();
+      bool found = FindEntry(Utf8ToLocal(name)) != -1;
 
       if (!found)
-        m->property.remove (name);
+        m->property.remove(name);
 
       it++;
     }
 
     // now set the rest. this will add missing properties as well
     int index;
-    const int count = GetEntryCount ();
+    const int count = GetEntryCount();
 
-    for (index = 0; index < count; index++ )
+    for (index = 0; index < count; index++)
     {
       wxString name, value;
 
-      GetEntryAtIndex (index, name, value);
+      GetEntryAtIndex(index, name, value);
 
-      std::string nameUtf8 (LocalToUtf8 (name));
-      std::string valueUtf8 (LocalToUtf8 (value));
+      std::string nameUtf8(LocalToUtf8(name));
+      std::string valueUtf8(LocalToUtf8(value));
 
-      m->property.set (nameUtf8.c_str (), valueUtf8.c_str ());
+      m->property.set(nameUtf8.c_str(), valueUtf8.c_str());
     }
   }
   catch (...)
   {
-    wxMessageBox (_("Error setting the property values"), _("Error"));
+    wxMessageBox(_("Error setting the property values"), _("Error"));
   }
 }
 
@@ -129,20 +129,20 @@ PropertyDlg::ReadFromGrid ()
  * @see ReadFromGrid
  */
 void
-PropertyDlg::WriteToGrid ()
+PropertyDlg::WriteToGrid()
 {
   const std::vector<svn::PropertyEntry> &
-    entries = m->property.entries ();
+  entries = m->property.entries();
   std::vector<svn::PropertyEntry>::const_iterator
-    it = entries.begin ();
+  it = entries.begin();
 
-  DeleteAllEntries ();
-  while (it != entries.end ())
+  DeleteAllEntries();
+  while (it != entries.end())
   {
     const svn::PropertyEntry & entry = *it;
 
-    SetEntry (Utf8ToLocal (entry.name.c_str ()),
-      Utf8ToLocal (entry.value.c_str ()));
+    SetEntry(Utf8ToLocal(entry.name.c_str()),
+             Utf8ToLocal(entry.value.c_str()));
 
     it++;
   }

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -31,9 +31,9 @@ namespace svn
 {
   // forward declarations
   class Path;
-    
+
   /**
-   * C++ API for Subversion. 
+   * C++ API for Subversion.
    * This class wraps around @a svn_info_t.
    */
   class Info
@@ -41,7 +41,7 @@ namespace svn
   public:
     /**
      * default constructor. if @a src is set,
-     * copy its contents. 
+     * copy its contents.
      *
      * If @a src is not set (=0) this will be
      * a non-versioned entry. This can be checked
@@ -49,17 +49,17 @@ namespace svn
      *
      * @param src another entry to copy from
      */
-    Info (const Path & path, const svn_info_t * src = 0);
+    Info(const Path & path, const svn_info_t * src = 0);
 
     /**
      * copy constructor
      */
-    Info (const Info & src);
+    Info(const Info & src);
 
     /**
-     * destructor 
+     * destructor
      */
-    virtual ~Info ();
+    virtual ~Info();
 
     /**
      * assignment operator
@@ -69,54 +69,54 @@ namespace svn
 
     /**
      * returns whether this is a valid=versioned
-     * entry.    
+     * entry.
      *
      * @return is entry valid
      * @retval true valid entry
      * @retval false invalid or unversioned entry
      */
-    bool isValid () const;
+    bool isValid() const;
 
     /** @return entry's name */
-    const Path & 
-    path () const;
+    const Path &
+    path() const;
 
     /** @return base revision */
-    const svn_revnum_t 
-    revision () const;
+    const svn_revnum_t
+    revision() const;
 
     /** @return url in repository */
-    const char * 
-    url () const;
+    const char *
+    url() const;
 
     /** @return canonical repository url */
     const char *
-    repos () const;
+    repos() const;
 
     /** @return repository uuid */
     const char *
-    uuid () const;
+    uuid() const;
 
     /** @return node kind (file, dir, ...) */
     const svn_node_kind_t
-    kind () const;
-    
+    kind() const;
+
     svn_revnum_t
-    lastChangedRev () const;
-    
+    lastChangedRev() const;
+
     apr_time_t
-    lastChangedDate () const;
-    
+    lastChangedDate() const;
+
     const char *
-    lastChangedAuthoer () const;
-    
+    lastChangedAuthoer() const;
+
     /** @todo MORE ENTRIES FROM @ref svn_info_to IF NEEDED */
-    
+
   private:
     struct Data;
-      
+
     Data * m;
- };
+  };
 
 }
 

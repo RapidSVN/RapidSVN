@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -31,59 +31,59 @@
 // app
 #include "report_dlg.hpp"
 
-BEGIN_EVENT_TABLE (ReportDlg, wxDialog)
-EVT_BUTTON (-1, ReportDlg::OnButton)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(ReportDlg, wxDialog)
+  EVT_BUTTON(-1, ReportDlg::OnButton)
+END_EVENT_TABLE()
 
-ReportDlg::ReportDlg (wxWindow * parent,
-                      const wxString & caption,
-                      const wxString & data, int type)
-  : wxDialog (parent, -1, caption, wxDefaultPosition, wxDefaultSize,
-              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-    m_str (data)
+ReportDlg::ReportDlg(wxWindow * parent,
+                     const wxString & caption,
+                     const wxString & data, int type)
+    : wxDialog(parent, -1, caption, wxDefaultPosition, wxDefaultSize,
+               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
+    m_str(data)
 {
-  m_text = new wxTextCtrl (this, -1, wxEmptyString,
-                         wxDefaultPosition,
-                         wxSize (500, 200),
-                         wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH);
-  m_text->SetMaxLength (0);
+  m_text = new wxTextCtrl(this, -1, wxEmptyString,
+                          wxDefaultPosition,
+                          wxSize(500, 200),
+                          wxTE_MULTILINE | wxTE_READONLY | wxTE_RICH);
+  m_text->SetMaxLength(0);
 
   if (type == ERROR_REPORT)
   {
-    m_text->SetDefaultStyle (wxTextAttr (*wxRED));
+    m_text->SetDefaultStyle(wxTextAttr(*wxRED));
   }
-  m_text->WriteText (m_str);
+  m_text->WriteText(m_str);
 
-  m_button = new wxButton (this, wxID_OK, _("OK"));
+  m_button = new wxButton(this, wxID_OK, _("OK"));
 
-  wxBoxSizer * topsizer = new wxBoxSizer (wxVERTICAL);
+  wxBoxSizer * topsizer = new wxBoxSizer(wxVERTICAL);
 
-  topsizer->Add (m_text, 1,       // make vertically stretchable
-                 wxEXPAND |     // make horizontally stretchable
-                 wxALL,         // and make border all around
-                 5);            // set border width to 10
+  topsizer->Add(m_text, 1,        // make vertically stretchable
+                wxEXPAND |     // make horizontally stretchable
+                wxALL,         // and make border all around
+                5);            // set border width to 10
 
-  wxBoxSizer * button_sizer = new wxBoxSizer (wxHORIZONTAL);
+  wxBoxSizer * button_sizer = new wxBoxSizer(wxHORIZONTAL);
 
-  button_sizer->Add (m_button, 0, // make horizontally unstretchable
-                     wxALL,     // make border all around (implicit top alignment)
-                     5);        // set border width to 10
+  button_sizer->Add(m_button, 0,  // make horizontally unstretchable
+                    wxALL,     // make border all around (implicit top alignment)
+                    5);        // set border width to 10
 
-  topsizer->Add (button_sizer, 0,       // make vertically unstretchable
-                 wxALIGN_CENTER);       // no border and centre horizontally
+  topsizer->Add(button_sizer, 0,        // make vertically unstretchable
+                wxALIGN_CENTER);       // no border and centre horizontally
 
 
-  SetAutoLayout (TRUE);         // tell dialog to use sizer
-  SetSizer (topsizer);          // actually set the sizer
+  SetAutoLayout(TRUE);          // tell dialog to use sizer
+  SetSizer(topsizer);           // actually set the sizer
 
-  topsizer->Fit (this);         // set size to minimum size as calculated by the sizer
-  topsizer->SetSizeHints (this);        // set size hints to honour mininum size
+  topsizer->Fit(this);          // set size to minimum size as calculated by the sizer
+  topsizer->SetSizeHints(this);         // set size hints to honour mininum size
 }
 
 void
-ReportDlg::OnButton (wxCommandEvent & event)
+ReportDlg::OnButton(wxCommandEvent & event)
 {
-  event.Skip ();
+  event.Skip();
 }
 /* -----------------------------------------------------------------
  * local variables:

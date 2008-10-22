@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,7 +39,7 @@
 #include "utils.hpp"
 #include "view_action.hpp"
 
-struct ViewAction::Data 
+struct ViewAction::Data
 {
 private:
   Action * action;
@@ -49,90 +49,90 @@ public:
   GetData data;
   wxWindow * parent;
 
-  Data (Action * action_)
-    : action (action_)
+  Data(Action * action_)
+      : action(action_)
   {
   }
 
 
-  Data (Action * action_, GetData & data_)
-    : action (action_), data (data_)
+  Data(Action * action_, GetData & data_)
+      : action(action_), data(data_)
   {
   }
 };
 
-ViewAction::ViewAction (wxWindow * parent,
-                        const GetData & data)
-  : Action (parent, _("View"), DONT_UPDATE)
+ViewAction::ViewAction(wxWindow * parent,
+                       const GetData & data)
+    : Action(parent, _("View"), DONT_UPDATE)
 {
-  m = new Data (this);
+  m = new Data(this);
   m->parent = parent;
   m->data = data;
   m->edit = false;
 }
 
 
-ViewAction::ViewAction (wxWindow * parent)
-  : Action (parent, _("Edit"), UPDATE_LATER)
+ViewAction::ViewAction(wxWindow * parent)
+    : Action(parent, _("Edit"), UPDATE_LATER)
 {
-  m = new Data (this);
+  m = new Data(this);
   m->parent = parent;
   m->edit = true;
 }
 
 bool
-ViewAction::Prepare ()
+ViewAction::Prepare()
 {
   return true;
 }
 
 bool
-ViewAction::Perform ()
+ViewAction::Perform()
 {
   Preferences prefs;
 
-  if (prefs.editor.Length () == 0)
-    throw RapidSvnEx (
+  if (prefs.editor.Length() == 0)
+    throw RapidSvnEx(
       _("The Editor is not configured. Please check Edit->Preferences>Programs"));
 
   wxString path;
 
   if (m->edit)
-    path = Utf8ToLocal (GetTarget ().c_str ());
+    path = Utf8ToLocal(GetTarget().c_str());
   else
   {
-    svn::Path pathUtf8 (PathUtf8 (m->data.path));
-    path = Utf8ToLocal  (
-      GetPathAsTempFile(pathUtf8.c_str (),
-                        m->data.revision).c_str ());
+    svn::Path pathUtf8(PathUtf8(m->data.path));
+    path = Utf8ToLocal(
+             GetPathAsTempFile(pathUtf8.c_str(),
+                               m->data.revision).c_str());
   }
 
-  wxString args (prefs.editorArgs);
-  TrimString (args);
+  wxString args(prefs.editorArgs);
+  TrimString(args);
 
-  if (args.Length () == 0)
+  if (args.Length() == 0)
     args = wxT("\"") + path + wxT("\"");
   else
-    args.Replace (wxT("%1"), path, true);
+    args.Replace(wxT("%1"), path, true);
 
-  wxString cmd (prefs.editor + wxT(" ") + args);
+  wxString cmd(prefs.editor + wxT(" ") + args);
 
   wxString msg;
-  msg.Printf (_("Execute editor: %s"), cmd.c_str ());
-  Trace (msg);
+  msg.Printf(_("Execute editor: %s"), cmd.c_str());
+  Trace(msg);
 
-  ActionEvent::Post (m->parent, TOKEN_CMD_VIEW, cmd);
+  ActionEvent::Post(m->parent, TOKEN_CMD_VIEW, cmd);
 
   return true;
 }
 
 bool
-ViewAction::CheckStatusSel (const svn::StatusSel & statusSel)
+ViewAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  if (1 != statusSel.size ())
+  if (1 != statusSel.size())
     return false;
 
-  if (statusSel.hasDirs ())
+  if (statusSel.hasDirs())
     return false;
 
   return true;

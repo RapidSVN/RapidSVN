@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,20 +34,20 @@
 #include "move_action.hpp"
 #include "utils.hpp"
 
-MoveAction::MoveAction (wxWindow * parent, int kind)
- : Action (parent, wxEmptyString, UPDATE_TREE),
-   m_kind (kind)
+MoveAction::MoveAction(wxWindow * parent, int kind)
+    : Action(parent, wxEmptyString, UPDATE_TREE),
+    m_kind(kind)
 {
   if (kind == MOVE_MOVE)
-    SetName (_("Move"));
+    SetName(_("Move"));
   else
-    SetName (_("Copy"));
+    SetName(_("Copy"));
 }
 
 bool
-MoveAction::Prepare ()
+MoveAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
@@ -59,47 +59,47 @@ MoveAction::Prepare ()
     flags = DestinationDlg::WITH_FORCE;
 
   // create description for the dialog
-  DestinationDlg dlg (GetParent (), GetName (),
-                      _("Select destination:"), flags,
-                      wxEmptyString,
-                      HISTORY_COPYMOVE_DESTINATION);
+  DestinationDlg dlg(GetParent(), GetName(),
+                     _("Select destination:"), flags,
+                     wxEmptyString,
+                     HISTORY_COPYMOVE_DESTINATION);
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
     return false;
 
-  m_destination = dlg.GetDestination ();
-  m_force = dlg.GetForce ();
+  m_destination = dlg.GetDestination();
+  m_force = dlg.GetForce();
 
   return true;
 }
 
 bool
-MoveAction::Perform ()  
+MoveAction::Perform()
 {
-  svn::Client client (GetContext ());
-  svn::Path destPath (GetPath().path());
-  destPath.addComponent((PathUtf8 (m_destination)).c_str ());
+  svn::Client client(GetContext());
+  svn::Path destPath(GetPath().path());
+  destPath.addComponent((PathUtf8(m_destination)).c_str());
   svn::Revision unusedRevision;
-  std::vector<svn::Path> targets (GetTargets ().targets ());
+  std::vector<svn::Path> targets(GetTargets().targets());
   std::vector<svn::Path>::iterator it;
 
-  for (it = targets.begin (); it != targets.end (); it++)
+  for (it = targets.begin(); it != targets.end(); it++)
   {
-    svn::Path srcPath (*it);
+    svn::Path srcPath(*it);
 
-    if (srcPath == GetPath ())
+    if (srcPath == GetPath())
       srcPath = ".";
 
     if (m_kind == MOVE_MOVE)
-      client.move (srcPath, unusedRevision, destPath, m_force);
+      client.move(srcPath, unusedRevision, destPath, m_force);
     else
-      client.copy (srcPath, unusedRevision, destPath);
+      client.copy(srcPath, unusedRevision, destPath);
   }
   return true;
 }
 
 bool
-MoveAction::CheckStatusSel (const svn::StatusSel & statusSel)
+MoveAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

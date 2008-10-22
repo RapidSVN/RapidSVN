@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -41,19 +41,19 @@ namespace svn
     /**
      * Constructor.  Assigns the exception reason.
      */
-    Exception (const char * message) throw ();
+    Exception(const char * message) throw();
 
-    ~Exception () throw ();
+    ~Exception() throw();
 
     /**
      * @return the exception message.
      */
-    const char * message () const;
+    const char * message() const;
 
     /**
      * @return the outermost error code.
      */
-    const apr_status_t apr_err () const;
+    const apr_status_t apr_err() const;
 
   protected:
     struct Data;
@@ -61,10 +61,10 @@ namespace svn
 
   private:
 
-    Exception (const Exception &) throw ();
+    Exception(const Exception &) throw();
 
-    Exception () throw ();
-    
+    Exception() throw();
+
     Exception & operator = (const Exception &);
   };
 
@@ -77,29 +77,29 @@ namespace svn
     /**
      * Constructor.  Sets the error template and an optional message.
      */
-    ClientException (svn_error_t * error) throw ();
+    ClientException(svn_error_t * error) throw();
 
 
     /**
      * Constructor that takes only an apr errorcode
      */
-    ClientException (apr_status_t status) throw ();
+    ClientException(apr_status_t status) throw();
 
-    ClientException (const char * message) throw ()
-      : Exception (message)
+    ClientException(const char * message) throw()
+        : Exception(message)
     {
     }
-    
 
-    /** 
+
+    /**
      * Copy constructor
      */
-    ClientException (const ClientException & src) throw ();
+    ClientException(const ClientException & src) throw();
 
-    virtual ~ClientException () throw ();
+    virtual ~ClientException() throw();
 
   private:
-    ClientException () throw ();
+    ClientException() throw();
 
     ClientException & operator = (ClientException &);
   };

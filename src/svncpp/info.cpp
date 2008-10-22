@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,35 +34,35 @@ namespace svn
     svn_info_t * info;
     Path path;
     Pool pool;
-  
+
     /** constructor (because of optional param */
-    Data (const Path & path_, const svn_info_t * info_ = 0)
-      : info (0), path (path_)
+    Data(const Path & path_, const svn_info_t * info_ = 0)
+        : info(0), path(path_)
     {
       if (info_ != 0)
-        info = svn_info_dup (info_, pool);
+        info = svn_info_dup(info_, pool);
     }
-  
+
     /** copy constructor */
-    Data (const Data * src)
-      : info (0), path (src->path)
+    Data(const Data * src)
+        : info(0), path(src->path)
     {
       if (src->info != 0)
-        info = svn_info_dup (src->info, pool);
+        info = svn_info_dup(src->info, pool);
     }
   };
-    
-  Info::Info (const Path & path, const svn_info_t * info)
-    : m (new Data (path, info))
+
+  Info::Info(const Path & path, const svn_info_t * info)
+      : m(new Data(path, info))
   {
   }
 
-  Info::Info (const Info & src)
-    : m (new Data (src.m))
+  Info::Info(const Info & src)
+      : m(new Data(src.m))
   {
   }
 
-  Info::~Info ()
+  Info::~Info()
   {
     delete m;
   }
@@ -74,7 +74,7 @@ namespace svn
     if (this != &src)
     {
       delete m;
-      m = new Data (src.m);
+      m = new Data(src.m);
     }
 
     return *this;
@@ -82,7 +82,7 @@ namespace svn
 
   const svn_node_kind_t
   Info::
-  kind () const
+  kind() const
   {
     if (0 == m->info)
       return svn_node_none;
@@ -90,15 +90,15 @@ namespace svn
       return m->info->kind;
   }
 
-  bool 
-  Info::isValid () const
+  bool
+  Info::isValid() const
   {
     return m->info != 0;
   }
 
 
-  const char * 
-  Info::url () const
+  const char *
+  Info::url() const
   {
     if (0 == m->info)
       return 0;

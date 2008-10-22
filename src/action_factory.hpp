@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,13 +36,13 @@ namespace svn
 /**
  * this is a factory class that checks, whether
  * an @ref Action for a @a id is valid and next,
- * creates a new @ref Action instance (an inherited 
+ * creates a new @ref Action instance (an inherited
  * @ref Action of course, like @ref CheckoutAction
  */
 class ActionFactory
 {
 public:
-  /** 
+  /**
    * check whether the selection of @a statusSel can
    * be used for the action identified by @a id
    *
@@ -50,8 +50,8 @@ public:
    * @param targets
    * @retval true valid
    */
-  static bool 
-  CheckIdForStatusSel (int id, const svn::StatusSel & statusSel);
+  static bool
+  CheckIdForStatusSel(int id, const svn::StatusSel & statusSel);
 
 
   /**
@@ -63,7 +63,7 @@ public:
    * @param id the id of the action
    */
   static Action *
-  CreateAction (wxWindow * parent, int id);
+  CreateAction(wxWindow * parent, int id);
 };
 
 

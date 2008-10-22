@@ -19,25 +19,24 @@ TABLE OF CONTENTS
 Coding style
 ============
 
-To understand how things work, read doc/svn-design.{texi,info,ps,pdf},
-and read the header files, which tend to have thoroughly-commented
-data structures.
+To understand how things work, read the header and source files,
+which tend to have thoroughly-commented data structures.
 
    char *                                     // func type on own line
-   argblarg (char *arg1, int arg2)            // func name on own line, single
-                                              // space between function name 
+   argblarg(char *arg1, int arg2)             // func name on own line, no
+                                              // space between function name
                                               // and opening paren
-   {                                          // first brace on own line 
+   {                                          // first brace on own line
      if ((some_very_long_condition && arg2)   // indent 2 cols (no tabs!)
        || remaining_condition)                // new line before operator
-     {                                        // brace on own line 
-       arg1 = some_func (arg1, arg2);         // space before opening paren 
+     {                                        // brace on own line
+       arg1 = some_func(arg1, arg2);          // no space before opening paren
      }                                        // close brace on own line
      else
      {
        do                                     // format do-while like this
        {
-         arg1 = another_func (arg1);
+         arg1 = another_func(arg1);
        }
        while (*arg1);
      }
@@ -69,7 +68,7 @@ class Foo
 {
   int m_myMember;
 
-  Foo (int intitialFoo)
+  Foo(int intitialFoo)
   {
     int bar = initialFoo * 2;
 
@@ -82,8 +81,8 @@ class Foo
 Documenting
 ===================
 
-Every function and class, whether public or internal, must start 
-out with a documentation comment that describes what the function 
+Every function and class, whether public or internal, must start
+out with a documentation comment that describes what the function
 does. The comments are placed in the headers. Comments in the
 source files are only used for implementation details.
 
@@ -100,7 +99,7 @@ Example:
  * @return the multiplied number
  */
 int
-MultiplyMe (int number1, int number2);
+MultiplyMe(int number1, int number2);
 
 Read over the RapidSVN code to get an overview of how this
 documentation looks in practice.
@@ -141,11 +140,11 @@ Later on, when someone is trying to figure out what happened to
 `twirling_baton_fast', they may not find it if they just search for
 "_fast".  A better entry would be:
 
-   * twirl.cpp 
+   * twirl.cpp
      (twirling_baton_fast, twirling_baton_slow): Removed these
-     obsolete structures. 
+     obsolete structures.
      (handle_parser_warning): Pass data directly to callees, instead
-     of storing in twirling_baton_*. 
+     of storing in twirling_baton_*.
 
    * twirl.h: Fix indentation.
 
@@ -160,11 +159,11 @@ adhere to this format -- not only does consistency aid readability, it
 also allows software to colorize log entries automatically.
 
 If your change is related to a specific issue in the issue tracker,
-then include a string like "issue #N" in the log message.  For
+then include a string like "Issue N" in the log message.  For
 example, if a patch resolves issue 1729, then the log message might
 be:
 
-   Fix issue #1729:
+   Issue 1729: Program crashes if file doesnt exist
 
    * get_editor.cpp
      (frobnicate_file): Check that file exists first.
@@ -186,7 +185,7 @@ it right:
 
 And then, in `consume_count' in `cplus-dem.cpp':
 
-   while (isdigit ((unsigned char)**type))
+   while (isdigit((unsigned char)**type))
    {
      count *= 10;
      count += **type - '0';
@@ -242,19 +241,19 @@ In addition to the standards above, RapidSVN uses these conventions:
 
    *  Stay within 80 columns, the width of a minimal standard display
       window.
-   
-   *  If you add any files to the project that might be opened on more 
-      than one operating system then give the file the native eol-style 
-      property.  This ensures that all files downloaded via svn 
-      arrive with the line endings native to that OS.  Here is how you 
+
+   *  If you add any files to the project that might be opened on more
+      than one operating system then give the file the native eol-style
+      property.  This ensures that all files downloaded via svn
+      arrive with the line endings native to that OS.  Here is how you
       add the property:
       % svn propset eol-style native new_file.cpp
 
    *  If you add images to the project make sure you apply the correct
-      mime-type property. 
+      mime-type property.
       Example for a XPM:
       % svn propset svn:mime-type image/x-xpm
-     
+
 
 
 Maintainer's Corner
@@ -265,19 +264,19 @@ For the RapidSVN website we are producing two types of packages:
    *  Source tarball rapidsvn-???.tar.gz
 
    *  Windows Installer RapidSVN-???.exe
- 
+
 
 These are the steps to follow when creating a new release of RapidSVN:
 
 0. Before Release:
 
-   *  Check the translations (in src/locale). 
-   *  Make sure all the strings for all the translations are 
+   *  Check the translations (in src/locale).
+   *  Make sure all the strings for all the translations are
       up to date (contact translators)
 
 1. Release preparations:
 
-   *  Edit the version numbers in the file "version.xml" and run 
+   *  Edit the version numbers in the file "version.xml" and run
       the Python script check-version.py (from the directory "tools")
 
    *  Create the the change description in the "CHANGES" file
@@ -304,7 +303,7 @@ These are the steps to follow when creating a new release of RapidSVN:
    *  Extract the source tarball to a temporary directory, check if everything
       is there and call "configure", "make", "make install"
 
-   *  Run RapidSVN 
+   *  Run RapidSVN
 
    *  Send the tarball to xelarellum@tigris.org, so he can upload it
       to http://www.rapidsvn.org/download and create the necessary links in
@@ -315,7 +314,7 @@ These are the steps to follow when creating a new release of RapidSVN:
    *  Checkout a fresh working copy of RapidSVN (using
       http://rapidsvn.tigris.org/svn/rapidsvn/tags/XYZ) from the repository
       to make sure everything is built and no old stuff is lying around
-     
+
    *  Make sure you are using the latest stable release of
       Innosetup, Subversion, wxWidgets, Openssl, BerkeyleyDB. Build all these tools
       and libraries. Some minor changes in apr_config.h or apu_config.h may
@@ -341,18 +340,18 @@ These are the steps to follow when creating a new release of RapidSVN:
 
    *  Run RapidSVN
 
-   *  Send the installer executable to xelarellum@tigris.org, so he can 
-      upload it to http://www.rapidsvn.org/download and create 
-      the necessary links in the files/documents section of 
+   *  Send the installer executable to xelarellum@tigris.org, so he can
+      upload it to http://www.rapidsvn.org/download and create
+      the necessary links in the files/documents section of
       http://rapidsvn.tigris.org
 
 3. Create a news entry on http://rapidsvn.tigris.org and send announcement emails
    (with same text) to announce@rapidsvn.tigris.org, dev@rapidsvn.tigris.org,
-   users@rapidsvn.tigris.org including the MD5 checksums for both the 
+   users@rapidsvn.tigris.org including the MD5 checksums for both the
    source tarball and the win32 installer executable.
 
-4. Update and commit (with CVS) the webpage http://rapidsvn.tigris.org. 
-   This includes changes to the roadmap items, archival of older roadmap items, 
+4. Update and commit (with CVS) the webpage http://rapidsvn.tigris.org.
+   This includes changes to the roadmap items, archival of older roadmap items,
    updating of the svncpp doxygen documentation (you can use the output generated
    when building on Linux).
 

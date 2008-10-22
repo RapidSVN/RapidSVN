@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -47,17 +47,17 @@ public:
    *                        If false, the target is assumed to be a file, and
    *                        the verb should be explicit.
    */
-  ExternalProgramAction (wxWindow * parent, long verb_id, 
-    bool treat_as_folder);
+  ExternalProgramAction(wxWindow * parent, long verb_id,
+                        bool treat_as_folder);
 
-  virtual bool 
-  Perform ();
+  virtual bool
+  Perform();
 
-  virtual bool 
-  Prepare ();
+  virtual bool
+  Prepare();
 
   static bool
-  CheckStatusSel (const svn::StatusSel & statusSel);
+  CheckStatusSel(const svn::StatusSel & statusSel);
 
 private:
   long m_verb_id;
@@ -65,7 +65,7 @@ private:
   wxWindow * m_parent;
 };
 
-#endif 
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

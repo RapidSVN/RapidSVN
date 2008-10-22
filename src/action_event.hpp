@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,7 +39,7 @@ public:
    * @param parent parent window
    * @param event_id id of event
    */
-  ActionEvent (wxWindow * parent, int event_id);
+  ActionEvent(wxWindow * parent, int event_id);
 
   /**
    * constructor
@@ -48,7 +48,7 @@ public:
    * @param event_id id of event
    * @param msg message event has to pass
    */
-  ActionEvent (wxWindow * parent, int event_id, const wxString & msg);
+  ActionEvent(wxWindow * parent, int event_id, const wxString & msg);
 
   /**
    * constructor
@@ -57,21 +57,21 @@ public:
    * @param event_id id of event
    * @param data data event has to pass
    */
-  ActionEvent (wxWindow * parent, int event_id, void * data);
+  ActionEvent(wxWindow * parent, int event_id, void * data);
 
   /**
    * destructor
    */
-  virtual ~ActionEvent ();
+  virtual ~ActionEvent();
 
   void
-  init (wxWindow * parent, int event_id);
+  init(wxWindow * parent, int event_id);
 
   void
-  init (wxWindow * parent, int event_id, const wxString & msg);
+  init(wxWindow * parent, int event_id, const wxString & msg);
 
   void
-  init (wxWindow * parent, int event_id, void * data);
+  init(wxWindow * parent, int event_id, void * data);
 
 //   /**
 //    * set the event code to be passed
@@ -101,16 +101,16 @@ public:
    * post the event
    */
   void
-  Post () const;
+  Post() const;
 
-  static void 
-  Post (wxWindow * parent, int event_id);
+  static void
+  Post(wxWindow * parent, int event_id);
 
-  static void 
-  Post (wxWindow * parent, int event_id, const wxString & msg);
+  static void
+  Post(wxWindow * parent, int event_id, const wxString & msg);
 
-  static void 
-  Post (wxWindow * parent, int event_id, void * data);
+  static void
+  Post(wxWindow * parent, int event_id, void * data);
 
 private:
   struct Data;
@@ -119,16 +119,16 @@ private:
   /**
    * forbid default constructor
    */
-  ActionEvent ();
+  ActionEvent();
 
   /**
    * forbid default copy constructor
-   */ 
-  ActionEvent (const ActionEvent &);
+   */
+  ActionEvent(const ActionEvent &);
 
   /**
    * forbid default assignment operator
-   */ 
+   */
   ActionEvent operator = (const ActionEvent &);
 };
 

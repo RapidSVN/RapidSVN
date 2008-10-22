@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -23,7 +23,7 @@
  */
 
 #ifndef _SVNCPP_DIRENT_HPP_
-#define _SVNCPP_DIRENT_HPP_ 
+#define _SVNCPP_DIRENT_HPP_
 
 // subversion api
 #include "svn_client.h"
@@ -36,22 +36,22 @@ namespace svn
     /**
      * default constructor
      */
-    DirEntry ();
+    DirEntry();
 
     /**
      * constructor for existing @a svn_dirent_t entries
      */
-    DirEntry (const char * name, svn_dirent_t * dirEntry);
+    DirEntry(const char * name, svn_dirent_t * dirEntry);
 
     /**
      * copy constructor
      */
-    DirEntry (const DirEntry & src);
+    DirEntry(const DirEntry & src);
 
     /**
      * destructor
      */
-    ~DirEntry ();
+    ~DirEntry();
 
     /**
      * assignment operator
@@ -60,25 +60,25 @@ namespace svn
     operator = (const DirEntry &);
 
     const char *
-    name () const;
+    name() const;
 
-    svn_node_kind_t 
-    kind () const;
+    svn_node_kind_t
+    kind() const;
 
     svn_filesize_t
-    size () const;
+    size() const;
 
     bool
-    hasProps () const;
+    hasProps() const;
 
     svn_revnum_t
-    createdRev () const;
+    createdRev() const;
 
     apr_time_t
-    time () const;
+    time() const;
 
     const char *
-    lastAuthor () const;
+    lastAuthor() const;
 
   private:
     struct Data;

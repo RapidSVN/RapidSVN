@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -30,8 +30,8 @@
 struct UpdateData
 {
   UpdateData()
-    : revision (wxEmptyString), url (wxEmptyString), 
-      useLatest (true), recursive (true), ignoreExternals (false)
+      : revision(wxEmptyString), url(wxEmptyString),
+      useLatest(true), recursive(true), ignoreExternals(false)
   {
   }
 

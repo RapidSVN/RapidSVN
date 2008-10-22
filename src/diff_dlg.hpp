@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -48,19 +48,19 @@ public:
    *
    * @param parent parent window
    */
-  DiffDlg (wxWindow *parent, const wxString & selectedUrl);
+  DiffDlg(wxWindow *parent, const wxString & selectedUrl);
 
   /**
    * destructor
    */
-  virtual ~DiffDlg ();
+  virtual ~DiffDlg();
 
 
   /**
    * returns the data the user has entered
    */
   const DiffData
-  GetData () const;
+  GetData() const;
 
 
   /**
@@ -69,7 +69,7 @@ public:
    * @param value true=enabled; false=disabled
    */
   void
-  EnableUrl (bool value);
+  EnableUrl(bool value);
 
 
   /**
@@ -83,36 +83,36 @@ public:
    * @param count count of entries in @a types
    */
   void
-  AllowCompareTypes (const DiffData::CompareType types [],
-                     size_t count);
+  AllowCompareTypes(const DiffData::CompareType types [],
+                    size_t count);
 
   /**
    * Allow all compare-types
    */
   void
-  AllowCompareTypes ();
+  AllowCompareTypes();
 
-  virtual bool TransferDataFromWindow ();
+  virtual bool TransferDataFromWindow();
 
 protected:
   // Event handlers
-  virtual void OnComboCompare (wxCommandEvent& event);
-  virtual void OnRadioUseRevision1 (wxCommandEvent& event);
-  virtual void OnTextRevision1 (wxCommandEvent& event);
-  virtual void OnCheckUseLatest1 (wxCommandEvent& event);
-  virtual void OnRadioUseDate1 (wxCommandEvent& event);
-  virtual void OnDatePicker1( wxDateEvent& event );
-  virtual void OnUsePath1 (wxCommandEvent& event);
-  virtual void OnComboPath1 (wxCommandEvent& event);
-  virtual void OnRadioUseRevision2 (wxCommandEvent& event);
-  virtual void OnTextRevision2 (wxCommandEvent& event);
-  virtual void OnCheckUseLatest2 (wxCommandEvent& event);
-  virtual void OnRadioUseDate2 (wxCommandEvent& event);
-  virtual void OnDatePicker2 (wxDateEvent& event );
-  virtual void OnCheckUsePath2 (wxCommandEvent& event);
-  virtual void OnComboPath2 (wxCommandEvent& event);
-  virtual void OnButtonOK (wxCommandEvent& event);
-  
+  virtual void OnComboCompare(wxCommandEvent& event);
+  virtual void OnRadioUseRevision1(wxCommandEvent& event);
+  virtual void OnTextRevision1(wxCommandEvent& event);
+  virtual void OnCheckUseLatest1(wxCommandEvent& event);
+  virtual void OnRadioUseDate1(wxCommandEvent& event);
+  virtual void OnDatePicker1(wxDateEvent& event);
+  virtual void OnUsePath1(wxCommandEvent& event);
+  virtual void OnComboPath1(wxCommandEvent& event);
+  virtual void OnRadioUseRevision2(wxCommandEvent& event);
+  virtual void OnTextRevision2(wxCommandEvent& event);
+  virtual void OnCheckUseLatest2(wxCommandEvent& event);
+  virtual void OnRadioUseDate2(wxCommandEvent& event);
+  virtual void OnDatePicker2(wxDateEvent& event);
+  virtual void OnCheckUsePath2(wxCommandEvent& event);
+  virtual void OnComboPath2(wxCommandEvent& event);
+  virtual void OnButtonOK(wxCommandEvent& event);
+
 private:
   /** hide implementation details */
   struct Data;

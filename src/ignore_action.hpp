@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -44,14 +44,14 @@ public:
    *
    * @param parent parent window
    */
-  IgnoreAction (wxWindow * parent);
-  virtual ~IgnoreAction ();
+  IgnoreAction(wxWindow * parent);
+  virtual ~IgnoreAction();
 
-  virtual bool 
-  Perform ();
+  virtual bool
+  Perform();
 
   static bool
-  CheckStatusSel (const svn::StatusSel & statusSel);
+  CheckStatusSel(const svn::StatusSel & statusSel);
 
 private:
   struct Data;

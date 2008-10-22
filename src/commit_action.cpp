@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,69 +36,69 @@
 #include "ids.hpp"
 #include "utils.hpp"
 
-CommitAction::CommitAction (wxWindow * parent)
-  : Action (parent, _("Commit"), 0)
+CommitAction::CommitAction(wxWindow * parent)
+    : Action(parent, _("Commit"), 0)
 {
 }
 
 bool
-CommitAction::Prepare ()
+CommitAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  CommitDlg dlg(GetParent ());
+  CommitDlg dlg(GetParent());
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_recursive = dlg.GetRecursive ();
-  m_message = dlg.GetMessage ();
-  m_keepLocks = dlg.GetKeepLocks ();
+  m_recursive = dlg.GetRecursive();
+  m_message = dlg.GetMessage();
+  m_keepLocks = dlg.GetKeepLocks();
 
   return true;
 }
 
 bool
-CommitAction::Perform ()
+CommitAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  const svn::StatusSel & statusSel = GetStatusSel ();
+  const svn::StatusSel & statusSel = GetStatusSel();
 
-  std::string messageUtf8 (LocalToUtf8 (m_message));
+  std::string messageUtf8(LocalToUtf8(m_message));
 
   svn::Pool pool;
 
-  svn_revnum_t revision = 
-    client.commit (statusSel.targets (), messageUtf8.c_str (),
-                   m_recursive, m_keepLocks);
+  svn_revnum_t revision =
+    client.commit(statusSel.targets(), messageUtf8.c_str(),
+                  m_recursive, m_keepLocks);
 
   wxString str;
 
-  str = wxString::Format (wxT("%s %")
-                          wxT(SVN_REVNUM_T_FMT)
-                          wxT("."),
-                          _("Committed revision"), revision);
-  Trace (str);
+  str = wxString::Format(wxT("%s %")
+                         wxT(SVN_REVNUM_T_FMT)
+                         wxT("."),
+                         _("Committed revision"), revision);
+  Trace(str);
 
   return true;
 }
 
 bool
-CommitAction::CheckStatusSel (const svn::StatusSel & statusSel)
+CommitAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  if (0 == statusSel.size ())
+  if (0 == statusSel.size())
     return false;
 
-  if (statusSel.hasUnversioned ())
+  if (statusSel.hasUnversioned())
     return false;
 
-  if (statusSel.hasUrl ())
+  if (statusSel.hasUrl())
     return false;
 
   return true;

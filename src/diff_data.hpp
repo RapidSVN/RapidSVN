@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -57,13 +57,13 @@ public:
   svn::Revision revision2;
 
   /** Constructor */
-  DiffData (svn_opt_revision_kind kind = svn::Revision::BASE)
-   : compareType (WITH_BASE),
-     useUrl1 (false), url1 (wxEmptyString),
-     useUrl2 (false), url2 (wxEmptyString),
-     revision1 (kind)
+  DiffData(svn_opt_revision_kind kind = svn::Revision::BASE)
+      : compareType(WITH_BASE),
+      useUrl1(false), url1(wxEmptyString),
+      useUrl2(false), url2(wxEmptyString),
+      revision1(kind)
   {
-    if (kind != svn::Revision::BASE) 
+    if (kind != svn::Revision::BASE)
       compareType = WITH_DIFFERENT_REVISION;
   }
 };

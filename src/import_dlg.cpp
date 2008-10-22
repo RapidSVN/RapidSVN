@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -46,17 +46,17 @@ struct ImportDlg::Data
 public:
   ImportData data;
 
-  Data (wxWindow * window)
+  Data(wxWindow * window)
   {
     data.TreeType = true;
     data.FileType = !data.TreeType;
     data.Recursive = true;
 
-    InitControls (window);
+    InitControls(window);
   }
 
   void
-  InitControls (wxWindow * wnd)
+  InitControls(wxWindow * wnd)
   {
     wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -67,10 +67,10 @@ public:
     Grid->Add(new wxStaticText(wnd, -1, _("Repository URL")), 0,
               wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
 
-    HistoryValidator val (HISTORY_REPOSITORY, &data.Repository);
-    wxComboBox *repository = 
-      new wxComboBox (wnd, -1, wxEmptyString, wxDefaultPosition,
-                      wxSize (235, -1), 0, 0, wxCB_DROPDOWN, val);
+    HistoryValidator val(HISTORY_REPOSITORY, &data.Repository);
+    wxComboBox *repository =
+      new wxComboBox(wnd, -1, wxEmptyString, wxDefaultPosition,
+                     wxSize(235, -1), 0, 0, wxCB_DROPDOWN, val);
     Grid->Add(repository, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
 
     Grid->Add(new wxStaticText(wnd, -1, wxEmptyString), 0,
@@ -105,8 +105,8 @@ public:
     // Sundry items row:
     wxBoxSizer *SundrySizer = new wxBoxSizer(wxHORIZONTAL);
 
-    wxCheckBox* Recursive = new wxCheckBox (wnd, -1, _("Recursive"),
-                                            wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&data.Recursive));
+    wxCheckBox* Recursive = new wxCheckBox(wnd, -1, _("Recursive"),
+                                           wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&data.Recursive));
     SundrySizer->Add(Recursive, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
 
     SundrySizer->Add(new wxStaticText(wnd, -1, _("Path type:")), 0,
@@ -125,7 +125,7 @@ public:
 
     // Button row
     wxBoxSizer *ButtonSizer = new wxBoxSizer(wxHORIZONTAL);
-    ButtonSizer->Add(new wxButton(wnd, wxID_OK, _("OK" )), 0,
+    ButtonSizer->Add(new wxButton(wnd, wxID_OK, _("OK")), 0,
                      wxALL, 10);
     ButtonSizer->Add(new wxButton(wnd, wxID_CANCEL, _("Cancel")), 0,
                      wxALL, 10);
@@ -140,42 +140,42 @@ public:
   }
 };
 
-BEGIN_EVENT_TABLE (ImportDlg, wxDialog)
-  EVT_BUTTON (wxID_OK, ImportDlg::OnOk)
-  EVT_BUTTON (ID_BUTTON_BROWSE, ImportDlg::OnBrowse)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(ImportDlg, wxDialog)
+  EVT_BUTTON(wxID_OK, ImportDlg::OnOk)
+  EVT_BUTTON(ID_BUTTON_BROWSE, ImportDlg::OnBrowse)
+END_EVENT_TABLE()
 
-ImportDlg::ImportDlg (wxWindow * parent, const svn::Path & selectedUrl)
-  : wxDialog (parent, -1, _("Import"),
-              wxDefaultPosition,
-              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+ImportDlg::ImportDlg(wxWindow * parent, const svn::Path & selectedUrl)
+    : wxDialog(parent, -1, _("Import"),
+               wxDefaultPosition,
+               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data (this);
+  m = new Data(this);
   CentreOnParent();
 
-  if (selectedUrl.isUrl ())
-    m->data.Repository = Utf8ToLocal (selectedUrl.c_str ());
+  if (selectedUrl.isUrl())
+    m->data.Repository = Utf8ToLocal(selectedUrl.c_str());
 }
 
-ImportDlg::~ImportDlg ()
+ImportDlg::~ImportDlg()
 {
   delete m;
 }
 
 void
-ImportDlg::OnOk (wxCommandEvent &event)
+ImportDlg::OnOk(wxCommandEvent &event)
 {
   // Transfer data from controls into m_data:
   TransferDataFromWindow();
 
-  TrimString (m->data.Repository);
-  TrimString (m->data.Path);
-  m->data.LogMessage.Trim ();
+  TrimString(m->data.Repository);
+  TrimString(m->data.Path);
+  m->data.LogMessage.Trim();
 
-  if (m->data.Repository.IsEmpty ())
+  if (m->data.Repository.IsEmpty())
   {
-    wxMessageBox (_("Repository URL is required for import!"),
-                  _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+    wxMessageBox(_("Repository URL is required for import!"),
+                 _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
 
     // Do not allow the user to continue if the path is empty
     // and the import is addressing a file.
@@ -185,49 +185,49 @@ ImportDlg::OnOk (wxCommandEvent &event)
   if (m->data.FileType)
   {
 
-    if (m->data.Path.IsEmpty ())
+    if (m->data.Path.IsEmpty())
     {
-      wxMessageBox (_("File path required when importing a file!"),
-                    _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+      wxMessageBox(_("File path required when importing a file!"),
+                   _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
 
       // Do not allow the user to continue if the reposURL is empty.
       return;
     }
   }
 
-  wxDialog::EndModal (wxID_OK);
+  wxDialog::EndModal(wxID_OK);
 }
 
 void
-ImportDlg::OnBrowse (wxCommandEvent & WXUNUSED (event))
+ImportDlg::OnBrowse(wxCommandEvent & WXUNUSED(event))
 {
   // Transfer data from controls into m->data:
   TransferDataFromWindow();
 
   if (m->data.TreeType)
   {
-    wxDirDialog dialog (this,
-                        _("Select a directory to import"),
-                        m->data.Path);
+    wxDirDialog dialog(this,
+                       _("Select a directory to import"),
+                       m->data.Path);
 
-    if (dialog.ShowModal () == wxID_OK)
-      m->data.Path = dialog.GetPath ();
+    if (dialog.ShowModal() == wxID_OK)
+      m->data.Path = dialog.GetPath();
   }
   else                          // it's a file
   {
-    wxFileDialog dialog (this,
-                         _("Select a file to import"),
-                         m->data.Path);
+    wxFileDialog dialog(this,
+                        _("Select a file to import"),
+                        m->data.Path);
 
-    if (dialog.ShowModal () == wxID_OK)
-      m->data.Path = dialog.GetPath ();
+    if (dialog.ShowModal() == wxID_OK)
+      m->data.Path = dialog.GetPath();
   }
   // Transfer data from m->data back into controls:
   TransferDataToWindow();
 }
 
 ImportData &
-ImportDlg::GetData ()
+ImportDlg::GetData()
 {
   return m->data;
 }

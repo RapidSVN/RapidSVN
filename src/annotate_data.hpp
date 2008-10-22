@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,9 +39,9 @@ public:
   svn::Revision endRevision;
 
   /** Constructor */
-  AnnotateData ()
-    : startRevision (svn::Revision::START),
-      endRevision (svn::Revision::HEAD)
+  AnnotateData()
+      : startRevision(svn::Revision::START),
+      endRevision(svn::Revision::HEAD)
   {
   }
 };

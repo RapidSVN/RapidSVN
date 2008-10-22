@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -40,18 +40,18 @@ class wxTextCtrl;
 class ReportDlg:public wxDialog
 {
 public:
-   ReportDlg (wxWindow * parent,
-               const wxString & caption,
-               const wxString & data, int type = NORMAL_REPORT);
+  ReportDlg(wxWindow * parent,
+            const wxString & caption,
+            const wxString & data, int type = NORMAL_REPORT);
 
-  void OnButton (wxCommandEvent & event);
+  void OnButton(wxCommandEvent & event);
 
 private:
   wxButton *m_button;
   wxTextCtrl *m_text;
 
   const wxString & m_str;
- DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

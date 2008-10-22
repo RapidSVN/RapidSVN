@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,9 +34,9 @@
 
 namespace svn
 {
-  Url::Url () {}
+  Url::Url() {}
 
-  Url::~Url () {}
+  Url::~Url() {}
 
   /**
    * determines if a path is a url; escape unsupported characters
@@ -45,11 +45,11 @@ namespace svn
    * @param urlToValidate url to be validated
    */
   bool
-  Url::isValid (const char * urlToValidate)
+  Url::isValid(const char * urlToValidate)
   {
-    std::string escapedUrlToValidate = escape (urlToValidate);
+    std::string escapedUrlToValidate = escape(urlToValidate);
 
-    return svn_path_is_url (escapedUrlToValidate.c_str ()) != 0;
+    return svn_path_is_url(escapedUrlToValidate.c_str()) != 0;
   }
 
   /**
@@ -60,11 +60,11 @@ namespace svn
    * @return string escaped url
    */
   std::string
-  Url::escape (const char * url)
+  Url::escape(const char * url)
   {
     Pool pool;
 
-    return svn_path_uri_autoescape (url, pool);
+    return svn_path_uri_autoescape(url, pool);
   }
 
   /**
@@ -76,11 +76,11 @@ namespace svn
    * @return string unescaped url
    */
   std::string
-  Url::unescape (const char * url)
+  Url::unescape(const char * url)
   {
     Pool pool;
 
-    return svn_path_uri_decode (url, pool);
+    return svn_path_uri_decode(url, pool);
   }
 
   /**
@@ -89,7 +89,7 @@ namespace svn
    * we are lacking a higher level of abstraction
    */
   std::vector<std::string>
-  Url::supportedSchemas ()
+  Url::supportedSchemas()
   {
     std::vector<std::string> schemas;
 

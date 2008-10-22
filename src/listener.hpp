@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -55,82 +55,82 @@ public:
    *
    * @param parent parent window
    */
-  Listener (wxWindow * parent);
+  Listener(wxWindow * parent);
 
   /**
    * destructor
    */
-  virtual ~Listener ();
+  virtual ~Listener();
 
   /**
    * @return Tracer instance
    */
-  Tracer * GetTracer ();
+  Tracer * GetTracer();
 
   /**
    * Sets the tracer passed as an argument.
    * If own is TRUE, then the @a Listener class
    * is responsible for deleting the tracer.
    */
-  void SetTracer (Tracer * t, bool own);
+  void SetTracer(Tracer * t, bool own);
 
   /**
    * set actions parent window
    *
    * @param parent the parent that will receive events
    */
-  void SetParent (wxWindow * parent);
+  void SetParent(wxWindow * parent);
 
   /**
    * @return parent
    */
-  wxWindow * GetParent ();
+  wxWindow * GetParent();
 
   /**
    * sets the context
    *
    * @param context
    */
-  void SetContext (svn::Context * context);
+  void SetContext(svn::Context * context);
 
   /**
    * @return the context of the action
    */
   svn::Context *
-  GetContext ();
+  GetContext();
 
   /**
    * @see svn::ContextListener
    */
   virtual bool
-  contextGetLogin (const std::string & realm,
-                   std::string & username,
-                   std::string & password,
-                   bool & maySave);
+  contextGetLogin(const std::string & realm,
+                  std::string & username,
+                  std::string & password,
+                  bool & maySave);
 
   /**
    * @see svn::ContextListener
    */
   virtual void
-  contextNotify (const char *path,
-                 svn_wc_notify_action_t action,
-                 svn_node_kind_t kind,
-                 const char *mime_type,
-                 svn_wc_notify_state_t content_state,
-                 svn_wc_notify_state_t prop_state,
-                 svn_revnum_t revision);
+  contextNotify(const char *path,
+                svn_wc_notify_action_t action,
+                svn_node_kind_t kind,
+                const char *mime_type,
+                svn_wc_notify_state_t content_state,
+                svn_wc_notify_state_t prop_state,
+                svn_revnum_t revision);
 
   /**
    * @see svn::ContextListener
    */
   virtual bool
-  contextGetLogMessage (std::string & msg);
+  contextGetLogMessage(std::string & msg);
 
   /**
    * @see svn::ContextListener
    */
   virtual svn::ContextListener::SslServerTrustAnswer
-  contextSslServerTrustPrompt (
+  contextSslServerTrustPrompt(
     const svn::ContextListener::SslServerTrustData & data,
     apr_uint32_t & acceptedFailures);
 
@@ -138,21 +138,21 @@ public:
    * @see svn::ContextListener
    */
   virtual bool
-  contextSslClientCertPrompt (std::string & certFile);
+  contextSslClientCertPrompt(std::string & certFile);
 
   /**
    * @see svn::ContextListener
    */
   virtual bool
-  contextSslClientCertPwPrompt (std::string & password,
-                                const std::string & realm,
-                                bool & maySave);
+  contextSslClientCertPwPrompt(std::string & password,
+                               const std::string & realm,
+                               bool & maySave);
 
   /**
    * @see svn::ContextListener
    */
   virtual bool
-  contextCancel ();
+  contextCancel();
 
   /**
    * shall the ongoing operation be cancelled?
@@ -164,7 +164,7 @@ public:
    *  @li false dont cancel
    */
   void
-  cancel (bool value);
+  cancel(bool value);
 
   /**
    * @see cancel
@@ -173,7 +173,7 @@ public:
    * @retval false dont cancel
    */
   bool
-  isCancelled () const;
+  isCancelled() const;
 
   /**
    * handles @a event that is passed from the parent frame
@@ -182,11 +182,11 @@ public:
    * @param event forwarded event
    */
   void
-  handleEvent (wxCommandEvent & event);
+  handleEvent(wxCommandEvent & event);
 
 
 protected:
-  void Trace (const wxString & msg);
+  void Trace(const wxString & msg);
 
 private:
   // implementation specific data
@@ -196,12 +196,12 @@ private:
   /**
    * disable private default constructor
    */
-  Listener ();
+  Listener();
 
   /**
    * disable private copy constructor
    */
-  Listener (const Listener &);
+  Listener(const Listener &);
 };
 
 #endif

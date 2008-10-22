@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -35,68 +35,68 @@
 #include "update_dlg.hpp"
 #include "utils.hpp"
 
-UpdateAction::UpdateAction (wxWindow * parent)
-  : Action (parent, _("Update"))
+UpdateAction::UpdateAction(wxWindow * parent)
+    : Action(parent, _("Update"))
 {
 }
 
 bool
-UpdateAction::Prepare ()
+UpdateAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  UpdateDlg dlg (GetParent (), _("Update"));
+  UpdateDlg dlg(GetParent(), _("Update"));
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_data = dlg.GetData ();
+  m_data = dlg.GetData();
   return true;
 }
 
 bool
-UpdateAction::Perform ()
+UpdateAction::Perform()
 {
-  svn::Revision revision (svn::Revision::HEAD);
+  svn::Revision revision(svn::Revision::HEAD);
   // Did the user request a specific revision?:
   if (!m_data.useLatest)
   {
     TrimString(m_data.revision);
-    if (!m_data.revision.IsEmpty ())
+    if (!m_data.revision.IsEmpty())
     {
       svn_revnum_t revnum;
       m_data.revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
-      revision = svn::Revision (revnum);
+      revision = svn::Revision(revnum);
     }
   }
 
-  wxSetWorkingDirectory (Utf8ToLocal (GetPath ().c_str ()));
-  svn::Client client (GetContext ());
+  wxSetWorkingDirectory(Utf8ToLocal(GetPath().c_str()));
+  svn::Client client(GetContext());
 
-  client.update (GetTargets (), revision, m_data.recursive, 
-                 m_data.ignoreExternals);
+  client.update(GetTargets(), revision, m_data.recursive,
+                m_data.ignoreExternals);
 
   return true;
 }
 
 bool
-UpdateAction::CheckStatusSel (const svn::StatusSel & statusSel)
+UpdateAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   // no Update for repositories
-  if (statusSel.hasUrl ())
+  if (statusSel.hasUrl())
     return false;
 
   // we NEED statusSel
-  if (0 == statusSel.size ())
+  if (0 == statusSel.size())
     return false;
 
   // No unversioned files allowed
-  if (statusSel.hasUnversioned ())
+  if (statusSel.hasUnversioned())
     return false;
 
   return true;

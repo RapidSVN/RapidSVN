@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -31,14 +31,14 @@
 
 /**
  * Validator class, that supports a history,
- * e.g. for a combo control a list of previously 
+ * e.g. for a combo control a list of previously
  * entered values
  *
  * @see HistoryManager
  */
 class HistoryValidator: public wxValidator
 {
-DECLARE_CLASS(HistoryValidator)
+  DECLARE_CLASS(HistoryValidator)
 public:
   /**
    * @param settingName name of the setting in
@@ -49,41 +49,45 @@ public:
    *                    fill the control on initialization but
    *                    will not back-propagate the value
    */
-  HistoryValidator (const wxString & settingName, 
-                    wxString * value = 0,
-                    bool dontUpdate = false,
-                    bool useMostRecent = true);
+  HistoryValidator(const wxString & settingName,
+                   wxString * value = 0,
+                   bool dontUpdate = false,
+                   bool useMostRecent = true);
 
 
   /** create a clone of the instane */
   virtual wxObject *
-  Clone() const { return new HistoryValidator (*this); }
+  Clone() const {
+    return new HistoryValidator(*this);
+  }
 
 
   /** create a copy of @a val */
-  bool 
+  bool
   Copy(const HistoryValidator & val);
 
 
   /* Called when the value in the window must be validated.
    * This function can pop up an error message.
    */
-  virtual bool 
-  Validate(wxWindow * ) { return TRUE; }
+  virtual bool
+  Validate(wxWindow *) {
+    return TRUE;
+  }
 
 
   /** Called to transfer data to the window */
-  virtual bool 
+  virtual bool
   TransferToWindow();
 
 
   /** Called to transfer data to the window */
-  virtual bool 
+  virtual bool
   TransferFromWindow();
 
 
   /** copy consturctor */
-  HistoryValidator (const HistoryValidator & src);
+  HistoryValidator(const HistoryValidator & src);
 
 private:
   /** name of the setting to use for this validator */
@@ -100,7 +104,7 @@ private:
   bool m_useMostRecent;
 
 
-  
+
   /** disallow assignment operator */
   HistoryValidator & operator = (const HistoryValidator &);
 };

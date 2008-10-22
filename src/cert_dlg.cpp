@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,10 +36,10 @@ enum
 };
 
 
-BEGIN_EVENT_TABLE (CertDlg, wxDialog)
-  EVT_BUTTON (ID_PERM, CertDlg::OnPerm)
-  EVT_BUTTON (ID_TEMP, CertDlg::OnTemp)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(CertDlg, wxDialog)
+  EVT_BUTTON(ID_PERM, CertDlg::OnPerm)
+  EVT_BUTTON(ID_TEMP, CertDlg::OnTemp)
+END_EVENT_TABLE()
 
 
 typedef struct
@@ -55,18 +55,18 @@ public:
   svn::ContextListener::SslServerTrustAnswer answer;
   wxUint32 acceptedFailures;
 
-  Data (wxUint32 acceptedFailures_)
-    : answer (svn::ContextListener::DONT_ACCEPT), acceptedFailures (acceptedFailures_)
+  Data(wxUint32 acceptedFailures_)
+      : answer(svn::ContextListener::DONT_ACCEPT), acceptedFailures(acceptedFailures_)
   {
   }
 };
 
-CertDlg::CertDlg (wxWindow * parent,
-                  const svn::ContextListener::SslServerTrustData & trustData)
-  : wxDialog (parent, -1, _("SSL Certificate"), wxDefaultPosition),
-    m (new Data (trustData.failures))
+CertDlg::CertDlg(wxWindow * parent,
+                 const svn::ContextListener::SslServerTrustData & trustData)
+    : wxDialog(parent, -1, _("SSL Certificate"), wxDefaultPosition),
+    m(new Data(trustData.failures))
 {
-  wxStaticText * labelTitle = new wxStaticText (
+  wxStaticText * labelTitle = new wxStaticText(
     this, -1, _("There were errors validating the server certificate.\nDo you want to trust this certificate?"));
 
   wxString failureStr;
@@ -80,7 +80,7 @@ CertDlg::CertDlg (wxWindow * parent,
     {SVN_AUTH_SSL_OTHER       , _("- The certificate has an unknown error.")}
   };
 
-  const int count = sizeof (CERT_FAILURES)/sizeof (CERT_FAILURES[0]);
+  const int count = sizeof(CERT_FAILURES)/sizeof(CERT_FAILURES[0]);
   for (int i=0; i < count; i++)
   {
     if ((CERT_FAILURES[i].failure & trustData.failures) != 0)
@@ -90,60 +90,60 @@ CertDlg::CertDlg (wxWindow * parent,
     }
   }
 
-  wxStaticText * labelFailure = new wxStaticText (
+  wxStaticText * labelFailure = new wxStaticText(
     this, -1, failureStr);
 
-  wxString failBoxLabel, tmp (Utf8ToLocal (trustData.realm));
-  failBoxLabel.Printf (_("Error validating server certificate for '%s':"),
-                       tmp.c_str ());
-  wxStaticBox * failBox = new wxStaticBox (
+  wxString failBoxLabel, tmp(Utf8ToLocal(trustData.realm));
+  failBoxLabel.Printf(_("Error validating server certificate for '%s':"),
+                      tmp.c_str());
+  wxStaticBox * failBox = new wxStaticBox(
     this, -1, failBoxLabel);
   wxStaticBoxSizer * failBoxSizer =
-    new wxStaticBoxSizer (failBox, wxVERTICAL);
-  failBoxSizer->Add (labelFailure, 0, wxALL, 10);
+    new wxStaticBoxSizer(failBox, wxVERTICAL);
+  failBoxSizer->Add(labelFailure, 0, wxALL, 10);
 
-  wxFlexGridSizer * certSizer = new wxFlexGridSizer (2, 10, 10);
-  certSizer->Add (new wxStaticText (
-    this, -1, _("Hostname:")));
-  certSizer->Add (new wxStaticText (
-    this, -1, Utf8ToLocal (trustData.hostname.c_str ())));
-  certSizer->Add (new wxStaticText (
-    this, -1, _("Issue:")));
-  certSizer->Add (new wxStaticText (
-    this, -1, Utf8ToLocal (trustData.issuerDName.c_str ())));
-  certSizer->Add (new wxStaticText (
-    this, -1, _("Valid from:")));
-  certSizer->Add (new wxStaticText (
-    this, -1, Utf8ToLocal (trustData.validFrom.c_str ())));
-  certSizer->Add (new wxStaticText (
-    this, -1, _("Valid until:")));
-  certSizer->Add (new wxStaticText (
-    this, -1, Utf8ToLocal (trustData.validUntil.c_str ())));
-  certSizer->Add (new wxStaticText (
-    this, -1, _("Fingerprint:")));
-  certSizer->Add (new wxStaticText (
-    this, -1, Utf8ToLocal (trustData.fingerprint.c_str ())));
+  wxFlexGridSizer * certSizer = new wxFlexGridSizer(2, 10, 10);
+  certSizer->Add(new wxStaticText(
+                   this, -1, _("Hostname:")));
+  certSizer->Add(new wxStaticText(
+                   this, -1, Utf8ToLocal(trustData.hostname.c_str())));
+  certSizer->Add(new wxStaticText(
+                   this, -1, _("Issue:")));
+  certSizer->Add(new wxStaticText(
+                   this, -1, Utf8ToLocal(trustData.issuerDName.c_str())));
+  certSizer->Add(new wxStaticText(
+                   this, -1, _("Valid from:")));
+  certSizer->Add(new wxStaticText(
+                   this, -1, Utf8ToLocal(trustData.validFrom.c_str())));
+  certSizer->Add(new wxStaticText(
+                   this, -1, _("Valid until:")));
+  certSizer->Add(new wxStaticText(
+                   this, -1, Utf8ToLocal(trustData.validUntil.c_str())));
+  certSizer->Add(new wxStaticText(
+                   this, -1, _("Fingerprint:")));
+  certSizer->Add(new wxStaticText(
+                   this, -1, Utf8ToLocal(trustData.fingerprint.c_str())));
 
-  wxStaticBox * certBox = new wxStaticBox (
+  wxStaticBox * certBox = new wxStaticBox(
     this, -1, _("Certificate Information:"));
   wxStaticBoxSizer * certBoxSizer =
-    new wxStaticBoxSizer (certBox, wxVERTICAL);
-  certBoxSizer->Add (certSizer);
+    new wxStaticBoxSizer(certBox, wxVERTICAL);
+  certBoxSizer->Add(certSizer);
 
-  wxBoxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
-  buttonSizer->Add (new wxButton (this, ID_PERM, _("&Permanently")),
-                    0, wxALL, 5);
-  buttonSizer->Add (new wxButton (this, ID_TEMP, _("&Temporarily")),
-                    0, wxALL, 5);
-  buttonSizer->Add (new wxButton (this, wxID_CANCEL, _("Cancel")),
-                    0, wxALL, 5);
+  wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+  buttonSizer->Add(new wxButton(this, ID_PERM, _("&Permanently")),
+                   0, wxALL, 5);
+  buttonSizer->Add(new wxButton(this, ID_TEMP, _("&Temporarily")),
+                   0, wxALL, 5);
+  buttonSizer->Add(new wxButton(this, wxID_CANCEL, _("Cancel")),
+                   0, wxALL, 5);
 
-  wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-  mainSizer->Add (labelTitle, 0, wxALL, 5);
-  mainSizer->Add (failBoxSizer, 0, wxALL | wxEXPAND, 5);
-  mainSizer->Add (certBoxSizer, 0, wxALL | wxEXPAND, 5);
-  mainSizer->Add (buttonSizer, 0,
-                  wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
+  wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
+  mainSizer->Add(labelTitle, 0, wxALL, 5);
+  mainSizer->Add(failBoxSizer, 0, wxALL | wxEXPAND, 5);
+  mainSizer->Add(certBoxSizer, 0, wxALL | wxEXPAND, 5);
+  mainSizer->Add(buttonSizer, 0,
+                 wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
   SetAutoLayout(true);
   SetSizer(mainSizer);
@@ -151,41 +151,41 @@ CertDlg::CertDlg (wxWindow * parent,
   mainSizer->SetSizeHints(this);
   mainSizer->Fit(this);
 
-  CentreOnParent ();
+  CentreOnParent();
 }
 
 
-CertDlg::~CertDlg ()
+CertDlg::~CertDlg()
 {
   delete m;
 }
 
 
 void
-CertDlg::OnPerm (wxCommandEvent & event)
+CertDlg::OnPerm(wxCommandEvent & event)
 {
   m->answer = svn::ContextListener::ACCEPT_PERMANENTLY;
-  Close (true);
+  Close(true);
 }
 
 
 void
-CertDlg::OnTemp (wxCommandEvent & event)
+CertDlg::OnTemp(wxCommandEvent & event)
 {
   m->answer = svn::ContextListener::ACCEPT_TEMPORARILY;
-  Close (true);
+  Close(true);
 }
 
 
 svn::ContextListener::SslServerTrustAnswer
-CertDlg::Answer () const
+CertDlg::Answer() const
 {
   return m->answer;
 }
 
 
 wxUint32
-CertDlg::AcceptedFailures () const
+CertDlg::AcceptedFailures() const
 {
   return m->acceptedFailures;
 }

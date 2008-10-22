@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -31,29 +31,29 @@
 
 namespace svn
 {
-  Client::Client (Context * context)
+  Client::Client(Context * context)
   {
-    setContext (context);
+    setContext(context);
   }
 
-  Client::~Client ()
+  Client::~Client()
   {
   }
 
   const Context *
-  Client::getContext () const
+  Client::getContext() const
   {
     return m_context;
   }
 
   Context *
-  Client::getContext ()
+  Client::getContext()
   {
     return m_context;
   }
 
   void
-  Client::setContext (Context * context)
+  Client::setContext(Context * context)
   {
     m_context = context;
   }

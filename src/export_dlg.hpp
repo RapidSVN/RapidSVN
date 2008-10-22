@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -49,18 +49,18 @@ public:
    * @param parent window
    * @param selectedUrl Use this value to pre-fill the URL
    */
-  ExportDlg (wxWindow *parent, const svn::Path & selectedUrl);
+  ExportDlg(wxWindow *parent, const svn::Path & selectedUrl);
 
   /**
    * Destructor
    */
-  virtual ~ExportDlg ();
+  virtual ~ExportDlg();
 
   /**
    * return the reference to @a ExportData
    */
   const ExportData &
-  GetData () const;
+  GetData() const;
 
 private:
   /** hide implementation details */
@@ -68,27 +68,27 @@ private:
   Data *m;
 
   void
-  OnBrowse (wxCommandEvent & event);
+  OnBrowse(wxCommandEvent & event);
 
   void
-  OnText (wxCommandEvent & event);
+  OnText(wxCommandEvent & event);
 
   void
-  OnHelp (wxCommandEvent & event);
+  OnHelp(wxCommandEvent & event);
 
   void
-  OnUseLatest (wxCommandEvent & event);
+  OnUseLatest(wxCommandEvent & event);
 
   void
-  OnNotSpecified (wxCommandEvent & event);
+  OnNotSpecified(wxCommandEvent & event);
 
   void
-  OnNativeEol (wxCommandEvent & event);
+  OnNativeEol(wxCommandEvent & event);
 
   void
-  InitDialog ();
+  InitDialog();
 
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

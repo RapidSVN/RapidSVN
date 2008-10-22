@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,57 +36,57 @@
 #include "ids.hpp"
 #include "utils.hpp"
 
-ExportAction::ExportAction (wxWindow * parent)
-  :Action (parent, _("Export"), DONT_UPDATE)
+ExportAction::ExportAction(wxWindow * parent)
+    :Action(parent, _("Export"), DONT_UPDATE)
 {
 }
 
 bool
-ExportAction::Prepare ()
+ExportAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  const std::vector<svn::Path> & v = GetTargets ();
+  const std::vector<svn::Path> & v = GetTargets();
 
-  svn::Path selectedPath ("");
+  svn::Path selectedPath("");
 
-  if (v.size () == 1)
+  if (v.size() == 1)
   {
     selectedPath = v [0];
   }
 
-  ExportDlg dlg (GetParent (), selectedPath);
+  ExportDlg dlg(GetParent(), selectedPath);
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_data = dlg.GetData ();
+  m_data = dlg.GetData();
   return true;
 }
 
 bool
-ExportAction::Perform ()
+ExportAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
   TrimString(m_data.DestPath);
   UnixPath(m_data.DestPath);
   TrimString(m_data.SrcPath);
 
   long revnum = -1;
-  svn::Revision revision (svn::Revision::HEAD);
+  svn::Revision revision(svn::Revision::HEAD);
   svn::Revision pegRevision;
 
   // Did the user request a specific revision?:
   if (!m_data.UseLatest)
   {
     TrimString(m_data.Revision);
-    if (!m_data.Revision.IsEmpty ())
+    if (!m_data.Revision.IsEmpty())
     {
       m_data.Revision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
     }
@@ -98,32 +98,32 @@ ExportAction::Perform ()
   if (!m_data.NotSpecified)
   {
     TrimString(m_data.PegRevision);
-    if (!m_data.PegRevision.IsEmpty ())
+    if (!m_data.PegRevision.IsEmpty())
     {
       m_data.PegRevision.ToLong(&revnum, 10);  // If this fails, revnum is unchanged.
     }
     if (revnum != -1)
       pegRevision = svn::Revision(revnum);
   }
-  
-  wxSetWorkingDirectory (m_data.DestPath);
 
-  svn::Path srcPathUtf8 (PathUtf8 (m_data.SrcPath));
-  svn::Path destPathUtf8 (PathUtf8 (m_data.DestPath));
+  wxSetWorkingDirectory(m_data.DestPath);
 
-  client.doExport (srcPathUtf8.c_str (), 
-                   destPathUtf8, 
-                   revision,
-                   m_data.Overwrite,
-                   pegRevision,
-                   m_data.IgnoreExternals,
-                   m_data.Recursive,
-                   m_data.Eol);
+  svn::Path srcPathUtf8(PathUtf8(m_data.SrcPath));
+  svn::Path destPathUtf8(PathUtf8(m_data.DestPath));
+
+  client.doExport(srcPathUtf8.c_str(),
+                  destPathUtf8,
+                  revision,
+                  m_data.Overwrite,
+                  pegRevision,
+                  m_data.IgnoreExternals,
+                  m_data.Recursive,
+                  m_data.Eol);
   return true;
 }
 
 bool
-ExportAction::CheckStatusSel (const svn::StatusSel & statusSel)
+ExportAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -40,55 +40,55 @@
 #include "preferences.hpp"
 #include "utils.hpp"
 
-UserResolveAction::UserResolveAction (wxWindow * parent)
-  : Action (parent, _("Resolve"))
+UserResolveAction::UserResolveAction(wxWindow * parent)
+    : Action(parent, _("Resolve"))
 {
 }
 
 bool
-UserResolveAction::Prepare ()
+UserResolveAction::Prepare()
 {
   // No dialog for UserResolve.
-  return Action::Prepare ();
+  return Action::Prepare();
 }
 
 bool
-UserResolveAction::Perform ()
+UserResolveAction::Perform()
 {
   Preferences prefs;
 
-  if (prefs.mergeTool.Length () == 0)
+  if (prefs.mergeTool.Length() == 0)
   {
-    TraceError (_("No merge tool set in the preferences"));
+    TraceError(_("No merge tool set in the preferences"));
     return false;
   }
 
-  const std::vector<svn::Path> v = GetTargets ();
+  const std::vector<svn::Path> v = GetTargets();
   std::vector<svn::Path>::const_iterator it;
 
-  svn::Client client (GetContext ());
-  for (it = v.begin (); it != v.end (); it++)
+  svn::Client client(GetContext());
+  for (it = v.begin(); it != v.end(); it++)
   {
     const svn::Path & path = *it;
-    
-    wxString resultPath = Utf8ToLocal (path.native ().c_str ());
+
+    wxString resultPath = Utf8ToLocal(path.native().c_str());
     wxString minePath   = resultPath + wxT(".mine");
 
-    if (wxFileExists (resultPath) && wxFileExists (minePath))
+    if (wxFileExists(resultPath) && wxFileExists(minePath))
     {
       wxString search = resultPath + wxT(".r*");
 
       wxFileSystem fileSystem;
 
-      wxString r1 = fileSystem.FindFirst (search, wxFILE);
-      wxString r2 = fileSystem.FindNext ();
+      wxString r1 = fileSystem.FindFirst(search, wxFILE);
+      wxString r2 = fileSystem.FindNext();
 
-      if (!r1.IsEmpty () && !r2.IsEmpty ())
+      if (!r1.IsEmpty() && !r2.IsEmpty())
       {
         long r1val;
         long r2val;
-        
-        if (r1.AfterLast ('r').ToLong (&r1val) && r2.AfterLast ('r').ToLong (&r2val))
+
+        if (r1.AfterLast('r').ToLong(&r1val) && r2.AfterLast('r').ToLong(&r2val))
         {
           wxString basePath;
           wxString theirsPath;
@@ -105,30 +105,30 @@ UserResolveAction::Perform ()
           }
 
           // prepare command line to execute
-          wxString args (prefs.mergeToolArgs);
+          wxString args(prefs.mergeToolArgs);
 
-          TrimString (args);
+          TrimString(args);
 
-          if (args.Length () == 0)
-            args.Printf (wxT("\"%s\" \"%s\" \"%s\" \"%s\""), basePath.c_str (), 
-                         theirsPath.c_str (),
-                         minePath.c_str (),
-                         resultPath.c_str ());
+          if (args.Length() == 0)
+            args.Printf(wxT("\"%s\" \"%s\" \"%s\" \"%s\""), basePath.c_str(),
+                        theirsPath.c_str(),
+                        minePath.c_str(),
+                        resultPath.c_str());
           else
           {
-            args.Replace (wxT("%1"), basePath.c_str (), true);
-            args.Replace (wxT("%2"), theirsPath.c_str (), true);
-            args.Replace (wxT("%3"), minePath.c_str (), true);
-            args.Replace (wxT("%4"), resultPath.c_str (), true);
+            args.Replace(wxT("%1"), basePath.c_str(), true);
+            args.Replace(wxT("%2"), theirsPath.c_str(), true);
+            args.Replace(wxT("%3"), minePath.c_str(), true);
+            args.Replace(wxT("%4"), resultPath.c_str(), true);
           }
 
-          wxString cmd (prefs.mergeTool + wxT(" ") + args);
+          wxString cmd(prefs.mergeTool + wxT(" ") + args);
 
           wxString msg;
-          msg.Printf (_("Execute merge tool: %s"), cmd.c_str ());
-          Trace (msg);
-        
-          ActionEvent::Post (GetParent (), TOKEN_CMD_MERGE, cmd);
+          msg.Printf(_("Execute merge tool: %s"), cmd.c_str());
+          Trace(msg);
+
+          ActionEvent::Post(GetParent(), TOKEN_CMD_MERGE, cmd);
         }
       }
     }
@@ -138,19 +138,19 @@ UserResolveAction::Perform ()
 }
 
 bool
-UserResolveAction::CheckStatusSel (const svn::StatusSel & statusSel)
+UserResolveAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   // well, we allow only a single+versioned+local file
-  if (!statusSel.hasVersioned ())
+  if (!statusSel.hasVersioned())
     return false;
 
-  if (statusSel.size () != 1)
+  if (statusSel.size() != 1)
     return false;
 
-  if (!statusSel.hasLocal ())
+  if (!statusSel.hasLocal())
     return false;
 
-  if (!statusSel.hasFiles ())
+  if (!statusSel.hasFiles())
     return false;
 
   return true;

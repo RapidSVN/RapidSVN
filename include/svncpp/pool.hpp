@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -41,20 +41,20 @@ namespace svn
      *
      * @param parent NULL -> global pool
      */
-    Pool (apr_pool_t * parent = (apr_pool_t *)0);
+    Pool(apr_pool_t * parent = (apr_pool_t *)0);
 
-    virtual ~ Pool ();
+    virtual ~ Pool();
 
     /**
      * @return apr handle to the pool
      */
-    apr_pool_t * 
-    pool () const;
+    apr_pool_t *
+    pool() const;
 
     /**
      * operator to return apr handle to the pool
      */
-    operator apr_pool_t * () const 
+    operator apr_pool_t * () const
     {
       return m_pool;
     }
@@ -62,7 +62,7 @@ namespace svn
     /**
      * release pool and create a new one
      */
-    void renew ();
+    void renew();
 
   private:
     apr_pool_t * m_parent;
@@ -70,7 +70,7 @@ namespace svn
 
     Pool& operator=(const Pool&);
 
-    Pool (const Pool &);
+    Pool(const Pool &);
   };
 }
 

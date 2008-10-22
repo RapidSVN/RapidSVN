@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -57,47 +57,47 @@ public:
   /**
    * default constructor
    */
-  FolderItemData ();
+  FolderItemData();
 
   /**
    * copy constructor
    */
-  FolderItemData (const FolderItemData& src);
+  FolderItemData(const FolderItemData& src);
 
   /**
    * destructor
    */
-  virtual ~FolderItemData ();
+  virtual ~FolderItemData();
 
   /**
    * initialize the member variables
    */
   void
-  Create (const int folderType,
-          const wxString & path = wxEmptyString,
-          const wxString & name = wxEmptyString,
-          bool hasChildren = false);
+  Create(const int folderType,
+         const wxString & path = wxEmptyString,
+         const wxString & name = wxEmptyString,
+         bool hasChildren = false);
 
   const int
-  getFolderType () const
+  getFolderType() const
   {
     return m_folderType;
   }
 
   const wxString&
-  getPath () const
+  getPath() const
   {
     return m_path;
   }
 
   const wxString&
-  getName () const
+  getName() const
   {
     return m_name;
   }
 
   const bool
-  hasChildren () const
+  hasChildren() const
   {
     return m_hasChildren;
   }
@@ -109,7 +109,7 @@ public:
    * @retval true existing folder
    * @retval false unreal/virtual entry
    */
-  const bool isReal () const
+  const bool isReal() const
   {
     switch (m_folderType)
     {
@@ -123,13 +123,13 @@ public:
   }
 
   const svn::Status &
-  getStatus () const
+  getStatus() const
   {
     return m_status;
   }
 
   void
-  setStatus (const svn::Status & status)
+  setStatus(const svn::Status & status)
   {
     m_status = status;
   }

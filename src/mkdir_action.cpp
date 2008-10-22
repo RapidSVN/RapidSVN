@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -33,48 +33,48 @@
 #include "mkdir_action.hpp"
 #include "utils.hpp"
 
-MkdirAction::MkdirAction (wxWindow * parent, const wxString & path)
- : Action (parent, _("Mkdir"), UPDATE_TREE),
-   m_path (path)
+MkdirAction::MkdirAction(wxWindow * parent, const wxString & path)
+    : Action(parent, _("Mkdir"), UPDATE_TREE),
+    m_path(path)
 {
 }
 
 bool
-MkdirAction::Prepare ()
+MkdirAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  DestinationDlg dlg (GetParent (), _("Make directory"),
-                      _("Directory:"));
+  DestinationDlg dlg(GetParent(), _("Make directory"),
+                     _("Directory:"));
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  wxString target (dlg.GetDestination ());
-  m_target = target.Strip (wxString::both);
+  wxString target(dlg.GetDestination());
+  m_target = target.Strip(wxString::both);
   return true;
 }
 
 bool
-MkdirAction::Perform ()
+MkdirAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  svn::Path pathUtf8 (PathUtf8 (m_path));
-  svn::Path targetUtf8 (PathUtf8 (m_target));
-  pathUtf8.addComponent (targetUtf8.c_str ());
+  svn::Path pathUtf8(PathUtf8(m_path));
+  svn::Path targetUtf8(PathUtf8(m_target));
+  pathUtf8.addComponent(targetUtf8.c_str());
 
-  client.mkdir (pathUtf8);
+  client.mkdir(pathUtf8);
   return true;
 }
 
 bool
-MkdirAction::CheckStatusSel (const svn::StatusSel & statusSel)
+MkdirAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

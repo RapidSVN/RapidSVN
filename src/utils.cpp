@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -74,43 +74,43 @@
 static const bool UseBitmapMenus = true;
 
 static wxMenuItem *
-CreateMenuItem (
+CreateMenuItem(
   wxMenu * parentMenu, int id, const wxString & text,
   const wxBitmap & bitmap)
 {
-  wxMenuItem * item = new wxMenuItem (parentMenu, id, text);
-  if(UseBitmapMenus)
-    item->SetBitmap (bitmap);
+  wxMenuItem * item = new wxMenuItem(parentMenu, id, text);
+  if (UseBitmapMenus)
+    item->SetBitmap(bitmap);
   return item;
 }
 
 static wxMenuItem *
-CreateMenuItem (
+CreateMenuItem(
   wxMenu * parentMenu, int id, const wxString & text)
 {
-  return new wxMenuItem (parentMenu, id, text);
+  return new wxMenuItem(parentMenu, id, text);
 }
 
 static wxMenuItem *
-AppendMenuItem (
+AppendMenuItem(
   wxMenu * parentMenu, int id, const wxString & text,
   const wxBitmap & bitmap)
 {
-  wxMenuItem * item = CreateMenuItem (parentMenu, id, text, bitmap);
-  parentMenu->Append (item);
+  wxMenuItem * item = CreateMenuItem(parentMenu, id, text, bitmap);
+  parentMenu->Append(item);
   return item;
 }
 
 static wxMenuItem *
-AppendMenuItem (
+AppendMenuItem(
   wxMenu * parentMenu, int id, const wxString & text)
 {
-  wxMenuItem * item = CreateMenuItem (parentMenu, id, text);
-  parentMenu->Append (item);
+  wxMenuItem * item = CreateMenuItem(parentMenu, id, text);
+  parentMenu->Append(item);
   return item;
 }
 
-wxString & UnixPath (wxString & path)
+wxString & UnixPath(wxString & path)
 {
 #ifdef _WIN32
   path.Replace(wxT("\\"), wxT("/"));
@@ -120,20 +120,20 @@ wxString & UnixPath (wxString & path)
 
 
 void
-TrimString (wxString & str)
+TrimString(wxString & str)
 {
-  str.Trim (TRUE);
-  str.Trim (FALSE);
+  str.Trim(TRUE);
+  str.Trim(FALSE);
 }
 
-bool PostMenuEvent (wxEvtHandler *source, long id)
+bool PostMenuEvent(wxEvtHandler *source, long id)
 {
   // This is the way it's done in wxFrame
-  wxCommandEvent event (wxEVT_COMMAND_MENU_SELECTED, id);
+  wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED, id);
 
-  event.SetEventObject (source);
+  event.SetEventObject(source);
 
-  return source->ProcessEvent (event);
+  return source->ProcessEvent(event);
 }
 
 wxButton *
@@ -142,7 +142,7 @@ CreateEllipsisButton(wxWindow *parent, long id)
   const wxChar *ELLIPSIS = wxT("...");
   int ellipsis_width, ellipsis_height;
 
-  wxButton *button = new wxButton (parent, id, ELLIPSIS);
+  wxButton *button = new wxButton(parent, id, ELLIPSIS);
   parent->GetTextExtent(ELLIPSIS, &ellipsis_width, &ellipsis_height);
 
   // HACK: Should get real button border size from somewhere
@@ -152,88 +152,88 @@ CreateEllipsisButton(wxWindow *parent, long id)
 }
 
 void
-AppendModifyMenu (wxMenu * parentMenu)
+AppendModifyMenu(wxMenu * parentMenu)
 {
-  AppendMenuItem (*parentMenu, ID_Edit);
+  AppendMenuItem(*parentMenu, ID_Edit);
 
-  parentMenu->AppendSeparator ();
-  AppendMenuItem (*parentMenu, ID_Update);
-  AppendMenuItem (*parentMenu, ID_Commit);
+  parentMenu->AppendSeparator();
+  AppendMenuItem(*parentMenu, ID_Update);
+  AppendMenuItem(*parentMenu, ID_Commit);
 
-  parentMenu->AppendSeparator ();
+  parentMenu->AppendSeparator();
 
-  AppendMenuItem (parentMenu, ID_Property, _("&Properties...\tCTRL-P"),
-                  EMBEDDED_BITMAP(info_png));
+  AppendMenuItem(parentMenu, ID_Property, _("&Properties...\tCTRL-P"),
+                 EMBEDDED_BITMAP(info_png));
 
-  parentMenu->AppendSeparator ();
+  parentMenu->AppendSeparator();
 
-  AppendMenuItem (parentMenu, ID_Add, _("&Add\tINS"),
-                  EMBEDDED_BITMAP(add_png));
-  AppendMenuItem (parentMenu, ID_AddRecursive, _("Add r&ecursive"));
-  AppendMenuItem (parentMenu, ID_Delete, _("&Delete\tDEL"),
-                  EMBEDDED_BITMAP(delete_png));
-  AppendMenuItem (parentMenu, ID_Ignore, _("&Ignore\tCTRL-DEL"));
+  AppendMenuItem(parentMenu, ID_Add, _("&Add\tINS"),
+                 EMBEDDED_BITMAP(add_png));
+  AppendMenuItem(parentMenu, ID_AddRecursive, _("Add r&ecursive"));
+  AppendMenuItem(parentMenu, ID_Delete, _("&Delete\tDEL"),
+                 EMBEDDED_BITMAP(delete_png));
+  AppendMenuItem(parentMenu, ID_Ignore, _("&Ignore\tCTRL-DEL"));
 
-  parentMenu->AppendSeparator ();
+  parentMenu->AppendSeparator();
 
-  AppendMenuItem (parentMenu, ID_Revert, _("Re&vert\tCTRL-V"),
-                  EMBEDDED_BITMAP(revert_png));
-  AppendMenuItem (parentMenu, ID_UserResolve, _("In&teractive Resolve...\tCTRL-T"));					
-  AppendMenuItem (parentMenu, ID_Resolve, _("Re&solve conflicts\tCTRL-S"),
-                  EMBEDDED_BITMAP(resolve_png));
+  AppendMenuItem(parentMenu, ID_Revert, _("Re&vert\tCTRL-V"),
+                 EMBEDDED_BITMAP(revert_png));
+  AppendMenuItem(parentMenu, ID_UserResolve, _("In&teractive Resolve...\tCTRL-T"));
+  AppendMenuItem(parentMenu, ID_Resolve, _("Re&solve conflicts\tCTRL-S"),
+                 EMBEDDED_BITMAP(resolve_png));
 
-  parentMenu->AppendSeparator ();
+  parentMenu->AppendSeparator();
 
-  AppendMenuItem (parentMenu, ID_Copy, _("&Copy...\tF5"),
-                  EMBEDDED_BITMAP(copy_png));
-  AppendMenuItem (parentMenu, ID_Move, _("M&ove...\tF6"),
-                  EMBEDDED_BITMAP(move_png));
-  AppendMenuItem (parentMenu, ID_Rename, _("Re&name...\tCTRL-N"),
-                  EMBEDDED_BITMAP(rename_png));
-  AppendMenuItem (parentMenu, ID_Mkdir, _("Make &directory...\tF7"));
+  AppendMenuItem(parentMenu, ID_Copy, _("&Copy...\tF5"),
+                 EMBEDDED_BITMAP(copy_png));
+  AppendMenuItem(parentMenu, ID_Move, _("M&ove...\tF6"),
+                 EMBEDDED_BITMAP(move_png));
+  AppendMenuItem(parentMenu, ID_Rename, _("Re&name...\tCTRL-N"),
+                 EMBEDDED_BITMAP(rename_png));
+  AppendMenuItem(parentMenu, ID_Mkdir, _("Make &directory...\tF7"));
 
-  parentMenu->AppendSeparator ();
+  parentMenu->AppendSeparator();
 
-  AppendMenuItem (parentMenu, ID_Lock, _("&Lock..."));
-  AppendMenuItem (parentMenu, ID_Unlock, _("&Unlock"));
+  AppendMenuItem(parentMenu, ID_Lock, _("&Lock..."));
+  AppendMenuItem(parentMenu, ID_Unlock, _("&Unlock"));
 }
 
 void
-AppendQueryMenu (wxMenu * parentMenu)
+AppendQueryMenu(wxMenu * parentMenu)
 {
-  AppendMenuItem (parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
-  AppendMenuItem (parentMenu, ID_DiffBase, _("&Diff to Base...\tCTRL+B"));
-  AppendMenuItem (parentMenu, ID_DiffHead, _("&Diff to Head...\tCTRL+H"));
-  parentMenu->AppendSeparator ();
-  AppendMenuItem (parentMenu, ID_Log, _("&Log...\tCTRL-L"),
-                  EMBEDDED_BITMAP(log_png));
-  AppendMenuItem (parentMenu, ID_Info, _("&Info..."),
-                  EMBEDDED_BITMAP(info_png));
-  AppendMenuItem (parentMenu, ID_Annotate, _("&Annotate..."),
-                  EMBEDDED_BITMAP(annotate_png));
+  AppendMenuItem(parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
+  AppendMenuItem(parentMenu, ID_DiffBase, _("&Diff to Base...\tCTRL+B"));
+  AppendMenuItem(parentMenu, ID_DiffHead, _("&Diff to Head...\tCTRL+H"));
+  parentMenu->AppendSeparator();
+  AppendMenuItem(parentMenu, ID_Log, _("&Log...\tCTRL-L"),
+                 EMBEDDED_BITMAP(log_png));
+  AppendMenuItem(parentMenu, ID_Info, _("&Info..."),
+                 EMBEDDED_BITMAP(info_png));
+  AppendMenuItem(parentMenu, ID_Annotate, _("&Annotate..."),
+                 EMBEDDED_BITMAP(annotate_png));
 }
 
 void
-AppendBookmarksMenu (wxMenu * parentMenu)
+AppendBookmarksMenu(wxMenu * parentMenu)
 {
-  AppendMenuItem (*parentMenu, ID_AddWcBookmark);
-  AppendMenuItem (*parentMenu, ID_AddRepoBookmark);
-  AppendMenuItem (*parentMenu, ID_Switch);
-  parentMenu->AppendSeparator ();
-  AppendMenuItem (*parentMenu, ID_EditBookmark);
-  AppendMenuItem (*parentMenu, ID_RemoveBookmark);
+  AppendMenuItem(*parentMenu, ID_AddWcBookmark);
+  AppendMenuItem(*parentMenu, ID_AddRepoBookmark);
+  AppendMenuItem(*parentMenu, ID_Switch);
+  parentMenu->AppendSeparator();
+  AppendMenuItem(*parentMenu, ID_EditBookmark);
+  AppendMenuItem(*parentMenu, ID_RemoveBookmark);
 }
 
 bool
-CheckRevision (const wxString & revstring)
+CheckRevision(const wxString & revstring)
 {
   svn_revnum_t revnum;
 
-  return ParseRevision (revstring, revnum);
+  return ParseRevision(revstring, revnum);
 }
 
 wxMenuItem *
-AppendMenuItem (wxMenu & menu, int id)
+AppendMenuItem(wxMenu & menu, int id)
 {
   wxString caption;
   wxBitmap bitmap;
@@ -318,27 +318,27 @@ AppendMenuItem (wxMenu & menu, int id)
     caption = _("Explore...\tF2");
   }
 
-  wxMenuItem * item = AppendMenuItem (&menu, id, caption, bitmap);
-  
+  wxMenuItem * item = AppendMenuItem(&menu, id, caption, bitmap);
+
   return item;
 }
 
 
 bool
-ParseRevision (const wxString & revstring, svn_revnum_t & revnum)
+ParseRevision(const wxString & revstring, svn_revnum_t & revnum)
 {
-  wxString value (revstring);
+  wxString value(revstring);
 
-  TrimString (value);
-  if (value.Length () <= 0)
+  TrimString(value);
+  if (value.Length() <= 0)
     return false;
 
-  return value.ToLong (&revnum);
+  return value.ToLong(&revnum);
 }
 
 
 wxString
-FormatDateTime (apr_time_t date, wxString fmt)
+FormatDateTime(apr_time_t date, wxString fmt)
 {
   wxString wxstrtime;
   if (date == 0)
@@ -350,12 +350,12 @@ FormatDateTime (apr_time_t date, wxString fmt)
   if (!apr_err)
   {
     wxDateTime wxdate = wxDateTime(
-      (wxDateTime::wxDateTime_t)te.tm_mday,
-	  (wxDateTime::Month)te.tm_mon,
-	  (int)te.tm_year + 1900,
-      (wxDateTime::wxDateTime_t)te.tm_hour,
-	  (wxDateTime::wxDateTime_t)te.tm_min,
-	  (wxDateTime::wxDateTime_t)te.tm_sec);
+                          (wxDateTime::wxDateTime_t)te.tm_mday,
+                          (wxDateTime::Month)te.tm_mon,
+                          (int)te.tm_year + 1900,
+                          (wxDateTime::wxDateTime_t)te.tm_hour,
+                          (wxDateTime::wxDateTime_t)te.tm_min,
+                          (wxDateTime::wxDateTime_t)te.tm_sec);
     wxstrtime = wxdate.Format(fmt);
   }
   return wxstrtime;
@@ -363,24 +363,24 @@ FormatDateTime (apr_time_t date, wxString fmt)
 
 
 wxString
-BeautifyPath (const wxString & path)
+BeautifyPath(const wxString & path)
 {
-  int pos = path.Find (wxT(":"));
+  int pos = path.Find(wxT(":"));
 
   if (pos <= 0)
     return path;
 
   // ok. we do have a dot. So is it an url or
   // a windows drive?
-  wxString start (path.Left (pos));
+  wxString start(path.Left(pos));
 
   // lowercase the Drive / URL schema part
-  return start.Lower () + path.Mid (pos);
+  return start.Lower() + path.Mid(pos);
 }
 
 
 wxString
-StatusDescription (const svn_wc_status_kind kind)
+StatusDescription(const svn_wc_status_kind kind)
 {
   switch (kind)
   {
@@ -389,7 +389,7 @@ StatusDescription (const svn_wc_status_kind kind)
     break;
   case svn_wc_status_unversioned:
     return _("unversioned");
-  break;
+    break;
   case svn_wc_status_normal:
     return _("normal");
     break;
@@ -433,7 +433,7 @@ StatusDescription (const svn_wc_status_kind kind)
 
 #if !wxUSE_UNICODE
 static wxMBConv *
-GetWXLocalConv ()
+GetWXLocalConv()
 {
 #if defined(__WXGTK20__)
   // In wxGTK 2.0+, for some reason wvConvCurrent
@@ -444,7 +444,7 @@ GetWXLocalConv ()
 
   if (wxConvCorrect == NULL)
   {
-    if (wxOKlibc ())
+    if (wxOKlibc())
     {
       wxConvCorrect = &wxConvLibc;
     }
@@ -463,130 +463,130 @@ GetWXLocalConv ()
 #endif
 
 wxString
-Utf8ToLocal (const char* srcUtf8)
+Utf8ToLocal(const char* srcUtf8)
 {
 #if wxUSE_UNICODE
-  wxString dst (srcUtf8, wxConvUTF8);
+  wxString dst(srcUtf8, wxConvUTF8);
 #else
-  wxString dst (wxConvUTF8.cMB2WC(srcUtf8), *GetWXLocalConv ());
+  wxString dst(wxConvUTF8.cMB2WC(srcUtf8), *GetWXLocalConv());
 #endif
 
   return dst;
 }
 
 wxString
-Utf8ToLocal (const std::string& srcUtf8)
+Utf8ToLocal(const std::string& srcUtf8)
 {
   return Utf8ToLocal(srcUtf8.c_str());
 }
 
 std::string
-LocalToUtf8 (const wxString & srcLocal)
+LocalToUtf8(const wxString & srcLocal)
 {
 #if wxUSE_UNICODE
-  std::string dst (srcLocal.mb_str (wxConvUTF8));
+  std::string dst(srcLocal.mb_str(wxConvUTF8));
 #else
-  wxString wxdst (srcLocal.wc_str (*GetWXLocalConv ()), wxConvUTF8);
-  std::string dst (wxdst.mb_str ());
+  wxString wxdst(srcLocal.wc_str(*GetWXLocalConv()), wxConvUTF8);
+  std::string dst(wxdst.mb_str());
 #endif
 
   return dst;
 }
 
 void
-LocalToUtf8 (const wxString & srcLocal, std::string & dstUtf8)
+LocalToUtf8(const wxString & srcLocal, std::string & dstUtf8)
 {
 #if wxUSE_UNICODE
-  dstUtf8 = srcLocal.mb_str (wxConvUTF8);
+  dstUtf8 = srcLocal.mb_str(wxConvUTF8);
 #else
-  wxString wxdst (srcLocal.wc_str (*GetWXLocalConv ()), wxConvUTF8);
-  dstUtf8 = wxdst.mb_str ();
+  wxString wxdst(srcLocal.wc_str(*GetWXLocalConv()), wxConvUTF8);
+  dstUtf8 = wxdst.mb_str();
 #endif
 }
 
 svn::Path
-PathUtf8 (const wxString & path)
+PathUtf8(const wxString & path)
 {
 #if wxUSE_UNICODE
-  return path.mb_str (wxConvUTF8).data ();
+  return path.mb_str(wxConvUTF8).data();
 #else
-  wxString wxdst (path.wc_str (*GetWXLocalConv ()), wxConvUTF8);
-  return wxdst.mb_str ();
+  wxString wxdst(path.wc_str(*GetWXLocalConv()), wxConvUTF8);
+  return wxdst.mb_str();
 #endif
 }
 
 
 void
-AppendVerbMenu (wxMenu * parentMenu, svn::Status * status)
+AppendVerbMenu(wxMenu * parentMenu, svn::Status * status)
 {
-    wxASSERT (status);
+  wxASSERT(status);
 
-    // Append file verbs
-    try
+  // Append file verbs
+  try
+  {
+    VerbList verbList;
+
+    // We don't want verbs on directories, even though they exist
+    bool isADirectory = status->entry().kind() == svn_node_dir;
+    if (!isADirectory)
+      verbList.InitFromDocument(Utf8ToLocal(status->path()), isADirectory);
+
+    if (verbList.GetCount() == 0)
+      return;
+
+    wxMenu * menu = new wxMenu();
+
+    size_t i = 0;
+    for (;
+         (i < verbList.GetCount()) &&
+         (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
     {
-      VerbList verbList;
-
-      // We don't want verbs on directories, even though they exist
-      bool isADirectory = status->entry ().kind () == svn_node_dir;
-      if (!isADirectory)
-        verbList.InitFromDocument (Utf8ToLocal (status->path ()), isADirectory );
-
-      if (verbList.GetCount () == 0)
-        return;
-
-      wxMenu * menu = new wxMenu ();
-
-      size_t i = 0;
-      for (;
-           (i < verbList.GetCount ()) &&
-           (i < (ID_Verb_Max - ID_Verb_Min + 1)); i++)
-      {
-        wxMenuItem *pItem;
-        pItem = new wxMenuItem (menu, ID_Verb_Min + i, verbList.GetName (i));
-        menu->Append (pItem);
-      }
-
-      parentMenu->Append (ID_Open, _("Open..."), menu);
+      wxMenuItem *pItem;
+      pItem = new wxMenuItem(menu, ID_Verb_Min + i, verbList.GetName(i));
+      menu->Append(pItem);
     }
-    catch (...)
-    {
-      // Failed assembling verbs.
-      // TODO: Report this error in the status bar?
-    }
+
+    parentMenu->Append(ID_Open, _("Open..."), menu);
+  }
+  catch (...)
+  {
+    // Failed assembling verbs.
+    // TODO: Report this error in the status bar?
+  }
 }
 
 
-wxBitmap 
-EmbeddedBitmap (const unsigned char * data, size_t len)
+wxBitmap
+EmbeddedBitmap(const unsigned char * data, size_t len)
 {
-  wxMemoryInputStream is (data, len);
-  wxImage img (is, wxBITMAP_TYPE_ANY, -1);
-  img.ConvertAlphaToMask ();
-  return wxBitmap (img, -1);
+  wxMemoryInputStream is(data, len);
+  wxImage img(is, wxBITMAP_TYPE_ANY, -1);
+  img.ConvertAlphaToMask();
+  return wxBitmap(img, -1);
 }
 
 
 void
-OpenURL (const wxString & url)
+OpenURL(const wxString & url)
 {
 #ifdef _WIN32
   // Right now @ref wxLaunchDefaultBrowser works only on
   // Windows, we have to work on this and detect
   // the browser on Mac OS and Linux as well
-  wxLaunchDefaultBrowser (url);
+  wxLaunchDefaultBrowser(url);
 #else
   // Well, maybe we can run Firefox?
   wxString args;
-  args.Printf (wxT("firefox \"%s\""), url.c_str ());
-  wxExecute (args, wxEXEC_ASYNC | wxEXEC_NOHIDE);
+  args.Printf(wxT("firefox \"%s\""), url.c_str());
+  wxExecute(args, wxEXEC_ASYNC | wxEXEC_NOHIDE);
 #endif
 }
 
 
 wxString
-PathToNative (const svn::Path & path)
+PathToNative(const svn::Path & path)
 {
-  return Utf8ToLocal (path.native ());
+  return Utf8ToLocal(path.native());
 }
 
 wxString
@@ -594,20 +594,20 @@ FullNativePath(const svn::Path & target, const wxString & base, bool flat)
 {
   if (target.isUrl())
   {
-    return PathToNative (target);
+    return PathToNative(target);
   }
   else
   {
     if (flat)
     {
-      wxFileName filename = wxFileName::FileName (PathToNative (target));
-      filename.Normalize ();
+      wxFileName filename = wxFileName::FileName(PathToNative(target));
+      filename.Normalize();
       return filename.GetFullPath();
     }
     else
     {
-      return base + wxFileName::GetPathSeparator () +
-        wxFileName::FileName (PathToNative (target)).GetFullName ();
+      return base + wxFileName::GetPathSeparator() +
+             wxFileName::FileName(PathToNative(target)).GetFullName();
     }
   }
 }

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -49,29 +49,29 @@ public:
    *                previous entries will be used instead of the edit
    *                box @see HistoryValidator
    */
-  DestinationDlg (wxWindow* parent, const wxString & title,
-                  const wxString & descr = wxEmptyString, const int flags=0,
-                  const wxString & dst = wxEmptyString,
-                  const wxString & history = wxEmptyString);
+  DestinationDlg(wxWindow* parent, const wxString & title,
+                 const wxString & descr = wxEmptyString, const int flags=0,
+                 const wxString & dst = wxEmptyString,
+                 const wxString & history = wxEmptyString);
 
   /**
    * default constructor. Use @a Create to initialize the dialog
    */
-  DestinationDlg ();
+  DestinationDlg();
 
   /**
    * destructor
    */
-  virtual ~DestinationDlg ();
+  virtual ~DestinationDlg();
 
   /**
    * initialize instance. See @a DestinationDlg for parameters
    */
   void
-  Create (wxWindow* parent, const wxString & title,
-          const wxString & descr = wxEmptyString, const int flags=0,
-          const wxString & dst = wxEmptyString,
-          const wxString & history = wxEmptyString);
+  Create(wxWindow* parent, const wxString & title,
+         const wxString & descr = wxEmptyString, const int flags=0,
+         const wxString & dst = wxEmptyString,
+         const wxString & history = wxEmptyString);
 
   /**
    * get destination
@@ -79,7 +79,7 @@ public:
    * @return destination
    */
   const wxString &
-  GetDestination () const;
+  GetDestination() const;
 
   /**
    * get the value of the "force" checkbox
@@ -87,7 +87,7 @@ public:
    * @return true=force/false=dont force
    */
   bool
-  GetForce () const;
+  GetForce() const;
 
 private:
   /**
@@ -96,7 +96,7 @@ private:
   struct Data;
   Data * m;
 
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

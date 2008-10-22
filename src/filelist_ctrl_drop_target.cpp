@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -37,38 +37,38 @@
 
 #include "utils.hpp"
 
-FileListCtrlDropTarget::FileListCtrlDropTarget (FolderBrowser * browser, 
-                                                FileListCtrl * parent)
-  : m_browser (browser), m_parent (parent)
+FileListCtrlDropTarget::FileListCtrlDropTarget(FolderBrowser * browser,
+    FileListCtrl * parent)
+    : m_browser(browser), m_parent(parent)
 {
 }
 
 wxString
-FileListCtrlDropTarget::GetDestinationPath (const wxPoint & point)
+FileListCtrlDropTarget::GetDestinationPath(const wxPoint & point)
 {
   wxString path = wxEmptyString;
   int flags = wxLIST_HITTEST_ONITEM;
-  long destinationItem = m_parent->HitTest (point, flags);
+  long destinationItem = m_parent->HitTest(point, flags);
   if (destinationItem != wxNOT_FOUND)  // Did we land on an item??
   {
-    svn::Status * status = 
-      (svn::Status*)m_parent->GetItemData (destinationItem);
-    if (status->isVersioned () && 
-        (status->entry ().kind() == svn_node_dir))
+    svn::Status * status =
+      (svn::Status*)m_parent->GetItemData(destinationItem);
+    if (status->isVersioned() &&
+        (status->entry().kind() == svn_node_dir))
     {
-      path = FullNativePath (svn::Path (status->path ()),
-        m_browser->GetSelectedItemData ()->getPath (), m_parent->IsFlat ());
+      path = FullNativePath(svn::Path(status->path()),
+                            m_browser->GetSelectedItemData()->getPath(), m_parent->IsFlat());
     }
   }
 
-  // If the path is still empty, then the hit test was on an 
-  // unversioned item, it wasn't on an item at all, or it 
+  // If the path is still empty, then the hit test was on an
+  // unversioned item, it wasn't on an item at all, or it
   // wasn't a directory:
   // Get the path from the folder browser
-  if (path.IsEmpty ())
+  if (path.IsEmpty())
   {
     // Get the path from the folder browser
-    path = m_browser->GetSelectedItemData ()->getPath ();
+    path = m_browser->GetSelectedItemData()->getPath();
   }
 
   return path;

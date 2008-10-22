@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -44,15 +44,15 @@ static const wxChar * EXECUTABLE_WILDCARD = _("All files|*");
 #endif
 
 
-PreferencesDlg::PreferencesDlg (wxWindow* parent, Preferences * prefs)
-  : PreferencesDlgBase (parent, -1, _("Preferences"),
-      wxDefaultPosition, wxDefaultSize,
-      wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER), m_prefs (prefs)
+PreferencesDlg::PreferencesDlg(wxWindow* parent, Preferences * prefs)
+    : PreferencesDlgBase(parent, -1, _("Preferences"),
+                         wxDefaultPosition, wxDefaultSize,
+                         wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER), m_prefs(prefs)
 {
-  CentreOnParent ();
+  CentreOnParent();
 }
 
-PreferencesDlg::~PreferencesDlg ()
+PreferencesDlg::~PreferencesDlg()
 {
 }
 
@@ -60,31 +60,31 @@ PreferencesDlg::~PreferencesDlg ()
  * @return true if transfer succeeded.
  */
 bool
-PreferencesDlg::TransferDataFromWindow ()
+PreferencesDlg::TransferDataFromWindow()
 {
   // General
-  m_prefs->purgeTempFiles = m_checkPurgeTempFiles->GetValue ();
-  m_prefs->useLastCommitMessage = m_checkUseLastCommitMessage->GetValue ();
-  m_prefs->resetFlatModeOnStart = m_checkResetFlatMode->GetValue ();
+  m_prefs->purgeTempFiles = m_checkPurgeTempFiles->GetValue();
+  m_prefs->useLastCommitMessage = m_checkUseLastCommitMessage->GetValue();
+  m_prefs->resetFlatModeOnStart = m_checkResetFlatMode->GetValue();
 
   // Programs
-  m_prefs->editor = m_textEditor->GetValue ();
-  m_prefs->editorArgs = m_textEditorArgs->GetValue ();
-  m_prefs->editorAlways = m_checkEditorAlways->GetValue ();
+  m_prefs->editor = m_textEditor->GetValue();
+  m_prefs->editorArgs = m_textEditorArgs->GetValue();
+  m_prefs->editorAlways = m_checkEditorAlways->GetValue();
 
-  m_prefs->explorer = m_textExplorer->GetValue ();
-  m_prefs->explorerArgs = m_textExplorerArgs->GetValue ();
-  m_prefs->explorerAlways = m_checkExplorerAlways->GetValue ();
+  m_prefs->explorer = m_textExplorer->GetValue();
+  m_prefs->explorerArgs = m_textExplorerArgs->GetValue();
+  m_prefs->explorerAlways = m_checkExplorerAlways->GetValue();
 
-  m_prefs->diffTool = m_textDiffTool->GetValue ();
-  m_prefs->diffToolArgs = m_textDiffToolArgs->GetValue ();
+  m_prefs->diffTool = m_textDiffTool->GetValue();
+  m_prefs->diffToolArgs = m_textDiffToolArgs->GetValue();
 
-  m_prefs->mergeTool = m_textMergeTool->GetValue ();
-  m_prefs->mergeToolArgs = m_textMergeToolArgs->GetValue ();
+  m_prefs->mergeTool = m_textMergeTool->GetValue();
+  m_prefs->mergeToolArgs = m_textMergeToolArgs->GetValue();
 
   // Authentication
-  m_prefs->authPerBookmark = m_checkAuthPerBookmark->GetValue ();
-  m_prefs->useAuthCache = m_checkUseAuthCache->GetValue ();
+  m_prefs->authPerBookmark = m_checkAuthPerBookmark->GetValue();
+  m_prefs->useAuthCache = m_checkUseAuthCache->GetValue();
 
   return true;
 }
@@ -93,78 +93,78 @@ PreferencesDlg::TransferDataFromWindow ()
  * @return true if transfer succeeded.
  */
 bool
-PreferencesDlg::TransferDataToWindow ()
+PreferencesDlg::TransferDataToWindow()
 {
   // General
-  m_checkPurgeTempFiles->SetValue (m_prefs->purgeTempFiles);
-  m_checkUseLastCommitMessage->SetValue (m_prefs->useLastCommitMessage);
-  m_checkResetFlatMode->SetValue (m_prefs->resetFlatModeOnStart);
+  m_checkPurgeTempFiles->SetValue(m_prefs->purgeTempFiles);
+  m_checkUseLastCommitMessage->SetValue(m_prefs->useLastCommitMessage);
+  m_checkResetFlatMode->SetValue(m_prefs->resetFlatModeOnStart);
 
   // Programs
-  m_textEditor->SetValue (m_prefs->editor);
-  m_textEditorArgs->SetValue (m_prefs->editorArgs);
-  m_checkEditorAlways->SetValue (m_prefs->editorAlways);
+  m_textEditor->SetValue(m_prefs->editor);
+  m_textEditorArgs->SetValue(m_prefs->editorArgs);
+  m_checkEditorAlways->SetValue(m_prefs->editorAlways);
 
-  m_textExplorer->SetValue (m_prefs->explorer);
-  m_textExplorerArgs->SetValue (m_prefs->explorerArgs);
-  m_checkExplorerAlways->SetValue (m_prefs->explorerAlways);
+  m_textExplorer->SetValue(m_prefs->explorer);
+  m_textExplorerArgs->SetValue(m_prefs->explorerArgs);
+  m_checkExplorerAlways->SetValue(m_prefs->explorerAlways);
 
-  m_textDiffTool->SetValue (m_prefs->diffTool);
-  m_textDiffToolArgs->SetValue (m_prefs->diffToolArgs);
+  m_textDiffTool->SetValue(m_prefs->diffTool);
+  m_textDiffToolArgs->SetValue(m_prefs->diffToolArgs);
 
-  m_textMergeTool->SetValue (m_prefs->mergeTool);
-  m_textMergeToolArgs->SetValue (m_prefs->mergeToolArgs);
+  m_textMergeTool->SetValue(m_prefs->mergeTool);
+  m_textMergeToolArgs->SetValue(m_prefs->mergeToolArgs);
 
   // Authentication
-  m_checkAuthPerBookmark->SetValue (m_prefs->authPerBookmark);
-  m_checkUseAuthCache->SetValue (m_prefs->useAuthCache);
+  m_checkAuthPerBookmark->SetValue(m_prefs->authPerBookmark);
+  m_checkUseAuthCache->SetValue(m_prefs->useAuthCache);
 
   return true;
 }
 
-bool 
-PreferencesDlg::SelectExecutable (const wxString & title, wxTextCtrl * textCtrl)
+bool
+PreferencesDlg::SelectExecutable(const wxString & title, wxTextCtrl * textCtrl)
 {
-  wxFileDialog dlg (this, title, wxEmptyString, wxEmptyString, 
-                    EXECUTABLE_WILDCARD, wxOPEN);
-  dlg.SetPath (textCtrl->GetValue ());
+  wxFileDialog dlg(this, title, wxEmptyString, wxEmptyString,
+                   EXECUTABLE_WILDCARD, wxOPEN);
+  dlg.SetPath(textCtrl->GetValue());
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
     return false;
 
-  textCtrl->SetValue (dlg.GetPath ());
-  return true;  
+  textCtrl->SetValue(dlg.GetPath());
+  return true;
 }
 
 
-void 
-PreferencesDlg::OnButtonEditorClick (wxCommandEvent& event)
+void
+PreferencesDlg::OnButtonEditorClick(wxCommandEvent& event)
 {
-  SelectExecutable (
+  SelectExecutable(
     _("Select standard editor executable"),
     m_textEditor);
 }
 
 void
-PreferencesDlg::OnButtonExplorerClick (wxCommandEvent& event)
+PreferencesDlg::OnButtonExplorerClick(wxCommandEvent& event)
 {
-  SelectExecutable (
+  SelectExecutable(
     _("Select standard file explorer executable"),
     m_textExplorer);
 }
 
 void
-PreferencesDlg::OnButtonDiffToolClick (wxCommandEvent& event)
+PreferencesDlg::OnButtonDiffToolClick(wxCommandEvent& event)
 {
-  SelectExecutable (
+  SelectExecutable(
     _("Select diff tool executable"),
     m_textDiffTool);
 }
 
 void
-PreferencesDlg::OnButtonMergeToolClick (wxCommandEvent& event)
+PreferencesDlg::OnButtonMergeToolClick(wxCommandEvent& event)
 {
-  SelectExecutable (
+  SelectExecutable(
     _("Select merge tool executable"),
     m_textMergeTool);
 }

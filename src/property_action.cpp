@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -33,32 +33,32 @@
 /**
  * right now this supports only one target
  */
-PropertyAction::PropertyAction (wxWindow * parent)
-  : Action (parent, _("Property"))
+PropertyAction::PropertyAction(wxWindow * parent)
+    : Action(parent, _("Property"))
 {
 }
 
 bool
-PropertyAction::Prepare ()
+PropertyAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  PropertyDlg dlg (GetParent (), GetContext (), GetTarget ());
+  PropertyDlg dlg(GetParent(), GetContext(), GetTarget());
 
-  return dlg.ShowModal () == wxID_OK;
+  return dlg.ShowModal() == wxID_OK;
 }
 
 bool
-PropertyAction::Perform ()
+PropertyAction::Perform()
 {
   return true;
 }
 
 bool
-PropertyAction::CheckStatusSel (const svn::StatusSel & statusSel)
+PropertyAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

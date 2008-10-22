@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -33,49 +33,49 @@
 // app
 #include "resolve_action.hpp"
 
-ResolveAction::ResolveAction (wxWindow * parent)
-  : Action (parent, _("Resolve"))
+ResolveAction::ResolveAction(wxWindow * parent)
+    : Action(parent, _("Resolve"))
 {
 }
 
 bool
-ResolveAction::Prepare ()
+ResolveAction::Prepare()
 {
   // No dialog for Resolve.
-  return Action::Prepare ();
+  return Action::Prepare();
 }
 
 bool
-ResolveAction::Perform ()
+ResolveAction::Perform()
 {
-  const std::vector<svn::Path> v = GetTargets ();
+  const std::vector<svn::Path> v = GetTargets();
   std::vector<svn::Path>::const_iterator it;
 
-  svn::Client client (GetContext ());
-  for (it = v.begin (); it != v.end (); it++)
+  svn::Client client(GetContext());
+  for (it = v.begin(); it != v.end(); it++)
   {
     const svn::Path & path = *it;
 
-    client.resolved (path.c_str (), false);
+    client.resolved(path.c_str(), false);
   }
 
   return true;
 }
 
 bool
-ResolveAction::CheckStatusSel (const svn::StatusSel & statusSel)
+ResolveAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   // allow only local+versioned files
-  if (!statusSel.hasVersioned ())
+  if (!statusSel.hasVersioned())
     return false;
 
-  if (statusSel.hasUnversioned ())
+  if (statusSel.hasUnversioned())
     return false;
 
-  if (!statusSel.hasLocal ())
+  if (!statusSel.hasLocal())
     return false;
 
-  if (!statusSel.hasFiles ())
+  if (!statusSel.hasFiles())
     return false;
 
   return true;

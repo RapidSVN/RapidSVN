@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -44,7 +44,7 @@ namespace svn
      *
      * @param path Path string
      */
-    void init (const char * path);
+    void init(const char * path);
 
   public:
     /**
@@ -54,22 +54,22 @@ namespace svn
      *
      * @param path Path string
      */
-    Path (const std::string & path = "");
-    
+    Path(const std::string & path = "");
+
     /**
      * Constructor
      *
      * @see Path::Path (const std::string &)
      * @param path Path string
      */
-    Path (const char * path);
+    Path(const char * path);
 
     /**
      * Copy constructor
      *
      * @param path Path to be copied
      */
-    Path (const Path & path);
+    Path(const Path & path);
 
     /**
      * Assignment operator
@@ -86,13 +86,13 @@ namespace svn
      * @return Path string
      */
     const std::string &
-    path () const;
+    path() const;
 
     /**
      * @return Path string as c string
      */
-    const char * 
-    c_str () const;
+    const char *
+    c_str() const;
 
     /**
      * check whether a path is set. Right now
@@ -101,8 +101,8 @@ namespace svn
      *
      * @return true if there is a path set
      */
-    bool 
-    isset () const;
+    bool
+    isset() const;
 
     /**
      * shows whether we have a path or url
@@ -110,7 +110,7 @@ namespace svn
      * @return true if the path is a valid url
      */
     const bool
-    isUrl () const;
+    isUrl() const;
 
     /**
      * adds a new URL component to the path
@@ -118,7 +118,7 @@ namespace svn
      * @param component new component to add
      */
     void
-    addComponent (const char * component);
+    addComponent(const char * component);
 
     /**
      * adds a new URL component to the path
@@ -126,7 +126,7 @@ namespace svn
      * @param component new component to add
      */
     void
-    addComponent (const std::string & component);
+    addComponent(const std::string & component);
 
     /**
      * split path in its components
@@ -135,7 +135,7 @@ namespace svn
      * @param basename filename
      */
     void
-    split (std::string & dirpath, std::string & basename) const;
+    split(std::string & dirpath, std::string & basename) const;
 
     /**
      * split path in its components including
@@ -146,7 +146,7 @@ namespace svn
      * @param ext extension (including leading dot ".")
      */
     void
-    split (std::string & dir, std::string & filename, std::string & ext) const;
+    split(std::string & dir, std::string & filename, std::string & ext) const;
 
     /**
      * get a basename of a file
@@ -154,7 +154,7 @@ namespace svn
      * @return basename filename without path
      */
     std::string
-    basename () const;
+    basename() const;
 
     /**
      * get a name of directory containing file
@@ -162,16 +162,16 @@ namespace svn
      * @return dirpath path of directory
      */
     std::string
-    dirpath () const;
+    dirpath() const;
 
     /**
      * get a substring of a path, starting at index
      *
-     * @param index 
+     * @param index
      * @return substr substring
      */
     std::string
-    substr (const size_t index) const;
+    substr(const size_t index) const;
 
     /**
      * return path as a string with unescaped special characters
@@ -179,21 +179,21 @@ namespace svn
      * @return unescaped path
      */
     std::string
-    unescape () const;
+    unescape() const;
 
     /**
      * returns the temporary directory
      */
     static Path
-    getTempDir ();
+    getTempDir();
 
     /** return the length of the path-string */
-    size_t 
-    length () const;
+    size_t
+    length() const;
 
     /** returns the path with native separators */
     std::string
-    native () const;
+    native() const;
   };
 }
 

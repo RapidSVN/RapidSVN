@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,23 +36,23 @@ namespace svn
 class UnlockAction : public Action
 {
 public:
-  UnlockAction (wxWindow * parent);
+  UnlockAction(wxWindow * parent);
 
-  virtual bool 
-  Perform ();
+  virtual bool
+  Perform();
 
-  virtual bool 
-  Prepare ();
+  virtual bool
+  Prepare();
 
   static bool
-  CheckStatusSel (const svn::StatusSel & statusSel);
+  CheckStatusSel(const svn::StatusSel & statusSel);
 
 private:
   bool m_force;
 
   // hide default and copy constructor
-  UnlockAction ();
-  UnlockAction (const UnlockAction &);
+  UnlockAction();
+  UnlockAction(const UnlockAction &);
 };
 
 #endif

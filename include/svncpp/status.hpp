@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -47,108 +47,108 @@ namespace svn
      * @param path
      * @param status
      */
-    Status (const char * path = 0, const svn_wc_status2_t * status = 0);
+    Status(const char * path = 0, const svn_wc_status2_t * status = 0);
 
     /**
      * copy constructor
      */
-    Status (const Status & src);
+    Status(const Status & src);
 
     /**
      * destructor
      */
-    ~Status ();
+    ~Status();
 
     /**
      * @return path of status entry
      */
     const char *
-    path () const;
+    path() const;
 
     /**
      * @return entry for this path
      * @retval entry.isValid () = false item is not versioned
      */
-    const Entry 
-    entry () const;
+    const Entry
+    entry() const;
 
     /**
-     * @return file status property enum of the "textual" component. 
+     * @return file status property enum of the "textual" component.
      */
-    const svn_wc_status_kind 
-    textStatus () const;
+    const svn_wc_status_kind
+    textStatus() const;
 
     /**
-     * @return file status property enum of the "property" component. 
+     * @return file status property enum of the "property" component.
      */
-    const svn_wc_status_kind 
-    propStatus () const;
+    const svn_wc_status_kind
+    propStatus() const;
 
     /**
      * @retval TRUE if under version control
      */
-    const bool 
-    isVersioned () const;
+    const bool
+    isVersioned() const;
 
     /**
      * @retval TRUE if copied
      */
-    const bool 
-    isCopied () const;
+    const bool
+    isCopied() const;
 
     /**
      * @retval TRUE if switched
      */
     const bool
-    isSwitched () const;
+    isSwitched() const;
 
     /**
      * @return the entry's text status in the repository
      */
     const svn_wc_status_kind
-    reposTextStatus () const;
+    reposTextStatus() const;
 
     /**
      * @return the entry's prop status in the repository
      */
     const svn_wc_status_kind
-    reposPropStatus () const;
+    reposPropStatus() const;
 
     /**
      * @return true if locked
      */
     const bool
-    isLocked () const;
+    isLocked() const;
 
     /**
      * @return true if has repository lock (not local)
      */
     const bool
-    isRepLock () const;
+    isRepLock() const;
 
     /**
      * @return lock token or null if not locked
      */
     const char *
-    lockToken () const;
+    lockToken() const;
 
     /**
      * @return lock owner or null if not locked
      */
     const char *
-    lockOwner () const;
+    lockOwner() const;
 
     /**
      * @return comment lock, null or no comment
      */
     const char *
-    lockComment () const;
+    lockComment() const;
 
     /**
      * @return lock creation date or 0 if not locked
      */
     const apr_time_t
-    lockCreationDate () const;
+    lockCreationDate() const;
 
     /**
      * assignment operator
@@ -156,13 +156,13 @@ namespace svn
     Status &
     operator = (const Status &);
 
-    /** 
+    /**
      * check whether the instance contains real data
      * or nothing if it has constructed with the default
      * constructor
      */
     bool
-    isset () const;
+    isset() const;
 
   private:
     struct Data;

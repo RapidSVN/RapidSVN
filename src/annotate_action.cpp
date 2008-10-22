@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,7 +39,7 @@
 #include "utils.hpp"
 #include "annotate_action.hpp"
 
-struct AnnotateAction::Data 
+struct AnnotateAction::Data
 {
 private:
   Action * action;
@@ -48,108 +48,108 @@ public:
   AnnotateData data;
   wxWindow * parent;
 
-  Data (Action * action_)
-    : action (action_)
+  Data(Action * action_)
+      : action(action_)
   {
   }
 
 
-  Data (Action * action_, AnnotateData & data_)
-    : action (action_), data (data_)
+  Data(Action * action_, AnnotateData & data_)
+      : action(action_), data(data_)
   {
   }
 
-  svn::Context * 
-  GetContext ()
+  svn::Context *
+  GetContext()
   {
-    return action->GetContext ();
+    return action->GetContext();
   }
 
   svn::AnnotatedFile *
-  GetAnnotatedFile (svn::Path path)
+  GetAnnotatedFile(svn::Path path)
   {
-    svn::Client client (GetContext ());
-    svn::AnnotatedFile * annotatedFile = client.annotate (path,
-        data.startRevision, data.endRevision);
+    svn::Client client(GetContext());
+    svn::AnnotatedFile * annotatedFile = client.annotate(path,
+                                         data.startRevision, data.endRevision);
     return annotatedFile;
   }
 };
 
-AnnotateAction::AnnotateAction (wxWindow * parent,
-                        const AnnotateData & data)
-  : Action (parent, _("Annotate"), UPDATE_LATER),
-    dlg (parent, _("Annotate"))
+AnnotateAction::AnnotateAction(wxWindow * parent,
+                               const AnnotateData & data)
+    : Action(parent, _("Annotate"), UPDATE_LATER),
+    dlg(parent, _("Annotate"))
 {
-  m = new Data (this);
+  m = new Data(this);
   m->parent = parent;
   m->data = data;
 }
 
 
-AnnotateAction::~AnnotateAction ()
+AnnotateAction::~AnnotateAction()
 {
   delete m;
 }
 
 
 bool
-AnnotateAction::Prepare ()
+AnnotateAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
   { // Busy cursor scope
     wxBusyCursor busyCursor;
-    
+
     // Now Annotate
     // If the data's path variable is set, then use that value
     // Otherwise use the value of GetTarget()
     // The data's path variable is set on the log dialog
     svn::AnnotatedFile * annotatedFile = NULL;
     svn::Path path;
-    if (m->data.path.IsEmpty ())
+    if (m->data.path.IsEmpty())
     {
-      path = GetTarget ();
+      path = GetTarget();
     }
     else
     {
-      path = PathUtf8 (m->data.path);
+      path = PathUtf8(m->data.path);
     }
-    annotatedFile = m->GetAnnotatedFile (path);
+    annotatedFile = m->GetAnnotatedFile(path);
     svn::AnnotatedFile::const_iterator it;
-    for (it=annotatedFile->begin (); it!=annotatedFile->end (); it++)
+    for (it=annotatedFile->begin(); it!=annotatedFile->end(); it++)
     {
-      svn::AnnotateLine line (*it);
-      dlg.AddAnnotateLine (line.revision (), Utf8ToLocal (line.author ()),
-          Utf8ToLocal (line.line ()));
+      svn::AnnotateLine line(*it);
+      dlg.AddAnnotateLine(line.revision(), Utf8ToLocal(line.author()),
+                          Utf8ToLocal(line.line()));
     }
-    dlg.AutoSizeColumn ();
+    dlg.AutoSizeColumn();
     delete annotatedFile;
   }
 
-  dlg.ShowModal ();
+  dlg.ShowModal();
 
   return true;
 }
 
 bool
-AnnotateAction::Perform ()
+AnnotateAction::Perform()
 {
   return true;
 }
 
 bool
-AnnotateAction::CheckStatusSel (const svn::StatusSel & statusSel)
+AnnotateAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  if (statusSel.size () != 1)
+  if (statusSel.size() != 1)
     return false;
 
-  if (statusSel.hasUnversioned ())
+  if (statusSel.hasUnversioned())
     return false;
 
-  if (statusSel.hasDirs ())
+  if (statusSel.hasDirs())
     return false;
 
   return true;

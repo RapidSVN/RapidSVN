@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -31,14 +31,16 @@
 class RapidSvnDropTarget : public wxFileDropTarget
 {
 public:
-  virtual bool 
-  OnDropFiles (wxCoord x, wxCoord y, const wxArrayString& filenames);
+  virtual bool
+  OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames);
 
-  virtual wxString 
-  GetDestinationPath () { return m_destination; }
+  virtual wxString
+  GetDestinationPath() {
+    return m_destination;
+  }
 
-  virtual wxString 
-  GetDestinationPath (const wxPoint & point) = 0;
+  virtual wxString
+  GetDestinationPath(const wxPoint & point) = 0;
 
 private:
   wxString m_destination;

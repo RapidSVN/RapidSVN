@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -58,17 +58,17 @@ enum
 class LogList : public wxListCtrl
 {
 public:
-  LogList (wxWindow * parent, const svn::LogEntries * entries)
-    : wxListCtrl (parent, LOG_LIST, wxDefaultPosition, 
-                  wxSize (365, 150), wxLC_REPORT)
+  LogList(wxWindow * parent, const svn::LogEntries * entries)
+      : wxListCtrl(parent, LOG_LIST, wxDefaultPosition,
+                   wxSize(365, 150), wxLC_REPORT)
   {
-    InitializeList (entries);
-    CentreOnParent ();
+    InitializeList(entries);
+    CentreOnParent();
   }
 
-  virtual ~LogList ()
+  virtual ~LogList()
   {
-    DeleteAllItems ();
+    DeleteAllItems();
   }
 
   /**
@@ -79,18 +79,18 @@ public:
    * @retval -1 not found/error
    */
   svn_revnum_t
-  GetRevisionForItem (long item) const
+  GetRevisionForItem(long item) const
   {
     wxListItem info;
     info.m_itemId = item;
     info.m_col = 0;
     info.m_mask = wxLIST_MASK_TEXT;
-  
-    if (!GetItem (info))
+
+    if (!GetItem(info))
       return -1;
 
     svn_revnum_t revnum=-1;
-    info.m_text.ToLong (&revnum);
+    info.m_text.ToLong(&revnum);
     return revnum;
   }
 
@@ -99,44 +99,44 @@ public:
    *
    * @return selected revision
    * @retval -1 if nothing was selected or the cell
-   *            contains an invalid string 
+   *            contains an invalid string
    */
   svn_revnum_t
-  GetSelectedRevision () const
+  GetSelectedRevision() const
   {
-    long item = GetNextItem (-1, wxLIST_NEXT_ALL, 
-                             wxLIST_STATE_SELECTED);
+    long item = GetNextItem(-1, wxLIST_NEXT_ALL,
+                            wxLIST_STATE_SELECTED);
     if (item == -1)
       return -1;
 
-    return GetRevisionForItem (item);
+    return GetRevisionForItem(item);
   }
 
   /**
    * returns the selected revisions.
-   * Like @a GetSelectedRevision, but can return 
+   * Like @a GetSelectedRevision, but can return
    * more revisions at once.
    *
    * @return if nothing is selected, an empty array
    *         will be returned
    */
   RevnumArray
-  GetSelectedRevisions () const
+  GetSelectedRevisions() const
   {
     RevnumArray array;
     long item = -1;
 
     do
     {
-      item = GetNextItem (item, wxLIST_NEXT_ALL,
-                               wxLIST_STATE_SELECTED);
+      item = GetNextItem(item, wxLIST_NEXT_ALL,
+                         wxLIST_STATE_SELECTED);
       if (item != -1)
       {
-        svn_revnum_t revnum (GetRevisionForItem (item));
+        svn_revnum_t revnum(GetRevisionForItem(item));
 
-        array.Add (revnum);
+        array.Add(revnum);
       }
-    } 
+    }
     while (item != -1);
 
     return array;
@@ -144,55 +144,55 @@ public:
 
 
   void
-  DeleteAllItems ()
+  DeleteAllItems()
   {
     // Delete the item data before deleting the items:
-    while (GetItemCount () > 0)
-      DeleteItem (0);
+    while (GetItemCount() > 0)
+      DeleteItem(0);
 
-    wxListCtrl::DeleteAllItems ();
+    wxListCtrl::DeleteAllItems();
   }
 
 private:
-  void OnSelected (wxListEvent& event);
+  void OnSelected(wxListEvent& event);
 
-  void InitializeList (const svn::LogEntries * entries)
+  void InitializeList(const svn::LogEntries * entries)
   {
-    SetSingleStyle (wxLC_REPORT);
+    SetSingleStyle(wxLC_REPORT);
 
-    InsertColumn (0, _("Revision"));
-    InsertColumn (1, _("User"));
-    InsertColumn (2, _("Date"));
-    InsertColumn (3, _("Log Message"));
+    InsertColumn(0, _("Revision"));
+    InsertColumn(1, _("User"));
+    InsertColumn(2, _("Date"));
+    InsertColumn(3, _("Log Message"));
 
-    SetColumnWidth (0, 65);
-    SetColumnWidth (1, 100);
-    SetColumnWidth (2, 150);
-    SetColumnWidth (3, 200);
+    SetColumnWidth(0, 65);
+    SetColumnWidth(1, 100);
+    SetColumnWidth(2, 150);
+    SetColumnWidth(3, 200);
 
     if (entries == 0)
       return;
 
     long index=0;
     svn::LogEntries::const_iterator it;
-    for (it=entries->begin (); it != entries->end (); it++ )
+    for (it=entries->begin(); it != entries->end(); it++)
     {
       const svn::LogEntry & entry = *it;
       wxString rev;
-      wxString dateStr (FormatDateTime (entry.date));
+      wxString dateStr(FormatDateTime(entry.date));
 
-      rev.Printf (wxT("%ld"), (long) entry.revision);
+      rev.Printf(wxT("%ld"), (long) entry.revision);
 
-      InsertItem (index, rev);
-      SetItem (index, 1, Utf8ToLocal (entry.author.c_str ()));
-      SetItem (index, 2, dateStr);
-      SetItem (index, 3, NewLinesToSpaces (Utf8ToLocal (entry.message.c_str ())));
+      InsertItem(index, rev);
+      SetItem(index, 1, Utf8ToLocal(entry.author.c_str()));
+      SetItem(index, 2, dateStr);
+      SetItem(index, 3, NewLinesToSpaces(Utf8ToLocal(entry.message.c_str())));
       index++;
     }
   }
 
-  wxString 
-  NewLinesToSpaces (const wxString& str)
+  wxString
+  NewLinesToSpaces(const wxString& str)
   {
     /*
     wxString result = str;
@@ -201,15 +201,15 @@ private:
     */
 
     wxString result;
-    if (str.Length () == 0)
+    if (str.Length() == 0)
     {
       return result;
     }
 
-    result.Alloc (str.Length ());
+    result.Alloc(str.Length());
     wxChar last = 0;
 
-    for (size_t idx = 0; idx < str.Length (); idx++)
+    for (size_t idx = 0; idx < str.Length(); idx++)
     {
       switch (str[idx])
       {
@@ -235,65 +235,65 @@ private:
 class AffectedList : public wxListCtrl
 {
 public:
-  AffectedList (wxWindow * parent)
-    : wxListCtrl (parent, -1, wxDefaultPosition, 
-                  wxSize (365, 150), wxLC_REPORT)
+  AffectedList(wxWindow * parent)
+      : wxListCtrl(parent, -1, wxDefaultPosition,
+                   wxSize(365, 150), wxLC_REPORT)
   {
-    InsertColumn (0, _("Action"));
-    InsertColumn (1, _("Path"));
-    InsertColumn (2, _("Copied from Path"));
-    InsertColumn (3, _("Copied from Rev"));
-    
-    CentreOnParent ();
+    InsertColumn(0, _("Action"));
+    InsertColumn(1, _("Path"));
+    InsertColumn(2, _("Copied from Path"));
+    InsertColumn(3, _("Copied from Rev"));
+
+    CentreOnParent();
   }
 
-  virtual ~AffectedList ()
+  virtual ~AffectedList()
   {
-    DeleteAllItems ();
+    DeleteAllItems();
   }
 
   void
-  DeleteAllItems ()
+  DeleteAllItems()
   {
     // Delete the item data before deleting the items:
-    while (GetItemCount () > 0)
-      DeleteItem (0);
+    while (GetItemCount() > 0)
+      DeleteItem(0);
 
-    wxListCtrl::DeleteAllItems ();
+    wxListCtrl::DeleteAllItems();
   }
-  
-  void SetValue (const std::list<svn::LogChangePathEntry> & changedPaths)
+
+  void SetValue(const std::list<svn::LogChangePathEntry> & changedPaths)
   {
-    DeleteAllItems ();
+    DeleteAllItems();
     int i=0;
     char actionBuffer [2];
     actionBuffer [1] = 0;
 
     std::list<svn::LogChangePathEntry>::const_iterator it;
 
-    for (it=changedPaths.begin (); it!=changedPaths.end (); it++)
+    for (it=changedPaths.begin(); it!=changedPaths.end(); it++)
     {
       const svn::LogChangePathEntry & changedPath = *it;
       actionBuffer [0] = changedPath.action;
-      
-      wxString label (Utf8ToLocal (actionBuffer));
-      wxString copyFromRev (wxEmptyString);
+
+      wxString label(Utf8ToLocal(actionBuffer));
+      wxString copyFromRev(wxEmptyString);
 
       if (changedPath.copyFromRevision != -1)
-        copyFromRev.Printf (wxT("%ld"), changedPath.copyFromRevision);
+        copyFromRev.Printf(wxT("%ld"), changedPath.copyFromRevision);
 
-      InsertItem (i, label);
-      SetItem (i, 1, Utf8ToLocal (changedPath.path.c_str ()));
-      SetItem (i, 2, Utf8ToLocal (changedPath.copyFromPath.c_str ()));
-      SetItem (i, 3, copyFromRev);
+      InsertItem(i, label);
+      SetItem(i, 1, Utf8ToLocal(changedPath.path.c_str()));
+      SetItem(i, 2, Utf8ToLocal(changedPath.copyFromPath.c_str()));
+      SetItem(i, 3, copyFromRev);
 
       i++;
     }
 
     // now refresh the column width
-    i=GetColumnCount ();
+    i=GetColumnCount();
     while (i-- > 0)
-      SetColumnWidth (i, (i == 0) ? wxLIST_AUTOSIZE_USEHEADER : wxLIST_AUTOSIZE);
+      SetColumnWidth(i, (i == 0) ? wxLIST_AUTOSIZE_USEHEADER : wxLIST_AUTOSIZE);
   }
 };
 
@@ -317,78 +317,78 @@ private:
   wxNotebook * m_notebook;
 
 public:
-  Data (wxWindow * parent_,
-        wxWindow * wnd,
-        const char * path_,
-        const svn::LogEntries * entries_)
-    : entries (entries_), path (Utf8ToLocal (path_)), 
-      parent (parent_), window (wnd)
+  Data(wxWindow * parent_,
+       wxWindow * wnd,
+       const char * path_,
+       const svn::LogEntries * entries_)
+      : entries(entries_), path(Utf8ToLocal(path_)),
+      parent(parent_), window(wnd)
   {
     // create controls
-    wxSplitterWindow* splitterWindow = new wxSplitterWindow (wnd, -1, wxDefaultPosition, wxDefaultSize, 0);
-    wxPanel* topPanel = new wxPanel (splitterWindow, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+    wxSplitterWindow* splitterWindow = new wxSplitterWindow(wnd, -1, wxDefaultPosition, wxDefaultSize, 0);
+    wxPanel* topPanel = new wxPanel(splitterWindow, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     wxPanel* bottomPanel = new wxPanel(splitterWindow, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
     wxString history;
-    history.Printf (_("History: %d revisions"), entries->size ());
-    wxStaticText * historyLabel = new wxStaticText (topPanel, -1, history);
+    history.Printf(_("History: %d revisions"), entries->size());
+    wxStaticText * historyLabel = new wxStaticText(topPanel, -1, history);
 
-    m_logList = new LogList (topPanel, entries);
+    m_logList = new LogList(topPanel, entries);
 
-    m_notebook = new wxNotebook (bottomPanel, -1);
-    m_logMsg = new wxTextCtrl (m_notebook, LOG_MSG, wxEmptyString, 
-                               wxDefaultPosition, wxSize (420, 210), 
-                               wxTE_READONLY | wxTE_MULTILINE );
-    m_notebook->AddPage (m_logMsg, _("Log Message:"));
-    m_affectedList = new AffectedList (m_notebook);
-    m_notebook->AddPage (m_affectedList, _("Affected Files/Dirs"));
+    m_notebook = new wxNotebook(bottomPanel, -1);
+    m_logMsg = new wxTextCtrl(m_notebook, LOG_MSG, wxEmptyString,
+                              wxDefaultPosition, wxSize(420, 210),
+                              wxTE_READONLY | wxTE_MULTILINE);
+    m_notebook->AddPage(m_logMsg, _("Log Message:"));
+    m_affectedList = new AffectedList(m_notebook);
+    m_notebook->AddPage(m_affectedList, _("Affected Files/Dirs"));
 
-    wxButton * buttonClose = new wxButton (topPanel, wxID_OK, _("&Close"));
-    m_buttonView  = new wxButton (topPanel, ID_View,  _("&View"));
-    m_buttonGet   = new wxButton (topPanel, ID_Get,   _("&Get"));
-    m_buttonDiff  = new wxButton (topPanel, ID_Diff,  _("&Diff"));
-    m_buttonMerge = new wxButton (topPanel, ID_Merge, _("&Merge"));
-    m_buttonAnnotate = new wxButton (topPanel, ID_Annotate, _("&Annotate"));
+    wxButton * buttonClose = new wxButton(topPanel, wxID_OK, _("&Close"));
+    m_buttonView  = new wxButton(topPanel, ID_View,  _("&View"));
+    m_buttonGet   = new wxButton(topPanel, ID_Get,   _("&Get"));
+    m_buttonDiff  = new wxButton(topPanel, ID_Diff,  _("&Diff"));
+    m_buttonMerge = new wxButton(topPanel, ID_Merge, _("&Merge"));
+    m_buttonAnnotate = new wxButton(topPanel, ID_Annotate, _("&Annotate"));
 
     // View/Get/Diff disabled for Alpha 3 Milestone
-    m_buttonView ->Enable (false);
-    m_buttonGet  ->Enable (false);
-    m_buttonDiff ->Enable (false);
-    m_buttonMerge->Enable (false);
-    m_buttonAnnotate->Enable (false);
+    m_buttonView ->Enable(false);
+    m_buttonGet  ->Enable(false);
+    m_buttonDiff ->Enable(false);
+    m_buttonMerge->Enable(false);
+    m_buttonAnnotate->Enable(false);
 
     // position controls
 
-    wxBoxSizer * logSizer = new wxBoxSizer (wxVERTICAL);
-    logSizer->Add (historyLabel, 0, wxALL, 5);
-    logSizer->Add (m_logList, 1, wxLEFT | wxEXPAND);
+    wxBoxSizer * logSizer = new wxBoxSizer(wxVERTICAL);
+    logSizer->Add(historyLabel, 0, wxALL, 5);
+    logSizer->Add(m_logList, 1, wxLEFT | wxEXPAND);
 
-    wxBoxSizer * buttonSizer = new wxBoxSizer (wxVERTICAL);
-    buttonSizer->Add (buttonClose,   0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add (m_buttonView,  0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add (m_buttonGet,   0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add (m_buttonDiff,  0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add (m_buttonMerge, 0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add (m_buttonAnnotate, 0, wxALL | wxEXPAND, 5);
+    wxBoxSizer * buttonSizer = new wxBoxSizer(wxVERTICAL);
+    buttonSizer->Add(buttonClose,   0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add(m_buttonView,  0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add(m_buttonGet,   0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add(m_buttonDiff,  0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add(m_buttonMerge, 0, wxALL | wxEXPAND, 5);
+    buttonSizer->Add(m_buttonAnnotate, 0, wxALL | wxEXPAND, 5);
 
-    wxBoxSizer * topSizer = new wxBoxSizer (wxHORIZONTAL);
-    topSizer->Add (logSizer, 1, wxEXPAND | wxALL, 5);
-    topSizer->Add (buttonSizer, 0, wxALL, 5);
+    wxBoxSizer * topSizer = new wxBoxSizer(wxHORIZONTAL);
+    topSizer->Add(logSizer, 1, wxEXPAND | wxALL, 5);
+    topSizer->Add(buttonSizer, 0, wxALL, 5);
 
-    wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
-    topPanel->SetSizerAndFit (topSizer);
-    wxBoxSizer * bottomSizer = new wxBoxSizer (wxHORIZONTAL);
-    bottomSizer->Add (m_notebook, 1, wxALL | wxEXPAND, 5);
-    bottomPanel->SetSizerAndFit (bottomSizer);
-    splitterWindow->SplitHorizontally (topPanel, bottomPanel, -100);
-    splitterWindow->SetSashGravity (0.5);
-    mainSizer->Add (splitterWindow, 1, wxEXPAND, 0);
+    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
+    topPanel->SetSizerAndFit(topSizer);
+    wxBoxSizer * bottomSizer = new wxBoxSizer(wxHORIZONTAL);
+    bottomSizer->Add(m_notebook, 1, wxALL | wxEXPAND, 5);
+    bottomPanel->SetSizerAndFit(bottomSizer);
+    splitterWindow->SplitHorizontally(topPanel, bottomPanel, -100);
+    splitterWindow->SetSashGravity(0.5);
+    mainSizer->Add(splitterWindow, 1, wxEXPAND, 0);
 
-    wnd->SetAutoLayout (true);
-    wnd->SetSizer (mainSizer);
+    wnd->SetAutoLayout(true);
+    wnd->SetSizer(mainSizer);
 
-    mainSizer->SetSizeHints (wnd);
-    mainSizer->Fit (wnd);
+    mainSizer->SetSizeHints(wnd);
+    mainSizer->Fit(wnd);
   }
 
   /**
@@ -396,93 +396,93 @@ public:
    * @a CheckButtons makes sure this command will
    * only be enabled if one entry in the list is
    * selected
-   */ 
+   */
   void
-  OnGet ()
+  OnGet()
   {
-    svn_revnum_t revnum = m_logList->GetSelectedRevision ();
+    svn_revnum_t revnum = m_logList->GetSelectedRevision();
 
-    GetData * data = new GetData ();
+    GetData * data = new GetData();
     data->revision = revnum;
     data->path = path;
 
-    ActionEvent::Post (parent, TOKEN_GET, data);
+    ActionEvent::Post(parent, TOKEN_GET, data);
   }
 
   /**
    * handle the "View" button
    */
   void
-  OnView ()
+  OnView()
   {
-    svn_revnum_t revnum = m_logList->GetSelectedRevision ();
- 
-    GetData * data = new GetData ();
+    svn_revnum_t revnum = m_logList->GetSelectedRevision();
+
+    GetData * data = new GetData();
     data->revision = revnum;
     data->path = path;
 
-    ActionEvent::Post (parent, TOKEN_VIEW, data);
+    ActionEvent::Post(parent, TOKEN_VIEW, data);
   }
-    
+
   void
-  OnSelected (long index)
+  OnSelected(long index)
   {
     const svn::LogEntry & entry = (*entries)[index];
 
-    wxString message (Utf8ToLocal (entry.message.c_str ()));
-    message.Trim ();
+    wxString message(Utf8ToLocal(entry.message.c_str()));
+    message.Trim();
 
-    m_logMsg->SetValue (message);
+    m_logMsg->SetValue(message);
 
-    m_affectedList->SetValue (entry.changedPaths);
+    m_affectedList->SetValue(entry.changedPaths);
 
-    CheckButtons ();
+    CheckButtons();
   }
 
   void
-  OnDiff ()
+  OnDiff()
   {
-    RevnumArray array (m_logList->GetSelectedRevisions ());
+    RevnumArray array(m_logList->GetSelectedRevisions());
 
     DiffData * data = 0;
-    if (array.Count () == 2)
+    if (array.Count() == 2)
     {
-      data = new DiffData ();
+      data = new DiffData();
       data->path = path;
       data->compareType = DiffData::TWO_REVISIONS;
-      data->revision1 = svn::Revision (array[0]);
-      data->revision2 = svn::Revision (array[1]);
+      data->revision1 = svn::Revision(array[0]);
+      data->revision2 = svn::Revision(array[1]);
     }
-    else if (array.Count () == 1)
+    else if (array.Count() == 1)
     {
-      data = new DiffData ();
+      data = new DiffData();
       data->path = path;
       data->compareType = DiffData::WITH_DIFFERENT_REVISION;
-      data->revision1 = svn::Revision (array[0]);
+      data->revision1 = svn::Revision(array[0]);
     }
     else
     {
-      wxMessageBox (_("Invalid selection. At least one revisions is needed for diff and no more than two."),
-                    _("Error"), wxOK | wxICON_ERROR, parent);
+      wxMessageBox(_("Invalid selection. At least one revisions is needed for diff and no more than two."),
+                   _("Error"), wxOK | wxICON_ERROR, parent);
       return;
     }
 
-    ActionEvent::Post (parent, TOKEN_DIFF, data);
+    ActionEvent::Post(parent, TOKEN_DIFF, data);
   }
 
   void
-  OnMerge ()
+  OnMerge()
   {
-    RevnumArray array (m_logList->GetSelectedRevisions ());
+    RevnumArray array(m_logList->GetSelectedRevisions());
 
-    if (array.Count () != 2)
+    if (array.Count() != 2)
     {
-      wxMessageBox (_("Invalid selection. Exactly two revisions needed for merge."),
-                    _("Error"), wxOK | wxICON_ERROR, parent);
+      wxMessageBox(_("Invalid selection. Exactly two revisions needed for merge."),
+                   _("Error"), wxOK | wxICON_ERROR, parent);
       return;
     }
 
-    MergeData * data = new MergeData ();
+    MergeData * data = new MergeData();
     data->Path1 = path;
     data->Path2 = path;
     if (array[0] > array[1])
@@ -496,112 +496,112 @@ public:
       data->Path2Rev << array[1];
     }
 
-    ActionEvent::Post (parent, TOKEN_MERGE, data);
+    ActionEvent::Post(parent, TOKEN_MERGE, data);
   }
 
   void
-  OnAnnotate ()
+  OnAnnotate()
   {
-    RevnumArray array (m_logList->GetSelectedRevisions ());
+    RevnumArray array(m_logList->GetSelectedRevisions());
 
     AnnotateData * data = 0;
-    if (array.Count () == 1)
+    if (array.Count() == 1)
     {
-      data = new AnnotateData ();
+      data = new AnnotateData();
       data->path = path;
-      data->endRevision = svn::Revision (array[0]);
+      data->endRevision = svn::Revision(array[0]);
     }
     else
     {
-      wxMessageBox (_("Invalid selection. Only one revision may be selected for annotate"),
-                    _("Error"), wxOK | wxICON_ERROR, parent);
+      wxMessageBox(_("Invalid selection. Only one revision may be selected for annotate"),
+                   _("Error"), wxOK | wxICON_ERROR, parent);
       return;
     }
 
-    ActionEvent::Post (parent, TOKEN_ANNOTATE, data);
+    ActionEvent::Post(parent, TOKEN_ANNOTATE, data);
   }
 
-  void 
-  CheckButtons ()
+  void
+  CheckButtons()
   {
-    svn::Path pathUtf8 (PathUtf8 (path));
-    bool isUrl = pathUtf8.isUrl ();
-    int count = m_logList->GetSelectedItemCount ();
+    svn::Path pathUtf8(PathUtf8(path));
+    bool isUrl = pathUtf8.isUrl();
+    int count = m_logList->GetSelectedItemCount();
 
-    m_buttonGet  ->Enable ((count == 1) && (!isUrl));
-    m_buttonView ->Enable (count == 1);
+    m_buttonGet  ->Enable((count == 1) && (!isUrl));
+    m_buttonView ->Enable(count == 1);
 
-    // If the bookmark is a working copy, then we can 
+    // If the bookmark is a working copy, then we can
     // compare a revision against the local copy
     if (isUrl)
-      m_buttonDiff ->Enable ((count == 2));
+      m_buttonDiff ->Enable((count == 2));
     else
-      m_buttonDiff ->Enable ((count == 1) || (count == 2));
+      m_buttonDiff ->Enable((count == 1) || (count == 2));
 
-    m_buttonMerge->Enable (count == 2);
-    m_buttonAnnotate->Enable (count == 1);
+    m_buttonMerge->Enable(count == 2);
+    m_buttonAnnotate->Enable(count == 1);
   }
 };
 
-BEGIN_EVENT_TABLE (LogDlg, wxDialog)
-  EVT_BUTTON (ID_Get,   LogDlg::OnGet)
-  EVT_BUTTON (ID_View,  LogDlg::OnView)
-  EVT_BUTTON (ID_Diff,  LogDlg::OnDiff)
-  EVT_BUTTON (ID_Merge, LogDlg::OnMerge)
-  EVT_BUTTON (ID_Annotate, LogDlg::OnAnnotate)
-  EVT_LIST_ITEM_SELECTED (LOG_LIST, LogDlg::OnSelected)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(LogDlg, wxDialog)
+  EVT_BUTTON(ID_Get,   LogDlg::OnGet)
+  EVT_BUTTON(ID_View,  LogDlg::OnView)
+  EVT_BUTTON(ID_Diff,  LogDlg::OnDiff)
+  EVT_BUTTON(ID_Merge, LogDlg::OnMerge)
+  EVT_BUTTON(ID_Annotate, LogDlg::OnAnnotate)
+  EVT_LIST_ITEM_SELECTED(LOG_LIST, LogDlg::OnSelected)
+END_EVENT_TABLE()
 
-LogDlg::LogDlg (wxWindow * parent,
-                const char * path,
-                const svn::LogEntries * entries)
-  : wxDialog (parent, -1, _("Log History"), wxDefaultPosition, 
-              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
+LogDlg::LogDlg(wxWindow * parent,
+               const char * path,
+               const svn::LogEntries * entries)
+    : wxDialog(parent, -1, _("Log History"), wxDefaultPosition,
+               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
 {
-  m = new Data (parent, this, path, entries);
-  CentreOnParent ();
+  m = new Data(parent, this, path, entries);
+  CentreOnParent();
 }
 
-LogDlg::~LogDlg ()
+LogDlg::~LogDlg()
 {
   delete m;
 }
 
 void
-LogDlg::OnGet (wxCommandEvent & event)
+LogDlg::OnGet(wxCommandEvent & event)
 {
-  m->OnGet ();
+  m->OnGet();
 }
 
 void
-LogDlg::OnView (wxCommandEvent & event)
+LogDlg::OnView(wxCommandEvent & event)
 {
-  m->OnView ();
+  m->OnView();
 }
 
 void
-LogDlg::OnSelected (wxListEvent& event)
+LogDlg::OnSelected(wxListEvent& event)
 {
-  m->OnSelected (event.m_itemIndex);
+  m->OnSelected(event.m_itemIndex);
 }
 
 
 void
-LogDlg::OnDiff (wxCommandEvent & event)
+LogDlg::OnDiff(wxCommandEvent & event)
 {
-  m->OnDiff ();
+  m->OnDiff();
 }
 
 void
-LogDlg::OnMerge (wxCommandEvent & event)
+LogDlg::OnMerge(wxCommandEvent & event)
 {
-  m->OnMerge ();
+  m->OnMerge();
 }
 
 void
-LogDlg::OnAnnotate (wxCommandEvent & event)
+LogDlg::OnAnnotate(wxCommandEvent & event)
 {
-  m->OnAnnotate ();
+  m->OnAnnotate();
 }
 
 /* -----------------------------------------------------------------

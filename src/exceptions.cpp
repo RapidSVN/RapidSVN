@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -28,13 +28,13 @@
 // app
 #include "exceptions.hpp"
 
-RapidSvnEx::RapidSvnEx (const wxString & __estr, const long __code)
+RapidSvnEx::RapidSvnEx(const wxString & __estr, const long __code)
 {
   code = __code;
-  what (__estr);
+  what(__estr);
 }
 
-RapidSvnEx::~RapidSvnEx ()
+RapidSvnEx::~RapidSvnEx()
 {
 }
 
@@ -50,9 +50,9 @@ RapidSvnEx & RapidSvnEx::operator = (const RapidSvnEx & rhs)
 }
 
 void
-RapidSvnEx::what (const wxString & __what)
+RapidSvnEx::what(const wxString & __what)
 {
-  estr.Printf (_("%s  code: %ld"), __what.c_str (), code);
+  estr.Printf(_("%s  code: %ld"), __what.c_str(), code);
 }
 /* -----------------------------------------------------------------
  * local variables:

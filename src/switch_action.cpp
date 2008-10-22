@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -46,73 +46,73 @@ public:
   bool relocate;
 };
 
-SwitchAction::SwitchAction (wxWindow * parent)
- : Action (parent, _("Switch URL"))
+SwitchAction::SwitchAction(wxWindow * parent)
+    : Action(parent, _("Switch URL"))
 {
-  m = new Data ();
+  m = new Data();
 }
 
 
-SwitchAction::~SwitchAction ()
+SwitchAction::~SwitchAction()
 {
   delete m;
 }
 
 
 bool
-SwitchAction::Prepare ()
+SwitchAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
   // first try to get the URL for the target
-  svn::Path path = GetTarget ();
-  svn::Client client (GetContext ());
-  svn::InfoVector infoVector (client.info (path));
-  if (infoVector.size () != 1)
+  svn::Path path = GetTarget();
+  svn::Client client(GetContext());
+  svn::InfoVector infoVector(client.info(path));
+  if (infoVector.size() != 1)
     return false;
 
-  m->old_url = Utf8ToLocal (svn::Url::unescape (infoVector[0].url ()));
+  m->old_url = Utf8ToLocal(svn::Url::unescape(infoVector[0].url()));
 
-  SwitchDlg dlg (GetParent (), m->old_url, true, false);
+  SwitchDlg dlg(GetParent(), m->old_url, true, false);
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m->new_url = dlg.GetUrl ();
-  m->revision = dlg.GetRevision ();
-  m->recursive = dlg.GetRecursive ();
-  m->relocate = dlg.GetRelocate ();
+  m->new_url = dlg.GetUrl();
+  m->revision = dlg.GetRevision();
+  m->recursive = dlg.GetRecursive();
+  m->relocate = dlg.GetRelocate();
 
   return true;
 }
 
 bool
-SwitchAction::Perform ()
+SwitchAction::Perform()
 {
-  svn::Path path = GetTarget ();
-  svn::Client client (GetContext ());
+  svn::Path path = GetTarget();
+  svn::Client client(GetContext());
 
   if (m->relocate)
-    client.relocate (path, 
-                     LocalToUtf8 (m->old_url).c_str (),
-                     LocalToUtf8 (m->new_url).c_str (),
-                     m->recursive);
+    client.relocate(path,
+                    LocalToUtf8(m->old_url).c_str(),
+                    LocalToUtf8(m->new_url).c_str(),
+                    m->recursive);
   else
-    client.doSwitch (path,  
-                     LocalToUtf8 (m->new_url).c_str (), 
-                     m->revision,
-                     m->recursive);
-  
+    client.doSwitch(path,
+                    LocalToUtf8(m->new_url).c_str(),
+                    m->revision,
+                    m->recursive);
+
   return true;
 }
 
 bool
-SwitchAction::CheckStatusSel (const svn::StatusSel & statusSel)
+SwitchAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,73 +39,73 @@ public:
   wxString msg;
   void * data;
 
-  Data (wxWindow * parent_, int eventId_) :
-    parent (parent_), eventId (eventId_)
+  Data(wxWindow * parent_, int eventId_) :
+      parent(parent_), eventId(eventId_)
   {
-    event = new wxCommandEvent (wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
-    event->SetInt (eventId);
+    event = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
+    event->SetInt(eventId);
   }
 
-  ~Data ()
+  ~Data()
   {
     delete event;
   }
 };
 
-ActionEvent::ActionEvent (wxWindow * parent, int eventId)
-  : m (NULL)
+ActionEvent::ActionEvent(wxWindow * parent, int eventId)
+    : m(NULL)
 {
-  init (parent, eventId);
+  init(parent, eventId);
 }
 
-ActionEvent::ActionEvent (wxWindow * parent, int eventId, const wxString & msg)
-  : m (NULL)
+ActionEvent::ActionEvent(wxWindow * parent, int eventId, const wxString & msg)
+    : m(NULL)
 {
-  init (parent, eventId, msg);
+  init(parent, eventId, msg);
 //  m->event->SetString (msg);
 }
 
-ActionEvent::ActionEvent (wxWindow * parent, int eventId, void * data)
-  : m (NULL)
+ActionEvent::ActionEvent(wxWindow * parent, int eventId, void * data)
+    : m(NULL)
 {
-  init (parent, eventId, data);
+  init(parent, eventId, data);
 //  m->event->SetClientData (data);
 }
 
-ActionEvent::~ActionEvent ()
+ActionEvent::~ActionEvent()
 {
   delete m;
 }
 
 void
-ActionEvent::init (wxWindow * parent, int eventId)
+ActionEvent::init(wxWindow * parent, int eventId)
 {
   if (m == NULL)
   {
-    m = new Data (parent, eventId);
+    m = new Data(parent, eventId);
   }
   else
   {
-    m->event->SetInt (eventId);
-    m->event->SetString (wxEmptyString);
-    m->event->SetClientData (NULL);
+    m->event->SetInt(eventId);
+    m->event->SetString(wxEmptyString);
+    m->event->SetClientData(NULL);
   }
 }
 
 void
-ActionEvent::init (wxWindow * parent, int eventId, const wxString & msg)
+ActionEvent::init(wxWindow * parent, int eventId, const wxString & msg)
 {
-  init (parent, eventId);
-  m->event->SetString (msg);
-  m->event->SetClientData (NULL);
+  init(parent, eventId);
+  m->event->SetString(msg);
+  m->event->SetClientData(NULL);
 }
 
 void
-ActionEvent::init (wxWindow * parent, int eventId, void * data)
+ActionEvent::init(wxWindow * parent, int eventId, void * data)
 {
-  init (parent, eventId);
-  m->event->SetClientData (data);
-  m->event->SetString (wxEmptyString);
+  init(parent, eventId);
+  m->event->SetClientData(data);
+  m->event->SetString(wxEmptyString);
 }
 
 // void
@@ -127,30 +127,30 @@ ActionEvent::init (wxWindow * parent, int eventId, void * data)
 // }
 
 void
-ActionEvent::Post () const
+ActionEvent::Post() const
 {
-  wxPostEvent (m->parent, *m->event);
+  wxPostEvent(m->parent, *m->event);
 }
 
 void
-ActionEvent::Post (wxWindow * parent, int event_id)
+ActionEvent::Post(wxWindow * parent, int event_id)
 {
-  ActionEvent event (parent, event_id);
-  event.Post ();
+  ActionEvent event(parent, event_id);
+  event.Post();
 }
 
 void
-ActionEvent::Post (wxWindow * parent, int event_id, const wxString & msg)
+ActionEvent::Post(wxWindow * parent, int event_id, const wxString & msg)
 {
-  ActionEvent event (parent, event_id, msg);
-  event.Post ();
+  ActionEvent event(parent, event_id, msg);
+  event.Post();
 }
 
 void
-ActionEvent::Post (wxWindow * parent, int event_id, void * data)
+ActionEvent::Post(wxWindow * parent, int event_id, void * data)
 {
-  ActionEvent event (parent, event_id, data);
-  event.Post ();
+  ActionEvent event(parent, event_id, data);
+  event.Post();
 }
 
 /* -----------------------------------------------------------------

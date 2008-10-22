@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -38,21 +38,21 @@
 class PropertyDlg : public ListEditorDlg
 {
 public:
-  PropertyDlg (wxWindow * parent, svn::Context * context,
-               const svn::Path & target);
+  PropertyDlg(wxWindow * parent, svn::Context * context,
+              const svn::Path & target);
 
   /**
    * destructor
    */
-  virtual ~PropertyDlg ();
+  virtual ~PropertyDlg();
 
 
 protected:
   virtual void
-  ReadFromGrid ();
+  ReadFromGrid();
 
   virtual void
-  WriteToGrid ();
+  WriteToGrid();
 
 private:
   struct Data;
@@ -61,12 +61,12 @@ private:
   /**
    * disallow default constructor
    */
-  PropertyDlg ();
+  PropertyDlg();
 
   /**
    * disallow copy constructor
    */
-  PropertyDlg (const PropertyDlg &);
+  PropertyDlg(const PropertyDlg &);
 
   /**
    * disallow assignment operator

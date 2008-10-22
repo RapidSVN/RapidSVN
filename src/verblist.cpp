@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -46,12 +46,12 @@
  * NON WINDOWS IMPLEMENTATION OF VerbList
  *********************************************************************/
 
-VerbList::VerbList ()
+VerbList::VerbList()
 {
 }
 
 
-VerbList::~VerbList ()
+VerbList::~VerbList()
 {
 }
 
@@ -62,22 +62,22 @@ VerbList::InitFromDocument(const wxString & documentPath, bool isAFolder)
 
 
 size_t
-VerbList::GetCount () const
+VerbList::GetCount() const
 {
   return 0;
 }
 
 
 const wxString &
-VerbList::GetName (size_t index) const
+VerbList::GetName(size_t index) const
 {
-  static const wxString empty (wxT(""));
+  static const wxString empty(wxT(""));
   return empty;
 }
 
 
 void
-VerbList::Launch (size_t index) const
+VerbList::Launch(size_t index) const
 {
 }
 
@@ -102,9 +102,9 @@ struct Verb
   wxString m_dde_app;
   wxString m_dde_topic;
 
-  Verb ();
+  Verb();
 
-  virtual ~ Verb () {};
+  virtual ~ Verb() {};
 
   /**
    * Read verb information from the given verb of the given key in the
@@ -139,64 +139,64 @@ struct VerbList::Data
 
 //*********************************************************************
 
-Verb::Verb () : m_uses_dde (false)
+Verb::Verb() : m_uses_dde(false)
 {
 }
 
 bool
-Verb::ReadFromRegistry (const wxRegKey & base, const wxString & verb_name)
+Verb::ReadFromRegistry(const wxRegKey & base, const wxString & verb_name)
 {
-  // Store descriptive verb name 
+  // Store descriptive verb name
   m_name = verb_name;
 
-  wxString command_key_name (verb_name + wxT("\\command"));
+  wxString command_key_name(verb_name + wxT("\\command"));
 
   // Read command key
-  if (!base.HasSubKey (command_key_name))
+  if (!base.HasSubKey(command_key_name))
     return false;
 
-  wxRegKey command_key (base, command_key_name);
+  wxRegKey command_key(base, command_key_name);
 
-  command_key.QueryValue (NULL, m_command);
+  command_key.QueryValue(NULL, m_command);
 
   // Attempt to read ddeexec key
   m_dde_command = wxT("");
   m_dde_topic = wxT("");
   m_dde_app = wxT("");
 
-  const wxString dde_command_key_name (verb_name + wxT("\\ddeexec"));
-  m_uses_dde = base.HasSubKey (dde_command_key_name);
+  const wxString dde_command_key_name(verb_name + wxT("\\ddeexec"));
+  m_uses_dde = base.HasSubKey(dde_command_key_name);
   if (m_uses_dde)
   {
-    wxRegKey dde_command_key (base, dde_command_key_name);;
-    if (dde_command_key.HasValue (NULL))
-      dde_command_key.QueryValue (NULL, m_dde_command);
+    wxRegKey dde_command_key(base, dde_command_key_name);;
+    if (dde_command_key.HasValue(NULL))
+      dde_command_key.QueryValue(NULL, m_dde_command);
 
-    const wxString dde_topic_name (wxT("Topic"));
-    if (dde_command_key.HasSubKey (dde_topic_name))
+    const wxString dde_topic_name(wxT("Topic"));
+    if (dde_command_key.HasSubKey(dde_topic_name))
     {
-      wxRegKey dde_topic_key (dde_command_key, dde_topic_name);
-      if (dde_topic_key.HasValue (NULL))
-        dde_topic_key.QueryValue (NULL, m_dde_topic);
+      wxRegKey dde_topic_key(dde_command_key, dde_topic_name);
+      if (dde_topic_key.HasValue(NULL))
+        dde_topic_key.QueryValue(NULL, m_dde_topic);
     }
 
-    const wxString dde_application_name (wxT("Application"));
-    if (dde_command_key.HasSubKey (dde_application_name))
+    const wxString dde_application_name(wxT("Application"));
+    if (dde_command_key.HasSubKey(dde_application_name))
     {
-      wxRegKey dde_app_key (dde_command_key, dde_application_name);
-      if (dde_app_key.HasValue (NULL))
-        dde_app_key.QueryValue (NULL, m_dde_app);
+      wxRegKey dde_app_key(dde_command_key, dde_application_name);
+      if (dde_app_key.HasValue(NULL))
+        dde_app_key.QueryValue(NULL, m_dde_app);
     }
   }
 
   return true;
 }
 
-void 
-Verb::Launch (const wxString  & document_path) const
+void
+Verb::Launch(const wxString  & document_path) const
 {
-  ShellExecute (NULL, m_name.c_str (), 
-                document_path.c_str (), NULL, NULL, SW_SHOWNORMAL);
+  ShellExecute(NULL, m_name.c_str(),
+               document_path.c_str(), NULL, NULL, SW_SHOWNORMAL);
   // TODO: error handling
 }
 
@@ -212,8 +212,8 @@ VerbList::~VerbList()
   delete m;
 }
 
-void 
-VerbList::InitFromDocument (const wxString & document_path, bool isAFolder)
+void
+VerbList::InitFromDocument(const wxString & document_path, bool isAFolder)
 {
 
   // Algorithm:
@@ -229,7 +229,7 @@ VerbList::InitFromDocument (const wxString & document_path, bool isAFolder)
   m->document_path = document_path;
 
   // Make sure list is empty
-  m->verb_list.clear ();
+  m->verb_list.clear();
 
 
   wxString progid_key_name;
@@ -242,81 +242,81 @@ VerbList::InitFromDocument (const wxString & document_path, bool isAFolder)
   else
   {
     // Find document extension
-    if (!m->document_path.HasExt ())
+    if (!m->document_path.HasExt())
       // Nothing to go on; we cannot provide an editor
       return;
 
-    wxString extension_key_name (wxT(".") + m->document_path.GetExt ());
-    if (!regKeyHKCR.HasSubKey (extension_key_name))
+    wxString extension_key_name(wxT(".") + m->document_path.GetExt());
+    if (!regKeyHKCR.HasSubKey(extension_key_name))
       return;
 
-    wxRegKey ext_key (regKeyHKCR, extension_key_name);
-    if (!ext_key.HasValue (NULL))
-      return; 
+    wxRegKey ext_key(regKeyHKCR, extension_key_name);
+    if (!ext_key.HasValue(NULL))
+      return;
 
-    ext_key.QueryValue (NULL, progid_key_name);
+    ext_key.QueryValue(NULL, progid_key_name);
   }
 
   // Get information on progid (name, verbs)
-  if (!regKeyHKCR.HasSubKey (progid_key_name))
+  if (!regKeyHKCR.HasSubKey(progid_key_name))
     return;
 
-  wxRegKey progid_key (regKeyHKCR, progid_key_name);
+  wxRegKey progid_key(regKeyHKCR, progid_key_name);
 
   // Get long name of progid (ignored if not found)
-  if (progid_key.HasValue (NULL))
-    progid_key.QueryValue (NULL, m->document_type_name);
+  if (progid_key.HasValue(NULL))
+    progid_key.QueryValue(NULL, m->document_type_name);
 
   // Get verbs of progid
-  const wxString progid_shell (wxT("shell"));
-  if (!progid_key.HasSubKey (progid_shell))
+  const wxString progid_shell(wxT("shell"));
+  if (!progid_key.HasSubKey(progid_shell))
     return;
 
-  wxRegKey verb_base_key (progid_key, progid_shell);
+  wxRegKey verb_base_key(progid_key, progid_shell);
 
   // Get name of default verb (ignored if not found)
 
-  wxString default_verb_name (wxT(""));
-  if (verb_base_key.HasValue (NULL))
-    verb_base_key.QueryValue (NULL, default_verb_name);
+  wxString default_verb_name(wxT(""));
+  if (verb_base_key.HasValue(NULL))
+    verb_base_key.QueryValue(NULL, default_verb_name);
 
   wxString verb_key_name;
   long index;
-  bool ok = verb_base_key.GetFirstKey (verb_key_name, index);
+  bool ok = verb_base_key.GetFirstKey(verb_key_name, index);
 
   while (ok)
   {
     Verb verb;
-    if (verb.ReadFromRegistry (verb_base_key, verb_key_name))
+    if (verb.ReadFromRegistry(verb_base_key, verb_key_name))
     {
       // Place first if default
       if (verb_key_name == default_verb_name)
-        m->verb_list.insert (m->verb_list.begin (), verb);
+        m->verb_list.insert(m->verb_list.begin(), verb);
       else
-        m->verb_list.push_back (verb);
+        m->verb_list.push_back(verb);
     }
 
     // select next key
-    ok = verb_base_key.GetNextKey (verb_key_name, index);
+    ok = verb_base_key.GetNextKey(verb_key_name, index);
   }
 }
 
-size_t 
-VerbList::GetCount () const
+size_t
+VerbList::GetCount() const
 {
-  return m->verb_list.size ();
+  return m->verb_list.size();
 }
 
 const wxString &
-VerbList::GetName (size_t index) const
+VerbList::GetName(size_t index) const
 {
   return m->verb_list[index].m_name;
 }
 
-void 
-VerbList::Launch (size_t index) const
+void
+VerbList::Launch(size_t index) const
 {
-  m->verb_list[index].Launch (m->document_path.GetFullPath ());
+  m->verb_list[index].Launch(m->document_path.GetFullPath());
 }
 
 

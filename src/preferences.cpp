@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -32,9 +32,9 @@
 
 // platform dependant constants
 #ifdef _WIN32
-  static const wxChar * DEFAULT_EXPLORER = wxT("explorer.exe");
+static const wxChar * DEFAULT_EXPLORER = wxT("explorer.exe");
 #else
-  static const wxChar * DEFAULT_EXPLORER = wxT("");
+static const wxChar * DEFAULT_EXPLORER = wxT("");
 #endif
 static const wxChar * DEFAULT_EDITOR = wxT("");
 static const wxChar * DEFAULT_DIFF_TOOL = wxT("");
@@ -73,75 +73,75 @@ static const wxChar CONF_USE_LAST_COMMIT_MESSAGE[] =
 static const wxChar CONF_RESET_FLAT_MODE_ON_START[] =
   wxT("/Preferences/ResetFlatModeOnStart");
 
-Preferences::Preferences ()
-  : editor (DEFAULT_EDITOR), editorAlways (false), editorArgs (wxEmptyString),
-    explorer (DEFAULT_EXPLORER), explorerAlways (false),
-    explorerArgs (wxEmptyString), diffTool (DEFAULT_DIFF_TOOL),
-    diffToolArgs (wxEmptyString), mergeTool (wxEmptyString), 
-    mergeToolArgs(wxEmptyString), purgeTempFiles (true),
-    authPerBookmark (false), useAuthCache (true)
+Preferences::Preferences()
+    : editor(DEFAULT_EDITOR), editorAlways(false), editorArgs(wxEmptyString),
+    explorer(DEFAULT_EXPLORER), explorerAlways(false),
+    explorerArgs(wxEmptyString), diffTool(DEFAULT_DIFF_TOOL),
+    diffToolArgs(wxEmptyString), mergeTool(wxEmptyString),
+    mergeToolArgs(wxEmptyString), purgeTempFiles(true),
+    authPerBookmark(false), useAuthCache(true)
 {
-  Read ();
+  Read();
 }
 
-Preferences::~Preferences ()
+Preferences::~Preferences()
 {
-  Write ();
+  Write();
 }
 
 void
-Preferences::Read ()
+Preferences::Read()
 {
-  wxConfigBase * config = wxConfigBase::Get ();
+  wxConfigBase * config = wxConfigBase::Get();
 
   // If these reads fail, the default values from the constructor remain
-  editor = config->Read (CONF_EDITOR, editor);
-  config->Read (CONF_EDITOR_ALWAYS, &editorAlways);
-  editorArgs = config->Read (CONF_EDITOR_ARGS, editorArgs);
+  editor = config->Read(CONF_EDITOR, editor);
+  config->Read(CONF_EDITOR_ALWAYS, &editorAlways);
+  editorArgs = config->Read(CONF_EDITOR_ARGS, editorArgs);
 
-  explorer = config->Read (CONF_EXPLORER, explorer);
-  config->Read (CONF_EXPLORER_ALWAYS, &explorerAlways);
-  explorerArgs = config->Read (CONF_EXPLORER_ARGS, explorerArgs);
+  explorer = config->Read(CONF_EXPLORER, explorer);
+  config->Read(CONF_EXPLORER_ALWAYS, &explorerAlways);
+  explorerArgs = config->Read(CONF_EXPLORER_ARGS, explorerArgs);
 
-  diffTool = config->Read (CONF_DIFF_TOOL, diffTool);
-  diffToolArgs = config->Read (CONF_DIFF_TOOL_ARGS, diffToolArgs);
+  diffTool = config->Read(CONF_DIFF_TOOL, diffTool);
+  diffToolArgs = config->Read(CONF_DIFF_TOOL_ARGS, diffToolArgs);
 
   mergeTool = config->Read(CONF_MERGE_TOOL, mergeTool);
   mergeToolArgs = config->Read(CONF_MERGE_TOOL_ARGS, mergeToolArgs);
 
-  config->Read (CONF_PURGE_TEMP_FILES,  &purgeTempFiles);
-  config->Read (CONF_AUTH_PER_BOOKMARK, &authPerBookmark);
-  config->Read (CONF_USE_AUTH_CACHE,    &useAuthCache);
-  
-  config->Read (CONF_USE_LAST_COMMIT_MESSAGE, &useLastCommitMessage);
-  config->Read (CONF_RESET_FLAT_MODE_ON_START, &resetFlatModeOnStart, false);
+  config->Read(CONF_PURGE_TEMP_FILES,  &purgeTempFiles);
+  config->Read(CONF_AUTH_PER_BOOKMARK, &authPerBookmark);
+  config->Read(CONF_USE_AUTH_CACHE,    &useAuthCache);
+
+  config->Read(CONF_USE_LAST_COMMIT_MESSAGE, &useLastCommitMessage);
+  config->Read(CONF_RESET_FLAT_MODE_ON_START, &resetFlatModeOnStart, false);
 }
 
-void Preferences::Write () const
+void Preferences::Write() const
 {
-  wxConfigBase * config = wxConfigBase::Get ();
+  wxConfigBase * config = wxConfigBase::Get();
 
-  config->Write (CONF_EDITOR, editor);
-  config->Write (CONF_EDITOR_ALWAYS, editorAlways);
-  config->Write (CONF_EDITOR_ARGS, editorArgs);
+  config->Write(CONF_EDITOR, editor);
+  config->Write(CONF_EDITOR_ALWAYS, editorAlways);
+  config->Write(CONF_EDITOR_ARGS, editorArgs);
 
-  config->Write (CONF_EXPLORER, explorer);
-  config->Write (CONF_EXPLORER_ALWAYS, explorerAlways);
-  config->Write (CONF_EXPLORER_ARGS, explorerArgs);
+  config->Write(CONF_EXPLORER, explorer);
+  config->Write(CONF_EXPLORER_ALWAYS, explorerAlways);
+  config->Write(CONF_EXPLORER_ARGS, explorerArgs);
 
-  config->Write (CONF_DIFF_TOOL, diffTool);
-  config->Write (CONF_DIFF_TOOL_ARGS, diffToolArgs);
+  config->Write(CONF_DIFF_TOOL, diffTool);
+  config->Write(CONF_DIFF_TOOL_ARGS, diffToolArgs);
 
-  config->Write (CONF_MERGE_TOOL, mergeTool);
-  config->Write (CONF_MERGE_TOOL_ARGS, mergeToolArgs);
+  config->Write(CONF_MERGE_TOOL, mergeTool);
+  config->Write(CONF_MERGE_TOOL_ARGS, mergeToolArgs);
 
-  config->Write (CONF_PURGE_TEMP_FILES, purgeTempFiles);
+  config->Write(CONF_PURGE_TEMP_FILES, purgeTempFiles);
 
-  config->Write (CONF_AUTH_PER_BOOKMARK, authPerBookmark);
-  config->Write (CONF_USE_AUTH_CACHE, useAuthCache);
+  config->Write(CONF_AUTH_PER_BOOKMARK, authPerBookmark);
+  config->Write(CONF_USE_AUTH_CACHE, useAuthCache);
 
-  config->Write (CONF_USE_LAST_COMMIT_MESSAGE, useLastCommitMessage);
-  config->Write (CONF_RESET_FLAT_MODE_ON_START, resetFlatModeOnStart);
+  config->Write(CONF_USE_LAST_COMMIT_MESSAGE, useLastCommitMessage);
+  config->Write(CONF_RESET_FLAT_MODE_ON_START, resetFlatModeOnStart);
 }
 
 /* -----------------------------------------------------------------

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -40,7 +40,7 @@ namespace svn
 class MergeAction:public Action
 {
 public:
-  MergeAction (wxWindow * frame);
+  MergeAction(wxWindow * frame);
 
   /**
    * Constructor, that takes read configured @a MergeData
@@ -49,16 +49,16 @@ public:
    * @param parent parent window
    * @param data merge data
    */
-  MergeAction (wxWindow * frame, MergeData & data);
+  MergeAction(wxWindow * frame, MergeData & data);
 
-  virtual bool 
-  Prepare ();
+  virtual bool
+  Prepare();
 
-  virtual bool 
-  Perform ();
+  virtual bool
+  Perform();
 
   static bool
-  CheckStatusSel (const svn::StatusSel & statusSel);
+  CheckStatusSel(const svn::StatusSel & statusSel);
 
 private:
   MergeData m_data;

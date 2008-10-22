@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,10 +34,10 @@ namespace svn
   {
   public:
     /** Constructor */
-    Url ();
+    Url();
 
     /** Destructor */
-    virtual ~Url ();
+    virtual ~Url();
 
     /**
      * Checks if @a url is valid
@@ -48,7 +48,7 @@ namespace svn
      *   /home/foo/bar
      */
     static bool
-    isValid (const char * urlToValidate);
+    isValid(const char * urlToValidate);
 
     /**
      * returns a url with forbidden charachters like spaces escaped
@@ -59,7 +59,7 @@ namespace svn
      *   http://rapidsvn.tigris.org/x%20y%20z.html
      */
     static std::string
-    escape (const char * url);
+    escape(const char * url);
 
     /**
      * returns a url with forbidden charachters like spaces unescaped
@@ -67,17 +67,17 @@ namespace svn
      * Undo the changes done by the previous function, escape ()
      */
     static std::string
-    unescape (const char * url);
+    unescape(const char * url);
 
     /**
      * returns a vector with url schemas that are
-     * supported by svn 
+     * supported by svn
      *
      * @return vector with entries like "file:", "http:"
      * @deprecated since 0.9.1 (returns an empty vector now)
      */
     static std::vector<std::string>
-    supportedSchemas ();
+    supportedSchemas();
   };
 }
 

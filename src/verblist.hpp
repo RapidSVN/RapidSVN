@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -35,10 +35,10 @@ class VerbList
 {
 public:
   /** constructor */
-  VerbList ();  
+  VerbList();
 
   /** destructor */
-  virtual ~VerbList ();  
+  virtual ~VerbList();
 
   /**
    * Assemble list of verbs based on the given document which can be a folder
@@ -46,34 +46,34 @@ public:
    *
    * @throw std::exception on unexpected errors
    */
-  void 
-  InitFromDocument (const wxString & documentPath, bool isAFolder);
+  void
+  InitFromDocument(const wxString & documentPath, bool isAFolder);
 
   /**
    * @return Number of verbs in list
    */
-  size_t 
-  GetCount () const;
+  size_t
+  GetCount() const;
 
   /**
    * @return Name of verb with the given index
    */
-  const wxString  & 
-  GetName (size_t index) const;
+  const wxString  &
+  GetName(size_t index) const;
 
   /**
    * Launches the verb with the given index on the document on which the verb
    * list is based
    */
-  void 
-  Launch (size_t index) const;
+  void
+  Launch(size_t index) const;
 
 private:
   struct Data;
   Data *m;
 };
 
-#endif 
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -46,18 +46,18 @@ public:
    * @param selectedUrl pre-fills the URL field with
    *                    this URL
    */
-  CheckoutDlg (wxWindow * parent, const svn::Path & selectedUrl);
+  CheckoutDlg(wxWindow * parent, const svn::Path & selectedUrl);
 
   /**
    * destructor
    */
-  virtual ~CheckoutDlg ();
+  virtual ~CheckoutDlg();
 
   /**
    * returns the checkout data
    */
   const CheckoutData &
-  GetData () const;
+  GetData() const;
 
 private:
   /** hide implementation details */
@@ -65,21 +65,21 @@ private:
   Data * m;
 
   void
-  OnBrowse (wxCommandEvent & event);
+  OnBrowse(wxCommandEvent & event);
 
   void
-  OnText (wxCommandEvent & event);
+  OnText(wxCommandEvent & event);
 
   void
-  OnHelp (wxCommandEvent & event);
+  OnHelp(wxCommandEvent & event);
 
   void
-  OnUseLatest (wxCommandEvent & event);
+  OnUseLatest(wxCommandEvent & event);
 
   void
-  InitDialog ();
+  InitDialog();
 
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

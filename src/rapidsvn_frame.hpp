@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -58,104 +58,104 @@ public:
    * @param title Application title
    * @param locale The locale that's used by the app
    */
-  RapidSvnFrame (const wxString & title,
-                 const wxLocale & locale);
-  virtual ~RapidSvnFrame ();
+  RapidSvnFrame(const wxString & title,
+                const wxLocale & locale);
+  virtual ~RapidSvnFrame();
 
   /** Allow children to trim their popup menus using the frames logic */
   void
-  TrimDisabledMenuItems (wxMenu & menu);
+  TrimDisabledMenuItems(wxMenu & menu);
 
   /**
   * Change the active window, if the corresponding event is handled
   * in one of the sub-windows
   */
   void
-  SetActivePane (ActivePane value);
+  SetActivePane(ActivePane value);
 
 private:
   /** disallow default constructor */
-  RapidSvnFrame ();
+  RapidSvnFrame();
 
   /** disallow copy constructor */
-  RapidSvnFrame (const RapidSvnFrame &);
+  RapidSvnFrame(const RapidSvnFrame &);
 
-  void OnActivate (wxActivateEvent & event);
-  void OnFocusChanged (wxCommandEvent & event);
+  void OnActivate(wxActivateEvent & event);
+  void OnFocusChanged(wxCommandEvent & event);
 
   // File menu
-  void OnAddWcBookmark (wxCommandEvent & event);
-  void OnAddRepoBookmark (wxCommandEvent & event);
-  void OnRemoveBookmark (wxCommandEvent & event);
-  void OnEditBookmark (wxCommandEvent & event);
-  void OnQuit (wxCommandEvent & event);
+  void OnAddWcBookmark(wxCommandEvent & event);
+  void OnAddRepoBookmark(wxCommandEvent & event);
+  void OnRemoveBookmark(wxCommandEvent & event);
+  void OnEditBookmark(wxCommandEvent & event);
+  void OnQuit(wxCommandEvent & event);
 
   // View menu
-  void OnPreferences (wxCommandEvent & event);
-  void OnRefresh (wxCommandEvent & event);
-  void OnColumnReset (wxCommandEvent & event);
-  void OnColumn (wxCommandEvent & event);
-  void OnIncludePath (wxCommandEvent & event);
-  void OnSortAscending (wxCommandEvent & event);
-  void OnColumnSorting (wxCommandEvent & event);
-  void OnFlatView (wxCommandEvent & event);
-  void OnRefreshWithUpdate (wxCommandEvent & event);
-  void OnShowUnversioned (wxCommandEvent & event);
-  void OnShowUnmodified (wxCommandEvent & event);
-  void OnShowModified (wxCommandEvent & event);
-  void OnShowConflicted (wxCommandEvent & event);
-  void OnIgnoreExternals (wxCommandEvent & event);
-  void OnShowIgnored (wxCommandEvent & event);
-  void OnStop (wxCommandEvent & event);
+  void OnPreferences(wxCommandEvent & event);
+  void OnRefresh(wxCommandEvent & event);
+  void OnColumnReset(wxCommandEvent & event);
+  void OnColumn(wxCommandEvent & event);
+  void OnIncludePath(wxCommandEvent & event);
+  void OnSortAscending(wxCommandEvent & event);
+  void OnColumnSorting(wxCommandEvent & event);
+  void OnFlatView(wxCommandEvent & event);
+  void OnRefreshWithUpdate(wxCommandEvent & event);
+  void OnShowUnversioned(wxCommandEvent & event);
+  void OnShowUnmodified(wxCommandEvent & event);
+  void OnShowModified(wxCommandEvent & event);
+  void OnShowConflicted(wxCommandEvent & event);
+  void OnIgnoreExternals(wxCommandEvent & event);
+  void OnShowIgnored(wxCommandEvent & event);
+  void OnStop(wxCommandEvent & event);
 
   // Query menu
-  void OnLog (wxCommandEvent & event);
-  void OnInfo (wxCommandEvent & event);
+  void OnLog(wxCommandEvent & event);
+  void OnInfo(wxCommandEvent & event);
 
   // Modify menu
-  void OnFileCommand (wxCommandEvent & event);
+  void OnFileCommand(wxCommandEvent & event);
 
   // Extras menu
-  void OnCleanup (wxCommandEvent & event);
+  void OnCleanup(wxCommandEvent & event);
 
   // Help menu
-  void OnHelpContents (wxCommandEvent & event);
-  void OnHelpIndex (wxCommandEvent & event);
-  void OnHelpStartupTips (wxCommandEvent & event);
-  void OnAbout (wxCommandEvent & event);
+  void OnHelpContents(wxCommandEvent & event);
+  void OnHelpIndex(wxCommandEvent & event);
+  void OnHelpStartupTips(wxCommandEvent & event);
+  void OnAbout(wxCommandEvent & event);
 
   // Test menu
-  void OnTestNewWxString (wxCommandEvent & event);
-  void OnTestListener (wxCommandEvent & event);
-  void OnTestCheckout (wxCommandEvent & event);
-  void PrintTimeMeasurements (apr_time_t start, apr_time_t end, 
-                              const wxString & name);
+  void OnTestNewWxString(wxCommandEvent & event);
+  void OnTestListener(wxCommandEvent & event);
+  void OnTestCheckout(wxCommandEvent & event);
+  void PrintTimeMeasurements(apr_time_t start, apr_time_t end,
+                             const wxString & name);
 
   // toolbar events
-  void OnToolEnter (wxCommandEvent & event);
+  void OnToolEnter(wxCommandEvent & event);
 
   // Events from action threads
-  void OnActionEvent (wxCommandEvent & event);
-  void OnListenerEvent (wxCommandEvent & event);
+  void OnActionEvent(wxCommandEvent & event);
+  void OnListenerEvent(wxCommandEvent & event);
 
-  // Bookmarks 
-  void AddWcBookmark ();
-  void AddRepoBookmark ();
-  void RemoveBookmark ();
-  void EditBookmark ();
+  // Bookmarks
+  void AddWcBookmark();
+  void AddRepoBookmark();
+  void RemoveBookmark();
+  void EditBookmark();
 
-  // Authentication 
-  void OnLogin (wxCommandEvent & event);
-  void OnLogout (wxCommandEvent & event);
+  // Authentication
+  void OnLogin(wxCommandEvent & event);
+  void OnLogout(wxCommandEvent & event);
 
   // Folder Browser event handlers
-  void OnFolderBrowserSelChanged (wxTreeEvent & event);
-  void OnFolderBrowserKeyDown (wxTreeEvent & event);
+  void OnFolderBrowserSelChanged(wxTreeEvent & event);
+  void OnFolderBrowserKeyDown(wxTreeEvent & event);
 
   // File List event handles
-  void OnFileListSelected (wxListEvent & event);
+  void OnFileListSelected(wxListEvent & event);
 
-  
+
 
   /**
    * Invoke the default action on the currently selected item(s)
@@ -165,45 +165,45 @@ private:
    *
    * @return false if no items were found to invoke default action on
    */
-  bool InvokeDefaultAction ();
+  bool InvokeDefaultAction();
 
-  /** 
-   * Update the contents of the filelist 
+  /**
+   * Update the contents of the filelist
    */
-  void RefreshFileList ();
+  void RefreshFileList();
 
-  /** 
-   * Update the contents of the folder browser 
+  /**
+   * Update the contents of the folder browser
    */
-  void RefreshFolderBrowser ();
+  void RefreshFolderBrowser();
 
   // Auxiliary functions
-  void UpdateCurrentPath ();
-  void UpdateMenuSorting ();
-  void UpdateMenuIncludePath ();
-  void UpdateMenuAscending ();
-  void SetIncludePathVisibility (bool flatMode);
-  void OnSize (wxSizeEvent & sizeEvent);
+  void UpdateCurrentPath();
+  void UpdateMenuSorting();
+  void UpdateMenuIncludePath();
+  void UpdateMenuAscending();
+  void SetIncludePathVisibility(bool flatMode);
+  void OnSize(wxSizeEvent & sizeEvent);
 
   // Enable/disable action menu items
-  void OnUpdateCommand (wxUpdateUIEvent & updateUIEvent);
+  void OnUpdateCommand(wxUpdateUIEvent & updateUIEvent);
 
   // Utility functions
-  void ShowLog ();
-  void ShowInfo ();
+  void ShowLog();
+  void ShowInfo();
 
-  void DelEntries ();
-  void MakeRevert ();
-  void MakeResolve ();
+  void DelEntries();
+  void MakeRevert();
+  void MakeResolve();
 
-  void MakeCopy ();
-  void Rename ();
-  void Mkdir ();
-  void Merge ();
-  void Contents ();
-  void ShowPreferences ();
+  void MakeCopy();
+  void Rename();
+  void Mkdir();
+  void Merge();
+  void Contents();
+  void ShowPreferences();
 
-  void Perform (Action * action);
+  void Perform(Action * action);
 
 private:
   /** hide implementation data */
@@ -220,7 +220,7 @@ private:
   svn::Context * m_context;
 
 private:
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 const int ID_TOOLBAR = 500;

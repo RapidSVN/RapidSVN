@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -28,45 +28,45 @@
 
 namespace svn
 {
-  const Revision Revision::START (svn_opt_revision_number);
-  const Revision Revision::BASE (svn_opt_revision_base);
-  const Revision Revision::HEAD (svn_opt_revision_head);
-  const Revision Revision::WORKING (svn_opt_revision_working);
-  const Revision Revision::UNSPECIFIED (svn_opt_revision_unspecified);
+  const Revision Revision::START(svn_opt_revision_number);
+  const Revision Revision::BASE(svn_opt_revision_base);
+  const Revision Revision::HEAD(svn_opt_revision_head);
+  const Revision Revision::WORKING(svn_opt_revision_working);
+  const Revision Revision::UNSPECIFIED(svn_opt_revision_unspecified);
 
 
-  Revision::Revision (const svn_opt_revision_t * revision)
+  Revision::Revision(const svn_opt_revision_t * revision)
   {
-    init (revision);
+    init(revision);
   }
 
-  Revision::Revision (const svn_revnum_t revnum)
+  Revision::Revision(const svn_revnum_t revnum)
   {
     m_revision.kind = svn_opt_revision_number;
     m_revision.value.number = revnum;
   }
 
-  Revision::Revision (const svn_opt_revision_kind kind)
+  Revision::Revision(const svn_opt_revision_kind kind)
   {
     m_revision.kind = kind;
     m_revision.value.number = 0;
   }
 
-  Revision::Revision (const DateTime dateTime)
+  Revision::Revision(const DateTime dateTime)
   {
     m_revision.kind = svn_opt_revision_date;
     m_revision.value.date = dateTime.GetAPRTimeT();
   }
 
-  Revision::Revision (const Revision & revision)
+  Revision::Revision(const Revision & revision)
   {
-    init (revision.revision ());
+    init(revision.revision());
   }
 
   void
-  Revision::init (const svn_opt_revision_t * revision)
+  Revision::init(const svn_opt_revision_t * revision)
   {
-    if( !revision )
+    if (!revision)
     {
       m_revision.kind = svn_opt_revision_unspecified;
     }
@@ -78,7 +78,7 @@ namespace svn
       // allowed to set number if we want to use date
       // and vice versa
 
-      switch( revision->kind )
+      switch (revision->kind)
       {
       case svn_opt_revision_number:
         m_revision.value.number = revision->value.number;
@@ -95,25 +95,25 @@ namespace svn
   }
 
   const svn_opt_revision_t *
-  Revision::revision () const
+  Revision::revision() const
   {
     return &m_revision;
   }
 
   const svn_revnum_t
-  Revision::revnum () const
+  Revision::revnum() const
   {
     return m_revision.value.number;
   }
 
   const apr_time_t
-  Revision::date () const
+  Revision::date() const
   {
     return m_revision.value.date;
   }
 
   const svn_opt_revision_kind
-  Revision::kind () const
+  Revision::kind() const
   {
     return m_revision.kind;
   }

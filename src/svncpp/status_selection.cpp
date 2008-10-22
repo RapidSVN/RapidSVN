@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -44,7 +44,7 @@
 
 namespace svn
 {
-  struct StatusSel::Data 
+  struct StatusSel::Data
   {
     Targets targets;
     std::vector<Status> status;
@@ -59,35 +59,35 @@ namespace svn
     Path emptyTarget;
 
     /** default constructor */
-    Data () {}
+    Data() {}
 
     /** copy constructor */
-    Data (const Data & src)
+    Data(const Data & src)
     {
       if (this != &src)
-        assign (src);
+        assign(src);
     }
 
     /** assign new values */
-    void 
-    assign (const Data & src)
+    void
+    assign(const Data & src)
     {
       // clear existing...
-      clear ();
+      clear();
 
       // ... and set from source
       std::vector <Status>::const_iterator it;
-      for(it = src.status.begin (); it != src.status.end (); it++)
+      for (it = src.status.begin(); it != src.status.end(); it++)
       {
-        push_back (*it);
+        push_back(*it);
       }
     }
 
     void
-    clear ()
+    clear()
     {
-      targets.clear ();
-      status.clear ();
+      targets.clear();
+      status.clear();
 
       hasDirs = false;
       hasFiles = false;
@@ -98,21 +98,21 @@ namespace svn
     }
 
     void
-    push_back (const Status & status_)
+    push_back(const Status & status_)
     {
       // skip pseudo entries
-      if (!status_.isset ())
+      if (!status_.isset())
         return;
 
-      if (!status_.isVersioned ())
+      if (!status_.isVersioned())
       {
         // for an unversioned entry we do not know
         // whether it's a file or a directory so
         // we have to check using APR
         apr_finfo_t finfo;
         Pool pool;
-        apr_status_t apr_status = apr_stat (
-          &finfo, status_.path (), APR_FINFO_TYPE, pool);
+        apr_status_t apr_status = apr_stat(
+                                    &finfo, status_.path(), APR_FINFO_TYPE, pool);
 
         // if we get an error the file might
         // have been deleted in the meantime
@@ -131,12 +131,12 @@ namespace svn
       else
       {
         hasVersioned = true;
-        if (Url::isValid (status_.path ()))
+        if (Url::isValid(status_.path()))
           hasUrl = true;
         else
           hasLocal = true;
 
-        if (svn_node_dir == status_.entry ().kind ())
+        if (svn_node_dir == status_.entry().kind())
           hasDirs = true;
         else
           hasFiles = true;
@@ -144,23 +144,23 @@ namespace svn
 
       // add stuff only now (because of possible apr_error
       // which causes the function to exit)
-      targets.push_back (status_.path ());
-      status.push_back (status_);
+      targets.push_back(status_.path());
+      status.push_back(status_);
     }
   };
 
 
-  StatusSel::StatusSel ()
-    : m (new Data)
+  StatusSel::StatusSel()
+      : m(new Data)
   {
   }
 
-  StatusSel::StatusSel (const StatusSel & src)
-    : m (new Data)
+  StatusSel::StatusSel(const StatusSel & src)
+      : m(new Data)
   {
     // different instance?
     if (this != &src)
-      m->assign (*src.m);
+      m->assign(*src.m);
   }
 
   StatusSel &
@@ -169,52 +169,52 @@ namespace svn
     if (this != &src)
     {
       delete m;
-      m = new Data (*src.m);
+      m = new Data(*src.m);
     }
 
     return *this;
   }
-  
-  StatusSel::~StatusSel ()
+
+  StatusSel::~StatusSel()
   {
     delete m;
   }
 
   const apr_array_header_t *
-  StatusSel::array (const Pool & pool) const
+  StatusSel::array(const Pool & pool) const
   {
-    return m->targets.array (pool);
+    return m->targets.array(pool);
   }
-  
+
   const Targets &
-  StatusSel::targets () const
+  StatusSel::targets() const
   {
     return m->targets;
   }
 
-  size_t 
-  StatusSel::size () const
+  size_t
+  StatusSel::size() const
   {
-    return m->targets.size ();
+    return m->targets.size();
   }
 
   void
-  StatusSel::push_back (const Status & status)
+  StatusSel::push_back(const Status & status)
   {
-    m->push_back (status);
+    m->push_back(status);
   }
 
   void
-  StatusSel::clear ()
+  StatusSel::clear()
   {
-    m->clear ();
+    m->clear();
   }
 
   void
-  StatusSel::reserve (size_t size)
+  StatusSel::reserve(size_t size)
   {
-    m->targets.reserve (size);
-    m->status.reserve (size);
+    m->targets.reserve(size);
+    m->status.reserve(size);
   }
 
   StatusSel::operator const std::vector<Path> & () const
@@ -223,46 +223,46 @@ namespace svn
   }
 
   const Path &
-  StatusSel::target () const
+  StatusSel::target() const
   {
-    if (size () > 0)
-      return m->targets.targets () [0];
+    if (size() > 0)
+      return m->targets.targets()[0];
     else
       return m->emptyTarget;
   }
 
-  bool 
-  StatusSel::hasDirs () const
+  bool
+  StatusSel::hasDirs() const
   {
     return m->hasDirs;
   }
 
   bool
-  StatusSel::hasFiles () const
+  StatusSel::hasFiles() const
   {
     return m->hasFiles;
   }
 
-  bool 
-  StatusSel::hasVersioned () const
+  bool
+  StatusSel::hasVersioned() const
   {
     return m->hasVersioned;
   }
 
   bool
-  StatusSel::hasUnversioned () const
+  StatusSel::hasUnversioned() const
   {
     return m->hasUnversioned;
   }
 
   bool
-  StatusSel::hasLocal () const
+  StatusSel::hasLocal() const
   {
     return m->hasLocal;
   }
 
   bool
-  StatusSel::hasUrl () const
+  StatusSel::hasUrl() const
   {
     return m->hasUrl;
   }

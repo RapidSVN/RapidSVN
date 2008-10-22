@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -62,10 +62,10 @@ static const wxChar * LABEL_DELETE=_("&Delete...");
 class ListCtrl : public wxListView
 {
 public:
-  ListCtrl (wxWindow * parent)
-    : wxListView (parent, ID_List, wxDefaultPosition,
-                  wxSize (350, 150), wxLC_REPORT |
-                  wxLC_SINGLE_SEL)
+  ListCtrl(wxWindow * parent)
+      : wxListView(parent, ID_List, wxDefaultPosition,
+                   wxSize(350, 150), wxLC_REPORT |
+                   wxLC_SINGLE_SEL)
   {
     wxListItem info;
 
@@ -73,12 +73,12 @@ public:
     info.m_col = 0;
     info.m_width = 120;
     info.m_text = _("Name");
-    InsertColumn (0, info);
+    InsertColumn(0, info);
 
     info.m_col = 1;
     info.m_width = 240;
     info.m_text = _("Value");
-    InsertColumn (1, info);
+    InsertColumn(1, info);
   }
 
   /**
@@ -91,17 +91,17 @@ public:
    * @return id of new item if inserted or old item if updated
    */
   long
-  SetEntry (const wxString & name, const wxString & value)
+  SetEntry(const wxString & name, const wxString & value)
   {
-    long id = FindItem (-1, name, false);
+    long id = FindItem(-1, name, false);
 
     if (-1 != id)
       m_values [id] = value;
     else
     {
-      id = GetItemCount ();
-      InsertItem (id, name);
-      m_values.push_back (value);
+      id = GetItemCount();
+      InsertItem(id, name);
+      m_values.push_back(value);
     }
 
     wxListItem item;
@@ -109,7 +109,7 @@ public:
     item.m_text = value;
     item.m_col = 1;
     item.m_mask = wxLIST_MASK_TEXT;
-    SetItem (item);
+    SetItem(item);
 
     return id;
   }
@@ -123,13 +123,13 @@ public:
    * @retval false nothing selected
    */
   bool
-  GetSelectedEntry (wxString & name, wxString & value)
+  GetSelectedEntry(wxString & name, wxString & value)
   {
-    long id = GetFirstSelected ();
+    long id = GetFirstSelected();
     if (id == -1)
       return false;
 
-    GetEntryAtIndex (id, name, value);
+    GetEntryAtIndex(id, name, value);
     return true;
   }
 
@@ -141,10 +141,10 @@ public:
    * @param value property value
    */
   void
-  GetEntryAtIndex (long id, wxString & name, wxString & value)
+  GetEntryAtIndex(long id, wxString & name, wxString & value)
   {
     // get name
-    name = GetItemText (id);
+    name = GetItemText(id);
 
     // get value
     value = m_values[id];
@@ -164,42 +164,42 @@ public:
   /**
    * Constructor
    */
-  EntryDlg (wxWindow * parent, const wxString & title)
-    : wxDialog (parent, -1, title, wxDefaultPosition),
-      m_readOnly (false)
+  EntryDlg(wxWindow * parent, const wxString & title)
+      : wxDialog(parent, -1, title, wxDefaultPosition),
+      m_readOnly(false)
   {
-    wxStaticText * labelName = new wxStaticText (this, -1, _("Name"));
-    wxStaticText * labelValue = new wxStaticText (this, -1, _("Value"));
-    wxTextCtrl * textName = new wxTextCtrl (this, ID_Name);
+    wxStaticText * labelName = new wxStaticText(this, -1, _("Name"));
+    wxStaticText * labelValue = new wxStaticText(this, -1, _("Value"));
+    wxTextCtrl * textName = new wxTextCtrl(this, ID_Name);
 
     wxTextCtrl * textValue =
-      new wxTextCtrl (this, ID_Value, wxEmptyString, wxDefaultPosition,
-                      wxSize (300, 100), wxTE_MULTILINE);
+      new wxTextCtrl(this, ID_Value, wxEmptyString, wxDefaultPosition,
+                     wxSize(300, 100), wxTE_MULTILINE);
 
-    wxFlexGridSizer * textSizer = new wxFlexGridSizer (2, 5, 5);
-    textSizer->Add (labelName);
-    textSizer->Add (textName, 1, wxEXPAND);
-    textSizer->Add (labelValue);
-    textSizer->Add (textValue, 1, wxEXPAND);
+    wxFlexGridSizer * textSizer = new wxFlexGridSizer(2, 5, 5);
+    textSizer->Add(labelName);
+    textSizer->Add(textName, 1, wxEXPAND);
+    textSizer->Add(labelValue);
+    textSizer->Add(textValue, 1, wxEXPAND);
 
-    wxButton * okButton = new wxButton (this, wxID_OK, _("OK"));
-    wxButton * cancelButton = new wxButton (this, wxID_CANCEL, _("Cancel"));
-    wxBoxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
-    buttonSizer->Add (okButton, 0, wxALL, 5);
-    buttonSizer->Add (cancelButton, 0, wxALL, 5);
+    wxButton * okButton = new wxButton(this, wxID_OK, _("OK"));
+    wxButton * cancelButton = new wxButton(this, wxID_CANCEL, _("Cancel"));
+    wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+    buttonSizer->Add(okButton, 0, wxALL, 5);
+    buttonSizer->Add(cancelButton, 0, wxALL, 5);
 
-    wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
+    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
 
-    mainSizer->Add (textSizer, 1, wxALL | wxEXPAND, 5);
-    mainSizer->Add (buttonSizer, 0, wxALL | wxALIGN_RIGHT , 5);
+    mainSizer->Add(textSizer, 1, wxALL | wxEXPAND, 5);
+    mainSizer->Add(buttonSizer, 0, wxALL | wxALIGN_RIGHT , 5);
 
-    okButton->SetDefault ();
+    okButton->SetDefault();
 
-    SetAutoLayout (true);
-    SetSizer (mainSizer);
+    SetAutoLayout(true);
+    SetSizer(mainSizer);
 
-    mainSizer->SetSizeHints (this);
-    mainSizer->Fit (this);
+    mainSizer->SetSizeHints(this);
+    mainSizer->Fit(this);
 
     m_buttonOk = okButton;
     m_textName = textName;
@@ -218,9 +218,9 @@ public:
    * @retval true if OK button was clicked
    */
   bool
-  Execute (const int mode,
-           wxString & name,
-           wxString & value)
+  Execute(const int mode,
+          wxString & name,
+          wxString & value)
   {
     switch (mode)
     {
@@ -233,44 +233,44 @@ public:
     }
     m_mode = mode;
 
-    SetReturnCode (wxID_CANCEL);
-    m_textName->Enable (mode == EDIT_NEW);
-    TrimString (name);
-    TrimString (value);
-    m_textName->SetValue (name);
-    m_textValue->SetValue (value);
+    SetReturnCode(wxID_CANCEL);
+    m_textName->Enable(mode == EDIT_NEW);
+    TrimString(name);
+    TrimString(value);
+    m_textName->SetValue(name);
+    m_textValue->SetValue(value);
 
-    CheckButtons ();
+    CheckButtons();
 
-    bool ok = ShowModal () == wxID_OK;
+    bool ok = ShowModal() == wxID_OK;
 
     if (ok)
     {
-      name = m_textName->GetValue ();
-      value = m_textValue->GetValue ();
-      TrimString (name);
-      TrimString (value);
+      name = m_textName->GetValue();
+      value = m_textValue->GetValue();
+      TrimString(name);
+      TrimString(value);
     }
 
     return ok;
   }
 
-  void SetNameCaption (const wxString & caption)
+  void SetNameCaption(const wxString & caption)
   {
-    m_labelName->SetLabel (caption);
+    m_labelName->SetLabel(caption);
   }
 
-  void SetValueCaption (const wxString & caption)
+  void SetValueCaption(const wxString & caption)
   {
-    m_labelValue->SetLabel (caption);
+    m_labelValue->SetLabel(caption);
   }
 
-  void SetReadOnly (bool value)
+  void SetReadOnly(bool value)
   {
     m_readOnly = value;
-    m_textName->Enable ((m_mode == EDIT_NEW) && !value);
-    m_textValue->Enable (!value);
-    CheckButtons ();
+    m_textName->Enable((m_mode == EDIT_NEW) && !value);
+    m_textValue->Enable(!value);
+    CheckButtons();
   }
 
 private:
@@ -283,26 +283,26 @@ private:
   int m_mode;
 
   void
-  OnName (wxCommandEvent &)
+  OnName(wxCommandEvent &)
   {
-    CheckButtons ();
+    CheckButtons();
   }
 
   void
-  CheckButtons ()
+  CheckButtons()
   {
-    wxString name = m_textName->GetValue ();
-    TrimString (name);
-    m_buttonOk->Enable ((name.Length () > 0) && !m_readOnly);
+    wxString name = m_textName->GetValue();
+    TrimString(name);
+    m_buttonOk->Enable((name.Length() > 0) && !m_readOnly);
   }
 
 private:
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
-BEGIN_EVENT_TABLE (EntryDlg, wxDialog)
-  EVT_TEXT (ID_Name, EntryDlg::OnName)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(EntryDlg, wxDialog)
+  EVT_TEXT(ID_Name, EntryDlg::OnName)
+END_EVENT_TABLE()
 
 struct ListEditorDlg::Data
 {
@@ -320,46 +320,46 @@ struct ListEditorDlg::Data
   wxString editTitle;
 
 public:
-  Data (wxWindow * wnd)
-    : window (wnd), nameCaption (_("Name")), valueCaption (_("Value")),
-      readOnly (false)
+  Data(wxWindow * wnd)
+      : window(wnd), nameCaption(_("Name")), valueCaption(_("Value")),
+      readOnly(false)
   {
     // create controls
-    wxStaticBoxSizer *boxSizer = new wxStaticBoxSizer (
-      box = new wxStaticBox (wnd, -1, wxEmptyString),
+    wxStaticBoxSizer *boxSizer = new wxStaticBoxSizer(
+      box = new wxStaticBox(wnd, -1, wxEmptyString),
       wxHORIZONTAL);
 
-    listCtrl = new ListCtrl (wnd);
-    boxSizer->Add (listCtrl, 1, wxALL | wxEXPAND, 2);
+    listCtrl = new ListCtrl(wnd);
+    boxSizer->Add(listCtrl, 1, wxALL | wxEXPAND, 2);
 
     // buttons
-    newButton = new wxButton (wnd, ID_New, LABEL_NEW);
-    editButton = new wxButton (wnd, ID_Edit, LABEL_EDIT);
-    editButton->Enable (false);
-    delButton = new wxButton (wnd, ID_Delete, LABEL_DELETE);
-    delButton->Enable (false);
-    okButton = new wxButton (wnd, wxID_OK, _("OK"));
-    wxButton * cancelButton = new wxButton (wnd, wxID_CANCEL, _("Cancel"));
+    newButton = new wxButton(wnd, ID_New, LABEL_NEW);
+    editButton = new wxButton(wnd, ID_Edit, LABEL_EDIT);
+    editButton->Enable(false);
+    delButton = new wxButton(wnd, ID_Delete, LABEL_DELETE);
+    delButton->Enable(false);
+    okButton = new wxButton(wnd, wxID_OK, _("OK"));
+    wxButton * cancelButton = new wxButton(wnd, wxID_CANCEL, _("Cancel"));
 
-    wxBoxSizer * buttonSizer = new wxBoxSizer (wxHORIZONTAL);
-    buttonSizer->Add (newButton, 0, wxALL, 5);
-    buttonSizer->Add (editButton, 0, wxALL, 5);
-    buttonSizer->Add (delButton, 0, wxALL, 5);
-    buttonSizer->Add (20, 20);
-    buttonSizer->Add (okButton, 0, wxALL, 5);
-    buttonSizer->Add (cancelButton, 0, wxALL, 5);
+    wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+    buttonSizer->Add(newButton, 0, wxALL, 5);
+    buttonSizer->Add(editButton, 0, wxALL, 5);
+    buttonSizer->Add(delButton, 0, wxALL, 5);
+    buttonSizer->Add(20, 20);
+    buttonSizer->Add(okButton, 0, wxALL, 5);
+    buttonSizer->Add(cancelButton, 0, wxALL, 5);
 
-    cancelButton->SetDefault ();
-    wxBoxSizer * mainSizer = new wxBoxSizer (wxVERTICAL);
+    cancelButton->SetDefault();
+    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
 
-    mainSizer->Add (boxSizer, 1, wxALL | wxCENTER | wxEXPAND , 5);
-    mainSizer->Add (buttonSizer, 0, wxALL | wxALIGN_RIGHT , 5);
+    mainSizer->Add(boxSizer, 1, wxALL | wxCENTER | wxEXPAND , 5);
+    mainSizer->Add(buttonSizer, 0, wxALL | wxALIGN_RIGHT , 5);
 
-    wnd->SetAutoLayout (true);
-    wnd->SetSizer (mainSizer);
+    wnd->SetAutoLayout(true);
+    wnd->SetSizer(mainSizer);
 
-    mainSizer->SetSizeHints (wnd);
-    mainSizer->Fit (wnd);
+    mainSizer->SetSizeHints(wnd);
+    mainSizer->Fit(wnd);
   }
 
 
@@ -369,12 +369,12 @@ public:
    * @retval true item is selected
    */
   bool
-  IsSelected ()
+  IsSelected()
   {
     if (!listCtrl)
       return false;
 
-    return listCtrl->GetFirstSelected () != -1;
+    return listCtrl->GetFirstSelected() != -1;
   }
 
   /**
@@ -382,28 +382,28 @@ public:
    * the grid
    */
   void
-  OnSelected ()
+  OnSelected()
   {
     // the edit and delete buttons will only be
     // enabled if there is a selected item
-    bool selected = IsSelected ();
-    editButton->Enable (selected);
-    delButton->Enable (selected && !readOnly);
+    bool selected = IsSelected();
+    editButton->Enable(selected);
+    delButton->Enable(selected && !readOnly);
   }
 
   /**
    * deletes the selected item in the list
    */
   void
-  DeleteSelected ()
+  DeleteSelected()
   {
-    long id = listCtrl->GetFirstSelected ();
+    long id = listCtrl->GetFirstSelected();
 
     if (id == -1)
       return;
 
-    listCtrl->DeleteItem (id);
-    OnSelected ();
+    listCtrl->DeleteItem(id);
+    OnSelected();
   }
 
   /**
@@ -412,7 +412,7 @@ public:
    * @param edit EDIT_NEW or EDIT_EDIT
    */
   void
-  Edit (int mode)
+  Edit(int mode)
   {
     wxString name, value, title;
 
@@ -421,146 +421,146 @@ public:
     else
     {
       title = editTitle;
-      listCtrl->GetSelectedEntry (name, value);
+      listCtrl->GetSelectedEntry(name, value);
     }
 
-    EntryDlg dlg (window, title);
-    dlg.SetReadOnly (readOnly);
-    if (!dlg.Execute (mode, name, value))
+    EntryDlg dlg(window, title);
+    dlg.SetReadOnly(readOnly);
+    if (!dlg.Execute(mode, name, value))
       return;
 
-    listCtrl->SetEntry (name, value);
+    listCtrl->SetEntry(name, value);
   }
 
 };
 
-BEGIN_EVENT_TABLE (ListEditorDlg, wxDialog)
-  EVT_BUTTON (ID_New, ListEditorDlg::OnNew)
-  EVT_BUTTON (ID_Edit, ListEditorDlg::OnEdit)
-  EVT_BUTTON (ID_Delete, ListEditorDlg::OnDelete)
-  EVT_LIST_ITEM_SELECTED (ID_List, ListEditorDlg::OnSelected)
-END_EVENT_TABLE ()
+BEGIN_EVENT_TABLE(ListEditorDlg, wxDialog)
+  EVT_BUTTON(ID_New, ListEditorDlg::OnNew)
+  EVT_BUTTON(ID_Edit, ListEditorDlg::OnEdit)
+  EVT_BUTTON(ID_Delete, ListEditorDlg::OnDelete)
+  EVT_LIST_ITEM_SELECTED(ID_List, ListEditorDlg::OnSelected)
+END_EVENT_TABLE()
 
-ListEditorDlg::ListEditorDlg (wxWindow * parent,
-                              const wxString & title)
-  : wxDialog (parent, -1, title, wxDefaultPosition,
-              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+ListEditorDlg::ListEditorDlg(wxWindow * parent,
+                             const wxString & title)
+    : wxDialog(parent, -1, title, wxDefaultPosition,
+               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data (this);
-  CentreOnParent ();
+  m = new Data(this);
+  CentreOnParent();
 }
 
-ListEditorDlg::~ListEditorDlg ()
+ListEditorDlg::~ListEditorDlg()
 {
   delete m;
 }
 
 void
-ListEditorDlg::OnNew (wxCommandEvent & event)
+ListEditorDlg::OnNew(wxCommandEvent & event)
 {
-  m->Edit (EDIT_NEW);
+  m->Edit(EDIT_NEW);
 }
 
 void
-ListEditorDlg::OnEdit (wxCommandEvent & event)
+ListEditorDlg::OnEdit(wxCommandEvent & event)
 {
-  m->Edit (EDIT_EDIT);
+  m->Edit(EDIT_EDIT);
 }
 
 void
-ListEditorDlg::OnDelete (wxCommandEvent & event)
+ListEditorDlg::OnDelete(wxCommandEvent & event)
 {
-  m->DeleteSelected ();
+  m->DeleteSelected();
 }
 
 void
-ListEditorDlg::OnSelected (wxListEvent &)
+ListEditorDlg::OnSelected(wxListEvent &)
 {
-  m->OnSelected ();
+  m->OnSelected();
 }
 
 void
-ListEditorDlg::SetCaption (const wxString & caption)
+ListEditorDlg::SetCaption(const wxString & caption)
 {
-  m->box->SetLabel (caption);
+  m->box->SetLabel(caption);
 }
 
 void
-ListEditorDlg::SetNameCaption (const wxString & caption)
+ListEditorDlg::SetNameCaption(const wxString & caption)
 {
   m->nameCaption = caption;
 }
 
 void
-ListEditorDlg::SetValueCaption (const wxString & caption)
+ListEditorDlg::SetValueCaption(const wxString & caption)
 {
   m->valueCaption = caption;
 }
 
 void
-ListEditorDlg::SetAddTitle (const wxString & title)
+ListEditorDlg::SetAddTitle(const wxString & title)
 {
   m->addTitle = title;
 }
 
 void
-ListEditorDlg::SetEditTitle (const wxString & title)
+ListEditorDlg::SetEditTitle(const wxString & title)
 {
   m->editTitle = title;
 }
 
 void
-ListEditorDlg::DeleteAllEntries ()
+ListEditorDlg::DeleteAllEntries()
 {
-  m->listCtrl->DeleteAllItems ();
+  m->listCtrl->DeleteAllItems();
 }
 
 long
-ListEditorDlg::SetEntry (const wxString & name, const wxString & value)
+ListEditorDlg::SetEntry(const wxString & name, const wxString & value)
 {
-  return m->listCtrl->SetEntry (name, value);
+  return m->listCtrl->SetEntry(name, value);
 }
 
 void
-ListEditorDlg::GetEntryAtIndex (long id, wxString & name, wxString & value) const
+ListEditorDlg::GetEntryAtIndex(long id, wxString & name, wxString & value) const
 {
-  m->listCtrl->GetEntryAtIndex (id, name, value);
+  m->listCtrl->GetEntryAtIndex(id, name, value);
 }
 
 long
-ListEditorDlg::GetEntryCount () const
+ListEditorDlg::GetEntryCount() const
 {
-  return m->listCtrl->GetItemCount ();
+  return m->listCtrl->GetItemCount();
 }
 
 int
-ListEditorDlg::ShowModal ()
+ListEditorDlg::ShowModal()
 {
   int result;
-  WriteToGrid ();
+  WriteToGrid();
 
-  result = wxDialog::ShowModal ();
+  result = wxDialog::ShowModal();
 
   if (result == wxID_OK)
-    ReadFromGrid ();
+    ReadFromGrid();
 
   return result;
 }
 
 long
-ListEditorDlg::FindEntry (const wxString & name) const
+ListEditorDlg::FindEntry(const wxString & name) const
 {
-  return m->listCtrl->FindItem (-1, name, false);
+  return m->listCtrl->FindItem(-1, name, false);
 }
 
 void
-ListEditorDlg::SetReadOnly (bool value)
+ListEditorDlg::SetReadOnly(bool value)
 {
   m->readOnly = value;
-  m->newButton->Enable (!value);
-  m->okButton->Enable (!value);
-  m->OnSelected ();
-  m->editButton->SetLabel (value ? LABEL_VIEW : LABEL_EDIT);
+  m->newButton->Enable(!value);
+  m->okButton->Enable(!value);
+  m->OnSelected();
+  m->editButton->SetLabel(value ? LABEL_VIEW : LABEL_EDIT);
 }
 
 /* -----------------------------------------------------------------

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -28,38 +28,38 @@
 
 namespace svn
 {
-  Entry::Entry (const svn_wc_entry_t * src)
-    : m_entry (0), m_pool (0), m_valid (false)
+  Entry::Entry(const svn_wc_entry_t * src)
+      : m_entry(0), m_pool(0), m_valid(false)
   {
-    init (src);
+    init(src);
   }
 
-  Entry::Entry (const Entry & src)
-    : m_entry (0), m_pool (0), m_valid (false)
+  Entry::Entry(const Entry & src)
+      : m_entry(0), m_pool(0), m_valid(false)
   {
-    init (src);
+    init(src);
   }
 
-  Entry::~Entry ()
+  Entry::~Entry()
   {
     // no need to explicitely de-allocate m_entry
     // since this will be handled by m_pool
   }
 
   void
-  Entry::init (const svn_wc_entry_t * src)
+  Entry::init(const svn_wc_entry_t * src)
   {
     if (src)
     {
       // copy the contents of src
-      m_entry = svn_wc_entry_dup (src, m_pool);
+      m_entry = svn_wc_entry_dup(src, m_pool);
       m_valid = true;
     }
     else
     {
       // create an empty entry
       m_entry = (svn_wc_entry_t*)
-        apr_pcalloc (m_pool, sizeof (svn_wc_entry_t));
+                apr_pcalloc(m_pool, sizeof(svn_wc_entry_t));
     }
   }
 
@@ -69,7 +69,7 @@ namespace svn
     if (this == &src)
       return *this;
 
-    init (src);
+    init(src);
     return *this;
   }
 

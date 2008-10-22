@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -33,69 +33,69 @@
 //svncpp
 #include "svncpp/path.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (PathTestCase);
+CPPUNIT_TEST_SUITE_REGISTRATION(PathTestCase);
 
 void
-PathTestCase::setUp ()
+PathTestCase::setUp()
 {
 }
 
 void
-PathTestCase::testInit ()
+PathTestCase::testInit()
 {
   svn::Path pathEmpty;
-  CPPUNIT_ASSERT (strcmp ("", pathEmpty.c_str ()) == 0);
-  CPPUNIT_ASSERT (pathEmpty.isset () == false);
+  CPPUNIT_ASSERT(strcmp("", pathEmpty.c_str()) == 0);
+  CPPUNIT_ASSERT(pathEmpty.isset() == false);
 
   svn::Path pathOne = "/some/path/to/repository";
-  CPPUNIT_ASSERT (strcmp ("/some/path/to/repository", pathOne.c_str ()) == 0);
-  CPPUNIT_ASSERT (pathOne.isset ());
+  CPPUNIT_ASSERT(strcmp("/some/path/to/repository", pathOne.c_str()) == 0);
+  CPPUNIT_ASSERT(pathOne.isset());
 
   svn::Path pathTwo = "http://this.is/a/url";
-  CPPUNIT_ASSERT (strcmp ("http://this.is/a/url", pathTwo.c_str ()) == 0);
-  CPPUNIT_ASSERT (pathTwo.isset ());
+  CPPUNIT_ASSERT(strcmp("http://this.is/a/url", pathTwo.c_str()) == 0);
+  CPPUNIT_ASSERT(pathTwo.isset());
 
   svn::Path pathThree = "file:///this.is/a/url";
-  CPPUNIT_ASSERT (strcmp ("file:///this.is/a/url", pathThree.c_str ()) == 0);
-  CPPUNIT_ASSERT (pathThree.isset ());
+  CPPUNIT_ASSERT(strcmp("file:///this.is/a/url", pathThree.c_str()) == 0);
+  CPPUNIT_ASSERT(pathThree.isset());
 }
 
 void
-PathTestCase::testSplit ()
+PathTestCase::testSplit()
 {
   svn::Path pathTest = "/some/path/to/repository";
   std::string dirpath = "";
   std::string basename = "";
 
-  pathTest.split (dirpath, basename);
-  CPPUNIT_ASSERT (dirpath == "/some/path/to");
-  CPPUNIT_ASSERT (basename == "repository");
+  pathTest.split(dirpath, basename);
+  CPPUNIT_ASSERT(dirpath == "/some/path/to");
+  CPPUNIT_ASSERT(basename == "repository");
 
   svn::Path test1 = "file.txt";
   std::string dir, file, ext;
 
-  test1.split (dir, file, ext);
-  CPPUNIT_ASSERT (strcmp (file.c_str (), "file") == 0);  
-  CPPUNIT_ASSERT (strcmp (dir.c_str (), "") == 0);  
-  CPPUNIT_ASSERT (strcmp (ext.c_str (), ".txt") == 0);
+  test1.split(dir, file, ext);
+  CPPUNIT_ASSERT(strcmp(file.c_str(), "file") == 0);
+  CPPUNIT_ASSERT(strcmp(dir.c_str(), "") == 0);
+  CPPUNIT_ASSERT(strcmp(ext.c_str(), ".txt") == 0);
 }
 
 void
-PathTestCase::testAddComponent ()
+PathTestCase::testAddComponent()
 {
   svn::Path pathTest = "/some/path/to/foo";
   std::string newBasename = "newname";
 
-  pathTest.addComponent (newBasename);
-  CPPUNIT_ASSERT (0 == strcmp (pathTest.c_str(), 
-                               "/some/path/to/foo/newname"));
+  pathTest.addComponent(newBasename);
+  CPPUNIT_ASSERT(0 == strcmp(pathTest.c_str(),
+                             "/some/path/to/foo/newname"));
 
   svn::Path urlTest = "http://some/url/to/repository";
   std::string newFile = "newname";
 
-  urlTest.addComponent (newFile);
-  CPPUNIT_ASSERT (0 == strcmp (urlTest.c_str(), 
-                               "http://some/url/to/repository/newname"));
+  urlTest.addComponent(newFile);
+  CPPUNIT_ASSERT(0 == strcmp(urlTest.c_str(),
+                             "http://some/url/to/repository/newname"));
 
   // Now test every possible combination:
   // * add another absolute UNIX path to a UNIX path
@@ -112,118 +112,118 @@ PathTestCase::testAddComponent ()
   static const char * win2 = "c:/some/path/to/foo";
 
   // URL1+URL2=URL2
-  svn::Path path (url1);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url1));
-  path.addComponent (url2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url2));
+  svn::Path path(url1);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), url1));
+  path.addComponent(url2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), url2));
 
   // URL1+WIN2=WIN2
   path = url1;
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url1));
-  path.addComponent (win2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win2));
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), url1));
+  path.addComponent(win2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), win2));
 
   // URL1+UNIX2=UNIX2
   path = url1;
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url1));
-  path.addComponent (unix2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix2));
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), url1));
+  path.addComponent(unix2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), unix2));
 
   // WIN1+URL2=URL2
   path = win1;
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win1));
-  path.addComponent (url2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url2));
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), win1));
+  path.addComponent(url2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), url2));
 
   // WIN1+WIN2=WIN2
   path = win1;
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win1));
-  path.addComponent (win2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win2));
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), win1));
+  path.addComponent(win2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), win2));
 
   // WIN1+UNIX2=UNIX2
   path = win1;
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win1));
-  path.addComponent (unix2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix2));
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), win1));
+  path.addComponent(unix2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), unix2));
 
   // UNIX1+URL2=URL2
   path = unix1;
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix1));
-  path.addComponent (url2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), url2));
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), unix1));
+  path.addComponent(url2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), url2));
 
   // UNIX1+WIN2=WIN2
   path = unix1;
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix1));
-  path.addComponent (win2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), win2));
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), unix1));
+  path.addComponent(win2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), win2));
 
   // UNIX1+UNIX2=UNIX2
   path = unix1;
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix1));
-  path.addComponent (unix2);
-  CPPUNIT_ASSERT (0 == strcmp (path.c_str (), unix2));
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), unix1));
+  path.addComponent(unix2);
+  CPPUNIT_ASSERT(0 == strcmp(path.c_str(), unix2));
 }
 
 void
-PathTestCase::testCopy ()
+PathTestCase::testCopy()
 {
   svn::Path pathOne = "/some/path";
   svn::Path pathTwo = pathOne;
 
-  CPPUNIT_ASSERT (strcmp (pathOne.c_str (), pathTwo.c_str ()) == 0);
+  CPPUNIT_ASSERT(strcmp(pathOne.c_str(), pathTwo.c_str()) == 0);
 }
 
 void
-PathTestCase::testIsUrl ()
+PathTestCase::testIsUrl()
 {
   svn::Path pathOne = "file:///this.is/a/url";
-  CPPUNIT_ASSERT (pathOne.isUrl ());
-  CPPUNIT_ASSERT (strcmp (pathOne.c_str (), "file:///this.is/a/url") == 0);
+  CPPUNIT_ASSERT(pathOne.isUrl());
+  CPPUNIT_ASSERT(strcmp(pathOne.c_str(), "file:///this.is/a/url") == 0);
 }
 
 void
-PathTestCase::testSubstr ()
+PathTestCase::testSubstr()
 {
-  svn::Path test ("/home/sleepy/tmp/sf âê/Bla Bla Blubb");
+  svn::Path test("/home/sleepy/tmp/sf âê/Bla Bla Blubb");
   int length = 25;
   std::string result = "";
 
-  result = test.substr (length);
-  CPPUNIT_ASSERT (result == "Bla Bla Blubb");
+  result = test.substr(length);
+  CPPUNIT_ASSERT(result == "Bla Bla Blubb");
 }
 
 void
-PathTestCase::testUnescape ()
+PathTestCase::testUnescape()
 {
-  svn::Path test ("/home/sleepy/tmp/sf%20x%20y");
-  CPPUNIT_ASSERT (test.unescape () == "/home/sleepy/tmp/sf x y");
+  svn::Path test("/home/sleepy/tmp/sf%20x%20y");
+  CPPUNIT_ASSERT(test.unescape() == "/home/sleepy/tmp/sf x y");
 }
 
 void
-PathTestCase::testLength ()
+PathTestCase::testLength()
 {
-  svn::Path test ("/tmp/sf%20x%20y");
-  CPPUNIT_ASSERT (test.length () == 15);
+  svn::Path test("/tmp/sf%20x%20y");
+  CPPUNIT_ASSERT(test.length() == 15);
 }
 
 void
-PathTestCase::testGetTempDir ()
+PathTestCase::testGetTempDir()
 {
-  svn::Path path (svn::Path::getTempDir ());
+  svn::Path path(svn::Path::getTempDir());
 
   // did we receive a path?
-  CPPUNIT_ASSERT (path.length () > 0);
+  CPPUNIT_ASSERT(path.length() > 0);
 
   // now, can we create a file in there?
-  path.addComponent ("foo.txt");
+  path.addComponent("foo.txt");
 
-  FILE * f = fopen (path.native ().c_str (), "w");
-  CPPUNIT_ASSERT (f != NULL);
+  FILE * f = fopen(path.native().c_str(), "w");
+  CPPUNIT_ASSERT(f != NULL);
 
-  fputs ("This is a teststring\n", f);
-  fclose (f);
+  fputs("This is a teststring\n", f);
+  fclose(f);
 }
 
 

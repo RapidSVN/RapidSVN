@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -35,39 +35,39 @@
 #include "tracer.hpp"
 #include "utils.hpp"
 
-CleanupAction::CleanupAction (wxWindow * parent)
-  : Action (parent, _("Cleanup"), 0)
+CleanupAction::CleanupAction(wxWindow * parent)
+    : Action(parent, _("Cleanup"), 0)
 {
 }
 
 bool
-CleanupAction::Prepare ()
+CleanupAction::Prepare()
 {
-  return Action::Prepare ();
+  return Action::Prepare();
 }
 
 bool
-CleanupAction::Perform ()
+CleanupAction::Perform()
 {
-  svn::Client client (GetContext ());
-  const svn::Path & path = GetPath ();
+  svn::Client client(GetContext());
+  const svn::Path & path = GetPath();
 
-  wxSetWorkingDirectory (Utf8ToLocal (path.c_str ()));
-  client.cleanup (path.c_str ());
+  wxSetWorkingDirectory(Utf8ToLocal(path.c_str()));
+  client.cleanup(path.c_str());
 
   return true;
 }
 
 bool
-CleanupAction::CheckStatusSel (const svn::StatusSel & statusSel)
+CleanupAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  if (statusSel.size () != 1)
+  if (statusSel.size() != 1)
     return false;
 
-  if (statusSel.hasUnversioned ())
+  if (statusSel.hasUnversioned())
     return false;
 
-  if (statusSel.hasUrl ())
+  if (statusSel.hasUrl())
     return false;
 
   return true;

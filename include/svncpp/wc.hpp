@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -23,7 +23,7 @@
  */
 
 #ifndef _SVNCPP_WC_HPP_
-#define _SVNCPP_WC_HPP_ 
+#define _SVNCPP_WC_HPP_
 
 // svncpp
 #include "svncpp/revision.hpp"
@@ -46,11 +46,11 @@ namespace svn
      * @param dir path to a directory
      * @return true=valid working copy
      */
-    static bool 
-    checkWc (const char * dir);
+    static bool
+    checkWc(const char * dir);
 
     static bool
-    checkWc (const Path & dir);
+    checkWc(const Path & dir);
 
     /**
      * ensure that an administrative area exists for @a dir, so that @a dir
@@ -62,8 +62,8 @@ namespace svn
      * @param revision expected working copy revision
      */
     static void
-    ensureAdm (const char * dir, const char * uuid, 
-               const char * url, const Revision & revision);
+    ensureAdm(const char * dir, const char * uuid,
+              const char * url, const Revision & revision);
 
     /**
      * use \a dir as name for the subversion administrative directory
@@ -71,16 +71,16 @@ namespace svn
      *
      * @param dir
      */
-    static void 
-    setAdmDir (const char * dir);
+    static void
+    setAdmDir(const char * dir);
 
     /**
      * checks whether @a name is an administrative directory
-     * 
+     *
      * @remarks @a name may only be a filename, not an absolute path
      */
     static bool
-    isAdmDir (const char * name);
+    isAdmDir(const char * name);
 
   private:
   };

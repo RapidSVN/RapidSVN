@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -65,112 +65,112 @@
 #include "drag_n_drop_action.hpp"
 #include "ignore_action.hpp"
 
-bool 
-ActionFactory::CheckIdForStatusSel (int id, const svn::StatusSel & statusSel)
+bool
+ActionFactory::CheckIdForStatusSel(int id, const svn::StatusSel & statusSel)
 {
   bool result = true;
   if ((id >= ID_Verb_Min) && (id <= ID_Verb_Max))
-    return ExternalProgramAction::CheckStatusSel (statusSel);
-  
+    return ExternalProgramAction::CheckStatusSel(statusSel);
+
   switch (id)
   {
   case ID_Explore:
     // Special case of ExternalProgramAction - needs to be a working copy, not just single target
-    result = ExternalProgramAction::CheckStatusSel (statusSel);
+    result = ExternalProgramAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Default_Action:
-    result = ExternalProgramAction::CheckStatusSel (statusSel);
+    result = ExternalProgramAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Update:
-    result = UpdateAction::CheckStatusSel (statusSel);
+    result = UpdateAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Commit:
-    result = CommitAction::CheckStatusSel (statusSel);
+    result = CommitAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Add:
-    result = AddAction::CheckStatusSel (statusSel);
+    result = AddAction::CheckStatusSel(statusSel);
     break;
 
   case ID_AddRecursive:
-    result = AddAction::CheckStatusSel (statusSel);
+    result = AddAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Import:
-    result = ImportAction::CheckStatusSel (statusSel);
+    result = ImportAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Export:
-    result = ExportAction::CheckStatusSel (statusSel);
+    result = ExportAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Checkout:
-    result = CheckoutAction::CheckStatusSel (statusSel);
+    result = CheckoutAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Cleanup:
-    result = CleanupAction::CheckStatusSel (statusSel);
+    result = CleanupAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Lock:
-    result = LockAction::CheckStatusSel (statusSel);
+    result = LockAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Log:
-    result = LogAction::CheckStatusSel (statusSel);
+    result = LogAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Revert:
-    result = RevertAction::CheckStatusSel (statusSel);
+    result = RevertAction::CheckStatusSel(statusSel);
     break;
 
   case ID_UserResolve:
-    result = UserResolveAction::CheckStatusSel (statusSel);
+    result = UserResolveAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Resolve:
-    result = ResolveAction::CheckStatusSel (statusSel);
+    result = ResolveAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Delete:
-    result = DeleteAction::CheckStatusSel (statusSel);
+    result = DeleteAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Copy:
-    result = MoveAction::CheckStatusSel (statusSel);
+    result = MoveAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Move:
-    result = MoveAction::CheckStatusSel (statusSel);
+    result = MoveAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Mkdir:
-    result = MkdirAction::CheckStatusSel (statusSel);
+    result = MkdirAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Merge:
-    result = MergeAction::CheckStatusSel (statusSel);
+    result = MergeAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Property:
-    result = PropertyAction::CheckStatusSel (statusSel);
+    result = PropertyAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Rename:
-    result = RenameAction::CheckStatusSel (statusSel);
+    result = RenameAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Switch:
-    result = SwitchAction::CheckStatusSel (statusSel);
+    result = SwitchAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Diff:
   case ID_DiffBase:
   case ID_DiffHead:
-    result = DiffAction::CheckStatusSel (statusSel);
+    result = DiffAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Info:
@@ -179,18 +179,18 @@ ActionFactory::CheckIdForStatusSel (int id, const svn::StatusSel & statusSel)
     break;
 
   case ID_Unlock:
-    result = UnlockAction::CheckStatusSel (statusSel);
+    result = UnlockAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Edit:
-    result = ViewAction::CheckStatusSel (statusSel);
+    result = ViewAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Annotate:
-    result = AnnotateAction::CheckStatusSel (statusSel);
+    result = AnnotateAction::CheckStatusSel(statusSel);
     break;
   case ID_Ignore:
-    result = IgnoreAction::CheckStatusSel (statusSel);
+    result = IgnoreAction::CheckStatusSel(statusSel);
     break;
   };
 
@@ -199,20 +199,20 @@ ActionFactory::CheckIdForStatusSel (int id, const svn::StatusSel & statusSel)
 
 
 Action *
-ActionFactory::CreateAction (wxWindow * parent, int id)
+ActionFactory::CreateAction(wxWindow * parent, int id)
 {
   Action* action = NULL;
 
   if ((id >= ID_Verb_Min) && (id <= ID_Verb_Max))
   {
-    action = new ExternalProgramAction (parent, id - ID_Verb_Min, false);
+    action = new ExternalProgramAction(parent, id - ID_Verb_Min, false);
   }
   else
   {
     switch (id)
     {
     case ID_Explore:
-      action = new ExternalProgramAction (parent, -1, true);
+      action = new ExternalProgramAction(parent, -1, true);
       break;
 
     case ID_Update:
@@ -224,111 +224,111 @@ ActionFactory::CreateAction (wxWindow * parent, int id)
       break;
 
     case ID_Add:
-      action = new AddAction (parent);
+      action = new AddAction(parent);
       break;
 
     case ID_AddRecursive:
-      action = new AddAction (parent, true);
+      action = new AddAction(parent, true);
       break;
 
     case ID_Import:
-      action = new ImportAction (parent);
+      action = new ImportAction(parent);
       break;
 
     case ID_Export:
-      action = new ExportAction (parent);
+      action = new ExportAction(parent);
       break;
 
     case ID_Checkout:
-      action = new CheckoutAction (parent);
+      action = new CheckoutAction(parent);
       break;
 
     case ID_Cleanup:
-      action = new CleanupAction (parent);
+      action = new CleanupAction(parent);
       break;
 
     case ID_Lock:
-      action = new LockAction (parent);
+      action = new LockAction(parent);
       break;
 
     case ID_Log:
-      action = new LogAction (parent);
+      action = new LogAction(parent);
       break;
 
     case ID_Revert:
-      action = new RevertAction (parent);
+      action = new RevertAction(parent);
       break;
 
     case ID_UserResolve:
-      action = new UserResolveAction (parent);
+      action = new UserResolveAction(parent);
       break;
 
     case ID_Resolve:
-      action = new ResolveAction (parent);
+      action = new ResolveAction(parent);
       break;
 
     case ID_Delete:
-      action = new DeleteAction (parent);
+      action = new DeleteAction(parent);
       break;
 
     case ID_Copy:
-      action = new MoveAction (parent, MOVE_COPY);
+      action = new MoveAction(parent, MOVE_COPY);
       break;
 
     case ID_Move:
-      action = new MoveAction (parent, MOVE_MOVE);
+      action = new MoveAction(parent, MOVE_MOVE);
       break;
 
     case ID_Merge:
-      action = new MergeAction (parent);
+      action = new MergeAction(parent);
       break;
 
     case ID_Property:
-      action = new PropertyAction (parent);
+      action = new PropertyAction(parent);
       break;
 
     case ID_Rename:
-      action = new RenameAction (parent);
+      action = new RenameAction(parent);
       break;
 
     case ID_Switch:
-      action = new SwitchAction (parent);
+      action = new SwitchAction(parent);
       break;
 
     case ID_Diff:
-      action = new DiffAction (parent);
+      action = new DiffAction(parent);
       break;
 
     case ID_DiffBase:
-      {
-        DiffData data (svn::Revision::BASE);
-        action = new DiffAction (parent, data);
-        break;
-      }
+    {
+      DiffData data(svn::Revision::BASE);
+      action = new DiffAction(parent, data);
+      break;
+    }
 
     case ID_DiffHead:
-      {
-        DiffData data (svn::Revision::HEAD);
-        action = new DiffAction (parent, data);
-        break;
-      }
+    {
+      DiffData data(svn::Revision::HEAD);
+      action = new DiffAction(parent, data);
+      break;
+    }
 
     case ID_Unlock:
-      action = new UnlockAction (parent);
+      action = new UnlockAction(parent);
       break;
 
     case ID_Edit:
-      action = new ViewAction (parent);
+      action = new ViewAction(parent);
       break;
 
     case ID_Annotate:
-      {
-        AnnotateData data;
-        action = new AnnotateAction (parent, data);
-        break;
-      }
+    {
+      AnnotateData data;
+      action = new AnnotateAction(parent, data);
+      break;
+    }
     case ID_Ignore:
-      action = new IgnoreAction (parent);
+      action = new IgnoreAction(parent);
       break;
     }
   }

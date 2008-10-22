@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -55,16 +55,16 @@ public:
    * @param parent parent window
    * @param type kind of action (MOVE_MOVE, MOVE_COPY)
    */
-  MoveAction (wxWindow * parent, int kind);
+  MoveAction(wxWindow * parent, int kind);
 
-  virtual bool 
-  Perform ();
+  virtual bool
+  Perform();
 
-  virtual bool 
-  Prepare ();
-  
+  virtual bool
+  Prepare();
+
   static bool
-  CheckStatusSel (const svn::StatusSel & statusSel);
+  CheckStatusSel(const svn::StatusSel & statusSel);
 
 private:
   int m_kind;

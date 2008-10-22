@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,21 +34,21 @@
 
 namespace svn
 {
-  bool 
-  Wc::checkWc (const char * dir)
+  bool
+  Wc::checkWc(const char * dir)
   {
-    Path path (dir);
-    return Wc::checkWc (path);
+    Path path(dir);
+    return Wc::checkWc(path);
   }
 
   bool
-  Wc::checkWc (const Path & dir)
+  Wc::checkWc(const Path & dir)
   {
     Pool pool;
     int wc;
 
     svn_error_t * error =
-      svn_wc_check_wc (dir.c_str (), &wc, pool);
+      svn_wc_check_wc(dir.c_str(), &wc, pool);
 
     if ((error != NULL) || (wc == 0))
     {
@@ -59,42 +59,42 @@ namespace svn
   }
 
   void
-  Wc::ensureAdm (const char * dir, const char *uuid, 
-                 const char * url, const Revision & revision)
+  Wc::ensureAdm(const char * dir, const char *uuid,
+                const char * url, const Revision & revision)
   {
     Pool pool;
-    Path dirPath (dir);
-    Path urlPath (url);
+    Path dirPath(dir);
+    Path urlPath(url);
 
     svn_error_t * error =
-      svn_wc_ensure_adm (dirPath.c_str (),    // path 
-                         uuid,                // UUID 
-                         urlPath.c_str (),    // url
-                         revision.revnum (),  // revision
-                         pool);
+      svn_wc_ensure_adm(dirPath.c_str(),      // path
+                        uuid,                // UUID
+                        urlPath.c_str(),     // url
+                        revision.revnum(),   // revision
+                        pool);
 
-    if(error != NULL)
-      throw ClientException (error);
+    if (error != NULL)
+      throw ClientException(error);
   }
 
   void
-  Wc::setAdmDir (const char * dir)
+  Wc::setAdmDir(const char * dir)
   {
     Pool pool;
 
-    svn_error_t * error = 
-      svn_wc_set_adm_dir (dir, pool);
+    svn_error_t * error =
+      svn_wc_set_adm_dir(dir, pool);
 
-    if(error != NULL)
-      throw ClientException (error);
+    if (error != NULL)
+      throw ClientException(error);
   }
 
   bool
-  Wc::isAdmDir (const char * name)
+  Wc::isAdmDir(const char * name)
   {
     Pool pool;
 
-    return 0 != svn_wc_is_adm_dir (name, pool);
+    return 0 != svn_wc_is_adm_dir(name, pool);
   }
 
 }

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -45,18 +45,18 @@ public:
    * @param parent window
    * @param selectedUrl Use this value to pre-fill the URL
    */
-  ImportDlg (wxWindow *parent, const svn::Path & selectedUrl);
+  ImportDlg(wxWindow *parent, const svn::Path & selectedUrl);
 
   /**
    * Destructor
    */
-  virtual ~ImportDlg ();
+  virtual ~ImportDlg();
 
   /**
    * return the reference to @a ImportData
    */
   ImportData &
-  GetData ();
+  GetData();
 
 private:
   /** hide implementation details */
@@ -66,19 +66,19 @@ private:
   /**
    * Event handler for OK button
    */
-  void OnOk (wxCommandEvent & event);
+  void OnOk(wxCommandEvent & event);
 
   /**
    * Event handler for Browser button
    */
-  void OnBrowse (wxCommandEvent & event);
+  void OnBrowse(wxCommandEvent & event);
 
   /**
    * Event handler for changes in text fields
    */
-  void OnText (wxCommandEvent & event);
+  void OnText(wxCommandEvent & event);
 
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

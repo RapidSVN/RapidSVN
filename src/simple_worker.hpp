@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -37,53 +37,53 @@ public:
   /**
    * default constructor.
    */
-  SimpleWorker (wxWindow * parent = 0);
+  SimpleWorker(wxWindow * parent = 0);
 
   /**
    * destructor
    */
-  virtual ~SimpleWorker ();
-
-  /**
-   * @see ActionWorker
-   */
-  virtual void 
-  Create (wxWindow * parent);
-
-  /**
-   * @see ActionWorker
-   */
-  virtual ActionState 
-  GetState ();
-
-  /**
-   * @see ActionWorker
-   */
-  virtual ActionResult 
-  GetResult ();
-
-  /**
-   * @see ActionWorker
-   */
-  virtual void SetTracer (Tracer * tr);
-
-  /**
-   * @see ActionWorker
-   */
-  virtual bool 
-  Perform (Action * action);
+  virtual ~SimpleWorker();
 
   /**
    * @see ActionWorker
    */
   virtual void
-  SetContext (svn::Context * context, bool own = false);
+  Create(wxWindow * parent);
 
   /**
    * @see ActionWorker
    */
-  virtual svn::Context * 
-  GetContext () const;
+  virtual ActionState
+  GetState();
+
+  /**
+   * @see ActionWorker
+   */
+  virtual ActionResult
+  GetResult();
+
+  /**
+   * @see ActionWorker
+   */
+  virtual void SetTracer(Tracer * tr);
+
+  /**
+   * @see ActionWorker
+   */
+  virtual bool
+  Perform(Action * action);
+
+  /**
+   * @see ActionWorker
+   */
+  virtual void
+  SetContext(svn::Context * context, bool own = false);
+
+  /**
+   * @see ActionWorker
+   */
+  virtual svn::Context *
+  GetContext() const;
 
 private:
   struct Data;
@@ -92,7 +92,7 @@ private:
   /**
    * private copy constructor
    */
-  SimpleWorker (const SimpleWorker &);
+  SimpleWorker(const SimpleWorker &);
 
   /**
    * sends a message to the tracer. This is
@@ -101,7 +101,7 @@ private:
    *
    * @param message to send
    */
-  void TraceError (const wxString & message);
+  void TraceError(const wxString & message);
 };
 
 #endif

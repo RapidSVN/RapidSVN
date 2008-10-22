@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -31,35 +31,35 @@
 // app
 #include "folder_item_data.hpp"
 
-FolderItemData::FolderItemData (const int folderType, 
-                                const wxString & path, 
-                                const wxString & name, 
-                                bool hasChildren)
-    : wxTreeItemData ()
+FolderItemData::FolderItemData(const int folderType,
+                               const wxString & path,
+                               const wxString & name,
+                               bool hasChildren)
+    : wxTreeItemData()
 {
-  Create (folderType, path, name, hasChildren);
+  Create(folderType, path, name, hasChildren);
 }
 
-FolderItemData::FolderItemData ()
-    : wxTreeItemData ()
+FolderItemData::FolderItemData()
+    : wxTreeItemData()
 {
 }
 
-FolderItemData::FolderItemData (const FolderItemData& src)
-    : wxTreeItemData ()
+FolderItemData::FolderItemData(const FolderItemData& src)
+    : wxTreeItemData()
 {
-  Create (src.m_folderType, src.m_path, src.m_name, src.m_hasChildren);
+  Create(src.m_folderType, src.m_path, src.m_name, src.m_hasChildren);
 }
 
-FolderItemData::~FolderItemData ()
+FolderItemData::~FolderItemData()
 {
 }
 
 void
-FolderItemData::Create (const int folderType, 
-                        const wxString & path, 
-                        const wxString & name, 
-                        bool hasChildren)
+FolderItemData::Create(const int folderType,
+                       const wxString & path,
+                       const wxString & name,
+                       bool hasChildren)
 {
   m_folderType = folderType;
   m_path = path;
@@ -67,7 +67,7 @@ FolderItemData::Create (const int folderType,
   m_hasChildren = hasChildren;
 }
 
-               
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

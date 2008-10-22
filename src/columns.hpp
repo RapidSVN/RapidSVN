@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -30,17 +30,17 @@
 
 struct Column
 {
-  const wxChar * name; 
+  const wxChar * name;
   const wxChar * caption;
   int id;
 
-  Column ()
-    : name (wxT("")), caption (wxT("")), id (0)
+  Column()
+      : name(wxT("")), caption(wxT("")), id(0)
   {
   }
 
-  Column (const wxChar * name_, const wxChar * caption_, int id_)
-    : name (name_), caption (caption_), id (id_)
+  Column(const wxChar * name_, const wxChar * caption_, int id_)
+      : name(name_), caption(caption_), id(id_)
   {
   }
 };
@@ -51,7 +51,7 @@ struct Columns
 
   Column COLUMNS[ID_ColumnSort_Min - ID_Column_Min];
 
-  Columns ();
+  Columns();
 
   Column
   operator [](int index);

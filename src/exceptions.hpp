@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,25 +34,25 @@ public:
   long code;
 
 public:
-   RapidSvnEx (const wxString & __estr = wxEmptyString, const long __code = -1);
+  RapidSvnEx(const wxString & __estr = wxEmptyString, const long __code = -1);
 
-   virtual ~ RapidSvnEx ();
+  virtual ~ RapidSvnEx();
 
-   RapidSvnEx (const RapidSvnEx & rhs)
+  RapidSvnEx(const RapidSvnEx & rhs)
   {
     *this = rhs;
   }
 
   RapidSvnEx & operator = (const RapidSvnEx & rhs);
 
-  void what (const wxString & __estr);
+  void what(const wxString & __estr);
 
-  virtual const wxChar *what () const
+  virtual const wxChar *what() const
   {
-    return estr.c_str ();
+    return estr.c_str();
   }
 
-  const wxString & str (void) const
+  const wxString & str(void) const
   {
     return estr;
   }

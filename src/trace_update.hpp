@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,12 +34,12 @@
 // forward declarations
 class Tracer;
 
-svn_error_t *get_trace_update_editor (const svn_delta_editor_t ** editor,
-                                      void **edit_baton,
-                                      const char *initial_path,
-                                      svn_boolean_t is_checkout,
-                                      svn_boolean_t no_final_line,
-                                      Tracer * tracer, apr_pool_t * pool);
+svn_error_t *get_trace_update_editor(const svn_delta_editor_t ** editor,
+                                     void **edit_baton,
+                                     const char *initial_path,
+                                     svn_boolean_t is_checkout,
+                                     svn_boolean_t no_final_line,
+                                     Tracer * tracer, apr_pool_t * pool);
 
 #endif
 /* -----------------------------------------------------------------

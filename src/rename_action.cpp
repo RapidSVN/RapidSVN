@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -33,62 +33,62 @@
 #include "destination_dlg.hpp"
 #include "utils.hpp"
 
-RenameAction::RenameAction (wxWindow * parent)
- : Action (parent, wxEmptyString, UPDATE_TREE)
+RenameAction::RenameAction(wxWindow * parent)
+    : Action(parent, wxEmptyString, UPDATE_TREE)
 {
-  SetName (_("Rename"));
+  SetName(_("Rename"));
 
 }
 
 bool
-RenameAction::Prepare ()
+RenameAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  wxString oldName (Utf8ToLocal (GetTarget ().basename ().c_str ()));
+  wxString oldName(Utf8ToLocal(GetTarget().basename().c_str()));
 
   // show destination dialog
-  DestinationDlg dlg (GetParent (), GetName (),
-                      _("Enter new name:"), 
-                      DestinationDlg::WITH_FORCE,
-                      oldName);
-  if (dlg.ShowModal () != wxID_OK)
+  DestinationDlg dlg(GetParent(), GetName(),
+                     _("Enter new name:"),
+                     DestinationDlg::WITH_FORCE,
+                     oldName);
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_destination = dlg.GetDestination ();
-  m_force = dlg.GetForce ();
+  m_destination = dlg.GetDestination();
+  m_force = dlg.GetForce();
 
   return true;
 }
 
 bool
-RenameAction::Perform ()
+RenameAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  svn::Path srcPath = GetTarget ();
-  svn::Path destPath (PathUtf8 (m_destination));
+  svn::Path srcPath = GetTarget();
+  svn::Path destPath(PathUtf8(m_destination));
   svn::Revision unusedRevision;
 
   std::string basename;
   std::string dirpath;
-  srcPath.split (dirpath, basename);
+  srcPath.split(dirpath, basename);
 
-  svn::Path newDestPath (dirpath);
-  newDestPath.addComponent(destPath.c_str ());
+  svn::Path newDestPath(dirpath);
+  newDestPath.addComponent(destPath.c_str());
 
-  client.move (srcPath, unusedRevision, newDestPath, m_force);
+  client.move(srcPath, unusedRevision, newDestPath, m_force);
 
   return true;
 }
 
 bool
-RenameAction::CheckStatusSel (const svn::StatusSel & statusSel)
+RenameAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

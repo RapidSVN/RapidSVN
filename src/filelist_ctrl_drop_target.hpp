@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -33,14 +33,14 @@ class FileListCtrl;
 class FileListCtrlDropTarget : public RapidSvnDropTarget
 {
 public:
-  FileListCtrlDropTarget (FolderBrowser * browser, 
-                          FileListCtrl * parent);
-  
-  virtual 
-  ~FileListCtrlDropTarget () {}
+  FileListCtrlDropTarget(FolderBrowser * browser,
+                         FileListCtrl * parent);
 
-  virtual wxString 
-  GetDestinationPath (const wxPoint & point);
+  virtual
+  ~FileListCtrlDropTarget() {}
+
+  virtual wxString
+  GetDestinationPath(const wxPoint & point);
 
 private:
   FolderBrowser * m_browser;

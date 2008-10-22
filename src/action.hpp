@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -85,50 +85,50 @@ public:
    * @param name of the action
    * @param flags
    */
-  Action (wxWindow * parent, const wxString & name, 
-          unsigned int flags = 0);
+  Action(wxWindow * parent, const wxString & name,
+         unsigned int flags = 0);
 
   /**
    * destructor
    */
-  virtual ~Action ();
+  virtual ~Action();
 
   /**
    * @return Tracer instance
    */
-  Tracer * GetTracer ();
+  Tracer * GetTracer();
 
   /**
    * Sets the tracer passed as an argument.
    * If own is TRUE, then the @a Action class
    * is responsible for deleting the tracer.
    */
-  void SetTracer (Tracer * t, bool own);
+  void SetTracer(Tracer * t, bool own);
 
   /**
    * set actions parent window
    *
    * @param parent the parent that will receive events
    */
-  void SetParent (wxWindow * parent);
+  void SetParent(wxWindow * parent);
 
   /**
    * @return parent
    */
-  wxWindow * GetParent ();
+  wxWindow * GetParent();
 
   /**
    * sets the context for this action
    *
    * @param context
    */
-  void SetContext (svn::Context * context);
+  void SetContext(svn::Context * context);
 
   /**
    * @return the context of the action
    */
   svn::Context *
-  GetContext ();
+  GetContext();
 
   /**
    * Prepare action. This method is execute in the main
@@ -145,7 +145,7 @@ public:
    * @retval false cancel
    */
   virtual bool
-  Prepare ();
+  Prepare();
 
 
   /**
@@ -153,7 +153,7 @@ public:
    * will be thrown.
    */
   virtual bool
-  Perform () = 0;
+  Perform() = 0;
 
   /**
    * sets the path for the action
@@ -161,13 +161,13 @@ public:
    * @param path
    */
   void
-  SetPath (const svn::Path & path);
+  SetPath(const svn::Path & path);
 
   /**
    * @return path
    */
   const svn::Path &
-  GetPath ();
+  GetPath();
 
   /**
    * sets a selection of @ref Status for the action.
@@ -178,25 +178,25 @@ public:
    * @param targets
    */
   void
-  SetStatusSel (const svn::StatusSel & statusSel);
+  SetStatusSel(const svn::StatusSel & statusSel);
 
   /**
    * @return the status selection for this action
    */
   const svn::StatusSel &
-  GetStatusSel () const;
+  GetStatusSel() const;
 
   /**
    * @return the targets for this action
    */
   const svn::Targets &
-  GetTargets () const;
+  GetTargets() const;
 
   /**
    * @return a single target for this action
    */
   const svn::Path
-  GetTarget () const;
+  GetTarget() const;
 
 
   /**
@@ -205,28 +205,28 @@ public:
    * @see DONT_UPDATE
    */
   unsigned int
-  GetFlags () const;
+  GetFlags() const;
 
 
   /** set the name of the action */
   void
-  SetName (const wxString & name);
+  SetName(const wxString & name);
 
   /** returns the name of the action */
   const wxString &
-  GetName () const;
+  GetName() const;
 
 
   /**
    * output message with the tracer
    */
-  void Trace (const wxString & msg);
+  void Trace(const wxString & msg);
 
 
   /**
    * output error message with the tracer
    */
-  void TraceError (const wxString & msg);
+  void TraceError(const wxString & msg);
 
 
   /**
@@ -237,7 +237,7 @@ public:
     * @return temporary filename
     */
   svn::Path
-  GetPathAsTempFile (
+  GetPathAsTempFile(
     const svn::Path & path,
     const svn::Revision & revision = svn::Revision::HEAD);
 
@@ -249,12 +249,12 @@ private:
   /**
    * private default constructor
    */
-  Action ();
+  Action();
 
   /**
    * private copy constructor
    */
-  Action (const Action &);
+  Action(const Action &);
 };
 
 #endif

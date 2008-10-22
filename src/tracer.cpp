@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -30,21 +30,21 @@
 #include "ids.hpp"
 #include "tracer.hpp"
 
-EventTracer::EventTracer (wxFrame * fr)
-  : m_frame (fr)
+EventTracer::EventTracer(wxFrame * fr)
+    : m_frame(fr)
 {
 }
 
 void
-EventTracer::Trace (const wxString & msg)
+EventTracer::Trace(const wxString & msg)
 {
-  ActionEvent::Post (m_frame, TOKEN_INFO, msg);
+  ActionEvent::Post(m_frame, TOKEN_INFO, msg);
 }
 
 void
-EventTracer::TraceError (const wxString & msg)
+EventTracer::TraceError(const wxString & msg)
 {
-  ActionEvent::Post (m_frame, TOKEN_ERROR, msg);
+  ActionEvent::Post(m_frame, TOKEN_ERROR, msg);
 }
 
 /* -----------------------------------------------------------------

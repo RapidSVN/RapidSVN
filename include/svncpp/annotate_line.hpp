@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,58 +36,58 @@ namespace svn
   class AnnotateLine
   {
   public:
-    AnnotateLine (apr_int64_t line_no,
-                  svn_revnum_t revision,
-                  const char *author,
-                  const char *date,
-                  const char *line)
-    : m_line_no (line_no), m_revision (revision), 
-      m_author (author), m_date (date), m_line (line)
+    AnnotateLine(apr_int64_t line_no,
+                 svn_revnum_t revision,
+                 const char *author,
+                 const char *date,
+                 const char *line)
+        : m_line_no(line_no), m_revision(revision),
+        m_author(author), m_date(date), m_line(line)
     {
     }
 
-    AnnotateLine ( const AnnotateLine &other)
-    : m_line_no (other.m_line_no), m_revision (other.m_revision), 
-      m_author (other.m_author), m_date (other.m_date), 
-      m_line (other.m_line)
+    AnnotateLine(const AnnotateLine &other)
+        : m_line_no(other.m_line_no), m_revision(other.m_revision),
+        m_author(other.m_author), m_date(other.m_date),
+        m_line(other.m_line)
     {
     }
 
     /**
-     * destructor 
+     * destructor
      */
-    virtual ~AnnotateLine ()
+    virtual ~AnnotateLine()
     {
     }
 
-    apr_int64_t 
-    lineNumber () const
+    apr_int64_t
+    lineNumber() const
     {
       return m_line_no;
     }
-    svn_revnum_t 
-    revision () const
+    svn_revnum_t
+    revision() const
     {
       return m_revision;
     }
 
 
     const std::string &
-    author () const
+    author() const
     {
       return m_author;
     }
 
 
     const std::string &
-    date () const
+    date() const
     {
       return m_date;
     }
 
 
     const std::string &
-    line () const
+    line() const
     {
       return m_line;
     }

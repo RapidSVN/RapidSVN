@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -30,38 +30,38 @@
 // app
 #include "revert_action.hpp"
 
-RevertAction::RevertAction (wxWindow * parent)
-  : Action (parent, _("Revert"))
+RevertAction::RevertAction(wxWindow * parent)
+    : Action(parent, _("Revert"))
 {
 }
 
 bool
-RevertAction::Prepare ()
+RevertAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
     return false;
 
-  wxMessageDialog dlg (GetParent (),
-                       _("Do you want to revert local changes?"),
-                       _("Revert"), wxYES_NO | wxICON_QUESTION);
+  wxMessageDialog dlg(GetParent(),
+                      _("Do you want to revert local changes?"),
+                      _("Revert"), wxYES_NO | wxICON_QUESTION);
 
-  if (dlg.ShowModal () != wxID_YES)
+  if (dlg.ShowModal() != wxID_YES)
     return false;
 
   return true;
 }
 
 bool
-RevertAction::Perform ()
+RevertAction::Perform()
 {
-  svn::Client client (GetContext ());
-  client.revert (GetTargets (), false);
+  svn::Client client(GetContext());
+  client.revert(GetTargets(), false);
 
   return true;
 }
 
 bool
-RevertAction::CheckStatusSel (const svn::StatusSel & statusSel)
+RevertAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   return true;
 }

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,8 +34,8 @@ class wxTipProvider;
 class RapidSvnApp:public wxApp
 {
 public:
-  void OptionallyRegisterTempFile (const wxString & filename);
-  void OptionallyPurgeTempFiles ();
+  void OptionallyRegisterTempFile(const wxString & filename);
+  void OptionallyPurgeTempFiles();
 
 #if wxUSE_WXHTML_HELP
   wxHtmlHelpController& GetHelpController()
@@ -46,15 +46,15 @@ public:
 
 #if wxUSE_STARTUP_TIPS
   wxTipProvider*
-  MakeTipProvider (bool force = false);
+  MakeTipProvider(bool force = false);
 
   void
-  SaveTipsInfo (bool showAtStartup, int tipIndex);
+  SaveTipsInfo(bool showAtStartup, int tipIndex);
 #endif
 
 protected:
-  virtual bool OnInit ();
-  virtual int OnExit ();
+  virtual bool OnInit();
+  virtual int OnExit();
 
 private:
   wxLocale m_locale;
@@ -65,11 +65,11 @@ private:
   wxHtmlHelpController* m_helpController;
 
   bool
-  LocateHelp ();
+  LocateHelp();
 #endif
 };
 
-DECLARE_APP (RapidSvnApp)
+DECLARE_APP(RapidSvnApp)
 
 #endif
 /* -----------------------------------------------------------------

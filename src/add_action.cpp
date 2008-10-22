@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -39,43 +39,43 @@ struct AddAction::Data
 public:
   bool recursive;
 
-  Data (bool recursive_)
-    : recursive (recursive_)
+  Data(bool recursive_)
+      : recursive(recursive_)
   {
   }
 };
 
-AddAction::AddAction (wxWindow * parent, bool recursive)
-  : Action (parent, _("Add"), 0),
-    m (new Data (recursive))
+AddAction::AddAction(wxWindow * parent, bool recursive)
+    : Action(parent, _("Add"), 0),
+    m(new Data(recursive))
 {
 }
 
-AddAction::~AddAction ()
+AddAction::~AddAction()
 {
   delete m;
 }
 
 bool
-AddAction::Prepare ()
+AddAction::Prepare()
 {
   // No dialog for Add
-  return Action::Prepare ();
+  return Action::Prepare();
 }
 
 bool
-AddAction::Perform ()
+AddAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  const std::vector<svn::Path> & v = GetTargets ().targets ();
+  const std::vector<svn::Path> & v = GetTargets().targets();
   std::vector<svn::Path>::const_iterator it;
 
-  for (it = v.begin (); it != v.end (); it++)
+  for (it = v.begin(); it != v.end(); it++)
   {
     const svn::Path & path = *it;
 
-    client.add (path.c_str (), m->recursive);
+    client.add(path.c_str(), m->recursive);
   }
 
   return true;
@@ -83,15 +83,15 @@ AddAction::Perform ()
 
 
 bool
-AddAction::CheckStatusSel (const svn::StatusSel & statusSel)
+AddAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  if (0 == statusSel.size ())
+  if (0 == statusSel.size())
     return false;
 
-  if (statusSel.hasUrl ())
+  if (statusSel.hasUrl())
     return false;
 
-  if (statusSel.hasVersioned ())
+  if (statusSel.hasVersioned())
     return false;
 
   return true;

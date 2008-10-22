@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -67,8 +67,8 @@ public:
    * @param parent parent window
    * @param the tracer that will receive notifications
    */
-  virtual void 
-  Create (wxWindow * parent) = 0;
+  virtual void
+  Create(wxWindow * parent) = 0;
 
   /**
    * check if there is already an action
@@ -76,8 +76,8 @@ public:
    *
    * @return true=active / false=inactive
    */
-  virtual ActionState 
-  GetState () = 0;
+  virtual ActionState
+  GetState() = 0;
 
   /**
    * returns the result of the action
@@ -86,8 +86,8 @@ public:
    *
    * @return result of the last action
    */
-  virtual ActionResult 
-  GetResult () = 0;
+  virtual ActionResult
+  GetResult() = 0;
 
   /**
    * sets the tracer that will be notified
@@ -98,8 +98,8 @@ public:
    *
    * @param tracer
    */
-  virtual void 
-  SetTracer (Tracer * tr) = 0;
+  virtual void
+  SetTracer(Tracer * tr) = 0;
 
   /**
    * Used to run an Action. If there
@@ -112,8 +112,8 @@ public:
    * @param action Action to run
    * @return true=success/false=another action running
    */
-  virtual bool 
-  Perform (Action * action) = 0;
+  virtual bool
+  Perform(Action * action) = 0;
 
   /**
    * Sets the context to use for actions
@@ -122,15 +122,15 @@ public:
    * @param own true: this class will own and delete the worker
    */
   virtual void
-  SetContext (svn::Context * context, bool own = false) = 0;
+  SetContext(svn::Context * context, bool own = false) = 0;
 
   /**
    * @return the context
    */
-  virtual svn::Context * 
-  GetContext () const = 0;
+  virtual svn::Context *
+  GetContext() const = 0;
 
-  virtual ~ActionWorker () { }
+  virtual ~ActionWorker() { }
 };
 
 #endif

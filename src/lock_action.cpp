@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,50 +36,50 @@
 #include "utils.hpp"
 
 
-LockAction::LockAction (wxWindow * parent)
-  : Action (parent, _("Lock"))
+LockAction::LockAction(wxWindow * parent)
+    : Action(parent, _("Lock"))
 {
 }
 
 bool
-LockAction::Prepare ()
+LockAction::Prepare()
 {
-  if (!Action::Prepare ())
+  if (!Action::Prepare())
   {
     return false;
   }
 
-  LockDlg dlg(GetParent ());
+  LockDlg dlg(GetParent());
 
-  if (dlg.ShowModal () != wxID_OK)
+  if (dlg.ShowModal() != wxID_OK)
   {
     return false;
   }
 
-  m_stealLock = dlg.GetStealLock ();
-  m_message = dlg.GetMessage ();
+  m_stealLock = dlg.GetStealLock();
+  m_message = dlg.GetMessage();
 
   return true;
 }
 
 bool
-LockAction::Perform ()
+LockAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  std::string messageUtf8 (LocalToUtf8 (m_message));
-  client.lock (GetTargets (), m_stealLock, messageUtf8.c_str ());
+  std::string messageUtf8(LocalToUtf8(m_message));
+  client.lock(GetTargets(), m_stealLock, messageUtf8.c_str());
 
   return true;
 }
 
 bool
-LockAction::CheckStatusSel (const svn::StatusSel & statusSel)
+LockAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  if (0 == statusSel.size ())
+  if (0 == statusSel.size())
     return false;
 
-  if (statusSel.hasUnversioned ())
+  if (statusSel.hasUnversioned())
     return false;
 
   return true;

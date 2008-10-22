@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -29,31 +29,31 @@
  */
 class PathTestCase : public CppUnit::TestCase
 {
-  CPPUNIT_TEST_SUITE (PathTestCase);
-  CPPUNIT_TEST (testInit);
-  CPPUNIT_TEST (testSplit);
-  CPPUNIT_TEST (testAddComponent);
-  CPPUNIT_TEST (testCopy);
-  CPPUNIT_TEST (testIsUrl);
-  CPPUNIT_TEST (testSubstr);  
-  CPPUNIT_TEST (testUnescape);
-  CPPUNIT_TEST (testLength);  
-  CPPUNIT_TEST (testGetTempDir);
-  CPPUNIT_TEST_SUITE_END ();
+  CPPUNIT_TEST_SUITE(PathTestCase);
+  CPPUNIT_TEST(testInit);
+  CPPUNIT_TEST(testSplit);
+  CPPUNIT_TEST(testAddComponent);
+  CPPUNIT_TEST(testCopy);
+  CPPUNIT_TEST(testIsUrl);
+  CPPUNIT_TEST(testSubstr);
+  CPPUNIT_TEST(testUnescape);
+  CPPUNIT_TEST(testLength);
+  CPPUNIT_TEST(testGetTempDir);
+  CPPUNIT_TEST_SUITE_END();
 
 public:
-  void setUp ();
+  void setUp();
 
 protected:
-  void testInit ();
-  void testSplit ();
-  void testAddComponent ();
-  void testCopy ();
-  void testIsUrl ();
-  void testSubstr ();
-  void testUnescape ();
-  void testLength ();  
-  void testGetTempDir ();
+  void testInit();
+  void testSplit();
+  void testAddComponent();
+  void testCopy();
+  void testIsUrl();
+  void testSubstr();
+  void testUnescape();
+  void testLength();
+  void testGetTempDir();
 };
 
 /* -----------------------------------------------------------------

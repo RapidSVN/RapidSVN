@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -44,20 +44,20 @@ namespace svn
   class Targets
   {
   public:
-    /** 
+    /**
      * Constructor
      *
      * @param targets vector of paths
      */
-    Targets (const std::vector<Path> & targets);
-    
+    Targets(const std::vector<Path> & targets);
+
     /**
      * Constructor from an APR array containing
      * char *.
      *
      * @param targets APR array header
      */
-    Targets (const apr_array_header_t * targets);
+    Targets(const apr_array_header_t * targets);
 
     /**
      * Constructor. Initializes list with just
@@ -65,19 +65,19 @@ namespace svn
      *
      * @param target
      */
-    Targets (const char * target = 0);
+    Targets(const char * target = 0);
 
     /**
      * Copy Constructor
      *
      * @param targets Source
      */
-    Targets (const Targets & targets);
+    Targets(const Targets & targets);
 
     /**
      * Destructor
      */
-    virtual ~Targets ();
+    virtual ~Targets();
 
     /**
      * Returns an apr array containing
@@ -86,7 +86,7 @@ namespace svn
      * @param pool Pool used for conversion
      */
     const apr_array_header_t *
-    array (const Pool & pool) const;
+    array(const Pool & pool) const;
 
     /**
      * Returns a vector of paths
@@ -99,7 +99,7 @@ namespace svn
     /**
      * @return the number of targets
      */
-    size_t size () const;
+    size_t size() const;
 
     /**
      * operator to return the vector
@@ -120,7 +120,7 @@ namespace svn
      * @return single path
      */
     const Path
-    target () const;
+    target() const;
 
     /**
      * adds a @ref Path to the existing entries
@@ -129,21 +129,21 @@ namespace svn
      *         unique
      */
     void
-    push_back (const Path & path);
+    push_back(const Path & path);
 
-    
+
     /**
-     * clears all entries 
+     * clears all entries
      */
     void
-    clear ();
+    clear();
 
     /**
      * reserve the size for following calls
      * to @ref push_back
      */
     void
-    reserve (size_t size);
+    reserve(size_t size);
 
   private:
     std::vector<Path> m_targets;

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -29,29 +29,29 @@
 //svncpp
 #include "svncpp/url.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION (UrlTestCase);
+CPPUNIT_TEST_SUITE_REGISTRATION(UrlTestCase);
 
 void
-UrlTestCase::setUp ()
+UrlTestCase::setUp()
 {
 }
 
 void
-UrlTestCase::testIsValid ()
+UrlTestCase::testIsValid()
 {
-  CPPUNIT_ASSERT (svn::Url::isValid ("my_repos/some/dummy/path") == 0);
-  CPPUNIT_ASSERT (svn::Url::isValid ("\\is that a path?/\\/") == 0);
-  CPPUNIT_ASSERT (svn::Url::isValid ("https://yahoo.de/index.de.html") == 1);
-  CPPUNIT_ASSERT (svn::Url::isValid ("file:///local/file/here") == 1);
-  CPPUNIT_ASSERT (svn::Url::isValid ("http://yahoo.de") == 1);
+  CPPUNIT_ASSERT(svn::Url::isValid("my_repos/some/dummy/path") == 0);
+  CPPUNIT_ASSERT(svn::Url::isValid("\\is that a path?/\\/") == 0);
+  CPPUNIT_ASSERT(svn::Url::isValid("https://yahoo.de/index.de.html") == 1);
+  CPPUNIT_ASSERT(svn::Url::isValid("file:///local/file/here") == 1);
+  CPPUNIT_ASSERT(svn::Url::isValid("http://yahoo.de") == 1);
 }
 
 void
-UrlTestCase::testEscape ()
+UrlTestCase::testEscape()
 {
-  CPPUNIT_ASSERT ("http://tigris.org/x%20y%20z.html" == svn::Url::escape ("http://tigris.org/x y z.html"));
-  CPPUNIT_ASSERT ("http://tigris.org/xyz.php" == svn::Url::escape ("http://tigris.org/xyz.php"));
-  CPPUNIT_ASSERT ("file:///local/file/here" == svn::Url::escape ("file:///local/file/here"));
+  CPPUNIT_ASSERT("http://tigris.org/x%20y%20z.html" == svn::Url::escape("http://tigris.org/x y z.html"));
+  CPPUNIT_ASSERT("http://tigris.org/xyz.php" == svn::Url::escape("http://tigris.org/xyz.php"));
+  CPPUNIT_ASSERT("file:///local/file/here" == svn::Url::escape("file:///local/file/here"));
 }
 
 

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -36,8 +36,8 @@
 #include "ignore_action.hpp"
 #include "utils.hpp"
 
-IgnoreAction::IgnoreAction (wxWindow * parent)
-  : Action (parent, _("Ignore"), UPDATE_TREE)
+IgnoreAction::IgnoreAction(wxWindow * parent)
+    : Action(parent, _("Ignore"), UPDATE_TREE)
 {
 }
 
@@ -46,18 +46,18 @@ IgnoreAction::~IgnoreAction()
 }
 
 bool
-IgnoreAction::Perform ()
+IgnoreAction::Perform()
 {
-  svn::Client client (GetContext ());
+  svn::Client client(GetContext());
 
-  client.ignore (GetTargets ());
+  client.ignore(GetTargets());
   return true;
 }
 
 bool
-IgnoreAction::CheckStatusSel (const svn::StatusSel & statusSel)
+IgnoreAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  return !statusSel.hasVersioned ();
+  return !statusSel.hasVersioned();
 }
 
 /* -----------------------------------------------------------------

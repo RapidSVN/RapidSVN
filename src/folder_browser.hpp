@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -42,37 +42,37 @@ namespace svn
 class FolderBrowser : public wxTreeCtrl
 {
 public:
-  FolderBrowser (wxWindow * parent,  const wxWindowID id = -1,
-                 const wxPoint & pos = wxDefaultPosition,
-                 const wxSize & size = wxDefaultSize,
-                 const wxString & name = wxT("FolderBrowser"));
+  FolderBrowser(wxWindow * parent,  const wxWindowID id = -1,
+                const wxPoint & pos = wxDefaultPosition,
+                const wxSize & size = wxDefaultSize,
+                const wxString & name = wxT("FolderBrowser"));
 
-  virtual ~FolderBrowser ();
+  virtual ~FolderBrowser();
 
-  void 
-  RefreshFolderBrowser ();
+  void
+  RefreshFolderBrowser();
 
   /**
    * remove the selected bookmark from bookmarks
    */
-  const bool 
-  RemoveBookmark ();
+  const bool
+  RemoveBookmark();
 
   /**
-   * add bookmark. 
-   * 
+   * add bookmark.
+   *
    * @param path path/url of the bookmark
    */
-  void 
-  AddBookmark (const wxString & path);
+  void
+  AddBookmark(const wxString & path);
 
   /**
    * returns the path of the current selection
    * if nothing is selected, an empty string
    * is returned
    */
-  const wxString 
-  GetPath () const;
+  const wxString
+  GetPath() const;
 
   /**
    * returns the "context" of the current selection.
@@ -80,14 +80,14 @@ public:
    *
    * @return context of selection
    */
-  const FolderItemData * 
-  GetSelectedItemData () const;
+  const FolderItemData *
+  GetSelectedItemData() const;
 
-  /** 
+  /**
    * the selected @ref Status instances
    */
   const svn::StatusSel &
-  GetStatusSel () const;
+  GetStatusSel() const;
 
   /**
    * returns the "context" of the item at point.
@@ -95,8 +95,8 @@ public:
    *
    * @return context of selection
    */
-  const FolderItemData * 
-  HitTest (const wxPoint & point) const;
+  const FolderItemData *
+  HitTest(const wxPoint & point) const;
 
   /**
    * return the authentication context of the current selection
@@ -104,8 +104,8 @@ public:
    * @return authentication context
    * @retval NULL if Bookmarks is selected
    */
-  svn::Context * 
-  GetContext ();
+  svn::Context *
+  GetContext();
 
   /**
    * Tries to select @a path in the current selected bookmark.
@@ -121,7 +121,7 @@ public:
    * @retval true selection successful
    */
   bool
-  SelectFolder (const wxString & path);
+  SelectFolder(const wxString & path);
 
   /**
    * selects the @a bookmark
@@ -130,7 +130,7 @@ public:
    * @return true on success
    */
   bool
-  SelectBookmark (const wxString & bookmarkPath);
+  SelectBookmark(const wxString & bookmarkPath);
 
   /**
    * setting whether there will be one login for all the
@@ -139,19 +139,19 @@ public:
    * each bookmark in the bookmarks list remembers its own login
    */
   void
-  SetAuthPerBookmark (const bool value);
+  SetAuthPerBookmark(const bool value);
 
-  /** 
-   * check whether flat-mode is turned on for the 
+  /**
+   * check whether flat-mode is turned on for the
    * selected bookmark
    *
    * @retval true flat-mode is turned on
    */
   const bool
-  IsFlat () const;
+  IsFlat() const;
 
   /**
-   * turns flat-mode for the selected bookmark 
+   * turns flat-mode for the selected bookmark
    * on or off
    *
    * @param flatMode true=on
@@ -159,31 +159,31 @@ public:
    * @retval false not set, e.g. root selected or nothing
    */
   bool
-  SetFlat (bool flatMode);
+  SetFlat(bool flatMode);
 
   /**
    * @return auth per bookmark setting
    */
   const bool
-  GetAuthPerBookmark () const;
+  GetAuthPerBookmark() const;
 
   /**
    * check if authentication credentials should be cached or not
    */
   const bool
-  GetAuthCache () const;
+  GetAuthCache() const;
 
   /**
    * select if authentication credentials should be cached or not
    */
   void
-  SetAuthCache (const bool value);
+  SetAuthCache(const bool value);
 
   void
-  SetListener (svn::ContextListener * listener);
+  SetListener(svn::ContextListener * listener);
 
   svn::ContextListener *
-  GetListener () const;
+  GetListener() const;
 
   /**
    * Writes configuration including bookmarks
@@ -192,7 +192,7 @@ public:
    * @param cfg Config instance to write to
    */
   void
-  WriteConfig (wxConfigBase * cfg) const;
+  WriteConfig(wxConfigBase * cfg) const;
 
   /**
    * Read configuration
@@ -200,7 +200,7 @@ public:
    * @param cfg Config instance
    */
   void
-  ReadConfig (wxConfigBase * cfg);
+  ReadConfig(wxConfigBase * cfg);
 
   /**
    * Expand the selected leaf of the tree.
@@ -208,7 +208,7 @@ public:
    * leafs
    */
   void
-  ExpandSelection ();
+  ExpandSelection();
 
 private:
   struct Data;
@@ -217,12 +217,12 @@ private:
   /**
    * disallow default constructor
    */
-  FolderBrowser ();
+  FolderBrowser();
 
   /**
    * disallow copy constructor
    */
-  FolderBrowser (const FolderBrowser &);
+  FolderBrowser(const FolderBrowser &);
 
   /**
    * disallow assignment operator
@@ -230,14 +230,14 @@ private:
   FolderBrowser & operator = (const FolderBrowser &);
 
 private:
-  DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 
-  void OnTreeKeyDown (wxTreeEvent & event);
-  void OnExpandItem (wxTreeEvent & event);
-  void OnCollapseItem (wxTreeEvent & event);
-  void OnContextMenu (wxContextMenuEvent & event);
-  void OnBeginDrag (wxTreeEvent & event);
-  void OnSetFocus (wxFocusEvent & event);
+  void OnTreeKeyDown(wxTreeEvent & event);
+  void OnExpandItem(wxTreeEvent & event);
+  void OnCollapseItem(wxTreeEvent & event);
+  void OnContextMenu(wxContextMenuEvent & event);
+  void OnBeginDrag(wxTreeEvent & event);
+  void OnSetFocus(wxFocusEvent & event);
 };
 
 #endif

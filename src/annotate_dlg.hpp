@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -34,19 +34,19 @@ class wxListView;
 class AnnotateDlg:public wxDialog
 {
 public:
-   AnnotateDlg (wxWindow * parent,
-               const wxString & caption);
+  AnnotateDlg(wxWindow * parent,
+              const wxString & caption);
 
-  void OnButton (wxCommandEvent & event);
-  void AddAnnotateLine (int revision, const wxString & author,
-      const wxString & line);
-  void AutoSizeColumn ();
+  void OnButton(wxCommandEvent & event);
+  void AddAnnotateLine(int revision, const wxString & author,
+                       const wxString & line);
+  void AutoSizeColumn();
 
 private:
   wxButton *m_button;
   wxListView *m_list;
 
- DECLARE_EVENT_TABLE ()
+  DECLARE_EVENT_TABLE()
 };
 
 #endif

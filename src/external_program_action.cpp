@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -40,37 +40,37 @@
 #include "utils.hpp"
 #include "verblist.hpp"
 
-ExternalProgramAction::ExternalProgramAction (
-  wxWindow * parent, long verb_id, bool treat_as_folder) 
- : Action (parent, _("Execute"), UPDATE_LATER), 
-   m_verb_id (verb_id), 
-   m_treat_as_folder (treat_as_folder),
-   m_parent (parent)
+ExternalProgramAction::ExternalProgramAction(
+  wxWindow * parent, long verb_id, bool treat_as_folder)
+    : Action(parent, _("Execute"), UPDATE_LATER),
+    m_verb_id(verb_id),
+    m_treat_as_folder(treat_as_folder),
+    m_parent(parent)
 {
 }
 
 bool
-ExternalProgramAction::Prepare ()
+ExternalProgramAction::Prepare()
 {
-  return Action::Prepare ();
+  return Action::Prepare();
 }
 
 bool
-ExternalProgramAction::Perform ()
+ExternalProgramAction::Perform()
 {
   VerbList verb_list;
 //  wxBusyCursor busy_cursor;
 
   // The actual target
-  svn::Path path = GetTarget ();
-  if (path.isUrl ())
+  svn::Path path = GetTarget();
+  if (path.isUrl())
     path = GetPathAsTempFile(path);
-  
-  wxString target_str = Utf8ToLocal (path.c_str ());
+
+  wxString target_str = Utf8ToLocal(path.c_str());
   wxFileName target = target_str;
 
   // The target we'll pass to the external program
-  wxString target_document = target.GetFullPath ();
+  wxString target_document = target.GetFullPath();
   Preferences prefs;
 
   if (m_treat_as_folder)
@@ -82,7 +82,7 @@ ExternalProgramAction::Perform ()
   }
 
   // Get verbs from the OS
-  verb_list.InitFromDocument (target_document, m_treat_as_folder);
+  verb_list.InitFromDocument(target_document, m_treat_as_folder);
 
   // An explicit verb was chose that is not available
   if ((m_verb_id >= 0) && ((size_t)m_verb_id > verb_list.GetCount()))
@@ -93,54 +93,54 @@ ExternalProgramAction::Perform ()
 
   if (m_treat_as_folder)
   {
-    if (verb_list.GetCount () && !((m_verb_id == -1) 
-      && prefs.explorerAlways))
+    if (verb_list.GetCount() && !((m_verb_id == -1)
+                                  && prefs.explorerAlways))
     {
-      verb_list.Launch ((m_verb_id == -1 ? 0 : m_verb_id));      
+      verb_list.Launch((m_verb_id == -1 ? 0 : m_verb_id));
     }
     else
     {
-      wxString args (prefs.explorerArgs);
-      TrimString (args);
+      wxString args(prefs.explorerArgs);
+      TrimString(args);
 
-      if (args.Length () == 0)
+      if (args.Length() == 0)
         args = wxT("\"") + target_document + wxT("\"");
       else
-        args.Replace (wxT("%1"), target_document, true);
-    
-      wxString cmd (prefs.explorer + wxT(" ") + args);
+        args.Replace(wxT("%1"), target_document, true);
+
+      wxString cmd(prefs.explorer + wxT(" ") + args);
 
       wxString msg;
-      msg.Printf (_("Execute file explorer: %s"), cmd.c_str ());
-      Trace (msg);
+      msg.Printf(_("Execute file explorer: %s"), cmd.c_str());
+      Trace(msg);
 
-      ActionEvent::Post (m_parent, TOKEN_CMD, cmd);
+      ActionEvent::Post(m_parent, TOKEN_CMD, cmd);
     }
   }
   else
   {
-    if (verb_list.GetCount () && !((m_verb_id == -1) 
-      && prefs.editorAlways))
+    if (verb_list.GetCount() && !((m_verb_id == -1)
+                                  && prefs.editorAlways))
     {
-      verb_list.Launch ((m_verb_id == -1 ? 0 : m_verb_id));      
+      verb_list.Launch((m_verb_id == -1 ? 0 : m_verb_id));
     }
     else
     {
-      wxString args (prefs.editorArgs);
-      TrimString (args);
+      wxString args(prefs.editorArgs);
+      TrimString(args);
 
-      if (args.Length () == 0)
+      if (args.Length() == 0)
         args = wxT("\"") + target_document + wxT("\"");
       else
-        args.Replace (wxT("%1"), target_document, true);
-   
-      wxString cmd (prefs.editor + wxT(" ") + args);
+        args.Replace(wxT("%1"), target_document, true);
+
+      wxString cmd(prefs.editor + wxT(" ") + args);
 
       wxString msg;
-      msg.Printf (_("Execute editor: %s"), cmd.c_str ());
-      Trace (msg);
+      msg.Printf(_("Execute editor: %s"), cmd.c_str());
+      Trace(msg);
 
-      ActionEvent::Post (m_parent, TOKEN_CMD, cmd);
+      ActionEvent::Post(m_parent, TOKEN_CMD, cmd);
     }
   }
 
@@ -148,15 +148,15 @@ ExternalProgramAction::Perform ()
 }
 
 bool
-ExternalProgramAction::CheckStatusSel (const svn::StatusSel & statusSel)
+ExternalProgramAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   // works with all kinds of files and dirs,
   // but only ONE is allowed
-  if (1 != statusSel.size ())
+  if (1 != statusSel.size())
     return false;
 
   // directories are allowed only local
-  if (statusSel.hasUrl () && statusSel.hasDirs ())
+  if (statusSel.hasUrl() && statusSel.hasDirs())
     return false;
 
   return true;

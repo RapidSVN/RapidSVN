@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -38,12 +38,12 @@ public:
    *
    * @param context context to use
    */
-  FileInfo (svn::Context * context, bool withUpdate = false);
+  FileInfo(svn::Context * context, bool withUpdate = false);
 
   /**
    * destructor
    */
-  virtual ~FileInfo ();
+  virtual ~FileInfo();
 
   /**
    * adds a path to the list of paths that are to be examined
@@ -51,7 +51,7 @@ public:
    * @param path absolute path to add
    */
   void
-  addPath (const char * path);
+  addPath(const char * path);
 
   /**
    * get an info string that contains informations about
@@ -60,7 +60,7 @@ public:
    * @return informational string
    */
   const wxString &
-  info () const;
+  info() const;
 
 private:
   // hide implementation details
