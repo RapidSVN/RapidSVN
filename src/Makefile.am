@@ -89,7 +89,6 @@ rapidsvn_SOURCES= \
 rapidsvn_LDFLAGS=-Lsvncpp
 rapidsvn_LDADD= -lsvncpp \
 	$(SVN_LIBS) \
-	$(NEON_LIBS) \
 	$(APR_LIBS) \
 	$(WX_LIBS) \
 	$(EXTRA_LIBS)
