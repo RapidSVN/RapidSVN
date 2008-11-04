@@ -70,6 +70,7 @@ rapidsvn_SOURCES= \
 	report_dlg.cpp \
 	resolve_action.cpp \
 	revert_action.cpp \
+	revert_dlg.cpp \
 	simple_worker.cpp \
 	switch_action.cpp \
 	switch_dlg.cpp \

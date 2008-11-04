@@ -46,6 +46,9 @@ public:
 
   static bool
   CheckStatusSel(const svn::StatusSel & statusSel);
+
+private:
+  bool m_recursive;
 };
 
 #endif

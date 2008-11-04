@@ -21,54 +21,30 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+#ifndef _REVERT_DLG_H_INCLUDED_
+#define _REVERT_DLG_H_INCLUDED_
+
 // wxWidgets
-#include "wx/wx.h"
+#include "wx/dialog.h"
 
-// svncpp
-#include "svncpp/client.hpp"
-
-// app
-#include "revert_action.hpp"
-#include "revert_dlg.hpp"
-
-RevertAction::RevertAction(wxWindow * parent)
-    : Action(parent, _("Revert"))
+class RevertDlg:public wxDialog
 {
-}
+public:
+  RevertDlg(wxWindow* parent);
 
-bool
-RevertAction::Prepare()
-{
-  if (!Action::Prepare())
-    return false;
+  virtual ~RevertDlg();
 
-  RevertDlg dlg(GetParent());
+  bool
+  GetRecursive() const;
 
-  if (dlg.ShowModal() != wxID_OK)
-  {
-    return false;
-  }
+private:
+  struct Data;
+  Data * m;
 
-  m_recursive = dlg.GetRecursive();
+  DECLARE_EVENT_TABLE()
+};
 
-  return true;
-}
-
-bool
-RevertAction::Perform()
-{
-  svn::Client client(GetContext());
-  client.revert(GetTargets(), m_recursive);
-
-  return true;
-}
-
-bool
-RevertAction::CheckStatusSel(const svn::StatusSel & statusSel)
-{
-  return true;
-}
-
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

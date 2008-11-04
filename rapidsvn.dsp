@@ -406,6 +406,10 @@ SOURCE=.\src\revert_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\revert_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\simple_worker.cpp
 # End Source File
 # Begin Source File
@@ -715,6 +719,10 @@ SOURCE=.\src\resource.hpp
 # Begin Source File
 
 SOURCE=.\src\revert_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\revert_dlg.hpp
 # End Source File
 # Begin Source File
 
