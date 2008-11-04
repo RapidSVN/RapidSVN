@@ -3,7 +3,7 @@ PROJECT AUTHORS
 
 The information in here is gathered from the commit
 log (brought this file up to date with revision 7579).
-People are ordered in chronological appearance. 
+People are ordered in chronological appearance.
 
 People with commit access to the repository:
 
@@ -33,7 +33,7 @@ Contributors for the project:
  Alex A. Besogonov     - source code
  GCS                   - debian package
  Jens Meyer auf'm Hofe - source code
- 
+
  Glenn Schrader        - configure system
  Frank Richter         - source code
  Wolfgang Fritz        - source code
@@ -61,8 +61,10 @@ Contributors for the project:
  Eugene Pelekhay       - source code
  Andreas Pakulat       - source code
  Mathieu Martin        - documentation
- Xavier Nodet          - source code, translation 
+ Xavier Nodet          - source code, translation
  Roland Rabien         - source code
  Hisateru Tanaka       - source code, translation
  Tim Jackson           - source code
  Petr Pitka            - source code
+ Luca Vercelli         - translation
+
