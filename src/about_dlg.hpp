@@ -25,12 +25,28 @@
 #define _ABOUT_DLG_H_INCLUDED_
 
 // wxWidgets
-#include "wx/wx.h"
+#include "wx/dialog.h"
 
 /**
- * Display the "About" Dialog...
+ * this is a "about" dialog for rapidsvn. It shows the logo and
+ * some informative text about copyright and versions
  */
-void ShowAboutDlg(const wxLocale & locale);
+class AboutDlg : public wxDialog
+{
+public:
+  /**
+   * constructor
+   *
+   * @param parent parent window
+   * @param locale locale used by the application
+   */
+  AboutDlg(wxWindow * parent, const wxLocale & locale);
+
+  /**
+   * destructor
+   */
+  virtual ~AboutDlg();
+};
 
 
 #endif
