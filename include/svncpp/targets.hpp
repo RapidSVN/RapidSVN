@@ -25,18 +25,17 @@
 #ifndef _SVNCPP_TARGETS_HPP_
 #define _SVNCPP_TARGETS_HPP_
 
-// stl
-#include "svncpp/vector_wrapper.hpp"
-
 // apr api
 #include "apr_tables.h"
 
+// svncpp
+#include "svncpp/path.hpp"
 
 namespace svn
 {
   // forward declarations
-  class Path;
   class Pool;
+
 
   /**
    * Encapsulation for Subversion target arrays handling
@@ -49,7 +48,7 @@ namespace svn
      *
      * @param targets vector of paths
      */
-    Targets(const std::vector<Path> & targets);
+    Targets(const PathVector & targets);
 
     /**
      * Constructor from an APR array containing
@@ -93,7 +92,7 @@ namespace svn
      *
      * @return vector of paths
      */
-    const std::vector<Path> &
+    const PathVector &
     targets() const;
 
     /**
@@ -106,7 +105,7 @@ namespace svn
      *
      * @return vector with targets
      */
-    operator const std::vector<Path> & () const
+    operator const PathVector & () const
     {
       return m_targets;
     }
@@ -146,7 +145,7 @@ namespace svn
     reserve(size_t size);
 
   private:
-    std::vector<Path> m_targets;
+    PathVector m_targets;
   };
 }
 

@@ -29,6 +29,8 @@
 #include "svncpp/client.hpp"
 #include "svncpp/pool.hpp"
 #include "svncpp/status_selection.hpp"
+#include "svncpp/targets.hpp"
+
 
 // app
 #include "commit_action.hpp"
@@ -45,20 +47,64 @@ bool
 CommitAction::Prepare()
 {
   if (!Action::Prepare())
-  {
     return false;
+
+  svn::Client client (GetContext());
+  const svn::StatusSel& statusSel = GetStatusSel();
+  const svn::PathVector & selectedTargets = statusSel.targets();
+  svn::PathVector targets;
+  svn::PathVector::const_iterator it;
+  bool recursive;
+
+  // for local files we wanna filter out the unmodified files
+  if (statusSel.hasUrl())
+  {
+    // but we can add all remote files immediately
+    targets = selectedTargets;
+
+    // recursive can be on
+    recursive = true;
+  }
+  for (it = selectedTargets.begin(); it != selectedTargets.end(); it++)
+  {
+    svn::Path path = *it;
+
+    svn::StatusFilter filter;
+    filter.showModified = true;
+    filter.showExternals = true;
+    filter.showConflicted = true;
+
+    // Get status array for parent and all entries within it
+    svn::StatusEntries entries;
+    client.status(path.c_str(), filter, true, false, entries);
+
+    svn::StatusEntries::iterator it;
+    for (it = entries.begin(); it != entries.end(); it++)
+    {
+      svn::Status& status = *it;
+
+      targets.push_back(status.path());
+    }
+
+    // we dont need recursice since we added all the
+    // files that are available
+    recursive = false;
   }
 
-  CommitDlg dlg(GetParent());
+  CommitDlg dlg(GetParent(), false, targets);
+  dlg.SetRecursive(recursive);
 
   if (dlg.ShowModal() != wxID_OK)
-  {
     return false;
-  }
 
   m_recursive = dlg.GetRecursive();
   m_message = dlg.GetMessage();
   m_keepLocks = dlg.GetKeepLocks();
+  m_files = dlg.GetSelectedFilenames();
+
+  // are there any files left over to commit?
+  if (m_files.size() == 0)
+    return false;
 
   return true;
 }
@@ -68,14 +114,12 @@ CommitAction::Perform()
 {
   svn::Client client(GetContext());
 
-  const svn::StatusSel & statusSel = GetStatusSel();
-
   std::string messageUtf8(LocalToUtf8(m_message));
 
   svn::Pool pool;
 
-  svn_revnum_t revision =
-    client.commit(statusSel.targets(), messageUtf8.c_str(),
+  svn_revnum_t revision = 
+    client.commit(m_files, messageUtf8.c_str(),
                   m_recursive, m_keepLocks);
 
   wxString str;

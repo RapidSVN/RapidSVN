@@ -26,11 +26,15 @@
 #include "wx/wx.h"
 #include "wx/valgen.h"
 
+// svncpp
+#include "svncpp/path.hpp"
+
 // app
 #include "commit_dlg.hpp"
 #include "hist_val.hpp"
 #include "hist_entries.hpp"
 #include "preferences.hpp"
+#include "utils.hpp"
 
 static const int ID_HISTORY_COMBO_BOX = 1;
 
@@ -41,11 +45,16 @@ public:
   bool keepLocks;
   wxComboBox * comboHistory;
   wxTextCtrl * msg;
+  wxCheckListBox * files;
+  wxCheckBox * checkRecursive;
 
   wxString message;
+  svn::PathVector filenames;
 
-  Data(wxWindow * window, bool unexpectedCommit)
-      : recursive(true), comboHistory(0), msg(0)
+  Data(wxWindow * window, bool unexpectedCommit, 
+       const svn::PathVector & filenames)
+    : recursive(true), comboHistory(0), msg(0), files(0),
+      checkRecursive(0)
   {
     // create controls
     wxStaticBox* msgBox =
@@ -67,6 +76,20 @@ public:
                            msgSize, wxTE_MULTILINE, val);
     }
 
+    if (filenames.size() > 0)
+    {
+      files = new wxCheckListBox(window, -1, wxDefaultPosition, wxDefaultSize, 0, wxLB_EXTENDED);
+      svn::PathVector::const_iterator it;
+
+      for(it=filenames.begin(); it!=filenames.end(); it++)
+      {
+        const svn::Path & path = *it;
+        int i = files->Append(PathToNative(path));
+        
+        files->Check(i, true);
+      }
+    }
+
     wxStaticText * labelHistory = new wxStaticText(
       window, -1, _("Recent entries:"), wxDefaultPosition);
 
@@ -78,7 +101,6 @@ public:
         wxCB_READONLY, val);
     }
 
-    wxCheckBox * checkRecursive = NULL;
     if (!unexpectedCommit)
     {
       wxGenericValidator val(&recursive);
@@ -132,12 +154,23 @@ public:
     buttonSizer->Add(ok, 0, wxALL, 10);
     buttonSizer->Add(cancel, 0, wxALL, 10);
 
-    wxBoxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
-    topSizer->Add(msgSizer, 1, wxALL | wxEXPAND, 5);
+    mainSizer->Add(msgSizer, 1, wxALL | wxEXPAND, 5);
+    mainSizer->Add(histSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
+
+    if (files != 0)
+    {
+      wxStaticBox* filesBox =
+        new wxStaticBox(window, -1, _("Files To Commit"));
+
+      // The files field:
+      wxStaticBoxSizer *filesSizer =
+        new wxStaticBoxSizer (filesBox, wxHORIZONTAL);
+
+      filesSizer->Add (files, 1, wxALL | wxEXPAND, 5);
+      mainSizer->Add(filesSizer, 1, wxALL | wxEXPAND, 5);
+    }
 
     // Add all the sizers to the main sizer
-    mainSizer->Add(topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
-    mainSizer->Add(histSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
     mainSizer->Add(buttonSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
 
     window->SetAutoLayout(true);
@@ -150,17 +183,32 @@ public:
   }
 };
 
+bool CommitDlg::TransferDataFromWindow()
+{
+  if (m->files != 0)
+  {
+    for(size_t i=0; i<m->files->GetCount(); i++)
+    {
+      if(m->files->IsChecked(i))
+        m->filenames.push_back(PathUtf8(m->files->GetString(i)));
+    }
+  }
+
+  return true;
+}
+
 
 BEGIN_EVENT_TABLE(CommitDlg, wxDialog)
   EVT_COMBOBOX(ID_HISTORY_COMBO_BOX, CommitDlg::OnHistoryComboBox)
 END_EVENT_TABLE()
 
-CommitDlg::CommitDlg(wxWindow* parent, bool unexpectedCommit)
+CommitDlg::CommitDlg(wxWindow* parent, bool unexpectedCommit, 
+                     const svn::PathVector & filenames)
     : wxDialog(parent, -1, unexpectedCommit ? _("Commit Log Message") : _("Commit"),
                wxDefaultPosition, wxDefaultSize,
                wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data(this, unexpectedCommit);
+  m = new Data(this, unexpectedCommit, filenames);
   CentreOnParent();
 }
 
@@ -175,10 +223,23 @@ CommitDlg::GetMessage() const
   return m->message;
 }
 
+const svn::PathVector &
+CommitDlg::GetSelectedFilenames() const
+{
+  return m->filenames;
+}
+
 bool
 CommitDlg::GetRecursive() const
 {
   return m->recursive;
+}
+
+void
+CommitDlg::SetRecursive(bool recursive)
+{
+  m->recursive = recursive;
+  m->checkRecursive->SetValue(recursive);
 }
 
 bool

@@ -29,6 +29,9 @@
 #include "wx/textctrl.h"
 #include "wx/toolbar.h"
 
+// svncpp
+#include "svncpp/targets.hpp"
+
 // app
 #include "action_worker.hpp"
 #include "tracer.hpp"
@@ -43,7 +46,6 @@ typedef enum
 ActivePane;
 
 // forward declarations
-class svn::Targets;
 class wxFrame;
 class wxMenu;
 class wxString;

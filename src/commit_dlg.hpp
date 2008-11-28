@@ -27,7 +27,9 @@
 // wxWidgets
 #include "wx/dialog.h"
 
-// forward declarations
+// svncpp
+#include "svncpp/path.hpp"
+
 class CommitDlg : public wxDialog
 {
 public:
@@ -36,7 +38,8 @@ public:
    *
    * @param parent parent window
    */
-  CommitDlg(wxWindow* parent, bool unexpectedCommit = false);
+  CommitDlg(wxWindow* parent, bool unexpectedCommit=false, 
+            const svn::PathVector & filenames=svn::EmptyPathVector);
 
   /**
    * destructor
@@ -50,10 +53,18 @@ public:
   GetMessage() const;
 
   /**
+   * @return filenames
+   */
+  const svn::PathVector &
+  GetSelectedFilenames() const;
+
+  /**
    * @return recursive setting
    */
   bool
   GetRecursive() const;
+
+  void SetRecursive(bool recursive);
 
   /**
    * @return keepLocks setting
@@ -61,12 +72,21 @@ public:
   bool
   GetKeepLocks() const;
 
+  virtual bool TransferDataFromWindow();
+
 private:
   /** hide implementation details */
   struct Data;
   Data * m;
 
   void OnHistoryComboBox(wxCommandEvent &);
+
+  /** disallow default constructor */
+  CommitDlg();
+
+  /** disallow copy constructor */
+  CommitDlg(const CommitDlg & src);
+
 private:
   DECLARE_EVENT_TABLE()
 };

@@ -68,8 +68,8 @@ AddAction::Perform()
 {
   svn::Client client(GetContext());
 
-  const std::vector<svn::Path> & v = GetTargets().targets();
-  std::vector<svn::Path>::const_iterator it;
+  const svn::PathVector & v = GetTargets().targets();
+  svn::PathVector::const_iterator it;
 
   for (it = v.begin(); it != v.end(); it++)
   {

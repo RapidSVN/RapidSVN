@@ -22,9 +22,6 @@
  * ====================================================================
  */
 
-// stl
-#include "svncpp/vector_wrapper.hpp"
-
 // subversion api
 #include "svn_types.h"
 
@@ -39,7 +36,7 @@
 
 namespace svn
 {
-  Targets::Targets(const std::vector<Path> & targets)
+  Targets::Targets(const PathVector & targets)
   {
     m_targets = targets;
   }
@@ -80,7 +77,7 @@ namespace svn
   const apr_array_header_t *
   Targets::array(const Pool & pool) const
   {
-    std::vector<Path>::const_iterator it;
+    PathVector::const_iterator it;
 
     apr_pool_t *apr_pool = pool.pool();
     apr_array_header_t *apr_targets =
@@ -100,7 +97,7 @@ namespace svn
     return apr_targets;
   }
 
-  const std::vector<Path> &
+  const PathVector &
   Targets::targets() const
   {
     return m_targets;

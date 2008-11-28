@@ -22,9 +22,6 @@
  * ====================================================================
  */
 
-// stl
-#include "svncpp/vector_wrapper.hpp"
-
 // wxWidgets
 #include "wx/wx.h"
 
@@ -62,7 +59,7 @@ info_print_time(apr_time_t atime, const wxChar * desc, wxString & str)
 struct FileInfo::Data
 {
   svn::Context * context;
-  std::vector<svn::Path> targets;
+  svn::PathVector targets;
   wxString info;
   bool withUpdate;
 
@@ -294,7 +291,7 @@ FileInfo::info() const
   m->info.Clear();
   svn::Client client(m->context);
 
-  std::vector<svn::Path>::const_iterator it;
+  svn::PathVector::const_iterator it;
 
   for (it = m->targets.begin(); it != m->targets.end(); it++)
   {

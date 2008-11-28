@@ -24,6 +24,9 @@
 #ifndef _COMMIT_ACTION_H_INCLUDED_
 #define _COMMIT_ACTION_H_INCLUDED_
 
+// svncpp
+#include "svncpp/path.hpp"
+
 // app
 #include "action.hpp"
 
@@ -51,6 +54,7 @@ private:
   bool m_recursive;
   bool m_keepLocks;
   wxString m_message;
+  svn::PathVector m_files;
 
   // hide default and copy constructor
   CommitAction();

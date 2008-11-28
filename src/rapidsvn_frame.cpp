@@ -2164,8 +2164,8 @@ RapidSvnFrame::ShowInfo()
 
   try
   {
-    std::vector<svn::Path> vector = m->GetStatusSel().targets();
-    std::vector<svn::Path>::const_iterator it;
+    svn::PathVector vector = m->GetStatusSel().targets();
+    svn::PathVector::const_iterator it;
 
     for (it = vector.begin(); it != vector.end(); it++)
     {

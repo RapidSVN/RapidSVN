@@ -49,7 +49,7 @@ ExportAction::Prepare()
     return false;
   }
 
-  const std::vector<svn::Path> & v = GetTargets();
+  const svn::PathVector & v = GetTargets();
 
   svn::Path selectedPath("");
 

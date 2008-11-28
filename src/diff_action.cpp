@@ -270,8 +270,8 @@ DiffAction::Perform()
 {
   if (m->diffData.path.IsEmpty())
   {
-    const std::vector<svn::Path> & v = GetTargets();
-    std::vector<svn::Path>::const_iterator it;
+    const svn::PathVector & v = GetTargets();
+    svn::PathVector::const_iterator it;
 
     for (it=v.begin(); it != v.end(); it++)
     {

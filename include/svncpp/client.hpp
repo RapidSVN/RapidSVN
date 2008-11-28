@@ -93,6 +93,13 @@ public:
     bool showConflicted;
     bool showIgnored;
     bool showExternals;
+
+    StatusFilter()
+      : showUnversioned(false), showUnmodified(false),
+        showModified(false), showConflicted(false),
+        showExternals(false)
+    {
+    }
   };
 
 

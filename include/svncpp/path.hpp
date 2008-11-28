@@ -27,6 +27,7 @@
 
 // stl
 #include "svncpp/string_wrapper.hpp"
+#include "svncpp/vector_wrapper.hpp"
 
 namespace svn
 {
@@ -195,6 +196,10 @@ namespace svn
     std::string
     native() const;
   };
+
+  typedef std::vector<Path> PathVector;
+
+  extern const PathVector EmptyPathVector;
 }
 
 #endif

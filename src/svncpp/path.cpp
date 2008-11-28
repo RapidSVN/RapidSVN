@@ -35,6 +35,8 @@
 
 namespace svn
 {
+  const PathVector EmptyPathVector;
+
   Path::Path(const char * path)
   {
     init(path);

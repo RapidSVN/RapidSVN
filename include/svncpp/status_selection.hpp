@@ -25,17 +25,14 @@
 #ifndef _SVNCPP_STATUS_SELECTION_HPP_
 #define _SVNCPP_STATUS_SELECTION_HPP_
 
-// stl
-#include "svncpp/vector_wrapper.hpp"
-
 // svncpp
 #include "svncpp/status.hpp"
+#include "svncpp/path.hpp"
 
 
 namespace svn
 {
   // forward declarations
-  class Path;
   class Pool;
   class Targets;
 
@@ -124,7 +121,7 @@ namespace svn
      *
      * @return vector with targets
      */
-    operator const std::vector<Path> & () const;
+    operator const PathVector & () const;
 
     /** at least one target is a file */
     bool

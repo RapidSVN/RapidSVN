@@ -80,8 +80,8 @@ MoveAction::Perform()
   svn::Path destPath(GetPath().path());
   destPath.addComponent((PathUtf8(m_destination)).c_str());
   svn::Revision unusedRevision;
-  std::vector<svn::Path> targets(GetTargets().targets());
-  std::vector<svn::Path>::iterator it;
+  svn::PathVector targets(GetTargets().targets());
+  svn::PathVector::iterator it;
 
   for (it = targets.begin(); it != targets.end(); it++)
   {
