@@ -185,6 +185,8 @@ public:
 
 bool CommitDlg::TransferDataFromWindow()
 {
+  m->message = m->msg->GetValue();
+
   if (m->files != 0)
   {
     for(size_t i=0; i<m->files->GetCount(); i++)
