@@ -62,6 +62,14 @@ CheckoutAction::Prepare()
       selectedUrl = selectedPath;
     }
   }
+  else if (v.size() == 0)
+  {
+    svn::Path selectedPath(GetPath());
+    if (selectedPath.isUrl())
+    {
+      selectedUrl = selectedPath;
+    }
+  }
 
   CheckoutDlg dlg(GetParent(), selectedUrl);
 
