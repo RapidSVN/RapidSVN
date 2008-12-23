@@ -55,8 +55,13 @@ ExportAction::Prepare()
 
   if (v.size() == 1)
   {
-    selectedPath = v [0];
+    selectedPath = v[0];
   }
+  else if (v.size() == 0)
+  {
+    selectedPath = GetPath();
+  }
+
 
   ExportDlg dlg(GetParent(), selectedPath);
 
