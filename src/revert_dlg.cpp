@@ -81,6 +81,7 @@ RevertDlg::RevertDlg(wxWindow* parent)
                wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
   m = new Data(this);
+  CentreOnParent();
 }
 
 RevertDlg::~RevertDlg()
