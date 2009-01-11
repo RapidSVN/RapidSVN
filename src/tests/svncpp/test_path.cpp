@@ -58,6 +58,11 @@ PathTestCase::testInit()
   svn::Path pathThree = "file:///this.is/a/url";
   CPPUNIT_ASSERT(strcmp("file:///this.is/a/url", pathThree.c_str()) == 0);
   CPPUNIT_ASSERT(pathThree.isset());
+
+  svn::Path pathFour("file:///this.is/a/url");
+  CPPUNIT_ASSERT(strcmp("file:///this.is/a/url", pathFour.c_str()) == 0);
+  CPPUNIT_ASSERT(pathFour.isset());
+
 }
 
 void
