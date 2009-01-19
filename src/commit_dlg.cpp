@@ -185,14 +185,17 @@ public:
 
 bool CommitDlg::TransferDataFromWindow()
 {
-  m->message = m->msg->GetValue();
+  bool result = wxDialog::TransferDataFromWindow();
 
-  if (m->files != 0)
+  if (result)
   {
-    for(size_t i=0; i<m->files->GetCount(); i++)
+    if (m->files != 0)
     {
-      if(m->files->IsChecked(i))
-        m->filenames.push_back(PathUtf8(m->files->GetString(i)));
+      for(size_t i=0; i<m->files->GetCount(); i++)
+      {
+        if(m->files->IsChecked(i))
+          m->filenames.push_back(PathUtf8(m->files->GetString(i)));
+      }
     }
   }
 
