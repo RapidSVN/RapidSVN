@@ -199,7 +199,7 @@ bool CommitDlg::TransferDataFromWindow()
     }
   }
 
-  return true;
+  return result;
 }
 
 
