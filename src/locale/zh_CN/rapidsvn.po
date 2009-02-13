@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: 2006-12-14 14:14+0800\n"
 "Last-Translator: SiC <sic666@163.com>\n"
 "Language-Team: RapidSVN i18n\n"
@@ -837,10 +837,6 @@ msgstr "合并的第一个路径或  URL 必须填写!"
 msgid "First working copy or URL"
 msgstr "第一个工作副本或 URL"
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr "平铺模式"
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "更多信息请访问:"
@@ -1379,7 +1375,7 @@ msgstr "刷新视图\tCTRL-R"
 msgid "Refresh the file list"
 msgstr "刷新文件列表"
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr "刷新并更新"
 
@@ -1605,6 +1601,11 @@ msgstr "显示不在版本控制中的项目"
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 #, fuzzy
 msgid "Show modified entries"
+msgstr "显示不在版本控制中的项目"
+
+#: ../rapidsvn_frame.cpp:272
+#, fuzzy
+msgid "Show subdirectories"
 msgstr "显示不在版本控制中的项目"
 
 #: ../rapidsvn_frame.cpp:612
@@ -1911,6 +1912,9 @@ msgstr "不在版本控制中"
 #: ../rapidsvn_frame.cpp:331
 msgid "wxString Creation&Tracing Test"
 msgstr "wxString 创建和追踪测试"
+
+#~ msgid "Flat Mode"
+#~ msgstr "平铺模式"
 
 #, fuzzy
 #~ msgid ".mine"

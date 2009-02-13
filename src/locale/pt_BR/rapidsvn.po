@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: 2006-09-20 12:00-0300\n"
 "Last-Translator: Jose Carlos Medeiros <jose@psabs.com.br>\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -848,10 +848,6 @@ msgstr "É requerido o primeiro caminho ou URL para fundir (merge)!"
 msgid "First working copy or URL"
 msgstr "Primeira cópia de trabalho ou URL"
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr "Modo Plano"
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "Para mais informações veja:"
@@ -1403,7 +1399,7 @@ msgstr "Recarregar\tCTRL-R"
 msgid "Refresh the file list"
 msgstr "Recarregar a lista de arquivos"
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr "Recarregar e Atualizar"
 
@@ -1634,6 +1630,11 @@ msgstr "Exibir os itens não versionados"
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 #, fuzzy
 msgid "Show modified entries"
+msgstr "Exibir os itens não versionados"
+
+#: ../rapidsvn_frame.cpp:272
+#, fuzzy
+msgid "Show subdirectories"
 msgstr "Exibir os itens não versionados"
 
 #: ../rapidsvn_frame.cpp:612
@@ -1944,6 +1945,9 @@ msgstr "sem versão"
 #: ../rapidsvn_frame.cpp:331
 msgid "wxString Creation&Tracing Test"
 msgstr "wxString Creation&Tracing Test"
+
+#~ msgid "Flat Mode"
+#~ msgstr "Modo Plano"
 
 #~ msgid "&Add\tCTRL-A"
 #~ msgstr "&Adicionar\tCTRL-A"

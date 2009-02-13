@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rapidSVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: 2007-03-11 20:33-0400\n"
 "Last-Translator: Jesus Jerez <jerezmoreno@gmail.com>\n"
 "Language-Team: español\n"
@@ -836,10 +836,6 @@ msgstr "¡La primera ubicación o URL es requerida para la fusión!"
 msgid "First working copy or URL"
 msgstr "Primera copia de trabajo o URL"
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr "Modo plano"
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "Para más información ver:"
@@ -1390,7 +1386,7 @@ msgstr "Refrescar vista\tCTRL-R"
 msgid "Refresh the file list"
 msgstr "Refrescar la lista de archivos"
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr "Refrescar con actualización"
 
@@ -1628,6 +1624,11 @@ msgstr "Mostrar entradas sin versiones"
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 #, fuzzy
 msgid "Show modified entries"
+msgstr "Mostrar entradas sin versiones"
+
+#: ../rapidsvn_frame.cpp:272
+#, fuzzy
+msgid "Show subdirectories"
 msgstr "Mostrar entradas sin versiones"
 
 #: ../rapidsvn_frame.cpp:612
@@ -1940,6 +1941,9 @@ msgstr "sin versión"
 #: ../rapidsvn_frame.cpp:331
 msgid "wxString Creation&Tracing Test"
 msgstr "Test wxString Creation&Tracing "
+
+#~ msgid "Flat Mode"
+#~ msgstr "Modo plano"
 
 #, fuzzy
 #~ msgid ".mine"

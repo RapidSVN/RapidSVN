@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rapidsvn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: 2006-11-06 16:59+0100\n"
 "Last-Translator: Jérôme Rapinat <gnupower@hotmail.fr>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -833,10 +833,6 @@ msgstr "Un Premier chemin ou une URL est nécessaire pour fusionner!"
 msgid "First working copy or URL"
 msgstr "Première copie de travail ou URL"
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr "Mode à plat"
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "Pour plus d'information voir :"
@@ -1387,7 +1383,7 @@ msgstr "Raffraichir la vue\tCTRL-R"
 msgid "Refresh the file list"
 msgstr "Raffraichir la liste des fichiers"
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr "Raffraichir avec mise à jour"
 
@@ -1619,6 +1615,11 @@ msgstr "Montrer les entrées non versionnées"
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 #, fuzzy
 msgid "Show modified entries"
+msgstr "Montrer les entrées non versionnées"
+
+#: ../rapidsvn_frame.cpp:272
+#, fuzzy
+msgid "Show subdirectories"
 msgstr "Montrer les entrées non versionnées"
 
 #: ../rapidsvn_frame.cpp:612
@@ -1931,6 +1932,9 @@ msgstr "non versionné"
 #: ../rapidsvn_frame.cpp:331
 msgid "wxString Creation&Tracing Test"
 msgstr "wxString Creation&Tracing Test"
+
+#~ msgid "Flat Mode"
+#~ msgstr "Mode à plat"
 
 #, fuzzy
 #~ msgid ".mine"

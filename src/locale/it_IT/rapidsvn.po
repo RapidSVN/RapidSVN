@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: 2006-11-01 20:03+0100\n"
 "Last-Translator: Luca Vercelli\n"
 "Language-Team:\n"
@@ -841,10 +841,6 @@ msgstr "Per unire 2 file e' necessario il primo percorso o un URL!"
 msgid "First working copy or URL"
 msgstr "Prima copia di lavoro o URL"
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr "Modalita' Flat"
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "Per altre Informazioni vedi:"
@@ -1393,7 +1389,7 @@ msgstr "&Aggiorna la vista\tCTRL-R"
 msgid "Refresh the file list"
 msgstr "Rileggi la lista dei file"
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr "Rileggi la lista dei file a aggiornali"
 
@@ -1619,6 +1615,11 @@ msgstr "Mostra i files ignorati"
 #, fuzzy
 msgid "Show modified entries"
 msgstr "Mostra i files ignorati"
+
+#: ../rapidsvn_frame.cpp:272
+#, fuzzy
+msgid "Show subdirectories"
+msgstr "Mostra le cartelle nascoste"
 
 #: ../rapidsvn_frame.cpp:612
 msgid "Show the log messages for the selected entries"
@@ -1925,6 +1926,9 @@ msgstr "senza versione"
 msgid "wxString Creation&Tracing Test"
 msgstr "wxString Creation&Tracing Test"
 
+#~ msgid "Flat Mode"
+#~ msgstr "Modalita' Flat"
+
 #~ msgid "&Add\tCTRL-A"
 #~ msgstr "&Aggiungi\tCTRL-A"
 
@@ -1933,9 +1937,6 @@ msgstr "wxString Creation&Tracing Test"
 
 #~ msgid "&Remove Bookmark..."
 #~ msgstr "&Rimuovi segnalibro..."
-
-#~ msgid "Show hidden directories"
-#~ msgstr "Mostra le cartelle nascoste"
 
 #~ msgid "Diff tool:"
 #~ msgstr "Programma per i Diff:"

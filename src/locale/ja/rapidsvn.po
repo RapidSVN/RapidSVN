@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: 2008-02-29 05:05+0900\n"
 "Last-Translator: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
 "Language-Team: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
@@ -835,10 +835,6 @@ msgstr "マージには第1パスまたはURLが必要です!"
 msgid "First working copy or URL"
 msgstr "第1パスまたはURL"
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr "フラットモード"
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "詳しくは以下を参照:"
@@ -1381,7 +1377,7 @@ msgstr "表示をリフレッシュ\tCTRL-R"
 msgid "Refresh the file list"
 msgstr "ファイルリストをリフレッシュ"
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr "更新してリフレッシュ"
 
@@ -1604,6 +1600,11 @@ msgstr "無視エントリを表示"
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 msgid "Show modified entries"
 msgstr "変更エントリを表示"
+
+#: ../rapidsvn_frame.cpp:272
+#, fuzzy
+msgid "Show subdirectories"
+msgstr "無視エントリを表示"
 
 #: ../rapidsvn_frame.cpp:612
 msgid "Show the log messages for the selected entries"
@@ -1915,6 +1916,9 @@ msgstr "バージョン管理外"
 #: ../rapidsvn_frame.cpp:331
 msgid "wxString Creation&Tracing Test"
 msgstr "wxString Creation&Tracing Test"
+
+#~ msgid "Flat Mode"
+#~ msgstr "フラットモード"
 
 #~ msgid ".r*"
 #~ msgstr ".r*"

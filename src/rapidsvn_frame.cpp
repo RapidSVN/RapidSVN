@@ -268,8 +268,8 @@ public:
     menuView->Append(0, _("Columns"), MenuColumns);
     menuView->Append(0, _("Sort"), MenuSorting);
 
-    menuView->AppendCheckItem(ID_Flat, _("Flat Mode"));
     menuView->AppendCheckItem(ID_RefreshWithUpdate, _("Refresh with Update"));
+    menuView->AppendCheckItem(ID_Flat, _("Show subdirectories"));
     menuView->AppendCheckItem(ID_ShowUnversioned, _("Show unversioned entries"));
     menuView->AppendCheckItem(ID_ShowUnmodified, _("Show unmodified entries"));
     menuView->AppendCheckItem(ID_ShowModified, _("Show modified entries"));

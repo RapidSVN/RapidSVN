@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: 2006-05-15 11:14+0100\n"
 "Last-Translator: Olha <sleepy@adam-i-eva.com>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
@@ -844,10 +844,6 @@ msgstr "Для операції об'єднання потрібен перши�
 msgid "First working copy or URL"
 msgstr "Перша робоча копія або URL"
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr "Розгорнутий режим (flat mode)"
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "Подальша інформація:"
@@ -1394,7 +1390,7 @@ msgstr "Оновити зображення\tCTRL-R"
 msgid "Refresh the file list"
 msgstr "Оновити перелік файлів"
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr "Оновлювати повністю"
 
@@ -1627,6 +1623,11 @@ msgstr "Показувати невідстежувані файли"
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 #, fuzzy
 msgid "Show modified entries"
+msgstr "Показувати невідстежувані файли"
+
+#: ../rapidsvn_frame.cpp:272
+#, fuzzy
+msgid "Show subdirectories"
 msgstr "Показувати невідстежувані файли"
 
 #: ../rapidsvn_frame.cpp:612
@@ -1937,6 +1938,9 @@ msgstr "невідстежуваний"
 #: ../rapidsvn_frame.cpp:331
 msgid "wxString Creation&Tracing Test"
 msgstr "Тест зі створення та журналювання wxString"
+
+#~ msgid "Flat Mode"
+#~ msgstr "Розгорнутий режим (flat mode)"
 
 #~ msgid "&Add\tCTRL-A"
 #~ msgstr "Додати\tCTRL-A"

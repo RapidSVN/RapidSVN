@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: 2006-05-15 11:14+0100\n"
 "Last-Translator: Olha <sleepy@adam-i-eva.com>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
@@ -844,10 +844,6 @@ msgstr "Для объединения необходим первый путь �
 msgid "First working copy or URL"
 msgstr "Первая рабочая копия или URL"
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr "Развернутый режим (flat mode)"
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr "Более подробная информация:"
@@ -1397,7 +1393,7 @@ msgstr "Обновить изображение\tCTRL-R"
 msgid "Refresh the file list"
 msgstr "Обновить список файлов"
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr "Обновлять полностью"
 
@@ -1633,6 +1629,11 @@ msgstr "Показывать неотслеживаемые файлы"
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 #, fuzzy
 msgid "Show modified entries"
+msgstr "Показывать неотслеживаемые файлы"
+
+#: ../rapidsvn_frame.cpp:272
+#, fuzzy
+msgid "Show subdirectories"
 msgstr "Показывать неотслеживаемые файлы"
 
 #: ../rapidsvn_frame.cpp:612
@@ -1942,6 +1943,9 @@ msgstr "не отслеживается"
 #: ../rapidsvn_frame.cpp:331
 msgid "wxString Creation&Tracing Test"
 msgstr "Тест создания и журналирования wxString"
+
+#~ msgid "Flat Mode"
+#~ msgstr "Развернутый режим (flat mode)"
 
 #~ msgid "&Add\tCTRL-A"
 #~ msgstr "Добавить\tCTRL-A"

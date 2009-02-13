@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-13 17:34+0100\n"
+"POT-Creation-Date: 2009-02-13 17:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -822,10 +822,6 @@ msgstr ""
 msgid "First working copy or URL"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:271
-msgid "Flat Mode"
-msgstr ""
-
 #: ../about_dlg.cpp:68
 msgid "For more information see:"
 msgstr ""
@@ -1342,7 +1338,7 @@ msgstr ""
 msgid "Refresh the file list"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:272
+#: ../rapidsvn_frame.cpp:271
 msgid "Refresh with Update"
 msgstr ""
 
@@ -1561,6 +1557,10 @@ msgstr ""
 
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 msgid "Show modified entries"
+msgstr ""
+
+#: ../rapidsvn_frame.cpp:272
+msgid "Show subdirectories"
 msgstr ""
 
 #: ../rapidsvn_frame.cpp:612
