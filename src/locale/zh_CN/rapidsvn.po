@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-06 09:43+0200\n"
+"POT-Creation-Date: 2009-02-13 17:34+0100\n"
 "PO-Revision-Date: 2006-12-14 14:14+0800\n"
 "Last-Translator: SiC <sic666@163.com>\n"
 "Language-Team: RapidSVN i18n\n"
@@ -239,7 +239,7 @@ msgstr ""
 msgid "- The certificate is not yet valid."
 msgstr "- 此证书尚未生效."
 
-#: ../file_info.cpp:105 ../file_info.cpp:113 ../file_info.cpp:198
+#: ../file_info.cpp:102 ../file_info.cpp:110 ../file_info.cpp:195
 msgid "<None>"
 msgstr "<无>"
 
@@ -382,7 +382,7 @@ msgid "CRLF (Windows)"
 msgstr "CRLF (Windows)"
 
 #: ../auth_dlg.cpp:73 ../cert_dlg.cpp:138 ../checkout_dlg.cpp:127
-#: ../commit_dlg.cpp:103 ../delete_dlg.cpp:57 ../destination_dlg.cpp:90
+#: ../commit_dlg.cpp:125 ../delete_dlg.cpp:57 ../destination_dlg.cpp:90
 #: ../dnd_dlg.cpp:112 ../export_dlg.cpp:146 ../import_dlg.cpp:130
 #: ../listed_dlg.cpp:186 ../listed_dlg.cpp:342 ../lock_dlg.cpp:61
 #: ../merge_dlg.cpp:215 ../rapidsvn_generated.cpp:195
@@ -415,7 +415,7 @@ msgstr "签出测试"
 msgid "Checksum"
 msgstr "校验和"
 
-#: ../file_info.cpp:200
+#: ../file_info.cpp:197
 #, c-format
 msgid "Checksum: %s"
 msgstr "校验和: %s"
@@ -437,11 +437,11 @@ msgstr "信息列"
 msgid "Combo!"
 msgstr ""
 
-#: ../commit_action.cpp:40 ../commit_dlg.cpp:159
+#: ../commit_action.cpp:42 ../commit_dlg.cpp:212
 msgid "Commit"
 msgstr "提交"
 
-#: ../commit_dlg.cpp:159
+#: ../commit_dlg.cpp:212
 msgid "Commit Log Message"
 msgstr "提交历史记录信息"
 
@@ -453,7 +453,7 @@ msgstr ""
 msgid "Commit selected"
 msgstr "提交选定项目"
 
-#: ../commit_action.cpp:86
+#: ../commit_action.cpp:130
 msgid "Committed revision"
 msgstr "已提交版本"
 
@@ -465,7 +465,7 @@ msgstr "比较:"
 msgid "Conflict BASE"
 msgstr "冲突的基准版本(BASE)"
 
-#: ../file_info.cpp:206
+#: ../file_info.cpp:203
 #, c-format
 msgid "Conflict BASE File: %s"
 msgstr "冲突的基准版本(BASE)文件: %s"
@@ -474,12 +474,12 @@ msgstr "冲突的基准版本(BASE)文件: %s"
 msgid "Conflict HEAD"
 msgstr "冲突的最新版本(HEAD)"
 
-#: ../file_info.cpp:216
+#: ../file_info.cpp:213
 #, c-format
 msgid "Conflict HEAD File: %s"
 msgstr "冲突的最新版本(HEAD)文件: %s"
 
-#: ../file_info.cpp:224
+#: ../file_info.cpp:221
 #, c-format
 msgid "Conflict Properties File: %s"
 msgstr "冲突的属性文件: %s"
@@ -488,7 +488,7 @@ msgstr "冲突的属性文件: %s"
 msgid "Conflict Work"
 msgstr "冲突的工作副本"
 
-#: ../file_info.cpp:211
+#: ../file_info.cpp:208
 #, c-format
 msgid "Conflict Working File: %s"
 msgstr "冲突的工作副本文件: %s"
@@ -497,12 +497,12 @@ msgstr "冲突的工作副本文件: %s"
 msgid "Copied"
 msgstr "已复制"
 
-#: ../file_info.cpp:175
+#: ../file_info.cpp:172
 #, c-format
 msgid "Copied From Rev: %ld"
 msgstr "已复制, 来自版本: %ld"
 
-#: ../file_info.cpp:172
+#: ../file_info.cpp:169
 #, c-format
 msgid "Copied From URL: %s"
 msgstr "已复制, 来自 URL: %s"
@@ -641,7 +641,7 @@ msgstr "显示不在版本控制中的项目"
 msgid "Do you want to delete the selected files/directories?"
 msgstr "确定要删除选定的文件/目录吗?"
 
-#: ../revert_action.cpp:45
+#: ../revert_dlg.cpp:45
 msgid "Do you want to revert local changes?"
 msgstr "确定要撤销本地的修改吗?"
 
@@ -673,7 +673,7 @@ msgstr "编辑属性"
 msgid "Enter a comment for this lock"
 msgstr "请输入此次锁定操作的附注"
 
-#: ../commit_dlg.cpp:52 ../import_dlg.cpp:95
+#: ../commit_dlg.cpp:61 ../import_dlg.cpp:95
 msgid "Enter log message"
 msgstr "请输入历史记录信息"
 
@@ -706,7 +706,7 @@ msgstr "请输入要用作导出文件的换行符(EOL)的符号."
 msgid "Error"
 msgstr "错误"
 
-#: ../file_info.cpp:269
+#: ../file_info.cpp:266
 msgid "Error retrieving status:"
 msgstr "获取状态时出错:"
 
@@ -820,6 +820,10 @@ msgstr "文件"
 #: ../import_dlg.cpp:190
 msgid "File path required when importing a file!"
 msgstr "导入文件时必须填写文件路径!"
+
+#: ../commit_dlg.cpp:163
+msgid "Files To Commit"
+msgstr ""
 
 #: ../cert_dlg.cpp:123
 msgid "Fingerprint:"
@@ -967,7 +971,7 @@ msgstr "选择无效. 一次只能评注一个版本."
 msgid "Issue:"
 msgstr "颁发者"
 
-#: ../commit_dlg.cpp:95
+#: ../commit_dlg.cpp:117
 msgid "Keep locks"
 msgstr "保持锁定"
 
@@ -979,16 +983,16 @@ msgstr "LF (Unix)"
 msgid "Last Changed"
 msgstr "最后修改"
 
-#: ../file_info.cpp:180
+#: ../file_info.cpp:177
 #, c-format
 msgid "Last Changed Author: %s"
 msgstr "最后修改者: %s"
 
-#: ../file_info.cpp:186
+#: ../file_info.cpp:183
 msgid "Last Changed Date"
 msgstr "最后修改日期"
 
-#: ../file_info.cpp:183
+#: ../file_info.cpp:180
 #, c-format
 msgid "Last Changed Rev: %ld"
 msgstr "最后修改的版本: %ld"
@@ -1019,15 +1023,15 @@ msgstr ""
 "系统名称: %s\n"
 "规范名称: %s\n"
 
-#: ../rapidsvn_app.cpp:190 ../rapidsvn_app.cpp:198
+#: ../rapidsvn_app.cpp:196 ../rapidsvn_app.cpp:204
 msgid "Locate help"
 msgstr "定位帮助文件"
 
-#: ../rapidsvn_app.cpp:258
+#: ../rapidsvn_app.cpp:264
 msgid "Locate tips"
 msgstr "定位技巧提示文件"
 
-#: ../rapidsvn_app.cpp:250
+#: ../rapidsvn_app.cpp:256
 msgid "Locate tips file"
 msgstr "定位帮助技巧文件"
 
@@ -1039,7 +1043,7 @@ msgstr "锁定"
 msgid "Lock Comment"
 msgstr "锁定附注"
 
-#: ../file_info.cpp:242
+#: ../file_info.cpp:239
 #, c-format
 msgid ""
 "Lock Comment:\n"
@@ -1048,7 +1052,7 @@ msgstr ""
 "锁定附注:\n"
 "%s"
 
-#: ../file_info.cpp:246
+#: ../file_info.cpp:243
 msgid "Lock Creation Date"
 msgstr "锁定创建时间"
 
@@ -1056,12 +1060,12 @@ msgstr "锁定创建时间"
 msgid "Lock Owner"
 msgstr "锁定所有者"
 
-#: ../file_info.cpp:237
+#: ../file_info.cpp:234
 #, c-format
 msgid "Lock Owner: %s"
 msgstr "锁定所有者: %s"
 
-#: ../file_info.cpp:232
+#: ../file_info.cpp:229
 #, c-format
 msgid "Lock Token: %s"
 msgstr "锁定标识: %s"
@@ -1158,7 +1162,7 @@ msgstr ""
 msgid "Name"
 msgstr "文件名"
 
-#: ../file_info.cpp:96
+#: ../file_info.cpp:93
 #, c-format
 msgid "Name: %s"
 msgstr "文件名: %s"
@@ -1167,11 +1171,15 @@ msgstr "文件名: %s"
 msgid "New Property"
 msgstr "新建属性值"
 
+#: ../revert_dlg.cpp:57
+msgid "No"
+msgstr ""
+
 #: ../diff_action.cpp:217
 msgid "No diff tool set in the preferences"
 msgstr "首选项中没有设置比较工具"
 
-#: ../rapidsvn_app.cpp:198
+#: ../rapidsvn_app.cpp:204
 msgid ""
 "No help file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1184,7 +1192,7 @@ msgstr ""
 msgid "No merge tool set in the preferences"
 msgstr "首选项中没有设置比较工具"
 
-#: ../rapidsvn_app.cpp:258
+#: ../rapidsvn_app.cpp:264
 msgid ""
 "No tips file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1192,7 +1200,7 @@ msgstr ""
 "没有选定帮助提示文件.\n"
 "您希望在下次程序启动时再次提示此信息吗?"
 
-#: ../file_info.cpp:121
+#: ../file_info.cpp:118
 #, c-format
 msgid "Node Kind: %s"
 msgstr "节点类型: %s"
@@ -1201,12 +1209,12 @@ msgstr "节点类型: %s"
 msgid "Not specified"
 msgstr "未指定"
 
-#: ../file_info.cpp:89
+#: ../file_info.cpp:86
 msgid "Not versioned"
 msgstr "未受版本控制"
 
 #: ../about_dlg.cpp:99 ../annotate_dlg.cpp:42 ../auth_dlg.cpp:71
-#: ../checkout_dlg.cpp:126 ../commit_dlg.cpp:101 ../delete_dlg.cpp:54
+#: ../checkout_dlg.cpp:126 ../commit_dlg.cpp:123 ../delete_dlg.cpp:54
 #: ../destination_dlg.cpp:87 ../export_dlg.cpp:145 ../import_dlg.cpp:128
 #: ../listed_dlg.cpp:185 ../listed_dlg.cpp:341 ../lock_dlg.cpp:60
 #: ../merge_dlg.cpp:212 ../rapidsvn_generated.cpp:191
@@ -1296,7 +1304,7 @@ msgstr "属性日期"
 msgid "Prop Status"
 msgstr "属性状态"
 
-#: ../file_info.cpp:192
+#: ../file_info.cpp:189
 msgid "Properties Last Updated"
 msgstr "属性最后更新"
 
@@ -1324,7 +1332,7 @@ msgstr "将文件和目录加入版本控制系统中"
 msgid "RapidSVN Error"
 msgstr "RapidSVN 错误"
 
-#: ../rapidsvn_app.cpp:89
+#: ../rapidsvn_app.cpp:95
 #, c-format
 msgid "RapidSVN Help: %s"
 msgstr "RapidSVN 帮助: %s"
@@ -1349,13 +1357,13 @@ msgstr "就绪"
 msgid "Ready\n"
 msgstr "就绪\n"
 
-#: ../commit_dlg.cpp:71
+#: ../commit_dlg.cpp:94
 msgid "Recent entries:"
 msgstr "最近条目:"
 
-#: ../checkout_dlg.cpp:111 ../commit_dlg.cpp:86 ../export_dlg.cpp:114
-#: ../import_dlg.cpp:108 ../merge_dlg.cpp:201 ../switch_dlg.cpp:117
-#: ../update_dlg.cpp:115
+#: ../checkout_dlg.cpp:111 ../commit_dlg.cpp:108 ../export_dlg.cpp:114
+#: ../import_dlg.cpp:108 ../merge_dlg.cpp:201 ../revert_dlg.cpp:49
+#: ../switch_dlg.cpp:117 ../update_dlg.cpp:115
 msgid "Recursive"
 msgstr "递归"
 
@@ -1412,12 +1420,12 @@ msgstr "文档库 URL"
 msgid "Repository URL is required for import!"
 msgstr "必须输入文档库 URL 才能执行导入操作!"
 
-#: ../file_info.cpp:115
+#: ../file_info.cpp:112
 #, c-format
 msgid "Repository UUID: %s"
 msgstr "文档库 UUID: %s"
 
-#: ../file_info.cpp:107
+#: ../file_info.cpp:104
 #, c-format
 msgid "Repository: %s"
 msgstr "文档库: %s"
@@ -1450,8 +1458,8 @@ msgstr "还原"
 msgid "Restore pristine working copy file (undo all local edits)"
 msgstr "恢复工作副本文件到最原始的状态(撤销所有本地修改)."
 
-#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1594 ../revert_action.cpp:34
-#: ../revert_action.cpp:46
+#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1594 ../revert_action.cpp:35
+#: ../revert_dlg.cpp:79
 msgid "Revert"
 msgstr "复原"
 
@@ -1483,7 +1491,7 @@ msgstr "版本或日期 #&2:"
 msgid "Revision:"
 msgstr "版本:"
 
-#: ../file_info.cpp:118
+#: ../file_info.cpp:115
 #, c-format
 msgid "Revision: %ld"
 msgstr "版本: %ld"
@@ -1496,7 +1504,7 @@ msgstr "SSL 证书"
 msgid "Schedule"
 msgstr "计划"
 
-#: ../file_info.cpp:145
+#: ../file_info.cpp:142
 #, c-format
 msgid "Schedule: %s"
 msgstr "计划: %s"
@@ -1674,7 +1682,7 @@ msgstr "测试结束于"
 msgid "Test started at"
 msgstr "测试开始于"
 
-#: ../file_info.cpp:189
+#: ../file_info.cpp:186
 msgid "Text Last Updated"
 msgstr "文本最后更新"
 
@@ -1690,7 +1698,7 @@ msgstr ""
 "验证服务器证书时发现错误.\n"
 "是否还要相信此证书?"
 
-#: ../commit_dlg.cpp:52
+#: ../commit_dlg.cpp:61
 msgid "This action has resulted in a Commit - please enter a log message"
 msgstr "此操作会产生提交动作 - 请输入历史记录信息"
 
@@ -1703,7 +1711,7 @@ msgstr "树"
 msgid "URL"
 msgstr "URL"
 
-#: ../file_info.cpp:99
+#: ../file_info.cpp:96
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -1800,11 +1808,15 @@ msgid ""
 "  %s?"
 msgstr ""
 
+#: ../revert_dlg.cpp:54
+msgid "Yes"
+msgstr ""
+
 #: ../rapidsvn_frame.cpp:2057
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "您不能把 Subversion 的管理目录添加到书签中!"
 
-#: ../file_info.cpp:153 ../filelist_ctrl.cpp:1194
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1194
 msgid "add"
 msgstr "添加"
 
@@ -1816,7 +1828,7 @@ msgstr "已添加"
 msgid "conflicted"
 msgstr "存在冲突"
 
-#: ../file_info.cpp:157 ../filelist_ctrl.cpp:1197
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1197
 msgid "delete"
 msgstr "删除"
 
@@ -1824,7 +1836,7 @@ msgstr "删除"
 msgid "deleted"
 msgstr "已删除"
 
-#: ../file_info.cpp:129
+#: ../file_info.cpp:126
 msgid "directory"
 msgstr "目录"
 
@@ -1832,7 +1844,7 @@ msgstr "目录"
 msgid "external"
 msgstr "外部"
 
-#: ../file_info.cpp:125
+#: ../file_info.cpp:122
 msgid "file"
 msgstr "文件"
 
@@ -1860,11 +1872,11 @@ msgstr "已修改"
 msgid "native"
 msgstr "原生"
 
-#: ../file_info.cpp:135 ../utils.cpp:388
+#: ../file_info.cpp:132 ../utils.cpp:388
 msgid "none"
 msgstr "无"
 
-#: ../file_info.cpp:149 ../utils.cpp:394
+#: ../file_info.cpp:146 ../utils.cpp:394
 msgid "normal"
 msgstr "常规"
 
@@ -1876,7 +1888,7 @@ msgstr "阻塞"
 msgid "outdated"
 msgstr "过时"
 
-#: ../file_info.cpp:161 ../filelist_ctrl.cpp:1200
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1200
 msgid "replace"
 msgstr "替换"
 
@@ -1884,7 +1896,7 @@ msgstr "替换"
 msgid "replaced"
 msgstr "已替换"
 
-#: ../file_info.cpp:140 ../file_info.cpp:165
+#: ../file_info.cpp:137 ../file_info.cpp:162
 msgid "unknown"
 msgstr "未知"
 

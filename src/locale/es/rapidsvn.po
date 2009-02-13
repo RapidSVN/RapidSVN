@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rapidSVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-06 09:43+0200\n"
+"POT-Creation-Date: 2009-02-13 17:34+0100\n"
 "PO-Revision-Date: 2007-03-11 20:33-0400\n"
 "Last-Translator: Jesus Jerez <jerezmoreno@gmail.com>\n"
 "Language-Team: español\n"
@@ -234,7 +234,7 @@ msgstr ""
 msgid "- The certificate is not yet valid."
 msgstr "- El certificado aún no es válido."
 
-#: ../file_info.cpp:105 ../file_info.cpp:113 ../file_info.cpp:198
+#: ../file_info.cpp:102 ../file_info.cpp:110 ../file_info.cpp:195
 msgid "<None>"
 msgstr "<Ninguno>"
 
@@ -377,7 +377,7 @@ msgid "CRLF (Windows)"
 msgstr "CRLF (Windows)"
 
 #: ../auth_dlg.cpp:73 ../cert_dlg.cpp:138 ../checkout_dlg.cpp:127
-#: ../commit_dlg.cpp:103 ../delete_dlg.cpp:57 ../destination_dlg.cpp:90
+#: ../commit_dlg.cpp:125 ../delete_dlg.cpp:57 ../destination_dlg.cpp:90
 #: ../dnd_dlg.cpp:112 ../export_dlg.cpp:146 ../import_dlg.cpp:130
 #: ../listed_dlg.cpp:186 ../listed_dlg.cpp:342 ../lock_dlg.cpp:61
 #: ../merge_dlg.cpp:215 ../rapidsvn_generated.cpp:195
@@ -410,7 +410,7 @@ msgstr "Comprobación de prueba"
 msgid "Checksum"
 msgstr "Suma de comprobación"
 
-#: ../file_info.cpp:200
+#: ../file_info.cpp:197
 #, c-format
 msgid "Checksum: %s"
 msgstr "Suma de comprobación: %s"
@@ -432,11 +432,11 @@ msgstr "Columnas"
 msgid "Combo!"
 msgstr ""
 
-#: ../commit_action.cpp:40 ../commit_dlg.cpp:159
+#: ../commit_action.cpp:42 ../commit_dlg.cpp:212
 msgid "Commit"
 msgstr "Enviar"
 
-#: ../commit_dlg.cpp:159
+#: ../commit_dlg.cpp:212
 msgid "Commit Log Message"
 msgstr "Enviar el mensaje del registro"
 
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Commit selected"
 msgstr "Enviar seleccionado"
 
-#: ../commit_action.cpp:86
+#: ../commit_action.cpp:130
 msgid "Committed revision"
 msgstr "Revisión enviada"
 
@@ -460,7 +460,7 @@ msgstr "Comparar:"
 msgid "Conflict BASE"
 msgstr "BASE en conflicto"
 
-#: ../file_info.cpp:206
+#: ../file_info.cpp:203
 #, c-format
 msgid "Conflict BASE File: %s"
 msgstr "Archivo BASE en conflicto: %s"
@@ -469,12 +469,12 @@ msgstr "Archivo BASE en conflicto: %s"
 msgid "Conflict HEAD"
 msgstr "HEAD en conflicto"
 
-#: ../file_info.cpp:216
+#: ../file_info.cpp:213
 #, c-format
 msgid "Conflict HEAD File: %s"
 msgstr "Archivo HEAD en conflicto: %s"
 
-#: ../file_info.cpp:224
+#: ../file_info.cpp:221
 #, c-format
 msgid "Conflict Properties File: %s"
 msgstr "Archivo de propiedades en conflicto: %s"
@@ -483,7 +483,7 @@ msgstr "Archivo de propiedades en conflicto: %s"
 msgid "Conflict Work"
 msgstr "Trabajo en conflicto"
 
-#: ../file_info.cpp:211
+#: ../file_info.cpp:208
 #, c-format
 msgid "Conflict Working File: %s"
 msgstr "Archivo de trabajo en conflicto: %s"
@@ -492,12 +492,12 @@ msgstr "Archivo de trabajo en conflicto: %s"
 msgid "Copied"
 msgstr "Copiado"
 
-#: ../file_info.cpp:175
+#: ../file_info.cpp:172
 #, c-format
 msgid "Copied From Rev: %ld"
 msgstr "Copiado desde Rev: %ld"
 
-#: ../file_info.cpp:172
+#: ../file_info.cpp:169
 #, c-format
 msgid "Copied From URL: %s"
 msgstr "Copiado desde URL: %s"
@@ -637,7 +637,7 @@ msgstr "Mostrar entradas sin versiones"
 msgid "Do you want to delete the selected files/directories?"
 msgstr "¿Deseas suprimir los archivos/directorios seleccionados?"
 
-#: ../revert_action.cpp:45
+#: ../revert_dlg.cpp:45
 msgid "Do you want to revert local changes?"
 msgstr "¿Deseas revertir cambios locales?"
 
@@ -669,7 +669,7 @@ msgstr "Editar propiedad"
 msgid "Enter a comment for this lock"
 msgstr "Introduzca un comentario para este bloqueo"
 
-#: ../commit_dlg.cpp:52 ../import_dlg.cpp:95
+#: ../commit_dlg.cpp:61 ../import_dlg.cpp:95
 msgid "Enter log message"
 msgstr "Introduzca mensaje de registro"
 
@@ -705,7 +705,7 @@ msgstr ""
 msgid "Error"
 msgstr "Error"
 
-#: ../file_info.cpp:269
+#: ../file_info.cpp:266
 msgid "Error retrieving status:"
 msgstr "Estado de error recuperando:"
 
@@ -819,6 +819,10 @@ msgstr "Archivo"
 #: ../import_dlg.cpp:190
 msgid "File path required when importing a file!"
 msgstr "¡La ubicación del archivo es requerida al importar un archivo!"
+
+#: ../commit_dlg.cpp:163
+msgid "Files To Commit"
+msgstr ""
 
 #: ../cert_dlg.cpp:123
 msgid "Fingerprint:"
@@ -976,7 +980,7 @@ msgstr ""
 msgid "Issue:"
 msgstr "Edición:"
 
-#: ../commit_dlg.cpp:95
+#: ../commit_dlg.cpp:117
 msgid "Keep locks"
 msgstr "Mantener bloqueos"
 
@@ -988,16 +992,16 @@ msgstr "LF (Unix)"
 msgid "Last Changed"
 msgstr "Último cambio"
 
-#: ../file_info.cpp:180
+#: ../file_info.cpp:177
 #, c-format
 msgid "Last Changed Author: %s"
 msgstr "Autor del último cambio: %s"
 
-#: ../file_info.cpp:186
+#: ../file_info.cpp:183
 msgid "Last Changed Date"
 msgstr "Fecha del último cambio"
 
-#: ../file_info.cpp:183
+#: ../file_info.cpp:180
 #, c-format
 msgid "Last Changed Rev: %ld"
 msgstr "Revisión del último cambio: %ld"
@@ -1028,15 +1032,15 @@ msgstr ""
 "Nombre del sistema: %s\n"
 "Nombre canónico: %s\n"
 
-#: ../rapidsvn_app.cpp:190 ../rapidsvn_app.cpp:198
+#: ../rapidsvn_app.cpp:196 ../rapidsvn_app.cpp:204
 msgid "Locate help"
 msgstr "Localizar ayuda"
 
-#: ../rapidsvn_app.cpp:258
+#: ../rapidsvn_app.cpp:264
 msgid "Locate tips"
 msgstr "Localizar consejos"
 
-#: ../rapidsvn_app.cpp:250
+#: ../rapidsvn_app.cpp:256
 msgid "Locate tips file"
 msgstr "Localizar archivo de consejos"
 
@@ -1048,7 +1052,7 @@ msgstr "Bloquear"
 msgid "Lock Comment"
 msgstr "Bloquear comentario"
 
-#: ../file_info.cpp:242
+#: ../file_info.cpp:239
 #, c-format
 msgid ""
 "Lock Comment:\n"
@@ -1057,7 +1061,7 @@ msgstr ""
 "Bloquear comentario:\n"
 "%s"
 
-#: ../file_info.cpp:246
+#: ../file_info.cpp:243
 msgid "Lock Creation Date"
 msgstr "Fecha de creación de bloqueo"
 
@@ -1065,12 +1069,12 @@ msgstr "Fecha de creación de bloqueo"
 msgid "Lock Owner"
 msgstr "Bloquear propietario"
 
-#: ../file_info.cpp:237
+#: ../file_info.cpp:234
 #, c-format
 msgid "Lock Owner: %s"
 msgstr "Bloquear propietario: %s"
 
-#: ../file_info.cpp:232
+#: ../file_info.cpp:229
 #, c-format
 msgid "Lock Token: %s"
 msgstr "Bloquear símbolo: %s"
@@ -1167,7 +1171,7 @@ msgstr ""
 msgid "Name"
 msgstr "Nombre"
 
-#: ../file_info.cpp:96
+#: ../file_info.cpp:93
 #, c-format
 msgid "Name: %s"
 msgstr "Nombre: %s"
@@ -1176,11 +1180,15 @@ msgstr "Nombre: %s"
 msgid "New Property"
 msgstr "Nueva propiedad"
 
+#: ../revert_dlg.cpp:57
+msgid "No"
+msgstr ""
+
 #: ../diff_action.cpp:217
 msgid "No diff tool set in the preferences"
 msgstr "La herramienta diff no está configurado en las preferencias"
 
-#: ../rapidsvn_app.cpp:198
+#: ../rapidsvn_app.cpp:204
 msgid ""
 "No help file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1193,7 +1201,7 @@ msgstr ""
 msgid "No merge tool set in the preferences"
 msgstr "La herramienta diff no está configurado en las preferencias"
 
-#: ../rapidsvn_app.cpp:258
+#: ../rapidsvn_app.cpp:264
 msgid ""
 "No tips file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1201,7 +1209,7 @@ msgstr ""
 "No se eligió ningún archivo de consejos, ¿desea que se le\n"
 " pregunte otra vez después del próximo inicio de la aplicación?"
 
-#: ../file_info.cpp:121
+#: ../file_info.cpp:118
 #, c-format
 msgid "Node Kind: %s"
 msgstr "Clase de nodo: %s"
@@ -1210,12 +1218,12 @@ msgstr "Clase de nodo: %s"
 msgid "Not specified"
 msgstr "No especificado"
 
-#: ../file_info.cpp:89
+#: ../file_info.cpp:86
 msgid "Not versioned"
 msgstr "No tiene versión asignada"
 
 #: ../about_dlg.cpp:99 ../annotate_dlg.cpp:42 ../auth_dlg.cpp:71
-#: ../checkout_dlg.cpp:126 ../commit_dlg.cpp:101 ../delete_dlg.cpp:54
+#: ../checkout_dlg.cpp:126 ../commit_dlg.cpp:123 ../delete_dlg.cpp:54
 #: ../destination_dlg.cpp:87 ../export_dlg.cpp:145 ../import_dlg.cpp:128
 #: ../listed_dlg.cpp:185 ../listed_dlg.cpp:341 ../lock_dlg.cpp:60
 #: ../merge_dlg.cpp:212 ../rapidsvn_generated.cpp:191
@@ -1307,7 +1315,7 @@ msgstr "Fecha de Origen"
 msgid "Prop Status"
 msgstr "Estado de Origen"
 
-#: ../file_info.cpp:192
+#: ../file_info.cpp:189
 msgid "Properties Last Updated"
 msgstr "Propiedades de la última actualización "
 
@@ -1335,7 +1343,7 @@ msgstr "Poner los archivos y los directorios bajo control de la revisión"
 msgid "RapidSVN Error"
 msgstr "Error de RapidSVN"
 
-#: ../rapidsvn_app.cpp:89
+#: ../rapidsvn_app.cpp:95
 #, c-format
 msgid "RapidSVN Help: %s"
 msgstr "Ayuda de RapidSVN: %s"
@@ -1360,13 +1368,13 @@ msgstr "Listo"
 msgid "Ready\n"
 msgstr "Listo\n"
 
-#: ../commit_dlg.cpp:71
+#: ../commit_dlg.cpp:94
 msgid "Recent entries:"
 msgstr "Entradas recientes:"
 
-#: ../checkout_dlg.cpp:111 ../commit_dlg.cpp:86 ../export_dlg.cpp:114
-#: ../import_dlg.cpp:108 ../merge_dlg.cpp:201 ../switch_dlg.cpp:117
-#: ../update_dlg.cpp:115
+#: ../checkout_dlg.cpp:111 ../commit_dlg.cpp:108 ../export_dlg.cpp:114
+#: ../import_dlg.cpp:108 ../merge_dlg.cpp:201 ../revert_dlg.cpp:49
+#: ../switch_dlg.cpp:117 ../update_dlg.cpp:115
 msgid "Recursive"
 msgstr "Recursivo"
 
@@ -1425,12 +1433,12 @@ msgstr "URL de Repositorio"
 msgid "Repository URL is required for import!"
 msgstr "¡URL de Repositorio es requerida para importar!"
 
-#: ../file_info.cpp:115
+#: ../file_info.cpp:112
 #, c-format
 msgid "Repository UUID: %s"
 msgstr "UUID de repositorio: %s"
 
-#: ../file_info.cpp:107
+#: ../file_info.cpp:104
 #, c-format
 msgid "Repository: %s"
 msgstr "Repositorio: %s"
@@ -1465,8 +1473,8 @@ msgstr ""
 "Restaurar copia del archivo de trabajo original (deshace todas las ediciones "
 "locales)"
 
-#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1594 ../revert_action.cpp:34
-#: ../revert_action.cpp:46
+#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1594 ../revert_action.cpp:35
+#: ../revert_dlg.cpp:79
 msgid "Revert"
 msgstr "Revertir"
 
@@ -1498,7 +1506,7 @@ msgstr "Revisión o fecha #&2:"
 msgid "Revision:"
 msgstr "Revisión:"
 
-#: ../file_info.cpp:118
+#: ../file_info.cpp:115
 #, c-format
 msgid "Revision: %ld"
 msgstr "Revisión: %ld"
@@ -1511,7 +1519,7 @@ msgstr "Certificado SSL"
 msgid "Schedule"
 msgstr "Horario"
 
-#: ../file_info.cpp:145
+#: ../file_info.cpp:142
 #, c-format
 msgid "Schedule: %s"
 msgstr "Horario: %s"
@@ -1697,7 +1705,7 @@ msgstr "Prueba terminada en"
 msgid "Test started at"
 msgstr "Prueba iniciada en"
 
-#: ../file_info.cpp:189
+#: ../file_info.cpp:186
 msgid "Text Last Updated"
 msgstr "Texto de la última actualización"
 
@@ -1715,7 +1723,7 @@ msgstr ""
 "Había errores validando el certificado del servidor.\n"
 "¿Desea confiar en este certificado?"
 
-#: ../commit_dlg.cpp:52
+#: ../commit_dlg.cpp:61
 msgid "This action has resulted in a Commit - please enter a log message"
 msgstr ""
 "Esta acción ha resultado en un envío - por favor introduzca un mensaje de "
@@ -1730,7 +1738,7 @@ msgstr "Árbol"
 msgid "URL"
 msgstr "URL"
 
-#: ../file_info.cpp:99
+#: ../file_info.cpp:96
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -1827,13 +1835,17 @@ msgid ""
 "  %s?"
 msgstr ""
 
+#: ../revert_dlg.cpp:54
+msgid "Yes"
+msgstr ""
+
 #: ../rapidsvn_frame.cpp:2057
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr ""
 "¡No puede agregar un directorio administrativo de subversión a los "
 "marcadores!"
 
-#: ../file_info.cpp:153 ../filelist_ctrl.cpp:1194
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1194
 msgid "add"
 msgstr "agregar"
 
@@ -1845,7 +1857,7 @@ msgstr "agregado"
 msgid "conflicted"
 msgstr "en conflicto"
 
-#: ../file_info.cpp:157 ../filelist_ctrl.cpp:1197
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1197
 msgid "delete"
 msgstr "borrar"
 
@@ -1853,7 +1865,7 @@ msgstr "borrar"
 msgid "deleted"
 msgstr "borrado"
 
-#: ../file_info.cpp:129
+#: ../file_info.cpp:126
 msgid "directory"
 msgstr "directorio"
 
@@ -1861,7 +1873,7 @@ msgstr "directorio"
 msgid "external"
 msgstr "externo"
 
-#: ../file_info.cpp:125
+#: ../file_info.cpp:122
 msgid "file"
 msgstr "archivo"
 
@@ -1889,11 +1901,11 @@ msgstr "modificado"
 msgid "native"
 msgstr "nativo"
 
-#: ../file_info.cpp:135 ../utils.cpp:388
+#: ../file_info.cpp:132 ../utils.cpp:388
 msgid "none"
 msgstr "ninguno"
 
-#: ../file_info.cpp:149 ../utils.cpp:394
+#: ../file_info.cpp:146 ../utils.cpp:394
 msgid "normal"
 msgstr "normal"
 
@@ -1905,7 +1917,7 @@ msgstr "obstruido"
 msgid "outdated"
 msgstr "desactualizado"
 
-#: ../file_info.cpp:161 ../filelist_ctrl.cpp:1200
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1200
 msgid "replace"
 msgstr "reemplazar"
 
@@ -1913,7 +1925,7 @@ msgstr "reemplazar"
 msgid "replaced"
 msgstr "substituido"
 
-#: ../file_info.cpp:140 ../file_info.cpp:165
+#: ../file_info.cpp:137 ../file_info.cpp:162
 msgid "unknown"
 msgstr "desconocido"
 

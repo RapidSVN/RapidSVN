@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-06 09:43+0200\n"
+"POT-Creation-Date: 2009-02-13 17:34+0100\n"
 "PO-Revision-Date: 2006-05-15 11:14+0100\n"
 "Last-Translator: Olha <sleepy@adam-i-eva.com>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
@@ -240,7 +240,7 @@ msgstr ""
 msgid "- The certificate is not yet valid."
 msgstr "- Сертифікат ще не дійсний."
 
-#: ../file_info.cpp:105 ../file_info.cpp:113 ../file_info.cpp:198
+#: ../file_info.cpp:102 ../file_info.cpp:110 ../file_info.cpp:195
 msgid "<None>"
 msgstr "<немає>"
 
@@ -385,7 +385,7 @@ msgid "CRLF (Windows)"
 msgstr "CRLF (Windows)"
 
 #: ../auth_dlg.cpp:73 ../cert_dlg.cpp:138 ../checkout_dlg.cpp:127
-#: ../commit_dlg.cpp:103 ../delete_dlg.cpp:57 ../destination_dlg.cpp:90
+#: ../commit_dlg.cpp:125 ../delete_dlg.cpp:57 ../destination_dlg.cpp:90
 #: ../dnd_dlg.cpp:112 ../export_dlg.cpp:146 ../import_dlg.cpp:130
 #: ../listed_dlg.cpp:186 ../listed_dlg.cpp:342 ../lock_dlg.cpp:61
 #: ../merge_dlg.cpp:215 ../rapidsvn_generated.cpp:195
@@ -418,7 +418,7 @@ msgstr "Тест Checkout"
 msgid "Checksum"
 msgstr "Контрольна сума"
 
-#: ../file_info.cpp:200
+#: ../file_info.cpp:197
 #, c-format
 msgid "Checksum: %s"
 msgstr "Контрольна сума: %s"
@@ -440,11 +440,11 @@ msgstr "Стовпці"
 msgid "Combo!"
 msgstr ""
 
-#: ../commit_action.cpp:40 ../commit_dlg.cpp:159
+#: ../commit_action.cpp:42 ../commit_dlg.cpp:212
 msgid "Commit"
 msgstr "Фіксація змін"
 
-#: ../commit_dlg.cpp:159
+#: ../commit_dlg.cpp:212
 msgid "Commit Log Message"
 msgstr "Повідомлення журналу"
 
@@ -456,7 +456,7 @@ msgstr ""
 msgid "Commit selected"
 msgstr "Зафіксувати вибране (commit)"
 
-#: ../commit_action.cpp:86
+#: ../commit_action.cpp:130
 msgid "Committed revision"
 msgstr "Зафіксовано ревізію"
 
@@ -468,7 +468,7 @@ msgstr "Порівняти:"
 msgid "Conflict BASE"
 msgstr "Конфлікт: BASE"
 
-#: ../file_info.cpp:206
+#: ../file_info.cpp:203
 #, c-format
 msgid "Conflict BASE File: %s"
 msgstr "BASE-файл конфлікту: %s"
@@ -477,12 +477,12 @@ msgstr "BASE-файл конфлікту: %s"
 msgid "Conflict HEAD"
 msgstr "Конфлікт: HEAD"
 
-#: ../file_info.cpp:216
+#: ../file_info.cpp:213
 #, c-format
 msgid "Conflict HEAD File: %s"
 msgstr "HEAD-файл конфлікту: %s"
 
-#: ../file_info.cpp:224
+#: ../file_info.cpp:221
 #, c-format
 msgid "Conflict Properties File: %s"
 msgstr "Файл конфлікту властивостей: %s"
@@ -491,7 +491,7 @@ msgstr "Файл конфлікту властивостей: %s"
 msgid "Conflict Work"
 msgstr "Конфлікт: робочий ф-л"
 
-#: ../file_info.cpp:211
+#: ../file_info.cpp:208
 #, c-format
 msgid "Conflict Working File: %s"
 msgstr "Робочий файл конфлікту: %s"
@@ -500,12 +500,12 @@ msgstr "Робочий файл конфлікту: %s"
 msgid "Copied"
 msgstr "Скопійовано"
 
-#: ../file_info.cpp:175
+#: ../file_info.cpp:172
 #, c-format
 msgid "Copied From Rev: %ld"
 msgstr "Скопійовано з ревізії: %ld"
 
-#: ../file_info.cpp:172
+#: ../file_info.cpp:169
 #, c-format
 msgid "Copied From URL: %s"
 msgstr "Скопійовано з URL: %s"
@@ -646,7 +646,7 @@ msgstr "Пропускаю невідстежуваний каталог: %s"
 msgid "Do you want to delete the selected files/directories?"
 msgstr "Ви згодні видалити вибрані файли/каталоги?"
 
-#: ../revert_action.cpp:45
+#: ../revert_dlg.cpp:45
 msgid "Do you want to revert local changes?"
 msgstr "Підтверджуєте скасування локальних змін?"
 
@@ -678,7 +678,7 @@ msgstr "Редагувати властивість"
 msgid "Enter a comment for this lock"
 msgstr "Введіть коментар для блокування"
 
-#: ../commit_dlg.cpp:52 ../import_dlg.cpp:95
+#: ../commit_dlg.cpp:61 ../import_dlg.cpp:95
 msgid "Enter log message"
 msgstr "Введіть повідомлення для журналу"
 
@@ -713,7 +713,7 @@ msgstr ""
 msgid "Error"
 msgstr "Помилка"
 
-#: ../file_info.cpp:269
+#: ../file_info.cpp:266
 msgid "Error retrieving status:"
 msgstr "Помилка при поверненні статусу:"
 
@@ -827,6 +827,10 @@ msgstr "Файл"
 #: ../import_dlg.cpp:190
 msgid "File path required when importing a file!"
 msgstr "Для імпорту файла потрібно вказати його шлях!"
+
+#: ../commit_dlg.cpp:163
+msgid "Files To Commit"
+msgstr ""
 
 #: ../cert_dlg.cpp:123
 msgid "Fingerprint:"
@@ -981,7 +985,7 @@ msgstr "Хибний вибір. Для операції об'єднання н�
 msgid "Issue:"
 msgstr "Виданий:"
 
-#: ../commit_dlg.cpp:95
+#: ../commit_dlg.cpp:117
 msgid "Keep locks"
 msgstr "Зберігати блокування"
 
@@ -993,16 +997,16 @@ msgstr "LF (Unix)"
 msgid "Last Changed"
 msgstr "Остання зміна"
 
-#: ../file_info.cpp:180
+#: ../file_info.cpp:177
 #, c-format
 msgid "Last Changed Author: %s"
 msgstr "Автор останньої зміни: %s"
 
-#: ../file_info.cpp:186
+#: ../file_info.cpp:183
 msgid "Last Changed Date"
 msgstr "Дата останньої зміни"
 
-#: ../file_info.cpp:183
+#: ../file_info.cpp:180
 #, c-format
 msgid "Last Changed Rev: %ld"
 msgstr "Ревізія останньої зміни: %ld"
@@ -1033,15 +1037,15 @@ msgstr ""
 "System Name: %s\n"
 "Canonical Name: %s\n"
 
-#: ../rapidsvn_app.cpp:190 ../rapidsvn_app.cpp:198
+#: ../rapidsvn_app.cpp:196 ../rapidsvn_app.cpp:204
 msgid "Locate help"
 msgstr "Встановити файл допомоги"
 
-#: ../rapidsvn_app.cpp:258
+#: ../rapidsvn_app.cpp:264
 msgid "Locate tips"
 msgstr "Встановити підказки"
 
-#: ../rapidsvn_app.cpp:250
+#: ../rapidsvn_app.cpp:256
 msgid "Locate tips file"
 msgstr "Встановити файл підказок"
 
@@ -1053,7 +1057,7 @@ msgstr "Блокування"
 msgid "Lock Comment"
 msgstr "Коментар блокування"
 
-#: ../file_info.cpp:242
+#: ../file_info.cpp:239
 #, c-format
 msgid ""
 "Lock Comment:\n"
@@ -1062,7 +1066,7 @@ msgstr ""
 "Коментар до блокування:\n"
 "%s"
 
-#: ../file_info.cpp:246
+#: ../file_info.cpp:243
 msgid "Lock Creation Date"
 msgstr "Дата створення блокування"
 
@@ -1070,12 +1074,12 @@ msgstr "Дата створення блокування"
 msgid "Lock Owner"
 msgstr "Власник блокування"
 
-#: ../file_info.cpp:237
+#: ../file_info.cpp:234
 #, c-format
 msgid "Lock Owner: %s"
 msgstr "Власник блокування: %s"
 
-#: ../file_info.cpp:232
+#: ../file_info.cpp:229
 #, c-format
 msgid "Lock Token: %s"
 msgstr "Ключ блокування: %s"
@@ -1172,7 +1176,7 @@ msgstr ""
 msgid "Name"
 msgstr "Ім'я"
 
-#: ../file_info.cpp:96
+#: ../file_info.cpp:93
 #, c-format
 msgid "Name: %s"
 msgstr "Ім'я: %s"
@@ -1181,11 +1185,15 @@ msgstr "Ім'я: %s"
 msgid "New Property"
 msgstr "Нова властивість"
 
+#: ../revert_dlg.cpp:57
+msgid "No"
+msgstr ""
+
 #: ../diff_action.cpp:217
 msgid "No diff tool set in the preferences"
 msgstr ""
 
-#: ../rapidsvn_app.cpp:198
+#: ../rapidsvn_app.cpp:204
 msgid ""
 "No help file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1197,7 +1205,7 @@ msgstr ""
 msgid "No merge tool set in the preferences"
 msgstr ""
 
-#: ../rapidsvn_app.cpp:258
+#: ../rapidsvn_app.cpp:264
 msgid ""
 "No tips file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1205,7 +1213,7 @@ msgstr ""
 "Файл підказок не вказано, повторити\n"
 "запитання при наступному старті?"
 
-#: ../file_info.cpp:121
+#: ../file_info.cpp:118
 #, c-format
 msgid "Node Kind: %s"
 msgstr "Тип: %s"
@@ -1214,12 +1222,12 @@ msgstr "Тип: %s"
 msgid "Not specified"
 msgstr "Не вказана"
 
-#: ../file_info.cpp:89
+#: ../file_info.cpp:86
 msgid "Not versioned"
 msgstr "невідстежуваний"
 
 #: ../about_dlg.cpp:99 ../annotate_dlg.cpp:42 ../auth_dlg.cpp:71
-#: ../checkout_dlg.cpp:126 ../commit_dlg.cpp:101 ../delete_dlg.cpp:54
+#: ../checkout_dlg.cpp:126 ../commit_dlg.cpp:123 ../delete_dlg.cpp:54
 #: ../destination_dlg.cpp:87 ../export_dlg.cpp:145 ../import_dlg.cpp:128
 #: ../listed_dlg.cpp:185 ../listed_dlg.cpp:341 ../lock_dlg.cpp:60
 #: ../merge_dlg.cpp:212 ../rapidsvn_generated.cpp:191
@@ -1311,7 +1319,7 @@ msgstr "Дата зміни власт."
 msgid "Prop Status"
 msgstr "Статус власт."
 
-#: ../file_info.cpp:192
+#: ../file_info.cpp:189
 msgid "Properties Last Updated"
 msgstr "Останнє оновлення властивостей"
 
@@ -1339,7 +1347,7 @@ msgstr "Занести файли та каталоги під контроль 
 msgid "RapidSVN Error"
 msgstr ""
 
-#: ../rapidsvn_app.cpp:89
+#: ../rapidsvn_app.cpp:95
 #, c-format
 msgid "RapidSVN Help: %s"
 msgstr "Допомога RapidSVN: %s"
@@ -1364,13 +1372,13 @@ msgstr "Готово"
 msgid "Ready\n"
 msgstr "Готово\n"
 
-#: ../commit_dlg.cpp:71
+#: ../commit_dlg.cpp:94
 msgid "Recent entries:"
 msgstr "Нещодавні записи:"
 
-#: ../checkout_dlg.cpp:111 ../commit_dlg.cpp:86 ../export_dlg.cpp:114
-#: ../import_dlg.cpp:108 ../merge_dlg.cpp:201 ../switch_dlg.cpp:117
-#: ../update_dlg.cpp:115
+#: ../checkout_dlg.cpp:111 ../commit_dlg.cpp:108 ../export_dlg.cpp:114
+#: ../import_dlg.cpp:108 ../merge_dlg.cpp:201 ../revert_dlg.cpp:49
+#: ../switch_dlg.cpp:117 ../update_dlg.cpp:115
 msgid "Recursive"
 msgstr "Рекурсивно"
 
@@ -1427,12 +1435,12 @@ msgstr "URL репозиторію"
 msgid "Repository URL is required for import!"
 msgstr "Для імпорту необхідний URL репозиторію!"
 
-#: ../file_info.cpp:115
+#: ../file_info.cpp:112
 #, c-format
 msgid "Repository UUID: %s"
 msgstr "UUID репозиторію: %s"
 
-#: ../file_info.cpp:107
+#: ../file_info.cpp:104
 #, c-format
 msgid "Repository: %s"
 msgstr "Репозиторій: %s"
@@ -1465,8 +1473,8 @@ msgstr "Відновити"
 msgid "Restore pristine working copy file (undo all local edits)"
 msgstr "Відновити початкову робочу копію файла (скасувати всі локальні зміни)"
 
-#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1594 ../revert_action.cpp:34
-#: ../revert_action.cpp:46
+#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1594 ../revert_action.cpp:35
+#: ../revert_dlg.cpp:79
 msgid "Revert"
 msgstr "Скасування змін"
 
@@ -1498,7 +1506,7 @@ msgstr "Ревізія або дата #&2:"
 msgid "Revision:"
 msgstr "Ревізія:"
 
-#: ../file_info.cpp:118
+#: ../file_info.cpp:115
 #, c-format
 msgid "Revision: %ld"
 msgstr "Ревізія: %ld"
@@ -1511,7 +1519,7 @@ msgstr "Сертифікат SSL"
 msgid "Schedule"
 msgstr "Заплановано"
 
-#: ../file_info.cpp:145
+#: ../file_info.cpp:142
 #, c-format
 msgid "Schedule: %s"
 msgstr "Заплановано: %s"
@@ -1696,7 +1704,7 @@ msgstr "Тест закінчено о"
 msgid "Test started at"
 msgstr "Тест розпочато о"
 
-#: ../file_info.cpp:189
+#: ../file_info.cpp:186
 msgid "Text Last Updated"
 msgstr "Останнє оновлення тексту"
 
@@ -1714,7 +1722,7 @@ msgstr ""
 "Знайдено помилки під час перевірки сертифіката.\n"
 "Прийняти цей сертифікат?"
 
-#: ../commit_dlg.cpp:52
+#: ../commit_dlg.cpp:61
 msgid "This action has resulted in a Commit - please enter a log message"
 msgstr ""
 "Ця операція призвела до фіксації змін (Commit). Введіть повідомлення для "
@@ -1729,7 +1737,7 @@ msgstr "Дерево"
 msgid "URL"
 msgstr "URL"
 
-#: ../file_info.cpp:99
+#: ../file_info.cpp:96
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -1826,11 +1834,15 @@ msgid ""
 "  %s?"
 msgstr ""
 
+#: ../revert_dlg.cpp:54
+msgid "Yes"
+msgstr ""
+
 #: ../rapidsvn_frame.cpp:2057
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "Не можна додати до закладок адміністративний каталог subversion!"
 
-#: ../file_info.cpp:153 ../filelist_ctrl.cpp:1194
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1194
 msgid "add"
 msgstr "додати"
 
@@ -1842,7 +1854,7 @@ msgstr "доданий"
 msgid "conflicted"
 msgstr "конфліктує"
 
-#: ../file_info.cpp:157 ../filelist_ctrl.cpp:1197
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1197
 msgid "delete"
 msgstr "видалити"
 
@@ -1850,7 +1862,7 @@ msgstr "видалити"
 msgid "deleted"
 msgstr "видалений"
 
-#: ../file_info.cpp:129
+#: ../file_info.cpp:126
 msgid "directory"
 msgstr "каталог"
 
@@ -1858,7 +1870,7 @@ msgstr "каталог"
 msgid "external"
 msgstr "зовнішній"
 
-#: ../file_info.cpp:125
+#: ../file_info.cpp:122
 msgid "file"
 msgstr "файл"
 
@@ -1886,11 +1898,11 @@ msgstr "змінений"
 msgid "native"
 msgstr "власний формат для ОС"
 
-#: ../file_info.cpp:135 ../utils.cpp:388
+#: ../file_info.cpp:132 ../utils.cpp:388
 msgid "none"
 msgstr "немає"
 
-#: ../file_info.cpp:149 ../utils.cpp:394
+#: ../file_info.cpp:146 ../utils.cpp:394
 msgid "normal"
 msgstr "нормальний"
 
@@ -1902,7 +1914,7 @@ msgstr "затуляє інший файл"
 msgid "outdated"
 msgstr "застарів"
 
-#: ../file_info.cpp:161 ../filelist_ctrl.cpp:1200
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1200
 msgid "replace"
 msgstr "замінити"
 
@@ -1910,7 +1922,7 @@ msgstr "замінити"
 msgid "replaced"
 msgstr "заміщений"
 
-#: ../file_info.cpp:140 ../file_info.cpp:165
+#: ../file_info.cpp:137 ../file_info.cpp:162
 msgid "unknown"
 msgstr "невідомо"
 
