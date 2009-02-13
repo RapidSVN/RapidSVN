@@ -106,6 +106,7 @@
 #include "res/bitmaps/info.png.h"
 #include "res/bitmaps/stop.png.h"
 
+#include "res/bitmaps/flat_mode.png.h"
 #include "res/bitmaps/nonsvn_file.png.h"
 #include "res/bitmaps/normal_file.png.h"
 #include "res/bitmaps/modified_file.png.h"
@@ -388,6 +389,15 @@ public:
   }
 
   void
+  CheckTool(int id, bool check)
+  {
+    wxToolBar * toolbar = m_parent->GetToolBar();
+
+    if (0 != toolbar)
+      toolbar->ToggleTool(id, check);
+  }
+
+  void
   SetMenuAndTool(int id, bool & toggleValue, bool newValue)
   {
     toggleValue = newValue;
@@ -462,13 +472,12 @@ public:
     AddActionTools(toolBar);
     AddInfoTools(toolBar);
 
-    toolBar->AddCheckTool(ID_ShowUnversioned,
+    toolBar->AddCheckTool(ID_Flat,
                           wxEmptyString,
-                          EMBEDDED_BITMAP(nonsvn_file_png),
+                          EMBEDDED_BITMAP(flat_mode_png),
                           wxNullBitmap,
-                          _("Show unversioned entries"),
-                          _("Display unversioned files/directories"));
-    wxEmptyString,
+                          _("Show subdirectories"),
+                          _("Show entries in subdirectories"));
     toolBar->AddCheckTool(ID_ShowUnmodified,
                           wxEmptyString,
                           EMBEDDED_BITMAP(normal_file_png),
@@ -1318,6 +1327,7 @@ RapidSvnFrame::OnFlatView(wxCommandEvent & event)
     newFlatMode = false;
 
   m->CheckMenu(ID_Flat, newFlatMode);
+  m->CheckTool(ID_Flat, newFlatMode);
   m->listCtrl->SetFlat(newFlatMode);
 
   SetIncludePathVisibility(newFlatMode);
@@ -1986,6 +1996,7 @@ RapidSvnFrame::OnFolderBrowserSelChanged(wxTreeEvent & event)
     bool flatMode = m->folderBrowser->IsFlat();
     m->listCtrl->SetFlat(flatMode);
     m->CheckMenu(ID_Flat, flatMode);
+    m->CheckTool(ID_Flat, flatMode);
 
     SetIncludePathVisibility(flatMode);
 
