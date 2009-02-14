@@ -36,151 +36,73 @@
 #include "preferences.hpp"
 #include "utils.hpp"
 
-static const int ID_HISTORY_COMBO_BOX = 1;
 
-struct CommitDlg::Data
+CommitDlg::CommitDlg(wxWindow* parent, const svn::PathVector & filenames)
+  : CommitDlgBase(parent, -1, _("Commit"), wxDefaultPosition, wxDefaultSize,
+                  wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-public:
-  bool recursive;
-  bool keepLocks;
-  wxComboBox * comboHistory;
-  wxTextCtrl * msg;
-  wxCheckListBox * files;
-  wxCheckBox * checkRecursive;
+  m_textMessage->SetMinSize(wxSize(GetCharWidth() * 60, GetCharHeight() * 8));
+  m_textMessage->SetSize(GetCharWidth() * 80, GetCharHeight() * 10);
 
-  wxString message;
-  svn::PathVector filenames;
+  Preferences prefs;
+  HistoryValidator valMessage(HISTORY_COMMIT_LOG, &m_message, false,
+                              prefs.useLastCommitMessage);
+  m_textMessage->SetValidator(valMessage);
 
-  Data(wxWindow * window, const svn::PathVector & filenames)
-    : recursive(true), keepLocks(false), comboHistory(0), 
-      msg(0), files(0), checkRecursive(0)
+  HistoryValidator valHistory(HISTORY_COMMIT_LOG, 0, true);
+  m_comboHistory->SetValidator(valHistory);
+
+  m_usesFilenames = filenames.size() > 0;
+  if (!m_usesFilenames)
+    m_mainSizer->Show(m_filesSizer, false);
+  else
   {
-    // create controls
-    wxStaticBox* msgBox =
-      new wxStaticBox(window, -1, _("Enter log message"));
-
-    wxSize msgSize(window->GetCharWidth() * 80,
-                   window->GetCharHeight() * 10);
-
+    m_checkListFiles->Clear();
+    
+    svn::PathVector::const_iterator it;
+    
+    for(it=filenames.begin(); it!=filenames.end(); it++)
     {
-      Preferences prefs;
-      HistoryValidator val(HISTORY_COMMIT_LOG, &message, false,
-                           prefs.useLastCommitMessage);
-      msg = new wxTextCtrl(window, -1, wxEmptyString, wxDefaultPosition,
-                           msgSize, wxTE_MULTILINE, val);
+      const svn::Path & path = *it;
+      int i = m_checkListFiles->Append(PathToNative(path));
+      
+      m_checkListFiles->Check(i, true);
     }
-
-    wxStaticText * labelHistory = new wxStaticText(
-      window, -1, _("Recent entries:"), wxDefaultPosition);
-
-    {
-      HistoryValidator val(HISTORY_COMMIT_LOG, 0, true);
-      comboHistory = new wxComboBox(
-        window, ID_HISTORY_COMBO_BOX, wxEmptyString,
-        wxDefaultPosition, wxDefaultSize, 0, NULL,
-        wxCB_READONLY, val);
-    }
-
-    if (filenames.size() > 0)
-    {
-      files = new wxCheckListBox(window, -1, wxDefaultPosition, wxDefaultSize, 0, wxLB_EXTENDED);
-      svn::PathVector::const_iterator it;
-
-      for(it=filenames.begin(); it!=filenames.end(); it++)
-      {
-        const svn::Path & path = *it;
-        int i = files->Append(PathToNative(path));
-        
-        files->Check(i, true);
-      }
-    }
-
-    {
-      wxGenericValidator val(&recursive);
-      checkRecursive =
-        new wxCheckBox(window, -1, _("Recursive"),
-                       wxDefaultPosition, wxDefaultSize, 0,
-                       val);
-    }
-
-    wxCheckBox * checkKeepLocks = NULL;
-    {
-      wxGenericValidator val(&keepLocks);
-      checkKeepLocks =
-        new wxCheckBox(window, -1, _("Keep locks"),
-                       wxDefaultPosition, wxDefaultSize, 0,
-                       val);
-    }
-
-    wxButton* ok =
-      new wxButton(window, wxID_OK, _("OK"));
-    wxButton* cancel =
-      new wxButton(window, wxID_CANCEL, _("Cancel"));
-
-    // position controls
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-
-    // The message field:
-    wxStaticBoxSizer *msgSizer =
-      new wxStaticBoxSizer(msgBox, wxHORIZONTAL);
-    msgSizer->Add(msg, 1, wxALL | wxEXPAND, 5);
-
-    // the history combo
-    wxBoxSizer * histSizer = new wxBoxSizer(wxHORIZONTAL);
-    histSizer->Add(labelHistory, 0, wxALL, 5);
-    histSizer->Add(comboHistory, 1, wxALL | wxEXPAND, 5);
-
-    // The buttons:
-    wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonSizer->Add(checkRecursive, 1,
-                     wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 10);
-    buttonSizer->Add(checkKeepLocks, 1,
-                     wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 10);
-    buttonSizer->Add(ok, 0, wxALL, 10);
-    buttonSizer->Add(cancel, 0, wxALL, 10);
-
-    mainSizer->Add(msgSizer, 1, wxALL | wxEXPAND, 5);
-    mainSizer->Add(histSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-
-    if (files != 0)
-    {
-      wxStaticBox* filesBox =
-        new wxStaticBox(window, -1, _("Files To Commit"));
-
-      // The files field:
-      wxStaticBoxSizer *filesSizer =
-        new wxStaticBoxSizer (filesBox, wxHORIZONTAL);
-
-      filesSizer->Add (files, 1, wxALL | wxEXPAND, 5);
-      mainSizer->Add(filesSizer, 1, wxALL | wxEXPAND, 5);
-    }
-
-    // Add all the sizers to the main sizer
-    mainSizer->Add(buttonSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-
-    window->SetAutoLayout(true);
-    window->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(window);
-    mainSizer->Fit(window);
-
-    ok->SetDefault();
   }
-};
+  
+  wxGenericValidator valRecursive(&m_recursive);
+  m_checkRecursive->SetValidator(valRecursive);
+  
+  wxGenericValidator valKeepLocks(&m_keepLocks);
+  m_checkKeepLocks->SetValidator(valKeepLocks);
+  
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
 
-bool CommitDlg::TransferDataFromWindow()
+  Layout();
+  CentreOnParent();
+}
+
+
+CommitDlg::~CommitDlg()
+{
+}
+
+
+bool 
+CommitDlg::TransferDataFromWindow()
 {
   bool result = wxDialog::TransferDataFromWindow();
 
-  if (result)
+  m_selectedFilenames.clear();
+
+  if (result && m_usesFilenames)
   {
-    if (m->files != 0)
+    size_t count = m_checkListFiles->GetCount();
+    for(size_t i=0; i < count; i++)
     {
-      for(size_t i=0; i<m->files->GetCount(); i++)
-      {
-        if(m->files->IsChecked(i))
-          m->filenames.push_back(PathUtf8(m->files->GetString(i)));
-      }
+      if(m_checkListFiles->IsChecked(i))
+        m_selectedFilenames.push_back(PathUtf8(m_checkListFiles->GetString(i)));
     }
   }
 
@@ -188,60 +110,49 @@ bool CommitDlg::TransferDataFromWindow()
 }
 
 
-BEGIN_EVENT_TABLE(CommitDlg, wxDialog)
-  EVT_COMBOBOX(ID_HISTORY_COMBO_BOX, CommitDlg::OnHistoryComboBox)
-END_EVENT_TABLE()
-
-CommitDlg::CommitDlg(wxWindow* parent, const svn::PathVector & filenames)
-  : wxDialog(parent, -1, _("Commit"), wxDefaultPosition, wxDefaultSize,
-             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
-{
-  m = new Data(this, filenames);
-  CentreOnParent();
-}
-
-CommitDlg::~CommitDlg()
-{
-  delete m;
-}
-
 const wxString &
 CommitDlg::GetMessage() const
 {
-  return m->message;
+  return m_message;
 }
+
 
 const svn::PathVector &
 CommitDlg::GetSelectedFilenames() const
 {
-  return m->filenames;
+  return m_selectedFilenames;
 }
+
 
 bool
 CommitDlg::GetRecursive() const
 {
-  return m->recursive;
+  return m_recursive;
 }
+
 
 void
 CommitDlg::SetRecursive(bool recursive)
 {
-  m->recursive = recursive;
-  m->checkRecursive->SetValue(recursive);
+  m_recursive = recursive;
+  m_checkRecursive->SetValue(recursive);
 }
+
 
 bool
 CommitDlg::GetKeepLocks() const
 {
-  return m->keepLocks;
+  return m_keepLocks;
 }
 
+
 void
-CommitDlg::OnHistoryComboBox(wxCommandEvent &)
+CommitDlg::OnComboHistory(wxCommandEvent &)
 {
   // transfer from combobox to text control
-  m->msg->SetValue(m->comboHistory->GetValue());
+  m_textMessage->SetValue(m_comboHistory->GetValue());
 }
+
 
 /* -----------------------------------------------------------------
  * local variables:

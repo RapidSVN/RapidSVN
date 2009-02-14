@@ -24,13 +24,13 @@
 #ifndef _COMMIT_DLG_H_INCLUDED_
 #define _COMMIT_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
-
 // svncpp
 #include "svncpp/path.hpp"
 
-class CommitDlg : public wxDialog
+// app
+#include "rapidsvn_generated.h"
+
+class CommitDlg : public CommitDlgBase
 {
 public:
   /**
@@ -75,20 +75,19 @@ public:
   virtual bool TransferDataFromWindow();
 
 private:
-  /** hide implementation details */
-  struct Data;
-  Data * m;
+  bool m_recursive;
+  bool m_keepLocks;
+  bool m_usesFilenames;
+  wxString m_message;
+  svn::PathVector m_selectedFilenames;
 
-  void OnHistoryComboBox(wxCommandEvent &);
+  virtual void OnComboHistory(wxCommandEvent &);
 
   /** disallow default constructor */
   CommitDlg();
 
   /** disallow copy constructor */
   CommitDlg(const CommitDlg & src);
-
-private:
-  DECLARE_EVENT_TABLE()
 };
 
 #endif
