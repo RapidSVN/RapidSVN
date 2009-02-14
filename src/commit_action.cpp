@@ -91,7 +91,7 @@ CommitAction::Prepare()
     recursive = false;
   }
 
-  CommitDlg dlg(GetParent(), false, targets);
+  CommitDlg dlg(GetParent(), targets);
   dlg.SetRecursive(recursive);
 
   if (dlg.ShowModal() != wxID_OK)

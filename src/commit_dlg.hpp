@@ -38,7 +38,7 @@ public:
    *
    * @param parent parent window
    */
-  CommitDlg(wxWindow* parent, bool unexpectedCommit=false, 
+  CommitDlg(wxWindow* parent, 
             const svn::PathVector & filenames=svn::EmptyPathVector);
 
   /**

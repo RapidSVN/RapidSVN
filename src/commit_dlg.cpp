@@ -51,19 +51,13 @@ public:
   wxString message;
   svn::PathVector filenames;
 
-  Data(wxWindow * window, bool unexpectedCommit, 
-       const svn::PathVector & filenames)
-    : recursive(true), comboHistory(0), msg(0), files(0),
-      checkRecursive(0)
+  Data(wxWindow * window, const svn::PathVector & filenames)
+    : recursive(true), keepLocks(false), comboHistory(0), 
+      msg(0), files(0), checkRecursive(0)
   {
     // create controls
     wxStaticBox* msgBox =
-      new wxStaticBox(window, -1, unexpectedCommit ? _("This action has resulted in a Commit - please enter a log message") : _("Enter log message"));
-
-    if (unexpectedCommit)
-      keepLocks = true;
-    else
-      keepLocks = false;
+      new wxStaticBox(window, -1, _("Enter log message"));
 
     wxSize msgSize(window->GetCharWidth() * 80,
                    window->GetCharHeight() * 10);
@@ -74,6 +68,17 @@ public:
                            prefs.useLastCommitMessage);
       msg = new wxTextCtrl(window, -1, wxEmptyString, wxDefaultPosition,
                            msgSize, wxTE_MULTILINE, val);
+    }
+
+    wxStaticText * labelHistory = new wxStaticText(
+      window, -1, _("Recent entries:"), wxDefaultPosition);
+
+    {
+      HistoryValidator val(HISTORY_COMMIT_LOG, 0, true);
+      comboHistory = new wxComboBox(
+        window, ID_HISTORY_COMBO_BOX, wxEmptyString,
+        wxDefaultPosition, wxDefaultSize, 0, NULL,
+        wxCB_READONLY, val);
     }
 
     if (filenames.size() > 0)
@@ -90,18 +95,6 @@ public:
       }
     }
 
-    wxStaticText * labelHistory = new wxStaticText(
-      window, -1, _("Recent entries:"), wxDefaultPosition);
-
-    {
-      HistoryValidator val(HISTORY_COMMIT_LOG, 0, true);
-      comboHistory = new wxComboBox(
-        window, ID_HISTORY_COMBO_BOX, wxEmptyString,
-        wxDefaultPosition, wxDefaultSize, 0, NULL,
-        wxCB_READONLY, val);
-    }
-
-    if (!unexpectedCommit)
     {
       wxGenericValidator val(&recursive);
       checkRecursive =
@@ -109,8 +102,8 @@ public:
                        wxDefaultPosition, wxDefaultSize, 0,
                        val);
     }
+
     wxCheckBox * checkKeepLocks = NULL;
-    if (!unexpectedCommit)
     {
       wxGenericValidator val(&keepLocks);
       checkKeepLocks =
@@ -139,18 +132,10 @@ public:
 
     // The buttons:
     wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-    if (!unexpectedCommit)
-    {
-      buttonSizer->Add(checkRecursive, 1,
-                       wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT,
-                       10);
-    }
-    if (!unexpectedCommit)
-    {
-      buttonSizer->Add(checkKeepLocks, 1,
-                       wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT,
-                       10);
-    }
+    buttonSizer->Add(checkRecursive, 1,
+                     wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 10);
+    buttonSizer->Add(checkKeepLocks, 1,
+                     wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 10);
     buttonSizer->Add(ok, 0, wxALL, 10);
     buttonSizer->Add(cancel, 0, wxALL, 10);
 
@@ -207,13 +192,11 @@ BEGIN_EVENT_TABLE(CommitDlg, wxDialog)
   EVT_COMBOBOX(ID_HISTORY_COMBO_BOX, CommitDlg::OnHistoryComboBox)
 END_EVENT_TABLE()
 
-CommitDlg::CommitDlg(wxWindow* parent, bool unexpectedCommit, 
-                     const svn::PathVector & filenames)
-    : wxDialog(parent, -1, unexpectedCommit ? _("Commit Log Message") : _("Commit"),
-               wxDefaultPosition, wxDefaultSize,
-               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+CommitDlg::CommitDlg(wxWindow* parent, const svn::PathVector & filenames)
+  : wxDialog(parent, -1, _("Commit"), wxDefaultPosition, wxDefaultSize,
+             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data(this, unexpectedCommit, filenames);
+  m = new Data(this, filenames);
   CentreOnParent();
 }
 
