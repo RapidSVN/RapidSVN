@@ -41,7 +41,9 @@ CommitLogDlg::CommitLogDlg(wxWindow* parent)
                      wxDefaultPosition, wxDefaultSize,
                      wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
+  m_textMessage->SetMinSize(wxSize(GetCharWidth() * 60, GetCharHeight() * 8));
   m_textMessage->SetSize(GetCharWidth() * 80, GetCharHeight() * 10);
+
   Preferences prefs;
   HistoryValidator histVal(HISTORY_COMMIT_LOG, &m_message, false,
                            prefs.useLastCommitMessage);
@@ -49,14 +51,11 @@ CommitLogDlg::CommitLogDlg(wxWindow* parent)
   
   HistoryValidator valHistory(HISTORY_COMMIT_LOG, 0, true);
   m_comboHistory->SetValidator(valHistory);
-  
-  /*SetAutoLayout(true);
-  SetSizer(m_mainSizer);
-  
-  m_mainSizer->SetSizeHints(this);
-  m_mainSizer->Fit(this);*/
-  Layout();
 
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+  
+  Layout();
   CentreOnParent();
 }
 
