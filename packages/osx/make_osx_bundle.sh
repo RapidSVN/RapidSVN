@@ -57,8 +57,8 @@ echo -n \
 	<string>????</string>
 	<key>CFBundleVersion</key><string>0.9.7</string>
 	<key>CFBundleShortVersionString</key><string>0.9.7</string>
-	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.9.7, (c) 2002-2008 RapidSVN</string>
-	<key>CFBundleLongVersionString</key><string>0.9.7, (c) 2002-2008 RapidSVN</string>
+	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.9.7, (c) 2002-2009 RapidSVN</string>
+	<key>CFBundleLongVersionString</key><string>0.9.7, (c) 2002-2009 RapidSVN</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2002-2007 RapidSVN</string>
 	<key>LSRequiresCarbon</key>
