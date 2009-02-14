@@ -423,3 +423,68 @@ CommitLogDlgBase::~CommitLogDlgBase()
 	// Disconnect Events
 	m_comboHistory->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitLogDlgBase::OnComboHistory ), NULL, this );
 }
+
+CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Enter log message") ), wxHORIZONTAL );
+	
+	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );
+	
+	m_mainSizer->Add( m_msgSizer, 1, wxALL|wxEXPAND, 5 );
+	
+	m_histSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_labelHistory = new wxStaticText( this, wxID_ANY, _("Recent entries:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelHistory->Wrap( -1 );
+	m_histSizer->Add( m_labelHistory, 0, wxALL, 5 );
+	
+	m_comboHistory = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY ); 
+	m_histSizer->Add( m_comboHistory, 1, 0, 5 );
+	
+	m_mainSizer->Add( m_histSizer, 0, wxEXPAND|wxLEFT|wxRIGHT, 5 );
+	
+	m_filesSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Files to commit") ), wxVERTICAL );
+	
+	wxArrayString m_checkListFilesChoices;
+	m_checkListFiles = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListFilesChoices, wxLB_EXTENDED );
+	m_filesSizer->Add( m_checkListFiles, 1, wxEXPAND, 5 );
+	
+	m_mainSizer->Add( m_filesSizer, 1, wxALL|wxEXPAND, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	buttonSizer->Add( m_checkRecursive, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_checkKeepLocks = new wxCheckBox( this, wxID_ANY, _("Keep Locks"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	buttonSizer->Add( m_checkKeepLocks, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_RIGHT|wxLEFT|wxRIGHT, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	
+	// Connect Events
+	m_comboHistory->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitDlgBase::OnComboHistory ), NULL, this );
+}
+
+CommitDlgBase::~CommitDlgBase()
+{
+	// Disconnect Events
+	m_comboHistory->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitDlgBase::OnComboHistory ), NULL, this );
+}

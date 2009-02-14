@@ -31,6 +31,7 @@
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 #include <wx/statbox.h>
+#include <wx/checklst.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -163,6 +164,37 @@ class CommitLogDlgBase : public wxDialog
 	public:
 		CommitLogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 498,232 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CommitLogDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class CommitDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class CommitDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticBoxSizer* m_msgSizer;
+		wxTextCtrl* m_textMessage;
+		wxBoxSizer* m_histSizer;
+		wxStaticText* m_labelHistory;
+		wxComboBox* m_comboHistory;
+		wxStaticBoxSizer* m_filesSizer;
+		wxCheckListBox* m_checkListFiles;
+		wxCheckBox* m_checkRecursive;
+		wxCheckBox* m_checkKeepLocks;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnComboHistory( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 498,400 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~CommitDlgBase();
 	
 };
 
