@@ -86,18 +86,15 @@ HistoryValidator::TransferToWindow()
     // clear and fill the combobox
     comboBox->Clear();
 
-    size_t count = list.Count();
-    size_t index;
-
     // insert an entry with file selected to checkout
     if (m_value != 0)
     {
-      if (m_value->Length() > 0)
-      {
+      if (!m_value->IsEmpty() > 0)
         comboBox->Append(*m_value);
-      }
     }
 
+    size_t count = list.Count();
+    size_t index;
     for (index = 0; index < count; index++)
     {
       wxString value(list.Item(index));
@@ -118,6 +115,40 @@ HistoryValidator::TransferToWindow()
       // if we have an entry, select it
       if ((count > 0))
         comboBox->SetSelection(0, 0);
+    }
+
+    return true;
+  }
+  else if (m_validatorWindow->IsKindOf(CLASSINFO(wxChoice)))
+  {
+    wxControlWithItems * control = (wxControlWithItems *)m_validatorWindow;
+
+    // clear and fill the control
+    control->Clear();
+
+    if (m_value != 0)
+    {
+      if (!m_value->IsEmpty())
+        control->Append(*m_value);
+    }
+
+    size_t count = list.Count();
+    size_t index;
+    for (index = 0; index < count; index++)
+    {
+      wxString value(list.Item(index));
+
+      if (wxNOT_FOUND == control->FindString(value))
+        control->Append(value);
+    }
+
+    if (!m_useMostRecent)
+      control->SetSelection(-1); 
+    else if (m_value != 0)
+    {
+      int i = control->FindString(*m_value);
+      if (i != wxNOT_FOUND)
+        control->SetSelection(i);
     }
 
     return true;
@@ -160,6 +191,21 @@ HistoryValidator::TransferFromWindow()
     lastValue.Trim();
 
     if (!m_dontUpdate && (lastValue.Length() > 0))
+      TheHistoryManager.AddEntryToList(m_settingName, lastValue);
+
+    if (m_value)
+      *m_value = lastValue;
+
+    return true;
+  }
+  else if (m_validatorWindow->IsKindOf(CLASSINFO(wxChoice)))
+  {
+    wxControlWithItems * control = (wxControlWithItems *)m_validatorWindow;
+
+    wxString lastValue(control->GetStringSelection());
+    lastValue.Trim();
+
+    if (!m_dontUpdate && !lastValue.IsEmpty())
       TheHistoryManager.AddEntryToList(m_settingName, lastValue);
 
     if (m_value)
