@@ -49,20 +49,15 @@ public:
   GetMessage() const;
 
 private:
-  /** hide implementation details */
-  struct Data;
-  Data * m;
+  wxString m_message;
 
-  void OnHistoryComboBox(wxCommandEvent &);
+  virtual void OnComboHistory(wxCommandEvent &);
 
   /** disallow default constructor */
   CommitLogDlg();
 
   /** disallow copy constructor */
   CommitLogDlg(const CommitLogDlg & src);
-
-private:
-  DECLARE_EVENT_TABLE()
 };
 
 #endif

@@ -383,6 +383,9 @@ CommitLogDlgBase::CommitLogDlgBase( wxWindow* parent, wxWindowID id, const wxStr
 	
 	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("This action has resulted in a commit - please enter a log message") ), wxHORIZONTAL );
 	
+	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );
+	
 	m_mainSizer->Add( m_msgSizer, 1, wxALL|wxEXPAND, 5 );
 	
 	m_histSizer = new wxBoxSizer( wxHORIZONTAL );
@@ -391,7 +394,10 @@ CommitLogDlgBase::CommitLogDlgBase( wxWindow* parent, wxWindowID id, const wxStr
 	m_labelHistory->Wrap( -1 );
 	m_histSizer->Add( m_labelHistory, 0, wxALL, 5 );
 	
-	m_mainSizer->Add( m_histSizer, 0, wxEXPAND, 5 );
+	m_comboHistory = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY ); 
+	m_histSizer->Add( m_comboHistory, 1, 0, 5 );
+	
+	m_mainSizer->Add( m_histSizer, 0, wxEXPAND|wxLEFT|wxRIGHT, 5 );
 	
 	wxBoxSizer* buttonSizer;
 	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
@@ -407,8 +413,13 @@ CommitLogDlgBase::CommitLogDlgBase( wxWindow* parent, wxWindowID id, const wxStr
 	
 	this->SetSizer( m_mainSizer );
 	this->Layout();
+	
+	// Connect Events
+	m_comboHistory->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitLogDlgBase::OnComboHistory ), NULL, this );
 }
 
 CommitLogDlgBase::~CommitLogDlgBase()
 {
+	// Disconnect Events
+	m_comboHistory->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitLogDlgBase::OnComboHistory ), NULL, this );
 }

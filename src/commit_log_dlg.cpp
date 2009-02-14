@@ -35,65 +35,27 @@
 #include "hist_entries.hpp"
 #include "preferences.hpp"
 
-enum
-{
-  ID_HISTORY_COMBO_BOX = wxID_HIGHEST
-};
-
-struct CommitLogDlg::Data
-{
-public:
-  wxComboBox * comboHistory;
-  wxTextCtrl * msg;
-
-  wxString message;
-
-  Data(wxWindow * window, wxSizer * msgSizer, wxSizer * histSizer)
-  {
-    // create controls
-    wxSize msgSize(window->GetCharWidth() * 80,
-                   window->GetCharHeight() * 10);
-
-    {
-      Preferences prefs;
-      HistoryValidator val(HISTORY_COMMIT_LOG, &message, false,
-                           prefs.useLastCommitMessage);
-      msg = new wxTextCtrl(window, -1, wxEmptyString, wxDefaultPosition,
-                           msgSize, wxTE_MULTILINE, val);
-      msgSizer->Add(msg, 1, wxALL | wxEXPAND, 5);
-    }
-
-    {
-      HistoryValidator val(HISTORY_COMMIT_LOG, 0, true);
-      comboHistory = new wxComboBox(
-        window, ID_HISTORY_COMBO_BOX, wxEmptyString,
-        wxDefaultPosition, wxDefaultSize, 0, NULL,
-        wxCB_READONLY, val);
-      
-      histSizer->Add(comboHistory, 1, wxALL | wxEXPAND, 5);
-    }
-
-  }
-};
-
-
-BEGIN_EVENT_TABLE(CommitLogDlg, wxDialog)
-  EVT_COMBOBOX(ID_HISTORY_COMBO_BOX, CommitLogDlg::OnHistoryComboBox)
-END_EVENT_TABLE()
-
 
 CommitLogDlg::CommitLogDlg(wxWindow* parent)
   : CommitLogDlgBase(parent, -1, _("Commit Log Message"),
                      wxDefaultPosition, wxDefaultSize,
                      wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-  m = new Data(this, m_msgSizer, m_histSizer);
-
-  SetAutoLayout(true);
+  m_textMessage->SetSize(GetCharWidth() * 80, GetCharHeight() * 10);
+  Preferences prefs;
+  HistoryValidator histVal(HISTORY_COMMIT_LOG, &m_message, false,
+                           prefs.useLastCommitMessage);
+  m_textMessage->SetValidator(histVal);
+  
+  HistoryValidator valHistory(HISTORY_COMMIT_LOG, 0, true);
+  m_comboHistory->SetValidator(valHistory);
+  
+  /*SetAutoLayout(true);
   SetSizer(m_mainSizer);
   
   m_mainSizer->SetSizeHints(this);
-  m_mainSizer->Fit(this);
+  m_mainSizer->Fit(this);*/
+  Layout();
 
   CentreOnParent();
 }
@@ -101,22 +63,21 @@ CommitLogDlg::CommitLogDlg(wxWindow* parent)
 
 CommitLogDlg::~CommitLogDlg()
 {
-  delete m;
 }
 
 
 const wxString &
 CommitLogDlg::GetMessage() const
 {
-  return m->message;
+  return m_message;
 }
 
 
 void
-CommitLogDlg::OnHistoryComboBox(wxCommandEvent &)
+CommitLogDlg::OnComboHistory(wxCommandEvent &)
 {
   // transfer from combobox to text control
-  m->msg->SetValue(m->comboHistory->GetValue());
+  m_textMessage->SetValue(m_comboHistory->GetStringSelection());
 }
 
 
