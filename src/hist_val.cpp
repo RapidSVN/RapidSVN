@@ -93,11 +93,11 @@ HistoryValidator::TransferToWindow()
         comboBox->Append(*m_value);
     }
 
-    size_t count = list.Count();
-    size_t index;
-    for (index = 0; index < count; index++)
+    wxArrayString::const_iterator it;
+
+    for (it = list.begin(); it != list.end(); it++)
     {
-      wxString value(list.Item(index));
+      const wxString & value = *it;
 
       comboBox->Append(value);
     }
@@ -113,7 +113,7 @@ HistoryValidator::TransferToWindow()
       }
 
       // if we have an entry, select it
-      if ((count > 0))
+      if (!comboBox->IsEmpty())
         comboBox->SetSelection(0, 0);
     }
 
@@ -132,11 +132,10 @@ HistoryValidator::TransferToWindow()
         control->Append(*m_value);
     }
 
-    size_t count = list.Count();
-    size_t index;
-    for (index = 0; index < count; index++)
+    wxArrayString::const_iterator it;
+    for (it = list.begin(); it != list.end(); it++)
     {
-      wxString value(list.Item(index));
+      const wxString & value = *it;
 
       if (wxNOT_FOUND == control->FindString(value))
         control->Append(value);
