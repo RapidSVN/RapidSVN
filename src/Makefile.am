@@ -23,6 +23,7 @@ rapidsvn_SOURCES= \
 	columns.cpp \
 	commit_action.cpp \
 	commit_dlg.cpp \
+	commit_log_dlg.cpp \
 	delete_action.cpp \
 	delete_dlg.cpp \
 	destination_dlg.cpp \

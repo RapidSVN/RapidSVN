@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb 21 2008)
+// C++ code generated with wxFormBuilder (version Apr 21 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -7,6 +7,8 @@
 
 #ifndef __rapidsvn_generated__
 #define __rapidsvn_generated__
+
+#include <wx/intl.h>
 
 #include <wx/string.h>
 #include <wx/checkbox.h>
@@ -18,6 +20,7 @@
 #include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
+#include <wx/icon.h>
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/stattext.h>
@@ -133,6 +136,27 @@ class DiffDlgBase : public wxDialog
 	public:
 		DiffDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Diff"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~DiffDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class CommitLogDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class CommitLogDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticBoxSizer* m_msgSizer;
+		wxBoxSizer* m_histSizer;
+		wxStaticText* m_labelHistory;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+	
+	public:
+		CommitLogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 498,232 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~CommitLogDlgBase();
 	
 };
 

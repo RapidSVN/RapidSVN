@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb 21 2008)
+// C++ code generated with wxFormBuilder (version Apr 21 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -373,4 +373,42 @@ DiffDlgBase::~DiffDlgBase()
 	m_checkUsePath2->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( DiffDlgBase::OnCheckUsePath2 ), NULL, this );
 	m_comboPath2->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( DiffDlgBase::OnComboPath2 ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DiffDlgBase::OnButtonOK ), NULL, this );
+}
+
+CommitLogDlgBase::CommitLogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("This action has resulted in a commit - please enter a log message") ), wxHORIZONTAL );
+	
+	m_mainSizer->Add( m_msgSizer, 1, wxALL|wxEXPAND, 5 );
+	
+	m_histSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_labelHistory = new wxStaticText( this, wxID_ANY, _("Recent entries:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelHistory->Wrap( -1 );
+	m_histSizer->Add( m_labelHistory, 0, wxALL, 5 );
+	
+	m_mainSizer->Add( m_histSizer, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_RIGHT|wxLEFT|wxRIGHT, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+}
+
+CommitLogDlgBase::~CommitLogDlgBase()
+{
 }

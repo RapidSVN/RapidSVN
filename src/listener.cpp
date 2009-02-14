@@ -34,7 +34,7 @@
 #include "action_event.hpp"
 #include "auth_dlg.hpp"
 #include "cert_dlg.hpp"
-#include "commit_dlg.hpp"
+#include "commit_log_dlg.hpp"
 #include "config.hpp"
 #include "ids.hpp"
 #include "listener.hpp"
@@ -202,7 +202,7 @@ public:
   callbackGetLogMessage()
   {
     wxMutexLocker lock(mutex);
-    CommitDlg dlg(parent, true);
+    CommitLogDlg dlg(parent);
 
     bool ok = dlg.ShowModal() == wxID_OK;
 
