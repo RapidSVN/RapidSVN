@@ -218,6 +218,10 @@ SOURCE=.\src\commit_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\commit_log_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\delete_action.cpp
 # End Source File
 # Begin Source File
@@ -535,6 +539,10 @@ SOURCE=.\src\commit_action.hpp
 # Begin Source File
 
 SOURCE=.\src\commit_dlg.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\commit_log_dlg.hpp
 # End Source File
 # Begin Source File
 
