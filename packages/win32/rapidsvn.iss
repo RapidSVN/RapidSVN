@@ -68,9 +68,9 @@ Source: "msvcp60.dll"; DestDir: "{app}\bin"; Flags: onlyifdoesntexist; Component
 Source: "tmp\libdb44.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 
 ; APR
-Source: "tmp\libapr.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "tmp\libapriconv.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "tmp\libaprutil.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\libapr-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\libapriconv-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+Source: "tmp\libaprutil-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 Source: "tmp\*.so"; DestDir: "{app}\bin\iconv"; Flags: ignoreversion; Components: main
 
 ; LibIntl

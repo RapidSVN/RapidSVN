@@ -14,16 +14,16 @@ rem       are set to existing paths (or at all)
 mkdir tmp
 
 rem Delete OLD Files
-del tmp\lib*.dll
+del tmp\*.dll
 del tmp\*.so
 
 rem Copy Berkeley DB
 copy %SUBVERSION%\db4-win32\bin\libdb44.dll tmp
 
 rem Copy APR DLLs
-copy %SUBVERSION%\apr\Release\libapr.dll tmp
-copy %SUBVERSION%\apr-util\Release\libaprutil.dll tmp
-copy %SUBVERSION%\apr-iconv\Release\libapriconv.dll tmp
+copy %SUBVERSION%\apr\Release\libapr-1.dll tmp
+copy %SUBVERSION%\apr-util\Release\libaprutil-1.dll tmp
+copy %SUBVERSION%\apr-iconv\Release\libapriconv-1.dll tmp
 copy %SUBVERSION%\apr-iconv\Release\iconv\*.so tmp
 
 rem Copy Libintl DLL
