@@ -68,7 +68,6 @@ def readCurrentRevision():
 def buildApplication():
   print "Rebuild rapidsvn (using msdev"
   run('msdev', ['rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'])
-  run('msdev', ['rapidsvn_svn1_4.dsw', '/MAKE',  'ALL',  '/REBUILD'])
   
   
 def buildMessages():
