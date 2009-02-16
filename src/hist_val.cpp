@@ -89,7 +89,7 @@ HistoryValidator::TransferToWindow()
     // insert an entry with file selected to checkout
     if (m_value != 0)
     {
-      if (!m_value->IsEmpty() > 0)
+      if (!m_value->IsEmpty())
         comboBox->Append(*m_value);
     }
 
