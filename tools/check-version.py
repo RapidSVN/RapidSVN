@@ -55,7 +55,7 @@ class Version:
         self.patch = ""
         self.str = ""
         self.milestone = ""
-	self.number = 0x000000
+        self.number = 0x000000
 
         self.readFromFile(filename)
         self.year = date.today().year
@@ -72,7 +72,7 @@ class Version:
         if len(self.patch) > 0:
           self.str += "-" + self.patch;
         self.milestone = version.attributes["milestone"].value
-	self.number = (int('0' + self.major, 10) << 24) + \
+        self.number = (int('0' + self.major, 10) << 24) + \
             (int(self.minor, 10) << 16) + \
             (int('0' + self.micro, 10) << 8) + \
             int('0' + self.patch, 10)
@@ -184,7 +184,7 @@ class VersionChecker:
                 "DISKIMAGE")
 
     def checkSvncppVersionHpp(self):
-	replace(SVNCPP_VERSION_HPP_FILE, 'SVNCPP_VERSION .*', \
+        replace(SVNCPP_VERSION_HPP_FILE, 'SVNCPP_VERSION .*', \
             "SVNCPP_VERSION 0x%08x" % self.version.number, \
             'SVNCPP_VERSION')
 
