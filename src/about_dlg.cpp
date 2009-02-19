@@ -50,6 +50,7 @@ AboutDlg::AboutDlg(wxWindow * parent, const wxLocale & locale)
   // TODO: Make these two constants in version.hpp translatable and wxT()'ed respectively.
   // Until then use the kludge of pretending they're UTF8 to save some silly looking ifdef's
   const wxString strCopyrightMessage(Utf8ToLocal(RAPIDSVN_COPYRIGHT));
+  const wxString strGpl(_("This program is licensed under the terms\nof the GNU General Public License version 3\n\nAvailable online under:"));
   const wxString strVerMilestone(Utf8ToLocal(RAPIDSVN_VER_MILESTONE));
 
 #ifdef wxUSE_UNICODE
@@ -61,10 +62,12 @@ AboutDlg::AboutDlg(wxWindow * parent, const wxLocale & locale)
   const wxString copy(wxString::Format(
                         wxT("%s\n") // version
                         wxT("\n%s\n\n") // copyright
+                        wxT("%s\nhttp://www.gnu.org/licenses/gpl-3-0.html\n\n") // gpl
                         wxT("%s\n") // for more information
                         wxT("http://rapidsvn.tigris.org"),
                         version.c_str(),
                         strCopyrightMessage.c_str(),
+                        strGpl.c_str(),
                         _("For more information see:")));
 
 
