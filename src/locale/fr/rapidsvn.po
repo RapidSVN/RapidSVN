@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: rapidsvn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-13 17:40+0100\n"
-"PO-Revision-Date: 2006-11-06 16:59+0100\n"
+"PO-Revision-Date: 2009-02-21 16:59+0100\n"
 "Last-Translator: Jérôme Rapinat <gnupower@hotmail.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,9 @@ msgid "%s  code: %ld"
 msgstr "%s  code : %ld"
 
 #: ../about_dlg.cpp:47
-#, fuzzy, c-format
+#, c-format
 msgid "%s Version %s"
-msgstr "%s Version %d.%d.%d"
+msgstr "%s Version %s"
 
 #: ../rapidsvn_frame.cpp:325
 msgid "&About..."
@@ -29,7 +29,7 @@ msgstr "&À propos..."
 
 #: ../utils.cpp:170
 msgid "&Add\tINS"
-msgstr ""
+msgstr "&Ajouter\tINS"
 
 #: ../utils.cpp:248
 msgid "&Add Existing Working Copy..."
@@ -120,9 +120,8 @@ msgid "&Help"
 msgstr "&Aide"
 
 #: ../utils.cpp:175
-#, fuzzy
 msgid "&Ignore\tCTRL-DEL"
-msgstr "&Exporter...\tCTRL-E"
+msgstr "&Ignorer\tCTRL-DEL"
 
 #: ../rapidsvn_frame.cpp:289
 msgid "&Import...\tCTRL-I"
@@ -169,7 +168,6 @@ msgid "&Query"
 msgstr "&Informations"
 
 #: ../utils.cpp:261
-#, fuzzy
 msgid "&Remove Bookmark"
 msgstr "&Enlever le signet"
 
@@ -226,8 +224,8 @@ msgid ""
 "- The certificate is not issued by a trusted authority.\n"
 "  Use the fingerprint to validate the certificate manually!"
 msgstr ""
-"- Le certificate n'est pas délivré par un tiers de confiance.\n"
-"  Utiliser l'empreinte pour valider le certificate manuellement!"
+"- Le certificat n'est pas délivré par un tiers de confiance.\n"
+"  Utiliser l'empreinte pour valider le certificat manuellement!"
 
 #: ../cert_dlg.cpp:78
 msgid "- The certificate is not yet valid."
@@ -288,12 +286,12 @@ msgstr "Copie de travail ajoutée aux signets '%s'"
 #: ../drag_n_drop_action.cpp:319
 #, c-format
 msgid "Adding directory to repository: %s"
-msgstr ""
+msgstr "Ajouter un répertoire au dépôt : %s"
 
 #: ../drag_n_drop_action.cpp:332
-#, fuzzy, c-format
+#, c-format
 msgid "Adding file to repository: %s"
-msgstr "Dépôt : %s"
+msgstr "Ajouter un fichier au dépôt : %s"
 
 #: ../log_dlg.cpp:344
 msgid "Affected Files/Dirs"
@@ -305,11 +303,11 @@ msgstr "Tous les fichiers|*"
 
 #: ../rapidsvn_frame.cpp:1464 ../rapidsvn_frame.cpp:1483
 msgid "An error occured while launching the browser"
-msgstr ""
+msgstr "Une erreur s'est produite lors du lancement du navigateur"
 
 #: ../rapidsvn_frame.cpp:1451
 msgid "An error occurred while checking valid actions"
-msgstr ""
+msgstr "Une erreur s'est produite lors de la vérification des actions valides"
 
 #: ../annotate_action.cpp:80 ../annotate_action.cpp:81
 msgid "Annotate"
@@ -326,6 +324,13 @@ msgid ""
 "\n"
 "  %s?"
 msgstr ""
+"Etes-vous sur de vouloir importer\n"
+"\n"
+"  %s\n"
+"\n"
+"dans\n"
+"\n"
+"  %s?"
 
 #: ../auth_dlg.cpp:117 ../rapidsvn_generated.cpp:184
 msgid "Authentication"
@@ -354,7 +359,7 @@ msgstr "Importer les changements du dépôt dans la copie de travail"
 #: ../rapidsvn_generated.cpp:57 ../rapidsvn_generated.cpp:88
 #: ../rapidsvn_generated.cpp:119 ../rapidsvn_generated.cpp:146
 msgid "Browse"
-msgstr ""
+msgstr "Parcourir"
 
 #: ../about_dlg.cpp:71
 #, c-format
@@ -419,9 +424,8 @@ msgid "Cleanup"
 msgstr "Nettoyer"
 
 #: ../utils.cpp:287
-#, fuzzy
 msgid "Co&mmit...\tCTRL-ENTER"
-msgstr "Pu&blication...\tCTRL-M"
+msgstr "Pu&blication...\tCTRL-ENTER"
 
 #: ../rapidsvn_frame.cpp:268
 msgid "Columns"
@@ -441,7 +445,7 @@ msgstr "Message de publication"
 
 #: ../rapidsvn_generated.cpp:30
 msgid "Commit log message: default to most recent"
-msgstr ""
+msgstr "Message de log de publication: le plus récent par défaut"
 
 #: ../rapidsvn_frame.cpp:565
 msgid "Commit selected"
@@ -515,19 +519,18 @@ msgid "Copy"
 msgstr "Copie"
 
 #: ../dnd_dlg.cpp:37
-#, fuzzy
 msgid "Copy/Move"
-msgstr "Copie"
+msgstr "Copier/Coller"
 
 #: ../drag_n_drop_action.cpp:314
-#, fuzzy, c-format
+#, c-format
 msgid "Copying file into working directory: %s"
-msgstr "Impossible de changer de répertoire vers %s"
+msgstr "Copie du fichier vers le répertoire: %s"
 
 #: ../drag_n_drop_action.cpp:288
-#, fuzzy, c-format
+#, c-format
 msgid "Copying file: %s"
-msgstr "Conflit Fichier Travail : %s"
+msgstr "Copie du fichier : %s"
 
 #: ../merge_action.cpp:86
 #, c-format
@@ -581,9 +584,8 @@ msgid "Diff"
 msgstr "Diff"
 
 #: ../rapidsvn_generated.cpp:135
-#, fuzzy
 msgid "Diff Tool"
-msgstr "Outil de diff :"
+msgstr "Outil de diff"
 
 #: ../diff_dlg.cpp:128
 msgid "Diff to BASE"
@@ -610,9 +612,8 @@ msgid "Directory:"
 msgstr "Répertoire :"
 
 #: ../rapidsvn_frame.cpp:489
-#, fuzzy
 msgid "Display conflicted files/directories"
-msgstr "Voulez vous déverrouiller les fichiers/répertoires sélectionnés ?"
+msgstr "Afficher les fichiers/répertoires en conflit"
 
 #: ../rapidsvn_frame.cpp:602
 msgid "Display info about selected entries"
@@ -620,16 +621,15 @@ msgstr "Affiche les informations sur les éléments sélectionnés"
 
 #: ../rapidsvn_frame.cpp:483
 msgid "Display modified files/directories"
-msgstr ""
+msgstr "Afficher les fichiers/répertoires modifiés"
 
 #: ../rapidsvn_frame.cpp:477
 msgid "Display unmodified files/directories"
-msgstr ""
+msgstr "Afficher les fichiers/répertoires non modifiés"
 
 #: ../rapidsvn_frame.cpp:470
-#, fuzzy
 msgid "Display unversioned files/directories"
-msgstr "Montrer les entrées non versionnées"
+msgstr "Montrer les fichiers/répertoires non versionnés"
 
 #: ../delete_dlg.cpp:45
 msgid "Do you want to delete the selected files/directories?"
@@ -780,14 +780,14 @@ msgid "Execute file explorer: %s"
 msgstr "Executer l'explorateur de fichiers : %s"
 
 #: ../userresolve_action.cpp:128
-#, fuzzy, c-format
+#, c-format
 msgid "Execute merge tool: %s"
-msgstr "Executer l'outil de diff : %s"
+msgstr "Exécuter l'outil de fusion : %s"
 
 #: ../simple_worker.cpp:175 ../threaded_worker.cpp:143
 #, c-format
 msgid "Execute: %s"
-msgstr "Executer : %s"
+msgstr "Exécuter : %s"
 
 #: ../utils.cpp:318
 msgid "Explore...\tF2"
@@ -819,7 +819,7 @@ msgstr "Un chemin est nécessaire pour importer un fichier!"
 
 #: ../commit_dlg.cpp:163
 msgid "Files To Commit"
-msgstr ""
+msgstr "Fichiers à publier"
 
 #: ../cert_dlg.cpp:123
 msgid "Fingerprint:"
@@ -897,9 +897,8 @@ msgstr ""
 "stable utiliser."
 
 #: ../ignore_action.cpp:40
-#, fuzzy
 msgid "Ignore"
-msgstr "Informations"
+msgstr "Ignorer"
 
 #: ../rapidsvn_frame.cpp:277
 msgid "Ignore Externals"
@@ -917,12 +916,11 @@ msgstr "Importer"
 #: ../drag_n_drop_action.cpp:303
 #, c-format
 msgid "Importing file into repository: %s"
-msgstr ""
+msgstr "Import d'un fichier dans le dépôt: %s"
 
 #: ../utils.cpp:181
-#, fuzzy
 msgid "In&teractive Resolve...\tCTRL-T"
-msgstr "&Propriétés...\tCTRL-P"
+msgstr "Résolution in&téractive...\tCTRL-T"
 
 #: ../rapidsvn_frame.cpp:2178
 msgid "Info"
@@ -1126,9 +1124,8 @@ msgid "Merge"
 msgstr "Fusionner"
 
 #: ../rapidsvn_generated.cpp:161
-#, fuzzy
 msgid "Merge Tool"
-msgstr "Fusionner"
+msgstr "Outil de fusion"
 
 #: ../merge_dlg.cpp:60
 msgid "Merge revisions"
@@ -1151,13 +1148,13 @@ msgid "Move"
 msgstr "Déplacer"
 
 #: ../drag_n_drop_action.cpp:293
-#, fuzzy, c-format
+#, c-format
 msgid "Moving file: %s"
-msgstr "Conflit Fichier Travail : %s"
+msgstr "Déplacement du fichier : %s"
 
 #: ../drag_n_drop_action.cpp:157
 msgid "Multiple Files"
-msgstr ""
+msgstr "Fichiers multiples"
 
 #: ../columns.cpp:45 ../listed_dlg.cpp:75 ../listed_dlg.cpp:171
 #: ../listed_dlg.cpp:324
@@ -1175,7 +1172,7 @@ msgstr "Nouvelle propriété"
 
 #: ../revert_dlg.cpp:57
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: ../diff_action.cpp:217
 msgid "No diff tool set in the preferences"
@@ -1190,9 +1187,8 @@ msgstr ""
 "de nouveau interrogé lors du prochain démarrage?"
 
 #: ../userresolve_action.cpp:62
-#, fuzzy
 msgid "No merge tool set in the preferences"
-msgstr "Pas d'outil de diff défini dans les préférences"
+msgstr "Pas d'outil de fusion défini dans les préférences"
 
 #: ../rapidsvn_app.cpp:264
 msgid ""
@@ -1261,7 +1257,7 @@ msgid ""
 "http://svnbook.red-bean.com/\n"
 "http://subversion.tigris.org"
 msgstr ""
-"S'il vous plaît utiliser 'svnadmin'\n"
+"Veuillez utiliser 'svnadmin'\n"
 "pour créer un nouveau dépôt.\n"
 "\n"
 "Cet outil en ligne de commande ne fait pas\n"
@@ -1280,9 +1276,8 @@ msgid "Preferences..."
 msgstr "Préférences..."
 
 #: ../rapidsvn_generated.cpp:151
-#, fuzzy
 msgid "Program arguments (%1=base, %2=theirs %3=mine %4=result):"
-msgstr "Arguments du programme (%1=fichier1, %2=fichier2) :"
+msgstr "Arguments du programme (%1=base, %2=leleur %3=lemien %4=resultat) :"
 
 #: ../rapidsvn_generated.cpp:125
 msgid "Program arguments (%1=file1, %2=file2):"
@@ -1388,9 +1383,8 @@ msgid "Refresh with Update"
 msgstr "Raffraichir avec mise à jour"
 
 #: ../switch_dlg.cpp:127
-#, fuzzy
 msgid "Relocate"
-msgstr "Remplacé"
+msgstr "Relocaliser"
 
 #: ../rapidsvn_frame.cpp:586
 msgid "Remove 'conflicted' state on working copy files or directories"
@@ -1486,14 +1480,12 @@ msgid "Revision must be an unsigned number!"
 msgstr "La révision doit être positive!"
 
 #: ../rapidsvn_generated.cpp:243
-#, fuzzy
 msgid "Revision or date #1:"
-msgstr "Révision ou date #&1 :"
+msgstr "Révision ou date #1:"
 
 #: ../rapidsvn_generated.cpp:283
-#, fuzzy
 msgid "Revision or date #2:"
-msgstr "Révision ou date #&2 :"
+msgstr "Révision ou date #2:"
 
 #: ../rapidsvn_generated.cpp:250 ../rapidsvn_generated.cpp:290
 msgid "Revision:"
@@ -1558,9 +1550,8 @@ msgid "Select diff tool executable"
 msgstr "Sélectionner un programme de diff"
 
 #: ../preferences_dlg.cpp:168
-#, fuzzy
 msgid "Select merge tool executable"
-msgstr "Sélectionner un programme de diff"
+msgstr "Sélectionner un programme de fusion"
 
 #: ../preferences_dlg.cpp:144
 msgid "Select standard editor executable"
@@ -1603,33 +1594,28 @@ msgid "Show Startup Tips"
 msgstr "Montrer les astuces de démarrage"
 
 #: ../rapidsvn_frame.cpp:276 ../rapidsvn_frame.cpp:488
-#, fuzzy
 msgid "Show conflicted entries"
-msgstr "Montrer les entrées non versionnées"
+msgstr "Montrer les entrées en conflit"
 
 #: ../rapidsvn_frame.cpp:278
-#, fuzzy
 msgid "Show ignored entries"
-msgstr "Montrer les entrées non versionnées"
+msgstr "Montrer les entrées ignorées"
 
 #: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
-#, fuzzy
 msgid "Show modified entries"
-msgstr "Montrer les entrées non versionnées"
+msgstr "Montrer les entrées modifiées"
 
 #: ../rapidsvn_frame.cpp:272
-#, fuzzy
 msgid "Show subdirectories"
-msgstr "Montrer les entrées non versionnées"
+msgstr "Montrer les sous-répertoires"
 
 #: ../rapidsvn_frame.cpp:612
 msgid "Show the log messages for the selected entries"
 msgstr "Montrer les messages de log pour les entrées sélectionnées"
 
 #: ../rapidsvn_frame.cpp:274 ../rapidsvn_frame.cpp:476
-#, fuzzy
 msgid "Show unmodified entries"
-msgstr "Montrer les entrées non versionnées"
+msgstr "Montrer les entrées non modifiées"
 
 #: ../rapidsvn_frame.cpp:273 ../rapidsvn_frame.cpp:469
 msgid "Show unversioned entries"
@@ -1648,14 +1634,12 @@ msgid "Sort Ascending"
 msgstr "Tri ascendant"
 
 #: ../rapidsvn_generated.cpp:77
-#, fuzzy
 msgid "Standard Editor"
-msgstr "Editeur standard :"
+msgstr "Editeur standard"
 
 #: ../rapidsvn_generated.cpp:108
-#, fuzzy
 msgid "Standard Explorer"
-msgstr "Gestionnaire de fichier standard :"
+msgstr "Gestionnaire de fichier standard"
 
 #: ../columns.cpp:50
 msgid "Status"
@@ -1748,9 +1732,8 @@ msgid "Unimplemented action!"
 msgstr "Action non implémentée!"
 
 #: ../rapidsvn_drop_target.cpp:55
-#, fuzzy
 msgid "Unknown destination path"
-msgstr "Chemin de destination"
+msgstr "Chemin de destination inconnu"
 
 #: ../unlock_action.cpp:39 ../unlock_dlg.cpp:80
 msgid "Unlock"
@@ -1781,9 +1764,8 @@ msgid "Use Path for Sorting"
 msgstr "Utiliser le chemin pour trier"
 
 #: ../rapidsvn_generated.cpp:271 ../rapidsvn_generated.cpp:311
-#, fuzzy
 msgid "Use URL/path:"
-msgstr "Utiliser URL/Chemin :"
+msgstr "Utiliser l'URL/chemin :"
 
 #: ../rapidsvn_generated.cpp:70 ../rapidsvn_generated.cpp:101
 msgid "Use always"
@@ -1826,10 +1808,18 @@ msgid ""
 "\n"
 "  %s?"
 msgstr ""
+"Voulez-vous déplacer ou copier\n"
+"\n"
+"\n"
+"  %s\n"
+"\n"
+"dans\n"
+"\n"
+"  %s?"
 
 #: ../revert_dlg.cpp:54
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: ../rapidsvn_frame.cpp:2057
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
@@ -1871,7 +1861,7 @@ msgstr "fichier"
 
 #: ../utils.cpp:427
 msgid "ignored"
-msgstr ""
+msgstr "ignoré"
 
 #: ../utils.cpp:424
 msgid "incomplete"
@@ -1936,9 +1926,8 @@ msgstr "wxString Creation&Tracing Test"
 #~ msgid "Flat Mode"
 #~ msgstr "Mode à plat"
 
-#, fuzzy
 #~ msgid ".mine"
-#~ msgstr "Ligne"
+#~ msgstr ".lemien"
 
 #~ msgid "&Add\tCTRL-A"
 #~ msgstr "&Ajouter\tCTRL-A"
