@@ -478,6 +478,12 @@ public:
                           wxNullBitmap,
                           _("Show subdirectories"),
                           _("Show entries in subdirectories"));
+    toolBar->AddCheckTool(ID_ShowUnversioned,
+                          wxEmptyString,
+                          EMBEDDED_BITMAP(nonsvn_file_png),
+                          wxNullBitmap,
+                          _("Show unversioned entries"),
+                          _("Display unversioned files/directories"));
     toolBar->AddCheckTool(ID_ShowUnmodified,
                           wxEmptyString,
                           EMBEDDED_BITMAP(normal_file_png),
