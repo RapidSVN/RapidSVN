@@ -83,6 +83,8 @@ private:
 
   virtual void OnComboHistory(wxCommandEvent &);
 
+  virtual void OnButtonToggle(wxCommandEvent &);
+
   /** disallow default constructor */
   CommitDlg();
 

@@ -154,6 +154,28 @@ CommitDlg::OnComboHistory(wxCommandEvent &)
 }
 
 
+void 
+CommitDlg::OnButtonToggle(wxCommandEvent &)
+{
+  wxArrayInt selection;
+  m_checkListFiles->GetSelections(selection);
+
+  if (selection.size() < 1)
+    return;
+
+  // the first selection is taken to get the new value
+  bool newValue = !m_checkListFiles->IsChecked(selection[0]);
+
+  wxArrayInt::const_iterator it;
+
+  for (it = selection.begin(); it != selection.end(); it++)
+  {
+    int item = *it;
+
+    m_checkListFiles->Check(item, newValue);
+  }
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
