@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 21 2008)
+// C++ code generated with wxFormBuilder (version Apr 15 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -183,6 +183,7 @@ class CommitDlgBase : public wxDialog
 		wxComboBox* m_comboHistory;
 		wxStaticBoxSizer* m_filesSizer;
 		wxCheckListBox* m_checkListFiles;
+		wxButton* m_buttonToggle;
 		wxCheckBox* m_checkRecursive;
 		wxCheckBox* m_checkKeepLocks;
 		wxButton* m_buttonOK;
@@ -190,6 +191,7 @@ class CommitDlgBase : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnComboHistory( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonToggle( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:

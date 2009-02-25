@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 21 2008)
+// C++ code generated with wxFormBuilder (version Apr 15 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -454,6 +454,9 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_checkListFiles = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListFilesChoices, wxLB_EXTENDED );
 	m_filesSizer->Add( m_checkListFiles, 1, wxEXPAND, 5 );
 	
+	m_buttonToggle = new wxButton( this, wxID_ANY, _("Toggle"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_filesSizer->Add( m_buttonToggle, 0, wxALL, 5 );
+	
 	m_mainSizer->Add( m_filesSizer, 1, wxALL|wxEXPAND, 5 );
 	
 	wxBoxSizer* buttonSizer;
@@ -481,10 +484,12 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	// Connect Events
 	m_comboHistory->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitDlgBase::OnComboHistory ), NULL, this );
+	m_buttonToggle->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CommitDlgBase::OnButtonToggle ), NULL, this );
 }
 
 CommitDlgBase::~CommitDlgBase()
 {
 	// Disconnect Events
 	m_comboHistory->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitDlgBase::OnComboHistory ), NULL, this );
+	m_buttonToggle->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CommitDlgBase::OnButtonToggle ), NULL, this );
 }
