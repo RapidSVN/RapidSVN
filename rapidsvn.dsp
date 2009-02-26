@@ -430,10 +430,6 @@ SOURCE=.\src\threaded_worker.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\trace_update.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\tracer.cpp
 # End Source File
 # Begin Source File
@@ -743,10 +739,6 @@ SOURCE=.\src\switch_action.hpp
 # Begin Source File
 
 SOURCE=.\src\threaded_worker.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\trace_update.hpp
 # End Source File
 # Begin Source File
 

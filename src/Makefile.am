@@ -77,7 +77,6 @@ rapidsvn_SOURCES= \
 	switch_dlg.cpp \
 	threaded_worker.cpp \
 	tracer.cpp \
-	trace_update.cpp \
 	unlock_action.cpp \
 	unlock_dlg.cpp \
 	update_action.cpp \
