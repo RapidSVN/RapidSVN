@@ -73,7 +73,7 @@ UnlockAction::Perform()
 }
 
 bool
-UnlockAction::CheckStatusSel(const svn::StatusSel & statusSel)
+UnlockAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

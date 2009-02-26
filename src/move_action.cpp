@@ -99,7 +99,7 @@ MoveAction::Perform()
 }
 
 bool
-MoveAction::CheckStatusSel(const svn::StatusSel & statusSel)
+MoveAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

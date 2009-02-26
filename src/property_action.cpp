@@ -58,7 +58,7 @@ PropertyAction::Perform()
 }
 
 bool
-PropertyAction::CheckStatusSel(const svn::StatusSel & statusSel)
+PropertyAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

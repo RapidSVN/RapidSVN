@@ -88,7 +88,7 @@ RenameAction::Perform()
 }
 
 bool
-RenameAction::CheckStatusSel(const svn::StatusSel & statusSel)
+RenameAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

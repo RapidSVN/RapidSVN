@@ -288,7 +288,7 @@ DiffAction::Perform()
 }
 
 bool
-DiffAction::CheckStatusSel(const svn::StatusSel & statusSel)
+DiffAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

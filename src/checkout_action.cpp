@@ -144,7 +144,7 @@ CheckoutAction::Perform()
 }
 
 bool
-CheckoutAction::CheckStatusSel(const svn::StatusSel & statusSel)
+CheckoutAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

@@ -163,7 +163,7 @@ ImportDlg::~ImportDlg()
 }
 
 void
-ImportDlg::OnOk(wxCommandEvent &event)
+ImportDlg::OnOk(wxCommandEvent & WXUNUSED(event))
 {
   // Transfer data from controls into m_data:
   TransferDataFromWindow();

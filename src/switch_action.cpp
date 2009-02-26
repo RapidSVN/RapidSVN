@@ -112,7 +112,7 @@ SwitchAction::Perform()
 }
 
 bool
-SwitchAction::CheckStatusSel(const svn::StatusSel & statusSel)
+SwitchAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

@@ -265,7 +265,7 @@ CheckoutDlg::~CheckoutDlg()
  * Brings up a directory dialog defaulted to the user's home directory.
  */
 void
-CheckoutDlg::OnBrowse(wxCommandEvent & event)
+CheckoutDlg::OnBrowse(wxCommandEvent & WXUNUSED(event))
 {
   // Transfer data from controls into m_pData:
   TransferDataFromWindow();

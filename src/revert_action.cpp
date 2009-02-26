@@ -64,7 +64,7 @@ RevertAction::Perform()
 }
 
 bool
-RevertAction::CheckStatusSel(const svn::StatusSel & statusSel)
+RevertAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

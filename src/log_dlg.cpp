@@ -568,13 +568,13 @@ LogDlg::~LogDlg()
 }
 
 void
-LogDlg::OnGet(wxCommandEvent & event)
+LogDlg::OnGet(wxCommandEvent & WXUNUSED(event))
 {
   m->OnGet();
 }
 
 void
-LogDlg::OnView(wxCommandEvent & event)
+LogDlg::OnView(wxCommandEvent & WXUNUSED(event))
 {
   m->OnView();
 }
@@ -587,19 +587,19 @@ LogDlg::OnSelected(wxListEvent& event)
 
 
 void
-LogDlg::OnDiff(wxCommandEvent & event)
+LogDlg::OnDiff(wxCommandEvent & WXUNUSED(event))
 {
   m->OnDiff();
 }
 
 void
-LogDlg::OnMerge(wxCommandEvent & event)
+LogDlg::OnMerge(wxCommandEvent & WXUNUSED(event))
 {
   m->OnMerge();
 }
 
 void
-LogDlg::OnAnnotate(wxCommandEvent & event)
+LogDlg::OnAnnotate(wxCommandEvent & WXUNUSED(event))
 {
   m->OnAnnotate();
 }

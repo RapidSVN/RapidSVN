@@ -337,91 +337,91 @@ DiffDlg::TransferDataFromWindow()
 
 
 void
-DiffDlg::OnComboCompare(wxCommandEvent& event)
+DiffDlg::OnComboCompare(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnRadioUseRevision1(wxCommandEvent& event)
+DiffDlg::OnRadioUseRevision1(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnTextRevision1(wxCommandEvent& event)
+DiffDlg::OnTextRevision1(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnCheckUseLatest1(wxCommandEvent& event)
+DiffDlg::OnCheckUseLatest1(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnRadioUseDate1(wxCommandEvent& event)
+DiffDlg::OnRadioUseDate1(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnDatePicker1(wxDateEvent& event)
+DiffDlg::OnDatePicker1(wxDateEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnUsePath1(wxCommandEvent& event)
+DiffDlg::OnUsePath1(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnComboPath1(wxCommandEvent& event)
+DiffDlg::OnComboPath1(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnRadioUseRevision2(wxCommandEvent& event)
+DiffDlg::OnRadioUseRevision2(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnTextRevision2(wxCommandEvent& event)
+DiffDlg::OnTextRevision2(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnCheckUseLatest2(wxCommandEvent& event)
+DiffDlg::OnCheckUseLatest2(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnRadioUseDate2(wxCommandEvent& event)
+DiffDlg::OnRadioUseDate2(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnDatePicker2(wxDateEvent& event)
+DiffDlg::OnDatePicker2(wxDateEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnCheckUsePath2(wxCommandEvent& event)
+DiffDlg::OnCheckUsePath2(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }
 
 void
-DiffDlg::OnComboPath2(wxCommandEvent& event)
+DiffDlg::OnComboPath2(wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
 }

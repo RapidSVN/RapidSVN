@@ -1210,25 +1210,25 @@ RapidSvnFrame::OnActivate(wxActivateEvent & event)
 }
 
 void
-RapidSvnFrame::OnAddWcBookmark(wxCommandEvent & event)
+RapidSvnFrame::OnAddWcBookmark(wxCommandEvent & WXUNUSED(event))
 {
   AddWcBookmark();
 }
 
 void
-RapidSvnFrame::OnAddRepoBookmark(wxCommandEvent & event)
+RapidSvnFrame::OnAddRepoBookmark(wxCommandEvent & WXUNUSED(event))
 {
   AddRepoBookmark();
 }
 
 void
-RapidSvnFrame::OnRemoveBookmark(wxCommandEvent & event)
+RapidSvnFrame::OnRemoveBookmark(wxCommandEvent & WXUNUSED(event))
 {
   RemoveBookmark();
 }
 
 void
-RapidSvnFrame::OnEditBookmark(wxCommandEvent & event)
+RapidSvnFrame::OnEditBookmark(wxCommandEvent & WXUNUSED(event))
 {
   EditBookmark();
 }
@@ -1252,7 +1252,7 @@ RapidSvnFrame::OnRefresh(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnColumnReset(wxCommandEvent &)
+RapidSvnFrame::OnColumnReset(wxCommandEvent & WXUNUSED(event))
 {
   m->listCtrl->ResetColumns();
   for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
@@ -1305,7 +1305,7 @@ RapidSvnFrame::OnIncludePath(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnSortAscending(wxCommandEvent & event)
+RapidSvnFrame::OnSortAscending(wxCommandEvent & WXUNUSED(event))
 {
   m->listCtrl->SetSortAscending(!m->listCtrl->GetSortAscending());
 }
@@ -1323,7 +1323,7 @@ RapidSvnFrame::OnColumnSorting(wxCommandEvent & event)
 }
 
 void
-RapidSvnFrame::OnFlatView(wxCommandEvent & event)
+RapidSvnFrame::OnFlatView(wxCommandEvent & WXUNUSED(event))
 {
   bool newFlatMode = !m->folderBrowser->IsFlat();
 
@@ -1400,7 +1400,7 @@ RapidSvnFrame::OnShowIgnored(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnLogin(wxCommandEvent & event)
+RapidSvnFrame::OnLogin(wxCommandEvent & WXUNUSED(event))
 {
   svn::Context * context = m->folderBrowser->GetContext();
 
@@ -1421,7 +1421,7 @@ RapidSvnFrame::OnLogin(wxCommandEvent & event)
 }
 
 void
-RapidSvnFrame::OnLogout(wxCommandEvent & event)
+RapidSvnFrame::OnLogout(wxCommandEvent & WXUNUSED(event))
 {
   svn::Context * context = m->folderBrowser->GetContext();
 
@@ -1432,7 +1432,7 @@ RapidSvnFrame::OnLogout(wxCommandEvent & event)
 }
 
 void
-RapidSvnFrame::OnStop(wxCommandEvent & event)
+RapidSvnFrame::OnStop(wxCommandEvent & WXUNUSED(event))
 {
   m->listener.cancel(true);
 }
@@ -1984,12 +1984,12 @@ RapidSvnFrame::OnActionEvent(wxCommandEvent & event)
 }
 
 void
-RapidSvnFrame::OnToolEnter(wxCommandEvent & event)
+RapidSvnFrame::OnToolEnter(wxCommandEvent & WXUNUSED(event))
 {
 }
 
 void
-RapidSvnFrame::OnFolderBrowserSelChanged(wxTreeEvent & event)
+RapidSvnFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
 {
   if (m->IsRunning())
     return;
@@ -2035,7 +2035,7 @@ RapidSvnFrame::OnFolderBrowserKeyDown(wxTreeEvent & event)
 }
 
 void
-RapidSvnFrame::OnFileListSelected(wxListEvent & event)
+RapidSvnFrame::OnFileListSelected(wxListEvent & WXUNUSED(event))
 {
   m->activePane = ACTIVEPANE_FILELIST;
 }

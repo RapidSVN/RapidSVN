@@ -303,7 +303,7 @@ ExportDlg::~ExportDlg()
  * Brings up a directory dialog defaulted to the user's home directory.
  */
 void
-ExportDlg::OnBrowse(wxCommandEvent & event)
+ExportDlg::OnBrowse(wxCommandEvent & WXUNUSED(event))
 {
   // Transfer data from controls into m_pData:
   TransferDataFromWindow();
@@ -357,7 +357,7 @@ ExportDlg::OnText(wxCommandEvent &)
 }
 
 void
-ExportDlg::OnHelp(wxCommandEvent & event)
+ExportDlg::OnHelp(wxCommandEvent & WXUNUSED(event))
 {
   // @todo Has to be re-integrated for Online Help
   // ::wxGetApp ().GetHelpController().Display(wxT("Export dialog"));

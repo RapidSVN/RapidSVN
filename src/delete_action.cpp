@@ -71,7 +71,7 @@ DeleteAction::Perform()
 }
 
 bool
-DeleteAction::CheckStatusSel(const svn::StatusSel & statusSel)
+DeleteAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

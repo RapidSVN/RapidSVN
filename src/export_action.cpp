@@ -128,7 +128,7 @@ ExportAction::Perform()
 }
 
 bool
-ExportAction::CheckStatusSel(const svn::StatusSel & statusSel)
+ExportAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

@@ -83,7 +83,7 @@ ImportAction::Perform()
 }
 
 bool
-ImportAction::CheckStatusSel(const svn::StatusSel & statusSel)
+ImportAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

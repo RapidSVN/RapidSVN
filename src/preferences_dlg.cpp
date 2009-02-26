@@ -138,7 +138,7 @@ PreferencesDlg::SelectExecutable(const wxString & title, wxTextCtrl * textCtrl)
 
 
 void
-PreferencesDlg::OnButtonEditorClick(wxCommandEvent& event)
+PreferencesDlg::OnButtonEditorClick(wxCommandEvent& WXUNUSED(event))
 {
   SelectExecutable(
     _("Select standard editor executable"),
@@ -146,7 +146,7 @@ PreferencesDlg::OnButtonEditorClick(wxCommandEvent& event)
 }
 
 void
-PreferencesDlg::OnButtonExplorerClick(wxCommandEvent& event)
+PreferencesDlg::OnButtonExplorerClick(wxCommandEvent& WXUNUSED(event))
 {
   SelectExecutable(
     _("Select standard file explorer executable"),
@@ -154,7 +154,7 @@ PreferencesDlg::OnButtonExplorerClick(wxCommandEvent& event)
 }
 
 void
-PreferencesDlg::OnButtonDiffToolClick(wxCommandEvent& event)
+PreferencesDlg::OnButtonDiffToolClick(wxCommandEvent& WXUNUSED(event))
 {
   SelectExecutable(
     _("Select diff tool executable"),
@@ -162,7 +162,7 @@ PreferencesDlg::OnButtonDiffToolClick(wxCommandEvent& event)
 }
 
 void
-PreferencesDlg::OnButtonMergeToolClick(wxCommandEvent& event)
+PreferencesDlg::OnButtonMergeToolClick(wxCommandEvent& WXUNUSED(event))
 {
   SelectExecutable(
     _("Select merge tool executable"),

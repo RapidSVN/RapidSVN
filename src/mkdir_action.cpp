@@ -74,7 +74,7 @@ MkdirAction::Perform()
 }
 
 bool
-MkdirAction::CheckStatusSel(const svn::StatusSel & statusSel)
+MkdirAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

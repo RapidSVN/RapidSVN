@@ -117,28 +117,28 @@ into\n\
 }
 
 void
-DragAndDropDialog::OnImport(wxCommandEvent & event)
+DragAndDropDialog::OnImport(wxCommandEvent & WXUNUSED(event))
 {
   m_decision = DragAndDropDialog::RESULT_IMPORT;
   EndModal(m_decision);
 }
 
 void
-DragAndDropDialog::OnMove(wxCommandEvent & event)
+DragAndDropDialog::OnMove(wxCommandEvent & WXUNUSED(event))
 {
   m_decision = DragAndDropDialog::RESULT_MOVE;
   EndModal(m_decision);
 }
 
 void
-DragAndDropDialog::OnCopy(wxCommandEvent & event)
+DragAndDropDialog::OnCopy(wxCommandEvent & WXUNUSED(event))
 {
   m_decision = DragAndDropDialog::RESULT_COPY;
   EndModal(m_decision);
 }
 
 void
-DragAndDropDialog::OnCancel(wxCommandEvent & event)
+DragAndDropDialog::OnCancel(wxCommandEvent & WXUNUSED(event))
 {
   m_decision = DragAndDropDialog::RESULT_CANCEL;
   EndModal(m_decision);

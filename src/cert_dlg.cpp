@@ -162,7 +162,7 @@ CertDlg::~CertDlg()
 
 
 void
-CertDlg::OnPerm(wxCommandEvent & event)
+CertDlg::OnPerm(wxCommandEvent & WXUNUSED(event))
 {
   m->answer = svn::ContextListener::ACCEPT_PERMANENTLY;
   Close(true);
@@ -170,7 +170,7 @@ CertDlg::OnPerm(wxCommandEvent & event)
 
 
 void
-CertDlg::OnTemp(wxCommandEvent & event)
+CertDlg::OnTemp(wxCommandEvent & WXUNUSED(event))
 {
   m->answer = svn::ContextListener::ACCEPT_TEMPORARILY;
   Close(true);

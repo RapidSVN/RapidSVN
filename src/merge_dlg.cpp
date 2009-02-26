@@ -67,7 +67,7 @@ MergeDlg::MergeDlg(wxWindow * parent, bool calledByLogDlg, MergeData & data)
 }
 
 void
-MergeDlg::OnOK(wxCommandEvent & event)
+MergeDlg::OnOK(wxCommandEvent & WXUNUSED(event))
 {
   // Transfer data from controls into m_pData:
   TransferDataFromWindow();
@@ -233,7 +233,7 @@ MergeDlg::InitializeData()
  * Brings up a directory dialog defaulted to the user's home directory.
  */
 void
-MergeDlg::OnBrowse(wxCommandEvent & event)
+MergeDlg::OnBrowse(wxCommandEvent & WXUNUSED(event))
 {
   // Transfer data from controls into m_pData:
   TransferDataFromWindow();

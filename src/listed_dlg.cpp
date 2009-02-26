@@ -456,25 +456,25 @@ ListEditorDlg::~ListEditorDlg()
 }
 
 void
-ListEditorDlg::OnNew(wxCommandEvent & event)
+ListEditorDlg::OnNew(wxCommandEvent & WXUNUSED(event))
 {
   m->Edit(EDIT_NEW);
 }
 
 void
-ListEditorDlg::OnEdit(wxCommandEvent & event)
+ListEditorDlg::OnEdit(wxCommandEvent & WXUNUSED(event))
 {
   m->Edit(EDIT_EDIT);
 }
 
 void
-ListEditorDlg::OnDelete(wxCommandEvent & event)
+ListEditorDlg::OnDelete(wxCommandEvent & WXUNUSED(event))
 {
   m->DeleteSelected();
 }
 
 void
-ListEditorDlg::OnSelected(wxListEvent &)
+ListEditorDlg::OnSelected(wxListEvent & WXUNUSED(event))
 {
   m->OnSelected();
 }

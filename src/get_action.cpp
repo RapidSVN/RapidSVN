@@ -65,7 +65,7 @@ GetAction::Perform()
 }
 
 bool
-GetAction::CheckStatusSel(const svn::StatusSel & statusSel)
+GetAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

@@ -349,7 +349,7 @@ DragAndDropAction::Perform()
 }
 
 bool
-DragAndDropAction::CheckStatusSel(const svn::StatusSel & statusSel)
+DragAndDropAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
 {
   return true;
 }

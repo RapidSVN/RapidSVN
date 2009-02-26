@@ -1339,7 +1339,7 @@ FileListCtrl::OnKeyDown(wxKeyEvent & event)
 }
 
 void
-FileListCtrl::OnDoubleClick(wxListEvent & event)
+FileListCtrl::OnDoubleClick(wxListEvent & WXUNUSED(event))
 {
   PostMenuEvent(this, ID_Default_Action);
 }
@@ -1406,7 +1406,7 @@ FileListCtrl::OnContextMenu(wxContextMenuEvent & event)
 }
 
 void
-FileListCtrl::ShowMenu(wxPoint & pt)
+FileListCtrl::ShowMenu(wxPoint & WXUNUSED(pt))
 {
   wxMenu menu;
 
@@ -1740,7 +1740,7 @@ FileListCtrl::SetShowIgnored(bool value)
 }
 
 void
-FileListCtrl::OnBeginDrag(wxListEvent & event)
+FileListCtrl::OnBeginDrag(wxListEvent & WXUNUSED(event))
 {
   IndexArray arr = GetSelectedItems();
 
