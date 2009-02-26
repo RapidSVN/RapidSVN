@@ -54,7 +54,7 @@ CommitAction::Prepare()
   const svn::PathVector & selectedTargets = statusSel.targets();
   svn::PathVector targets;
   svn::PathVector::const_iterator it;
-  bool recursive;
+  bool recursive = false;
 
   // for local files we wanna filter out the unmodified files
   if (statusSel.hasUrl())

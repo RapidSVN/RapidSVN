@@ -85,8 +85,8 @@ UserResolveAction::Perform()
 
       if (!r1.IsEmpty() && !r2.IsEmpty())
       {
-        long r1val;
-        long r2val;
+        long r1val = 0;
+        long r2val = 0;
 
         if (r1.AfterLast('r').ToLong(&r1val) && r2.AfterLast('r').ToLong(&r2val))
         {
