@@ -264,36 +264,49 @@ public:
 
   void SetValue(const std::list<svn::LogChangePathEntry> & changedPaths)
   {
-    DeleteAllItems();
-    int i=0;
-    char actionBuffer [2];
-    actionBuffer [1] = 0;
+    Freeze();
 
-    std::list<svn::LogChangePathEntry>::const_iterator it;
-
-    for (it=changedPaths.begin(); it!=changedPaths.end(); it++)
+    try
     {
-      const svn::LogChangePathEntry & changedPath = *it;
-      actionBuffer [0] = changedPath.action;
+      DeleteAllItems();
+      int i=0;
+      char actionBuffer [2];
+      actionBuffer [1] = 0;
 
-      wxString label(Utf8ToLocal(actionBuffer));
-      wxString copyFromRev(wxEmptyString);
+      std::list<svn::LogChangePathEntry>::const_iterator it;
 
-      if (changedPath.copyFromRevision != -1)
-        copyFromRev.Printf(wxT("%ld"), changedPath.copyFromRevision);
+      for (it=changedPaths.begin(); it!=changedPaths.end(); it++)
+      {
+        const svn::LogChangePathEntry & changedPath = *it;
+        actionBuffer [0] = changedPath.action;
 
-      InsertItem(i, label);
-      SetItem(i, 1, Utf8ToLocal(changedPath.path.c_str()));
-      SetItem(i, 2, Utf8ToLocal(changedPath.copyFromPath.c_str()));
-      SetItem(i, 3, copyFromRev);
+        wxString label(Utf8ToLocal(actionBuffer));
+        wxString copyFromRev(wxEmptyString);
 
-      i++;
+        if (changedPath.copyFromRevision != -1)
+          copyFromRev.Printf(wxT("%ld"), changedPath.copyFromRevision);
+
+        InsertItem(i, label);
+        SetItem(i, 1, Utf8ToLocal(changedPath.path.c_str()));
+        SetItem(i, 2, Utf8ToLocal(changedPath.copyFromPath.c_str()));
+        SetItem(i, 3, copyFromRev);
+
+        i++;
+      }
+
+      // now refresh the column width
+      i=GetColumnCount();
+      while (i-- > 0)
+        SetColumnWidth(i, (i == 0) ? wxLIST_AUTOSIZE_USEHEADER : wxLIST_AUTOSIZE);
+
+      Thaw();
     }
+    catch (...)
+    {
+      Thaw();
 
-    // now refresh the column width
-    i=GetColumnCount();
-    while (i-- > 0)
-      SetColumnWidth(i, (i == 0) ? wxLIST_AUTOSIZE_USEHEADER : wxLIST_AUTOSIZE);
+      throw;
+    }
   }
 };
 
