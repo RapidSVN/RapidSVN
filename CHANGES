@@ -52,8 +52,8 @@ Unresolved issues
     * 545 Occassionally not saving bookmarks
     * 547 Mac: Update/Commit enabled only for files (not directory)
     * 548 Mac: Update dialog doesnt respond to ENTER key
-    * 586 svn::Info implementation incomplete
     * 634 Mac: Filelist order broken (first files and then folders, folders in wrong order)
+    * 586 svn::Info implementation incomplete
 
 
 Version 0.9.6 (released March 3rd 2008)
