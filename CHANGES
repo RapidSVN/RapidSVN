@@ -1,3 +1,61 @@
+Version 0.9.8 (released March 19th 2009)
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.8
+
+User-visible changes
+
+    * 582 Migrated license to GPLv3
+    * 73  New Feature: Implement display filters
+    * 607 New Feature: Basic support for subversion 1.5
+    * 630 New Feature: Recursive Revert
+    * 639 Enhancement: Added toolbar tool to toggle "Show subdirectories"
+    * 514 Fixed: Log Dialog: log column line-endings not converted
+    * 516 Fixed: Pre-fill Name for Checkout/Export Command doesnt work
+    * 526 Fixed: Filelist update failed when there were special characetrs in the uri
+    * 527 Fixed: Dialogs showed on Wrong Monitor on Multi-Monitor Windows Systems
+    * 534 Fixed: Assertion failed when trying to move a file up one directory(../)
+    * 560 Fixed: Windows/wxMSW 2.6.4: "Mondrian" logo displayed in Explorer
+    * 564 Fixed: Selection not updated correctly
+    * 571 Fixed: Fails to build on gcc 4.3
+    * 578 Fixed: Packaging problem: rapidsvn_generated.h was missing in tarball
+    * 583 Fixed: Localized date format broken
+    * 589 Fixed: Mac: File list column disappeared
+    * 590 Fixed: Right-clicking doesn't select tree item
+    * 593 Fixed: Startup crash on WinXP with svn-1.4.6 for Apache 2.2.x
+    * 594 Fixed: Warning after checkout
+    * 598 Fixed: DnD: Needless prompting for import log
+    * 599 Fixed: Refresh with update: DnD on file list failed
+    * 604 Fixed: Cannot explicitly add ignored files
+    * 605 Fixed: Error during filelist refresh prevents further diplay
+    * 615 Fixed: Multiple File Delete Triggers Multiple Commits
+    * 626 Fixed: Copy/Move dialog does not cancel on escape key
+    * 631 Fixed: Build broken for Linux/Subversion 1.5.1 (on Ubuntu Intrepid)
+    * 640 Dropped Subversion 1.4.x support in binary packages
+
+Developer-visible changes
+
+    * 628 Changed coding style to ANSI + parent outer
+    * 585 Enhancement: added version identifier in the headers
+
+Work in progress (not completed)
+
+    * 632 New Feature: Ability to commit specific files
+    * 413 Focus lost from file view after app switch
+    * 477 Concurrent actions - lack of visual feedback
+    * 555 Linux+Mac: locale files not installed by default
+    * 581 Refresh with update: doubleclick on folders doesnt work
+
+Unresolved issues
+
+    * 467 Log History - Get command mingles the file if modified locally
+    * 494 SegFault when using diff on two revisions
+    * 542 Right-clicking doesn't select the file before popping up context-menu
+    * 545 Occassionally not saving bookmarks
+    * 547 Mac: Update/Commit enabled only for files (not directory)
+    * 548 Mac: Update dialog doesnt respond to ENTER key
+    * 586 svn::Info implementation incomplete
+    * 634 Mac: Filelist order broken (first files and then folders, folders in wrong order)
+
+
 Version 0.9.6 (released March 3rd 2008)
 http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.6
 
