@@ -13,6 +13,5 @@ svncpptest_CPPFLAGS=-I../../../include @CPPUNIT_CXXFLAGS@
 svncpptest_LDFLAGS=-L../../svncpp @CPPUNIT_LIBS@
 svncpptest_LDADD=-lsvncpp \
 	$(SVN_LIBS) \
-	$(NEON_LIBS) \
 	$(APR_LIBS)	
 svncpptest_DEPENDENCIES=../../svncpp/libsvncpp.la
