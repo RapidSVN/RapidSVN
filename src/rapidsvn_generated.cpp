@@ -430,7 +430,7 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_mainSizer = new wxBoxSizer( wxVERTICAL );
 	
-	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Enter log message") ), wxHORIZONTAL );
+	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Enter &log message") ), wxHORIZONTAL );
 	
 	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );
@@ -439,7 +439,7 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_histSizer = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_labelHistory = new wxStaticText( this, wxID_ANY, _("Recent entries:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelHistory = new wxStaticText( this, wxID_ANY, _("&Recent entries:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_labelHistory->Wrap( -1 );
 	m_histSizer->Add( m_labelHistory, 0, wxALL, 5 );
 	
@@ -448,14 +448,22 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_mainSizer->Add( m_histSizer, 0, wxEXPAND|wxLEFT|wxRIGHT, 5 );
 	
-	m_filesSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Files to commit") ), wxVERTICAL );
+	m_filesSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("&Files to commit") ), wxVERTICAL );
 	
 	wxArrayString m_checkListFilesChoices;
 	m_checkListFiles = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListFilesChoices, wxLB_EXTENDED );
 	m_filesSizer->Add( m_checkListFiles, 1, wxEXPAND, 5 );
 	
-	m_buttonToggle = new wxButton( this, wxID_ANY, _("Toggle"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_filesSizer->Add( m_buttonToggle, 0, wxALL, 5 );
+	wxBoxSizer* bSizerFileButtons;
+	bSizerFileButtons = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonToggle = new wxButton( this, wxID_ANY, _("&Toggle"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerFileButtons->Add( m_buttonToggle, 0, wxALL, 5 );
+	
+	m_buttonDiff = new wxButton( this, wxID_ANY, _("&Diff"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerFileButtons->Add( m_buttonDiff, 0, wxALL, 5 );
+	
+	m_filesSizer->Add( bSizerFileButtons, 0, wxEXPAND, 5 );
 	
 	m_mainSizer->Add( m_filesSizer, 1, wxALL|wxEXPAND, 5 );
 	
@@ -484,14 +492,20 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	// Connect Events
 	m_comboHistory->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitDlgBase::OnComboHistory ), NULL, this );
+	m_checkListFiles->Connect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( CommitDlgBase::OnCheckListFiles ), NULL, this );
 	m_checkListFiles->Connect( wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler( CommitDlgBase::OnCheckListFilesDClick ), NULL, this );
+	m_checkListFiles->Connect( wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler( CommitDlgBase::OnCheckListFilesToggle ), NULL, this );
 	m_buttonToggle->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CommitDlgBase::OnButtonToggle ), NULL, this );
+	m_buttonDiff->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CommitDlgBase::OnButtonDiff ), NULL, this );
 }
 
 CommitDlgBase::~CommitDlgBase()
 {
 	// Disconnect Events
 	m_comboHistory->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CommitDlgBase::OnComboHistory ), NULL, this );
+	m_checkListFiles->Disconnect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( CommitDlgBase::OnCheckListFiles ), NULL, this );
 	m_checkListFiles->Disconnect( wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler( CommitDlgBase::OnCheckListFilesDClick ), NULL, this );
+	m_checkListFiles->Disconnect( wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler( CommitDlgBase::OnCheckListFilesToggle ), NULL, this );
 	m_buttonToggle->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CommitDlgBase::OnButtonToggle ), NULL, this );
+	m_buttonDiff->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CommitDlgBase::OnButtonDiff ), NULL, this );
 }

@@ -81,16 +81,27 @@ private:
   wxString m_message;
   svn::PathVector m_selectedFilenames;
 
-  virtual void OnComboHistory(wxCommandEvent &);
-  virtual void OnCheckListFilesDClick(wxCommandEvent& event);
-
-  virtual void OnButtonToggle(wxCommandEvent &);
-
   /** disallow default constructor */
   CommitDlg();
 
   /** disallow copy constructor */
   CommitDlg(const CommitDlg & src);
+
+  void CheckFilesButtons(void);
+
+protected: // inherited from CommitDlgBase
+  virtual void OnComboHistory(wxCommandEvent &);
+
+  virtual void OnCheckListFilesToggle(wxCommandEvent &);
+
+  virtual void OnCheckListFilesDClick(wxCommandEvent &);
+
+  virtual void OnCheckListFiles(wxCommandEvent &);
+
+  virtual void OnButtonToggle(wxCommandEvent &);
+
+  virtual void OnButtonDiff(wxCommandEvent &);
+
 };
 
 #endif

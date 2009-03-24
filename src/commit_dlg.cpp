@@ -72,6 +72,8 @@ CommitDlg::CommitDlg(wxWindow* parent, const svn::PathVector & filenames)
       
       m_checkListFiles->Check(i, true);
     }
+
+    CheckFilesButtons();
   }
   
   wxGenericValidator valRecursive(&m_recursive);
@@ -160,16 +162,47 @@ CommitDlg::OnComboHistory(wxCommandEvent &)
 void
 CommitDlg::OnCheckListFilesDClick(wxCommandEvent &event)
 {
-  int index = event.GetInt();
-  if (index != wxNOT_FOUND)
+  OnButtonDiff(event);
+}
+
+
+void 
+CommitDlg::OnCheckListFiles(wxCommandEvent &)
+{
+  CheckFilesButtons();
+}
+
+
+void 
+CommitDlg::OnCheckListFilesToggle(wxCommandEvent & event)
+{
+  OnButtonToggle(event);
+}
+
+
+void
+CommitDlg::OnButtonDiff(wxCommandEvent &)
+{
+  wxArrayInt selection;
+  m_checkListFiles->GetSelections(selection);
+
+  // right now we support only single selection
+  wxASSERT(selection.size() <= 1);
+
+  wxArrayInt::const_iterator it;
+
+  for (it = selection.begin(); it != selection.end(); it++)
   {
-    wxListBox *listbox = (wxListBox*)event.GetEventObject();
+    int item = *it;
+
     DiffData *data = new DiffData ();
-    data->path = listbox->GetString((unsigned int)index);
+    data->path = m_checkListFiles->GetString((unsigned int)item);
     data->compareType = DiffData::WITH_BASE;
+
     ActionEvent::Post(GetParent(), TOKEN_DIFF, data);
   }
 }
+
 
 void 
 CommitDlg::OnButtonToggle(wxCommandEvent &)
@@ -192,6 +225,18 @@ CommitDlg::OnButtonToggle(wxCommandEvent &)
     m_checkListFiles->Check(item, newValue);
   }
 }
+
+
+void
+CommitDlg::CheckFilesButtons(void)
+{
+  wxArrayInt selection;
+  m_checkListFiles->GetSelections(selection);
+
+  m_buttonToggle->Enable(selection.size() > 0);
+  m_buttonDiff->Enable(selection.size() == 1);
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

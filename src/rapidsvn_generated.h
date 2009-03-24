@@ -184,6 +184,7 @@ class CommitDlgBase : public wxDialog
 		wxStaticBoxSizer* m_filesSizer;
 		wxCheckListBox* m_checkListFiles;
 		wxButton* m_buttonToggle;
+		wxButton* m_buttonDiff;
 		wxCheckBox* m_checkRecursive;
 		wxCheckBox* m_checkKeepLocks;
 		wxButton* m_buttonOK;
@@ -191,12 +192,15 @@ class CommitDlgBase : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnComboHistory( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCheckListFiles( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnCheckListFilesDClick( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCheckListFilesToggle( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnButtonToggle( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonDiff( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:
-		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 498,400 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 583,500 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CommitDlgBase();
 	
 };
