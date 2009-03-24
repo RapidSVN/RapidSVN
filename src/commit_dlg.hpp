@@ -82,7 +82,7 @@ private:
   svn::PathVector m_selectedFilenames;
 
   virtual void OnComboHistory(wxCommandEvent &);
-  virtual void OnCheckListBoxDClick(wxCommandEvent& event);
+  virtual void OnCheckListFilesDClick(wxCommandEvent& event);
 
   virtual void OnButtonToggle(wxCommandEvent &);
 

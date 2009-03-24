@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 15 2008)
+// C++ code generated with wxFormBuilder (version Apr 21 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -191,8 +191,8 @@ class CommitDlgBase : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnComboHistory( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCheckListFilesDClick( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnButtonToggle( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnCheckListBoxDClick( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:

@@ -3684,7 +3684,7 @@
                                 <property name="window_style"></property>
                                 <event name="OnChar"></event>
                                 <event name="OnCheckListBox"></event>
-                                <event name="OnCheckListBoxDClick">OnCheckListBoxDClick</event>
+                                <event name="OnCheckListBoxDClick">OnCheckListFilesDClick</event>
                                 <event name="OnCheckListBoxToggled"></event>
                                 <event name="OnEnterWindow"></event>
                                 <event name="OnEraseBackground"></event>

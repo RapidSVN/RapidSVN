@@ -158,7 +158,7 @@ CommitDlg::OnComboHistory(wxCommandEvent &)
 }
 
 void
-CommitDlg::OnCheckListBoxDClick(wxCommandEvent &event)
+CommitDlg::OnCheckListFilesDClick(wxCommandEvent &event)
 {
   int index = event.GetInt();
   if (index != wxNOT_FOUND)
