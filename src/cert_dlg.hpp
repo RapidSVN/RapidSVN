@@ -30,12 +30,6 @@
 // svncpp
 #include "svncpp/context_listener.hpp"
 
-// forward declarations
-namespace svn
-{
-  struct ContextListener::SslServerTrustData;
-};
-
 class CertDlg : public wxDialog
 {
 public:
