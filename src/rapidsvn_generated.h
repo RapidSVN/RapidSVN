@@ -192,6 +192,7 @@ class CommitDlgBase : public wxDialog
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnComboHistory( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnButtonToggle( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCheckListBoxDClick( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:

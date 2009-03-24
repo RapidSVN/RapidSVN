@@ -35,6 +35,10 @@
 #include "hist_entries.hpp"
 #include "preferences.hpp"
 #include "utils.hpp"
+#include "diff_data.hpp"
+#include "diff_action.hpp"
+#include "action_event.hpp"
+#include "ids.hpp"
 
 
 CommitDlg::CommitDlg(wxWindow* parent, const svn::PathVector & filenames)
@@ -153,6 +157,19 @@ CommitDlg::OnComboHistory(wxCommandEvent &)
   m_textMessage->SetValue(m_comboHistory->GetValue());
 }
 
+void
+CommitDlg::OnCheckListBoxDClick(wxCommandEvent &event)
+{
+  int index = event.GetInt();
+  if (index != wxNOT_FOUND)
+  {
+    wxListBox *listbox = (wxListBox*)event.GetEventObject();
+    DiffData *data = new DiffData ();
+    data->path = listbox->GetString((unsigned int)index);
+    data->compareType = DiffData::WITH_BASE;
+    ActionEvent::Post(GetParent(), TOKEN_DIFF, data);
+  }
+}
 
 void 
 CommitDlg::OnButtonToggle(wxCommandEvent &)
