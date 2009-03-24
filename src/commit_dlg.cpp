@@ -78,7 +78,8 @@ CommitDlg::CommitDlg(wxWindow* parent, const svn::PathVector & filenames)
   
   wxGenericValidator valRecursive(&m_recursive);
   m_checkRecursive->SetValidator(valRecursive);
-  
+
+  m_keepLocks = false;  
   wxGenericValidator valKeepLocks(&m_keepLocks);
   m_checkKeepLocks->SetValidator(valKeepLocks);
   
