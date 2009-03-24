@@ -38,6 +38,7 @@
 
 // actions
 #include "add_action.hpp"
+#include "add_recursive_action.hpp"
 #include "checkout_action.hpp"
 #include "cleanup_action.hpp"
 #include "commit_action.hpp"
@@ -96,7 +97,7 @@ ActionFactory::CheckIdForStatusSel(int id, const svn::StatusSel & statusSel)
     break;
 
   case ID_AddRecursive:
-    result = AddAction::CheckStatusSel(statusSel);
+    result = AddRecursiveAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Import:
@@ -228,7 +229,7 @@ ActionFactory::CreateAction(wxWindow * parent, int id)
       break;
 
     case ID_AddRecursive:
-      action = new AddAction(parent, true);
+      action = new AddRecursiveAction(parent);
       break;
 
     case ID_Import:

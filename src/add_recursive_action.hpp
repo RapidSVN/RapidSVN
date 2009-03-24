@@ -21,68 +21,43 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
-// wxWidgets
-#include "wx/intl.h"
+#ifndef _ADD_RECURSIVE_ACTION_H_INCLUDED_
+#define _ADD_RECURSIVE_ACTION_H_INCLUDED_
 
 // svncpp
-#include "svncpp/client.hpp"
-#include "svncpp/status_selection.hpp"
-#include "svncpp/targets.hpp"
+#include "svncpp/path.hpp"
 
 // app
-#include "add_action.hpp"
+#include "action.hpp"
 
-AddAction::AddAction(wxWindow * parent)
-    : Action(parent, _("Add"), 0)
+// forward declarations
+namespace svn
 {
+  class StatusSel;
 }
 
-AddAction::~AddAction()
+class AddRecursiveAction:public Action
 {
-}
+public:
+  /**
+   * Constructor
+   *
+   * @param parent parent window
+   */
+  AddRecursiveAction(wxWindow * parent);
+  virtual ~AddRecursiveAction();
 
-bool
-AddAction::Prepare()
-{
-  // No dialog for Add
-  return Action::Prepare();
-}
+  virtual bool
+  Prepare();
 
-bool
-AddAction::Perform()
-{
-  svn::Client client(GetContext());
+  virtual bool
+  Perform();
 
-  const svn::PathVector & v = GetTargets().targets();
-  svn::PathVector::const_iterator it;
+  static bool
+  CheckStatusSel(const svn::StatusSel & statusSel);
+};
 
-  for (it = v.begin(); it != v.end(); it++)
-  {
-    const svn::Path & path = *it;
-
-    client.add(path.c_str(), false);
-  }
-
-  return true;
-}
-
-
-bool
-AddAction::CheckStatusSel(const svn::StatusSel & statusSel)
-{
-  if (0 == statusSel.size())
-    return false;
-
-  if (statusSel.hasUrl())
-    return false;
-
-  if (statusSel.hasVersioned())
-    return false;
-
-  return true;
-}
-
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

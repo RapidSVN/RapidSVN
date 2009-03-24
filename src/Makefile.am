@@ -13,6 +13,7 @@ rapidsvn_SOURCES= \
 	action_event.cpp \
 	action_factory.cpp \
 	add_action.cpp \
+	add_recursive_action.cpp \
 	annotate_action.cpp \
 	annotate_dlg.cpp \
 	auth_dlg.cpp \

@@ -31,53 +31,75 @@
 #include "svncpp/targets.hpp"
 
 // app
-#include "add_action.hpp"
+#include "add_recursive_action.hpp"
 
-AddAction::AddAction(wxWindow * parent)
+AddRecursiveAction::AddRecursiveAction(wxWindow * parent)
     : Action(parent, _("Add"), 0)
 {
 }
 
-AddAction::~AddAction()
+AddRecursiveAction::~AddRecursiveAction()
 {
 }
 
 bool
-AddAction::Prepare()
+AddRecursiveAction::Prepare()
 {
   // No dialog for Add
   return Action::Prepare();
 }
 
 bool
-AddAction::Perform()
+AddRecursiveAction::Perform()
 {
   svn::Client client(GetContext());
 
-  const svn::PathVector & v = GetTargets().targets();
-  svn::PathVector::const_iterator it;
+  // with recursion we have to cycle over the selection
+  // and find unversioned subdirectories and add them
+  svn::StatusFilter filter;
+  filter.showUnversioned = true;
+  
+  svn::PathVector paths = GetTargets().targets();
 
-  for (it = v.begin(); it != v.end(); it++)
+  do
   {
-    const svn::Path & path = *it;
+    svn::PathVector nextPaths;
+    svn::PathVector::const_iterator it;
 
-    client.add(path.c_str(), false);
+    for (it = paths.begin(); it != paths.end(); it++)
+    {
+      const svn::Path & path = *it;
+      
+      svn::StatusEntries entries;
+      client.status (path.c_str(), filter, true, false, entries);
+      
+      svn::StatusEntries::const_iterator itStatus;
+      
+      for (itStatus = entries.begin(); itStatus != entries.end(); itStatus++)
+      {
+        const svn::Status & status = *itStatus;
+        client.add(status.path(), false);
+        nextPaths.push_back(status.path());
+      }
+    }
+
+    // for the next round we copy the newly added files/dirs
+    // and find subdirectories there
+    paths = nextPaths;
   }
+  while (paths.size() > 0);
 
   return true;
 }
 
 
 bool
-AddAction::CheckStatusSel(const svn::StatusSel & statusSel)
+AddRecursiveAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
   if (0 == statusSel.size())
     return false;
 
   if (statusSel.hasUrl())
-    return false;
-
-  if (statusSel.hasVersioned())
     return false;
 
   return true;

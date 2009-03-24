@@ -43,9 +43,8 @@ public:
    * Constructor
    *
    * @param parent parent window
-   * @param recursive if true, add files/directories recursive
    */
-  AddAction(wxWindow * parent, bool recursive=false);
+  AddAction(wxWindow * parent);
   virtual ~AddAction();
 
   virtual bool
@@ -56,10 +55,6 @@ public:
 
   static bool
   CheckStatusSel(const svn::StatusSel & statusSel);
-
-private:
-  struct Data;
-  Data * m;
 };
 
 #endif

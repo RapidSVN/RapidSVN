@@ -178,6 +178,10 @@ SOURCE=.\src\add_action.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\add_recursive_action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\annotate_action.cpp
 # End Source File
 # Begin Source File
@@ -491,6 +495,10 @@ SOURCE=.\src\action_worker.hpp
 # Begin Source File
 
 SOURCE=.\src\add_action.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\add_recursive_action.hpp
 # End Source File
 # Begin Source File
 
