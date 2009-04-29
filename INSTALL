@@ -457,62 +457,40 @@ Contents:
 	Make sure you have installed Xcode (so gcc will work).
 
 	Download the following tarballs:
-	- wxMac-2.6.3.tar.gz
-          REMARK: 2.8.7 DOESNT WORK WITH RAPIDSVN NOW
-	- subversion-1.4.5.tar.gz (or newer)
-	- subversion-deps-1.4.5.tar.gz (or newer)
-	- db-4.4.20.NC.tar.gz (or newer)
+	- wxMac-2.8.10.tar.gz
+	- subversion-1.5.6.tar.gz (or newer)
+	- subversion-deps-1.5.6.tar.gz (or newer)
+	- db-4.7.25.NC.tar.gz (or newer)
 
 	Extract the packages to $HOME/RapidSVN-build, so
-	we have a directory $HOME/RapidSVN-build/subversion-1.4.5
+	we have a directory $HOME/RapidSVN-build/subversion-1.5.6
         an so on.
 
 
-4.3     Configure/Compile/Install wxWidgets
-
-	cd to the extracted wxWidgets directory.
-
-        Configure wxWidgets, so it is NOT built as shared library;
-        with Unicode support:
-	  ./configure --prefix=$HOME/RapidSVN-build \
-            --disable-shared --enable-unicode --disable-tga
-
-        Remarks: "--disable-tga" works around a compilation error
-                 in wxMac-2.6.3
-
-        Compile wxWidgets:
-          make
-
-        Install wxWidgets after successful compilation:
-          make install
-
-        If you have set PATH you can run "wx-config" now.
-        If this works you have a running wxWidgets installation
-
-
-4.4     Configure/Compile/Install Berkeley DB
+4.3     Configure/Compile/Install Berkeley DB
 
 	cd to:
-	  $HOME/RapidSVN-build/db-4.4.20.NC/build_unix
+	  $HOME/RapidSVN-build/db-4.7.25.NC/build_unix
 
 	Configure a static build:
-	  ../dist/configure --prefix=$HOME/RapidSVN-build \
-            --disable-shared
+	  CFLAGS="-O3 -arch i386 -arch ppc -mmacosx-version-min=10.3 -fvisibility=hidden" \
+            LDFLAGS="-arch i386 -arch ppc -mmacosx-version-min=10.3" \
+            ../dist/configure --prefix=$HOME/RapidSVN-build --disable-shared
 
         Compile and install Berkeley DB:
           make
           make install
 
 
-4.5     Configure/Compile/Install Subversion
+4.4     Configure/Compile/Install Subversion
 
         cd to:
-          $HOME/RapidSVN-build/subversion-1.4.5
+          $HOME/RapidSVN-build/subversion-1.5.6
 
         Configure a static build with OpenSSL and Berkeley DB support:
-          ./configure --prefix=$HOME/RapidSVN-build \
-            --with-berkeley-db=$HOME/RapidSVN-build \
-            --with-ssl=openssl
+          CFLAGS="-g -O2 -arch i386 -arch ppc -mmacosx-version-min=10.3 -fvisibility=hidden" \
+            LDFLAGS="-arch i386 -arch ppc -mmacosx-version-min=10.3" ./configure --prefix=$HOME/RapidSVN-build \
+            --with-berkeley-db=$HOME/RapidSVN-build --with-ssl --disable-shared --with-expat=builtin --without-apxs
 
         Compile and install Subversion:
           make
@@ -528,35 +506,31 @@ Contents:
         running:
           svnadmin create --fs-type=bdb /temp/test
 
-4.6     Configure/Compile/Install RapidSVN
 
-        If you are using Mac OS/X 10.4 and have Xcode 2.5
-        installed you might get an error when calling 'glibtoolize'
-        from the shell. This is because Xcode 2.5 messed this up.
- 
-        (found the resolution here: 
-         http://www.mail-archive.com/swfmill@osflash.org/msg01386.html)
+4.5     Configure/Compile/Install wxWidgets
 
-        Workaround:
-        - download the same version of libtool as the one
-          glibtoolize --version reports (1.5 in my case, so I 
-          downloaded 1.5.26)
-        - extract the tarball
-        - configure/compile/install the stuff:
-          ./configure --prefix=$HOME/RapidSVN-build
+	cd to the extracted wxWidgets directory.
+
+        Configure wxWidgets, so it is NOT built as shared library;
+        with Unicode support:
+          CFLAGS="-I$HOME/RapidSVN-build/include/apr-1" \
+            CXXFLAGS="-I$HOME/RapidSVN-build/include/apr-1" \
+            LDFLAGS="-L$HOME/RapidSVN-build/lib"
+	    ./configure --prefix=$HOME/RapidSVN-build \
+            --disable-shared --enable-unicode --enable-universal_binary \
+            --with-macosx-version-min=10.3
+
+        Compile wxWidgets:
           make
+
+        Install wxWidgets after successful compilation:
           make install
-        
-        glibtoolize still complains, but you should have a
-        functioning libtoolize now.
 
-        My first attempt was to use the latest libtool but
-        I received many errors when configuring RapidSVN
-        with it, so finally I gave up and ensured I had the
-        same version as installed.
-        
+        If you have set PATH you can run "wx-config" now.
+        If this works you have a running wxWidgets installation
 
-4.7     Configure/Compile/Install RapidSVN
+
+4.6     Configure/Compile/Install RapidSVN
 
         Download and extract a RapidSVN tarball       
         or checkout a new working copy of RapidSVN in
@@ -565,10 +539,16 @@ Contents:
         Cd to the directory.
 
         Now configure the static build:
-          ./configure --prefix=$HOME/RapidSVN-build \
-          --disable-shared \
-          --with-svn-include=$HOME/RapidSVN-build/include \
-          --with-svn-lib=$HOME/RapidSVN-build/lib
+          CFLAGS="-g -O2 -arch i386 -arch ppc -fvisibility=hidden -I$HOME/RapidSVN-build/include" \
+            CXXFLAGS="-g -O2 -arch i386 -arch ppc -fvisibility=hidden -fvisibility-inlines-hidden" \
+            LDFLAGS="-arch i386 -arch ppc -L$HOME/RapidSVN-build/lib" ./configure --prefix=$HOME/RapidSVN-build \
+            --disable-shared \
+            --with-svn-include=$HOME/RapidSVN-build/include \
+            --with-svn-lib=$HOME/RapidSVN-build/lib \
+            --with-apr-config=$HOME/RapidSVN-build/bin/apr-1-config \
+            --with-apu-config=$HOME/RapidSVN-build/bin/apu-1-config \
+            --with-wx-config=$HOME/RapidSVN-build/bin/wx-config \
+            --disable-dependency-tracking
 
         Compile RapidSVN:
           make
