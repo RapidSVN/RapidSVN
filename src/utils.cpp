@@ -338,7 +338,7 @@ ParseRevision(const wxString & revstring, svn_revnum_t & revnum)
 
 
 wxString
-FormatDateTime(apr_time_t date, wxString fmt)
+FormatDateTime(apr_time_t date)
 {
   wxString wxstrtime;
   if (date == 0)
@@ -356,7 +356,7 @@ FormatDateTime(apr_time_t date, wxString fmt)
                           (wxDateTime::wxDateTime_t)te.tm_hour,
                           (wxDateTime::wxDateTime_t)te.tm_min,
                           (wxDateTime::wxDateTime_t)te.tm_sec);
-    wxstrtime = wxdate.Format(fmt);
+    wxstrtime = wxdate.Format(_("%x %X"));
   }
   return wxstrtime;
 }

@@ -166,11 +166,10 @@ ParseRevision(const wxString & revstring, svn_revnum_t & revnum);
  * Format a date/time value to standard format
  *
  * @param data
- * @param fmt format string
  * @return formatted date/time string
  */
 wxString
-FormatDateTime(apr_time_t date, wxString fmt = wxT("%x %X"));
+FormatDateTime(apr_time_t date);
 
 
 /**
