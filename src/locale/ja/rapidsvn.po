@@ -28,7 +28,7 @@ msgstr "%s バージョン %s"
 #: ../utils.cpp:359
 #, c-format
 msgid "%x %X"
-msgstr ""
+msgstr "%F %T"
 
 #: ../rapidsvn_frame.cpp:326
 msgid "&About..."
@@ -119,9 +119,8 @@ msgid "&File"
 msgstr "ファイル(&F)"
 
 #: ../rapidsvn_generated.cpp:451
-#, fuzzy
 msgid "&Files to commit"
-msgstr "ロックに失敗しました"
+msgstr "コミット(&F)"
 
 #: ../log_dlg.cpp:361
 msgid "&Get"
@@ -180,9 +179,8 @@ msgid "&Query"
 msgstr "クエリ(&Q)"
 
 #: ../rapidsvn_generated.cpp:442
-#, fuzzy
 msgid "&Recent entries:"
-msgstr "最近のエントリ:"
+msgstr "最近のエントリ(&R):"
 
 #: ../utils.cpp:261
 msgid "&Remove Bookmark"
@@ -210,7 +208,7 @@ msgstr "テスト(&T)"
 
 #: ../rapidsvn_generated.cpp:460
 msgid "&Toggle"
-msgstr ""
+msgstr "反転(&T)"
 
 #: ../utils.cpp:198
 msgid "&Unlock"
@@ -686,9 +684,8 @@ msgid "Edit Property"
 msgstr "属性の編集"
 
 #: ../rapidsvn_generated.cpp:433
-#, fuzzy
 msgid "Enter &log message"
-msgstr "ログメッセージを入力してください"
+msgstr "ログメッセージを入力してください(&L)"
 
 #: ../lock_dlg.cpp:45
 msgid "Enter a comment for this lock"
@@ -992,7 +989,6 @@ msgid "Issue:"
 msgstr "発行元:"
 
 #: ../rapidsvn_generated.cpp:477
-#, fuzzy
 msgid "Keep Locks"
 msgstr "ロックを維持"
 
@@ -1617,9 +1613,8 @@ msgid "Show conflicted entries"
 msgstr "競合エントリを表示"
 
 #: ../rapidsvn_frame.cpp:480
-#, fuzzy
 msgid "Show entries in subdirectories"
-msgstr "無視エントリを表示"
+msgstr "サブディレクトリ内のエントリを表示"
 
 #: ../rapidsvn_frame.cpp:279
 msgid "Show ignored entries"
@@ -1630,9 +1625,8 @@ msgid "Show modified entries"
 msgstr "変更エントリを表示"
 
 #: ../rapidsvn_frame.cpp:273 ../rapidsvn_frame.cpp:479
-#, fuzzy
 msgid "Show subdirectories"
-msgstr "無視エントリを表示"
+msgstr "サブディレクトリを表示"
 
 #: ../rapidsvn_frame.cpp:627
 msgid "Show the log messages for the selected entries"
@@ -1724,7 +1718,6 @@ msgstr ""
 "本当にこの証明書を信用しますか?"
 
 #: ../rapidsvn_generated.cpp:384
-#, fuzzy
 msgid "This action has resulted in a commit - please enter a log message"
 msgstr ""
 "このアクションによってコミットが発生します。ログメッセージを入力してくださ"
