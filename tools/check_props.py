@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/python
 #
 # ====================================================================
 # Copyright (c) 2002-2009 The RapidSvn Group.  All rights reserved.
@@ -37,7 +37,7 @@ def set_prop(filename, prop, value):
   p=Popen(args, stdout=None)
   t=p.communicate()[0]
 
-TEXT_EXTENSIONS=['.cpp', '.hpp', '.py', '.sh', '.txt', '.html', '.map', '.md5', '.xpm']
+TEXT_EXTENSIONS=['.cpp', '.hpp', '.py', '.sh', '.txt', '.html', '.map', '.md5', '.xpm', '.po', '.pot']
 
 def is_text(fname):
   fname = fname.lower()
