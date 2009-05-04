@@ -515,7 +515,7 @@ Contents:
         with Unicode support:
           CFLAGS="-I$HOME/RapidSVN-build/include/apr-1" \
             CXXFLAGS="-I$HOME/RapidSVN-build/include/apr-1" \
-            LDFLAGS="-L$HOME/RapidSVN-build/lib"
+            LDFLAGS="-L$HOME/RapidSVN-build/lib" \
 	    ./configure --prefix=$HOME/RapidSVN-build \
             --disable-shared --enable-unicode --enable-universal_binary \
             --with-macosx-version-min=10.3
