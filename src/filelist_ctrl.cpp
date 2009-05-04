@@ -1081,7 +1081,8 @@ FileListCtrl::RefreshFileList()
   GetItemRect(GetTopItem(), cr);
   ScrollList(0, ir.GetTop() - cr.GetTop());
 
-  Focus(focusedItem);
+  if (focusedItem >= 0)
+    Focus(focusedItem);
 
   wxLogStatus(_("Ready"),"");
 }
