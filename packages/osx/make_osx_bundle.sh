@@ -34,40 +34,7 @@ for DIR in ??_??; do
 done
 popd
 
-echo -n \
-"<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
-<plist version="0.9">
-<dict>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleIdentifier</key>
-	<string>org.svn.rapidsvn</string>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
-	<key>CFBundleExecutable</key>
-	<string>rapidsvn</string>
-	<key>CFBundleIconFile</key>
-	<string>rapidsvn.icns</string>
-	<key>CFBundleName</key>
-	<string>RapidSVN</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key><string>0.9.9</string>
-	<key>CFBundleShortVersionString</key><string>0.9.9</string>
-	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.9.9, (c) 2002-2009 RapidSVN</string>
-	<key>CFBundleLongVersionString</key><string>0.9.9, (c) 2002-2009 RapidSVN</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2002-2007 RapidSVN</string>
-	<key>LSRequiresCarbon</key>
-        <true/>
-	<key>CSResourcesFileMapped</key>
-	<true/>
-</dict>
-</plist>
-" > $BUNDLEDIR/Info.plist
+cp Info.plist $BUNDLEDIR/Info.plist
 
 # Now create the disk image from the bundle
 hdiutil create -quiet -srcfolder RapidSVN.app $DISKIMAGE
