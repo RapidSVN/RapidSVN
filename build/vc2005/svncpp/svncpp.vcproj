@@ -37,7 +37,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../include;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;_DEBUG;SVN_DEBUG;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;_DEBUG;SVN_DEBUG;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="3"
 			/>
 			<Tool
@@ -92,7 +92,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../include;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="2"
 			/>
 			<Tool
@@ -147,7 +147,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../include;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="2"
 			/>
 			<Tool
@@ -202,7 +202,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../include;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;_DEBUG;SVN_DEBUG;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;_DEBUG;SVN_DEBUG;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="3"
 			/>
 			<Tool
