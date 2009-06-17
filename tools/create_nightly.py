@@ -93,7 +93,7 @@ def buildMessages():
       msgfmt.make(po,mo)
 
 
-def buildInstaller():
+def buildInstaller(compiler):
   print "Clean installer"
   os.chdir("packages/win32")
   # Remove files
@@ -103,7 +103,10 @@ def buildInstaller():
   for n in x: os.unlink(n)
 
   print "Fetching files for installer"
-  run('cmd.exe', ['/c', 'FetchFiles.bat'])
+  if compiler=='vc2005':
+    run('cmd.exe', ['/c', 'FetchFiles_vs2005.bat'])
+  else:
+    run('cmd.exe', ['/c', 'FetchFiles.bat'])
   innosetup="%s\iscc.exe" % getEnviron("INNOSETUP")
   print "Build installer (using %s)" %innosetup
   run(innosetup, ['rapidsvn.iss'])
@@ -232,7 +235,7 @@ if __name__ == '__main__':
       buildApplicationVc6()
     elif compiler == 'vc2005':
       buildApplicationVc2005()
-    pkg=buildInstaller()
+    pkg=buildInstaller(compiler)
   uploadInstaller(pkg)
 
   #remember revision
