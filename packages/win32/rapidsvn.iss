@@ -36,8 +36,8 @@ Name: main; Description: RapidSVN Application; Types: compact custom full; Flags
 
 [Files]
 ; RapidSVN application files
-Source: "..\..\Release\rapidsvn.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; OnlyBelowVersion: 0,4.0; Components: main
-Source: "..\..\Unicode_Release\rapidsvn.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; MinVersion: 0,4.0; Components: main
+Source: "tmp/rapidsvn_ansi.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; OnlyBelowVersion: 0,4.0; Components: main
+Source: "tmp/rapidsvn_unicode.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; MinVersion: 0,4.0; Components: main
 Source: "..\..\src\locale\de\rapidsvn.po"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\fr\rapidsvn.po"; DestDir: "{app}\bin\locale\fr"; Flags: ignoreversion; Components: main
@@ -61,20 +61,9 @@ Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components:
 Source: "..\..\GPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\FDL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 
-; Microsoft Runtime DLL
-Source: "msvcp60.dll"; DestDir: "{app}\bin"; Flags: onlyifdoesntexist; Components: main
-
-; Berkeley DB
-Source: "tmp\libdb44.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-
-; APR
-Source: "tmp\libapr-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "tmp\libapriconv-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
-Source: "tmp\libaprutil-1.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
+; Shared libraries
+Source: "tmp\*.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 Source: "tmp\*.so"; DestDir: "{app}\bin\iconv"; Flags: ignoreversion; Components: main
-
-; LibIntl
-Source: "tmp\intl3_svn.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main
 
 [Icons]
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin";
