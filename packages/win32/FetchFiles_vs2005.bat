@@ -27,6 +27,7 @@ copy %SUBVERSION%\iconv\*.so tmp
 rem Copy C++ Runtime
 copy msvcp80.dll tmp
 copy msvcr80.dll tmp
+copy msvcm80.dll tmp
 
 rem Copy RapidSVN
 copy "..\..\build\vc2005\unicode release\rapidsvn.exe" tmp\rapidsvn_unicode.exe
