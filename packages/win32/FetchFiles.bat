@@ -9,7 +9,7 @@ rem These environment variables are needed:
 rem   SUBVERSION
 rem ---------------------------------------------------
 rem TODO: check whether environment variables
-rem       are set to existing paths (or at all) 
+rem       are set to existing paths (or at all)
 
 mkdir tmp
 
@@ -28,5 +28,12 @@ copy %SUBVERSION%\apr-iconv\Release\iconv\*.so tmp
 
 rem Copy Libintl DLL
 copy %LIBINTL%\bin\intl3_svn.dll tmp
+
+rem Copy C++ Runtime
+copy msvcp60.dll tmp
+
+rem Copy RapidSvn
+copy ..\..\Release\rapidsvn.exe" tmp/rapidsvn_ansi.exe
+copy ..\..\Unicode_Release\rapidsvn.exe tmp/rapidsvn_unicode.exe
 
 rem pause
