@@ -1,0 +1,1 @@
+DIST_SUBDIRS=vc2005 xcode
