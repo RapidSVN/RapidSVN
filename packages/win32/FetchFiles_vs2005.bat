@@ -24,6 +24,10 @@ rem Copy Subversion and APR DLLs
 copy %SUBVERSION%\bin\*.dll tmp
 copy %SUBVERSION%\iconv\*.so tmp
 
+rem Copy C++ Runtime
 copy msvcp80.dll tmp
+copy msvcr80.dll tmp
+
+rem Copy RapidSVN
 copy "..\..\build\vc2005\unicode release\rapidsvn.exe" tmp\rapidsvn_unicode.exe
 copy ..\..\build\vc2005\release\rapidsvn.exe tmp\rapidsvn_ansi.exe
