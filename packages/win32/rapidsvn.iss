@@ -36,8 +36,8 @@ Name: main; Description: RapidSVN Application; Types: compact custom full; Flags
 
 [Files]
 ; RapidSVN application files
-Source: "tmp/rapidsvn_ansi.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; OnlyBelowVersion: 0,4.0; Components: main
-Source: "tmp/rapidsvn_unicode.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; MinVersion: 0,4.0; Components: main
+Source: "tmp/rapidsvn_ansi.exe"; DestDir: "{app}\bin"; DestName: "rapidsvn.exe"; Flags: ignoreversion; OnlyBelowVersion: 0,4.0; Components: main
+Source: "tmp/rapidsvn_unicode.exe"; DestDir: "{app}\bin"; DestName: "rapidsvn.exe"; Flags: ignoreversion; MinVersion: 0,4.0; Components: main
 Source: "..\..\src\locale\de\rapidsvn.po"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\fr\rapidsvn.po"; DestDir: "{app}\bin\locale\fr"; Flags: ignoreversion; Components: main
