@@ -1,4 +1,4 @@
-# 
+#
 # ====================================================================
 # Copyright (c) 2002-2009 The RapidSvn Group.  All rights reserved.
 #
@@ -6,14 +6,14 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
-# along with this program (in the file GPL.txt.  
+# along with this program (in the file GPL.txt.
 # If not, see <http://www.gnu.org/licenses/>.
 #
 # This software consists of voluntary contributions made by many
@@ -34,6 +34,7 @@ import glob
 import msgfmt
 import platform
 from subprocess import Popen, PIPE
+from getopt import getopt
 
 FILENAME="last-successful-revision.txt"
 
@@ -47,7 +48,7 @@ def run(cmd, args=[], silent=False):
   if not silent:
     print t
   return t
-  
+
 def getEnviron(key):
   try:
     return os.environ[key]
@@ -59,17 +60,22 @@ def readLastSuccessfulRevision():
     return open(FILENAME, "r").read()
   except:
     return ""
-    
+
 def readCurrentRevision():
   t=run("svn", ["info",  "."], 1)
   m=re.search("Revision: ([0-9]+)",t)
   return m.group(1)
-  
-def buildApplication():
+
+def buildApplicationVc6():
   print "Rebuild rapidsvn (using msdev"
   run('msdev', ['rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'])
-  
-  
+
+
+def buildApplicationVc2005():
+  print "Rebuild rapidsvn (using msdev"
+  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', '$ALL'])
+
+
 def buildMessages():
   # First we have to check which translations we have
   l=glob.glob('src/locale/[a-z]*')
@@ -85,7 +91,7 @@ def buildMessages():
       msgfmt.MESSAGES = {}
       print "Compiling message catalog %s into %s" % (po, mo)
       msgfmt.make(po,mo)
-  
+
 
 def buildInstaller():
   print "Clean installer"
@@ -101,7 +107,7 @@ def buildInstaller():
   innosetup="%s\iscc.exe" % getEnviron("INNOSETUP")
   print "Build installer (using %s)" %innosetup
   run(innosetup, ['rapidsvn.iss'])
-  
+
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
   if not len(n):
@@ -149,7 +155,7 @@ def buildMacDiskImage():
   print "The new package is: %s" % (pkg)
   os.chdir("../..")
   return "packages/osx/%s" % (pkg)
-  
+
 def uploadInstaller(pkg):
   dir=''
   scp='scp'
@@ -160,15 +166,37 @@ def uploadInstaller(pkg):
   elif platform.system() == 'Darwin':
     scp='scp'
     dir='osx'
-    
+
   url="rapidsvn@rapidsvn.org:/srv/www/vhosts/rapidsvn.org/httpdocs/download/nightly/%s" % (dir)
   run(scp,  [pkg, url])
-    
+
+def usage():
+  print "Usage: create_nightly.py [--compiler={vc2005, vc6}]"
+  print
 
 if __name__ == '__main__':
   # Check whether we are in the project dir
   if not os.path.exists("HACKING.txt"):
     print "Wrong directory to start this script!"
+    sys.exit(1)
+
+  # Parse the options
+  compiler=None
+  try:
+    opts, args=getopt(sys.argv[1:], [], ['compiler='])
+
+    if len(args) > 1:
+      raise Exception()
+
+    for opt, value in opts:
+      if opt == '--compiler':
+        if not value in ['vc6', 'vc2005']:
+          raise Exception()
+        else:
+          compiler = value
+
+  except:
+    usage()
     sys.exit(1)
 
   system=platform.system()
@@ -192,18 +220,21 @@ if __name__ == '__main__':
   elif currentRevision <= lastSuccessfulRevision:
     print "No newer revision detected, aborting (last successful=%s, current=%s)" % (lastSuccessfulRevision, currentRevision)
     sys.exit(0)
-    
+
   buildMessages()
-  
+
   pkg = ''
   if system == 'Darwin':
     makeApplication()
     pkg=buildMacDiskImage()
-  else:   
-    buildApplication()
+  elif system == 'Windows':
+    if compiler in [None, 'vc6']:
+      buildApplicationVc6()
+    elif compiler == 'vc2005':
+      buildApplicationVc2005()
     pkg=buildInstaller()
   uploadInstaller(pkg)
-  
+
   #remember revision
   open(FILENAME, "w").write(currentRevision)
 
