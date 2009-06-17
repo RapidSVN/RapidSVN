@@ -73,7 +73,8 @@ def buildApplicationVc6():
 
 def buildApplicationVc2005():
   print "Rebuild rapidsvn (using msdev"
-  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', '$ALL'])
+  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Release|Win32'])
+  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Unicode Release|Win32'])
 
 
 def buildMessages():
