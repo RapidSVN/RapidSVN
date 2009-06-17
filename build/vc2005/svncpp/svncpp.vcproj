@@ -15,7 +15,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			ConfigurationType="1"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="4"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -34,6 +36,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../../include;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;_DEBUG;SVN_DEBUG;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
+				RuntimeLibrary="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -45,13 +50,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -61,12 +63,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -74,7 +70,9 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			ConfigurationType="1"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="4"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -93,6 +91,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../../include;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
+				RuntimeLibrary="2"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -104,13 +105,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -122,10 +120,114 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Unicode Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="4"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../../include;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
+				RuntimeLibrary="2"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Unicode Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="4"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../../include;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;_DEBUG;SVN_DEBUG;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
+				RuntimeLibrary="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -140,12 +242,216 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\..\src\svncpp\apr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\client.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\client_annotate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\client_cat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\client_diff.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\client_ls.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\client_modify.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\client_property.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\client_status.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\context.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\datetime.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\dirent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\entry.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\exception.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\info.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\log_entry.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\m_check.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\path.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\pool.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\property.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\revision.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\status.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\status_selection.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\targets.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\url.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\wc.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Headerdateien"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\..\include\svncpp\annotate_line.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\apr.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\client.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\context.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\context_listener.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\datetime.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\dirent.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\entry.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\exception.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\info.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\log_entry.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\map_wrapper.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\path.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\pool.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\property.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\revision.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\status.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\status_selection.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\string_wrapper.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\targets.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\url.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\utility_wrapper.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\vector_wrapper.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\version.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\svncpp\wc.hpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Ressourcendateien"
