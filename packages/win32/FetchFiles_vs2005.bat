@@ -30,5 +30,7 @@ copy msvcr80.dll tmp
 copy msvcm80.dll tmp
 
 rem Copy RapidSVN
-copy "..\..\build\vc2005\unicode release\rapidsvn.exe" tmp\rapidsvn_unicode.exe
-copy ..\..\build\vc2005\release\rapidsvn.exe tmp\rapidsvn_ansi.exe
+copy "..\..\build\vc2005\unicode release\rapidsvn_unicode.exe" tmp
+copy "..\..\build\vc2005\unicode release\rapidsvn_unicode.exe.manifest" tmp
+copy ..\..\build\vc2005\release\rapidsvn_ansi.exe tmp
+copy ..\..\build\vc2005\release\rapidsvn_ansi.exe.manifest tmp
