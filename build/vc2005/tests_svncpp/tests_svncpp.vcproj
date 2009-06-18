@@ -15,6 +15,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -34,6 +36,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../../include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				PreprocessorDefinitions="__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
+				RuntimeLibrary="3"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -46,6 +52,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="cppunitd.lib libdb44.lib wxbase28d.lib wxmsw28d_core.lib wxmsw28d_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
+				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
+				IgnoreDefaultLibraryNames="msvcrt"
+				GenerateDebugInformation="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -74,6 +84,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -136,12 +147,6 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Quelldateien"
-			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
-			>
-		</Filter>
-		<Filter
 			Name="Ressourcendateien"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
@@ -152,6 +157,32 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\..\src\tests\svncpp\test_path.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\tests\svncpp\test_url.hpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Quelldateien"
+			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
+			<File
+				RelativePath="..\..\..\src\tests\svncpp\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\tests\svncpp\test_path.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\tests\svncpp\test_url.cpp"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
