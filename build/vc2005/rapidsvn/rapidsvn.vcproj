@@ -280,7 +280,9 @@
 				OutputFile="$(OutDir)\$(ProjectName)_unicode_debug.exe"
 				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
+				GenerateDebugInformation="true"
 				AssemblyDebug="1"
+				GenerateMapFile="true"
 				SubSystem="2"
 				TargetMachine="1"
 			/>
