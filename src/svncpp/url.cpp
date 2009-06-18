@@ -38,12 +38,6 @@ namespace svn
 
   Url::~Url() {}
 
-  /**
-   * determines if a path is a url; escape unsupported characters
-   * before checking
-   *
-   * @param urlToValidate url to be validated
-   */
   bool
   Url::isValid(const char * urlToValidate)
   {
@@ -52,13 +46,7 @@ namespace svn
     return svn_path_is_url(escapedUrlToValidate.c_str()) != 0;
   }
 
-  /**
-   * returns a url with forbidden characters like spaces escaped
-   *
-   * @param url url to be escaped
-   *
-   * @return string escaped url
-   */
+
   std::string
   Url::escape(const char * url)
   {
@@ -67,14 +55,7 @@ namespace svn
     return svn_path_uri_autoescape(url, pool);
   }
 
-  /**
-   * returns a url with unescaped special characters, undo changes of the
-   * previous, escape function
-   *
-   * @param url url to be unescaped
-   *
-   * @return string unescaped url
-   */
+
   std::string
   Url::unescape(const char * url)
   {
