@@ -60,6 +60,12 @@ extern const wxChar HISTORY_COPYMOVE_DESTINATION [];
 extern const wxChar HISTORY_DIFF_URL [];
 
 
+/**
+ * History entry for existing working directories 
+ */
+extern const wxChar HISTORY_EXISTING_WORKING_DIRECTORY[];
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:

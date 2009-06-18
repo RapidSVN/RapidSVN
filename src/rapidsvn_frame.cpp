@@ -50,6 +50,8 @@
 #include "folder_item_data.hpp"
 #include "folder_browser.hpp"
 #include "filelist_ctrl.hpp"
+#include "hist_entries.hpp"
+#include "hist_mgr.hpp"
 #include "annotate_data.hpp"
 #include "log_data.hpp"
 #include "drag_n_drop_data.hpp"
@@ -2053,7 +2055,15 @@ RapidSvnFrame::OnListenerEvent(wxCommandEvent & event)
 void
 RapidSvnFrame::AddWcBookmark()
 {
-  wxDirDialog dialog(this, _("Select a directory"), wxGetHomeDir());
+  const wxArrayString & lastDirs=TheHistoryManager.ReadList(HISTORY_EXISTING_WORKING_DIRECTORY);
+
+  wxString dir;
+  if (lastDirs.IsEmpty())
+    dir = wxGetHomeDir();
+  else
+    dir = lastDirs[0];
+
+  wxDirDialog dialog(this, _("Select a directory"), dir);
   bool add = TRUE;
 
   // select dir dialog
@@ -2087,8 +2097,8 @@ directory to the bookmarks!"),
               dialog.GetPath().c_str());
 
   m->folderBrowser->SelectBookmark(dialog.GetPath());
-  //UpdateCurrentPath ();
-  //RefreshFileList ();
+
+  TheHistoryManager.AddEntryToList(HISTORY_EXISTING_WORKING_DIRECTORY, dialog.GetPath());
 }
 
 void

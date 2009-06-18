@@ -33,9 +33,11 @@ const wxChar HISTORY_REPOSITORY[] = wxT("History/Repositories");
 
 const wxChar HISTORY_WORKING_DIRECTORY[] = wxT("History/WorkingDirectories");
 
-const wxChar HISTORY_COPYMOVE_DESTINATION [] = wxT("History/CopyMoveDestination");
+const wxChar HISTORY_COPYMOVE_DESTINATION[] = wxT("History/CopyMoveDestination");
 
-const wxChar HISTORY_DIFF_URL [] = wxT("History/DiffUrl");
+const wxChar HISTORY_DIFF_URL[] = wxT("History/DiffUrl");
+
+const wxChar HISTORY_EXISTING_WORKING_DIRECTORY[] = wxT("History/ExistingWorkingDirectory");
 
 /* -----------------------------------------------------------------
  * local variables:
