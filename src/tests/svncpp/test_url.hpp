@@ -32,6 +32,7 @@ class UrlTestCase : public CppUnit::TestCase
   CPPUNIT_TEST_SUITE(UrlTestCase);
   CPPUNIT_TEST(testIsValid);
   CPPUNIT_TEST(testEscape);
+  CPPUNIT_TEST(testUnescape);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -40,6 +41,7 @@ public:
 protected:
   void testIsValid();
   void testEscape();
+  void testUnescape();
 };
 
 /* -----------------------------------------------------------------

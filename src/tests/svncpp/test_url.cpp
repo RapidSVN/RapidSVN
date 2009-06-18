@@ -52,6 +52,59 @@ UrlTestCase::testEscape()
   CPPUNIT_ASSERT("http://tigris.org/x%20y%20z.html" == svn::Url::escape("http://tigris.org/x y z.html"));
   CPPUNIT_ASSERT("http://tigris.org/xyz.php" == svn::Url::escape("http://tigris.org/xyz.php"));
   CPPUNIT_ASSERT("file:///local/file/here" == svn::Url::escape("file:///local/file/here"));
+
+  // first encode single chars
+  CPPUNIT_ASSERT("http://foo/%22" == svn::Url::escape("http://foo/\""));
+  CPPUNIT_ASSERT("http://foo/%23" == svn::Url::escape("http://foo/#"));
+  CPPUNIT_ASSERT("http://foo/%25" == svn::Url::escape("http://foo/%"));
+  CPPUNIT_ASSERT("http://foo/%3B" == svn::Url::escape("http://foo/;"));
+  CPPUNIT_ASSERT("http://foo/%3C" == svn::Url::escape("http://foo/<"));
+  CPPUNIT_ASSERT("http://foo/%3E" == svn::Url::escape("http://foo/>"));
+  CPPUNIT_ASSERT("http://foo/%3F" == svn::Url::escape("http://foo/?"));
+  CPPUNIT_ASSERT("http://foo/%5B" == svn::Url::escape("http://foo/["));
+  CPPUNIT_ASSERT("http://foo/%5C" == svn::Url::escape("http://foo/\\"));
+  CPPUNIT_ASSERT("http://foo/%5D" == svn::Url::escape("http://foo/]"));
+  CPPUNIT_ASSERT("http://foo/%5E" == svn::Url::escape("http://foo/^"));
+  CPPUNIT_ASSERT("http://foo/%60" == svn::Url::escape("http://foo/`"));
+  CPPUNIT_ASSERT("http://foo/%7B" == svn::Url::escape("http://foo/{"));
+  CPPUNIT_ASSERT("http://foo/%7C" == svn::Url::escape("http://foo/|"));
+  CPPUNIT_ASSERT("http://foo/%7D" == svn::Url::escape("http://foo/}"));
+  CPPUNIT_ASSERT("http://foo/%20" == svn::Url::escape("http://foo/ "));
+
+  // and then all together
+  CPPUNIT_ASSERT("http://foo/%22%23%25%3B%3C%3E%3F%5B%5C%5D%5E%60%7B%7C%7D%20" == svn::Url::escape("http://foo/\"#%;<>?[\\]^`{|} "));
+}
+
+
+void
+UrlTestCase::testUnescape()
+{
+  // this test is only a reversed test of UrlTestCase::testEscape
+
+  CPPUNIT_ASSERT("http://tigris.org/x%20y%20z.html" == svn::Url::escape("http://tigris.org/x y z.html"));
+  CPPUNIT_ASSERT("http://tigris.org/xyz.php" == svn::Url::escape("http://tigris.org/xyz.php"));
+  CPPUNIT_ASSERT("file:///local/file/here" == svn::Url::escape("file:///local/file/here"));
+
+  // first encode single chars
+  CPPUNIT_ASSERT("http://foo/%22" == svn::Url::escape("http://foo/\""));
+  CPPUNIT_ASSERT("http://foo/%23" == svn::Url::escape("http://foo/#"));
+  CPPUNIT_ASSERT("http://foo/%25" == svn::Url::escape("http://foo/%"));
+  CPPUNIT_ASSERT("http://foo/%3B" == svn::Url::escape("http://foo/;"));
+  CPPUNIT_ASSERT("http://foo/%3C" == svn::Url::escape("http://foo/<"));
+  CPPUNIT_ASSERT("http://foo/%3E" == svn::Url::escape("http://foo/>"));
+  CPPUNIT_ASSERT("http://foo/%3F" == svn::Url::escape("http://foo/?"));
+  CPPUNIT_ASSERT("http://foo/%5B" == svn::Url::escape("http://foo/["));
+  CPPUNIT_ASSERT("http://foo/%5C" == svn::Url::escape("http://foo/\\"));
+  CPPUNIT_ASSERT("http://foo/%5D" == svn::Url::escape("http://foo/]"));
+  CPPUNIT_ASSERT("http://foo/%5E" == svn::Url::escape("http://foo/^"));
+  CPPUNIT_ASSERT("http://foo/%60" == svn::Url::escape("http://foo/`"));
+  CPPUNIT_ASSERT("http://foo/%7B" == svn::Url::escape("http://foo/{"));
+  CPPUNIT_ASSERT("http://foo/%7C" == svn::Url::escape("http://foo/|"));
+  CPPUNIT_ASSERT("http://foo/%7D" == svn::Url::escape("http://foo/}"));
+  CPPUNIT_ASSERT("http://foo/%20" == svn::Url::escape("http://foo/ "));
+
+  // and then all together
+  CPPUNIT_ASSERT("http://foo/%22%23%25%3B%3C%3E%3F%5B%5C%5D%5E%60%7B%7C%7D%20" == svn::Url::escape("http://foo/\"#%;<>?[\\]^`{|} "));
 }
 
 
