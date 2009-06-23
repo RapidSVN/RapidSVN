@@ -44,6 +44,7 @@ namespace svn
 {
   class Status;
   class Path;
+  class Context;
 }
 
 /**
@@ -332,6 +333,18 @@ OpenURL(const wxString & url);
  */
 wxString
 FullNativePath(const svn::Path & target, const wxString & base, bool flat);
+
+/**
+  * Checks that folder on path contents a modified child/children.
+  * 
+  * @param path path to folder
+  * @param context pointer to current context
+  *
+  * @return true if folder contents modified children, 
+  *         otherwise false 
+  */
+bool
+hasModifiedChildren(const svn::Path & path, svn::Context * context);
 #endif
 /* -----------------------------------------------------------------
  * local variables:

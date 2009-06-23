@@ -613,6 +613,32 @@ FullNativePath(const svn::Path & target, const wxString & base, bool flat)
     }
   }
 }
+
+bool
+hasModifiedChildren(const svn::Path & path, svn::Context * context)
+{
+  svn::Client client(context);
+  svn::StatusEntries children = 
+    client.status(path.c_str(),
+                  true,       // Recursive
+                  true,       // Get all entries
+                  false,      // Dont update from repository
+                  false);     // Use global ignores
+
+  svn::StatusEntries::iterator it;
+  for (it = children.begin(); it != children.end(); it++)
+  {
+    svn::Status & childStatus = *it;
+
+    if ((childStatus.textStatus() == svn_wc_status_modified) ||
+        (childStatus.propStatus() == svn_wc_status_modified))
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
