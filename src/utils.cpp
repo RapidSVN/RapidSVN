@@ -617,13 +617,15 @@ FullNativePath(const svn::Path & target, const wxString & base, bool flat)
 bool
 hasModifiedChildren(const svn::Path & path, svn::Context * context)
 {
+  // there is no such thing like a modifed item in an url...
+  if (svn::Url::isValid(path.c_str()))
+    return false;
+
   svn::Client client(context);
   svn::StatusEntries children = 
     client.status(path.c_str(),
-                  true,       // Recursive
-                  true,       // Get all entries
-                  false,      // Dont update from repository
-                  false);     // Use global ignores
+                  true,   // Recursive
+                  false); // Only get interesting entries
 
   svn::StatusEntries::iterator it;
   for (it = children.begin(); it != children.end(); it++)
