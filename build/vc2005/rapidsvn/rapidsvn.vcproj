@@ -37,6 +37,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="../../../include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
 				PreprocessorDefinitions="__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="3"
@@ -260,6 +261,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="../../../include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
 				PreprocessorDefinitions="wxUSE_UNICODE=1;__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="3"
