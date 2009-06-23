@@ -69,10 +69,7 @@ namespace svn
       m_path = int_path;
 
       if (svn::Url::isValid(int_path))
-      {
         m_pathIsUrl = true;
-        m_path = svn::Url::escape(int_path);
-      }
     }
   }
 
@@ -262,6 +259,7 @@ namespace svn
   {
     return svn::Url::unescape(m_path.c_str());
   }
+
 
   /* ===================================================================
    * The next two Fixed_* functions are copies of the APR

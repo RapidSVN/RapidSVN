@@ -234,7 +234,8 @@ void
 LocalToUtf8(const wxString & srcLocal, std::string & dstUtf8);
 
 /**
- * converts a string from local encoding to a utf8 path
+ * converts a string from local encoding to a utf8 path.
+ * Urls get escaped
  *
  * @param path path string in local encoding
  * @return path in utf8

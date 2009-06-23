@@ -540,6 +540,8 @@ public:
                     false,      // Dont update from repository
                     false);     // Use global ignores
 
+    bool pathIsUrl = parentPathUtf8.isUrl();
+
     svn::StatusEntries::iterator it;
     for (it = entries.begin(); it != entries.end(); it++)
     {
@@ -598,7 +600,7 @@ public:
                                image, image, data);
 
         bool hasSubDirs = true;
-        if (!filename.isUrl())
+        if (!pathIsUrl)
           hasSubDirs = HasSubdirectories(path);
         treeCtrl->SetItemHasChildren(newId, hasSubDirs);
         treeCtrl->SetItemImage(newId, open_image, wxTreeItemIcon_Expanded);

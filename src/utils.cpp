@@ -39,6 +39,7 @@
 #include "svncpp/client.hpp"
 #include "svncpp/status.hpp"
 #include "svncpp/path.hpp"
+#include "svncpp/url.hpp"
 
 // app
 #include "ids.hpp"
@@ -507,12 +508,13 @@ LocalToUtf8(const wxString & srcLocal, std::string & dstUtf8)
 svn::Path
 PathUtf8(const wxString & path)
 {
-#if wxUSE_UNICODE
-  return path.mb_str(wxConvUTF8).data();
-#else
-  wxString wxdst(path.wc_str(*GetWXLocalConv()), wxConvUTF8);
-  return wxdst.mb_str();
-#endif
+  std::string utf8;
+  LocalToUtf8(path, utf8);
+
+  if (svn::Url::isValid(utf8.c_str()))
+    return svn::Url::escape(utf8.c_str()).c_str();
+  else
+    return utf8;
 }
 
 

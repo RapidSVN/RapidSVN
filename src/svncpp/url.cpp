@@ -32,6 +32,33 @@
 #include "svncpp/pool.hpp"
 #include "svncpp/url.hpp"
 
+static void findAndReplace(std::string & source, const std::string & find, const std::string & replace)
+{
+  // start seaching from the beginning
+  size_t pos = 0;
+  size_t findLength = find.length();
+  size_t replaceLength = replace.length();
+
+  do
+  {
+    // search for the next occurrenc
+    pos = source.find(find, pos);
+    
+    // found?
+    if (pos != std::string::npos)
+    {
+      // yes, place
+      source.replace(pos, findLength, replace);
+
+      // Make sure we dont search from the beginning
+      // othwise replacing % with %25 would result 
+      // in an endless loop
+      pos = pos + replaceLength;
+    }
+  }
+  while (pos != std::string::npos);
+}
+
 namespace svn
 {
   Url::Url() {}
@@ -41,9 +68,7 @@ namespace svn
   bool
   Url::isValid(const char * urlToValidate)
   {
-    std::string escapedUrlToValidate = escape(urlToValidate);
-
-    return svn_path_is_url(escapedUrlToValidate.c_str()) != 0;
+    return svn_path_is_url(urlToValidate) != 0;
   }
 
 
@@ -52,7 +77,21 @@ namespace svn
   {
     Pool pool;
 
-    return svn_path_uri_autoescape(url, pool);
+    // First make sure % gets escaped
+    std::string partlyEscaped(url);
+    findAndReplace(partlyEscaped, "%", "%25");
+
+    // Let svn do the first part of the work
+    partlyEscaped=svn_path_uri_autoescape(partlyEscaped.c_str(), pool);
+
+    // Then worry about the rest
+    findAndReplace(partlyEscaped, "#", "%23");
+    findAndReplace(partlyEscaped, ";", "%3B");
+    findAndReplace(partlyEscaped, "?", "%3F");
+    findAndReplace(partlyEscaped, "[", "%5B");
+    findAndReplace(partlyEscaped, "]", "%5D");
+
+    return partlyEscaped;
   }
 
 
