@@ -583,7 +583,7 @@ public:
 
         if ((status.textStatus() == svn_wc_status_modified) ||
             (status.propStatus() == svn_wc_status_modified) ||
-            (hasModifiedChildren(status.path(), GetContext())))
+            (HasModifiedChildren(status.path(), GetContext())))
         {
           image = FOLDER_IMAGE_MODIFIED_FOLDER;
           open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;

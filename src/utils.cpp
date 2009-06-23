@@ -615,7 +615,7 @@ FullNativePath(const svn::Path & target, const wxString & base, bool flat)
 }
 
 bool
-hasModifiedChildren(const svn::Path & path, svn::Context * context)
+HasModifiedChildren(const svn::Path & path, svn::Context * context)
 {
   // there is no such thing like a modifed item in an url...
   if (svn::Url::isValid(path.c_str()))
