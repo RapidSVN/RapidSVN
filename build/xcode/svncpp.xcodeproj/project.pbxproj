@@ -79,12 +79,12 @@
 		4D597A1D0FA8AAD300BE5B53 = {
 			isa = PBXGroup;
 			children = (
-				4D597A300FA8AAE800BE5B53 /* Sources */,
+				4D597A300FA8AAE800BE5B53 /* svncpp */,
 				4D597A360FA8AB1900BE5B53 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		4D597A300FA8AAE800BE5B53 /* Sources */ = {
+		4D597A300FA8AAE800BE5B53 /* svncpp */ = {
 			isa = PBXGroup;
 			children = (
 				4D597A530FA8ACAB00BE5B53 /* client.cpp */,
@@ -114,7 +114,8 @@
 				4D597A6B0FA8ACAB00BE5B53 /* wc.cpp */,
 				4D597A3A0FA8AB2E00BE5B53 /* apr.cpp */,
 			);
-			name = Sources;
+			name = svncpp;
+			path = ../../src/svncpp;
 			sourceTree = "<group>";
 		};
 		4D597A360FA8AB1900BE5B53 /* Products */ = {
