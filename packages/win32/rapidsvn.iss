@@ -36,8 +36,9 @@ Name: main; Description: RapidSVN Application; Types: compact custom full; Flags
 
 [Files]
 ; RapidSVN application files
-Source: "tmp/rapidsvn_ansi.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; OnlyBelowVersion: 0,4.0; Components: main
-Source: "tmp/rapidsvn_unicode.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; MinVersion: 0,4.0; Components: main
+Source: "tmp/rapidsvn_ansi.exe"; DestDir: "{app}\bin"; Flags: ignoreversion;
+Source: "tmp/rapidsvn_unicode.exe"; DestDir: "{app}\bin"; Flags: ignoreversion;
+Source: "tmp/rapidsvn_*.exe.manifest"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "..\..\src\locale\de\rapidsvn.po"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\de\rapidsvn.mo"; DestDir: "{app}\bin\locale\de"; Flags: ignoreversion; Components: main
 Source: "..\..\src\locale\fr\rapidsvn.po"; DestDir: "{app}\bin\locale\fr"; Flags: ignoreversion; Components: main
@@ -66,11 +67,12 @@ Source: "tmp\*.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: mai
 Source: "tmp\*.so"; DestDir: "{app}\bin\iconv"; Flags: ignoreversion; Components: main
 
 [Icons]
-Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn_ansi.exe"; WorkingDir: "{app}\bin"; OnlyBelowVersion: 0,4.0; Components: main
+Name: "{group}\RapidSVN (Ansi)"; Filename: "{app}\bin\rapidsvn_ansi.exe"; WorkingDir: "{app}\bin"; OnlyBelowVersion: 0,4.0; Components: main
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn_unicode.exe"; WorkingDir: "{app}\bin"; MinVersion: 0,4.0; Components: main
-Name: "{userdesktop}\RapidSVN-0.9.9"; Filename: "{app}\bin\rapidsvn_ansi.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon; OnlyBelowVersion: 0,4.0; Components: main
+Name: "{userdesktop}\RapidSVN-0.9.9 (Ansi)"; Filename: "{app}\bin\rapidsvn_ansi.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon; OnlyBelowVersion: 0,4.0; Components: main
 Name: "{userdesktop}\RapidSVN-0.9.9"; Filename: "{app}\bin\rapidsvn_unicode.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon; MinVersion: 0,4.0; Components: main
 
 [Run]
-Filename: "{app}\bin\rapidsvn.exe"; Description: "Launch RapidSVN"; WorkingDir: "{app}\bin"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\bin\rapidsvn_ansi.exe"; Description: "Launch RapidSVN (Ansi)"; WorkingDir: "{app}\bin"; Flags: nowait postinstall skipifsilent; OnlyBelowVersion: 0,4.0; Components: main
+Filename: "{app}\bin\rapidsvn_unicode.exe"; Description: "Launch RapidSVN"; WorkingDir: "{app}\bin"; Flags: nowait postinstall skipifsilent; MinVersion: 0,4.0; Components: main
 
