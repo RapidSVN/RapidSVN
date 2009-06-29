@@ -26,6 +26,7 @@
 #include "wx/wx.h"
 #include "wx/confbase.h"
 #include "wx/stdpaths.h"
+#include "wx/sysopt.h"
 #include <wx/fs_zip.h> // ZIP filesystem support
 #include <wx/tipdlg.h>
 #include <wx/cshelp.h>
@@ -64,6 +65,7 @@ bool RapidSvnApp::OnInit()
   m_locale.Init();
   m_locale.AddCatalogLookupPathPrefix(wxT("locale"));
 #ifdef __WXMAC__
+	wxSystemOptions::SetOption(wxT("mac.listctrl.always_use_generic"), true);
   m_locale.AddCatalogLookupPathPrefix(
     wxStandardPaths::Get().GetResourcesDir() +
     wxFileName::GetPathSeparator() +
