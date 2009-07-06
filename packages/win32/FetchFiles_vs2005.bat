@@ -24,6 +24,9 @@ rem Copy Subversion and APR DLLs
 copy %SUBVERSION%\bin\*.dll tmp
 copy %SUBVERSION%\iconv\*.so tmp
 
+rem Copy C++ 6.0 Runtime (needed for libdb44.dll)
+copy msvcp60.dll tmp
+
 rem Copy C++ Runtime
 copy msvcp80.dll tmp
 copy msvcr80.dll tmp
