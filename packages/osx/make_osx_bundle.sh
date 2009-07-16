@@ -4,7 +4,7 @@
 #
 
 # Remove any old stuff. We wanna create a FRESH bundle
-DISKIMAGE=RapidSVN-0.9.9
+DISKIMAGE=RapidSVN-0.10.0
 DISKIMAGE_FILE=$DISKIMAGE.dmg
 test -e RapidSVN.app && rm -rf RapidSVN.app
 rm *.dmg
@@ -58,10 +58,10 @@ echo -n \
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key><string>0.9.9</string>
-	<key>CFBundleShortVersionString</key><string>0.9.9</string>
-	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.9.9, (c) 2002-2009 RapidSVN</string>
-	<key>CFBundleLongVersionString</key><string>0.9.9, (c) 2002-2009 RapidSVN</string>
+	<key>CFBundleVersion</key><string>0.10.0</string>
+	<key>CFBundleShortVersionString</key><string>0.10.0</string>
+	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.10.0, (c) 2002-2009 RapidSVN</string>
+	<key>CFBundleLongVersionString</key><string>0.10.0, (c) 2002-2009 RapidSVN</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2002-2007 RapidSVN</string>
 	<key>LSRequiresCarbon</key>

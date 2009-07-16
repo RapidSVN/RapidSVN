@@ -45,12 +45,12 @@
 /**
  * Minor version number.
  */
-#define RAPIDSVN_VER_MINOR 9
+#define RAPIDSVN_VER_MINOR 10
 
 /**
  * Micro version number.
  */
-#define RAPIDSVN_VER_MICRO 9
+#define RAPIDSVN_VER_MICRO 0
 
 /**
  * Patch string. Can be empty
@@ -60,7 +60,7 @@
 /**
  * Combined version string
  */
-#define RAPIDSVN_VER_STR "0.9.9"
+#define RAPIDSVN_VER_STR "0.10.0"
 
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
