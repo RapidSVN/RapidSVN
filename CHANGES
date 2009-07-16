@@ -1,3 +1,31 @@
+Version 0.10 (released July 17th 2009)
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.10
+
+User-visible changes
+
+    * 632 New Feature: Ability to commit specific files
+    * 80  Enhancement: Remember filenames, log entries between calls
+    * 128 Enhancement: Add special folder item if folder/subfolder contains modified file
+    * 477 Enhancement: Concurrent actions lacked visual feedback
+    * 601 Enhancement: Add "review" functionality to commit dialog
+    * 638 Enhancement: Adding files recursively
+    * 655 Enhancement: Remeber last directory when adding an existing working copy
+    * 413 Fixed: Focus lost from file view after app switch
+    * 548 Fixed: Mac: Update dialog didnt respond to ENTER key
+    * 599 Fixed: Refresh with update: DnD on file list failed
+    * 634 Fixed: Mac: Filelist order broken (first files and then folders, folders in wrong order)
+
+Developer-visible changes
+
+    * 649 Win32: Support for Visual Studio 2005
+
+Work in progress (not completed)
+
+    * 526 Filelist update fails when there are special characetrs in the uri
+    * 555 Linux+Mac: locale files not installed by default
+    * 654 Error when open folder into tree with Cyrilic characters in name.
+
+
 Version 0.9.8 (released March 19th 2009)
 http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.9.8
 
