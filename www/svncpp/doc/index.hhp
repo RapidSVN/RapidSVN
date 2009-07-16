@@ -10,7 +10,7 @@ Language=0x409 English (United States)
 Title=SvnCpp
 
 [WINDOWS]
-main="SvnCpp","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x387e,,,,,,,,0
+main="SvnCpp","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x10387e,,,,,,,,0
 
 [FILES]
 index.html
@@ -67,6 +67,7 @@ version_8hpp.html
 wc_8hpp.html
 deprecated.html
 annotated.html
+classes.html
 hierarchy.html
 functions.html
 functions_0x62.html

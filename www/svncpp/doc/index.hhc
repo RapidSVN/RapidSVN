@@ -15,7 +15,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::ClientException"><param name="Local" value="classsvn_1_1ClientException.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Context"><param name="Local" value="classsvn_1_1Context.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::ContextListener"><param name="Local" value="classsvn_1_1ContextListener.html"><param name="ImageNumber" value="11"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::ContextListener::SslServerTrustData"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::ContextListener::ContextListener::SslServerTrustData"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::DateTime"><param name="Local" value="classsvn_1_1DateTime.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::DirEntry"><param name="Local" value="classsvn_1_1DirEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Entry"><param name="Local" value="classsvn_1_1Entry.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -42,7 +42,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Client"><param name="Local" value="classsvn_1_1Client.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Context"><param name="Local" value="classsvn_1_1Context.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::ContextListener"><param name="Local" value="classsvn_1_1ContextListener.html"><param name="ImageNumber" value="11"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::ContextListener::SslServerTrustData"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html"><param name="ImageNumber" value="11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::ContextListener::ContextListener::SslServerTrustData"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::DateTime"><param name="Local" value="classsvn_1_1DateTime.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::DirEntry"><param name="Local" value="classsvn_1_1DirEntry.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="svn::Entry"><param name="Local" value="classsvn_1_1Entry.html"><param name="ImageNumber" value="11"></OBJECT>

@@ -106,8 +106,8 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#d228fd8825e3c858a7acd84b1222d241"><param name="Name" value="entry"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#22c2da8772cd10e91c9085ea4b823461"><param name="Name" value="escape"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#0dd8f2c6fad74674079f907a3e51ac64"><param name="Name" value="Exception"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#7147629f39ff44894ac958495a79f885"><param name="Name" value="failures"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#3002daad7303d120ffe80bc1a202d624"><param name="Name" value="fingerprint"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#ff2daf4d0e99d6ca6b8b03d7d4ad7c7f"><param name="Name" value="failures"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#98d00128dfc1d254dcac86b98c694fc4"><param name="Name" value="fingerprint"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#25daf115e121c683f4cb7bc12ea134db"><param name="Name" value="get"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#6a48a2020b35e43f5794722b7da9fdcd"><param name="Name" value="GetAPRTimeT"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#862dfe08cf6f4a85aeae1da9e720aef6"><param name="Name" value="getContext"></OBJECT>
@@ -124,7 +124,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#396004f033f4a0d86661f1241d5afa86"><param name="Name" value="hasUrl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#d02b79fc2a0e463e71ae4314116c8f7c"><param name="Name" value="hasVersioned"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#82a40f08814af5fd8584fd50dd9e73f3"><param name="Name" value="HEAD"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#281307928df9356df54a36e9fc402041"><param name="Name" value="hostname"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#98283de45c37f05bc360cde54e74dc99"><param name="Name" value="hostname"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#47d0d809756b517b0cfe80e4f7952c52"><param name="Name" value="ignore"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#28270185f8d3fc920b3f47d021dbe339"><param name="Name" value="import"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#0c4d484e0bc8c532d807fd4abaece34b"><param name="Name" value="info"></OBJECT>
@@ -149,7 +149,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#934426adbdbf73c1ce230d00000bed5c"><param name="Name" value="svn::Path"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#f4aa43b0937d032970347d6cde8e1ccb"><param name="Name" value="svn::Status"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#fdc5b1ae9e8fad02c6abc9fead916d48"><param name="Name" value="issuerDName"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#0a8ecfbc1a8d4cb3312e0e5f7bec7f51"><param name="Name" value="issuerDName"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#1322f705495cd98668ebee3a7f58d9bf"><param name="Name" value="isSwitched"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#4fd5b04a88d3ba95914ef946bbfdcc73"><param name="Name" value="isUrl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#3275770645ef09a2f37a672a2fd5b614"><param name="Name" value="IsValid"></OBJECT>
@@ -189,7 +189,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogEntry.html#f8582d0b2b5af768014284b6e9d1a8ac"><param name="Name" value="LogEntry"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#e150d6008f18b5d5843674715b691302"><param name="Name" value="m"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#f1968bd1f97a5c67a507de1613a906fe"><param name="Name" value="maySave"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#60cc503606f812ba42061038ee72751a"><param name="Name" value="maySave"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#06c837c897521288cbe7b63ebdf59832"><param name="Name" value="merge"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#42de6b83c4aec7dcc7805847821ac11d"><param name="Name" value="message"></OBJECT>
   <UL>
@@ -221,9 +221,9 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#ea941a8dd76b77517360660d05e78e21"><param name="Name" value="svn::DateTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#802d97d8ba9251b21bec9190d4c1acdf"><param name="Name" value="svn::Path"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#22fb62cee9d015ed643949d10c5d8c42"><param name="Name" value="operator="></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#72bf8fdeff018e9230f118bb9e4a01bb"><param name="Name" value="operator="></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#22fb62cee9d015ed643949d10c5d8c42"><param name="Name" value="svn::ContextListener::SslServerTrustData"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#72bf8fdeff018e9230f118bb9e4a01bb"><param name="Name" value="svn::ContextListener::SslServerTrustData"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#ba6ca332418645d86d06c969c815783e"><param name="Name" value="svn::DateTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#8885f4d4b87e81f97b9da227d50368b8"><param name="Name" value="svn::DirEntry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#3ee218219359e79a00aa431fb71f1d3a"><param name="Name" value="svn::Entry"></OBJECT>
@@ -281,7 +281,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#0265b5c38bdf365cc932c41695b57cd9"><param name="Name" value="svn::StatusSel"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Targets.html#8eac8e3da408a0133e97355551b0ea18"><param name="Name" value="svn::Targets"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#7ae1ed2a4054246b72a7874fa17f950f"><param name="Name" value="realm"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#969050a3eb12ee2fc0428de25b5ad8e0"><param name="Name" value="realm"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#3b6b1c1e926932cdd4ed5e4960a5f323"><param name="Name" value="relocate"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#888f1fe56c63ab87f76c0a2dbea3f03e"><param name="Name" value="remove"></OBJECT>
   <UL>
@@ -340,7 +340,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Targets.html#952c8a5bd541671cbc4fdcafc9172184"><param name="Name" value="svn::Targets"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#9744e9cb15d3b0242d8641a32c962521"><param name="Name" value="split"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#fd739de29747495b3c649cf3701c61ed"><param name="Name" value="SslServerTrustData"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#db755ae1342e23ba3904214bc4d62aa4"><param name="Name" value="SslServerTrustData"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#3e945b9702911eaf4a6b96232164a55e"><param name="Name" value="START"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#23a90b64730025b76916643f39278705"><param name="Name" value="status"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#53218299060391bddbb5428ffc531b17"><param name="Name" value="Status"></OBJECT>
@@ -433,16 +433,16 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html"><param name="Name" value="svn::ContextListener::SslServerTrustData"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#7147629f39ff44894ac958495a79f885"><param name="Name" value="failures"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#3002daad7303d120ffe80bc1a202d624"><param name="Name" value="fingerprint"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#281307928df9356df54a36e9fc402041"><param name="Name" value="hostname"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#fdc5b1ae9e8fad02c6abc9fead916d48"><param name="Name" value="issuerDName"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#f1968bd1f97a5c67a507de1613a906fe"><param name="Name" value="maySave"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#22fb62cee9d015ed643949d10c5d8c42"><param name="Name" value="operator="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#7ae1ed2a4054246b72a7874fa17f950f"><param name="Name" value="realm"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#fd739de29747495b3c649cf3701c61ed"><param name="Name" value="SslServerTrustData"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#bd299aaf1c4eec371dfdcded3aab8170"><param name="Name" value="validFrom"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#c2e7209c2501548a318f16f8924f2b32"><param name="Name" value="validUntil"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#ff2daf4d0e99d6ca6b8b03d7d4ad7c7f"><param name="Name" value="failures"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#98d00128dfc1d254dcac86b98c694fc4"><param name="Name" value="fingerprint"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#98283de45c37f05bc360cde54e74dc99"><param name="Name" value="hostname"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#0a8ecfbc1a8d4cb3312e0e5f7bec7f51"><param name="Name" value="issuerDName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#60cc503606f812ba42061038ee72751a"><param name="Name" value="maySave"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#72bf8fdeff018e9230f118bb9e4a01bb"><param name="Name" value="operator="></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#969050a3eb12ee2fc0428de25b5ad8e0"><param name="Name" value="realm"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#db755ae1342e23ba3904214bc4d62aa4"><param name="Name" value="SslServerTrustData"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#7980986ab4de7e7c76be67933607d844"><param name="Name" value="validFrom"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#f314736e5af2a4dde876f49155262f26"><param name="Name" value="validUntil"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1ContextListener.html"><param name="Name" value="svn::ContextListener"></OBJECT>
   <UL>
@@ -736,8 +736,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#607ec167eac821ee1bf3a868a68f129b"><param name="Name" value="svn::Entry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#5aecb880ce76c7dbea93d5c387a1f47a"><param name="Name" value="svn::Info"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#bd299aaf1c4eec371dfdcded3aab8170"><param name="Name" value="validFrom"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#c2e7209c2501548a318f16f8924f2b32"><param name="Name" value="validUntil"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#7980986ab4de7e7c76be67933607d844"><param name="Name" value="validFrom"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#f314736e5af2a4dde876f49155262f26"><param name="Name" value="validUntil"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1PropertyEntry.html#0e2063bc43c1032729a067de61e02fdb"><param name="Name" value="value"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="version_8hpp.html"><param name="Name" value="version.hpp"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#16411f02d70c7b0bd38178bddb5b469d"><param name="Name" value="WORKING"></OBJECT>
