@@ -78,17 +78,28 @@ class Version:
             int('0' + self.patch, 10)
 
 def replace(fname, regex, newval, what):
-    s = open(fname, "r").read()
-    s_old = s
+    s_old = open(fname, "r").read()
+    rest = s_old
     r = re.compile(regex)
-    m = r.search(s)
-    if not m:
+    m = r.search(rest)
+    found = False
+    s = ""
+    while m:
+        found = True
+        s += rest[:m.start()] + newval
+        rest = rest[m.end():]
+        m = r.search(rest)
+    
+    s += rest
+
+    if not found:
         print "%s: %s not found" % (fname, what)
+    elif s == s_old:
+        print "%s: %s already replaced" % (fname, what)
     else:
-        s = s[:m.start()] + newval + s[m.end():]
-        if (s != s_old):
-            open(fname, "w").write(s)
-            print "%s: %s changed" % (fname, what)
+        open(fname, "w").write(s)
+        print "%s: %s changed" % (fname, what)
+
 
 class VersionChecker:
     def __init__(self):
