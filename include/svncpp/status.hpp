@@ -31,6 +31,9 @@
 #include "svncpp/entry.hpp"
 #include "svncpp/pool.hpp"
 
+// stl
+#include "svncpp/vector_wrapper.hpp"
+
 namespace svn
 {
   /**
@@ -168,6 +171,8 @@ namespace svn
     struct Data;
     Data * m;
   };
+
+  typedef std::vector<Status> StatusVector;
 }
 
 #endif

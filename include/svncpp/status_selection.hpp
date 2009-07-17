@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -73,6 +73,14 @@ namespace svn
      */
     const apr_array_header_t *
     array(const Pool & pool) const;
+
+    /**
+     * Returns a vector of statuses
+     *
+     * @return vector of statuses
+     */
+    const StatusVector &
+    statusVector() const;
 
     /**
      * Returns a vector of paths

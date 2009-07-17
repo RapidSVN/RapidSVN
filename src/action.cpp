@@ -203,6 +203,12 @@ Action::SetStatusSel(const svn::StatusSel & statusSel)
   m->statusSel = statusSel;
 }
 
+const svn::StatusVector &
+Action::GetStatusVector() const
+{
+  return m->statusSel.statusVector();
+}
+
 const svn::Targets &
 Action::GetTargets() const
 {

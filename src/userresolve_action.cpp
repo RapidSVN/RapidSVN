@@ -63,75 +63,51 @@ UserResolveAction::Perform()
     return false;
   }
 
-  const svn::PathVector v = GetTargets();
-  svn::PathVector::const_iterator it;
+  const svn::StatusVector & v = GetStatusVector();
+  svn::StatusVector::const_iterator it;
 
   svn::Client client(GetContext());
   for (it = v.begin(); it != v.end(); it++)
   {
-    const svn::Path & path = *it;
+    const svn::Path & path = it->path();
+    const svn::Entry & entry = it->entry();
 
-    wxString resultPath = Utf8ToLocal(path.native().c_str());
-    wxString minePath   = resultPath + wxT(".mine");
+    wxFileName resultPath = Utf8ToLocal(path.native().c_str());
+    wxFileName minePath(resultPath.GetPath(), Utf8ToLocal(entry.conflictWrk()));
+    wxFileName basePath(resultPath.GetPath(), Utf8ToLocal(entry.conflictOld()));
+    wxFileName theirsPath(resultPath.GetPath(), Utf8ToLocal(entry.conflictNew()));
 
-    if (wxFileExists(resultPath) && wxFileExists(minePath))
+    if ((!resultPath.FileExists()) || (!minePath.FileExists()) ||
+        (!basePath.FileExists()) ||  (!theirsPath.FileExists()))
     {
-      wxString search = resultPath + wxT(".r*");
-
-      wxFileSystem fileSystem;
-
-      wxString r1 = fileSystem.FindFirst(search, wxFILE);
-      wxString r2 = fileSystem.FindNext();
-
-      if (!r1.IsEmpty() && !r2.IsEmpty())
-      {
-        long r1val = 0;
-        long r2val = 0;
-
-        if (r1.AfterLast('r').ToLong(&r1val) && r2.AfterLast('r').ToLong(&r2val))
-        {
-          wxString basePath;
-          wxString theirsPath;
-
-          if (r1val < r2val)
-          {
-            basePath   = r1;
-            theirsPath = r2;
-          }
-          else
-          {
-            basePath   = r2;
-            theirsPath = r1;
-          }
-
-          // prepare command line to execute
-          wxString args(prefs.mergeToolArgs);
-
-          TrimString(args);
-
-          if (args.Length() == 0)
-            args.Printf(wxT("\"%s\" \"%s\" \"%s\" \"%s\""), basePath.c_str(),
-                        theirsPath.c_str(),
-                        minePath.c_str(),
-                        resultPath.c_str());
-          else
-          {
-            args.Replace(wxT("%1"), basePath.c_str(), true);
-            args.Replace(wxT("%2"), theirsPath.c_str(), true);
-            args.Replace(wxT("%3"), minePath.c_str(), true);
-            args.Replace(wxT("%4"), resultPath.c_str(), true);
-          }
-
-          wxString cmd(prefs.mergeTool + wxT(" ") + args);
-
-          wxString msg;
-          msg.Printf(_("Execute merge tool: %s"), cmd.c_str());
-          Trace(msg);
-
-          ActionEvent::Post(GetParent(), TOKEN_CMD_MERGE, cmd);
-        }
-      }
+      continue;
     }
+
+    // prepare command line to execute
+    wxString args(prefs.mergeToolArgs);
+
+    TrimString(args);
+
+    if (args.Length() == 0)
+      args.Printf(wxT("\"%s\" \"%s\" \"%s\" \"%s\""), basePath.GetFullPath().c_str(),
+                  theirsPath.GetFullPath().c_str(),
+                  minePath.GetFullPath().c_str(),
+                  resultPath.GetFullPath().c_str());
+		else
+    {
+      args.Replace(wxT("%1"), basePath.GetFullPath().c_str(), true);
+      args.Replace(wxT("%2"), theirsPath.GetFullPath().c_str(), true);
+      args.Replace(wxT("%3"), minePath.GetFullPath().c_str(), true);
+      args.Replace(wxT("%4"), resultPath.GetFullPath().c_str(), true);
+    }
+
+    wxString cmd(prefs.mergeTool + wxT(" ") + args);
+
+    wxString msg;
+    msg.Printf(_("Execute merge tool: %s"), cmd.c_str());
+    Trace(msg);
+
+    ActionEvent::Post(GetParent(), TOKEN_CMD_MERGE, cmd);
   }
 
   return true;
