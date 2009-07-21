@@ -94,7 +94,7 @@ def buildMessages():
       msgfmt.make(po,mo)
 
 
-def buildInstaller(compiler):
+def buildInstaller(compiler, suffix):
   print "Clean installer"
   os.chdir("packages/win32")
   # Remove files
@@ -120,7 +120,7 @@ def buildInstaller(compiler):
   old=n[0]
   e=os.path.splitext(old)
   print e
-  pkg="%s-%s%s" % (e[0],currentRevision,e[1])
+  pkg="%s-%s%s%s" % (e[0],currentRevision,suffix,e[1])
   os.rename(old, pkg)
   print "The new package is: %s" % (pkg)
   os.chdir("../..")
@@ -141,7 +141,7 @@ def makeApplication():
     print "Hm, seems like we have a build error: aborting"
     sys.exit(1)
 
-def buildMacDiskImage():
+def buildMacDiskImage(suffix):
   print 'Build Mac Disk Image'
   os.chdir('packages/osx')
   run('./make_osx_bundle.sh', silent=True)
@@ -154,7 +154,7 @@ def buildMacDiskImage():
   old=n[0]
   e=os.path.splitext(old)
   print e
-  pkg="%s-%s%s" % (e[0],currentRevision,e[1])
+  pkg="%s-%s%s%s" % (e[0],currentRevision,suffix,e[1])
   os.rename(old, pkg)
   print "The new package is: %s" % (pkg)
   os.chdir("../..")
@@ -175,7 +175,7 @@ def uploadInstaller(pkg):
   run(scp,  [pkg, url])
 
 def usage():
-  print "Usage: create_nightly.py [--compiler={vc2005, vc6}]"
+  print "Usage: create_nightly.py [--compiler={vc2005, vc6}] [--suffix=<text>]"
   print
 
 if __name__ == '__main__':
@@ -186,8 +186,9 @@ if __name__ == '__main__':
 
   # Parse the options
   compiler=None
+  suffix=""
   try:
-    opts, args=getopt(sys.argv[1:], [], ['compiler='])
+    opts, args=getopt(sys.argv[1:], [], ['compiler=', 'suffix='])
 
     if len(args) > 1:
       raise Exception()
@@ -198,6 +199,8 @@ if __name__ == '__main__':
           raise Exception()
         else:
           compiler = value
+      elif opt == '--suffix':
+         suffix = value
 
   except:
     usage()
@@ -230,13 +233,13 @@ if __name__ == '__main__':
   pkg = ''
   if system == 'Darwin':
     makeApplication()
-    pkg=buildMacDiskImage()
+    pkg=buildMacDiskImage(suffix)
   elif system == 'Windows':
     if compiler in [None, 'vc6']:
       buildApplicationVc6()
     elif compiler == 'vc2005':
       buildApplicationVc2005()
-    pkg=buildInstaller(compiler)
+    pkg=buildInstaller(compiler, suffix)
   uploadInstaller(pkg)
 
   #remember revision
