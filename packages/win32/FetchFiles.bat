@@ -33,7 +33,7 @@ rem Copy C++ Runtime
 copy msvcp60.dll tmp
 
 rem Copy RapidSvn
-copy ..\..\Release\rapidsvn.exe" tmp/rapidsvn_ansi.exe
-copy ..\..\Unicode_Release\rapidsvn.exe tmp/rapidsvn_unicode.exe
+copy ..\..\Release\rapidsvn_ansi.exe" tmp
+copy ..\..\Unicode_Release\rapidsvn_unicode.exe tmp
 
 rem pause
