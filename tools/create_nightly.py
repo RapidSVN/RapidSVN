@@ -68,7 +68,7 @@ def readCurrentRevision():
 
 def buildApplicationVc6():
   print "Rebuild rapidsvn (using msdev"
-  run('msdev', ['rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'])
+  run('msdev', ['build\\vc6\\rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'])
 
 
 def buildApplicationVc2005():
