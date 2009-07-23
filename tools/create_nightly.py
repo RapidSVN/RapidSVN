@@ -175,7 +175,7 @@ def uploadInstaller(pkg):
   run(scp,  [pkg, url])
 
 def usage():
-  print "Usage: create_nightly.py [--compiler={vc2005, vc6}] [--suffix=<text>]"
+  print "Usage: create_nightly.py [--compiler={vc2005, vc6}] [--suffix=<text>] [--skip-compile] [--skip-installer] [--skip-upload]"
   print
 
 if __name__ == '__main__':
@@ -187,6 +187,9 @@ if __name__ == '__main__':
   # Parse the options
   compiler=None
   suffix=""
+  skipCompile=False
+  skipInstaller=False
+  skipUpload=False
   try:
     opts, args=getopt(sys.argv[1:], [], ['compiler=', 'suffix='])
 
@@ -200,7 +203,13 @@ if __name__ == '__main__':
         else:
           compiler = value
       elif opt == '--suffix':
-         suffix = value
+        suffix = value
+      elif opt == '--skip-compile':
+        skipCompile=True
+      elif opt == '--skip-installer':
+        skipInstaller=True
+      elif opt == '--skip-upload':
+        skipUpload=True
 
   except:
     usage()
@@ -232,15 +241,17 @@ if __name__ == '__main__':
 
   pkg = ''
   if system == 'Darwin':
-    makeApplication()
-    pkg=buildMacDiskImage(suffix)
+    if not skipCompile: makeApplication()
+    if not skipInstaller: pkg=buildMacDiskImage(suffix)
   elif system == 'Windows':
-    if compiler in [None, 'vc6']:
-      buildApplicationVc6()
-    elif compiler == 'vc2005':
-      buildApplicationVc2005()
-    pkg=buildInstaller(compiler, suffix)
-  uploadInstaller(pkg)
+    if not skipCompile:
+      if compiler in [None, 'vc6']:
+        buildApplicationVc6()
+      elif compiler == 'vc2005':
+        buildApplicationVc2005()
+    if not skipInstaller: pkg=buildInstaller(compiler, suffix)
+
+  if not skipUpload: uploadInstaller(pkg)
 
   #remember revision
   open(FILENAME, "w").write(currentRevision)
