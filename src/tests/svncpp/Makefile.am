@@ -1,4 +1,4 @@
-EXTRA_DIST=make_repos.bat make_repos.sh svncpptest.dsp svncpptest.dsw README.txt
+EXTRA_DIST=make_repos.bat make_repos.sh README.txt
 
 noinst_HEADERS=${wildcard *.hpp}
 

@@ -444,6 +444,7 @@ fi
 AC_OUTPUT(Makefile \
           build/Makefile \
           build/vc2005/Makefile \
+          build/vc6/Makefile \
           build/xcode/Makefile \
           doc/Makefile \
           doc/manpage/Makefile \
