@@ -20,14 +20,9 @@ del tmp\*.so
 rem Copy Berkeley DB
 copy %SUBVERSION%\db4-win32\bin\libdb44.dll tmp
 
-rem Copy APR DLLs
-copy %SUBVERSION%\apr\Release\libapr-1.dll tmp
-copy %SUBVERSION%\apr-util\Release\libaprutil-1.dll tmp
-copy %SUBVERSION%\apr-iconv\Release\libapriconv-1.dll tmp
-copy %SUBVERSION%\apr-iconv\Release\iconv\*.so tmp
-
-rem Copy Libintl DLL
-copy %LIBINTL%\bin\intl3_svn.dll tmp
+rem Copy Subversion and APR DLLs
+copy %SUBVERSION%\bin\*.dll tmp
+copy %SUBVERSION%\iconv\*.so tmp
 
 rem Copy C++ Runtime
 copy msvcp60.dll tmp
