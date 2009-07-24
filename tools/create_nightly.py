@@ -67,14 +67,16 @@ def readCurrentRevision():
   return m.group(1)
 
 def buildApplicationVc6():
-  print "Rebuild rapidsvn (using msdev"
-  run('msdev', ['rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'])
+  print "Rebuild rapidsvn (using Visual C++ 6.0 msdev)"
+  out=open('msdev.log', 'w')
+  out.write(run('msdev', ['build\\vc6\\rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'], silent=True))
 
 
 def buildApplicationVc2005():
-  print "Rebuild rapidsvn (using msdev"
-  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Release|Win32'])
-  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Unicode Release|Win32'])
+  out=open('vcbuild.log', 'w')
+  print "Rebuild rapidsvn (using Visual C++ 2005 vcbuild)"
+  out.write(run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Release|Win32'], silent=True))
+  out.write(run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Unicode Release|Win32'], silent=True))
 
 
 def buildMessages():
@@ -94,7 +96,7 @@ def buildMessages():
       msgfmt.make(po,mo)
 
 
-def buildInstaller(compiler):
+def buildInstaller(compiler, suffix):
   print "Clean installer"
   os.chdir("packages/win32")
   # Remove files
@@ -104,13 +106,14 @@ def buildInstaller(compiler):
   for n in x: os.unlink(n)
 
   print "Fetching files for installer"
+  out=open('innosetup.log', 'w')
   if compiler=='vc2005':
-    run('cmd.exe', ['/c', 'FetchFiles_vs2005.bat'])
+    out.write(run('cmd.exe', ['/c', 'FetchFiles_vs2005.bat'], silent=True))
   else:
-    run('cmd.exe', ['/c', 'FetchFiles.bat'])
+    out.write(run('cmd.exe', ['/c', 'FetchFiles.bat'], silent=True))
   innosetup="%s\iscc.exe" % getEnviron("INNOSETUP")
   print "Build installer (using %s)" %innosetup
-  run(innosetup, ['rapidsvn.iss'])
+  out.write(run(innosetup, ['rapidsvn.iss'], silent=True))
 
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
@@ -120,7 +123,7 @@ def buildInstaller(compiler):
   old=n[0]
   e=os.path.splitext(old)
   print e
-  pkg="%s-%s%s" % (e[0],currentRevision,e[1])
+  pkg="%s-%s%s%s" % (e[0],currentRevision,suffix,e[1])
   os.rename(old, pkg)
   print "The new package is: %s" % (pkg)
   os.chdir("../..")
@@ -141,7 +144,7 @@ def makeApplication():
     print "Hm, seems like we have a build error: aborting"
     sys.exit(1)
 
-def buildMacDiskImage():
+def buildMacDiskImage(suffix):
   print 'Build Mac Disk Image'
   os.chdir('packages/osx')
   run('./make_osx_bundle.sh', silent=True)
@@ -154,7 +157,7 @@ def buildMacDiskImage():
   old=n[0]
   e=os.path.splitext(old)
   print e
-  pkg="%s-%s%s" % (e[0],currentRevision,e[1])
+  pkg="%s-%s%s%s" % (e[0],currentRevision,suffix,e[1])
   os.rename(old, pkg)
   print "The new package is: %s" % (pkg)
   os.chdir("../..")
@@ -175,7 +178,7 @@ def uploadInstaller(pkg):
   run(scp,  [pkg, url])
 
 def usage():
-  print "Usage: create_nightly.py [--compiler={vc2005, vc6}]"
+  print "Usage: create_nightly.py [--compiler={vc2005, vc6}] [--suffix=<text>] [--force] [--skip-compile] [--skip-installer] [--skip-upload]"
   print
 
 if __name__ == '__main__':
@@ -186,8 +189,13 @@ if __name__ == '__main__':
 
   # Parse the options
   compiler=None
+  suffix=""
+  skipCompile=False
+  skipInstaller=False
+  skipUpload=False
+  force=False
   try:
-    opts, args=getopt(sys.argv[1:], [], ['compiler='])
+    opts, args=getopt(sys.argv[1:], [], ['compiler=', 'suffix=', 'skip-compile', 'skip-installer', 'skip-upload', 'force'])
 
     if len(args) > 1:
       raise Exception()
@@ -198,6 +206,16 @@ if __name__ == '__main__':
           raise Exception()
         else:
           compiler = value
+      elif opt == '--suffix':
+        suffix = value
+      elif opt == '--skip-compile':
+        skipCompile=True
+      elif opt == '--skip-installer':
+        skipInstaller=True
+      elif opt == '--skip-upload':
+        skipUpload=True
+      elif opt == '--force':
+        force=True
 
   except:
     usage()
@@ -221,6 +239,8 @@ if __name__ == '__main__':
 
   if "" == lastSuccessfulRevision:
     print "No successful previous build detected"
+  elif force:
+    print "Forcing the build"
   elif currentRevision <= lastSuccessfulRevision:
     print "No newer revision detected, aborting (last successful=%s, current=%s)" % (lastSuccessfulRevision, currentRevision)
     sys.exit(0)
@@ -229,15 +249,17 @@ if __name__ == '__main__':
 
   pkg = ''
   if system == 'Darwin':
-    makeApplication()
-    pkg=buildMacDiskImage()
+    if not skipCompile: makeApplication()
+    if not skipInstaller: pkg=buildMacDiskImage(suffix)
   elif system == 'Windows':
-    if compiler in [None, 'vc6']:
-      buildApplicationVc6()
-    elif compiler == 'vc2005':
-      buildApplicationVc2005()
-    pkg=buildInstaller(compiler)
-  uploadInstaller(pkg)
+    if not skipCompile:
+      if compiler in [None, 'vc6']:
+        buildApplicationVc6()
+      elif compiler == 'vc2005':
+        buildApplicationVc2005()
+    if not skipInstaller: pkg=buildInstaller(compiler, suffix)
+
+  if not skipUpload: uploadInstaller(pkg)
 
   #remember revision
   open(FILENAME, "w").write(currentRevision)
