@@ -55,4 +55,5 @@ BEGIN
     END
 END
 
+#define wxUSE_NO_MANIFEST 1  // VC++ manifest hack.
 #include "wx/msw/wx.rc"
