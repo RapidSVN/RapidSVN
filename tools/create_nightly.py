@@ -38,11 +38,11 @@ from getopt import getopt
 
 FILENAME="last-successful-revision.txt"
 
-def run(cmd, args=[], silent=False, out=PIPE):
+def run(cmd, args=[], silent=False):
   cmd_args=[cmd]
   cmd_args.extend(args)
   #print cmd_args
-  p=Popen(cmd_args, stdout=out, stderr=out)
+  p=Popen(cmd_args, stdout=PIPE)
   t=p.communicate()[0]
 
   if not silent:
@@ -68,14 +68,15 @@ def readCurrentRevision():
 
 def buildApplicationVc6():
   print "Rebuild rapidsvn (using Visual C++ 6.0 msdev)"
-  run('msdev', ['build\\vc6\\rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'], open('msdev.log', 'w'))
+  out=open('msdev.log', 'w')
+  out.write(run('msdev', ['build\\vc6\\rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'], silent=True))
 
 
 def buildApplicationVc2005():
   out=open('vcbuild.log', 'w')
   print "Rebuild rapidsvn (using Visual C++ 2005 vcbuild)"
-  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Release|Win32'], out)
-  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Unicode Release|Win32'], out)
+  out.write(run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Release|Win32'], silent=True))
+  out.write(run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Unicode Release|Win32'], silent=True))
 
 
 def buildMessages():
@@ -105,13 +106,14 @@ def buildInstaller(compiler, suffix):
   for n in x: os.unlink(n)
 
   print "Fetching files for installer"
+  out=open('innosetup.log', 'w')
   if compiler=='vc2005':
-    run('cmd.exe', ['/c', 'FetchFiles_vs2005.bat'])
+    out.write(run('cmd.exe', ['/c', 'FetchFiles_vs2005.bat'], silent=True))
   else:
-    run('cmd.exe', ['/c', 'FetchFiles.bat'])
+    out.write(run('cmd.exe', ['/c', 'FetchFiles.bat'], silent=True))
   innosetup="%s\iscc.exe" % getEnviron("INNOSETUP")
   print "Build installer (using %s)" %innosetup
-  run(innosetup, ['rapidsvn.iss'], open('innosetup.log', 'w'))
+  out.write(run(innosetup, ['rapidsvn.iss'], silent=True))
 
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
@@ -176,7 +178,7 @@ def uploadInstaller(pkg):
   run(scp,  [pkg, url])
 
 def usage():
-  print "Usage: create_nightly.py [--compiler={vc2005, vc6}] [--suffix=<text>] [--skip-compile] [--skip-installer] [--skip-upload]"
+  print "Usage: create_nightly.py [--compiler={vc2005, vc6}] [--suffix=<text>] [--force] [--skip-compile] [--skip-installer] [--skip-upload]"
   print
 
 if __name__ == '__main__':
@@ -191,8 +193,9 @@ if __name__ == '__main__':
   skipCompile=False
   skipInstaller=False
   skipUpload=False
+  force=False
   try:
-    opts, args=getopt(sys.argv[1:], [], ['compiler=', 'suffix=', 'skip-compile', 'skip-installer', 'skip-upload'])
+    opts, args=getopt(sys.argv[1:], [], ['compiler=', 'suffix=', 'skip-compile', 'skip-installer', 'skip-upload', 'force'])
 
     if len(args) > 1:
       raise Exception()
@@ -211,6 +214,8 @@ if __name__ == '__main__':
         skipInstaller=True
       elif opt == '--skip-upload':
         skipUpload=True
+      elif opt == '--force':
+        force=True
 
   except:
     usage()
@@ -234,6 +239,8 @@ if __name__ == '__main__':
 
   if "" == lastSuccessfulRevision:
     print "No successful previous build detected"
+  elif force:
+    print "Forcing the build"
   elif currentRevision <= lastSuccessfulRevision:
     print "No newer revision detected, aborting (last successful=%s, current=%s)" % (lastSuccessfulRevision, currentRevision)
     sys.exit(0)
