@@ -71,8 +71,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				EmbedManifest="true"
-				UpdateFileHashes="true"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -144,8 +143,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				EmbedManifest="true"
-				UpdateFileHashes="true"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -218,8 +216,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				EmbedManifest="true"
-				UpdateFileHashes="true"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -297,9 +294,8 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				EmbedManifest="true"
+				EmbedManifest="false"
 				VerboseOutput="true"
-				UpdateFileHashes="true"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"

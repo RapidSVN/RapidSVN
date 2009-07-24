@@ -42,8 +42,8 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /O2 /I "../../../include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD BASE CPP /nologo /W3 /GX /O2 /I "..\..\include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -65,8 +65,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /I "../../../include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "../../../include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "SVN_DEBUG" /YX /FD /GZ /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /I "..\..\include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\..\include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "SVN_DEBUG" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -88,8 +88,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Unicode_Debug"
 # PROP Intermediate_Dir "Unicode_Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "../../../include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "SVN_DEBUG" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "../../../include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "SVN_DEBUG" /YX /FD /GZ /c
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\..\include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "SVN_DEBUG" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\..\include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "SVN_DEBUG" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -111,8 +111,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Unicode_Release"
 # PROP Intermediate_Dir "Unicode_Release"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../../../include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\include" /I "$(SUBVERSION)/include" /I "$(SUBVERSION)/include/apr" /I "$(SUBVERSION)/include/apr-iconv" /I "$(SUBVERSION)/include/apr-util" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -135,103 +135,103 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\apr.cpp
+SOURCE=.\apr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\client.cpp
+SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\client_annotate.cpp
+SOURCE=.\client_annotate.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\client_cat.cpp
+SOURCE=.\client_cat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\client_diff.cpp
+SOURCE=.\client_diff.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\client_ls.cpp
+SOURCE=.\client_ls.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\client_modify.cpp
+SOURCE=.\client_modify.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\client_property.cpp
+SOURCE=.\client_property.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\client_status.cpp
+SOURCE=.\client_status.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\context.cpp
+SOURCE=.\context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\datetime.cpp
+SOURCE=.\datetime.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\dirent.cpp
+SOURCE=.\dirent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\entry.cpp
+SOURCE=.\entry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\exception.cpp
+SOURCE=.\exception.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\info.cpp
+SOURCE=.\info.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\log_entry.cpp
+SOURCE=.\log_entry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\path.cpp
+SOURCE=.\path.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\pool.cpp
+SOURCE=.\pool.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\property.cpp
+SOURCE=.\property.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\revision.cpp
+SOURCE=.\revision.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\status.cpp
+SOURCE=.\status.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\status_selection.cpp
+SOURCE=.\status_selection.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\targets.cpp
+SOURCE=.\targets.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\url.cpp
+SOURCE=.\url.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\wc.cpp
+SOURCE=.\wc.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -239,87 +239,87 @@ SOURCE=..\..\..\src\svncpp\wc.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\annotate_line.hpp
+SOURCE=..\..\include\svncpp\annotate_line.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\apr.hpp
+SOURCE=..\..\include\svncpp\apr.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\check.hpp
+SOURCE=..\..\include\svncpp\check.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\client.hpp
+SOURCE=..\..\include\svncpp\client.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\context.hpp
+SOURCE=..\..\include\svncpp\context.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\context_listener.hpp
+SOURCE=..\..\include\svncpp\context_listener.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\datetime.hpp
+SOURCE=..\..\include\svncpp\datetime.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\dirent.hpp
+SOURCE=..\..\include\svncpp\dirent.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\entry.hpp
+SOURCE=..\..\include\svncpp\entry.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\exception.hpp
+SOURCE=..\..\include\svncpp\exception.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\info.hpp
+SOURCE=..\..\include\svncpp\info.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\log_entry.hpp
+SOURCE=..\..\include\svncpp\log_entry.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\path.hpp
+SOURCE=..\..\include\svncpp\path.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\pool.hpp
+SOURCE=..\..\include\svncpp\pool.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\property.hpp
+SOURCE=..\..\include\svncpp\property.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\revision.hpp
+SOURCE=..\..\include\svncpp\revision.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\status.hpp
+SOURCE=..\..\include\svncpp\status.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\status_selection.hpp
+SOURCE=..\..\include\svncpp\status_selection.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\targets.hpp
+SOURCE=..\..\include\svncpp\targets.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\url.hpp
+SOURCE=..\..\include\svncpp\url.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\svncpp\wc.hpp
+SOURCE=..\..\include\svncpp\wc.hpp
 # End Source File
 # End Group
 # Begin Group "Private Header Files"
@@ -327,7 +327,7 @@ SOURCE=..\..\..\include\svncpp\wc.hpp
 # PROP Default_Filter "hpp"
 # Begin Source File
 
-SOURCE=..\..\..\src\svncpp\m_check.hpp
+SOURCE=.\m_check.hpp
 # End Source File
 # End Group
 # End Target

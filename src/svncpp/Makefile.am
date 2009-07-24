@@ -1,4 +1,5 @@
 noinst_HEADERS=${wildcard *.hpp}
+EXTRA_DIST=svncpp.dsp
 
 lib_LTLIBRARIES=libsvncpp.la
 

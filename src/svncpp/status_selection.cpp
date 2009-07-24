@@ -22,6 +22,9 @@
  * ====================================================================
  */
 
+// stl
+#include "svncpp/vector_wrapper.hpp"
+
 // subversion api
 #include "svn_types.h"
 
@@ -44,7 +47,7 @@ namespace svn
   struct StatusSel::Data
   {
     Targets targets;
-    StatusVector status;
+    std::vector<Status> status;
 
     bool hasDirs;
     bool hasFiles;
@@ -73,7 +76,7 @@ namespace svn
       clear();
 
       // ... and set from source
-      StatusVector::const_iterator it;
+      std::vector <Status>::const_iterator it;
       for (it = src.status.begin(); it != src.status.end(); it++)
       {
         push_back(*it);
@@ -183,12 +186,6 @@ namespace svn
     return m->targets.array(pool);
   }
 
-  const StatusVector &
-  StatusSel::statusVector() const
-  {
-    return m->status;
-  }
-
   const Targets &
   StatusSel::targets() const
   {
@@ -220,7 +217,7 @@ namespace svn
     m->status.reserve(size);
   }
 
-  StatusSel::operator const PathVector & () const
+  StatusSel::operator const std::vector<Path> & () const
   {
     return m->targets;
   }

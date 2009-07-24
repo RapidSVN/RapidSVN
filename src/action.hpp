@@ -27,7 +27,6 @@
 // svncpp
 #include "svncpp/path.hpp"
 #include "svncpp/revision.hpp"
-#include "svncpp/status.hpp"
 
 // wxWidgets
 #include "wx/string.h"
@@ -186,12 +185,6 @@ public:
    */
   const svn::StatusSel &
   GetStatusSel() const;
-
-  /**
-   * @return the statuses for this action
-   */
-  const svn::StatusVector &
-  GetStatusVector() const;
 
   /**
    * @return the targets for this action

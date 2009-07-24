@@ -33,7 +33,7 @@
  * Bit 16-23: Minor
  * Bit 24-31: Major
  */
-#define SVNCPP_VERSION 0x000b0000
+#define SVNCPP_VERSION 0x000a0000
 
 #endif
 /* -----------------------------------------------------------------
