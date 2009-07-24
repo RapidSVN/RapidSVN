@@ -38,11 +38,11 @@ from getopt import getopt
 
 FILENAME="last-successful-revision.txt"
 
-def run(cmd, args=[], silent=False):
+def run(cmd, args=[], silent=False, out=PIPE):
   cmd_args=[cmd]
   cmd_args.extend(args)
   #print cmd_args
-  p=Popen(cmd_args, stdout=PIPE)
+  p=Popen(cmd_args, stdout=out, stderr=out)
   t=p.communicate()[0]
 
   if not silent:
@@ -67,14 +67,15 @@ def readCurrentRevision():
   return m.group(1)
 
 def buildApplicationVc6():
-  print "Rebuild rapidsvn (using msdev"
-  run('msdev', ['build\\vc6\\rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'])
+  print "Rebuild rapidsvn (using Visual C++ 6.0 msdev)"
+  run('msdev', ['build\\vc6\\rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'], open('msdev.log', 'w'))
 
 
 def buildApplicationVc2005():
-  print "Rebuild rapidsvn (using msdev"
-  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Release|Win32'])
-  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Unicode Release|Win32'])
+  out=open('vcbuild.log', 'w')
+  print "Rebuild rapidsvn (using Visual C++ 2005 vcbuild)"
+  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Release|Win32'], out)
+  run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Unicode Release|Win32'], out)
 
 
 def buildMessages():
@@ -110,7 +111,7 @@ def buildInstaller(compiler, suffix):
     run('cmd.exe', ['/c', 'FetchFiles.bat'])
   innosetup="%s\iscc.exe" % getEnviron("INNOSETUP")
   print "Build installer (using %s)" %innosetup
-  run(innosetup, ['rapidsvn.iss'])
+  run(innosetup, ['rapidsvn.iss'], open('innosetup.log', 'w'))
 
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
@@ -191,7 +192,7 @@ if __name__ == '__main__':
   skipInstaller=False
   skipUpload=False
   try:
-    opts, args=getopt(sys.argv[1:], [], ['compiler=', 'suffix='])
+    opts, args=getopt(sys.argv[1:], [], ['compiler=', 'suffix=', 'skip-compile', 'skip-installer', 'skip-upload'])
 
     if len(args) > 1:
       raise Exception()
