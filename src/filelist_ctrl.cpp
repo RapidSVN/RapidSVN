@@ -771,8 +771,7 @@ FileListCtrl::Data::GetImageIndex(const svn::Status & status)
     if (IsDir(&status))
     {
       if ((textIndex == svn_wc_status_modified) ||
-          (propIndex == svn_wc_status_modified) ||
-          (HasModifiedChildren(status.path(), Context)))
+          (propIndex == svn_wc_status_modified))
       {
         imageIndex = ImageIndexArray[IMG_INDX_MODIFIED_VERSIONED_FOLDER + lock_offset];
       }

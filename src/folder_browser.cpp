@@ -529,6 +529,9 @@ public:
     if (treeCtrl->IsExpanded(parentId))
       return;
 
+    wxFont fontBold (treeCtrl->GetFont());
+    fontBold.SetWeight(wxFONTWEIGHT_BOLD);
+
     svn::Client client(GetContext());
     svn::Path parentPathUtf8(PathUtf8(parentPath));
 
@@ -582,8 +585,7 @@ public:
 
 
         if ((status.textStatus() == svn_wc_status_modified) ||
-            (status.propStatus() == svn_wc_status_modified) ||
-            (HasModifiedChildren(status.path(), GetContext())))
+            (status.propStatus() == svn_wc_status_modified))
         {
           image = FOLDER_IMAGE_MODIFIED_FOLDER;
           open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
@@ -596,9 +598,12 @@ public:
         data->setStatus(status);
 
         wxTreeItemId newId = treeCtrl->AppendItem(
-                               parentId,
-                               Utf8ToLocal(filename.basename()),
-                               image, image, data);
+          parentId, Utf8ToLocal(filename.basename()),
+          image, image, data);
+
+        // show that the folder contains modified items
+        if (HasModifiedChildren(status.path(), GetContext()))
+          treeCtrl->SetItemFont(newId, fontBold);
 
         bool hasSubDirs = true;
         if (!pathIsUrl)
