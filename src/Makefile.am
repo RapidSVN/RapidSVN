@@ -1,4 +1,4 @@
-SUBDIRS=svncpp
+SUBDIRS=svncpp locale
 
 DIST_SUBDIRS=${SUBDIRS} locale res tests
 
