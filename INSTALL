@@ -438,6 +438,13 @@ Contents:
         We decided to use only static linking for Subversion and wxWidgets
         on Mac OS/X, so everything is included in a single binary.
 
+		Berkeley DB (BDB) support is not included because of difficulties
+		enabling static BDB support while building Subversion 1.6.2+. (It
+		might work as a dynamic build with a normally-installed Berkeley
+		DB on the system, as per Linux and other Unixes, but this would
+		not result in a self-contained and easily-installed Mac OS X
+		application.)
+
 4.1     Preparations 
 
 	Create the following directory:
@@ -449,7 +456,7 @@ Contents:
 	The RapidSVN working copy will be there too.
 
 	To make life easier for the configure scripts run
-	"export PATH=$HOME/RapidSVN-build:$PATH"
+	"export PATH=$HOME/RapidSVN-build/bin:$PATH"
 	
 
 4.2     Download and Install required packages
@@ -458,39 +465,23 @@ Contents:
 
 	Download the following tarballs:
 	- wxMac-2.8.10.tar.gz
-	- subversion-1.5.6.tar.gz (or newer)
-	- subversion-deps-1.5.6.tar.gz (or newer)
-	- db-4.7.25.NC.tar.gz (or newer)
+	- subversion-1.6.2.tar.gz (or newer)
+	- subversion-deps-1.6.2.tar.gz (or newer)
 
 	Extract the packages to $HOME/RapidSVN-build, so
-	we have a directory $HOME/RapidSVN-build/subversion-1.5.6
-        an so on.
+	we have a directory $HOME/RapidSVN-build/subversion-1.6.2
+    and so on.
 
 
-4.3     Configure/Compile/Install Berkeley DB
-
-	cd to:
-	  $HOME/RapidSVN-build/db-4.7.25.NC/build_unix
-
-	Configure a static build:
-	  CFLAGS="-O3 -arch i386 -arch ppc -mmacosx-version-min=10.3 -fvisibility=hidden" \
-            LDFLAGS="-arch i386 -arch ppc -mmacosx-version-min=10.3" \
-            ../dist/configure --prefix=$HOME/RapidSVN-build --disable-shared
-
-        Compile and install Berkeley DB:
-          make
-          make install
-
-
-4.4     Configure/Compile/Install Subversion
+4.3     Configure/Compile/Install Subversion
 
         cd to:
-          $HOME/RapidSVN-build/subversion-1.5.6
+          $HOME/RapidSVN-build/subversion-1.6.2
 
         Configure a static build with OpenSSL and Berkeley DB support:
           CFLAGS="-g -O2 -arch i386 -arch ppc -mmacosx-version-min=10.3 -fvisibility=hidden" \
             LDFLAGS="-arch i386 -arch ppc -mmacosx-version-min=10.3" ./configure --prefix=$HOME/RapidSVN-build \
-            --with-berkeley-db=$HOME/RapidSVN-build --with-ssl --disable-shared --with-expat=builtin --without-apxs
+            --without-berkeley-db --with-ssl --disable-shared --without-apxs
 
         Compile and install Subversion:
           make
@@ -502,12 +493,8 @@ Contents:
 
         Check for the line '- handles 'https' scheme'.
 
-        You can check your installation for Berkeley DB support by
-        running:
-          svnadmin create --fs-type=bdb /temp/test
 
-
-4.5     Configure/Compile/Install wxWidgets
+4.4     Configure/Compile/Install wxWidgets
 
 	cd to the extracted wxWidgets directory.
 
@@ -530,7 +517,7 @@ Contents:
         If this works you have a running wxWidgets installation
 
 
-4.6     Configure/Compile/Install RapidSVN
+4.5     Configure/Compile/Install RapidSVN
 
         Download and extract a RapidSVN tarball       
         or checkout a new working copy of RapidSVN in
