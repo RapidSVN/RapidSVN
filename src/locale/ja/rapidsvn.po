@@ -28,7 +28,7 @@ msgstr "%s バージョン %s"
 #: ../utils.cpp:360
 #, c-format
 msgid "%x %X"
-msgstr "%F %T"
+msgstr "%Y-%m-%d %H:%M:%S"
 
 #: ../rapidsvn_frame.cpp:328
 msgid "&About..."
