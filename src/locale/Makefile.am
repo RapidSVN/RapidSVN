@@ -22,7 +22,11 @@ install-rapidsvn-catalogs:
 	done
 
 # the programs we use (TODO: use configure to detect them)
-MSGFMT=msgfmt
+#On OS/X we dont seem to have msgfmt installed by default
+#so we are going to use the python version instead
+#(TODO check for msgfmt, then python)
+#MSGFMT=msgfmt
+MSGFMT=python $(top_srcdir)/tools/msgfmt.py
 
 all-mo:
 	for i in $(RAPIDSVN_LANGUAGES) ; do \
