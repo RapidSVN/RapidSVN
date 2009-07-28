@@ -345,6 +345,7 @@ FullNativePath(const svn::Path & target, const wxString & base, bool flat);
   */
 bool
 HasModifiedChildren(const svn::Path & path, svn::Context * context);
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:
