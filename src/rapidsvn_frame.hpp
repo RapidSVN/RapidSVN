@@ -109,6 +109,7 @@ private:
   void OnIgnoreExternals(wxCommandEvent & event);
   void OnShowIgnored(wxCommandEvent & event);
   void OnStop(wxCommandEvent & event);
+  void OnIndicateModifiedChildren(wxCommandEvent & event);
 
   // Query menu
   void OnLog(wxCommandEvent & event);

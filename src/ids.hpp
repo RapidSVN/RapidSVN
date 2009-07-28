@@ -45,6 +45,7 @@ enum
   ID_IgnoreExternals,
   ID_ShowIgnored,
   ID_Filter_Max,
+  ID_IndicateModifiedChildren,
   ID_HelpContents,
   ID_HelpIndex,
   ID_HelpStartupTips,

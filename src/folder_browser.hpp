@@ -161,6 +161,26 @@ public:
   bool
   SetFlat(bool flatMode);
 
+  /** 
+   * checks whether indication of modified content is
+   * switched on (for the selected bookmark)
+   *
+   * @retval true modified content is indicarted
+   */
+  bool
+  GetIndicateModifiedChildren() const;
+
+  /**
+   * switch on/off indication of modified children for
+   * the selected bookmark
+   *
+   * @param show
+   * @retval true success
+   * @retval false not set, no bookmark selected
+   */
+  bool
+  SetIndicateModifiedChildren(bool show);
+
   /**
    * @return auth per bookmark setting
    */

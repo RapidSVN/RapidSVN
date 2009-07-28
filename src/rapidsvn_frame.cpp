@@ -273,6 +273,7 @@ public:
 
     menuView->AppendCheckItem(ID_RefreshWithUpdate, _("Refresh with Update"));
     menuView->AppendCheckItem(ID_Flat, _("Show subdirectories"));
+    menuView->AppendCheckItem(ID_IndicateModifiedChildren, _("Indicate modified children"));
     menuView->AppendCheckItem(ID_ShowUnversioned, _("Show unversioned entries"));
     menuView->AppendCheckItem(ID_ShowUnmodified, _("Show unmodified entries"));
     menuView->AppendCheckItem(ID_ShowModified, _("Show modified entries"));
@@ -771,6 +772,7 @@ BEGIN_EVENT_TABLE(RapidSvnFrame, wxFrame)
   EVT_MENU(ID_ShowUnmodified, RapidSvnFrame::OnShowUnmodified)
   EVT_MENU(ID_ShowModified, RapidSvnFrame::OnShowModified)
   EVT_MENU(ID_ShowConflicted, RapidSvnFrame::OnShowConflicted)
+  EVT_MENU(ID_IndicateModifiedChildren, RapidSvnFrame::OnIndicateModifiedChildren)
 
   EVT_MENU(ID_Login, RapidSvnFrame::OnLogin)
   EVT_MENU(ID_Logout, RapidSvnFrame::OnLogout)
@@ -1324,6 +1326,7 @@ RapidSvnFrame::OnColumnSorting(wxCommandEvent & event)
   UpdateMenuAscending();
 }
 
+
 void
 RapidSvnFrame::OnFlatView(wxCommandEvent & WXUNUSED(event))
 {
@@ -1341,6 +1344,22 @@ RapidSvnFrame::OnFlatView(wxCommandEvent & WXUNUSED(event))
   SetIncludePathVisibility(newFlatMode);
 
   RefreshFileList();
+}
+
+
+void
+RapidSvnFrame::OnIndicateModifiedChildren(wxCommandEvent & WXUNUSED(event))
+{
+  bool newValue = !m->folderBrowser->GetIndicateModifiedChildren();
+
+  // if this cannot be set (e.g. invalid selection
+  // like the root element, we uncheck this
+  if (!m->folderBrowser->SetIndicateModifiedChildren(newValue))
+    newValue = false;
+
+  m->CheckMenu(ID_IndicateModifiedChildren, newValue);
+
+  RefreshFolderBrowser();
 }
 
 
@@ -2000,11 +2019,13 @@ RapidSvnFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
   {
     m->activePane = ACTIVEPANE_FOLDER_BROWSER;
 
-    // Update the menu and list control flat-mode setting
+    // Update the menu and list control 
     bool flatMode = m->folderBrowser->IsFlat();
     m->listCtrl->SetFlat(flatMode);
     m->CheckMenu(ID_Flat, flatMode);
     m->CheckTool(ID_Flat, flatMode);
+    bool indicateModifiedChildren = m->folderBrowser->GetIndicateModifiedChildren();
+    m->CheckMenu(ID_IndicateModifiedChildren, indicateModifiedChildren);
 
     SetIncludePathVisibility(flatMode);
 

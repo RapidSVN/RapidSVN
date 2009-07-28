@@ -82,9 +82,10 @@ enum
 
 static const unsigned int MAXLENGTH_BOOKMARK = 35;
 
-const static wxChar ConfigBookmarkFmt [] = wxT("/Bookmarks/Bookmark%ld");
-const static wxChar ConfigBookmarkCount [] = wxT("/Bookmarks/Count");
-const static wxChar ConfigFlatModeFmt [] = wxT("/Bookmarks/Bookmark%ldFlat");
+const static wxChar ConfigBookmarkFmt[] = wxT("/Bookmarks/Bookmark%ld");
+const static wxChar ConfigBookmarkCount[] = wxT("/Bookmarks/Count");
+const static wxChar ConfigFlatModeFmt[] = wxT("/Bookmarks/Bookmark%ldFlat");
+const static wxChar ConfigIndicateModifiedChildrenFmt[] = wxT("/Bookmarks/Bookmark%ldIndicateModifiedChildren");
 
 static const wxString EmptyString;
 
@@ -105,9 +106,11 @@ struct Bookmark
 public:
   svn::Context * context;
   bool flatMode;
+  bool indicateModifiedChildren;
 
-  Bookmark(bool flatMode_=false)
-      : context(0), flatMode(flatMode_)
+  Bookmark(bool flatMode_=false, bool indicateModifiedChildren_=false)
+    : context(0), flatMode(flatMode_), 
+      indicateModifiedChildren(indicateModifiedChildren_)
   {
   }
 
@@ -545,6 +548,8 @@ public:
 
     bool pathIsUrl = parentPathUtf8.isUrl();
 
+    bool indicateModifiedChildren  = GetSelectedBookmark().indicateModifiedChildren;
+
     svn::StatusEntries::iterator it;
     for (it = entries.begin(); it != entries.end(); it++)
     {
@@ -601,9 +606,12 @@ public:
           parentId, Utf8ToLocal(filename.basename()),
           image, image, data);
 
-        // show that the folder contains modified items
-        if (HasModifiedChildren(status.path(), GetContext()))
-          treeCtrl->SetItemFont(newId, fontBold);
+        if (indicateModifiedChildren)
+        {
+          // show that the folder contains modified items
+          if (HasModifiedChildren(status.path(), GetContext()))
+            treeCtrl->SetItemFont(newId, fontBold);
+        }
 
         bool hasSubDirs = true;
         if (!pathIsUrl)
@@ -1105,6 +1113,9 @@ FolderBrowser::WriteConfig(wxConfigBase * cfg) const
     else
       cfg->Write(keyFlatMode, (long)0);
 
+    cfg->Write(wxString::Format(ConfigIndicateModifiedChildrenFmt, item),
+               it->second.indicateModifiedChildren ? 1 : 0);
+
     item++;
   }
 }
@@ -1130,8 +1141,13 @@ FolderBrowser::ReadConfig(wxConfigBase * cfg)
     if (!prefs.resetFlatModeOnStart)
       cfg->Read(keyFlatMode, &flatMode, 0);
 
+    // we wanna see modified children per default
+    long indicateModifiedChildren=0;
+    cfg->Read(wxString::Format(ConfigIndicateModifiedChildrenFmt, item),
+              &indicateModifiedChildren, 1);
+
     if (path.Length() > 0)
-      m->bookmarks [path] = Bookmark(flatMode != 0);
+      m->bookmarks [path] = Bookmark(flatMode != 0, indicateModifiedChildren != 0);
   }
 }
 
@@ -1155,6 +1171,29 @@ FolderBrowser::SetFlat(bool flatMode)
     return false;
 
   bookmark.flatMode = flatMode;
+  return true;
+}
+
+bool
+FolderBrowser::GetIndicateModifiedChildren() const
+{
+  Bookmark & bookmark = m->GetSelectedBookmark();
+
+  if (&bookmark == &InvalidBookmark)
+    return false;
+
+  return bookmark.indicateModifiedChildren;
+}
+
+bool
+FolderBrowser::SetIndicateModifiedChildren(bool newValue)
+{
+  Bookmark & bookmark = m->GetSelectedBookmark();
+
+  if (&bookmark == &InvalidBookmark)
+    return false;
+
+  bookmark.indicateModifiedChildren = newValue;
   return true;
 }
 
