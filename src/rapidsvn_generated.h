@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 21 2008)
+// C++ code generated with wxFormBuilder (version Dec 29 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -202,6 +202,35 @@ class CommitDlgBase : public wxDialog
 	public:
 		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 583,500 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CommitDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class UpdateDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class UpdateDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxComboBox* m_comboUrl;
+		wxTextCtrl* m_textRevision;
+		wxCheckBox* m_checkUseLatest;
+		wxCheckBox* m_checkForce;
+		wxCheckBox* m_checkRecursive;
+		wxCheckBox* m_checkIgnoreExternals;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnComboRevision( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboRevisionText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnTextRevision( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		UpdateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		~UpdateDlgBase();
 	
 };
 

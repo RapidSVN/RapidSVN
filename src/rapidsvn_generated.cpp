@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 21 2008)
+// C++ code generated with wxFormBuilder (version Dec 29 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -508,4 +508,78 @@ CommitDlgBase::~CommitDlgBase()
 	m_checkListFiles->Disconnect( wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler( CommitDlgBase::OnCheckListFilesToggle ), NULL, this );
 	m_buttonToggle->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CommitDlgBase::OnButtonToggle ), NULL, this );
 	m_buttonDiff->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CommitDlgBase::OnButtonDiff ), NULL, this );
+}
+
+UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* rootSizer;
+	rootSizer = new wxBoxSizer( wxVERTICAL );
+	
+	wxStaticBoxSizer* m_urlSizer;
+	m_urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("URL") ), wxVERTICAL );
+	
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
+	m_urlSizer->Add( m_comboUrl, 1, wxALL|wxEXPAND, 5 );
+	
+	rootSizer->Add( m_urlSizer, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* m_revisionSizer;
+	m_revisionSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision") ), wxHORIZONTAL );
+	
+	m_textRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	
+	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	m_revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 5 );
+	
+	rootSizer->Add( m_revisionSizer, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* optionSizer;
+	optionSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	optionSizer->Add( m_checkForce, 0, 0, 5 );
+	
+	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	optionSizer->Add( m_checkRecursive, 0, 0, 5 );
+	
+	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore Externals"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	optionSizer->Add( m_checkIgnoreExternals, 0, 0, 5 );
+	
+	rootSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	rootSizer->Add( buttonSizer, 0, wxALIGN_CENTER|wxLEFT|wxRIGHT, 5 );
+	
+	this->SetSizer( rootSizer );
+	this->Layout();
+	rootSizer->Fit( this );
+	
+	// Connect Events
+	m_comboUrl->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnComboRevision ), NULL, this );
+	m_comboUrl->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnComboRevisionText ), NULL, this );
+	m_textRevision->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnTextRevision ), NULL, this );
+}
+
+UpdateDlgBase::~UpdateDlgBase()
+{
+	// Disconnect Events
+	m_comboUrl->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnComboRevision ), NULL, this );
+	m_comboUrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnComboRevisionText ), NULL, this );
+	m_textRevision->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnTextRevision ), NULL, this );
 }
