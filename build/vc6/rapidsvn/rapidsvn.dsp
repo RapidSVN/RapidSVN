@@ -7,21 +7,21 @@
 CFG=rapidsvn - Win32 Unicode Debug
 !MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
 !MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "rapidsvn.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
 !MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "rapidsvn.mak" CFG="rapidsvn - Win32 Unicode Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Für die Konfiguration stehen zur Auswahl:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "rapidsvn - Win32 Release" (basierend auf  "Win32 (x86) Application")
 !MESSAGE "rapidsvn - Win32 Debug" (basierend auf  "Win32 (x86) Application")
 !MESSAGE "rapidsvn - Win32 Unicode Debug" (basierend auf  "Win32 (x86) Application")
 !MESSAGE "rapidsvn - Win32 Unicode Release" (basierend auf  "Win32 (x86) Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -113,7 +113,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 svncpp.lib libsvn_subr-1.lib libsvn_client-1.lib libsvn_wc-1.lib libneon.lib xml.lib libapr-1.lib libaprutil-1.lib libdb43d.lib wxbase28ud.lib wxmsw28ud_core.lib wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"..\svncpp\Debug" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_client" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_delta" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_diff" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs_base" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs_fs" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_fs_util" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_neon" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_local" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_ra_svn" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_repos" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_subr" /libpath:"$(SUBVERSION)\Debug\subversion\libsvn_wc" /libpath:"$(SUBVERSION)\neon" /libpath:"$(SUBVERSION)\apr-iconv\Debug" /libpath:"$(SUBVERSION)\apr-util\xml\expat\lib\LibD" /libpath:"$(SUBVERSION)\apr\Debug" /libpath:"$(SUBVERSION)\apr-util\Debug" /libpath:"$(SUBVERSION)\db4-win32\lib" /libpath:"$(WX)\lib"
 # SUBTRACT BASE LINK32 /pdb:none
-# ADD LINK32 msvcrtd.lib msvcprtd.lib libneon.lib wxbase28ud.lib wxmsw28ud_core.lib wxmsw28ud_adv.lib wxpngd.lib oldnames.lib svncpp.lib libsvn_subr-1.lib libsvn_client-1.lib libsvn_wc-1.lib xml.lib libapr-1.lib libaprutil-1.lib wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib /out:"Unicode_Debug/rapidsvn_unicode.exe" /pdbtype:sept /libpath:"..\svncpp\Unicode_Debug" /libpath:"$(SUBVERSION)/lib" /libpath:"$(SUBVERSION)/lib/apr" /libpath:"$(SUBVERSION)/lib/apr-iconv" /libpath:"$(SUBVERSION)/lib/apr-util" /libpath:"$(SUBVERSION)/lib/neon" /libpath:"$(SUBVERSION)/lib/sasl" /libpath:"$(SUBVERSION)/lib/serf" /libpath:"$(SUBVERSION)\db4-win32\lib" /libpath:"$(WX)\lib\vc_lib" /libpath:"$(LIBINTL)\lib"
+# ADD LINK32 msvcrtd.lib msvcprtd.lib libneon.lib wxbase28ud.lib wxmsw28ud_core.lib wxmsw28ud_adv.lib wxpngd.lib oldnames.lib svncpp.lib libsvn_subr-1.lib libsvn_client-1.lib libsvn_wc-1.lib xml.lib libapr-1.lib libaprutil-1.lib wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib /nologo /subsystem:windows /debug /machine:I386 /nodefaultlib /out:"Unicode_Debug/rapidsvn.exe" /pdbtype:sept /libpath:"..\svncpp\Unicode_Debug" /libpath:"$(SUBVERSION)/lib" /libpath:"$(SUBVERSION)/lib/apr" /libpath:"$(SUBVERSION)/lib/apr-iconv" /libpath:"$(SUBVERSION)/lib/apr-util" /libpath:"$(SUBVERSION)/lib/neon" /libpath:"$(SUBVERSION)/lib/sasl" /libpath:"$(SUBVERSION)/lib/serf" /libpath:"$(SUBVERSION)\db4-win32\lib" /libpath:"$(WX)\lib\vc_lib" /libpath:"$(LIBINTL)\lib"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "rapidsvn - Win32 Unicode Release"
@@ -142,10 +142,10 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 svncpp.lib libsvn_subr-1.lib libsvn_client-1.lib libsvn_wc-1.lib libneon.lib xml.lib libapr-1.lib libaprutil-1.lib libdb43.lib wxmsw.lib wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libcmt" /libpath:"..\svncpp\Release" /libpath:"$(SUBVERSION)/lib" /libpath:"$(SUBVERSION)/lib/apr" /libpath:"$(SUBVERSION)/lib/apr-iconv" /libpath:"$(SUBVERSION)/lib/apr-util" /libpath:"$(SUBVERSION)/lib/neon" /libpath:"$(SUBVERSION)/lib/sasl" /libpath:"$(SUBVERSION)/lib/serf" /libpath:"$(SUBVERSION)\db4-win32\lib" /libpath:"$(WX)\lib"
 # SUBTRACT BASE LINK32 /pdb:none
-# ADD LINK32 msvcrt.lib msvcprt.lib libneon.lib wxbase28u.lib wxmsw28u_core.lib wxmsw28u_adv.lib wxpng.lib oldnames.lib svncpp.lib libsvn_subr-1.lib libsvn_client-1.lib libsvn_wc-1.lib xml.lib libapr-1.lib libaprutil-1.lib wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libcmt" /out:"Unicode_Release/rapidsvn_unicode.exe" /libpath:"..\svncpp\Unicode_Release" /libpath:"$(SUBVERSION)/lib" /libpath:"$(SUBVERSION)/lib/apr" /libpath:"$(SUBVERSION)/lib/apr-iconv" /libpath:"$(SUBVERSION)/lib/apr-util" /libpath:"$(SUBVERSION)/lib/neon" /libpath:"$(SUBVERSION)/lib/sasl" /libpath:"$(SUBVERSION)/lib/serf" /libpath:"$(SUBVERSION)\db4-win32\lib" /libpath:"$(WX)\lib\vc_lib" /libpath:"$(LIBINTL)\lib"
+# ADD LINK32 msvcrt.lib msvcprt.lib libneon.lib wxbase28u.lib wxmsw28u_core.lib wxmsw28u_adv.lib wxpng.lib oldnames.lib svncpp.lib libsvn_subr-1.lib libsvn_client-1.lib libsvn_wc-1.lib xml.lib libapr-1.lib libaprutil-1.lib wsock32.lib winspool.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib advapi32.lib kernel32.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libcmt" /out:"Unicode_Release/rapidsvn.exe" /libpath:"..\svncpp\Unicode_Release" /libpath:"$(SUBVERSION)/lib" /libpath:"$(SUBVERSION)/lib/apr" /libpath:"$(SUBVERSION)/lib/apr-iconv" /libpath:"$(SUBVERSION)/lib/apr-util" /libpath:"$(SUBVERSION)/lib/neon" /libpath:"$(SUBVERSION)/lib/sasl" /libpath:"$(SUBVERSION)/lib/serf" /libpath:"$(SUBVERSION)\db4-win32\lib" /libpath:"$(WX)\lib\vc_lib" /libpath:"$(LIBINTL)\lib"
 # SUBTRACT LINK32 /pdb:none
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 

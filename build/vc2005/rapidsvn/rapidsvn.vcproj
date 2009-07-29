@@ -208,7 +208,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libdb44.lib wxbase28u.lib wxmsw28u_core.lib wxmsw28u_adv.lib wxpng.lib wxzlib.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_unicode.exe"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
 				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				SubSystem="2"
 				TargetMachine="1"
@@ -283,7 +283,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libdb44.lib wxbase28ud.lib wxmsw28ud_core.lib wxmsw28ud_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_unicode_debug.exe"
+				OutputFile="$(OutDir)\$(ProjectName)_debug.exe"
 				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
 				GenerateDebugInformation="true"

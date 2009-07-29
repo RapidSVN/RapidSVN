@@ -29,6 +29,6 @@ copy msvcp60.dll tmp
 
 rem Copy RapidSvn
 copy ..\..\build\vc6\rapidsvn\Release\rapidsvn_ansi.exe tmp
-copy ..\..\build\vc6\rapidsvn\Unicode_Release\rapidsvn_unicode.exe tmp
+copy ..\..\build\vc6\rapidsvn\Unicode_Release\rapidsvn.exe tmp
 
 rem pause
