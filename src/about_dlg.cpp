@@ -43,9 +43,18 @@ AboutDlg::AboutDlg(wxWindow * parent, const wxLocale & locale)
   SetTitle(title);
 
   // format string
-  const wxString version(wxString::Format(
-                           _("%s Version %s"),
-                           APPLICATION_NAME, Utf8ToLocal(RAPIDSVN_VER_STR).c_str()));
+  wxString version;
+  
+  if (0 == RAPIDSVN_VER_REVISION)
+  {
+    version = wxString::Format(_("%s Version %s"),
+                               APPLICATION_NAME, Utf8ToLocal(RAPIDSVN_VER_STR).c_str());
+  }
+  else
+  {
+    version = wxString::Format(_("%s Version %s Revision %d"),
+                               APPLICATION_NAME, Utf8ToLocal(RAPIDSVN_VER_STR).c_str(), RAPIDSVN_VER_REVISION);
+  }
 
   // TODO: Make these two constants in version.hpp translatable and wxT()'ed respectively.
   // Until then use the kludge of pretending they're UTF8 to save some silly looking ifdef's

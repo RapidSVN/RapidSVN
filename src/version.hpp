@@ -62,6 +62,10 @@
  */
 #define RAPIDSVN_VER_STR "0.11.0"
 
+#ifndef RAPIDSVN_VER_REVISION
+#define RAPIDSVN_VER_REVISION 0
+#endif
+
 /* Symbolic name of the milestone
    Modify whenever Minor number is changed. */
 #define RAPIDSVN_VER_MILESTONE "0.12"
