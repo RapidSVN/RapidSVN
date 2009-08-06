@@ -82,11 +82,14 @@ Language: %s\n\
 System Name: %s\n\
 Canonical Name: %s\n"));
 
+  const svn_version_t * pSvnVersion = svn_subr_version();
+  assert(pSvnVersion != 0);
+
   const wxString built(wxString::Format(
                          builtFmt,
                          wxMAJOR_VERSION, wxMINOR_VERSION,
                          wxRELEASE_NUMBER, unicode.c_str(),
-                         SVN_VER_MAJOR, SVN_VER_MINOR, SVN_VER_MICRO));
+                         pSvnVersion->major, pSvnVersion->minor, pSvnVersion->patch));
 
   const wxString info(wxString::Format(
                         infoFmt,
