@@ -163,9 +163,21 @@ namespace svn
      * check whether the instance contains real data
      * or nothing if it has constructed with the default
      * constructor
+     *
+     * @deprecated
      */
     bool
     isset() const;
+
+    /**
+     * check whether the instance contains real data
+     * or nothing if it has constructed with the default
+     * constructor
+     *
+     * @deprecated
+     */
+    bool
+    isSet() const;
 
   private:
     struct Data;

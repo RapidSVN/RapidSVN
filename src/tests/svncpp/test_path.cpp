@@ -45,23 +45,23 @@ PathTestCase::testInit()
 {
   svn::Path pathEmpty;
   CPPUNIT_ASSERT(strcmp("", pathEmpty.c_str()) == 0);
-  CPPUNIT_ASSERT(pathEmpty.isset() == false);
+  CPPUNIT_ASSERT(pathEmpty.isSet() == false);
 
   svn::Path pathOne = "/some/path/to/repository";
   CPPUNIT_ASSERT(strcmp("/some/path/to/repository", pathOne.c_str()) == 0);
-  CPPUNIT_ASSERT(pathOne.isset());
+  CPPUNIT_ASSERT(pathOne.isSet());
 
   svn::Path pathTwo = "http://this.is/a/url";
   CPPUNIT_ASSERT(strcmp("http://this.is/a/url", pathTwo.c_str()) == 0);
-  CPPUNIT_ASSERT(pathTwo.isset());
+  CPPUNIT_ASSERT(pathTwo.isSet());
 
   svn::Path pathThree = "file:///this.is/a/url";
   CPPUNIT_ASSERT(strcmp("file:///this.is/a/url", pathThree.c_str()) == 0);
-  CPPUNIT_ASSERT(pathThree.isset());
+  CPPUNIT_ASSERT(pathThree.isSet());
 
   svn::Path pathFour("file:///this.is/a/url");
   CPPUNIT_ASSERT(strcmp("file:///this.is/a/url", pathFour.c_str()) == 0);
-  CPPUNIT_ASSERT(pathFour.isset());
+  CPPUNIT_ASSERT(pathFour.isSet());
 
 }
 

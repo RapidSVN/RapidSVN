@@ -98,7 +98,7 @@ namespace svn
     push_back(const Status & status_)
     {
       // skip pseudo entries
-      if (!status_.isset())
+      if (!status_.isSet())
         return;
 
       if (!status_.isVersioned())

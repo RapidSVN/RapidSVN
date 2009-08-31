@@ -230,6 +230,12 @@ namespace svn
   {
     return m->path.length() > 0;
   }
+
+  bool
+  Status::isSet() const
+  {
+    return m->path.length() > 0;
+  }
 }
 /* -----------------------------------------------------------------
  * local variables:

@@ -100,10 +100,24 @@ namespace svn
      * this checks only if the string is non-
      * empty.
      *
+     * @deprecated
+     *
      * @return true if there is a path set
      */
     bool
     isset() const;
+
+    /**
+     * check whether a path is set. Right now
+     * this checks only if the string is non-
+     * empty.
+     *
+     * @deprecated
+     *
+     * @return true if there is a path set
+     */
+    bool
+    isSet() const;
 
     /**
      * shows whether we have a path or url
