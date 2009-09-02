@@ -2,7 +2,7 @@ noinst_HEADERS=${wildcard *.hpp}
 
 lib_LTLIBRARIES=libsvncpp.la
 
-libsvncpp_la_LDFLAGS=-version-info 2:0:0
+libsvncpp_la_LDFLAGS=-version-info 3:0:0
 libsvncpp_la_SOURCES= \
 	apr.cpp \
 	client.cpp \

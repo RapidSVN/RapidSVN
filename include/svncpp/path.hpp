@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -100,19 +100,10 @@ namespace svn
      * this checks only if the string is non-
      * empty.
      *
-     * @deprecated
-     *
-     * @return true if there is a path set
-     */
-    bool
-    isset() const;
-
-    /**
-     * check whether a path is set. Right now
-     * this checks only if the string is non-
-     * empty.
-     *
-     * @deprecated
+     * @note This is the successor of @a isset which had to be removed
+     *       since there was a name conflict with system headers on
+     *       some systems (see issue 676)
+     * @since 0.12
      *
      * @return true if there is a path set
      */

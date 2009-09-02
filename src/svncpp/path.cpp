@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -103,12 +103,6 @@ namespace svn
       return true;
 
     return false;
-  }
-
-  bool
-  Path::isset() const
-  {
-    return m_path.length() > 0;
   }
 
   bool

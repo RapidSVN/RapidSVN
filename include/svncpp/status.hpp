@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -164,17 +164,10 @@ namespace svn
      * or nothing if it has constructed with the default
      * constructor
      *
-     * @deprecated
-     */
-    bool
-    isset() const;
-
-    /**
-     * check whether the instance contains real data
-     * or nothing if it has constructed with the default
-     * constructor
-     *
-     * @deprecated
+     * @note This is the successor of @a isset which had to be removed
+     *       since there was a name conflict with system headers on
+     *       some systems (see issue 676)
+     * @since 0.12
      */
     bool
     isSet() const;
