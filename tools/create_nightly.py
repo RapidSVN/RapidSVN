@@ -66,6 +66,22 @@ def readCurrentRevision():
   m=re.search("Revision: ([0-9]+)",t)
   return m.group(1)
 
+def patchVersionHeader(revision):
+  # first undo any previous patch
+  VERSION_HEADER="src/version.hpp"
+  REVISION_DEFINE="#define RAPIDSVN_VER_REVISION "
+  run("svn", ["revert", VERSION_HEADER], 1)
+
+  # now read the header
+  original=open(VERSION_HEADER, "r").read()
+  m=re.search(REVISION_DEFINE + "[0-9]+", original)
+  if not m:
+    raise Exception("%s' nicht gefunden in '%s'" % (REVISION_DEFINE, VERSION_HEADER))
+
+  # patch the revision
+  patched=original[:m.start()] + REVISION_DEFINE + str(revision) + original[m.end():]
+  open(VERSION_HEADER, "w").write(patched)
+
 def buildApplicationVc6():
   print "Rebuild rapidsvn (using Visual C++ 6.0 msdev)"
   out=open('msdev.log', 'w')
@@ -236,6 +252,7 @@ if __name__ == '__main__':
   # Now decide whether or not we have to create a nightly build
   lastSuccessfulRevision=readLastSuccessfulRevision()
   currentRevision=readCurrentRevision()
+  patchVersionHeader(currentRevision)
 
   if "" == lastSuccessfulRevision:
     print "No successful previous build detected"
