@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-16 22:13+0200\n"
+"POT-Creation-Date: 2009-09-14 10:18+0200\n"
 "PO-Revision-Date: 2008-02-29 05:05+0900\n"
 "Last-Translator: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
 "Language-Team: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
@@ -20,9 +20,14 @@ msgstr ""
 msgid "%s  code: %ld"
 msgstr "%s コード: %ld"
 
-#: ../about_dlg.cpp:47
+#: ../about_dlg.cpp:50
 #, c-format
 msgid "%s Version %s"
+msgstr "%s バージョン %s"
+
+#: ../about_dlg.cpp:55
+#, fuzzy, c-format
+msgid "%s Version %s Revision %d"
 msgstr "%s バージョン %s"
 
 #: ../utils.cpp:360
@@ -30,7 +35,7 @@ msgstr "%s バージョン %s"
 msgid "%x %X"
 msgstr "%Y-%m-%d %H:%M:%S"
 
-#: ../rapidsvn_frame.cpp:328
+#: ../rapidsvn_frame.cpp:329
 msgid "&About..."
 msgstr "このソフトウェアについて(&A)..."
 
@@ -50,7 +55,7 @@ msgstr "注釈(&A)"
 msgid "&Annotate..."
 msgstr "注釈(&A)..."
 
-#: ../rapidsvn_frame.cpp:349
+#: ../rapidsvn_frame.cpp:350
 msgid "&Bookmarks"
 msgstr "ブックマーク(&B)"
 
@@ -58,7 +63,7 @@ msgstr "ブックマーク(&B)"
 msgid "&Close"
 msgstr "閉じる(&C)"
 
-#: ../rapidsvn_frame.cpp:321
+#: ../rapidsvn_frame.cpp:322
 msgid "&Contents\tF1"
 msgstr "コンテンツ(&C)\tF1"
 
@@ -66,7 +71,7 @@ msgstr "コンテンツ(&C)\tF1"
 msgid "&Copy...\tF5"
 msgstr "コピー(&C)...\tF5"
 
-#: ../rapidsvn_frame.cpp:295
+#: ../rapidsvn_frame.cpp:296
 msgid "&Create..."
 msgstr "作成(&C)..."
 
@@ -106,15 +111,15 @@ msgstr "編集(&E)..."
 msgid "&Edit...\tF3"
 msgstr "編集(&E)...\tF3"
 
-#: ../rapidsvn_frame.cpp:293
+#: ../rapidsvn_frame.cpp:294
 msgid "&Export...\tCTRL-E"
 msgstr "エクスポート(&E)...\tCTRL-E"
 
-#: ../rapidsvn_frame.cpp:350
+#: ../rapidsvn_frame.cpp:351
 msgid "&Extras"
 msgstr "特別(&E)"
 
-#: ../rapidsvn_frame.cpp:344
+#: ../rapidsvn_frame.cpp:345
 msgid "&File"
 msgstr "ファイル(&F)"
 
@@ -126,7 +131,7 @@ msgstr "コミット(&F)"
 msgid "&Get"
 msgstr "取得(&G)"
 
-#: ../rapidsvn_frame.cpp:229 ../rapidsvn_frame.cpp:351
+#: ../rapidsvn_frame.cpp:229 ../rapidsvn_frame.cpp:352
 msgid "&Help"
 msgstr "ヘルプ(&H)"
 
@@ -134,11 +139,11 @@ msgstr "ヘルプ(&H)"
 msgid "&Ignore\tCTRL-DEL"
 msgstr "無視(&I)\tCTRL-DEL"
 
-#: ../rapidsvn_frame.cpp:292
+#: ../rapidsvn_frame.cpp:293
 msgid "&Import...\tCTRL-I"
 msgstr "インポート(&I)...\tCTRL-I"
 
-#: ../rapidsvn_frame.cpp:322
+#: ../rapidsvn_frame.cpp:323
 msgid "&Index\tShift+F1"
 msgstr "目次(&I)\tShift+F1"
 
@@ -158,7 +163,7 @@ msgstr "ログ(&L)...\tCTRL-L"
 msgid "&Merge"
 msgstr "マージ(&M)"
 
-#: ../rapidsvn_frame.cpp:347
+#: ../rapidsvn_frame.cpp:348
 msgid "&Modify"
 msgstr "変更(&M)"
 
@@ -174,7 +179,7 @@ msgstr "常に(&P)"
 msgid "&Properties...\tCTRL-P"
 msgstr "属性(&P)...\tCTRL-P"
 
-#: ../rapidsvn_frame.cpp:348
+#: ../rapidsvn_frame.cpp:349
 msgid "&Query"
 msgstr "クエリ(&Q)"
 
@@ -186,7 +191,7 @@ msgstr "最近のエントリ(&R):"
 msgid "&Remove Bookmark"
 msgstr "ブックマークの削除(&R)"
 
-#: ../rapidsvn_frame.cpp:346
+#: ../rapidsvn_frame.cpp:347
 msgid "&Repository"
 msgstr "リポジトリ(&R)"
 
@@ -202,7 +207,7 @@ msgstr "リポジトリURLの切り替え(&S)..."
 msgid "&Temporarily"
 msgstr "今回だけ(&T)"
 
-#: ../rapidsvn_frame.cpp:353
+#: ../rapidsvn_frame.cpp:354
 msgid "&Tests"
 msgstr "テスト(&T)"
 
@@ -218,7 +223,7 @@ msgstr "ロック解除(&U)"
 msgid "&Update...\tCTRL-U"
 msgstr "更新(&U)...\tCTRL-U"
 
-#: ../log_dlg.cpp:360 ../rapidsvn_frame.cpp:345
+#: ../log_dlg.cpp:360 ../rapidsvn_frame.cpp:346
 msgid "&View"
 msgstr "表示(&V)"
 
@@ -254,7 +259,7 @@ msgstr "- 無効な証明書です。"
 msgid "<None>"
 msgstr "<なし>"
 
-#: ../about_dlg.cpp:59
+#: ../about_dlg.cpp:68
 msgid "ANSI"
 msgstr "ANSI"
 
@@ -268,7 +273,7 @@ msgid "Action"
 msgstr "アクション"
 
 #: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listener.cpp:353
-#: ../rapidsvn_frame.cpp:1608
+#: ../rapidsvn_frame.cpp:1627
 msgid "Add"
 msgstr "追加"
 
@@ -280,7 +285,7 @@ msgstr "既存のリポジトリを追加(&R)..."
 msgid "Add r&ecursive"
 msgstr "子階層も追加(&E)"
 
-#: ../rapidsvn_frame.cpp:552
+#: ../rapidsvn_frame.cpp:553
 msgid "Add selected"
 msgstr "追加"
 
@@ -288,17 +293,17 @@ msgstr "追加"
 msgid "Add to bookmarks"
 msgstr "ブックマークに追加"
 
-#: ../listener.cpp:362 ../listener.cpp:369 ../rapidsvn_frame.cpp:1617
-#: ../rapidsvn_frame.cpp:1624
+#: ../listener.cpp:362 ../listener.cpp:369 ../rapidsvn_frame.cpp:1636
+#: ../rapidsvn_frame.cpp:1643
 msgid "Added"
 msgstr "追加"
 
-#: ../rapidsvn_frame.cpp:2125
+#: ../rapidsvn_frame.cpp:2146
 #, c-format
 msgid "Added repository to bookmarks '%s'"
 msgstr "リポジトリはブックマーク '%s' に追加されました"
 
-#: ../rapidsvn_frame.cpp:2096
+#: ../rapidsvn_frame.cpp:2117
 #, c-format
 msgid "Added working copy to bookmarks '%s'"
 msgstr "作業コピーはブックマーク '%s' に追加されました"
@@ -321,11 +326,11 @@ msgstr "影響を受けたファイル/ディレクトリ"
 msgid "All files|*"
 msgstr "全てのファイル|*"
 
-#: ../rapidsvn_frame.cpp:1482 ../rapidsvn_frame.cpp:1501
+#: ../rapidsvn_frame.cpp:1501 ../rapidsvn_frame.cpp:1520
 msgid "An error occured while launching the browser"
 msgstr "ブラウザの起動中にエラーが発生しました"
 
-#: ../rapidsvn_frame.cpp:1469
+#: ../rapidsvn_frame.cpp:1488
 msgid "An error occurred while checking valid actions"
 msgstr "アクションのチェック中にエラーが発生しました"
 
@@ -360,19 +365,19 @@ msgstr "認証"
 msgid "Author"
 msgstr "作者"
 
-#: ../action.cpp:261
+#: ../action.cpp:267
 msgid "BASE"
 msgstr "BASE"
 
-#: ../rapidsvn_frame.cpp:2162
+#: ../rapidsvn_frame.cpp:2183
 msgid "Bookmark"
 msgstr "ブックマーク"
 
-#: ../folder_browser.cpp:174
+#: ../folder_browser.cpp:177
 msgid "Bookmarks"
 msgstr "ブックマーク"
 
-#: ../rapidsvn_frame.cpp:573
+#: ../rapidsvn_frame.cpp:574
 msgid "Bring changes from the repository into the working copy"
 msgstr "リポジトリの変更を作業コピーに反映"
 
@@ -381,7 +386,7 @@ msgstr "リポジトリの変更を作業コピーに反映"
 msgid "Browse"
 msgstr "参照"
 
-#: ../about_dlg.cpp:74
+#: ../about_dlg.cpp:83
 #, c-format
 msgid ""
 "Built with:\n"
@@ -406,7 +411,8 @@ msgstr "CRLF (Windows)"
 #: ../listed_dlg.cpp:342 ../lock_dlg.cpp:61 ../merge_dlg.cpp:215
 #: ../rapidsvn_generated.cpp:195 ../rapidsvn_generated.cpp:329
 #: ../rapidsvn_generated.cpp:409 ../rapidsvn_generated.cpp:485
-#: ../switch_dlg.cpp:139 ../unlock_dlg.cpp:58 ../update_dlg.cpp:135
+#: ../rapidsvn_generated.cpp:564 ../switch_dlg.cpp:139 ../unlock_dlg.cpp:58
+#: ../update_dlg.cpp:135
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -414,7 +420,7 @@ msgstr "キャンセル"
 msgid "Certificate Information:"
 msgstr "証明書情報:"
 
-#: ../rapidsvn_frame.cpp:294
+#: ../rapidsvn_frame.cpp:295
 msgid "Check&out...\tCTRL-O"
 msgstr "チェックアウト(&O)...\tCTRL-O"
 
@@ -426,7 +432,7 @@ msgstr "チェックアウト"
 msgid "Checkout New Working Copy..."
 msgstr "新しい作業コピーをチェックアウト"
 
-#: ../rapidsvn_frame.cpp:336
+#: ../rapidsvn_frame.cpp:337
 msgid "Checkout Test"
 msgstr "チェックアウトテスト"
 
@@ -467,7 +473,7 @@ msgstr "ログメッセージをコミット"
 msgid "Commit log message: default to most recent"
 msgstr "コミットログメッセージ: 最近のものをデフォルトに"
 
-#: ../rapidsvn_frame.cpp:582
+#: ../rapidsvn_frame.cpp:583
 msgid "Commit selected"
 msgstr "コミット"
 
@@ -534,7 +540,7 @@ msgid "Copied from Rev"
 msgstr "コピー元リビジョン"
 
 #: ../dnd_dlg.cpp:108 ../listener.cpp:354 ../move_action.cpp:44
-#: ../rapidsvn_frame.cpp:1609
+#: ../rapidsvn_frame.cpp:1628
 msgid "Copy"
 msgstr "コピー"
 
@@ -570,20 +576,20 @@ msgid "Date:"
 msgstr "日付:"
 
 #: ../delete_action.cpp:40 ../delete_dlg.cpp:79 ../listener.cpp:355
-#: ../rapidsvn_frame.cpp:1610
+#: ../rapidsvn_frame.cpp:1629
 msgid "Delete"
 msgstr "削除"
 
-#: ../rapidsvn_frame.cpp:563
+#: ../rapidsvn_frame.cpp:564
 msgid "Delete files and directories from version control"
 msgstr "ファイルおよびディレクトリをバージョン管理から削除"
 
-#: ../rapidsvn_frame.cpp:562
+#: ../rapidsvn_frame.cpp:563
 msgid "Delete selected"
 msgstr "削除"
 
-#: ../listener.cpp:361 ../listener.cpp:370 ../rapidsvn_frame.cpp:1616
-#: ../rapidsvn_frame.cpp:1625
+#: ../listener.cpp:361 ../listener.cpp:370 ../rapidsvn_frame.cpp:1635
+#: ../rapidsvn_frame.cpp:1644
 msgid "Deleted"
 msgstr "削除"
 
@@ -631,23 +637,23 @@ msgstr "ブックマークごとに異なるログインを使う"
 msgid "Directory:"
 msgstr "ディレクトリ:"
 
-#: ../rapidsvn_frame.cpp:506
+#: ../rapidsvn_frame.cpp:507
 msgid "Display conflicted files/directories"
 msgstr "競合ファイル/ディレクトリを表示します"
 
-#: ../rapidsvn_frame.cpp:619
+#: ../rapidsvn_frame.cpp:620
 msgid "Display info about selected entries"
 msgstr "選択したエントリの情報を表示します"
 
-#: ../rapidsvn_frame.cpp:500
+#: ../rapidsvn_frame.cpp:501
 msgid "Display modified files/directories"
 msgstr "変更ファイル/ディレクトリを表示します"
 
-#: ../rapidsvn_frame.cpp:494
+#: ../rapidsvn_frame.cpp:495
 msgid "Display unmodified files/directories"
 msgstr "未変更ファイル/ディレクトリを表示します"
 
-#: ../rapidsvn_frame.cpp:488
+#: ../rapidsvn_frame.cpp:489
 msgid "Display unversioned files/directories"
 msgstr "バージョン管理されていないファイル/ディレクトリを表示します"
 
@@ -675,7 +681,7 @@ msgstr "EOL:"
 msgid "Edit"
 msgstr "編集"
 
-#: ../rapidsvn_frame.cpp:2162
+#: ../rapidsvn_frame.cpp:2183
 msgid "Edit Bookmark"
 msgstr "ブックマークの編集"
 
@@ -722,7 +728,7 @@ msgstr ""
 #: ../import_dlg.cpp:178 ../import_dlg.cpp:191 ../log_dlg.cpp:479
 #: ../log_dlg.cpp:494 ../log_dlg.cpp:530 ../merge_dlg.cpp:52
 #: ../merge_dlg.cpp:91 ../merge_dlg.cpp:107 ../property_dlg.cpp:120
-#: ../rapidsvn_frame.cpp:2086
+#: ../rapidsvn_frame.cpp:2107
 msgid "Error"
 msgstr "エラー"
 
@@ -757,26 +763,26 @@ msgstr "アクション準備中にエラー"
 msgid "Error while preparing action: %s"
 msgstr "アクション準備中にエラー: %s"
 
-#: ../folder_browser.cpp:497
+#: ../folder_browser.cpp:500
 #, c-format
 msgid "Error while refreshing filelist (%s)"
 msgstr "ファイルリスのトリフレッシュ中にエラー (%s)"
 
-#: ../rapidsvn_frame.cpp:1135
+#: ../rapidsvn_frame.cpp:1137
 msgid "Error while updating filelist"
 msgstr "ファイルリスト更新中にエラー"
 
-#: ../rapidsvn_frame.cpp:1122
+#: ../rapidsvn_frame.cpp:1124
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "ファイルリスト更新中にエラー(%s)"
 
-#: ../rapidsvn_frame.cpp:722
+#: ../rapidsvn_frame.cpp:723
 #, c-format
 msgid "Error: %s\n"
 msgstr "エラー: %s\n"
 
-#: ../rapidsvn_frame.cpp:2020
+#: ../rapidsvn_frame.cpp:2041
 msgid "Exception occured during filelist update"
 msgstr "ファイルリスト更新中に例外が発生"
 
@@ -803,7 +809,7 @@ msgstr "エディタを実行: %s"
 msgid "Execute file explorer: %s"
 msgstr "ファイルエクスプローラを実行: %s"
 
-#: ../userresolve_action.cpp:128
+#: ../userresolve_action.cpp:107
 #, c-format
 msgid "Execute merge tool: %s"
 msgstr "マージツールを実行: %s"
@@ -825,11 +831,11 @@ msgstr "エクスポート"
 msgid "Extension"
 msgstr "拡張子"
 
-#: ../listener.cpp:376 ../rapidsvn_frame.cpp:1631
+#: ../listener.cpp:376 ../rapidsvn_frame.cpp:1650
 msgid "Failed to lock"
 msgstr "ロックに失敗しました"
 
-#: ../listener.cpp:377 ../rapidsvn_frame.cpp:1632
+#: ../listener.cpp:377 ../rapidsvn_frame.cpp:1651
 msgid "Failed to unlock"
 msgstr "ロック解除に失敗しました"
 
@@ -853,11 +859,12 @@ msgstr "マージには第1パスまたはURLが必要です!"
 msgid "First working copy or URL"
 msgstr "第1パスまたはURL"
 
-#: ../about_dlg.cpp:71
+#: ../about_dlg.cpp:80
 msgid "For more information see:"
 msgstr "詳しくは以下を参照:"
 
 #: ../destination_dlg.cpp:80 ../merge_dlg.cpp:205
+#: ../rapidsvn_generated.cpp:543
 msgid "Force"
 msgstr "強制"
 
@@ -881,12 +888,12 @@ msgstr "自分がロック所有者でなくても強制的にロックを解除
 msgid "General"
 msgstr "一般"
 
-#: ../action.cpp:266
+#: ../action.cpp:272
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "ファイルを取得: %s リビジョン %s"
 
-#: ../action.cpp:259
+#: ../action.cpp:265
 msgid "HEAD"
 msgstr "HEAD"
 
@@ -919,7 +926,7 @@ msgstr ""
 msgid "Ignore"
 msgstr "無視"
 
-#: ../rapidsvn_frame.cpp:280
+#: ../rapidsvn_frame.cpp:281 ../rapidsvn_generated.cpp:551
 msgid "Ignore Externals"
 msgstr "外部参照を無視"
 
@@ -941,15 +948,19 @@ msgstr "リポジトリにファイルをインポートします: %s"
 msgid "In&teractive Resolve...\tCTRL-T"
 msgstr "対話的に衝突を解消(&T)...\tCTRL-T"
 
-#: ../rapidsvn_frame.cpp:2205
+#: ../rapidsvn_frame.cpp:276
+msgid "Indicate modified children"
+msgstr ""
+
+#: ../rapidsvn_frame.cpp:2226
 msgid "Info"
 msgstr "情報"
 
-#: ../rapidsvn_frame.cpp:618
+#: ../rapidsvn_frame.cpp:619
 msgid "Info selected"
 msgstr "情報"
 
-#: ../rapidsvn_frame.cpp:1697
+#: ../rapidsvn_frame.cpp:1716
 msgid "Information"
 msgstr "情報"
 
@@ -957,7 +968,7 @@ msgstr "情報"
 msgid "Internal Error: There is another action running"
 msgstr "内部エラー: 実行中の他アクションがあります"
 
-#: ../rapidsvn_frame.cpp:1765
+#: ../rapidsvn_frame.cpp:1784
 msgid "Internal Error: no client data for action event!"
 msgstr "内部エラー: アクションイベントのためのクライアントデータがありません!"
 
@@ -1018,16 +1029,16 @@ msgstr "最終更新リビジョン: %ld"
 msgid "Line"
 msgstr "行"
 
-#: ../rapidsvn_frame.cpp:335
+#: ../rapidsvn_frame.cpp:336
 msgid "Listener Test"
 msgstr "リスナテスト"
 
-#: ../filelist_ctrl.cpp:1019
+#: ../filelist_ctrl.cpp:1018
 #, c-format
 msgid "Listing entries in '%s'"
 msgstr "'%s' のエントリを一覧しています"
 
-#: ../about_dlg.cpp:79
+#: ../about_dlg.cpp:88
 #, c-format
 msgid ""
 "Locale Information:\n"
@@ -1040,15 +1051,15 @@ msgstr ""
 "システム名: %s\n"
 "正式名称: %s\n"
 
-#: ../rapidsvn_app.cpp:196 ../rapidsvn_app.cpp:204
+#: ../rapidsvn_app.cpp:198 ../rapidsvn_app.cpp:206
 msgid "Locate help"
 msgstr "ヘルプを探す"
 
-#: ../rapidsvn_app.cpp:264
+#: ../rapidsvn_app.cpp:266
 msgid "Locate tips"
 msgstr "ヒントを探す"
 
-#: ../rapidsvn_app.cpp:256
+#: ../rapidsvn_app.cpp:258
 msgid "Locate tips file"
 msgstr "ヒントのファイルを探す"
 
@@ -1087,7 +1098,7 @@ msgstr "ロック所有者: %s"
 msgid "Lock Token: %s"
 msgstr "ロックトークン: %s"
 
-#: ../listener.cpp:374 ../rapidsvn_frame.cpp:1629
+#: ../listener.cpp:374 ../rapidsvn_frame.cpp:1648
 msgid "Locked"
 msgstr "ロック"
 
@@ -1107,7 +1118,7 @@ msgstr "ログメッセージ"
 msgid "Log Message:"
 msgstr "ログメッセージ:"
 
-#: ../rapidsvn_frame.cpp:628
+#: ../rapidsvn_frame.cpp:629
 msgid "Log selected"
 msgstr "ログ"
 
@@ -1115,11 +1126,11 @@ msgstr "ログ"
 msgid "Login..."
 msgstr "ログイン..."
 
-#: ../folder_browser.cpp:333
+#: ../folder_browser.cpp:336
 msgid "Logout"
 msgstr "ログアウト"
 
-#: ../folder_browser.cpp:338
+#: ../folder_browser.cpp:341
 #, c-format
 msgid "Logout '%s'"
 msgstr "ログアウト '%s'"
@@ -1148,7 +1159,7 @@ msgstr "マージツール"
 msgid "Merge revisions"
 msgstr "リビジョン間でマージ"
 
-#: ../rapidsvn_frame.cpp:299
+#: ../rapidsvn_frame.cpp:300
 msgid "Merge..."
 msgstr "マージ..."
 
@@ -1156,7 +1167,7 @@ msgstr "マージ..."
 msgid "Mkdir"
 msgstr "Mkdir"
 
-#: ../listener.cpp:368 ../rapidsvn_frame.cpp:1623
+#: ../listener.cpp:368 ../rapidsvn_frame.cpp:1642
 msgid "Modified"
 msgstr "変更"
 
@@ -1195,7 +1206,7 @@ msgstr ""
 msgid "No diff tool set in the preferences"
 msgstr "設定で比較ツールが指定されていません"
 
-#: ../rapidsvn_app.cpp:204
+#: ../rapidsvn_app.cpp:206
 msgid ""
 "No help file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1207,7 +1218,7 @@ msgstr ""
 msgid "No merge tool set in the preferences"
 msgstr "設定でマージツールが指定されていません"
 
-#: ../rapidsvn_app.cpp:264
+#: ../rapidsvn_app.cpp:266
 msgid ""
 "No tips file was chosen, would you like to be \n"
 "asked again after next application start?"
@@ -1228,14 +1239,14 @@ msgstr "指定しない"
 msgid "Not versioned"
 msgstr "バージョン管理されていません"
 
-#: ../about_dlg.cpp:102 ../annotate_dlg.cpp:42 ../auth_dlg.cpp:71
+#: ../about_dlg.cpp:114 ../annotate_dlg.cpp:42 ../auth_dlg.cpp:71
 #: ../checkout_dlg.cpp:126 ../delete_dlg.cpp:54 ../destination_dlg.cpp:87
 #: ../export_dlg.cpp:145 ../import_dlg.cpp:128 ../listed_dlg.cpp:185
 #: ../listed_dlg.cpp:341 ../lock_dlg.cpp:60 ../merge_dlg.cpp:212
 #: ../rapidsvn_generated.cpp:191 ../rapidsvn_generated.cpp:325
 #: ../rapidsvn_generated.cpp:405 ../rapidsvn_generated.cpp:481
-#: ../report_dlg.cpp:57 ../switch_dlg.cpp:137 ../unlock_dlg.cpp:55
-#: ../update_dlg.cpp:133
+#: ../rapidsvn_generated.cpp:560 ../report_dlg.cpp:57 ../switch_dlg.cpp:137
+#: ../unlock_dlg.cpp:55 ../update_dlg.cpp:133
 msgid "OK"
 msgstr "OK"
 
@@ -1263,7 +1274,7 @@ msgstr "パスの種類:"
 msgid "Peg Revision"
 msgstr "ペグ・リビジョン"
 
-#: ../rapidsvn_frame.cpp:1690
+#: ../rapidsvn_frame.cpp:1709
 msgid ""
 "Please use the command line utility 'svnadmin'\n"
 "to create a new repository.\n"
@@ -1341,15 +1352,15 @@ msgstr "属性エディタ"
 msgid "Purge temporary files on program exit"
 msgstr "プログラム終了時に一時ファイルを破棄する"
 
-#: ../rapidsvn_frame.cpp:553
+#: ../rapidsvn_frame.cpp:554
 msgid "Put files and directories under revision control"
 msgstr "ファイルとディレクトリをバージョン管理下に置く"
 
-#: ../rapidsvn_frame.cpp:689
+#: ../rapidsvn_frame.cpp:690
 msgid "RapidSVN Error"
 msgstr "RapidSVNエラー"
 
-#: ../rapidsvn_app.cpp:95
+#: ../rapidsvn_app.cpp:97
 #, c-format
 msgid "RapidSVN Help: %s"
 msgstr "RapidSVN ヘルプ: %s"
@@ -1366,11 +1377,11 @@ msgstr "衝突の解消(&S)\tCtrl+S"
 msgid "Re&vert\tCTRL-V"
 msgstr "元に戻す(&V)\tCTRL-V"
 
-#: ../filelist_ctrl.cpp:1089
+#: ../filelist_ctrl.cpp:1088
 msgid "Ready"
 msgstr "レディ"
 
-#: ../rapidsvn_frame.cpp:1745 ../rapidsvn_frame.cpp:1789
+#: ../rapidsvn_frame.cpp:1764 ../rapidsvn_frame.cpp:1808
 msgid "Ready\n"
 msgstr "レディ\n"
 
@@ -1379,12 +1390,13 @@ msgid "Recent entries:"
 msgstr "最近のエントリ:"
 
 #: ../checkout_dlg.cpp:111 ../export_dlg.cpp:114 ../import_dlg.cpp:108
-#: ../merge_dlg.cpp:201 ../rapidsvn_generated.cpp:473 ../revert_dlg.cpp:49
-#: ../switch_dlg.cpp:117 ../update_dlg.cpp:115
+#: ../merge_dlg.cpp:201 ../rapidsvn_generated.cpp:473
+#: ../rapidsvn_generated.cpp:547 ../revert_dlg.cpp:49 ../switch_dlg.cpp:117
+#: ../update_dlg.cpp:115
 msgid "Recursive"
 msgstr "子階層を含む"
 
-#: ../rapidsvn_frame.cpp:517
+#: ../rapidsvn_frame.cpp:518
 msgid "Refresh"
 msgstr "リフレッシュ"
 
@@ -1392,7 +1404,7 @@ msgstr "リフレッシュ"
 msgid "Refresh View\tCTRL-R"
 msgstr "表示をリフレッシュ\tCTRL-R"
 
-#: ../rapidsvn_frame.cpp:518
+#: ../rapidsvn_frame.cpp:519
 msgid "Refresh the file list"
 msgstr "ファイルリストをリフレッシュ"
 
@@ -1404,11 +1416,11 @@ msgstr "更新してリフレッシュ"
 msgid "Relocate"
 msgstr "再配置"
 
-#: ../rapidsvn_frame.cpp:603
+#: ../rapidsvn_frame.cpp:604
 msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr "作業コピーのファイルまたはディレクトリの衝突状態を取り除く"
 
-#: ../rapidsvn_frame.cpp:2139
+#: ../rapidsvn_frame.cpp:2160
 msgid "Removed bookmark"
 msgstr "削除済みブックマーク"
 
@@ -1420,7 +1432,7 @@ msgstr "名前の変更"
 msgid "Rep. Rev."
 msgstr "リポジトリ リビジョン"
 
-#: ../listener.cpp:371 ../rapidsvn_frame.cpp:1626
+#: ../listener.cpp:371 ../rapidsvn_frame.cpp:1645
 msgid "Replaced"
 msgstr "置換"
 
@@ -1428,7 +1440,7 @@ msgstr "置換"
 msgid "Repository"
 msgstr "リポジトリ"
 
-#: ../import_dlg.cpp:67 ../rapidsvn_frame.cpp:2111
+#: ../import_dlg.cpp:67 ../rapidsvn_frame.cpp:2132
 msgid "Repository URL"
 msgstr "リポジトリURL"
 
@@ -1458,34 +1470,35 @@ msgstr "プログラムを開始するたびにフラットモードをリセッ
 msgid "Resolve"
 msgstr "衝突の解消"
 
-#: ../rapidsvn_frame.cpp:602
+#: ../rapidsvn_frame.cpp:603
 msgid "Resolve selected"
 msgstr "衝突の解消"
 
-#: ../listener.cpp:359 ../rapidsvn_frame.cpp:1614
+#: ../listener.cpp:359 ../rapidsvn_frame.cpp:1633
 msgid "Resolved"
 msgstr "解消"
 
-#: ../listener.cpp:356 ../rapidsvn_frame.cpp:1611
+#: ../listener.cpp:356 ../rapidsvn_frame.cpp:1630
 msgid "Restore"
 msgstr "復元"
 
-#: ../rapidsvn_frame.cpp:593
+#: ../rapidsvn_frame.cpp:594
 msgid "Restore pristine working copy file (undo all local edits)"
 msgstr "初期作業コピーファイルを復元(すべてのローカル編集を元に戻す)"
 
-#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1612 ../revert_action.cpp:35
+#: ../listener.cpp:357 ../rapidsvn_frame.cpp:1631 ../revert_action.cpp:35
 #: ../revert_dlg.cpp:79
 msgid "Revert"
 msgstr "元に戻す"
 
-#: ../rapidsvn_frame.cpp:592
+#: ../rapidsvn_frame.cpp:593
 msgid "Revert selected"
 msgstr "元に戻す"
 
 #: ../annotate_dlg.cpp:47 ../checkout_dlg.cpp:83 ../columns.cpp:47
 #: ../export_dlg.cpp:86 ../log_dlg.cpp:163 ../merge_dlg.cpp:133
-#: ../merge_dlg.cpp:150 ../switch_dlg.cpp:91 ../update_dlg.cpp:88
+#: ../merge_dlg.cpp:150 ../rapidsvn_generated.cpp:529 ../switch_dlg.cpp:91
+#: ../update_dlg.cpp:88
 msgid "Revision"
 msgstr "リビジョン"
 
@@ -1543,7 +1556,7 @@ msgstr "出力ディレクトリを選択してください"
 msgid "Select a destination folder to merge to"
 msgstr "マージの出力先フォルダを選択してください"
 
-#: ../rapidsvn_frame.cpp:2066
+#: ../rapidsvn_frame.cpp:2087
 msgid "Select a directory"
 msgstr "ディレクトリを選択してください"
 
@@ -1575,7 +1588,7 @@ msgstr "実行可能な標準エディタを選択してください"
 msgid "Select standard file explorer executable"
 msgstr "実行可能なファイルエクスプローラを選択してください"
 
-#: ../rapidsvn_frame.cpp:583
+#: ../rapidsvn_frame.cpp:584
 msgid "Send changes from your working copy to the repository"
 msgstr "変更を作業コピーからリポジトリに送信"
 
@@ -1604,43 +1617,43 @@ msgstr ""
 "チェックすると、ここで管理されている外部定義と外部参照作業コピーを無視しま"
 "す。"
 
-#: ../rapidsvn_frame.cpp:325
+#: ../rapidsvn_frame.cpp:326
 msgid "Show Startup Tips"
 msgstr "起動時にヒントを表示"
 
-#: ../rapidsvn_frame.cpp:279 ../rapidsvn_frame.cpp:505
+#: ../rapidsvn_frame.cpp:280 ../rapidsvn_frame.cpp:506
 msgid "Show conflicted entries"
 msgstr "競合エントリを表示"
 
-#: ../rapidsvn_frame.cpp:482
+#: ../rapidsvn_frame.cpp:483
 msgid "Show entries in subdirectories"
 msgstr "サブディレクトリ内のエントリを表示"
 
-#: ../rapidsvn_frame.cpp:281
+#: ../rapidsvn_frame.cpp:282
 msgid "Show ignored entries"
 msgstr "無視エントリを表示"
 
-#: ../rapidsvn_frame.cpp:278 ../rapidsvn_frame.cpp:499
+#: ../rapidsvn_frame.cpp:279 ../rapidsvn_frame.cpp:500
 msgid "Show modified entries"
 msgstr "変更エントリを表示"
 
-#: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:481
+#: ../rapidsvn_frame.cpp:275 ../rapidsvn_frame.cpp:482
 msgid "Show subdirectories"
 msgstr "サブディレクトリを表示"
 
-#: ../rapidsvn_frame.cpp:629
+#: ../rapidsvn_frame.cpp:630
 msgid "Show the log messages for the selected entries"
 msgstr "選択されたエントリのログメッセージを表示"
 
-#: ../rapidsvn_frame.cpp:277 ../rapidsvn_frame.cpp:493
+#: ../rapidsvn_frame.cpp:278 ../rapidsvn_frame.cpp:494
 msgid "Show unmodified entries"
 msgstr "未変更エントリを表示"
 
-#: ../rapidsvn_frame.cpp:276 ../rapidsvn_frame.cpp:487
+#: ../rapidsvn_frame.cpp:277 ../rapidsvn_frame.cpp:488
 msgid "Show unversioned entries"
 msgstr "バージョン管理されていないエントリを表示"
 
-#: ../listener.cpp:360 ../rapidsvn_frame.cpp:1615
+#: ../listener.cpp:360 ../rapidsvn_frame.cpp:1634
 msgid "Skip"
 msgstr "スキップ"
 
@@ -1668,11 +1681,11 @@ msgstr "状態"
 msgid "Steal lock if it belongs to another user"
 msgstr "ロックが他のユーザに属している場合は奪う"
 
-#: ../rapidsvn_frame.cpp:530
+#: ../rapidsvn_frame.cpp:531
 msgid "Stop"
 msgstr "停止"
 
-#: ../rapidsvn_frame.cpp:531
+#: ../rapidsvn_frame.cpp:532
 msgid "Stop the current action"
 msgstr "現在のアクションを停止"
 
@@ -1684,19 +1697,19 @@ msgstr "認証証明書をハードディスクに保存"
 msgid "Switch URL"
 msgstr "URLの切り替え"
 
-#: ../rapidsvn_frame.cpp:300
+#: ../rapidsvn_frame.cpp:301
 msgid "Switch URL...\tCTRL-S"
 msgstr "URLの切り替え...\tCTRL-S"
 
-#: ../rapidsvn_frame.cpp:1562
+#: ../rapidsvn_frame.cpp:1581
 msgid "Test duration"
 msgstr "テスト所要時間"
 
-#: ../rapidsvn_frame.cpp:1558
+#: ../rapidsvn_frame.cpp:1577
 msgid "Test ended at"
 msgstr "テスト終了時刻"
 
-#: ../rapidsvn_frame.cpp:1555
+#: ../rapidsvn_frame.cpp:1574
 msgid "Test started at"
 msgstr "テスト開始時刻"
 
@@ -1723,7 +1736,7 @@ msgstr ""
 "このアクションによってコミットが発生します。ログメッセージを入力してくださ"
 "い。"
 
-#: ../about_dlg.cpp:53
+#: ../about_dlg.cpp:62
 msgid ""
 "This program is licensed under the terms\n"
 "of the GNU General Public License version 3\n"
@@ -1736,7 +1749,7 @@ msgid "Tree"
 msgstr "ツリー"
 
 #: ../checkout_dlg.cpp:65 ../columns.cpp:59 ../export_dlg.cpp:68
-#: ../switch_dlg.cpp:77 ../update_dlg.cpp:73
+#: ../rapidsvn_generated.cpp:521 ../switch_dlg.cpp:77 ../update_dlg.cpp:73
 msgid "URL"
 msgstr "URL"
 
@@ -1749,11 +1762,11 @@ msgstr "URL: %s"
 msgid "UUID"
 msgstr "UUID"
 
-#: ../about_dlg.cpp:57
+#: ../about_dlg.cpp:66
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../rapidsvn_frame.cpp:1717
+#: ../rapidsvn_frame.cpp:1736
 msgid "Unimplemented action!"
 msgstr "未実装アクション!"
 
@@ -1765,7 +1778,7 @@ msgstr "未知の出力パス"
 msgid "Unlock"
 msgstr "ロック解除"
 
-#: ../listener.cpp:375 ../rapidsvn_frame.cpp:1630
+#: ../listener.cpp:375 ../rapidsvn_frame.cpp:1649
 msgid "Unlocked"
 msgstr "ロックが解除"
 
@@ -1773,15 +1786,15 @@ msgstr "ロックが解除"
 msgid "Update"
 msgstr "更新"
 
-#: ../rapidsvn_frame.cpp:572
+#: ../rapidsvn_frame.cpp:573
 msgid "Update selected"
 msgstr "更新"
 
-#: ../listener.cpp:363 ../rapidsvn_frame.cpp:1618
+#: ../listener.cpp:363 ../rapidsvn_frame.cpp:1637
 msgid "Updated"
 msgstr "更新"
 
-#: ../rapidsvn_frame.cpp:1779 ../rapidsvn_frame.cpp:1784
+#: ../rapidsvn_frame.cpp:1798 ../rapidsvn_frame.cpp:1803
 msgid "Updating..."
 msgstr "更新しています..."
 
@@ -1798,7 +1811,8 @@ msgid "Use always"
 msgstr "常に使用"
 
 #: ../checkout_dlg.cpp:92 ../export_dlg.cpp:95 ../rapidsvn_generated.cpp:259
-#: ../rapidsvn_generated.cpp:299 ../switch_dlg.cpp:103 ../update_dlg.cpp:100
+#: ../rapidsvn_generated.cpp:299 ../rapidsvn_generated.cpp:534
+#: ../switch_dlg.cpp:103 ../update_dlg.cpp:100
 msgid "Use latest"
 msgstr "最新を使用"
 
@@ -1847,11 +1861,11 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: ../rapidsvn_frame.cpp:2084
+#: ../rapidsvn_frame.cpp:2105
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "Subversion管理ディレクトリをブックマークに追加することはできません!"
 
-#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1197
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1196
 msgid "add"
 msgstr "追加"
 
@@ -1863,7 +1877,7 @@ msgstr "追加"
 msgid "conflicted"
 msgstr "衝突"
 
-#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1200
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1199
 msgid "delete"
 msgstr "削除"
 
@@ -1919,11 +1933,11 @@ msgstr "通常"
 msgid "obstructed"
 msgstr "妨害"
 
-#: ../filelist_ctrl.cpp:1230 ../filelist_ctrl.cpp:1244
+#: ../filelist_ctrl.cpp:1229 ../filelist_ctrl.cpp:1243
 msgid "outdated"
 msgstr "期限切れ"
 
-#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1203
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1202
 msgid "replace"
 msgstr "置換"
 
@@ -1943,7 +1957,7 @@ msgstr "不明な値"
 msgid "unversioned"
 msgstr "バージョン管理外"
 
-#: ../rapidsvn_frame.cpp:334
+#: ../rapidsvn_frame.cpp:335
 msgid "wxString Creation&Tracing Test"
 msgstr "wxString Creation&Tracing Test"
 
