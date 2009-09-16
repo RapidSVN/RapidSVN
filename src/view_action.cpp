@@ -98,13 +98,13 @@ ViewAction::Perform()
   wxString path;
 
   if (m->edit)
-    path = Utf8ToLocal(GetTarget().c_str());
+    path = Utf8ToLocal(GetTarget().native().c_str());
   else
   {
     svn::Path pathUtf8(PathUtf8(m->data.path));
     path = Utf8ToLocal(
              GetPathAsTempFile(pathUtf8.c_str(),
-                               m->data.revision).c_str());
+                               m->data.revision).native().c_str());
   }
 
   wxString args(prefs.editorArgs);

@@ -66,7 +66,7 @@ ExternalProgramAction::Perform()
   if (path.isUrl())
     path = GetPathAsTempFile(path);
 
-  wxString target_str = Utf8ToLocal(path.c_str());
+  wxString target_str = Utf8ToLocal(path.native().c_str());
   wxFileName target = target_str;
 
   // The target we'll pass to the external program
