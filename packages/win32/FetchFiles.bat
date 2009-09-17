@@ -14,8 +14,8 @@ rem       are set to existing paths (or at all)
 mkdir tmp
 
 rem Delete OLD Files
-del tmp\*.dll
-del tmp\*.so
+del /q tmp\*.*
+del /q output\*.*
 
 rem Copy Berkeley DB
 copy %SUBVERSION%\db4-win32\bin\libdb44.dll tmp
