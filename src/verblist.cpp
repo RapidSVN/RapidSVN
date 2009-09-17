@@ -71,8 +71,7 @@ VerbList::GetCount() const
 const wxString &
 VerbList::GetName(size_t index) const
 {
-  static const wxString empty(wxT(""));
-  return empty;
+  return wxEmptyString;
 }
 
 
@@ -95,12 +94,12 @@ VerbList::Launch(size_t index) const
 struct Verb
 {
   typedef std::vector<Verb> LIST;
-  bool m_uses_dde;
+  bool m_usesDde;
   wxString m_name;
   wxString m_command;
-  wxString m_dde_command;
-  wxString m_dde_app;
-  wxString m_dde_topic;
+  wxString m_ddeCommand;
+  wxString m_ddeApplication;
+  wxString m_ddeTopic;
 
   Verb();
 
@@ -116,13 +115,13 @@ struct Verb
    * @retval false if error has happened
    */
   bool
-  ReadFromRegistry(const wxRegKey & base, const wxString & verb_name);
+  ReadFromRegistry(const wxRegKey & base, const wxString & verbName);
 
 
   /**
    * Lauch the verb on the given document
    */
-  void Launch(const wxString & document_path) const;
+  void Launch(const wxString & documentPath) const;
 };
 
 
@@ -131,7 +130,7 @@ struct Verb
  */
 struct VerbList::Data
 {
-  wxFileName document_path;
+  wxFileName documentPath;
   wxString document_type_name;
   Verb::LIST verb_list;
 };
@@ -139,53 +138,58 @@ struct VerbList::Data
 
 //*********************************************************************
 
-Verb::Verb() : m_uses_dde(false)
+Verb::Verb() : m_usesDde(false)
 {
 }
 
 bool
-Verb::ReadFromRegistry(const wxRegKey & base, const wxString & verb_name)
+Verb::ReadFromRegistry(const wxRegKey & base, const wxString & verbName)
 {
   // Store descriptive verb name
-  m_name = verb_name;
+  m_name = verbName;
 
-  wxString command_key_name(verb_name + wxT("\\command"));
-
-  // Read command key
-  if (!base.HasSubKey(command_key_name))
+  if (!base.HasSubKey(verbName))
     return false;
 
-  wxRegKey command_key(base, command_key_name);
+  wxRegKey verbKey(base, verbName);
 
-  command_key.QueryValue(NULL, m_command);
+  // Read command key
+  const wxString commandKeyName(wxT("command"));
+  if (!verbKey.HasSubKey(commandKeyName))
+    return false;
+
+  wxRegKey commandKey(base, commandKeyName);
+
+  if (commandKey.HasValue(NULL))
+    commandKey.QueryValue(NULL, m_command);
 
   // Attempt to read ddeexec key
-  m_dde_command = wxT("");
-  m_dde_topic = wxT("");
-  m_dde_app = wxT("");
+  m_ddeCommand.Clear();
+  m_ddeTopic.Clear();
+  m_ddeApplication.Clear();
 
-  const wxString dde_command_key_name(verb_name + wxT("\\ddeexec"));
-  m_uses_dde = base.HasSubKey(dde_command_key_name);
-  if (m_uses_dde)
+  const wxString ddeCommandKeyName(wxT("ddeexec"));
+  m_usesDde = verbKey.HasSubKey(ddeCommandKeyName);
+  if (m_usesDde)
   {
-    wxRegKey dde_command_key(base, dde_command_key_name);;
-    if (dde_command_key.HasValue(NULL))
-      dde_command_key.QueryValue(NULL, m_dde_command);
+    wxRegKey ddeCommandKey(verbKey, ddeCommandKeyName);;
+    if (ddeCommandKey.HasValue(NULL))
+      ddeCommandKey.QueryValue(NULL, m_ddeCommand);
 
-    const wxString dde_topic_name(wxT("Topic"));
-    if (dde_command_key.HasSubKey(dde_topic_name))
+    const wxString ddeTopicName(wxT("Topic"));
+    if (ddeCommandKey.HasSubKey(ddeTopicName))
     {
-      wxRegKey dde_topic_key(dde_command_key, dde_topic_name);
-      if (dde_topic_key.HasValue(NULL))
-        dde_topic_key.QueryValue(NULL, m_dde_topic);
+      wxRegKey ddeTopicKey(ddeCommandKey, ddeTopicName);
+      if (ddeTopicKey.HasValue(NULL))
+        ddeTopicKey.QueryValue(NULL, m_ddeTopic);
     }
 
-    const wxString dde_application_name(wxT("Application"));
-    if (dde_command_key.HasSubKey(dde_application_name))
+    const wxString ddeApplicationName(wxT("Application"));
+    if (ddeCommandKey.HasSubKey(ddeApplicationName))
     {
-      wxRegKey dde_app_key(dde_command_key, dde_application_name);
-      if (dde_app_key.HasValue(NULL))
-        dde_app_key.QueryValue(NULL, m_dde_app);
+      wxRegKey ddeApplicationKey(ddeCommandKey, ddeApplicationName);
+      if (ddeApplicationKey.HasValue(NULL))
+        ddeApplicationKey.QueryValue(NULL, m_ddeApplication);
     }
   }
 
@@ -193,10 +197,10 @@ Verb::ReadFromRegistry(const wxRegKey & base, const wxString & verb_name)
 }
 
 void
-Verb::Launch(const wxString  & document_path) const
+Verb::Launch(const wxString  & documentPath) const
 {
   ShellExecute(NULL, m_name.c_str(),
-               document_path.c_str(), NULL, NULL, SW_SHOWNORMAL);
+               documentPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
   // TODO: error handling
 }
 
@@ -213,7 +217,7 @@ VerbList::~VerbList()
 }
 
 void
-VerbList::InitFromDocument(const wxString & document_path, bool isAFolder)
+VerbList::InitFromDocument(const wxString & documentPath, bool isAFolder)
 {
 
   // Algorithm:
@@ -226,7 +230,7 @@ VerbList::InitFromDocument(const wxString & document_path, bool isAFolder)
   // Expand wildcards in command: "%1" and %1, and %SystemRoot% and other
   // environment variables.
 
-  m->document_path = document_path;
+  m->documentPath = documentPath;
 
   // Make sure list is empty
   m->verb_list.clear();
@@ -242,11 +246,11 @@ VerbList::InitFromDocument(const wxString & document_path, bool isAFolder)
   else
   {
     // Find document extension
-    if (!m->document_path.HasExt())
+    if (!m->documentPath.HasExt())
       // Nothing to go on; we cannot provide an editor
       return;
 
-    wxString extension_key_name(wxT(".") + m->document_path.GetExt());
+    wxString extension_key_name(wxT(".") + m->documentPath.GetExt());
     if (!regKeyHKCR.HasSubKey(extension_key_name))
       return;
 
@@ -276,9 +280,9 @@ VerbList::InitFromDocument(const wxString & document_path, bool isAFolder)
 
   // Get name of default verb (ignored if not found)
 
-  wxString default_verb_name(wxT(""));
+  wxString default_verbName;
   if (verb_base_key.HasValue(NULL))
-    verb_base_key.QueryValue(NULL, default_verb_name);
+    verb_base_key.QueryValue(NULL, default_verbName);
 
   wxString verb_key_name;
   long index;
@@ -290,7 +294,7 @@ VerbList::InitFromDocument(const wxString & document_path, bool isAFolder)
     if (verb.ReadFromRegistry(verb_base_key, verb_key_name))
     {
       // Place first if default
-      if (verb_key_name == default_verb_name)
+      if (verb_key_name == default_verbName)
         m->verb_list.insert(m->verb_list.begin(), verb);
       else
         m->verb_list.push_back(verb);
@@ -316,7 +320,7 @@ VerbList::GetName(size_t index) const
 void
 VerbList::Launch(size_t index) const
 {
-  m->verb_list[index].Launch(m->document_path.GetFullPath());
+  m->verb_list[index].Launch(m->documentPath.GetFullPath());
 }
 
 
