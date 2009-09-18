@@ -29,7 +29,7 @@ dnl
 dnl APR
 dnl
 
-APR_CONFIGS="apr-config /usr/local/apr/bin/apr-config"
+APR_CONFIGS="apr-config apr-1-config /usr/local/apr/bin/apr-config"
 AC_ARG_WITH(apr-config,
 [[  --with-apr-config=FILE    Use the given path to apr-config when determining
                             APR configuration; defaults to "apr-config"]],
@@ -60,7 +60,7 @@ dnl
 dnl APR util
 dnl
 
-APU_CONFIGS="apu-config /usr/local/apr/bin/apu-config"
+APU_CONFIGS="apu-config apu-1-config /usr/local/apr/bin/apu-config"
 AC_ARG_WITH(apu-config,
 [[  --with-apu-config=FILE    Use the given path to apu-config when determining
                             APR util configuration; defaults to "apu-config"]],
