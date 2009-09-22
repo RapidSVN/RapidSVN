@@ -71,7 +71,7 @@ VerbList::GetCount() const
 const wxString &
 VerbList::GetName(size_t index) const
 {
-  return wxEmptyString;
+  return wxT("");
 }
 
 
@@ -239,7 +239,7 @@ VerbList::InitFromDocument(const wxString & documentPath, bool isAFolder)
   wxString progid_key_name;
 
   // Get progid of extension
-  wxRegKey regKeyHKCR; // (wxRegKey::HKCR, wxEmptyString);
+  wxRegKey regKeyHKCR;
 
   if (isAFolder)
     progid_key_name = wxT("Folder");
