@@ -78,55 +78,55 @@ namespace svn
     /**
      * @return file status property enum of the "textual" component.
      */
-    const svn_wc_status_kind
+    svn_wc_status_kind
     textStatus() const;
 
     /**
      * @return file status property enum of the "property" component.
      */
-    const svn_wc_status_kind
+    svn_wc_status_kind
     propStatus() const;
 
     /**
      * @retval TRUE if under version control
      */
-    const bool
+    bool
     isVersioned() const;
 
     /**
      * @retval TRUE if copied
      */
-    const bool
+    bool
     isCopied() const;
 
     /**
      * @retval TRUE if switched
      */
-    const bool
+    bool
     isSwitched() const;
 
     /**
      * @return the entry's text status in the repository
      */
-    const svn_wc_status_kind
+    svn_wc_status_kind
     reposTextStatus() const;
 
     /**
      * @return the entry's prop status in the repository
      */
-    const svn_wc_status_kind
+    svn_wc_status_kind
     reposPropStatus() const;
 
     /**
      * @return true if locked
      */
-    const bool
+    bool
     isLocked() const;
 
     /**
      * @return true if has repository lock (not local)
      */
-    const bool
+    bool
     isRepLock() const;
 
     /**
@@ -150,7 +150,7 @@ namespace svn
     /**
      * @return lock creation date or 0 if not locked
      */
-    const apr_time_t
+    apr_time_t
     lockCreationDate() const;
 
     /**

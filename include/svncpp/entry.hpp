@@ -87,7 +87,7 @@ namespace svn
     /**
      * @return base revision
      */
-    const svn_revnum_t
+    svn_revnum_t
     revision() const
     {
       return m_entry->revision;
@@ -123,7 +123,7 @@ namespace svn
     /**
      * @return node kind (file, dir, ...)
      */
-    const svn_node_kind_t
+    svn_node_kind_t
     kind() const
     {
       return m_entry->kind;
@@ -132,7 +132,7 @@ namespace svn
     /**
      * @return scheduling (add, delete, replace)
      */
-    const svn_wc_schedule_t
+    svn_wc_schedule_t
     schedule() const
     {
       return m_entry->schedule;
@@ -141,7 +141,7 @@ namespace svn
     /**
      * @return TRUE if copied
      */
-    const bool
+    bool
     isCopied() const
     {
       return m_entry->copied != 0;
@@ -150,7 +150,7 @@ namespace svn
     /**
      * @return true if deleted
      */
-    const bool
+    bool
     isDeleted() const
     {
       return m_entry->deleted != 0;
@@ -159,7 +159,7 @@ namespace svn
     /**
      * @return true if deleted
      */
-    const bool
+    bool
     isAbsent() const
     {
       return m_entry->absent != 0;
@@ -177,7 +177,7 @@ namespace svn
     /**
      * @return copyfrom revision
      */
-    const svn_revnum_t
+    svn_revnum_t
     copyfromRev() const
     {
       return m_entry->copyfrom_rev;
@@ -223,7 +223,7 @@ namespace svn
      * @return last up-to-date time for text contents
      * @retval 0 no information available
      */
-    const apr_time_t
+    apr_time_t
     textTime() const
     {
       return m_entry->text_time;
@@ -233,7 +233,7 @@ namespace svn
      * @return last up-to-date time for properties
      * @retval 0 no information available
      */
-    const apr_time_t
+    apr_time_t
     propTime() const
     {
       return m_entry->prop_time;
@@ -252,7 +252,7 @@ namespace svn
     /**
      * @return last revision this was changed
      */
-    const svn_revnum_t
+    svn_revnum_t
     cmtRev() const
     {
       return m_entry->cmt_rev;
@@ -261,7 +261,7 @@ namespace svn
     /**
      * @return last date this was changed
      */
-    const apr_time_t
+    apr_time_t
     cmtDate() const
     {
       return m_entry->cmt_date;

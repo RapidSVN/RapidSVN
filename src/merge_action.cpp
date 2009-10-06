@@ -113,7 +113,7 @@ MergeAction::Perform()
 }
 
 bool
-MergeAction::CheckStatusSel(const svn::StatusSel & statusSel)
+MergeAction::CheckStatusSel(const svn::StatusSel & /*statusSel*/)
 {
   return true;
 }

@@ -260,7 +260,7 @@ namespace svn
 
   void
   Client::move(const Path & srcPath,
-               const Revision & srcRevision,
+               const Revision & /*srcRevision*/,
                const Path & destPath,
                bool force) throw(ClientException)
   {

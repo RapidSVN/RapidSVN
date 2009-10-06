@@ -76,7 +76,7 @@ public:
      */
     static svn_error_t *
     translateString(const char * str, const char ** newStr,
-                    apr_pool_t * pool)
+                    apr_pool_t * /*pool*/)
     {
       // due to problems with apr_xlate we dont perform
       // any conversion at this place. YOU will have to make

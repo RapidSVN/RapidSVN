@@ -80,7 +80,7 @@ public:
    * retrieves the revision information for a file
    */
   svn::Revision
-  getRevision(const svn::Path & path, const svn::Status & status)
+  getRevision(const svn::Path & /*path*/, const svn::Status & status)
   {
     svn::Entry entry(status.entry());
     return entry.revision();

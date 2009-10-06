@@ -41,7 +41,7 @@ namespace svn
                    const char *author,
                    const char *date,
                    const char *line,
-                   apr_pool_t *pool)
+                   apr_pool_t * /*pool*/)
   {
     AnnotatedFile * entries = (AnnotatedFile *) baton;
     entries->push_back(

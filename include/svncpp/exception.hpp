@@ -53,7 +53,7 @@ namespace svn
     /**
      * @return the outermost error code.
      */
-    const apr_status_t apr_err() const;
+    apr_status_t apr_err() const;
 
   protected:
     struct Data;

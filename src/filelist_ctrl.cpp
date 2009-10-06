@@ -145,7 +145,7 @@ IsDir(const svn::Status * status)
   return wxDirExists(Utf8ToLocal(status->path()));
 }
 
-static const int
+static int
 GetDefaultWidth(int col)
 {
   int width;

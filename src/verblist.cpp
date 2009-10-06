@@ -57,7 +57,7 @@ VerbList::~VerbList()
 
 
 void
-VerbList::InitFromDocument(const wxString & documentPath, bool isAFolder)
+VerbList::InitFromDocument(const wxString & /*documentPath*/, bool /*isAFolder*/)
 {}
 
 
@@ -69,14 +69,14 @@ VerbList::GetCount() const
 
 
 const wxString &
-VerbList::GetName(size_t index) const
+VerbList::GetName(size_t /*index*/) const
 {
   return wxT("");
 }
 
 
 void
-VerbList::Launch(size_t index) const
+VerbList::Launch(size_t /*index*/) const
 {
 }
 

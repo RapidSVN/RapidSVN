@@ -78,7 +78,7 @@ public:
          const wxString & name = wxEmptyString,
          bool hasChildren = false);
 
-  const int
+  int
   getFolderType() const
   {
     return m_folderType;
@@ -96,7 +96,7 @@ public:
     return m_name;
   }
 
-  const bool
+  bool
   hasChildren() const
   {
     return m_hasChildren;
@@ -109,7 +109,7 @@ public:
    * @retval true existing folder
    * @retval false unreal/virtual entry
    */
-  const bool isReal() const
+  bool isReal() const
   {
     switch (m_folderType)
     {

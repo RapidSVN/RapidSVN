@@ -107,13 +107,13 @@ namespace svn
     /**
      * @return revision numver
      */
-    const svn_revnum_t
+    svn_revnum_t
     revnum() const;
 
     /**
      * @return revision kind
      */
-    const svn_opt_revision_kind
+    svn_opt_revision_kind
     kind() const;
 
     /**
@@ -128,7 +128,7 @@ namespace svn
     /**
      * @return date
      */
-    const apr_time_t
+    apr_time_t
     date() const;
   };
 }

@@ -53,31 +53,31 @@ namespace svn
     return *this;
   }
 
-  const bool
+  bool
   DateTime::operator ==(const DateTime & dateTime)
   {
     return m_time == dateTime.m_time;
   }
 
-  const bool
+  bool
   DateTime::operator !=(const DateTime & dateTime)
   {
     return m_time != dateTime.m_time;
   }
 
-  const bool
+  bool
   DateTime::IsValid() const
   {
     return m_time != APR_DATE_BAD;
   }
 
-  const apr_time_t
+  apr_time_t
   DateTime::GetAPRTimeT() const
   {
     return m_time;
   }
 
-  const bool
+  bool
   DateTime::SetRFC822Date(const char* date)
   {
     m_time = apr_date_parse_rfc(date);

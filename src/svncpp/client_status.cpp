@@ -171,7 +171,7 @@ namespace svn
                const char * path,
                const bool descend,
                StatusEntries & entries,
-               Context * context)
+               Context * /*context*/)
   {
     Revision rev(Revision::HEAD);
     DirEntries dirEntries = client->list(path, rev, descend);
@@ -374,7 +374,7 @@ public:
   static svn_error_t *
   infoReceiverFunc(void * baton, const char * path,
                    const svn_info_t * info,
-                   apr_pool_t * pool)
+                   apr_pool_t * /*pool*/)
   {
     InfoVector * infoVector = static_cast<InfoVector *>(baton);
 

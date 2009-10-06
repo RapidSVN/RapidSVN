@@ -80,9 +80,8 @@ namespace svn
     return *this;
   }
 
-  const svn_node_kind_t
-  Info::
-  kind() const
+  svn_node_kind_t
+  Info::kind() const
   {
     if (0 == m->info)
       return svn_node_none;

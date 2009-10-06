@@ -82,7 +82,7 @@ namespace svn
     path() const;
 
     /** @return base revision */
-    const svn_revnum_t
+    svn_revnum_t
     revision() const;
 
     /** @return url in repository */
@@ -98,7 +98,7 @@ namespace svn
     uuid() const;
 
     /** @return node kind (file, dir, ...) */
-    const svn_node_kind_t
+    svn_node_kind_t
     kind() const;
 
     svn_revnum_t

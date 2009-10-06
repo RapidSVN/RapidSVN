@@ -896,7 +896,7 @@ public:
     }
   }
 
-  const bool
+  bool
   GetAuthPerBookmark() const
   {
     return singleContext == 0;
@@ -975,7 +975,7 @@ FolderBrowser::RefreshFolderBrowser()
   SelectFolder(path);
 }
 
-const bool
+bool
 FolderBrowser::RemoveBookmark()
 {
   wxTreeItemId id = m->treeCtrl->GetSelection();
@@ -1065,7 +1065,7 @@ FolderBrowser::SetAuthPerBookmark(const bool value)
   m->SetAuthPerBookmark(value);
 }
 
-const bool
+bool
 FolderBrowser::GetAuthPerBookmark() const
 {
   return m->GetAuthPerBookmark();
@@ -1151,7 +1151,7 @@ FolderBrowser::ReadConfig(wxConfigBase * cfg)
   }
 }
 
-const bool
+bool
 FolderBrowser::IsFlat() const
 {
   Bookmark & bookmark = m->GetSelectedBookmark();
@@ -1197,7 +1197,7 @@ FolderBrowser::SetIndicateModifiedChildren(bool newValue)
   return true;
 }
 
-const bool
+bool
 FolderBrowser::GetAuthCache() const
 {
   return m->useAuthCache;

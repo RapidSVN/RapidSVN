@@ -16,9 +16,9 @@ dnl GCC specifics
 dnl
 AC_MSG_CHECKING([for gcc/g++])
 if test "$GXX" = "yes" ; then
-   AC_MSG_RESULT([found (using "-Wall" and "-fexceptions")])
-   CPPFLAGS="$CPPFLAGS -Wall -fexceptions"
-   CXXFLAGS="$CXXFLAGS -Wall -fexceptions"
+   AC_MSG_RESULT([found (using "-Wall", "-Wextra" and "-fexceptions")])
+   CPPFLAGS="$CPPFLAGS -Wall -W -fexceptions"
+   CXXFLAGS="$CXXFLAGS -Wall -W -fexceptions"
 else
    AC_MSG_RESULT([non gcc/g++ compiler])
 fi

@@ -398,10 +398,10 @@ Listener::contextNotify(const char *path,
 }
 
 bool
-Listener::contextGetLogin(const std::string & realm,
+Listener::contextGetLogin(const std::string & /*realm*/,
                           std::string & username,
                           std::string & password,
-                          bool & maySave)
+                          bool & /*maySave*/)
 {
   m->username = username;
   m->password = password;
@@ -442,7 +442,7 @@ Listener::contextGetLogMessage(std::string & msg)
 svn::ContextListener::SslServerTrustAnswer
 Listener::contextSslServerTrustPrompt(
   const svn::ContextListener::SslServerTrustData & data,
-  apr_uint32_t & acceptedFailures)
+  apr_uint32_t & /*acceptedFailures*/)
 {
   m->sslServerTrustData = data;
   m->sendSignalAndWait(SIG_SSL_SERVER_TRUST_PROMPT);
@@ -471,8 +471,8 @@ Listener::contextSslClientCertPrompt(std::string & certFile)
 
 bool
 Listener::contextSslClientCertPwPrompt(std::string & password,
-                                       const std::string & realm,
-                                       bool & maySave)
+                                       const std::string & /*realm*/,
+                                       bool & /*maySave*/)
 {
   /// @todo @ref realm isnt used yet
   /// @todo @ref maySave isnt used yet

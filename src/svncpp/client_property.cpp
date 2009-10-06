@@ -163,7 +163,7 @@ namespace svn
   Client::propset(const char * propName,
                   const char * propValue,
                   const Path & path,
-                  const Revision & revision,
+                  const Revision & /*revision*/,
                   bool recurse,
                   bool skip_checks)
   {
@@ -198,7 +198,7 @@ namespace svn
   void
   Client::propdel(const char *propName,
                   const Path &path,
-                  const Revision &revision,
+                  const Revision & /*revision*/,
                   bool recurse)
   {
     Pool pool;

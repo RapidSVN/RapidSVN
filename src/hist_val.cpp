@@ -49,6 +49,7 @@ HistoryValidator::HistoryValidator(const wxString & settingName,
 
 
 HistoryValidator::HistoryValidator(const HistoryValidator & src)
+:  wxValidator()
 {
   Copy(src);
 }
@@ -58,7 +59,6 @@ bool
 HistoryValidator::Copy(const HistoryValidator & val)
 {
   wxValidator::Copy(val);
-
   m_settingName = val.m_settingName;
   m_value = val.m_value;
   m_dontUpdate = val.m_dontUpdate;

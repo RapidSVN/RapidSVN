@@ -105,49 +105,49 @@ namespace svn
     return Entry(m->status->entry);
   }
 
-  const svn_wc_status_kind
+  svn_wc_status_kind
   Status::textStatus() const
   {
     return m->status->text_status;
   }
 
-  const svn_wc_status_kind
+  svn_wc_status_kind
   Status::propStatus() const
   {
     return m->status->prop_status;
   }
 
-  const bool
+  bool
   Status::isVersioned() const
   {
     return m->isVersioned;
   }
 
-  const bool
+  bool
   Status::isCopied() const
   {
     return m->status->copied != 0;
   }
 
-  const bool
+  bool
   Status::isSwitched() const
   {
     return m->status->switched != 0;
   }
 
-  const svn_wc_status_kind
+  svn_wc_status_kind
   Status::reposTextStatus() const
   {
     return m->status->repos_text_status;
   }
 
-  const svn_wc_status_kind
+  svn_wc_status_kind
   Status::reposPropStatus() const
   {
     return m->status->repos_prop_status;
   }
 
-  const bool
+  bool
   Status::isLocked() const
   {
     if (m->status->repos_lock && (m->status->repos_lock->token != 0))
@@ -158,7 +158,7 @@ namespace svn
       return false;
   }
 
-  const bool
+  bool
   Status::isRepLock() const
   {
     if (m->status->entry && (m->status->entry->lock_token != 0))
@@ -202,7 +202,7 @@ namespace svn
       return "";
   }
 
-  const apr_time_t
+  apr_time_t
   Status::lockCreationDate() const
   {
     if (m->status->repos_lock && m->status->repos_lock->token != 0)

@@ -115,7 +115,7 @@ namespace svn
      *
      * @return true if the path is a valid url
      */
-    const bool
+    bool
     isUrl() const;
 
     /**

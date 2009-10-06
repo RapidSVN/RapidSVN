@@ -55,7 +55,7 @@ public:
   /**
    * remove the selected bookmark from bookmarks
    */
-  const bool
+  bool
   RemoveBookmark();
 
   /**
@@ -147,7 +147,7 @@ public:
    *
    * @retval true flat-mode is turned on
    */
-  const bool
+  bool
   IsFlat() const;
 
   /**
@@ -184,13 +184,13 @@ public:
   /**
    * @return auth per bookmark setting
    */
-  const bool
+  bool
   GetAuthPerBookmark() const;
 
   /**
    * check if authentication credentials should be cached or not
    */
-  const bool
+  bool
   GetAuthCache() const;
 
   /**
