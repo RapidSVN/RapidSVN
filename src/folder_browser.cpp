@@ -658,7 +658,7 @@ public:
         wxTreeItemId newId;
         if ((modified_count > 0) && (HAS_MODIFIED_CHILDREN != modified_count))
           newId = treeCtrl->AppendItem(
-            parentId, wxString::Format(wxT("%s (%u) "), basename, modified_count),
+            parentId, wxString::Format(wxT("%s (%u) "), basename.c_str(), modified_count),
             image, image, data);
         else
           newId = treeCtrl->AppendItem(
