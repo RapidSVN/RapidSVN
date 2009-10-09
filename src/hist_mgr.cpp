@@ -22,10 +22,12 @@
  * ====================================================================
  */
 
+// stl
+#include <map>
+
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/string.h"
-#include "wx/hashmap.h"
 #include "wx/confbase.h"
 #include "wx/debug.h"
 
@@ -35,7 +37,7 @@
 
 
 /** a hash map that contains wxArrayString */
-WX_DECLARE_STRING_HASH_MAP(wxArrayString, wxArrayStringHashMap);
+typedef std::map<wxString, wxArrayString>wxArrayStringHashMap;
 
 
 /** maximal number of entries per list */
