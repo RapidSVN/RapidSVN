@@ -32,7 +32,6 @@
 #include "wx/imaglist.h"
 #include "wx/treectrl.h"
 #include "wx/confbase.h"
-#include "wx/hashmap.h"
 #include "wx/dnd.h"
 
 // svncpp
@@ -84,7 +83,6 @@ enum
 };
 
 static const unsigned int MAXLENGTH_BOOKMARK = 35;
-
 const static wxChar ConfigBookmarkFmt[] = wxT("/Bookmarks/Bookmark%ld");
 const static wxChar ConfigBookmarkCount[] = wxT("/Bookmarks/Count");
 const static wxChar ConfigFlatModeFmt[] = wxT("/Bookmarks/Bookmark%ldFlat");
@@ -141,8 +139,7 @@ public:
 };
 
 static Bookmark InvalidBookmark;
-
-WX_DECLARE_STRING_HASH_MAP(Bookmark, BookmarkHashMap);
+typedef std::map<wxString, Bookmark>BookmarkHashMap;
 
 struct FolderBrowser::Data
 {
@@ -553,8 +550,7 @@ public:
     bool pathIsUrl = parentPathUtf8.isUrl();
     bool indicateModifiedChildren  = GetSelectedBookmark().indicateModifiedChildren &&
                                      !pathIsUrl;
-    std::map<wxString, size_t> modifiedEntriesMap;
-    const size_t HAS_MODIFIED_CHILDREN = (size_t)-1;
+    std::map<wxString, int> modifiedEntriesMap;
 
     if (indicateModifiedChildren)
     {
@@ -584,13 +580,13 @@ public:
             hasModifiedSubChildren = true;
         }
 
-        size_t modified_cound = modifiedEntriesMap[path];
+        int modified_count = modifiedEntriesMap[path];
         if (hasModifiedSubChildren)
         {
-          if (0 == modified_cound)
-            modifiedEntriesMap[path] = HAS_MODIFIED_CHILDREN;
+          if (0 == modified_count)
+            modifiedEntriesMap[path] = -1;
         }
-        else if (HAS_MODIFIED_CHILDREN == modifiedEntriesMap[path])
+        else if (modified_count < 0)
           modifiedEntriesMap[path] = 1;
         else
           modifiedEntriesMap[path]++;
@@ -650,20 +646,19 @@ public:
           open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
         }
 
-        size_t modified_count = 0;
-        
+        int modified_count = 0;
         if (indicateModifiedChildren)
           modified_count = modifiedEntriesMap[path.Mid(parentLength)];
 
-        wxTreeItemId newId;
-        if ((modified_count > 0) && (HAS_MODIFIED_CHILDREN != modified_count))
-          newId = treeCtrl->AppendItem(
-            parentId, wxString::Format(wxT("%s (%u) "), basename.c_str(), modified_count),
-            image, image, data);
-        else
-          newId = treeCtrl->AppendItem(
-            parentId, basename,
-            image, image, data);
+        wxString label(basename);
+        if (modified_count > 0) 
+        {
+          label = wxString::Format(
+            wxT("%s (%u) "), basename.c_str(), modified_count);
+        }
+
+        wxTreeItemId newId = 
+          treeCtrl->AppendItem(parentId, label, image, image, data);
 
         if (modified_count != 0)
           treeCtrl->SetItemFont(newId, fontBold);
