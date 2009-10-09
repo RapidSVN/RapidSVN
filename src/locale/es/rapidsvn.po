@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rapidSVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-14 10:18+0200\n"
+"POT-Creation-Date: 2009-10-09 16:03+0200\n"
 "PO-Revision-Date: 2007-03-11 20:33-0400\n"
 "Last-Translator: Jesus Jerez <jerezmoreno@gmail.com>\n"
 "Language-Team: español\n"
@@ -369,6 +369,7 @@ msgstr "BASE"
 msgid "Bookmark"
 msgstr "Marcador"
 
+#: ../folder_browser--.cpp:181 ../folder_browser-.cpp:182
 #: ../folder_browser.cpp:177
 msgid "Bookmarks"
 msgstr "Marcadores"
@@ -767,6 +768,7 @@ msgstr "Error mientras se preparaba la acción."
 msgid "Error while preparing action: %s"
 msgstr "Error mientras se preparaba la acción: %s"
 
+#: ../folder_browser--.cpp:504 ../folder_browser-.cpp:505
 #: ../folder_browser.cpp:500
 #, c-format
 msgid "Error while refreshing filelist (%s)"
@@ -1136,10 +1138,12 @@ msgstr "Registro seleccionado"
 msgid "Login..."
 msgstr "Conexión..."
 
+#: ../folder_browser--.cpp:340 ../folder_browser-.cpp:341
 #: ../folder_browser.cpp:336
 msgid "Logout"
 msgstr "Cerrar sesión"
 
+#: ../folder_browser--.cpp:345 ../folder_browser-.cpp:346
 #: ../folder_browser.cpp:341
 #, c-format
 msgid "Logout '%s'"

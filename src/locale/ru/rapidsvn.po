@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-14 10:18+0200\n"
+"POT-Creation-Date: 2009-10-09 16:03+0200\n"
 "PO-Revision-Date: 2006-05-15 11:14+0100\n"
 "Last-Translator: Olha <sleepy@adam-i-eva.com>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
@@ -377,6 +377,7 @@ msgstr "BASE"
 msgid "Bookmark"
 msgstr "Закладка"
 
+#: ../folder_browser--.cpp:181 ../folder_browser-.cpp:182
 #: ../folder_browser.cpp:177
 msgid "Bookmarks"
 msgstr "Закладки"
@@ -775,6 +776,7 @@ msgstr "Ошибка во время подготовки операции."
 msgid "Error while preparing action: %s"
 msgstr "Ошибка во время подготовки операции: %s"
 
+#: ../folder_browser--.cpp:504 ../folder_browser-.cpp:505
 #: ../folder_browser.cpp:500
 #, c-format
 msgid "Error while refreshing filelist (%s)"
@@ -1144,10 +1146,12 @@ msgstr "Журнал файла"
 msgid "Login..."
 msgstr "Вход (login)..."
 
+#: ../folder_browser--.cpp:340 ../folder_browser-.cpp:341
 #: ../folder_browser.cpp:336
 msgid "Logout"
 msgstr "Выход (logout)"
 
+#: ../folder_browser--.cpp:345 ../folder_browser-.cpp:346
 #: ../folder_browser.cpp:341
 #, c-format
 msgid "Logout '%s'"
