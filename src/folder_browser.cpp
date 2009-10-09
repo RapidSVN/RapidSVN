@@ -554,6 +554,7 @@ public:
     bool indicateModifiedChildren  = GetSelectedBookmark().indicateModifiedChildren &&
                                      !pathIsUrl;
     std::map<wxString, size_t> modifiedEntriesMap;
+    const size_t HAS_MODIFIED_CHILDREN = (size_t)-1;
 
     if (indicateModifiedChildren)
     {
@@ -569,12 +570,30 @@ public:
         wxString path(PathToNative(modifiedPath).Mid(parentLength));
         int separatorPos = path.Find(pathSeparator);
 
-        // we only need the first path component
-        if (separatorPos != wxNOT_FOUND)
+        // we have to check, wether the entry we wanna add contains
+        // modified entries or is modified itself (in this case this
+        // counts) or if the modifications are deeper in the tree
+        // (in that case we only mark it as modified)
+        bool hasModifiedSubChildren = false;
+        if (wxNOT_FOUND != separatorPos)
+        {
+          wxString restPath(path.Mid(separatorPos+1));
           path = path.Left(separatorPos);
 
-        // increase the count
-        modifiedEntriesMap[path]++;
+          if (wxNOT_FOUND != restPath.Find(pathSeparator))
+            hasModifiedSubChildren = true;
+        }
+
+        size_t modified_cound = modifiedEntriesMap[path];
+        if (hasModifiedSubChildren)
+        {
+          if (0 == modified_cound)
+            modifiedEntriesMap[path] = HAS_MODIFIED_CHILDREN;
+        }
+        else if (HAS_MODIFIED_CHILDREN == modifiedEntriesMap[path])
+          modifiedEntriesMap[path] = 1;
+        else
+          modifiedEntriesMap[path]++;
       }
     }
     
@@ -617,6 +636,12 @@ public:
           open_image = FOLDER_IMAGE_OPEN_FOLDER;
         }
 
+        wxString basename(Utf8ToLocal(filename.basename()));
+        FolderItemData * data = new FolderItemData(
+          FOLDER_TYPE_NORMAL, path,
+          basename,
+          TRUE);
+        data->setStatus(status);
 
         if ((status.textStatus() == svn_wc_status_modified) ||
             (status.propStatus() == svn_wc_status_modified))
@@ -625,22 +650,23 @@ public:
           open_image = FOLDER_IMAGE_MODIFIED_OPEN_FOLDER;
         }
 
-        FolderItemData * data = new FolderItemData(
-          FOLDER_TYPE_NORMAL, path,
-          Utf8ToLocal(filename.basename()),
-          TRUE);
-        data->setStatus(status);
-
-        wxTreeItemId newId = treeCtrl->AppendItem(
-          parentId, Utf8ToLocal(filename.basename()),
-          image, image, data);
-
+        size_t modified_count = 0;
+        
         if (indicateModifiedChildren)
-        {
-          // show that the folder contains modified items
-          if (modifiedEntriesMap[path.Mid(parentLength)] > 0)
-            treeCtrl->SetItemFont(newId, fontBold);
-        }
+          modified_count = modifiedEntriesMap[path.Mid(parentLength)];
+
+        wxTreeItemId newId;
+        if ((modified_count > 0) && (HAS_MODIFIED_CHILDREN != modified_count))
+          newId = treeCtrl->AppendItem(
+            parentId, wxString::Format(wxT("%s (%u) "), basename, modified_count),
+            image, image, data);
+        else
+          newId = treeCtrl->AppendItem(
+            parentId, basename,
+            image, image, data);
+
+        if (modified_count != 0)
+          treeCtrl->SetItemFont(newId, fontBold);
 
         bool hasSubDirs = true;
         if (!pathIsUrl)
