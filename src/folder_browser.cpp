@@ -22,6 +22,9 @@
  * ====================================================================
  */
 
+// stl
+#include <map>
+
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/filename.h"
@@ -534,6 +537,7 @@ public:
 
     wxFont fontBold (treeCtrl->GetFont());
     fontBold.SetWeight(wxFONTWEIGHT_BOLD);
+    size_t parentLength = parentPath.Length() + 1; //+1 = path separator
 
     svn::Client client(GetContext());
     svn::Path parentPathUtf8(PathUtf8(parentPath));
@@ -547,8 +551,33 @@ public:
                     false);     // Use global ignores
 
     bool pathIsUrl = parentPathUtf8.isUrl();
+    bool indicateModifiedChildren  = GetSelectedBookmark().indicateModifiedChildren &&
+                                     !pathIsUrl;
+    std::map<wxString, size_t> modifiedEntriesMap;
 
-    bool indicateModifiedChildren  = GetSelectedBookmark().indicateModifiedChildren;
+    if (indicateModifiedChildren)
+    {
+      // Only get interesting entries
+      svn::StatusEntries modifiedEntries = 
+        client.status(parentPathUtf8.c_str(), true, false);
+      wxChar pathSeparator = wxFileName::GetPathSeparator();
+
+      svn::StatusEntries::const_iterator it;
+      for (it = modifiedEntries.begin(); it != modifiedEntries.end(); it++)
+      {
+        const svn::Path modifiedPath((*it).path());
+        wxString path(PathToNative(modifiedPath).Mid(parentLength));
+        int separatorPos = path.Find(pathSeparator);
+
+        // we only need the first path component
+        if (separatorPos != wxNOT_FOUND)
+          path = path.Left(separatorPos);
+
+        // increase the count
+        modifiedEntriesMap[path]++;
+      }
+    }
+    
 
     svn::StatusEntries::iterator it;
     for (it = entries.begin(); it != entries.end(); it++)
@@ -609,7 +638,7 @@ public:
         if (indicateModifiedChildren)
         {
           // show that the folder contains modified items
-          if (HasModifiedChildren(status.path(), GetContext()))
+          if (modifiedEntriesMap[path.Mid(parentLength)] > 0)
             treeCtrl->SetItemFont(newId, fontBold);
         }
 
