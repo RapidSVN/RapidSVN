@@ -39,7 +39,7 @@
 #include "utils.hpp"
 
 CommitAction::CommitAction(wxWindow * parent)
-    : Action(parent, _("Commit"), 0)
+    : Action(parent, _("Commit"), UPDATE_TREE)
 {
 }
 
