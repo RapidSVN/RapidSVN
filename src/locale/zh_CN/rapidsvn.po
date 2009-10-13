@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-09 16:03+0200\n"
+"POT-Creation-Date: 2009-10-13 13:10+0200\n"
 "PO-Revision-Date: 2006-12-14 14:14+0800\n"
 "Last-Translator: SiC <sic666@163.com>\n"
 "Language-Team: RapidSVN i18n\n"
@@ -374,7 +374,6 @@ msgstr "基准(BASE)"
 msgid "Bookmark"
 msgstr "书签"
 
-#: ../folder_browser--.cpp:181 ../folder_browser-.cpp:182
 #: ../folder_browser.cpp:177
 msgid "Bookmarks"
 msgstr "书签"
@@ -769,7 +768,6 @@ msgstr "准备操作时出错."
 msgid "Error while preparing action: %s"
 msgstr "准备操作时出错: %s"
 
-#: ../folder_browser--.cpp:504 ../folder_browser-.cpp:505
 #: ../folder_browser.cpp:500
 #, c-format
 msgid "Error while refreshing filelist (%s)"
@@ -1129,12 +1127,10 @@ msgstr "选定项目的历史记录"
 msgid "Login..."
 msgstr "登录..."
 
-#: ../folder_browser--.cpp:340 ../folder_browser-.cpp:341
 #: ../folder_browser.cpp:336
 msgid "Logout"
 msgstr "注销"
 
-#: ../folder_browser--.cpp:345 ../folder_browser-.cpp:346
 #: ../folder_browser.cpp:341
 #, c-format
 msgid "Logout '%s'"

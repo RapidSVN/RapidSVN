@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-09 16:03+0200\n"
+"POT-Creation-Date: 2009-10-13 13:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -365,7 +365,6 @@ msgstr ""
 msgid "Bookmark"
 msgstr ""
 
-#: ../folder_browser--.cpp:181 ../folder_browser-.cpp:182
 #: ../folder_browser.cpp:177
 msgid "Bookmarks"
 msgstr ""
@@ -751,7 +750,6 @@ msgstr ""
 msgid "Error while preparing action: %s"
 msgstr ""
 
-#: ../folder_browser--.cpp:504 ../folder_browser-.cpp:505
 #: ../folder_browser.cpp:500
 #, c-format
 msgid "Error while refreshing filelist (%s)"
@@ -1102,12 +1100,10 @@ msgstr ""
 msgid "Login..."
 msgstr ""
 
-#: ../folder_browser--.cpp:340 ../folder_browser-.cpp:341
 #: ../folder_browser.cpp:336
 msgid "Logout"
 msgstr ""
 
-#: ../folder_browser--.cpp:345 ../folder_browser-.cpp:346
 #: ../folder_browser.cpp:341
 #, c-format
 msgid "Logout '%s'"
