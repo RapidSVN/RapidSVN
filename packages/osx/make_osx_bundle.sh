@@ -73,8 +73,13 @@ echo -n \
 </plist>
 " > $BUNDLEDIR/Info.plist
 
+# Sometimes hdiutil will produce an error
+# we dont have the cause for this yet.
+# First try: we wait a while for things to settle
+sleep 5
+
 echo "Now create the disk image $DISKIMAGE from the bundle"
-hdiutil create -quiet -srcfolder RapidSVN.app $DISKIMAGE
+hdiutil create -srcfolder RapidSVN.app $DISKIMAGE || echo "hdiutil error"
 
 test -e $DISKIMAGE_FILE && echo Success!!
 
