@@ -4,12 +4,13 @@
 #
 
 # Remove any old stuff. We wanna create a FRESH bundle
+echo "Remove any old stuff"
 DISKIMAGE=RapidSVN-0.11.0
 DISKIMAGE_FILE=$DISKIMAGE.dmg
 test -e RapidSVN.app && rm -rf RapidSVN.app
 rm *.dmg
 
-# Create the bundle
+echo "Create the bundle"
 BUNDLEDIR=RapidSVN.app/Contents
 mkdir -p $BUNDLEDIR/MacOS
 mkdir -p $BUNDLEDIR/Resources
@@ -29,10 +30,10 @@ for DIR in ?? ??_?? ; do
  
   mkdir -p $DSTDIR
 
-  # Copy the message catalog...
+  echo "Copy the message catalog $DST"
   cp $SRC $DST
   
-  # and compile it
+  echo "Compile the message catalog $DST"
   python ../../tools/msgfmt.py $DST
 done
 popd
@@ -72,7 +73,7 @@ echo -n \
 </plist>
 " > $BUNDLEDIR/Info.plist
 
-# Now create the disk image from the bundle
+echo "Now create the disk image $DISKIMAGE from the bundle"
 hdiutil create -quiet -srcfolder RapidSVN.app $DISKIMAGE
 
 test -e $DISKIMAGE_FILE && echo Success!!
