@@ -1,4 +1,4 @@
-Version 0.12 (not released)
+Version 0.12 (released October 14th 2009)
 http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.12
 
 User-visible changes
@@ -10,6 +10,7 @@ User-visible changes
     * 668 Enhancement: Show build revision in About Dialog
     * 669 Enhancement: Dont use static svn version in About dialog
     * 665 Windows: Drop suffix for unicode exe
+    * 679 Mac+Win: Support Subversion 1.6.5 in binary packges
     * 526 Fixed: Filelist update failed when there are special characetrs in the uri
     * 555 Fixed: Linux+Mac: locale files not installed by default
     * 614 Fixed: Interactive Resolve used hardcoded filenames
@@ -31,7 +32,6 @@ Work in progress (not completed)
     * 557 Slow refresh in flat mode
     * 648 Wrong system text color used: too hard to read.
     * 654 Error when open folder into tree with Cyrilic characters in name.
-    * 679 Mac+Win: Support Subversion 1.6.5 in binary packges
 
 
 Version 0.10 (released July 17th 2009)

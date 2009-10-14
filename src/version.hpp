@@ -45,7 +45,7 @@
 /**
  * Minor version number.
  */
-#define RAPIDSVN_VER_MINOR 11
+#define RAPIDSVN_VER_MINOR 12
 
 /**
  * Micro version number.
@@ -60,7 +60,7 @@
 /**
  * Combined version string
  */
-#define RAPIDSVN_VER_STR "0.11.0"
+#define RAPIDSVN_VER_STR "0.12.0"
 
 #ifndef RAPIDSVN_VER_REVISION
 #define RAPIDSVN_VER_REVISION 0
