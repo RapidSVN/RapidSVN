@@ -32,28 +32,17 @@ release.
 The following steps have to be performed for updating the
 translation:
 
-1. Recreate the template file
+1. Recreate the template file and merge the old translations and the new strings
 
    To extract all the strings in the cpp source code files 
    (only strings that should be translated are marked by
    _("my string")), open a shell and chdir to "src/locale";
    now run:
-
-     ../../tools/update-pot.sh
-
-
-2. Merge the old translations and the new strings
-
-   This step has to be performed for every language.
-
-   Change to "src/locale/<language>" and merge the
-   information:
-
-     ../../../tools/update-po.sh
+   
+     ./update.sh
 
 
-
-3. Update the translations
+2. Update the translations
 
    This step has to be performed for every language.
 
@@ -63,15 +52,15 @@ translation:
      poedit rapidsvn.po
 
 
-4. Compile the translations
+3. Compile the translations
 
    Change to the directory "src/locale" and
    compile the translations:
 
-     ../../tools/compile-po.sh
+     ./fmt.sh
 
 
-5. Check the result in RapidSVN
+4. Check the result in RapidSVN
 
    Change to "src".
 
