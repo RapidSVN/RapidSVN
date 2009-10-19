@@ -8,31 +8,67 @@
 </head>
 <body>
 
+<h3><a id="r0.12" name="r0.12">Version 0.12 (released October 14th 2009)</a></h3>
+<a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.12">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.12</a>
+<p><b>User-visible changes</b></p>
+<ul>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=663">663</a>&nbsp;New: Show number of modified children in folder browser</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=662">662</a>&nbsp;Enhancement: Indicate changed content with BOLD text instead of red color</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=666">666</a>&nbsp;Enhancement: Performance optimization for indicating modified subfolders</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=667">667</a>&nbsp;Enhancement: Make indication of modified subfolder configurable</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=668">668</a>&nbsp;Enhancement: Show build revision in About Dialog</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=669">669</a>&nbsp;Enhancement: Dont use static svn version in About dialog</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=665">665</a>&nbsp;Windows: Drop suffix for unicode exe</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=679">679</a>&nbsp;Mac+Win: Support Subversion 1.6.5 in binary packges</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=526">526</a>&nbsp;Fixed: Filelist update failed when there are special characetrs in the uri</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=555">555</a>&nbsp;Fixed: Linux+Mac: locale files not installed by default</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=614">614</a>&nbsp;Fixed: Interactive Resolve used hardcoded filenames</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=643">643</a>&nbsp;Fixed: Mac: crashes at startup because of missing dynamic libraries</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=656">656</a>&nbsp;Fixed: Windows 7: Error when starting Explorer from RapidSVN</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=660">660</a>&nbsp;Fixed: Visual C++ 2005 Builds Fail to Startup with Visual C++ Runtime Error</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=664">664</a>&nbsp;Fixed: Crashes on Windows in Japan</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=671">671</a>&nbsp;Fixed: Tree not updated after a commit</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=678">678</a>&nbsp;Fixed: Use native path separator when starting external app</li>
+</ul>
+<p><b>Developer-visible changes</b></p>
+<ul>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=597">597</a>&nbsp;Accept apr-1-config and apu-1-config</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=661">661</a>&nbsp;Build instructions for Mac now without BDB (problems with static build)</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=676">676</a>&nbsp;Fixed: Compilation on HP-UX broken, isset() name space conflict</li>
+</ul>
+<p><b>Work in progress (not completed)</b></p>
+<ul>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=557">557</a>&nbsp;Slow refresh in flat mode</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=648">648</a>&nbsp;Wrong system text color used: too hard to read.</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=654">654</a>&nbsp;Error when open folder into tree with Cyrilic characters in name.</li>
+</ul>
+
+
 <h3><a id="r0.10" name="r0.10">Version 0.10 (released July 17th 2009)</a></h3>
 <a href="http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.10">http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.10</a>
 <p><b>User-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=632">632</a>&nbsp;New Feature: Ability to commit specific files</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=80">80</a>&nbsp;Enhancement: Remember filenames, log entries between calls</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=128">128</a>&nbsp;Enhancement: Add special folder item if folder/subfolder contains modified file</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=477">477</a>&nbsp;Enhancement: Concurrent actions lacked visual feedback</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=601">601</a>&nbsp;Enhancement: Add "review" functionality to commit dialog</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=638">638</a>&nbsp;Enhancement: Adding files recursively</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=655">655</a>&nbsp;Enhancement: Remeber last directory when adding an existing working copy</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=413">413</a>&nbsp;Fixed: Focus lost from file view after app switch</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=548">548</a>&nbsp;Fixed: Mac: Update dialog didnt respond to ENTER key</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=599">599</a>&nbsp;Fixed: Refresh with update: DnD on file list failed</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=634">634</a>&nbsp;Fixed: Mac: Filelist order broken (first files and then folders, folders in wrong order)</a>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=632">632</a>&nbsp;New Feature: Ability to commit specific files</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=80">80</a>&nbsp;Enhancement: Remember filenames, log entries between calls</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=128">128</a>&nbsp;Enhancement: Add special folder item if folder/subfolder contains modified file</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=477">477</a>&nbsp;Enhancement: Concurrent actions lacked visual feedback</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=601">601</a>&nbsp;Enhancement: Add "review" functionality to commit dialog</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=638">638</a>&nbsp;Enhancement: Adding files recursively</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=655">655</a>&nbsp;Enhancement: Remeber last directory when adding an existing working copy</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=413">413</a>&nbsp;Fixed: Focus lost from file view after app switch</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=548">548</a>&nbsp;Fixed: Mac: Update dialog didnt respond to ENTER key</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=599">599</a>&nbsp;Fixed: Refresh with update: DnD on file list failed</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=634">634</a>&nbsp;Fixed: Mac: Filelist order broken (first files and then folders, folders in wrong order)</li>
 </ul>
 <p><b>Developer-visible changes</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=649">649</a>&nbsp;Win32: Support for Visual Studio 2005</a>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=649">649</a>&nbsp;Win32: Support for Visual Studio 2005</li>
 </ul>
 <p><b>Work in progress (not completed)</b></p>
 <ul>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=526">526</a>&nbsp;Filelist update fails when there are special characetrs in the uri</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=555">555</a>&nbsp;Linux+Mac: locale files not installed by default</a>
-<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=654">654</a>&nbsp;Error when open folder into tree with Cyrilic characters in name.</a>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=526">526</a>&nbsp;Filelist update fails when there are special characetrs in the uri</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=555">555</a>&nbsp;Linux+Mac: locale files not installed by default</li>
+<li><a href="http://rapidsvn.tigris.org/issues/show_bug.cgi?id=654">654</a>&nbsp;Error when open folder into tree with Cyrilic characters in name.</li>
 </ul>
 
 
