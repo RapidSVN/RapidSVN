@@ -17,7 +17,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1AnnotateLine.html#04c5856506756c000f9ad8543a0199a4"><param name="Name" value="AnnotateLine"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Apr.html#bbcdd3a1b8e74b9b0832352973e17292"><param name="Name" value="Apr"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#a99cda13d33670ceb5fb869124e4cede"><param name="Name" value="apr_err"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#84f7d8929062c26ff83e194d050d228f"><param name="Name" value="apr_err"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#de2e484a7b4dcf5fcc57a0afa2501a32"><param name="Name" value="array"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#de2e484a7b4dcf5fcc57a0afa2501a32"><param name="Name" value="svn::StatusSel"></OBJECT>
@@ -56,8 +56,8 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#621dcb7c1b7ec63cb7fc69e79ccd3f7e"><param name="Name" value="Client"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1ClientException.html#15bbbcd3a223328a5e87014633014241"><param name="Name" value="ClientException"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#065ca777b5125b80f0056c3390eb94dc"><param name="Name" value="cmtAuthor"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#88117770bf0daf3b4c2acaa5a753a2c3"><param name="Name" value="cmtDate"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#8db014ad4fc7763a7ee79d4a53a471fd"><param name="Name" value="cmtRev"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#91c578d855320dabce287a85af9e1121"><param name="Name" value="cmtDate"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#70fa46710fe838f675ece9b32749f3a3"><param name="Name" value="cmtRev"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#2f56fcb8747d6edff212cf71107840bc"><param name="Name" value="commit"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#6a64c4f94af72ebde3994828801db803"><param name="Name" value="conflictNew"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#946cc01d63021499200cf46a1beab3ab"><param name="Name" value="conflictOld"></OBJECT>
@@ -72,7 +72,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1ContextListener.html#192093852dada6a3d9de7c4124dd7224"><param name="Name" value="contextSslServerTrustPrompt"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#57947cefc0d6a6e25ed8c8091a4c177f"><param name="Name" value="copy"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogChangePathEntry.html#c270b8bb315d824bf2056b4998a8ba5b"><param name="Name" value="copyFromPath"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#cec51e2708dd3794754c1911b2216f19"><param name="Name" value="copyfromRev"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#62400602da83acb623c7d3f457d9162b"><param name="Name" value="copyfromRev"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogChangePathEntry.html#863c1e397913d51522f39ea08a779e9e"><param name="Name" value="copyFromRevision"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#3888c09bbad95f2efaf7a5a8a82f8294"><param name="Name" value="copyfromUrl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#6e21ea5f21f666b27c0d785da80a8d76"><param name="Name" value="createdRev"></OBJECT>
@@ -81,7 +81,7 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1AnnotateLine.html#9de7b0c1fd9f40040f317bc5480446ca"><param name="Name" value="svn::AnnotateLine"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogEntry.html#d04d8d4ae07bdd635f195d586915f0e6"><param name="Name" value="svn::LogEntry"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#0a8a8004c07fd40c46d97719c475493d"><param name="Name" value="svn::Revision"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#225aab611959a0e107c4deae7e1fb704"><param name="Name" value="svn::Revision"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#05de09d28f1b4ae623b43b65ebf5b231"><param name="Name" value="DateTime"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#0c17e7fdc82fac7249c77c311af61b37"><param name="Name" value="diff"></OBJECT>
@@ -109,7 +109,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#ff2daf4d0e99d6ca6b8b03d7d4ad7c7f"><param name="Name" value="failures"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#98d00128dfc1d254dcac86b98c694fc4"><param name="Name" value="fingerprint"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#25daf115e121c683f4cb7bc12ea134db"><param name="Name" value="get"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#6a48a2020b35e43f5794722b7da9fdcd"><param name="Name" value="GetAPRTimeT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#bcaf35e33be1347472b9628385e41fe5"><param name="Name" value="GetAPRTimeT"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#862dfe08cf6f4a85aeae1da9e720aef6"><param name="Name" value="getContext"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Context.html#29d2c53d6ea6b0e99d7c9541156ded3d"><param name="Name" value="getListener"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Context.html#3bc32be1c26259aa7c5722599f73c47e"><param name="Name" value="getLogMessage"></OBJECT>
@@ -134,38 +134,38 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#bcf588af645f0686e5ff751f71a893b2"><param name="Name" value="client.hpp"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#bcf588af645f0686e5ff751f71a893b2"><param name="Name" value="svn"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#b6cef4fce42c7663f08325b43c6f6e3e"><param name="Name" value="isAbsent"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#3f451cbb1fee8aff2f17b73a642bf0ae"><param name="Name" value="isAbsent"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Wc.html#bdd2654d628571a80364d2c056fd41a7"><param name="Name" value="isAdmDir"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#7b71b170c5ce783669b48d727d971a6b"><param name="Name" value="isCopied"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#96dcff5c820ca074f59666179a9e8967"><param name="Name" value="isCopied"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#7b71b170c5ce783669b48d727d971a6b"><param name="Name" value="svn::Entry"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#70786f9146697ed6aa3cf9278caa0506"><param name="Name" value="svn::Status"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#96dcff5c820ca074f59666179a9e8967"><param name="Name" value="svn::Entry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#1c1037e4317ed98cdd71e5741b002495"><param name="Name" value="svn::Status"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#2cf7eb31797244f89bafefdf26c34274"><param name="Name" value="isDeleted"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#c0e7769b9d26655b020d2a3ba8f3dadb"><param name="Name" value="isLocked"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#c7fa8850277d97780e618685c4b43841"><param name="Name" value="isRepLock"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#934426adbdbf73c1ce230d00000bed5c"><param name="Name" value="isset"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#cef17e4ad5428e1631aab23e26f4b481"><param name="Name" value="isDeleted"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#6fa909df3e4d8a0e01bc9f2167c228b2"><param name="Name" value="isLocked"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#cc58142362160b17ce85628bb537415e"><param name="Name" value="isRepLock"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#3caeab5a61c0cb27acf43d71dc30c535"><param name="Name" value="isSet"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#934426adbdbf73c1ce230d00000bed5c"><param name="Name" value="svn::Path"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#f4aa43b0937d032970347d6cde8e1ccb"><param name="Name" value="svn::Status"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#3caeab5a61c0cb27acf43d71dc30c535"><param name="Name" value="svn::Path"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#84d1f7bc46dc22bdf07345c039120d32"><param name="Name" value="svn::Status"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#0a8ecfbc1a8d4cb3312e0e5f7bec7f51"><param name="Name" value="issuerDName"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#1322f705495cd98668ebee3a7f58d9bf"><param name="Name" value="isSwitched"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#4fd5b04a88d3ba95914ef946bbfdcc73"><param name="Name" value="isUrl"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#3275770645ef09a2f37a672a2fd5b614"><param name="Name" value="IsValid"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#5340ba79732baed7eaccb02c66e5ea69"><param name="Name" value="isSwitched"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#9e294d95ded20dbf0413cdec15e60548"><param name="Name" value="isUrl"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#2d25e7fa9befa332840851eefd378912"><param name="Name" value="IsValid"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#7513ef9aab0f3ea9f340a33282c17234"><param name="Name" value="isValid"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#7513ef9aab0f3ea9f340a33282c17234"><param name="Name" value="svn::Entry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#114401863e907d98079c64b1b6deafb2"><param name="Name" value="svn::Info"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#f0dcf1b165718e08adc3a1e21b39b23a"><param name="Name" value="svn::Url"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#72f54edc590c70b4e267a226daf6d313"><param name="Name" value="isVersioned"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#17b431909bdbf0f1b6b70d8e6f5af702"><param name="Name" value="isVersioned"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#cd3e4836db28a561b15b2da52304c48e"><param name="Name" value="kind"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#cd3e4836db28a561b15b2da52304c48e"><param name="Name" value="svn::DirEntry"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#6f13b330c57a4a78e0c36c375dc0533d"><param name="Name" value="svn::Entry"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#a7cfc71c1045a6c3091238f377d242d5"><param name="Name" value="svn::Info"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#ddbee3f3d9c8eb757f4098fc6f50a9d9"><param name="Name" value="svn::Revision"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#fa685353a879cce2a29b0b59122f951d"><param name="Name" value="svn::Entry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#f0ed7953fd9bfc9874ba3c1f0b3cc95e"><param name="Name" value="svn::Info"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#93c963a33de6f8a3367f36342e373d90"><param name="Name" value="svn::Revision"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#5a25ebd9abd5fd8af7d491fdd175135e"><param name="Name" value="lastAuthor"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#f3e4660cf6357ffd1ae57a78a46fc8d7"><param name="Name" value="lastChangedAuthoer"></OBJECT>
@@ -177,7 +177,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#c4ea09dbd3171447c5a1a38e2a518a01"><param name="Name" value="list"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#6c4254f4712fc5efa2b87a4897160e18"><param name="Name" value="lock"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#b67f67006604dcb8a6cdf7fa9a332401"><param name="Name" value="lockComment"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#8655a567ffc1c30035d9f91e8efebad7"><param name="Name" value="lockCreationDate"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#8f0b85528e9ede96b931206ea58cdd1a"><param name="Name" value="lockCreationDate"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#69eae88aa869789b810f5a1e47636567"><param name="Name" value="lockOwner"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#9417394d69303fd32a979ebc95831206"><param name="Name" value="lockToken"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#583054842e2b1daa2a7d61aee68159d8"><param name="Name" value="log"></OBJECT>
@@ -215,10 +215,10 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#62cb7bbfaa2bfbcb251a1b7042a0b981"><param name="Name" value="operator svn_opt_revision_kind"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#c554e713dd56bed371cbced261f567ea"><param name="Name" value="operator svn_opt_revision_t *"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#481ff2813d561352b507098aacdec153"><param name="Name" value="operator svn_wc_entry_t *"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#2c26cbb2a1b35829cf61b088f7961fae"><param name="Name" value="operator!="></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#ea941a8dd76b77517360660d05e78e21"><param name="Name" value="operator=="></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#87e019b41fa9defe15b0101c804a2f40"><param name="Name" value="operator!="></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#faa7294055b6b60009c65ebe3e32e90b"><param name="Name" value="operator=="></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#ea941a8dd76b77517360660d05e78e21"><param name="Name" value="svn::DateTime"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#faa7294055b6b60009c65ebe3e32e90b"><param name="Name" value="svn::DateTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#802d97d8ba9251b21bec9190d4c1acdf"><param name="Name" value="svn::Path"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#72bf8fdeff018e9230f118bb9e4a01bb"><param name="Name" value="operator="></OBJECT>
@@ -274,8 +274,8 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#4bfe199c4caf986c86f4b1eae78ee4f4"><param name="Name" value="propget"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#1d6aa0d4975a658c4263aaa8b135c86f"><param name="Name" value="proplist"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#89566344093636e1424636b7b4d086b5"><param name="Name" value="propset"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#8d9c4346d4b5ed5472c16faf6cd4928f"><param name="Name" value="propStatus"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#b4594857db75fb481791a380c1a6f921"><param name="Name" value="propTime"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#21fc3db522636079b847006d40accd9c"><param name="Name" value="propStatus"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#f9a88c6508351df3ae1b7bf4263ad5be"><param name="Name" value="propTime"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#0265b5c38bdf365cc932c41695b57cd9"><param name="Name" value="push_back"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#0265b5c38bdf365cc932c41695b57cd9"><param name="Name" value="svn::StatusSel"></OBJECT>
@@ -294,8 +294,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#89f90a6c395259fbc07f3543e729d389"><param name="Name" value="svn::Entry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#3ce7919be8a58ecb2668554e06bf7425"><param name="Name" value="svn::Info"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#a9d23c50818a966d553ffe8baef108ea"><param name="Name" value="reposPropStatus"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#6ffc7dcdf25698db01db5892a7d62bbd"><param name="Name" value="reposTextStatus"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#5d098a5f96c3a6353a7741abaff2684b"><param name="Name" value="reposPropStatus"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#cfa02cfc3e04932690f63a3d6304a029"><param name="Name" value="reposTextStatus"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#b8e456a393ecdf7bc4d446a9fb2edf8f"><param name="Name" value="reserve"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#b8e456a393ecdf7bc4d446a9fb2edf8f"><param name="Name" value="svn::StatusSel"></OBJECT>
@@ -307,18 +307,18 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1AnnotateLine.html#4e64ed5aaf1732e0a501e4494ebf384d"><param name="Name" value="revision"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1AnnotateLine.html#4e64ed5aaf1732e0a501e4494ebf384d"><param name="Name" value="svn::AnnotateLine"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#f41718fb1ae02f50a7501c72777d9367"><param name="Name" value="svn::Entry"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#d937f61319b7619d705c2601b58277a1"><param name="Name" value="svn::Info"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#be5664e5392b1506bd72ad0c8d80c354"><param name="Name" value="svn::Entry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#b3d45589bc59bcf92ea9d59d604e20ad"><param name="Name" value="svn::Info"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1LogEntry.html#687b3704856fa78c3fe60f19033aa6ea"><param name="Name" value="svn::LogEntry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#6a8411489c063eb281783d433fb14b8d"><param name="Name" value="svn::Revision"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#56d289fea0728100c942e080efb69842"><param name="Name" value="Revision"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#ec61cecb69977854c519f8b56609401b"><param name="Name" value="revnum"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#37abc2753bec7968d5d68318ea987d8a"><param name="Name" value="revnum"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#5f16e5e70518102a3bdbbea984e6f048"><param name="Name" value="revpropdel"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#053c18a83f4b7ef82139ccbf1c50c632"><param name="Name" value="revpropget"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#d79e9f58d7774030d2e2115cc4076a06"><param name="Name" value="revproplist"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#84cd0871b8a341b50cb3a8f736ff29cb"><param name="Name" value="revpropset"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#c7473f8624f11c1d607fedf37f81aad1"><param name="Name" value="schedule"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#270c98abe152e7c64894b5f301a8ae27"><param name="Name" value="schedule"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Property.html#f1a45a44d1aef80d95c4c29e63c5a879"><param name="Name" value="set"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Wc.html#816394dc0a11f70b8e55d6434dacec24"><param name="Name" value="setAdmDir"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Context.html#d78f38942182d59b52f12913b8e6a339"><param name="Name" value="setAuthCache"></OBJECT>
@@ -326,7 +326,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Context.html#7a2329aaf8e708c0c90a72fb7a7e8a57"><param name="Name" value="setListener"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Context.html#926f3b6d60910f22c0bd774b322639ad"><param name="Name" value="setLogin"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Context.html#28da2aacc51a9352bc8e3d71b2db3dc6"><param name="Name" value="setLogMessage"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#e425d1462c1547144ab8c1c80548c68d"><param name="Name" value="SetRFC822Date"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#efe6234e86ebdac1b43a4dedcb001d4e"><param name="Name" value="SetRFC822Date"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1StatusFilter.html#76dd0dc5b8955924bb52d93c70bd7cc4"><param name="Name" value="showConflicted"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1StatusFilter.html#4789cbb1f8ca997d6bb8e9d3531bb2bd"><param name="Name" value="showExternals"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1StatusFilter.html#5083236d5ab8fe685ea12ee0f696d33a"><param name="Name" value="showIgnored"></OBJECT>
@@ -342,6 +342,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#9744e9cb15d3b0242d8641a32c962521"><param name="Name" value="split"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1ContextListener_1_1SslServerTrustData.html#db755ae1342e23ba3904214bc4d62aa4"><param name="Name" value="SslServerTrustData"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#3e945b9702911eaf4a6b96232164a55e"><param name="Name" value="START"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="status_8hpp.html"><param name="Name" value="status.hpp"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Client.html#23a90b64730025b76916643f39278705"><param name="Name" value="status"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#53218299060391bddbb5428ffc531b17"><param name="Name" value="Status"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#6ab85e78004e0a0273ae406f418103c8"><param name="Name" value="StatusEntries"></OBJECT>
@@ -351,6 +352,12 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1StatusFilter.html#82429e6478945025515bfe0bfb3cb12e"><param name="Name" value="StatusFilter"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#8edde647f4b765edaf2bcfb3b4531ef2"><param name="Name" value="StatusSel"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#5709c568e262d24296ec2b3bf3a03b72"><param name="Name" value="StatusVector"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#5709c568e262d24296ec2b3bf3a03b72"><param name="Name" value="status.hpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#5709c568e262d24296ec2b3bf3a03b72"><param name="Name" value="svn"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#7c041fc74ca7abb55d85c3487ba05a34"><param name="Name" value="statusVector"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#13b0769fa4164c87a8dd143b0c89d5ec"><param name="Name" value="substr"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Url.html#c1a1e82111c8c5802f4a5e4620f64f1c"><param name="Name" value="supportedSchemas"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1AnnotateLine.html"><param name="Name" value="svn::AnnotateLine"></OBJECT>
@@ -461,12 +468,12 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html"><param name="Name" value="svn::DateTime"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#05de09d28f1b4ae623b43b65ebf5b231"><param name="Name" value="DateTime"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#6a48a2020b35e43f5794722b7da9fdcd"><param name="Name" value="GetAPRTimeT"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#3275770645ef09a2f37a672a2fd5b614"><param name="Name" value="IsValid"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#2c26cbb2a1b35829cf61b088f7961fae"><param name="Name" value="operator!="></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#bcaf35e33be1347472b9628385e41fe5"><param name="Name" value="GetAPRTimeT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#2d25e7fa9befa332840851eefd378912"><param name="Name" value="IsValid"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#87e019b41fa9defe15b0101c804a2f40"><param name="Name" value="operator!="></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#ba6ca332418645d86d06c969c815783e"><param name="Name" value="operator="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#ea941a8dd76b77517360660d05e78e21"><param name="Name" value="operator=="></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#e425d1462c1547144ab8c1c80548c68d"><param name="Name" value="SetRFC822Date"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#faa7294055b6b60009c65ebe3e32e90b"><param name="Name" value="operator=="></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DateTime.html#efe6234e86ebdac1b43a4dedcb001d4e"><param name="Name" value="SetRFC822Date"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html"><param name="Name" value="svn::DirEntry"></OBJECT>
   <UL>
@@ -485,35 +492,35 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#cb7ebae05db6f96f4d8f655969ba1501"><param name="Name" value="checksum"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#065ca777b5125b80f0056c3390eb94dc"><param name="Name" value="cmtAuthor"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#88117770bf0daf3b4c2acaa5a753a2c3"><param name="Name" value="cmtDate"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#8db014ad4fc7763a7ee79d4a53a471fd"><param name="Name" value="cmtRev"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#91c578d855320dabce287a85af9e1121"><param name="Name" value="cmtDate"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#70fa46710fe838f675ece9b32749f3a3"><param name="Name" value="cmtRev"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#6a64c4f94af72ebde3994828801db803"><param name="Name" value="conflictNew"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#946cc01d63021499200cf46a1beab3ab"><param name="Name" value="conflictOld"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#5d0f8a6b710f06ce054a40b6453d6aa0"><param name="Name" value="conflictWrk"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#cec51e2708dd3794754c1911b2216f19"><param name="Name" value="copyfromRev"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#62400602da83acb623c7d3f457d9162b"><param name="Name" value="copyfromRev"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#3888c09bbad95f2efaf7a5a8a82f8294"><param name="Name" value="copyfromUrl"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#d6c0d28557354e2ce2b5ebc070f1fe00"><param name="Name" value="Entry"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#b6cef4fce42c7663f08325b43c6f6e3e"><param name="Name" value="isAbsent"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#7b71b170c5ce783669b48d727d971a6b"><param name="Name" value="isCopied"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#2cf7eb31797244f89bafefdf26c34274"><param name="Name" value="isDeleted"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#3f451cbb1fee8aff2f17b73a642bf0ae"><param name="Name" value="isAbsent"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#96dcff5c820ca074f59666179a9e8967"><param name="Name" value="isCopied"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#cef17e4ad5428e1631aab23e26f4b481"><param name="Name" value="isDeleted"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#7513ef9aab0f3ea9f340a33282c17234"><param name="Name" value="isValid"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#6f13b330c57a4a78e0c36c375dc0533d"><param name="Name" value="kind"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#fa685353a879cce2a29b0b59122f951d"><param name="Name" value="kind"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#89008a1496450caf5d9b861f21475ef2"><param name="Name" value="name"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#481ff2813d561352b507098aacdec153"><param name="Name" value="operator svn_wc_entry_t *"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#3ee218219359e79a00aa431fb71f1d3a"><param name="Name" value="operator="></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#b4b0e59cafad645c6fa09434e93f0452"><param name="Name" value="prejfile"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#b4594857db75fb481791a380c1a6f921"><param name="Name" value="propTime"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#f9a88c6508351df3ae1b7bf4263ad5be"><param name="Name" value="propTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#89f90a6c395259fbc07f3543e729d389"><param name="Name" value="repos"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#f41718fb1ae02f50a7501c72777d9367"><param name="Name" value="revision"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#c7473f8624f11c1d607fedf37f81aad1"><param name="Name" value="schedule"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#2602fb828da66f51b66142541cf5df0e"><param name="Name" value="textTime"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#be5664e5392b1506bd72ad0c8d80c354"><param name="Name" value="revision"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#270c98abe152e7c64894b5f301a8ae27"><param name="Name" value="schedule"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#62f42ce7992f6a5031892c0fa579a6b7"><param name="Name" value="textTime"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#d8d1a422362124c62666c921e1a4df5e"><param name="Name" value="url"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#607ec167eac821ee1bf3a868a68f129b"><param name="Name" value="uuid"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#5182e1adb89dec01f415dfd78281c1a0"><param name="Name" value="~Entry"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html"><param name="Name" value="svn::Exception"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#a99cda13d33670ceb5fb869124e4cede"><param name="Name" value="apr_err"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#84f7d8929062c26ff83e194d050d228f"><param name="Name" value="apr_err"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#0dd8f2c6fad74674079f907a3e51ac64"><param name="Name" value="Exception"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#e150d6008f18b5d5843674715b691302"><param name="Name" value="m"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Exception.html#42de6b83c4aec7dcc7805847821ac11d"><param name="Name" value="message"></OBJECT>
@@ -523,14 +530,14 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#8d1a6219d13be4c43598385384b3fbe4"><param name="Name" value="Info"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#114401863e907d98079c64b1b6deafb2"><param name="Name" value="isValid"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#a7cfc71c1045a6c3091238f377d242d5"><param name="Name" value="kind"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#f0ed7953fd9bfc9874ba3c1f0b3cc95e"><param name="Name" value="kind"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#f3e4660cf6357ffd1ae57a78a46fc8d7"><param name="Name" value="lastChangedAuthoer"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#933277c539f2f68284cf71bf1e92ea18"><param name="Name" value="lastChangedDate"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#334e999cd0c87396caa0c8b5f1d2a9e3"><param name="Name" value="lastChangedRev"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#5efec188abc39f8bdef0b984ced1885e"><param name="Name" value="operator="></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#18028e19cb52cdc9225e3986f6f89573"><param name="Name" value="path"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#3ce7919be8a58ecb2668554e06bf7425"><param name="Name" value="repos"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#d937f61319b7619d705c2601b58277a1"><param name="Name" value="revision"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#b3d45589bc59bcf92ea9d59d604e20ad"><param name="Name" value="revision"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#da55b349fb12513200b735950988c976"><param name="Name" value="url"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#5aecb880ce76c7dbea93d5c387a1f47a"><param name="Name" value="uuid"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Info.html#2fc8468be6775211c1df0f1c3e34554f"><param name="Name" value="~Info"></OBJECT>
@@ -559,8 +566,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#80dd8b717c5842f07325c40dad4e7d2b"><param name="Name" value="c_str"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#5b80dd5e90b698b807aa204457356af3"><param name="Name" value="dirpath"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#ba93f29a4e277cb0e8dc708d977e4e01"><param name="Name" value="getTempDir"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#934426adbdbf73c1ce230d00000bed5c"><param name="Name" value="isset"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#4fd5b04a88d3ba95914ef946bbfdcc73"><param name="Name" value="isUrl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#3caeab5a61c0cb27acf43d71dc30c535"><param name="Name" value="isSet"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#9e294d95ded20dbf0413cdec15e60548"><param name="Name" value="isUrl"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#aba3943466960c2211d5107314243a70"><param name="Name" value="length"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#8ae639ff5b778fbae02c82b4bf106c13"><param name="Name" value="native"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#23dd599d82478ef7728d1e2e631e41de"><param name="Name" value="operator="></OBJECT>
@@ -596,14 +603,14 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html"><param name="Name" value="svn::Revision"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#31ff9734b22526072da6d933ccc8dcd6"><param name="Name" value="BASE"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#0a8a8004c07fd40c46d97719c475493d"><param name="Name" value="date"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#225aab611959a0e107c4deae7e1fb704"><param name="Name" value="date"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#82a40f08814af5fd8584fd50dd9e73f3"><param name="Name" value="HEAD"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#ddbee3f3d9c8eb757f4098fc6f50a9d9"><param name="Name" value="kind"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#93c963a33de6f8a3367f36342e373d90"><param name="Name" value="kind"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#62cb7bbfaa2bfbcb251a1b7042a0b981"><param name="Name" value="operator svn_opt_revision_kind"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#c554e713dd56bed371cbced261f567ea"><param name="Name" value="operator svn_opt_revision_t *"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#6a8411489c063eb281783d433fb14b8d"><param name="Name" value="revision"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#56d289fea0728100c942e080efb69842"><param name="Name" value="Revision"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#ec61cecb69977854c519f8b56609401b"><param name="Name" value="revnum"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#37abc2753bec7968d5d68318ea987d8a"><param name="Name" value="revnum"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#3e945b9702911eaf4a6b96232164a55e"><param name="Name" value="START"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#280736e091bc68b113299671e2e6a3db"><param name="Name" value="UNSPECIFIED"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Revision.html#16411f02d70c7b0bd38178bddb5b469d"><param name="Name" value="WORKING"></OBJECT>
@@ -611,23 +618,23 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html"><param name="Name" value="svn::Status"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#d228fd8825e3c858a7acd84b1222d241"><param name="Name" value="entry"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#70786f9146697ed6aa3cf9278caa0506"><param name="Name" value="isCopied"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#c0e7769b9d26655b020d2a3ba8f3dadb"><param name="Name" value="isLocked"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#c7fa8850277d97780e618685c4b43841"><param name="Name" value="isRepLock"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#f4aa43b0937d032970347d6cde8e1ccb"><param name="Name" value="isset"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#1322f705495cd98668ebee3a7f58d9bf"><param name="Name" value="isSwitched"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#72f54edc590c70b4e267a226daf6d313"><param name="Name" value="isVersioned"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#1c1037e4317ed98cdd71e5741b002495"><param name="Name" value="isCopied"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#6fa909df3e4d8a0e01bc9f2167c228b2"><param name="Name" value="isLocked"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#cc58142362160b17ce85628bb537415e"><param name="Name" value="isRepLock"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#84d1f7bc46dc22bdf07345c039120d32"><param name="Name" value="isSet"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#5340ba79732baed7eaccb02c66e5ea69"><param name="Name" value="isSwitched"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#17b431909bdbf0f1b6b70d8e6f5af702"><param name="Name" value="isVersioned"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#b67f67006604dcb8a6cdf7fa9a332401"><param name="Name" value="lockComment"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#8655a567ffc1c30035d9f91e8efebad7"><param name="Name" value="lockCreationDate"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#8f0b85528e9ede96b931206ea58cdd1a"><param name="Name" value="lockCreationDate"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#69eae88aa869789b810f5a1e47636567"><param name="Name" value="lockOwner"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#9417394d69303fd32a979ebc95831206"><param name="Name" value="lockToken"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#091cc16887d4a41527812beb844d0cfd"><param name="Name" value="operator="></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#67e611c4fe25c659c5d837398fe6d757"><param name="Name" value="path"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#8d9c4346d4b5ed5472c16faf6cd4928f"><param name="Name" value="propStatus"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#a9d23c50818a966d553ffe8baef108ea"><param name="Name" value="reposPropStatus"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#6ffc7dcdf25698db01db5892a7d62bbd"><param name="Name" value="reposTextStatus"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#21fc3db522636079b847006d40accd9c"><param name="Name" value="propStatus"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#5d098a5f96c3a6353a7741abaff2684b"><param name="Name" value="reposPropStatus"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#cfa02cfc3e04932690f63a3d6304a029"><param name="Name" value="reposTextStatus"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#53218299060391bddbb5428ffc531b17"><param name="Name" value="Status"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#663fb5097aa082c21875d7954b7746ce"><param name="Name" value="textStatus"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#d85c4d3337a1f2f47f4e64707f34e827"><param name="Name" value="textStatus"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#bb498f7d3b98c6c9bcd4bc0404c83a6f"><param name="Name" value="~Status"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structsvn_1_1StatusFilter.html"><param name="Name" value="svn::StatusFilter"></OBJECT>
@@ -656,6 +663,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#b8e456a393ecdf7bc4d446a9fb2edf8f"><param name="Name" value="reserve"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#5f316766826ca01029b05c8ed1a6cff9"><param name="Name" value="size"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#8edde647f4b765edaf2bcfb3b4531ef2"><param name="Name" value="StatusSel"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#7c041fc74ca7abb55d85c3487ba05a34"><param name="Name" value="statusVector"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#4758361d7e69d3ff0d9d716a53158f8a"><param name="Name" value="target"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#9e8ae4fc951a352a96543527baa95c0b"><param name="Name" value="targets"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#3fb5ad3cc990007b5b212db95b2916ad"><param name="Name" value="~StatusSel"></OBJECT>
@@ -701,6 +709,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#cba782652c30a2349be6a61018481471"><param name="Name" value="PathVector"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#6a627f2b0d28dd29a9d6979e1a829a97"><param name="Name" value="PropertiesMap"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#6ab85e78004e0a0273ae406f418103c8"><param name="Name" value="StatusEntries"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacesvn.html#5709c568e262d24296ec2b3bf3a03b72"><param name="Name" value="StatusVector"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="version_8hpp.html#a7d277d17af90c9cde1cf85722c0695e"><param name="Name" value="SVNCPP_VERSION"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1StatusSel.html#4758361d7e69d3ff0d9d716a53158f8a"><param name="Name" value="target"></OBJECT>
@@ -714,8 +723,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Targets.html#11891e116b376c34b55a601b5818ee5e"><param name="Name" value="svn::Targets"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Targets.html#3da3f4370ea08685b9fee30fb9184453"><param name="Name" value="Targets"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#663fb5097aa082c21875d7954b7746ce"><param name="Name" value="textStatus"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#2602fb828da66f51b66142541cf5df0e"><param name="Name" value="textTime"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Status.html#d85c4d3337a1f2f47f4e64707f34e827"><param name="Name" value="textStatus"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Entry.html#62f42ce7992f6a5031892c0fa579a6b7"><param name="Name" value="textTime"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1DirEntry.html#75495b12657079ccded7953dc3a8b50a"><param name="Name" value="time"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="classsvn_1_1Path.html#80634b1dfb4f1db0349748dcd617f467"><param name="Name" value="unescape"></OBJECT>
   <UL>

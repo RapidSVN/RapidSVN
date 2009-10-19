@@ -76,8 +76,8 @@
 <a name="l00084"></a>00084       <span class="keywordflow">return</span> m_entry-&gt;name;
 <a name="l00085"></a>00085     }
 <a name="l00086"></a>00086 
-<a name="l00090"></a>00090     <span class="keyword">const</span> svn_revnum_t
-<a name="l00091"></a><a class="code" href="classsvn_1_1Entry.html#f41718fb1ae02f50a7501c72777d9367">00091</a>     <a class="code" href="classsvn_1_1Entry.html#f41718fb1ae02f50a7501c72777d9367">revision</a>()<span class="keyword"> const</span>
+<a name="l00090"></a>00090     svn_revnum_t
+<a name="l00091"></a><a class="code" href="classsvn_1_1Entry.html#be5664e5392b1506bd72ad0c8d80c354">00091</a>     <a class="code" href="classsvn_1_1Entry.html#be5664e5392b1506bd72ad0c8d80c354">revision</a>()<span class="keyword"> const</span>
 <a name="l00092"></a>00092 <span class="keyword">    </span>{
 <a name="l00093"></a>00093       <span class="keywordflow">return</span> m_entry-&gt;revision;
 <a name="l00094"></a>00094     }
@@ -100,32 +100,32 @@
 <a name="l00120"></a>00120       <span class="keywordflow">return</span> m_entry-&gt;uuid;
 <a name="l00121"></a>00121     }
 <a name="l00122"></a>00122 
-<a name="l00126"></a>00126     <span class="keyword">const</span> svn_node_kind_t
-<a name="l00127"></a><a class="code" href="classsvn_1_1Entry.html#6f13b330c57a4a78e0c36c375dc0533d">00127</a>     <a class="code" href="classsvn_1_1Entry.html#6f13b330c57a4a78e0c36c375dc0533d">kind</a>()<span class="keyword"> const</span>
+<a name="l00126"></a>00126     svn_node_kind_t
+<a name="l00127"></a><a class="code" href="classsvn_1_1Entry.html#fa685353a879cce2a29b0b59122f951d">00127</a>     <a class="code" href="classsvn_1_1Entry.html#fa685353a879cce2a29b0b59122f951d">kind</a>()<span class="keyword"> const</span>
 <a name="l00128"></a>00128 <span class="keyword">    </span>{
 <a name="l00129"></a>00129       <span class="keywordflow">return</span> m_entry-&gt;kind;
 <a name="l00130"></a>00130     }
 <a name="l00131"></a>00131 
-<a name="l00135"></a>00135     <span class="keyword">const</span> svn_wc_schedule_t
-<a name="l00136"></a><a class="code" href="classsvn_1_1Entry.html#c7473f8624f11c1d607fedf37f81aad1">00136</a>     <a class="code" href="classsvn_1_1Entry.html#c7473f8624f11c1d607fedf37f81aad1">schedule</a>()<span class="keyword"> const</span>
+<a name="l00135"></a>00135     svn_wc_schedule_t
+<a name="l00136"></a><a class="code" href="classsvn_1_1Entry.html#270c98abe152e7c64894b5f301a8ae27">00136</a>     <a class="code" href="classsvn_1_1Entry.html#270c98abe152e7c64894b5f301a8ae27">schedule</a>()<span class="keyword"> const</span>
 <a name="l00137"></a>00137 <span class="keyword">    </span>{
 <a name="l00138"></a>00138       <span class="keywordflow">return</span> m_entry-&gt;schedule;
 <a name="l00139"></a>00139     }
 <a name="l00140"></a>00140 
-<a name="l00144"></a>00144     <span class="keyword">const</span> <span class="keywordtype">bool</span>
-<a name="l00145"></a><a class="code" href="classsvn_1_1Entry.html#7b71b170c5ce783669b48d727d971a6b">00145</a>     <a class="code" href="classsvn_1_1Entry.html#7b71b170c5ce783669b48d727d971a6b">isCopied</a>()<span class="keyword"> const</span>
+<a name="l00144"></a>00144     <span class="keywordtype">bool</span>
+<a name="l00145"></a><a class="code" href="classsvn_1_1Entry.html#96dcff5c820ca074f59666179a9e8967">00145</a>     <a class="code" href="classsvn_1_1Entry.html#96dcff5c820ca074f59666179a9e8967">isCopied</a>()<span class="keyword"> const</span>
 <a name="l00146"></a>00146 <span class="keyword">    </span>{
 <a name="l00147"></a>00147       <span class="keywordflow">return</span> m_entry-&gt;copied != 0;
 <a name="l00148"></a>00148     }
 <a name="l00149"></a>00149 
-<a name="l00153"></a>00153     <span class="keyword">const</span> <span class="keywordtype">bool</span>
-<a name="l00154"></a><a class="code" href="classsvn_1_1Entry.html#2cf7eb31797244f89bafefdf26c34274">00154</a>     <a class="code" href="classsvn_1_1Entry.html#2cf7eb31797244f89bafefdf26c34274">isDeleted</a>()<span class="keyword"> const</span>
+<a name="l00153"></a>00153     <span class="keywordtype">bool</span>
+<a name="l00154"></a><a class="code" href="classsvn_1_1Entry.html#cef17e4ad5428e1631aab23e26f4b481">00154</a>     <a class="code" href="classsvn_1_1Entry.html#cef17e4ad5428e1631aab23e26f4b481">isDeleted</a>()<span class="keyword"> const</span>
 <a name="l00155"></a>00155 <span class="keyword">    </span>{
 <a name="l00156"></a>00156       <span class="keywordflow">return</span> m_entry-&gt;deleted != 0;
 <a name="l00157"></a>00157     }
 <a name="l00158"></a>00158 
-<a name="l00162"></a>00162     <span class="keyword">const</span> <span class="keywordtype">bool</span>
-<a name="l00163"></a><a class="code" href="classsvn_1_1Entry.html#b6cef4fce42c7663f08325b43c6f6e3e">00163</a>     <a class="code" href="classsvn_1_1Entry.html#b6cef4fce42c7663f08325b43c6f6e3e">isAbsent</a>()<span class="keyword"> const</span>
+<a name="l00162"></a>00162     <span class="keywordtype">bool</span>
+<a name="l00163"></a><a class="code" href="classsvn_1_1Entry.html#3f451cbb1fee8aff2f17b73a642bf0ae">00163</a>     <a class="code" href="classsvn_1_1Entry.html#3f451cbb1fee8aff2f17b73a642bf0ae">isAbsent</a>()<span class="keyword"> const</span>
 <a name="l00164"></a>00164 <span class="keyword">    </span>{
 <a name="l00165"></a>00165       <span class="keywordflow">return</span> m_entry-&gt;absent != 0;
 <a name="l00166"></a>00166     }
@@ -136,8 +136,8 @@
 <a name="l00174"></a>00174       <span class="keywordflow">return</span> m_entry-&gt;copyfrom_url;
 <a name="l00175"></a>00175     }
 <a name="l00176"></a>00176 
-<a name="l00180"></a>00180     <span class="keyword">const</span> svn_revnum_t
-<a name="l00181"></a><a class="code" href="classsvn_1_1Entry.html#cec51e2708dd3794754c1911b2216f19">00181</a>     <a class="code" href="classsvn_1_1Entry.html#cec51e2708dd3794754c1911b2216f19">copyfromRev</a>()<span class="keyword"> const</span>
+<a name="l00180"></a>00180     svn_revnum_t
+<a name="l00181"></a><a class="code" href="classsvn_1_1Entry.html#62400602da83acb623c7d3f457d9162b">00181</a>     <a class="code" href="classsvn_1_1Entry.html#62400602da83acb623c7d3f457d9162b">copyfromRev</a>()<span class="keyword"> const</span>
 <a name="l00182"></a>00182 <span class="keyword">    </span>{
 <a name="l00183"></a>00183       <span class="keywordflow">return</span> m_entry-&gt;copyfrom_rev;
 <a name="l00184"></a>00184     }
@@ -166,14 +166,14 @@
 <a name="l00219"></a>00219       <span class="keywordflow">return</span> m_entry-&gt;prejfile;
 <a name="l00220"></a>00220     }
 <a name="l00221"></a>00221 
-<a name="l00226"></a>00226     <span class="keyword">const</span> apr_time_t
-<a name="l00227"></a><a class="code" href="classsvn_1_1Entry.html#2602fb828da66f51b66142541cf5df0e">00227</a>     <a class="code" href="classsvn_1_1Entry.html#2602fb828da66f51b66142541cf5df0e">textTime</a>()<span class="keyword"> const</span>
+<a name="l00226"></a>00226     apr_time_t
+<a name="l00227"></a><a class="code" href="classsvn_1_1Entry.html#62f42ce7992f6a5031892c0fa579a6b7">00227</a>     <a class="code" href="classsvn_1_1Entry.html#62f42ce7992f6a5031892c0fa579a6b7">textTime</a>()<span class="keyword"> const</span>
 <a name="l00228"></a>00228 <span class="keyword">    </span>{
 <a name="l00229"></a>00229       <span class="keywordflow">return</span> m_entry-&gt;text_time;
 <a name="l00230"></a>00230     }
 <a name="l00231"></a>00231 
-<a name="l00236"></a>00236     <span class="keyword">const</span> apr_time_t
-<a name="l00237"></a><a class="code" href="classsvn_1_1Entry.html#b4594857db75fb481791a380c1a6f921">00237</a>     <a class="code" href="classsvn_1_1Entry.html#b4594857db75fb481791a380c1a6f921">propTime</a>()<span class="keyword"> const</span>
+<a name="l00236"></a>00236     apr_time_t
+<a name="l00237"></a><a class="code" href="classsvn_1_1Entry.html#f9a88c6508351df3ae1b7bf4263ad5be">00237</a>     <a class="code" href="classsvn_1_1Entry.html#f9a88c6508351df3ae1b7bf4263ad5be">propTime</a>()<span class="keyword"> const</span>
 <a name="l00238"></a>00238 <span class="keyword">    </span>{
 <a name="l00239"></a>00239       <span class="keywordflow">return</span> m_entry-&gt;prop_time;
 <a name="l00240"></a>00240     }
@@ -184,14 +184,14 @@
 <a name="l00249"></a>00249       <span class="keywordflow">return</span> m_entry-&gt;checksum;
 <a name="l00250"></a>00250     }
 <a name="l00251"></a>00251 
-<a name="l00255"></a>00255     <span class="keyword">const</span> svn_revnum_t
-<a name="l00256"></a><a class="code" href="classsvn_1_1Entry.html#8db014ad4fc7763a7ee79d4a53a471fd">00256</a>     <a class="code" href="classsvn_1_1Entry.html#8db014ad4fc7763a7ee79d4a53a471fd">cmtRev</a>()<span class="keyword"> const</span>
+<a name="l00255"></a>00255     svn_revnum_t
+<a name="l00256"></a><a class="code" href="classsvn_1_1Entry.html#70fa46710fe838f675ece9b32749f3a3">00256</a>     <a class="code" href="classsvn_1_1Entry.html#70fa46710fe838f675ece9b32749f3a3">cmtRev</a>()<span class="keyword"> const</span>
 <a name="l00257"></a>00257 <span class="keyword">    </span>{
 <a name="l00258"></a>00258       <span class="keywordflow">return</span> m_entry-&gt;cmt_rev;
 <a name="l00259"></a>00259     }
 <a name="l00260"></a>00260 
-<a name="l00264"></a>00264     <span class="keyword">const</span> apr_time_t
-<a name="l00265"></a><a class="code" href="classsvn_1_1Entry.html#88117770bf0daf3b4c2acaa5a753a2c3">00265</a>     <a class="code" href="classsvn_1_1Entry.html#88117770bf0daf3b4c2acaa5a753a2c3">cmtDate</a>()<span class="keyword"> const</span>
+<a name="l00264"></a>00264     apr_time_t
+<a name="l00265"></a><a class="code" href="classsvn_1_1Entry.html#91c578d855320dabce287a85af9e1121">00265</a>     <a class="code" href="classsvn_1_1Entry.html#91c578d855320dabce287a85af9e1121">cmtDate</a>()<span class="keyword"> const</span>
 <a name="l00266"></a>00266 <span class="keyword">    </span>{
 <a name="l00267"></a>00267       <span class="keywordflow">return</span> m_entry-&gt;cmt_date;
 <a name="l00268"></a>00268     }
@@ -228,7 +228,7 @@
 <a name="l00311"></a>00311 <span class="comment"> * end:</span>
 <a name="l00312"></a>00312 <span class="comment"> */</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 16 22:33:05 2009 for SvnCpp by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Oct 6 19:45:57 2009 for SvnCpp by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

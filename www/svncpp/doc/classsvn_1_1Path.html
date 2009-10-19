@@ -45,9 +45,9 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#80dd8b717c5842f07325c40dad4e7d2b">c_str</a> () const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#934426adbdbf73c1ce230d00000bed5c">isset</a> () const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#3caeab5a61c0cb27acf43d71dc30c535">isSet</a> () const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#4fd5b04a88d3ba95914ef946bbfdcc73">isUrl</a> () const </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#9e294d95ded20dbf0413cdec15e60548">isUrl</a> () const </td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsvn_1_1Path.html#fa7d1c91720d53e5e2aa5d4fc67310a2">addComponent</a> (const char *component)</td></tr>
 
@@ -288,12 +288,12 @@ get a name of directory containing file<p>
 returns the temporary directory 
 </div>
 </div><p>
-<a class="anchor" name="934426adbdbf73c1ce230d00000bed5c"></a><!-- doxytag: member="svn::Path::isset" ref="934426adbdbf73c1ce230d00000bed5c" args="() const " -->
+<a class="anchor" name="3caeab5a61c0cb27acf43d71dc30c535"></a><!-- doxytag: member="svn::Path::isSet" ref="3caeab5a61c0cb27acf43d71dc30c535" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool svn::Path::isset           </td>
+          <td class="memname">bool svn::Path::isSet           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -305,16 +305,18 @@ returns the temporary directory
 
 <p>
 check whether a path is set. Right now this checks only if the string is non- empty.<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd>This is the successor of <em>isset</em> which had to be removed since there was a name conflict with system headers on some systems (see issue 676) </dd></dl>
+<dl class="since" compact><dt><b>Since:</b></dt><dd>0.12</dd></dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if there is a path set </dd></dl>
 
 </div>
 </div><p>
-<a class="anchor" name="4fd5b04a88d3ba95914ef946bbfdcc73"></a><!-- doxytag: member="svn::Path::isUrl" ref="4fd5b04a88d3ba95914ef946bbfdcc73" args="() const " -->
+<a class="anchor" name="9e294d95ded20dbf0413cdec15e60548"></a><!-- doxytag: member="svn::Path::isUrl" ref="9e294d95ded20dbf0413cdec15e60548" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const bool svn::Path::isUrl           </td>
+          <td class="memname">bool svn::Path::isUrl           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -558,7 +560,7 @@ return path as a string with unescaped special characters<p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="path_8hpp-source.html">path.hpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 16 22:33:06 2009 for SvnCpp by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Oct 6 19:45:58 2009 for SvnCpp by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

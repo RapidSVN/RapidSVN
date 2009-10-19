@@ -36,7 +36,7 @@
 <a name="l00013"></a>00013 <span class="comment"> * GNU General Public License for more details.</span>
 <a name="l00014"></a>00014 <span class="comment"> *</span>
 <a name="l00015"></a>00015 <span class="comment"> * You should have received a copy of the GNU General Public License</span>
-<a name="l00016"></a>00016 <span class="comment"> * along with this program (in the file GPL.txt.  </span>
+<a name="l00016"></a>00016 <span class="comment"> * along with this program (in the file GPL.txt.</span>
 <a name="l00017"></a>00017 <span class="comment"> * If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00018"></a>00018 <span class="comment"> *</span>
 <a name="l00019"></a>00019 <span class="comment"> * This software consists of voluntary contributions made by many</span>
@@ -74,57 +74,60 @@
 <a name="l00074"></a>00074     <span class="keyword">const</span> apr_array_header_t *
 <a name="l00075"></a>00075     <a class="code" href="classsvn_1_1StatusSel.html#de2e484a7b4dcf5fcc57a0afa2501a32">array</a>(<span class="keyword">const</span> <a class="code" href="classsvn_1_1Pool.html">Pool</a> &amp; pool) <span class="keyword">const</span>;
 <a name="l00076"></a>00076 
-<a name="l00082"></a>00082     <span class="keyword">const</span> <a class="code" href="classsvn_1_1Targets.html">Targets</a> &amp;
-<a name="l00083"></a>00083     <a class="code" href="classsvn_1_1StatusSel.html#9e8ae4fc951a352a96543527baa95c0b">targets</a>() <span class="keyword">const</span>;
+<a name="l00082"></a>00082     <span class="keyword">const</span> <a class="code" href="namespacesvn.html#5709c568e262d24296ec2b3bf3a03b72">StatusVector</a> &amp;
+<a name="l00083"></a>00083     <a class="code" href="classsvn_1_1StatusSel.html#7c041fc74ca7abb55d85c3487ba05a34">statusVector</a>() <span class="keyword">const</span>;
 <a name="l00084"></a>00084 
-<a name="l00091"></a>00091     <span class="keyword">const</span> <a class="code" href="classsvn_1_1Path.html">Path</a> &amp;
-<a name="l00092"></a>00092     <a class="code" href="classsvn_1_1StatusSel.html#4758361d7e69d3ff0d9d716a53158f8a">target</a>() <span class="keyword">const</span>;
-<a name="l00093"></a>00093 
-<a name="l00097"></a>00097     <span class="keywordtype">size_t</span> <a class="code" href="classsvn_1_1StatusSel.html#5f316766826ca01029b05c8ed1a6cff9">size</a>() <span class="keyword">const</span>;
-<a name="l00098"></a>00098 
-<a name="l00102"></a>00102     <span class="keywordtype">void</span>
-<a name="l00103"></a>00103     <a class="code" href="classsvn_1_1StatusSel.html#b8e456a393ecdf7bc4d446a9fb2edf8f">reserve</a>(<span class="keywordtype">size_t</span> size);
-<a name="l00104"></a>00104 
+<a name="l00090"></a>00090     <span class="keyword">const</span> <a class="code" href="classsvn_1_1Targets.html">Targets</a> &amp;
+<a name="l00091"></a>00091     <a class="code" href="classsvn_1_1StatusSel.html#9e8ae4fc951a352a96543527baa95c0b">targets</a>() <span class="keyword">const</span>;
+<a name="l00092"></a>00092 
+<a name="l00099"></a>00099     <span class="keyword">const</span> <a class="code" href="classsvn_1_1Path.html">Path</a> &amp;
+<a name="l00100"></a>00100     <a class="code" href="classsvn_1_1StatusSel.html#4758361d7e69d3ff0d9d716a53158f8a">target</a>() <span class="keyword">const</span>;
+<a name="l00101"></a>00101 
+<a name="l00105"></a>00105     <span class="keywordtype">size_t</span> <a class="code" href="classsvn_1_1StatusSel.html#5f316766826ca01029b05c8ed1a6cff9">size</a>() <span class="keyword">const</span>;
+<a name="l00106"></a>00106 
 <a name="l00110"></a>00110     <span class="keywordtype">void</span>
-<a name="l00111"></a>00111     <a class="code" href="classsvn_1_1StatusSel.html#0265b5c38bdf365cc932c41695b57cd9">push_back</a>(<span class="keyword">const</span> <a class="code" href="classsvn_1_1Status.html">Status</a> &amp; status);
+<a name="l00111"></a>00111     <a class="code" href="classsvn_1_1StatusSel.html#b8e456a393ecdf7bc4d446a9fb2edf8f">reserve</a>(<span class="keywordtype">size_t</span> size);
 <a name="l00112"></a>00112 
-<a name="l00116"></a>00116     <span class="keywordtype">void</span>
-<a name="l00117"></a>00117     <a class="code" href="classsvn_1_1StatusSel.html#8bad364a88db8a06122966ea32a9b913">clear</a>();
-<a name="l00118"></a>00118 
-<a name="l00124"></a>00124     <a class="code" href="classsvn_1_1StatusSel.html#42517f5171f9265f5376f0acff8ddd9d">operator const PathVector &amp; </a>() <span class="keyword">const</span>;
-<a name="l00125"></a>00125 
-<a name="l00127"></a>00127     <span class="keywordtype">bool</span>
-<a name="l00128"></a>00128     <a class="code" href="classsvn_1_1StatusSel.html#1e39d51d1580e82c378469f0d8d2aa7e">hasFiles</a>() <span class="keyword">const</span>;
-<a name="l00129"></a>00129 
-<a name="l00131"></a>00131     <span class="keywordtype">bool</span>
-<a name="l00132"></a>00132     <a class="code" href="classsvn_1_1StatusSel.html#a01049f67c634f50868ed7b9e9ce3db2">hasDirs</a>() <span class="keyword">const</span>;
+<a name="l00118"></a>00118     <span class="keywordtype">void</span>
+<a name="l00119"></a>00119     <a class="code" href="classsvn_1_1StatusSel.html#0265b5c38bdf365cc932c41695b57cd9">push_back</a>(<span class="keyword">const</span> <a class="code" href="classsvn_1_1Status.html">Status</a> &amp; status);
+<a name="l00120"></a>00120 
+<a name="l00124"></a>00124     <span class="keywordtype">void</span>
+<a name="l00125"></a>00125     <a class="code" href="classsvn_1_1StatusSel.html#8bad364a88db8a06122966ea32a9b913">clear</a>();
+<a name="l00126"></a>00126 
+<a name="l00132"></a>00132     <a class="code" href="classsvn_1_1StatusSel.html#42517f5171f9265f5376f0acff8ddd9d">operator const PathVector &amp; </a>() <span class="keyword">const</span>;
 <a name="l00133"></a>00133 
 <a name="l00135"></a>00135     <span class="keywordtype">bool</span>
-<a name="l00136"></a>00136     <a class="code" href="classsvn_1_1StatusSel.html#d02b79fc2a0e463e71ae4314116c8f7c">hasVersioned</a>() <span class="keyword">const</span>;
+<a name="l00136"></a>00136     <a class="code" href="classsvn_1_1StatusSel.html#1e39d51d1580e82c378469f0d8d2aa7e">hasFiles</a>() <span class="keyword">const</span>;
 <a name="l00137"></a>00137 
 <a name="l00139"></a>00139     <span class="keywordtype">bool</span>
-<a name="l00140"></a>00140     <a class="code" href="classsvn_1_1StatusSel.html#c59cc4eff87a6830f983a91ca6c96584">hasUnversioned</a>() <span class="keyword">const</span>;
+<a name="l00140"></a>00140     <a class="code" href="classsvn_1_1StatusSel.html#a01049f67c634f50868ed7b9e9ce3db2">hasDirs</a>() <span class="keyword">const</span>;
 <a name="l00141"></a>00141 
 <a name="l00143"></a>00143     <span class="keywordtype">bool</span>
-<a name="l00144"></a>00144     <a class="code" href="classsvn_1_1StatusSel.html#396004f033f4a0d86661f1241d5afa86">hasUrl</a>() <span class="keyword">const</span>;
+<a name="l00144"></a>00144     <a class="code" href="classsvn_1_1StatusSel.html#d02b79fc2a0e463e71ae4314116c8f7c">hasVersioned</a>() <span class="keyword">const</span>;
 <a name="l00145"></a>00145 
 <a name="l00147"></a>00147     <span class="keywordtype">bool</span>
-<a name="l00148"></a>00148     <a class="code" href="classsvn_1_1StatusSel.html#676eeb78059f0300731fdecf56b12641">hasLocal</a>() <span class="keyword">const</span>;
+<a name="l00148"></a>00148     <a class="code" href="classsvn_1_1StatusSel.html#c59cc4eff87a6830f983a91ca6c96584">hasUnversioned</a>() <span class="keyword">const</span>;
 <a name="l00149"></a>00149 
-<a name="l00150"></a>00150   <span class="keyword">private</span>:
-<a name="l00151"></a>00151     <span class="keyword">struct </span>Data;
-<a name="l00152"></a>00152     Data * m;
-<a name="l00153"></a>00153   };
-<a name="l00154"></a>00154 }
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156 <span class="preprocessor">#endif</span>
-<a name="l00157"></a>00157 <span class="preprocessor"></span><span class="comment">/* -----------------------------------------------------------------</span>
-<a name="l00158"></a>00158 <span class="comment"> * local variables:</span>
-<a name="l00159"></a>00159 <span class="comment"> * eval: (load-file "../../rapidsvn-dev.el")</span>
-<a name="l00160"></a>00160 <span class="comment"> * end:</span>
-<a name="l00161"></a>00161 <span class="comment"> */</span>
+<a name="l00151"></a>00151     <span class="keywordtype">bool</span>
+<a name="l00152"></a>00152     <a class="code" href="classsvn_1_1StatusSel.html#396004f033f4a0d86661f1241d5afa86">hasUrl</a>() <span class="keyword">const</span>;
+<a name="l00153"></a>00153 
+<a name="l00155"></a>00155     <span class="keywordtype">bool</span>
+<a name="l00156"></a>00156     <a class="code" href="classsvn_1_1StatusSel.html#676eeb78059f0300731fdecf56b12641">hasLocal</a>() <span class="keyword">const</span>;
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158   <span class="keyword">private</span>:
+<a name="l00159"></a>00159     <span class="keyword">struct </span>Data;
+<a name="l00160"></a>00160     Data * m;
+<a name="l00161"></a>00161   };
+<a name="l00162"></a>00162 }
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164 <span class="preprocessor">#endif</span>
+<a name="l00165"></a>00165 <span class="preprocessor"></span><span class="comment">/* -----------------------------------------------------------------</span>
+<a name="l00166"></a>00166 <span class="comment"> * local variables:</span>
+<a name="l00167"></a>00167 <span class="comment"> * eval: (load-file "../../rapidsvn-dev.el")</span>
+<a name="l00168"></a>00168 <span class="comment"> * end:</span>
+<a name="l00169"></a>00169 <span class="comment"> */</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 16 22:33:05 2009 for SvnCpp by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Oct 6 19:45:57 2009 for SvnCpp by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>
