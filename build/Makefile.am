@@ -1,2 +1,2 @@
-SUBDIRS=vc2005 xcode
+SUBDIRS=vc6 vc2005 xcode
 
