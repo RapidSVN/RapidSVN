@@ -11,5 +11,6 @@ manpage-no:
 manpage-yes:
 	$(MAKEMAN) $(srcdir)/rapidsvn.xml
 
+distclean: clean
 clean:
 	-rm -f rapidsvn.1

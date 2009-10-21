@@ -9,5 +9,6 @@ doxygen-no:
 doxygen-yes: 
 	$(DOXYGEN) svncpp.dox
 
+distclean: clean
 clean:
 	-rm -rf html
