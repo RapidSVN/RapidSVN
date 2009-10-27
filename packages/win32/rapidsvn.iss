@@ -33,6 +33,7 @@ Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "A
 
 [Components]
 Name: main; Description: RapidSVN Application; Types: compact custom full; Flags: fixed
+Name: svn; Description: Subversion Command Line; Types: custom full
 
 [Files]
 ; RapidSVN application files
@@ -60,6 +61,10 @@ Source: "..\..\README"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\GPL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
 Source: "..\..\FDL.txt"; DestDir: "{app}"; Flags: ignoreversion; Components: main
+
+; Subversion command line
+Source: "tmp\svn.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: svn
+Source: "tmp\svnadmin.exe"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: svn
 
 ; Shared libraries
 Source: "tmp\*.dll"; DestDir: "{app}\bin"; Flags: ignoreversion; Components: main

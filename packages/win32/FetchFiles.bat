@@ -24,6 +24,10 @@ rem Copy Subversion and APR DLLs
 copy %SUBVERSION%\bin\*.dll tmp
 copy %SUBVERSION%\iconv\*.so tmp
 
+rem Copy Subversion command line clients
+copy %SUBVERSION%\bin\svn.exe tmp
+copy %SUBVERSION%\bin\svnadmin.exe tmp
+
 rem Copy C++ Runtime
 copy msvcp60.dll tmp
 
