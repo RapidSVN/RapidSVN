@@ -646,7 +646,11 @@ HasModifiedChildren(const svn::Path & path, svn::Context * context)
 wxString 
 FindExecutableInPath(const wxString & executable)
 {
-  return executable; // TODO
+  wxPathList pathList;
+  wxFileName filename(executable);
+
+  pathList.AddEnvList(wxT("PATH"));
+  return pathList.FindAbsoluteValidPath(executable);
 }
 
 /* -----------------------------------------------------------------

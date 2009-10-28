@@ -30,6 +30,7 @@
 #include "create_repos_dlg.hpp"
 #include "hist_val.hpp"
 #include "hist_entries.hpp"
+#include "svn_executables.hpp"
 #include "utils.hpp"
 
 struct CreateReposDlg::Data
@@ -39,7 +40,7 @@ public:
 
   Data()
   {
-    svnadminAvailable = !FindExecutableInPath(wxT("svnadmin")).IsEmpty();
+    svnadminAvailable = !FindExecutableInPath(SVNADMIN_EXECUTABLE).IsEmpty();
   }
 };
 
