@@ -41,6 +41,7 @@
 #include "add_recursive_action.hpp"
 #include "checkout_action.hpp"
 #include "cleanup_action.hpp"
+#include "create_repos_action.hpp"
 #include "commit_action.hpp"
 #include "delete_action.hpp"
 #include "diff_action.hpp"
@@ -193,6 +194,8 @@ ActionFactory::CheckIdForStatusSel(int id, const svn::StatusSel & statusSel)
   case ID_Ignore:
     result = IgnoreAction::CheckStatusSel(statusSel);
     break;
+  case ID_CreateRepository:
+    result = CreateRepositoryAction::CheckStatusSel(statusSel);
   };
 
   return result;
@@ -331,6 +334,9 @@ ActionFactory::CreateAction(wxWindow * parent, int id)
     case ID_Ignore:
       action = new IgnoreAction(parent);
       break;
+
+    case ID_CreateRepository:
+      action = new CreateRepositoryAction(parent);
     }
   }
 

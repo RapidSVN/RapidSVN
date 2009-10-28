@@ -1704,19 +1704,6 @@ RapidSvnFrame::OnFileCommand(wxCommandEvent & event)
 
   switch (id)
   {
-  case ID_CreateRepository:
-    wxMessageBox(
-      _("Please use the command line utility 'svnadmin'\n\
-to create a new repository.\n\n\
-This command line utility is not part of the\n\
-RapidSVN distribution.\n\n\
-More information about subversion:\n\
-http://svnbook.red-bean.com/\n\
-http://subversion.tigris.org"),
-      _("Information"),
-      wxOK);
-    break;
-
   case ID_Default_Action:
     InvokeDefaultAction();
     break;

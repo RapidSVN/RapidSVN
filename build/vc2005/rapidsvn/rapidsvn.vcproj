@@ -398,6 +398,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\create_repos_action.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\delete_action.cpp"
 				>
 			</File>
@@ -729,6 +733,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\config.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\create_repos_action.hpp"
 				>
 			</File>
 			<File
