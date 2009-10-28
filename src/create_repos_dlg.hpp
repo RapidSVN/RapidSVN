@@ -21,56 +21,60 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
-// wxWidgets
-#include "wx/intl.h"
-
-// svncpp
-#include "svncpp/client.hpp"
-#include "svncpp/status_selection.hpp"
-#include "svncpp/targets.hpp"
+#ifndef _CREATE_REPOS_DLG_H_INCLUDED_
+#define _CREATE_REPOS_DLG_H_INCLUDED_
 
 // app
-#include "create_repos_action.hpp"
-#include "create_repos_dlg.hpp"
+#include "rapidsvn_generated.h"
 
-CreateRepositoryAction::CreateRepositoryAction(wxWindow * parent)
-    : Action(parent, _("Add"), 0)
+
+class CreateReposDlg : public CreateReposDlgBase
 {
-}
+public:
+  /**
+   * Constructor
+   *
+   * @param parent window
+   */
+  CreateReposDlg(wxWindow *parent);
 
-CreateRepositoryAction::~CreateRepositoryAction()
-{
-}
+  /**
+   * Destructor
+   */
+  virtual ~CreateReposDlg();
 
-bool
-CreateRepositoryAction::Prepare()
-{
-  CreateReposDlg dlg(GetParent());
+  enum
+  {
+    TYPE_FSFS=0,
+    TYPE_BDB
+  };
 
-  if (dlg.ShowModal() != wxID_OK)
-    return false;
+  enum
+  {
+    COMPAT_DEFAULT=0,
+    COMPAT_PRE_1_6,
+    COMPAT_PRE_1_5,
+    COMPAT_PRE_1_4
+  };
 
-  // TODO
+protected: // CreateReposDlgBase event handlers
+	virtual void OnComboType(wxCommandEvent& event);
+	virtual void OnComboDirText(wxCommandEvent& event);
+	virtual void OnButtonBrowseDirClick(wxCommandEvent& event);
+	virtual void OnComboNameText(wxCommandEvent& event);
+	virtual void OnComboCompatibility(wxCommandEvent& event);
+	virtual void OnComboConfigDirText(wxCommandEvent& event);
+	virtual void OnButtonBrowseConfigDirClick(wxCommandEvent& event);
 
-  return true;
-}
+private:
+  /** hide implementation details */
+  struct Data;
+  Data *m;
 
-bool
-CreateRepositoryAction::Perform()
-{
-  // TODO
-  //svn::Client client(GetContext());
-  return true;
-}
+  void CheckValues();
+};
 
-
-bool
-CreateRepositoryAction::CheckStatusSel(const svn::StatusSel & WXUNUSED(statusSel))
-{
-  return true;
-}
-
+#endif
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
