@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Dec 29 2008)
+// C++ code generated with wxFormBuilder (version Apr 16 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -231,6 +231,56 @@ class UpdateDlgBase : public wxDialog
 	public:
 		UpdateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~UpdateDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class CreateReposDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class CreateReposDlgBase : public wxDialog 
+{
+	private:
+		wxBoxSizer* sizerGeneral;
+		wxBoxSizer* sizerType;
+		wxStaticBoxSizer* sizerDir;
+		wxStaticBoxSizer* sizerName;
+		wxBoxSizer* sizerExtended;
+		wxBoxSizer* sizerCompatibility;
+		wxStaticBoxSizer* sizerConfigDir;
+		wxBoxSizer* sizerButton;
+	
+	protected:
+		wxNotebook* m_notebook;
+		wxPanel* m_panelGeneral;
+		wxStaticText* m_staticType;
+		wxComboBox* m_comboType;
+		wxComboBox* m_comboDirectory;
+		wxButton* m_buttonBrowseDir;
+		wxComboBox* m_comboName;
+		wxPanel* m_panelExtended;
+		wxStaticText* m_staticCompatibility;
+		wxComboBox* m_comboCompatibility;
+		wxComboBox* m_comboConfigDir;
+		wxButton* m_buttonBrowseConfigDir;
+		wxCheckBox* m_checkBdbLogKeep;
+		wxCheckBox* m_checkBdbTxnNoSync;
+		wxStaticText* m_staticWarning;
+		wxButton* m_buttonOk;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnComboType( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboDirText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonBrowseDirClick( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboNameText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboCompatibility( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboConfigDirText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonBrowseConfigDirClick( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		CreateReposDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Create Repository"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		~CreateReposDlgBase();
 	
 };
 
