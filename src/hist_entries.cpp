@@ -28,16 +28,15 @@
 
 
 const wxChar HISTORY_COMMIT_LOG[] = wxT("History/CommitLog");
-
 const wxChar HISTORY_REPOSITORY[] = wxT("History/Repositories");
-
 const wxChar HISTORY_WORKING_DIRECTORY[] = wxT("History/WorkingDirectories");
-
 const wxChar HISTORY_COPYMOVE_DESTINATION[] = wxT("History/CopyMoveDestination");
-
 const wxChar HISTORY_DIFF_URL[] = wxT("History/DiffUrl");
-
 const wxChar HISTORY_EXISTING_WORKING_DIRECTORY[] = wxT("History/ExistingWorkingDirectory");
+
+const wxChar HISTORY_CREATE_REPOS_DIRECTORY[] = wxT("History/CreateRepositoryDirecrory");
+const wxChar HISTORY_CREATE_REPOS_NAME[] = wxT("History/CreateRepositoryName");
+const wxChar HISTORY_CREATE_REPOS_CONFIG_DIRECTORY[] = wxT("History/CreateRepositoryConfigDir");
 
 /* -----------------------------------------------------------------
  * local variables:

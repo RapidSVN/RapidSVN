@@ -65,6 +65,10 @@ extern const wxChar HISTORY_DIFF_URL [];
  */
 extern const wxChar HISTORY_EXISTING_WORKING_DIRECTORY[];
 
+extern const wxChar HISTORY_CREATE_REPOS_DIRECTORY[];
+extern const wxChar HISTORY_CREATE_REPOS_NAME[];
+extern const wxChar HISTORY_CREATE_REPOS_CONFIG_DIRECTORY[];
+
 
 #endif
 /* -----------------------------------------------------------------
