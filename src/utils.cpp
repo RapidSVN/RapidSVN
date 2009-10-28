@@ -641,6 +641,14 @@ HasModifiedChildren(const svn::Path & path, svn::Context * context)
 
   return false;
 }
+
+
+wxString 
+FindExecutableInPath(const wxString & executable)
+{
+  return executable; // TODO
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

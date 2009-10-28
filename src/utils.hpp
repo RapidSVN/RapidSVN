@@ -346,6 +346,13 @@ FullNativePath(const svn::Path & target, const wxString & base, bool flat);
 bool
 HasModifiedChildren(const svn::Path & path, svn::Context * context);
 
+/**
+ * Checks whether @a executable can be found path and returns the
+ * absolute path
+ */
+wxString FindExecutableInPath(const wxString & executable);
+
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:
