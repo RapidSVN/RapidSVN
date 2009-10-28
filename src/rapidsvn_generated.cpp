@@ -587,9 +587,9 @@ UpdateDlgBase::~UpdateDlgBase()
 CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->SetExtraStyle( wxWS_EX_VALIDATE_RECURSIVELY );
 	
-	wxBoxSizer* rootSizer;
-	rootSizer = new wxBoxSizer( wxVERTICAL );
+	m_rootSizer = new wxBoxSizer( wxVERTICAL );
 	
 	m_notebook = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelGeneral = new wxPanel( m_notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
@@ -601,12 +601,12 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_staticType->Wrap( -1 );
 	sizerType->Add( m_staticType, 0, wxALL, 5 );
 	
-	m_comboType = new wxComboBox( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN );
+	m_comboType = new wxComboBox( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY );
 	m_comboType->Append( _("FSFS") );
 	m_comboType->Append( _("BerkeleyDB") );
 	sizerType->Add( m_comboType, 1, wxALL, 5 );
 	
-	sizerGeneral->Add( sizerType, 1, wxEXPAND, 5 );
+	sizerGeneral->Add( sizerType, 0, wxEXPAND, 5 );
 	
 	sizerDir = new wxStaticBoxSizer( new wxStaticBox( m_panelGeneral, wxID_ANY, _("Create repository in &directory:") ), wxHORIZONTAL );
 	
@@ -625,10 +625,14 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	
 	sizerGeneral->Add( sizerName, 0, wxEXPAND, 5 );
 	
+	m_checkCreateBookmark = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Create a bookmark for the new repository"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	sizerGeneral->Add( m_checkCreateBookmark, 0, wxALL, 5 );
+	
 	m_panelGeneral->SetSizer( sizerGeneral );
 	m_panelGeneral->Layout();
 	sizerGeneral->Fit( m_panelGeneral );
-	m_notebook->AddPage( m_panelGeneral, _("General"), true );
+	m_notebook->AddPage( m_panelGeneral, _("General"), false );
 	m_panelExtended = new wxPanel( m_notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	sizerExtended = new wxBoxSizer( wxVERTICAL );
 	
@@ -638,7 +642,7 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_staticCompatibility->Wrap( -1 );
 	sizerCompatibility->Add( m_staticCompatibility, 0, wxALL, 5 );
 	
-	m_comboCompatibility = new wxComboBox( m_panelExtended, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN );
+	m_comboCompatibility = new wxComboBox( m_panelExtended, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY );
 	m_comboCompatibility->Append( _("Default") );
 	m_comboCompatibility->Append( _("pre Subversion 1.6") );
 	m_comboCompatibility->Append( _("pre Subversion 1.5") );
@@ -668,15 +672,15 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_panelExtended->SetSizer( sizerExtended );
 	m_panelExtended->Layout();
 	sizerExtended->Fit( m_panelExtended );
-	m_notebook->AddPage( m_panelExtended, _("More options"), false );
+	m_notebook->AddPage( m_panelExtended, _("More options"), true );
 	
-	rootSizer->Add( m_notebook, 1, wxEXPAND | wxALL, 5 );
+	m_rootSizer->Add( m_notebook, 1, wxEXPAND | wxALL, 5 );
 	
 	m_staticWarning = new wxStaticText( this, wxID_ANY, _("WARNING"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticWarning->Wrap( -1 );
 	m_staticWarning->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), 70, 90, 92, false, wxEmptyString ) );
 	
-	rootSizer->Add( m_staticWarning, 0, wxEXPAND|wxLEFT|wxRIGHT, 5 );
+	m_rootSizer->Add( m_staticWarning, 0, wxEXPAND|wxLEFT|wxRIGHT, 5 );
 	
 	sizerButton = new wxBoxSizer( wxHORIZONTAL );
 	
@@ -687,11 +691,11 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizerButton->Add( m_buttonCancel, 0, wxALL, 10 );
 	
-	rootSizer->Add( sizerButton, 0, wxALIGN_CENTER, 5 );
+	m_rootSizer->Add( sizerButton, 0, wxALIGN_CENTER, 5 );
 	
-	this->SetSizer( rootSizer );
+	this->SetSizer( m_rootSizer );
 	this->Layout();
-	rootSizer->Fit( this );
+	m_rootSizer->Fit( this );
 	
 	// Connect Events
 	m_comboType->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnComboType ), NULL, this );

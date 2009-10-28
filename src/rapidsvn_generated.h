@@ -250,6 +250,7 @@ class CreateReposDlgBase : public wxDialog
 		wxBoxSizer* sizerButton;
 	
 	protected:
+		wxBoxSizer* m_rootSizer;
 		wxNotebook* m_notebook;
 		wxPanel* m_panelGeneral;
 		wxStaticText* m_staticType;
@@ -257,6 +258,7 @@ class CreateReposDlgBase : public wxDialog
 		wxComboBox* m_comboDirectory;
 		wxButton* m_buttonBrowseDir;
 		wxComboBox* m_comboName;
+		wxCheckBox* m_checkCreateBookmark;
 		wxPanel* m_panelExtended;
 		wxStaticText* m_staticCompatibility;
 		wxComboBox* m_comboCompatibility;
@@ -279,7 +281,7 @@ class CreateReposDlgBase : public wxDialog
 		
 	
 	public:
-		CreateReposDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Create Repository"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		CreateReposDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Create Repository"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CreateReposDlgBase();
 	
 };
