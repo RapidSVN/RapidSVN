@@ -4597,7 +4597,7 @@
             <property name="subclass"></property>
             <property name="title">Create Repository</property>
             <property name="tooltip"></property>
-            <property name="window_extra_style">wxWS_EX_VALIDATE_RECURSIVELY</property>
+            <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style"></property>
             <event name="OnActivate"></event>

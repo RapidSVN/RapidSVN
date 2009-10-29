@@ -57,6 +57,9 @@ public:
     COMPAT_PRE_1_4
   };
 
+  virtual bool TransferDataFromWindow();
+  virtual bool TransferDataToWindow();
+
 protected: // CreateReposDlgBase event handlers
 	virtual void OnComboType(wxCommandEvent& event);
 	virtual void OnComboDirText(wxCommandEvent& event);

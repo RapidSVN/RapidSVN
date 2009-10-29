@@ -587,7 +587,6 @@ UpdateDlgBase::~UpdateDlgBase()
 CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-	this->SetExtraStyle( wxWS_EX_VALIDATE_RECURSIVELY );
 	
 	m_rootSizer = new wxBoxSizer( wxVERTICAL );
 	

@@ -68,13 +68,12 @@ CreateReposDlg::CreateReposDlg(wxWindow * parent)
     m_comboConfigDir->SetValidator(val);
   }
 
-  //SetSizer(m_rootSizer);
-
-  m_comboDirectory->SetMinSize(wxSize(GetCharWidth() * 60, GetCharHeight()));
-  m_rootSizer->SetSizeHints(this);
-  m_rootSizer->Fit(this);
-
-  Layout();
+  // TODO all this stuff doesnt work. Dont know why :-(
+  // m_comboDirectory->SetMinSize(wxSize(GetCharWidth() * 60, GetCharHeight()));
+  // m_rootSizer->SetSizeHints(this);
+  // m_rootSizer->Fit(this);
+  // 
+  // Layout();
   CentreOnParent();
 
   CheckValues();
@@ -216,7 +215,25 @@ CreateReposDlg::OnButtonBrowseConfigDirClick(wxCommandEvent& event)
   }
 }
 
+bool 
+CreateReposDlg::TransferDataFromWindow()
+{
+  // without wxWS_EX_VALIDATE_RECURSIVELY we need to make
+  // sure the history gets saved. Settings this flasg doesnt work
+  // since then the dialog gets shown in the taskbar (on Windows)
+  return CreateReposDlgBase::TransferDataFromWindow() &&
+    m_panelGeneral->TransferDataFromWindow() &&
+    m_panelExtended->TransferDataFromWindow();
+}
 
+
+bool 
+CreateReposDlg::TransferDataToWindow()
+{
+  return CreateReposDlgBase::TransferDataToWindow() &&
+    m_panelGeneral->TransferDataToWindow() &&
+    m_panelExtended->TransferDataToWindow();
+}
 
 /* -----------------------------------------------------------------
  * local variables:
