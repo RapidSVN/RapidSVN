@@ -60,14 +60,41 @@ public:
   virtual bool TransferDataFromWindow();
   virtual bool TransferDataToWindow();
 
+  /** @return directory in which to create the repository */
+  wxString GetDir() const;
+
+  /** @return name of the new repository */
+  wxString GetName() const;
+
+  /** @return absolute filename of the new repository */
+  wxString GetFilename() const;
+
+  /** @return config directory (or empty if not used */
+  wxString GetConfigDir() const;
+
+  /** @return @ref TYPE_FSFS or @ref TYPE_BDB */
+  int GetType() const;
+
+  /** @return one of the @a COMPAT_* values */
+  int GetCompat() const;
+
+  /** @note only for @ref TYPE_BDB */
+  bool GetBdbLogKeep() const;
+
+  /** @note only for @ref TYPE_BDB */
+  bool GetBdbTxnNoSync() const;
+
+  /** whether to add a bookmark after creating the new repository */
+  bool GetAddBookmark() const;
+
 protected: // CreateReposDlgBase event handlers
-	virtual void OnComboType(wxCommandEvent& event);
-	virtual void OnComboDirText(wxCommandEvent& event);
-	virtual void OnButtonBrowseDirClick(wxCommandEvent& event);
-	virtual void OnComboNameText(wxCommandEvent& event);
-	virtual void OnComboCompatibility(wxCommandEvent& event);
-	virtual void OnComboConfigDirText(wxCommandEvent& event);
-	virtual void OnButtonBrowseConfigDirClick(wxCommandEvent& event);
+  virtual void OnChoiceType(wxCommandEvent& event);
+  virtual void OnComboDirText(wxCommandEvent& event);
+  virtual void OnButtonBrowseDirClick(wxCommandEvent& event);
+  virtual void OnComboNameText(wxCommandEvent& event);
+  virtual void OnChoiceCompat(wxCommandEvent& event);
+  virtual void OnComboConfigDirText(wxCommandEvent& event);
+  virtual void OnButtonBrowseConfigDirClick(wxCommandEvent& event);
 
 private:
   /** hide implementation details */

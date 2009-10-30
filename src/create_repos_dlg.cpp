@@ -50,14 +50,14 @@ CreateReposDlg::CreateReposDlg(wxWindow * parent)
 {
   m = new Data();
 
-  m_comboType->SetSelection(TYPE_FSFS);
-  m_comboCompatibility->SetSelection(COMPAT_DEFAULT);
-  m_checkCreateBookmark->SetValue(true);
+  m_choiceType->SetSelection(TYPE_FSFS);
+  m_choiceCompat->SetSelection(COMPAT_DEFAULT);
+  m_checkAddBookmark->SetValue(true);
   m_notebook->SetSelection(0);
 
   {
     HistoryValidator val(HISTORY_CREATE_REPOS_DIRECTORY);
-    m_comboDirectory->SetValidator(val);
+    m_comboDir->SetValidator(val);
   }
   {
     HistoryValidator val(HISTORY_CREATE_REPOS_NAME);
@@ -89,32 +89,25 @@ CreateReposDlg::~CreateReposDlg()
 void 
 CreateReposDlg::CheckValues()
 {
-  wxASSERT(0 != m_comboDirectory);
-  wxASSERT(0 != m_comboType);
   wxASSERT(0 != m_checkBdbLogKeep);
   wxASSERT(0 != m_checkBdbTxnNoSync);
   wxASSERT(0 != m_buttonOk);
-  wxASSERT(0 != m_comboName);
-  wxASSERT(0 != m_comboConfigDir);
+  wxASSERT(0 != m_textFilename);
 
   wxString msg;
   bool valid=true;
 
-  bool isBdb = TYPE_BDB == m_comboType->GetSelection();
+  bool isBdb = TYPE_BDB == GetType();
 
   m_checkBdbLogKeep->Enable(isBdb);
   m_checkBdbTxnNoSync->Enable(isBdb);
 
   // Now check whether we can proceed
 
-  wxString name(m_comboName->GetValue());
-  TrimString(name);
-  wxString dir(m_comboDirectory->GetValue());
-  TrimString(dir);
-  wxString configDir(m_comboConfigDir->GetValue());
-  TrimString(configDir);
-
-  wxFileName filename(dir, name);
+  wxString name(GetName());
+  wxString dir(GetDir());
+  wxString configDir(GetConfigDir());
+  wxString filename(GetFilename());
 
   if (!m->svnadminAvailable)
   {
@@ -131,12 +124,12 @@ CreateReposDlg::CheckValues()
     valid = false;
     msg = _("Enter a name for the repository");
   }
-  else if (::wxDirExists(filename.GetFullPath()))
+  else if (::wxDirExists(filename))
   {
     valid = false;
     msg = _("A directory of this name exists already");
   }
-  else if (::wxFileExists(filename.GetFullPath()))
+  else if (::wxFileExists(filename))
   {
     valid = false;
     msg = _("A file of this name exists already");
@@ -147,60 +140,60 @@ CreateReposDlg::CheckValues()
     msg = _("The configuration directory does not exist");
   }
 
+  m_textFilename->SetValue(filename);
   m_staticWarning->SetLabel(msg);
-
   m_buttonOk->Enable(valid);
 }
 
 
 void 
-CreateReposDlg::OnComboType(wxCommandEvent& event)
+CreateReposDlg::OnChoiceType(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
 void 
-CreateReposDlg::OnComboDirText(wxCommandEvent& event)
+CreateReposDlg::OnComboDirText(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
 void 
-CreateReposDlg::OnComboNameText(wxCommandEvent& event)
+CreateReposDlg::OnComboNameText(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
 void 
-CreateReposDlg::OnComboCompatibility(wxCommandEvent& event)
+CreateReposDlg::OnChoiceCompat(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
 void 
-CreateReposDlg::OnComboConfigDirText(wxCommandEvent& event)
+CreateReposDlg::OnComboConfigDirText(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
 void 
-CreateReposDlg::OnButtonBrowseDirClick(wxCommandEvent& event)
+CreateReposDlg::OnButtonBrowseDirClick(wxCommandEvent & WXUNUSED(event))
 {
   wxASSERT(0 != m_comboDirectory);
 
   wxDirDialog dialog(this, _("Select a directory"),
-                     m_comboDirectory->GetValue(),
+                     GetDir(),
                      wxDD_NEW_DIR_BUTTON);
 
   if (dialog.ShowModal() == wxID_OK)
   {
-    m_comboDirectory->SetValue(dialog.GetPath());
+    m_comboDir->SetValue(dialog.GetPath());
     CheckValues();
   }
 }
 
 void 
-CreateReposDlg::OnButtonBrowseConfigDirClick(wxCommandEvent& event)
+CreateReposDlg::OnButtonBrowseConfigDirClick(wxCommandEvent & WXUNUSED(event))
 {
   wxASSERT(0 != m_comboConfigDir);
 
@@ -233,6 +226,102 @@ CreateReposDlg::TransferDataToWindow()
   return CreateReposDlgBase::TransferDataToWindow() &&
     m_panelGeneral->TransferDataToWindow() &&
     m_panelExtended->TransferDataToWindow();
+}
+
+
+wxString 
+CreateReposDlg::GetDir() const
+{
+  wxASSERT(0 != m_comboDir);
+
+  wxString dir(m_comboDir->GetValue());
+  TrimString(dir);
+
+  return dir;
+}
+
+
+wxString
+CreateReposDlg::GetName() const
+{
+  wxASSERT(0 != m_comboName);
+
+  wxString name(m_comboName->GetValue());
+  TrimString(name);
+
+  return name;
+}
+
+
+wxString 
+CreateReposDlg::GetFilename() const
+{
+  wxFileName filename(GetDir(), GetName());
+
+  filename.Normalize(wxPATH_NORM_ENV_VARS | 
+                     wxPATH_NORM_DOTS |
+                     wxPATH_NORM_ABSOLUTE |
+                     wxPATH_NORM_LONG |
+                     wxPATH_NORM_TILDE);
+
+  return filename.GetFullPath();
+}
+
+
+wxString 
+CreateReposDlg::GetConfigDir() const
+{
+  wxASSERT(0 != m_comboConfigDir);
+
+  wxString configDir(m_comboConfigDir->GetValue());
+  TrimString(configDir);
+
+  return configDir;
+}
+
+
+int
+CreateReposDlg::GetType() const
+{
+  wxASSERT(0 != m_comboType);
+
+  return m_choiceType->GetSelection();
+}
+
+
+int 
+CreateReposDlg::GetCompat() const
+{
+  wxASSERT(0 != m_choiceCompat);
+
+  return m_choiceCompat->GetSelection();
+}
+
+
+bool
+CreateReposDlg::GetBdbLogKeep() const
+{
+  wxASSERT(0 != m_checkBdbLogKeep);
+
+  return m_checkBdbLogKeep->GetValue();
+}
+
+
+bool 
+CreateReposDlg::GetBdbTxnNoSync() const
+{
+  wxASSERT(0 != m_checkBdbTxnNoSync);
+
+  return m_checkBdbTxnNoSync->GetValue();
+}
+
+
+bool 
+CreateReposDlg::GetAddBookmark() const
+{
+  wxASSERT(0 != m_checkAddBookmark);
+
+  return m_checkAddBookmark->GetValue();
 }
 
 /* -----------------------------------------------------------------
