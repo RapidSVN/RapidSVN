@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 16 2008)
+// C++ code generated with wxFormBuilder (version Dec 29 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -38,7 +38,7 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_panelGeneral->SetSizer( bSizer3 );
 	m_panelGeneral->Layout();
 	bSizer3->Fit( m_panelGeneral );
-	m_notebookMain->AddPage( m_panelGeneral, _("General"), true );
+	m_notebookMain->AddPage( m_panelGeneral, _("General"), false );
 	m_panelPrograms = new wxPanel( m_notebookMain, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxVERTICAL );
@@ -600,33 +600,48 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_staticType->Wrap( -1 );
 	sizerType->Add( m_staticType, 0, wxALL, 5 );
 	
-	m_comboType = new wxComboBox( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY );
-	m_comboType->Append( _("FSFS") );
-	m_comboType->Append( _("BerkeleyDB") );
-	sizerType->Add( m_comboType, 1, wxALL, 5 );
+	wxString m_choiceTypeChoices[] = { _("FSFS"), _("BerkeleyDB") };
+	int m_choiceTypeNChoices = sizeof( m_choiceTypeChoices ) / sizeof( wxString );
+	m_choiceType = new wxChoice( m_panelGeneral, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceTypeNChoices, m_choiceTypeChoices, 0 );
+	m_choiceType->SetSelection( 0 );
+	sizerType->Add( m_choiceType, 0, wxALL, 5 );
 	
 	sizerGeneral->Add( sizerType, 0, wxEXPAND, 5 );
 	
-	sizerDir = new wxStaticBoxSizer( new wxStaticBox( m_panelGeneral, wxID_ANY, _("Create repository in &directory:") ), wxHORIZONTAL );
+	m_staticDir = new wxStaticText( m_panelGeneral, wxID_ANY, _("Create repository in &directory:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticDir->Wrap( -1 );
+	sizerGeneral->Add( m_staticDir, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
 	
-	m_comboDirectory = new wxComboBox( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	sizerDir->Add( m_comboDirectory, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	sizerDir = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_comboDir = new wxComboBox( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	sizerDir->Add( m_comboDir, 1, wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_buttonBrowseDir = new wxButton( m_panelGeneral, wxID_ANY, _("Browse"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerDir->Add( m_buttonBrowseDir, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	sizerDir->Add( m_buttonBrowseDir, 0, wxALIGN_CENTER_VERTICAL, 5 );
 	
-	sizerGeneral->Add( sizerDir, 0, wxEXPAND, 5 );
+	sizerGeneral->Add( sizerDir, 0, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5 );
 	
-	sizerName = new wxStaticBoxSizer( new wxStaticBox( m_panelGeneral, wxID_ANY, _("&Name of the new repository:") ), wxVERTICAL );
+	m_staticName = new wxStaticText( m_panelGeneral, wxID_ANY, _("&Name of the new repository:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticName->Wrap( -1 );
+	sizerGeneral->Add( m_staticName, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
 	
 	m_comboName = new wxComboBox( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	sizerName->Add( m_comboName, 0, wxALL|wxEXPAND, 5 );
+	sizerGeneral->Add( m_comboName, 0, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5 );
 	
-	sizerGeneral->Add( sizerName, 0, wxEXPAND, 5 );
+	m_staticFilename = new wxStaticText( m_panelGeneral, wxID_ANY, _("Resulting repository filename:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticFilename->Wrap( -1 );
+	sizerGeneral->Add( m_staticFilename, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
 	
-	m_checkCreateBookmark = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Create a bookmark for the new repository"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_textFilename = new wxTextCtrl( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+	m_textFilename->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNTEXT ) );
+	m_textFilename->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNFACE ) );
 	
-	sizerGeneral->Add( m_checkCreateBookmark, 0, wxALL, 5 );
+	sizerGeneral->Add( m_textFilename, 0, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5 );
+	
+	m_checkAddBookmark = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Add a bookmark for the new repository"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	sizerGeneral->Add( m_checkAddBookmark, 0, wxALL, 5 );
 	
 	m_panelGeneral->SetSizer( sizerGeneral );
 	m_panelGeneral->Layout();
@@ -641,24 +656,27 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_staticCompatibility->Wrap( -1 );
 	sizerCompatibility->Add( m_staticCompatibility, 0, wxALL, 5 );
 	
-	m_comboCompatibility = new wxComboBox( m_panelExtended, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN|wxCB_READONLY );
-	m_comboCompatibility->Append( _("Default") );
-	m_comboCompatibility->Append( _("pre Subversion 1.6") );
-	m_comboCompatibility->Append( _("pre Subversion 1.5") );
-	m_comboCompatibility->Append( _("pre Subversion 1.4") );
-	sizerCompatibility->Add( m_comboCompatibility, 1, wxALL, 5 );
+	wxString m_choiceCompatChoices[] = { _("Default"), _("pre Subversion 1.6"), _("pre Subversion 1.5"), _("pre Subversion 1.4") };
+	int m_choiceCompatNChoices = sizeof( m_choiceCompatChoices ) / sizeof( wxString );
+	m_choiceCompat = new wxChoice( m_panelExtended, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceCompatNChoices, m_choiceCompatChoices, 0 );
+	m_choiceCompat->SetSelection( 0 );
+	sizerCompatibility->Add( m_choiceCompat, 0, wxALL, 5 );
 	
 	sizerExtended->Add( sizerCompatibility, 0, wxEXPAND, 5 );
 	
-	sizerConfigDir = new wxStaticBoxSizer( new wxStaticBox( m_panelExtended, wxID_ANY, _("&Load configuration from directory (optional):") ), wxHORIZONTAL );
+	m_staticConfigDir = new wxStaticText( m_panelExtended, wxID_ANY, _("&Load configuration from directory (optional):"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticConfigDir->Wrap( -1 );
+	sizerExtended->Add( m_staticConfigDir, 0, wxLEFT|wxRIGHT|wxTOP, 5 );
+	
+	sizerConfigDir = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_comboConfigDir = new wxComboBox( m_panelExtended, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	sizerConfigDir->Add( m_comboConfigDir, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	sizerConfigDir->Add( m_comboConfigDir, 1, wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_buttonBrowseConfigDir = new wxButton( m_panelExtended, wxID_ANY, _("&Browse"), wxDefaultPosition, wxDefaultSize, 0 );
-	sizerConfigDir->Add( m_buttonBrowseConfigDir, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	sizerConfigDir->Add( m_buttonBrowseConfigDir, 0, wxALIGN_CENTER_VERTICAL, 5 );
 	
-	sizerExtended->Add( sizerConfigDir, 0, wxEXPAND, 5 );
+	sizerExtended->Add( sizerConfigDir, 0, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5 );
 	
 	m_checkBdbLogKeep = new wxCheckBox( m_panelExtended, wxID_ANY, _("Disable automatic Log removal"), wxDefaultPosition, wxDefaultSize, 0 );
 	
@@ -671,7 +689,7 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_panelExtended->SetSizer( sizerExtended );
 	m_panelExtended->Layout();
 	sizerExtended->Fit( m_panelExtended );
-	m_notebook->AddPage( m_panelExtended, _("More options"), true );
+	m_notebook->AddPage( m_panelExtended, _("More options"), false );
 	
 	m_rootSizer->Add( m_notebook, 1, wxEXPAND | wxALL, 5 );
 	
@@ -697,11 +715,11 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_rootSizer->Fit( this );
 	
 	// Connect Events
-	m_comboType->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnComboType ), NULL, this );
-	m_comboDirectory->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboDirText ), NULL, this );
+	m_choiceType->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnChoiceType ), NULL, this );
+	m_comboDir->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboDirText ), NULL, this );
 	m_buttonBrowseDir->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateReposDlgBase::OnButtonBrowseDirClick ), NULL, this );
 	m_comboName->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboNameText ), NULL, this );
-	m_comboCompatibility->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnComboCompatibility ), NULL, this );
+	m_choiceCompat->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnChoiceCompat ), NULL, this );
 	m_comboConfigDir->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboConfigDirText ), NULL, this );
 	m_buttonBrowseConfigDir->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateReposDlgBase::OnButtonBrowseConfigDirClick ), NULL, this );
 }
@@ -709,11 +727,11 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 CreateReposDlgBase::~CreateReposDlgBase()
 {
 	// Disconnect Events
-	m_comboType->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnComboType ), NULL, this );
-	m_comboDirectory->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboDirText ), NULL, this );
+	m_choiceType->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnChoiceType ), NULL, this );
+	m_comboDir->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboDirText ), NULL, this );
 	m_buttonBrowseDir->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateReposDlgBase::OnButtonBrowseDirClick ), NULL, this );
 	m_comboName->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboNameText ), NULL, this );
-	m_comboCompatibility->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnComboCompatibility ), NULL, this );
+	m_choiceCompat->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnChoiceCompat ), NULL, this );
 	m_comboConfigDir->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboConfigDirText ), NULL, this );
 	m_buttonBrowseConfigDir->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateReposDlgBase::OnButtonBrowseConfigDirClick ), NULL, this );
 }

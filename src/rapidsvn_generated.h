@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 16 2008)
+// C++ code generated with wxFormBuilder (version Dec 29 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -32,6 +32,7 @@
 #include <wx/dateevt.h>
 #include <wx/statbox.h>
 #include <wx/checklst.h>
+#include <wx/choice.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -242,11 +243,11 @@ class CreateReposDlgBase : public wxDialog
 	private:
 		wxBoxSizer* sizerGeneral;
 		wxBoxSizer* sizerType;
-		wxStaticBoxSizer* sizerDir;
-		wxStaticBoxSizer* sizerName;
+		wxStaticText* m_staticDir;
+		wxStaticText* m_staticFilename;
 		wxBoxSizer* sizerExtended;
 		wxBoxSizer* sizerCompatibility;
-		wxStaticBoxSizer* sizerConfigDir;
+		wxBoxSizer* sizerConfigDir;
 		wxBoxSizer* sizerButton;
 	
 	protected:
@@ -254,14 +255,18 @@ class CreateReposDlgBase : public wxDialog
 		wxNotebook* m_notebook;
 		wxPanel* m_panelGeneral;
 		wxStaticText* m_staticType;
-		wxComboBox* m_comboType;
-		wxComboBox* m_comboDirectory;
+		wxChoice* m_choiceType;
+		wxBoxSizer* sizerDir;
+		wxComboBox* m_comboDir;
 		wxButton* m_buttonBrowseDir;
+		wxStaticText* m_staticName;
 		wxComboBox* m_comboName;
-		wxCheckBox* m_checkCreateBookmark;
+		wxTextCtrl* m_textFilename;
+		wxCheckBox* m_checkAddBookmark;
 		wxPanel* m_panelExtended;
 		wxStaticText* m_staticCompatibility;
-		wxComboBox* m_comboCompatibility;
+		wxChoice* m_choiceCompat;
+		wxStaticText* m_staticConfigDir;
 		wxComboBox* m_comboConfigDir;
 		wxButton* m_buttonBrowseConfigDir;
 		wxCheckBox* m_checkBdbLogKeep;
@@ -271,11 +276,11 @@ class CreateReposDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnComboType( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnChoiceType( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnComboDirText( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnButtonBrowseDirClick( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnComboNameText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnComboCompatibility( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnChoiceCompat( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnComboConfigDirText( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnButtonBrowseConfigDirClick( wxCommandEvent& event ){ event.Skip(); }
 		
