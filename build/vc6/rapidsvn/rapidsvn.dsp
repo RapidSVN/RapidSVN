@@ -226,6 +226,14 @@ SOURCE=..\..\..\src\commit_log_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\create_repos_action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\create_repos_dlg.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\delete_action.cpp
 # End Source File
 # Begin Source File

@@ -25,6 +25,8 @@ rapidsvn_SOURCES= \
 	commit_action.cpp \
 	commit_dlg.cpp \
 	commit_log_dlg.cpp \
+	create_repos_action.cpp \
+	create_repos_dlg.cpp \
 	delete_action.cpp \
 	delete_dlg.cpp \
 	destination_dlg.cpp \
