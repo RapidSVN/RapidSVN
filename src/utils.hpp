@@ -350,9 +350,19 @@ HasModifiedChildren(const svn::Path & path, svn::Context * context);
  * Checks whether @a executable can be found path and returns the
  * absolute path
  */
-wxString FindExecutableInPath(const wxString & executable);
+wxString 
+FindExecutableInPath(const wxString & executable);
 
 
+/**
+ * This works almost like @ref ::wxDirExists, but in extension of
+ * @ref wxDirExists this call expands ~ (home dir) and environment
+ * variable before checking the existence
+ *
+ * @param dir
+ */
+bool 
+IsValidDir(const wxString & dir);
 #endif
 /* -----------------------------------------------------------------
  * local variables:

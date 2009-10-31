@@ -33,6 +33,7 @@
 #include "svn_executables.hpp"
 #include "utils.hpp"
 
+
 struct CreateReposDlg::Data
 {
 public:
@@ -114,7 +115,7 @@ CreateReposDlg::CheckValues()
     valid = false;
     msg = _("svnadmin could not be found");
   }
-  else if (!::wxDirExists(dir))
+  else if (!::IsValidDir(dir))
   {
     valid = false;
     msg = _("Select an existing directory for the repository");
@@ -124,7 +125,7 @@ CreateReposDlg::CheckValues()
     valid = false;
     msg = _("Enter a name for the repository");
   }
-  else if (::wxDirExists(filename))
+  else if (::IsValidDir(filename))
   {
     valid = false;
     msg = _("A directory of this name exists already");
@@ -134,7 +135,7 @@ CreateReposDlg::CheckValues()
     valid = false;
     msg = _("A file of this name exists already");
   }
-  else if (!configDir.IsEmpty() && !::wxDirExists(configDir))
+  else if (!configDir.IsEmpty() && !::IsValidDir(configDir))
   {
     valid = false;
     msg = _("The configuration directory does not exist");

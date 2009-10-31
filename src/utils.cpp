@@ -653,6 +653,21 @@ FindExecutableInPath(const wxString & executable)
   return pathList.FindAbsoluteValidPath(executable);
 }
 
+
+bool 
+IsValidDir(const wxString & dir)
+{
+  wxFileName filename(dir);
+  filename.Normalize(wxPATH_NORM_ENV_VARS | 
+                     wxPATH_NORM_DOTS |
+                     wxPATH_NORM_ABSOLUTE |
+                     wxPATH_NORM_LONG |
+                     wxPATH_NORM_TILDE);
+
+  return ::wxDirExists(filename.GetFullPath());
+}
+
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")
