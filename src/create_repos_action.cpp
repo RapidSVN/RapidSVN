@@ -31,11 +31,14 @@
 #include "svncpp/targets.hpp"
 
 // app
+#include "action_event.hpp"
 #include "create_repos_action.hpp"
 #include "create_repos_dlg.hpp"
+#include "ids.hpp"
+#include "svn_executables.hpp"
 
 CreateRepositoryAction::CreateRepositoryAction(wxWindow * parent)
-    : Action(parent, _("Add"), 0)
+  : Action(parent, _("Create Repository"), 0)
 {
 }
 
@@ -51,7 +54,95 @@ CreateRepositoryAction::Prepare()
   if (dlg.ShowModal() != wxID_OK)
     return false;
 
-  // TODO
+  // now we have to build the svnadmin commandline options
+  // from the dialog fields
+  wxString cmd(SVNADMIN_EXECUTABLE);
+  cmd += wxT(" create");
+
+  switch (dlg.GetType())
+  {
+  case CreateReposDlg::TYPE_FSFS:
+    cmd += wxT(" --fs-type fsfs");
+    break;
+  case CreateReposDlg::TYPE_BDB:
+    cmd += wxT(" --fs-type bdb");
+    break;
+  default:
+    // Unknown type
+    return false;
+  }
+
+  switch (dlg.GetCompat())
+  {
+  case CreateReposDlg::COMPAT_PRE_1_6:
+    cmd += wxT(" --pre-1-6-compatible");
+    break;
+  case CreateReposDlg::COMPAT_PRE_1_5:
+    cmd += wxT(" --pre-1-5-compatible");
+    break;
+  case CreateReposDlg::COMPAT_PRE_1_4:
+    cmd += wxT(" --pre-1-4-compatible");
+    break;
+  default:
+    ; // No default option for this option
+  }
+
+  wxString configDir(dlg.GetConfigDir());
+  if (!configDir.IsEmpty())
+    cmd += wxString::Format(wxT(" --configDir \"%s\""), configDir.c_str());
+
+
+  if (dlg.GetBdbLogKeep())
+    cmd += wxT(" --bdb-log-keep");
+
+  if (dlg.GetBdbTxnNoSync())
+    cmd += wxT(" --bdb-txn-nosync");
+
+  wxString filename(dlg.GetFilename());
+  cmd += wxString::Format(wxT(" \"%s\""), filename.c_str());
+
+  bool addBookmark = dlg.GetAddBookmark();
+
+  // we can run svnadmin from the main thread as this should
+  // not take too long (< 1 second)
+  Trace(wxString::Format(_("Running command %s:"), cmd.c_str()));
+  wxArrayString output;
+
+  int result = ::wxExecute(cmd, output, output, wxEXEC_SYNC);
+
+  if (result < 0)
+  {
+    Trace(_("Error running svnadmin"));
+    return false;
+  }
+
+  wxArrayString::const_iterator it;
+  for (it=output.begin(); it != output.end(); it++)
+    Trace(*it);
+
+  if (result > 0)
+  {
+    Trace(_("The svnadmin command was not successful."));
+    return false;
+  }
+
+  
+  // now add a bookmark
+  if (addBookmark)
+  {
+    // this works for simple bookmarks like "/foo/bar"
+    // or "c:/foo". 
+    // TODO check and implement this for UNC paths on
+    // windows as well, e.g. "\\server\foo\bar"
+    wxString repoBookmark(wxT("file://"));
+    if (!filename.StartsWith(wxT("/")))
+      repoBookmark += wxT("/");
+
+    repoBookmark += filename;
+
+    ActionEvent::Post(GetParent(), TOKEN_ADD_BOOKMARK, repoBookmark);
+  }
+
 
   return true;
 }
@@ -59,8 +150,6 @@ CreateRepositoryAction::Prepare()
 bool
 CreateRepositoryAction::Perform()
 {
-  // TODO
-  //svn::Client client(GetContext());
   return true;
 }
 
