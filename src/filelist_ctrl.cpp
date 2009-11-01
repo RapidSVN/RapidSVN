@@ -956,9 +956,11 @@ BEGIN_EVENT_TABLE(FileListCtrl, wxListCtrl)
   EVT_SET_FOCUS(FileListCtrl::OnSetFocus)
 END_EVENT_TABLE()
 
-FileListCtrl::FileListCtrl(wxWindow * parent, const wxWindowID id,
-                           const wxPoint & pos, const wxSize & size)
-    : wxListView(parent, id, pos, size, wxLC_REPORT)
+FileListCtrl::FileListCtrl(wxWindow* parent, wxWindowID id, 
+                           const wxPoint& pos, const wxSize& size, 
+                           long style, const wxValidator& validator, 
+                           const wxString& name)
+ : wxListView(parent, id, pos, size, style, validator, name)
 {
   m = new Data();
 

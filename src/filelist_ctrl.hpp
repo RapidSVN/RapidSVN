@@ -87,8 +87,12 @@ public:
   } FileListColumns;
 
 
-  FileListCtrl(wxWindow * parent, const wxWindowID id,
-               const wxPoint & pos, const wxSize & size);
+  FileListCtrl(wxWindow* parent, wxWindowID id, 
+               const wxPoint& pos = wxDefaultPosition, 
+               const wxSize& size = wxDefaultSize, 
+               long style = wxLC_REPORT, 
+               const wxValidator& validator = wxDefaultValidator, const 
+               wxString& name = wxListCtrlNameStr);
 
   virtual ~FileListCtrl();
 

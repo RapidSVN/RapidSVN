@@ -42,10 +42,12 @@ namespace svn
 class FolderBrowser : public wxTreeCtrl
 {
 public:
-  FolderBrowser(wxWindow * parent,  const wxWindowID id = -1,
-                const wxPoint & pos = wxDefaultPosition,
-                const wxSize & size = wxDefaultSize,
-                const wxString & name = wxT("FolderBrowser"));
+  FolderBrowser(wxWindow* parent, wxWindowID id, 
+                const wxPoint& pos = wxDefaultPosition, 
+                const wxSize& size = wxDefaultSize, 
+                long style = wxTR_HAS_BUTTONS | wxTR_SINGLE, 
+                const wxValidator& validator = wxDefaultValidator, const 
+                wxString& name = wxT("FolderBrowser"));
 
   virtual ~FolderBrowser();
 

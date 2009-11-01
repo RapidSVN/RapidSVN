@@ -987,10 +987,11 @@ BEGIN_EVENT_TABLE(FolderBrowser, wxTreeCtrl)
   EVT_SET_FOCUS(FolderBrowser::OnSetFocus)
 END_EVENT_TABLE()
 
-FolderBrowser::FolderBrowser(wxWindow * parent, const wxWindowID id,
-                             const wxPoint & pos, const wxSize & size,
+FolderBrowser::FolderBrowser(wxWindow* parent, wxWindowID id, 
+                             const wxPoint& pos, const wxSize& size, 
+                             long style, const wxValidator& validator,
                              const wxString & name)
-    : wxTreeCtrl(parent, id, pos, size, wxTR_HAS_BUTTONS | wxTR_SINGLE, wxDefaultValidator, name)
+: wxTreeCtrl(parent, id, pos, size, style, validator, name)
 {
   m = new Data(this);
 }
