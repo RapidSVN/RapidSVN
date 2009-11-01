@@ -320,6 +320,11 @@ class MainFrameBase : public wxFrame
 		FileListCtrl* m_listCtrl;
 		wxTextCtrl* m_log;
 		wxStatusBar* m_statusBar;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnActivate( wxActivateEvent& event ){ event.Skip(); }
+		virtual void OnSize( wxSizeEvent& event ){ event.Skip(); }
+		
 	
 	public:
 		MainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 639,441 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );

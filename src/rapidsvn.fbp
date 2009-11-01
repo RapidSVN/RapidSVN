@@ -5915,7 +5915,7 @@
             <property name="window_name"></property>
             <property name="window_style">wxTAB_TRAVERSAL</property>
             <property name="xrc_skip_sizer">1</property>
-            <event name="OnActivate"></event>
+            <event name="OnActivate">OnActivate</event>
             <event name="OnActivateApp"></event>
             <event name="OnChar"></event>
             <event name="OnClose"></event>
@@ -5942,7 +5942,7 @@
             <event name="OnRightDown"></event>
             <event name="OnRightUp"></event>
             <event name="OnSetFocus"></event>
-            <event name="OnSize"></event>
+            <event name="OnSize">OnSize</event>
             <event name="OnUpdateUI"></event>
             <object class="wxBoxSizer" expanded="0">
                 <property name="minimum_size"></property>
@@ -6422,7 +6422,7 @@
                                             <property name="permission">protected</property>
                                             <property name="pos"></property>
                                             <property name="size"></property>
-                                            <property name="style">wxTE_READONLY|wxTE_RICH2</property>
+                                            <property name="style">wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH2</property>
                                             <property name="subclass"></property>
                                             <property name="tooltip"></property>
                                             <property name="value"></property>

@@ -781,7 +781,7 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	panelBottom = new wxPanel( m_splitterHoriz, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	sizerBottom = new wxBoxSizer( wxVERTICAL );
 	
-	m_log = new wxTextCtrl( panelBottom, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxTE_RICH2 );
+	m_log = new wxTextCtrl( panelBottom, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH2 );
 	sizerBottom->Add( m_log, 1, wxEXPAND, 5 );
 	
 	panelBottom->SetSizer( sizerBottom );
@@ -793,8 +793,15 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	this->SetSizer( sizerRoot );
 	this->Layout();
 	m_statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
+	
+	// Connect Events
+	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( MainFrameBase::OnActivate ) );
+	this->Connect( wxEVT_SIZE, wxSizeEventHandler( MainFrameBase::OnSize ) );
 }
 
 MainFrameBase::~MainFrameBase()
 {
+	// Disconnect Events
+	this->Disconnect( wxEVT_ACTIVATE, wxActivateEventHandler( MainFrameBase::OnActivate ) );
+	this->Disconnect( wxEVT_SIZE, wxSizeEventHandler( MainFrameBase::OnSize ) );
 }
