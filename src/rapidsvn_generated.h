@@ -10,6 +10,9 @@
 
 #include <wx/intl.h>
 
+class FileListCtrl;
+class FolderBrowser;
+
 #include <wx/string.h>
 #include <wx/checkbox.h>
 #include <wx/gdicmn.h>
@@ -33,6 +36,11 @@
 #include <wx/statbox.h>
 #include <wx/checklst.h>
 #include <wx/choice.h>
+#include <wx/treectrl.h>
+#include <wx/listctrl.h>
+#include <wx/splitter.h>
+#include <wx/statusbr.h>
+#include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -288,6 +296,46 @@ class CreateReposDlgBase : public wxDialog
 	public:
 		CreateReposDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Create Repository"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CreateReposDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MainFrameBase
+///////////////////////////////////////////////////////////////////////////////
+class MainFrameBase : public wxFrame 
+{
+	private:
+		wxPanel* panelFolderBrowser;
+		wxBoxSizer* sizerFolderBrowser;
+		wxPanel* panelListCtrl;
+		wxBoxSizer* sizerListCtrl;
+		wxPanel* panelBottom;
+		wxBoxSizer* sizerBottom;
+	
+	protected:
+		wxSplitterWindow* m_splitterHoriz;
+		wxPanel* m_panelTop;
+		wxSplitterWindow* m_splitterVert;
+		FolderBrowser* m_folderBrowser;
+		FileListCtrl* m_listCtrl;
+		wxTextCtrl* m_log;
+		wxStatusBar* m_statusBar;
+	
+	public:
+		MainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 639,441 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		~MainFrameBase();
+		void m_splitterHorizOnIdle( wxIdleEvent& )
+		{
+		m_splitterHoriz->SetSashPosition( 0 );
+		m_splitterHoriz->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterHorizOnIdle ), NULL, this );
+		}
+		
+		void m_splitterVertOnIdle( wxIdleEvent& )
+		{
+		m_splitterVert->SetSashPosition( 0 );
+		m_splitterVert->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterVertOnIdle ), NULL, this );
+		}
+		
 	
 };
 

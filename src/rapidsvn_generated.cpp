@@ -7,6 +7,9 @@
 
 #include <wx/wx.h>
 
+#include "filelist_ctrl.hpp"
+#include "folder_browser.hpp"
+
 #include "rapidsvn_generated.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -734,4 +737,64 @@ CreateReposDlgBase::~CreateReposDlgBase()
 	m_choiceCompat->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( CreateReposDlgBase::OnChoiceCompat ), NULL, this );
 	m_comboConfigDir->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CreateReposDlgBase::OnComboConfigDirText ), NULL, this );
 	m_buttonBrowseConfigDir->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CreateReposDlgBase::OnButtonBrowseConfigDirClick ), NULL, this );
+}
+
+MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* sizerRoot;
+	sizerRoot = new wxBoxSizer( wxVERTICAL );
+	
+	m_splitterHoriz = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D|wxSP_LIVE_UPDATE );
+	m_splitterHoriz->Connect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterHorizOnIdle ), NULL, this );
+	m_panelTop = new wxPanel( m_splitterHoriz, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* sizerTop;
+	sizerTop = new wxBoxSizer( wxVERTICAL );
+	
+	m_splitterVert = new wxSplitterWindow( m_panelTop, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D|wxSP_LIVE_UPDATE );
+	m_splitterVert->Connect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterVertOnIdle ), NULL, this );
+	panelFolderBrowser = new wxPanel( m_splitterVert, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	sizerFolderBrowser = new wxBoxSizer( wxVERTICAL );
+	
+	m_folderBrowser = new FolderBrowser( panelFolderBrowser, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
+	sizerFolderBrowser->Add( m_folderBrowser, 1, wxEXPAND, 5 );
+	
+	panelFolderBrowser->SetSizer( sizerFolderBrowser );
+	panelFolderBrowser->Layout();
+	sizerFolderBrowser->Fit( panelFolderBrowser );
+	panelListCtrl = new wxPanel( m_splitterVert, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	sizerListCtrl = new wxBoxSizer( wxVERTICAL );
+	
+	m_listCtrl = new FileListCtrl( panelListCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
+	sizerListCtrl->Add( m_listCtrl, 1, wxEXPAND, 5 );
+	
+	panelListCtrl->SetSizer( sizerListCtrl );
+	panelListCtrl->Layout();
+	sizerListCtrl->Fit( panelListCtrl );
+	m_splitterVert->SplitVertically( panelFolderBrowser, panelListCtrl, 0 );
+	sizerTop->Add( m_splitterVert, 1, wxEXPAND, 5 );
+	
+	m_panelTop->SetSizer( sizerTop );
+	m_panelTop->Layout();
+	sizerTop->Fit( m_panelTop );
+	panelBottom = new wxPanel( m_splitterHoriz, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	sizerBottom = new wxBoxSizer( wxVERTICAL );
+	
+	m_log = new wxTextCtrl( panelBottom, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxTE_RICH2 );
+	sizerBottom->Add( m_log, 1, wxEXPAND, 5 );
+	
+	panelBottom->SetSizer( sizerBottom );
+	panelBottom->Layout();
+	sizerBottom->Fit( panelBottom );
+	m_splitterHoriz->SplitHorizontally( m_panelTop, panelBottom, 0 );
+	sizerRoot->Add( m_splitterHoriz, 1, wxEXPAND, 5 );
+	
+	this->SetSizer( sizerRoot );
+	this->Layout();
+	m_statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
+}
+
+MainFrameBase::~MainFrameBase()
+{
 }
