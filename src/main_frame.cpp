@@ -21,6 +21,11 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
+/**
+ * @file main_frame.cpp
+ * @todo The restoration of the splitter position doesnt work after the
+ *       conversion to MainFrameBase, Test/Implement for wxGTK/wxMSW
+ */
 // wxWidgets
 #include "wx/confbase.h"
 #include "wx/wx.h"
@@ -90,9 +95,6 @@
 #include "filelist_ctrl_drop_target.hpp"
 #include "folder_browser_drop_target.hpp"
 
-// controls
-#include "proportional_splitter.hpp"
-
 // Bitmaps
 #include "res/bitmaps/rapidsvn_16x16.xpm"
 #include "res/bitmaps/rapidsvn_32x32.xpm"
@@ -161,11 +163,6 @@ CreateActionWorker(wxWindow * parent)
 struct MainFrame::Data
 {
 public:
-  FolderBrowser * folderBrowser;
-  FileListCtrl * listCtrl;
-  wxSplitterWindow * horizSplitter;
-  wxSplitterWindow * vertSplitter;
-  wxTextCtrl * log;
   EventTracer * logTracer;
 
   wxMenu * MenuColumns;
@@ -190,6 +187,9 @@ private:
   bool m_running;
   wxFrame * m_parent;
   bool m_isErrorDialogActive;
+  FolderBrowser * m_folderBrowser;
+  FileListCtrl * m_listCtrl;
+  wxTextCtrl * m_log;
 
 public:
 
@@ -198,11 +198,10 @@ public:
    */
   svn::Apr apr;
 
-  Data(wxFrame * parent, const wxLocale & locale_)
-      : folderBrowser(0), listCtrl(0),
-      horizSplitter(0), vertSplitter(0),
-      log(0), logTracer(0),
-      MenuColumns(0), MenuSorting(0), MenuBar(0),
+  Data(wxFrame * parent, FolderBrowser * folderBrowser,
+       FileListCtrl * listCtrl, wxTextCtrl * log,
+       const wxLocale & locale_)
+    : MenuColumns(0), MenuSorting(0), MenuBar(0),
       listener(parent),
       updateAfterActivate(false), dontUpdateFilelist(false),
       skipFilelistUpdate(false), locale(locale_),
@@ -211,7 +210,9 @@ public:
       showUnversioned(false), showUnmodified(false),
       showModified(false), showConflicted(false),
       m_running(false), m_parent(parent),
-      m_isErrorDialogActive(false)
+      m_isErrorDialogActive(false),
+      m_folderBrowser(folderBrowser), 
+      m_listCtrl(listCtrl), m_log(log)
   {
     InitializeMenu();
   }
@@ -438,15 +439,15 @@ public:
 
     m_parent->SetCursor(running ? *wxHOURGLASS_CURSOR : *wxSTANDARD_CURSOR);
 
-    if (folderBrowser)
+    if (m_folderBrowser)
     {
-      folderBrowser->SetCursor(running ? *wxHOURGLASS_CURSOR : *wxSTANDARD_CURSOR);
-      folderBrowser->Enable(!running);
+      m_folderBrowser->SetCursor(running ? *wxHOURGLASS_CURSOR : *wxSTANDARD_CURSOR);
+      m_folderBrowser->Enable(!running);
     }
-    if (listCtrl)
+    if (m_listCtrl)
     {
-      listCtrl->SetCursor(running ? *wxHOURGLASS_CURSOR : *wxSTANDARD_CURSOR);
-      listCtrl->Enable(!running);
+      m_listCtrl->SetCursor(running ? *wxHOURGLASS_CURSOR : *wxSTANDARD_CURSOR);
+      m_listCtrl->Enable(!running);
     }
   }
 
@@ -477,10 +478,10 @@ public:
   bool
   IsFlat() const
   {
-    if (!listCtrl)
+    if (!m_listCtrl)
       return 0;
 
-    return listCtrl->IsFlat();
+    return m_listCtrl->IsFlat();
   }
 
 
@@ -524,10 +525,10 @@ public:
   void
   Trace(const wxString & msg)
   {
-    if (!log)
+    if (!m_log)
       return;
 
-    log->AppendText(msg + wxT('\n'));
+    m_log->AppendText(msg + wxT('\n'));
   }
 
   /**
@@ -540,12 +541,12 @@ public:
   void
   TraceError(const wxString & msg, bool showDialog=true)
   {
-    if (!log)
+    if (!m_log)
       return;
 
-    log->SetDefaultStyle(wxTextAttr(*wxRED));
-    log->AppendText(wxString::Format(_("Error: %s\n"), msg.c_str()));
-    log->SetDefaultStyle(wxTextAttr(*wxBLACK));
+    m_log->SetDefaultStyle(wxTextAttr(*wxRED));
+    m_log->AppendText(wxString::Format(_("Error: %s\n"), msg.c_str()));
+    m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));
 
     if (showDialog)
       ShowErrorDialog(msg);
@@ -556,22 +557,21 @@ public:
   {
     //is there nothing selected in the list control,
     //or is the active window *not* the list control?
-    if (listCtrl->GetSelectedItemCount() <= 0 ||
+    if (m_listCtrl->GetSelectedItemCount() <= 0 ||
         activePane != ACTIVEPANE_FILELIST)
     {
-      return folderBrowser->GetStatusSel();
+      return m_folderBrowser->GetStatusSel();
     }
     else
     {
       //no, build the file list from the list control
-      return listCtrl->GetStatusSel();
+      return m_listCtrl->GetStatusSel();
     }
   }
 };
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
-  EVT_ACTIVATE(MainFrame::OnActivate)
   EVT_MENU(ID_AddWcBookmark, MainFrame::OnAddWcBookmark)
   EVT_MENU(ID_AddRepoBookmark, MainFrame::OnAddRepoBookmark)
   EVT_MENU(ID_RemoveBookmark, MainFrame::OnRemoveBookmark)
@@ -632,8 +632,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
   EVT_MENU_RANGE(LISTENER_MIN, LISTENER_MAX, MainFrame::OnListenerEvent)
 
-  EVT_SIZE(MainFrame::OnSize)
-
   EVT_MENU(FOLDER_BROWSER, MainFrame::OnFocusChanged)
   EVT_MENU(FILELIST_CTRL, MainFrame::OnFocusChanged)
 END_EVENT_TABLE()
@@ -641,11 +639,11 @@ END_EVENT_TABLE()
 /** class implementation **/
 MainFrame::MainFrame(const wxString & title,
                              const wxLocale & locale)
-    : wxFrame((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
+    : MainFrameBase((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
               wxDEFAULT_FRAME_STYLE),
     m_title(title), m_context(0)
 {
-  m = new Data(this, locale);
+  m = new Data(this, m_folderBrowser, m_listCtrl, m_log, locale);
   m_actionWorker = CreateActionWorker(this);
 
   // enable trace
@@ -672,64 +670,36 @@ MainFrame::MainFrame(const wxString & title,
   CreateMainToolBar(this);
   m->SetRunning(false);
 
-  // Note: In the past here was an #if that checked
-  // the wxWidgets version, since wxSplitterWindow
-  // wasnt available below 2.4.2 (if I remember this correctly).
-  // But today we only use wxSplitterWindow
-  m->horizSplitter = new wxSplitterWindow(this, -1,
-                                          wxDefaultPosition,
-                                          wxDefaultSize,
-                                          SPLITTER_STYLE);
-
-  m_info_panel = new wxPanel(m->horizSplitter, -1,
-                             wxDefaultPosition, wxDefaultSize,
-                             wxTAB_TRAVERSAL | wxCLIP_CHILDREN);
-
-  m->log = new wxTextCtrl(m->horizSplitter, -1, wxEmptyString,
-                          wxPoint(0, 0), wxDefaultSize,
-                          wxTE_MULTILINE | wxTE_READONLY);
-
   // as much as the widget can stand
-  m->log->SetMaxLength(0);
+  m_log->SetMaxLength(0);
 
   m->logTracer = new EventTracer(this);
   m->listener.SetTracer(m->logTracer, false);
 
 
-  m->vertSplitter = new wxSplitterWindow(m_info_panel, -1,
-                                         wxDefaultPosition,
-                                         wxDefaultSize,
-                                         SPLITTER_STYLE);
-
   // Create the list control to display files
-  m->listCtrl = new FileListCtrl(m->vertSplitter, FILELIST_CTRL,
-                                 wxDefaultPosition, wxDefaultSize);
   m->CheckMenu(ID_Flat,              false);
-  m->CheckMenu(ID_RefreshWithUpdate, m->listCtrl->GetWithUpdate());
+  m->CheckMenu(ID_RefreshWithUpdate, m_listCtrl->GetWithUpdate());
   m->SetMenuAndTool(ID_ShowUnversioned, m->showUnversioned,
-                    m->listCtrl->GetShowUnversioned());
+                    m_listCtrl->GetShowUnversioned());
   m->SetMenuAndTool(ID_ShowUnmodified, m->showUnmodified, true);
   m->SetMenuAndTool(ID_ShowModified, m->showModified, true);
   m->SetMenuAndTool(ID_ShowConflicted, m->showConflicted, true);
-  m->CheckMenu(ID_IgnoreExternals,   m->listCtrl->GetIgnoreExternals());
-  m->CheckMenu(ID_ShowIgnored,       m->listCtrl->GetShowIgnored());
-  m->CheckMenu(ID_Sort_Ascending,    m->listCtrl->GetSortAscending());
-  m->CheckSort(m->listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
-  m->listCtrl->SetShowUnmodified(true);
-  m->listCtrl->SetShowModified(true);
-  m->listCtrl->SetShowConflicted(true);
+  m->CheckMenu(ID_IgnoreExternals,   m_listCtrl->GetIgnoreExternals());
+  m->CheckMenu(ID_ShowIgnored,       m_listCtrl->GetShowIgnored());
+  m->CheckMenu(ID_Sort_Ascending,    m_listCtrl->GetSortAscending());
+  m->CheckSort(m_listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
+  m_listCtrl->SetShowUnmodified(true);
+  m_listCtrl->SetShowModified(true);
+  m_listCtrl->SetShowConflicted(true);
 
-  bool isFlat = m->listCtrl->IsFlat();
-  bool includePath = m->listCtrl->GetIncludePath();
+  bool isFlat = m_listCtrl->IsFlat();
+  bool includePath = m_listCtrl->GetIncludePath();
   if (isFlat == false && includePath == true)
     m->CheckMenu(ID_Include_Path, false);
   else
     m->CheckMenu(ID_Include_Path, includePath);
   m->EnableMenuEntry(ID_Include_Path, isFlat ? true : false);
-
-
-  // Create the browse control
-  m->folderBrowser = new FolderBrowser(m->vertSplitter, FOLDER_BROWSER);
 
   // Adapt the menu entries
   for (int col=0; col < FileListCtrl::COL_COUNT; col++)
@@ -738,19 +708,13 @@ MainFrame::MainFrame(const wxString & title,
     int sortid = id + Columns::SORT_COLUMN_OFFSET;
     if (id != ID_Column_Name && id != ID_Column_Path)
     {
-      bool check = m->listCtrl->GetColumnVisible(col);
+      bool check = m_listCtrl->GetColumnVisible(col);
       m->CheckColumn(id, check);
       m->EnableMenuEntry(sortid, check);
     }
   }
 
   RefreshFileList();
-
-  wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-  sizer->Add(m->vertSplitter, 1, wxEXPAND);
-
-  m_info_panel->SetAutoLayout(true);
-  m_info_panel->SetSizer(sizer);
 
   // Read frame position
   if (cfg->Read(ConfigMaximized, (long int)0) == 1)
@@ -773,24 +737,24 @@ MainFrame::MainFrame(const wxString & title,
   int hpos = cfg->Read(ConfigSplitterHoriz, (3 * h) / 4);
 
   // initialize the folder browser
-  m->folderBrowser->ReadConfig(cfg);
+  m_folderBrowser->ReadConfig(cfg);
   {
     Preferences prefs;
-    m->folderBrowser->SetListener(&m->listener);
-    m->folderBrowser->SetAuthCache(prefs.useAuthCache);
-    m->folderBrowser->SetAuthPerBookmark(prefs.authPerBookmark);
+    m_folderBrowser->SetListener(&m->listener);
+    m_folderBrowser->SetAuthCache(prefs.useAuthCache);
+    m_folderBrowser->SetAuthPerBookmark(prefs.authPerBookmark);
   }
   UpdateCurrentPath();
   RefreshFolderBrowser();
 
   // Set sash position for every splitter.
   // Note: do not revert the order of Split calls, as the panels will be messed up.
-  m->horizSplitter->SplitHorizontally(m_info_panel, m->log, hpos);
-  m->vertSplitter->SplitVertically(m->folderBrowser, m->listCtrl, vpos);
+  m_splitterHoriz->SplitHorizontally(m_panelTop, m_log, hpos);
+  m_splitterVert->SplitVertically(m_folderBrowser, m_listCtrl, vpos);
 
   // Initialize for drag and drop
-  m->folderBrowser->SetDropTarget(new FolderBrowserDropTarget(m->folderBrowser));
-  m->listCtrl->SetDropTarget(new FileListCtrlDropTarget(m->folderBrowser, m->listCtrl));
+  m_folderBrowser->SetDropTarget(new FolderBrowserDropTarget(m_folderBrowser));
+  m_listCtrl->SetDropTarget(new FileListCtrlDropTarget(m_folderBrowser, m_listCtrl));
 }
 
 MainFrame::~MainFrame()
@@ -828,11 +792,11 @@ MainFrame::~MainFrame()
 
   // Save splitter positions
   cfg->Write(ConfigSplitterVert,
-             (long) m->vertSplitter->GetSashPosition());
+             (long) m_splitterVert->GetSashPosition());
   cfg->Write(ConfigSplitterHoriz,
-             (long) m->horizSplitter->GetSashPosition());
+             (long) m_splitterHoriz->GetSashPosition());
 
-  m->folderBrowser->WriteConfig(cfg);
+  m_folderBrowser->WriteConfig(cfg);
 
   delete m;
 }
@@ -905,7 +869,7 @@ MainFrame::RefreshFileList()
   if (!isRunning)
     m->SetRunning(true);
 
-  if (m->listCtrl && m->folderBrowser)
+  if (m_listCtrl && m_folderBrowser)
   {
     wxBusyCursor busy;
 
@@ -929,13 +893,13 @@ MainFrame::RefreshFileList()
         // calling "UpdateColumns" should be necessary
         // only for the first call. But without any
         // items this call should be cheap.
-        m->listCtrl->DeleteAllItems();
-        m->listCtrl->UpdateColumns();
+        m_listCtrl->DeleteAllItems();
+        m_listCtrl->UpdateColumns();
       }
       else
       {
-        m->listCtrl->SetContext(m_context);
-        m->listCtrl->RefreshFileList(m->currentPath);
+        m_listCtrl->SetContext(m_context);
+        m_listCtrl->RefreshFileList(m->currentPath);
       }
 
     }
@@ -949,8 +913,8 @@ MainFrame::RefreshFileList()
       // calling "UpdateColumns" should be necessary
       // only for the first call. But without any
       // items this call should be cheap.
-      m->listCtrl->DeleteAllItems();
-      m->listCtrl->UpdateColumns();
+      m_listCtrl->DeleteAllItems();
+      m_listCtrl->UpdateColumns();
 
     }
     catch (...)
@@ -960,8 +924,8 @@ MainFrame::RefreshFileList()
       // calling "UpdateColumns" should be necessary
       // only for the first call. But without any
       // items this call should be cheap.
-      m->listCtrl->DeleteAllItems();
-      m->listCtrl->UpdateColumns();
+      m_listCtrl->DeleteAllItems();
+      m_listCtrl->UpdateColumns();
     }
 
   }
@@ -983,8 +947,8 @@ MainFrame::RefreshFolderBrowser()
     if (!m->skipFilelistUpdate)
       m->dontUpdateFilelist = true;
 
-    if (m->folderBrowser)
-      m->folderBrowser->RefreshFolderBrowser();
+    if (m_folderBrowser)
+      m_folderBrowser->RefreshFolderBrowser();
   }
   catch (...)
   {
@@ -1079,10 +1043,10 @@ MainFrame::OnRefresh(wxCommandEvent & WXUNUSED(event))
 void
 MainFrame::OnColumnReset(wxCommandEvent & WXUNUSED(event))
 {
-  m->listCtrl->ResetColumns();
+  m_listCtrl->ResetColumns();
   for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
   {
-    bool visible = m->listCtrl->GetColumnVisible(col);
+    bool visible = m_listCtrl->GetColumnVisible(col);
     int id = m->ColumnList [col].id;
 
     if (id != ID_Column_Name && id != ID_Column_Path)
@@ -1111,7 +1075,7 @@ MainFrame::OnColumn(wxCommandEvent & event)
     // Enable/disable the corresponding column. Automatically define
     // a new sorting column after an old one is disabled.
     bool visible = m->IsColumnChecked(eventId);
-    m->listCtrl->SetColumnVisible(col, visible);
+    m_listCtrl->SetColumnVisible(col, visible);
 
     int sortid = eventId + Columns::SORT_COLUMN_OFFSET;
     m->EnableMenuEntry(sortid, visible);
@@ -1126,13 +1090,13 @@ MainFrame::OnColumn(wxCommandEvent & event)
 void
 MainFrame::OnIncludePath(wxCommandEvent & WXUNUSED(event))
 {
-  m->listCtrl->SetIncludePath(!m->listCtrl->GetIncludePath());
+  m_listCtrl->SetIncludePath(!m_listCtrl->GetIncludePath());
 }
 
 void
 MainFrame::OnSortAscending(wxCommandEvent & WXUNUSED(event))
 {
-  m->listCtrl->SetSortAscending(!m->listCtrl->GetSortAscending());
+  m_listCtrl->SetSortAscending(!m_listCtrl->GetSortAscending());
 }
 
 void
@@ -1141,8 +1105,8 @@ MainFrame::OnColumnSorting(wxCommandEvent & event)
   // we dont want to list FileListCtrl::COL_NAME/COL_PATH/... here
   int col = event.GetId() - ID_ColumnSort_Name;
 
-  m->listCtrl->SetSortColumn(col);
-  m->listCtrl->SetSortAscending(true);
+  m_listCtrl->SetSortColumn(col);
+  m_listCtrl->SetSortAscending(true);
 
   UpdateMenuAscending();
 }
@@ -1151,16 +1115,16 @@ MainFrame::OnColumnSorting(wxCommandEvent & event)
 void
 MainFrame::OnFlatView(wxCommandEvent & WXUNUSED(event))
 {
-  bool newFlatMode = !m->folderBrowser->IsFlat();
+  bool newFlatMode = !m_folderBrowser->IsFlat();
 
   // if this cannot be set (e.g. invalid selection
   // like the root element, we uncheck this
-  if (!m->folderBrowser->SetFlat(newFlatMode))
+  if (!m_folderBrowser->SetFlat(newFlatMode))
     newFlatMode = false;
 
   m->CheckMenu(ID_Flat, newFlatMode);
   m->CheckTool(ID_Flat, newFlatMode);
-  m->listCtrl->SetFlat(newFlatMode);
+  m_listCtrl->SetFlat(newFlatMode);
 
   SetIncludePathVisibility(newFlatMode);
 
@@ -1171,11 +1135,11 @@ MainFrame::OnFlatView(wxCommandEvent & WXUNUSED(event))
 void
 MainFrame::OnIndicateModifiedChildren(wxCommandEvent & WXUNUSED(event))
 {
-  bool newValue = !m->folderBrowser->GetIndicateModifiedChildren();
+  bool newValue = !m_folderBrowser->GetIndicateModifiedChildren();
 
   // if this cannot be set (e.g. invalid selection
   // like the root element, we uncheck this
-  if (!m->folderBrowser->SetIndicateModifiedChildren(newValue))
+  if (!m_folderBrowser->SetIndicateModifiedChildren(newValue))
     newValue = false;
 
   m->CheckMenu(ID_IndicateModifiedChildren, newValue);
@@ -1188,7 +1152,7 @@ void
 MainFrame::OnRefreshWithUpdate(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->IsMenuChecked(ID_RefreshWithUpdate);
-  m->listCtrl->SetWithUpdate(checked);
+  m_listCtrl->SetWithUpdate(checked);
   RefreshFolderBrowser();
 }
 
@@ -1197,7 +1161,7 @@ void
 MainFrame::OnShowUnversioned(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->ToggleMenuAndTool(ID_ShowUnversioned, m->showUnversioned);
-  m->listCtrl->SetShowUnversioned(checked);
+  m_listCtrl->SetShowUnversioned(checked);
   RefreshFileList();
 }
 
@@ -1205,7 +1169,7 @@ void
 MainFrame::OnShowUnmodified(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->ToggleMenuAndTool(ID_ShowUnmodified, m->showUnmodified);
-  m->listCtrl->SetShowUnmodified(checked);
+  m_listCtrl->SetShowUnmodified(checked);
   RefreshFileList();
 }
 
@@ -1213,7 +1177,7 @@ void
 MainFrame::OnShowModified(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->ToggleMenuAndTool(ID_ShowModified, m->showModified);
-  m->listCtrl->SetShowModified(checked);
+  m_listCtrl->SetShowModified(checked);
   RefreshFileList();
 }
 
@@ -1221,7 +1185,7 @@ void
 MainFrame::OnShowConflicted(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->ToggleMenuAndTool(ID_ShowConflicted, m->showConflicted);
-  m->listCtrl->SetShowConflicted(checked);
+  m_listCtrl->SetShowConflicted(checked);
   RefreshFileList();
 }
 
@@ -1229,7 +1193,7 @@ void
 MainFrame::OnIgnoreExternals(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->IsMenuChecked(ID_IgnoreExternals);
-  m->listCtrl->SetIgnoreExternals(checked);
+  m_listCtrl->SetIgnoreExternals(checked);
   RefreshFileList();
 }
 
@@ -1237,14 +1201,14 @@ void
 MainFrame::OnShowIgnored(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->IsMenuChecked(ID_ShowIgnored);
-  m->listCtrl->SetShowIgnored(checked);
+  m_listCtrl->SetShowIgnored(checked);
   RefreshFileList();
 }
 
 void
 MainFrame::OnLogin(wxCommandEvent & WXUNUSED(event))
 {
-  svn::Context * context = m->folderBrowser->GetContext();
+  svn::Context * context = m_folderBrowser->GetContext();
 
   if (context == 0)
     return;
@@ -1265,7 +1229,7 @@ MainFrame::OnLogin(wxCommandEvent & WXUNUSED(event))
 void
 MainFrame::OnLogout(wxCommandEvent & WXUNUSED(event))
 {
-  svn::Context * context = m->folderBrowser->GetContext();
+  svn::Context * context = m_folderBrowser->GetContext();
 
   if (context == 0)
     return;
@@ -1686,9 +1650,9 @@ MainFrame::OnActionEvent(wxCommandEvent & event)
   {
     const wxString bookmark = event.GetString();
 
-    m->folderBrowser->AddBookmark(bookmark);
+    m_folderBrowser->AddBookmark(bookmark);
     RefreshFolderBrowser();
-    m->folderBrowser->SelectBookmark(bookmark);
+    m_folderBrowser->SelectBookmark(bookmark);
     UpdateCurrentPath();
     RefreshFileList();
   }
@@ -1828,17 +1792,17 @@ MainFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
     m->activePane = ACTIVEPANE_FOLDER_BROWSER;
 
     // Update the menu and list control 
-    bool flatMode = m->folderBrowser->IsFlat();
-    m->listCtrl->SetFlat(flatMode);
+    bool flatMode = m_folderBrowser->IsFlat();
+    m_listCtrl->SetFlat(flatMode);
     m->CheckMenu(ID_Flat, flatMode);
     m->CheckTool(ID_Flat, flatMode);
-    bool indicateModifiedChildren = m->folderBrowser->GetIndicateModifiedChildren();
+    bool indicateModifiedChildren = m_folderBrowser->GetIndicateModifiedChildren();
     m->CheckMenu(ID_IndicateModifiedChildren, indicateModifiedChildren);
 
     SetIncludePathVisibility(flatMode);
 
     // Disable menu entry if no path is selected (e.g. root)
-    const wxString & path = m->folderBrowser->GetPath();
+    const wxString & path = m_folderBrowser->GetPath();
     m->MenuBar->Enable(ID_Flat, !path.IsEmpty());
 
     UpdateCurrentPath();
@@ -1917,7 +1881,7 @@ directory to the bookmarks!"),
   }
 
   // add
-  m->folderBrowser->AddBookmark(dialog.GetPath());
+  m_folderBrowser->AddBookmark(dialog.GetPath());
 
   m->skipFilelistUpdate = true;
   RefreshFolderBrowser();
@@ -1925,7 +1889,7 @@ directory to the bookmarks!"),
   wxLogStatus(_("Added working copy to bookmarks '%s'"),
               dialog.GetPath().c_str());
 
-  m->folderBrowser->SelectBookmark(dialog.GetPath());
+  m_folderBrowser->SelectBookmark(dialog.GetPath());
 
   TheHistoryManager.AddEntryToList(HISTORY_EXISTING_WORKING_DIRECTORY, dialog.GetPath());
 }
@@ -1946,7 +1910,7 @@ MainFrame::AddRepoBookmark()
 
   // add
   wxString url = dialog.GetData().url;
-  m->folderBrowser->AddBookmark(url);
+  m_folderBrowser->AddBookmark(url);
 
   m->skipFilelistUpdate = true;
   RefreshFolderBrowser();
@@ -1954,7 +1918,7 @@ MainFrame::AddRepoBookmark()
   wxLogStatus(_("Added repository to bookmarks '%s'"),
               url.c_str());
 
-  m->folderBrowser->SelectBookmark(url);
+  m_folderBrowser->SelectBookmark(url);
   //UpdateCurrentPath ();
   //RefreshFileList ();
 }
@@ -1962,8 +1926,8 @@ MainFrame::AddRepoBookmark()
 inline void
 MainFrame::RemoveBookmark()
 {
-  wxASSERT(m->folderBrowser);
-  if (m->folderBrowser->RemoveBookmark())
+  wxASSERT(m_folderBrowser);
+  if (m_folderBrowser->RemoveBookmark())
   {
     wxLogStatus(_("Removed bookmark"));
   }
@@ -1972,15 +1936,15 @@ MainFrame::RemoveBookmark()
 void
 MainFrame::EditBookmark()
 {
-  wxASSERT(m->folderBrowser);
+  wxASSERT(m_folderBrowser);
 
-  const FolderItemData * bookmark = m->folderBrowser->GetSelectedItemData();
+  const FolderItemData * bookmark = m_folderBrowser->GetSelectedItemData();
 
   // if nothing is selected, or the wrong type,
   // just exit (this should be handled by the routine
   // that is responsible for greying out menu entries,
   // but hey: nobody is perfect
-  if (!m->folderBrowser)
+  if (!m_folderBrowser)
     return;
 
   if (bookmark->getFolderType() != FOLDER_TYPE_BOOKMARK)
@@ -2001,10 +1965,10 @@ MainFrame::EditBookmark()
     if (oldPath == newPath)
       return;
 
-    m->folderBrowser->RemoveBookmark();
-    m->folderBrowser->AddBookmark(newPath);
+    m_folderBrowser->RemoveBookmark();
+    m_folderBrowser->AddBookmark(newPath);
     RefreshFolderBrowser();
-    m->folderBrowser->SelectBookmark(newPath);
+    m_folderBrowser->SelectBookmark(newPath);
   }
 }
 
@@ -2013,8 +1977,8 @@ void
 MainFrame::ShowInfo()
 {
   bool withUpdate = false;
-  if (m->listCtrl)
-    withUpdate = m->listCtrl->GetWithUpdate();
+  if (m_listCtrl)
+    withUpdate = m_listCtrl->GetWithUpdate();
 
   FileInfo fileInfo(m_context, withUpdate);
 
@@ -2052,23 +2016,23 @@ MainFrame::ShowPreferences()
 
   if (ok)
   {
-    m->folderBrowser->SetAuthCache(prefs.useAuthCache);
-    m->folderBrowser->SetAuthPerBookmark(prefs.authPerBookmark);
+    m_folderBrowser->SetAuthCache(prefs.useAuthCache);
+    m_folderBrowser->SetAuthPerBookmark(prefs.authPerBookmark);
   }
 }
 
 void
 MainFrame::UpdateCurrentPath()
 {
-  if (m->folderBrowser == 0)
+  if (m_folderBrowser == 0)
   {
     m->currentPath.Clear();
     m_context = 0;
   }
   else
   {
-    m->currentPath = m->folderBrowser->GetPath();
-    m_context = m->folderBrowser->GetContext();
+    m->currentPath = m_folderBrowser->GetPath();
+    m_context = m_folderBrowser->GetContext();
   }
 
   if (m->currentPath.Length() > 0)
@@ -2093,8 +2057,8 @@ MainFrame::InvokeDefaultAction()
   if (statusSel.hasDirs())
   {
     // go one folder deeper...
-    m->folderBrowser->SelectFolder(
-      FullNativePath(statusSel.target(), m->currentPath, m->listCtrl->IsFlat())
+    m_folderBrowser->SelectFolder(
+      FullNativePath(statusSel.target(), m->currentPath, m_listCtrl->IsFlat())
     );
   }
   else
@@ -2131,19 +2095,19 @@ MainFrame::Perform(Action * action)
 inline void
 MainFrame::UpdateMenuSorting()
 {
-  m->CheckSort(m->listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
+  m->CheckSort(m_listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
 }
 
 inline void
 MainFrame::UpdateMenuIncludePath()
 {
-  m->CheckMenu(ID_Include_Path, m->listCtrl->GetIncludePath());
+  m->CheckMenu(ID_Include_Path, m_listCtrl->GetIncludePath());
 }
 
 inline void
 MainFrame::UpdateMenuAscending()
 {
-  m->CheckMenu(ID_Sort_Ascending, m->listCtrl->GetSortAscending());
+  m->CheckMenu(ID_Sort_Ascending, m_listCtrl->GetSortAscending());
 }
 
 void
@@ -2151,7 +2115,7 @@ MainFrame::SetIncludePathVisibility(bool flatMode)
 {
   if (flatMode == false)
   {
-    if (m->listCtrl->GetIncludePath() == true)
+    if (m_listCtrl->GetIncludePath() == true)
       m->CheckMenu(ID_Include_Path, false);
 
     UpdateMenuSorting();
@@ -2169,8 +2133,8 @@ MainFrame::OnSize(wxSizeEvent & sizeEvent)
 {
   if (!this->IsMaximized() && IsShown())
   {
-    m->vertSplitter->SetSashGravity(0.0f);
-    m->horizSplitter->SetSashGravity(1.0f);
+    m_splitterVert->SetSashGravity(0.0f);
+    m_splitterHoriz->SetSashGravity(1.0f);
   }
 
   sizeEvent.Skip();

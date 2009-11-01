@@ -36,6 +36,7 @@
 #include "action_worker.hpp"
 #include "tracer.hpp"
 #include "log_action.hpp"
+#include "rapidsvn_generated.h"
 #include "utils.hpp"
 
 typedef enum
@@ -51,7 +52,7 @@ class wxMenu;
 class wxString;
 class wxListEvent;
 
-class MainFrame : public wxFrame
+class MainFrame : public MainFrameBase
 {
 public:
   /**
@@ -61,7 +62,7 @@ public:
    * @param locale The locale that's used by the app
    */
   MainFrame(const wxString & title,
-                const wxLocale & locale);
+            const wxLocale & locale);
   virtual ~MainFrame();
 
   /** Allow children to trim their popup menus using the frames logic */
@@ -82,7 +83,6 @@ private:
   /** disallow copy constructor */
   MainFrame(const MainFrame &);
 
-  void OnActivate(wxActivateEvent & event);
   void OnFocusChanged(wxCommandEvent & event);
 
   // File menu
@@ -186,7 +186,6 @@ private:
   void UpdateMenuIncludePath();
   void UpdateMenuAscending();
   void SetIncludePathVisibility(bool flatMode);
-  void OnSize(wxSizeEvent & sizeEvent);
 
   // Enable/disable action menu items
   void OnUpdateCommand(wxUpdateUIEvent & updateUIEvent);
@@ -208,16 +207,15 @@ private:
 
   void Perform(Action * action);
 
+protected: // inherited from MainFrameBase
+  virtual void OnActivate(wxActivateEvent & event);
+  virtual void OnSize(wxSizeEvent & sizeEvent);
 private:
   /** hide implementation data */
   struct Data;
   Data * m;
 
   ActionWorker * m_actionWorker;
-
-  wxPanel *m_info_panel;
-
-  size_t m_toolbar_rows;        // 1 or 2 only (toolbar rows)
 
   wxString m_title;
   svn::Context * m_context;
