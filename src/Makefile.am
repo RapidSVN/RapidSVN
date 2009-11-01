@@ -67,7 +67,6 @@ rapidsvn_SOURCES= \
 	preferences_dlg.cpp \
 	property_action.cpp \
 	property_dlg.cpp \
-	proportional_splitter.cpp \
 	rapidsvn_app.cpp \
 	rapidsvn_drop_target.cpp \
 	rapidsvn_generated.cpp \

@@ -566,10 +566,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\proportional_splitter.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\rapidsvn_app.cpp"
 				>
 			</File>
@@ -937,10 +933,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\property_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\proportional_splitter.hpp"
 				>
 			</File>
 			<File
