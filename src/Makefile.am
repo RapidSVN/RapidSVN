@@ -58,6 +58,7 @@ rapidsvn_SOURCES= \
 	log_action.cpp \
 	log_dlg.cpp \
 	main_frame.cpp \
+	main_frame_helper.cpp \
 	merge_action.cpp \
 	merge_dlg.cpp \
 	mkdir_action.cpp \

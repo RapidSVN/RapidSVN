@@ -358,6 +358,10 @@ SOURCE=..\..\..\src\main_frame.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\main_frame_helper.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\merge_action.cpp
 # End Source File
 # Begin Source File

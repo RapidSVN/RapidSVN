@@ -530,6 +530,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\main_frame_helper.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\merge_action.cpp"
 				>
 			</File>
