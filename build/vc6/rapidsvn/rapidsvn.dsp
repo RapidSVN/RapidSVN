@@ -354,6 +354,10 @@ SOURCE=..\..\..\src\log_dlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\main_frame.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\merge_action.cpp
 # End Source File
 # Begin Source File
@@ -395,10 +399,6 @@ SOURCE=..\..\..\src\rapidsvn_app.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\rapidsvn_drop_target.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\rapidsvn_frame.cpp
 # End Source File
 # Begin Source File
 
@@ -678,6 +678,10 @@ SOURCE=..\..\..\src\log_dlg.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\main_frame.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\merge_action.hpp
 # End Source File
 # Begin Source File
@@ -715,10 +719,6 @@ SOURCE=..\..\..\src\proportional_splitter.hpp
 # Begin Source File
 
 SOURCE=..\..\..\src\rapidsvn_app.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\rapidsvn_frame.hpp
 # End Source File
 # Begin Source File
 

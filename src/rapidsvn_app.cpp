@@ -38,9 +38,9 @@
 //app
 #include "config.hpp"
 #include "hist_mgr.hpp"
+#include "main_frame.hpp"
 #include "preferences.hpp"
 #include "rapidsvn_app.hpp"
-#include "rapidsvn_frame.hpp"
 #include "version.hpp"
 
 static const wxChar HELP_FILE[] =  wxT("/Resources/HelpFile");
@@ -105,7 +105,7 @@ bool RapidSvnApp::OnInit()
 #endif
   wxHelpProvider::Set(provider);
 
-  RapidSvnFrame * frame = new RapidSvnFrame(APPLICATION_NAME, m_locale);
+  MainFrame * frame = new MainFrame(APPLICATION_NAME, m_locale);
   frame->Show(TRUE);
   SetTopWindow(frame);
 

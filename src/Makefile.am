@@ -57,6 +57,7 @@ rapidsvn_SOURCES= \
 	lock_dlg.cpp \
 	log_action.cpp \
 	log_dlg.cpp \
+	main_frame.cpp \
 	merge_action.cpp \
 	merge_dlg.cpp \
 	mkdir_action.cpp \
@@ -68,7 +69,6 @@ rapidsvn_SOURCES= \
 	proportional_splitter.cpp \
 	rapidsvn_app.cpp \
 	rapidsvn_drop_target.cpp \
-	rapidsvn_frame.cpp \
 	rapidsvn_generated.cpp \
 	rename_action.cpp \
 	report_dlg.cpp \

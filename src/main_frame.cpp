@@ -84,7 +84,7 @@
 #include "update_dlg.hpp"
 #include "log_dlg.hpp"
 
-#include "rapidsvn_frame.hpp"
+#include "main_frame.hpp"
 
 #include "filelist_ctrl_drop_target.hpp"
 #include "folder_browser_drop_target.hpp"
@@ -157,7 +157,7 @@ CreateActionWorker(wxWindow * parent)
  * class that hide implementation specific data and methods from
  * the interface
  */
-struct RapidSvnFrame::Data
+struct MainFrame::Data
 {
 public:
   FolderBrowser * folderBrowser;
@@ -665,7 +665,7 @@ public:
    * at the moment (not an action dialog).
    *
    * This information is used to decide whether to refresh
-   * in @ref RapidSvnFrame::OnActivate
+   * in @ref MainFrame::OnActivate
    *
    * @retval true there is an error dialog showing
    */
@@ -746,76 +746,76 @@ public:
 };
 
 
-BEGIN_EVENT_TABLE(RapidSvnFrame, wxFrame)
-  EVT_ACTIVATE(RapidSvnFrame::OnActivate)
-  EVT_MENU(ID_AddWcBookmark, RapidSvnFrame::OnAddWcBookmark)
-  EVT_MENU(ID_AddRepoBookmark, RapidSvnFrame::OnAddRepoBookmark)
-  EVT_MENU(ID_RemoveBookmark, RapidSvnFrame::OnRemoveBookmark)
-  EVT_MENU(ID_EditBookmark, RapidSvnFrame::OnEditBookmark)
-  EVT_MENU(ID_Quit, RapidSvnFrame::OnQuit)
+BEGIN_EVENT_TABLE(MainFrame, wxFrame)
+  EVT_ACTIVATE(MainFrame::OnActivate)
+  EVT_MENU(ID_AddWcBookmark, MainFrame::OnAddWcBookmark)
+  EVT_MENU(ID_AddRepoBookmark, MainFrame::OnAddRepoBookmark)
+  EVT_MENU(ID_RemoveBookmark, MainFrame::OnRemoveBookmark)
+  EVT_MENU(ID_EditBookmark, MainFrame::OnEditBookmark)
+  EVT_MENU(ID_Quit, MainFrame::OnQuit)
 
-  EVT_MENU(ID_Preferences, RapidSvnFrame::OnPreferences)
-  EVT_MENU(ID_Refresh, RapidSvnFrame::OnRefresh)
-  EVT_UPDATE_UI(ID_Refresh, RapidSvnFrame::OnUpdateCommand)
+  EVT_MENU(ID_Preferences, MainFrame::OnPreferences)
+  EVT_MENU(ID_Refresh, MainFrame::OnRefresh)
+  EVT_UPDATE_UI(ID_Refresh, MainFrame::OnUpdateCommand)
 
-  EVT_MENU(ID_Column_Reset, RapidSvnFrame::OnColumnReset)
-  EVT_MENU_RANGE(ID_Column_Min, ID_Column_Max, RapidSvnFrame::OnColumn)
-  EVT_MENU(ID_Include_Path, RapidSvnFrame::OnIncludePath)
-  EVT_MENU(ID_Sort_Ascending, RapidSvnFrame::OnSortAscending)
-  EVT_MENU_RANGE(ID_ColumnSort_Min, ID_ColumnSort_Max, RapidSvnFrame::OnColumnSorting)
+  EVT_MENU(ID_Column_Reset, MainFrame::OnColumnReset)
+  EVT_MENU_RANGE(ID_Column_Min, ID_Column_Max, MainFrame::OnColumn)
+  EVT_MENU(ID_Include_Path, MainFrame::OnIncludePath)
+  EVT_MENU(ID_Sort_Ascending, MainFrame::OnSortAscending)
+  EVT_MENU_RANGE(ID_ColumnSort_Min, ID_ColumnSort_Max, MainFrame::OnColumnSorting)
 
-  EVT_MENU(ID_Flat, RapidSvnFrame::OnFlatView)
-  EVT_MENU(ID_RefreshWithUpdate, RapidSvnFrame::OnRefreshWithUpdate)
-  EVT_MENU(ID_ShowUnversioned, RapidSvnFrame::OnShowUnversioned)
-  EVT_MENU(ID_IgnoreExternals, RapidSvnFrame::OnIgnoreExternals)
-  EVT_MENU(ID_ShowIgnored, RapidSvnFrame::OnShowIgnored)
-  EVT_MENU(ID_ShowUnmodified, RapidSvnFrame::OnShowUnmodified)
-  EVT_MENU(ID_ShowModified, RapidSvnFrame::OnShowModified)
-  EVT_MENU(ID_ShowConflicted, RapidSvnFrame::OnShowConflicted)
-  EVT_MENU(ID_IndicateModifiedChildren, RapidSvnFrame::OnIndicateModifiedChildren)
+  EVT_MENU(ID_Flat, MainFrame::OnFlatView)
+  EVT_MENU(ID_RefreshWithUpdate, MainFrame::OnRefreshWithUpdate)
+  EVT_MENU(ID_ShowUnversioned, MainFrame::OnShowUnversioned)
+  EVT_MENU(ID_IgnoreExternals, MainFrame::OnIgnoreExternals)
+  EVT_MENU(ID_ShowIgnored, MainFrame::OnShowIgnored)
+  EVT_MENU(ID_ShowUnmodified, MainFrame::OnShowUnmodified)
+  EVT_MENU(ID_ShowModified, MainFrame::OnShowModified)
+  EVT_MENU(ID_ShowConflicted, MainFrame::OnShowConflicted)
+  EVT_MENU(ID_IndicateModifiedChildren, MainFrame::OnIndicateModifiedChildren)
 
-  EVT_MENU(ID_Login, RapidSvnFrame::OnLogin)
-  EVT_MENU(ID_Logout, RapidSvnFrame::OnLogout)
-  EVT_MENU(ID_Stop, RapidSvnFrame::OnStop)
+  EVT_MENU(ID_Login, MainFrame::OnLogin)
+  EVT_MENU(ID_Logout, MainFrame::OnLogout)
+  EVT_MENU(ID_Stop, MainFrame::OnStop)
 
-  EVT_MENU(ID_Info, RapidSvnFrame::OnInfo)
-  EVT_UPDATE_UI(ID_Info, RapidSvnFrame::OnUpdateCommand)
+  EVT_MENU(ID_Info, MainFrame::OnInfo)
+  EVT_UPDATE_UI(ID_Info, MainFrame::OnUpdateCommand)
 
-  EVT_MENU(ID_HelpContents, RapidSvnFrame::OnHelpContents)
-  EVT_MENU(ID_HelpIndex, RapidSvnFrame::OnHelpIndex)
-  EVT_MENU(ID_HelpStartupTips, RapidSvnFrame::OnHelpStartupTips)
-  EVT_MENU(ID_About, RapidSvnFrame::OnAbout)
+  EVT_MENU(ID_HelpContents, MainFrame::OnHelpContents)
+  EVT_MENU(ID_HelpIndex, MainFrame::OnHelpIndex)
+  EVT_MENU(ID_HelpStartupTips, MainFrame::OnHelpStartupTips)
+  EVT_MENU(ID_About, MainFrame::OnAbout)
 
   #ifdef USE_DEBUG_TESTS
-  EVT_MENU(ID_TestNewWxString, RapidSvnFrame::OnTestNewWxString)
-  EVT_MENU(ID_TestListener, RapidSvnFrame::OnTestListener)
-  EVT_MENU(ID_TestCheckout, RapidSvnFrame::OnTestCheckout)
+  EVT_MENU(ID_TestNewWxString, MainFrame::OnTestNewWxString)
+  EVT_MENU(ID_TestListener, MainFrame::OnTestListener)
+  EVT_MENU(ID_TestCheckout, MainFrame::OnTestCheckout)
   #endif
 
-  EVT_MENU_RANGE(ID_File_Min, ID_File_Max, RapidSvnFrame::OnFileCommand)
-  EVT_MENU_RANGE(ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnFileCommand)
+  EVT_MENU_RANGE(ID_File_Min, ID_File_Max, MainFrame::OnFileCommand)
+  EVT_MENU_RANGE(ID_Verb_Min, ID_Verb_Max, MainFrame::OnFileCommand)
 
-  EVT_UPDATE_UI_RANGE(ID_File_Min, ID_File_Max, RapidSvnFrame::OnUpdateCommand)
-  EVT_UPDATE_UI_RANGE(ID_Verb_Min, ID_Verb_Max, RapidSvnFrame::OnUpdateCommand)
-  EVT_UPDATE_UI_RANGE(ID_Filter_Min, ID_Filter_Max, RapidSvnFrame::OnUpdateCommand)
+  EVT_UPDATE_UI_RANGE(ID_File_Min, ID_File_Max, MainFrame::OnUpdateCommand)
+  EVT_UPDATE_UI_RANGE(ID_Verb_Min, ID_Verb_Max, MainFrame::OnUpdateCommand)
+  EVT_UPDATE_UI_RANGE(ID_Filter_Min, ID_Filter_Max, MainFrame::OnUpdateCommand)
 
-  EVT_MENU(ACTION_EVENT, RapidSvnFrame::OnActionEvent)
+  EVT_MENU(ACTION_EVENT, MainFrame::OnActionEvent)
 
-  EVT_TOOL_ENTER(ID_TOOLBAR, RapidSvnFrame::OnToolEnter)
-  EVT_TREE_SEL_CHANGED(-1, RapidSvnFrame::OnFolderBrowserSelChanged)
-  EVT_TREE_KEY_DOWN(-1, RapidSvnFrame::OnFolderBrowserKeyDown)
-  EVT_LIST_ITEM_SELECTED(-1, RapidSvnFrame::OnFileListSelected)
+  EVT_TOOL_ENTER(ID_TOOLBAR, MainFrame::OnToolEnter)
+  EVT_TREE_SEL_CHANGED(-1, MainFrame::OnFolderBrowserSelChanged)
+  EVT_TREE_KEY_DOWN(-1, MainFrame::OnFolderBrowserKeyDown)
+  EVT_LIST_ITEM_SELECTED(-1, MainFrame::OnFileListSelected)
 
-  EVT_MENU_RANGE(LISTENER_MIN, LISTENER_MAX, RapidSvnFrame::OnListenerEvent)
+  EVT_MENU_RANGE(LISTENER_MIN, LISTENER_MAX, MainFrame::OnListenerEvent)
 
-  EVT_SIZE(RapidSvnFrame::OnSize)
+  EVT_SIZE(MainFrame::OnSize)
 
-  EVT_MENU(FOLDER_BROWSER, RapidSvnFrame::OnFocusChanged)
-  EVT_MENU(FILELIST_CTRL, RapidSvnFrame::OnFocusChanged)
+  EVT_MENU(FOLDER_BROWSER, MainFrame::OnFocusChanged)
+  EVT_MENU(FILELIST_CTRL, MainFrame::OnFocusChanged)
 END_EVENT_TABLE()
 
 /** class implementation **/
-RapidSvnFrame::RapidSvnFrame(const wxString & title,
+MainFrame::MainFrame(const wxString & title,
                              const wxLocale & locale)
     : wxFrame((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
               wxDEFAULT_FRAME_STYLE),
@@ -972,7 +972,7 @@ RapidSvnFrame::RapidSvnFrame(const wxString & title,
   m->listCtrl->SetDropTarget(new FileListCtrlDropTarget(m->folderBrowser, m->listCtrl));
 }
 
-RapidSvnFrame::~RapidSvnFrame()
+MainFrame::~MainFrame()
 {
   wxConfigBase *cfg = wxConfigBase::Get();
   if (cfg == NULL)
@@ -1017,13 +1017,13 @@ RapidSvnFrame::~RapidSvnFrame()
 }
 
 void
-RapidSvnFrame::SetActivePane(ActivePane value)
+MainFrame::SetActivePane(ActivePane value)
 {
   m->activePane = value;
 }
 
 void
-RapidSvnFrame::TrimDisabledMenuItems(wxMenu & menu)
+MainFrame::TrimDisabledMenuItems(wxMenu & menu)
 {
   // Check for disabled items
   size_t pos = menu.GetMenuItemCount();
@@ -1075,7 +1075,7 @@ RapidSvnFrame::TrimDisabledMenuItems(wxMenu & menu)
 }
 
 void
-RapidSvnFrame::RefreshFileList()
+MainFrame::RefreshFileList()
 {
   if (m->dontUpdateFilelist)
     return;
@@ -1149,7 +1149,7 @@ RapidSvnFrame::RefreshFileList()
 }
 
 void
-RapidSvnFrame::RefreshFolderBrowser()
+MainFrame::RefreshFolderBrowser()
 {
   wxBusyCursor busy;
 
@@ -1184,7 +1184,7 @@ RapidSvnFrame::RefreshFolderBrowser()
 /*** START OF SECTION EVENTS ***/
 
 void
-RapidSvnFrame::OnActivate(wxActivateEvent & event)
+MainFrame::OnActivate(wxActivateEvent & event)
 {
   // in the past we used to refresh only if we had
   // had an action which changed stuff.
@@ -1214,49 +1214,49 @@ RapidSvnFrame::OnActivate(wxActivateEvent & event)
 }
 
 void
-RapidSvnFrame::OnAddWcBookmark(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnAddWcBookmark(wxCommandEvent & WXUNUSED(event))
 {
   AddWcBookmark();
 }
 
 void
-RapidSvnFrame::OnAddRepoBookmark(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnAddRepoBookmark(wxCommandEvent & WXUNUSED(event))
 {
   AddRepoBookmark();
 }
 
 void
-RapidSvnFrame::OnRemoveBookmark(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnRemoveBookmark(wxCommandEvent & WXUNUSED(event))
 {
   RemoveBookmark();
 }
 
 void
-RapidSvnFrame::OnEditBookmark(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnEditBookmark(wxCommandEvent & WXUNUSED(event))
 {
   EditBookmark();
 }
 
 void
-RapidSvnFrame::OnQuit(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnQuit(wxCommandEvent & WXUNUSED(event))
 {
   Close(TRUE);
 }
 
 void
-RapidSvnFrame::OnPreferences(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnPreferences(wxCommandEvent & WXUNUSED(event))
 {
   ShowPreferences();
 }
 
 void
-RapidSvnFrame::OnRefresh(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnRefresh(wxCommandEvent & WXUNUSED(event))
 {
   RefreshFolderBrowser();
 }
 
 void
-RapidSvnFrame::OnColumnReset(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnColumnReset(wxCommandEvent & WXUNUSED(event))
 {
   m->listCtrl->ResetColumns();
   for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
@@ -1274,7 +1274,7 @@ RapidSvnFrame::OnColumnReset(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnColumn(wxCommandEvent & event)
+MainFrame::OnColumn(wxCommandEvent & event)
 {
   int eventId = event.GetId();
   int col = 0;
@@ -1303,19 +1303,19 @@ RapidSvnFrame::OnColumn(wxCommandEvent & event)
 }
 
 void
-RapidSvnFrame::OnIncludePath(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnIncludePath(wxCommandEvent & WXUNUSED(event))
 {
   m->listCtrl->SetIncludePath(!m->listCtrl->GetIncludePath());
 }
 
 void
-RapidSvnFrame::OnSortAscending(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnSortAscending(wxCommandEvent & WXUNUSED(event))
 {
   m->listCtrl->SetSortAscending(!m->listCtrl->GetSortAscending());
 }
 
 void
-RapidSvnFrame::OnColumnSorting(wxCommandEvent & event)
+MainFrame::OnColumnSorting(wxCommandEvent & event)
 {
   // we dont want to list FileListCtrl::COL_NAME/COL_PATH/... here
   int col = event.GetId() - ID_ColumnSort_Name;
@@ -1328,7 +1328,7 @@ RapidSvnFrame::OnColumnSorting(wxCommandEvent & event)
 
 
 void
-RapidSvnFrame::OnFlatView(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnFlatView(wxCommandEvent & WXUNUSED(event))
 {
   bool newFlatMode = !m->folderBrowser->IsFlat();
 
@@ -1348,7 +1348,7 @@ RapidSvnFrame::OnFlatView(wxCommandEvent & WXUNUSED(event))
 
 
 void
-RapidSvnFrame::OnIndicateModifiedChildren(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnIndicateModifiedChildren(wxCommandEvent & WXUNUSED(event))
 {
   bool newValue = !m->folderBrowser->GetIndicateModifiedChildren();
 
@@ -1364,7 +1364,7 @@ RapidSvnFrame::OnIndicateModifiedChildren(wxCommandEvent & WXUNUSED(event))
 
 
 void
-RapidSvnFrame::OnRefreshWithUpdate(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnRefreshWithUpdate(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->IsMenuChecked(ID_RefreshWithUpdate);
   m->listCtrl->SetWithUpdate(checked);
@@ -1373,7 +1373,7 @@ RapidSvnFrame::OnRefreshWithUpdate(wxCommandEvent & WXUNUSED(event))
 
 
 void
-RapidSvnFrame::OnShowUnversioned(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnShowUnversioned(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->ToggleMenuAndTool(ID_ShowUnversioned, m->showUnversioned);
   m->listCtrl->SetShowUnversioned(checked);
@@ -1381,7 +1381,7 @@ RapidSvnFrame::OnShowUnversioned(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnShowUnmodified(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnShowUnmodified(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->ToggleMenuAndTool(ID_ShowUnmodified, m->showUnmodified);
   m->listCtrl->SetShowUnmodified(checked);
@@ -1389,7 +1389,7 @@ RapidSvnFrame::OnShowUnmodified(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnShowModified(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnShowModified(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->ToggleMenuAndTool(ID_ShowModified, m->showModified);
   m->listCtrl->SetShowModified(checked);
@@ -1397,7 +1397,7 @@ RapidSvnFrame::OnShowModified(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnShowConflicted(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnShowConflicted(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->ToggleMenuAndTool(ID_ShowConflicted, m->showConflicted);
   m->listCtrl->SetShowConflicted(checked);
@@ -1405,7 +1405,7 @@ RapidSvnFrame::OnShowConflicted(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnIgnoreExternals(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnIgnoreExternals(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->IsMenuChecked(ID_IgnoreExternals);
   m->listCtrl->SetIgnoreExternals(checked);
@@ -1413,7 +1413,7 @@ RapidSvnFrame::OnIgnoreExternals(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnShowIgnored(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnShowIgnored(wxCommandEvent & WXUNUSED(event))
 {
   bool checked = m->IsMenuChecked(ID_ShowIgnored);
   m->listCtrl->SetShowIgnored(checked);
@@ -1421,7 +1421,7 @@ RapidSvnFrame::OnShowIgnored(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnLogin(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnLogin(wxCommandEvent & WXUNUSED(event))
 {
   svn::Context * context = m->folderBrowser->GetContext();
 
@@ -1442,7 +1442,7 @@ RapidSvnFrame::OnLogin(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnLogout(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnLogout(wxCommandEvent & WXUNUSED(event))
 {
   svn::Context * context = m->folderBrowser->GetContext();
 
@@ -1453,19 +1453,19 @@ RapidSvnFrame::OnLogout(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnStop(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnStop(wxCommandEvent & WXUNUSED(event))
 {
   m->listener.cancel(true);
 }
 
 void
-RapidSvnFrame::OnInfo(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnInfo(wxCommandEvent & WXUNUSED(event))
 {
   ShowInfo();
 }
 
 void
-RapidSvnFrame::OnUpdateCommand(wxUpdateUIEvent & updateUIEvent)
+MainFrame::OnUpdateCommand(wxUpdateUIEvent & updateUIEvent)
 {
   if (m->IsRunning()) {
     updateUIEvent.Enable(false);
@@ -1490,7 +1490,7 @@ RapidSvnFrame::OnUpdateCommand(wxUpdateUIEvent & updateUIEvent)
 }
 
 void
-RapidSvnFrame::OnHelpContents(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnHelpContents(wxCommandEvent & WXUNUSED(event))
 {
   try
   {
@@ -1509,7 +1509,7 @@ RapidSvnFrame::OnHelpContents(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnHelpIndex(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnHelpIndex(wxCommandEvent & WXUNUSED(event))
 {
   try
   {
@@ -1526,7 +1526,7 @@ RapidSvnFrame::OnHelpIndex(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnHelpStartupTips(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnHelpStartupTips(wxCommandEvent & WXUNUSED(event))
 {
 #ifdef USE_STARTUP_TIPS
   RapidSvnApp& app = ::wxGetApp();
@@ -1541,7 +1541,7 @@ RapidSvnFrame::OnHelpStartupTips(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnAbout(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnAbout(wxCommandEvent & WXUNUSED(event))
 {
   AboutDlg dlg(this, m->locale);
 
@@ -1566,7 +1566,7 @@ info_print_time(apr_time_t atime, const wxChar * desc, wxString & str)
 }
 
 void
-RapidSvnFrame::PrintTimeMeasurements(apr_time_t start, apr_time_t end, const wxString & name)
+MainFrame::PrintTimeMeasurements(apr_time_t start, apr_time_t end, const wxString & name)
 {
   wxString msg(name);
   Trace(wxT('\n') + msg);
@@ -1583,7 +1583,7 @@ RapidSvnFrame::PrintTimeMeasurements(apr_time_t start, apr_time_t end, const wxS
 }
 
 void
-RapidSvnFrame::OnTestNewWxString(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnTestNewWxString(wxCommandEvent & WXUNUSED(event))
 {
   apr_time_t start = apr_time_now();
 
@@ -1609,7 +1609,7 @@ RapidSvnFrame::OnTestNewWxString(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnTestListener(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnTestListener(wxCommandEvent & WXUNUSED(event))
 {
   apr_time_t start = apr_time_now();
 
@@ -1682,7 +1682,7 @@ RapidSvnFrame::OnTestListener(wxCommandEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnTestCheckout(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnTestCheckout(wxCommandEvent & WXUNUSED(event))
 {
   apr_time_t start = apr_time_now();
 
@@ -1698,7 +1698,7 @@ RapidSvnFrame::OnTestCheckout(wxCommandEvent & WXUNUSED(event))
 #endif
 
 void
-RapidSvnFrame::OnFileCommand(wxCommandEvent & event)
+MainFrame::OnFileCommand(wxCommandEvent & event)
 {
   int id = event.GetId();
 
@@ -1726,7 +1726,7 @@ RapidSvnFrame::OnFileCommand(wxCommandEvent & event)
 }
 
 void
-RapidSvnFrame::OnActionEvent(wxCommandEvent & event)
+MainFrame::OnActionEvent(wxCommandEvent & event)
 {
   const int token = event.GetInt();
 
@@ -1992,12 +1992,12 @@ RapidSvnFrame::OnActionEvent(wxCommandEvent & event)
 }
 
 void
-RapidSvnFrame::OnToolEnter(wxCommandEvent & WXUNUSED(event))
+MainFrame::OnToolEnter(wxCommandEvent & WXUNUSED(event))
 {
 }
 
 void
-RapidSvnFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
+MainFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
 {
   if (m->IsRunning())
     return;
@@ -2030,7 +2030,7 @@ RapidSvnFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
 }
 
 void
-RapidSvnFrame::OnFolderBrowserKeyDown(wxTreeEvent & event)
+MainFrame::OnFolderBrowserKeyDown(wxTreeEvent & event)
 {
   switch (event.GetKeyEvent().GetKeyCode())
   {
@@ -2045,14 +2045,14 @@ RapidSvnFrame::OnFolderBrowserKeyDown(wxTreeEvent & event)
 }
 
 void
-RapidSvnFrame::OnFileListSelected(wxListEvent & WXUNUSED(event))
+MainFrame::OnFileListSelected(wxListEvent & WXUNUSED(event))
 {
   m->activePane = ACTIVEPANE_FILELIST;
 }
 
 
 void
-RapidSvnFrame::OnListenerEvent(wxCommandEvent & event)
+MainFrame::OnListenerEvent(wxCommandEvent & event)
 {
   m->listener.handleEvent(event);
 }
@@ -2061,7 +2061,7 @@ RapidSvnFrame::OnListenerEvent(wxCommandEvent & event)
 
 
 void
-RapidSvnFrame::AddWcBookmark()
+MainFrame::AddWcBookmark()
 {
   const wxArrayString & lastDirs=TheHistoryManager.ReadList(HISTORY_EXISTING_WORKING_DIRECTORY);
 
@@ -2110,7 +2110,7 @@ directory to the bookmarks!"),
 }
 
 void
-RapidSvnFrame::AddRepoBookmark()
+MainFrame::AddRepoBookmark()
 {
   const int flags =
     UpdateDlg::WITH_URL |
@@ -2139,7 +2139,7 @@ RapidSvnFrame::AddRepoBookmark()
 }
 
 inline void
-RapidSvnFrame::RemoveBookmark()
+MainFrame::RemoveBookmark()
 {
   wxASSERT(m->folderBrowser);
   if (m->folderBrowser->RemoveBookmark())
@@ -2149,7 +2149,7 @@ RapidSvnFrame::RemoveBookmark()
 }
 
 void
-RapidSvnFrame::EditBookmark()
+MainFrame::EditBookmark()
 {
   wxASSERT(m->folderBrowser);
 
@@ -2189,7 +2189,7 @@ RapidSvnFrame::EditBookmark()
 
 
 void
-RapidSvnFrame::ShowInfo()
+MainFrame::ShowInfo()
 {
   bool withUpdate = false;
   if (m->listCtrl)
@@ -2223,7 +2223,7 @@ RapidSvnFrame::ShowInfo()
 
 
 void
-RapidSvnFrame::ShowPreferences()
+MainFrame::ShowPreferences()
 {
   Preferences prefs;
   PreferencesDlg dlg(this, & prefs);
@@ -2237,7 +2237,7 @@ RapidSvnFrame::ShowPreferences()
 }
 
 void
-RapidSvnFrame::UpdateCurrentPath()
+MainFrame::UpdateCurrentPath()
 {
   if (m->folderBrowser == 0)
   {
@@ -2257,7 +2257,7 @@ RapidSvnFrame::UpdateCurrentPath()
 }
 
 bool
-RapidSvnFrame::InvokeDefaultAction()
+MainFrame::InvokeDefaultAction()
 {
   const svn::StatusSel & statusSel = m->GetStatusSel();
 
@@ -2285,7 +2285,7 @@ RapidSvnFrame::InvokeDefaultAction()
 }
 
 void
-RapidSvnFrame::Perform(Action * action)
+MainFrame::Perform(Action * action)
 {
   try
   {
@@ -2308,25 +2308,25 @@ RapidSvnFrame::Perform(Action * action)
 }
 
 inline void
-RapidSvnFrame::UpdateMenuSorting()
+MainFrame::UpdateMenuSorting()
 {
   m->CheckSort(m->listCtrl->GetSortColumn() + ID_ColumnSort_Min + 1);
 }
 
 inline void
-RapidSvnFrame::UpdateMenuIncludePath()
+MainFrame::UpdateMenuIncludePath()
 {
   m->CheckMenu(ID_Include_Path, m->listCtrl->GetIncludePath());
 }
 
 inline void
-RapidSvnFrame::UpdateMenuAscending()
+MainFrame::UpdateMenuAscending()
 {
   m->CheckMenu(ID_Sort_Ascending, m->listCtrl->GetSortAscending());
 }
 
 void
-RapidSvnFrame::SetIncludePathVisibility(bool flatMode)
+MainFrame::SetIncludePathVisibility(bool flatMode)
 {
   if (flatMode == false)
   {
@@ -2344,7 +2344,7 @@ RapidSvnFrame::SetIncludePathVisibility(bool flatMode)
 }
 
 void
-RapidSvnFrame::OnSize(wxSizeEvent & sizeEvent)
+MainFrame::OnSize(wxSizeEvent & sizeEvent)
 {
   if (!this->IsMaximized() && IsShown())
   {
@@ -2356,7 +2356,7 @@ RapidSvnFrame::OnSize(wxSizeEvent & sizeEvent)
 }
 
 void
-RapidSvnFrame::OnFocusChanged(wxCommandEvent & event)
+MainFrame::OnFocusChanged(wxCommandEvent & event)
 {
   switch (event.GetId())
   {

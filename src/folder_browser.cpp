@@ -47,11 +47,11 @@
 #include "folder_browser.hpp"
 #include "folder_item_data.hpp"
 #include "ids.hpp"
-#include "utils.hpp"
-#include "rapidsvn_app.hpp"
-#include "rapidsvn_frame.hpp"
-#include "rapidsvn_drop_target.hpp"
+#include "main_frame.hpp"
 #include "preferences.hpp"
+#include "rapidsvn_app.hpp"
+#include "rapidsvn_drop_target.hpp"
+#include "utils.hpp"
 
 // bitmaps
 #include "res/bitmaps/computer.png.h"
@@ -354,7 +354,7 @@ public:
     }
 
     // Check for disabled items
-    RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp().GetTopWindow();
+    MainFrame* frame = (MainFrame*) wxGetApp().GetTopWindow();
     frame->TrimDisabledMenuItems(menu);
 
     // show menu

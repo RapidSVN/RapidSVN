@@ -50,9 +50,9 @@
 #include "columns.hpp"
 #include "filelist_ctrl.hpp"
 #include "ids.hpp"
+#include "main_frame.hpp"
 #include "preferences.hpp"
 #include "rapidsvn_app.hpp"
-#include "rapidsvn_frame.hpp"
 #include "utils.hpp"
 #include "rapidsvn_drop_target.hpp"
 
@@ -1428,7 +1428,7 @@ FileListCtrl::ShowMenu(wxPoint & WXUNUSED(pt))
   AppendQueryMenu(&menu);
 
   // Check for disabled items
-  RapidSvnFrame* frame = (RapidSvnFrame*) wxGetApp().GetTopWindow();
+  MainFrame* frame = (MainFrame*) wxGetApp().GetTopWindow();
   frame->TrimDisabledMenuItems(menu);
 
   PopupMenu(&menu);

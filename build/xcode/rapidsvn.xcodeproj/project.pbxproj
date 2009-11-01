@@ -70,7 +70,7 @@
 		4D5979EA0FA8AA4500BE5B53 /* property_dlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D5979C30FA8AA4500BE5B53 /* property_dlg.cpp */; };
 		4D5979EB0FA8AA4500BE5B53 /* proportional_splitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D5979C50FA8AA4500BE5B53 /* proportional_splitter.cpp */; };
 		4D5979EC0FA8AA4500BE5B53 /* rapidsvn_drop_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D5979C70FA8AA4500BE5B53 /* rapidsvn_drop_target.cpp */; };
-		4D5979ED0FA8AA4500BE5B53 /* rapidsvn_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D5979C90FA8AA4500BE5B53 /* rapidsvn_frame.cpp */; };
+		4D5979ED0FA8AA4500BE5B53 /* main_frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D5979C90FA8AA4500BE5B53 /* main_frame.cpp */; };
 		4D5979EE0FA8AA4500BE5B53 /* rapidsvn_generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D5979CB0FA8AA4500BE5B53 /* rapidsvn_generated.cpp */; };
 		4D5979EF0FA8AA4500BE5B53 /* rename_action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D5979CD0FA8AA4500BE5B53 /* rename_action.cpp */; };
 		4D5979F00FA8AA4500BE5B53 /* report_dlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D5979CF0FA8AA4500BE5B53 /* report_dlg.cpp */; };
@@ -238,8 +238,8 @@
 		4D5979C60FA8AA4500BE5B53 /* proportional_splitter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = proportional_splitter.hpp; sourceTree = "<group>"; };
 		4D5979C70FA8AA4500BE5B53 /* rapidsvn_drop_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rapidsvn_drop_target.cpp; sourceTree = "<group>"; };
 		4D5979C80FA8AA4500BE5B53 /* rapidsvn_drop_target.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rapidsvn_drop_target.hpp; sourceTree = "<group>"; };
-		4D5979C90FA8AA4500BE5B53 /* rapidsvn_frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rapidsvn_frame.cpp; sourceTree = "<group>"; };
-		4D5979CA0FA8AA4500BE5B53 /* rapidsvn_frame.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rapidsvn_frame.hpp; sourceTree = "<group>"; };
+		4D5979C90FA8AA4500BE5B53 /* main_frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_frame.cpp; sourceTree = "<group>"; };
+		4D5979CA0FA8AA4500BE5B53 /* main_frame.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = main_frame.hpp; sourceTree = "<group>"; };
 		4D5979CB0FA8AA4500BE5B53 /* rapidsvn_generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rapidsvn_generated.cpp; sourceTree = "<group>"; };
 		4D5979CC0FA8AA4500BE5B53 /* rapidsvn_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidsvn_generated.h; sourceTree = "<group>"; };
 		4D5979CD0FA8AA4500BE5B53 /* rename_action.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rename_action.cpp; sourceTree = "<group>"; };
@@ -381,8 +381,8 @@
 				4D5979C60FA8AA4500BE5B53 /* proportional_splitter.hpp */,
 				4D5979C70FA8AA4500BE5B53 /* rapidsvn_drop_target.cpp */,
 				4D5979C80FA8AA4500BE5B53 /* rapidsvn_drop_target.hpp */,
-				4D5979C90FA8AA4500BE5B53 /* rapidsvn_frame.cpp */,
-				4D5979CA0FA8AA4500BE5B53 /* rapidsvn_frame.hpp */,
+				4D5979C90FA8AA4500BE5B53 /* main_frame.cpp */,
+				4D5979CA0FA8AA4500BE5B53 /* main_frame.hpp */,
 				4D5979CB0FA8AA4500BE5B53 /* rapidsvn_generated.cpp */,
 				4D5979CC0FA8AA4500BE5B53 /* rapidsvn_generated.h */,
 				4D5979CD0FA8AA4500BE5B53 /* rename_action.cpp */,
@@ -675,7 +675,7 @@
 				4D5979EA0FA8AA4500BE5B53 /* property_dlg.cpp in Sources */,
 				4D5979EB0FA8AA4500BE5B53 /* proportional_splitter.cpp in Sources */,
 				4D5979EC0FA8AA4500BE5B53 /* rapidsvn_drop_target.cpp in Sources */,
-				4D5979ED0FA8AA4500BE5B53 /* rapidsvn_frame.cpp in Sources */,
+				4D5979ED0FA8AA4500BE5B53 /* main_frame.cpp in Sources */,
 				4D5979EE0FA8AA4500BE5B53 /* rapidsvn_generated.cpp in Sources */,
 				4D5979EF0FA8AA4500BE5B53 /* rename_action.cpp in Sources */,
 				4D5979F00FA8AA4500BE5B53 /* report_dlg.cpp in Sources */,

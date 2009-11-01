@@ -526,6 +526,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\main_frame.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\merge_action.cpp"
 				>
 			</File>
@@ -567,10 +571,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\rapidsvn_drop_target.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rapidsvn_frame.cpp"
 				>
 			</File>
 			<File
@@ -896,6 +896,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\main_frame.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\merge_action.hpp"
 				>
 			</File>
@@ -941,10 +945,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\rapidsvn_drop_target.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rapidsvn_frame.hpp"
 				>
 			</File>
 			<File

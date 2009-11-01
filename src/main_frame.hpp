@@ -21,8 +21,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
-#define _RAPIDSVN_FRAME_HEADER_H_INCLUDED_
+#ifndef _MAIN_FRAME_HEADER_H_INCLUDED_
+#define _MAIN_FRAME_HEADER_H_INCLUDED_
 
 // wxWidgets
 #include "wx/frame.h"
@@ -51,7 +51,7 @@ class wxMenu;
 class wxString;
 class wxListEvent;
 
-class RapidSvnFrame : public wxFrame
+class MainFrame : public wxFrame
 {
 public:
   /**
@@ -60,9 +60,9 @@ public:
    * @param title Application title
    * @param locale The locale that's used by the app
    */
-  RapidSvnFrame(const wxString & title,
+  MainFrame(const wxString & title,
                 const wxLocale & locale);
-  virtual ~RapidSvnFrame();
+  virtual ~MainFrame();
 
   /** Allow children to trim their popup menus using the frames logic */
   void
@@ -77,10 +77,10 @@ public:
 
 private:
   /** disallow default constructor */
-  RapidSvnFrame();
+  MainFrame();
 
   /** disallow copy constructor */
-  RapidSvnFrame(const RapidSvnFrame &);
+  MainFrame(const MainFrame &);
 
   void OnActivate(wxActivateEvent & event);
   void OnFocusChanged(wxCommandEvent & event);
