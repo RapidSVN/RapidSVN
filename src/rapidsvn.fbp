@@ -5967,8 +5967,8 @@
                         <property name="name">m_splitterHoriz</property>
                         <property name="permission">protected</property>
                         <property name="pos"></property>
-                        <property name="sashgravity">0.0</property>
-                        <property name="sashpos">0</property>
+                        <property name="sashgravity">1</property>
+                        <property name="sashpos">-1</property>
                         <property name="sashsize">-1</property>
                         <property name="size"></property>
                         <property name="splitmode">wxSPLIT_HORIZONTAL</property>

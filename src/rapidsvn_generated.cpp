@@ -744,6 +744,7 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	sizerRoot = new wxBoxSizer( wxVERTICAL );
 	
 	m_splitterHoriz = new SplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE );
+	m_splitterHoriz->SetSashGravity( 1 );
 	m_splitterHoriz->Connect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterHorizOnIdle ), NULL, this );
 	m_panelTop = new wxPanel( m_splitterHoriz, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* sizerTop;
@@ -784,7 +785,7 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	panelBottom->SetSizer( sizerBottom );
 	panelBottom->Layout();
 	sizerBottom->Fit( panelBottom );
-	m_splitterHoriz->SplitHorizontally( m_panelTop, panelBottom, 0 );
+	m_splitterHoriz->SplitHorizontally( m_panelTop, panelBottom, -1 );
 	sizerRoot->Add( m_splitterHoriz, 1, wxEXPAND, 5 );
 	
 	this->SetSizer( sizerRoot );

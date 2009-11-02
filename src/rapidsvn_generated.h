@@ -334,7 +334,7 @@ class MainFrameBase : public wxFrame
 		~MainFrameBase();
 		void m_splitterHorizOnIdle( wxIdleEvent& )
 		{
-		m_splitterHoriz->SetSashPosition( 0 );
+		m_splitterHoriz->SetSashPosition( -1 );
 		m_splitterHoriz->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterHorizOnIdle ), NULL, this );
 		}
 		
