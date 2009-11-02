@@ -625,9 +625,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_LIST_ITEM_SELECTED(-1, MainFrame::OnFileListSelected)
 
   EVT_MENU_RANGE(LISTENER_MIN, LISTENER_MAX, MainFrame::OnListenerEvent)
-
-  EVT_MENU(FOLDER_BROWSER, MainFrame::OnFocusChanged)
-  EVT_MENU(FILELIST_CTRL, MainFrame::OnFocusChanged)
 END_EVENT_TABLE()
 
 /** class implementation **/
@@ -2123,24 +2120,19 @@ MainFrame::OnSize(wxSizeEvent & sizeEvent)
   sizeEvent.Skip();
 }
 
-void
-MainFrame::OnFocusChanged(wxCommandEvent & event)
+
+void 
+MainFrame::OnFolderBrowserSetFocus(wxFocusEvent& event)
 {
-  switch (event.GetId())
-  {
-  case FOLDER_BROWSER:
-    SetActivePane(ACTIVEPANE_FOLDER_BROWSER);
-    break;
-
-  case FILELIST_CTRL:
-    SetActivePane(ACTIVEPANE_FILELIST);
-    break;
-
-  default:
-    ; // unknown/not interesting
-  }
+  SetActivePane(ACTIVEPANE_FOLDER_BROWSER);
 }
 
+
+void 
+MainFrame::OnListCtrlSetFocus(wxFocusEvent& event)
+{
+  SetActivePane(ACTIVEPANE_FILELIST);
+}
 
 /**
  * In @ref MainFrameBase there is an event handler that uses

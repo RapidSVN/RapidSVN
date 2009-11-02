@@ -211,6 +211,8 @@ private:
 protected: // inherited from MainFrameBase
   virtual void OnActivate(wxActivateEvent & event);
   virtual void OnSize(wxSizeEvent & sizeEvent);
+	virtual void OnFolderBrowserSetFocus(wxFocusEvent& event);
+	virtual void OnListCtrlSetFocus(wxFocusEvent& event);
 private:
   /** hide implementation data */
   struct Data;

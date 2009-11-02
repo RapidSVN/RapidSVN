@@ -327,6 +327,8 @@ class MainFrameBase : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnActivate( wxActivateEvent& event ){ event.Skip(); }
 		virtual void OnSize( wxSizeEvent& event ){ event.Skip(); }
+		virtual void OnFolderBrowserSetFocus( wxFocusEvent& event ){ event.Skip(); }
+		virtual void OnListCtrlSetFocus( wxFocusEvent& event ){ event.Skip(); }
 		
 	
 	public:

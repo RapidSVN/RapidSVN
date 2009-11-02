@@ -795,6 +795,8 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	// Connect Events
 	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( MainFrameBase::OnActivate ) );
 	this->Connect( wxEVT_SIZE, wxSizeEventHandler( MainFrameBase::OnSize ) );
+	m_folderBrowser->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnFolderBrowserSetFocus ), NULL, this );
+	m_listCtrl->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnListCtrlSetFocus ), NULL, this );
 }
 
 MainFrameBase::~MainFrameBase()
@@ -802,4 +804,6 @@ MainFrameBase::~MainFrameBase()
 	// Disconnect Events
 	this->Disconnect( wxEVT_ACTIVATE, wxActivateEventHandler( MainFrameBase::OnActivate ) );
 	this->Disconnect( wxEVT_SIZE, wxSizeEventHandler( MainFrameBase::OnSize ) );
+	m_folderBrowser->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnFolderBrowserSetFocus ), NULL, this );
+	m_listCtrl->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnListCtrlSetFocus ), NULL, this );
 }

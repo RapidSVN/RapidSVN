@@ -6201,7 +6201,7 @@
                                                                 <event name="OnRightDClick"></event>
                                                                 <event name="OnRightDown"></event>
                                                                 <event name="OnRightUp"></event>
-                                                                <event name="OnSetFocus"></event>
+                                                                <event name="OnSetFocus">OnFolderBrowserSetFocus</event>
                                                                 <event name="OnSize"></event>
                                                                 <event name="OnTreeBeginDrag"></event>
                                                                 <event name="OnTreeBeginLabelEdit"></event>
@@ -6342,7 +6342,7 @@
                                                                 <event name="OnRightDClick"></event>
                                                                 <event name="OnRightDown"></event>
                                                                 <event name="OnRightUp"></event>
-                                                                <event name="OnSetFocus"></event>
+                                                                <event name="OnSetFocus">OnListCtrlSetFocus</event>
                                                                 <event name="OnSize"></event>
                                                                 <event name="OnUpdateUI"></event>
                                                             </object>
