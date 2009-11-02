@@ -97,6 +97,12 @@
 #include "res/bitmaps/rep_locked_newer_file.png.h"
 #include "res/bitmaps/rep_locked_modified_newer_file.png.h"
 
+/** 
+ * With the latest version of Subversion (tested with Subversion 1.6.5)
+ * this workaround was not needed anymore
+ */
+#define WORKAROUND_ISSUE_324 0
+
 /**
  * Tags for wxConfig file settings, defined here to avoid duplicate
  * hard coded strings.
@@ -652,7 +658,9 @@ public:
   bool ShowConflicted;
   bool IgnoreExternals;
   bool ShowIgnored;
+#if WORKAROUND_ISSUE_324
   bool IsRelative;
+#endif
 
   svn::StatusSel statusSel;
 
@@ -700,8 +708,10 @@ FileListCtrl::Data::Data()
     IncludePath(true), SortAscending(true),
     DirtyColumns(true), FlatMode(false),
     WithUpdate(false), ShowUnversioned(true),
-    IgnoreExternals(false), ShowIgnored(false),
-    IsRelative(false)
+    IgnoreExternals(false), ShowIgnored(false)
+#if WORKAROUND_ISSUE_324
+    ,IsRelative(false)
+#endif
 {
   ImageListSmall = new wxImageList(16, 16, TRUE);
 
@@ -874,7 +884,11 @@ FileListCtrl::Data::CompareFunction(long item1, long item2, long sortData)
 
   // depening on absolute or relative we have to adapt the
   // length we take for "."
+#if WORKAROUND_ISSUE_324
   size_t compareLength = data->IsRelative ? 0 : data->Path.length();
+#else
+  size_t compareLength = data->Path.length();
+#endif
 
   if (ps1 && ps2)
     return CompareItems(ps1, ps2, data->SortColumn,
@@ -1029,6 +1043,7 @@ FileListCtrl::RefreshFileList()
     filter.showIgnored = m->ShowIgnored;
     filter.showExternals = !m->IgnoreExternals;
 
+#if WORKAROUND_ISSUE_324
     // Workaround for issue 324 (only local+non-flat+update):
     //   we chdir to the requested dir and pass "." to svn
     if (!pathUtf8.isUrl() && m->WithUpdate && !m->FlatMode)
@@ -1046,6 +1061,11 @@ FileListCtrl::RefreshFileList()
       client.status(pathUtf8.c_str(), filter, m->FlatMode,
                     m->WithUpdate, statusSelector);
     }
+#else
+    client.status(pathUtf8.c_str(), filter, m->FlatMode,
+                  m->WithUpdate, statusSelector);
+#endif
+
 
     svn::StatusEntries::const_iterator it;
     for (it = statusSelector.begin(); it != statusSelector.end(); it++)
@@ -1098,6 +1118,7 @@ FileListCtrl::CreateLables(const svn::Status & status, const svn::Path & basePat
   bool isDot;;
   svn::Path pathUtf8;
 
+#if WORKAROUND_ISSUE_324
   if (m->IsRelative)
   {
     const char * path = status.path();
@@ -1117,6 +1138,7 @@ FileListCtrl::CreateLables(const svn::Status & status, const svn::Path & basePat
     }
   }
   else
+#endif
   {
     fullPath = status.path();
 
