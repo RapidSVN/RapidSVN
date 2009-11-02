@@ -180,7 +180,7 @@ CreateReposDlg::OnComboConfigDirText(wxCommandEvent & WXUNUSED(event))
 void 
 CreateReposDlg::OnButtonBrowseDirClick(wxCommandEvent & WXUNUSED(event))
 {
-  wxASSERT(0 != m_comboDirectory);
+  wxASSERT(0 != m_comboDir);
 
   wxDirDialog dialog(this, _("Select a directory"),
                      GetDir(),
@@ -284,7 +284,7 @@ CreateReposDlg::GetConfigDir() const
 int
 CreateReposDlg::GetType() const
 {
-  wxASSERT(0 != m_comboType);
+  wxASSERT(0 != m_choiceType);
 
   return m_choiceType->GetSelection();
 }
