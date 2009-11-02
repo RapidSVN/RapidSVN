@@ -5972,7 +5972,7 @@
                         <property name="sashsize">-1</property>
                         <property name="size"></property>
                         <property name="splitmode">wxSPLIT_HORIZONTAL</property>
-                        <property name="style">wxSP_3D|wxSP_LIVE_UPDATE</property>
+                        <property name="style">wxSP_LIVE_UPDATE</property>
                         <property name="subclass"></property>
                         <property name="tooltip"></property>
                         <property name="window_extra_style"></property>
@@ -6076,7 +6076,7 @@
                                             <property name="sashsize">-1</property>
                                             <property name="size"></property>
                                             <property name="splitmode">wxSPLIT_VERTICAL</property>
-                                            <property name="style">wxSP_3D|wxSP_LIVE_UPDATE</property>
+                                            <property name="style">wxSP_LIVE_UPDATE</property>
                                             <property name="subclass"></property>
                                             <property name="tooltip"></property>
                                             <property name="window_extra_style"></property>
@@ -6428,7 +6428,7 @@
                                             <property name="value"></property>
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
-                                            <property name="window_style"></property>
+                                            <property name="window_style">wxSUNKEN_BORDER</property>
                                             <event name="OnChar"></event>
                                             <event name="OnEnterWindow"></event>
                                             <event name="OnEraseBackground"></event>
