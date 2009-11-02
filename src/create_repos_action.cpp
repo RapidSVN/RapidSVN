@@ -24,12 +24,7 @@
 
 // wxWidgets
 #include "wx/wx.h"
-#include "wx/intl.h"
-
-// svncpp
-#include "svncpp/client.hpp"
-#include "svncpp/status_selection.hpp"
-#include "svncpp/targets.hpp"
+#include "wx/filename.h"
 
 // app
 #include "action_event.hpp"
@@ -139,7 +134,9 @@ CreateRepositoryAction::Prepare()
     if (!filename.StartsWith(wxT("/")))
       repoBookmark += wxT("/");
 
-    repoBookmark += filename;
+    // we need / instead of a backslash
+    wxFileName intern(filename);
+    repoBookmark += intern.GetFullPath(wxPATH_UNIX);
 
     ActionEvent::Post(GetParent(), TOKEN_ADD_BOOKMARK, repoBookmark);
   }

@@ -115,7 +115,7 @@ CreateReposDlg::CheckValues()
     valid = false;
     msg = _("svnadmin could not be found");
   }
-  else if (!::IsValidDir(dir))
+  else if (dir.IsEmpty() || !::IsValidDir(dir))
   {
     valid = false;
     msg = _("Select an existing directory for the repository");
@@ -257,6 +257,12 @@ CreateReposDlg::GetName() const
 wxString 
 CreateReposDlg::GetFilename() const
 {
+  wxString dir(GetDir());
+  wxString name(GetName());
+
+  if (dir.IsEmpty() || name.IsEmpty())
+    return wxEmptyString;
+
   wxFileName filename(GetDir(), GetName());
 
   filename.Normalize(wxPATH_NORM_ENV_VARS | 
