@@ -23,8 +23,6 @@
  */
 /**
  * @file main_frame.cpp
- * @todo The restoration of the splitter position doesnt work after the
- *       conversion to MainFrameBase, Test/Implement for wxGTK/wxMSW
  */
 // wxWidgets
 #include "wx/confbase.h"
