@@ -281,7 +281,7 @@ private:
   void OnBeginDrag(wxListEvent & event);
   void OnSetFocus(wxFocusEvent & event);
 
-  void CreateLables(const svn::Status & status, const svn::Path & basePath);
+  void CreateLabels(const svn::Status & status, const svn::Path & basePath);
 
 private:
   DECLARE_EVENT_TABLE()

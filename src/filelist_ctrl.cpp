@@ -77,6 +77,10 @@
 #include "res/bitmaps/modified_newer_file.png.h"
 #include "res/bitmaps/externals_folder.png.h"
 
+#include "res/bitmaps/remote_added_file.png.h"
+#include "res/bitmaps/remote_added_folder.png.h"
+
+
 #include "res/bitmaps/locked_file.png.h"
 #include "res/bitmaps/locked_missing_file.png.h"
 #include "res/bitmaps/locked_deleted_file.png.h"
@@ -547,6 +551,8 @@ enum
   IMG_INDX_NEWER_FOLDER,
   IMG_INDX_MODIFIED_NEWER,
   IMG_INDX_EXTERNALS_FOLDER,
+  IMG_INDX_REMOTE_ADDED_FILE,
+  IMG_INDX_REMOTE_ADDED_FOLDER,
   IMG_INDX_COUNT
 };
 
@@ -591,7 +597,9 @@ static const MapItem MAP_ICON_ARRAY [] =
   MAP_ITEM(IMG_INDX_NEWER_FILE,                 newer_file_png),
   MAP_ITEM(IMG_INDX_NEWER_FOLDER,               newer_folder_png),
   MAP_ITEM(IMG_INDX_MODIFIED_NEWER,             modified_newer_file_png),
-  MAP_ITEM(IMG_INDX_EXTERNALS_FOLDER,           externals_folder_png)
+  MAP_ITEM(IMG_INDX_EXTERNALS_FOLDER,           externals_folder_png),
+  MAP_ITEM(IMG_INDX_REMOTE_ADDED_FILE,          remote_added_file_png),
+  MAP_ITEM(IMG_INDX_REMOTE_ADDED_FOLDER,        remote_added_folder_png)
 };
 
 
@@ -773,7 +781,22 @@ FileListCtrl::Data::GetImageIndex(const svn::Status & status)
     (status.reposTextStatus() == svn_wc_status_modified) ||
     (status.reposPropStatus() == svn_wc_status_modified);
 
-  if (status.isVersioned())
+  svn_node_kind_t oodKind = status.oodKind();
+  if (svn_node_file == oodKind)
+  {
+    if (svn_wc_status_added == status.reposTextStatus())
+      imageIndex = ImageIndexArray[IMG_INDX_REMOTE_ADDED_FILE];
+    else
+      imageIndex = ImageIndexArray[IMG_INDX_NEWER_FILE];
+  }
+  else if (svn_node_dir == oodKind)
+  {
+    if (svn_wc_status_added == status.reposTextStatus())
+      imageIndex = ImageIndexArray[IMG_INDX_REMOTE_ADDED_FOLDER];
+    else
+      imageIndex = ImageIndexArray[IMG_INDX_NEWER_FOLDER];
+  }
+  else if (status.isVersioned())
   {
     int textIndex = status.textStatus();
     int propIndex = status.propStatus();
@@ -820,7 +843,8 @@ FileListCtrl::Data::GetImageIndex(const svn::Status & status)
       }
     }
   }
-  else
+  else // if (status.reposTextStatus() == 
+
   {
     wxString wxFullPath = Utf8ToLocal(status.path());
 
@@ -1072,7 +1096,7 @@ FileListCtrl::RefreshFileList()
     {
       const svn::Status & status = *it;
 
-      CreateLables(status, pathUtf8);
+      CreateLabels(status, pathUtf8);
       // trying to restore selection
       if (std::binary_search(selBegin, selEnd, status.path()))
       {
@@ -1111,7 +1135,7 @@ FileListCtrl::RefreshFileList()
 }
 
 void
-FileListCtrl::CreateLables(const svn::Status & status, const svn::Path & basePathUtf8)
+FileListCtrl::CreateLabels(const svn::Status & status, const svn::Path & basePathUtf8)
 {
   wxString values[COL_COUNT];
   svn::Path fullPath;
@@ -1180,8 +1204,9 @@ FileListCtrl::CreateLables(const svn::Status & status, const svn::Path & basePat
   int i = GetItemCount();
   int imageIndex = m->GetImageIndex(status);
 
-  // User want to see unversioned entries?
-  if (status.isVersioned() || m->ShowUnversioned)
+  // User want to see unversioned or outdated entries?
+  if (status.isVersioned() || m->ShowUnversioned || 
+      (svn_node_none != status.oodKind()))
   {
     InsertItem(i, values[COL_NAME], imageIndex);
 
@@ -1189,7 +1214,23 @@ FileListCtrl::CreateLables(const svn::Status & status, const svn::Path & basePat
     SetItemData(i, (long) new svn::Status(status));      // The control now owns this data
     // and must delete it in due course.
 
-    if (status.isVersioned())
+    if (svn_node_none != status.oodKind())
+    {
+      values[COL_CMT_REV].Printf(wxT("%ld"), status.oodLastCmtRev());
+      values[COL_AUTHOR] = Utf8ToLocal(status.oodLastCmtAuthor());
+      values[COL_CMT_DATE] = FormatDateTime(status.oodLastCmtDate());
+
+      switch (status.reposTextStatus())
+      {
+      case svn_wc_status_added:
+        values[COL_TEXT_STATUS] = _("added");
+        break;
+      case svn_wc_status_modified:
+        values[COL_TEXT_STATUS] = _("modified");
+        break;
+      }
+    }
+    else if (status.isVersioned())
     {
       const svn::Entry & entry = status.entry();
 
