@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 16 2008)
+// C++ code generated with wxFormBuilder (version Dec 29 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -381,7 +381,7 @@ CommitLogDlgBase::CommitLogDlgBase( wxWindow* parent, wxWindowID id, const wxStr
 	
 	m_mainSizer = new wxBoxSizer( wxVERTICAL );
 	
-	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("This action has resulted in a commit - please enter a log message") ), wxHORIZONTAL );
+	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("This action has resulted in a commit - please enter a &log message") ), wxHORIZONTAL );
 	
 	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );

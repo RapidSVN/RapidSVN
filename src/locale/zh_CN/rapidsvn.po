@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-02 13:24+0100\n"
+"POT-Creation-Date: 2009-11-02 17:09+0100\n"
 "PO-Revision-Date: 2006-12-14 14:14+0800\n"
 "Last-Translator: SiC <sic666@163.com>\n"
 "Language-Team: RapidSVN i18n\n"
@@ -311,7 +311,7 @@ msgid "Action"
 msgstr "动作"
 
 #: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listener.cpp:353
-#: ../main_frame.cpp:1401
+#: ../main_frame.cpp:1398
 msgid "Add"
 msgstr "添加"
 
@@ -335,17 +335,17 @@ msgstr "添加选定项目"
 msgid "Add to bookmarks"
 msgstr "添加到书签"
 
-#: ../listener.cpp:362 ../listener.cpp:369 ../main_frame.cpp:1410
-#: ../main_frame.cpp:1417
+#: ../listener.cpp:362 ../listener.cpp:369 ../main_frame.cpp:1407
+#: ../main_frame.cpp:1414
 msgid "Added"
 msgstr "已添加"
 
-#: ../main_frame.cpp:1907
+#: ../main_frame.cpp:1904
 #, c-format
 msgid "Added repository to bookmarks '%s'"
 msgstr "已添加文档库到书签 '%s'"
 
-#: ../main_frame.cpp:1878
+#: ../main_frame.cpp:1875
 #, c-format
 msgid "Added working copy to bookmarks '%s'"
 msgstr "已添加工作副本到书签 '%s'"
@@ -368,11 +368,11 @@ msgstr "受影响的文件/目录"
 msgid "All files|*"
 msgstr "所有文件|*"
 
-#: ../main_frame.cpp:1274 ../main_frame.cpp:1293
+#: ../main_frame.cpp:1271 ../main_frame.cpp:1290
 msgid "An error occured while launching the browser"
 msgstr ""
 
-#: ../main_frame.cpp:1261
+#: ../main_frame.cpp:1258
 msgid "An error occurred while checking valid actions"
 msgstr ""
 
@@ -408,7 +408,7 @@ msgstr "基准(BASE)"
 msgid "BerkeleyDB"
 msgstr ""
 
-#: ../main_frame.cpp:1944
+#: ../main_frame.cpp:1941
 msgid "Bookmark"
 msgstr "书签"
 
@@ -580,7 +580,7 @@ msgstr "已复制, 来自 URL:"
 msgid "Copied from Rev"
 msgstr "已复制, 来自版本:"
 
-#: ../dnd_dlg.cpp:108 ../listener.cpp:354 ../main_frame.cpp:1402
+#: ../dnd_dlg.cpp:108 ../listener.cpp:354 ../main_frame.cpp:1399
 #: ../move_action.cpp:44
 msgid "Copy"
 msgstr "复制"
@@ -633,7 +633,7 @@ msgid "Default"
 msgstr "删除"
 
 #: ../delete_action.cpp:40 ../delete_dlg.cpp:79 ../listener.cpp:355
-#: ../main_frame.cpp:1403
+#: ../main_frame.cpp:1400
 msgid "Delete"
 msgstr "删除"
 
@@ -645,8 +645,8 @@ msgstr "从版本控制系统中删除文件和目录"
 msgid "Delete selected"
 msgstr "删除选定项目"
 
-#: ../listener.cpp:361 ../listener.cpp:370 ../main_frame.cpp:1409
-#: ../main_frame.cpp:1418
+#: ../listener.cpp:361 ../listener.cpp:370 ../main_frame.cpp:1406
+#: ../main_frame.cpp:1415
 msgid "Deleted"
 msgstr "已删除"
 
@@ -749,7 +749,7 @@ msgstr "换行符:"
 msgid "Edit"
 msgstr "编辑"
 
-#: ../main_frame.cpp:1944
+#: ../main_frame.cpp:1941
 msgid "Edit Bookmark"
 msgstr "编辑书签"
 
@@ -798,7 +798,7 @@ msgid ""
 msgstr "请输入要用作导出文件的换行符(EOL)的符号."
 
 #: ../import_dlg.cpp:178 ../import_dlg.cpp:191 ../log_dlg.cpp:479
-#: ../log_dlg.cpp:494 ../log_dlg.cpp:530 ../main_frame.cpp:1868
+#: ../log_dlg.cpp:494 ../log_dlg.cpp:530 ../main_frame.cpp:1865
 #: ../merge_dlg.cpp:52 ../merge_dlg.cpp:91 ../merge_dlg.cpp:107
 #: ../property_dlg.cpp:120
 msgid "Error"
@@ -844,11 +844,11 @@ msgstr "准备操作时出错: %s"
 msgid "Error while refreshing filelist (%s)"
 msgstr "刷新文件列表时出错 (%s)"
 
-#: ../main_frame.cpp:910
+#: ../main_frame.cpp:907
 msgid "Error while updating filelist"
 msgstr "更新文件列表时出错"
 
-#: ../main_frame.cpp:897
+#: ../main_frame.cpp:894
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "更新文件列表时出错 (%s)"
@@ -858,7 +858,7 @@ msgstr "更新文件列表时出错 (%s)"
 msgid "Error: %s\n"
 msgstr "错误: %s\n"
 
-#: ../main_frame.cpp:1802
+#: ../main_frame.cpp:1799
 msgid "Exception occured during filelist update"
 msgstr "更新文件列表时出现异常"
 
@@ -911,11 +911,11 @@ msgstr "扩展名"
 msgid "FSFS"
 msgstr ""
 
-#: ../listener.cpp:376 ../main_frame.cpp:1424
+#: ../listener.cpp:376 ../main_frame.cpp:1421
 msgid "Failed to lock"
 msgstr "锁定失败"
 
-#: ../listener.cpp:377 ../main_frame.cpp:1425
+#: ../listener.cpp:377 ../main_frame.cpp:1422
 msgid "Failed to unlock"
 msgstr "解除锁定失败"
 
@@ -1028,7 +1028,7 @@ msgstr "属性(&P)...\tCTRL-P"
 msgid "Indicate modified children"
 msgstr ""
 
-#: ../main_frame.cpp:1987
+#: ../main_frame.cpp:1984
 msgid "Info"
 msgstr "信息"
 
@@ -1040,7 +1040,7 @@ msgstr "选定项目的信息"
 msgid "Internal Error: There is another action running"
 msgstr "内部错误: 已有一个操作正在执行中"
 
-#: ../main_frame.cpp:1545
+#: ../main_frame.cpp:1542
 msgid "Internal Error: no client data for action event!"
 msgstr "内部错误: 没有符合操作事件的客户端数据!"
 
@@ -1105,7 +1105,7 @@ msgstr "行"
 msgid "Listener Test"
 msgstr "Listener 测试"
 
-#: ../filelist_ctrl.cpp:1020
+#: ../filelist_ctrl.cpp:1058
 #, c-format
 msgid "Listing entries in '%s'"
 msgstr "正在列出 '%s' 中的项目"
@@ -1170,7 +1170,7 @@ msgstr "锁定所有者: %s"
 msgid "Lock Token: %s"
 msgstr "锁定标识: %s"
 
-#: ../listener.cpp:374 ../main_frame.cpp:1422
+#: ../listener.cpp:374 ../main_frame.cpp:1419
 msgid "Locked"
 msgstr "已锁定"
 
@@ -1240,7 +1240,7 @@ msgstr "合并..."
 msgid "Mkdir"
 msgstr "Mkdir"
 
-#: ../listener.cpp:368 ../main_frame.cpp:1416
+#: ../listener.cpp:368 ../main_frame.cpp:1413
 msgid "Modified"
 msgstr "已修改"
 
@@ -1435,11 +1435,11 @@ msgstr "解决冲突(&s)\tCTRL-S"
 msgid "Re&vert\tCTRL-V"
 msgstr "复原(&v)\tCTRL-V"
 
-#: ../filelist_ctrl.cpp:1090
+#: ../filelist_ctrl.cpp:1134
 msgid "Ready"
 msgstr "就绪"
 
-#: ../main_frame.cpp:1525 ../main_frame.cpp:1569
+#: ../main_frame.cpp:1522 ../main_frame.cpp:1566
 msgid "Ready\n"
 msgstr "就绪\n"
 
@@ -1479,7 +1479,7 @@ msgstr "已替换"
 msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr "移除工作副本文件或目录的'冲突'状态"
 
-#: ../main_frame.cpp:1921
+#: ../main_frame.cpp:1918
 msgid "Removed bookmark"
 msgstr "已移除书签"
 
@@ -1491,7 +1491,7 @@ msgstr "重命名"
 msgid "Rep. Rev."
 msgstr "文档库版本"
 
-#: ../listener.cpp:371 ../main_frame.cpp:1419
+#: ../listener.cpp:371 ../main_frame.cpp:1416
 msgid "Replaced"
 msgstr "已替换"
 
@@ -1499,7 +1499,7 @@ msgstr "已替换"
 msgid "Repository"
 msgstr "文档库"
 
-#: ../import_dlg.cpp:67 ../main_frame.cpp:1893
+#: ../import_dlg.cpp:67 ../main_frame.cpp:1890
 msgid "Repository URL"
 msgstr "文档库 URL"
 
@@ -1533,11 +1533,11 @@ msgstr "解决冲突"
 msgid "Resolve selected"
 msgstr "解决选定项目的冲突"
 
-#: ../listener.cpp:359 ../main_frame.cpp:1407
+#: ../listener.cpp:359 ../main_frame.cpp:1404
 msgid "Resolved"
 msgstr "已解决冲突"
 
-#: ../listener.cpp:356 ../main_frame.cpp:1404
+#: ../listener.cpp:356 ../main_frame.cpp:1401
 msgid "Restore"
 msgstr "还原"
 
@@ -1549,7 +1549,7 @@ msgstr "恢复工作副本文件到最原始的状态(撤销所有本地修改).
 msgid "Resulting repository filename:"
 msgstr ""
 
-#: ../listener.cpp:357 ../main_frame.cpp:1405 ../revert_action.cpp:35
+#: ../listener.cpp:357 ../main_frame.cpp:1402 ../revert_action.cpp:35
 #: ../revert_dlg.cpp:79
 msgid "Revert"
 msgstr "复原"
@@ -1627,7 +1627,7 @@ msgid "Select a destination folder to merge to"
 msgstr "选择要合并到的目标文件夹"
 
 #: ../create_repos_dlg.cpp:185 ../create_repos_dlg.cpp:201
-#: ../main_frame.cpp:1848
+#: ../main_frame.cpp:1845
 msgid "Select a directory"
 msgstr "选择目录"
 
@@ -1733,7 +1733,7 @@ msgstr "显示不在版本控制中的项目"
 msgid "Show unversioned entries"
 msgstr "显示不在版本控制中的项目"
 
-#: ../listener.cpp:360 ../main_frame.cpp:1408
+#: ../listener.cpp:360 ../main_frame.cpp:1405
 msgid "Skip"
 msgstr "跳过"
 
@@ -1783,15 +1783,15 @@ msgstr "切换 URL"
 msgid "Switch URL...\tCTRL-S"
 msgstr "切换 URL...\tCTRL-S"
 
-#: ../main_frame.cpp:1355
+#: ../main_frame.cpp:1352
 msgid "Test duration"
 msgstr "测试耗时"
 
-#: ../main_frame.cpp:1351
+#: ../main_frame.cpp:1348
 msgid "Test ended at"
 msgstr "测试结束于"
 
-#: ../main_frame.cpp:1348
+#: ../main_frame.cpp:1345
 msgid "Test started at"
 msgstr "测试开始于"
 
@@ -1821,7 +1821,7 @@ msgstr ""
 
 #: ../rapidsvn_generated.cpp:384
 #, fuzzy
-msgid "This action has resulted in a commit - please enter a log message"
+msgid "This action has resulted in a commit - please enter a &log message"
 msgstr "此操作会产生提交动作 - 请输入历史记录信息"
 
 #: ../about_dlg.cpp:62
@@ -1854,7 +1854,7 @@ msgstr "UUID"
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../main_frame.cpp:1497
+#: ../main_frame.cpp:1494
 msgid "Unimplemented action!"
 msgstr "未实现的功能!"
 
@@ -1867,7 +1867,7 @@ msgstr "目标路径"
 msgid "Unlock"
 msgstr "解除锁定"
 
-#: ../listener.cpp:375 ../main_frame.cpp:1423
+#: ../listener.cpp:375 ../main_frame.cpp:1420
 msgid "Unlocked"
 msgstr "已解除锁定"
 
@@ -1879,11 +1879,11 @@ msgstr "更新"
 msgid "Update selected"
 msgstr "更新选定项目"
 
-#: ../listener.cpp:363 ../main_frame.cpp:1411
+#: ../listener.cpp:363 ../main_frame.cpp:1408
 msgid "Updated"
 msgstr "已更新"
 
-#: ../main_frame.cpp:1559 ../main_frame.cpp:1564
+#: ../main_frame.cpp:1556 ../main_frame.cpp:1561
 msgid "Updating..."
 msgstr "更新中..."
 
@@ -1947,15 +1947,15 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: ../main_frame.cpp:1866
+#: ../main_frame.cpp:1863
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "您不能把 Subversion 的管理目录添加到书签中!"
 
-#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1198
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1261
 msgid "add"
 msgstr "添加"
 
-#: ../utils.cpp:398
+#: ../filelist_ctrl.cpp:1226 ../utils.cpp:398
 msgid "added"
 msgstr "已添加"
 
@@ -1963,7 +1963,7 @@ msgstr "已添加"
 msgid "conflicted"
 msgstr "存在冲突"
 
-#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1201
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1264
 msgid "delete"
 msgstr "删除"
 
@@ -1999,7 +1999,7 @@ msgstr "已合并"
 msgid "missing"
 msgstr "丢失"
 
-#: ../utils.cpp:410
+#: ../filelist_ctrl.cpp:1229 ../utils.cpp:410
 msgid "modified"
 msgstr "已修改"
 
@@ -2019,7 +2019,7 @@ msgstr "常规"
 msgid "obstructed"
 msgstr "阻塞"
 
-#: ../filelist_ctrl.cpp:1231 ../filelist_ctrl.cpp:1245
+#: ../filelist_ctrl.cpp:1294 ../filelist_ctrl.cpp:1308
 msgid "outdated"
 msgstr "过时"
 
@@ -2035,7 +2035,7 @@ msgstr ""
 msgid "pre Subversion 1.6"
 msgstr ""
 
-#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1204
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1267
 msgid "replace"
 msgstr "替换"
 

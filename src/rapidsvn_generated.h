@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 16 2008)
+// C++ code generated with wxFormBuilder (version Dec 29 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -212,7 +212,7 @@ class CommitDlgBase : public wxDialog
 		
 	
 	public:
-		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 583,500 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 583,500 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxTAB_TRAVERSAL );
 		~CommitDlgBase();
 	
 };
