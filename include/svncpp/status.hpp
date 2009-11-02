@@ -153,6 +153,36 @@ namespace svn
     apr_time_t
     lockCreationDate() const;
 
+    /** Set to the youngest committed revision, or @c SVN_INVALID_REVNUM
+     * if not out of date.
+     * @since New in 0.14
+     */
+    svn_revnum_t 
+    oodLastCmtRev() const;
+
+    /** Set to the most recent commit date, or @c 0 if not out of date.
+     * @since New in 0.14
+     */
+    apr_time_t 
+    oodLastCmtDate() const;
+
+    /** Set to the node kind of the youngest commit, or @c svn_node_none
+     * if not out of date.
+     * @since New in 0.14
+     */
+    svn_node_kind_t 
+    oodKind() const;
+
+    /** Set to the user name of the youngest commit, or @c NULL if not
+     * out of date or non-existent.  Because a non-existent @c
+     * svn:author property has the same behavior as an out-of-date
+     * working copy, examine @c ood_last_cmt_rev to determine whether
+     * the working copy is out of date.
+     * @since New in 0.14
+     */
+    const char * 
+    oodLastCmtAuthor() const;
+
     /**
      * assignment operator
      */

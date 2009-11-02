@@ -230,6 +230,30 @@ namespace svn
   {
     return m->path.length() > 0;
   }
+
+  svn_revnum_t 
+  Status::oodLastCmtRev() const
+  {
+    return m->status->ood_last_cmt_rev;
+  }
+
+  apr_time_t 
+  Status::oodLastCmtDate() const
+  {
+    return m->status->ood_last_cmt_date;
+  }
+
+  svn_node_kind_t 
+  Status::oodKind() const
+  {
+    return m->status->ood_kind;
+  }
+
+  const char * 
+  Status::oodLastCmtAuthor() const
+  {
+    return m->status->ood_last_cmt_author;
+  }
 }
 /* -----------------------------------------------------------------
  * local variables:
