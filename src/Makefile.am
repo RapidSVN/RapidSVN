@@ -76,6 +76,7 @@ rapidsvn_SOURCES= \
 	revert_action.cpp \
 	revert_dlg.cpp \
 	simple_worker.cpp \
+	splitter.cpp \
 	switch_action.cpp \
 	switch_dlg.cpp \
 	threaded_worker.cpp \
@@ -87,7 +88,7 @@ rapidsvn_SOURCES= \
 	userresolve_action.cpp \
 	utils.cpp \
 	verblist.cpp \
-	view_action.cpp 
+	view_action.cpp
 
 rapidsvn_LDFLAGS=-Lsvncpp
 rapidsvn_LDADD= -lsvncpp \

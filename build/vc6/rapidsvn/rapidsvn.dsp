@@ -430,6 +430,10 @@ SOURCE=..\..\..\src\simple_worker.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\splitter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\switch_action.cpp
 # End Source File
 # Begin Source File

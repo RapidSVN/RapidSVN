@@ -12,6 +12,7 @@
 
 class FileListCtrl;
 class FolderBrowser;
+class SplitterWindow;
 
 #include <wx/string.h>
 #include <wx/checkbox.h>
@@ -41,6 +42,8 @@ class FolderBrowser;
 #include <wx/splitter.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
+
+#include "controls.hpp"
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -313,9 +316,9 @@ class MainFrameBase : public wxFrame
 		wxBoxSizer* sizerBottom;
 	
 	protected:
-		wxSplitterWindow* m_splitterHoriz;
+		SplitterWindow* m_splitterHoriz;
 		wxPanel* m_panelTop;
-		wxSplitterWindow* m_splitterVert;
+		SplitterWindow* m_splitterVert;
 		FolderBrowser* m_folderBrowser;
 		FileListCtrl* m_listCtrl;
 		wxTextCtrl* m_log;

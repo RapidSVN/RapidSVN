@@ -602,6 +602,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\splitter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\switch_action.cpp"
 				>
 			</File>
@@ -973,6 +977,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\simple_worker.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\splitter.hpp"
 				>
 			</File>
 			<File

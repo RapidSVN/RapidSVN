@@ -7,9 +7,6 @@
 
 #include <wx/wx.h>
 
-#include "filelist_ctrl.hpp"
-#include "folder_browser.hpp"
-
 #include "rapidsvn_generated.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -746,13 +743,13 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxBoxSizer* sizerRoot;
 	sizerRoot = new wxBoxSizer( wxVERTICAL );
 	
-	m_splitterHoriz = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE );
+	m_splitterHoriz = new SplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE );
 	m_splitterHoriz->Connect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterHorizOnIdle ), NULL, this );
 	m_panelTop = new wxPanel( m_splitterHoriz, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* sizerTop;
 	sizerTop = new wxBoxSizer( wxVERTICAL );
 	
-	m_splitterVert = new wxSplitterWindow( m_panelTop, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE );
+	m_splitterVert = new SplitterWindow( m_panelTop, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE );
 	m_splitterVert->Connect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterVertOnIdle ), NULL, this );
 	panelFolderBrowser = new wxPanel( m_splitterVert, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	sizerFolderBrowser = new wxBoxSizer( wxVERTICAL );
