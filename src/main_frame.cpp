@@ -664,7 +664,6 @@ MainFrame::MainFrame(const wxString & title,
   SetIcons(iconBundle);
 
   SetMenuBar(m->MenuBar);
-  CreateStatusBar();
 
   // Create the toolbar
   CreateMainToolBar(this);
