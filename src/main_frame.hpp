@@ -207,6 +207,7 @@ private:
 
   void Perform(Action * action);
 
+  void OnIdle(wxIdleEvent& event);
 protected: // inherited from MainFrameBase
   virtual void OnActivate(wxActivateEvent & event);
   virtual void OnSize(wxSizeEvent & sizeEvent);

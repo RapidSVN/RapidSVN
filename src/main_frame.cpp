@@ -133,13 +133,6 @@ const static wxChar ConfigSplitterVert[] = wxT("/MainFrame/SplitterVert2");
 
 const static wxChar TraceMisc[] = wxT("tracemisc");
 
-// Platform specific constants.
-#ifdef __WXMSW__
-const static int SPLITTER_STYLE = wxSP_FULLSASH | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
-#else
-const static int SPLITTER_STYLE = wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN;
-#endif
-
 /**
  * Local helper function to create the action worker
  *
@@ -182,6 +175,9 @@ public:
   bool showUnmodified;
   bool showModified;
   bool showConflicted;
+  int horizSashPos;
+  int vertSashPos;
+  int idleCount;
 
 private:
   bool m_running;
@@ -208,7 +204,7 @@ public:
       currentPath(wxT("")),
       activePane(ACTIVEPANE_FOLDER_BROWSER),
       showUnversioned(false), showUnmodified(false),
-      showModified(false), showConflicted(false),
+      showModified(false), showConflicted(false), idleCount(0),
       m_running(false), m_parent(parent),
       m_isErrorDialogActive(false),
       m_folderBrowser(folderBrowser), 
@@ -716,24 +712,21 @@ MainFrame::MainFrame(const wxString & title,
   RefreshFileList();
 
   // Read frame position
+  int x = cfg->Read(ConfigLeft, 50);
+  int y = cfg->Read(ConfigTop, 50);
+  int w = cfg->Read(ConfigWidth, 806);
+  int h = cfg->Read(ConfigHeight, 480);
+
+  Move(x, y);
+  SetClientSize(w, h);
+
   if (cfg->Read(ConfigMaximized, (long int)0) == 1)
     Maximize(true);
-  else
-  {
-    int x = cfg->Read(ConfigLeft, 50);
-    int y = cfg->Read(ConfigTop, 50);
-    int w = cfg->Read(ConfigWidth, 806);
-    int h = cfg->Read(ConfigHeight, 480);
-
-    Move(x, y);
-    SetClientSize(w, h);
-  }
 
   // Get sash position for every splitter from configuration.
-  int w,h;
   GetClientSize(&w, &h);
-  int vpos = cfg->Read(ConfigSplitterVert, w / 3);
-  int hpos = cfg->Read(ConfigSplitterHoriz, (3 * h) / 4);
+  m->vertSashPos = cfg->Read(ConfigSplitterVert, w / 3);
+  m->horizSashPos = cfg->Read(ConfigSplitterHoriz, (3 * h) / 4);
 
   // initialize the folder browser
   m_folderBrowser->ReadConfig(cfg);
@@ -746,14 +739,12 @@ MainFrame::MainFrame(const wxString & title,
   UpdateCurrentPath();
   RefreshFolderBrowser();
 
-  // Set sash position for every splitter.
-  // Note: do not revert the order of Split calls, as the panels will be messed up.
-  m_splitterHoriz->SplitHorizontally(m_panelTop, m_log, hpos);
-  m_splitterVert->SplitVertically(m_folderBrowser, m_listCtrl, vpos);
-
   // Initialize for drag and drop
   m_folderBrowser->SetDropTarget(new FolderBrowserDropTarget(m_folderBrowser));
   m_listCtrl->SetDropTarget(new FileListCtrlDropTarget(m_folderBrowser, m_listCtrl));
+
+  // this is a workaround for the buggy Splitter initialisation
+  Connect(wxEVT_IDLE, wxIdleEventHandler(MainFrame::OnIdle), NULL, this);
 }
 
 MainFrame::~MainFrame()
@@ -1327,6 +1318,7 @@ MainFrame::OnHelpStartupTips(wxCommandEvent & WXUNUSED(event))
 void
 MainFrame::OnAbout(wxCommandEvent & WXUNUSED(event))
 {
+  m_splitterHoriz->SetSashPosition(100);
   AboutDlg dlg(this, m->locale);
 
   dlg.ShowModal();
@@ -2130,12 +2122,6 @@ MainFrame::SetIncludePathVisibility(bool flatMode)
 void
 MainFrame::OnSize(wxSizeEvent & sizeEvent)
 {
-  if (!this->IsMaximized() && IsShown())
-  {
-    m_splitterVert->SetSashGravity(0.0f);
-    m_splitterHoriz->SetSashGravity(1.0f);
-  }
-
   sizeEvent.Skip();
 }
 
@@ -2154,6 +2140,28 @@ MainFrame::OnFocusChanged(wxCommandEvent & event)
 
   default:
     ; // unknown/not interesting
+  }
+}
+
+
+/**
+ * In @ref MainFrameBase there is an event handler that uses
+ * the idle event as well to set the splitter sash position.
+ * So we have to wait just one call longer until we can set the
+ * desired sash position
+ */
+void 
+MainFrame::OnIdle(wxIdleEvent & WXUNUSED(event))
+{
+  m->idleCount++;
+
+  if (m->idleCount >= 2)
+  {
+    m_splitterVert->SetSashPosition(m->vertSashPos);
+    m_splitterHoriz->SetSashPosition(m->horizSashPos);
+
+    // we dont need this event anymore
+    Disconnect(wxEVT_IDLE, wxIdleEventHandler(MainFrame::OnIdle), NULL, this);
   }
 }
 
