@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: RapidSVN 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-11-02 17:09+0100\n"
-"PO-Revision-Date: 2008-02-29 05:05+0900\n"
+"PO-Revision-Date: 2009-11-16 00:51+0900\n"
 "Last-Translator: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
 "Language-Team: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -26,9 +26,9 @@ msgid "%s Version %s"
 msgstr "%s バージョン %s"
 
 #: ../about_dlg.cpp:55
-#, fuzzy, c-format
+#, c-format
 msgid "%s Version %s Revision %d"
-msgstr "%s バージョン %s"
+msgstr "%s バージョン %s リビジョン %d"
 
 #: ../utils.cpp:360
 #, c-format
@@ -60,9 +60,8 @@ msgid "&Bookmarks"
 msgstr "ブックマーク(&B)"
 
 #: ../rapidsvn_generated.cpp:676
-#, fuzzy
 msgid "&Browse"
-msgstr "参照"
+msgstr "参照(&B)"
 
 #: ../log_dlg.cpp:359
 msgid "&Close"
@@ -70,7 +69,7 @@ msgstr "閉じる(&C)"
 
 #: ../rapidsvn_generated.cpp:655
 msgid "&Compatible with:"
-msgstr ""
+msgstr "互換性(&C):"
 
 #: ../main_frame.cpp:316
 msgid "&Contents\tF1"
@@ -162,7 +161,7 @@ msgstr "情報(&I)..."
 
 #: ../rapidsvn_generated.cpp:667
 msgid "&Load configuration from directory (optional):"
-msgstr ""
+msgstr "設定を読み込むディレクトリ(&L) (オプション):"
 
 #: ../utils.cpp:198
 msgid "&Lock..."
@@ -181,9 +180,8 @@ msgid "&Modify"
 msgstr "変更(&M)"
 
 #: ../rapidsvn_generated.cpp:625
-#, fuzzy
 msgid "&Name of the new repository:"
-msgstr "リポジトリの新規作成..."
+msgstr "新規リポジトリの名前(&N):"
 
 #: ../listed_dlg.cpp:59
 msgid "&New..."
@@ -235,7 +233,7 @@ msgstr "反転(&T)"
 
 #: ../rapidsvn_generated.cpp:599
 msgid "&Type:"
-msgstr ""
+msgstr "タイプ(&T)"
 
 #: ../utils.cpp:199
 msgid "&Unlock"
@@ -283,11 +281,11 @@ msgstr "<なし>"
 
 #: ../create_repos_dlg.cpp:131
 msgid "A directory of this name exists already"
-msgstr ""
+msgstr "この名前のディレクトリはすでに存在します"
 
 #: ../create_repos_dlg.cpp:136
 msgid "A file of this name exists already"
-msgstr ""
+msgstr "この名前のファイルはすでに存在します"
 
 #: ../about_dlg.cpp:68
 msgid "ANSI"
@@ -313,7 +311,7 @@ msgstr "既存のリポジトリを追加(&R)..."
 
 #: ../rapidsvn_generated.cpp:642
 msgid "Add a bookmark for the new repository"
-msgstr ""
+msgstr "新規リポジトリのブックマークを追加"
 
 #: ../utils.cpp:173
 msgid "Add r&ecursive"
@@ -405,7 +403,7 @@ msgstr "BASE"
 
 #: ../rapidsvn_generated.cpp:603
 msgid "BerkeleyDB"
-msgstr ""
+msgstr "BerkeleyDB"
 
 #: ../main_frame.cpp:1941
 msgid "Bookmark"
@@ -607,14 +605,12 @@ msgid "Create New Repository..."
 msgstr "リポジトリの新規作成..."
 
 #: ../create_repos_action.cpp:37
-#, fuzzy
 msgid "Create Repository"
-msgstr "リポジトリの新規作成..."
+msgstr "リポジトリの新規作成"
 
 #: ../rapidsvn_generated.cpp:611
-#, fuzzy
 msgid "Create repository in &directory:"
-msgstr "出力ディレクトリを選択してください"
+msgstr "リポジトリを作成するディレクトリ(&D):"
 
 #: ../columns.cpp:54 ../log_dlg.cpp:165
 msgid "Date"
@@ -625,9 +621,8 @@ msgid "Date:"
 msgstr "日付:"
 
 #: ../rapidsvn_generated.cpp:659
-#, fuzzy
 msgid "Default"
-msgstr "削除"
+msgstr "デフォルト"
 
 #: ../delete_action.cpp:40 ../delete_dlg.cpp:79 ../listener.cpp:355
 #: ../main_frame.cpp:1400
@@ -693,11 +688,11 @@ msgstr "ディレクトリ:"
 
 #: ../rapidsvn_generated.cpp:681
 msgid "Disable automatic Log removal"
-msgstr ""
+msgstr "自動ログ削除をしない"
 
 #: ../rapidsvn_generated.cpp:685
 msgid "Disable fsync when committing database transactions"
-msgstr ""
+msgstr "データベーストランザクションのコミット時にfsyncしない"
 
 #: ../main_frame_helper.cpp:195
 msgid "Display conflicted files/directories"
@@ -760,9 +755,8 @@ msgid "Enter a comment for this lock"
 msgstr "このロックにコメントを入力してください"
 
 #: ../create_repos_dlg.cpp:126
-#, fuzzy
 msgid "Enter a name for the repository"
-msgstr "このロックにコメントを入力してください"
+msgstr "このリポジトリにコメントを入力してください"
 
 #: ../import_dlg.cpp:95
 msgid "Enter log message"
@@ -805,7 +799,7 @@ msgstr "ステータス取得エラー:"
 
 #: ../create_repos_action.cpp:111
 msgid "Error running svnadmin"
-msgstr ""
+msgstr "svnadmin 実行エラー"
 
 #: ../property_dlg.cpp:120
 msgid "Error setting the property values"
@@ -904,7 +898,7 @@ msgstr "拡張子"
 
 #: ../rapidsvn_generated.cpp:603
 msgid "FSFS"
-msgstr ""
+msgstr "FSFS"
 
 #: ../listener.cpp:376 ../main_frame.cpp:1421
 msgid "Failed to lock"
@@ -1025,7 +1019,7 @@ msgstr "対話的に衝突を解消(&T)...\tCTRL-T"
 
 #: ../main_frame.cpp:270
 msgid "Indicate modified children"
-msgstr ""
+msgstr "子の変更を表示"
 
 #: ../main_frame.cpp:1984
 msgid "Info"
@@ -1244,7 +1238,7 @@ msgstr "変更"
 
 #: ../rapidsvn_generated.cpp:692
 msgid "More options"
-msgstr ""
+msgstr "拡張オプション"
 
 #: ../dnd_dlg.cpp:104 ../move_action.cpp:42
 msgid "Move"
@@ -1275,7 +1269,7 @@ msgstr "新しい属性"
 
 #: ../revert_dlg.cpp:57
 msgid "No"
-msgstr ""
+msgstr "いいえ"
 
 #: ../diff_action.cpp:217
 msgid "No diff tool set in the preferences"
@@ -1464,7 +1458,7 @@ msgstr "ファイルリストをリフレッシュ"
 
 #: ../main_frame.cpp:268
 msgid "Refresh with Update"
-msgstr "更新してリフレッシュ"
+msgstr "リフレッシュ時に更新も行う"
 
 #: ../switch_dlg.cpp:127
 msgid "Relocate"
@@ -1542,7 +1536,7 @@ msgstr "初期作業コピーファイルを復元(すべてのローカル編�
 
 #: ../rapidsvn_generated.cpp:632
 msgid "Resulting repository filename:"
-msgstr ""
+msgstr "結果リポジトリファイル名:"
 
 #: ../listener.cpp:357 ../main_frame.cpp:1402 ../revert_action.cpp:35
 #: ../revert_dlg.cpp:79
@@ -1584,7 +1578,7 @@ msgstr "リビジョン: %ld"
 #: ../create_repos_action.cpp:104
 #, c-format
 msgid "Running command %s:"
-msgstr ""
+msgstr "実行中コマンド %s:"
 
 #: ../cert_dlg.cpp:66
 msgid "SSL Certificate"
@@ -1633,9 +1627,8 @@ msgid "Select a file to import"
 msgstr "インポートするファイルを選択してください"
 
 #: ../create_repos_dlg.cpp:121
-#, fuzzy
 msgid "Select an existing directory for the repository"
-msgstr "ディレクトリをリポジトリに追加します: %s"
+msgstr "リポジトリ作成用に既存のディレクトリを選択してください"
 
 #: ../move_action.cpp:63
 msgid "Select destination:"
@@ -1667,8 +1660,7 @@ msgstr "リポジトリ内のファイルの最新バージョンを得るには
 
 #: ../checkout_dlg.cpp:108 ../export_dlg.cpp:111
 msgid "Set this to use BASE/HEAD (current) peg revision of the files."
-msgstr ""
-"ファイルのBASE/HEAD(現行)ペグ・リビジョンを使用するにはこれをチェックします。"
+msgstr "ファイルのBASE/HEAD(現行)ペグ・リビジョンを使用するにはこれをチェックします。"
 
 #: ../checkout_dlg.cpp:119
 msgid "Set to automatically create a new working copy bookmark."
@@ -1788,16 +1780,15 @@ msgstr "テキスト最終更新"
 
 #: ../view_action.cpp:96
 msgid "The Editor is not configured. Please check Edit->Preferences>Programs"
-msgstr ""
-"エディタが設定されていません。編集->設定->プログラムを確認してください。"
+msgstr "エディタが設定されていません。編集->設定->プログラムを確認してください。"
 
 #: ../create_repos_dlg.cpp:141
 msgid "The configuration directory does not exist"
-msgstr ""
+msgstr "設定ディレクトリがありません"
 
 #: ../create_repos_action.cpp:121
 msgid "The svnadmin command was not successful."
-msgstr ""
+msgstr "svnadmin コマンドが成功しませんでした。"
 
 #: ../cert_dlg.cpp:70
 msgid ""
@@ -1808,11 +1799,8 @@ msgstr ""
 "本当にこの証明書を信用しますか?"
 
 #: ../rapidsvn_generated.cpp:384
-#, fuzzy
 msgid "This action has resulted in a commit - please enter a &log message"
-msgstr ""
-"このアクションによってコミットが発生します。ログメッセージを入力してくださ"
-"い。"
+msgstr "このアクションによってコミットが発生します。ログメッセージを入力してください。(&L)"
 
 #: ../about_dlg.cpp:62
 msgid ""
@@ -1821,6 +1809,10 @@ msgid ""
 "\n"
 "Available online under:"
 msgstr ""
+"このプログラムはGUN一般公衆ライセンス\n"
+"バージョン3の条件下で供与されます。\n"
+"\n"
+"以下よりオンラインで読めます:"
 
 #: ../import_dlg.cpp:116
 msgid "Tree"
@@ -1916,7 +1908,7 @@ msgstr "表示"
 
 #: ../rapidsvn_generated.cpp:696
 msgid "WARNING"
-msgstr ""
+msgstr "警告"
 
 #: ../dnd_dlg.cpp:69
 #, c-format
@@ -1941,7 +1933,7 @@ msgstr ""
 
 #: ../revert_dlg.cpp:54
 msgid "Yes"
-msgstr ""
+msgstr "はい"
 
 #: ../main_frame.cpp:1863
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
@@ -2021,15 +2013,15 @@ msgstr "期限切れ"
 
 #: ../rapidsvn_generated.cpp:659
 msgid "pre Subversion 1.4"
-msgstr ""
+msgstr "Subversion 1.4 以下"
 
 #: ../rapidsvn_generated.cpp:659
 msgid "pre Subversion 1.5"
-msgstr ""
+msgstr "Subversion 1.5 以下"
 
 #: ../rapidsvn_generated.cpp:659
 msgid "pre Subversion 1.6"
-msgstr ""
+msgstr "Subversion 1.6 以下"
 
 #: ../file_info.cpp:158 ../filelist_ctrl.cpp:1267
 msgid "replace"
@@ -2041,7 +2033,7 @@ msgstr "置換"
 
 #: ../create_repos_dlg.cpp:116
 msgid "svnadmin could not be found"
-msgstr ""
+msgstr "svnadminが見つかりません"
 
 #: ../file_info.cpp:137 ../file_info.cpp:162
 msgid "unknown"
