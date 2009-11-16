@@ -21,10 +21,8 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#if defined( _MSC_VER) && _MSC_VER <= 1200
-#pragma warning( disable: 4786 )// debug symbol truncated
-#endif
-// stl
+
+ // stl
 #include <exception>
 #include "svncpp/map_wrapper.hpp"
 #include <deque>
