@@ -26,11 +26,6 @@
 #define _SVNCPP_PROPERTY_H_
 
 
-// Ignore MSVC 6 compiler warning: debug symbol truncated
-#if defined (_MSC_VER) && _MSC_VER <= 1200
-#pragma warning (disable: 4786)
-#endif
-
 // Ignore MSVC 7 compiler warning: C++ exception specification
 #if defined (_MSC_VER) && _MSCVER > 1200 && _MSCVER <= 1310
 #pragma warning (disable: 4290)

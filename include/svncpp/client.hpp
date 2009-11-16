@@ -25,14 +25,6 @@
 #ifndef _SVNCPP_CLIENT_H_
 #define _SVNCPP_CLIENT_H_
 
-// Ignore MSVC 6 compiler warning
-#if defined (_MSC_VER) && _MSC_VER <= 1200
-// debug symbol truncated
-#pragma warning (disable: 4786)
-// C++ exception specification
-#pragma warning (disable: 4290)
-#endif
-
 // Ignore MSVC 7,8,9 compiler warnings
 #if defined (_MSC_VER) && _MSC_VER > 1200 && _MSC_VER <= 1500
 // C++ exception specification
