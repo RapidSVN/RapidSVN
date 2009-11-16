@@ -82,12 +82,6 @@ def patchVersionHeader(revision):
   patched=original[:m.start()] + REVISION_DEFINE + str(revision) + original[m.end():]
   open(VERSION_HEADER, "w").write(patched)
 
-def buildApplicationVc6():
-  print "Rebuild rapidsvn (using Visual C++ 6.0 msdev)"
-  out=open('msdev.log', 'w')
-  out.write(run('msdev', ['build\\vc6\\rapidsvn.dsw', '/MAKE',  'ALL',  '/REBUILD'], silent=True))
-
-
 def buildApplicationVc2005():
   out=open('vcbuild.log', 'w')
   print "Rebuild rapidsvn (using Visual C++ 2005 vcbuild)"
@@ -125,8 +119,6 @@ def buildInstaller(compiler, suffix):
   out=open('innosetup.log', 'w')
   if compiler=='vc2005':
     out.write(run('cmd.exe', ['/c', 'FetchFiles_vs2005.bat'], silent=True))
-  else:
-    out.write(run('cmd.exe', ['/c', 'FetchFiles.bat'], silent=True))
   innosetup="%s\iscc.exe" % getEnviron("INNOSETUP")
   print "Build installer (using %s)" %innosetup
   out.write(run(innosetup, ['rapidsvn.iss'], silent=True))
@@ -194,7 +186,7 @@ def uploadInstaller(pkg):
   run(scp,  [pkg, url])
 
 def usage():
-  print "Usage: create_nightly.py [--compiler={vc2005, vc6}] [--suffix=<text>] [--force] [--skip-compile] [--skip-installer] [--skip-upload]"
+  print "Usage: create_nightly.py [--compiler={vc2005}] [--suffix=<text>] [--force] [--skip-compile] [--skip-installer] [--skip-upload]"
   print
 
 if __name__ == '__main__':
@@ -218,7 +210,7 @@ if __name__ == '__main__':
 
     for opt, value in opts:
       if opt == '--compiler':
-        if not value in ['vc6', 'vc2005']:
+        if not value in ['vc2005']:
           raise Exception()
         else:
           compiler = value
@@ -270,9 +262,7 @@ if __name__ == '__main__':
     if not skipInstaller: pkg=buildMacDiskImage(suffix)
   elif system == 'Windows':
     if not skipCompile:
-      if compiler in [None, 'vc6']:
-        buildApplicationVc6()
-      elif compiler == 'vc2005':
+      if compiler in [None, 'vc2005']:
         buildApplicationVc2005()
     if not skipInstaller: pkg=buildInstaller(compiler, suffix)
 
