@@ -41,10 +41,10 @@ AC_ARG_WITH(apr-config,
 AC_MSG_CHECKING([for APR])
 APR_CONFIG=""
 for VALUE in $APR_CONFIGS ; do
-	if $VALUE --cflags >/dev/null 2>&1; then
-		APR_CONFIG=$VALUE
-		break
-	fi
+  if $VALUE --cflags >/dev/null 2>&1; then
+    APR_CONFIG=$VALUE
+    break
+  fi
 done
 if test $APR_CONFIG ; then
     AC_MSG_RESULT([found])
@@ -52,7 +52,7 @@ else
     AC_MSG_RESULT([not found])
     AC_MSG_ERROR([APR is required. Try --with-apr-config.])
 fi
-	
+
 CPPFLAGS="$CPPFLAGS  `$APR_CONFIG --cppflags` `$APR_CONFIG --includes`"
 APR_LIBS="`$APR_CONFIG --link-ld --libs`"
 
@@ -72,10 +72,10 @@ AC_ARG_WITH(apu-config,
 AC_MSG_CHECKING([for APR util])
 APU_CONFIG=""
 for VALUE in $APU_CONFIGS ; do
-	if $VALUE --includes >/dev/null 2>&1; then
-		APU_CONFIG=$VALUE
-		break
-	fi
+  if $VALUE --includes >/dev/null 2>&1; then
+    APU_CONFIG=$VALUE
+    break
+  fi
 done
 if test $APU_CONFIG ; then
     AC_MSG_RESULT([found])
@@ -126,10 +126,10 @@ AC_ARG_WITH(svn-lib,
 AC_MSG_CHECKING([for Subversion libraries])
 SVN_LIB=""
 for VALUE in $SVN_LIBS ; do
-	if ls $VALUE/libsvn_client-1.* >/dev/null 2>&1; then
-		SVN_LIB=$VALUE
-		break
-	fi
+  if ls $VALUE/libsvn_client-1.* >/dev/null 2>&1; then
+    SVN_LIB=$VALUE
+    break
+  fi
 done
 if test $SVN_LIB ; then
     AC_MSG_RESULT([found])
@@ -155,25 +155,25 @@ AC_ARG_WITH(wx-config,
 AC_MSG_CHECKING([wxWidgets version])
 WX_CONFIG=""
 for VALUE in $WX_CONFIGS ; do
-	if WX_VERSION=`$VALUE --version 2>&1` ; then
-		WX_CONFIG=$VALUE
-		break
-	fi
+  if WX_VERSION=`$VALUE --version 2>&1` ; then
+    WX_CONFIG=$VALUE
+    break
+  fi
 done
-if test $WX_CONFIG ; then	
-	AC_MSG_RESULT([$WX_VERSION])
+if test $WX_CONFIG ; then  
+  AC_MSG_RESULT([$WX_VERSION])
 else
-	AC_MSG_RESULT([not found])
-	AC_MSG_ERROR([wxWidgets is required. Try --with-wx-config.])
+  AC_MSG_RESULT([not found])
+  AC_MSG_ERROR([wxWidgets is required. Try --with-wx-config.])
 fi
 case $WX_VERSION in
     [2.4.[2-9]])
         ;;
     [2.[5-9].*])
-	;;
+        ;;
     *)
         AC_MSG_ERROR([wxWidgets >= 2.4.2 required, found version $WX_VERSION])
-	AC_MSG_ERROR([Try --with-wx-config.])
+        AC_MSG_ERROR([Try --with-wx-config.])
         ;;
 esac
 CPPFLAGS="$CPPFLAGS `$WX_CONFIG --cppflags`"
@@ -183,13 +183,13 @@ WX_LIBS="`$WX_CONFIG --libs`"
 dnl
 dnl Platform specific specials
 dnl
-AC_MSG_CHECKING([for platform specifics])	
+AC_MSG_CHECKING([for platform specifics])
 EXTRA_LIBS=""
 case "$target" in
     *-*-darwin* )
         AC_MSG_RESULT([darwin])
         EXTRA_LIBS="-framework Security"
-	;;
+        ;;
     *)
         AC_MSG_RESULT([no])
         ;;
@@ -243,7 +243,7 @@ else
   if $XSLTPROC --version >/dev/null 2>&1 ; then
     AC_MSG_RESULT([found])
   else
-    AC_MSG_RESULT([not found])	
+    AC_MSG_RESULT([not found])
     XSLTPROC=""
   fi
 fi
@@ -307,7 +307,7 @@ if test "$DOCBOOK_MANPAGES" = "yes"; then
     for X in $X9 ; do
       if test -f $X; then
         DOCBOOK_MANPAGES=$X
-	break
+        break
       fi
     done
   fi
@@ -369,7 +369,7 @@ else
   if doxygenversion=`$DOXYGEN --version 2>&1` ; then
     AC_MSG_RESULT([found])
   else
-    AC_MSG_RESULT([not found])	
+    AC_MSG_RESULT([not found])
     DOXYGEN=""
   fi
 fi
@@ -396,7 +396,7 @@ else
   if dotbla=`echo | $DOT 2>/dev/null` ; then
     AC_MSG_RESULT([found])
   else
-    AC_MSG_RESULT([not found])	
+    AC_MSG_RESULT([not found])
     DOT=""
   fi
 fi
@@ -444,23 +444,22 @@ fi
 AC_OUTPUT(Makefile \
           build/Makefile \
           build/vc2005/Makefile \
-          build/vc6/Makefile \
           build/xcode/Makefile \
           doc/Makefile \
           doc/manpage/Makefile \
           doc/svncpp/Makefile \
           include/Makefile \
           include/svncpp/Makefile \
-	  packages/Makefile \
-	  packages/debian/Makefile \
-	  packages/osx/Makefile \
-	  packages/rpm/Makefile \
-	  packages/win32/Makefile \
+          packages/Makefile \
+          packages/debian/Makefile \
+          packages/osx/Makefile \
+          packages/rpm/Makefile \
+          packages/win32/Makefile \
           src/Makefile \
-	  src/locale/Makefile \
+          src/locale/Makefile \
           src/res/Makefile \
           src/svncpp/Makefile \
-	  src/tests/Makefile \
-	  src/tests/svncpp/Makefile \
-	  tools/Makefile)
+          src/tests/Makefile \
+          src/tests/svncpp/Makefile \
+          tools/Makefile)
 
