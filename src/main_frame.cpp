@@ -1313,7 +1313,6 @@ MainFrame::OnHelpStartupTips(wxCommandEvent & WXUNUSED(event))
 void
 MainFrame::OnAbout(wxCommandEvent & WXUNUSED(event))
 {
-  m_splitterHoriz->SetSashPosition(100);
   AboutDlg dlg(this, m->locale);
 
   dlg.ShowModal();
