@@ -39,6 +39,5 @@ distclean: clean
 clean:
 	for i in $(RAPIDSVN_LANGUAGES) ; do \
 		test -f $(srcdir)/$$i/rapidsvn.mo && rm $(srcdir)/$$i/rapidsvn.mo ; \
-		fi ; \
 	done
 .PHONY: all-mo
