@@ -451,4 +451,24 @@ class CertDlgBase : public wxDialog
 	
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Class DeleteDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class DeleteDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticQuestion;
+		wxCheckBox* m_checkForce;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+	
+	public:
+		DeleteDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Delete"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~DeleteDlgBase();
+	
+};
+
 #endif //__rapidsvn_generated__

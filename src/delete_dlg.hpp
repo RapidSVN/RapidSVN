@@ -24,10 +24,9 @@
 #ifndef _DELETE_DLG_H_INCLUDED_
 #define _DELETE_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+#include "rapidsvn_generated.h"
 
-class DeleteDlg:public wxDialog
+class DeleteDlg:public DeleteDlgBase
 {
 public:
   DeleteDlg(wxWindow* parent);
@@ -38,10 +37,7 @@ public:
   GetForce() const;
 
 private:
-  struct Data;
-  Data * m;
-
-  DECLARE_EVENT_TABLE()
+  bool m_force;
 };
 
 #endif

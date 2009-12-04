@@ -1015,3 +1015,38 @@ CertDlgBase::~CertDlgBase()
 	m_buttonPerm->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CertDlgBase::OnPerm ), NULL, this );
 	m_buttonTemp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CertDlgBase::OnTemp ), NULL, this );
 }
+
+DeleteDlgBase::DeleteDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_staticQuestion = new wxStaticText( this, wxID_ANY, _("Do you want to delete the selected files/directories?"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticQuestion->Wrap( -1 );
+	m_mainSizer->Add( m_staticQuestion, 1, wxALL|wxEXPAND, 5 );
+	
+	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force removal"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	m_mainSizer->Add( m_checkForce, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_CENTER|wxLEFT|wxRIGHT, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	m_mainSizer->Fit( this );
+}
+
+DeleteDlgBase::~DeleteDlgBase()
+{
+}
