@@ -372,4 +372,28 @@ class AboutDlgBase : public wxDialog
 	
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Class AuthDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class AuthDlgBase : public wxDialog 
+{
+	private:
+		wxFlexGridSizer* authSizer;
+		wxBoxSizer* buttonSizer;
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticUsername;
+		wxTextCtrl* m_textUsername;
+		wxStaticText* m_staticPassword;
+		wxTextCtrl* m_textPassword;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+	
+	public:
+		AuthDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~AuthDlgBase();
+	
+};
+
 #endif //__rapidsvn_generated__

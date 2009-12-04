@@ -847,3 +847,50 @@ AboutDlgBase::AboutDlgBase( wxWindow* parent, wxWindowID id, const wxString& tit
 AboutDlgBase::~AboutDlgBase()
 {
 }
+
+AuthDlgBase::AuthDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	authSizer = new wxFlexGridSizer( 2, 2, 5, 5 );
+	authSizer->AddGrowableCol( 1 );
+	authSizer->SetFlexibleDirection( wxHORIZONTAL );
+	authSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticUsername = new wxStaticText( this, wxID_ANY, _("&Username"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticUsername->Wrap( -1 );
+	authSizer->Add( m_staticUsername, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textUsername = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	authSizer->Add( m_textUsername, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	
+	m_staticPassword = new wxStaticText( this, wxID_ANY, _("&Password"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPassword->Wrap( -1 );
+	authSizer->Add( m_staticPassword, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textPassword = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PASSWORD );
+	authSizer->Add( m_textPassword, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	
+	m_mainSizer->Add( authSizer, 0, wxEXPAND, 5 );
+	
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_CENTER, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	m_mainSizer->Fit( this );
+}
+
+AuthDlgBase::~AuthDlgBase()
+{
+}

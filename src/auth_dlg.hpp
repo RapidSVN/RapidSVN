@@ -24,13 +24,16 @@
 #ifndef _AUTH_DLG_H_INCLUDED_
 #define _AUTH_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+#include "rapidsvn_generated.h"
 
-class AuthDlg:public wxDialog
+class AuthDlg:public AuthDlgBase
 {
 public:
-  static const int HIDE_USERNAME;
+  enum
+  {
+    HIDE_USERNAME=0x1,
+    HIDE_PASSWORD=0x2
+  };
 
   AuthDlg(wxWindow * parent,
           const wxString & username = wxEmptyString,
@@ -46,10 +49,8 @@ public:
   GetPassword() const;
 
 private:
-  struct Data;
-  Data * m;
-
-  DECLARE_EVENT_TABLE()
+  wxString m_username;
+  wxString m_password;
 };
 
 #endif

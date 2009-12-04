@@ -25,118 +25,55 @@
 // wxWidgets
 #include "wx/wx.h"
 #include "wx/valgen.h"
-#include "wx/sizer.h"
 
 // app
 #include "auth_dlg.hpp"
 
-BEGIN_EVENT_TABLE(AuthDlg, wxDialog)
-END_EVENT_TABLE()
-
-struct AuthDlg::Data
-{
-public:
-  wxString Username;
-  wxString Password;
-
-  Data(wxWindow * window, int flags)
-  {
-    wxStaticText * labelUser=0;
-    wxTextCtrl * textUser=0;
-    const bool showUser = (flags & HIDE_USERNAME) == 0;
-
-    // create controls first
-
-    // authentication fields
-    if (showUser)
-    {
-      labelUser =
-        new wxStaticText(window, -1, _("User"));
-
-      textUser = new wxTextCtrl(
-        window, -1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0,
-        wxTextValidator(wxFILTER_NONE, &Username));
-    }
-
-    wxStaticText * labelPassword =
-      new wxStaticText(window, -1, _("Password"));
-
-    wxTextCtrl* textPassword = new wxTextCtrl(
-      window, -1, wxEmptyString, wxPoint(-1,-1),
-      wxDefaultSize, wxTE_PASSWORD,
-      wxTextValidator(wxFILTER_NONE, &Password));
-
-    // buttons
-    wxButton * buttonOk = new wxButton(window, wxID_OK,
-                                       _("OK"));
-    wxButton * buttonCancel = new wxButton(window, wxID_CANCEL,
-                                           _("Cancel"));
-
-    // create sizers and position controls
-    wxFlexGridSizer *authSizer = new wxFlexGridSizer(2, 2, 5, 5);
-    if (showUser)
-    {
-      authSizer->Add(labelUser, 0,
-                     wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-
-      authSizer->Add(textUser, 1,
-                     wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
-    }
-
-    authSizer->Add(labelPassword, 0,
-                   wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-
-    authSizer->Add(textPassword, 1,
-                   wxALL | wxALIGN_CENTER_VERTICAL, 5);
-
-    // The buttons:
-    wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonSizer->Add(buttonOk, 0, wxALL, 10);
-    buttonSizer->Add(buttonCancel, 0, wxALL, 10);
-    buttonOk->SetDefault();
-
-    // Add all the sizers to the main sizer
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-    mainSizer->Add(authSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-    mainSizer->Add(buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
-
-    window->SetAutoLayout(true);
-    window->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(window);
-    mainSizer->Fit(window);
-  }
-
-};
-
-const int AuthDlg::HIDE_USERNAME = 1;
 
 // TODO: username & password are not used - why not?
 AuthDlg::AuthDlg(wxWindow* parent, const wxString & username,
                  const wxString & password, int flags)
-    : wxDialog(parent, -1, _("Authentication"),
-               wxDefaultPosition, wxDefaultSize,
-               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+  : AuthDlgBase(parent), m_username(username), m_password(password)
 {
-  m = new Data(this, flags);
+  const bool hideUser = 0 != (flags & HIDE_USERNAME);
+  const bool hidePassword = 0 != (flags & HIDE_PASSWORD);
+
+  if (hideUser)
+  {
+    m_staticUsername->Show(false);
+    m_textUsername->Show(false);
+  }
+
+  if (hidePassword)
+  {
+    m_staticPassword->Show(false);
+    m_textPassword->Show(false);
+  }
+
+  m_textUsername->SetValidator(wxTextValidator(wxFILTER_NONE, &m_username));
+  m_textPassword->SetValidator(wxTextValidator(wxFILTER_NONE, &m_password));
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
   CentreOnParent();
 }
 
 AuthDlg::~AuthDlg()
 {
-  delete m;
 }
 
 const wxString &
 AuthDlg::GetUsername() const
 {
-  return m->Username;
+  return m_username;
 }
 
 const wxString &
 AuthDlg::GetPassword() const
 {
-  return m->Password;
+  return m_password;
 }
 
 /* -----------------------------------------------------------------
