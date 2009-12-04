@@ -133,6 +133,7 @@ private:
   void OnTestCheckout(wxCommandEvent & event);
   void PrintTimeMeasurements(apr_time_t start, apr_time_t end,
                              const wxString & name);
+  void OnTestCertDlg(wxCommandEvent & event);
 
   // toolbar events
   void OnToolEnter(wxCommandEvent & event);

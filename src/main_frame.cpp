@@ -115,6 +115,11 @@
 #include "res/bitmaps/modified_file.png.h"
 #include "res/bitmaps/conflicted_file.png.h"
 
+#ifdef USE_DEBUG_TESTS
+#include "checkout_action.hpp"
+#include "cert_dlg.hpp"
+#endif
+
 // number of items initially in the list
 static const int NUM_ITEMS = 30;
 
@@ -329,6 +334,7 @@ public:
     menuTests->Append(ID_TestNewWxString, _("wxString Creation&Tracing Test"));
     menuTests->Append(ID_TestListener, _("Listener Test"));
     menuTests->Append(ID_TestCheckout, _("Checkout Test"));
+    menuTests->Append(ID_TestCertDlg, _("Certificate Dlg"));
 #endif
 
     // Create the menu bar and append the menus
@@ -608,6 +614,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MENU(ID_TestNewWxString, MainFrame::OnTestNewWxString)
   EVT_MENU(ID_TestListener, MainFrame::OnTestListener)
   EVT_MENU(ID_TestCheckout, MainFrame::OnTestCheckout)
+  EVT_MENU(ID_TestCertDlg, MainFrame::OnTestCertDlg)
   #endif
 
   EVT_MENU_RANGE(ID_File_Min, ID_File_Max, MainFrame::OnFileCommand)
@@ -1339,17 +1346,17 @@ void
 MainFrame::PrintTimeMeasurements(apr_time_t start, apr_time_t end, const wxString & name)
 {
   wxString msg(name);
-  Trace(wxT('\n') + msg);
+  m->Trace(wxT('\n') + msg);
 
   info_print_time(start, _("Test started at"), msg);
-  Trace(wxT("\n") + msg);
+  m->Trace(wxT("\n") + msg);
 
   info_print_time(end, _("Test ended at"), msg);
-  Trace(msg);
+  m->Trace(msg);
 
   apr_time_t duration = end - start;
   info_print_time(duration, _("Test duration"), msg);
-  Trace(msg + wxT("\n"));
+  m->Trace(msg + wxT("\n"));
 }
 
 void
@@ -1362,7 +1369,7 @@ MainFrame::OnTestNewWxString(wxCommandEvent & WXUNUSED(event))
   {
     wxString message;
     message.Printf(wxT("Tracing a message from newely created wxString, round #%d"), i);
-    Trace(message);
+    m->Trace(message);
 
     static apr_time_t last_access = apr_time_now();
     if (apr_time_now() - last_access > 2000000)
@@ -1433,7 +1440,7 @@ MainFrame::OnTestListener(wxCommandEvent & WXUNUSED(event))
         static wxString msg;
         msg.Printf(wxT("%s: %s, %d"), ACTION_NAMES[i], wxpath.c_str(), j);
 
-        Trace(msg);
+        m->Trace(msg);
       }
 
       static apr_time_t last_access = apr_time_now();
@@ -1466,6 +1473,57 @@ MainFrame::OnTestCheckout(wxCommandEvent & WXUNUSED(event))
   PrintTimeMeasurements(start, end, name);
 }
 #endif
+
+void 
+MainFrame::OnTestCertDlg(wxCommandEvent & WXUNUSED(event))
+{
+  svn::ContextListener::SslServerTrustData data;
+  data.failures = (apr_uint32_t)-1;
+  data.hostname = "hostname";
+  data.fingerprint = "this is the fingerprint";
+  data.validFrom = "Apr 25th 2007";
+  data.validUntil = "Apr 31th 2015";
+  data.issuerDName = "RapidSVN SSL Certificate Authority";
+  data.realm = "RapidSVN Tests";
+  
+  CertDlg dlg(this, data);
+
+  int modalResult = dlg.ShowModal();
+  wxString modalDescr;
+  switch (modalResult)
+  {
+  case wxID_OK:
+    modalDescr=wxT("wxID_OK");
+    break;
+  case wxID_CANCEL:
+    modalDescr=wxT("wxID_CANCEL");
+    break;
+  default:
+    modalDescr=wxString::Format(wxT("%08x"), modalResult);
+  }
+
+  wxString answer;
+  switch (dlg.Answer())
+  {
+  case svn::ContextListener::DONT_ACCEPT:
+    answer = wxT("DONT_ACCEPT");
+    break;
+  case svn::ContextListener::ACCEPT_TEMPORARILY:
+    answer = wxT("ACCEPT_TEMPORARILY");
+    break;
+  case svn::ContextListener::ACCEPT_PERMANENTLY:
+    answer = wxT("ACCEPT_PERMANENTLY");
+    break;
+  default:
+    answer = wxT("Invalid answer");
+  }
+
+
+  wxString msg = wxString::Format(
+    wxT("Modal result:%s\nAccepted Failures: %08x\nAnswer: %s"),
+    modalDescr.c_str(), dlg.AcceptedFailures(), answer.c_str());
+  ::wxMessageBox(msg, wxT("Certificate Dlg Results"), wxOK);
+}
 
 void
 MainFrame::OnFileCommand(wxCommandEvent & event)
@@ -2121,14 +2179,14 @@ MainFrame::OnSize(wxSizeEvent & sizeEvent)
 
 
 void 
-MainFrame::OnFolderBrowserSetFocus(wxFocusEvent& event)
+MainFrame::OnFolderBrowserSetFocus(wxFocusEvent& WXUNUSED(event))
 {
   SetActivePane(ACTIVEPANE_FOLDER_BROWSER);
 }
 
 
 void 
-MainFrame::OnListCtrlSetFocus(wxFocusEvent& event)
+MainFrame::OnListCtrlSetFocus(wxFocusEvent& WXUNUSED(event))
 {
   SetActivePane(ACTIVEPANE_FILELIST);
 }

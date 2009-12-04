@@ -49,9 +49,6 @@ enum
   ID_HelpContents,
   ID_HelpIndex,
   ID_HelpStartupTips,
-  ID_TestNewWxString,
-  ID_TestListener,
-  ID_TestCheckout,
   ID_Preferences,
   ID_AddWcBookmark,
   ID_AddRepoBookmark,
@@ -63,6 +60,11 @@ enum
   ID_Flat,
   ID_Stop,
   ID_Open,
+
+  ID_TestNewWxString,
+  ID_TestListener,
+  ID_TestCheckout,
+  ID_TestCertDlg,
 
   ID_File_Min,
   ID_Add,
