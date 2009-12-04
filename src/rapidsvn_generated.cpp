@@ -894,3 +894,24 @@ AuthDlgBase::AuthDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 AuthDlgBase::~AuthDlgBase()
 {
 }
+
+AnnotateDlgBase::AnnotateDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_list = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
+	m_mainSizer->Add( m_list, 1, wxALL|wxEXPAND, 5 );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	m_mainSizer->Add( m_buttonOK, 0, wxALIGN_CENTER|wxALL, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+}
+
+AnnotateDlgBase::~AnnotateDlgBase()
+{
+}

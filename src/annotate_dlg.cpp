@@ -22,28 +22,15 @@
  * ====================================================================
  */
 
-// wxWidgets
-#include "wx/wx.h"
-#include "wx/listctrl.h"
-
 // app
 #include "annotate_dlg.hpp"
 #include "utils.hpp"
 
-BEGIN_EVENT_TABLE(AnnotateDlg, wxDialog)
-  EVT_BUTTON(-1, AnnotateDlg::OnButton)
-END_EVENT_TABLE()
 
 AnnotateDlg::AnnotateDlg(wxWindow * parent,
                          const wxString & caption)
-    : wxDialog(parent, -1, caption, wxDefaultPosition, wxDefaultSize,
-               wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+  : AnnotateDlgBase(parent, -1, caption)
 {
-  m_button = new wxButton(this, wxID_OK, _("OK"));
-
-  m_list = new wxListView(this, -1, wxDefaultPosition, wxSize(565, 450),
-                          wxLC_REPORT);
-
   m_list->InsertColumn(0, _("Revision"), wxLIST_FORMAT_RIGHT);
   m_list->InsertColumn(1, _("Author"), wxLIST_FORMAT_RIGHT);
   m_list->InsertColumn(2, _("Line"), wxLIST_FORMAT_RIGHT);
@@ -64,36 +51,13 @@ AnnotateDlg::AnnotateDlg(wxWindow * parent,
   m_list->SetColumnWidth(3, 10);
   m_list->SetColumnWidth(4, 150);
 
-  wxBoxSizer * topsizer = new wxBoxSizer(wxVERTICAL);
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
 
-  topsizer->Add(m_list, 1,        // make vertically stretchable
-                wxEXPAND |     // make horizontally stretchable
-                wxALL,         // and make border all around
-                5);            // set border width to 10
-
-  wxBoxSizer * button_sizer = new wxBoxSizer(wxHORIZONTAL);
-
-  button_sizer->Add(m_button, 0,  // make horizontally unstretchable
-                    wxALL,     // make border all around (implicit top alignment)
-                    5);        // set border width to 10
-
-  topsizer->Add(button_sizer, 0,        // make vertically unstretchable
-                wxALIGN_CENTER);       // no border and centre horizontally
-
-
-  SetAutoLayout(TRUE);          // tell dialog to use sizer
-  SetSizer(topsizer);           // actually set the sizer
-
-  topsizer->Fit(this);          // set size to minimum size as calculated by the sizer
-  topsizer->SetSizeHints(this);         // set size hints to honour mininum size
+  Layout();
+  CentreOnParent();
 
   Maximize();
-}
-
-void
-AnnotateDlg::OnButton(wxCommandEvent & event)
-{
-  event.Skip();
 }
 
 void

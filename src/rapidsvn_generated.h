@@ -396,4 +396,22 @@ class AuthDlgBase : public wxDialog
 	
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Class AnnotateDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class AnnotateDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxListCtrl* m_list;
+		wxButton* m_buttonOK;
+	
+	public:
+		AnnotateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Annotate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 398,313 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~AnnotateDlgBase();
+	
+};
+
 #endif //__rapidsvn_generated__

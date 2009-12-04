@@ -24,29 +24,17 @@
 #ifndef _ANNOTATE_DLG_H_INCLUDED_
 #define _ANNOTATE_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+#include "rapidsvn_generated.h"
 
-// forward declarations
-class wxButton;
-class wxListView;
-
-class AnnotateDlg:public wxDialog
+class AnnotateDlg:public AnnotateDlgBase
 {
 public:
   AnnotateDlg(wxWindow * parent,
               const wxString & caption);
-
-  void OnButton(wxCommandEvent & event);
+  
   void AddAnnotateLine(int revision, const wxString & author,
                        const wxString & line);
   void AutoSizeColumn();
-
-private:
-  wxButton *m_button;
-  wxListView *m_list;
-
-  DECLARE_EVENT_TABLE()
 };
 
 #endif
