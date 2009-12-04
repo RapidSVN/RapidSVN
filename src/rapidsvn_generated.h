@@ -414,4 +414,41 @@ class AnnotateDlgBase : public wxDialog
 	
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Class CertDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class CertDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticTitle;
+		wxStaticBoxSizer* m_sizerFailures;
+		wxStaticText* m_staticFailures;
+		wxStaticText* m_labelHostname;
+		wxStaticText* m_staticHostname;
+		wxStaticText* m_labelIssuer;
+		wxStaticText* m_staticIssuer;
+		wxStaticText* m_labelValidFrom;
+		wxStaticText* m_staticValidFrom;
+		wxStaticText* m_labelValidUntil;
+		wxStaticText* m_staticValidUntil;
+		wxStaticText* m_labelFingerprint;
+		wxStaticText* m_staticFingerprint;
+		wxButton* m_buttonPerm;
+		wxButton* m_buttonTemp;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnPerm( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnTemp( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		CertDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("SSL Certificate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 394,339 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~CertDlgBase();
+	
+};
+
 #endif //__rapidsvn_generated__

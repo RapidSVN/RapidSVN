@@ -915,3 +915,103 @@ AnnotateDlgBase::AnnotateDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 AnnotateDlgBase::~AnnotateDlgBase()
 {
 }
+
+CertDlgBase::CertDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_staticTitle = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTitle->Wrap( -1 );
+	m_mainSizer->Add( m_staticTitle, 0, wxALL, 5 );
+	
+	m_sizerFailures = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("MyLabel") ), wxVERTICAL );
+	
+	m_staticFailures = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticFailures->Wrap( -1 );
+	m_sizerFailures->Add( m_staticFailures, 0, wxALL, 5 );
+	
+	m_mainSizer->Add( m_sizerFailures, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* sizerCert;
+	sizerCert = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Certificate information:") ), wxVERTICAL );
+	
+	wxFlexGridSizer* fgSizerFailures;
+	fgSizerFailures = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizerFailures->SetFlexibleDirection( wxBOTH );
+	fgSizerFailures->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_labelHostname = new wxStaticText( this, wxID_ANY, _("Hostname:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelHostname->Wrap( -1 );
+	fgSizerFailures->Add( m_labelHostname, 0, wxALL, 5 );
+	
+	m_staticHostname = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticHostname->Wrap( -1 );
+	fgSizerFailures->Add( m_staticHostname, 0, wxALL, 5 );
+	
+	m_labelIssuer = new wxStaticText( this, wxID_ANY, _("Issuer:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelIssuer->Wrap( -1 );
+	fgSizerFailures->Add( m_labelIssuer, 0, wxALL, 5 );
+	
+	m_staticIssuer = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticIssuer->Wrap( -1 );
+	fgSizerFailures->Add( m_staticIssuer, 0, wxALL, 5 );
+	
+	m_labelValidFrom = new wxStaticText( this, wxID_ANY, _("Valid from:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelValidFrom->Wrap( -1 );
+	fgSizerFailures->Add( m_labelValidFrom, 0, wxALL, 5 );
+	
+	m_staticValidFrom = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticValidFrom->Wrap( -1 );
+	fgSizerFailures->Add( m_staticValidFrom, 0, wxALL, 5 );
+	
+	m_labelValidUntil = new wxStaticText( this, wxID_ANY, _("Valid until:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelValidUntil->Wrap( -1 );
+	fgSizerFailures->Add( m_labelValidUntil, 0, wxALL, 5 );
+	
+	m_staticValidUntil = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticValidUntil->Wrap( -1 );
+	fgSizerFailures->Add( m_staticValidUntil, 0, wxALL, 5 );
+	
+	m_labelFingerprint = new wxStaticText( this, wxID_ANY, _("Fingerprint:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelFingerprint->Wrap( -1 );
+	fgSizerFailures->Add( m_labelFingerprint, 0, wxALL, 5 );
+	
+	m_staticFingerprint = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticFingerprint->Wrap( -1 );
+	fgSizerFailures->Add( m_staticFingerprint, 0, wxALL, 5 );
+	
+	sizerCert->Add( fgSizerFailures, 1, wxEXPAND, 5 );
+	
+	m_mainSizer->Add( sizerCert, 1, wxEXPAND, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonPerm = new wxButton( this, wxID_ANY, _("&Permanently"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonPerm, 0, wxALL, 5 );
+	
+	m_buttonTemp = new wxButton( this, wxID_ANY, _("&Temporarily"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonTemp, 0, wxALL, 5 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonCancel->SetDefault(); 
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 5 );
+	
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_CENTER, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	
+	// Connect Events
+	m_buttonPerm->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CertDlgBase::OnPerm ), NULL, this );
+	m_buttonTemp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CertDlgBase::OnTemp ), NULL, this );
+}
+
+CertDlgBase::~CertDlgBase()
+{
+	// Disconnect Events
+	m_buttonPerm->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CertDlgBase::OnPerm ), NULL, this );
+	m_buttonTemp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CertDlgBase::OnTemp ), NULL, this );
+}

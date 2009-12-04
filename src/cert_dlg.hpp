@@ -24,13 +24,14 @@
 #ifndef _CERT_DLG_H_INCLUDED_
 #define _CERT_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+
+// app
+#include "rapidsvn_generated.h"
 
 // svncpp
 #include "svncpp/context_listener.hpp"
 
-class CertDlg : public wxDialog
+class CertDlg : public CertDlgBase
 {
 public:
   CertDlg(wxWindow * parent,
@@ -45,14 +46,12 @@ public:
   AcceptedFailures() const;
 
 private:
-  struct Data;
-  Data * m;
+  svn::ContextListener::SslServerTrustAnswer m_answer;
+  apr_uint32_t m_acceptedFailures;
 
-private:
-  DECLARE_EVENT_TABLE()
-
-  void OnPerm(wxCommandEvent & event);
-  void OnTemp(wxCommandEvent & event);
+protected:
+  virtual void OnPerm(wxCommandEvent & event);
+  virtual void OnTemp(wxCommandEvent & event);
 };
 
 #endif
