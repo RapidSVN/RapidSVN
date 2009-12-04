@@ -807,3 +807,43 @@ MainFrameBase::~MainFrameBase()
 	m_folderBrowser->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnFolderBrowserSetFocus ), NULL, this );
 	m_listCtrl->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnListCtrlSetFocus ), NULL, this );
 }
+
+AboutDlgBase::AboutDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	topSizer = new wxFlexGridSizer( 2, 2, 10, 10 );
+	topSizer->SetFlexibleDirection( wxBOTH );
+	topSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_bitmapLogo = new wxStaticBitmap( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	topSizer->Add( m_bitmapLogo, 0, wxALL, 5 );
+	
+	m_staticCopy = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticCopy->Wrap( -1 );
+	topSizer->Add( m_staticCopy, 1, wxALL|wxEXPAND, 5 );
+	
+	m_staticBuilt = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticBuilt->Wrap( -1 );
+	topSizer->Add( m_staticBuilt, 0, wxALL, 5 );
+	
+	m_staticInfo = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticInfo->Wrap( -1 );
+	topSizer->Add( m_staticInfo, 0, wxALL, 5 );
+	
+	m_mainSizer->Add( topSizer, 0, wxEXPAND, 5 );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	m_mainSizer->Add( m_buttonOK, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	m_mainSizer->Fit( this );
+}
+
+AboutDlgBase::~AboutDlgBase()
+{
+}

@@ -42,6 +42,7 @@ class SplitterWindow;
 #include <wx/splitter.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
+#include <wx/statbmp.h>
 
 #include "controls.hpp"
 
@@ -346,6 +347,28 @@ class MainFrameBase : public wxFrame
 		m_splitterVert->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterVertOnIdle ), NULL, this );
 		}
 		
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class AboutDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class AboutDlgBase : public wxDialog 
+{
+	private:
+		wxFlexGridSizer* topSizer;
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticBitmap* m_bitmapLogo;
+		wxStaticText* m_staticCopy;
+		wxStaticText* m_staticBuilt;
+		wxStaticText* m_staticInfo;
+		wxButton* m_buttonOK;
+	
+	public:
+		AboutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About ..."), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		~AboutDlgBase();
 	
 };
 

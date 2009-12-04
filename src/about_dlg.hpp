@@ -24,14 +24,14 @@
 #ifndef _ABOUT_DLG_H_INCLUDED_
 #define _ABOUT_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+#include "rapidsvn_generated.h"
+
 
 /**
  * this is a "about" dialog for rapidsvn. It shows the logo and
  * some informative text about copyright and versions
  */
-class AboutDlg : public wxDialog
+class AboutDlg : public AboutDlgBase
 {
 public:
   /**

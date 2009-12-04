@@ -33,7 +33,7 @@
 #include "utils.hpp"
 
 AboutDlg::AboutDlg(wxWindow * parent, const wxLocale & locale)
-    : wxDialog(parent, -1, wxEmptyString, wxDefaultPosition)
+    : AboutDlgBase(parent, -1, wxEmptyString, wxDefaultPosition)
 {
   const wxString title(wxString::Format(
                          _("About %s"), APPLICATION_NAME));
@@ -58,13 +58,13 @@ AboutDlg::AboutDlg(wxWindow * parent, const wxLocale & locale)
   const wxString strCopyrightMessage(Utf8ToLocal(RAPIDSVN_COPYRIGHT));
   const wxString strGpl(_("This program is licensed under the terms\nof the GNU General Public License version 3\n\nAvailable online under:"));
   const wxString strVerMilestone(Utf8ToLocal(RAPIDSVN_VER_MILESTONE));
-
+  
 #ifdef wxUSE_UNICODE
   wxString unicode(_("Unicode"));
 #else
   wxString unicode(_("ANSI"));
 #endif
-
+  
   const wxString copy(wxString::Format(
                         wxT("%s\n") // version
                         wxT("\n%s\n\n") // copyright
@@ -102,31 +102,15 @@ Canonical Name: %s\n"));
                         locale.GetLocale(), locale.GetSysName().c_str(),
                         locale.GetCanonicalName().c_str()));
 
-  // create controls
-  wxStaticBitmap * logo =
-    new wxStaticBitmap(this, -1, EMBEDDED_BITMAP(logo_png));
-  wxStaticText * labelCopy = new wxStaticText(this, -1, copy);
-  wxStaticText * labelBuilt = new wxStaticText(this, -1, built);
-  wxStaticText * labelInfo = new wxStaticText(this, -1, info);
-  wxButton * button = new wxButton(this, wxID_OK, _("OK"));
+  m_bitmapLogo->SetBitmap(EMBEDDED_BITMAP(logo_png));
+  m_staticCopy->SetLabel(copy);
+  m_staticBuilt->SetLabel(built);
+  m_staticInfo->SetLabel(info);
 
-  // position controls
-  wxFlexGridSizer * topSizer = new wxFlexGridSizer(2, 10, 10);
-  topSizer->Add(logo, 0);
-  topSizer->Add(labelCopy, 1, wxEXPAND);
-  topSizer->Add(labelBuilt, 0, wxALL);
-  topSizer->Add(labelInfo, 0, wxALL);
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
 
-  wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
-  mainSizer->Add(topSizer, 0, wxALL, 5);
-  mainSizer->Add(button, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
-
-  SetAutoLayout(true);
-  SetSizer(mainSizer);
-
-  mainSizer->SetSizeHints(this);
-  mainSizer->Fit(this);
-
+  Layout();
   CentreOnParent();
 }
 
