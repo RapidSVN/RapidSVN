@@ -24,23 +24,26 @@
 #ifndef _UPDATE_DLG_H_INCLUDED_
 #define _UPDATE_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+// app
+#include "rapidsvn_generated.h"
 
 // forward declarations
 struct UpdateData;
 
-class UpdateDlg:public wxDialog
+class UpdateDlg:public UpdateDlgBase
 {
 public:
-  /** show dialog without "recursiv" checkbox */
-  static const int WITHOUT_RECURSIVE;
+  enum
+  {
+    /** show dialog without "recursiv" checkbox */
+    WITHOUT_RECURSIVE=0x1,
+    
+    /** show dialog with URL line */
+    WITH_URL=0x2,
 
-  /** show dialog with URL line */
-  static const int WITH_URL;
-
-  /** show dialog without revision information */
-  static const int WITHOUT_REVISION;
+    /** show dialog without revision information */
+    WITHOUT_REVISION=0x4
+  };
 
   /**
    * constructor
@@ -49,10 +52,8 @@ public:
    * @param flags flags for the window (@a WITH_URL)
    * @param recursive default flag for the "recursive" check
    */
-  UpdateDlg(wxWindow* parent,
-            const wxString & title,
-            int flags = 0,
-            bool recursive = true);
+  UpdateDlg(wxWindow* parent, const wxString & title,
+            int flags = 0, bool recursive = true);
 
   /**
    * destructor
@@ -62,18 +63,18 @@ public:
   UpdateData &
   GetData();
 
-  void InitDialog();
-private:
-  struct Data;
-  Data * m;
-
+protected: // events inherited from UpdateDlgBase
   void
   OnUseLatest(wxCommandEvent &event);
 
   void
   OnText(wxCommandEvent & event);
 
-  DECLARE_EVENT_TABLE()
+private:
+  struct Data;
+  Data * m;
+
+  void CheckControls();
 };
 
 #endif

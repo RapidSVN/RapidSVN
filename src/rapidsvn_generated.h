@@ -226,7 +226,10 @@ class UpdateDlgBase : public wxDialog
 	private:
 	
 	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticBoxSizer* m_urlSizer;
 		wxComboBox* m_comboUrl;
+		wxStaticBoxSizer* m_revisionSizer;
 		wxTextCtrl* m_textRevision;
 		wxCheckBox* m_checkUseLatest;
 		wxCheckBox* m_checkForce;
@@ -236,13 +239,12 @@ class UpdateDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnComboRevision( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnComboRevisionText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnTextRevision( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnUseLatest( wxCommandEvent& event ){ event.Skip(); }
 		
 	
 	public:
-		UpdateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		UpdateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 440,309 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~UpdateDlgBase();
 	
 };

@@ -4062,7 +4062,7 @@
             <property name="minimum_size"></property>
             <property name="name">UpdateDlgBase</property>
             <property name="pos"></property>
-            <property name="size"></property>
+            <property name="size">440,309</property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
             <property name="title"></property>
@@ -4102,9 +4102,9 @@
             <event name="OnUpdateUI"></event>
             <object class="wxBoxSizer" expanded="0">
                 <property name="minimum_size"></property>
-                <property name="name">rootSizer</property>
+                <property name="name">m_mainSizer</property>
                 <property name="orient">wxVERTICAL</property>
-                <property name="permission">none</property>
+                <property name="permission">protected</property>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND</property>
@@ -4115,7 +4115,7 @@
                         <property name="minimum_size"></property>
                         <property name="name">m_urlSizer</property>
                         <property name="orient">wxVERTICAL</property>
-                        <property name="permission">none</property>
+                        <property name="permission">protected</property>
                         <event name="OnUpdateUI"></event>
                         <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
@@ -4144,7 +4144,7 @@
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
                                 <event name="OnChar"></event>
-                                <event name="OnCombobox">OnComboRevision</event>
+                                <event name="OnCombobox">OnText</event>
                                 <event name="OnEnterWindow"></event>
                                 <event name="OnEraseBackground"></event>
                                 <event name="OnKeyDown"></event>
@@ -4166,7 +4166,7 @@
                                 <event name="OnRightUp"></event>
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
-                                <event name="OnText">OnComboRevisionText</event>
+                                <event name="OnText"></event>
                                 <event name="OnTextEnter"></event>
                                 <event name="OnUpdateUI"></event>
                             </object>
@@ -4183,7 +4183,7 @@
                         <property name="minimum_size"></property>
                         <property name="name">m_revisionSizer</property>
                         <property name="orient">wxHORIZONTAL</property>
-                        <property name="permission">none</property>
+                        <property name="permission">protected</property>
                         <event name="OnUpdateUI"></event>
                         <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
@@ -4233,7 +4233,7 @@
                                 <event name="OnRightUp"></event>
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
-                                <event name="OnText">OnTextRevision</event>
+                                <event name="OnText">OnText</event>
                                 <event name="OnTextEnter"></event>
                                 <event name="OnTextMaxLen"></event>
                                 <event name="OnTextURL"></event>
@@ -4267,7 +4267,7 @@
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
                                 <event name="OnChar"></event>
-                                <event name="OnCheckBox"></event>
+                                <event name="OnCheckBox">OnUseLatest</event>
                                 <event name="OnEnterWindow"></event>
                                 <event name="OnEraseBackground"></event>
                                 <event name="OnKeyDown"></event>

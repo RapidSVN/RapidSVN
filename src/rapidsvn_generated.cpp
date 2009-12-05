@@ -514,18 +514,15 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 	
-	wxBoxSizer* rootSizer;
-	rootSizer = new wxBoxSizer( wxVERTICAL );
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
 	
-	wxStaticBoxSizer* m_urlSizer;
 	m_urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("URL") ), wxVERTICAL );
 	
 	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
 	m_urlSizer->Add( m_comboUrl, 1, wxALL|wxEXPAND, 5 );
 	
-	rootSizer->Add( m_urlSizer, 0, wxEXPAND, 5 );
+	m_mainSizer->Add( m_urlSizer, 0, wxEXPAND, 5 );
 	
-	wxStaticBoxSizer* m_revisionSizer;
 	m_revisionSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision") ), wxHORIZONTAL );
 	
 	m_textRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
@@ -535,7 +532,7 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 5 );
 	
-	rootSizer->Add( m_revisionSizer, 0, wxEXPAND, 5 );
+	m_mainSizer->Add( m_revisionSizer, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* optionSizer;
 	optionSizer = new wxBoxSizer( wxHORIZONTAL );
@@ -552,7 +549,7 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	optionSizer->Add( m_checkIgnoreExternals, 0, 0, 5 );
 	
-	rootSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );
+	m_mainSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );
 	
 	wxBoxSizer* buttonSizer;
 	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
@@ -564,24 +561,23 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
 	
-	rootSizer->Add( buttonSizer, 0, wxALIGN_CENTER|wxLEFT|wxRIGHT, 5 );
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_CENTER|wxLEFT|wxRIGHT, 5 );
 	
-	this->SetSizer( rootSizer );
+	this->SetSizer( m_mainSizer );
 	this->Layout();
-	rootSizer->Fit( this );
 	
 	// Connect Events
-	m_comboUrl->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnComboRevision ), NULL, this );
-	m_comboUrl->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnComboRevisionText ), NULL, this );
-	m_textRevision->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnTextRevision ), NULL, this );
+	m_comboUrl->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
+	m_textRevision->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
+	m_checkUseLatest->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( UpdateDlgBase::OnUseLatest ), NULL, this );
 }
 
 UpdateDlgBase::~UpdateDlgBase()
 {
 	// Disconnect Events
-	m_comboUrl->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnComboRevision ), NULL, this );
-	m_comboUrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnComboRevisionText ), NULL, this );
-	m_textRevision->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnTextRevision ), NULL, this );
+	m_comboUrl->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
+	m_textRevision->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
+	m_checkUseLatest->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( UpdateDlgBase::OnUseLatest ), NULL, this );
 }
 
 CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
