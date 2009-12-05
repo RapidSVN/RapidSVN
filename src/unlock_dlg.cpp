@@ -47,6 +47,12 @@ UnlockDlg::UnlockDlg(wxWindow * parent)
   m = new Data();
 
   m_checkForce->SetValidator(wxGenericValidator(&m->force));
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
+  CentreOnParent();
 }
 
 UnlockDlg::~UnlockDlg()
