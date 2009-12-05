@@ -34,53 +34,23 @@ struct RevertDlg::Data
 public:
   bool recursive;
 
-  Data(wxWindow * window)
-      : recursive(false)
+  Data()
+    : recursive(false)
   {
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
-    wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-
-    wxStaticText * label =
-      new wxStaticText(window, -1, _("Do you want to revert local changes?"));
-    topSizer->Add(label, 0, wxALL, 5);
-
-    // The "recursive" check box:
-    wxCheckBox* check = new wxCheckBox(window, -1, _("Recursive"),
-                                       wxDefaultPosition, wxDefaultSize, 0,
-                                       wxGenericValidator(&recursive));
-
-    // The buttons:
-    wxButton * yes = new wxButton(window, wxID_OK, _("Yes"));
-    buttonSizer->Add(yes, 0, wxALL, 10);
-
-    wxButton * no = new wxButton(window, wxID_CANCEL, _("No"));
-    buttonSizer->Add(no, 0, wxALL, 10);
-
-    // Add all the sizers to the main sizer
-    mainSizer->Add(topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
-    mainSizer->Add(check, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
-    mainSizer->Add(buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
-
-    window->SetAutoLayout(true);
-    window->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(window);
-    mainSizer->Fit(window);
-
-    yes->SetDefault();
   }
 };
 
-BEGIN_EVENT_TABLE(RevertDlg, wxDialog)
-END_EVENT_TABLE()
-
 RevertDlg::RevertDlg(wxWindow* parent)
-    : wxDialog(parent, -1, _("Revert"),
-               wxDefaultPosition, wxDefaultSize,
-               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+  : RevertDlgBase(parent)
 {
-  m = new Data(this);
+  m = new Data();
+
+  m_checkRecursive->SetValidator(wxGenericValidator(&m->recursive));
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
   CentreOnParent();
 }
 

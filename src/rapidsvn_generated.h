@@ -480,6 +480,26 @@ class PreferencesDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class RevertDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class RevertDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticQuestion;
+		wxCheckBox* m_checkRecursive;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+	
+	public:
+		RevertDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Revert"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		~RevertDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class SwitchDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class SwitchDlgBase : public wxDialog 

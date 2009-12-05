@@ -24,10 +24,10 @@
 #ifndef _REVERT_DLG_H_INCLUDED_
 #define _REVERT_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+// app
+#include "rapidsvn_generated.h"
 
-class RevertDlg:public wxDialog
+class RevertDlg:public RevertDlgBase
 {
 public:
   RevertDlg(wxWindow* parent);
@@ -40,8 +40,6 @@ public:
 private:
   struct Data;
   Data * m;
-
-  DECLARE_EVENT_TABLE()
 };
 
 #endif
