@@ -688,6 +688,16 @@ UpdateValue(wxCheckBox * ctrl, bool value)
 }
 
 
+void
+UpdateValue(wxTextCtrl * ctrl, const wxString & value)
+{
+  wxASSERT(0 != ctrl);
+
+  if (ctrl->GetValue() != value)
+    ctrl->SetValue(value);
+}
+
+
 
 /* -----------------------------------------------------------------
  * local variables:

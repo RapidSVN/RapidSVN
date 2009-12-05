@@ -40,6 +40,7 @@ class wxMenu;
 class wxCommandEvent;
 class wxFileName;
 class wxCheckBox;
+class wxTextCtrl;
 
 namespace svn
 {
@@ -381,6 +382,9 @@ EnableCtrl(wxWindow * ctrl, bool enable);
 /** Updates the value of a checkbox flicker-free */
 void
 UpdateValue(wxCheckBox * ctrl, bool value);
+
+void
+UpdateValue(wxTextCtrl * ctrl, const wxString & value);
 
 #endif
 /* -----------------------------------------------------------------
