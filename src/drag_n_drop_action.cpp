@@ -95,7 +95,7 @@ DragAndDropAction::DragAndDropAction(wxWindow * parent,
   m = new DragAndDropData();
   m->m_files = data.m_files;
   m->m_destination = data.m_destination;
-  m->m_action = DragAndDropDialog::RESULT_CANCEL;
+  m->m_action = DragAndDropDlg::RESULT_CANCEL;
   m->m_logMessage = wxEmptyString;
   m->m_recursiveAdd = false;
 }
@@ -245,17 +245,25 @@ DragAndDropAction::Prepare()
     m->m_recursiveAdd = true;
   }
 
+  int possibleActions;
+  if (importFiles)
+    possibleActions = DragAndDropDlg::IMPORT;
+  else if (showMoveButton)
+    possibleActions = DragAndDropDlg::COPY_MOVE;
+  else
+    possibleActions = DragAndDropDlg::COPY;
+
   // Present the confirmation dialog to the user
-  DragAndDropDialog dlg(m_parent, src, m->m_destination,
-                        showMoveButton, importFiles);
+  DragAndDropDlg dlg(m_parent, src, m->m_destination,
+                     possibleActions);
   m->m_action = dlg.ShowModal();
 
-  if (DragAndDropDialog::RESULT_CANCEL == m->m_action)
+  if (DragAndDropDlg::RESULT_CANCEL == m->m_action)
     return false;
 
   // Imports require additional information from the user
   //  so present the commit dialog to get that information
-  if (DragAndDropDialog::RESULT_IMPORT == m->m_action && incrementRevision)
+  if (DragAndDropDlg::RESULT_IMPORT == m->m_action && incrementRevision)
   {
     CommitDlg commitDlg(m_parent);
     if (commitDlg.ShowModal() != wxID_OK)
@@ -284,17 +292,17 @@ DragAndDropAction::Perform()
     destPath.addComponent(LocalToUtf8(srcFilename.GetFullName()));
     switch (m->m_action)
     {
-    case DragAndDropDialog::RESULT_COPY:
+    case DragAndDropDlg::RESULT_COPY:
       msg.Printf(_("Copying file: %s"), PathToNative(srcPath).c_str());
       Trace(msg);
       client.copy(srcPath, unusedRevision, destPath);
       break;
-    case DragAndDropDialog::RESULT_MOVE:
+    case DragAndDropDlg::RESULT_MOVE:
       msg.Printf(_("Moving file: %s"), PathToNative(srcPath).c_str());
       Trace(msg);
       client.move(srcPath, unusedRevision, destPath, false);
       break;
-    case DragAndDropDialog::RESULT_IMPORT:
+    case DragAndDropDlg::RESULT_IMPORT:
       // Imports only work when the destination directory is a URL.
       // For imports into a WC, copy the files to the WC and mark
       //  them to be added to the repository
@@ -338,7 +346,7 @@ DragAndDropAction::Perform()
         client.add(destPath, m->m_recursiveAdd);
       }
       break;
-    case DragAndDropDialog::RESULT_CANCEL:
+    case DragAndDropDlg::RESULT_CANCEL:
       break;
     default:
       break;

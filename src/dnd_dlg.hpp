@@ -24,53 +24,43 @@
 #ifndef _DND_DLG_H_INCLUDED_
 #define _DND_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/wx.h"
-#include "wx/dialog.h"
+// app
+#include "rapidsvn_generated.h"
 
-enum
-{
-  ID_DND_DLG=10018,
-  ID_BUTTON_IMPORT,
-  ID_BUTTON_COPY,
-  ID_BUTTON_MOVE
-};
-
-class DragAndDropDialog : public wxDialog
+class DragAndDropDlg : public DragAndDropDlgBase
 {
 public:
-  DragAndDropDialog(wxWindow *parent, wxString src, wxString dest, bool bShowMove = true, bool bShowImport = false);
-  int GetDecision();
-
+  /** one of the possible actions for drag'n'drop */
   enum {
-    RESULT_CANCEL = 1,
-    RESULT_MOVE,
-    RESULT_COPY,
-    RESULT_IMPORT,
+    IMPORT,
+    COPY,
+    COPY_MOVE
   };
 
-  void
-  OnImport(wxCommandEvent & event);
+  enum
+  {
+    RESULT_CANCEL=wxID_CANCEL,
+    RESULT_IMPORT=wxID_HIGHEST,
+    RESULT_COPY,
+    RESULT_MOVE
+  };
 
-  void
-  OnMove(wxCommandEvent & event);
+  DragAndDropDlg(wxWindow *parent, wxString src, wxString dest, int action);
 
-  void
-  OnCopy(wxCommandEvent & event);
 
-  void
-  OnCancel(wxCommandEvent & event);
+protected: // event handlers inherited from DragNDropDlgBase
+  virtual void
+  OnButtonImport(wxCommandEvent & event);
+
+  virtual void
+  OnButtonMove(wxCommandEvent & event);
+
+  virtual void
+  OnButtonCopy(wxCommandEvent & event);
 
 private:
-  void CreateControls();
-
-  int m_decision;
-  wxString m_src;
-  wxString m_dest;
-  bool m_showImport;
-  bool m_showMove;
-
-  DECLARE_EVENT_TABLE()
+  struct Data; 
+  Data * m;
 };
 
 #endif

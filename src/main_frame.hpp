@@ -135,6 +135,7 @@ private:
                              const wxString & name);
   void OnTestCertDlg(wxCommandEvent & event);
   void OnTestDestinationDlg(wxCommandEvent & event);
+  void OnTestDndDlg(wxCommandEvent & event);
 
   // toolbar events
   void OnToolEnter(wxCommandEvent & event);

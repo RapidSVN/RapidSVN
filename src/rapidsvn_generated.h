@@ -404,6 +404,33 @@ class DiffDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class DragAndDropDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class DragAndDropDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticQuestion;
+		wxButton* m_buttonImport;
+		wxButton* m_buttonMove;
+		wxButton* m_buttonCopy;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnButtonImport( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonMove( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonCopy( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		DragAndDropDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~DragAndDropDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class ExportDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class ExportDlgBase : public wxDialog 

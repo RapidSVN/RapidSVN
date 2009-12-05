@@ -67,6 +67,10 @@ enum
   ID_TestCertDlg,
   ID_TestDestinationDlg,
   ID_TestDestinationDlgWithForce,
+  ID_TestDndImport,
+  ID_TestDndCopy,
+  ID_TestDndCopyMove,
+  ID_TestDndDlg,
 
   ID_File_Min,
   ID_Add,

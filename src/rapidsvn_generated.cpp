@@ -848,6 +848,52 @@ DiffDlgBase::~DiffDlgBase()
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DiffDlgBase::OnButtonOK ), NULL, this );
 }
 
+DragAndDropDlgBase::DragAndDropDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_staticQuestion = new wxStaticText( this, wxID_ANY, _("Question"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticQuestion->Wrap( -1 );
+	m_mainSizer->Add( m_staticQuestion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonImport = new wxButton( this, wxID_ANY, _("Import"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonImport, 0, wxALL, 10 );
+	
+	m_buttonMove = new wxButton( this, wxID_ANY, _("Move"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonMove, 0, wxALL, 10 );
+	
+	m_buttonCopy = new wxButton( this, wxID_ANY, _("Copy"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCopy, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonCancel->SetDefault(); 
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	m_mainSizer->Fit( this );
+	
+	// Connect Events
+	m_buttonImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DragAndDropDlgBase::OnButtonImport ), NULL, this );
+	m_buttonMove->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DragAndDropDlgBase::OnButtonMove ), NULL, this );
+	m_buttonCopy->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DragAndDropDlgBase::OnButtonCopy ), NULL, this );
+}
+
+DragAndDropDlgBase::~DragAndDropDlgBase()
+{
+	// Disconnect Events
+	m_buttonImport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DragAndDropDlgBase::OnButtonImport ), NULL, this );
+	m_buttonMove->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DragAndDropDlgBase::OnButtonMove ), NULL, this );
+	m_buttonCopy->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DragAndDropDlgBase::OnButtonCopy ), NULL, this );
+}
+
 ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );

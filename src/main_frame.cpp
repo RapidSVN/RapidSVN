@@ -119,6 +119,7 @@
 #include "checkout_action.hpp"
 #include "cert_dlg.hpp"
 #include "destination_dlg.hpp"
+#include "dnd_dlg.hpp"
 #endif
 
 // number of items initially in the list
@@ -332,12 +333,19 @@ public:
     // Debug Menu
     wxMenu *menuTests = new wxMenu;
 
-    menuTests->Append(ID_TestNewWxString, _("wxString Creation&Tracing Test"));
-    menuTests->Append(ID_TestListener, _("Listener Test"));
-    menuTests->Append(ID_TestCheckout, _("Checkout Test"));
-    menuTests->Append(ID_TestCertDlg, _("Certificate Dlg"));
-    menuTests->Append(ID_TestDestinationDlg, _("Destination Dlg (Simple)"));
-    menuTests->Append(ID_TestDestinationDlgWithForce, _("Destination Dlg (With Force)"));
+    menuTests->Append(ID_TestNewWxString, wxT("wxString Creation&Tracing Test"));
+    menuTests->Append(ID_TestListener, wxT("Listener Test"));
+    menuTests->Append(ID_TestCheckout, wxT("Checkout Test"));
+    menuTests->Append(ID_TestCertDlg, wxT("Certificate Dlg"));
+    menuTests->Append(ID_TestDestinationDlg, wxT("Destination Dlg (Simple)"));
+    menuTests->Append(ID_TestDestinationDlgWithForce, wxT("Destination Dlg (With Force)"));
+
+    wxMenu * menuDnd = new wxMenu;
+    menuDnd->AppendRadioItem(ID_TestDndImport, wxT("with action \"Import\""));
+    menuDnd->AppendRadioItem(ID_TestDndCopy, wxT("with action \"Copy\""));
+    menuDnd->AppendRadioItem(ID_TestDndCopyMove, wxT("with action \"Copy/mive\""));
+    menuDnd->Append(ID_TestDndDlg, wxT("Show Dialog"));
+    menuTests->AppendSubMenu(menuDnd, wxT("Dnd Dlg"));
 #endif
 
     // Create the menu bar and append the menus
@@ -620,6 +628,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MENU(ID_TestCertDlg, MainFrame::OnTestCertDlg)
   EVT_MENU(ID_TestDestinationDlg, MainFrame::OnTestDestinationDlg)
   EVT_MENU(ID_TestDestinationDlgWithForce, MainFrame::OnTestDestinationDlg)
+  EVT_MENU(ID_TestDndDlg, MainFrame::OnTestDndDlg)
   #endif
 
   EVT_MENU_RANGE(ID_File_Min, ID_File_Max, MainFrame::OnFileCommand)
@@ -1532,7 +1541,7 @@ MainFrame::OnTestCertDlg(wxCommandEvent & WXUNUSED(event))
 void
 MainFrame::OnTestDestinationDlg(wxCommandEvent & event)
 {
-  int flags;
+  int flags = 0;
 
   switch (event.GetId())
   {
@@ -1568,6 +1577,45 @@ MainFrame::OnTestDestinationDlg(wxCommandEvent & event)
     modalDescr.c_str(), dlg.GetDestination().c_str(), 
     force ? wxT("true") : wxT("false"));
   ::wxMessageBox(msg, wxT("DestinationDlg Results"), wxOK);
+}
+
+
+void
+MainFrame::OnTestDndDlg(wxCommandEvent &)
+{
+  int action = DragAndDropDlg::IMPORT;
+  if (m->IsMenuChecked(ID_TestDndCopy))
+    action = DragAndDropDlg::COPY;
+  else if (m->IsMenuChecked(ID_TestDndCopyMove))
+    action = DragAndDropDlg::COPY_MOVE;
+
+  DragAndDropDlg dlg(this, wxT("/home/foo/src"), 
+                     wxT("/home/foo/dst"),
+                     action);
+  
+  int result = dlg.ShowModal();
+  wxString resultStr;
+  switch (result)
+  {
+  case wxID_CANCEL:
+    resultStr = wxT("wxID_CANCEL");
+    break;
+  case DragAndDropDlg::RESULT_MOVE:
+    resultStr = wxT("RESULT_MOVE");
+    break;
+  case DragAndDropDlg::RESULT_COPY:
+    resultStr = wxT("RESULT_COPY");
+    break;
+  case DragAndDropDlg::RESULT_IMPORT:
+    resultStr = wxT("RESULT_IMPORT");
+    break;
+  default:
+    resultStr = wxString::Format(wxT("Unknown %08x"), result);
+  }
+
+  wxString msg = wxString::Format(
+    wxT("Modal result:%s"), resultStr.c_str());
+  ::wxMessageBox(msg, wxT("DndDlg Results"), wxOK);
 }
 #endif
 
