@@ -24,11 +24,11 @@
 #ifndef _LOCK_DLG_H_INCLUDED_
 #define _LOCK_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+// app
+#include "rapidsvn_generated.h"
 
 // forward declarations
-class LockDlg : public wxDialog
+class LockDlg : public LockDlgBase
 {
 public:
   /**
@@ -59,10 +59,6 @@ private:
   /** hide implementation details */
   struct Data;
   Data * m;
-
-  void OnHistoryComboBox(wxCommandEvent &);
-private:
-  DECLARE_EVENT_TABLE()
 };
 
 #endif

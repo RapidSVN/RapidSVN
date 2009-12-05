@@ -443,6 +443,27 @@ class ExportDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class LockDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class LockDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticBoxSizer* m_msgSizer;
+		wxTextCtrl* m_textMessage;
+		wxCheckBox* m_checkStealLock;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+	
+	public:
+		LockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Lock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~LockDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class MainFrameBase
 ///////////////////////////////////////////////////////////////////////////////
 class MainFrameBase : public wxFrame 

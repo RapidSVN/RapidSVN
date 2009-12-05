@@ -33,75 +33,28 @@ struct LockDlg::Data
 {
 public:
   bool stealLock;
-  wxTextCtrl * msg;
-
   wxString message;
 
-  Data(wxWindow * window)
-      : stealLock(false), msg(0)
+  Data()
+    : stealLock(false)
   {
-    // create controls
-    wxStaticBox* msgBox =
-      new wxStaticBox(window, 1, _("Enter a comment for this lock"));
-
-    wxSize msgSize(window->GetCharWidth() * 80,
-                   window->GetCharHeight() * 4);
-
-    msg = new wxTextCtrl(window, -1, wxEmptyString, wxDefaultPosition,
-                         msgSize, wxTE_MULTILINE,
-                         wxTextValidator(wxFILTER_NONE, &message));
-
-    wxCheckBox * checkStealLock = NULL;
-    wxGenericValidator val(&stealLock);
-    checkStealLock =
-      new wxCheckBox(window, -1, _("Steal lock if it belongs to another user"),
-                     wxDefaultPosition, wxDefaultSize, 0,
-                     val);
-    wxButton * ok = new wxButton(window, wxID_OK, _("OK"));
-    wxButton * cancel = new wxButton(window, wxID_CANCEL, _("Cancel"));
-
-    // position controls
-    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
-
-    // The message field:
-    wxStaticBoxSizer * msgSizer =
-      new wxStaticBoxSizer(msgBox, wxHORIZONTAL);
-    msgSizer->Add(msg, 1, wxALL | wxEXPAND, 5);
-
-    // The buttons:
-    wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonSizer->Add(checkStealLock, 1,
-                     wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT,
-                     10);
-    buttonSizer->Add(ok, 0, wxALL, 10);
-    buttonSizer->Add(cancel, 0, wxALL, 10);
-
-    wxBoxSizer * topSizer = new wxBoxSizer(wxHORIZONTAL);
-    topSizer->Add(msgSizer, 1, wxALL | wxEXPAND, 5);
-
-    // Add all the sizers to the main sizer
-    mainSizer->Add(topSizer, 1, wxLEFT | wxRIGHT | wxEXPAND, 5);
-    mainSizer->Add(buttonSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-
-    window->SetAutoLayout(true);
-    window->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(window);
-    mainSizer->Fit(window);
-
-    ok->SetDefault();
   }
 };
 
-BEGIN_EVENT_TABLE(LockDlg, wxDialog)
-END_EVENT_TABLE()
-
 LockDlg::LockDlg(wxWindow * parent)
-    : wxDialog(parent, -1, _("Lock"),
-               wxDefaultPosition, wxDefaultSize,
-               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+  : LockDlgBase(parent)
 {
-  m = new Data(this);
+  m = new Data();
+
+  m_textMessage->SetSize(GetCharWidth() * 80,
+                         GetCharHeight() * 4);
+  m_textMessage->SetValidator(wxTextValidator(wxFILTER_NONE, &m->message));
+  m_checkStealLock->SetValidator(wxGenericValidator(&m->stealLock));
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
   CentreOnParent();
 }
 
