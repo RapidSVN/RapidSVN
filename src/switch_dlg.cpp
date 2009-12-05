@@ -36,22 +36,9 @@
 #include "switch_dlg.hpp"
 #include "utils.hpp"
 
-enum
-{
-  ID_USELATEST = 100,
-  ID_REVISION,
-  ID_URL,
-  ID_RELOCATE
-};
 
 struct SwitchDlg::Data
 {
-private:
-  wxTextCtrl * m_textRevision;
-  wxCheckBox * m_checkUseLatest;
-  wxCheckBox * m_checkRelocate;
-  wxComboBox * m_comboUrl;
-  wxButton * m_buttonOk;
 public:
   wxString url;
   wxString revision;
@@ -59,147 +46,33 @@ public:
   bool relocate;
   bool useLatest;
 
-  Data(wxWindow * window, const wxString & url_,
-       bool recursive_, bool relocate_)
-      : m_textRevision(0), m_checkUseLatest(0), m_comboUrl(0),
-      m_buttonOk(0),
-      url(url_), revision(wxT("")),
+  Data(const wxString & url_, bool recursive_, bool relocate_)
+    : url(url_), revision(wxT("")),
       recursive(recursive_), relocate(relocate_),
       useLatest(true)
   {
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *middleSizer = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *optionSizer = new wxBoxSizer(wxHORIZONTAL);
-    wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-
-    // The URL fields:
-    {
-      wxStaticBox * box = new wxStaticBox(window, -1, _("URL"));
-      wxStaticBoxSizer * sizer = new wxStaticBoxSizer(box, wxHORIZONTAL);
-
-      HistoryValidator val(HISTORY_REPOSITORY, &url);
-      m_comboUrl = new wxComboBox(window, ID_URL, wxEmptyString,
-                                  wxDefaultPosition, wxSize(235, -1),
-                                  0, 0, wxCB_DROPDOWN, val);
-
-      sizer->Add(m_comboUrl, 1, wxALL | wxEXPAND, 5);
-      middleSizer->Add(sizer, 1, wxALL | wxEXPAND, 5);
-    }
-
-    // The revision fields:
-    {
-      wxStaticBox * box = new wxStaticBox(window, -1, _("Revision"));
-      wxStaticBoxSizer *revSizer = new wxStaticBoxSizer(box, wxHORIZONTAL);
-
-      wxTextValidator val(wxFILTER_NUMERIC, &revision);
-      m_textRevision = new wxTextCtrl(window, ID_REVISION, wxEmptyString,
-                                      wxDefaultPosition,
-                                      wxDefaultSize, 0, val);
-      revSizer->Add(m_textRevision, 1,
-                    wxALL | wxALIGN_CENTER_VERTICAL | wxEXPAND, 5);
-
-      wxGenericValidator valUseLatest(&useLatest);
-      m_checkUseLatest = new wxCheckBox(window, ID_USELATEST,
-                                        _("Use latest"),
-                                        wxDefaultPosition,
-                                        wxDefaultSize, 0, valUseLatest);
-      revSizer->Add(m_checkUseLatest, 0,
-                    wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
-
-      middleSizer->Add(revSizer, 1, wxALL | wxEXPAND, 5);
-    }
-
-    // The recursive checkbox
-
-    {
-      wxGenericValidator val(&recursive);
-      wxCheckBox * checkRecursive =
-        new wxCheckBox(window, -1, _("Recursive"),
-                       wxDefaultPosition, wxDefaultSize, 0, val);
-      optionSizer->Add(checkRecursive, 0,
-                       wxALIGN_CENTER_HORIZONTAL | wxALL , 5);
-    }
-
-    // The "relocate" checkbox
-    {
-      wxGenericValidator val(&relocate);
-      m_checkRelocate = new wxCheckBox(window, ID_RELOCATE,
-                                       _("Relocate"),
-                                       wxDefaultPosition,
-                                       wxDefaultSize, 0,
-                                       val);
-      optionSizer->Add(m_checkRelocate, 0,
-                       wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
-    }
-
-
-    // The buttons:
-    m_buttonOk = new wxButton(window, wxID_OK, _("OK"));
-    buttonSizer->Add(m_buttonOk, 0, wxALL, 10);
-    wxButton * button = new wxButton(window, wxID_CANCEL, _("Cancel"));
-    buttonSizer->Add(button, 0, wxALL, 10);
-
-    // Add all the sizers to the main sizer
-    mainSizer->Add(middleSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-    mainSizer->Add(optionSizer, 0, wxLEFT | wxRIGHT | wxEXPAND, 5);
-    mainSizer->Add(5, 5, 1, wxEXPAND);
-    mainSizer->Add(buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
-
-    window->SetAutoLayout(true);
-    window->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(window);
-    mainSizer->Fit(window);
-
-    m_buttonOk->SetDefault();
   }
-
-  void
-  EnableControls()
-  {
-    m_textRevision->Enable(!m_checkUseLatest->IsChecked());
-  }
-
-  void
-  CheckButtons()
-  {
-    bool ok = true;
-
-    if (!m_checkUseLatest->IsChecked())
-    {
-      ok = CheckRevision(m_textRevision->GetValue());
-    }
-
-    if (ok)
-    {
-      svn::Path UrlUtf8(PathUtf8(m_comboUrl->GetValue()));
-      ok = UrlUtf8.isUrl();
-    }
-
-    m_buttonOk->Enable(ok);
-  }
-
 };
-
-BEGIN_EVENT_TABLE(SwitchDlg, wxDialog)
-  EVT_CHECKBOX(ID_USELATEST, SwitchDlg::OnUseLatest)
-  EVT_TEXT(ID_URL, SwitchDlg::OnText)
-  EVT_TEXT(ID_REVISION, SwitchDlg::OnText)
-END_EVENT_TABLE()
 
 SwitchDlg::SwitchDlg(wxWindow* parent, const wxString & url,
                      bool recursive, bool relocate)
-    : wxDialog(parent, -1, _("Switch URL"),
-               wxDefaultPosition, wxDefaultSize,
-               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+: SwitchDlgBase(parent, -1)
 {
-  m = new Data(this, url, recursive, relocate);
+  m = new Data(url, recursive, relocate);
+
+  m_comboUrl->SetValidator(HistoryValidator(HISTORY_REPOSITORY, &m->url));
+  m_textRevision->SetValidator(wxTextValidator(wxFILTER_NUMERIC, &m->revision));
+  m_checkUseLatest->SetValidator(wxGenericValidator(&m->useLatest));
+  m_checkRecursive->SetValidator(wxGenericValidator(&m->recursive));
+  m_checkRelocate->SetValidator(wxGenericValidator(&m->relocate));
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
   CentreOnParent();
 
-  wxDialog::InitDialog();
-
-  m->EnableControls();
-  m->CheckButtons();
+  CheckControls();
 }
 
 SwitchDlg::~SwitchDlg()
@@ -210,14 +83,13 @@ SwitchDlg::~SwitchDlg()
 void
 SwitchDlg::OnUseLatest(wxCommandEvent &)
 {
-  m->EnableControls();
-  m->CheckButtons();
+  CheckControls();
 }
 
 void
 SwitchDlg::OnText(wxCommandEvent &)
 {
-  m->CheckButtons();
+  CheckControls();
 }
 
 svn::Revision
@@ -255,6 +127,28 @@ bool
 SwitchDlg::GetRecursive() const
 {
   return m->recursive;
+}
+
+
+void
+SwitchDlg::CheckControls()
+{
+  bool useLatest = m_checkUseLatest->IsChecked();
+
+  EnableCtrl(m_textRevision, !useLatest);
+  
+  bool ok = true;
+  
+  if (!useLatest)
+    ok = CheckRevision(m_textRevision->GetValue());
+  
+  if (ok)
+  {
+    svn::Path UrlUtf8(PathUtf8(m_comboUrl->GetValue()));
+    ok = UrlUtf8.isUrl();
+  }
+
+  EnableCtrl(m_buttonOK, ok);
 }
 
 

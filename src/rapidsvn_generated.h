@@ -480,6 +480,36 @@ class PreferencesDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class SwitchDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class SwitchDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticBoxSizer* m_urlSizer;
+		wxComboBox* m_comboUrl;
+		wxStaticBoxSizer* m_revisionSizer;
+		wxTextCtrl* m_textRevision;
+		wxCheckBox* m_checkUseLatest;
+		wxCheckBox* m_checkRecursive;
+		wxCheckBox* m_checkRelocate;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnUseLatest( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		SwitchDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Switch URL"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~SwitchDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class UnlockDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class UnlockDlgBase : public wxDialog 

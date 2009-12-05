@@ -24,8 +24,8 @@
 #ifndef _SWITCH_DLG_H_INCLUDED_
 #define _SWITCH_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+// app
+#include "rapidsvn_generated.h"
 
 // forward declarations
 
@@ -34,7 +34,7 @@ namespace svn
   class Revision;
 }
 
-class SwitchDlg:public wxDialog
+class SwitchDlg:public SwitchDlgBase
 {
 public:
   /**
@@ -64,17 +64,19 @@ public:
   bool
   GetRelocate() const;
 
+
+protected: // event handlers form SwitchDlgBase
+  virtual void
+  OnUseLatest(wxCommandEvent &event);
+
+  virtual void
+  OnText(wxCommandEvent & event);
+  
 private:
   struct Data;
   Data * m;
 
-  void
-  OnUseLatest(wxCommandEvent &event);
-
-  void
-  OnText(wxCommandEvent & event);
-
-  DECLARE_EVENT_TABLE()
+  void CheckControls();
 };
 
 #endif

@@ -1085,6 +1085,74 @@ PreferencesDlgBase::~PreferencesDlgBase()
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDlgBase::OnOK ), NULL, this );
 }
 
+SwitchDlgBase::SwitchDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("URL") ), wxVERTICAL );
+	
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
+	m_urlSizer->Add( m_comboUrl, 1, wxALL|wxEXPAND, 5 );
+	
+	m_mainSizer->Add( m_urlSizer, 0, wxEXPAND, 5 );
+	
+	m_revisionSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision") ), wxHORIZONTAL );
+	
+	m_textRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	
+	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUseLatest->SetValue(true);
+	
+	m_revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 5 );
+	
+	m_mainSizer->Add( m_revisionSizer, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* optionSizer;
+	optionSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	optionSizer->Add( m_checkRecursive, 0, 0, 5 );
+	
+	m_checkRelocate = new wxCheckBox( this, wxID_ANY, _("Relocate"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	optionSizer->Add( m_checkRelocate, 0, 0, 5 );
+	
+	m_mainSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_CENTER|wxLEFT|wxRIGHT, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	m_mainSizer->Fit( this );
+	
+	// Connect Events
+	m_comboUrl->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( SwitchDlgBase::OnText ), NULL, this );
+	m_textRevision->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( SwitchDlgBase::OnText ), NULL, this );
+	m_checkUseLatest->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( SwitchDlgBase::OnUseLatest ), NULL, this );
+}
+
+SwitchDlgBase::~SwitchDlgBase()
+{
+	// Disconnect Events
+	m_comboUrl->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( SwitchDlgBase::OnText ), NULL, this );
+	m_textRevision->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( SwitchDlgBase::OnText ), NULL, this );
+	m_checkUseLatest->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( SwitchDlgBase::OnUseLatest ), NULL, this );
+}
+
 UnlockDlgBase::UnlockDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
