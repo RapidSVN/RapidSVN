@@ -471,4 +471,41 @@ class DeleteDlgBase : public wxDialog
 	
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Class CheckoutDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class CheckoutDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxComboBox* m_comboUrl;
+		wxComboBox* m_comboDest;
+		wxButton* m_buttonBrowse;
+		wxTextCtrl* m_textRevision;
+		wxCheckBox* m_checkUseLatest;
+		wxTextCtrl* m_textPegRevision;
+		wxCheckBox* m_checkPegNotSpecified;
+		wxCheckBox* m_checkAddToBookmarks;
+		wxCheckBox* m_checkRecursive;
+		wxCheckBox* m_checkIgnoreExternals;
+		wxBoxSizer* m_buttonSizer;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		wxButton* m_buttonHelp;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnBrowse( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCheckBox( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnHelp( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		CheckoutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Checkout"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 389,333 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~CheckoutDlgBase();
+	
+};
+
 #endif //__rapidsvn_generated__

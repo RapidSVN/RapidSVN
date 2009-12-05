@@ -24,11 +24,9 @@
 #ifndef _CHECKOUT_DLG_H_INCLUDED_
 #define _CHECKOUT_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/wx.h"
-
 // app
 #include "checkout_data.hpp"
+#include "rapidsvn_generated.h"
 
 // svncpp
 namespace svn
@@ -36,7 +34,7 @@ namespace svn
   class Path;
 }
 
-class CheckoutDlg : public wxDialog
+class CheckoutDlg : public CheckoutDlgBase
 {
 public:
   /**
@@ -59,27 +57,25 @@ public:
   const CheckoutData &
   GetData() const;
 
+protected: // Events inherited from CheckoutDlgBase
+  virtual void
+  OnBrowse(wxCommandEvent & event);
+
+  virtual void
+  OnText(wxCommandEvent & event);
+
+  virtual void
+  OnCheckBox(wxCommandEvent & event);
+
+  virtual void
+  OnHelp(wxCommandEvent & event);
+
 private:
   /** hide implementation details */
   struct Data;
   Data * m;
 
-  void
-  OnBrowse(wxCommandEvent & event);
-
-  void
-  OnText(wxCommandEvent & event);
-
-  void
-  OnHelp(wxCommandEvent & event);
-
-  void
-  OnUseLatest(wxCommandEvent & event);
-
-  void
-  InitDialog();
-
-  DECLARE_EVENT_TABLE()
+  void CheckControls();
 };
 
 #endif
