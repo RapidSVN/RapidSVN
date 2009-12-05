@@ -24,8 +24,7 @@
 #ifndef _REPORT_DLG_H_INCLUDED_
 #define _REPORT_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+#include "rapidsvn_generated.h"
 
 enum
 {
@@ -33,25 +32,15 @@ enum
   ERROR_REPORT
 };
 
-// forward declarations
-class wxButton;
-class wxTextCtrl;
-
-class ReportDlg:public wxDialog
+class ReportDlg:public ReportDlgBase
 {
 public:
   ReportDlg(wxWindow * parent,
             const wxString & caption,
             const wxString & data, int type = NORMAL_REPORT);
-
-  void OnButton(wxCommandEvent & event);
-
 private:
-  wxButton *m_button;
-  wxTextCtrl *m_text;
-
-  const wxString & m_str;
-  DECLARE_EVENT_TABLE()
+  struct Data;
+  Data * m;
 };
 
 #endif

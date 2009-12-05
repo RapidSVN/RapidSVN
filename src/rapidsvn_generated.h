@@ -519,6 +519,24 @@ class PreferencesDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class ReportDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class ReportDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxTextCtrl* m_text;
+		wxButton* m_buttonOK;
+	
+	public:
+		ReportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Report"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 567,409 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~ReportDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class RevertDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class RevertDlgBase : public wxDialog 
