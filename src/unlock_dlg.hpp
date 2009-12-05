@@ -24,10 +24,10 @@
 #ifndef _UNLOCK_DLG_H_INCLUDED_
 #define _UNLOCK_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+// app
+#include "rapidsvn_generated.h"
 
-class UnlockDlg:public wxDialog
+class UnlockDlg:public UnlockDlgBase
 {
 public:
   UnlockDlg(wxWindow* parent);
@@ -40,8 +40,6 @@ public:
 private:
   struct Data;
   Data * m;
-
-  DECLARE_EVENT_TABLE()
 };
 
 #endif

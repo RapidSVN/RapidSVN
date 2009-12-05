@@ -480,6 +480,26 @@ class PreferencesDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class UnlockDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class UnlockDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticQuestion;
+		wxCheckBox* m_checkForce;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+	
+	public:
+		UnlockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Unlock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 440,143 ), long style = wxDEFAULT_DIALOG_STYLE );
+		~UnlockDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class UpdateDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class UpdateDlgBase : public wxDialog 
