@@ -668,6 +668,16 @@ IsValidDir(const wxString & dir)
 }
 
 
+void
+EnableCtrl(wxWindow * ctrl, bool enable)
+{
+  wxASSERT(0 != ctrl);
+
+  if (ctrl->IsEnabled() != enable)
+    ctrl->Enable(enable);
+}
+
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

@@ -363,6 +363,19 @@ FindExecutableInPath(const wxString & executable);
  */
 bool 
 IsValidDir(const wxString & dir);
+
+
+/**
+ * Helper function that enables/disables a control only if
+ * the enable status differs. 
+ * This avoids flickering on some platforms.
+ *
+ * @param ctrl
+ * @param enable
+ */
+void
+EnableCtrl(wxWindow * ctrl, bool enable);
+
 #endif
 /* -----------------------------------------------------------------
  * local variables:
