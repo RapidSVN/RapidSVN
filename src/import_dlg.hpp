@@ -24,8 +24,8 @@
 #ifndef _IMPORT_DLG_H_INCLUDED_
 #define _IMPORT_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+// app
+#include "rapidsvn_generated.h"
 
 // forward declarations
 struct ImportData;
@@ -36,7 +36,7 @@ namespace svn
 }
 
 
-class ImportDlg:public wxDialog
+class ImportDlg:public ImportDlgBase
 {
 public:
   /**
@@ -58,27 +58,17 @@ public:
   ImportData &
   GetData();
 
+protected: // inherited event handlers
+  virtual void OnBrowse(wxCommandEvent & event);
+
+  virtual void OnCommand(wxCommandEvent & event);
+
 private:
   /** hide implementation details */
   struct Data;
   Data *m;
 
-  /**
-   * Event handler for OK button
-   */
-  void OnOk(wxCommandEvent & event);
-
-  /**
-   * Event handler for Browser button
-   */
-  void OnBrowse(wxCommandEvent & event);
-
-  /**
-   * Event handler for changes in text fields
-   */
-  void OnText(wxCommandEvent & event);
-
-  DECLARE_EVENT_TABLE()
+  void CheckControls();
 };
 
 #endif

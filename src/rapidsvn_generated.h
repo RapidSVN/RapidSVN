@@ -491,6 +491,38 @@ class LockDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class ImportDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class ImportDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxComboBox* m_comboUrl;
+		wxTextCtrl* m_textPath;
+		wxButton* m_buttonBrowse;
+		wxStaticText* m_staticPathType;
+		wxChoice* m_choicePathType;
+		wxStaticBoxSizer* m_msgSizer;
+		wxTextCtrl* m_textMessage;
+		wxBoxSizer* m_buttonSizer;
+		wxCheckBox* m_checkRecursive;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnCommand( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnBrowse( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		ImportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~ImportDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class MainFrameBase
 ///////////////////////////////////////////////////////////////////////////////
 class MainFrameBase : public wxFrame 

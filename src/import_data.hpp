@@ -36,8 +36,14 @@ struct ImportData
   wxString Path;
   wxString LogMessage;
   bool Recursive;
-  bool TreeType;
-  bool FileType;
+
+  enum
+  {
+    DIRECTORY=0,
+    FILE
+  };
+
+  int PathType;
 };
 
 #endif

@@ -524,7 +524,7 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_panelGeneral->SetSizer( sizerGeneral );
 	m_panelGeneral->Layout();
 	sizerGeneral->Fit( m_panelGeneral );
-	m_notebook->AddPage( m_panelGeneral, _("General"), false );
+	m_notebook->AddPage( m_panelGeneral, _("General"), true );
 	m_panelExtended = new wxPanel( m_notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	sizerExtended = new wxBoxSizer( wxVERTICAL );
 	
@@ -1054,6 +1054,93 @@ LockDlgBase::LockDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 
 LockDlgBase::~LockDlgBase()
 {
+}
+
+ImportDlgBase::ImportDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	wxStaticBoxSizer* urlSizer;
+	urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Repository &URL for import") ), wxVERTICAL );
+	
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
+	urlSizer->Add( m_comboUrl, 0, wxALL|wxEXPAND, 5 );
+	
+	m_mainSizer->Add( urlSizer, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* pathSizer;
+	pathSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Import &Path") ), wxVERTICAL );
+	
+	wxBoxSizer* pathNameSizer;
+	pathNameSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textPath = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	pathNameSizer->Add( m_textPath, 1, wxALL, 5 );
+	
+	m_buttonBrowse = new wxButton( this, wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
+	pathNameSizer->Add( m_buttonBrowse, 0, wxALL, 5 );
+	
+	pathSizer->Add( pathNameSizer, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* importTypeSizer;
+	importTypeSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_staticPathType = new wxStaticText( this, wxID_ANY, _("Path &type"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPathType->Wrap( -1 );
+	importTypeSizer->Add( m_staticPathType, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	wxString m_choicePathTypeChoices[] = { _("Directory"), _("File") };
+	int m_choicePathTypeNChoices = sizeof( m_choicePathTypeChoices ) / sizeof( wxString );
+	m_choicePathType = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePathTypeNChoices, m_choicePathTypeChoices, 0 );
+	m_choicePathType->SetSelection( 0 );
+	importTypeSizer->Add( m_choicePathType, 0, wxALIGN_CENTER_VERTICAL, 5 );
+	
+	pathSizer->Add( importTypeSizer, 0, 0, 5 );
+	
+	m_mainSizer->Add( pathSizer, 0, wxEXPAND, 5 );
+	
+	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("End &log message") ), wxHORIZONTAL );
+	
+	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );
+	
+	m_mainSizer->Add( m_msgSizer, 1, wxEXPAND, 5 );
+	
+	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	m_buttonSizer->Add( m_checkRecursive, 0, wxALIGN_CENTER_VERTICAL|wxALL, 10 );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	m_buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( m_buttonSizer, 0, wxALIGN_CENTER, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	m_mainSizer->Fit( this );
+	
+	// Connect Events
+	m_comboUrl->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ImportDlgBase::OnCommand ), NULL, this );
+	m_textPath->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ImportDlgBase::OnCommand ), NULL, this );
+	m_buttonBrowse->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ImportDlgBase::OnBrowse ), NULL, this );
+	m_choicePathType->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ImportDlgBase::OnCommand ), NULL, this );
+}
+
+ImportDlgBase::~ImportDlgBase()
+{
+	// Disconnect Events
+	m_comboUrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ImportDlgBase::OnCommand ), NULL, this );
+	m_textPath->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ImportDlgBase::OnCommand ), NULL, this );
+	m_buttonBrowse->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ImportDlgBase::OnBrowse ), NULL, this );
+	m_choicePathType->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ImportDlgBase::OnCommand ), NULL, this );
 }
 
 MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )

@@ -36,125 +36,44 @@
 #include "import_dlg.hpp"
 #include "utils.hpp"
 
-enum
-{
-  ID_BUTTON_BROWSE = 100,
-};
-
 struct ImportDlg::Data
 {
 public:
   ImportData data;
 
-  Data(wxWindow * window)
+  Data(const svn::Path & selectedUrl)
   {
-    data.TreeType = true;
-    data.FileType = !data.TreeType;
+
+    data.PathType = ImportData::DIRECTORY;
     data.Recursive = true;
 
-    InitControls(window);
+    if (selectedUrl.isUrl())
+      data.Repository = Utf8ToLocal(selectedUrl.c_str());
+
   }
 
-  void
-  InitControls(wxWindow * wnd)
-  {
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-
-    wxFlexGridSizer* Grid = new wxFlexGridSizer(2, 3, 5, 0);
-    Grid->AddGrowableCol(1);  // The second column can be expanded.
-
-    // Row 0:
-    Grid->Add(new wxStaticText(wnd, -1, _("Repository URL")), 0,
-              wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-
-    HistoryValidator val(HISTORY_REPOSITORY, &data.Repository);
-    wxComboBox *repository =
-      new wxComboBox(wnd, -1, wxEmptyString, wxDefaultPosition,
-                     wxSize(235, -1), 0, 0, wxCB_DROPDOWN, val);
-    Grid->Add(repository, 1, wxLEFT | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
-
-    Grid->Add(new wxStaticText(wnd, -1, wxEmptyString), 0,
-              0, 5);
-
-    // Row 1:
-    Grid->Add(new wxStaticText(wnd, -1, _("Path")), 0,
-              wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-    wxTextCtrl *Path = new wxTextCtrl(wnd, -1, wxEmptyString,
-                                      wxDefaultPosition, wxSize(300, -1), 0,
-                                      wxTextValidator(wxFILTER_NONE, &data.Path));
-    Grid->Add(Path, 1, wxLEFT | wxEXPAND, 5);
-    wxButton* BrowseButton = new wxButton(wnd, ID_BUTTON_BROWSE, wxT("..."),
-                                          wxPoint(-1,-1), wxSize(20, -1));
-    Grid->Add(BrowseButton, 0, wxLEFT | wxALIGN_CENTER_VERTICAL, 5);
-
-    mainSizer->Add(Grid, 0, wxALL | wxEXPAND, 5);
-
-
-    // The message field:
-    wxStaticBoxSizer *messageSizer = new wxStaticBoxSizer(
-      new wxStaticBox(wnd, -1, _("Enter log message")), wxHORIZONTAL);
-
-    wxTextCtrl* Log = new wxTextCtrl(wnd, -1, wxEmptyString, wxDefaultPosition,
-                                     wxSize(-1, 50), wxTE_MULTILINE,
-                                     wxTextValidator(wxFILTER_NONE, &data.LogMessage));
-
-    messageSizer->Add(Log, 1, wxALL | wxEXPAND, 5);
-
-    mainSizer->Add(messageSizer, 1, wxALL | wxEXPAND, 5);
-
-    // Sundry items row:
-    wxBoxSizer *SundrySizer = new wxBoxSizer(wxHORIZONTAL);
-
-    wxCheckBox* Recursive = new wxCheckBox(wnd, -1, _("Recursive"),
-                                           wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&data.Recursive));
-    SundrySizer->Add(Recursive, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
-
-    SundrySizer->Add(new wxStaticText(wnd, -1, _("Path type:")), 0,
-                     wxLEFT | wxALIGN_CENTER_VERTICAL, 30);
-
-    SundrySizer->Add(
-      new wxRadioButton(wnd, -1, _("Tree"), wxDefaultPosition, wxDefaultSize, 0,
-                        wxGenericValidator(&data.TreeType)),
-      0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
-    SundrySizer->Add(
-      new wxRadioButton(wnd, -1, _("File"), wxDefaultPosition, wxDefaultSize, 0,
-                        wxGenericValidator(&data.FileType)),
-      0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
-
-    mainSizer->Add(SundrySizer, 0, wxALL | wxCENTER, 5);
-
-    // Button row
-    wxBoxSizer *ButtonSizer = new wxBoxSizer(wxHORIZONTAL);
-    ButtonSizer->Add(new wxButton(wnd, wxID_OK, _("OK")), 0,
-                     wxALL, 10);
-    ButtonSizer->Add(new wxButton(wnd, wxID_CANCEL, _("Cancel")), 0,
-                     wxALL, 10);
-
-    mainSizer->Add(ButtonSizer, 0, wxALL | wxCENTER, 5);
-
-    wnd->SetAutoLayout(true);
-    wnd->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(wnd);
-    mainSizer->Fit(wnd);
-  }
 };
 
-BEGIN_EVENT_TABLE(ImportDlg, wxDialog)
-  EVT_BUTTON(wxID_OK, ImportDlg::OnOk)
-  EVT_BUTTON(ID_BUTTON_BROWSE, ImportDlg::OnBrowse)
-END_EVENT_TABLE()
 
 ImportDlg::ImportDlg(wxWindow * parent, const svn::Path & selectedUrl)
-    : wxDialog(parent, -1, _("Import"),
-               wxDefaultPosition,
-               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+  : ImportDlgBase(parent)
 {
-  m = new Data(this);
+  m = new Data(selectedUrl);
   CentreOnParent();
 
-  if (selectedUrl.isUrl())
-    m->data.Repository = Utf8ToLocal(selectedUrl.c_str());
+  m_comboUrl->SetValidator(HistoryValidator(HISTORY_REPOSITORY, &m->data.Repository));
+  m_textPath->SetValidator(wxTextValidator(wxFILTER_NONE, &m->data.Path));
+  m_textMessage->SetValidator(wxTextValidator(wxFILTER_NONE, &m->data.LogMessage));
+  m_choicePathType->SetValidator(wxGenericValidator(&m->data.PathType));
+  m_checkRecursive->SetValidator(wxGenericValidator(&m->data.Recursive));
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
+  CentreOnParent();
+
+  CheckControls();
 }
 
 ImportDlg::~ImportDlg()
@@ -162,74 +81,76 @@ ImportDlg::~ImportDlg()
   delete m;
 }
 
-void
-ImportDlg::OnOk(wxCommandEvent & WXUNUSED(event))
+
+void 
+ImportDlg::CheckControls()
 {
-  // Transfer data from controls into m_data:
-  TransferDataFromWindow();
+  wxString url(m_comboUrl->GetValue());
+  wxString path(m_textPath->GetValue());
+  int pathType = m_choicePathType->GetSelection();
 
-  TrimString(m->data.Repository);
-  TrimString(m->data.Path);
-  m->data.LogMessage.Trim();
+  bool ok = true;
 
-  if (m->data.Repository.IsEmpty())
+  // valid url?
+  if (url.IsEmpty() || !PathUtf8(url).isUrl())
+    ok = false;
+
+  // path entered?
+  if (path.IsEmpty())
+    ok = false;
+
+  if (ok)
   {
-    wxMessageBox(_("Repository URL is required for import!"),
-                 _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
-
-    // Do not allow the user to continue if the path is empty
-    // and the import is addressing a file.
-    return;
-  }
-
-  if (m->data.FileType)
-  {
-
-    if (m->data.Path.IsEmpty())
+    // if entered, is path a valid dir/file?
+    switch (pathType)
     {
-      wxMessageBox(_("File path required when importing a file!"),
-                   _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
-
-      // Do not allow the user to continue if the reposURL is empty.
-      return;
+    case ImportData::DIRECTORY:
+      if (!::wxDirExists(path))
+        ok = false;
+      break;
+    case ImportData::FILE:
+      if (!::wxFileExists(path))
+        ok = false;
     }
   }
 
-  wxDialog::EndModal(wxID_OK);
+  EnableCtrl(m_buttonOK, ok);
 }
+
 
 void
 ImportDlg::OnBrowse(wxCommandEvent & WXUNUSED(event))
 {
-  // Transfer data from controls into m->data:
-  TransferDataFromWindow();
+  wxString oldPath(m_textPath->GetValue());
 
-  if (m->data.TreeType)
+  if (ImportData::DIRECTORY == m_choicePathType->GetSelection())
   {
-    wxDirDialog dialog(this,
-                       _("Select a directory to import"),
-                       m->data.Path);
-
-    if (dialog.ShowModal() == wxID_OK)
-      m->data.Path = dialog.GetPath();
+    wxDirDialog dlg(this, _("Select a directory to import"), oldPath);
+    if (wxID_OK == dlg.ShowModal())
+      UpdateValue(m_textPath, dlg.GetPath());
   }
-  else                          // it's a file
+  else                   
   {
-    wxFileDialog dialog(this,
-                        _("Select a file to import"),
-                        m->data.Path);
-
-    if (dialog.ShowModal() == wxID_OK)
-      m->data.Path = dialog.GetPath();
+    wxFileDialog dlg(this,_("Select a file to import"), oldPath);
+    if (wxID_OK == dlg.ShowModal())
+      UpdateValue(m_textPath, dlg.GetPath());
   }
-  // Transfer data from m->data back into controls:
-  TransferDataToWindow();
+
+  CheckControls();
 }
+
 
 ImportData &
 ImportDlg::GetData()
 {
   return m->data;
+}
+
+
+void
+ImportDlg::OnCommand(wxCommandEvent &)
+{
+  CheckControls();
 }
 
 /* -----------------------------------------------------------------
