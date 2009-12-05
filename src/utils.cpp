@@ -678,6 +678,17 @@ EnableCtrl(wxWindow * ctrl, bool enable)
 }
 
 
+void
+UpdateValue(wxCheckBox * ctrl, bool value)
+{
+  wxASSERT(0 != ctrl);
+
+  if (ctrl->GetValue() != value)
+    ctrl->SetValue(value);
+}
+
+
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

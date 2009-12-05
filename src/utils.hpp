@@ -39,6 +39,7 @@ class Tracer;
 class wxMenu;
 class wxCommandEvent;
 class wxFileName;
+class wxCheckBox;
 
 namespace svn
 {
@@ -375,6 +376,11 @@ IsValidDir(const wxString & dir);
  */
 void
 EnableCtrl(wxWindow * ctrl, bool enable);
+
+
+/** Updates the value of a checkbox flicker-free */
+void
+UpdateValue(wxCheckBox * ctrl, bool value);
 
 #endif
 /* -----------------------------------------------------------------
