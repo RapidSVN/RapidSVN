@@ -29,122 +29,64 @@
 // app
 #include "destination_dlg.hpp"
 #include "hist_val.hpp"
+#include "utils.hpp"
+
 
 struct DestinationDlg::Data
 {
 public:
+  wxString descr;
   wxString destination;
+  wxString history;
   bool force;
+  bool withForce;
 
-  Data(wxWindow * window, const wxString & descr,
-       int flags, const wxString & dest,
-       const wxString history)
-      : destination(dest), force(false)
+  Data(const wxString & descr_, int flags, const wxString & dest,
+       const wxString history_)
+    : descr(descr_), destination(dest), 
+      history(history_), force(false)
   {
-    bool withForce = (flags & WITH_FORCE) != 0;
-
-    wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-
-    // The description:
-    wxStaticText * labelDescr =
-      new wxStaticText(window, -1, descr);
-    mainSizer->Add(labelDescr, 0, wxALL, 5);
-
-    // The destination:
-    if (wxEmptyString == history)
-    {
-      wxTextValidator val(wxFILTER_NONE, &destination);
-      wxTextCtrl * textDest =
-        new wxTextCtrl(window, -1, wxEmptyString, wxDefaultPosition,
-                       wxSize(200, -1), 0, val);
-
-      mainSizer->Add(textDest, 0, wxALL | wxEXPAND, 5);
-    }
-    else
-    {
-      HistoryValidator valDest(history, &destination, false, false);
-      wxComboBox * comboDest =
-        new wxComboBox(window, -1, wxEmptyString, wxDefaultPosition,
-                       wxSize(200, -1), 0, 0, wxCB_DROPDOWN, valDest);
-
-      mainSizer->Add(comboDest, 0, wxALL | wxEXPAND, 5);
-    }
-
-
-    // The force check
-    if (withForce)
-    {
-      wxGenericValidator val(&force);
-      wxCheckBox * check =
-        new wxCheckBox(window, -1, _("Force"),
-                       wxDefaultPosition, wxDefaultSize,
-                       0, val);
-      mainSizer->Add(check, 0, wxALL | wxALIGN_CENTER_HORIZONTAL);
-    }
-
-    // The buttons:
-    wxButton * ok = new wxButton(window, wxID_OK, _("OK"));
-    buttonSizer->Add(ok, 0, wxALL, 10);
-
-    wxButton * cancel = new wxButton(window, wxID_CANCEL, _("Cancel"));
-    buttonSizer->Add(cancel, 0, wxALL, 10);
-
-    // Add all the sizers to the main sizer
-    mainSizer->Add(buttonSizer, 0, wxLEFT | wxRIGHT | wxCENTER, 5);
-
-    window->SetAutoLayout(true);
-    window->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(window);
-    mainSizer->Fit(window);
-
-    ok->SetDefault();
+    withForce = (flags & WITH_FORCE) != 0;
   }
 };
 
-BEGIN_EVENT_TABLE(DestinationDlg, wxDialog)
-END_EVENT_TABLE()
-
-const int DestinationDlg::WITH_FORCE=1;
-
-const int DIALOG_FLAGS = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
 
 DestinationDlg::DestinationDlg(wxWindow* parent,
                                const wxString & title,
                                const wxString & descr,
-                               const int flags,
+                               int flags,
                                const wxString & dst,
                                const wxString & history)
-    : wxDialog(parent, -1, title,
-               wxDefaultPosition, wxDefaultSize,
-               DIALOG_FLAGS)
+  : DestinationDlgBase(parent, -1, title)
 {
-  m = new Data(this, descr, flags, dst, history);
+  m = new Data(descr, flags, dst, history);
+
+  // The destination:
+  if (m->history.IsEmpty())
+    m_textDestination->SetValidator(wxTextValidator(wxFILTER_NONE, &m->destination));
+  else
+    m_textDestination->SetValidator(HistoryValidator(m->history, &m->destination, false, false));
+
+  m_checkForce->SetValidator(wxGenericValidator(&m->force));
+
+  if (!m->withForce)
+    m_checkForce->Show(false);
+  
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
+  CentreOnParent();
+
+  CheckControls();
 }
 
-DestinationDlg::DestinationDlg()
-    : wxDialog(), m(0)
-{
-}
 
 DestinationDlg::~DestinationDlg()
 {
-  if (m)
-    delete m;
+  delete m;
 }
 
-void
-DestinationDlg::Create(wxWindow* parent, const wxString & title,
-                       const wxString & descr, const int flags,
-                       const wxString & dst,
-                       const wxString & history)
-{
-  wxDialog::Create(parent, -1, title, wxDefaultPosition,
-                   wxDefaultSize, DIALOG_FLAGS);
-
-  m = new Data(this, descr, flags, dst, history);
-}
 
 const wxString &
 DestinationDlg::GetDestination() const
@@ -152,10 +94,27 @@ DestinationDlg::GetDestination() const
   return m->destination;
 }
 
+
 bool
 DestinationDlg::GetForce() const
 {
   return m->force;
+}
+
+
+void
+DestinationDlg::OnText(wxCommandEvent &)
+{
+  CheckControls();
+}
+
+
+void 
+DestinationDlg::CheckControls()
+{
+  bool ok = !m_textDestination->GetValue().IsEmpty();
+
+  EnableCtrl(m_buttonOK, ok);
 }
 
 /* -----------------------------------------------------------------

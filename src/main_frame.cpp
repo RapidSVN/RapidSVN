@@ -118,6 +118,7 @@
 #ifdef USE_DEBUG_TESTS
 #include "checkout_action.hpp"
 #include "cert_dlg.hpp"
+#include "destination_dlg.hpp"
 #endif
 
 // number of items initially in the list
@@ -335,6 +336,8 @@ public:
     menuTests->Append(ID_TestListener, _("Listener Test"));
     menuTests->Append(ID_TestCheckout, _("Checkout Test"));
     menuTests->Append(ID_TestCertDlg, _("Certificate Dlg"));
+    menuTests->Append(ID_TestDestinationDlg, _("Destination Dlg (Simple)"));
+    menuTests->Append(ID_TestDestinationDlgWithForce, _("Destination Dlg (With Force)"));
 #endif
 
     // Create the menu bar and append the menus
@@ -615,6 +618,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MENU(ID_TestListener, MainFrame::OnTestListener)
   EVT_MENU(ID_TestCheckout, MainFrame::OnTestCheckout)
   EVT_MENU(ID_TestCertDlg, MainFrame::OnTestCertDlg)
+  EVT_MENU(ID_TestDestinationDlg, MainFrame::OnTestDestinationDlg)
+  EVT_MENU(ID_TestDestinationDlgWithForce, MainFrame::OnTestDestinationDlg)
   #endif
 
   EVT_MENU_RANGE(ID_File_Min, ID_File_Max, MainFrame::OnFileCommand)
@@ -1472,7 +1477,6 @@ MainFrame::OnTestCheckout(wxCommandEvent & WXUNUSED(event))
   wxString name(wxT("Tested Checkout (works only in single-threaded version)"));
   PrintTimeMeasurements(start, end, name);
 }
-#endif
 
 void 
 MainFrame::OnTestCertDlg(wxCommandEvent & WXUNUSED(event))
@@ -1524,6 +1528,48 @@ MainFrame::OnTestCertDlg(wxCommandEvent & WXUNUSED(event))
     modalDescr.c_str(), dlg.AcceptedFailures(), answer.c_str());
   ::wxMessageBox(msg, wxT("Certificate Dlg Results"), wxOK);
 }
+
+void
+MainFrame::OnTestDestinationDlg(wxCommandEvent & event)
+{
+  int flags;
+
+  switch (event.GetId())
+  {
+  case ID_TestDestinationDlg:
+    flags = 0;
+    break;
+  case ID_TestDestinationDlgWithForce:
+    flags = DestinationDlg::WITH_FORCE;
+    break;
+  }
+
+  DestinationDlg dlg(this, wxT("DestinationDlg Title"),
+                     wxT("Here comes the description"),
+                     flags, wxT("/home/foo"));
+
+  int result = dlg.ShowModal();
+  wxString modalDescr;
+  switch (result)
+  {
+  case wxID_OK:
+    modalDescr = wxT("wxID_OK");
+    break;
+  case wxID_CANCEL:
+    modalDescr = wxT("wxID_CANCEL");
+    break;
+  default:
+    modalDescr = wxString::Format(wxT("%08x"));
+  }
+  int force = dlg.GetForce();
+
+  wxString msg = wxString::Format(
+    wxT("Modal result:%s\nDestination: \"%s\"\nForce: %s"),
+    modalDescr.c_str(), dlg.GetDestination().c_str(), 
+    force ? wxT("true") : wxT("false"));
+  ::wxMessageBox(msg, wxT("DestinationDlg Results"), wxOK);
+}
+#endif
 
 void
 MainFrame::OnFileCommand(wxCommandEvent & event)

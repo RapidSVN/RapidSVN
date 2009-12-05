@@ -328,6 +328,31 @@ class DeleteDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class DestinationDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class DestinationDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticQuestion;
+		wxTextCtrl* m_textDestination;
+		wxCheckBox* m_checkForce;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		DestinationDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Destination"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~DestinationDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class DiffDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class DiffDlgBase : public wxDialog 

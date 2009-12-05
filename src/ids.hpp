@@ -65,6 +65,8 @@ enum
   ID_TestListener,
   ID_TestCheckout,
   ID_TestCertDlg,
+  ID_TestDestinationDlg,
+  ID_TestDestinationDlgWithForce,
 
   ID_File_Min,
   ID_Add,

@@ -24,18 +24,21 @@
 #ifndef _DESTINATION_DLG_H_INCLUDED_
 #define _DESTINATION_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
+// app
+#include "rapidsvn_generated.h"
 
 /**
  * this is a multi-purpose dialog that can be used
  * to fetch a single path or URL. It can be configured
  * using the different flags
  */
-class DestinationDlg:public wxDialog
+class DestinationDlg:public DestinationDlgBase
 {
 public:
-  static const int WITH_FORCE;
+  enum
+  {
+    WITH_FORCE=0x1
+  };
 
   /**
    * constructor
@@ -50,28 +53,14 @@ public:
    *                box @see HistoryValidator
    */
   DestinationDlg(wxWindow* parent, const wxString & title,
-                 const wxString & descr = wxEmptyString, const int flags=0,
+                 const wxString & descr = wxEmptyString, int flags=0,
                  const wxString & dst = wxEmptyString,
                  const wxString & history = wxEmptyString);
-
-  /**
-   * default constructor. Use @a Create to initialize the dialog
-   */
-  DestinationDlg();
 
   /**
    * destructor
    */
   virtual ~DestinationDlg();
-
-  /**
-   * initialize instance. See @a DestinationDlg for parameters
-   */
-  void
-  Create(wxWindow* parent, const wxString & title,
-         const wxString & descr = wxEmptyString, const int flags=0,
-         const wxString & dst = wxEmptyString,
-         const wxString & history = wxEmptyString);
 
   /**
    * get destination
@@ -89,6 +78,9 @@ public:
   bool
   GetForce() const;
 
+protected: // event handlers inherited from DestinationDlgBase
+  virtual void OnText(wxCommandEvent & event);
+
 private:
   /**
    * hide implementation details
@@ -96,7 +88,7 @@ private:
   struct Data;
   Data * m;
 
-  DECLARE_EVENT_TABLE()
+  void CheckControls();
 };
 
 #endif
