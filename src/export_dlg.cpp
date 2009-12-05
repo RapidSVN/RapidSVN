@@ -38,260 +38,59 @@
 #include "export_dlg.hpp"
 #include "utils.hpp"
 
-enum
-{
-  ID_USE_LATEST = 100,
-  ID_NOT_SPECIFIED = 200,
-  ID_NATIVE_EOL = 1,
-  ID_BUTTON_BROWSE
-};
-
 struct ExportDlg::Data
 {
-private:
-  wxCheckBox * m_checkUseLatest;
-  wxCheckBox * m_checkNotSpecified;
-  wxTextCtrl * m_textRevision;
-  wxTextCtrl * m_textPegRevision;
-  wxTextCtrl * m_textDestPath;
-  wxComboBox * m_comboSrcPath;
-  wxComboBox * m_comboNativeEol;
-  wxButton * m_buttonOk;
-
 public:
   ExportData data;
 
-  Data(wxWindow * wnd)
+  Data(const svn::Path selectedUrl)
   {
-    // create controls
-    wxStaticBox* urlBox =
-      new wxStaticBox(wnd, 0, _("URL"));
-    HistoryValidator valModule(HISTORY_REPOSITORY, &data.SrcPath);
-    m_comboSrcPath =
-      new wxComboBox(wnd, -1, wxEmptyString, wxDefaultPosition,
-                     wxSize(235, -1), 0, 0, wxCB_DROPDOWN, valModule);
-    m_comboSrcPath->SetHelpText(_("Enter the repository URL (not local path) here."));
-    wxStaticBox* destBox =
-      new wxStaticBox(wnd, 0, _("Destination Directory"));
-    wxTextValidator valDestPath(wxFILTER_NONE, &data.DestPath);
-    m_textDestPath =
-      new wxTextCtrl(wnd, -1, wxEmptyString, wxDefaultPosition,
-                     wxSize(205, -1), 0, valDestPath);
-    m_textDestPath->SetHelpText(_("Enter the local path where you want the code be exported."));
-    wxButton* browse =
-      new wxButton(wnd, ID_BUTTON_BROWSE, wxT("..."),
-                   wxDefaultPosition, wxSize(20, -1));
-
-    wxStaticBox* revisionBox =
-      new wxStaticBox(wnd, -1, _("Revision"));
-    wxTextValidator valRevision(wxFILTER_NUMERIC, &data.Revision);
-    m_textRevision =
-      new wxTextCtrl(wnd, -1, wxEmptyString, wxDefaultPosition,
-                     wxSize(50, -1), 0, valRevision);
-    m_textRevision->SetHelpText(_("If not using the latest version of the files, specify which revision to use here."));
-
-    wxGenericValidator valLatest(&data.UseLatest);
-    m_checkUseLatest =
-      new wxCheckBox(wnd, ID_USE_LATEST, _("Use latest"),
-                     wxDefaultPosition, wxDefaultSize, 0, valLatest);
-    m_checkUseLatest->SetHelpText(_("Set this to get the latest version of the files in the repository."));
-
-    wxStaticBox* pegRevisionBox =
-      new wxStaticBox(wnd, -1, _("Peg Revision"));
-    wxTextValidator valPegRevision(wxFILTER_NUMERIC, &data.PegRevision);
-    m_textPegRevision =
-      new wxTextCtrl(wnd, -1, wxEmptyString, wxDefaultPosition,
-                     wxSize(50, -1), 0, valPegRevision);
-    m_textPegRevision->SetHelpText(_("If the files were renamed or moved some time, specify which peg revision to use here."));
-
-    wxGenericValidator valNotSpecified(&data.NotSpecified);
-    m_checkNotSpecified =
-      new wxCheckBox(wnd, ID_NOT_SPECIFIED, _("Not specified"),
-                     wxDefaultPosition, wxDefaultSize, 0, valNotSpecified);
-    m_checkNotSpecified->SetHelpText(_("Set this to use BASE/HEAD (current) peg revision of the files."));
-
-    wxCheckBox* recursive =
-      new wxCheckBox(wnd, -1, _("Recursive"),
-                     wxDefaultPosition, wxDefaultSize, 0,
-                     wxGenericValidator(&data.Recursive));
-    recursive->SetHelpText(_("Set to get all subdirectories from the URL also."));
-
-    wxCheckBox* overwrite =
-      new wxCheckBox(wnd, -1, _("Overwrite"),
-                     wxDefaultPosition, wxDefaultSize, 0,
-                     wxGenericValidator(&data.Overwrite));
-    overwrite->SetHelpText(_("Force to execute even if destination directory not empty, causes overwriting of files with the same names."));
-
-    wxCheckBox* ignoreExternals =
-      new wxCheckBox(wnd, -1, _("Ignore externals"),
-                     wxDefaultPosition, wxDefaultSize, 0,
-                     wxGenericValidator(&data.IgnoreExternals));
-    ignoreExternals->SetHelpText(_("Set to ignore external definitions and the external working copies managed by them."));
-    wxStaticText * labelEol = new wxStaticText(
-      wnd, -1, _("EOL:"), wxDefaultPosition);
-
-    wxString eol [] =
-    {
-      _("native"),
-      _("CRLF (Windows)"),
-      _("LF (Unix)"),
-      _("CR (MacOS)")
-    };
-    m_comboNativeEol = new wxComboBox(wnd, ID_NATIVE_EOL, _("native"),
-                                      wxDefaultPosition, wxDefaultSize, 0,
-                                      eol, wxCB_DROPDOWN);
-    m_comboNativeEol->SetHelpText(_("Enter what kind of symbol(s) do you want as EOL (end of line) in exported files."));
-
-    m_buttonOk = new wxButton(wnd, wxID_OK, _("OK"));
-    wxButton* cancel = new wxButton(wnd, wxID_CANCEL, _("Cancel"));
-    // TODO: online help. Help button doesn't work yet, so commented out.
-    // wxButton* help = new wxButton( wnd, wxID_HELP, _("Help"));
-
-    // place controls
-    // URL row
-    wxStaticBoxSizer *urlSizer =
-      new wxStaticBoxSizer(urlBox, wxHORIZONTAL);
-    urlSizer->Add(m_comboSrcPath, 1, wxALL | wxEXPAND, 5);
-
-    // Destination row
-    wxStaticBoxSizer *destSizer =
-      new wxStaticBoxSizer(destBox, wxHORIZONTAL);
-    destSizer->Add(m_textDestPath, 1, wxALL | wxEXPAND, 5);
-    destSizer->Add(browse, 0, wxALL, 5);
-
-    // Revision row
-    wxBoxSizer *reSizer = new wxBoxSizer(wxHORIZONTAL);
-    wxStaticBoxSizer *revisionSizer =
-      new wxStaticBoxSizer(revisionBox, wxHORIZONTAL);
-    revisionSizer->Add(m_textRevision, 1, wxALL | wxEXPAND, 5);
-    revisionSizer->Add(m_checkUseLatest, 0,
-                       wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
-    reSizer->Add(revisionSizer, 1, wxALL | wxEXPAND, 0);
-
-    wxBoxSizer *preSizer = new wxBoxSizer(wxHORIZONTAL);
-    // Peg revision row
-    wxStaticBoxSizer *pegRevisionSizer =
-      new wxStaticBoxSizer(pegRevisionBox, wxHORIZONTAL);
-    pegRevisionSizer->Add(m_textPegRevision, 1, wxALL | wxEXPAND, 5);
-    pegRevisionSizer->Add(m_checkNotSpecified, 0,
-                          wxLEFT | wxRIGHT | wxALIGN_CENTER_VERTICAL, 5);
-    preSizer->Add(pegRevisionSizer, 1, wxALL | wxEXPAND, 0);
-
-    // the native eol combo
-    wxBoxSizer *nativeEolSizer = new wxBoxSizer(wxHORIZONTAL);
-    nativeEolSizer->Add(labelEol, 1, wxALL | wxEXPAND, 5);
-    nativeEolSizer->Add(m_comboNativeEol, 1, wxALL | wxEXPAND, 5);
-
-    // Button row
-    wxBoxSizer *buttonSizer  = new wxBoxSizer(wxHORIZONTAL);
-    buttonSizer->Add(m_buttonOk, 0, wxALL, 10);
-    buttonSizer->Add(cancel, 0, wxALL, 10);
-    // Add explicit context-sensitive help button for non-MSW
-    // TODO: Online Help
-    // buttonSizer->Add(help, 0, wxALL, 10);
-#ifndef __WXMSW__
-    buttonSizer->Add(new wxContextHelpButton(wnd), 0, wxALL, 10);
-#endif
-
-    // Extras sizer
-    wxBoxSizer *extrasSizer = new wxBoxSizer(wxHORIZONTAL);
-    extrasSizer->Add(recursive, 0, wxALL | wxCENTER, 5);
-    extrasSizer->Add(overwrite, 0, wxALL | wxCENTER, 5);
-    extrasSizer->Add(ignoreExternals, 0, wxALL | wxCENTER, 5);
-
-    // Add all sizers to main sizer
-    wxBoxSizer *mainSizer    = new wxBoxSizer(wxVERTICAL);
-    mainSizer->Add(urlSizer, 0, wxALL | wxEXPAND, 5);
-    mainSizer->Add(destSizer, 0, wxALL | wxEXPAND, 5);
-    mainSizer->Add(reSizer, 0, wxALL | wxEXPAND, 5);
-    mainSizer->Add(preSizer, 0, wxALL | wxEXPAND, 5);
-    mainSizer->Add(nativeEolSizer, 0, wxALL | wxEXPAND, 5);
-    mainSizer->Add(extrasSizer, 0, wxALL | wxCENTER, 5);
-    mainSizer->Add(buttonSizer, 0, wxALL | wxCENTER, 5);
-
-    wnd->SetAutoLayout(true);
-    wnd->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(wnd);
-    mainSizer->Fit(wnd);
+    data.SrcPath = Utf8ToLocal(selectedUrl.c_str());
   }
 
-  void
-  CheckControls()
-  {
-    bool useLatest = m_checkUseLatest->IsChecked();
-    bool notSpecified = m_checkNotSpecified->IsChecked();
-
-    m_textRevision->Enable(!useLatest);
-    m_textPegRevision->Enable(!notSpecified);
-
-    bool ok = true;
-    if (!useLatest)
-    {
-      ok = CheckRevision(m_textRevision->GetValue());
-    }
-
-    if (!notSpecified)
-    {
-      ok = CheckRevision(m_textPegRevision->GetValue());
-    }
-
-    if (m_textDestPath->GetValue().Length() <= 0)
-    {
-      ok = false;
-    }
-
-    if (m_comboSrcPath->GetValue().Length() <= 0)
-    {
-      ok = false;
-    }
-
-    if (m_comboNativeEol->GetValue().Length() <= 0)
-    {
-      ok = false;
-    }
-    else
-    {
-      wxString textEol = m_comboNativeEol->GetValue();
-      if (textEol == wxT("CRLF (Windows)"))
-        data.Eol = "CRLF";
-      else if (textEol == wxT("LF (Unix)"))
-        data.Eol = "LF";
-      else if (textEol == wxT("CR (MacOS)"))
-        data.Eol = "CR";
-      else
-        data.Eol = NULL;
-    }
-    m_buttonOk->Enable(ok);
-    if (ok)
-    {
-      m_buttonOk->SetDefault();
-    }
-  }
 };
 
-BEGIN_EVENT_TABLE(ExportDlg, wxDialog)
-  EVT_BUTTON(ID_BUTTON_BROWSE, ExportDlg::OnBrowse)
-  EVT_CHECKBOX(ID_USE_LATEST, ExportDlg::OnUseLatest)
-  EVT_CHECKBOX(ID_NOT_SPECIFIED, ExportDlg::OnNotSpecified)
-  EVT_COMBOBOX(ID_NATIVE_EOL, ExportDlg::OnNativeEol)
-  EVT_TEXT(-1, ExportDlg::OnText)
-  //  EVT_BUTTON (wxID_HELP, ExportDlg::OnHelp)
-END_EVENT_TABLE()
 
 ExportDlg::ExportDlg(wxWindow * parent, const svn::Path & selectedUrl)
+  : ExportDlgBase(parent)
 {
-  // Add the context-sensitive help button on the caption for MSW
-#ifdef __WXMSW__
-  SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
-#endif
-  Create(parent, -1, _("Export"), wxDefaultPosition,
-         wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+  m = new Data(selectedUrl);
 
-  m = new Data(this);
+  m_comboUrl->SetValidator(HistoryValidator(HISTORY_REPOSITORY, &m->data.SrcPath));
+  m_comboUrl->SetHelpText(_("Enter the repository URL (not local path) here."));
+  m_comboDest->SetValidator(HistoryValidator(HISTORY_WORKING_DIRECTORY, &m->data.DestPath));
+  m_comboDest->SetHelpText(_("Enter the local path where you want the code checked out to here."));
+  m_textRevision->SetValidator(wxTextValidator(wxFILTER_NUMERIC, &m->data.Revision));
+  m_textRevision->SetHelpText(
+    _("If not using the latest version of the files, specify which revision to use here."));
+  m_checkUseLatest->SetValidator(wxGenericValidator(&m->data.UseLatest));
+  m_checkUseLatest->SetHelpText(_("Set this to get the latest version of the files in the repository."));
+  m_textPegRevision->SetValidator(wxTextValidator(wxFILTER_NUMERIC, &m->data.PegRevision));
+  m_textPegRevision->SetHelpText(_("If the files were renamed or moved some time, specify which peg revision to use here."));
+  m_checkPegNotSpecified->SetValidator(wxGenericValidator(&m->data.NotSpecified));
+  m_checkPegNotSpecified->SetHelpText(_("Set this to use BASE/HEAD (current) peg revision of the files."));
+  m_checkRecursive->SetValidator(wxGenericValidator(&m->data.Recursive));
+  m_checkRecursive->SetHelpText(_("Set to get all subdirectories from the URL also."));
+  m_checkOverwrite->SetValidator(wxGenericValidator(&m->data.Overwrite));
+  m_checkOverwrite->SetHelpText(_("Force to execute even if destination directory not empty, causes overwriting of files with the same names."));
+  m_checkIgnoreExternals->SetValidator(wxGenericValidator(&m->data.IgnoreExternals));
+  m_checkIgnoreExternals->SetHelpText(_("Set to ignore external definitions and the external working copies managed by them."));
+
+  // Add explicit context-sensitive help button for non-MSW
+#ifndef __WXMSW__
+  m_buttonSizer->Add(new wxContextHelpButton(this), 0, wxALL, 10);
+#endif
+  
+  // TODO: online help. Help button doesn't work yet, so hide it.
+  m_buttonHelp->Show(false);
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
   CentreOnParent();
 
-  m->data.SrcPath = Utf8ToLocal(selectedUrl.c_str());
+  CheckControls();
 }
 
 ExportDlg::~ExportDlg()
@@ -319,30 +118,6 @@ ExportDlg::OnBrowse(wxCommandEvent & WXUNUSED(event))
   }
 }
 
-void
-ExportDlg::InitDialog()
-{
-  wxDialog::InitDialog();
-  m->CheckControls();
-}
-
-void
-ExportDlg::OnUseLatest(wxCommandEvent &)
-{
-  m->CheckControls();
-}
-
-void
-ExportDlg::OnNotSpecified(wxCommandEvent &)
-{
-  m->CheckControls();
-}
-
-void
-ExportDlg::OnNativeEol(wxCommandEvent &)
-{
-  m->CheckControls();
-}
 
 const ExportData &
 ExportDlg::GetData() const
@@ -350,18 +125,55 @@ ExportDlg::GetData() const
   return m->data;
 }
 
+
+void
+ExportDlg::CheckControls()
+{
+  bool useLatest = m_checkUseLatest->IsChecked();
+  bool notSpecified = m_checkPegNotSpecified->IsChecked();
+  
+  m_textRevision->Enable(!useLatest);
+  m_textPegRevision->Enable(!notSpecified);
+  
+  bool ok = true;
+  EnableCtrl(m_textRevision, !useLatest);
+  if (!useLatest)
+    ok = CheckRevision(m_textRevision->GetValue());
+
+  EnableCtrl(m_textPegRevision, !notSpecified);
+  if (!notSpecified)
+    ok = CheckRevision(m_textPegRevision->GetValue());
+  
+  if (m_comboDest->GetValue().Length() <= 0)
+    ok = false;
+  
+  if (m_comboUrl->GetValue().Length() <= 0)
+    ok = false;
+
+  EnableCtrl(m_buttonOK, ok);
+}
+
+
 void
 ExportDlg::OnText(wxCommandEvent &)
 {
-  m->CheckControls();
+  CheckControls();
+}
+
+
+void
+ExportDlg::OnCheckBox(wxCommandEvent &)
+{
+  CheckControls();
 }
 
 void
-ExportDlg::OnHelp(wxCommandEvent & WXUNUSED(event))
+ExportDlg::OnHelp(wxCommandEvent &)
 {
   // @todo Has to be re-integrated for Online Help
-  // ::wxGetApp ().GetHelpController().Display(wxT("Export dialog"));
+  // ::wxGetApp ().GetHelpController().Display(wxT("Checkout dialog"));
 }
+
 
 /* -----------------------------------------------------------------
  * local variables:

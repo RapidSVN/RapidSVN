@@ -24,11 +24,8 @@
 #ifndef _EXPORT_DLG_H_INCLUDED_
 #define _EXPORT_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/wx.h"
-#include "wx/dialog.h"
-
 // app
+#include "rapidsvn_generated.h"
 #include "export_data.hpp"
 
 // svncpp
@@ -37,10 +34,7 @@ namespace svn
   class Path;
 }
 
-// forward declarations
-//struct ExportData;
-
-class ExportDlg : public wxDialog
+class ExportDlg : public ExportDlgBase
 {
 public:
   /**
@@ -62,33 +56,25 @@ public:
   const ExportData &
   GetData() const;
 
+protected: // Events inherited from CheckoutDlgBase
+  virtual void
+  OnBrowse(wxCommandEvent & event);
+
+  virtual void
+  OnText(wxCommandEvent & event);
+
+  virtual void
+  OnCheckBox(wxCommandEvent & event);
+
+  virtual void
+  OnHelp(wxCommandEvent & event);
+
 private:
   /** hide implementation details */
   struct Data;
   Data *m;
 
-  void
-  OnBrowse(wxCommandEvent & event);
-
-  void
-  OnText(wxCommandEvent & event);
-
-  void
-  OnHelp(wxCommandEvent & event);
-
-  void
-  OnUseLatest(wxCommandEvent & event);
-
-  void
-  OnNotSpecified(wxCommandEvent & event);
-
-  void
-  OnNativeEol(wxCommandEvent & event);
-
-  void
-  InitDialog();
-
-  DECLARE_EVENT_TABLE()
+  void CheckControls();
 };
 
 #endif

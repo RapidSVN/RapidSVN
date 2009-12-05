@@ -379,6 +379,45 @@ class DiffDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class ExportDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class ExportDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxComboBox* m_comboUrl;
+		wxComboBox* m_comboDest;
+		wxButton* m_buttonBrowse;
+		wxTextCtrl* m_textRevision;
+		wxCheckBox* m_checkUseLatest;
+		wxTextCtrl* m_textPegRevision;
+		wxCheckBox* m_checkPegNotSpecified;
+		wxStaticText* m_staticEol;
+		wxChoice* m_choice3;
+		wxCheckBox* m_checkRecursive;
+		wxCheckBox* m_checkOverwrite;
+		wxCheckBox* m_checkIgnoreExternals;
+		wxBoxSizer* m_buttonSizer;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		wxButton* m_buttonHelp;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnBrowse( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCheckBox( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnHelp( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		ExportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Export"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		~ExportDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class MainFrameBase
 ///////////////////////////////////////////////////////////////////////////////
 class MainFrameBase : public wxFrame 

@@ -805,6 +805,130 @@ DiffDlgBase::~DiffDlgBase()
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DiffDlgBase::OnButtonOK ), NULL, this );
 }
 
+ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->SetExtraStyle( wxDIALOG_EX_CONTEXTHELP );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	wxStaticBoxSizer* urlSizer;
+	urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("URL") ), wxVERTICAL );
+	
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
+	urlSizer->Add( m_comboUrl, 0, wxALL|wxEXPAND, 5 );
+	
+	m_mainSizer->Add( urlSizer, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* destSizer;
+	destSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Destination Directory") ), wxHORIZONTAL );
+	
+	m_comboDest = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 205,-1 ), 0, NULL, 0 ); 
+	destSizer->Add( m_comboDest, 1, wxALL, 5 );
+	
+	m_buttonBrowse = new wxButton( this, wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
+	destSizer->Add( m_buttonBrowse, 0, wxALL, 5 );
+	
+	m_mainSizer->Add( destSizer, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* revisionSizer;
+	revisionSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision") ), wxHORIZONTAL );
+	
+	m_textRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_mainSizer->Add( revisionSizer, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* pegSizer;
+	pegSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Peg Revision") ), wxHORIZONTAL );
+	
+	m_textPegRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	pegSizer->Add( m_textPegRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_checkPegNotSpecified = new wxCheckBox( this, wxID_ANY, _("Not specified"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	pegSizer->Add( m_checkPegNotSpecified, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_mainSizer->Add( pegSizer, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* eolSizer;
+	eolSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_staticEol = new wxStaticText( this, wxID_ANY, _("End of line characters"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticEol->Wrap( -1 );
+	eolSizer->Add( m_staticEol, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choice3Choices[] = { _("native"), _("CRLF (Windows)"), _("LF (Unix)"), _("CR (MacOS)") };
+	int m_choice3NChoices = sizeof( m_choice3Choices ) / sizeof( wxString );
+	m_choice3 = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choice3NChoices, m_choice3Choices, 0 );
+	m_choice3->SetSelection( 0 );
+	eolSizer->Add( m_choice3, 0, wxALL, 5 );
+	
+	m_mainSizer->Add( eolSizer, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* extrasSizer;
+	extrasSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	extrasSizer->Add( m_checkRecursive, 0, wxALL, 5 );
+	
+	m_checkOverwrite = new wxCheckBox( this, wxID_ANY, _("Overwrite"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	extrasSizer->Add( m_checkOverwrite, 0, wxALL, 5 );
+	
+	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore externals"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	extrasSizer->Add( m_checkIgnoreExternals, 0, wxALL, 5 );
+	
+	m_mainSizer->Add( extrasSizer, 1, wxALIGN_CENTER, 5 );
+	
+	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	m_buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_buttonHelp = new wxButton( this, wxID_ANY, _("Help"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonHelp, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( m_buttonSizer, 0, wxALIGN_CENTER, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	m_mainSizer->Fit( this );
+	
+	// Connect Events
+	m_comboUrl->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
+	m_comboDest->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
+	m_buttonBrowse->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ExportDlgBase::OnBrowse ), NULL, this );
+	m_textRevision->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
+	m_checkUseLatest->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ExportDlgBase::OnCheckBox ), NULL, this );
+	m_textPegRevision->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
+	m_checkPegNotSpecified->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ExportDlgBase::OnCheckBox ), NULL, this );
+	m_buttonHelp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ExportDlgBase::OnHelp ), NULL, this );
+}
+
+ExportDlgBase::~ExportDlgBase()
+{
+	// Disconnect Events
+	m_comboUrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
+	m_comboDest->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
+	m_buttonBrowse->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ExportDlgBase::OnBrowse ), NULL, this );
+	m_textRevision->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
+	m_checkUseLatest->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ExportDlgBase::OnCheckBox ), NULL, this );
+	m_textPegRevision->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
+	m_checkPegNotSpecified->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ExportDlgBase::OnCheckBox ), NULL, this );
+	m_buttonHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ExportDlgBase::OnHelp ), NULL, this );
+}
+
 MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
