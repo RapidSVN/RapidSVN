@@ -34,6 +34,7 @@ rapidsvn_SOURCES= \
 	diff_dlg.cpp \
 	dnd_dlg.cpp \
 	drag_n_drop_action.cpp \
+	entry_dlg.cpp \
 	exceptions.cpp \
 	export_action.cpp \
 	export_dlg.cpp \

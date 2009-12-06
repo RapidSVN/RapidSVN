@@ -36,6 +36,7 @@
 
 // app
 #include "listed_dlg.hpp"
+#include "entry_dlg.hpp"
 #include "utils.hpp"
 
 enum
@@ -43,16 +44,9 @@ enum
   ID_New = 0x2000,
   ID_Edit,
   ID_Delete,
-  ID_List,
-  ID_Name,
-  ID_Value
+  ID_List
 };
 
-enum
-{
-  EDIT_NEW,
-  EDIT_EDIT
-};
 
 
 class ListCtrl : public wxListView
@@ -150,155 +144,6 @@ private:
   std::vector<wxString> m_values;
 };
 
-/**
- * private class for the dialog.
- * this edits one single name/value pair
- */
-class EntryDlg : public wxDialog
-{
-public:
-  /**
-   * Constructor
-   */
-  EntryDlg(wxWindow * parent, const wxString & title)
-      : wxDialog(parent, -1, title, wxDefaultPosition),
-      m_readOnly(false)
-  {
-    wxStaticText * labelName = new wxStaticText(this, -1, _("Name"));
-    wxStaticText * labelValue = new wxStaticText(this, -1, _("Value"));
-    wxTextCtrl * textName = new wxTextCtrl(this, ID_Name);
-
-    wxTextCtrl * textValue =
-      new wxTextCtrl(this, ID_Value, wxEmptyString, wxDefaultPosition,
-                     wxSize(300, 100), wxTE_MULTILINE);
-
-    wxFlexGridSizer * textSizer = new wxFlexGridSizer(2, 5, 5);
-    textSizer->Add(labelName);
-    textSizer->Add(textName, 1, wxEXPAND);
-    textSizer->Add(labelValue);
-    textSizer->Add(textValue, 1, wxEXPAND);
-
-    wxButton * okButton = new wxButton(this, wxID_OK, _("OK"));
-    wxButton * cancelButton = new wxButton(this, wxID_CANCEL, _("Cancel"));
-    wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonSizer->Add(okButton, 0, wxALL, 5);
-    buttonSizer->Add(cancelButton, 0, wxALL, 5);
-
-    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
-
-    mainSizer->Add(textSizer, 1, wxALL | wxEXPAND, 5);
-    mainSizer->Add(buttonSizer, 0, wxALL | wxALIGN_RIGHT , 5);
-
-    okButton->SetDefault();
-
-    SetAutoLayout(true);
-    SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(this);
-    mainSizer->Fit(this);
-
-    m_buttonOk = okButton;
-    m_textName = textName;
-    m_textValue = textValue;
-    m_labelName = labelName;
-    m_labelValue = labelValue;
-
-    m_mode = EDIT_NEW;
-  }
-
-  /**
-   * Execute the dialog
-   *
-   * @param caption caption of the dialog
-   * @param value name of the property
-   * @retval true if OK button was clicked
-   */
-  bool
-  Execute(const int mode,
-          wxString & name,
-          wxString & value)
-  {
-    switch (mode)
-    {
-    case EDIT_NEW:
-    case EDIT_EDIT:
-      break;
-    default:
-      // invalid mode, exit
-      return false;
-    }
-    m_mode = mode;
-
-    SetReturnCode(wxID_CANCEL);
-    m_textName->Enable(mode == EDIT_NEW);
-    TrimString(name);
-    TrimString(value);
-    m_textName->SetValue(name);
-    m_textValue->SetValue(value);
-
-    CheckButtons();
-
-    bool ok = ShowModal() == wxID_OK;
-
-    if (ok)
-    {
-      name = m_textName->GetValue();
-      value = m_textValue->GetValue();
-      TrimString(name);
-      TrimString(value);
-    }
-
-    return ok;
-  }
-
-  void SetNameCaption(const wxString & caption)
-  {
-    m_labelName->SetLabel(caption);
-  }
-
-  void SetValueCaption(const wxString & caption)
-  {
-    m_labelValue->SetLabel(caption);
-  }
-
-  void SetReadOnly(bool value)
-  {
-    m_readOnly = value;
-    m_textName->Enable((m_mode == EDIT_NEW) && !value);
-    m_textValue->Enable(!value);
-    CheckButtons();
-  }
-
-private:
-  bool m_readOnly;
-  wxTextCtrl * m_textName;
-  wxTextCtrl * m_textValue;
-  wxStaticText * m_labelName;
-  wxStaticText * m_labelValue;
-  wxButton * m_buttonOk;
-  int m_mode;
-
-  void
-  OnName(wxCommandEvent &)
-  {
-    CheckButtons();
-  }
-
-  void
-  CheckButtons()
-  {
-    wxString name = m_textName->GetValue();
-    TrimString(name);
-    m_buttonOk->Enable((name.Length() > 0) && !m_readOnly);
-  }
-
-private:
-  DECLARE_EVENT_TABLE()
-};
-
-BEGIN_EVENT_TABLE(EntryDlg, wxDialog)
-  EVT_TEXT(ID_Name, EntryDlg::OnName)
-END_EVENT_TABLE()
 
 struct ListEditorDlg::Data
 {

@@ -434,6 +434,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\entry_dlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\exceptions.cpp"
 				>
 			</File>
@@ -785,6 +789,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\drag_n_drop_data.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\entry_dlg.hpp"
 				>
 			</File>
 			<File
