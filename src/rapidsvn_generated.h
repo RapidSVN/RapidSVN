@@ -478,6 +478,7 @@ class ListEditorDlgBase : public wxDialog
 	
 	protected:
 		wxBoxSizer* m_mainSizer;
+		wxStaticBoxSizer* m_listSizer;
 		wxBoxSizer* m_buttonSizer;
 		wxButton* m_buttonNew;
 		wxButton* m_buttonEdit;

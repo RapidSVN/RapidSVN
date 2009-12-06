@@ -1024,6 +1024,10 @@ ListEditorDlgBase::ListEditorDlgBase( wxWindow* parent, wxWindowID id, const wxS
 	
 	m_mainSizer = new wxBoxSizer( wxVERTICAL );
 	
+	m_listSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, wxEmptyString ), wxVERTICAL );
+	
+	m_mainSizer->Add( m_listSizer, 1, wxEXPAND, 5 );
+	
 	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_buttonNew = new wxButton( this, wxID_ANY, _("&New..."), wxDefaultPosition, wxDefaultSize, 0 );
