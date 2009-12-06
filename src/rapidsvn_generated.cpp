@@ -894,6 +894,59 @@ DragAndDropDlgBase::~DragAndDropDlgBase()
 	m_buttonCopy->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( DragAndDropDlgBase::OnButtonCopy ), NULL, this );
 }
 
+EntryDlgBase::EntryDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	wxFlexGridSizer* fgSizer6;
+	fgSizer6 = new wxFlexGridSizer( 2, 2, 5, 5 );
+	fgSizer6->AddGrowableCol( 1 );
+	fgSizer6->AddGrowableRow( 1 );
+	fgSizer6->SetFlexibleDirection( wxBOTH );
+	fgSizer6->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticName = new wxStaticText( this, wxID_ANY, _("&Name"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticName->Wrap( -1 );
+	fgSizer6->Add( m_staticName, 0, 0, 5 );
+	
+	m_textName = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer6->Add( m_textName, 0, wxEXPAND, 5 );
+	
+	m_staticValue = new wxStaticText( this, wxID_ANY, _("&Value"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticValue->Wrap( -1 );
+	fgSizer6->Add( m_staticValue, 0, 0, 5 );
+	
+	m_textValue = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 300,100 ), wxTE_MULTILINE );
+	fgSizer6->Add( m_textValue, 1, wxEXPAND, 5 );
+	
+	m_mainSizer->Add( fgSizer6, 1, wxALL|wxEXPAND, 5 );
+	
+	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	m_buttonSizer->Add( m_buttonOK, 0, wxALL, 5 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonCancel, 0, wxALL, 5 );
+	
+	m_mainSizer->Add( m_buttonSizer, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	
+	// Connect Events
+	m_textName->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( EntryDlgBase::OnText ), NULL, this );
+}
+
+EntryDlgBase::~EntryDlgBase()
+{
+	// Disconnect Events
+	m_textName->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( EntryDlgBase::OnText ), NULL, this );
+}
+
 ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );

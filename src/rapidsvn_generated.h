@@ -431,6 +431,33 @@ class DragAndDropDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class EntryDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class EntryDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticName;
+		wxTextCtrl* m_textName;
+		wxStaticText* m_staticValue;
+		wxTextCtrl* m_textValue;
+		wxBoxSizer* m_buttonSizer;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		EntryDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Edit"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 489,331 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~EntryDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class ExportDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class ExportDlgBase : public wxDialog 

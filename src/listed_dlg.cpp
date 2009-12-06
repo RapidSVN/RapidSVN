@@ -180,11 +180,11 @@ public:
    * @param edit EDIT_NEW or EDIT_EDIT
    */
   void
-  Edit(int mode)
+  Edit(EntryDlg::EditMode mode)
   {
     wxString name, value, title;
 
-    if (mode != EDIT_EDIT)
+    if (mode != EntryDlg::EDIT)
       title = addTitle;
     else
     {
@@ -194,9 +194,12 @@ public:
 
     EntryDlg dlg(wnd, title);
     dlg.SetReadOnly(readOnly);
-    if (!dlg.Execute(mode, name, value))
+    dlg.SetEditMode(mode);
+    dlg.SetNameValue(name, value);
+    if (wxID_OK != dlg.ShowModal())
       return;
 
+    dlg.GetNameValue(name, value);
     listCtrl->SetEntry(name, value);
   }
 
@@ -233,13 +236,13 @@ ListEditorDlg::~ListEditorDlg()
 void
 ListEditorDlg::OnNew(wxCommandEvent & WXUNUSED(event))
 {
-  m->Edit(EDIT_NEW);
+  m->Edit(EntryDlg::NEW);
 }
 
 void
 ListEditorDlg::OnEdit(wxCommandEvent & WXUNUSED(event))
 {
-  m->Edit(EDIT_EDIT);
+  m->Edit(EntryDlg::EDIT);
 }
 
 void
