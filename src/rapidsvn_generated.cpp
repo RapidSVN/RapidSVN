@@ -1018,6 +1018,52 @@ ExportDlgBase::~ExportDlgBase()
 	m_buttonHelp->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ExportDlgBase::OnHelp ), NULL, this );
 }
 
+ListEditorDlgBase::ListEditorDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonNew = new wxButton( this, wxID_ANY, _("&New..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonNew, 0, wxALL, 10 );
+	
+	m_buttonEdit = new wxButton( this, wxID_ANY, _("&Edit..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonEdit, 0, wxALL, 10 );
+	
+	m_buttonDelete = new wxButton( this, wxID_ANY, _("&Delete..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonDelete, 0, wxALL, 10 );
+	
+	
+	m_buttonSizer->Add( 20, 20, 1, wxEXPAND, 5 );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonCancel->SetDefault(); 
+	m_buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( m_buttonSizer, 0, wxEXPAND, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	
+	// Connect Events
+	m_buttonNew->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ListEditorDlgBase::OnNew ), NULL, this );
+	m_buttonEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ListEditorDlgBase::OnEdit ), NULL, this );
+	m_buttonDelete->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ListEditorDlgBase::OnDelete ), NULL, this );
+}
+
+ListEditorDlgBase::~ListEditorDlgBase()
+{
+	// Disconnect Events
+	m_buttonNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ListEditorDlgBase::OnNew ), NULL, this );
+	m_buttonEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ListEditorDlgBase::OnEdit ), NULL, this );
+	m_buttonDelete->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ListEditorDlgBase::OnDelete ), NULL, this );
+}
+
 LockDlgBase::LockDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );

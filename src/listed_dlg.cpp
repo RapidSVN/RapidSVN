@@ -54,10 +54,6 @@ enum
   EDIT_EDIT
 };
 
-static const wxChar * LABEL_EDIT=_("&Edit...");
-static const wxChar * LABEL_VIEW=_("&View...");
-static const wxChar * LABEL_NEW=_("&New...");
-static const wxChar * LABEL_DELETE=_("&Delete...");
 
 class ListCtrl : public wxListView
 {
@@ -306,105 +302,32 @@ END_EVENT_TABLE()
 
 struct ListEditorDlg::Data
 {
-  wxWindow * window;
+  wxWindow * wnd;
   wxString nameCaption;
   wxString valueCaption;
   bool readOnly;
   ListCtrl * listCtrl;
-  wxButton * newButton;
-  wxButton * okButton;
-  wxButton * editButton;
-  wxButton * delButton;
-  wxStaticBox * box;
   wxString addTitle;
   wxString editTitle;
 
 public:
-  Data(wxWindow * wnd)
-      : window(wnd), nameCaption(_("Name")), valueCaption(_("Value")),
-      readOnly(false)
+  Data(wxWindow * wnd_)
+    : wnd(wnd_), nameCaption(_("Name")), valueCaption(_("Value")),
+      readOnly(false), listCtrl(0), addTitle(_("Add")),
+      editTitle(_("Edit"))
   {
-    // create controls
-    wxStaticBoxSizer *boxSizer = new wxStaticBoxSizer(
-      box = new wxStaticBox(wnd, -1, wxEmptyString),
-      wxHORIZONTAL);
-
-    listCtrl = new ListCtrl(wnd);
-    boxSizer->Add(listCtrl, 1, wxALL | wxEXPAND, 2);
-
-    // buttons
-    newButton = new wxButton(wnd, ID_New, LABEL_NEW);
-    editButton = new wxButton(wnd, ID_Edit, LABEL_EDIT);
-    editButton->Enable(false);
-    delButton = new wxButton(wnd, ID_Delete, LABEL_DELETE);
-    delButton->Enable(false);
-    okButton = new wxButton(wnd, wxID_OK, _("OK"));
-    wxButton * cancelButton = new wxButton(wnd, wxID_CANCEL, _("Cancel"));
-
-    wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-    buttonSizer->Add(newButton, 0, wxALL, 5);
-    buttonSizer->Add(editButton, 0, wxALL, 5);
-    buttonSizer->Add(delButton, 0, wxALL, 5);
-    buttonSizer->Add(20, 20);
-    buttonSizer->Add(okButton, 0, wxALL, 5);
-    buttonSizer->Add(cancelButton, 0, wxALL, 5);
-
-    cancelButton->SetDefault();
-    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
-
-    mainSizer->Add(boxSizer, 1, wxALL | wxCENTER | wxEXPAND , 5);
-    mainSizer->Add(buttonSizer, 0, wxALL | wxALIGN_RIGHT , 5);
-
-    wnd->SetAutoLayout(true);
-    wnd->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(wnd);
-    mainSizer->Fit(wnd);
   }
 
 
-  /**
-   * returns whether an item in the list is selected
-   *
-   * @retval true item is selected
-   */
-  bool
-  IsSelected()
+  long
+  GetSelection() const
   {
     if (!listCtrl)
-      return false;
+      return 0;
 
-    return listCtrl->GetFirstSelected() != -1;
+    return listCtrl->GetFirstSelected();
   }
 
-  /**
-   * methode gets called by the selection event of
-   * the grid
-   */
-  void
-  OnSelected()
-  {
-    // the edit and delete buttons will only be
-    // enabled if there is a selected item
-    bool selected = IsSelected();
-    editButton->Enable(selected);
-    delButton->Enable(selected && !readOnly);
-  }
-
-  /**
-   * deletes the selected item in the list
-   */
-  void
-  DeleteSelected()
-  {
-    long id = listCtrl->GetFirstSelected();
-
-    if (id == -1)
-      return;
-
-    listCtrl->DeleteItem(id);
-    OnSelected();
-  }
 
   /**
    * shows the dialog for a property to edit or add.
@@ -424,7 +347,7 @@ public:
       listCtrl->GetSelectedEntry(name, value);
     }
 
-    EntryDlg dlg(window, title);
+    EntryDlg dlg(wnd, title);
     dlg.SetReadOnly(readOnly);
     if (!dlg.Execute(mode, name, value))
       return;
@@ -434,24 +357,31 @@ public:
 
 };
 
-BEGIN_EVENT_TABLE(ListEditorDlg, wxDialog)
-  EVT_BUTTON(ID_New, ListEditorDlg::OnNew)
-  EVT_BUTTON(ID_Edit, ListEditorDlg::OnEdit)
-  EVT_BUTTON(ID_Delete, ListEditorDlg::OnDelete)
-  EVT_LIST_ITEM_SELECTED(ID_List, ListEditorDlg::OnSelected)
-END_EVENT_TABLE()
 
 ListEditorDlg::ListEditorDlg(wxWindow * parent,
                              const wxString & title)
-    : wxDialog(parent, -1, title, wxDefaultPosition,
-               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+    : ListEditorDlgBase(parent, -1, title)
 {
   m = new Data(this);
+  m->listCtrl = new ListCtrl(this);
+
+  m_listSizer->Add(m->listCtrl, 1, wxALL | wxEXPAND, 2);
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
   CentreOnParent();
+
+  CheckControls();
+
+  m->listCtrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(ListEditorDlg::OnSelected), NULL, this );
 }
 
 ListEditorDlg::~ListEditorDlg()
 {
+  m->listCtrl->Disconnect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(ListEditorDlg::OnSelected), NULL, this );
+
   delete m;
 }
 
@@ -470,19 +400,26 @@ ListEditorDlg::OnEdit(wxCommandEvent & WXUNUSED(event))
 void
 ListEditorDlg::OnDelete(wxCommandEvent & WXUNUSED(event))
 {
-  m->DeleteSelected();
+  long id = m->GetSelection();
+
+  if (-1 == id)
+    return;
+
+  m->listCtrl->DeleteItem(id);
+
+  CheckControls();
 }
 
 void
 ListEditorDlg::OnSelected(wxListEvent & WXUNUSED(event))
 {
-  m->OnSelected();
+  CheckControls();
 }
 
 void
 ListEditorDlg::SetCaption(const wxString & caption)
 {
-  m->box->SetLabel(caption);
+  m_listSizer->GetStaticBox()->SetLabel(caption);
 }
 
 void
@@ -533,20 +470,6 @@ ListEditorDlg::GetEntryCount() const
   return m->listCtrl->GetItemCount();
 }
 
-int
-ListEditorDlg::ShowModal()
-{
-  int result;
-  WriteToGrid();
-
-  result = wxDialog::ShowModal();
-
-  if (result == wxID_OK)
-    ReadFromGrid();
-
-  return result;
-}
-
 long
 ListEditorDlg::FindEntry(const wxString & name) const
 {
@@ -557,11 +480,23 @@ void
 ListEditorDlg::SetReadOnly(bool value)
 {
   m->readOnly = value;
-  m->newButton->Enable(!value);
-  m->okButton->Enable(!value);
-  m->OnSelected();
-  m->editButton->SetLabel(value ? LABEL_VIEW : LABEL_EDIT);
+
+  m_buttonEdit->SetLabel(value ? _("View...") : _("Edit..."));
+
+  CheckControls();
 }
+
+void
+ListEditorDlg::CheckControls()
+{
+  bool isSelected = m->GetSelection() >= 0;
+
+  EnableCtrl(m_buttonNew, !m->readOnly);
+  EnableCtrl(m_buttonOK, !m->readOnly);
+  EnableCtrl(m_buttonEdit, !m->readOnly && isSelected);
+  EnableCtrl(m_buttonDelete, !m->readOnly && isSelected);
+}
+
 
 /* -----------------------------------------------------------------
  * local variables:

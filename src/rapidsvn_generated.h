@@ -470,6 +470,35 @@ class ExportDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class ListEditorDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class ListEditorDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxBoxSizer* m_buttonSizer;
+		wxButton* m_buttonNew;
+		wxButton* m_buttonEdit;
+		wxButton* m_buttonDelete;
+		
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnNew( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnEdit( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnDelete( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		ListEditorDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("ListEditor"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 602,372 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~ListEditorDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class LockDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class LockDlgBase : public wxDialog 

@@ -75,10 +75,10 @@ PropertyDlg::~PropertyDlg()
  * Properties, that are set only in @a property will be
  * set to NULL
  *
- * @see WriteToGrid
+ * @see TransferDataToWindow
  */
-void
-PropertyDlg::ReadFromGrid()
+bool
+PropertyDlg::TransferDataFromWindow()
 {
   try
   {
@@ -114,10 +114,18 @@ PropertyDlg::ReadFromGrid()
 
       m->property.set(nameUtf8.c_str(), valueUtf8.c_str());
     }
+    return true;
+  }
+  catch (svn::ClientException & e)
+  {
+    wxMessageBox(_("Error setting the property values:\n%s"),
+                 Utf8ToLocal(e.message()).c_str());
+    return false;
   }
   catch (...)
   {
     wxMessageBox(_("Error setting the property values"), _("Error"));
+    return false;
   }
 }
 
@@ -126,10 +134,10 @@ PropertyDlg::ReadFromGrid()
  * to the grid. all user manipulations will be performed only in the
  * grid.
  *
- * @see ReadFromGrid
+ * @see TransferDataToWindow
  */
-void
-PropertyDlg::WriteToGrid()
+bool
+PropertyDlg::TransferDataToWindow()
 {
   const std::vector<svn::PropertyEntry> &
   entries = m->property.entries();
@@ -146,6 +154,8 @@ PropertyDlg::WriteToGrid()
 
     it++;
   }
+
+  return true;
 }
 /* -----------------------------------------------------------------
  * local variables:

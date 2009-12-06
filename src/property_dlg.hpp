@@ -46,13 +46,11 @@ public:
    */
   virtual ~PropertyDlg();
 
+  virtual bool
+  TransferDataFromWindow();
 
-protected:
-  virtual void
-  ReadFromGrid();
-
-  virtual void
-  WriteToGrid();
+  virtual bool
+  TransferDataToWindow();
 
 private:
   struct Data;

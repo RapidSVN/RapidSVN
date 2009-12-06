@@ -25,14 +25,13 @@
 #ifndef _LISTED_DLG_H_INCLUDED_
 #define _LISTED_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
-#include "wx/window.h"
+// app
+#include "rapidsvn_generated.h"
 
 // forward declarations
 class wxListEvent;
 
-class ListEditorDlg : public wxDialog
+class ListEditorDlg : public ListEditorDlgBase
 {
 public:
   ListEditorDlg(wxWindow * parent, const wxString & title);
@@ -72,9 +71,6 @@ public:
   long
   FindEntry(const wxString & name) const;
 
-  virtual int
-  ShowModal();
-
   /**
    * enables or disables the saving/modification
    * of properties.
@@ -82,12 +78,18 @@ public:
   void
   SetReadOnly(bool value);
 
-protected:
+protected: // inherited event handlers
   virtual void
-  ReadFromGrid() = 0;
+  OnNew(wxCommandEvent & event);
 
   virtual void
-  WriteToGrid() = 0;
+  OnEdit(wxCommandEvent & event);
+
+  virtual void
+  OnDelete(wxCommandEvent & event);
+
+  virtual void
+  OnSelected(wxListEvent & event);
 
 private:
   struct Data;
@@ -110,28 +112,7 @@ private:
   operator = (const ListEditorDlg &);
 
   void
-  CheckButtons();
-
-  void
-  OnClose(wxCommandEvent & event);
-
-  void
-  OnOK(wxCommandEvent & event);
-
-  void
-  OnNew(wxCommandEvent & event);
-
-  void
-  OnEdit(wxCommandEvent & event);
-
-  void
-  OnDelete(wxCommandEvent & event);
-
-  void
-  OnSelected(wxListEvent & event);
-
-private:
-  DECLARE_EVENT_TABLE()
+  CheckControls();
 };
 
 #endif
