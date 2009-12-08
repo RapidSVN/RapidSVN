@@ -627,6 +627,41 @@ class MainFrameBase : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class MergeDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class MergeDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		
+		wxStaticText* m_staticRevision1;
+		wxComboBox* m_comboUrl1;
+		wxTextCtrl* m_textRevision1;
+		
+		wxStaticText* m_staticRevision2;
+		wxComboBox* m_comboUrl2;
+		wxTextCtrl* m_textRevision2;
+		wxComboBox* m_comboDest;
+		wxButton* m_buttonBrowse;
+		wxCheckBox* m_checkRecursive;
+		wxCheckBox* m_checkForce;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnBrowse( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		MergeDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Merge revisions"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 599,337 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~MergeDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class PreferencesDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class PreferencesDlgBase : public wxDialog 

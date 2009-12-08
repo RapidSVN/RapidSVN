@@ -1318,6 +1318,123 @@ MainFrameBase::~MainFrameBase()
 	m_listCtrl->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnListCtrlSetFocus ), NULL, this );
 }
 
+MergeDlgBase::MergeDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	wxStaticBoxSizer* sizer1;
+	sizer1 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("First working copy or URL") ), wxHORIZONTAL );
+	
+	wxFlexGridSizer* fgSizer1;
+	fgSizer1 = new wxFlexGridSizer( 2, 2, 0, 5 );
+	fgSizer1->AddGrowableCol( 0 );
+	fgSizer1->SetFlexibleDirection( wxBOTH );
+	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	
+	fgSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	m_staticRevision1 = new wxStaticText( this, wxID_ANY, _("&Revision"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticRevision1->Wrap( -1 );
+	fgSizer1->Add( m_staticRevision1, 0, 0, 5 );
+	
+	m_comboUrl1 = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
+	fgSizer1->Add( m_comboUrl1, 1, wxEXPAND, 5 );
+	
+	m_textRevision1 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer1->Add( m_textRevision1, 0, wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+	
+	sizer1->Add( fgSizer1, 1, wxEXPAND, 5 );
+	
+	m_mainSizer->Add( sizer1, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* sizer2;
+	sizer2 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("First working copy or URL") ), wxHORIZONTAL );
+	
+	wxFlexGridSizer* fgSizer2;
+	fgSizer2 = new wxFlexGridSizer( 2, 2, 0, 5 );
+	fgSizer2->AddGrowableCol( 0 );
+	fgSizer2->SetFlexibleDirection( wxBOTH );
+	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	
+	fgSizer2->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	m_staticRevision2 = new wxStaticText( this, wxID_ANY, _("&Revision"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticRevision2->Wrap( -1 );
+	fgSizer2->Add( m_staticRevision2, 0, 0, 5 );
+	
+	m_comboUrl2 = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
+	fgSizer2->Add( m_comboUrl2, 1, wxEXPAND, 5 );
+	
+	m_textRevision2 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer2->Add( m_textRevision2, 0, wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+	
+	sizer2->Add( fgSizer2, 1, wxEXPAND, 5 );
+	
+	m_mainSizer->Add( sizer2, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* destSizer;
+	destSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Destination Directory") ), wxHORIZONTAL );
+	
+	m_comboDest = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 205,-1 ), 0, NULL, 0 ); 
+	destSizer->Add( m_comboDest, 1, wxEXPAND, 5 );
+	
+	m_buttonBrowse = new wxButton( this, wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
+	destSizer->Add( m_buttonBrowse, 0, wxLEFT, 5 );
+	
+	m_mainSizer->Add( destSizer, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* optionSizer;
+	optionSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	optionSizer->Add( m_checkRecursive, 0, 0, 5 );
+	
+	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	optionSizer->Add( m_checkForce, 0, 0, 5 );
+	
+	m_mainSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );
+	
+	wxBoxSizer* buttonSizer;
+	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	m_mainSizer->Add( buttonSizer, 0, wxALIGN_CENTER|wxLEFT|wxRIGHT, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	
+	// Connect Events
+	m_comboUrl1->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_textRevision1->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_comboUrl2->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_textRevision2->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_comboDest->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_buttonBrowse->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MergeDlgBase::OnBrowse ), NULL, this );
+}
+
+MergeDlgBase::~MergeDlgBase()
+{
+	// Disconnect Events
+	m_comboUrl1->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_textRevision1->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_comboUrl2->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_textRevision2->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_comboDest->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( MergeDlgBase::OnText ), NULL, this );
+	m_buttonBrowse->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MergeDlgBase::OnBrowse ), NULL, this );
+}
+
 PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );

@@ -69,6 +69,11 @@ extern const wxChar HISTORY_CREATE_REPOS_DIRECTORY[];
 extern const wxChar HISTORY_CREATE_REPOS_NAME[];
 extern const wxChar HISTORY_CREATE_REPOS_CONFIG_DIRECTORY[];
 
+// entries for merging
+extern const wxChar HISTORY_MERGE_URL[];
+extern const wxChar HISTORY_MERGE_DEST[];
+
+
 
 #endif
 /* -----------------------------------------------------------------

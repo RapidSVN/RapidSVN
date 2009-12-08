@@ -38,6 +38,9 @@ const wxChar HISTORY_CREATE_REPOS_DIRECTORY[] = wxT("History/CreateRepositoryDir
 const wxChar HISTORY_CREATE_REPOS_NAME[] = wxT("History/CreateRepositoryName");
 const wxChar HISTORY_CREATE_REPOS_CONFIG_DIRECTORY[] = wxT("History/CreateRepositoryConfigDir");
 
+const wxChar HISTORY_MERGE_URL[] = wxT("History/MergeUrl");
+const wxChar HISTORY_MERGE_DEST[] = wxT("History/MergeDestination");
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

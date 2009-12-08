@@ -26,208 +26,77 @@
 #include "wx/valgen.h"
 
 // app
+#include "hist_entries.hpp"
+#include "hist_val.hpp"
 #include "merge_dlg.hpp"
 #include "utils.hpp"
 
-enum
+struct MergeDlg::Data
 {
-  ID_USELATEST = 100,
-  ID_BUTTON_BROWSE,
+public:
+  MergeData data;
+
+  Data(bool calledByLogDlg, const MergeData & data_)
+    : data(data_)
+  {
+    data.calledByLogDlg = calledByLogDlg;
+  }
 };
 
-BEGIN_EVENT_TABLE(MergeDlg, wxDialog)
-  EVT_BUTTON(wxID_OK, MergeDlg::OnOK)
-  EVT_BUTTON(ID_BUTTON_BROWSE, MergeDlg::OnBrowse)
-END_EVENT_TABLE()
-
-int
-MergeDlg::TestRev(wxString & val)
-{
-  unsigned long rev = 0;
-
-  if (!val.ToULong(&rev, 10) && rev < 0)
-  {
-    // could not convert revision to a number
-    wxMessageBox(_("Revision must be an unsigned number!"),
-                 _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
-    return -1;
-  }
-
-  return 0;
-}
 
 MergeDlg::MergeDlg(wxWindow * parent, bool calledByLogDlg, MergeData & data)
-    : wxDialog(parent, -1, _("Merge revisions"), wxDefaultPosition,
-               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
-    m_data(data)
+  : MergeDlgBase(parent)
 {
-  m_data.calledByLogDlg = calledByLogDlg;
-  InitializeData();
+  m = new Data(calledByLogDlg, data);
+
+  m_comboUrl1->SetValidator(HistoryValidator(HISTORY_MERGE_URL, &m->data.Path1));
+  m_textRevision1->SetValidator(wxTextValidator(wxFILTER_NUMERIC, &m->data.Path1Rev));
+  m_comboUrl2->SetValidator(HistoryValidator(HISTORY_MERGE_URL, &m->data.Path2));
+  m_textRevision2->SetValidator(wxTextValidator(wxFILTER_NUMERIC, &m->data.Path2Rev));
+  m_comboDest->SetValidator(HistoryValidator(HISTORY_MERGE_DEST, &m->data.Destination));
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
+  Layout();
   CentreOnParent();
+
+  CheckControls();
 }
 
-void
-MergeDlg::OnOK(wxCommandEvent & WXUNUSED(event))
+
+MergeDlg::~MergeDlg()
 {
-  // Transfer data from controls into m_pData:
-  TransferDataFromWindow();
-
-  TrimString(m_data.Path1);
-  TrimString(m_data.Path1Rev);
-  TrimString(m_data.Path2);
-  TrimString(m_data.Path2Rev);
-  TrimString(m_data.Destination);
-
-  // test revision numbers
-  if (TestRev(m_data.Path1Rev) < 0)
-    return;
-
-  if (TestRev(m_data.Path2Rev) < 0)
-    return;
-
-  if (m_data.Path1.IsEmpty())
-  {
-    wxMessageBox(_("First path or URL is required for merge!"),
-                 _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
-
-    // Do not allow the user to continue if the path is empty
-    // and the import is addressing a file.
-    return;
-  }
-
-  // If start revision for first path is emtpy...
-  // (the end revision should be empty also in this case - checked above)
-  if (m_data.Path1Rev.IsEmpty())
-  {
-    // the second path should be specified, as now there is
-    // no deductible interval from the first path
-    if (m_data.Path2.IsEmpty())
-    {
-      wxMessageBox(_("Second path or URL is required for merge!"),
-                   _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
-
-      // Do not allow the user to continue if the path is empty
-      // and the import is addressing a file.
-      return;
-    }
-  }
-
-  wxDialog::EndModal(wxID_OK);
+  delete m;
 }
 
-void
-MergeDlg::InitializeData()
+
+bool 
+MergeDlg::TransferDataFromWindow()
 {
-  wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
+  if (!MergeDlgBase::TransferDataFromWindow())
+    return false;
 
-  // Merge paths grid:
-  wxStaticBoxSizer * mergeSizer = new wxStaticBoxSizer(
-    new wxStaticBox(this, -1, _("Merge")), wxHORIZONTAL);
+  TrimString(m->data.Path1);
+  TrimString(m->data.Path1Rev);
+  TrimString(m->data.Path2);
+  TrimString(m->data.Path2Rev);
+  TrimString(m->data.Destination);
 
-  wxFlexGridSizer * grid = new wxFlexGridSizer(6, 2, 0, 0);
-  grid->AddGrowableCol(0);   // The first column can be expanded.
-
-  // Row 0:
-  grid->Add(new wxStaticText(this, -1, _("First working copy or URL")), 0,
-            0, 5);
-  grid->Add(new wxStaticText(this, -1, _("Revision")), 0,
-            wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
-
-  // Row 1:
-  wxTextCtrl *Path1 = new wxTextCtrl(this, -1, wxEmptyString,
-                                     wxDefaultPosition, wxSize(300, -1), 0,
-                                     wxTextValidator(wxFILTER_NONE, &m_data.Path1));
-  grid->Add(Path1, 1, wxBOTTOM | wxEXPAND, 10);
-
-  wxTextCtrl *Path1Rev = new wxTextCtrl(this, -1, wxEmptyString,
-                                        wxDefaultPosition, wxDefaultSize, 0,
-                                        wxTextValidator(wxFILTER_NUMERIC, &m_data.Path1Rev));
-  grid->Add(Path1Rev, 0, wxLEFT, 20);
-
-  // Row 2:
-  grid->Add(new wxStaticText(this, -1, _("Second working copy or URL")),
-            0, 0, 5);
-  grid->Add(new wxStaticText(this, -1, _("Revision")), 0,
-            wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
-
-  // Row 3:
-  wxTextCtrl * Path2 =
-    new wxTextCtrl(this, -1, wxEmptyString,
-                   wxDefaultPosition, wxDefaultSize,
-                   0, wxTextValidator(wxFILTER_NONE, &m_data.Path2));
-  grid->Add(Path2, 1, wxBOTTOM | wxEXPAND, 10);
-
-  wxTextCtrl *Path2Rev =
-    new wxTextCtrl(this, -1, wxEmptyString,
-                   wxDefaultPosition, wxDefaultSize, 0,
-                   wxTextValidator(wxFILTER_NUMERIC, &m_data.Path2Rev));
-  grid->Add(Path2Rev, 0, wxLEFT, 20);
-
-  // Row 4:
-  if (m_data.calledByLogDlg)
-    grid->Add(new wxStaticText(this, -1, _("Destination file")), 0, 0, 5);
-  else
-    grid->Add(new wxStaticText(this, -1, _("Destination path")), 0, 0, 5);
-  grid->Add(new wxStaticText(this, -1, wxEmptyString), 0,
-            wxLEFT | wxALIGN_CENTER_VERTICAL, 20);
-
-  // Row 5:
-  wxTextCtrl * Destination =
-    new wxTextCtrl(this, -1, wxEmptyString,
-                   wxDefaultPosition, wxDefaultSize, 0,
-                   wxTextValidator(wxFILTER_NONE, &m_data.Destination));
-  grid->Add(Destination, 1, wxBOTTOM | wxEXPAND, 5);
-
-  // If called by the log dialogue, the source path and revision is
-  // already given by the selected entries
-  if (m_data.calledByLogDlg)
-  {
-    Path1->Disable();
-    Path2->Disable();
-    Path1Rev->Disable();
-    Path2Rev->Disable();
-  }
-
-  wxButton* BrowseButton =
-    new wxButton(this, ID_BUTTON_BROWSE, wxT("..."),
-                 wxPoint(-1,-1), wxSize(20, -1));
-  grid->Add(BrowseButton, 0, wxALL, 5);
-
-  mergeSizer->Add(grid, 1, wxALL | wxEXPAND, 5);
-
-  // Sundry items row:
-  wxBoxSizer *sundrySizer = new wxBoxSizer(wxHORIZONTAL);
-  wxCheckBox* Recursive =
-    new wxCheckBox(this, -1, _("Recursive"), wxDefaultPosition,
-                   wxDefaultSize, 0, wxGenericValidator(&m_data.Recursive));
-  sundrySizer->Add(Recursive, 0, wxALL, 5);
-  wxCheckBox* Force =
-    new wxCheckBox(this, -1, _("Force"), wxDefaultPosition, wxDefaultSize,
-                   0, wxGenericValidator(&m_data.Force));
-  sundrySizer->Add(Force, 0, wxALL, 5);
-
-  // Button row
-  wxBoxSizer * buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-
-  wxButton * ok = new wxButton(this, wxID_OK, _("OK"));
-  buttonSizer->Add(ok, 0, wxALL, 10);
-
-  wxButton * cancel = new wxButton(this, wxID_CANCEL, _("Cancel"));
-  buttonSizer->Add(cancel, 0, wxALL, 10);
-
-  // Add all sizers to main sizer
-  mainSizer->Add(mergeSizer, 0, wxALL | wxEXPAND, 5);
-  mainSizer->Add(sundrySizer, 0, wxALL | wxCENTER, 5);
-  mainSizer->Add(buttonSizer, 0, wxALL | wxCENTER, 5);
-
-  SetAutoLayout(true);
-  SetSizer(mainSizer);
-
-  mainSizer->SetSizeHints(this);
-  mainSizer->Fit(this);
-
-  ok->SetDefault();
+  return true;
 }
+
+
+bool
+MergeDlg::TransferDataToWindow()
+{
+  if (!MergeDlgBase::TransferDataToWindow())
+    return false;
+
+  CheckControls();
+  return true;
+}
+
 
 /**
  * Brings up a directory dialog defaulted to the user's home directory.
@@ -235,18 +104,52 @@ MergeDlg::InitializeData()
 void
 MergeDlg::OnBrowse(wxCommandEvent & WXUNUSED(event))
 {
-  // Transfer data from controls into m_pData:
-  TransferDataFromWindow();
+  wxString dest(m_comboDest->GetValue());
+  TrimString(dest);
+
   wxDirDialog dialog(this,
                      _("Select a destination folder to merge to"),
-                     wxGetHomeDir());
+                     dest);
 
   if (dialog.ShowModal() == wxID_OK)
-  {
-    m_data.Destination = dialog.GetPath();
-    // Transfer data from m_pData back into controls:
-    TransferDataToWindow();
-  }
+    m_comboDest->SetValue(dialog.GetPath());
+}
+
+
+void
+MergeDlg::OnText(wxCommandEvent &)
+{
+  CheckControls();
+}
+
+
+void
+MergeDlg::CheckControls()
+{
+  wxString url1(m_comboUrl1->GetValue());
+  wxString rev1(m_textRevision1->GetValue());
+  wxString url2(m_comboUrl2->GetValue());
+  wxString rev2(m_textRevision2->GetValue());
+  wxString dest(m_comboDest->GetValue());
+
+  TrimString(url1);
+  TrimString(rev1);
+  TrimString(url2);
+  TrimString(rev2);
+  TrimString(dest);
+
+  bool ok = 
+    !url1.IsEmpty() && !url1.IsEmpty() &&
+    !dest.IsEmpty() && CheckRevision(rev1) && 
+    CheckRevision(rev2);
+
+  bool readOnly = m->data.calledByLogDlg;
+  EnableCtrl(m_comboUrl1, !readOnly);
+  EnableCtrl(m_comboUrl2, !readOnly);
+  EnableCtrl(m_textRevision1, !readOnly);
+  EnableCtrl(m_textRevision2, !readOnly);
+
+  EnableCtrl(m_buttonOK, ok);
 }
 
 /* -----------------------------------------------------------------

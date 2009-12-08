@@ -24,26 +24,36 @@
 #ifndef _MERGE_DLG_H_INCLUDED_
 #define _MERGE_DLG_H_INCLUDED_
 
-// wxWidgets
-#include "wx/dialog.h"
-
 // app
 #include "merge_data.hpp"
+#include "rapidsvn_generated.h"
 
-class MergeDlg:public wxDialog
+
+class MergeDlg:public MergeDlgBase
 {
 public:
   MergeDlg(wxWindow *parent, bool calledByLogDlg, MergeData & data);
-  void OnOK(wxCommandEvent& event);
-  void OnBrowse(wxCommandEvent & event);
+
+  virtual ~MergeDlg();
+
+  virtual bool
+  TransferDataFromWindow();
+
+  virtual bool
+  TransferDataToWindow();
+
+protected: // inhertited event handlers
+  virtual void 
+  OnText(wxCommandEvent &);
+
+  virtual void
+  OnBrowse(wxCommandEvent &);
 
 private:
-  void InitializeData();
-  int TestRev(wxString & val);
+  struct Data;
+  Data * m;
 
-  MergeData & m_data;
-
-  DECLARE_EVENT_TABLE()
+  void CheckControls();
 };
 
 #endif
