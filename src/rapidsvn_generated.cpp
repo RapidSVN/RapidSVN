@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Dec 29 2008)
+// C++ code generated with wxFormBuilder (version Apr 21 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -1157,6 +1157,117 @@ LockDlgBase::LockDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 
 LockDlgBase::~LockDlgBase()
 {
+}
+
+LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_splitter = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D );
+	m_splitter->Connect( wxEVT_IDLE, wxIdleEventHandler( LogDlgBase::m_splitterOnIdle ), NULL, this );
+	m_upperPanel = new wxPanel( m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* upperSizer;
+	upperSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	wxBoxSizer* upperLeftSizer;
+	upperLeftSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_staticRevisions = new wxStaticText( m_upperPanel, wxID_ANY, _("History: %d revisions"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticRevisions->Wrap( -1 );
+	upperLeftSizer->Add( m_staticRevisions, 0, wxALL, 5 );
+	
+	m_listRevisions = new wxListCtrl( m_upperPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
+	upperLeftSizer->Add( m_listRevisions, 1, wxALL|wxEXPAND, 5 );
+	
+	upperSizer->Add( upperLeftSizer, 1, wxEXPAND, 5 );
+	
+	wxBoxSizer* upperRightSizer;
+	upperRightSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_buttonClose = new wxButton( m_upperPanel, wxID_CANCEL, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
+	upperRightSizer->Add( m_buttonClose, 0, wxALL, 5 );
+	
+	m_buttonView = new wxButton( m_upperPanel, wxID_ANY, _("&View"), wxDefaultPosition, wxDefaultSize, 0 );
+	upperRightSizer->Add( m_buttonView, 0, wxALL, 5 );
+	
+	m_buttonGet = new wxButton( m_upperPanel, wxID_ANY, _("&Get"), wxDefaultPosition, wxDefaultSize, 0 );
+	upperRightSizer->Add( m_buttonGet, 0, wxALL, 5 );
+	
+	m_buttonDiff = new wxButton( m_upperPanel, wxID_ANY, _("&Diff"), wxDefaultPosition, wxDefaultSize, 0 );
+	upperRightSizer->Add( m_buttonDiff, 0, wxALL, 5 );
+	
+	m_buttonMerge = new wxButton( m_upperPanel, wxID_ANY, _("&Merge"), wxDefaultPosition, wxDefaultSize, 0 );
+	upperRightSizer->Add( m_buttonMerge, 0, wxALL, 5 );
+	
+	m_buttonAnnotate = new wxButton( m_upperPanel, wxID_ANY, _("&Annotate"), wxDefaultPosition, wxDefaultSize, 0 );
+	upperRightSizer->Add( m_buttonAnnotate, 0, wxALL, 5 );
+	
+	upperSizer->Add( upperRightSizer, 0, wxEXPAND, 5 );
+	
+	m_upperPanel->SetSizer( upperSizer );
+	m_upperPanel->Layout();
+	upperSizer->Fit( m_upperPanel );
+	m_lowerPanel = new wxPanel( m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* lowerSizer;
+	lowerSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_notebook = new wxNotebook( m_lowerPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_panelLog = new wxPanel( m_notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* logSizer;
+	logSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_textLog = new wxTextCtrl( m_panelLog, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	logSizer->Add( m_textLog, 1, wxEXPAND, 5 );
+	
+	m_panelLog->SetSizer( logSizer );
+	m_panelLog->Layout();
+	logSizer->Fit( m_panelLog );
+	m_notebook->AddPage( m_panelLog, _("Log Message"), true );
+	m_panelFiles = new wxPanel( m_notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* filesSizer;
+	filesSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_listFiles = new wxListCtrl( m_panelFiles, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
+	filesSizer->Add( m_listFiles, 1, wxEXPAND, 5 );
+	
+	m_panelFiles->SetSizer( filesSizer );
+	m_panelFiles->Layout();
+	filesSizer->Fit( m_panelFiles );
+	m_notebook->AddPage( m_panelFiles, _("Affected Files/Dirs"), false );
+	
+	lowerSizer->Add( m_notebook, 1, wxEXPAND | wxALL, 5 );
+	
+	m_lowerPanel->SetSizer( lowerSizer );
+	m_lowerPanel->Layout();
+	lowerSizer->Fit( m_lowerPanel );
+	m_splitter->SplitHorizontally( m_upperPanel, m_lowerPanel, 0 );
+	m_mainSizer->Add( m_splitter, 1, wxEXPAND, 5 );
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	
+	// Connect Events
+	m_listRevisions->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( LogDlgBase::OnRevisionDeselected ), NULL, this );
+	m_listRevisions->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( LogDlgBase::OnRevisionSelected ), NULL, this );
+	m_buttonView->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnView ), NULL, this );
+	m_buttonGet->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnGet ), NULL, this );
+	m_buttonDiff->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnDiff ), NULL, this );
+	m_buttonMerge->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnMerge ), NULL, this );
+	m_buttonAnnotate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnAnnotate ), NULL, this );
+}
+
+LogDlgBase::~LogDlgBase()
+{
+	// Disconnect Events
+	m_listRevisions->Disconnect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( LogDlgBase::OnRevisionDeselected ), NULL, this );
+	m_listRevisions->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( LogDlgBase::OnRevisionSelected ), NULL, this );
+	m_buttonView->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnView ), NULL, this );
+	m_buttonGet->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnGet ), NULL, this );
+	m_buttonDiff->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnDiff ), NULL, this );
+	m_buttonMerge->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnMerge ), NULL, this );
+	m_buttonAnnotate->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnAnnotate ), NULL, this );
 }
 
 ImportDlgBase::ImportDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )

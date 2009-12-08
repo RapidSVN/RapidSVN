@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Dec 29 2008)
+// C++ code generated with wxFormBuilder (version Apr 21 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -39,8 +39,8 @@ class SplitterWindow;
 #include <wx/radiobut.h>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
-#include <wx/treectrl.h>
 #include <wx/splitter.h>
+#include <wx/treectrl.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
 
@@ -544,6 +544,54 @@ class LockDlgBase : public wxDialog
 	public:
 		LockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Lock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~LockDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class LogDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class LogDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxSplitterWindow* m_splitter;
+		wxPanel* m_upperPanel;
+		wxStaticText* m_staticRevisions;
+		wxListCtrl* m_listRevisions;
+		wxButton* m_buttonClose;
+		wxButton* m_buttonView;
+		wxButton* m_buttonGet;
+		wxButton* m_buttonDiff;
+		wxButton* m_buttonMerge;
+		wxButton* m_buttonAnnotate;
+		wxPanel* m_lowerPanel;
+		wxNotebook* m_notebook;
+		wxPanel* m_panelLog;
+		wxTextCtrl* m_textLog;
+		wxPanel* m_panelFiles;
+		wxListCtrl* m_listFiles;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnRevisionDeselected( wxListEvent& event ){ event.Skip(); }
+		virtual void OnRevisionSelected( wxListEvent& event ){ event.Skip(); }
+		virtual void OnView( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnGet( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnDiff( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnMerge( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnAnnotate( wxCommandEvent& event ){ event.Skip(); }
+		
+	
+	public:
+		LogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Log History"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 709,456 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		~LogDlgBase();
+		void m_splitterOnIdle( wxIdleEvent& )
+		{
+		m_splitter->SetSashPosition( 0 );
+		m_splitter->Disconnect( wxEVT_IDLE, wxIdleEventHandler( LogDlgBase::m_splitterOnIdle ), NULL, this );
+		}
+		
 	
 };
 
