@@ -1,11 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 21 2008)
+// C++ code generated with wxFormBuilder (version Apr 16 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
 #include <wx/wx.h>
+
+#include "log_aff_list.hpp"
+#include "log_rev_list.hpp"
 
 #include "rapidsvn_generated.h"
 
@@ -1165,7 +1168,7 @@ LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, 
 	
 	m_mainSizer = new wxBoxSizer( wxVERTICAL );
 	
-	m_splitter = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D );
+	m_splitter = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE|wxNO_BORDER );
 	m_splitter->Connect( wxEVT_IDLE, wxIdleEventHandler( LogDlgBase::m_splitterOnIdle ), NULL, this );
 	m_upperPanel = new wxPanel( m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* upperSizer;
@@ -1178,7 +1181,7 @@ LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_staticRevisions->Wrap( -1 );
 	upperLeftSizer->Add( m_staticRevisions, 0, wxALL, 5 );
 	
-	m_listRevisions = new wxListCtrl( m_upperPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
+	m_listRevisions = new LogRevList( m_upperPanel, wxID_ANY, wxDefaultPosition, wxSize( 365,150 ), wxLC_REPORT );
 	upperLeftSizer->Add( m_listRevisions, 1, wxALL|wxEXPAND, 5 );
 	
 	upperSizer->Add( upperLeftSizer, 1, wxEXPAND, 5 );
@@ -1229,7 +1232,7 @@ LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, 
 	wxBoxSizer* filesSizer;
 	filesSizer = new wxBoxSizer( wxVERTICAL );
 	
-	m_listFiles = new wxListCtrl( m_panelFiles, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
+	m_listFiles = new LogAffectedList( m_panelFiles, wxID_ANY, wxDefaultPosition, wxSize( 365,150 ), wxLC_REPORT );
 	filesSizer->Add( m_listFiles, 1, wxEXPAND, 5 );
 	
 	m_panelFiles->SetSizer( filesSizer );
@@ -1249,8 +1252,8 @@ LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, 
 	this->Layout();
 	
 	// Connect Events
-	m_listRevisions->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( LogDlgBase::OnRevisionDeselected ), NULL, this );
-	m_listRevisions->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( LogDlgBase::OnRevisionSelected ), NULL, this );
+	m_listRevisions->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( LogDlgBase::OnRevDeselected ), NULL, this );
+	m_listRevisions->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( LogDlgBase::OnRevSelected ), NULL, this );
 	m_buttonView->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnView ), NULL, this );
 	m_buttonGet->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnGet ), NULL, this );
 	m_buttonDiff->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnDiff ), NULL, this );
@@ -1261,8 +1264,8 @@ LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, 
 LogDlgBase::~LogDlgBase()
 {
 	// Disconnect Events
-	m_listRevisions->Disconnect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( LogDlgBase::OnRevisionDeselected ), NULL, this );
-	m_listRevisions->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( LogDlgBase::OnRevisionSelected ), NULL, this );
+	m_listRevisions->Disconnect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( LogDlgBase::OnRevDeselected ), NULL, this );
+	m_listRevisions->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( LogDlgBase::OnRevSelected ), NULL, this );
 	m_buttonView->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnView ), NULL, this );
 	m_buttonGet->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnGet ), NULL, this );
 	m_buttonDiff->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnDiff ), NULL, this );

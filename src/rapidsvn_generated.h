@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 21 2008)
+// C++ code generated with wxFormBuilder (version Apr 16 2008)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -12,6 +12,8 @@
 
 class FileListCtrl;
 class FolderBrowser;
+class LogAffectedList;
+class LogRevList;
 class SplitterWindow;
 
 #include <wx/bitmap.h>
@@ -559,7 +561,7 @@ class LogDlgBase : public wxDialog
 		wxSplitterWindow* m_splitter;
 		wxPanel* m_upperPanel;
 		wxStaticText* m_staticRevisions;
-		wxListCtrl* m_listRevisions;
+		LogRevList* m_listRevisions;
 		wxButton* m_buttonClose;
 		wxButton* m_buttonView;
 		wxButton* m_buttonGet;
@@ -571,11 +573,11 @@ class LogDlgBase : public wxDialog
 		wxPanel* m_panelLog;
 		wxTextCtrl* m_textLog;
 		wxPanel* m_panelFiles;
-		wxListCtrl* m_listFiles;
+		LogAffectedList* m_listFiles;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnRevisionDeselected( wxListEvent& event ){ event.Skip(); }
-		virtual void OnRevisionSelected( wxListEvent& event ){ event.Skip(); }
+		virtual void OnRevDeselected( wxListEvent& event ){ event.Skip(); }
+		virtual void OnRevSelected( wxListEvent& event ){ event.Skip(); }
 		virtual void OnView( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnGet( wxCommandEvent& event ){ event.Skip(); }
 		virtual void OnDiff( wxCommandEvent& event ){ event.Skip(); }

@@ -31,12 +31,10 @@
 // svncpp
 #include "svncpp/client.hpp"
 
-//forward declarations
-class wxTextCtrl;
-class LogList;
-class wxListEvent;
+// app
+#include "rapidsvn_generated.h"
 
-class LogDlg : public wxDialog
+class LogDlg : public LogDlgBase
 {
 public:
   /**
@@ -56,56 +54,36 @@ public:
    */
   virtual ~LogDlg();
 
+protected:  // events inherited from LogDlgBase
+  void 
+  OnGet(wxCommandEvent & event);
+
+  void 
+  OnView(wxCommandEvent & event);
+
+  void 
+  OnDiff(wxCommandEvent & event);
+
+  void 
+  OnMerge(wxCommandEvent & event);
+
+  void 
+  OnAnnotate(wxCommandEvent & event);
+
+  void
+  OnRevSelected(wxListEvent & event);
+
+  void
+  OnRevDeselected(wxListEvent & event);
+
 private:
   /** hide implementation details */
   struct Data;
   Data * m;
 
+  void CheckControls();
+  void UpdateSelection();
 
-  /**
-   * Event handler for the "Get" button
-   * @param event
-   */
-  void OnGet(wxCommandEvent & event);
-
-
-  /**
-   * Event handler for the "View" button
-   * @param event
-   */
-  void OnView(wxCommandEvent & event);
-
-
-  /**
-   * Event handler that will be called whenever
-   * the selection in the list of revision changes
-   *
-   * @param event
-   */
-  void OnSelected(wxListEvent& event);
-
-
-  /**
-   * Event handler for the "Diff" button
-   * @param event
-   */
-  void OnDiff(wxCommandEvent & event);
-
-
-  /**
-   * Event handler for the "Merge" button
-   * @param event
-   */
-  void OnMerge(wxCommandEvent & event);
-
-
-  /**
-   * Event handler for the "Annotate" button
-   * @param event
-   */
-  void OnAnnotate(wxCommandEvent & event);
-
-  DECLARE_EVENT_TABLE()
 };
 
 #endif

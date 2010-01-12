@@ -45,277 +45,42 @@
 #include "utils.hpp"
 #include "annotate_data.hpp"
 
-enum
-{
-  ID_View = 1,
-  ID_Get,
-  LOG_LIST,
-  LOG_MSG
-};
-
-
 struct LogDlg::Data
 {
 public:
   const svn::LogEntries * entries;
   wxString path;
-  wxWindow * parent;
-  wxWindow * window;
-
-private:
-  LogRevList * m_logList;
-  wxTextCtrl * m_logMsg;
-  wxButton * m_buttonView;
-  wxButton * m_buttonGet;
-  wxButton * m_buttonDiff;
-  wxButton * m_buttonMerge;
-  wxButton * m_buttonAnnotate;
-  LogAffectedList * m_affectedList;
-  wxNotebook * m_notebook;
 
 public:
-  Data(wxWindow * parent_,
-       wxWindow * wnd,
-       const char * path_,
+  Data(const char * path_,
        const svn::LogEntries * entries_)
-      : entries(entries_), path(Utf8ToLocal(path_)),
-      parent(parent_), window(wnd)
+      : entries(entries_), path(Utf8ToLocal(path_))
   {
-    // create controls
-    wxSplitterWindow* splitterWindow = new wxSplitterWindow(wnd, -1, wxDefaultPosition, wxDefaultSize, 0);
-    wxPanel* topPanel = new wxPanel(splitterWindow, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    wxPanel* bottomPanel = new wxPanel(splitterWindow, -1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-
-    wxString history;
-    history.Printf(_("History: %d revisions"), entries->size());
-    wxStaticText * historyLabel = new wxStaticText(topPanel, -1, history);
-
-    m_logList = new LogRevList(topPanel, entries);
-
-    m_notebook = new wxNotebook(bottomPanel, -1);
-    m_logMsg = new wxTextCtrl(m_notebook, LOG_MSG, wxEmptyString,
-                              wxDefaultPosition, wxSize(420, 210),
-                              wxTE_READONLY | wxTE_MULTILINE);
-    m_notebook->AddPage(m_logMsg, _("Log Message:"));
-    m_affectedList = new LogAffectedList(m_notebook);
-    m_notebook->AddPage(m_affectedList, _("Affected Files/Dirs"));
-
-    wxButton * buttonClose = new wxButton(topPanel, wxID_OK, _("&Close"));
-    m_buttonView  = new wxButton(topPanel, ID_View,  _("&View"));
-    m_buttonGet   = new wxButton(topPanel, ID_Get,   _("&Get"));
-    m_buttonDiff  = new wxButton(topPanel, ID_Diff,  _("&Diff"));
-    m_buttonMerge = new wxButton(topPanel, ID_Merge, _("&Merge"));
-    m_buttonAnnotate = new wxButton(topPanel, ID_Annotate, _("&Annotate"));
-
-    // View/Get/Diff disabled for Alpha 3 Milestone
-    m_buttonView ->Enable(false);
-    m_buttonGet  ->Enable(false);
-    m_buttonDiff ->Enable(false);
-    m_buttonMerge->Enable(false);
-    m_buttonAnnotate->Enable(false);
-
-    // position controls
-
-    wxBoxSizer * logSizer = new wxBoxSizer(wxVERTICAL);
-    logSizer->Add(historyLabel, 0, wxALL, 5);
-    logSizer->Add(m_logList, 1, wxLEFT | wxEXPAND);
-
-    wxBoxSizer * buttonSizer = new wxBoxSizer(wxVERTICAL);
-    buttonSizer->Add(buttonClose,   0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add(m_buttonView,  0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add(m_buttonGet,   0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add(m_buttonDiff,  0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add(m_buttonMerge, 0, wxALL | wxEXPAND, 5);
-    buttonSizer->Add(m_buttonAnnotate, 0, wxALL | wxEXPAND, 5);
-
-    wxBoxSizer * topSizer = new wxBoxSizer(wxHORIZONTAL);
-    topSizer->Add(logSizer, 1, wxEXPAND | wxALL, 5);
-    topSizer->Add(buttonSizer, 0, wxALL, 5);
-
-    wxBoxSizer * mainSizer = new wxBoxSizer(wxVERTICAL);
-    topPanel->SetSizerAndFit(topSizer);
-    wxBoxSizer * bottomSizer = new wxBoxSizer(wxHORIZONTAL);
-    bottomSizer->Add(m_notebook, 1, wxALL | wxEXPAND, 5);
-    bottomPanel->SetSizerAndFit(bottomSizer);
-    splitterWindow->SplitHorizontally(topPanel, bottomPanel, -100);
-    splitterWindow->SetSashGravity(0.5);
-    mainSizer->Add(splitterWindow, 1, wxEXPAND, 0);
-
-    wnd->SetAutoLayout(true);
-    wnd->SetSizer(mainSizer);
-
-    mainSizer->SetSizeHints(wnd);
-    mainSizer->Fit(wnd);
   }
 
-  /**
-   * handler for the "get" button.
-   * @a CheckButtons makes sure this command will
-   * only be enabled if one entry in the list is
-   * selected
-   */
-  void
-  OnGet()
-  {
-    svn_revnum_t revnum = m_logList->GetSelectedRevision();
-
-    GetData * data = new GetData();
-    data->revision = revnum;
-    data->path = path;
-
-    ActionEvent::Post(parent, TOKEN_GET, data);
-  }
-
-  /**
-   * handle the "View" button
-   */
-  void
-  OnView()
-  {
-    svn_revnum_t revnum = m_logList->GetSelectedRevision();
-
-    GetData * data = new GetData();
-    data->revision = revnum;
-    data->path = path;
-
-    ActionEvent::Post(parent, TOKEN_VIEW, data);
-  }
-
-  void
-  OnSelected(long index)
-  {
-    const svn::LogEntry & entry = (*entries)[index];
-
-    wxString message(Utf8ToLocal(entry.message.c_str()));
-    message.Trim();
-
-    m_logMsg->SetValue(message);
-
-    m_affectedList->SetValue(entry.changedPaths);
-
-    CheckButtons();
-  }
-
-  void
-  OnDiff()
-  {
-    RevnumArray array(m_logList->GetSelectedRevisions());
-
-    DiffData * data = 0;
-    if (array.Count() == 2)
-    {
-      data = new DiffData();
-      data->path = path;
-      data->compareType = DiffData::TWO_REVISIONS;
-      data->revision1 = svn::Revision(array[0]);
-      data->revision2 = svn::Revision(array[1]);
-    }
-    else if (array.Count() == 1)
-    {
-      data = new DiffData();
-      data->path = path;
-      data->compareType = DiffData::WITH_DIFFERENT_REVISION;
-      data->revision1 = svn::Revision(array[0]);
-    }
-    else
-    {
-      wxMessageBox(_("Invalid selection. At least one revisions is needed for diff and no more than two."),
-                   _("Error"), wxOK | wxICON_ERROR, parent);
-      return;
-    }
-
-    ActionEvent::Post(parent, TOKEN_DIFF, data);
-  }
-
-  void
-  OnMerge()
-  {
-    RevnumArray array(m_logList->GetSelectedRevisions());
-
-    if (array.Count() != 2)
-    {
-      wxMessageBox(_("Invalid selection. Exactly two revisions needed for merge."),
-                   _("Error"), wxOK | wxICON_ERROR, parent);
-      return;
-    }
-
-    MergeData * data = new MergeData();
-    data->Path1 = path;
-    data->Path2 = path;
-    if (array[0] > array[1])
-    {
-      data->Path1Rev << array[1];
-      data->Path2Rev << array[0];
-    }
-    else
-    {
-      data->Path1Rev << array[0];
-      data->Path2Rev << array[1];
-    }
-
-    ActionEvent::Post(parent, TOKEN_MERGE, data);
-  }
-
-  void
-  OnAnnotate()
-  {
-    RevnumArray array(m_logList->GetSelectedRevisions());
-
-    AnnotateData * data = 0;
-    if (array.Count() == 1)
-    {
-      data = new AnnotateData();
-      data->path = path;
-      data->endRevision = svn::Revision(array[0]);
-    }
-    else
-    {
-      wxMessageBox(_("Invalid selection. Only one revision may be selected for annotate"),
-                   _("Error"), wxOK | wxICON_ERROR, parent);
-      return;
-    }
-
-    ActionEvent::Post(parent, TOKEN_ANNOTATE, data);
-  }
-
-  void
-  CheckButtons()
-  {
-    svn::Path pathUtf8(PathUtf8(path));
-    bool isUrl = pathUtf8.isUrl();
-    int count = m_logList->GetSelectedItemCount();
-
-    m_buttonGet  ->Enable((count == 1) && (!isUrl));
-    m_buttonView ->Enable(count == 1);
-
-    // If the bookmark is a working copy, then we can
-    // compare a revision against the local copy
-    if (isUrl)
-      m_buttonDiff ->Enable((count == 2));
-    else
-      m_buttonDiff ->Enable((count == 1) || (count == 2));
-
-    m_buttonMerge->Enable(count == 2);
-    m_buttonAnnotate->Enable(count == 1);
-  }
 };
-
-BEGIN_EVENT_TABLE(LogDlg, wxDialog)
-  EVT_BUTTON(ID_Get,   LogDlg::OnGet)
-  EVT_BUTTON(ID_View,  LogDlg::OnView)
-  EVT_BUTTON(ID_Diff,  LogDlg::OnDiff)
-  EVT_BUTTON(ID_Merge, LogDlg::OnMerge)
-  EVT_BUTTON(ID_Annotate, LogDlg::OnAnnotate)
-  EVT_LIST_ITEM_SELECTED(LOG_LIST, LogDlg::OnSelected)
-END_EVENT_TABLE()
 
 LogDlg::LogDlg(wxWindow * parent,
                const char * path,
                const svn::LogEntries * entries)
-    : wxDialog(parent, -1, _("Log History"), wxDefaultPosition,
-               wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
+    : LogDlgBase(parent, -1, _("Log History"), wxDefaultPosition,
+                 wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
 {
-  m = new Data(parent, this, path, entries);
+  m = new Data(path, entries);
+
+  m_staticRevisions->SetLabel(
+    wxString::Format(_("History: %d revisions"), entries->size()));
+
+  m_listRevisions->SetEntries(entries);
+
+  CheckControls();
+
+  SetAutoLayout(true);
+  SetSizer(m_mainSizer);
+
+  m_mainSizer->SetSizeHints(this);
+  m_mainSizer->Fit(this);
+
   CentreOnParent();
 }
 
@@ -327,38 +92,153 @@ LogDlg::~LogDlg()
 void
 LogDlg::OnGet(wxCommandEvent & WXUNUSED(event))
 {
-  m->OnGet();
+  svn_revnum_t revnum = m_listRevisions->GetSelectedRevision();
+
+  GetData * data = new GetData();
+  data->revision = revnum;
+  data->path = m->path;
+
+  ActionEvent::Post(GetParent(), TOKEN_GET, data);
 }
 
 void
 LogDlg::OnView(wxCommandEvent & WXUNUSED(event))
 {
-  m->OnView();
-}
+  svn_revnum_t revnum = m_listRevisions->GetSelectedRevision();
 
-void
-LogDlg::OnSelected(wxListEvent& event)
-{
-  m->OnSelected(event.m_itemIndex);
-}
+  GetData * data = new GetData();
+  data->revision = revnum;
+  data->path = m->path;
 
+  ActionEvent::Post(GetParent(), TOKEN_VIEW, data);
+}
 
 void
 LogDlg::OnDiff(wxCommandEvent & WXUNUSED(event))
 {
-  m->OnDiff();
+  RevnumArray array(m_listRevisions->GetSelectedRevisions());
+
+  wxASSERT(array.Count() >= 1);
+  wxASSERT(array.Count() <= 2);
+
+  DiffData * data = new DiffData();
+  data->path = m->path;
+
+  if (2 == array.Count())
+  {
+    data->compareType = DiffData::TWO_REVISIONS;
+    data->revision1 = svn::Revision(array[0]);
+    data->revision2 = svn::Revision(array[1]);
+  }
+  else 
+  {
+    data->compareType = DiffData::WITH_DIFFERENT_REVISION;
+    data->revision1 = svn::Revision(array[0]);
+  }
+
+  ActionEvent::Post(GetParent(), TOKEN_DIFF, data);
 }
 
 void
 LogDlg::OnMerge(wxCommandEvent & WXUNUSED(event))
 {
-  m->OnMerge();
+  RevnumArray array(m_listRevisions->GetSelectedRevisions());
+
+  wxASSERT(2 == array.Count());
+
+  MergeData * data = new MergeData();
+  data->Path1 = data->Path2 = m->path;
+  if (array[0] > array[1])
+  {
+    data->Path1Rev << array[1];
+    data->Path2Rev << array[0];
+  }
+  else
+  {
+    data->Path1Rev << array[0];
+    data->Path2Rev << array[1];
+  }
+
+  ActionEvent::Post(GetParent(), TOKEN_MERGE, data);
 }
 
 void
 LogDlg::OnAnnotate(wxCommandEvent & WXUNUSED(event))
 {
-  m->OnAnnotate();
+  RevnumArray array(m_listRevisions->GetSelectedRevisions());
+
+  wxASSERT(1 == array.Count());
+
+  AnnotateData * data = new AnnotateData();
+  data->path = m->path;
+  data->endRevision = svn::Revision(array[0]);
+
+  ActionEvent::Post(GetParent(), TOKEN_ANNOTATE, data);
+}
+
+
+void 
+LogDlg::UpdateSelection()
+{
+  int count = m_listRevisions->GetSelectedItemCount();
+
+  if (1 != count)
+  {
+    m_textLog->Clear();
+    m_listFiles->DeleteAllItems();
+  }
+  else
+  {
+    long itemIndex = m_listRevisions->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+    const svn::LogEntry & entry = (*m->entries)[itemIndex];
+
+    wxString message(Utf8ToLocal(entry.message.c_str()));
+    message.Trim();
+
+    m_textLog->SetValue(message);
+    m_listFiles->SetValue(entry.changedPaths);
+  }
+}
+
+
+void
+LogDlg::OnRevSelected(wxListEvent & WXUNUSED(event))
+{
+  CheckControls();
+}
+
+
+void
+LogDlg::OnRevDeselected(wxListEvent & WXUNUSED(event))
+{
+  CheckControls();
+}
+
+
+void
+LogDlg::CheckControls()
+{
+  svn::Path pathUtf8(PathUtf8(m->path));
+  bool isUrl = pathUtf8.isUrl();
+  int count = m_listRevisions->GetSelectedItemCount();
+
+  bool twoRevs = 2 == count;
+  bool oneRev = 1 == count;
+
+  UpdateSelection();
+
+  m_buttonGet->Enable(oneRev && (!isUrl));
+  m_buttonView->Enable(oneRev);
+
+  // If the bookmark is a working copy, then we can
+  // compare a revision against the local copy
+  if (isUrl)
+    m_buttonDiff ->Enable(twoRevs);
+  else
+    m_buttonDiff ->Enable(oneRev || twoRevs);
+
+  m_buttonMerge->Enable(twoRevs);
+  m_buttonAnnotate->Enable(oneRev);
 }
 
 /* -----------------------------------------------------------------
