@@ -39,6 +39,7 @@
 #include "get_data.hpp"
 #include "ids.hpp"
 #include "log_dlg.hpp"
+#include "log_rev_list.hpp"
 #include "merge_dlg.hpp"
 #include "utils.hpp"
 #include "annotate_data.hpp"
@@ -49,182 +50,6 @@ enum
   ID_Get,
   LOG_LIST,
   LOG_MSG
-};
-
-class LogList : public wxListCtrl
-{
-public:
-  LogList(wxWindow * parent, const svn::LogEntries * entries)
-      : wxListCtrl(parent, LOG_LIST, wxDefaultPosition,
-                   wxSize(365, 150), wxLC_REPORT)
-  {
-    InitializeList(entries);
-    CentreOnParent();
-  }
-
-  virtual ~LogList()
-  {
-    DeleteAllItems();
-  }
-
-  /**
-   * Returns the revision for the given @a item
-   *
-   * @param item
-   * @return revnum
-   * @retval -1 not found/error
-   */
-  svn_revnum_t
-  GetRevisionForItem(long item) const
-  {
-    wxListItem info;
-    info.m_itemId = item;
-    info.m_col = 0;
-    info.m_mask = wxLIST_MASK_TEXT;
-
-    if (!GetItem(info))
-      return -1;
-
-    svn_revnum_t revnum=-1;
-    info.m_text.ToLong(&revnum);
-    return revnum;
-  }
-
-  /**
-   * returns the selected revision.
-   *
-   * @return selected revision
-   * @retval -1 if nothing was selected or the cell
-   *            contains an invalid string
-   */
-  svn_revnum_t
-  GetSelectedRevision() const
-  {
-    long item = GetNextItem(-1, wxLIST_NEXT_ALL,
-                            wxLIST_STATE_SELECTED);
-    if (item == -1)
-      return -1;
-
-    return GetRevisionForItem(item);
-  }
-
-  /**
-   * returns the selected revisions.
-   * Like @a GetSelectedRevision, but can return
-   * more revisions at once.
-   *
-   * @return if nothing is selected, an empty array
-   *         will be returned
-   */
-  RevnumArray
-  GetSelectedRevisions() const
-  {
-    RevnumArray array;
-    long item = -1;
-
-    do
-    {
-      item = GetNextItem(item, wxLIST_NEXT_ALL,
-                         wxLIST_STATE_SELECTED);
-      if (item != -1)
-      {
-        svn_revnum_t revnum(GetRevisionForItem(item));
-
-        array.Add(revnum);
-      }
-    }
-    while (item != -1);
-
-    return array;
-  }
-
-
-  void
-  DeleteAllItems()
-  {
-    // Delete the item data before deleting the items:
-    while (GetItemCount() > 0)
-      DeleteItem(0);
-
-    wxListCtrl::DeleteAllItems();
-  }
-
-private:
-  void OnSelected(wxListEvent& event);
-
-  void InitializeList(const svn::LogEntries * entries)
-  {
-    SetSingleStyle(wxLC_REPORT);
-
-    InsertColumn(0, _("Revision"));
-    InsertColumn(1, _("User"));
-    InsertColumn(2, _("Date"));
-    InsertColumn(3, _("Log Message"));
-
-    SetColumnWidth(0, 65);
-    SetColumnWidth(1, 100);
-    SetColumnWidth(2, 150);
-    SetColumnWidth(3, 200);
-
-    if (entries == 0)
-      return;
-
-    long index=0;
-    svn::LogEntries::const_iterator it;
-    for (it=entries->begin(); it != entries->end(); it++)
-    {
-      const svn::LogEntry & entry = *it;
-      wxString rev;
-      wxString dateStr(FormatDateTime(entry.date));
-
-      rev.Printf(wxT("%ld"), (long) entry.revision);
-
-      InsertItem(index, rev);
-      SetItem(index, 1, Utf8ToLocal(entry.author.c_str()));
-      SetItem(index, 2, dateStr);
-      SetItem(index, 3, NewLinesToSpaces(Utf8ToLocal(entry.message.c_str())));
-      index++;
-    }
-  }
-
-  wxString
-  NewLinesToSpaces(const wxString& str)
-  {
-    /*
-    wxString result = str;
-    result.Replace (wxT("\n"), wxT(" "));
-    return result;
-    */
-
-    wxString result;
-    if (str.Length() == 0)
-    {
-      return result;
-    }
-
-    result.Alloc(str.Length());
-    wxChar last = 0;
-
-    for (size_t idx = 0; idx < str.Length(); idx++)
-    {
-      switch (str[idx])
-      {
-      case wxT('\r'):
-      case wxT('\n'):
-        if (last != wxT(' '))
-        {
-          result += wxT(' ');
-        }
-        break;
-
-      default:
-        result += str[idx];
-        break;
-      }
-    }
-
-    return result;
-  }
 };
 
 
@@ -315,7 +140,7 @@ public:
   wxWindow * window;
 
 private:
-  LogList * m_logList;
+  LogRevList * m_logList;
   wxTextCtrl * m_logMsg;
   wxButton * m_buttonView;
   wxButton * m_buttonGet;
@@ -342,7 +167,7 @@ public:
     history.Printf(_("History: %d revisions"), entries->size());
     wxStaticText * historyLabel = new wxStaticText(topPanel, -1, history);
 
-    m_logList = new LogList(topPanel, entries);
+    m_logList = new LogRevList(topPanel, entries);
 
     m_notebook = new wxNotebook(bottomPanel, -1);
     m_logMsg = new wxTextCtrl(m_notebook, LOG_MSG, wxEmptyString,
