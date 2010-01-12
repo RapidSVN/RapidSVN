@@ -1,11 +1,11 @@
 =================================================================
-Copyright (C) 2002-2010 The RapidSvn Group. All rights reserved.
+Copyright (C) 2002-2010 The RapidSVN Group. All rights reserved.
 
 =================================================================
 
 This software consists of voluntary contributions made by many
-individuals on behalf of the RapidSvn Group.  For more
-information on the RapidSvn Group, please see
+individuals on behalf of the RapidSVN Group.  For more
+information on the RapidSVN Group, please see
 <http://rapidsvn.tigris.org/>.
 
 RapidSVN is licensed under the GNU General Public License.

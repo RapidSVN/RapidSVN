@@ -1,6 +1,6 @@
 /*
  * ====================================================================
- * Copyright (c) 2002-2008 The RapidSvn Group.  All rights reserved.
+ * Copyright (c) 2002-2010 The RapidSVN Group.  All rights reserved.
  *
  * This software is licensed as described in the file LICENSE.txt,
  * which you should have received as part of this distribution.
@@ -36,16 +36,16 @@ BEGIN
         BLOCK "040904B0"
         BEGIN
             VALUE "Comments", "\0"
-            VALUE "CompanyName", "The RapidSvn Group\0"
-            VALUE "FileDescription", "RapidSvn\0"
+            VALUE "CompanyName", "The RapidSVN Group\0"
+            VALUE "FileDescription", "RapidSVN\0"
             VALUE "FileVersion", RAPIDSVN_VER_STR
             VALUE "ProductVersion", RAPIDSVN_VER_STR
             VALUE "InternalName", "RAPIDSVN\0"
-            VALUE "LegalCopyright", "(c) Copyright 2002-2008 The RapidSvn Group\0"
+            VALUE "LegalCopyright", "(c) Copyright 2002-2010 The RapidSVN Group\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "rapidsvn.exe\0"
             VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "RapidSvn\0"
+            VALUE "ProductName", "RapidSVN\0"
             VALUE "SpecialBuild", "\0"
         END
     END

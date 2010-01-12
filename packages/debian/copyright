@@ -8,13 +8,13 @@ Upstream Authors: Tim Kemp <kempus@tigris.org>, Stefan Kueng <steveking@tigris.o
 Copyright:
 
 =================================================================
-Copyright (C) 2002-2009 The RapidSvn Group. All rights reserved.
+Copyright (C) 2002-2010 The RapidSVN Group. All rights reserved.
 
 =================================================================
 
 This software consists of voluntary contributions made by many
-individuals on behalf of the RapidSvn Group.  For more
-information on the RapidSvn Group, please see
+individuals on behalf of the RapidSVN Group.  For more
+information on the RapidSVN Group, please see
 <http://rapidsvn.tigris.org/>.
 
 RapidSVN is licensed under the GNU General Public License.
@@ -34,7 +34,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program (in the file GPL.txt.  
+along with this program (in the file GPL.txt.
 If not, see <http://www.gnu.org/licenses/>.
 
 
