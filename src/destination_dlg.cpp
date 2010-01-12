@@ -35,16 +35,13 @@
 struct DestinationDlg::Data
 {
 public:
-  wxString descr;
   wxString destination;
   wxString history;
   bool force;
   bool withForce;
 
-  Data(const wxString & descr_, int flags, const wxString & dest,
-       const wxString history_)
-    : descr(descr_), destination(dest), 
-      history(history_), force(false)
+  Data(int flags, const wxString & dest, const wxString history_)
+    : destination(dest), history(history_), force(false)
   {
     withForce = (flags & WITH_FORCE) != 0;
   }
@@ -59,7 +56,7 @@ DestinationDlg::DestinationDlg(wxWindow* parent,
                                const wxString & history)
   : DestinationDlgBase(parent, -1, title)
 {
-  m = new Data(descr, flags, dst, history);
+  m = new Data(flags, dst, history);
 
   // The destination:
   if (m->history.IsEmpty())
@@ -67,6 +64,7 @@ DestinationDlg::DestinationDlg(wxWindow* parent,
   else
     m_textDestination->SetValidator(HistoryValidator(m->history, &m->destination, false, false));
 
+  m_staticQuestion->SetLabel(descr);
   m_checkForce->SetValidator(wxGenericValidator(&m->force));
 
   if (!m->withForce)
