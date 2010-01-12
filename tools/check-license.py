@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # ====================================================================
-# Copyright (c) 2002-2009 The RapidSvn Group.  All rights reserved.
+# Copyright (c) 2002-2010 The RapidSvn Group.  All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program (in the file GPL.txt.  
+# along with this program (in the file GPL.txt.
 # If not, see <http://www.gnu.org/licenses/>.
 #
 # This software consists of voluntary contributions made by many
@@ -38,7 +38,7 @@
 OLD_LICENSE = '''\
 /\*
  \* ====================================================================
- \* Copyright \(c\) 2002-200[3456789] The RapidSvn Group.  All rights reserved.
+ \* Copyright \(c\) 2002-20[01][3456789] The RapidSvn Group.  All rights reserved.
 [^=]*====================================================================
  \*/
 '''
@@ -48,7 +48,7 @@ OLD_LICENSE = '''\
 NEW_LICENSE_GPL = '''\
 /*
  * ====================================================================
- * Copyright (c) 2002-2009 The RapidSvn Group.  All rights reserved.
+ * Copyright (c) 2002-2010 The RapidSvn Group.  All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ NEW_LICENSE_GPL = '''\
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
