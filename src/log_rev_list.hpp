@@ -27,6 +27,9 @@
 // wx
 #include "wx/wx.h"
 
+// svncpp
+#include "svncpp/client.hpp"
+
 // app
 #include "utils.hpp"
 
@@ -34,18 +37,53 @@
 class LogRevList : public wxListCtrl
 {
 public:
-  LogRevList(wxWindow * parent, const svn::LogEntries * entries)
-      : wxListCtrl(parent, -1, wxDefaultPosition,
-                   wxSize(365, 150), wxLC_REPORT)
+  LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, 
+             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT, 
+             const wxValidator& validator = wxDefaultValidator, 
+             const wxString& name = wxT("LogRevList"))
+    : wxListCtrl(parent, id, pos, size, style, validator, name)
   {
-    InitializeList(entries);
-    CentreOnParent();
+    InsertColumn(0, _("Revision"));
+    InsertColumn(1, _("User"));
+    InsertColumn(2, _("Date"));
+    InsertColumn(3, _("Log Message"));
+
+    SetColumnWidth(0, 65);
+    SetColumnWidth(1, 100);
+    SetColumnWidth(2, 150);
+    SetColumnWidth(3, 200);
   }
 
   virtual ~LogRevList()
   {
     DeleteAllItems();
   }
+
+  void SetEntries(const svn::LogEntries * entries)
+  {
+    DeleteAllItems();
+
+    if (entries == 0)
+      return;
+
+    long index=0;
+    svn::LogEntries::const_iterator it;
+    for (it=entries->begin(); it != entries->end(); it++)
+    {
+      const svn::LogEntry & entry = *it;
+      wxString rev;
+      wxString dateStr(FormatDateTime(entry.date));
+
+      rev.Printf(wxT("%ld"), (long) entry.revision);
+
+      InsertItem(index, rev);
+      SetItem(index, 1, Utf8ToLocal(entry.author.c_str()));
+      SetItem(index, 2, dateStr);
+      SetItem(index, 3, NewLinesToSpaces(Utf8ToLocal(entry.message.c_str())));
+      index++;
+    }
+  }
+
 
   /**
    * Returns the revision for the given @a item
@@ -130,43 +168,6 @@ public:
   }
 
 private:
-  void OnSelected(wxListEvent& event);
-
-  void InitializeList(const svn::LogEntries * entries)
-  {
-    SetSingleStyle(wxLC_REPORT);
-
-    InsertColumn(0, _("Revision"));
-    InsertColumn(1, _("User"));
-    InsertColumn(2, _("Date"));
-    InsertColumn(3, _("Log Message"));
-
-    SetColumnWidth(0, 65);
-    SetColumnWidth(1, 100);
-    SetColumnWidth(2, 150);
-    SetColumnWidth(3, 200);
-
-    if (entries == 0)
-      return;
-
-    long index=0;
-    svn::LogEntries::const_iterator it;
-    for (it=entries->begin(); it != entries->end(); it++)
-    {
-      const svn::LogEntry & entry = *it;
-      wxString rev;
-      wxString dateStr(FormatDateTime(entry.date));
-
-      rev.Printf(wxT("%ld"), (long) entry.revision);
-
-      InsertItem(index, rev);
-      SetItem(index, 1, Utf8ToLocal(entry.author.c_str()));
-      SetItem(index, 2, dateStr);
-      SetItem(index, 3, NewLinesToSpaces(Utf8ToLocal(entry.message.c_str())));
-      index++;
-    }
-  }
-
   wxString
   NewLinesToSpaces(const wxString& str)
   {

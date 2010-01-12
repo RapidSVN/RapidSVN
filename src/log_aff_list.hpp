@@ -24,8 +24,15 @@
 #ifndef _LOG_AFF_LIST_H_INCLUDED_
 #define _LOG_AFF_LIST_H_INCLUDED_
 
+// stl
+#include <list>
+
 // wx
 #include "wx/wx.h"
+#include "wx/listctrl.h"
+
+// svncpp
+#include "svncpp/log_entry.hpp"
 
 // app
 #include "utils.hpp"
@@ -34,16 +41,16 @@
 class LogAffectedList : public wxListCtrl
 {
 public:
-  LogAffectedList(wxWindow * parent)
-      : wxListCtrl(parent, -1, wxDefaultPosition,
-                   wxSize(365, 150), wxLC_REPORT)
+  LogAffectedList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, 
+             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT, 
+             const wxValidator& validator = wxDefaultValidator, 
+             const wxString& name = wxT("LogAffectedList"))
+    : wxListCtrl(parent, id, pos, size, style, validator, name)
   {
     InsertColumn(0, _("Action"));
     InsertColumn(1, _("Path"));
     InsertColumn(2, _("Copied from Path"));
     InsertColumn(3, _("Copied from Rev"));
-
-    CentreOnParent();
   }
 
   virtual ~LogAffectedList()
