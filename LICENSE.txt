@@ -1,5 +1,5 @@
 =================================================================
-Copyright (C) 2002-2009 The RapidSvn Group. All rights reserved.
+Copyright (C) 2002-2010 The RapidSvn Group. All rights reserved.
 
 =================================================================
 
@@ -25,7 +25,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program (in the file GPL.txt.  
+along with this program (in the file GPL.txt.
 If not, see <http://www.gnu.org/licenses/>.
 
 
