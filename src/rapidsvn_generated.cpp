@@ -1190,22 +1190,22 @@ LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, 
 	upperRightSizer = new wxBoxSizer( wxVERTICAL );
 	
 	m_buttonClose = new wxButton( m_upperPanel, wxID_CANCEL, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
-	upperRightSizer->Add( m_buttonClose, 0, wxALL, 5 );
+	upperRightSizer->Add( m_buttonClose, 0, wxALL|wxEXPAND, 5 );
 	
 	m_buttonView = new wxButton( m_upperPanel, wxID_ANY, _("&View"), wxDefaultPosition, wxDefaultSize, 0 );
-	upperRightSizer->Add( m_buttonView, 0, wxALL, 5 );
+	upperRightSizer->Add( m_buttonView, 0, wxALL|wxEXPAND, 5 );
 	
 	m_buttonGet = new wxButton( m_upperPanel, wxID_ANY, _("&Get"), wxDefaultPosition, wxDefaultSize, 0 );
-	upperRightSizer->Add( m_buttonGet, 0, wxALL, 5 );
+	upperRightSizer->Add( m_buttonGet, 0, wxALL|wxEXPAND, 5 );
 	
 	m_buttonDiff = new wxButton( m_upperPanel, wxID_ANY, _("&Diff"), wxDefaultPosition, wxDefaultSize, 0 );
-	upperRightSizer->Add( m_buttonDiff, 0, wxALL, 5 );
+	upperRightSizer->Add( m_buttonDiff, 0, wxALL|wxEXPAND, 5 );
 	
 	m_buttonMerge = new wxButton( m_upperPanel, wxID_ANY, _("&Merge"), wxDefaultPosition, wxDefaultSize, 0 );
-	upperRightSizer->Add( m_buttonMerge, 0, wxALL, 5 );
+	upperRightSizer->Add( m_buttonMerge, 0, wxALL|wxEXPAND, 5 );
 	
 	m_buttonAnnotate = new wxButton( m_upperPanel, wxID_ANY, _("&Annotate"), wxDefaultPosition, wxDefaultSize, 0 );
-	upperRightSizer->Add( m_buttonAnnotate, 0, wxALL, 5 );
+	upperRightSizer->Add( m_buttonAnnotate, 0, wxALL|wxEXPAND, 5 );
 	
 	upperSizer->Add( upperRightSizer, 0, wxEXPAND, 5 );
 	
