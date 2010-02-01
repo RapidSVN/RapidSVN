@@ -662,8 +662,8 @@ DestinationDlgBase::DestinationDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_staticQuestion->Wrap( -1 );
 	m_mainSizer->Add( m_staticQuestion, 0, wxALL, 5 );
 	
-	m_textDestination = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0 );
-	m_mainSizer->Add( m_textDestination, 0, wxALL, 5 );
+	m_comboDestination = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
+	m_mainSizer->Add( m_comboDestination, 0, wxALL|wxEXPAND, 5 );
 	
 	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force"), wxDefaultPosition, wxDefaultSize, 0 );
 	
@@ -686,13 +686,13 @@ DestinationDlgBase::DestinationDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_mainSizer->Fit( this );
 	
 	// Connect Events
-	m_textDestination->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( DestinationDlgBase::OnText ), NULL, this );
+	m_comboDestination->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( DestinationDlgBase::OnText ), NULL, this );
 }
 
 DestinationDlgBase::~DestinationDlgBase()
 {
 	// Disconnect Events
-	m_textDestination->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( DestinationDlgBase::OnText ), NULL, this );
+	m_comboDestination->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( DestinationDlgBase::OnText ), NULL, this );
 }
 
 DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )

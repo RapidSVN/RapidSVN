@@ -60,9 +60,9 @@ DestinationDlg::DestinationDlg(wxWindow* parent,
 
   // The destination:
   if (m->history.IsEmpty())
-    m_textDestination->SetValidator(wxTextValidator(wxFILTER_NONE, &m->destination));
+    m_comboDestination->SetValidator(wxTextValidator(wxFILTER_NONE, &m->destination));
   else
-    m_textDestination->SetValidator(HistoryValidator(m->history, &m->destination, false, false));
+    m_comboDestination->SetValidator(HistoryValidator(m->history, &m->destination, false, false));
 
   m_staticQuestion->SetLabel(descr);
   m_checkForce->SetValidator(wxGenericValidator(&m->force));
@@ -110,7 +110,7 @@ DestinationDlg::OnText(wxCommandEvent &)
 void 
 DestinationDlg::CheckControls()
 {
-  bool ok = !m_textDestination->GetValue().IsEmpty();
+  bool ok = !m_comboDestination->GetValue().IsEmpty();
 
   EnableCtrl(m_buttonOK, ok);
 }

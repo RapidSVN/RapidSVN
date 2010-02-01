@@ -339,7 +339,7 @@ class DestinationDlgBase : public wxDialog
 	protected:
 		wxBoxSizer* m_mainSizer;
 		wxStaticText* m_staticQuestion;
-		wxTextCtrl* m_textDestination;
+		wxComboBox* m_comboDestination;
 		wxCheckBox* m_checkForce;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
