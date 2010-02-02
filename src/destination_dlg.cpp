@@ -60,7 +60,7 @@ DestinationDlg::DestinationDlg(wxWindow* parent,
 
   // The destination:
   if (m->history.IsEmpty())
-    m_comboDestination->SetValidator(wxTextValidator(wxFILTER_NONE, &m->destination));
+    m_comboDestination->SetValidator(wxGenericValidator(&m->destination));
   else
     m_comboDestination->SetValidator(HistoryValidator(m->history, &m->destination, false, false));
 
