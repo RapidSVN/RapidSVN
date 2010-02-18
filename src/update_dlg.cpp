@@ -68,10 +68,10 @@ UpdateDlg::UpdateDlg(wxWindow* parent, const wxString & title, int flags,
   m_checkIgnoreExternals->SetValidator(wxGenericValidator(&m->data.ignoreExternals));
 
   if (!m->hasUrl)
-    m_mainSizer->Hide(m_urlSizer, true);
+    m_mainSizer->Show(m_urlSizer, false);
 
   if (!m->hasRevision)
-    m_mainSizer->Hide(m_revisionSizer, true);
+    m_mainSizer->Show(m_revisionSizer, false);
 
   m_checkRecursive->Show(m->hasRecursive);
 

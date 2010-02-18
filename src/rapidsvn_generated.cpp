@@ -1948,10 +1948,6 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxBoxSizer* optionSizer;
 	optionSizer = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force"), wxDefaultPosition, wxDefaultSize, 0 );
-	
-	optionSizer->Add( m_checkForce, 0, 0, 5 );
-	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
 	
 	optionSizer->Add( m_checkRecursive, 0, 0, 5 );

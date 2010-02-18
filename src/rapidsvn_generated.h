@@ -867,7 +867,6 @@ class UpdateDlgBase : public wxDialog
 		wxStaticBoxSizer* m_revisionSizer;
 		wxTextCtrl* m_textRevision;
 		wxCheckBox* m_checkUseLatest;
-		wxCheckBox* m_checkForce;
 		wxCheckBox* m_checkRecursive;
 		wxCheckBox* m_checkIgnoreExternals;
 		wxButton* m_buttonOK;
