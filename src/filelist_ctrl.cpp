@@ -1164,7 +1164,7 @@ FileListCtrl::CreateLabels(const svn::Status & status, const svn::Path & basePat
   {
     fullPath = status.path();
 
-    size_t basePathUtf8Length = basePathUtf8.length() + 1;
+    size_t basePathUtf8Length = svn::Url::unescape(basePathUtf8.c_str()).length() + 1;
     pathUtf8 = (fullPath.substr(basePathUtf8Length));
     pathUtf8 = pathUtf8.unescape();
 
