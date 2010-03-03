@@ -66,6 +66,30 @@ def readCurrentRevision():
   m=re.search("Revision: ([0-9]+)",t)
   return m.group(1)
 
+def readLatestChangeRevision():
+  # list all files and revision numbers
+  t=run("svn", ["status", "-v", "."], 1)
+  # this will output something like
+  # "    1234   3456    users src/rapidsvn.cpp"
+  # we are interested in the second number, the changed revision
+  # and the last part so we can skip "www"
+  r=re.compile(r"^[ ]+[0-9]+[ ]+([0-9]+)[ ]+[^ ]+[ ]+(.*)$")
+  latest_rev=0
+  for line in t.split("\n"):
+    m=r.match(line)
+    if m:
+      rev=int(m.group(1))
+      dir=m.group(2)
+      if dir.startswith("www"):
+        continue # skip the www dir
+
+      if rev > latest_rev:
+        latest_rev = rev
+
+  # we needed the int only for comparing, now we need a str
+  return str(latest_rev)
+
+
 def patchVersionHeader(revision):
   # first undo any previous patch
   VERSION_HEADER="src/version.hpp"
@@ -81,6 +105,7 @@ def patchVersionHeader(revision):
   # patch the revision
   patched=original[:m.start()] + REVISION_DEFINE + str(revision) + original[m.end():]
   open(VERSION_HEADER, "w").write(patched)
+
 
 def buildApplicationVc2005():
   out=open('vcbuild.log', 'w')
@@ -152,6 +177,7 @@ def makeApplication():
     print "Hm, seems like we have a build error: aborting"
     sys.exit(1)
 
+
 def buildMacDiskImage(suffix):
   print 'Build Mac Disk Image'
   os.chdir('packages/osx')
@@ -171,6 +197,7 @@ def buildMacDiskImage(suffix):
   os.chdir("../..")
   return "packages/osx/%s" % (pkg)
 
+
 def uploadInstaller(pkg):
   dir=''
   scp='scp'
@@ -185,11 +212,16 @@ def uploadInstaller(pkg):
   url="rapidsvn@rapidsvn.org:/srv/www/vhosts/rapidsvn.org/httpdocs/download/nightly/%s" % (dir)
   run(scp,  [pkg, url])
 
+
 def usage():
   print "Usage: create_nightly.py [--compiler={vc2005}] [--suffix=<text>] [--force] [--skip-compile] [--skip-installer] [--skip-upload]"
   print
 
+
 if __name__ == '__main__':
+  # Check if we need to chdir one up
+  if os.path.exists("create_nightly.py"):
+    os.chdir("..")
   # Check whether we are in the project dir
   if not os.path.exists("HACKING.txt"):
     print "Wrong directory to start this script!"
@@ -243,7 +275,7 @@ if __name__ == '__main__':
 
   # Now decide whether or not we have to create a nightly build
   lastSuccessfulRevision=readLastSuccessfulRevision()
-  currentRevision=readCurrentRevision()
+  currentRevision=readLatestChangeRevision()
   patchVersionHeader(currentRevision)
 
   if "" == lastSuccessfulRevision:
