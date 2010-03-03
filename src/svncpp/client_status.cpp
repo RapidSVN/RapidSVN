@@ -132,7 +132,9 @@ namespace svn
       static_cast<svn_wc_entry_t *>(
         apr_pcalloc(pool, sizeof(svn_wc_entry_t)));
 
-    std::string url(path);
+    // path in in encoded form, but for our use it has to
+    // be decoded
+    std::string url(Url::unescape(path));
     url += "/";
     url += dirEntry.name();
 
