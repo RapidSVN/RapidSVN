@@ -42,7 +42,10 @@ public:
     WITH_URL=0x2,
 
     /** show dialog without revision information */
-    WITHOUT_REVISION=0x4
+    WITHOUT_REVISION=0x4,
+
+    /** don't display the "ignore externals" checkbox */
+    WITHOUT_IGNORE_EXTERNALS=0x8
   };
 
   /**

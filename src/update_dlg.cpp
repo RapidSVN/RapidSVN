@@ -44,12 +44,14 @@ public:
   bool hasUrl;
   bool hasRevision;
   bool hasRecursive;
+  bool hasIgnoreExternals;
 
   Data(int flags)
   {
     hasUrl = 0 != (flags & WITH_URL);
     hasRevision = 0 == (flags & WITHOUT_REVISION);
     hasRecursive = 0 == (flags & WITHOUT_RECURSIVE);
+    hasIgnoreExternals = 0 == (flags & WITHOUT_IGNORE_EXTERNALS);
   }
 };
 
@@ -74,6 +76,7 @@ UpdateDlg::UpdateDlg(wxWindow* parent, const wxString & title, int flags,
     m_mainSizer->Show(m_revisionSizer, false);
 
   m_checkRecursive->Show(m->hasRecursive);
+  m_checkIgnoreExternals->Show(m->hasIgnoreExternals);
 
   m_mainSizer->SetSizeHints(this);
   m_mainSizer->Fit(this);

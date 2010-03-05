@@ -2037,7 +2037,8 @@ MainFrame::AddRepoBookmark()
   const int flags =
     UpdateDlg::WITH_URL |
     UpdateDlg::WITHOUT_RECURSIVE |
-    UpdateDlg::WITHOUT_REVISION;
+    UpdateDlg::WITHOUT_REVISION |
+    UpdateDlg::WITHOUT_IGNORE_EXTERNALS;
   UpdateDlg dialog(this, _("Repository URL"), flags);
 
   if (dialog.ShowModal() != wxID_OK)
