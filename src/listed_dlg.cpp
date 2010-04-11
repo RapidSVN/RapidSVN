@@ -105,6 +105,27 @@ public:
   }
 
   /**
+   * Deletes an entry from the list.
+   * @param id
+   */
+  void
+  DeleteEntry(int id)
+  {
+    this->DeleteItem(id);
+    this->m_values.erase(this->m_values.begin() + id);
+  }
+
+  /**
+   * Deletes all entries from the list.
+   */
+  void
+  DeleteAllEntries()
+  {
+    this->DeleteAllItems();
+    this->m_values.clear();
+  }
+
+  /**
    * returns the name/value pair for the selected item in the
    * list
    *
@@ -253,7 +274,7 @@ ListEditorDlg::OnDelete(wxCommandEvent & WXUNUSED(event))
   if (-1 == id)
     return;
 
-  m->listCtrl->DeleteItem(id);
+  m->listCtrl->DeleteEntry(id);
 
   CheckControls();
 }
@@ -297,7 +318,7 @@ ListEditorDlg::SetEditTitle(const wxString & title)
 void
 ListEditorDlg::DeleteAllEntries()
 {
-  m->listCtrl->DeleteAllItems();
+  m->listCtrl->DeleteAllEntries();
 }
 
 long
