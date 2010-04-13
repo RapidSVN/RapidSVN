@@ -41,7 +41,8 @@ namespace svn
     /**
      * constructor for existing @a svn_dirent_t entries
      */
-    DirEntry(const char * name, svn_dirent_t * dirEntry);
+    DirEntry(const char * name, svn_dirent_t * dirEntry, 
+             const svn_lock_t * lock = 0);
 
     /**
      * copy constructor
@@ -79,6 +80,15 @@ namespace svn
 
     const char *
     lastAuthor() const;
+
+    const char *
+    lockOwner() const;
+
+    const char *
+    lockComment() const;
+
+    const char *
+    lockToken() const;
 
   private:
     struct Data;

@@ -149,6 +149,14 @@ namespace svn
     e->cmt_date = dirEntry.time();
     e->cmt_author = dirEntry.lastAuthor();
 
+    bool locked = strlen(dirEntry.lockToken()) > 0;
+    if (locked)
+    {
+      e->lock_token = dirEntry.lockToken();
+      e->lock_owner = dirEntry.lockOwner();
+      e->lock_comment = dirEntry.lockComment();
+    }
+
     svn_wc_status2_t * s =
       static_cast<svn_wc_status2_t *>(
         apr_pcalloc(pool, sizeof(svn_wc_status2_t)));

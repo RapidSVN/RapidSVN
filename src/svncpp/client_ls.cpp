@@ -41,6 +41,20 @@ compare_items_as_paths(const svn_sort__item_t *a, const svn_sort__item_t *b)
 
 namespace svn
 {
+  static svn_error_t*
+  listEntriesFunc(void *baton, const char *path,
+        const svn_dirent_t *dirent, const svn_lock_t *lock,
+        const char *abs_path, apr_pool_t *pool)
+  {
+    if (strlen(path) > 0)
+    {
+      DirEntries * entries = static_cast<DirEntries *>(baton);
+      entries->push_back(
+        DirEntry(path, const_cast<svn_dirent_t *>(dirent), lock));
+    }
+    return 0;
+  }
+
   DirEntries
   Client::list(const char * pathOrUrl,
                svn_opt_revision_t * revision,
@@ -48,39 +62,21 @@ namespace svn
   {
     Pool pool;
 
-    apr_hash_t * hash;
+    DirEntries entries;
     svn_error_t * error =
-      svn_client_ls(&hash,
-                    pathOrUrl,
-                    revision,
-                    recurse,
-                    *m_context,
-                    pool);
+      svn_client_list2(pathOrUrl,
+                       revision,
+                       revision,
+                       recurse ? svn_depth_infinity : svn_depth_immediates,
+                       SVN_DIRENT_ALL,
+                       true,
+                       listEntriesFunc,
+                       &entries,
+                       *m_context,
+                       pool);
 
     if (error != 0)
       throw ClientException(error);
-
-    apr_array_header_t *
-    array = svn_sort__hash(
-              hash, compare_items_as_paths, pool);
-
-    DirEntries entries;
-
-    for (int i = 0; i < array->nelts; ++i)
-    {
-      const char *entryname;
-      svn_dirent_t *dirent;
-      svn_sort__item_t *item;
-
-      item = &APR_ARRAY_IDX(array, i, svn_sort__item_t);
-
-      entryname = static_cast<const char *>(item->key);
-
-      dirent = static_cast<svn_dirent_t *>
-               (apr_hash_get(hash, entryname, item->klen));
-
-      entries.push_back(DirEntry(entryname, dirent));
-    }
 
     return entries;
   }

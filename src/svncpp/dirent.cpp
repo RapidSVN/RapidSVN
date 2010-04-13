@@ -41,18 +41,29 @@ public:
     apr_time_t time;
     std::string lastAuthor;
 
+    std::string lockToken;
+    std::string lockOwner;
+    std::string lockComment;
+
     Data()
         : kind(svn_node_unknown), size(0), hasProps(false),
         createdRev(0), time(0)
     {
     }
 
-    Data(const char * _name, svn_dirent_t * dirEntry)
+    Data(const char * _name, svn_dirent_t * dirEntry, const svn_lock_t * lock)
         : name(_name), kind(dirEntry->kind), size(dirEntry->size),
         hasProps(dirEntry->has_props != 0),
         createdRev(dirEntry->created_rev), time(dirEntry->time)
     {
       lastAuthor = dirEntry->last_author == 0 ? "" : dirEntry->last_author;
+
+      if (lock != 0)
+      {
+        lockToken = (lock->token != 0) ? lock->token : "";
+        lockOwner = (lock->owner != 0) ? lock->owner : "";
+        lockComment = (lock->comment != 0) ? lock->comment : "";
+      }
     }
 
     Data(const DirEntry & src)
@@ -70,6 +81,9 @@ public:
       createdRev = src.createdRev();
       time = src.time();
       lastAuthor = src.lastAuthor();
+      lockToken = src.lockToken();
+      lockOwner = src.lockOwner();
+      lockComment = src.lockComment();
     }
   };
 
@@ -78,13 +92,14 @@ public:
   {
   }
 
-  DirEntry::DirEntry(const char * name, svn_dirent_t * DirEntry)
-      : m(new Data(name, DirEntry))
+  DirEntry::DirEntry(const char * name, svn_dirent_t * DirEntry, 
+                     const svn_lock_t * lock)
+    : m(new Data(name, DirEntry, lock))
   {
   }
 
   DirEntry::DirEntry(const DirEntry & src)
-      : m(new Data(src))
+    : m(new Data(src))
   {
   }
 
@@ -133,6 +148,24 @@ public:
   DirEntry::name() const
   {
     return m->name.c_str();
+  }
+
+  const char *
+  DirEntry::lockToken() const
+  {
+    return m->lockToken.c_str();
+  }
+
+  const char *
+  DirEntry::lockOwner() const
+  {
+    return m->lockOwner.c_str();
+  }
+
+  const char *
+  DirEntry::lockComment() const
+  {
+    return m->lockComment.c_str();
   }
 
   DirEntry &
