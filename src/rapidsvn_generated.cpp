@@ -1975,6 +1975,7 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	// Connect Events
 	m_comboUrl->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
+	m_comboUrl->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
 	m_textRevision->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
 	m_checkUseLatest->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( UpdateDlgBase::OnUseLatest ), NULL, this );
 }
@@ -1983,6 +1984,7 @@ UpdateDlgBase::~UpdateDlgBase()
 {
 	// Disconnect Events
 	m_comboUrl->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
+	m_comboUrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
 	m_textRevision->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
 	m_checkUseLatest->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( UpdateDlgBase::OnUseLatest ), NULL, this );
 }
