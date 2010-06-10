@@ -60,13 +60,28 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <widget class="QMenu" name="menu_Sort">
+     <property name="title">
+      <string>&amp;Sort</string>
+     </property>
+     <addaction name="actionUsePathForSorting"/>
+     <addaction name="actionSortAscending"/>
+     <addaction name="separator"/>
+    </widget>
+    <widget class="QMenu" name="menu_Columns">
+     <property name="title">
+      <string>&amp;Columns</string>
+     </property>
+     <addaction name="actionResetColumns"/>
+     <addaction name="separator"/>
+    </widget>
     <addaction name="actionRefresh"/>
     <addaction name="actionStop"/>
     <addaction name="separator"/>
     <addaction name="action_Explore"/>
     <addaction name="separator"/>
-    <addaction name="action_Columns"/>
-    <addaction name="action_Sort"/>
+    <addaction name="menu_Columns"/>
+    <addaction name="menu_Sort"/>
     <addaction name="actionRefresh_with_Update"/>
     <addaction name="actionShowSubdirectories"/>
     <addaction name="actionIndicate_modified_children"/>
@@ -240,16 +255,6 @@
    </property>
    <property name="shortcut">
     <string>F2</string>
-   </property>
-  </action>
-  <action name="action_Columns">
-   <property name="text">
-    <string>&amp;Columns</string>
-   </property>
-  </action>
-  <action name="action_Sort">
-   <property name="text">
-    <string>&amp;Sort</string>
    </property>
   </action>
   <action name="actionRefresh_with_Update">
@@ -704,6 +709,21 @@
   <action name="action_Remove_Bookmark">
    <property name="text">
     <string>&amp;Remove Bookmark</string>
+   </property>
+  </action>
+  <action name="actionUsePathForSorting">
+   <property name="text">
+    <string>Use Path for Sorting</string>
+   </property>
+  </action>
+  <action name="actionSortAscending">
+   <property name="text">
+    <string>Sort Ascending</string>
+   </property>
+  </action>
+  <action name="actionResetColumns">
+   <property name="text">
+    <string>Reset Columns</string>
    </property>
   </action>
  </widget>
