@@ -1,6 +1,6 @@
 /*
  * ====================================================================
- * Copyright (c) 2010 Alexander Mueller.  All rights reserved.
+ * Copyright (c) 2002-2010 The RapidSVN Group.  All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,9 @@
  *
  * This software consists of voluntary contributions made by many
  * individuals.  For exact contribution history, see the revision
- * history and logs, available at http://rapidgit.org/.
+ * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
