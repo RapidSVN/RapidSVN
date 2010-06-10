@@ -98,50 +98,6 @@ PostMenuEvent(wxEvtHandler *source, long id);
 #endif
 
 /**
- * Create a correctly sized button with an ellipsis (three dots)
- */
-QPushButton *
-CreateEllipsisButton(QWidget *parent, long id);
-
-/**
- * Append entries for the "Modify" menu
- *
- * @param parentMenu menu that will receive the items
- */
-void
-AppendModifyMenu(QMenu * parentMenu);
-
-/**
- * Append entries for the "Repository" menu
- *
- * @param parentMenu menu that will receive the items
- */
-void
-AppendBookmarksMenu(QMenu * parentMenu);
-
-/**
- * Append entries for the "Query" menu
- *
- * @param parentMenu menu that will receive the items
- */
-void
-AppendQueryMenu(QMenu * parentMenu);
-
-
-/**
- * Append entries for "verbs" (Win32 only).
- * Since this feature is context specific (based on
- * the selected file), @a status has to be passed.
- * Works only with one selected file
- *
- * @param parentMenu menu that will receive the items
- * @param status status instance of the selected item
- */
-void
-AppendVerbMenu(QMenu * parentMenu, svn::Status * status);
-
-
-/**
  * Checks if the given string contains a valid
  * revision number
  *
@@ -150,17 +106,6 @@ AppendVerbMenu(QMenu * parentMenu, svn::Status * status);
  */
 bool
 CheckRevision(const QString & revstring);
-
-
-/**
- * Creates a menu item for @a id (with whistles and bells, uh,
- * bitmaps)
- *
- * @param menu menu where the new item will be appended
- * @param id menu item to create
- */
-QMenuItem *
-AppendMenuItem(QMenu & menu, int id);
 
 
 /**
