@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
@@ -47,6 +50,121 @@
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menu_View">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionRefresh"/>
+    <addaction name="action_Stop"/>
+    <addaction name="separator"/>
+    <addaction name="action_Explore"/>
+    <addaction name="separator"/>
+    <addaction name="action_Columns"/>
+    <addaction name="action_Sort"/>
+    <addaction name="actionRefresh_with_Update"/>
+    <addaction name="actionShow_subdirectories"/>
+    <addaction name="actionIndicate_modified_children"/>
+    <addaction name="actionShow_unversioned_entries"/>
+    <addaction name="actionShow_unmodified_entries"/>
+    <addaction name="actionShow_modified_entries"/>
+    <addaction name="actionShow_conflicted_entries"/>
+    <addaction name="actionIgnore_Externals"/>
+    <addaction name="actionShow_ignored_entries"/>
+    <addaction name="separator"/>
+    <addaction name="action_Preferences"/>
+   </widget>
+   <widget class="QMenu" name="menu_Repository">
+    <property name="title">
+     <string>&amp;Repository</string>
+    </property>
+    <addaction name="action_Import"/>
+    <addaction name="action_Export"/>
+    <addaction name="actionCheck_out"/>
+    <addaction name="action_Create"/>
+    <addaction name="separator"/>
+    <addaction name="actionMerge"/>
+    <addaction name="actionSwitch_URL"/>
+   </widget>
+   <widget class="QMenu" name="menu_Modify">
+    <property name="title">
+     <string>&amp;Modify</string>
+    </property>
+    <addaction name="action_Edit"/>
+    <addaction name="separator"/>
+    <addaction name="action_Update"/>
+    <addaction name="actionCo_mmit"/>
+    <addaction name="separator"/>
+    <addaction name="action_Properties"/>
+    <addaction name="separator"/>
+    <addaction name="action_Add"/>
+    <addaction name="actionAdd_r_ecursive"/>
+    <addaction name="action_Delete"/>
+    <addaction name="action_Ignore"/>
+    <addaction name="separator"/>
+    <addaction name="actionRe_vert"/>
+    <addaction name="actionIn_teractive_resolve"/>
+    <addaction name="actionRe_solve_conflicts"/>
+    <addaction name="separator"/>
+    <addaction name="action_Copy"/>
+    <addaction name="actionM_ove"/>
+    <addaction name="actionRe_name"/>
+    <addaction name="actionMake_directory"/>
+    <addaction name="separator"/>
+    <addaction name="action_Lock"/>
+    <addaction name="action_Unlock"/>
+   </widget>
+   <widget class="QMenu" name="menu_Query">
+    <property name="title">
+     <string>&amp;Query</string>
+    </property>
+    <addaction name="action_Diff"/>
+    <addaction name="actionDiff_to_Base"/>
+    <addaction name="actionDiff_to_Head"/>
+    <addaction name="separator"/>
+    <addaction name="action_Log"/>
+    <addaction name="action_Info"/>
+    <addaction name="action_Annotate"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_Contents"/>
+    <addaction name="action_Index"/>
+    <addaction name="separator"/>
+    <addaction name="action_About"/>
+   </widget>
+   <widget class="QMenu" name="menu_Bookmarks">
+    <property name="title">
+     <string>&amp;Bookmarks</string>
+    </property>
+    <addaction name="action_Add_Existing_Working_Copy"/>
+    <addaction name="actionAdd_Existing_Repository"/>
+    <addaction name="action_Switch_Repository_URL"/>
+    <addaction name="separator"/>
+    <addaction name="action_Edit_Bookmark"/>
+    <addaction name="action_Remove_Bookmark"/>
+   </widget>
+   <widget class="QMenu" name="menu_Extra">
+    <property name="title">
+     <string>&amp;Extras</string>
+    </property>
+    <addaction name="action_Cleanup"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_View"/>
+   <addaction name="menu_Repository"/>
+   <addaction name="menu_Modify"/>
+   <addaction name="menu_Query"/>
+   <addaction name="menu_Bookmarks"/>
+   <addaction name="menu_Extra"/>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -57,6 +175,381 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionQuit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionRefresh">
+   <property name="text">
+    <string>&amp;Refresh</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="action_Stop">
+   <property name="text">
+    <string>&amp;Stop</string>
+   </property>
+  </action>
+  <action name="action_Explore">
+   <property name="text">
+    <string>&amp;Explore</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="action_Columns">
+   <property name="text">
+    <string>&amp;Columns</string>
+   </property>
+  </action>
+  <action name="action_Sort">
+   <property name="text">
+    <string>&amp;Sort</string>
+   </property>
+  </action>
+  <action name="actionRefresh_with_Update">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Refresh with Update</string>
+   </property>
+  </action>
+  <action name="actionShow_subdirectories">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show subdirectories</string>
+   </property>
+  </action>
+  <action name="actionIndicate_modified_children">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Indicate modified children</string>
+   </property>
+  </action>
+  <action name="actionShow_unversioned_entries">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show unversioned entries</string>
+   </property>
+  </action>
+  <action name="actionShow_unmodified_entries">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show unmodified entries</string>
+   </property>
+  </action>
+  <action name="actionShow_modified_entries">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show modified entries</string>
+   </property>
+  </action>
+  <action name="actionShow_conflicted_entries">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show conflicted entries</string>
+   </property>
+  </action>
+  <action name="actionIgnore_Externals">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Ignore Externals</string>
+   </property>
+  </action>
+  <action name="actionShow_ignored_entries">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show ignored entries</string>
+   </property>
+  </action>
+  <action name="action_Import">
+   <property name="text">
+    <string>&amp;Import...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="action_Export">
+   <property name="text">
+    <string>&amp;Export...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionCheck_out">
+   <property name="text">
+    <string>Check&amp;out...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="action_Create">
+   <property name="text">
+    <string>&amp;Create...</string>
+   </property>
+  </action>
+  <action name="actionMerge">
+   <property name="text">
+    <string>Merge...</string>
+   </property>
+  </action>
+  <action name="actionSwitch_URL">
+   <property name="text">
+    <string>Switch URL...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_Contents">
+   <property name="text">
+    <string>&amp;Contents</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="action_Index">
+   <property name="text">
+    <string>&amp;Index</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F1</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="text">
+    <string>&amp;About...</string>
+   </property>
+  </action>
+  <action name="action_Preferences">
+   <property name="text">
+    <string>&amp;Preferences...</string>
+   </property>
+  </action>
+  <action name="action_Cleanup">
+   <property name="text">
+    <string>&amp;Cleanup</string>
+   </property>
+  </action>
+  <action name="action_Edit">
+   <property name="text">
+    <string>&amp;Edit...</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
+  </action>
+  <action name="action_Update">
+   <property name="text">
+    <string>&amp;Update...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="actionCo_mmit">
+   <property name="text">
+    <string>Co&amp;mmit...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Return</string>
+   </property>
+  </action>
+  <action name="action_Properties">
+   <property name="text">
+    <string>&amp;Properties...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="action_Add">
+   <property name="text">
+    <string>&amp;Add</string>
+   </property>
+   <property name="shortcut">
+    <string>Ins</string>
+   </property>
+  </action>
+  <action name="actionAdd_r_ecursive">
+   <property name="text">
+    <string>Add r&amp;ecursive</string>
+   </property>
+  </action>
+  <action name="action_Delete">
+   <property name="text">
+    <string>&amp;Delete</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="action_Ignore">
+   <property name="text">
+    <string>&amp;Ignore</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
+   </property>
+  </action>
+  <action name="actionRe_vert">
+   <property name="text">
+    <string>Re&amp;vert</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionIn_teractive_resolve">
+   <property name="text">
+    <string>In&amp;teractive resolve...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionRe_solve_conflicts">
+   <property name="text">
+    <string>Re&amp;solve conflicts</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_Copy">
+   <property name="text">
+    <string>&amp;Copy...</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionM_ove">
+   <property name="text">
+    <string>M&amp;ove...</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
+  </action>
+  <action name="actionRe_name">
+   <property name="text">
+    <string>Re&amp;name...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionMake_directory">
+   <property name="text">
+    <string>Make &amp;directory...</string>
+   </property>
+   <property name="shortcut">
+    <string>F7</string>
+   </property>
+  </action>
+  <action name="action_Lock">
+   <property name="text">
+    <string>&amp;Lock...</string>
+   </property>
+  </action>
+  <action name="action_Unlock">
+   <property name="text">
+    <string>&amp;Unlock</string>
+   </property>
+  </action>
+  <action name="action_Diff">
+   <property name="text">
+    <string>&amp;Diff...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionDiff_to_Base">
+   <property name="text">
+    <string>Diff to &amp;Base...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionDiff_to_Head">
+   <property name="text">
+    <string>Diff to &amp;Head...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="action_Log">
+   <property name="text">
+    <string>&amp;Log...</string>
+   </property>
+  </action>
+  <action name="action_Info">
+   <property name="text">
+    <string>&amp;Info...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="action_Annotate">
+   <property name="text">
+    <string>&amp;Annotate...</string>
+   </property>
+  </action>
+  <action name="action_Add_Existing_Working_Copy">
+   <property name="text">
+    <string>&amp;Add Existing Working Copy...</string>
+   </property>
+  </action>
+  <action name="actionAdd_Existing_Repository">
+   <property name="text">
+    <string>Add Existing &amp;Repository...</string>
+   </property>
+  </action>
+  <action name="action_Switch_Repository_URL">
+   <property name="text">
+    <string>&amp;Switch Repository URL...</string>
+   </property>
+  </action>
+  <action name="action_Edit_Bookmark">
+   <property name="text">
+    <string>&amp;Edit Bookmark...</string>
+   </property>
+  </action>
+  <action name="action_Remove_Bookmark">
+   <property name="text">
+    <string>&amp;Remove Bookmark</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
