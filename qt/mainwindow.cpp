@@ -24,22 +24,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#define UNPORTED_TO_QT 0
-
 // svncpp
 #include <svncpp/apr.hpp>
 #include <svncpp/status_selection.hpp>
+#include <svncpp/url.hpp>
 
 // app
 #include "utils.hpp"
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
 #include "rapidsvn_app.hpp"
 #include "columns.hpp"
 #endif
 #include "config.h"
 #include "listener.hpp"
 #include "ids.hpp"
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
 #include "destination_dlg.hpp"
 #include "diff_data.hpp"
 #include "get_data.hpp"
@@ -63,7 +62,7 @@
 #include "threaded_worker.hpp"
 #endif
 
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
 #include "view_action.hpp"
 #include "get_action.hpp"
 #include "diff_action.hpp"
@@ -77,7 +76,7 @@
 
 
 // dialogs
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
 #include "about_dlg.hpp"
 #include "auth_dlg.hpp"
 #include "report_dlg.hpp"
@@ -93,7 +92,7 @@
 #include "folder_browser_drop_target.hpp"
 #endif
 
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
 
 #ifdef USE_DEBUG_TESTS
 #include "checkout_action.hpp"
@@ -141,16 +140,12 @@ CreateActionWorker(QWidget * parent)
 struct MainWindow::Data
 {
 public:
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
   EventTracer * logTracer;
 #endif
 
-  QMenu * MenuColumns;
-  QMenu * MenuSorting;
-  QMenuBar * MenuBar;
-
   Listener listener;
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
   Columns ColumnList;
 #endif
 
@@ -176,7 +171,7 @@ private:
 
   QWidget * m_parent;
   bool m_isErrorDialogActive;
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
   FolderBrowser * m_folderBrowser;
   FileListCtrl * m_listCtrl;
   wxTextCtrl * m_log;
@@ -189,11 +184,10 @@ public:
    */
   svn::Apr apr;
 
-  Data(QObject * parent, /*, FolderBrowser * folderBrowser,
+  Data(QWidget * parent, /*, FolderBrowser * folderBrowser,
        FileListCtrl * listCtrl, wxTextCtrl * log, */
        const QLocale & locale_)
-    : MenuColumns(0), MenuSorting(0), MenuBar(0),
-      listener(parent),
+    : listener(parent),
       updateAfterActivate(false), dontUpdateFilelist(false),
       skipFilelistUpdate(false), locale(locale_),
       currentPath(""),
@@ -220,32 +214,15 @@ public:
     wxApp::s_macHelpMenuTitleName = tr("&Help");
 #endif
 
-    // File menu
-    QMenu *menuFile = new QMenu(m_parent);
-
     // Quit menu item is not necessary on MacOSX:
+#ifdef PORTED_TO_QT
 #ifndef __WXMAC__
     //menuFile->addSeparator ();
     AppendMenuItem(*menuFile, ID_Quit);
 #endif
+#endif
 
-    // Columns menu
-    MenuColumns = new QMenu;
-    AppendMenuItem(*MenuColumns, ID_Column_Reset);
-    MenuColumns->addSeparator();
-
-    // Sorting menu
-    MenuSorting = new QMenu;
-    actionUsePathForSorting = new QAction(parent);
-    actionUsePathForSorting->setText(tr("Use Path for Sorting"));
-    actionUsePathForSorting->setCheckable(true);
-    MenuSorting->addAction(actionUsePathForSorting);
-    actionSortAscending = new QAction(tr("Sort Ascending"), parent);
-    actionSortAscending->setCheckable(true);
-    MenuSorting->addAction(actionSortAscending);
-    MenuSorting->addSeparator();
-
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
     for (int col = 0; col < FileListCtrl::COL_COUNT; col++)
     {
       int id = ColumnList[col].id;
@@ -257,36 +234,14 @@ public:
     }
 #endif
 
-    // View menu
-    QMenu *menuView = new QMenu;
-    AppendMenuItem(*menuView, ID_Refresh);
-    AppendMenuItem(*menuView, ID_Stop);
-    menuView->addSeparator();
-
-    AppendMenuItem(*menuView, ID_Explore);
-    menuView->addSeparator();
-
-    menuView->Append(0, tr("Columns"), MenuColumns);
-    menuView->Append(0, tr("Sort"), MenuSorting);
-
+#ifdef PORTED_TO_QT
     // Preferences menu item goes to its own place on MacOSX,
     // so no separator is necessary.
-#if UNPORTED_TO_QT
+
 #ifndef __WXMAC__
     menuView->addSeparator();
 #endif
 #endif
-    // Modify menu
-    QMenu *menuModif = new QMenu;
-    AppendModifyMenu(menuModif);
-
-    // Query menu
-    QMenu *menuQuery = new QMenu;
-    AppendQueryMenu(menuQuery);
-
-    // Bookmarks menu
-    QMenu *menuBookmarks = new QMenu;
-    AppendBookmarksMenu(menuBookmarks);
 
 #ifdef USE_DEBUG_TESTS
     // Debug Menu
@@ -307,19 +262,6 @@ public:
     menuTests->AppendSubMenu(menuDnd, "Dnd Dlg");
 #endif
 
-    // Create the menu bar and append the menus
-    MenuBar = new QMenuBar;
-    // Under wxMac the menu might be empty, so
-    // don't show it:
-    if (menuFile->GetMenuItemCount()>0)
-      MenuBar->Append(menuFile, tr("&File"));
-    MenuBar->Append(menuView, tr("&View"));
-    MenuBar->Append(menuRepos, tr("&Repository"));
-    MenuBar->Append(menuModif, tr("&Modify"));
-    MenuBar->Append(menuQuery, tr("&Query"));
-    MenuBar->Append(menuBookmarks, tr("&Bookmarks"));
-    MenuBar->Append(menuExtras, tr("&Extras"));
-    MenuBar->Append(menuHelp, tr("&Help"));
 #ifdef USE_DEBUG_TESTS
     MenuBar->Append(menuTests, tr("&Tests"));
 #endif
@@ -328,51 +270,87 @@ public:
   bool
   IsColumnChecked(int id)
   {
+#ifdef PORTED_TO_QT
     return MenuColumns->IsChecked(id);
+#else
+    Q_UNUSED(id);
+    return false;
+#endif
   }
 
   void
   CheckColumn(int id, bool check)
   {
+#ifdef PORTED_TO_QT
     MenuColumns->Check(id, check);
+#else
+    Q_UNUSED(id);
+    Q_UNUSED(check);
+#endif
   }
 
   void
   CheckSort(int id)
   {
+#ifdef PORTED_TO_QT
     MenuSorting->Check(id, true);
+#else
+    Q_UNUSED(id);
+#endif
   }
 
   void
   EnableMenuEntry(int id, bool enable)
   {
+#ifdef PORTED_TO_QT
     MenuSorting->Enable(id, enable);
+#else
+    Q_UNUSED(id);
+    Q_UNUSED(enable);
+#endif
   }
 
   bool
   IsMenuChecked(int id)
   {
+#ifdef PORTED_TO_QT
     return MenuBar->IsChecked(id);
+#else
+    Q_UNUSED(id);
+
+    return false;
+#endif
   }
 
   void
   CheckMenu(int id, bool check)
   {
+#ifdef PORTED_TO_QT
     MenuBar->Check(id, check);
+#else
+    Q_UNUSED(id);
+    Q_UNUSED(check);
+#endif
   }
 
   void
   CheckTool(int id, bool check)
   {
+#ifdef PORTED_TO_QT
     wxToolBar * toolbar = m_parent->GetToolBar();
 
     if (0 != toolbar)
       toolbar->ToggleTool(id, check);
+#else
+    Q_UNUSED(id);
+    Q_UNUSED(check);
+#endif
   }
 
   void
   SetMenuAndTool(int id, bool & toggleValue, bool newValue)
   {
+#ifdef PORTED_TO_QT
     toggleValue = newValue;
 
     // first update the menu entry
@@ -382,14 +360,25 @@ public:
     wxToolBarBase * toolBar = m_parent->GetToolBar();
     if (toolBar != 0)
       toolBar->ToggleTool(id, toggleValue);
+#else
+    Q_UNUSED(id);
+    Q_UNUSED(toggleValue);
+    Q_UNUSED(newValue);
+#endif
   }
 
   bool
   ToggleMenuAndTool(int id, bool & toggleValue)
   {
+#ifdef PORTED_TO_QT
     SetMenuAndTool(id, toggleValue, !toggleValue);
 
     return toggleValue;
+#else
+    Q_UNUSED(id);
+    Q_UNUSED(toggleValue);
+    return false;
+#endif
   }
 
   void
@@ -400,6 +389,7 @@ public:
 
     m_running = running;
 
+#ifdef PORTED_TO_QT
     wxToolBarBase * toolBar = m_parent->GetToolBar();
 
     wxASSERT(toolBar != 0);
@@ -419,6 +409,7 @@ public:
       m_listCtrl->SetCursor(running ? *wxHOURGLASS_CURSOR : *wxSTANDARD_CURSOR);
       m_listCtrl->Enable(!running);
     }
+#endif
   }
 
   bool
@@ -448,10 +439,14 @@ public:
   bool
   IsFlat() const
   {
+#ifdef PORTED_TO_QT
     if (!m_listCtrl)
       return 0;
 
     return m_listCtrl->IsFlat();
+#else
+    return false;
+#endif
   }
 
 
@@ -482,7 +477,11 @@ public:
   ShowErrorDialog(const QString & msg)
   {
     m_isErrorDialogActive = true;
+#ifdef PORTED_TO_QT
     wxMessageBox(msg, tr("RapidSVN Error"), wxICON_ERROR | wxOK);
+#else
+    Q_UNUSED(msg);
+#endif
     m_isErrorDialogActive = false;
   }
 
@@ -495,10 +494,14 @@ public:
   void
   Trace(const QString & msg)
   {
+#ifdef PORTED_TO_QT
     if (!m_log)
       return;
 
     m_log->AppendText(msg + '\n');
+#else
+    Q_UNUSED(msg);
+#endif
   }
 
   /**
@@ -511,6 +514,7 @@ public:
   void
   TraceError(const QString & msg, bool showDialog=true)
   {
+#ifdef PORTED_TO_QT
     if (!m_log)
       return;
 
@@ -520,11 +524,16 @@ public:
 
     if (showDialog)
       ShowErrorDialog(msg);
+#else
+    Q_UNUSED(msg);
+    Q_UNUSED(showDialog);
+#endif
   }
 
   const svn::StatusSel &
   GetStatusSel()  const
   {
+#ifdef PORTED_TO_QT
     //is there nothing selected in the list control,
     //or is the active window *not* the list control?
     if (m_listCtrl->GetSelectedItemCount() <= 0 ||
@@ -537,10 +546,14 @@ public:
       //no, build the file list from the list control
       return m_listCtrl->GetStatusSel();
     }
+#else
+    static svn::StatusSel sel;
+    return sel;
+#endif
   }
 };
 
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
 BEGIN_EVENT_TABLE(MainWindow, wxFrame)
   EVT_MENU(ID_AddWcBookmark, MainWindow::OnAddWcBookmark)
   EVT_MENU(ID_AddRepoBookmark, MainWindow::OnAddRepoBookmark)
@@ -620,7 +633,7 @@ MainWindow(QWidget *parent, const QString & title)
   m = new Data(this, m_folderBrowser, m_listCtrl, m_log, locale);
   m_actionWorker = CreateActionWorker(this);
 
-#if UNPORTED_TO_QT
+#ifdef PORTED_TO_QT
   // enable trace
   wxLog::AddTraceMask(TraceMisc);
 
