@@ -1,6 +1,7 @@
 EXTRA_DIST=rapidsvn.pot \
 	de/rapidsvn.po \
 	fr/rapidsvn.po \
+	hu/rapidsvn.po \
 	it_IT/rapidsvn.po \
 	pt_BR/rapidsvn.po \
 	ru/rapidsvn.po \
@@ -9,7 +10,7 @@ EXTRA_DIST=rapidsvn.pot \
 	zh_CN/rapidsvn.po\
 	ja/rapidsvn.po
 
-RAPIDSVN_LANGUAGES=de fr it_IT pt_BR ru es uk zh_CN ja
+RAPIDSVN_LANGUAGES=de fr hu it_IT pt_BR ru es uk zh_CN ja
 
 localedir = $(datadir)/locale
 

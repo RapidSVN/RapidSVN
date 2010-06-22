@@ -5,7 +5,7 @@
 # in the language subdirectories
 
 xgettext -C -k_ -s -o rapidsvn.pot ../*.cpp
-for X in de fr it_IT pt_BR ru es uk zh_CN ja ; do
+for X in de fr hu it_IT pt_BR ru es uk zh_CN ja ; do
 	msgmerge -U $X/rapidsvn.po rapidsvn.pot
 done
 
