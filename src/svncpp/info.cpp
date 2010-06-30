@@ -105,6 +105,16 @@ namespace svn
       return m->info->URL;
   }
 
+  const char *
+  Info::repos() const
+  {
+    if (0 == m->info)
+      return 0;
+    else
+      return m->info->repos_root_URL;
+  }
+
+
 }
 
 /* -----------------------------------------------------------------
