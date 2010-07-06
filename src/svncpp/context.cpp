@@ -72,31 +72,6 @@ public:
     std::string configDir;
 
     /**
-     * translate native c-string to utf8
-     */
-    static svn_error_t *
-    translateString(const char * str, const char ** newStr,
-                    apr_pool_t * /*pool*/)
-    {
-      // due to problems with apr_xlate we dont perform
-      // any conversion at this place. YOU will have to make
-      // sure any strings passed are UTF 8 strings
-      // svn_string_t *string = svn_string_create ("", pool);
-      //
-      // string->data = str;
-      // string->len = strlen (str);
-      //
-      // const char * encoding = APR_LOCALE_CHARSET;
-      //
-      // SVN_ERR (svn_subst_translate_string (&string, string,
-      //                                      encoding, pool));
-      //
-      // *newStr = string->data;
-      *newStr = str;
-      return SVN_NO_ERROR;
-    }
-
-    /**
      * the @a baton is interpreted as Data *
      * Several checks are performed on the baton:
      * - baton == 0?
