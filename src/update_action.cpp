@@ -91,6 +91,14 @@ UpdateAction::CheckStatusSel(const svn::StatusSel & statusSel)
   if (statusSel.hasUrl())
     return false;
 
+  // we NEED statusSel
+  if (0 == statusSel.size())
+    return false;
+
+  // No unversioned files allowed
+  if (statusSel.hasUnversioned())
+    return false;
+
   return true;
 }
 

@@ -463,6 +463,7 @@ public:
     case FOLDER_TYPE_BOOKMARKS:
     {
       BookmarkHashMap::iterator it = bookmarks.begin();
+      svn::Client client(GetContext());
 
       for (; it!= bookmarks.end(); it++)
       {
@@ -477,6 +478,36 @@ public:
 
         FolderItemData* data= new FolderItemData(FOLDER_TYPE_BOOKMARK,
             path, path, TRUE);
+
+        if (!pathUtf8.isUrl())
+        {
+          try
+          {
+            svn::StatusEntries entries(client.status(pathUtf8.c_str(),
+                                       false,      // Not recursive
+                                       true,       // Get all entries
+                                       false,      // Dont update from repository
+                                       false));     // Use global ignores
+            svn::StatusEntries::iterator it;
+            for (it = entries.begin(); it != entries.end(); it++)
+            {
+              svn::Status& status = *it;
+              svn::Path statusPath(status.path());
+
+              if (statusPath == pathUtf8)
+              {
+                data->setStatus(status);
+                break;
+              }
+            }
+          }
+          catch (...)
+          {
+            ; // only ignore exceptions here to be able to skip over non-existing bookmarks
+          }
+        }
+
+
         wxTreeItemId newId = treeCtrl->AppendItem(parentId, path,
                              image, image, data);
         treeCtrl->SetItemHasChildren(newId, TRUE);
@@ -540,12 +571,12 @@ public:
     svn::Path parentPathUtf8(PathUtf8(parentPath));
 
     // Get status array for parent and all entries within it
-    svn::StatusEntries entries =
+    svn::StatusEntries entries(
       client.status(parentPathUtf8.c_str(),
                     false,      // Not recursive
                     true,       // Get all entries
                     false,      // Dont update from repository
-                    false);     // Use global ignores
+                    false));     // Use global ignores
 
     bool pathIsUrl = parentPathUtf8.isUrl();
     bool indicateModifiedChildren  = GetSelectedBookmark().indicateModifiedChildren &&

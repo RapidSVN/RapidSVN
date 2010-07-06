@@ -136,6 +136,12 @@ CommitAction::Perform()
 bool
 CommitAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
+  if (0 == statusSel.size())
+    return false;
+
+  if (statusSel.hasUnversioned())
+    return false;
+
   if (statusSel.hasUrl())
     return false;
 
