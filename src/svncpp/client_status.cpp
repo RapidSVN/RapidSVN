@@ -39,6 +39,8 @@
 #include "svncpp/targets.hpp"
 #include "svncpp/url.hpp"
 
+#include "m_is_empty.hpp"
+
 namespace svn
 {
   static svn_error_t *
@@ -149,7 +151,7 @@ namespace svn
     e->cmt_date = dirEntry.time();
     e->cmt_author = dirEntry.lastAuthor();
 
-    bool locked = strlen(dirEntry.lockToken()) > 0;
+    bool locked = !isEmpty(dirEntry.lockToken());
     if (locked)
     {
       e->lock_token = dirEntry.lockToken();

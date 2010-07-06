@@ -312,7 +312,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\svncpp\m_check.hpp"
+				RelativePath="..\..\..\src\svncpp\m_is_empty.cpp"
 				>
 			</File>
 			<File
@@ -403,6 +403,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\svncpp\map_wrapper.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\m_check.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\svncpp\m_is_empty.hpp"
 				>
 			</File>
 			<File

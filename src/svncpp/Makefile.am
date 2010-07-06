@@ -20,6 +20,7 @@ libsvncpp_la_SOURCES= \
 	entry.cpp \
 	info.cpp \
 	log_entry.cpp \
+	m_is_empty.cpp \
 	path.cpp \
 	pool.cpp \
 	property.cpp \

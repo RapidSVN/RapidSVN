@@ -32,6 +32,8 @@
 #include "svncpp/dirent.hpp"
 #include "svncpp/exception.hpp"
 
+#include "m_is_empty.hpp"
+
 
 static int
 compare_items_as_paths(const svn_sort__item_t *a, const svn_sort__item_t *b)
@@ -46,7 +48,7 @@ namespace svn
         const svn_dirent_t *dirent, const svn_lock_t *lock,
         const char *abs_path, apr_pool_t *pool)
   {
-    if (strlen(path) > 0)
+    if (!isEmpty(path))
     {
       DirEntries * entries = static_cast<DirEntries *>(baton);
       entries->push_back(
