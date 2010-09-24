@@ -31,7 +31,7 @@ MSGFMT=python $(top_srcdir)/tools/msgfmt.py
 
 all-mo:
 	for i in $(RAPIDSVN_LANGUAGES) ; do \
-		$(MSGFMT) -o $(srcdir)/$$i/rapidsvn.mo $(srcdir)/$$i/rapidsvn.po ; \
+	    $(MSGFMT) -o $(srcdir)/$$i/rapidsvn.mo $(srcdir)/$$i/rapidsvn.po ; \
 	done
 
 all: all-mo
@@ -39,6 +39,6 @@ all: all-mo
 distclean: clean
 clean:
 	for i in $(RAPIDSVN_LANGUAGES) ; do \
-		test -f $(srcdir)/$$i/rapidsvn.mo && rm $(srcdir)/$$i/rapidsvn.mo ; \
+	    if [ -f $(srcdir)/$$i/rapidsvn.mo ] ; then rm $(srcdir)/$$i/rapidsvn.mo ; fi ; \
 	done
 .PHONY: all-mo
