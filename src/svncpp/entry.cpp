@@ -24,7 +24,6 @@
 
 // svncpp
 #include "svncpp/entry.hpp"
-#include "m_check.hpp"
 
 namespace svn
 {

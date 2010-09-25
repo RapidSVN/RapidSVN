@@ -29,7 +29,6 @@
 #include "svncpp/exception.hpp"
 #include "svncpp/pool.hpp"
 #include "svncpp/targets.hpp"
-#include "m_check.hpp"
 
 namespace svn
 {

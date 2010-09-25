@@ -32,7 +32,6 @@
 #include "svncpp/exception.hpp"
 #include "svncpp/pool.hpp"
 #include "svncpp/status.hpp"
-#include "m_check.hpp"
 
 namespace svn
 {

@@ -24,7 +24,6 @@
 
 // subversion api
 #include "svn_client.h"
-//#include "svn_utf.h"
 
 // svncpp
 #include "svncpp/exception.hpp"
@@ -32,7 +31,6 @@
 #include "svncpp/pool.hpp"
 #include "svncpp/property.hpp"
 #include "svncpp/revision.hpp"
-#include "m_check.hpp"
 
 namespace svn
 {
