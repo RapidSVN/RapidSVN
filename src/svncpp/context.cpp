@@ -192,15 +192,10 @@ public:
       ctx.auth_baton = ab;
       ctx.log_msg_func = onLogMsg;
       ctx.log_msg_baton = this;
-      ctx.notify_func = onNotify;
-      ctx.notify_baton = this;
-      ctx.cancel_func = onCancel;
-      ctx.cancel_baton = this;
-
-#if (SVN_VER_MAJOR >= 1) && (SVN_VER_MINOR >= 2)
       ctx.notify_func2 = onNotify2;
       ctx.notify_baton2 = this;
-#endif
+      ctx.cancel_func = onCancel;
+      ctx.cancel_baton = this;
     }
 
     void setAuthCache(bool value)
@@ -269,49 +264,29 @@ public:
     /**
      * this is the callback function for the subversion
      * api functions to signal the progress of an action
-     */
-    static void
-    onNotify(void * baton,
-             const char *path,
-             svn_wc_notify_action_t action,
-             svn_node_kind_t kind,
-             const char *mime_type,
-             svn_wc_notify_state_t content_state,
-             svn_wc_notify_state_t prop_state,
-             svn_revnum_t revision)
-    {
-      if (baton == 0)
-        return;
-
-      Data * data = static_cast <Data *>(baton);
-
-      data->notify(path, action, kind, mime_type, content_state,
-                   prop_state, revision);
-    }
-
-
-#if (SVN_VER_MAJOR >= 1) && (SVN_VER_MINOR >= 2)
-    /**
-     * this is the callback function for the subversion 1.2
-     * api functions to signal the progress of an action
      *
-     * @todo right now we forward only to @a onNotify,
-     *       but maybe we should a notify2 to the listener
      * @since subversion 1.2
      */
     static void
     onNotify2(void*baton,const svn_wc_notify_t *action,apr_pool_t *)
     {
-      if (!baton)
-        return;
+      Data * data = static_cast <Data *>(baton);
 
-      // for now forward the call to @a onNotify
-      onNotify(baton, action->path, action->action,
-               action->kind, action->mime_type,
-               action->content_state, action->prop_state,
-               action->revision);
+      data->notify(action->path, 
+                   action->action, 
+                   action->kind, 
+                   action->mime_type, 
+                   action->content_state,
+                   action->prop_state, 
+                   action->revision
+                   /* TODO
+                   , action->lock_state,
+                   action->changelist_name,
+                   action->merge_range
+                   action->rev_props
+                   */
+        );
     }
-#endif
 
 
     /**
