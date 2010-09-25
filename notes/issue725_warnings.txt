@@ -1,0 +1,222 @@
+client_annotate.cpp:60: warning: ‘svn_error_t* svn_client_blame(const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_error_t* (*)(void*, apr_int64_t, svn_revnum_t, const char*, const char*, const char*, apr_pool_t*), void*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2170)
+client_annotate.cpp:67: warning: ‘svn_error_t* svn_client_blame(const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_error_t* (*)(void*, apr_int64_t, svn_revnum_t, const char*, const char*, const char*, apr_pool_t*), void*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2170)
+client_cat.cpp:116: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_cat.cpp:121: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_cat.cpp:147: warning: ‘svn_stream_t* svn_stream_from_aprfile(apr_file_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:817)
+client_cat.cpp:147: warning: ‘svn_stream_t* svn_stream_from_aprfile(apr_file_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:817)
+client_diff.cpp:106: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:108: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:117: warning: ‘svn_error_t* svn_client_diff(const apr_array_header_t*, const char*, const svn_opt_revision_t*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, apr_file_t*, apr_file_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2334)
+client_diff.cpp:123: warning: ‘svn_error_t* svn_client_diff(const apr_array_header_t*, const char*, const svn_opt_revision_t*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, apr_file_t*, apr_file_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2334)
+client_diff.cpp:180: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:182: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:191: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:193: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:202: warning: ‘svn_error_t* svn_client_diff(const apr_array_header_t*, const char*, const svn_opt_revision_t*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, apr_file_t*, apr_file_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2334)
+client_diff.cpp:208: warning: ‘svn_error_t* svn_client_diff(const apr_array_header_t*, const char*, const svn_opt_revision_t*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, apr_file_t*, apr_file_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2334)
+client_diff.cpp:265: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:267: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:276: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:278: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:287: warning: ‘svn_error_t* svn_client_diff_peg(const apr_array_header_t*, const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, apr_file_t*, apr_file_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2439)
+client_diff.cpp:293: warning: ‘svn_error_t* svn_client_diff_peg(const apr_array_header_t*, const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, apr_file_t*, apr_file_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2439)
+client_diff.cpp:95: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_diff.cpp:97: warning: ‘svn_error_t* svn_io_open_unique_file(apr_file_t**, const char**, const char*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_io.h:236)
+client_modify.cpp:136: warning: ‘svn_error_t* svn_client_revert(const apr_array_header_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2999)
+client_modify.cpp:139: warning: ‘svn_error_t* svn_client_revert(const apr_array_header_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2999)
+client_modify.cpp:156: warning: ‘svn_error_t* svn_client_add(const char*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1386)
+client_modify.cpp:159: warning: ‘svn_error_t* svn_client_add(const char*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1386)
+client_modify.cpp:175: warning: ‘svn_error_t* svn_client_update2(apr_array_header_t**, const apr_array_header_t*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1183)
+client_modify.cpp:181: warning: ‘svn_error_t* svn_client_update2(apr_array_header_t**, const apr_array_header_t*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1183)
+client_modify.cpp:221: warning: ‘svn_error_t* svn_client_commit2(svn_client_commit_info_t**, const apr_array_header_t*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1756)
+client_modify.cpp:226: warning: ‘svn_error_t* svn_client_commit2(svn_client_commit_info_t**, const apr_array_header_t*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1756)
+client_modify.cpp:245: warning: ‘svn_error_t* svn_client_copy(svn_client_commit_info_t**, const char*, const svn_opt_revision_t*, const char*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3230)
+client_modify.cpp:250: warning: ‘svn_error_t* svn_client_copy(svn_client_commit_info_t**, const char*, const svn_opt_revision_t*, const char*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3230)
+client_modify.cpp:266: warning: ‘svn_error_t* svn_client_move2(svn_client_commit_info_t**, const char*, const char*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3379)
+client_modify.cpp:271: warning: ‘svn_error_t* svn_client_move2(svn_client_commit_info_t**, const char*, const char*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3379)
+client_modify.cpp:285: warning: ‘svn_error_t* svn_client_mkdir(svn_client_commit_info_t**, const apr_array_header_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1461)
+client_modify.cpp:288: warning: ‘svn_error_t* svn_client_mkdir(svn_client_commit_info_t**, const apr_array_header_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1461)
+client_modify.cpp:301: warning: ‘svn_error_t* svn_client_mkdir(svn_client_commit_info_t**, const apr_array_header_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1461)
+client_modify.cpp:304: warning: ‘svn_error_t* svn_client_mkdir(svn_client_commit_info_t**, const apr_array_header_t*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1461)
+client_modify.cpp:329: warning: ‘svn_error_t* svn_client_resolved(const char*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3022)
+client_modify.cpp:332: warning: ‘svn_error_t* svn_client_resolved(const char*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3022)
+client_modify.cpp:352: warning: ‘svn_error_t* svn_client_export3(svn_revnum_t*, const char*, const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, const char*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3882)
+client_modify.cpp:362: warning: ‘svn_error_t* svn_client_export3(svn_revnum_t*, const char*, const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, const char*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3882)
+client_modify.cpp:377: warning: ‘svn_error_t* svn_client_switch(svn_revnum_t*, const char*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1284)
+client_modify.cpp:383: warning: ‘svn_error_t* svn_client_switch(svn_revnum_t*, const char*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1284)
+client_modify.cpp:402: warning: ‘svn_error_t* svn_client_import(svn_client_commit_info_t**, const char*, const char*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1649)
+client_modify.cpp:407: warning: ‘svn_error_t* svn_client_import(svn_client_commit_info_t**, const char*, const char*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1649)
+client_modify.cpp:432: warning: ‘svn_error_t* svn_client_merge(const char*, const svn_opt_revision_t*, const char*, const svn_opt_revision_t*, const char*, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2677)
+client_modify.cpp:442: warning: ‘svn_error_t* svn_client_merge(const char*, const svn_opt_revision_t*, const char*, const svn_opt_revision_t*, const char*, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2677)
+client_modify.cpp:479: warning: ‘svn_error_t* svn_client_propget(apr_hash_t**, const char*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3665)
+client_modify.cpp:485: warning: ‘svn_error_t* svn_client_propget(apr_hash_t**, const char*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3665)
+client_modify.cpp:48: warning: ‘svn_error_t* svn_client_checkout2(svn_revnum_t*, const char*, const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1072)
+client_modify.cpp:522: warning: ‘svn_error_t* svn_client_propset2(const char*, const svn_string_t*, const char*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3497)
+client_modify.cpp:528: warning: ‘svn_error_t* svn_client_propset2(const char*, const svn_string_t*, const char*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3497)
+client_modify.cpp:56: warning: ‘svn_error_t* svn_client_checkout2(svn_revnum_t*, const char*, const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1072)
+client_modify.cpp:73: warning: ‘svn_error_t* svn_client_delete(svn_client_commit_info_t**, const apr_array_header_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1547)
+client_modify.cpp:77: warning: ‘svn_error_t* svn_client_delete(svn_client_commit_info_t**, const apr_array_header_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1547)
+client_modify.cpp:90: warning: ‘svn_error_t* svn_client_delete(svn_client_commit_info_t**, const apr_array_header_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1547)
+client_modify.cpp:94: warning: ‘svn_error_t* svn_client_delete(svn_client_commit_info_t**, const apr_array_header_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1547)
+client_property.cpp:112: warning: ‘svn_error_t* svn_client_propget(apr_hash_t**, const char*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3665)
+client_property.cpp:118: warning: ‘svn_error_t* svn_client_propget(apr_hash_t**, const char*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3665)
+client_property.cpp:171: warning: ‘svn_error_t* svn_client_propset2(const char*, const svn_string_t*, const char*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3497)
+client_property.cpp:177: warning: ‘svn_error_t* svn_client_propset2(const char*, const svn_string_t*, const char*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3497)
+client_property.cpp:202: warning: ‘svn_error_t* svn_client_propset(const char*, const svn_string_t*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3513)
+client_property.cpp:206: warning: ‘svn_error_t* svn_client_propset(const char*, const svn_string_t*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3513)
+client_property.cpp:328: warning: ‘svn_error_t* svn_client_revprop_set(const char*, const svn_string_t*, const char*, const svn_opt_revision_t*, svn_revnum_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3577)
+client_property.cpp:335: warning: ‘svn_error_t* svn_client_revprop_set(const char*, const svn_string_t*, const char*, const svn_opt_revision_t*, svn_revnum_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3577)
+client_property.cpp:364: warning: ‘svn_error_t* svn_client_revprop_set(const char*, const svn_string_t*, const char*, const svn_opt_revision_t*, svn_revnum_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3577)
+client_property.cpp:371: warning: ‘svn_error_t* svn_client_revprop_set(const char*, const svn_string_t*, const char*, const svn_opt_revision_t*, svn_revnum_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3577)
+client_property.cpp:54: warning: ‘svn_error_t* svn_client_proplist(apr_array_header_t**, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3770)
+client_property.cpp:59: warning: ‘svn_error_t* svn_client_proplist(apr_array_header_t**, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3770)
+client_status.cpp:108: warning: ‘svn_error_t* svn_client_status2(svn_revnum_t*, const char*, const svn_opt_revision_t*, void (*)(void*, const char*, svn_wc_status2_t*), void*, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1867)
+client_status.cpp:120: warning: ‘svn_error_t* svn_client_status2(svn_revnum_t*, const char*, const svn_opt_revision_t*, void (*)(void*, const char*, svn_wc_status2_t*), void*, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1867)
+client_status.cpp:299: warning: ‘svn_error_t* svn_client_status2(svn_revnum_t*, const char*, const svn_opt_revision_t*, void (*)(void*, const char*, svn_wc_status2_t*), void*, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1867)
+client_status.cpp:311: warning: ‘svn_error_t* svn_client_status2(svn_revnum_t*, const char*, const svn_opt_revision_t*, void (*)(void*, const char*, svn_wc_status2_t*), void*, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1867)
+client_status.cpp:355: warning: ‘svn_error_t* svn_client_log2(const apr_array_header_t*, const svn_opt_revision_t*, const svn_opt_revision_t*, int, svn_boolean_t, svn_boolean_t, svn_error_t* (*)(void*, apr_hash_t*, svn_revnum_t, const char*, const char*, const char*, apr_pool_t*), void*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2028)
+client_status.cpp:365: warning: ‘svn_error_t* svn_client_log2(const apr_array_header_t*, const svn_opt_revision_t*, const svn_opt_revision_t*, int, svn_boolean_t, svn_boolean_t, svn_error_t* (*)(void*, apr_hash_t*, svn_revnum_t, const char*, const char*, const char*, apr_pool_t*), void*, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:2028)
+client_status.cpp:405: warning: ‘svn_error_t* svn_client_info(const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_error_t* (*)(void*, const char*, const svn_info_t*, apr_pool_t*), void*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:4533)
+client_status.cpp:412: warning: ‘svn_error_t* svn_client_info(const char*, const svn_opt_revision_t*, const svn_opt_revision_t*, svn_error_t* (*)(void*, const char*, const svn_info_t*, apr_pool_t*), void*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:4533)
+context.cpp:132: warning: ‘void svn_client_get_simple_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:160)
+context.cpp:134: warning: ‘void svn_client_get_simple_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:160)
+context.cpp:138: warning: ‘void svn_client_get_username_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:207)
+context.cpp:140: warning: ‘void svn_client_get_username_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:207)
+context.cpp:144: warning: ‘void svn_client_get_simple_prompt_provider(svn_auth_provider_object_t**, svn_error_t* (*)(svn_auth_cred_simple_t**, void*, const char*, const char*, svn_boolean_t, apr_pool_t*), void*, int, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:111)
+context.cpp:149: warning: ‘void svn_client_get_simple_prompt_provider(svn_auth_provider_object_t**, svn_error_t* (*)(svn_auth_cred_simple_t**, void*, const char*, const char*, svn_boolean_t, apr_pool_t*), void*, int, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:111)
+context.cpp:156: warning: ‘void svn_client_get_ssl_server_trust_file_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:223)
+context.cpp:156: warning: ‘void svn_client_get_ssl_server_trust_file_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:223)
+context.cpp:160: warning: ‘void svn_client_get_ssl_client_cert_file_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:240)
+context.cpp:160: warning: ‘void svn_client_get_ssl_client_cert_file_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:240)
+context.cpp:164: warning: ‘void svn_client_get_ssl_client_cert_pw_file_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:257)
+context.cpp:164: warning: ‘void svn_client_get_ssl_client_cert_pw_file_provider(svn_auth_provider_object_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:257)
+context.cpp:168: warning: ‘void svn_client_get_ssl_server_trust_prompt_provider(svn_auth_provider_object_t**, svn_error_t* (*)(svn_auth_cred_ssl_server_trust_t**, void*, const char*, apr_uint32_t, const svn_auth_ssl_server_cert_info_t*, svn_boolean_t, apr_pool_t*), void*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:274)
+context.cpp:169: warning: ‘void svn_client_get_ssl_server_trust_prompt_provider(svn_auth_provider_object_t**, svn_error_t* (*)(svn_auth_cred_ssl_server_trust_t**, void*, const char*, apr_uint32_t, const svn_auth_ssl_server_cert_info_t*, svn_boolean_t, apr_pool_t*), void*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:274)
+context.cpp:174: warning: ‘void svn_client_get_ssl_client_cert_pw_prompt_provider(svn_auth_provider_object_t**, svn_error_t* (*)(svn_auth_cred_ssl_client_cert_pw_t**, void*, const char*, svn_boolean_t, apr_pool_t*), void*, int, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:317)
+context.cpp:175: warning: ‘void svn_client_get_ssl_client_cert_pw_prompt_provider(svn_auth_provider_object_t**, svn_error_t* (*)(svn_auth_cred_ssl_client_cert_pw_t**, void*, const char*, svn_boolean_t, apr_pool_t*), void*, int, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:317)
+path.cpp:167: warning: ‘const char* svn_path_url_add_component(const char*, const char*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_path.h:540)
+path.cpp:169: warning: ‘const char* svn_path_url_add_component(const char*, const char*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_path.h:540)
+property.cpp:101: warning: ‘svn_error_t* svn_client_propget(apr_hash_t**, const char*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3665)
+property.cpp:107: warning: ‘svn_error_t* svn_client_propget(apr_hash_t**, const char*, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3665)
+property.cpp:137: warning: ‘svn_error_t* svn_client_propset2(const char*, const svn_string_t*, const char*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3497)
+property.cpp:143: warning: ‘svn_error_t* svn_client_propset2(const char*, const svn_string_t*, const char*, svn_boolean_t, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3497)
+property.cpp:155: warning: ‘svn_error_t* svn_client_propset(const char*, const svn_string_t*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3513)
+property.cpp:159: warning: ‘svn_error_t* svn_client_propset(const char*, const svn_string_t*, const char*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3513)
+property.cpp:62: warning: ‘svn_error_t* svn_client_proplist(apr_array_header_t**, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3770)
+property.cpp:67: warning: ‘svn_error_t* svn_client_proplist(apr_array_header_t**, const char*, const svn_opt_revision_t*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:3770)
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_16x16.xpm:24: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_32x32.xpm:43: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+res/bitmaps/rapidsvn_48x48.xpm:59: warning: deprecated conversion from string constant to ‘char*’
+wc.cpp:70: warning: ‘svn_error_t* svn_wc_ensure_adm(const char*, const char*, const char*, svn_revnum_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:2597)
+wc.cpp:74: warning: ‘svn_error_t* svn_wc_ensure_adm(const char*, const char*, const char*, svn_revnum_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:2597)
