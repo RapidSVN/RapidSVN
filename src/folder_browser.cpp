@@ -586,8 +586,15 @@ public:
     if (indicateModifiedChildren)
     {
       // Only get interesting entries
-      svn::StatusEntries modifiedEntries = 
-        client.status(parentPathUtf8.c_str(), true, false);
+      svn::StatusFilter modifiedFilter;
+      modifiedFilter.showUnversioned = false;
+      modifiedFilter.showUnmodified = false;
+      modifiedFilter.showModified = true;
+      modifiedFilter.showConflicted = true;
+      modifiedFilter.showExternals = false;
+      svn::StatusEntries modifiedEntries;
+      client.status(parentPathUtf8.c_str(), modifiedFilter, true, false,
+        modifiedEntries);
       wxChar pathSeparator = wxFileName::GetPathSeparator();
 
       svn::StatusEntries::const_iterator it;
