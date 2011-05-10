@@ -5,7 +5,7 @@ DIST_SUBDIRS=${SUBDIRS} locale res tests
 noinst_HEADERS=${wildcard *.hpp} ${wildcard *.h}
 bin_PROGRAMS=rapidsvn
 
-EXTRA_DIST=${wildcard *.fbp}
+EXTRA_DIST=${wildcard *.fbp} rapidsvn.rc
 
 rapidsvn_SOURCES= \
 	about_dlg.cpp \
