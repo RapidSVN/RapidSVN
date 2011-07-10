@@ -61,10 +61,10 @@ echo -n \
 	<string>????</string>
 	<key>CFBundleVersion</key><string>0.13.0</string>
 	<key>CFBundleShortVersionString</key><string>0.13.0</string>
-	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.13.0, (c) 2002-2009 RapidSVN</string>
-	<key>CFBundleLongVersionString</key><string>0.13.0, (c) 2002-2009 RapidSVN</string>
+	<key>CFBundleGetInfoString</key><string>RapidSVN version 0.13.0, (c) 2002-2011 RapidSVN</string>
+	<key>CFBundleLongVersionString</key><string>0.13.0, (c) 2002-2011 RapidSVN</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2002-2007 RapidSVN</string>
+	<string>Copyright 2002-2011 RapidSVN</string>
 	<key>LSRequiresCarbon</key>
         <true/>
 	<key>CSResourcesFileMapped</key>

@@ -1,6 +1,6 @@
 /*
  * ====================================================================
- * Copyright (c) 2002-2010 The RapidSVN Group.  All rights reserved.
+ * Copyright (c) 2002-2011 The RapidSVN Group.  All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 #define APPLICATION_NAME wxT("RapidSVN")
 
-#define RAPIDSVN_COPYRIGHT "(c) 2002-2010 The RapidSVN Group. All rights reserved."
+#define RAPIDSVN_COPYRIGHT "(c) 2002-2011 The RapidSVN Group. All rights reserved."
 
 /* Symbols that define the version number.
  * The numbers are maintained in the file version.xml (in the

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ====================================================================
-# Copyright (c) 2002-2010 The RapidSVN Group.  All rights reserved.
+# Copyright (c) 2002-2011 The RapidSVN Group.  All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
