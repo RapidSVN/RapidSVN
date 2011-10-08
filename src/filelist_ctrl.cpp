@@ -445,6 +445,14 @@ CompareColumn(svn::Status * ps1,
     res = Compare(e1.conflictWrk(), e2.conflictWrk());
     break;
 
+  case FileListCtrl::COL_LOCK_OWNER:
+    res = Compare(e1.lockOwner(), e2.lockOwner());
+    break;
+
+  case FileListCtrl::COL_LOCK_COMMENT:
+    res = Compare(e1.lockComment(), e2.lockComment());
+    break;
+
   default:
     res = 0;
   }

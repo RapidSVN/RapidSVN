@@ -277,6 +277,24 @@ namespace svn
     }
 
     /**
+     * @return lock owner of this file
+     */
+    const char *
+    lockOwner() const
+    {
+      return m_entry->lock_owner;
+    }
+
+    /**
+     * @return lock comment of this file
+     */
+    const char *
+    lockComment() const
+    {
+      return m_entry->lock_comment;
+    }
+
+    /**
      * @return svn_wc_entry_t for this class
      */
     operator svn_wc_entry_t * () const
