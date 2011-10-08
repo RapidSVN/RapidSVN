@@ -188,6 +188,8 @@ public:
 protected:
   void Trace(const wxString & msg);
 
+  void TraceDefaultMessage(svn_wc_notify_action_t action, const char * path);
+
 private:
   // implementation specific data
   struct Data;

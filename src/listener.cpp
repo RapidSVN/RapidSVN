@@ -282,6 +282,55 @@ public:
 
 };
 
+struct UpdateCounter
+{
+public:
+  int conflicted;
+  int merged;
+  int added;
+  int deleted;
+  int updated;
+  int externalCounter;
+
+  UpdateCounter() : conflicted(0), merged(0), added(0), deleted(0), updated(0), externalCounter(0) {}
+
+  void Reset()
+  {
+    conflicted = 0;
+    merged = 0;
+    added = 0;
+    deleted = 0;
+    updated = 0;
+    externalCounter = 0;
+  }
+
+  wxString GetMessage() const
+  {
+    wxString message;
+    AppendToMessage(_("Conflicted"), conflicted, message);
+    AppendToMessage(_("Merged"), merged, message);
+    AppendToMessage(_("Added"), added, message);
+    AppendToMessage(_("Deleted"), deleted, message);
+    AppendToMessage(_("Updated"), updated, message);
+    return message;
+  }
+
+private:
+  void AppendToMessage(const wxString &label, int count, wxString &output) const
+  {
+    if (count > 0)
+    {
+      if (!output.IsEmpty())
+      {
+        output += wxT(", ");
+      }
+      output += label;
+      output += wxT(": ");
+      output += wxString::Format(wxT("%d"), count);
+    }
+  }
+};
+
 Listener::Listener(wxWindow * parent)
 {
   m = new Data(parent);
@@ -339,13 +388,7 @@ Listener::GetContext()
 }
 
 void
-Listener::contextNotify(const char *path,
-                        svn_wc_notify_action_t action,
-                        svn_node_kind_t WXUNUSED(kind),
-                        const char * WXUNUSED(mime_type),
-                        svn_wc_notify_state_t WXUNUSED(content_state),
-                        svn_wc_notify_state_t WXUNUSED(prop_state),
-                        svn_revnum_t WXUNUSED(revision))
+Listener::TraceDefaultMessage(svn_wc_notify_action_t action, const char * path)
 {
   static const wxChar *
   ACTION_NAMES [] =
@@ -357,12 +400,12 @@ Listener::contextNotify(const char *path,
     _("Revert"),           // svn_wc_notify_revert,
     NULL ,                 // NOT USED HERE svn_wc_notify_failed_revert,
     _("Resolved"),         // svn_wc_notify_resolved,
-    _("Skip"),             // NOT USED HERE svn_wc_notify_skip,
+    _("Skip"),             // svn_wc_notify_skip,
     _("Deleted"),          // svn_wc_notify_update_delete,
     _("Added"),            // svn_wc_notify_update_add,
     _("Updated"),          // svn_wc_notify_update_update,
     NULL,                  // NOT USED HERE svn_wc_notify_update_completed,
-    NULL,                  // NOT USED HERE svn_wc_notify_update_external,
+    _("External"),         // svn_wc_notify_update_external,
     NULL,                  // NOT USED HERE svn_wc_notify_status_completed
     NULL,                  // NOT USED HERE svn_wc_notify_status_external
     _("Modified"),         // svn_wc_notify_commit_modified,
@@ -385,6 +428,81 @@ Listener::contextNotify(const char *path,
     msg.Printf(wxT("%s: %s"), ACTION_NAMES[action], Utf8ToLocal(path).c_str());
 
     Trace(msg);
+  }
+}
+
+void
+Listener::contextNotify(const char *path,
+                        svn_wc_notify_action_t action,
+                        svn_node_kind_t kind,
+                        const char * WXUNUSED(mime_type),
+                        svn_wc_notify_state_t content_state,
+                        svn_wc_notify_state_t prop_state,
+                        svn_revnum_t revision)
+{
+  static UpdateCounter updateCounter;
+
+  TraceDefaultMessage(action, path);
+  switch (action)
+  {
+  case svn_wc_notify_update_add:
+    if ((content_state == svn_wc_notify_state_conflicted) || (prop_state == svn_wc_notify_state_conflicted))
+    {
+      updateCounter.conflicted++;
+    }
+    else
+    {
+      updateCounter.added++;
+    }
+    break;
+
+  case svn_wc_notify_update_delete:
+    updateCounter.deleted++;
+    break;
+
+  case svn_wc_notify_update_update:
+    if ((kind == svn_node_dir) && ((prop_state == svn_wc_notify_state_inapplicable) || (prop_state == svn_wc_notify_state_unknown) || (prop_state == svn_wc_notify_state_unchanged)))
+    {
+      break;
+    }
+    if ((content_state == svn_wc_notify_state_conflicted) || (prop_state == svn_wc_notify_state_conflicted))
+    {
+      updateCounter.conflicted++;
+    }
+    else if ((content_state == svn_wc_notify_state_merged) || (prop_state == svn_wc_notify_state_merged))
+    {
+      updateCounter.merged++;
+    }
+    else if ((content_state == svn_wc_notify_state_changed) || (prop_state == svn_wc_notify_state_changed))
+    {
+      updateCounter.updated++;
+    }
+    break;
+
+  case svn_wc_notify_update_external:
+    updateCounter.externalCounter++;
+    break;
+
+  case svn_wc_notify_update_completed:
+    if (updateCounter.externalCounter == 0)
+    {
+      Trace(wxString::Format(_("Completed at revision %d"), revision));
+      wxString info = updateCounter.GetMessage();
+      if (!info.IsEmpty())
+      {
+        Trace(info);
+      }
+      updateCounter.Reset();
+    }
+    else
+    {
+      Trace(wxString::Format(_("Completed %s at revision %d"), Utf8ToLocal(path).c_str(), revision));
+      updateCounter.externalCounter--;
+    }
+    break;
+
+  default:
+    break;
   }
 
 #ifdef USE_SIMPLE_WORKER
