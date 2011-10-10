@@ -1,0 +1,23 @@
+import os.path
+
+env = Environment()
+sources = Glob("#src/svncpp/*.cpp")
+env.StaticLibrary(source = sources, target = "svncpp")
+env.Append(CPPPATH = ['#include'])
+
+deps = {
+	'svn': ['/usr/include/subversion-1'],
+	'apr': ['/usr/include/apr-1.0']
+}
+
+for dep in deps:
+	for dir in deps[dep]:
+		if os.path.isdir(dir):
+			env.Append(CPPPATH = [dir])
+			break
+
+# -----------------------------------------------------------------
+# local variables:
+# eval: (load-file "../../../rapidsvn-dev.el")
+# end:
+#

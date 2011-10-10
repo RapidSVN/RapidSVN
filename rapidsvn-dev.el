@@ -22,5 +22,10 @@
 (setq indent-tabs-mode nil)
 (setq angry-mob-with-torches-and-pitchforks t)
 
+;;; Enable Python Mode for SCONS build file
+(setq auto-mode-alist
+      (cons '("SConstruct" . python-mode) auto-mode-alist))
+ (setq auto-mode-alist
+      (cons '("SConscript" . python-mode) auto-mode-alist))
 
 (message "loaded rapidsvn-dev.el")

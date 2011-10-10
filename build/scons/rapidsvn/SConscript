@@ -1,0 +1,26 @@
+import os.path
+
+env = Environment()
+sources = Glob("#src/*.cpp")
+env.Program(source = sources, target = "rapidsvn")
+env.Append(CPPPATH = ['#include'])
+env.ParseConfig('wx-config --cflags --libs')
+env.Append(LIBS = ['svncpp'], LIBPATH = ['#build/scons/svncpp'])
+env.Append(LIBS = ['svn_client-1'])
+
+deps = {
+	'svn': ['/usr/include/subversion-1'],
+	'apr': ['/usr/include/apr-1.0']
+}
+
+for dep in deps:
+	for dir in deps[dep]:
+		if os.path.isdir(dir):
+			env.Append(CPPPATH = [dir])
+			break
+
+# -----------------------------------------------------------------
+# local variables:
+# eval: (load-file "../../../rapidsvn-dev.el")
+# end:
+#
