@@ -113,7 +113,7 @@ HistoryValidator::TransferToWindow()
       }
 
       // if we have an entry, select it
-      if (!comboBox->IsEmpty())
+      if (!static_cast<wxControlWithItems*>(comboBox)->IsEmpty())
         comboBox->SetSelection(0, 0);
     }
 
