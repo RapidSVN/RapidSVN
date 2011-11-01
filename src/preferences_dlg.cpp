@@ -126,7 +126,7 @@ bool
 PreferencesDlg::SelectExecutable(const wxString & title, wxTextCtrl * textCtrl)
 {
   wxFileDialog dlg(this, title, wxEmptyString, wxEmptyString,
-                   EXECUTABLE_WILDCARD, wxOPEN);
+                   EXECUTABLE_WILDCARD, wxFD_OPEN);
   dlg.SetPath(textCtrl->GetValue());
 
   if (dlg.ShowModal() != wxID_OK)

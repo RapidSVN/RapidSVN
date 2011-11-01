@@ -188,13 +188,14 @@ private:
 
     for (size_t idx = 0; idx < str.Length(); idx++)
     {
-      switch (str[idx])
+      wxChar s = str[idx];
+      switch (s)
       {
       case wxT('\r'):
       case wxT('\n'):
-        if (last != wxT(' '))
+        if (last != wxChar(' '))
         {
-          result += wxT(' ');
+          result += wxChar(' ');
         }
         break;
 

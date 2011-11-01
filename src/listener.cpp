@@ -167,7 +167,7 @@ public:
     wxMutexLocker lock(mutex);
     wxString localCertFile = wxFileSelector(
                                _("Select Certificate File"), wxT(""), wxT(""), wxT(""),
-                               wxT("*.*"), wxOPEN | wxFILE_MUST_EXIST, parent);
+                               wxT("*.*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST, parent);
     LocalToUtf8(localCertFile, certFile);
 
     dataReceived = !localCertFile.empty();
