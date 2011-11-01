@@ -55,62 +55,50 @@ AddActionTools(wxToolBarBase *toolBar)
   wxASSERT(toolBar);
   
   toolBar->AddTool(ID_Add,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(add_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Add selected"),
 		   _("Put files and directories under revision control"));
   
   toolBar->AddTool(ID_Delete,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(delete_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Delete selected"),
 		   _("Delete files and directories from version control"));
   
   toolBar->AddTool(ID_Update,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(update_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Update selected"),
 		   _("Bring changes from the repository into the working copy"));
   
   toolBar->AddTool(ID_Commit,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(commit_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Commit selected"),
 		   _("Send changes from your working copy to the repository"));
   
   toolBar->AddTool(ID_Revert,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(revert_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Revert selected"),
 		   _("Restore pristine working copy file (undo all local edits)"));
   
   toolBar->AddTool(ID_Resolve,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(resolve_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Resolve selected"),
 		   _("Remove 'conflicted' state on working copy files or directories"));
   
@@ -122,22 +110,18 @@ static void
 AddInfoTools(wxToolBarBase *toolBar)
 {
   toolBar->AddTool(ID_Info,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(info_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Info selected"),
 		   _("Display info about selected entries"));
   
   toolBar->AddTool(ID_Log,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(log_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Log selected"),
 		   _("Show the log messages for the selected entries"));
   
@@ -197,12 +181,10 @@ CreateMainToolBar(wxFrame * frame)
 
   // Set toolbar refresh button.
   toolBar->AddTool(ID_Refresh,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(refresh_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   (wxObject *) NULL,
+                   wxITEM_NORMAL,
 		   _("Refresh"),
 		   _("Refresh the file list"));
   
@@ -210,12 +192,10 @@ CreateMainToolBar(wxFrame * frame)
   
   // STOP button
   toolBar->AddTool(ID_Stop,
+                   wxEmptyString,
 		   EMBEDDED_BITMAP(stop_png),
 		   wxNullBitmap,
-		   FALSE,
-		   -1,
-		   -1,
-		   0,
+                   wxITEM_NORMAL,
 		   _("Stop"),
 		   _("Stop the current action"));
   
