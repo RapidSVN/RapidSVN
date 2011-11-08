@@ -432,18 +432,11 @@ Contents:
         structure. This binary can still rely on other shared libraries,
         but since most applications on Mac OS/X are installed only by
         dragging the application icon to the destination you cannot
-        be sure, whethere the installed shared libraries match the
+        be sure, whether the installed shared libraries match the
         versions you need.
         
         We decided to use only static linking for Subversion and wxWidgets
         on Mac OS/X, so everything is included in a single binary.
-
-		Berkeley DB (BDB) support is not included because of difficulties
-		enabling static BDB support while building Subversion 1.6.2+. (It
-		might work as a dynamic build with a normally-installed Berkeley
-		DB on the system, as per Linux and other Unixes, but this would
-		not result in a self-contained and easily-installed Mac OS X
-		application.)
 
 4.1     Preparations 
 
@@ -451,12 +444,14 @@ Contents:
         $HOME/RapidSVN-build
 
 	This will be our temporary directory where all the necessary
-	libraries that arent part of Darwin/OS X will be.
+	libraries that aren't part of Darwin/OS X will be.
 
 	The RapidSVN working copy will be there too.
 
 	To make life easier for the configure scripts run
-	"export PATH=$HOME/RapidSVN-build/bin:$PATH"
+	export PATH=$HOME/RapidSVN-build/bin:$PATH
+	export RAPIDSVN_ARCH="-arch i386 -arch ppc" (10.3 - 10.6)
+	export RAPIDSVN_ARCH="-arch i386" (10.7+)
 	
 
 4.2     Download and Install required packages
@@ -464,24 +459,88 @@ Contents:
 	Make sure you have installed Xcode (so gcc will work).
 
 	Download the following tarballs:
-	- wxMac-2.8.10.tar.gz
-	- subversion-1.6.2.tar.gz (or newer)
-	- subversion-deps-1.6.2.tar.gz (or newer)
+	- db-4.8.30.NC.tar.gz
+	- apr-1.4.5.tar.bz2
+	- apr-util-1.3.12.tar.bz2
+	- neon-0.29.6.tar.gz
+	- subversion-1.7.1.tar.bz2
+	- wxMac-2.8.12.tar.gz
 
 	Extract the packages to $HOME/RapidSVN-build, so
-	we have a directory $HOME/RapidSVN-build/subversion-1.6.2
-    and so on.
+	we have a directory $HOME/RapidSVN-build/subversion-1.7.1
+	and so on.
 
 
-4.3     Configure/Compile/Install Subversion
+4.3     Configure/Compile/Install Berkeley DB
+
+	cd to:
+	  $HOME/RapidSVN-build/db-4.8.30NC/build_unix
+
+	Configure a static build:
+	  CFLAGS="-O3 $RAPIDSVN_ARCH -mmacosx-version-min=10.4 -fvisibility=hidden" \
+            LDFLAGS="$RAPIDSVN_ARCH -mmacosx-version-min=10.4" \
+            ../dist/configure --prefix=$HOME/RapidSVN-build --disable-shared
+
+        Compile and install Berkeley DB:
+          make
+          make install
+
+
+4.4     Configure/Compile/Install apr
+
+	cd to:
+	  $HOME/RapidSVN-build/apr-1.4.5
+
+	Configure a static build:
+	  CFLAGS="-O3 $RAPIDSVN_ARCH -mmacosx-version-min=10.4 -fvisibility=hidden" \
+            LDFLAGS="$RAPIDSVN_ARCH -mmacosx-version-min=10.4" \
+            ./configure --prefix=$HOME/RapidSVN-build --disable-shared
+
+        Compile and install apr:
+          make
+          make install
+
+
+4.5     Configure/Compile/Install apr-util
+
+	cd to:
+	  $HOME/RapidSVN-build/apr-util-1.3.12
+
+	Configure a static build:
+	  CFLAGS="-O3 $RAPIDSVN_ARCH -mmacosx-version-min=10.4 -fvisibility=hidden" \
+            LDFLAGS="$RAPIDSVN_ARCH -mmacosx-version-min=10.4" \
+            ./configure --prefix=$HOME/RapidSVN-build --with-apr=$HOME/RapidSVN-build \
+             --with-dbm=db48 --with-berkeley-db=$HOME/RapidSVN-build
+
+        Compile and install apr-util:
+          make
+          make install
+
+
+4.6     Configure/Compile/Install neon
+
+	cd to:
+	  $HOME/RapidSVN-build/neon-0.29.6
+
+	Configure a static build:
+	  CFLAGS="-O3 $RAPIDSVN_ARCH -mmacosx-version-min=10.4 -fvisibility=hidden" \
+            LDFLAGS="$RAPIDSVN_ARCH -mmacosx-version-min=10.4" \
+            ./configure --prefix=$HOME/RapidSVN-build --disable-shared --with-ssl=openssl
+
+        Compile and install neon:
+          make
+          make install
+
+
+4.7     Configure/Compile/Install Subversion
 
         cd to:
-          $HOME/RapidSVN-build/subversion-1.6.2
+          $HOME/RapidSVN-build/subversion-1.7.1
 
         Configure a static build with OpenSSL and Berkeley DB support:
-          CFLAGS="-g -O2 -arch i386 -arch ppc -mmacosx-version-min=10.3 -fvisibility=hidden" \
-            LDFLAGS="-arch i386 -arch ppc -mmacosx-version-min=10.3" ./configure --prefix=$HOME/RapidSVN-build \
-            --without-berkeley-db --with-ssl --disable-shared --without-apxs
+          CFLAGS="-g -O2 $RAPIDSVN_ARCH -mmacosx-version-min=10.4 -fvisibility=hidden -I$HOME/RapidSVN-build/include" \
+            LDFLAGS="$RAPIDSVN_ARCH -mmacosx-version-min=10.4 -L$HOME/RapidSVN-build/lib" ./configure --prefix=$HOME/RapidSVN-build \
+            --with-berkeley-db --disable-shared --without-apxs --with-apr=$HOME/RapidSVN-build --with-apr-util=$HOME/RapidSVN-build
 
         Compile and install Subversion:
           make
@@ -493,19 +552,25 @@ Contents:
 
         Check for the line '- handles 'https' scheme'.
 
+        You can check your installation for Berkeley DB support by
+        running:
+          svnadmin create --fs-type=bdb /tmp/test
 
-4.4     Configure/Compile/Install wxWidgets
+
+4.8     Configure/Compile/Install wxWidgets
 
 	cd to the extracted wxWidgets directory.
 
         Configure wxWidgets, so it is NOT built as shared library;
         with Unicode support:
-          CFLAGS="-I$HOME/RapidSVN-build/include/apr-1" \
-            CXXFLAGS="-I$HOME/RapidSVN-build/include/apr-1" \
+          sed -e "s#-arch ppc -arch i386#$RAPIDSVN_ARCH#" < configure > configure-rapidsvn
+          chmod +x configure-rapidsvn
+          CFLAGS="-I$HOME/RapidSVN-build/include/apr-1 -fvisibility=hidden" \
+            CXXFLAGS="-I$HOME/RapidSVN-build/include/apr-1 -fvisibility=hidden -fvisibility-inlines-hidden" \
             LDFLAGS="-L$HOME/RapidSVN-build/lib" \
-	    ./configure --prefix=$HOME/RapidSVN-build \
+	    ./configure-rapidsvn --prefix=$HOME/RapidSVN-build \
             --disable-shared --enable-unicode --enable-universal_binary \
-            --with-macosx-version-min=10.3
+            --with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.6.sdk
 
         Compile wxWidgets:
           make
@@ -517,7 +582,7 @@ Contents:
         If this works you have a running wxWidgets installation
 
 
-4.5     Configure/Compile/Install RapidSVN
+4.9     Configure/Compile/Install RapidSVN
 
         Download and extract a RapidSVN tarball       
         or checkout a new working copy of RapidSVN in
@@ -526,9 +591,10 @@ Contents:
         Cd to the directory.
 
         Now configure the static build:
-          CFLAGS="-g -O2 -arch i386 -arch ppc -fvisibility=hidden -I$HOME/RapidSVN-build/include" \
-            CXXFLAGS="-g -O2 -arch i386 -arch ppc -fvisibility=hidden -fvisibility-inlines-hidden" \
-            LDFLAGS="-arch i386 -arch ppc -L$HOME/RapidSVN-build/lib" ./configure --prefix=$HOME/RapidSVN-build \
+          ./autogen.sh
+          CFLAGS="-g -O2 $RAPIDSVN_ARCH -fvisibility=hidden -I$HOME/RapidSVN-build/include" \
+            CXXFLAGS="-g -O2 $RAPIDSVN_ARCH -fvisibility=hidden -fvisibility-inlines-hidden" \
+            LDFLAGS="$RAPIDSVN_ARCH -L$HOME/RapidSVN-build/lib" ./configure --prefix=$HOME/RapidSVN-build \
             --disable-shared \
             --with-svn-include=$HOME/RapidSVN-build/include \
             --with-svn-lib=$HOME/RapidSVN-build/lib \
