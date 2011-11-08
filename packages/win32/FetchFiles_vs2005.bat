@@ -18,7 +18,7 @@ del /q tmp\*.*
 del /q output\*.*
 
 rem Copy Berkeley DB
-copy %SUBVERSION%\db4-win32\bin\libdb44.dll tmp
+copy %SUBVERSION%\db4-win32\bin\libdb*.dll tmp
 
 rem Copy Subversion and APR DLLs
 copy %SUBVERSION%\bin\*.dll tmp
