@@ -27,7 +27,6 @@
 
 // svncpp
 #include "svncpp/client.hpp"
-#include "svncpp/m_check.hpp"
 #include "svncpp/targets.hpp"
 
 // app

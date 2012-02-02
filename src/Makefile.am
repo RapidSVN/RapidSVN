@@ -1,4 +1,4 @@
-SUBDIRS=svncpp locale
+SUBDIRS=locale
 
 DIST_SUBDIRS=${SUBDIRS} locale res tests
 
@@ -91,10 +91,11 @@ rapidsvn_SOURCES= \
 	verblist.cpp \
 	view_action.cpp
 
-rapidsvn_LDFLAGS=-Lsvncpp
+rapidsvn_LDFLAGS=-L../libsvncpp
 rapidsvn_LDADD= -lsvncpp \
 	$(SVN_LIBS) \
 	$(APR_LIBS) \
 	$(WX_LIBS) \
 	$(EXTRA_LIBS)
-rapidsvn_DEPENDENCIES=svncpp/libsvncpp.la
+rapidsvn_DEPENDENCIES=../libsvncpp/libsvncpp.la
+

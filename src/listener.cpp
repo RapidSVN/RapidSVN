@@ -27,9 +27,6 @@
 #include "wx/thread.h"
 #include "wx/utils.h"
 
-// svncpp
-#include "svncpp/m_check.hpp"
-
 // app
 #include "action_event.hpp"
 #include "auth_dlg.hpp"
