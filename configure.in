@@ -9,7 +9,8 @@ AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
 
 abs_srcdir="`cd $srcdir && pwd`"
-CPPFLAGS="$CPPFLAGS -I$abs_srcdir/include"
+SVNCPP_DIR="$abs_srcdir/libsvncpp"
+CPPFLAGS="$CPPFLAGS -I$SVNCPP_DIR/include"
 
 dnl
 dnl GCC specifics
@@ -433,6 +434,7 @@ AC_SUBST(MAN_MANS)
 AC_SUBST(DOXYGEN)
 AC_SUBST(DOXYGEN_DIST)
 AC_SUBST(TARGET_DOXYGEN)
+AC_SUBST(SVNCPP_DIR)
 
 if test "$CPPUNITCONFIG" ; then
     CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
@@ -448,8 +450,6 @@ AC_OUTPUT(Makefile \
           doc/Makefile \
           doc/manpage/Makefile \
           doc/svncpp/Makefile \
-          include/Makefile \
-          include/svncpp/Makefile \
           libsvncpp/Makefile \
           packages/Makefile \
           packages/debian/Makefile \

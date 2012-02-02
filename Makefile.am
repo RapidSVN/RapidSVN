@@ -1,4 +1,4 @@
-SUBDIRS=libsvncpp include src doc
+SUBDIRS=libsvncpp src doc
 
 DIST_SUBDIRS=$(SUBDIRS) packages tools build
 

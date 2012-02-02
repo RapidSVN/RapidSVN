@@ -1,4 +1,4 @@
-noinst_HEADERS=${wildcard src/*.hpp}
+noinst_HEADERS=${wildcard src/*.hpp} ${wildcard include/svncpp/*.hpp}
 
 lib_LTLIBRARIES=libsvncpp.la
 

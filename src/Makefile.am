@@ -91,11 +91,11 @@ rapidsvn_SOURCES= \
 	verblist.cpp \
 	view_action.cpp
 
-rapidsvn_LDFLAGS=-L../libsvncpp
+rapidsvn_LDFLAGS=-L$(SVNCPP_DIR)
 rapidsvn_LDADD= -lsvncpp \
 	$(SVN_LIBS) \
 	$(APR_LIBS) \
 	$(WX_LIBS) \
 	$(EXTRA_LIBS)
-rapidsvn_DEPENDENCIES=../libsvncpp/libsvncpp.la
+rapidsvn_DEPENDENCIES=$(SVNCPP_DIR)/libsvncpp.la
 
