@@ -10,6 +10,7 @@ AC_PROG_LIBTOOL
 
 abs_srcdir="`cd $srcdir && pwd`"
 SVNCPP_DIR="$abs_srcdir/libsvncpp"
+LIBRAPIDSVN_DIR="$abs_srcdir/librapidsvn"
 CPPFLAGS="$CPPFLAGS -I$SVNCPP_DIR/include"
 
 dnl
@@ -179,7 +180,7 @@ case $WX_VERSION in
 esac
 CPPFLAGS="$CPPFLAGS `$WX_CONFIG --cppflags`"
 CXXFLAGS="$CXXFLAGS `$WX_CONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
-WX_LIBS="`$WX_CONFIG --libs`"
+WX_LIBS="`$WX_CONFIG --libs base,core,adv`"
 
 dnl
 dnl Platform specific specials
@@ -435,6 +436,7 @@ AC_SUBST(DOXYGEN)
 AC_SUBST(DOXYGEN_DIST)
 AC_SUBST(TARGET_DOXYGEN)
 AC_SUBST(SVNCPP_DIR)
+AC_SUBST(LIBRAPIDSVN_DIR)
 
 if test "$CPPUNITCONFIG" ; then
     CPPUNIT_CXXFLAGS="`$CPPUNITCONFIG --cflags`"
@@ -452,13 +454,13 @@ AC_OUTPUT(Makefile \
           doc/svncpp/Makefile \
           libsvncpp/Makefile \
           libsvncpp/tests/Makefile \
+          librapidsvn/Makefile \
+          librapidsvn/src/locale/Makefile \
           packages/Makefile \
           packages/debian/Makefile \
           packages/osx/Makefile \
           packages/rpm/Makefile \
           packages/win32/Makefile \
           src/Makefile \
-          src/locale/Makefile \
-          src/res/Makefile \
           tools/Makefile)
 
