@@ -1,6 +1,6 @@
 SUBDIRS=locale
 
-DIST_SUBDIRS=${SUBDIRS} locale res tests
+DIST_SUBDIRS=${SUBDIRS} locale res
 
 noinst_HEADERS=${wildcard *.hpp} ${wildcard *.h}
 bin_PROGRAMS=rapidsvn

@@ -9,9 +9,9 @@ svncpptest_SOURCES= \
 	test_url.cpp \
 	test_path.cpp
 
-svncpptest_CPPFLAGS=-I../../../include @CPPUNIT_CXXFLAGS@
-svncpptest_LDFLAGS=-L../../svncpp @CPPUNIT_LIBS@
+svncpptest_CPPFLAGS=-I$(SVNCPP_DIR)/include @CPPUNIT_CXXFLAGS@
+svncpptest_LDFLAGS=-L$(SVNCPP_DIR) @CPPUNIT_LIBS@
 svncpptest_LDADD=-lsvncpp \
 	$(SVN_LIBS) \
 	$(APR_LIBS)	
-svncpptest_DEPENDENCIES=../../svncpp/libsvncpp.la
+svncpptest_DEPENDENCIES=$(SVNCPP_DIR)/libsvncpp.la

@@ -1,2 +1,0 @@
-DIST_SUBDIRS=svncpp
-

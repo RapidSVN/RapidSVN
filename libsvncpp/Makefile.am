@@ -1,3 +1,5 @@
+#SUBDIRS=tests
+
 noinst_HEADERS=${wildcard src/*.hpp} ${wildcard include/svncpp/*.hpp}
 
 lib_LTLIBRARIES=libsvncpp.la

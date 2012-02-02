@@ -451,6 +451,7 @@ AC_OUTPUT(Makefile \
           doc/manpage/Makefile \
           doc/svncpp/Makefile \
           libsvncpp/Makefile \
+          libsvncpp/tests/Makefile \
           packages/Makefile \
           packages/debian/Makefile \
           packages/osx/Makefile \
@@ -459,7 +460,5 @@ AC_OUTPUT(Makefile \
           src/Makefile \
           src/locale/Makefile \
           src/res/Makefile \
-          src/tests/Makefile \
-          src/tests/svncpp/Makefile \
           tools/Makefile)
 
