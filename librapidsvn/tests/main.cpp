@@ -34,7 +34,7 @@ main(int argc, char **argv)
   runner.addTest(registry.makeTest());
   bool wasSucessful = runner.run("", false);
 
-  return wasSucessful;
+  return wasSucessful ? 0 : 1;
 }
 
 /* -----------------------------------------------------------------

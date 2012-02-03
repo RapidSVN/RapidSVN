@@ -2,6 +2,8 @@ bin_PROGRAMS=librapidsvn_tests
 
 #noinst_HEADERS= 
 
+TESTS=librapidsvn_tests
+
 librapidsvn_tests_SOURCES= \
 	main.cpp 
 

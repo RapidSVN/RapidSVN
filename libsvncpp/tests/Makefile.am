@@ -4,6 +4,8 @@ noinst_HEADERS= \
 	path_test.hpp \
 	url_test.hpp
 
+TESTS=libsvncpp_tests
+
 bin_PROGRAMS=libsvncpp_tests
 
 libsvncpp_tests_SOURCES= \
