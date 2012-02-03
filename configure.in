@@ -456,6 +456,7 @@ AC_OUTPUT(Makefile \
           libsvncpp/tests/Makefile \
           librapidsvn/Makefile \
           librapidsvn/src/locale/Makefile \
+          librapidsvn/tests/Makefile \
           packages/Makefile \
           packages/debian/Makefile \
           packages/osx/Makefile \
