@@ -4,16 +4,17 @@ noinst_HEADERS= \
 	path_test.hpp \
 	url_test.hpp
 
-bin_PROGRAMS=libsvncpptest
+bin_PROGRAMS=libsvncpp_tests
 
-libsvncpptest_SOURCES= \
+libsvncpp_tests_SOURCES= \
 	main.cpp \
 	path_test.cpp \
 	url_test.cpp
 
-libsvncpptest_CPPFLAGS=-I$(SVNCPP_DIR)/include @CPPUNIT_CXXFLAGS@
-libsvncpptest_LDFLAGS=-L$(SVNCPP_DIR) @CPPUNIT_LIBS@
-libsvncpptest_LDADD=-lsvncpp \
+libsvncpp_tests_CPPFLAGS=-I$(SVNCPP_DIR)/include @CPPUNIT_CXXFLAGS@
+libsvncpp_tests_LDFLAGS=-L$(SVNCPP_DIR) @CPPUNIT_LIBS@
+libsvncpp_tests_LDADD=-lsvncpp \
 	$(SVN_LIBS) \
 	$(APR_LIBS)	
-libsvncpptest_DEPENDENCIES=$(SVNCPP_DIR)/libsvncpp.la
+libsvncpp_tests_DEPENDENCIES=$(SVNCPP_DIR)/libsvncpp.la
+
