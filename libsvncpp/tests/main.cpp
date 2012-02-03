@@ -39,6 +39,6 @@ main(int argc, char **argv)
 
 /* -----------------------------------------------------------------
  * local variables:
- * eval: (load-file "../../../rapidsvn-dev.el")
+ * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */

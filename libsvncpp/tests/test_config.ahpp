@@ -1,6 +1,0 @@
-
-// Path to a respository.  e.g. "file:///c:/dev/rapidsvn/test_repos"
-char * REPOS_PATH = "file:///";
-
-// Path to checkout files to. e.g. "c:/temp/svn_test".
-char * CHECKOUT_PATH = "";

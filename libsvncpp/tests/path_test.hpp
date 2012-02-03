@@ -23,80 +23,41 @@
  */
 #include "cppunit/TestCase.h"
 #include "cppunit/extensions/HelperMacros.h"
-#include "svncpp/status.hpp"
-#include "svncpp/modify.hpp"
-#include "svncpp/property.hpp"
-#include "svncpp/log.hpp"
-#include "test_config.hpp"
 
 /**
- * Tests the SvnCpp classes.
+ * Tests the svn::Path class.
  */
-class SvnCppTestCase : public CppUnit::TestCase
+class PathTestCase : public CppUnit::TestCase
 {
-  CPPUNIT_TEST_SUITE(SvnCppTestCase);
-  CPPUNIT_TEST(testStatus);
-  CPPUNIT_TEST(testCheckout);
-  CPPUNIT_TEST(testDeleteRevert);
-  CPPUNIT_TEST(testAdd);
-  CPPUNIT_TEST(testUpdate);
-  CPPUNIT_TEST(testCommit);
+  CPPUNIT_TEST_SUITE(PathTestCase);
+  CPPUNIT_TEST(testInit);
+  CPPUNIT_TEST(testSplit);
+  CPPUNIT_TEST(testAddComponent);
   CPPUNIT_TEST(testCopy);
-  CPPUNIT_TEST(testMove);
-  CPPUNIT_TEST(testMkdir);
-  CPPUNIT_TEST(testExport);
-  CPPUNIT_TEST(testProperty);
-  CPPUNIT_TEST(testLog);
+  CPPUNIT_TEST(testIsUrl);
+  CPPUNIT_TEST(testSubstr);
+  CPPUNIT_TEST(testUnescape);
+  CPPUNIT_TEST(testLength);
+  CPPUNIT_TEST(testGetTempDir);
   CPPUNIT_TEST_SUITE_END();
-
-private:
-  svn::Notify notify;
 
 public:
   void setUp();
 
 protected:
-  /**
-   * Tests all of the status methods.
-   */
-  void testStatus();
-
-  void testCheckout();
-
-  void testDeleteRevert();
-
-  void testAdd();
-
-  void testUpdate();
-
-  void testCommit();
-
+  void testInit();
+  void testSplit();
+  void testAddComponent();
   void testCopy();
-
-  void testMove();
-
-  void testProperty();
-
-  void testMkdir();
-
-  void testExport();
-
-  void testLog();
+  void testIsUrl();
+  void testSubstr();
+  void testUnescape();
+  void testLength();
+  void testGetTempDir();
 };
 
-/**
- * Required for testCheckout.
- */
-struct NotifyBaton
-{
-  svn_boolean_t received_some_change;
-  svn_boolean_t is_checkout;
-  svn_boolean_t suppress_final_line;
-  svn_boolean_t sent_first_txdelta;
-  apr_pool_t *pool;
-};
 /* -----------------------------------------------------------------
  * local variables:
- * eval: (load-file "../../../rapidsvn-dev.el")
+ * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */

@@ -23,7 +23,7 @@
  */
 
 // app
-#include "test_path.hpp"
+#include "path_test.hpp"
 
 // ansi c lib
 #include <cstring>
@@ -234,6 +234,6 @@ PathTestCase::testGetTempDir()
 
 /* -----------------------------------------------------------------
  * local variables:
- * eval: (load-file "../../../rapidsvn-dev.el")
+ * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */

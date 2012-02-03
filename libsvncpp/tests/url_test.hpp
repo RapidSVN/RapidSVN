@@ -46,6 +46,6 @@ protected:
 
 /* -----------------------------------------------------------------
  * local variables:
- * eval: (load-file "../../../rapidsvn-dev.el")
+ * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */

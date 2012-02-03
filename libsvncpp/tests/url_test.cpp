@@ -23,7 +23,7 @@
  */
 
 // app
-#include "test_url.hpp"
+#include "url_test.hpp"
 #include "svncpp/string_wrapper.hpp"
 
 //svncpp
@@ -110,6 +110,6 @@ UrlTestCase::testUnescape()
 
 /* -----------------------------------------------------------------
  * local variables:
- * eval: (load-file "../../../rapidsvn-dev.el")
+ * eval: (load-file "../../rapidsvn-dev.el")
  * end:
  */
