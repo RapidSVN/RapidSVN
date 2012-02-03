@@ -461,6 +461,6 @@ AC_OUTPUT(Makefile \
           packages/osx/Makefile \
           packages/rpm/Makefile \
           packages/win32/Makefile \
-          src/Makefile \
+          rapidsvn/Makefile \
           tools/Makefile)
 
