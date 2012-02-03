@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual C++ Express 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests_svncpp", "tests_svncpp\tests_svncpp.vcproj", "{884F83DC-90B8-4A19-89E5-445CE91A360E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsvncpp_tests", "libsvncpp_tests\libsvncpp_tests.vcproj", "{884F83DC-90B8-4A19-89E5-445CE91A360E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C55139AB-9C4E-4A60-89D9-ECB953457AD0} = {C55139AB-9C4E-4A60-89D9-ECB953457AD0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "svncpp", "svncpp\svncpp.vcproj", "{C55139AB-9C4E-4A60-89D9-ECB953457AD0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsvncpp", "libsvncpp\libsvncpp.vcproj", "{C55139AB-9C4E-4A60-89D9-ECB953457AD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
