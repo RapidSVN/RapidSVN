@@ -38,7 +38,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
 				PreprocessorDefinitions="__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="3"
 				BrowseInformation="1"
@@ -56,7 +56,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxbase28d.lib wxmsw28d_core.lib wxmsw28d_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
+				AdditionalDependencies="wxbase28d.lib wxmsw28d_core.lib wxmsw28d_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib librapidsvn.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_ansi_debug.exe"
 				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
@@ -117,7 +117,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../include;&quot;$(WX)/lib/vc_lib/msw&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/msw&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
 				PreprocessorDefinitions="__WXMSW__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="2"
 			/>
@@ -133,7 +133,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxbase28.lib wxmsw28_core.lib wxmsw28_adv.lib wxpng.lib wxzlib.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib "
+				AdditionalDependencies="wxbase28.lib wxmsw28_core.lib wxmsw28_adv.lib wxpng.lib wxzlib.lib oldnames.lib librapidsvn.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib "
 				OutputFile="$(OutDir)\$(ProjectName)_ansi.exe"
 				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				SubSystem="2"
@@ -191,7 +191,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../include;&quot;$(WX)/lib/vc_lib/msw&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/msw&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
 				PreprocessorDefinitions="wxUSE_UNICODE=1;__WXMSW__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="2"
 			/>
@@ -207,7 +207,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxbase28u.lib wxmsw28u_core.lib wxmsw28u_adv.lib wxpng.lib wxzlib.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
+				AdditionalDependencies="wxbase28u.lib wxmsw28u_core.lib wxmsw28u_adv.lib wxpng.lib wxzlib.lib oldnames.lib librapidsvn.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				SubSystem="2"
@@ -265,7 +265,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
 				PreprocessorDefinitions="wxUSE_UNICODE=1;__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
 				RuntimeLibrary="3"
 				DebugInformationFormat="3"
@@ -282,7 +282,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxbase28ud.lib wxmsw28ud_core.lib wxmsw28ud_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib svncpp.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
+				AdditionalDependencies="wxbase28ud.lib wxmsw28ud_core.lib wxmsw28ud_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib librapidsvn.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_debug.exe"
 				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
@@ -330,331 +330,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\src\about_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\action_event.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\action_factory.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\add_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\add_recursive_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\annotate_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\annotate_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\auth_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\cert_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\checkout_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\checkout_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\cleanup_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\columns.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\commit_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\commit_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\commit_log_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\create_repos_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\create_repos_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\delete_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\delete_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\destination_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\diff_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\diff_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\dnd_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\drag_n_drop_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\entry_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\exceptions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\export_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\export_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\external_program_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\file_info.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\filelist_ctrl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\filelist_ctrl_drop_target.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\folder_browser.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\folder_browser_drop_target.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\folder_item_data.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\get_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\hist_entries.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\hist_mgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\hist_val.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\ignore_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\import_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\import_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\listed_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\listener.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\lock_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\lock_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\log_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\log_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\main_frame.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\main_frame_helper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\merge_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\merge_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\mkdir_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\move_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\preferences.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\preferences_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\property_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\property_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rapidsvn_app.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rapidsvn_drop_target.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rapidsvn_generated.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rename_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\report_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\resolve_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\revert_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\revert_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\simple_worker.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\splitter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\switch_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\switch_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\threaded_worker.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\tracer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\unlock_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\unlock_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\update_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\update_dlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\userresolve_action.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\utils.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\verblist.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\view_action.cpp"
+				RelativePath="..\..\..\rapidsvn\src\rapidsvn_app.cpp"
 				>
 			</File>
 		</Filter>
@@ -663,394 +339,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\..\..\src\about_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\action_event.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\action_factory.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\action_worker.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\add_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\add_recursive_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\annotate_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\annotate_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\annotate_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\auth_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\cert_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\checkout_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\checkout_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\checkout_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\cleanup_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\columns.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\commit_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\commit_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\commit_log_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\config.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\create_repos_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\create_repos_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\delete_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\delete_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\destination_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\diff_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\diff_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\diff_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\dnd_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\drag_n_drop_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\drag_n_drop_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\entry_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\exceptions.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\export_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\export_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\export_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\external_program_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\file_info.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\filelist_ctrl.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\filelist_ctrl_drop_target.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\folder_browser.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\folder_browser_drop_target.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\folder_item_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\get_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\get_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\hist_entries.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\hist_mgr.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\hist_val.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\ids.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\ignore_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\import_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\import_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\import_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\listed_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\listener.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\lock_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\lock_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\log_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\log_aff_list.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\log_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\log_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\main_frame.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\merge_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\merge_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\merge_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\mkdir_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\move_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\preferences.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\preferences_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\property_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\property_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rapidsvn_app.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rapidsvn_drop_target.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rapidsvn_generated.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\rename_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\report_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\resolve_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\resource.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\revert_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\revert_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\simple_worker.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\splitter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\switch_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\switch_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\threaded_worker.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\tracer.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\unlock_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\unlock_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\update_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\update_data.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\update_dlg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\userresolve_action.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\utils.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\verblist.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\version.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\view_action.hpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Ressourcendateien"
@@ -1058,7 +346,7 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="..\..\..\src\rapidsvn.rc"
+				RelativePath="..\..\..\rapidsvn\src\rapidsvn.rc"
 				>
 			</File>
 		</Filter>
