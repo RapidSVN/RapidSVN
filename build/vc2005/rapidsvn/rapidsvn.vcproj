@@ -49,7 +49,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="$(WX)/include"
+				AdditionalIncludeDirectories="../../../librapidsvn/include;$(WX)/include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -126,7 +126,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="$(WX)/include"
+				AdditionalIncludeDirectories="../../../librapidsvn/include;$(WX)/include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -200,7 +200,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="$(WX)/include"
+				AdditionalIncludeDirectories="../../../librapidsvn/include;$(WX)/include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -275,7 +275,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="$(WX)/include"
+				AdditionalIncludeDirectories="../../../librapidsvn/include;$(WX)/include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -330,7 +330,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\rapidsvn\src\rapidsvn_app.cpp"
+				RelativePath="..\..\..\rapidsvn\rapidsvn_app.cpp"
 				>
 			</File>
 		</Filter>
@@ -346,7 +346,7 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="..\..\..\rapidsvn\src\rapidsvn.rc"
+				RelativePath="..\..\..\rapidsvn\rapidsvn.rc"
 				>
 			</File>
 		</Filter>
