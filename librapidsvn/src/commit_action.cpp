@@ -130,6 +130,10 @@ CommitAction::Perform()
                          _("Committed revision"), revision);
   Trace(str);
 
+  const std::string &postCommitErr = client.commitInfo().postCommitErr;
+  if (postCommitErr.length() > 0)
+    throw svn::ClientException(postCommitErr.c_str());
+    
   return true;
 }
 

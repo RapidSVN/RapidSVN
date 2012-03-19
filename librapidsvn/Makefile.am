@@ -201,7 +201,7 @@ EXTRA_DIST=rapidsvn.fbp \
 
 lib_LTLIBRARIES=librapidsvn.la
 
-librapidsvn_la_CPPFLAGS=-Iinclude
+librapidsvn_la_CPPFLAGS=-Iinclude -I$(SVNCPP_DIR)/include
 librapidsvn_la_DEPENDENCIES=$(SVNCPP_DIR)/libsvncpp.la
 librapidsvn_la_LDFLAGS=-version-info 0:0:0 \
 	$(WX_LIBS)

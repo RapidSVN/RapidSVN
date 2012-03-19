@@ -214,18 +214,26 @@ namespace svn
     Pool pool;
 
     m_context->setLogMessage(message);
+    m_commitInfo = CommitInfo();
 
-    svn_client_commit_info_t *commit_info = NULL;
+    svn_commit_info_t *commit_info = NULL;
 
     svn_error_t * error =
-      svn_client_commit2(&commit_info,
+      svn_client_commit4(&commit_info,
                          targets.array(pool),
-                         recurse,
+                         recurse ? svn_depth_infinity : svn_depth_empty,
                          keep_locks,
+                         false,
+                         NULL,
+                         NULL,
                          *m_context,
                          pool);
+
     if (error != NULL)
       throw ClientException(error);
+
+    if (commit_info)
+      m_commitInfo = CommitInfo(commit_info);
 
     if (commit_info && SVN_IS_VALID_REVNUM(commit_info->revision))
       return commit_info->revision;

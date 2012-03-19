@@ -33,6 +33,7 @@
 
 
 // stl
+#include <assert.h>
 #include "svncpp/vector_wrapper.hpp"
 #include "svncpp/utility_wrapper.hpp"
 #include "svncpp/map_wrapper.hpp"
@@ -78,7 +79,7 @@ namespace svn
    */
   struct StatusFilter
   {
-public:
+  public:
     bool showUnversioned;
     bool showUnmodified;
     bool showModified;    ///< this includes @a showConflicted as well
@@ -95,6 +96,37 @@ public:
   };
 
 
+  struct CommitInfo
+  {
+    svn_revnum_t revision;
+
+    /** server-side date of the commit. */
+    std::string date;
+
+    /** author of the commit. */
+    std::string author;
+
+    /** error message from post-commit hook */
+    std::string postCommitErr;
+
+    CommitInfo() :
+      revision(SVN_INVALID_REVNUM)
+    {
+    }
+
+    CommitInfo(const svn_commit_info_t *info)
+    {
+      assert(0 != info);
+      
+      revision = info->revision;
+      date = info->date;
+      author = info->author;
+      if (0 != info->post_commit_err)
+	postCommitErr = info->post_commit_err;
+    }
+  };
+
+
   /**
    * Subversion client API.
    */
@@ -107,6 +139,14 @@ public:
     Client(Context * context = 0);
 
     virtual ~Client();
+
+    /** 
+     * @since 0.14
+     */
+    const CommitInfo& commitInfo() const
+    {
+      return m_commitInfo;
+    }
 
     /**
      * @return returns the Client context
@@ -337,6 +377,10 @@ public:
     /**
      * Commits changes to the repository. This usually requires
      * authentication, see Auth.
+     *
+     * @since 0.14 see additional information about the commit
+     *        in @ref commitInfo
+     *
      * @return Returns a long representing the revision. It returns a
      *         -1 if the revision number is invalid.
      * @param targets files to commit.
@@ -762,6 +806,7 @@ public:
     ignore(const Targets & targets) throw(ClientException);
   private:
     Context * m_context;
+    CommitInfo m_commitInfo;
 
     /**
      * disallow assignment operator
