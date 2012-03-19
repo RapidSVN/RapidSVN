@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="libsvncpp" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="libsvncpp" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="libsvncpp" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="../../../libsvncpp/include/svncpp/annotate_line.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/apr.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/client.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/commit_info.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/context.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/context_listener.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/datetime.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/dirent.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/entry.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/exception.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/info.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/log_entry.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/map_wrapper.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/path.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/pool.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/property.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/revision.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/status.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/status_selection.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/string_wrapper.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/targets.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/url.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/utility_wrapper.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/vector_wrapper.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/version.hpp" />
+		<Unit filename="../../../libsvncpp/include/svncpp/wc.hpp" />
+		<Unit filename="../../../libsvncpp/src/apr.cpp" />
+		<Unit filename="../../../libsvncpp/src/client.cpp" />
+		<Unit filename="../../../libsvncpp/src/client_annotate.cpp" />
+		<Unit filename="../../../libsvncpp/src/client_cat.cpp" />
+		<Unit filename="../../../libsvncpp/src/client_diff.cpp" />
+		<Unit filename="../../../libsvncpp/src/client_ls.cpp" />
+		<Unit filename="../../../libsvncpp/src/client_modify.cpp" />
+		<Unit filename="../../../libsvncpp/src/client_property.cpp" />
+		<Unit filename="../../../libsvncpp/src/client_status.cpp" />
+		<Unit filename="../../../libsvncpp/src/context.cpp" />
+		<Unit filename="../../../libsvncpp/src/datetime.cpp" />
+		<Unit filename="../../../libsvncpp/src/dirent.cpp" />
+		<Unit filename="../../../libsvncpp/src/entry.cpp" />
+		<Unit filename="../../../libsvncpp/src/exception.cpp" />
+		<Unit filename="../../../libsvncpp/src/info.cpp" />
+		<Unit filename="../../../libsvncpp/src/log_entry.cpp" />
+		<Unit filename="../../../libsvncpp/src/m_check.hpp" />
+		<Unit filename="../../../libsvncpp/src/m_is_empty.cpp" />
+		<Unit filename="../../../libsvncpp/src/m_is_empty.hpp" />
+		<Unit filename="../../../libsvncpp/src/path.cpp" />
+		<Unit filename="../../../libsvncpp/src/pool.cpp" />
+		<Unit filename="../../../libsvncpp/src/property.cpp" />
+		<Unit filename="../../../libsvncpp/src/revision.cpp" />
+		<Unit filename="../../../libsvncpp/src/status.cpp" />
+		<Unit filename="../../../libsvncpp/src/status_selection.cpp" />
+		<Unit filename="../../../libsvncpp/src/targets.cpp" />
+		<Unit filename="../../../libsvncpp/src/url.cpp" />
+		<Unit filename="../../../libsvncpp/src/wc.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
