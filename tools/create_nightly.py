@@ -92,7 +92,7 @@ def readLatestChangeRevision():
 
 def patchVersionHeader(revision):
   # first undo any previous patch
-  VERSION_HEADER="src/version.hpp"
+  VERSION_HEADER="librapidsvn/include/version.hpp"
   REVISION_DEFINE="#define RAPIDSVN_VER_REVISION "
   run("svn", ["revert", VERSION_HEADER], 1)
 

@@ -41,7 +41,7 @@ from datetime import date
 # The following files are being checked/patched:
 VERSION_FILE = "version.xml"
 CONFIGURE_IN_FILE = "configure.in"
-VERSION_HPP_FILE = "src/version.hpp"
+VERSION_HPP_FILE = "librapidsvn/include/version.hpp"
 RAPIDSVN_ISS_FILE = "packages/win32/rapidsvn.iss"
 DEBIAN_FILES_FILE = "packages/debian/files"
 MAKE_OSX_BUNDLE_FILE = "packages/osx/make_osx_bundle.sh"
