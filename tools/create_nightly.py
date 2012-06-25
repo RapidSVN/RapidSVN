@@ -116,7 +116,7 @@ def buildApplicationVc2005():
 
 def buildMessages():
   # First we have to check which translations we have
-  l=glob.glob('src/locale/[a-z]*')
+  l=glob.glob('librapidsvn/src/locale/[a-z]*')
   dirs=[]
   for f in l:
     if os.path.isdir(f):
