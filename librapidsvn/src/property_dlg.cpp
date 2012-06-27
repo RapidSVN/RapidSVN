@@ -59,6 +59,17 @@ PropertyDlg::PropertyDlg(wxWindow * parent,
   const bool readOnly = svn::Url::isValid(target_);
   m = new Data(this, context, target_);
 
+  wxArrayString names;
+  names.Add(wxT("svn:eol-style"));
+  names.Add(wxT("svn:executable"));
+  names.Add(wxT("svn:externals"));
+  names.Add(wxT("svn:ignore"));
+  names.Add(wxT("svn:keywords"));
+  names.Add(wxT("svn:mime-type"));
+  names.Add(wxT("svn:needs-lock"));
+  names.Add(wxT("svn:special"));
+  SetNameTemplates(names);
+
   SetCaption(_("Properties:"));
   SetAddTitle(_("New Property"));
   SetEditTitle(_("Edit Property"));

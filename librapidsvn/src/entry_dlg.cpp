@@ -154,6 +154,14 @@ EntryDlg::OnText(wxCommandEvent &)
   CheckControls();
 }
 
+
+void 
+EntryDlg::SetNameTemplates(const wxArrayString & names)
+{
+  m_comboName->Clear();
+  m_comboName->Append(names);
+}
+
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

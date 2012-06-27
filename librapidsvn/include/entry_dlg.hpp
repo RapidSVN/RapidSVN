@@ -68,6 +68,9 @@ public:
   void
   GetNameValue(wxString & name, wxString & value) const;
 
+  void
+  SetNameTemplates(const wxArrayString & names);
+
 protected: // inherited event handlers
   virtual void
   OnText(wxCommandEvent &);

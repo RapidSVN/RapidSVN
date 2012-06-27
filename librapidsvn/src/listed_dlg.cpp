@@ -175,6 +175,7 @@ struct ListEditorDlg::Data
   ListCtrl * listCtrl;
   wxString addTitle;
   wxString editTitle;
+  wxArrayString nameTemplates;
 
 public:
   Data(wxWindow * wnd_)
@@ -216,6 +217,7 @@ public:
     EntryDlg dlg(wnd, title);
     dlg.SetReadOnly(readOnly);
     dlg.SetEditMode(mode);
+    dlg.SetNameTemplates(nameTemplates);
     dlg.SetNameValue(name, value);
     if (wxID_OK != dlg.ShowModal())
       return;
@@ -364,6 +366,13 @@ ListEditorDlg::CheckControls()
   EnableCtrl(m_buttonOK, !m->readOnly);
   EnableCtrl(m_buttonEdit, !m->readOnly && isSelected);
   EnableCtrl(m_buttonDelete, !m->readOnly && isSelected);
+}
+
+
+void
+ListEditorDlg::SetNameTemplates(const wxArrayString & values)
+{
+  m->nameTemplates = values;
 }
 
 

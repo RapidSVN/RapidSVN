@@ -29,6 +29,7 @@
 #include "rapidsvn_generated.h"
 
 // forward declarations
+class wxArrayString;
 class wxListEvent;
 
 class ListEditorDlg : public ListEditorDlgBase
@@ -55,6 +56,13 @@ public:
 
   void
   SetCaption(const wxString & caption);
+
+  /** 
+   * fills the entries in the combo box for
+   * the names
+   */
+  void
+  SetNameTemplates(const wxArrayString & values);
 
   void
   DeleteAllEntries();
