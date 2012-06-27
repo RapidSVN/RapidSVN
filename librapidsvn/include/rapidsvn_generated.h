@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 16 2008)
+// C++ code generated with wxFormBuilder (version Dec 21 2009)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -67,6 +67,7 @@ class AboutDlgBase : public wxDialog
 		wxButton* m_buttonOK;
 	
 	public:
+		
 		AboutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About ..."), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~AboutDlgBase();
 	
@@ -85,6 +86,7 @@ class AnnotateDlgBase : public wxDialog
 		wxButton* m_buttonOK;
 	
 	public:
+		
 		AnnotateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Annotate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 398,313 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~AnnotateDlgBase();
 	
@@ -109,6 +111,7 @@ class AuthDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 	
 	public:
+		
 		AuthDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~AuthDlgBase();
 	
@@ -141,11 +144,12 @@ class CertDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnPerm( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnTemp( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnPerm( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTemp( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		CertDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("SSL Certificate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 394,339 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CertDlgBase();
 	
@@ -176,13 +180,14 @@ class CheckoutDlgBase : public wxDialog
 		wxButton* m_buttonHelp;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnBrowse( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnCheckBox( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnHelp( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBrowse( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCheckBox( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnHelp( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		CheckoutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Checkout"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 389,333 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CheckoutDlgBase();
 	
@@ -212,15 +217,16 @@ class CommitDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnComboHistory( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnCheckListFiles( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnCheckListFilesDClick( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnCheckListFilesToggle( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonToggle( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonDiff( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboHistory( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCheckListFiles( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCheckListFilesDClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCheckListFilesToggle( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonToggle( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonDiff( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 583,500 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxTAB_TRAVERSAL );
 		~CommitDlgBase();
 	
@@ -244,10 +250,11 @@ class CommitLogDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnComboHistory( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboHistory( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		CommitLogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 498,232 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CommitLogDlgBase();
 	
@@ -294,16 +301,17 @@ class CreateReposDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnChoiceType( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnComboDirText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonBrowseDirClick( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnComboNameText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnChoiceCompat( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnComboConfigDirText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonBrowseConfigDirClick( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnChoiceType( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnComboDirText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonBrowseDirClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnComboNameText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnChoiceCompat( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnComboConfigDirText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonBrowseConfigDirClick( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		CreateReposDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Create Repository"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~CreateReposDlgBase();
 	
@@ -324,6 +332,7 @@ class DeleteDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 	
 	public:
+		
 		DeleteDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Delete"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~DeleteDlgBase();
 	
@@ -345,10 +354,11 @@ class DestinationDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnText( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		DestinationDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Destination"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~DestinationDlgBase();
 	
@@ -381,25 +391,26 @@ class DiffDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnComboCompare( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnRadioUseRevision1( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnTextRevision1( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnCheckUseLatest1( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnRadioUseDate1( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnDatePicker1( wxDateEvent& event ){ event.Skip(); }
-		virtual void OnUsePath1( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnComboPath1( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnRadioUseRevision2( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnTextRevision2( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnCheckUseLatest2( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnRadioUseDate2( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnDatePicker2( wxDateEvent& event ){ event.Skip(); }
-		virtual void OnCheckUsePath2( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnComboPath2( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonOK( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnComboCompare( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRadioUseRevision1( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTextRevision1( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCheckUseLatest1( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRadioUseDate1( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDatePicker1( wxDateEvent& event ) { event.Skip(); }
+		virtual void OnUsePath1( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnComboPath1( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRadioUseRevision2( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTextRevision2( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCheckUseLatest2( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRadioUseDate2( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDatePicker2( wxDateEvent& event ) { event.Skip(); }
+		virtual void OnCheckUsePath2( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnComboPath2( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonOK( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		DiffDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Diff"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~DiffDlgBase();
 	
@@ -421,12 +432,13 @@ class DragAndDropDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnButtonImport( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonMove( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonCopy( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonImport( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonMove( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonCopy( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		DragAndDropDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~DragAndDropDlgBase();
 	
@@ -442,7 +454,7 @@ class EntryDlgBase : public wxDialog
 	protected:
 		wxBoxSizer* m_mainSizer;
 		wxStaticText* m_staticName;
-		wxTextCtrl* m_textName;
+		wxComboBox* m_comboName;
 		wxStaticText* m_staticValue;
 		wxTextCtrl* m_textValue;
 		wxBoxSizer* m_buttonSizer;
@@ -450,10 +462,11 @@ class EntryDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnText( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		EntryDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Edit"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 489,331 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~EntryDlgBase();
 	
@@ -486,13 +499,14 @@ class ExportDlgBase : public wxDialog
 		wxButton* m_buttonHelp;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnBrowse( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnCheckBox( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnHelp( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBrowse( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCheckBox( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnHelp( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		ExportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Export"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~ExportDlgBase();
 	
@@ -517,12 +531,13 @@ class ListEditorDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnNew( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnEdit( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnDelete( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnNew( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEdit( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDelete( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		ListEditorDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("ListEditor"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 602,372 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~ListEditorDlgBase();
 	
@@ -544,6 +559,7 @@ class LockDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 	
 	public:
+		
 		LockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Lock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~LockDlgBase();
 	
@@ -576,16 +592,17 @@ class LogDlgBase : public wxDialog
 		LogAffectedList* m_listFiles;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnRevDeselected( wxListEvent& event ){ event.Skip(); }
-		virtual void OnRevSelected( wxListEvent& event ){ event.Skip(); }
-		virtual void OnView( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnGet( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnDiff( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnMerge( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnAnnotate( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnRevDeselected( wxListEvent& event ) { event.Skip(); }
+		virtual void OnRevSelected( wxListEvent& event ) { event.Skip(); }
+		virtual void OnView( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnGet( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDiff( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMerge( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnAnnotate( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		LogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Log History"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 709,456 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~LogDlgBase();
 		void m_splitterOnIdle( wxIdleEvent& )
@@ -619,11 +636,12 @@ class ImportDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnCommand( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnBrowse( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnCommand( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBrowse( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		ImportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~ImportDlgBase();
 	
@@ -652,13 +670,14 @@ class MainFrameBase : public wxFrame
 		wxStatusBar* m_statusBar;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnActivate( wxActivateEvent& event ){ event.Skip(); }
-		virtual void OnSize( wxSizeEvent& event ){ event.Skip(); }
-		virtual void OnFolderBrowserSetFocus( wxFocusEvent& event ){ event.Skip(); }
-		virtual void OnListCtrlSetFocus( wxFocusEvent& event ){ event.Skip(); }
+		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }
+		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnFolderBrowserSetFocus( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnListCtrlSetFocus( wxFocusEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		MainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 639,441 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~MainFrameBase();
 		void m_splitterHorizOnIdle( wxIdleEvent& )
@@ -701,11 +720,12 @@ class MergeDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnBrowse( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBrowse( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		MergeDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Merge revisions"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 599,337 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~MergeDlgBase();
 	
@@ -752,14 +772,15 @@ class PreferencesDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnButtonEditorClick( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonExplorerClick( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonDiffToolClick( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnButtonMergeToolClick( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnOK( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnButtonEditorClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonExplorerClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonDiffToolClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonMergeToolClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		PreferencesDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~PreferencesDlgBase();
 	
@@ -778,6 +799,7 @@ class ReportDlgBase : public wxDialog
 		wxButton* m_buttonOK;
 	
 	public:
+		
 		ReportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Report"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 567,409 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~ReportDlgBase();
 	
@@ -798,6 +820,7 @@ class RevertDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 	
 	public:
+		
 		RevertDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Revert"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~RevertDlgBase();
 	
@@ -823,11 +846,12 @@ class SwitchDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnUseLatest( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnUseLatest( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		SwitchDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Switch URL"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		~SwitchDlgBase();
 	
@@ -848,6 +872,7 @@ class UnlockDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 	
 	public:
+		
 		UnlockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Unlock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 440,143 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~UnlockDlgBase();
 	
@@ -873,11 +898,12 @@ class UpdateDlgBase : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnText( wxCommandEvent& event ){ event.Skip(); }
-		virtual void OnUseLatest( wxCommandEvent& event ){ event.Skip(); }
+		virtual void OnText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnUseLatest( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
+		
 		UpdateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 440,309 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~UpdateDlgBase();
 	

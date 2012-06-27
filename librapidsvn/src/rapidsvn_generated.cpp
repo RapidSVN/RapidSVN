@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Apr 16 2008)
+// C++ code generated with wxFormBuilder (version Dec 21 2009)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -255,7 +255,6 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_mainSizer->Add( revisionSizer, 0, wxEXPAND, 5 );
@@ -267,7 +266,6 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	pegSizer->Add( m_textPegRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_checkPegNotSpecified = new wxCheckBox( this, wxID_ANY, _("Not specified"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	pegSizer->Add( m_checkPegNotSpecified, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_mainSizer->Add( pegSizer, 0, wxEXPAND, 5 );
@@ -276,15 +274,12 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	extrasSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkAddToBookmarks = new wxCheckBox( this, wxID_ANY, _("Add to bookmarks"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	extrasSizer->Add( m_checkAddToBookmarks, 0, wxALL, 5 );
 	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	extrasSizer->Add( m_checkRecursive, 0, wxALL, 5 );
 	
 	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore externals"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	extrasSizer->Add( m_checkIgnoreExternals, 0, wxALL, 5 );
 	
 	m_mainSizer->Add( extrasSizer, 1, wxALIGN_CENTER, 5 );
@@ -377,11 +372,9 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	buttonSizer->Add( m_checkRecursive, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_checkKeepLocks = new wxCheckBox( this, wxID_ANY, _("Keep Locks"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	buttonSizer->Add( m_checkKeepLocks, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -521,7 +514,6 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	sizerGeneral->Add( m_textFilename, 0, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5 );
 	
 	m_checkAddBookmark = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Add a bookmark for the new repository"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	sizerGeneral->Add( m_checkAddBookmark, 0, wxALL, 5 );
 	
 	m_panelGeneral->SetSizer( sizerGeneral );
@@ -560,11 +552,9 @@ CreateReposDlgBase::CreateReposDlgBase( wxWindow* parent, wxWindowID id, const w
 	sizerExtended->Add( sizerConfigDir, 0, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5 );
 	
 	m_checkBdbLogKeep = new wxCheckBox( m_panelExtended, wxID_ANY, _("Disable automatic Log removal"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	sizerExtended->Add( m_checkBdbLogKeep, 0, wxALL, 5 );
 	
 	m_checkBdbTxnNoSync = new wxCheckBox( m_panelExtended, wxID_ANY, _("Disable fsync when committing database transactions"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	sizerExtended->Add( m_checkBdbTxnNoSync, 0, wxALL, 5 );
 	
 	m_panelExtended->SetSizer( sizerExtended );
@@ -628,7 +618,6 @@ DeleteDlgBase::DeleteDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_mainSizer->Add( m_staticQuestion, 1, wxALL|wxEXPAND, 5 );
 	
 	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force removal"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	m_mainSizer->Add( m_checkForce, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 	
 	wxBoxSizer* buttonSizer;
@@ -666,7 +655,6 @@ DestinationDlgBase::DestinationDlgBase( wxWindow* parent, wxWindowID id, const w
 	m_mainSizer->Add( m_comboDestination, 0, wxALL|wxEXPAND, 5 );
 	
 	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	m_mainSizer->Add( m_checkForce, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 	
 	wxBoxSizer* buttonSizer;
@@ -733,7 +721,6 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	bSizer16->Add( m_textRevision1, 0, wxEXPAND, 5 );
 	
 	m_checkUseLatest1 = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	bSizer16->Add( m_checkUseLatest1, 0, 0, 5 );
 	
 	fgSizer1->Add( bSizer16, 1, wxEXPAND, 5 );
@@ -745,7 +732,6 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizer1->Add( m_datePicker1, 0, wxEXPAND, 5 );
 	
 	m_checkUsePath1 = new wxCheckBox( this, wxID_ANY, _("Use URL/path:"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	fgSizer1->Add( m_checkUsePath1, 0, 0, 5 );
 	
 	m_comboPath1 = new wxComboBox( this, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
@@ -773,7 +759,6 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	bSizer161->Add( m_textRevision2, 0, wxEXPAND, 5 );
 	
 	m_checkUseLatest2 = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	bSizer161->Add( m_checkUseLatest2, 0, 0, 5 );
 	
 	fgSizer2->Add( bSizer161, 1, wxEXPAND, 5 );
@@ -785,7 +770,6 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizer2->Add( m_datePicker2, 0, wxEXPAND, 5 );
 	
 	m_checkUsePath2 = new wxCheckBox( this, wxID_ANY, _("Use URL/path:"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	fgSizer2->Add( m_checkUsePath2, 0, 0, 5 );
 	
 	m_comboPath2 = new wxComboBox( this, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
@@ -914,8 +898,8 @@ EntryDlgBase::EntryDlgBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_staticName->Wrap( -1 );
 	fgSizer6->Add( m_staticName, 0, 0, 5 );
 	
-	m_textName = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizer6->Add( m_textName, 0, wxEXPAND, 5 );
+	m_comboName = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizer6->Add( m_comboName, 0, wxEXPAND, 5 );
 	
 	m_staticValue = new wxStaticText( this, wxID_ANY, _("&Value"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticValue->Wrap( -1 );
@@ -941,13 +925,13 @@ EntryDlgBase::EntryDlgBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Layout();
 	
 	// Connect Events
-	m_textName->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( EntryDlgBase::OnText ), NULL, this );
+	m_comboName->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( EntryDlgBase::OnText ), NULL, this );
 }
 
 EntryDlgBase::~EntryDlgBase()
 {
 	// Disconnect Events
-	m_textName->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( EntryDlgBase::OnText ), NULL, this );
+	m_comboName->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( EntryDlgBase::OnText ), NULL, this );
 }
 
 ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
@@ -983,7 +967,6 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_mainSizer->Add( revisionSizer, 0, wxEXPAND, 5 );
@@ -995,7 +978,6 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	pegSizer->Add( m_textPegRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_checkPegNotSpecified = new wxCheckBox( this, wxID_ANY, _("Not specified"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	pegSizer->Add( m_checkPegNotSpecified, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_mainSizer->Add( pegSizer, 0, wxEXPAND, 5 );
@@ -1019,15 +1001,12 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	extrasSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	extrasSizer->Add( m_checkRecursive, 0, wxALL, 5 );
 	
 	m_checkOverwrite = new wxCheckBox( this, wxID_ANY, _("Overwrite"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	extrasSizer->Add( m_checkOverwrite, 0, wxALL, 5 );
 	
 	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore externals"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	extrasSizer->Add( m_checkIgnoreExternals, 0, wxALL, 5 );
 	
 	m_mainSizer->Add( extrasSizer, 1, wxALIGN_CENTER, 5 );
@@ -1141,7 +1120,6 @@ LockDlgBase::LockDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkStealLock = new wxCheckBox( this, wxID_ANY, _("Steal lock if it belongs to another user"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	buttonSizer->Add( m_checkStealLock, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -1328,7 +1306,6 @@ ImportDlgBase::ImportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	m_buttonSizer->Add( m_checkRecursive, 0, wxALIGN_CENTER_VERTICAL|wxALL, 10 );
 	
 	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -1505,11 +1482,9 @@ MergeDlgBase::MergeDlgBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	optionSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	optionSizer->Add( m_checkRecursive, 0, 0, 5 );
 	
 	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	optionSizer->Add( m_checkForce, 0, 0, 5 );
 	
 	m_mainSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );
@@ -1562,15 +1537,12 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
 	
 	m_checkPurgeTempFiles = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Purge temporary files on program exit"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	bSizer3->Add( m_checkPurgeTempFiles, 0, wxALL, 5 );
 	
 	m_checkUseLastCommitMessage = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Commit log message: default to most recent"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	bSizer3->Add( m_checkUseLastCommitMessage, 0, wxALL, 5 );
 	
 	m_checkResetFlatMode = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Reset Flat Mode on every program start"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	bSizer3->Add( m_checkResetFlatMode, 0, wxALL, 5 );
 	
 	m_panelGeneral->SetSizer( bSizer3 );
@@ -1606,7 +1578,6 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	sizerPanelEditor->Add( m_textEditorArgs, 0, wxALL|wxEXPAND, 5 );
 	
 	m_checkEditorAlways = new wxCheckBox( m_panelEditor, wxID_ANY, _("Use always"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	sizerPanelEditor->Add( m_checkEditorAlways, 0, wxALL, 5 );
 	
 	m_panelEditor->SetSizer( sizerPanelEditor );
@@ -1637,7 +1608,6 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	sizerPanelExplorer->Add( m_textExplorerArgs, 0, wxALL|wxEXPAND, 5 );
 	
 	m_checkExplorerAlways = new wxCheckBox( m_panelExplorer, wxID_ANY, _("Use always"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	sizerPanelExplorer->Add( m_checkExplorerAlways, 0, wxALL, 5 );
 	
 	m_panelExplorer->SetSizer( sizerPanelExplorer );
@@ -1709,11 +1679,9 @@ PreferencesDlgBase::PreferencesDlgBase( wxWindow* parent, wxWindowID id, const w
 	sizerAuth = new wxBoxSizer( wxVERTICAL );
 	
 	m_checkAuthPerBookmark = new wxCheckBox( m_panelAuth, wxID_ANY, _("Different login for each bookmark in the bookmarks list"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	sizerAuth->Add( m_checkAuthPerBookmark, 0, wxALL, 5 );
 	
 	m_checkUseAuthCache = new wxCheckBox( m_panelAuth, wxID_ANY, _("Store authentication credentials on hard disk"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	sizerAuth->Add( m_checkUseAuthCache, 0, wxALL, 5 );
 	
 	m_panelAuth->SetSizer( sizerAuth );
@@ -1794,7 +1762,6 @@ RevertDlgBase::RevertDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_mainSizer->Add( m_staticQuestion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	m_mainSizer->Add( m_checkRecursive, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 	
 	wxBoxSizer* buttonSizer;
@@ -1837,8 +1804,7 @@ SwitchDlgBase::SwitchDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_checkUseLatest->SetValue(true);
-	
+	m_checkUseLatest->SetValue(true); 
 	m_revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 5 );
 	
 	m_mainSizer->Add( m_revisionSizer, 0, wxEXPAND, 5 );
@@ -1847,11 +1813,9 @@ SwitchDlgBase::SwitchDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	optionSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	optionSizer->Add( m_checkRecursive, 0, 0, 5 );
 	
 	m_checkRelocate = new wxCheckBox( this, wxID_ANY, _("Relocate"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	optionSizer->Add( m_checkRelocate, 0, 0, 5 );
 	
 	m_mainSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );
@@ -1897,7 +1861,6 @@ UnlockDlgBase::UnlockDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_mainSizer->Add( m_staticQuestion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 	
 	m_checkForce = new wxCheckBox( this, wxID_ANY, _("Force unlocking even if you are not the lock owner"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	m_mainSizer->Add( m_checkForce, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 	
 	wxBoxSizer* buttonSizer;
@@ -1939,8 +1902,7 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_checkUseLatest->SetValue(true);
-	
+	m_checkUseLatest->SetValue(true); 
 	m_revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 5 );
 	
 	m_mainSizer->Add( m_revisionSizer, 0, wxEXPAND, 5 );
@@ -1949,11 +1911,9 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	optionSizer = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	optionSizer->Add( m_checkRecursive, 0, 0, 5 );
 	
 	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore Externals"), wxDefaultPosition, wxDefaultSize, 0 );
-	
 	optionSizer->Add( m_checkIgnoreExternals, 0, 0, 5 );
 	
 	m_mainSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );

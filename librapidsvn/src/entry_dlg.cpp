@@ -50,7 +50,7 @@ EntryDlg::EntryDlg(wxWindow * parent, const wxString & title)
 {
   m = new Data();
 
-  m_textName->SetValidator(wxGenericValidator(&m->name));
+  m_comboName->SetValidator(wxGenericValidator(&m->name));
   m_textValue->SetValidator(wxGenericValidator(&m->value));
   
   m_mainSizer->SetSizeHints(this);
@@ -133,19 +133,18 @@ EntryDlg::SetEditMode(EditMode mode)
 void
 EntryDlg::CheckControls()
 {
-  wxString name = m_textName->GetValue();
+  wxString name = m_comboName->GetValue();
   TrimString(name);
 
   bool ok = true;
 
-  EnableCtrl(m_textName, !m->readOnly && (m->mode != EDIT));
+  EnableCtrl(m_comboName, !m->readOnly && (m->mode != EDIT));
   EnableCtrl(m_textValue, !m->readOnly);
 
   if (name.IsEmpty())
     ok = false;
 
   EnableCtrl(m_buttonOK, !m->readOnly && ok);
-
 }
 
 
