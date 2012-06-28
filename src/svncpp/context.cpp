@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program (in the file GPL.txt.  
+ * along with this program (in the file GPL.txt.
  * If not, see <http://www.gnu.org/licenses/>.
  *
  * This software consists of voluntary contributions made by many
@@ -65,36 +65,11 @@ public:
     bool logIsSet;
     int promptCounter;
     Pool pool;
-    svn_client_ctx_t ctx;
+    svn_client_ctx_t * ctx;
     std::string username;
     std::string password;
     std::string logMessage;
     std::string configDir;
-
-    /**
-     * translate native c-string to utf8
-     */
-    static svn_error_t *
-    translateString(const char * str, const char ** newStr,
-                    apr_pool_t * /*pool*/)
-    {
-      // due to problems with apr_xlate we dont perform
-      // any conversion at this place. YOU will have to make
-      // sure any strings passed are UTF 8 strings
-      // svn_string_t *string = svn_string_create ("", pool);
-      //
-      // string->data = str;
-      // string->len = strlen (str);
-      //
-      // const char * encoding = APR_LOCALE_CHARSET;
-      //
-      // SVN_ERR (svn_subst_translate_string (&string, string,
-      //                                      encoding, pool));
-      //
-      // *newStr = string->data;
-      *newStr = str;
-      return SVN_NO_ERROR;
-    }
 
     /**
      * the @a baton is interpreted as Data *
@@ -205,27 +180,22 @@ public:
       svn_auth_open(&ab, providers, pool);
 
       // initialize ctx structure
-      memset(&ctx, 0, sizeof(ctx));
+      svn_client_create_context(&ctx, pool);
 
       // get the config based on the configDir passed in
-      svn_config_get_config(&ctx.config, c_configDir, pool);
+      svn_config_get_config(&ctx->config, c_configDir, pool);
 
       // tell the auth functions where the config is
       svn_auth_set_parameter(ab, SVN_AUTH_PARAM_CONFIG_DIR,
                              c_configDir);
 
-      ctx.auth_baton = ab;
-      ctx.log_msg_func = onLogMsg;
-      ctx.log_msg_baton = this;
-      ctx.notify_func = onNotify;
-      ctx.notify_baton = this;
-      ctx.cancel_func = onCancel;
-      ctx.cancel_baton = this;
-
-#if (SVN_VER_MAJOR >= 1) && (SVN_VER_MINOR >= 2)
-      ctx.notify_func2 = onNotify2;
-      ctx.notify_baton2 = this;
-#endif
+      ctx->auth_baton = ab;
+      ctx->log_msg_func = onLogMsg;
+      ctx->log_msg_baton = this;
+      ctx->notify_func2 = onNotify2;
+      ctx->notify_baton2 = this;
+      ctx->cancel_func = onCancel;
+      ctx->cancel_baton = this;
     }
 
     void setAuthCache(bool value)
@@ -234,7 +204,7 @@ public:
       if (!value)
         param = (void *)"1";
 
-      svn_auth_set_parameter(ctx.auth_baton,
+      svn_auth_set_parameter(ctx->auth_baton,
                              SVN_AUTH_PARAM_NO_AUTH_CACHE,
                              param);
     }
@@ -245,7 +215,7 @@ public:
       username = usr;
       password = pwd;
 
-      svn_auth_baton_t * ab = ctx.auth_baton;
+      svn_auth_baton_t * ab = ctx->auth_baton;
       svn_auth_set_parameter(ab, SVN_AUTH_PARAM_DEFAULT_USERNAME,
                              username.c_str());
       svn_auth_set_parameter(ab, SVN_AUTH_PARAM_DEFAULT_PASSWORD,
@@ -294,49 +264,29 @@ public:
     /**
      * this is the callback function for the subversion
      * api functions to signal the progress of an action
-     */
-    static void
-    onNotify(void * baton,
-             const char *path,
-             svn_wc_notify_action_t action,
-             svn_node_kind_t kind,
-             const char *mime_type,
-             svn_wc_notify_state_t content_state,
-             svn_wc_notify_state_t prop_state,
-             svn_revnum_t revision)
-    {
-      if (baton == 0)
-        return;
-
-      Data * data = static_cast <Data *>(baton);
-
-      data->notify(path, action, kind, mime_type, content_state,
-                   prop_state, revision);
-    }
-
-
-#if (SVN_VER_MAJOR >= 1) && (SVN_VER_MINOR >= 2)
-    /**
-     * this is the callback function for the subversion 1.2
-     * api functions to signal the progress of an action
      *
-     * @todo right now we forward only to @a onNotify,
-     *       but maybe we should a notify2 to the listener
      * @since subversion 1.2
      */
     static void
     onNotify2(void*baton,const svn_wc_notify_t *action,apr_pool_t *)
     {
-      if (!baton)
-        return;
+      Data * data = static_cast <Data *>(baton);
 
-      // for now forward the call to @a onNotify
-      onNotify(baton, action->path, action->action,
-               action->kind, action->mime_type,
-               action->content_state, action->prop_state,
-               action->revision);
+      data->notify(action->path, 
+                   action->action, 
+                   action->kind, 
+                   action->mime_type, 
+                   action->content_state,
+                   action->prop_state, 
+                   action->revision
+                   /* TODO
+                   , action->lock_state,
+                   action->changelist_name,
+                   action->merge_range
+                   action->rev_props
+                   */
+        );
     }
-#endif
 
 
     /**
@@ -654,13 +604,13 @@ public:
 
   Context::operator svn_client_ctx_t * ()
   {
-    return &(m->ctx);
+    return m->ctx;
   }
 
   svn_client_ctx_t *
   Context::ctx()
   {
-    return &(m->ctx);
+    return m->ctx;
   }
 
   void
