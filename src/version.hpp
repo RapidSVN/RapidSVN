@@ -50,7 +50,7 @@
 /**
  * Micro version number.
  */
-#define RAPIDSVN_VER_MICRO 0
+#define RAPIDSVN_VER_MICRO 1
 
 /**
  * Patch string. Can be empty
@@ -60,7 +60,7 @@
 /**
  * Combined version string
  */
-#define RAPIDSVN_VER_STR "0.12.0"
+#define RAPIDSVN_VER_STR "0.12.1"
 
 #ifndef RAPIDSVN_VER_REVISION
 #define RAPIDSVN_VER_REVISION 0

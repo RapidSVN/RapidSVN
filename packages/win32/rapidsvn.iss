@@ -5,16 +5,16 @@
 ;          before running this script
 
 [Setup]
-AppName=RapidSVN-0.12.0
-AppVerName=RapidSVN-0.12.0
+AppName=RapidSVN-0.12.1
+AppVerName=RapidSVN-0.12.1
 AppPublisherURL=http://rapidsvn.tigris.org/
 AppSupportURL=http://rapidsvn.tigris.org/
 AppUpdatesURL=http://rapidsvn.tigris.org/
-DefaultDirName={pf}\RapidSVN-0.12.0
-DefaultGroupName=RapidSVN-0.12.0
+DefaultDirName={pf}\RapidSVN-0.12.1
+DefaultGroupName=RapidSVN-0.12.1
 LicenseFile=..\..\GPL.txt
 InfoBeforeFile=..\..\README
-OutputBaseFilename=RapidSVN-0.12.0
+OutputBaseFilename=RapidSVN-0.12.1
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
@@ -68,8 +68,8 @@ Source: "tmp\*.so"; DestDir: "{app}\bin\iconv"; Flags: ignoreversion; Components
 [Icons]
 Name: "{group}\RapidSVN (Ansi)"; Filename: "{app}\bin\rapidsvn_ansi.exe"; WorkingDir: "{app}\bin"; OnlyBelowVersion: 0,4.0; Components: main
 Name: "{group}\RapidSVN"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; MinVersion: 0,4.0; Components: main
-Name: "{userdesktop}\RapidSVN-0.12.0"; Filename: "{app}\bin\rapidsvn_ansi.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon; OnlyBelowVersion: 0,4.0; Components: main
-Name: "{userdesktop}\RapidSVN-0.12.0"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon; MinVersion: 0,4.0; Components: main
+Name: "{userdesktop}\RapidSVN-0.12.1"; Filename: "{app}\bin\rapidsvn_ansi.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon; OnlyBelowVersion: 0,4.0; Components: main
+Name: "{userdesktop}\RapidSVN-0.12.1"; Filename: "{app}\bin\rapidsvn.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon; MinVersion: 0,4.0; Components: main
 
 [Run]
 Filename: "{app}\bin\rapidsvn_ansi.exe"; Description: "Launch RapidSVN (Ansi)"; WorkingDir: "{app}\bin"; Flags: nowait postinstall skipifsilent; OnlyBelowVersion: 0,4.0; Components: main
