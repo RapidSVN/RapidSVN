@@ -1,3 +1,11 @@
+Version 0.12.1 (released June 29th 2012)
+http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.12.1
+
+User-visible changes
+
+    * 737 Fixed: Crashes on local working copies with Subversion 1.7
+
+
 Version 0.12 (released October 14th 2009)
 http://rapidsvn.tigris.org/svn/rapidsvn/tags/0.12
 
