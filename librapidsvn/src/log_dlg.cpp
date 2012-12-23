@@ -22,6 +22,9 @@
  * ====================================================================
  */
 
+// stl
+#include <algorithm>
+
 // wx windows
 #include "wx/wx.h"
 #include "wx/valgen.h"
@@ -185,7 +188,8 @@ LogDlg::UpdateSelection()
   if (1 != count)
   {
     m_textLog->Clear();
-    m_listFiles->DeleteAllItems();
+    ReduceSelectionToOnlyTwoItems();
+    FillAffectedFiles();
   }
   else
   {
@@ -198,20 +202,20 @@ LogDlg::UpdateSelection()
     m_textLog->SetValue(message);
     m_listFiles->SetValue(entry.changedPaths);
   }
+  CheckControls();
 }
-
 
 void
 LogDlg::OnRevSelected(wxListEvent & WXUNUSED(event))
 {
-  CheckControls();
+  UpdateSelection();
 }
 
 
 void
 LogDlg::OnRevDeselected(wxListEvent & WXUNUSED(event))
 {
-  CheckControls();
+  UpdateSelection();
 }
 
 
@@ -225,8 +229,6 @@ LogDlg::CheckControls()
   bool twoRevs = 2 == count;
   bool oneRev = 1 == count;
 
-  UpdateSelection();
-
   m_buttonGet->Enable(oneRev && (!isUrl));
   m_buttonView->Enable(oneRev);
 
@@ -239,6 +241,123 @@ LogDlg::CheckControls()
 
   m_buttonMerge->Enable(twoRevs);
   m_buttonAnnotate->Enable(oneRev);
+}
+
+void
+LogDlg::ReduceSelectionToOnlyTwoItems()
+{
+  if (m_listRevisions->GetSelectedItemCount() <= 2)
+  {
+    return;
+  }
+
+  long previousSelectedItemIndex = m_listRevisions->GetNextSelected(m_listRevisions->GetFirstSelected()),
+       selectedItemIndex = m_listRevisions->GetNextSelected(previousSelectedItemIndex);
+  bool focusedWasSelected = false;
+
+  while (selectedItemIndex != -1)
+  {
+    if (previousSelectedItemIndex == m_listRevisions->GetFocusedItem())
+    {
+      focusedWasSelected = true;
+    }
+    else
+    {
+      m_listRevisions->Select(previousSelectedItemIndex, false);
+    }
+    previousSelectedItemIndex = selectedItemIndex;
+    selectedItemIndex = m_listRevisions->GetNextSelected(previousSelectedItemIndex);
+  }
+
+  if (focusedWasSelected)
+  {
+    m_listRevisions->Select(previousSelectedItemIndex, false);
+  }
+}
+
+void
+LogDlg::FillAffectedFiles()
+{
+  m_listFiles->DeleteAllItems();
+
+  long firstSelectedItemIndex = m_listRevisions->GetFirstSelected();
+  if (firstSelectedItemIndex == -1)
+  {
+    return;
+  }
+
+  const svn::LogEntry & entry = (*m->entries)[firstSelectedItemIndex];
+  std::list<svn::LogChangePathEntry> changedPaths = entry.changedPaths;
+
+  if (m_listRevisions->GetSelectedItemCount() > 1)
+  {
+    std::set<std::string> affectedPaths = GetIntersectionOfAffectedPaths();
+    changedPaths = FilterAffectedPaths(changedPaths, affectedPaths);
+  }
+
+  m_listFiles->SetValue(changedPaths);
+}
+
+std::set<std::string>
+LogDlg::GetIntersectionOfAffectedPaths()
+{
+  long firstSelectedItemIndex = m_listRevisions->GetFirstSelected();
+  std::set<std::string> affectedPaths = GetAffectedPathsForItem(firstSelectedItemIndex);
+  long nextSelectedItemIndex = m_listRevisions->GetNextSelected(firstSelectedItemIndex);
+
+  while (nextSelectedItemIndex != -1)
+  {
+    std::set<std::string> nextAffectedPaths = GetAffectedPathsForItem(nextSelectedItemIndex);
+    std::vector<std::string> intersection(affectedPaths.size());
+
+    set_intersection(affectedPaths.begin(), affectedPaths.end(),
+        nextAffectedPaths.begin(), nextAffectedPaths.end(),
+        intersection.begin());
+    affectedPaths = std::set<std::string>(intersection.begin(), intersection.end());
+
+    nextSelectedItemIndex = m_listRevisions->GetNextSelected(nextSelectedItemIndex);
+  }
+
+  return affectedPaths;
+}
+
+std::list<svn::LogChangePathEntry>
+LogDlg::FilterAffectedPaths(std::list<svn::LogChangePathEntry> const & changedPaths, std::set<std::string> const & filter)
+{
+  std::list<svn::LogChangePathEntry> result;
+
+  for (std::list<svn::LogChangePathEntry>::const_iterator it = changedPaths.begin();
+      it != changedPaths.end();
+      ++it)
+  {
+    if (filter.find(it->path) != filter.end())
+    {
+      result.push_back(*it);
+    }
+  }
+
+  return result;
+}
+
+std::set<std::string>
+LogDlg::GetAffectedPathsForItem(long itemIndex)
+{
+  if (itemIndex < 0)
+  {
+    return std::set<std::string>();
+  }
+
+  std::set<std::string> result;
+  const svn::LogEntry & entry = (*m->entries)[itemIndex];
+
+  for (std::list<svn::LogChangePathEntry>::const_iterator it = entry.changedPaths.begin();
+      it != entry.changedPaths.end();
+      ++it)
+  {
+    result.insert(it->path);
+  }
+
+  return result;
 }
 
 /* -----------------------------------------------------------------

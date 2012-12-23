@@ -34,14 +34,14 @@
 #include "utils.hpp"
 
 
-class LogRevList : public wxListCtrl
+class LogRevList : public wxListView
 {
 public:
   LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, 
              const wxSize& size = wxDefaultSize, long style = wxLC_REPORT, 
              const wxValidator& validator = wxDefaultValidator, 
              const wxString& name = wxT("LogRevList"))
-    : wxListCtrl(parent, id, pos, size, style, validator, name)
+    : wxListView(parent, id, pos, size, style, validator, name)
   {
     InsertColumn(0, _("Revision"));
     InsertColumn(1, _("User"));

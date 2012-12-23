@@ -25,6 +25,9 @@
 #ifndef _LOG_DLG_H_INCLUDED_
 #define _LOG_DLG_H_INCLUDED_
 
+// stl
+#include <set>
+
 // wxWidgets
 #include "wx/dialog.h"
 
@@ -83,7 +86,11 @@ private:
 
   void CheckControls();
   void UpdateSelection();
-
+  void ReduceSelectionToOnlyTwoItems();
+  void FillAffectedFiles();
+  std::set<std::string> GetIntersectionOfAffectedPaths();
+  std::list<svn::LogChangePathEntry> FilterAffectedPaths(std::list<svn::LogChangePathEntry> const & changedPaths, std::set<std::string> const & filter);
+  std::set<std::string> GetAffectedPathsForItem(long itemIndex);
 };
 
 #endif

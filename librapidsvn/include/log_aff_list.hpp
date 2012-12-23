@@ -38,14 +38,14 @@
 #include "utils.hpp"
 
 
-class LogAffectedList : public wxListCtrl
+class LogAffectedList : public wxListView
 {
 public:
   LogAffectedList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, 
              const wxSize& size = wxDefaultSize, long style = wxLC_REPORT, 
              const wxValidator& validator = wxDefaultValidator, 
              const wxString& name = wxT("LogAffectedList"))
-    : wxListCtrl(parent, id, pos, size, style, validator, name)
+    : wxListView(parent, id, pos, size, style, validator, name)
   {
     InsertColumn(0, _("Action"));
     InsertColumn(1, _("Path"));
