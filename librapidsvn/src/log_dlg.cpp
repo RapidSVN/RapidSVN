@@ -270,7 +270,7 @@ LogDlg::UpdateSelection()
   }
   else
   {
-    long itemIndex = m_listRevisions->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+    long itemIndex = m_listRevisions->GetFirstSelected();
     const svn::LogEntry & entry = (*m->entries)[itemIndex];
 
     wxString message(Utf8ToLocal(entry.message.c_str()));
