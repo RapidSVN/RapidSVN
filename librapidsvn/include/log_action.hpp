@@ -32,6 +32,9 @@
 namespace svn
 {
   class StatusSel;
+  class Client;
+  class Path;
+  class RepositoryPath;
 }
 
 class LogAction : public Action
@@ -47,6 +50,9 @@ public:
 
   static bool
   CheckStatusSel(const svn::StatusSel & statusSel);
+
+private:
+  svn::RepositoryPath CreateRepositoryPath(svn::Client & client, svn::Path & path);
 };
 
 #endif

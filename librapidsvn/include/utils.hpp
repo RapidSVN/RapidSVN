@@ -117,6 +117,13 @@ AppendBookmarksMenu(wxMenu * parentMenu);
 void
 AppendQueryMenu(wxMenu * parentMenu);
 
+/**
+ * Append entries for the "Query" menu for log item.
+ *
+ * @param parentMenu menu that will receive the items
+ */
+void
+AppendLogItemQueryMenu(wxMenu *parentMenu);
 
 /**
  * Append entries for "verbs" (Win32 only).

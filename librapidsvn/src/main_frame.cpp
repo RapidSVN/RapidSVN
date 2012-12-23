@@ -1887,7 +1887,7 @@ MainFrame::OnActionEvent(wxCommandEvent & event)
 
     if (pData != 0)
     {
-      LogDlg dlg(this, pData->target.c_str(), pData->logEntries);
+      LogDlg dlg(this, pData->target, pData->logEntries);
       dlg.ShowModal();
 
       delete pData->logEntries;

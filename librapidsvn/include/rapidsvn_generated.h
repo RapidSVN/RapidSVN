@@ -599,6 +599,7 @@ class LogDlgBase : public wxDialog
 		virtual void OnDiff( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMerge( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAnnotate( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnAffectedFileOrDirRightClick( wxListEvent& event ) { event.Skip(); }
 		
 	
 	public:

@@ -27,12 +27,14 @@
 
 // stl
 #include <set>
+#include <memory>
 
 // wxWidgets
 #include "wx/dialog.h"
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/repository_path.hpp"
 
 // app
 #include "rapidsvn_generated.h"
@@ -49,7 +51,7 @@ public:
    * @param entries log entries
    */
   LogDlg(wxWindow * parent,
-         const char * path,
+         const svn::RepositoryPath & path, 
          const svn::LogEntries * entries);
 
   /**
@@ -79,10 +81,22 @@ protected:  // events inherited from LogDlgBase
   void
   OnRevDeselected(wxListEvent & event);
 
+  void
+  OnAffectedFileOrDirRightClick(wxListEvent & event);
+
 private:
   /** hide implementation details */
   struct Data;
-  Data * m;
+  std::auto_ptr<Data> m;
+  
+  std::list<svn::LogChangePathEntry> affectedFiles;
+
+  void OnAffectedFileOrDirCommand(wxCommandEvent & event);
+
+  void OnView(wxString & path);
+  void OnDiff(wxString & path, bool singleItemDiff = false);
+  void OnAnnotate(wxString & path);
+  void OnLog(wxString & path);
 
   void CheckControls();
   void UpdateSelection();

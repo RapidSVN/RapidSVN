@@ -16,6 +16,7 @@ noinst_HEADERS= \
 	include/svncpp/path.hpp \
 	include/svncpp/pool.hpp \
 	include/svncpp/property.hpp \
+	include/svncpp/repository_path.hpp \
 	include/svncpp/revision.hpp \
 	include/svncpp/status.hpp \
 	include/svncpp/status_selection.hpp \

@@ -53,23 +53,24 @@ struct LogDlg::Data
 public:
   const svn::LogEntries * entries;
   wxString path;
+  svn::RepositoryPath repositoryPath; 
 
 public:
-  Data(const char * path_,
+  Data(const svn::RepositoryPath & path_,
        const svn::LogEntries * entries_)
-      : entries(entries_), path(Utf8ToLocal(path_))
+      : entries(entries_), path(Utf8ToLocal(path_.c_str())), repositoryPath(path_)
   {
   }
 
 };
 
 LogDlg::LogDlg(wxWindow * parent,
-               const char * path,
+               const svn::RepositoryPath & path, 
                const svn::LogEntries * entries)
     : LogDlgBase(parent, -1, _("Log History"), wxDefaultPosition,
                  wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
 {
-  m = new Data(path, entries);
+  m = std::auto_ptr<Data>(new Data(path, entries));
 
   m_staticRevisions->SetLabel(
     wxString::Format(_("History: %d revisions"), entries->size()));
@@ -84,12 +85,14 @@ LogDlg::LogDlg(wxWindow * parent,
   m_mainSizer->SetSizeHints(this);
   m_mainSizer->Fit(this);
 
+  m_listFiles->Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(LogDlg::OnAffectedFileOrDirCommand), NULL, this);
+
   CentreOnParent();
 }
 
 LogDlg::~LogDlg()
 {
-  delete m;
+  m_listFiles->Disconnect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(LogDlg::OnAffectedFileOrDirCommand), NULL, this);
 }
 
 void
@@ -107,11 +110,17 @@ LogDlg::OnGet(wxCommandEvent & WXUNUSED(event))
 void
 LogDlg::OnView(wxCommandEvent & WXUNUSED(event))
 {
+  OnView(m->path);
+}
+
+void
+LogDlg::OnView(wxString & path)
+{
   svn_revnum_t revnum = m_listRevisions->GetSelectedRevision();
 
   GetData * data = new GetData();
   data->revision = revnum;
-  data->path = m->path;
+  data->path = path;
 
   ActionEvent::Post(GetParent(), TOKEN_VIEW, data);
 }
@@ -119,19 +128,31 @@ LogDlg::OnView(wxCommandEvent & WXUNUSED(event))
 void
 LogDlg::OnDiff(wxCommandEvent & WXUNUSED(event))
 {
+  OnDiff(m->path);
+}
+
+void
+LogDlg::OnDiff(wxString & path, bool singleItemDiff)
+{
   RevnumArray array(m_listRevisions->GetSelectedRevisions());
 
   wxASSERT(array.Count() >= 1);
   wxASSERT(array.Count() <= 2);
 
   DiffData * data = new DiffData();
-  data->path = m->path;
+  data->path = path;
 
   if (2 == array.Count())
   {
     data->compareType = DiffData::TWO_REVISIONS;
     data->revision1 = svn::Revision(array[0]);
     data->revision2 = svn::Revision(array[1]);
+  }
+  else if (m->repositoryPath.isUrl() || singleItemDiff)
+  {
+    data->compareType = DiffData::TWO_REVISIONS;
+    data->revision1 = svn::Revision(array[0]);
+    data->revision2 = svn::Revision(array[0] - 1);
   }
   else 
   {
@@ -168,15 +189,72 @@ LogDlg::OnMerge(wxCommandEvent & WXUNUSED(event))
 void
 LogDlg::OnAnnotate(wxCommandEvent & WXUNUSED(event))
 {
+  OnAnnotate(m->path);
+}
+
+void
+LogDlg::OnAnnotate(wxString & path)
+{
   RevnumArray array(m_listRevisions->GetSelectedRevisions());
 
   wxASSERT(1 == array.Count());
 
   AnnotateData * data = new AnnotateData();
-  data->path = m->path;
+  data->path = path;
   data->endRevision = svn::Revision(array[0]);
 
   ActionEvent::Post(GetParent(), TOKEN_ANNOTATE, data);
+}
+
+void
+LogDlg::OnLog(wxString & path)
+{
+}
+
+void
+LogDlg::OnAffectedFileOrDirRightClick(wxListEvent & event)
+{
+  long focusedIdx = m_listFiles->GetFocusedItem();
+
+  if (focusedIdx == -1)
+  {
+    return;
+  }
+
+  wxMenu menu;
+  AppendLogItemQueryMenu(&menu);
+
+  m_listFiles->PopupMenu(&menu, event.GetPoint());
+}
+
+void
+LogDlg::OnAffectedFileOrDirCommand(wxCommandEvent & event)
+{
+  long focusedFileIdx = m_listFiles->GetFocusedItem();
+
+  wxASSERT(focusedFileIdx != -1);
+
+  std::list<svn::LogChangePathEntry>::const_iterator it = affectedFiles.begin();
+  std::advance(it, focusedFileIdx);
+  wxString file(Utf8ToLocal(m->repositoryPath.getRepositoryRoot() + it->path));
+
+
+  int id = event.GetId();
+  switch (id)
+  {
+    case ID_Diff:
+      OnDiff(file, true);
+      break;
+    case ID_Edit:
+      OnView(file);
+      break;
+    case ID_Log:
+      OnLog(file);
+      break;
+    case ID_Annotate:
+      OnAnnotate(file);
+      break;
+  }
 }
 
 
@@ -189,7 +267,6 @@ LogDlg::UpdateSelection()
   {
     m_textLog->Clear();
     ReduceSelectionToOnlyTwoItems();
-    FillAffectedFiles();
   }
   else
   {
@@ -200,8 +277,8 @@ LogDlg::UpdateSelection()
     message.Trim();
 
     m_textLog->SetValue(message);
-    m_listFiles->SetValue(entry.changedPaths);
   }
+  FillAffectedFiles();
   CheckControls();
 }
 
@@ -279,6 +356,7 @@ void
 LogDlg::FillAffectedFiles()
 {
   m_listFiles->DeleteAllItems();
+  affectedFiles.clear();
 
   long firstSelectedItemIndex = m_listRevisions->GetFirstSelected();
   if (firstSelectedItemIndex == -1)
@@ -287,15 +365,15 @@ LogDlg::FillAffectedFiles()
   }
 
   const svn::LogEntry & entry = (*m->entries)[firstSelectedItemIndex];
-  std::list<svn::LogChangePathEntry> changedPaths = entry.changedPaths;
+  affectedFiles = entry.changedPaths;
 
   if (m_listRevisions->GetSelectedItemCount() > 1)
   {
-    std::set<std::string> affectedPaths = GetIntersectionOfAffectedPaths();
-    changedPaths = FilterAffectedPaths(changedPaths, affectedPaths);
+    std::set<std::string> affectedFilesIntersection = GetIntersectionOfAffectedPaths();
+    affectedFiles = FilterAffectedPaths(affectedFiles, affectedFilesIntersection);
   }
 
-  m_listFiles->SetValue(changedPaths);
+  m_listFiles->SetValue(affectedFiles);
 }
 
 std::set<std::string>

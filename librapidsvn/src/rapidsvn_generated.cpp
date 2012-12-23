@@ -1237,6 +1237,7 @@ LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_buttonDiff->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnDiff ), NULL, this );
 	m_buttonMerge->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnMerge ), NULL, this );
 	m_buttonAnnotate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnAnnotate ), NULL, this );
+	m_listFiles->Connect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK, wxListEventHandler( LogDlgBase::OnAffectedFileOrDirRightClick ), NULL, this );
 }
 
 LogDlgBase::~LogDlgBase()
@@ -1249,6 +1250,7 @@ LogDlgBase::~LogDlgBase()
 	m_buttonDiff->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnDiff ), NULL, this );
 	m_buttonMerge->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnMerge ), NULL, this );
 	m_buttonAnnotate->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( LogDlgBase::OnAnnotate ), NULL, this );
+	m_listFiles->Disconnect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK, wxListEventHandler( LogDlgBase::OnAffectedFileOrDirRightClick ), NULL, this );
 }
 
 ImportDlgBase::ImportDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )

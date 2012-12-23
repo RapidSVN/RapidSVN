@@ -28,6 +28,8 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/info.hpp"
+#include "svncpp/repository_path.hpp"
 #include "svncpp/revision.hpp"
 #include "svncpp/status_selection.hpp"
 
@@ -52,7 +54,7 @@ LogAction::Perform()
     client.log(target.c_str(), svn::Revision::START,
                svn::Revision::HEAD, true, false);
 
-  LogData * data = new LogData(entries, target);
+  LogData * data = new LogData(entries, CreateRepositoryPath(client, target));
   ActionEvent::Post(GetParent(), TOKEN_LOG, data);
 
   return true;
@@ -70,6 +72,13 @@ LogAction::CheckStatusSel(const svn::StatusSel & statusSel)
   return true;
 }
 
+svn::RepositoryPath
+LogAction::CreateRepositoryPath(svn::Client & client, svn::Path & path)
+{
+  svn::InfoVector info = client.info(path, svn::Revision::START, svn::Revision::HEAD);
+  std::string repositoryRoot = !info.empty() ? info.back().repos() : "";
+  return svn::RepositoryPath(path.path(), repositoryRoot);
+}
 /* -----------------------------------------------------------------
  * local variables:
  * eval: (load-file "../rapidsvn-dev.el")

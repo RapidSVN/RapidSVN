@@ -30,14 +30,15 @@
 
 // svncpp
 #include "svncpp/client.hpp"
+#include "svncpp/repository_path.hpp"
 
 struct LogData
 {
 public:
   const svn::LogEntries * logEntries;
-  svn::Path target;
+  svn::RepositoryPath target;
 
-  LogData(const svn::LogEntries * logEntries_, const svn::Path & target_)
+  LogData(const svn::LogEntries * logEntries_, const svn::RepositoryPath & target_)
       : logEntries(logEntries_), target(target_)
   {
   }

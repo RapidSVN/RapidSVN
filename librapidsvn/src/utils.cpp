@@ -215,6 +215,15 @@ AppendQueryMenu(wxMenu * parentMenu)
 }
 
 void
+AppendLogItemQueryMenu(wxMenu *parentMenu)
+{
+  AppendMenuItem(parentMenu, ID_Diff, _("&Diff..."));
+  AppendMenuItem(parentMenu, ID_Edit, _("&View..."));
+  AppendMenuItem(parentMenu, ID_Log, _("&Log..."), EMBEDDED_BITMAP(log_png));
+  AppendMenuItem(parentMenu, ID_Annotate, _("&Annotate..."), EMBEDDED_BITMAP(annotate_png));
+}
+
+void
 AppendBookmarksMenu(wxMenu * parentMenu)
 {
   AppendMenuItem(*parentMenu, ID_AddWcBookmark);
@@ -317,6 +326,7 @@ AppendMenuItem(wxMenu & menu, int id)
 
   case ID_Explore:
     caption = _("Explore...\tF2");
+    break;
   }
 
   wxMenuItem * item = AppendMenuItem(&menu, id, caption, bitmap);
