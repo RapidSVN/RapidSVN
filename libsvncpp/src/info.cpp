@@ -95,6 +95,14 @@ namespace svn
     return m->info != 0;
   }
 
+  svn_revnum_t
+  Info::revision() const
+  {
+    if (0 == m->info)
+      return 0;
+    else
+      return m->info->rev;
+  }
 
   const char *
   Info::url() const
@@ -121,6 +129,33 @@ namespace svn
       return 0;
     else
       return m->info->repos_UUID;
+  }
+
+  svn_revnum_t
+  Info::lastChangedRev() const
+  {
+    if (0 == m->info)
+      return 0;
+    else
+      return m->info->last_changed_rev;
+  }
+
+  apr_time_t
+  Info::lastChangedDate() const
+  {
+    if (0 == m->info)
+      return 0;
+    else
+      return m->info->last_changed_date;
+  }
+
+  const char *
+  Info::lastChangedAuthor() const
+  {
+    if (0 == m->info)
+      return 0;
+    else
+      return m->info->last_changed_author;
   }
 
 }
