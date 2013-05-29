@@ -108,7 +108,7 @@ namespace svn
     lastChangedDate() const;
 
     const char *
-    lastChangedAuthoer() const;
+    lastChangedAuthor() const;
 
     /** @todo MORE ENTRIES FROM @ref svn_info_to IF NEEDED */
 
