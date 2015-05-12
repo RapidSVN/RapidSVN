@@ -45,7 +45,7 @@ public:
 
   Data(const svn::Path selectedUrl)
   {
-    data.SrcPath = Utf8ToLocal(selectedUrl.c_str());
+    data.SrcPath = Utf8ToLocal(selectedUrl.native().c_str());
   }
 
 };

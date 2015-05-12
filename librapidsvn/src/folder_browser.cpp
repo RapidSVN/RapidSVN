@@ -670,7 +670,7 @@ public:
           open_image = FOLDER_IMAGE_OPEN_FOLDER;
         }
 
-        wxString basename(Utf8ToLocal(filename.basename()));
+        wxString basename = wxFileName::FileName(path).GetName();
         FolderItemData * data = new FolderItemData(
           FOLDER_TYPE_NORMAL, path,
           basename,
