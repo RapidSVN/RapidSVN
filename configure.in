@@ -83,7 +83,7 @@ if test $APU_CONFIG ; then
     AC_MSG_RESULT([found])
 else
     AC_MSG_RESULT([not found])
-    AC_MSG_ERROR([APR util is required. Try --with-apu-config.])
+    AC_MSG_ERROR([APU util is required. Try --with-apu-config.])
 fi
 CPPFLAGS="$CPPFLAGS `$APU_CONFIG --includes`"
 APR_LIBS="$APR_LIBS `$APU_CONFIG --link-ld --libs`"
@@ -117,7 +117,7 @@ else
 fi
 CPPFLAGS="$CPPFLAGS -I$SVN_INCLUDE/subversion-1"
 
-SVN_LIBS="/usr/lib64 /usr/local/lib /usr/lib"
+SVN_LIBS="/usr/lib64 /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu"
 AC_ARG_WITH(svn-lib,
 [[  --with-svn-lib=DIR  Use the given path to the subversion libraries.]],
 [
@@ -172,6 +172,8 @@ case $WX_VERSION in
     [2.4.[2-9]])
         ;;
     [2.[5-9].*])
+        ;;
+    [3.0.*])
         ;;
     *)
         AC_MSG_ERROR([wxWidgets >= 2.4.2 required, found version $WX_VERSION])
