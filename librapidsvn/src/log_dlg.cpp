@@ -53,7 +53,7 @@ struct LogDlg::Data
 public:
   const svn::LogEntries * entries;
   wxString path;
-  svn::RepositoryPath repositoryPath; 
+  svn::RepositoryPath repositoryPath;
 
 public:
   Data(const svn::RepositoryPath & path_,
@@ -65,10 +65,10 @@ public:
 };
 
 LogDlg::LogDlg(wxWindow * parent,
-               const svn::RepositoryPath & path, 
+               const svn::RepositoryPath & path,
                const svn::LogEntries * entries)
     : LogDlgBase(parent, -1, _("Log History"), wxDefaultPosition,
-                 wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
+                 parent->GetSize(), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
 {
   m = std::auto_ptr<Data>(new Data(path, entries));
 
@@ -86,6 +86,11 @@ LogDlg::LogDlg(wxWindow * parent,
   m_mainSizer->Fit(this);
 
   m_listFiles->Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(LogDlg::OnAffectedFileOrDirCommand), NULL, this);
+
+  // Set size of this dialog to be 5% smaller than parent window.
+  wxSize parentSize = parent->GetSize();
+  parentSize.DecBy(parentSize.GetWidth() * 0.05);
+  this->SetSize(parentSize);
 
   CentreOnParent();
 }
@@ -154,7 +159,7 @@ LogDlg::OnDiff(wxString & path, bool singleItemDiff)
     data->revision1 = svn::Revision(array[0]);
     data->revision2 = svn::Revision(array[0] - 1);
   }
-  else 
+  else
   {
     data->compareType = DiffData::WITH_DIFFERENT_REVISION;
     data->revision1 = svn::Revision(array[0]);
@@ -258,7 +263,7 @@ LogDlg::OnAffectedFileOrDirCommand(wxCommandEvent & event)
 }
 
 
-void 
+void
 LogDlg::UpdateSelection()
 {
   int count = m_listRevisions->GetSelectedItemCount();

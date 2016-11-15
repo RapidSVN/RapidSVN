@@ -47,11 +47,12 @@ public:
 
     Data()
         : kind(svn_node_unknown), size(0), hasProps(false),
-        createdRev(0), time(0)
+
+          createdRev(0), time(0)
     {
     }
 
-    Data(const char * _name, svn_dirent_t * dirEntry, const svn_lock_t * lock)
+    Data(const char * _name, const svn_dirent_t * dirEntry, const svn_lock_t * lock)
         : name(_name), kind(dirEntry->kind), size(dirEntry->size),
         hasProps(dirEntry->has_props != 0),
         createdRev(dirEntry->created_rev), time(dirEntry->time)
@@ -92,7 +93,7 @@ public:
   {
   }
 
-  DirEntry::DirEntry(const char * name, svn_dirent_t * DirEntry, 
+  DirEntry::DirEntry(const char * name, const svn_dirent_t * DirEntry,
                      const svn_lock_t * lock)
     : m(new Data(name, DirEntry, lock))
   {
