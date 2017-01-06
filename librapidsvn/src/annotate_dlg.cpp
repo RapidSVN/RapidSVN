@@ -54,6 +54,11 @@ AnnotateDlg::AnnotateDlg(wxWindow * parent,
   m_mainSizer->SetSizeHints(this);
   m_mainSizer->Fit(this);
 
+  // Set size of this dialog to be 5% smaller than parent window.
+  wxSize parentSize = parent->GetSize();
+  parentSize.DecBy(parentSize.GetWidth() * 0.05);
+  this->SetSize(parentSize);
+
   Layout();
   CentreOnParent();
 
