@@ -37,53 +37,16 @@
 class LogRevList : public wxListView
 {
 public:
-  LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, 
-             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT, 
-             const wxValidator& validator = wxDefaultValidator, 
-             const wxString& name = wxT("LogRevList"))
-    : wxListView(parent, id, pos, size, style, validator, name)
-  {
-    InsertColumn(0, _("Revision"));
-    InsertColumn(1, _("User"));
-    InsertColumn(2, _("Date"));
-    InsertColumn(3, _("Log Message"));
+  LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
+             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT,
+             const wxValidator& validator = wxDefaultValidator,
+             const wxString& name = wxT("LogRevList"));
 
-    SetColumnWidth(0, 65);
-    SetColumnWidth(1, 100);
-    SetColumnWidth(2, 150);
-    SetColumnWidth(3, 200);
-  }
+  virtual ~LogRevList();
 
-  virtual ~LogRevList()
-  {
-    DeleteAllItems();
-  }
-
-  void SetEntries(const svn::LogEntries * entries)
-  {
-    DeleteAllItems();
-
-    if (entries == 0)
-      return;
-
-    long index=0;
-    svn::LogEntries::const_iterator it;
-    for (it=entries->begin(); it != entries->end(); it++)
-    {
-      const svn::LogEntry & entry = *it;
-      wxString rev;
-      wxString dateStr(FormatDateTime(entry.date));
-
-      rev.Printf(wxT("%ld"), (long) entry.revision);
-
-      InsertItem(index, rev);
-      SetItem(index, 1, Utf8ToLocal(entry.author.c_str()));
-      SetItem(index, 2, dateStr);
-      SetItem(index, 3, NewLinesToSpaces(Utf8ToLocal(entry.message.c_str())));
-      index++;
-    }
-  }
-
+  void SetEntries(svn::LogEntries * entries);
+  void
+  AddEntriesToList(svn::LogEntries * entries);
 
   /**
    * Returns the revision for the given @a item
@@ -93,20 +56,7 @@ public:
    * @retval -1 not found/error
    */
   svn_revnum_t
-  GetRevisionForItem(long item) const
-  {
-    wxListItem info;
-    info.m_itemId = item;
-    info.m_col = 0;
-    info.m_mask = wxLIST_MASK_TEXT;
-
-    if (!GetItem(info))
-      return -1;
-
-    svn_revnum_t revnum=-1;
-    info.m_text.ToLong(&revnum);
-    return revnum;
-  }
+  GetRevisionForItem(long item) const;
 
   /**
    * returns the selected revision.
@@ -116,15 +66,16 @@ public:
    *            contains an invalid string
    */
   svn_revnum_t
-  GetSelectedRevision() const
-  {
-    long item = GetNextItem(-1, wxLIST_NEXT_ALL,
-                            wxLIST_STATE_SELECTED);
-    if (item == -1)
-      return -1;
+  GetSelectedRevision() const;
 
-    return GetRevisionForItem(item);
-  }
+  /**
+   * returns the prior revision.
+   * Like @a GetSelectedRevision, but returns revision prior to the one passed
+   *
+   * @return if none found then return -1
+   */
+  svn_revnum_t
+  GetPriorRevision(const svn_revnum_t revnum) const;
 
   /**
    * returns the selected revisions.
@@ -135,80 +86,31 @@ public:
    *         will be returned
    */
   RevnumArray
-  GetSelectedRevisions() const
-  {
-    RevnumArray array;
-    long item = -1;
+  GetSelectedRevisions() const;
 
-    do
-    {
-      item = GetNextItem(item, wxLIST_NEXT_ALL,
-                         wxLIST_STATE_SELECTED);
-      if (item != -1)
-      {
-        svn_revnum_t revnum(GetRevisionForItem(item));
-
-        array.Add(revnum);
-      }
-    }
-    while (item != -1);
-
-    return array;
-  }
-
+  /**
+   * returns the last revision in list.
+   *
+   * @return last revision
+   * @retval -1 if nothing was selected or the cell
+   *            contains an invalid string
+   */
+  svn_revnum_t GetLastRevision() const;
 
   void
-  DeleteAllItems()
-  {
-    // Delete the item data before deleting the items:
-    while (GetItemCount() > 0)
-      DeleteItem(0);
+  DeleteAllItems();
 
-    wxListCtrl::DeleteAllItems();
-  }
+  void
+  AutoSizeLastColumn();
 
 private:
   wxString
-  NewLinesToSpaces(const wxString& str)
-  {
-    /*
-    wxString result = str;
-    result.Replace (wxT("\n"), wxT(" "));
-    return result;
-    */
+  NewLinesToSpaces(const wxString& str);
+  void
+  OnSize(wxSizeEvent& event);
 
-    wxString result;
-    if (str.Length() == 0)
-    {
-      return result;
-    }
-
-    result.Alloc(str.Length());
-    wxChar last = 0;
-
-    for (size_t idx = 0; idx < str.Length(); idx++)
-    {
-      wxChar s = str[idx];
-      switch (s)
-      {
-      case wxT('\r'):
-      case wxT('\n'):
-        if (last != wxChar(' '))
-        {
-          result += wxChar(' ');
-        }
-        break;
-
-      default:
-        result += str[idx];
-        break;
-      }
-    }
-
-    return result;
-  }
+  DECLARE_EVENT_TABLE()
 };
-
 
 #endif
 /* -----------------------------------------------------------------

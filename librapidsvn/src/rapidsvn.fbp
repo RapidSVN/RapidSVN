@@ -9878,7 +9878,7 @@
                                                     <property name="pos"></property>
                                                     <property name="size">365,150</property>
                                                     <property name="style">wxLC_REPORT</property>
-                                                    <property name="subclass">LogRevList; log_rev_list.hpp</property>
+                                                    <property name="subclass">LogRevList</property>
                                                     <property name="tooltip"></property>
                                                     <property name="validator_data_type"></property>
                                                     <property name="validator_style">wxFILTER_NONE</property>
