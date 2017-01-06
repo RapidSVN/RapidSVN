@@ -161,8 +161,13 @@ LogDlg::OnDiff(wxString & path, bool singleItemDiff)
   }
   else
   {
-    data->compareType = DiffData::WITH_DIFFERENT_REVISION;
-    data->revision1 = svn::Revision(array[0]);
+    svn_revnum_t revnumPrior = m_listRevisions->GetPriorRevision(array[0]);
+    if(revnumPrior != -1)
+    {
+      data->compareType = DiffData::TWO_REVISIONS;
+      data->revision1 = svn::Revision(array[0]);
+      data->revision2 = svn::Revision(revnumPrior);
+    }
   }
 
   ActionEvent::Post(GetParent(), TOKEN_DIFF, data);
@@ -313,14 +318,7 @@ LogDlg::CheckControls()
 
   m_buttonGet->Enable(oneRev && (!isUrl));
   m_buttonView->Enable(oneRev);
-
-  // If the bookmark is a working copy, then we can
-  // compare a revision against the local copy
-  if (isUrl)
-    m_buttonDiff ->Enable(twoRevs);
-  else
-    m_buttonDiff ->Enable(oneRev || twoRevs);
-
+  m_buttonDiff ->Enable(oneRev || twoRevs);
   m_buttonMerge->Enable(twoRevs);
   m_buttonAnnotate->Enable(oneRev);
 }

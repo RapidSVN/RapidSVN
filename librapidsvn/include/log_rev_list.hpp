@@ -37,9 +37,9 @@
 class LogRevList : public wxListView
 {
 public:
-  LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, 
-             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT, 
-             const wxValidator& validator = wxDefaultValidator, 
+  LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
+             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT,
+             const wxValidator& validator = wxDefaultValidator,
              const wxString& name = wxT("LogRevList"))
     : wxListView(parent, id, pos, size, style, validator, name)
   {
@@ -124,6 +124,41 @@ public:
       return -1;
 
     return GetRevisionForItem(item);
+  }
+
+  /**
+   * returns the prior revision.
+   * Like @a GetSelectedRevision, but returns revision prior to the one passed
+   *
+   * @return if none found then return -1
+   */
+  svn_revnum_t
+  GetPriorRevision(const svn_revnum_t revnum) const
+  {
+    long item = -1;
+
+    do
+    {
+      item = GetNextItem(item, wxLIST_NEXT_BELOW,
+                         wxLIST_STATE_DONTCARE);
+      if (item != -1)
+      {
+        svn_revnum_t revnumTemp(GetRevisionForItem(item));
+        if(revnum == revnumTemp)
+        {
+          item = GetNextItem(item, wxLIST_NEXT_BELOW,
+                             wxLIST_STATE_DONTCARE);
+          if (item != -1)
+          {
+            svn_revnum_t revnumPrior(GetRevisionForItem(item));
+            return revnumPrior;
+          }
+        }
+      }
+    }
+    while (item != -1);
+
+    return -1;
   }
 
   /**
