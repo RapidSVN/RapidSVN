@@ -256,6 +256,7 @@ librapidsvn_la_SOURCES= \
 	src/lock_dlg.cpp \
 	src/log_action.cpp \
 	src/log_dlg.cpp \
+	src/log_rev_list.cpp \
 	src/main_frame.cpp \
 	src/main_frame_helper.cpp \
 	src/merge_action.cpp \
