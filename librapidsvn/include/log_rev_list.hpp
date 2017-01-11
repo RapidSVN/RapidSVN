@@ -44,9 +44,9 @@ public:
 
   virtual ~LogRevList();
 
-  void SetEntries(svn::LogEntries * entries);
+  void SetEntries(const svn::LogEntries * entries);
   void
-  AddEntriesToList(svn::LogEntries * entries);
+  AddEntriesToList(const svn::LogEntries * entries);
 
   /**
    * Returns the revision for the given @a item
