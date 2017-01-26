@@ -578,6 +578,7 @@ class LogDlgBase : public wxDialog
 		wxPanel* m_upperPanel;
 		wxStaticText* m_staticRevisions;
 		LogRevList* m_listRevisions;
+		wxButton* m_buttonMore;
 		wxButton* m_buttonClose;
 		wxButton* m_buttonView;
 		wxButton* m_buttonGet;
@@ -594,6 +595,7 @@ class LogDlgBase : public wxDialog
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnRevDeselected( wxListEvent& event ) { event.Skip(); }
 		virtual void OnRevSelected( wxListEvent& event ) { event.Skip(); }
+		virtual void OnMore( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnView( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnGet( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDiff( wxCommandEvent& event ) { event.Skip(); }

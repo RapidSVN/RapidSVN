@@ -90,6 +90,7 @@ enum
   ID_Import,
   ID_Lock,
   ID_Log,
+  ID_LogNext,
   ID_Merge,
   ID_Mkdir,
   ID_Move,
@@ -192,6 +193,8 @@ enum
   TOKEN_UPDATE_ASCENDING,
   TOKEN_ANNOTATE,
   TOKEN_LOG,
+  TOKEN_LOG_NEXT,
+  TOKEN_LOG_NEXT_CALLBACK,
   TOKEN_DRAG_N_DROP,
 
   LISTENER_MIN,

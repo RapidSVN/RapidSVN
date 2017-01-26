@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-02 17:09+0100\n"
+"POT-Creation-Date: 2017-01-26 15:12+0000\n"
 "PO-Revision-Date: 2011-11-07 09:56+0800\n"
 "Last-Translator: highbing <caohaibing@gmail.com>\n"
 "Language-Team: RapidSVN i18n\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,22 +25,22 @@ msgstr ""
 msgid "%s  code: %ld"
 msgstr "%s  代码:%ld"
 
-#: ../about_dlg.cpp:50
+#: ../about_dlg.cpp:47
 #, fuzzy, c-format
 msgid "%s Version %s"
 msgstr "%s 版本 %d.%d.%d"
 
-#: ../about_dlg.cpp:55
+#: ../about_dlg.cpp:52
 #, fuzzy, c-format
 msgid "%s Version %s Revision %d"
 msgstr "%s 版本 %d.%d.%d"
 
-#: ../utils.cpp:360
+#: ../utils.cpp:370
 #, c-format
 msgid "%x %X"
 msgstr ""
 
-#: ../main_frame.cpp:323
+#: ../main_frame.cpp:332
 msgid "&About..."
 msgstr "关于(&A)..."
 
@@ -47,36 +48,32 @@ msgstr "关于(&A)..."
 msgid "&Add\tINS"
 msgstr "添加(&D)\tINS"
 
-#: ../utils.cpp:249
+#: ../utils.cpp:258
 msgid "&Add Existing Working Copy..."
 msgstr "添加已存在的工作副本(&A)..."
 
-#: ../log_dlg.cpp:364
+#: ../rapidsvn_generated.cpp:1188
 msgid "&Annotate"
 msgstr "评注(&A)"
 
-#: ../utils.cpp:213
+#: ../utils.cpp:213 ../utils.cpp:223
 msgid "&Annotate..."
 msgstr "评注(&A)..."
 
-#: ../main_frame.cpp:344
+#: ../main_frame.cpp:363
 msgid "&Bookmarks"
 msgstr "书签(&B)"
 
-#: ../rapidsvn_generated.cpp:676
+#: ../rapidsvn_generated.cpp:549
 #, fuzzy
 msgid "&Browse"
 msgstr "关闭(&C)"
 
-#: ../log_dlg.cpp:359
-msgid "&Close"
-msgstr "关闭(&C)"
-
-#: ../rapidsvn_generated.cpp:655
+#: ../rapidsvn_generated.cpp:528
 msgid "&Compatible with:"
 msgstr ""
 
-#: ../main_frame.cpp:316
+#: ../main_frame.cpp:325
 msgid "&Contents\tF1"
 msgstr "目录(&C)\tF1"
 
@@ -84,7 +81,7 @@ msgstr "目录(&C)\tF1"
 msgid "&Copy...\tF5"
 msgstr "复制(&C)...\tF5"
 
-#: ../main_frame.cpp:290
+#: ../main_frame.cpp:299
 msgid "&Create..."
 msgstr "创建(&C)..."
 
@@ -92,12 +89,11 @@ msgstr "创建(&C)..."
 msgid "&Delete\tDEL"
 msgstr "删除(&D)\tDEL"
 
-#: ../listed_dlg.cpp:60
+#: ../rapidsvn_generated.cpp:1074
 msgid "&Delete..."
 msgstr "删除(&D)..."
 
-#: ../log_dlg.cpp:362
-#: ../rapidsvn_generated.cpp:463
+#: ../rapidsvn_generated.cpp:364 ../rapidsvn_generated.cpp:1182
 msgid "&Diff"
 msgstr "比较(&D)"
 
@@ -109,45 +105,49 @@ msgstr "与基准版本(BASE)比较(&D)...\tCTRL+B"
 msgid "&Diff to Head...\tCTRL+H"
 msgstr "与最新版本(HEAD)比较(&D)...\tCTRL+H"
 
+#: ../utils.cpp:220
+#, fuzzy
+msgid "&Diff..."
+msgstr "比较(&D)"
+
 #: ../utils.cpp:205
 msgid "&Diff...\tCTRL+D"
 msgstr "比较(&D)...\tCTRL+D"
 
-#: ../utils.cpp:267
+#: ../utils.cpp:276
 msgid "&Edit Bookmark..."
 msgstr "编辑书签(&E)..."
 
-#: ../listed_dlg.cpp:57
+#: ../rapidsvn_generated.cpp:1071
 msgid "&Edit..."
 msgstr "编辑(&E)..."
 
-#: ../utils.cpp:245
+#: ../utils.cpp:254
 msgid "&Edit...\tF3"
 msgstr "编辑(&E)...\tF3"
 
-#: ../main_frame.cpp:288
+#: ../main_frame.cpp:297
 msgid "&Export...\tCTRL-E"
 msgstr "导出(&E)...\tCTRL-E"
 
-#: ../main_frame.cpp:345
+#: ../main_frame.cpp:364
 msgid "&Extras"
 msgstr "扩展功能(&E)"
 
-#: ../main_frame.cpp:339
+#: ../main_frame.cpp:358
 msgid "&File"
 msgstr "文件(&F)"
 
-#: ../rapidsvn_generated.cpp:451
+#: ../rapidsvn_generated.cpp:352
 #, fuzzy
 msgid "&Files to commit"
 msgstr "锁定失败"
 
-#: ../log_dlg.cpp:361
+#: ../rapidsvn_generated.cpp:1179
 msgid "&Get"
 msgstr "获取(&G)"
 
-#: ../main_frame.cpp:223
-#: ../main_frame.cpp:346
+#: ../main_frame.cpp:232 ../main_frame.cpp:365
 msgid "&Help"
 msgstr "帮助(&H)"
 
@@ -155,11 +155,11 @@ msgstr "帮助(&H)"
 msgid "&Ignore\tCTRL-DEL"
 msgstr "忽略(&I)...\tCTRL-DEL"
 
-#: ../main_frame.cpp:287
+#: ../main_frame.cpp:296
 msgid "&Import...\tCTRL-I"
 msgstr "导入(&I)...\tCTRL-I"
 
-#: ../main_frame.cpp:317
+#: ../main_frame.cpp:326
 msgid "&Index\tShift+F1"
 msgstr "索引(&I)\tShift+F1"
 
@@ -167,7 +167,7 @@ msgstr "索引(&I)\tShift+F1"
 msgid "&Info..."
 msgstr "信息(&I)..."
 
-#: ../rapidsvn_generated.cpp:667
+#: ../rapidsvn_generated.cpp:540
 msgid "&Load configuration from directory (optional):"
 msgstr ""
 
@@ -175,28 +175,43 @@ msgstr ""
 msgid "&Lock..."
 msgstr "锁定(&L)..."
 
+#: ../utils.cpp:222
+#, fuzzy
+msgid "&Log..."
+msgstr "历史记录(&L)...\tCTRL-L"
+
 #: ../utils.cpp:209
 msgid "&Log...\tCTRL-L"
 msgstr "历史记录(&L)...\tCTRL-L"
 
-#: ../log_dlg.cpp:363
+#: ../rapidsvn_generated.cpp:1185
 msgid "&Merge"
 msgstr "合并(&M)"
 
-#: ../main_frame.cpp:342
+#: ../main_frame.cpp:361
 msgid "&Modify"
 msgstr "修改(&M)"
 
-#: ../rapidsvn_generated.cpp:625
+#: ../rapidsvn_generated.cpp:897
+#, fuzzy
+msgid "&Name"
+msgstr "文件名"
+
+#: ../rapidsvn_generated.cpp:499
 #, fuzzy
 msgid "&Name of the new repository:"
 msgstr "新建文档库..."
 
-#: ../listed_dlg.cpp:59
+#: ../rapidsvn_generated.cpp:1068
 msgid "&New..."
 msgstr "新建(&N)..."
 
-#: ../cert_dlg.cpp:134
+#: ../rapidsvn_generated.cpp:96
+#, fuzzy
+msgid "&Password"
+msgstr "密码"
+
+#: ../rapidsvn_generated.cpp:198
 msgid "&Permanently"
 msgstr "永久的(&P)"
 
@@ -204,44 +219,49 @@ msgstr "永久的(&P)"
 msgid "&Properties...\tCTRL-P"
 msgstr "属性(&P)...\tCTRL-P"
 
-#: ../main_frame.cpp:343
+#: ../main_frame.cpp:362
 msgid "&Query"
 msgstr "查询(&Q)"
 
-#: ../rapidsvn_generated.cpp:442
+#: ../rapidsvn_generated.cpp:343
 #, fuzzy
 msgid "&Recent entries:"
 msgstr "最近条目:"
 
-#: ../utils.cpp:262
+#: ../utils.cpp:271
 msgid "&Remove Bookmark"
 msgstr "移除书签(&R)..."
 
-#: ../main_frame.cpp:341
+#: ../main_frame.cpp:360
 msgid "&Repository"
 msgstr "文档库(&R)"
 
-#: ../utils.cpp:314
+#: ../rapidsvn_generated.cpp:1437 ../rapidsvn_generated.cpp:1463
+#, fuzzy
+msgid "&Revision"
+msgstr "版本"
+
+#: ../utils.cpp:323
 msgid "&Stop"
 msgstr "停止(&S)"
 
-#: ../utils.cpp:258
+#: ../utils.cpp:267
 msgid "&Switch Repository URL..."
 msgstr "修改文档库 URL(&S)..."
 
-#: ../cert_dlg.cpp:136
+#: ../rapidsvn_generated.cpp:201
 msgid "&Temporarily"
 msgstr "临时的(&T)"
 
-#: ../main_frame.cpp:348
+#: ../main_frame.cpp:367
 msgid "&Tests"
 msgstr "测试(&T)"
 
-#: ../rapidsvn_generated.cpp:460
+#: ../rapidsvn_generated.cpp:361
 msgid "&Toggle"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:599
+#: ../rapidsvn_generated.cpp:473
 msgid "&Type:"
 msgstr ""
 
@@ -249,32 +269,41 @@ msgstr ""
 msgid "&Unlock"
 msgstr "解除锁定(&U)"
 
-#: ../utils.cpp:283
+#: ../utils.cpp:292
 msgid "&Update...\tCTRL-U"
 msgstr "更新(&U)...\tCTRL-U"
 
-#: ../log_dlg.cpp:360
-#: ../main_frame.cpp:340
+#: ../rapidsvn_generated.cpp:89
+#, fuzzy
+msgid "&Username"
+msgstr "重命名"
+
+#: ../rapidsvn_generated.cpp:904
+#, fuzzy
+msgid "&Value"
+msgstr "值"
+
+#: ../main_frame.cpp:359 ../rapidsvn_generated.cpp:1176
 msgid "&View"
 msgstr "查看(&V)"
 
-#: ../listed_dlg.cpp:58
+#: ../utils.cpp:221
 msgid "&View..."
 msgstr "查看(&V)..."
 
-#: ../cert_dlg.cpp:80
+#: ../cert_dlg.cpp:51
 msgid "- The certificate has an unknown error."
 msgstr "- 此证书包含一个未知错误."
 
-#: ../cert_dlg.cpp:79
+#: ../cert_dlg.cpp:50
 msgid "- The certificate has expired."
 msgstr "- 此证书已过期."
 
-#: ../cert_dlg.cpp:77
+#: ../cert_dlg.cpp:48
 msgid "- The certificate hostname does not match."
 msgstr "- 此证书的主机名不匹配."
 
-#: ../cert_dlg.cpp:76
+#: ../cert_dlg.cpp:47
 msgid ""
 "- The certificate is not issued by a trusted authority.\n"
 "  Use the fingerprint to validate the certificate manually!"
@@ -282,13 +311,17 @@ msgstr ""
 "- 此证书不是由可信赖的机构颁发的.\n"
 "  请使用指纹(Fingerprint)手工验证此证书的有效性!"
 
-#: ../cert_dlg.cpp:78
+#: ../cert_dlg.cpp:49
 msgid "- The certificate is not yet valid."
 msgstr "- 此证书尚未生效."
 
-#: ../file_info.cpp:102
-#: ../file_info.cpp:110
-#: ../file_info.cpp:195
+#: ../rapidsvn_generated.cpp:246 ../rapidsvn_generated.cpp:958
+#: ../rapidsvn_generated.cpp:1284 ../rapidsvn_generated.cpp:1483
+#, fuzzy
+msgid "..."
+msgstr "新建(&N)..."
+
+#: ../file_info.cpp:102 ../file_info.cpp:110 ../file_info.cpp:195
 msgid "<None>"
 msgstr "<无>"
 
@@ -300,31 +333,25 @@ msgstr ""
 msgid "A file of this name exists already"
 msgstr ""
 
-#: ../about_dlg.cpp:68
+#: ../about_dlg.cpp:65
 msgid "ANSI"
 msgstr "ANSI"
 
-#: ../about_dlg.cpp:42
+#: ../about_dlg.cpp:39
 #, c-format
 msgid "About %s"
 msgstr "关于 %s"
 
-#: ../log_dlg.cpp:242
-msgid "Action"
-msgstr "动作"
-
-#: ../add_action.cpp:37
-#: ../add_recursive_action.cpp:37
-#: ../listener.cpp:353
-#: ../main_frame.cpp:1398
+#: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listed_dlg.cpp:183
+#: ../listener.cpp:393 ../main_frame.cpp:1420
 msgid "Add"
 msgstr "添加"
 
-#: ../utils.cpp:254
+#: ../utils.cpp:263
 msgid "Add Existing &Repository..."
 msgstr "添加已存在的文档库(&R)..."
 
-#: ../rapidsvn_generated.cpp:642
+#: ../rapidsvn_generated.cpp:516
 msgid "Add a bookmark for the new repository"
 msgstr ""
 
@@ -332,42 +359,40 @@ msgstr ""
 msgid "Add r&ecursive"
 msgstr "递归添加(&e)..."
 
-#: ../main_frame_helper.cpp:64
+#: ../main_frame_helper.cpp:62
 msgid "Add selected"
 msgstr "添加选定项目"
 
-#: ../checkout_dlg.cpp:116
+#: ../rapidsvn_generated.cpp:276
 msgid "Add to bookmarks"
 msgstr "添加到书签"
 
-#: ../listener.cpp:362
-#: ../listener.cpp:369
-#: ../main_frame.cpp:1407
-#: ../main_frame.cpp:1414
+#: ../listener.cpp:309 ../listener.cpp:402 ../listener.cpp:409
+#: ../main_frame.cpp:1429 ../main_frame.cpp:1436
 msgid "Added"
 msgstr "已添加"
 
-#: ../main_frame.cpp:1904
+#: ../main_frame.cpp:2093
 #, c-format
 msgid "Added repository to bookmarks '%s'"
 msgstr "已添加文档库到书签 '%s'"
 
-#: ../main_frame.cpp:1875
+#: ../main_frame.cpp:2063
 #, c-format
 msgid "Added working copy to bookmarks '%s'"
 msgstr "已添加工作副本到书签 '%s'"
 
-#: ../drag_n_drop_action.cpp:319
+#: ../drag_n_drop_action.cpp:327
 #, c-format
 msgid "Adding directory to repository: %s"
 msgstr ""
 
-#: ../drag_n_drop_action.cpp:332
+#: ../drag_n_drop_action.cpp:340
 #, fuzzy, c-format
 msgid "Adding file to repository: %s"
 msgstr "文档库: %s"
 
-#: ../log_dlg.cpp:357
+#: ../rapidsvn_generated.cpp:1222
 msgid "Affected Files/Dirs"
 msgstr "受影响的文件/目录"
 
@@ -375,21 +400,19 @@ msgstr "受影响的文件/目录"
 msgid "All files|*"
 msgstr "所有文件|*"
 
-#: ../main_frame.cpp:1271
-#: ../main_frame.cpp:1290
+#: ../main_frame.cpp:1294 ../main_frame.cpp:1313
 msgid "An error occured while launching the browser"
 msgstr ""
 
-#: ../main_frame.cpp:1258
+#: ../main_frame.cpp:1281
 msgid "An error occurred while checking valid actions"
 msgstr ""
 
-#: ../annotate_action.cpp:80
-#: ../annotate_action.cpp:81
+#: ../annotate_action.cpp:80 ../annotate_action.cpp:81
 msgid "Annotate"
 msgstr "评注"
 
-#: ../dnd_dlg.cpp:56
+#: ../dnd_dlg.cpp:31
 #, c-format
 msgid ""
 "Are you sure that you want to import\n"
@@ -401,13 +424,11 @@ msgid ""
 "  %s?"
 msgstr ""
 
-#: ../auth_dlg.cpp:117
-#: ../rapidsvn_generated.cpp:184
+#: ../rapidsvn_generated.cpp:1697
 msgid "Authentication"
 msgstr "身份验证"
 
-#: ../annotate_dlg.cpp:48
-#: ../columns.cpp:49
+#: ../annotate_dlg.cpp:35 ../columns.cpp:49
 msgid "Author"
 msgstr "作者"
 
@@ -415,11 +436,11 @@ msgstr "作者"
 msgid "BASE"
 msgstr "基准(BASE)"
 
-#: ../rapidsvn_generated.cpp:603
+#: ../rapidsvn_generated.cpp:477
 msgid "BerkeleyDB"
 msgstr ""
 
-#: ../main_frame.cpp:1941
+#: ../main_frame.cpp:2130
 msgid "Bookmark"
 msgstr "书签"
 
@@ -427,19 +448,17 @@ msgstr "书签"
 msgid "Bookmarks"
 msgstr "书签"
 
-#: ../main_frame_helper.cpp:85
+#: ../main_frame_helper.cpp:79
 msgid "Bring changes from the repository into the working copy"
 msgstr "将文档库的修改带入工作副本"
 
-#: ../rapidsvn_generated.cpp:57
-#: ../rapidsvn_generated.cpp:88
-#: ../rapidsvn_generated.cpp:119
-#: ../rapidsvn_generated.cpp:146
-#: ../rapidsvn_generated.cpp:620
+#: ../rapidsvn_generated.cpp:494 ../rapidsvn_generated.cpp:1574
+#: ../rapidsvn_generated.cpp:1604 ../rapidsvn_generated.cpp:1634
+#: ../rapidsvn_generated.cpp:1661
 msgid "Browse"
 msgstr ""
 
-#: ../about_dlg.cpp:83
+#: ../about_dlg.cpp:80
 #, c-format
 msgid ""
 "Built with:\n"
@@ -450,58 +469,44 @@ msgstr ""
 "wxWidgets %d.%d.%d (%s)\n"
 "Subversion %d.%d.%d\n"
 
-#: ../export_dlg.cpp:138
+#: ../rapidsvn_generated.cpp:992
 msgid "CR (MacOS)"
 msgstr "CR (MacOS)"
 
-#: ../export_dlg.cpp:136
+#: ../rapidsvn_generated.cpp:992
 msgid "CRLF (Windows)"
 msgstr "CRLF (Windows)"
 
-#: ../auth_dlg.cpp:73
-#: ../cert_dlg.cpp:138
-#: ../checkout_dlg.cpp:127
-#: ../delete_dlg.cpp:57
-#: ../destination_dlg.cpp:90
-#: ../dnd_dlg.cpp:112
-#: ../export_dlg.cpp:146
-#: ../import_dlg.cpp:130
-#: ../listed_dlg.cpp:186
-#: ../listed_dlg.cpp:342
-#: ../lock_dlg.cpp:61
-#: ../merge_dlg.cpp:215
-#: ../rapidsvn_generated.cpp:195
-#: ../rapidsvn_generated.cpp:329
-#: ../rapidsvn_generated.cpp:409
-#: ../rapidsvn_generated.cpp:485
-#: ../rapidsvn_generated.cpp:564
-#: ../rapidsvn_generated.cpp:708
-#: ../switch_dlg.cpp:139
-#: ../unlock_dlg.cpp:58
-#: ../update_dlg.cpp:135
+#: ../rapidsvn_generated.cpp:111 ../rapidsvn_generated.cpp:204
+#: ../rapidsvn_generated.cpp:293 ../rapidsvn_generated.cpp:384
+#: ../rapidsvn_generated.cpp:443 ../rapidsvn_generated.cpp:579
+#: ../rapidsvn_generated.cpp:630 ../rapidsvn_generated.cpp:667
+#: ../rapidsvn_generated.cpp:789 ../rapidsvn_generated.cpp:860
+#: ../rapidsvn_generated.cpp:919 ../rapidsvn_generated.cpp:1020
+#: ../rapidsvn_generated.cpp:1083 ../rapidsvn_generated.cpp:1129
+#: ../rapidsvn_generated.cpp:1322 ../rapidsvn_generated.cpp:1506
+#: ../rapidsvn_generated.cpp:1708 ../rapidsvn_generated.cpp:1781
+#: ../rapidsvn_generated.cpp:1837 ../rapidsvn_generated.cpp:1880
+#: ../rapidsvn_generated.cpp:1935
 msgid "Cancel"
 msgstr "取消"
 
-#: ../cert_dlg.cpp:128
-msgid "Certificate Information:"
+#: ../rapidsvn_generated.cpp:144
+#, fuzzy
+msgid "Certificate information:"
 msgstr "证书信息:"
 
-#: ../main_frame.cpp:289
+#: ../main_frame.cpp:298
 msgid "Check&out...\tCTRL-O"
 msgstr "签出(&o)...\tCTRL-O"
 
 #: ../checkout_action.cpp:40
-#: ../checkout_dlg.cpp:250
 msgid "Checkout"
 msgstr "签出"
 
-#: ../utils.cpp:275
+#: ../utils.cpp:284
 msgid "Checkout New Working Copy..."
 msgstr "签出新的工作副本..."
-
-#: ../main_frame.cpp:331
-msgid "Checkout Test"
-msgstr "签出测试"
 
 #: ../columns.cpp:58
 msgid "Checksum"
@@ -512,26 +517,28 @@ msgstr "校验和"
 msgid "Checksum: %s"
 msgstr "校验和: %s"
 
-#: ../cleanup_action.cpp:39
-#: ../utils.cpp:306
+#: ../cleanup_action.cpp:39 ../utils.cpp:315
 msgid "Cleanup"
 msgstr "清理"
 
-#: ../utils.cpp:288
+#: ../rapidsvn_generated.cpp:1173
+#, fuzzy
+msgid "Close"
+msgstr "关闭(&C)"
+
+#: ../utils.cpp:297
 msgid "Co&mmit...\tCTRL-ENTER"
 msgstr "提交(&m)...\tCTRL-Enter"
 
-#: ../main_frame.cpp:265
+#: ../main_frame.cpp:274
 msgid "Columns"
 msgstr "信息列"
 
-#: ../rapidsvn_generated.cpp:275
-#: ../rapidsvn_generated.cpp:315
+#: ../rapidsvn_generated.cpp:737 ../rapidsvn_generated.cpp:775
 msgid "Combo!"
 msgstr ""
 
-#: ../commit_action.cpp:42
-#: ../commit_dlg.cpp:45
+#: ../commit_action.cpp:42 ../commit_dlg.cpp:45
 msgid "Commit"
 msgstr "提交"
 
@@ -539,11 +546,11 @@ msgstr "提交"
 msgid "Commit Log Message"
 msgstr "提交历史记录信息"
 
-#: ../rapidsvn_generated.cpp:30
+#: ../rapidsvn_generated.cpp:1549
 msgid "Commit log message: default to most recent"
 msgstr ""
 
-#: ../main_frame_helper.cpp:94
+#: ../main_frame_helper.cpp:86
 msgid "Commit selected"
 msgstr "提交选定项目"
 
@@ -551,9 +558,19 @@ msgstr "提交选定项目"
 msgid "Committed revision"
 msgstr "已提交版本"
 
-#: ../rapidsvn_generated.cpp:233
+#: ../rapidsvn_generated.cpp:697
 msgid "Compare:"
 msgstr "比较:"
+
+#: ../listener.cpp:496
+#, fuzzy, c-format
+msgid "Completed %s at revision %d"
+msgstr "已提交版本"
+
+#: ../listener.cpp:486
+#, fuzzy, c-format
+msgid "Completed at revision %d"
+msgstr "已提交版本"
 
 #: ../columns.cpp:64
 msgid "Conflict BASE"
@@ -587,6 +604,11 @@ msgstr "冲突的工作副本"
 msgid "Conflict Working File: %s"
 msgstr "冲突的工作副本文件: %s"
 
+#: ../listener.cpp:307
+#, fuzzy
+msgid "Conflicted"
+msgstr "存在冲突"
+
 #: ../columns.cpp:63
 msgid "Copied"
 msgstr "已复制"
@@ -601,31 +623,21 @@ msgstr "已复制, 来自版本: %ld"
 msgid "Copied From URL: %s"
 msgstr "已复制, 来自 URL: %s"
 
-#: ../log_dlg.cpp:244
-msgid "Copied from Path"
-msgstr "已复制, 来自 URL:"
-
-#: ../log_dlg.cpp:245
-msgid "Copied from Rev"
-msgstr "已复制, 来自版本:"
-
-#: ../dnd_dlg.cpp:108
-#: ../listener.cpp:354
-#: ../main_frame.cpp:1399
-#: ../move_action.cpp:44
+#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1421
+#: ../move_action.cpp:44 ../rapidsvn_generated.cpp:857
 msgid "Copy"
 msgstr "复制"
 
-#: ../dnd_dlg.cpp:37
+#: ../dnd_dlg.cpp:82
 msgid "Copy/Move"
 msgstr "复制/移动"
 
-#: ../drag_n_drop_action.cpp:314
+#: ../drag_n_drop_action.cpp:322
 #, fuzzy, c-format
 msgid "Copying file into working directory: %s"
 msgstr "无法将工作路径切换到 %s"
 
-#: ../drag_n_drop_action.cpp:288
+#: ../drag_n_drop_action.cpp:296
 #, fuzzy, c-format
 msgid "Copying file: %s"
 msgstr "冲突的工作副本文件: %s"
@@ -635,7 +647,7 @@ msgstr "冲突的工作副本文件: %s"
 msgid "Could not set working directory to %s"
 msgstr "无法将工作路径切换到 %s"
 
-#: ../utils.cpp:271
+#: ../utils.cpp:280
 msgid "Create New Repository..."
 msgstr "新建文档库..."
 
@@ -644,68 +656,51 @@ msgstr "新建文档库..."
 msgid "Create Repository"
 msgstr "新建文档库..."
 
-#: ../rapidsvn_generated.cpp:611
+#: ../rapidsvn_generated.cpp:485
 #, fuzzy
 msgid "Create repository in &directory:"
 msgstr "选择目标目录"
 
-#: ../columns.cpp:54
-#: ../log_dlg.cpp:165
+#: ../columns.cpp:54 ../log_rev_list.cpp:39
 msgid "Date"
 msgstr "日期"
 
-#: ../rapidsvn_generated.cpp:265
-#: ../rapidsvn_generated.cpp:305
+#: ../rapidsvn_generated.cpp:728 ../rapidsvn_generated.cpp:766
 msgid "Date:"
 msgstr "日期:"
 
-#: ../rapidsvn_generated.cpp:659
+#: ../rapidsvn_generated.cpp:532
 #, fuzzy
 msgid "Default"
 msgstr "删除"
 
-#: ../delete_action.cpp:40
-#: ../delete_dlg.cpp:79
-#: ../listener.cpp:355
-#: ../main_frame.cpp:1400
+#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1422
 msgid "Delete"
 msgstr "删除"
 
-#: ../main_frame_helper.cpp:75
+#: ../main_frame_helper.cpp:71
 msgid "Delete files and directories from version control"
 msgstr "从版本控制系统中删除文件和目录"
 
-#: ../main_frame_helper.cpp:74
+#: ../main_frame_helper.cpp:70
 msgid "Delete selected"
 msgstr "删除选定项目"
 
-#: ../listener.cpp:361
-#: ../listener.cpp:370
-#: ../main_frame.cpp:1406
-#: ../main_frame.cpp:1415
+#: ../listener.cpp:310 ../listener.cpp:401 ../listener.cpp:410
+#: ../main_frame.cpp:1428 ../main_frame.cpp:1437
 msgid "Deleted"
 msgstr "已删除"
 
-#: ../checkout_dlg.cpp:72
-#: ../export_dlg.cpp:75
+#: ../rapidsvn_generated.cpp:241 ../rapidsvn_generated.cpp:953
+#: ../rapidsvn_generated.cpp:1478
 msgid "Destination Directory"
 msgstr "目标目录"
 
-#: ../merge_dlg.cpp:168
-msgid "Destination file"
-msgstr "目标文件"
-
-#: ../merge_dlg.cpp:170
-msgid "Destination path"
-msgstr "目标路径"
-
-#: ../diff_action.cpp:191
-#: ../diff_action.cpp:197
-#: ../diff_dlg.cpp:179
+#: ../diff_action.cpp:191 ../diff_action.cpp:197 ../diff_dlg.cpp:179
 msgid "Diff"
 msgstr "比较"
 
-#: ../rapidsvn_generated.cpp:135
+#: ../rapidsvn_generated.cpp:1650
 msgid "Diff Tool"
 msgstr "比较工具"
 
@@ -725,81 +720,96 @@ msgstr "与其它版本/日期比较"
 msgid "Diff two revisions/dates"
 msgstr "比较两个不同版本/日期"
 
-#: ../rapidsvn_generated.cpp:173
+#: ../rapidsvn_generated.cpp:1688
 msgid "Different login for each bookmark in the bookmarks list"
 msgstr "为书签列表中的每个书签使用不同的登陆信息"
+
+#: ../rapidsvn_generated.cpp:1296
+#, fuzzy
+msgid "Directory"
+msgstr "目录:"
 
 #: ../mkdir_action.cpp:51
 msgid "Directory:"
 msgstr "目录:"
 
-#: ../rapidsvn_generated.cpp:681
+#: ../rapidsvn_generated.cpp:554
 msgid "Disable automatic Log removal"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:685
+#: ../rapidsvn_generated.cpp:557
 msgid "Disable fsync when committing database transactions"
 msgstr ""
 
-#: ../main_frame_helper.cpp:195
+#: ../main_frame_helper.cpp:179
 #, fuzzy
 msgid "Display conflicted files/directories"
 msgstr "确定要解除选定文件/目录的锁定状态吗?"
 
-#: ../main_frame_helper.cpp:132
+#: ../main_frame_helper.cpp:118
 msgid "Display info about selected entries"
 msgstr "显示选定项目的信息"
 
-#: ../main_frame_helper.cpp:189
+#: ../main_frame_helper.cpp:173
 msgid "Display modified files/directories"
 msgstr ""
 
-#: ../main_frame_helper.cpp:183
+#: ../main_frame_helper.cpp:167
 msgid "Display unmodified files/directories"
 msgstr "忽略(&I)...\tCTRL-DEL"
 
-#: ../main_frame_helper.cpp:177
+#: ../main_frame_helper.cpp:161
 #, fuzzy
 msgid "Display unversioned files/directories"
 msgstr "显示不在版本控制中的项目"
 
-#: ../delete_dlg.cpp:45
+#: ../rapidsvn_generated.cpp:616
 msgid "Do you want to delete the selected files/directories?"
 msgstr "确定要删除选定的文件/目录吗?"
 
-#: ../revert_dlg.cpp:45
+#: ../rapidsvn_generated.cpp:1767
 msgid "Do you want to revert local changes?"
 msgstr "确定要撤销本地的修改吗?"
 
-#: ../unlock_dlg.cpp:45
+#: ../rapidsvn_generated.cpp:1866
 msgid "Do you want to unlock the selected files/directories?"
 msgstr "确定要解除选定文件/目录的锁定状态吗?"
 
-#: ../utils.cpp:293
+#: ../utils.cpp:302
 msgid "E&xit\tCTRL-Q"
 msgstr "退出(&x)\tCTRL-Q"
 
-#: ../export_dlg.cpp:131
-msgid "EOL:"
-msgstr "换行符:"
-
-#: ../view_action.cpp:76
+#: ../listed_dlg.cpp:184 ../view_action.cpp:76
 msgid "Edit"
 msgstr "编辑"
 
-#: ../main_frame.cpp:1941
+#: ../main_frame.cpp:2130
 msgid "Edit Bookmark"
 msgstr "编辑书签"
 
-#: ../property_dlg.cpp:64
+#: ../property_dlg.cpp:75
 msgid "Edit Property"
 msgstr "编辑属性"
 
-#: ../rapidsvn_generated.cpp:433
+#: ../listed_dlg.cpp:355
+#, fuzzy
+msgid "Edit..."
+msgstr "编辑(&E)..."
+
+#: ../rapidsvn_generated.cpp:1306
+#, fuzzy
+msgid "End &log message"
+msgstr "请输入日志信息(&l)"
+
+#: ../rapidsvn_generated.cpp:988
+msgid "End of line characters"
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:334
 msgid "Enter &log message"
 msgstr "请输入日志信息(&l)"
 
-#: ../lock_dlg.cpp:45
+#: ../rapidsvn_generated.cpp:1112
 msgid "Enter a comment for this lock"
 msgstr "请输入此次锁定操作的附注"
 
@@ -808,41 +818,19 @@ msgstr "请输入此次锁定操作的附注"
 msgid "Enter a name for the repository"
 msgstr "请输入此次锁定操作的附注"
 
-#: ../import_dlg.cpp:95
-msgid "Enter log message"
-msgstr "请输入历史记录信息"
-
 #: ../rename_action.cpp:55
 msgid "Enter new name:"
 msgstr "请输入新名称:"
 
-#: ../export_dlg.cpp:80
-msgid "Enter the local path where you want the code be exported."
-msgstr "请输入用于导出代码的本地路径"
-
-#: ../checkout_dlg.cpp:77
+#: ../checkout_dlg.cpp:60 ../export_dlg.cpp:62
 msgid "Enter the local path where you want the code checked out to here."
 msgstr "请输入用于签出代码的本地路径."
 
-#: ../checkout_dlg.cpp:70
-#: ../export_dlg.cpp:73
+#: ../checkout_dlg.cpp:58 ../export_dlg.cpp:60
 msgid "Enter the repository URL (not local path) here."
 msgstr "请输入文档库的 URL (非本地路径)."
 
-#: ../export_dlg.cpp:143
-msgid "Enter what kind of symbol(s) do you want as EOL (end of line) in exported files."
-msgstr "请输入要用作导出文件的换行符(EOL)的符号."
-
-#: ../import_dlg.cpp:178
-#: ../import_dlg.cpp:191
-#: ../log_dlg.cpp:479
-#: ../log_dlg.cpp:494
-#: ../log_dlg.cpp:530
-#: ../main_frame.cpp:1865
-#: ../merge_dlg.cpp:52
-#: ../merge_dlg.cpp:91
-#: ../merge_dlg.cpp:107
-#: ../property_dlg.cpp:120
+#: ../main_frame.cpp:2053 ../property_dlg.cpp:138
 msgid "Error"
 msgstr "错误"
 
@@ -854,57 +842,60 @@ msgstr "获取状态时出错:"
 msgid "Error running svnadmin"
 msgstr ""
 
-#: ../property_dlg.cpp:120
+#: ../property_dlg.cpp:138
 msgid "Error setting the property values"
 msgstr "设置属性值时出错"
 
-#: ../cert_dlg.cpp:97
+#: ../property_dlg.cpp:132
+#, fuzzy, c-format
+msgid ""
+"Error setting the property values:\n"
+"%s"
+msgstr "设置属性值时出错"
+
+#: ../cert_dlg.cpp:68
 #, c-format
 msgid "Error validating server certificate for '%s':"
 msgstr "验证服务器 '%s' 的证书时出错:"
 
-#: ../simple_worker.cpp:216
-#: ../threaded_worker.cpp:178
+#: ../simple_worker.cpp:216 ../threaded_worker.cpp:178
 msgid "Error while performing action."
 msgstr "执行操作时出错."
 
-#: ../simple_worker.cpp:206
-#: ../threaded_worker.cpp:165
+#: ../simple_worker.cpp:206 ../threaded_worker.cpp:165
 #, c-format
 msgid "Error while performing action: %s"
 msgstr "执行操作时出错: %s"
 
-#: ../simple_worker.cpp:167
-#: ../threaded_worker.cpp:286
+#: ../simple_worker.cpp:167 ../threaded_worker.cpp:286
 msgid "Error while preparing action."
 msgstr "准备操作时出错."
 
-#: ../simple_worker.cpp:161
-#: ../threaded_worker.cpp:276
+#: ../simple_worker.cpp:161 ../threaded_worker.cpp:276
 #, c-format
 msgid "Error while preparing action: %s"
 msgstr "准备操作时出错: %s"
 
-#: ../folder_browser.cpp:500
+#: ../folder_browser.cpp:531
 #, c-format
 msgid "Error while refreshing filelist (%s)"
 msgstr "刷新文件列表时出错 (%s)"
 
-#: ../main_frame.cpp:907
+#: ../main_frame.cpp:930
 msgid "Error while updating filelist"
 msgstr "更新文件列表时出错"
 
-#: ../main_frame.cpp:894
+#: ../main_frame.cpp:917
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "更新文件列表时出错 (%s)"
 
-#: ../main_frame.cpp:542
+#: ../main_frame.cpp:561
 #, c-format
 msgid "Error: %s\n"
 msgstr "错误: %s\n"
 
-#: ../main_frame.cpp:1799
+#: ../main_frame.cpp:1987
 msgid "Exception occured during filelist update"
 msgstr "更新文件列表时出现异常"
 
@@ -921,8 +912,7 @@ msgstr "执行"
 msgid "Execute diff tool: %s"
 msgstr "执行比较工具: %s"
 
-#: ../external_program_action.cpp:140
-#: ../view_action.cpp:121
+#: ../external_program_action.cpp:140 ../view_action.cpp:121
 #, c-format
 msgid "Execute editor: %s"
 msgstr "执行编辑器: %s"
@@ -937,18 +927,16 @@ msgstr "执行文件浏览器: %s"
 msgid "Execute merge tool: %s"
 msgstr "执行比较工具: %s"
 
-#: ../simple_worker.cpp:175
-#: ../threaded_worker.cpp:143
+#: ../simple_worker.cpp:175 ../threaded_worker.cpp:143
 #, c-format
 msgid "Execute: %s"
 msgstr "执行: %s"
 
-#: ../utils.cpp:319
+#: ../utils.cpp:328
 msgid "Explore...\tF2"
 msgstr "浏览...\tF2"
 
-#: ../export_action.cpp:40
-#: ../export_dlg.cpp:288
+#: ../export_action.cpp:39
 msgid "Export"
 msgstr "导出"
 
@@ -956,64 +944,58 @@ msgstr "导出"
 msgid "Extension"
 msgstr "扩展名"
 
-#: ../rapidsvn_generated.cpp:603
+#: ../listener.cpp:405
+#, fuzzy
+msgid "External"
+msgstr "外部"
+
+#: ../rapidsvn_generated.cpp:477
 msgid "FSFS"
 msgstr ""
 
-#: ../listener.cpp:376
-#: ../main_frame.cpp:1421
+#: ../listener.cpp:416 ../main_frame.cpp:1443
 msgid "Failed to lock"
 msgstr "锁定失败"
 
-#: ../listener.cpp:377
-#: ../main_frame.cpp:1422
+#: ../listener.cpp:417 ../main_frame.cpp:1444
 msgid "Failed to unlock"
 msgstr "解除锁定失败"
 
-#: ../import_dlg.cpp:120
+#: ../rapidsvn_generated.cpp:1296
 msgid "File"
 msgstr "文件"
 
-#: ../import_dlg.cpp:190
-msgid "File path required when importing a file!"
-msgstr "导入文件时必须填写文件路径!"
-
-#: ../cert_dlg.cpp:123
+#: ../rapidsvn_generated.cpp:183
 msgid "Fingerprint:"
 msgstr "指纹(Fingerprint):"
 
-#: ../merge_dlg.cpp:90
-msgid "First path or URL is required for merge!"
-msgstr "合并的第一个路径或  URL 必须填写!"
-
-#: ../merge_dlg.cpp:131
+#: ../rapidsvn_generated.cpp:1426 ../rapidsvn_generated.cpp:1452
 msgid "First working copy or URL"
 msgstr "第一个工作副本或 URL"
 
-#: ../about_dlg.cpp:80
+#: ../about_dlg.cpp:77
 msgid "For more information see:"
 msgstr "更多信息请访问:"
 
-#: ../destination_dlg.cpp:80
-#: ../merge_dlg.cpp:205
-#: ../rapidsvn_generated.cpp:543
+#: ../rapidsvn_generated.cpp:657 ../rapidsvn_generated.cpp:1494
 msgid "Force"
 msgstr "强制"
 
-#: ../delete_dlg.cpp:49
+#: ../rapidsvn_generated.cpp:620
 msgid "Force removal"
 msgstr "强制删除"
 
-#: ../export_dlg.cpp:123
-msgid "Force to execute even if destination directory not empty, causes overwriting of files with the same names."
+#: ../export_dlg.cpp:75
+msgid ""
+"Force to execute even if destination directory not empty, causes overwriting "
+"of files with the same names."
 msgstr "强制执行, 即使目标目录为非空, 具有相同文件名的文件将被覆盖"
 
-#: ../unlock_dlg.cpp:51
+#: ../rapidsvn_generated.cpp:1870
 msgid "Force unlocking even if you are not the lock owner"
 msgstr "强制解除锁定, 即使你不是锁定所有者"
 
-#: ../rapidsvn_generated.cpp:41
-#: ../rapidsvn_generated.cpp:649
+#: ../rapidsvn_generated.cpp:522 ../rapidsvn_generated.cpp:1558
 msgid "General"
 msgstr "常规"
 
@@ -1026,48 +1008,58 @@ msgstr "获取文件 %s (版本 %s)"
 msgid "HEAD"
 msgstr "HEAD"
 
-#: ../log_dlg.cpp:346
+#: ../rapidsvn_generated.cpp:296 ../rapidsvn_generated.cpp:1023
+#, fuzzy
+msgid "Help"
+msgstr "帮助(&H)"
+
+#: ../rapidsvn_generated.cpp:650
+msgid "Here comes the description"
+msgstr ""
+
+#: ../log_dlg.cpp:77 ../rapidsvn_generated.cpp:1158
 #, c-format
 msgid "History: %d revisions"
 msgstr "历史: %d 次版本更新"
 
-#: ../cert_dlg.cpp:107
+#: ../rapidsvn_generated.cpp:151
 msgid "Hostname:"
 msgstr "主机名:"
 
-#: ../checkout_dlg.cpp:88
-#: ../export_dlg.cpp:91
-msgid "If not using the latest version of the files, specify which revision to use here."
+#: ../checkout_dlg.cpp:63 ../export_dlg.cpp:65
+msgid ""
+"If not using the latest version of the files, specify which revision to use "
+"here."
 msgstr "如果不想使用最新版本的文件, 请在此处指定要使用的版本."
 
-#: ../checkout_dlg.cpp:102
-#: ../export_dlg.cpp:105
-msgid "If the files were renamed or moved some time, specify which peg revision to use here."
+#: ../checkout_dlg.cpp:67 ../export_dlg.cpp:69
+msgid ""
+"If the files were renamed or moved some time, specify which peg revision to "
+"use here."
 msgstr "如果文件被改名或移动了多次, 请指定这里要使用的定位版本(peg)."
 
 #: ../ignore_action.cpp:40
 msgid "Ignore"
 msgstr "忽略"
 
-#: ../main_frame.cpp:275
-#: ../rapidsvn_generated.cpp:551
+#: ../main_frame.cpp:284 ../rapidsvn_generated.cpp:1923
 msgid "Ignore Externals"
 msgstr "忽略外部文件"
 
-#: ../checkout_dlg.cpp:122
-#: ../export_dlg.cpp:126
-#: ../update_dlg.cpp:124
+#: ../rapidsvn_generated.cpp:282 ../rapidsvn_generated.cpp:1009
 msgid "Ignore externals"
 msgstr "忽略外部文件"
 
-#: ../dnd_dlg.cpp:37
-#: ../dnd_dlg.cpp:97
-#: ../import_action.cpp:38
-#: ../import_dlg.cpp:149
+#: ../dnd_dlg.cpp:63 ../import_action.cpp:38 ../rapidsvn_generated.cpp:851
 msgid "Import"
 msgstr "导入"
 
-#: ../drag_n_drop_action.cpp:303
+#: ../rapidsvn_generated.cpp:1276
+#, fuzzy
+msgid "Import &Path"
+msgstr "导入"
+
+#: ../drag_n_drop_action.cpp:311
 #, c-format
 msgid "Importing file into repository: %s"
 msgstr ""
@@ -1077,15 +1069,15 @@ msgstr ""
 msgid "In&teractive Resolve...\tCTRL-T"
 msgstr "属性(&P)...\tCTRL-P"
 
-#: ../main_frame.cpp:270
+#: ../main_frame.cpp:279
 msgid "Indicate modified children"
 msgstr ""
 
-#: ../main_frame.cpp:1984
+#: ../main_frame.cpp:2173
 msgid "Info"
 msgstr "信息"
 
-#: ../main_frame_helper.cpp:131
+#: ../main_frame_helper.cpp:117
 msgid "Info selected"
 msgstr "选定项目的信息"
 
@@ -1093,7 +1085,7 @@ msgstr "选定项目的信息"
 msgid "Internal Error: There is another action running"
 msgstr "内部错误: 已有一个操作正在执行中"
 
-#: ../main_frame.cpp:1542
+#: ../main_frame.cpp:1695
 msgid "Internal Error: no client data for action event!"
 msgstr "内部错误: 没有符合操作事件的客户端数据!"
 
@@ -1105,28 +1097,17 @@ msgstr "内部错误: 不存在上下文"
 msgid "Invalid revision number detected"
 msgstr "检测到无效的版本号"
 
-#: ../log_dlg.cpp:478
-msgid "Invalid selection. At least one revisions is needed for diff and no more than two."
-msgstr "选择无效. 至少要指定一个版本才能进行比较."
-
-#: ../log_dlg.cpp:493
-msgid "Invalid selection. Exactly two revisions needed for merge."
-msgstr "选择无效. 必须指定要合并的两个版本."
-
-#: ../log_dlg.cpp:529
-msgid "Invalid selection. Only one revision may be selected for annotate"
-msgstr "选择无效. 一次只能评注一个版本."
-
-#: ../cert_dlg.cpp:111
-msgid "Issue:"
+#: ../rapidsvn_generated.cpp:159
+#, fuzzy
+msgid "Issuer:"
 msgstr "颁发者"
 
-#: ../rapidsvn_generated.cpp:477
+#: ../rapidsvn_generated.cpp:377
 #, fuzzy
 msgid "Keep Locks"
 msgstr "保持锁定"
 
-#: ../export_dlg.cpp:137
+#: ../rapidsvn_generated.cpp:992
 msgid "LF (Unix)"
 msgstr "LF (Unix)"
 
@@ -1148,20 +1129,16 @@ msgstr "最后修改日期"
 msgid "Last Changed Rev: %ld"
 msgstr "最后修改的版本: %ld"
 
-#: ../annotate_dlg.cpp:49
+#: ../annotate_dlg.cpp:36
 msgid "Line"
 msgstr "行"
 
-#: ../main_frame.cpp:330
-msgid "Listener Test"
-msgstr "Listener 测试"
-
-#: ../filelist_ctrl.cpp:1058
+#: ../filelist_ctrl.cpp:1064
 #, c-format
 msgid "Listing entries in '%s'"
 msgstr "正在列出 '%s' 中的项目"
 
-#: ../about_dlg.cpp:88
+#: ../about_dlg.cpp:85
 #, c-format
 msgid ""
 "Locale Information:\n"
@@ -1174,21 +1151,7 @@ msgstr ""
 "系统名称: %s\n"
 "规范名称: %s\n"
 
-#: ../rapidsvn_app.cpp:198
-#: ../rapidsvn_app.cpp:206
-msgid "Locate help"
-msgstr "定位帮助文件"
-
-#: ../rapidsvn_app.cpp:266
-msgid "Locate tips"
-msgstr "定位技巧提示文件"
-
-#: ../rapidsvn_app.cpp:258
-msgid "Locate tips file"
-msgstr "定位帮助技巧文件"
-
 #: ../lock_action.cpp:40
-#: ../lock_dlg.cpp:100
 msgid "Lock"
 msgstr "锁定"
 
@@ -1223,32 +1186,27 @@ msgstr "锁定所有者: %s"
 msgid "Lock Token: %s"
 msgstr "锁定标识: %s"
 
-#: ../listener.cpp:374
-#: ../main_frame.cpp:1419
+#: ../listener.cpp:414 ../main_frame.cpp:1441
 msgid "Locked"
 msgstr "已锁定"
 
-#: ../log_action.cpp:41
+#: ../log_action.cpp:82 ../log_action.cpp:136
 msgid "Log"
 msgstr "历史记录"
 
-#: ../log_dlg.cpp:571
+#: ../log_dlg.cpp:71
 msgid "Log History"
 msgstr "历史记录"
 
-#: ../log_dlg.cpp:166
+#: ../log_rev_list.cpp:40 ../rapidsvn_generated.cpp:1211
 msgid "Log Message"
 msgstr "历史记录信息"
 
-#: ../log_dlg.cpp:355
-msgid "Log Message:"
-msgstr "历史记录信息:"
-
-#: ../main_frame_helper.cpp:141
+#: ../main_frame_helper.cpp:125
 msgid "Log selected"
 msgstr "选定项目的历史记录"
 
-#: ../utils.cpp:279
+#: ../utils.cpp:288
 msgid "Login..."
 msgstr "登录..."
 
@@ -1273,43 +1231,40 @@ msgstr "创建目录(&d)...\tF7"
 msgid "Make directory"
 msgstr "创建目录"
 
-#: ../merge_action.cpp:38
-#: ../merge_action.cpp:44
-#: ../merge_dlg.cpp:125
+#: ../merge_action.cpp:38 ../merge_action.cpp:44
 msgid "Merge"
 msgstr "合并"
 
-#: ../rapidsvn_generated.cpp:161
+#: ../rapidsvn_generated.cpp:1676
 msgid "Merge Tool"
 msgstr "合并工具"
 
-#: ../merge_dlg.cpp:60
-msgid "Merge revisions"
-msgstr "合并版本"
-
-#: ../main_frame.cpp:294
+#: ../main_frame.cpp:303
 msgid "Merge..."
 msgstr "合并..."
+
+#: ../listener.cpp:308
+#, fuzzy
+msgid "Merged"
+msgstr "合并"
 
 #: ../mkdir_action.cpp:37
 msgid "Mkdir"
 msgstr "Mkdir"
 
-#: ../listener.cpp:368
-#: ../main_frame.cpp:1413
+#: ../listener.cpp:408 ../main_frame.cpp:1435
 msgid "Modified"
 msgstr "已修改"
 
-#: ../rapidsvn_generated.cpp:692
+#: ../rapidsvn_generated.cpp:563
 msgid "More options"
 msgstr ""
 
-#: ../dnd_dlg.cpp:104
-#: ../move_action.cpp:42
+#: ../move_action.cpp:42 ../rapidsvn_generated.cpp:854
 msgid "Move"
 msgstr "移动"
 
-#: ../drag_n_drop_action.cpp:293
+#: ../drag_n_drop_action.cpp:301
 #, fuzzy, c-format
 msgid "Moving file: %s"
 msgstr "冲突的工作副本文件: %s"
@@ -1318,10 +1273,16 @@ msgstr "冲突的工作副本文件: %s"
 msgid "Multiple Files"
 msgstr ""
 
-#: ../columns.cpp:45
-#: ../listed_dlg.cpp:75
-#: ../listed_dlg.cpp:171
-#: ../listed_dlg.cpp:324
+#: ../rapidsvn_generated.cpp:30 ../rapidsvn_generated.cpp:34
+#: ../rapidsvn_generated.cpp:38 ../rapidsvn_generated.cpp:131
+#: ../rapidsvn_generated.cpp:135 ../rapidsvn_generated.cpp:137
+#: ../rapidsvn_generated.cpp:155 ../rapidsvn_generated.cpp:163
+#: ../rapidsvn_generated.cpp:171 ../rapidsvn_generated.cpp:179
+#: ../rapidsvn_generated.cpp:187
+msgid "MyLabel"
+msgstr ""
+
+#: ../columns.cpp:45 ../listed_dlg.cpp:65 ../listed_dlg.cpp:182
 msgid "Name"
 msgstr "文件名"
 
@@ -1330,45 +1291,24 @@ msgstr "文件名"
 msgid "Name: %s"
 msgstr "文件名: %s"
 
-#: ../property_dlg.cpp:63
+#: ../property_dlg.cpp:74
 msgid "New Property"
 msgstr "新建属性值"
-
-#: ../revert_dlg.cpp:57
-msgid "No"
-msgstr ""
 
 #: ../diff_action.cpp:217
 msgid "No diff tool set in the preferences"
 msgstr "首选项中没有设置比较工具"
 
-#: ../rapidsvn_app.cpp:206
-msgid ""
-"No help file was chosen, would you like to be \n"
-"asked again after next application start?"
-msgstr ""
-"没有选定帮助文件.\n"
-"您希望在下次程序启动时再次提示此信息吗?"
-
 #: ../userresolve_action.cpp:62
 msgid "No merge tool set in the preferences"
 msgstr "首选项中没有设置合并工具"
-
-#: ../rapidsvn_app.cpp:266
-msgid ""
-"No tips file was chosen, would you like to be \n"
-"asked again after next application start?"
-msgstr ""
-"没有选定帮助提示文件.\n"
-"您希望在下次程序启动时再次提示此信息吗?"
 
 #: ../file_info.cpp:118
 #, c-format
 msgid "Node Kind: %s"
 msgstr "节点类型: %s"
 
-#: ../checkout_dlg.cpp:106
-#: ../export_dlg.cpp:109
+#: ../rapidsvn_generated.cpp:268 ../rapidsvn_generated.cpp:980
 msgid "Not specified"
 msgstr "未指定"
 
@@ -1376,55 +1316,38 @@ msgstr "未指定"
 msgid "Not versioned"
 msgstr "未受版本控制"
 
-#: ../about_dlg.cpp:114
-#: ../annotate_dlg.cpp:42
-#: ../auth_dlg.cpp:71
-#: ../checkout_dlg.cpp:126
-#: ../delete_dlg.cpp:54
-#: ../destination_dlg.cpp:87
-#: ../export_dlg.cpp:145
-#: ../import_dlg.cpp:128
-#: ../listed_dlg.cpp:185
-#: ../listed_dlg.cpp:341
-#: ../lock_dlg.cpp:60
-#: ../merge_dlg.cpp:212
-#: ../rapidsvn_generated.cpp:191
-#: ../rapidsvn_generated.cpp:325
-#: ../rapidsvn_generated.cpp:405
-#: ../rapidsvn_generated.cpp:481
-#: ../rapidsvn_generated.cpp:560
-#: ../rapidsvn_generated.cpp:704
-#: ../report_dlg.cpp:57
-#: ../switch_dlg.cpp:137
-#: ../unlock_dlg.cpp:55
-#: ../update_dlg.cpp:133
+#: ../rapidsvn_generated.cpp:44 ../rapidsvn_generated.cpp:66
+#: ../rapidsvn_generated.cpp:107 ../rapidsvn_generated.cpp:289
+#: ../rapidsvn_generated.cpp:380 ../rapidsvn_generated.cpp:439
+#: ../rapidsvn_generated.cpp:575 ../rapidsvn_generated.cpp:626
+#: ../rapidsvn_generated.cpp:663 ../rapidsvn_generated.cpp:785
+#: ../rapidsvn_generated.cpp:915 ../rapidsvn_generated.cpp:1016
+#: ../rapidsvn_generated.cpp:1080 ../rapidsvn_generated.cpp:1125
+#: ../rapidsvn_generated.cpp:1318 ../rapidsvn_generated.cpp:1502
+#: ../rapidsvn_generated.cpp:1704 ../rapidsvn_generated.cpp:1747
+#: ../rapidsvn_generated.cpp:1777 ../rapidsvn_generated.cpp:1833
+#: ../rapidsvn_generated.cpp:1876 ../rapidsvn_generated.cpp:1931
 msgid "OK"
 msgstr "确定"
 
-#: ../utils.cpp:551
+#: ../utils.cpp:561
 msgid "Open..."
 msgstr "打开..."
 
-#: ../export_dlg.cpp:120
+#: ../rapidsvn_generated.cpp:1006
 msgid "Overwrite"
 msgstr "覆盖"
 
-#: ../auth_dlg.cpp:62
-msgid "Password"
-msgstr "密码"
-
 #: ../columns.cpp:46
-#: ../import_dlg.cpp:80
-#: ../log_dlg.cpp:243
 msgid "Path"
 msgstr "路径"
 
-#: ../import_dlg.cpp:112
-msgid "Path type:"
+#: ../rapidsvn_generated.cpp:1292
+#, fuzzy
+msgid "Path &type"
 msgstr "路径类型:"
 
-#: ../checkout_dlg.cpp:97
-#: ../export_dlg.cpp:100
+#: ../rapidsvn_generated.cpp:263 ../rapidsvn_generated.cpp:975
 msgid "Peg Revision"
 msgstr "定位版本"
 
@@ -1432,28 +1355,28 @@ msgstr "定位版本"
 msgid "Preferences"
 msgstr "首选项"
 
-#: ../utils.cpp:302
+#: ../utils.cpp:311
 msgid "Preferences..."
 msgstr "首选项..."
 
-#: ../rapidsvn_generated.cpp:151
+#: ../rapidsvn_generated.cpp:1666
 #, fuzzy
 msgid "Program arguments (%1=base, %2=theirs %3=mine %4=result):"
 msgstr "程序参数 (%1=文件1, %2=文件2):"
 
-#: ../rapidsvn_generated.cpp:125
+#: ../rapidsvn_generated.cpp:1640
 msgid "Program arguments (%1=file1, %2=file2):"
 msgstr "程序参数 (%1=文件1, %2=文件2):"
 
-#: ../rapidsvn_generated.cpp:94
+#: ../rapidsvn_generated.cpp:1610
 msgid "Program arguments (%1=selected directory):"
 msgstr "程序参数 (%1=选定的目录):"
 
-#: ../rapidsvn_generated.cpp:63
+#: ../rapidsvn_generated.cpp:1580
 msgid "Program arguments (%1=selected file):"
 msgstr "程序参数 (%1=选定的文件):"
 
-#: ../rapidsvn_generated.cpp:168
+#: ../rapidsvn_generated.cpp:1683
 msgid "Programs"
 msgstr "程序"
 
@@ -1469,7 +1392,7 @@ msgstr "属性状态"
 msgid "Properties Last Updated"
 msgstr "属性最后更新"
 
-#: ../property_dlg.cpp:62
+#: ../property_dlg.cpp:73
 msgid "Properties:"
 msgstr "属性:"
 
@@ -1481,22 +1404,21 @@ msgstr "属性"
 msgid "Property Editor"
 msgstr "属性编辑器"
 
-#: ../rapidsvn_generated.cpp:26
+#: ../rapidsvn_generated.cpp:1546
 msgid "Purge temporary files on program exit"
 msgstr "退出程序时清除临时文件"
 
-#: ../main_frame_helper.cpp:65
+#: ../main_frame_helper.cpp:63
 msgid "Put files and directories under revision control"
 msgstr "将文件和目录加入版本控制系统中"
 
-#: ../main_frame.cpp:509
+#: ../rapidsvn_generated.cpp:844
+msgid "Question"
+msgstr ""
+
+#: ../main_frame.cpp:528
 msgid "RapidSVN Error"
 msgstr "RapidSVN 错误"
-
-#: ../rapidsvn_app.cpp:97
-#, c-format
-msgid "RapidSVN Help: %s"
-msgstr "RapidSVN 帮助: %s"
 
 #: ../utils.cpp:192
 msgid "Re&name...\tCTRL-N"
@@ -1510,57 +1432,51 @@ msgstr "解决冲突(&s)\tCTRL-S"
 msgid "Re&vert\tCTRL-V"
 msgstr "复原(&v)\tCTRL-V"
 
-#: ../filelist_ctrl.cpp:1134
+#: ../filelist_ctrl.cpp:1140
 msgid "Ready"
 msgstr "就绪"
 
-#: ../main_frame.cpp:1522
-#: ../main_frame.cpp:1566
+#: ../main_frame.cpp:1675 ../main_frame.cpp:1719
 msgid "Ready\n"
 msgstr "就绪\n"
 
-#: ../rapidsvn_generated.cpp:393
+#: ../rapidsvn_generated.cpp:427
 msgid "Recent entries:"
 msgstr "最近条目:"
 
-#: ../checkout_dlg.cpp:111
-#: ../export_dlg.cpp:114
-#: ../import_dlg.cpp:108
-#: ../merge_dlg.cpp:201
-#: ../rapidsvn_generated.cpp:473
-#: ../rapidsvn_generated.cpp:547
-#: ../revert_dlg.cpp:49
-#: ../switch_dlg.cpp:117
-#: ../update_dlg.cpp:115
+#: ../rapidsvn_generated.cpp:279 ../rapidsvn_generated.cpp:374
+#: ../rapidsvn_generated.cpp:1003 ../rapidsvn_generated.cpp:1315
+#: ../rapidsvn_generated.cpp:1491 ../rapidsvn_generated.cpp:1771
+#: ../rapidsvn_generated.cpp:1822 ../rapidsvn_generated.cpp:1920
 msgid "Recursive"
 msgstr "递归"
 
-#: ../main_frame_helper.cpp:206
+#: ../main_frame_helper.cpp:188
 msgid "Refresh"
 msgstr "刷新"
 
-#: ../utils.cpp:297
+#: ../utils.cpp:306
 msgid "Refresh View\tCTRL-R"
 msgstr "刷新视图\tCTRL-R"
 
-#: ../main_frame_helper.cpp:207
+#: ../main_frame_helper.cpp:189
 msgid "Refresh the file list"
 msgstr "刷新文件列表"
 
-#: ../main_frame.cpp:268
+#: ../main_frame.cpp:277
 msgid "Refresh with Update"
 msgstr "刷新并更新"
 
-#: ../switch_dlg.cpp:127
+#: ../rapidsvn_generated.cpp:1825
 #, fuzzy
 msgid "Relocate"
 msgstr "已替换"
 
-#: ../main_frame_helper.cpp:115
+#: ../main_frame_helper.cpp:103
 msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr "移除工作副本文件或目录的'冲突'状态"
 
-#: ../main_frame.cpp:1918
+#: ../main_frame.cpp:2107
 msgid "Removed bookmark"
 msgstr "已移除书签"
 
@@ -1572,8 +1488,7 @@ msgstr "重命名"
 msgid "Rep. Rev."
 msgstr "文档库版本"
 
-#: ../listener.cpp:371
-#: ../main_frame.cpp:1416
+#: ../listener.cpp:411 ../main_frame.cpp:1438
 msgid "Replaced"
 msgstr "已替换"
 
@@ -1581,14 +1496,14 @@ msgstr "已替换"
 msgid "Repository"
 msgstr "文档库"
 
-#: ../import_dlg.cpp:67
-#: ../main_frame.cpp:1890
+#: ../rapidsvn_generated.cpp:1268
+#, fuzzy
+msgid "Repository &URL for import"
+msgstr "必须输入文档库 URL 才能执行导入操作!"
+
+#: ../main_frame.cpp:2079
 msgid "Repository URL"
 msgstr "文档库 URL"
-
-#: ../import_dlg.cpp:177
-msgid "Repository URL is required for import!"
-msgstr "必须输入文档库 URL 才能执行导入操作!"
 
 #: ../file_info.cpp:112
 #, c-format
@@ -1600,81 +1515,63 @@ msgstr "文档库 UUID: %s"
 msgid "Repository: %s"
 msgstr "文档库: %s"
 
-#: ../utils.cpp:310
+#: ../utils.cpp:319
 msgid "Reset Columns"
 msgstr "重置信息列"
 
-#: ../rapidsvn_generated.cpp:34
+#: ../rapidsvn_generated.cpp:1552
 msgid "Reset Flat Mode on every program start"
 msgstr ""
 
-#: ../resolve_action.cpp:37
-#: ../userresolve_action.cpp:44
+#: ../resolve_action.cpp:37 ../userresolve_action.cpp:44
 msgid "Resolve"
 msgstr "解决冲突"
 
-#: ../main_frame_helper.cpp:114
+#: ../main_frame_helper.cpp:102
 msgid "Resolve selected"
 msgstr "解决选定项目的冲突"
 
-#: ../listener.cpp:359
-#: ../main_frame.cpp:1404
+#: ../listener.cpp:399 ../main_frame.cpp:1426
 msgid "Resolved"
 msgstr "已解决冲突"
 
-#: ../listener.cpp:356
-#: ../main_frame.cpp:1401
+#: ../listener.cpp:396 ../main_frame.cpp:1423
 msgid "Restore"
 msgstr "还原"
 
-#: ../main_frame_helper.cpp:105
+#: ../main_frame_helper.cpp:95
 msgid "Restore pristine working copy file (undo all local edits)"
 msgstr "恢复工作副本文件到最原始的状态(撤销所有本地修改)."
 
-#: ../rapidsvn_generated.cpp:632
+#: ../rapidsvn_generated.cpp:506
 msgid "Resulting repository filename:"
 msgstr ""
 
-#: ../listener.cpp:357
-#: ../main_frame.cpp:1402
-#: ../revert_action.cpp:35
-#: ../revert_dlg.cpp:79
+#: ../listener.cpp:397 ../main_frame.cpp:1424 ../revert_action.cpp:35
 msgid "Revert"
 msgstr "复原"
 
-#: ../main_frame_helper.cpp:104
+#: ../main_frame_helper.cpp:94
 msgid "Revert selected"
 msgstr "复原选定的项目"
 
-#: ../annotate_dlg.cpp:47
-#: ../checkout_dlg.cpp:83
-#: ../columns.cpp:47
-#: ../export_dlg.cpp:86
-#: ../log_dlg.cpp:163
-#: ../merge_dlg.cpp:133
-#: ../merge_dlg.cpp:150
-#: ../rapidsvn_generated.cpp:529
-#: ../switch_dlg.cpp:91
-#: ../update_dlg.cpp:88
+#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:37
+#: ../rapidsvn_generated.cpp:252 ../rapidsvn_generated.cpp:964
+#: ../rapidsvn_generated.cpp:1808 ../rapidsvn_generated.cpp:1906
 msgid "Revision"
 msgstr "版本"
 
-#: ../merge_dlg.cpp:51
-msgid "Revision must be an unsigned number!"
-msgstr "版本号必须为正整数!"
-
-#: ../rapidsvn_generated.cpp:243
+#: ../rapidsvn_generated.cpp:707
 #, fuzzy
 msgid "Revision or date #1:"
 msgstr "版本或日期 #&1:"
 
-#: ../rapidsvn_generated.cpp:283
+#: ../rapidsvn_generated.cpp:745
 #, fuzzy
 msgid "Revision or date #2:"
 msgstr "版本或日期 #&2:"
 
-#: ../rapidsvn_generated.cpp:250
-#: ../rapidsvn_generated.cpp:290
+#: ../rapidsvn_generated.cpp:714 ../rapidsvn_generated.cpp:752
 msgid "Revision:"
 msgstr "版本:"
 
@@ -1688,10 +1585,6 @@ msgstr "版本: %ld"
 msgid "Running command %s:"
 msgstr ""
 
-#: ../cert_dlg.cpp:66
-msgid "SSL Certificate"
-msgstr "SSL 证书"
-
 #: ../columns.cpp:62
 msgid "Schedule"
 msgstr "计划"
@@ -1701,38 +1594,28 @@ msgstr "计划"
 msgid "Schedule: %s"
 msgstr "计划: %s"
 
-#: ../merge_dlg.cpp:106
-msgid "Second path or URL is required for merge!"
-msgstr "合并的第二个路径或  URL 必须填写!"
-
-#: ../merge_dlg.cpp:148
-msgid "Second working copy or URL"
-msgstr "第二个工作副本或 URL"
-
-#: ../listener.cpp:169
+#: ../listener.cpp:166
 msgid "Select Certificate File"
 msgstr "选择证书文件"
 
-#: ../checkout_dlg.cpp:273
-#: ../export_dlg.cpp:311
+#: ../checkout_dlg.cpp:108 ../export_dlg.cpp:110
 msgid "Select a destination directory"
 msgstr "选择目标目录"
 
-#: ../merge_dlg.cpp:241
+#: ../merge_dlg.cpp:111
 msgid "Select a destination folder to merge to"
 msgstr "选择要合并到的目标文件夹"
 
-#: ../create_repos_dlg.cpp:185
-#: ../create_repos_dlg.cpp:201
-#: ../main_frame.cpp:1845
+#: ../create_repos_dlg.cpp:185 ../create_repos_dlg.cpp:201
+#: ../main_frame.cpp:2033
 msgid "Select a directory"
 msgstr "选择目录"
 
-#: ../import_dlg.cpp:210
+#: ../import_dlg.cpp:128
 msgid "Select a directory to import"
 msgstr "选择要导入的目录"
 
-#: ../import_dlg.cpp:219
+#: ../import_dlg.cpp:134
 msgid "Select a file to import"
 msgstr "选择要导入的文件"
 
@@ -1761,93 +1644,85 @@ msgstr "选择标准编辑器的执行程序"
 msgid "Select standard file explorer executable"
 msgstr "选择文件浏览器的执行程序"
 
-#: ../main_frame_helper.cpp:95
+#: ../main_frame_helper.cpp:87
 msgid "Send changes from your working copy to the repository"
 msgstr "将您的工作副本中的修改发送到文档库"
 
-#: ../checkout_dlg.cpp:94
-#: ../export_dlg.cpp:97
+#: ../checkout_dlg.cpp:65 ../export_dlg.cpp:67
 msgid "Set this to get the latest version of the files in the repository."
 msgstr "选定此项以获取文档库中最新版本的文件"
 
-#: ../checkout_dlg.cpp:108
-#: ../export_dlg.cpp:111
+#: ../checkout_dlg.cpp:69 ../export_dlg.cpp:71
 msgid "Set this to use BASE/HEAD (current) peg revision of the files."
 msgstr "选定此项以使用文件的 BASE/HEAD(当前) 定位版本."
 
-#: ../checkout_dlg.cpp:119
+#: ../checkout_dlg.cpp:73
 msgid "Set to automatically create a new working copy bookmark."
 msgstr "选定此项会自动创建一个工作副本书签."
 
-#: ../checkout_dlg.cpp:114
-#: ../export_dlg.cpp:117
+#: ../checkout_dlg.cpp:71 ../export_dlg.cpp:73
 msgid "Set to get all subdirectories from the URL also."
 msgstr "选定此项会获取 URL 下所有子目录的内容."
 
-#: ../checkout_dlg.cpp:125
-#: ../export_dlg.cpp:129
-msgid "Set to ignore external definitions and the external working copies managed by them."
+#: ../checkout_dlg.cpp:75 ../export_dlg.cpp:77
+msgid ""
+"Set to ignore external definitions and the external working copies managed "
+"by them."
 msgstr "选定此项以忽略由外部定义文件管理的工作副本."
 
-#: ../main_frame.cpp:320
+#: ../main_frame.cpp:329
 msgid "Show Startup Tips"
 msgstr "显示启动时的技巧提示"
 
-#: ../main_frame.cpp:274
-#: ../main_frame_helper.cpp:194
+#: ../main_frame.cpp:283 ../main_frame_helper.cpp:178
 msgid "Show conflicted entries"
 msgstr "列出有冲突的项目"
 
-#: ../main_frame_helper.cpp:171
+#: ../main_frame_helper.cpp:155
 msgid "Show entries in subdirectories"
 msgstr "列出位于子目录中的项目"
 
-#: ../main_frame.cpp:276
+#: ../main_frame.cpp:285
 msgid "Show ignored entries"
 msgstr "列出已忽略的项目"
 
-#: ../main_frame.cpp:273
-#: ../main_frame_helper.cpp:188
+#: ../main_frame.cpp:282 ../main_frame_helper.cpp:172
 msgid "Show modified entries"
 msgstr "列出已修改的项目"
 
-#: ../main_frame.cpp:269
-#: ../main_frame_helper.cpp:170
+#: ../main_frame.cpp:278 ../main_frame_helper.cpp:154
 msgid "Show subdirectories"
 msgstr "列出子目录中的项目"
 
-#: ../main_frame_helper.cpp:142
+#: ../main_frame_helper.cpp:126
 msgid "Show the log messages for the selected entries"
 msgstr "列出选定项目的日志信息."
 
-#: ../main_frame.cpp:272
-#: ../main_frame_helper.cpp:182
+#: ../main_frame.cpp:281 ../main_frame_helper.cpp:166
 msgid "Show unmodified entries"
 msgstr "列出未修改的项目"
 
-#: ../main_frame.cpp:271
-#: ../main_frame_helper.cpp:176
+#: ../main_frame.cpp:280 ../main_frame_helper.cpp:160
 msgid "Show unversioned entries"
 msgstr "列出不在版本控制中的项目"
 
-#: ../listener.cpp:360
-#: ../main_frame.cpp:1405
+#: ../listener.cpp:400 ../main_frame.cpp:1427
 msgid "Skip"
 msgstr "跳过"
 
-#: ../main_frame.cpp:266
+#: ../main_frame.cpp:275
 msgid "Sort"
 msgstr "排序"
 
-#: ../main_frame.cpp:242
+#: ../main_frame.cpp:251
 msgid "Sort Ascending"
 msgstr "升序排序"
 
-#: ../rapidsvn_generated.cpp:77
+#: ../rapidsvn_generated.cpp:1593
 msgid "Standard Editor"
 msgstr "默认编辑器"
 
-#: ../rapidsvn_generated.cpp:108
+#: ../rapidsvn_generated.cpp:1623
 msgid "Standard Explorer"
 msgstr "默认文件浏览器"
 
@@ -1855,40 +1730,39 @@ msgstr "默认文件浏览器"
 msgid "Status"
 msgstr "状态"
 
-#: ../lock_dlg.cpp:57
+#: ../rapidsvn_generated.cpp:1122
 msgid "Steal lock if it belongs to another user"
 msgstr "如果锁定属于其它用户, 将它强行转给当前用户"
 
-#: ../main_frame_helper.cpp:219
+#: ../main_frame_helper.cpp:199
 msgid "Stop"
 msgstr "停止"
 
-#: ../main_frame_helper.cpp:220
+#: ../main_frame_helper.cpp:200
 msgid "Stop the current action"
 msgstr "停止当前操作"
 
-#: ../rapidsvn_generated.cpp:177
+#: ../rapidsvn_generated.cpp:1691
 msgid "Store authentication credentials on hard disk"
 msgstr "将身份验证信息保存在硬盘上"
 
 #: ../switch_action.cpp:50
-#: ../switch_dlg.cpp:192
 msgid "Switch URL"
 msgstr "切换 URL"
 
-#: ../main_frame.cpp:295
+#: ../main_frame.cpp:304
 msgid "Switch URL...\tCTRL-S"
 msgstr "切换 URL...\tCTRL-S"
 
-#: ../main_frame.cpp:1352
+#: ../main_frame.cpp:1374
 msgid "Test duration"
 msgstr "测试耗时"
 
-#: ../main_frame.cpp:1348
+#: ../main_frame.cpp:1370
 msgid "Test ended at"
 msgstr "测试结束于"
 
-#: ../main_frame.cpp:1345
+#: ../main_frame.cpp:1367
 msgid "Test started at"
 msgstr "测试开始于"
 
@@ -1908,7 +1782,7 @@ msgstr ""
 msgid "The svnadmin command was not successful."
 msgstr ""
 
-#: ../cert_dlg.cpp:70
+#: ../cert_dlg.cpp:37
 msgid ""
 "There were errors validating the server certificate.\n"
 "Do you want to trust this certificate?"
@@ -1916,12 +1790,12 @@ msgstr ""
 "验证服务器证书时发现错误.\n"
 "是否还要相信此证书?"
 
-#: ../rapidsvn_generated.cpp:384
+#: ../rapidsvn_generated.cpp:418
 #, fuzzy
 msgid "This action has resulted in a commit - please enter a &log message"
 msgstr "此操作会产生提交动作 - 请输入历史记录信息"
 
-#: ../about_dlg.cpp:62
+#: ../about_dlg.cpp:59
 msgid ""
 "This program is licensed under the terms\n"
 "of the GNU General Public License version 3\n"
@@ -1929,16 +1803,9 @@ msgid ""
 "Available online under:"
 msgstr ""
 
-#: ../import_dlg.cpp:116
-msgid "Tree"
-msgstr "树"
-
-#: ../checkout_dlg.cpp:65
-#: ../columns.cpp:59
-#: ../export_dlg.cpp:68
-#: ../rapidsvn_generated.cpp:521
-#: ../switch_dlg.cpp:77
-#: ../update_dlg.cpp:73
+#: ../columns.cpp:59 ../rapidsvn_generated.cpp:233
+#: ../rapidsvn_generated.cpp:945 ../rapidsvn_generated.cpp:1801
+#: ../rapidsvn_generated.cpp:1899
 msgid "URL"
 msgstr "URL"
 
@@ -1951,11 +1818,11 @@ msgstr "URL: %s"
 msgid "UUID"
 msgstr "UUID"
 
-#: ../about_dlg.cpp:66
+#: ../about_dlg.cpp:63
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../main_frame.cpp:1494
+#: ../main_frame.cpp:1647
 msgid "Unimplemented action!"
 msgstr "未实现的功能!"
 
@@ -1964,75 +1831,60 @@ msgid "Unknown destination path"
 msgstr "未知的目标路径"
 
 #: ../unlock_action.cpp:39
-#: ../unlock_dlg.cpp:80
 msgid "Unlock"
 msgstr "解除锁定"
 
-#: ../listener.cpp:375
-#: ../main_frame.cpp:1420
+#: ../listener.cpp:415 ../main_frame.cpp:1442
 msgid "Unlocked"
 msgstr "已解除锁定"
 
-#: ../get_action.cpp:38
-#: ../update_action.cpp:39
-#: ../update_action.cpp:51
+#: ../get_action.cpp:38 ../update_action.cpp:39 ../update_action.cpp:51
 msgid "Update"
 msgstr "更新"
 
-#: ../main_frame_helper.cpp:84
+#: ../main_frame_helper.cpp:78
 msgid "Update selected"
 msgstr "更新选定项目"
 
-#: ../listener.cpp:363
-#: ../main_frame.cpp:1408
+#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1430
 msgid "Updated"
 msgstr "已更新"
 
-#: ../main_frame.cpp:1556
-#: ../main_frame.cpp:1561
+#: ../main_frame.cpp:1709 ../main_frame.cpp:1714
 msgid "Updating..."
 msgstr "更新中..."
 
-#: ../main_frame.cpp:241
+#: ../main_frame.cpp:250
 msgid "Use Path for Sorting"
 msgstr "使用路径排序"
 
-#: ../rapidsvn_generated.cpp:271
-#: ../rapidsvn_generated.cpp:311
+#: ../rapidsvn_generated.cpp:734 ../rapidsvn_generated.cpp:772
 msgid "Use URL/path:"
 msgstr "使用URL或路径:"
 
-#: ../rapidsvn_generated.cpp:70
-#: ../rapidsvn_generated.cpp:101
+#: ../rapidsvn_generated.cpp:1587 ../rapidsvn_generated.cpp:1617
 msgid "Use always"
 msgstr "总是使用此程序"
 
-#: ../checkout_dlg.cpp:92
-#: ../export_dlg.cpp:95
-#: ../rapidsvn_generated.cpp:259
-#: ../rapidsvn_generated.cpp:299
-#: ../rapidsvn_generated.cpp:534
-#: ../switch_dlg.cpp:103
-#: ../update_dlg.cpp:100
+#: ../rapidsvn_generated.cpp:257 ../rapidsvn_generated.cpp:723
+#: ../rapidsvn_generated.cpp:761 ../rapidsvn_generated.cpp:969
+#: ../rapidsvn_generated.cpp:1813 ../rapidsvn_generated.cpp:1911
 msgid "Use latest"
 msgstr "使用最新版本"
 
-#: ../auth_dlg.cpp:54
-#: ../log_dlg.cpp:164
+#: ../log_rev_list.cpp:38
 msgid "User"
 msgstr "用户名"
 
-#: ../cert_dlg.cpp:115
+#: ../rapidsvn_generated.cpp:167
 msgid "Valid from:"
 msgstr "有效起始日期:"
 
-#: ../cert_dlg.cpp:119
+#: ../rapidsvn_generated.cpp:175
 msgid "Valid until:"
 msgstr "有效结束日期:"
 
-#: ../listed_dlg.cpp:80
-#: ../listed_dlg.cpp:172
-#: ../listed_dlg.cpp:324
+#: ../listed_dlg.cpp:70 ../listed_dlg.cpp:182
 msgid "Value"
 msgstr "值"
 
@@ -2040,11 +1892,29 @@ msgstr "值"
 msgid "View"
 msgstr "查看"
 
-#: ../rapidsvn_generated.cpp:696
+#: ../listed_dlg.cpp:355
+#, fuzzy
+msgid "View..."
+msgstr "查看(&V)..."
+
+#: ../rapidsvn_generated.cpp:567
 msgid "WARNING"
 msgstr ""
 
-#: ../dnd_dlg.cpp:69
+#: ../dnd_dlg.cpp:48
+#, c-format
+msgid ""
+"Would you like to copy\n"
+"\n"
+"\n"
+"  %s\n"
+"\n"
+"into\n"
+"\n"
+"  %s?"
+msgstr ""
+
+#: ../dnd_dlg.cpp:39
 #, c-format
 msgid ""
 "Would you like to move or copy\n"
@@ -2057,34 +1927,27 @@ msgid ""
 "  %s?"
 msgstr ""
 
-#: ../revert_dlg.cpp:54
-msgid "Yes"
-msgstr ""
-
-#: ../main_frame.cpp:1863
+#: ../main_frame.cpp:2051
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "您不能把 Subversion 的管理目录添加到书签中!"
 
-#: ../file_info.cpp:150
-#: ../filelist_ctrl.cpp:1261
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1267
 msgid "add"
 msgstr "添加"
 
-#: ../filelist_ctrl.cpp:1226
-#: ../utils.cpp:398
+#: ../filelist_ctrl.cpp:1232 ../utils.cpp:408
 msgid "added"
 msgstr "已添加"
 
-#: ../utils.cpp:416
+#: ../utils.cpp:426
 msgid "conflicted"
 msgstr "存在冲突"
 
-#: ../file_info.cpp:154
-#: ../filelist_ctrl.cpp:1264
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1270
 msgid "delete"
 msgstr "删除"
 
-#: ../utils.cpp:404
+#: ../utils.cpp:414
 msgid "deleted"
 msgstr "已删除"
 
@@ -2092,7 +1955,7 @@ msgstr "已删除"
 msgid "directory"
 msgstr "目录"
 
-#: ../utils.cpp:422
+#: ../utils.cpp:432
 msgid "external"
 msgstr "外部"
 
@@ -2100,69 +1963,67 @@ msgstr "外部"
 msgid "file"
 msgstr "文件"
 
-#: ../utils.cpp:428
+#: ../utils.cpp:438
 msgid "ignored"
 msgstr "已忽略"
 
-#: ../utils.cpp:425
+#: ../utils.cpp:435
 msgid "incomplete"
 msgstr "不完整"
 
-#: ../utils.cpp:413
+#: ../utils.cpp:423
 msgid "merged"
 msgstr "已合并"
 
-#: ../utils.cpp:401
+#: ../utils.cpp:411
 msgid "missing"
 msgstr "丢失"
 
-#: ../filelist_ctrl.cpp:1229
-#: ../utils.cpp:410
+#: ../filelist_ctrl.cpp:1235 ../utils.cpp:420
 msgid "modified"
 msgstr "已修改"
 
-#: ../export_dlg.cpp:135
-#: ../export_dlg.cpp:140
+#: ../rapidsvn_generated.cpp:1165
+msgid "more"
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:992
 msgid "native"
 msgstr "原生"
 
-#: ../file_info.cpp:132
-#: ../utils.cpp:389
+#: ../file_info.cpp:132 ../utils.cpp:399
 msgid "none"
 msgstr "无"
 
-#: ../file_info.cpp:146
-#: ../utils.cpp:395
+#: ../file_info.cpp:146 ../utils.cpp:405
 msgid "normal"
 msgstr "常规"
 
-#: ../utils.cpp:419
+#: ../utils.cpp:429
 msgid "obstructed"
 msgstr "阻塞"
 
-#: ../filelist_ctrl.cpp:1294
-#: ../filelist_ctrl.cpp:1308
+#: ../filelist_ctrl.cpp:1300 ../filelist_ctrl.cpp:1314
 msgid "outdated"
 msgstr "过时"
 
-#: ../rapidsvn_generated.cpp:659
+#: ../rapidsvn_generated.cpp:532
 msgid "pre Subversion 1.4"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:659
+#: ../rapidsvn_generated.cpp:532
 msgid "pre Subversion 1.5"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:659
+#: ../rapidsvn_generated.cpp:532
 msgid "pre Subversion 1.6"
 msgstr ""
 
-#: ../file_info.cpp:158
-#: ../filelist_ctrl.cpp:1267
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1273
 msgid "replace"
 msgstr "替换"
 
-#: ../utils.cpp:407
+#: ../utils.cpp:417
 msgid "replaced"
 msgstr "已替换"
 
@@ -2170,22 +2031,119 @@ msgstr "已替换"
 msgid "svnadmin could not be found"
 msgstr "找不到svnadmin"
 
-#: ../file_info.cpp:137
-#: ../file_info.cpp:162
+#: ../file_info.cpp:137 ../file_info.cpp:162
 msgid "unknown"
 msgstr "未知"
 
-#: ../utils.cpp:430
+#: ../utils.cpp:440
 msgid "unknown value"
 msgstr "未知值"
 
-#: ../utils.cpp:392
+#: ../utils.cpp:402
 msgid "unversioned"
 msgstr "不在版本控制中"
 
-#: ../main_frame.cpp:329
-msgid "wxString Creation&Tracing Test"
-msgstr "wxString 创建和追踪测试"
+#~ msgid "Action"
+#~ msgstr "动作"
+
+#~ msgid "Checkout Test"
+#~ msgstr "签出测试"
+
+#~ msgid "Copied from Path"
+#~ msgstr "已复制, 来自 URL:"
+
+#~ msgid "Copied from Rev"
+#~ msgstr "已复制, 来自版本:"
+
+#~ msgid "Destination file"
+#~ msgstr "目标文件"
+
+#~ msgid "Destination path"
+#~ msgstr "目标路径"
+
+#~ msgid "EOL:"
+#~ msgstr "换行符:"
+
+#~ msgid "Enter log message"
+#~ msgstr "请输入历史记录信息"
+
+#~ msgid "Enter the local path where you want the code be exported."
+#~ msgstr "请输入用于导出代码的本地路径"
+
+#~ msgid ""
+#~ "Enter what kind of symbol(s) do you want as EOL (end of line) in exported "
+#~ "files."
+#~ msgstr "请输入要用作导出文件的换行符(EOL)的符号."
+
+#~ msgid "File path required when importing a file!"
+#~ msgstr "导入文件时必须填写文件路径!"
+
+#~ msgid "First path or URL is required for merge!"
+#~ msgstr "合并的第一个路径或  URL 必须填写!"
+
+#~ msgid ""
+#~ "Invalid selection. At least one revisions is needed for diff and no more "
+#~ "than two."
+#~ msgstr "选择无效. 至少要指定一个版本才能进行比较."
+
+#~ msgid "Invalid selection. Exactly two revisions needed for merge."
+#~ msgstr "选择无效. 必须指定要合并的两个版本."
+
+#~ msgid "Invalid selection. Only one revision may be selected for annotate"
+#~ msgstr "选择无效. 一次只能评注一个版本."
+
+#~ msgid "Listener Test"
+#~ msgstr "Listener 测试"
+
+#~ msgid "Locate help"
+#~ msgstr "定位帮助文件"
+
+#~ msgid "Locate tips"
+#~ msgstr "定位技巧提示文件"
+
+#~ msgid "Locate tips file"
+#~ msgstr "定位帮助技巧文件"
+
+#~ msgid "Log Message:"
+#~ msgstr "历史记录信息:"
+
+#~ msgid "Merge revisions"
+#~ msgstr "合并版本"
+
+#~ msgid ""
+#~ "No help file was chosen, would you like to be \n"
+#~ "asked again after next application start?"
+#~ msgstr ""
+#~ "没有选定帮助文件.\n"
+#~ "您希望在下次程序启动时再次提示此信息吗?"
+
+#~ msgid ""
+#~ "No tips file was chosen, would you like to be \n"
+#~ "asked again after next application start?"
+#~ msgstr ""
+#~ "没有选定帮助提示文件.\n"
+#~ "您希望在下次程序启动时再次提示此信息吗?"
+
+#~ msgid "RapidSVN Help: %s"
+#~ msgstr "RapidSVN 帮助: %s"
+
+#~ msgid "Revision must be an unsigned number!"
+#~ msgstr "版本号必须为正整数!"
+
+#~ msgid "SSL Certificate"
+#~ msgstr "SSL 证书"
+
+#~ msgid "Second path or URL is required for merge!"
+#~ msgstr "合并的第二个路径或  URL 必须填写!"
+
+#~ msgid "Second working copy or URL"
+#~ msgstr "第二个工作副本或 URL"
+
+#~ msgid "Tree"
+#~ msgstr "树"
+
+#~ msgid "wxString Creation&Tracing Test"
+#~ msgstr "wxString 创建和追踪测试"
 
 #~ msgid "Information"
 #~ msgstr "信息"

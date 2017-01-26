@@ -26,6 +26,8 @@
 #include "wx/wx.h"
 #include "wx/intl.h"
 
+#include <algorithm>
+
 // svncpp
 #include "svncpp/client.hpp"
 #include "svncpp/info.hpp"
@@ -35,9 +37,94 @@
 
 // app
 #include "action_event.hpp"
+#include "utils.hpp"
 #include "ids.hpp"
 #include "log_action.hpp"
 #include "log_data.hpp"
+
+
+/* static */ int LogAction::LogLimit = 50;
+
+struct LogNextAction::Data
+{
+private:
+  Action * action;
+
+public:
+  LogNextData data;
+  wxWindow * parent;
+
+  Data(Action * action_)
+      : action(action_)
+  {
+  }
+
+  Data(Action * action_, LogNextData & data_)
+      : action(action_), data(data_)
+  {
+  }
+
+  svn::Context *
+  GetContext()
+  {
+    return action->GetContext();
+  }
+
+  void
+  GetLogNext(svn::LogEntries& logEntriesNext)
+  {
+  }
+};
+
+
+LogNextAction::LogNextAction(wxWindow * parent,
+                             LogNextData & data)
+    : Action(parent, _("Log"), UPDATE_LATER)
+{
+  m = new Data(this, data);
+  m->parent = parent;
+}
+
+LogNextAction::~LogNextAction()
+{
+  delete m;
+}
+
+bool
+LogNextAction::Perform()
+{
+  // wxBusyCursor busyCursor;
+  
+  svn::Client client(GetContext());
+
+  svn::Path path = PathUtf8(m->data.path);
+  svn::Path target = GetTarget();
+
+  svn::LogEntries * entries = const_cast<svn::LogEntries *>(client.log(target.c_str(), m->data.startRevision,
+                                                                       svn::Revision::START, LogAction::LogLimit, true, false));
+  std::reverse(entries->begin(), entries->end());
+    
+  LogNextData * data = new LogNextData(m->data.path, m->data.startRevision,
+                                       svn::Revision::HEAD, m->data.logdlg,
+                                       (svn::LogEntries *) entries);
+  ActionEvent::Post(GetParent(), TOKEN_LOG_NEXT_CALLBACK, data);
+
+  return true;
+}
+
+bool
+LogNextAction::CheckStatusSel(const svn::StatusSel & statusSel)
+{
+  if (1 != statusSel.size())
+    return false;
+
+  if (statusSel.hasUnversioned())
+    return false;
+
+  return true;
+}
+
+// ===============================================================================================
 
 LogAction::LogAction(wxWindow * parent)
     : Action(parent, _("Log"), DONT_UPDATE)
@@ -50,10 +137,10 @@ LogAction::Perform()
   svn::Client client(GetContext());
 
   svn::Path target = GetTarget();
-  const svn::LogEntries * entries =
-    client.log(target.c_str(), svn::Revision::START,
-               svn::Revision::HEAD, true, false);
-
+  svn::LogEntries * entries = const_cast<svn::LogEntries *>(client.log(target.c_str(), svn::Revision::HEAD,
+                                                            svn::Revision::START, LogLimit, true, false));
+  std::reverse(entries->begin(), entries->end());
+  
   LogData * data = new LogData(entries, CreateRepositoryPath(client, target));
   ActionEvent::Post(GetParent(), TOKEN_LOG, data);
 

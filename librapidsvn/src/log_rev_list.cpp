@@ -51,7 +51,7 @@ LogRevList::~LogRevList()
 }
 
 void
-LogRevList::SetEntries(const svn::LogEntries * entries)
+LogRevList::SetEntries(svn::LogEntries * entries)
 {
   DeleteAllItems();
 
@@ -62,7 +62,7 @@ LogRevList::SetEntries(const svn::LogEntries * entries)
 }
 
 void
-LogRevList::AddEntriesToList(const svn::LogEntries * entries)
+LogRevList::AddEntriesToList(svn::LogEntries * entries)
 {
   if (entries == 0)
     return;

@@ -52,12 +52,19 @@ public:
    */
   LogDlg(wxWindow * parent,
          const svn::RepositoryPath & path, 
-         const svn::LogEntries * entries);
+         svn::LogEntries * entries);
 
   /**
    * destructor
    */
   virtual ~LogDlg();
+
+  void
+  NextLogEntriesCallback(svn::LogEntries* nextLogEntries);
+
+  void
+  AddLogEntries(svn::LogEntries* logEntries);
+
 
 protected:  // events inherited from LogDlgBase
   void 
@@ -74,6 +81,9 @@ protected:  // events inherited from LogDlgBase
 
   void 
   OnAnnotate(wxCommandEvent & event);
+
+  void
+  OnMore(wxCommandEvent & event);
 
   void
   OnRevSelected(wxListEvent & event);
@@ -96,6 +106,7 @@ private:
   void OnView(wxString & path);
   void OnDiff(wxString & path, bool singleItemDiff = false);
   void OnAnnotate(wxString & path);
+  void OnMore(wxString & path);
   void OnLog(wxString & path);
 
   void CheckControls();
