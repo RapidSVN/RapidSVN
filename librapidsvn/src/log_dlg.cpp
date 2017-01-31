@@ -76,9 +76,21 @@ LogDlg::LogDlg(wxWindow * parent,
   m_staticRevisions->SetLabel(
     wxString::Format(_("History: %d revisions"), entries->size()));
 
-  m_listRevisions->SetEntries(entries);
+  // Remove the last log entry (only included so we know if more are available)
+  if(entries->size() > LogAction::LogLimit)
+  {
+      svn::LogEntry & lastLogEntry = entries->back();
+      m_NextRevision = lastLogEntry.revision;
+      entries->pop_back();
+      m_buttonMore->Enable(true);
+  }
+  else
+  {
+      m_NextRevision = SVN_INVALID_REVNUM;
+      m_buttonMore->Enable(false);
+  }
 
-  m_buttonMore->Enable((entries->size() == LogAction::LogLimit));
+  m_listRevisions->SetEntries(entries);
 
   CheckControls();
 
@@ -112,6 +124,20 @@ LogDlg::NextLogEntriesCallback(svn::LogEntries* nextLogEntries)
 void
 LogDlg::AddLogEntries(svn::LogEntries* logEntries)
 {
+  // Remove the last log entry (only included so we know if more are available)
+  m_buttonMore->Enable(false);
+  if(logEntries->size() > LogAction::LogLimit)
+  {
+      svn::LogEntry & lastLogEntry = logEntries->back();
+      m_NextRevision = lastLogEntry.revision;
+      logEntries->pop_back();
+      m_buttonMore->Enable(true);
+  }
+  else
+  {
+      m_NextRevision = SVN_INVALID_REVNUM;
+  }
+
   svn::LogEntries::iterator iter;
   for(iter = logEntries->begin(); iter != logEntries->end(); ++iter)
   {
@@ -119,8 +145,6 @@ LogDlg::AddLogEntries(svn::LogEntries* logEntries)
       m->entries->push_back(entry);
   }
   m_listRevisions->AddEntriesToList(logEntries);
-
-  m_buttonMore->Enable((logEntries->size() == LogAction::LogLimit));
 }
 
 void
@@ -250,15 +274,12 @@ LogDlg::OnMore(wxCommandEvent & WXUNUSED(event))
 void
 LogDlg::OnMore(wxString & path)
 {
-  svn_revnum_t revnum = m_listRevisions->GetLastRevision();
-  if(revnum == -1)
-      return;
+  if(m_NextRevision == SVN_INVALID_REVNUM)
+    return;
 
   m_buttonMore->Enable(false);
 
-  svn::Revision revisionStart(revnum - 1);
-
-  LogNextData * data = new LogNextData(path, svn::Revision(revisionStart), svn::Revision::HEAD, (LogDlg*)this);
+  LogNextData * data = new LogNextData(path, svn::Revision(m_NextRevision), svn::Revision::HEAD, (LogDlg*)this);
 
   ActionEvent::Post(GetParent(), TOKEN_LOG_NEXT, data);
 }

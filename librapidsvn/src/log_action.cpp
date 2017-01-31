@@ -43,7 +43,7 @@
 #include "log_data.hpp"
 
 
-/* static */ int LogAction::LogLimit = 50;
+/* static */ int LogAction::LogLimit = 30;
 
 struct LogNextAction::Data
 {
@@ -94,16 +94,16 @@ bool
 LogNextAction::Perform()
 {
   // wxBusyCursor busyCursor;
-  
+
   svn::Client client(GetContext());
 
   svn::Path path = PathUtf8(m->data.path);
   svn::Path target = GetTarget();
 
   svn::LogEntries * entries = const_cast<svn::LogEntries *>(client.log(target.c_str(), m->data.startRevision,
-                                                                       svn::Revision::START, LogAction::LogLimit, true, false));
+                                                                       svn::Revision::START, LogAction::LogLimit + 1, true, false));
   std::reverse(entries->begin(), entries->end());
-    
+
   LogNextData * data = new LogNextData(m->data.path, m->data.startRevision,
                                        svn::Revision::HEAD, m->data.logdlg,
                                        (svn::LogEntries *) entries);
@@ -138,9 +138,9 @@ LogAction::Perform()
 
   svn::Path target = GetTarget();
   svn::LogEntries * entries = const_cast<svn::LogEntries *>(client.log(target.c_str(), svn::Revision::HEAD,
-                                                            svn::Revision::START, LogLimit, true, false));
+                                                            svn::Revision::START, LogLimit + 1, true, false));
   std::reverse(entries->begin(), entries->end());
-  
+
   LogData * data = new LogData(entries, CreateRepositoryPath(client, target));
   ActionEvent::Post(GetParent(), TOKEN_LOG, data);
 

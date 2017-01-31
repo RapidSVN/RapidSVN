@@ -98,8 +98,9 @@ private:
   /** hide implementation details */
   struct Data;
   std::auto_ptr<Data> m;
-  
+    
   std::list<svn::LogChangePathEntry> affectedFiles;
+  svn_revnum_t m_NextRevision;
 
   void OnAffectedFileOrDirCommand(wxCommandEvent & event);
 
