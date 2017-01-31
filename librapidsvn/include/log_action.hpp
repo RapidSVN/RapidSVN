@@ -35,10 +35,69 @@ namespace svn
   class Client;
   class Path;
   class RepositoryPath;
+  class LogEntry;
+  typedef std::vector<LogEntry> LogEntries;
 }
+class LogDlg;
+
+struct LogNextData
+{
+public:
+  wxString path;
+  svn::Revision startRevision;
+  svn::Revision endRevision;
+  LogDlg* logdlg;
+  svn::LogEntries* logEntries;
+
+  /** Constructor */
+  LogNextData()
+      : startRevision(svn::Revision::START),
+      endRevision(svn::Revision::HEAD),
+      logdlg(NULL),
+      logEntries(NULL)
+  {
+  }
+  /** Constructor */
+  LogNextData(wxString path_, svn::Revision startRevision_ = svn::Revision::START,
+              svn::Revision endRevision_ = svn::Revision::HEAD,
+              LogDlg* logdlg_ = NULL, svn::LogEntries* logEntries_ = NULL)
+      : path(path_),
+      startRevision(startRevision_),
+      endRevision(endRevision_),
+      logdlg(logdlg_),
+      logEntries(logEntries_)
+  {
+  }
+};
+
+class LogNextAction : public Action
+{
+public:
+  /** Constructor */
+  LogNextAction(wxWindow * parent, LogNextData & data);
+
+  /** Desctructor */
+  virtual ~LogNextAction();
+
+  /**
+   * @see Action
+   */
+  virtual bool
+  Perform();
+
+  static bool
+  CheckStatusSel(const svn::StatusSel & statusSel);
+
+private:
+  struct Data;
+  Data * m;
+};
 
 class LogAction : public Action
 {
+public:
+  static int LogLimit;
+
 public:
   LogAction(wxWindow * parent);
 

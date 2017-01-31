@@ -47,17 +47,18 @@
 #include "merge_dlg.hpp"
 #include "utils.hpp"
 #include "annotate_data.hpp"
+#include "log_action.hpp"
 
 struct LogDlg::Data
 {
 public:
-  const svn::LogEntries * entries;
+  svn::LogEntries * entries;
   wxString path;
   svn::RepositoryPath repositoryPath;
 
 public:
   Data(const svn::RepositoryPath & path_,
-       const svn::LogEntries * entries_)
+       svn::LogEntries * entries_)
       : entries(entries_), path(Utf8ToLocal(path_.c_str())), repositoryPath(path_)
   {
   }
@@ -66,7 +67,7 @@ public:
 
 LogDlg::LogDlg(wxWindow * parent,
                const svn::RepositoryPath & path,
-               const svn::LogEntries * entries)
+               svn::LogEntries * entries)
     : LogDlgBase(parent, -1, _("Log History"), wxDefaultPosition,
                  parent->GetSize(), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
 {
@@ -74,6 +75,20 @@ LogDlg::LogDlg(wxWindow * parent,
 
   m_staticRevisions->SetLabel(
     wxString::Format(_("History: %d revisions"), entries->size()));
+
+  // Remove the last log entry (only included so we know if more are available)
+  if(entries->size() > LogAction::LogLimit)
+  {
+      svn::LogEntry & lastLogEntry = entries->back();
+      m_NextRevision = lastLogEntry.revision;
+      entries->pop_back();
+      m_buttonMore->Enable(true);
+  }
+  else
+  {
+      m_NextRevision = SVN_INVALID_REVNUM;
+      m_buttonMore->Enable(false);
+  }
 
   m_listRevisions->SetEntries(entries);
 
@@ -98,6 +113,38 @@ LogDlg::LogDlg(wxWindow * parent,
 LogDlg::~LogDlg()
 {
   m_listFiles->Disconnect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(LogDlg::OnAffectedFileOrDirCommand), NULL, this);
+}
+
+void
+LogDlg::NextLogEntriesCallback(svn::LogEntries* nextLogEntries)
+{
+  AddLogEntries(nextLogEntries);
+}
+
+void
+LogDlg::AddLogEntries(svn::LogEntries* logEntries)
+{
+  // Remove the last log entry (only included so we know if more are available)
+  m_buttonMore->Enable(false);
+  if(logEntries->size() > LogAction::LogLimit)
+  {
+      svn::LogEntry & lastLogEntry = logEntries->back();
+      m_NextRevision = lastLogEntry.revision;
+      logEntries->pop_back();
+      m_buttonMore->Enable(true);
+  }
+  else
+  {
+      m_NextRevision = SVN_INVALID_REVNUM;
+  }
+
+  svn::LogEntries::iterator iter;
+  for(iter = logEntries->begin(); iter != logEntries->end(); ++iter)
+  {
+      const svn::LogEntry & entry = *iter;
+      m->entries->push_back(entry);
+  }
+  m_listRevisions->AddEntriesToList(logEntries);
 }
 
 void
@@ -164,6 +211,8 @@ LogDlg::OnDiff(wxString & path, bool singleItemDiff)
     svn_revnum_t revnumPrior = m_listRevisions->GetPriorRevision(array[0]);
     if(revnumPrior != -1)
     {
+      data = new DiffData();
+      data->path = path;
       data->compareType = DiffData::TWO_REVISIONS;
       data->revision1 = svn::Revision(array[0]);
       data->revision2 = svn::Revision(revnumPrior);
@@ -214,6 +263,25 @@ LogDlg::OnAnnotate(wxString & path)
   data->endRevision = svn::Revision(array[0]);
 
   ActionEvent::Post(GetParent(), TOKEN_ANNOTATE, data);
+}
+
+void
+LogDlg::OnMore(wxCommandEvent & WXUNUSED(event))
+{
+  OnMore(m->path);
+}
+
+void
+LogDlg::OnMore(wxString & path)
+{
+  if(m_NextRevision == SVN_INVALID_REVNUM)
+    return;
+
+  m_buttonMore->Enable(false);
+
+  LogNextData * data = new LogNextData(path, svn::Revision(m_NextRevision), svn::Revision::HEAD, (LogDlg*)this);
+
+  ActionEvent::Post(GetParent(), TOKEN_LOG_NEXT, data);
 }
 
 void
@@ -281,6 +349,10 @@ LogDlg::UpdateSelection()
   else
   {
     long itemIndex = m_listRevisions->GetFirstSelected();
+    if(itemIndex < 0 || itemIndex >= m->entries->size())
+    {
+      return;
+    }
     const svn::LogEntry & entry = (*m->entries)[itemIndex];
 
     wxString message(Utf8ToLocal(entry.message.c_str()));

@@ -70,6 +70,7 @@
 #include "drag_n_drop_action.hpp"
 #include "external_program_action.hpp"
 #include "mkdir_action.hpp"
+#include "log_action.hpp"
 
 #ifdef USE_SIMPLE_WORKER
 #include "simple_worker.hpp"
@@ -86,6 +87,7 @@
 #include "preferences_dlg.hpp"
 #include "update_dlg.hpp"
 #include "log_dlg.hpp"
+
 
 #include "main_frame.hpp"
 #include "main_frame_helper.hpp"
@@ -1887,11 +1889,44 @@ MainFrame::OnActionEvent(wxCommandEvent & event)
 
     if (pData != 0)
     {
-      LogDlg dlg(this, pData->target, pData->logEntries);
+      LogDlg dlg(this, pData->target, const_cast<svn::LogEntries*>(pData->logEntries));
       dlg.ShowModal();
 
       delete pData->logEntries;
       delete pData;
+    }
+  }
+  break;
+  case TOKEN_LOG_NEXT:
+  {
+    LogNextData * pData = static_cast<LogNextData *>(event.GetClientData());
+
+    if (pData != 0)
+    {
+      // copy and delete data
+      LogNextData data(*pData);
+      delete pData;
+      Action * action;
+
+      action = new LogNextAction(this, data);
+      Perform(action);
+    }
+  }
+  break;
+  case TOKEN_LOG_NEXT_CALLBACK:
+  {
+    LogNextData * pData = static_cast<LogNextData *>(event.GetClientData());
+
+    if (pData != 0)
+    {
+      // copy and delete data
+      LogNextData data(*pData);
+      delete pData;
+
+      if(data.logdlg != NULL && data.logEntries != NULL)
+      {
+        data.logdlg->NextLogEntriesCallback(data.logEntries);
+      }
     }
   }
   break;

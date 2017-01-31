@@ -24,6 +24,8 @@
 // Stdlib (for strcmp)
 #include "string.h"
 
+#include <algorithm>
+
 // Subversion api
 #include "svn_client.h"
 #include "svn_sorts.h"
@@ -339,8 +341,6 @@ public:
     }
   }
 
-
-
   const LogEntries *
   Client::log(const char * path, const Revision & revisionStart,
               const Revision & revisionEnd, bool discoverChangedPaths,
@@ -351,6 +351,37 @@ public:
     LogEntries * entries = new LogEntries();
     svn_error_t *error;
     int limit = 0;
+
+    error = svn_client_log2(
+              target.array(pool),
+              revisionStart.revision(),
+              revisionEnd.revision(),
+              limit,
+              discoverChangedPaths ? 1 : 0,
+              strictNodeHistory ? 1 : 0,
+              logReceiver,
+              entries,
+              *m_context, // client ctx
+              pool);
+
+    if (error != NULL)
+    {
+      delete entries;
+      throw ClientException(error);
+    }
+
+    return entries;
+  }
+
+  const LogEntries *
+  Client::log(const char * path, const Revision & revisionStart,
+              const Revision & revisionEnd, const int limit, bool discoverChangedPaths,
+              bool strictNodeHistory) throw(ClientException)
+  {
+    Pool pool;
+    Targets target(path);
+    LogEntries * entries = new LogEntries();
+    svn_error_t *error;
 
     error = svn_client_log2(
               target.array(pool),

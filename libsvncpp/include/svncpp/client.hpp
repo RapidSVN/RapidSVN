@@ -122,7 +122,7 @@ namespace svn
       date = info->date;
       author = info->author;
       if (0 != info->post_commit_err)
-	postCommitErr = info->post_commit_err;
+    postCommitErr = info->post_commit_err;
     }
   };
 
@@ -549,6 +549,31 @@ namespace svn
     log(const char * path,
         const Revision & revisionStart,
         const Revision & revisionEnd,
+        bool discoverChangedPaths = false,
+        bool strictNodeHistory = true) throw(ClientException);
+
+    /**
+     * Retrieve log information for the given path
+     * Loads the log messages result set. The first
+     * entry  is the youngest revision.
+     * Can limit the number of log entries returned.
+     *
+     * You can use the constants Revision::START and
+     * Revision::HEAD
+     *
+     * @param path
+     * @param revisionStart
+     * @param revisionEnd
+     * @param limit
+     * @param discoverChangedPaths
+     * @param strictNodeHistory
+     * @return a vector with log entries
+     */
+    const LogEntries *
+    log(const char * path,
+        const Revision & revisionStart,
+        const Revision & revisionEnd,
+        const int limit,
         bool discoverChangedPaths = false,
         bool strictNodeHistory = true) throw(ClientException);
 

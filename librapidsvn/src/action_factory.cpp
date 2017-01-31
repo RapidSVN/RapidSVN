@@ -259,6 +259,13 @@ ActionFactory::CreateAction(wxWindow * parent, int id)
       action = new LogAction(parent);
       break;
 
+    case ID_LogNext:
+    {
+      LogNextData data;
+      action = new LogNextAction(parent, data);
+      break;
+    }
+
     case ID_Revert:
       action = new RevertAction(parent);
       break;
