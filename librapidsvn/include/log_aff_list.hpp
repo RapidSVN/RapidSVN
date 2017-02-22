@@ -26,6 +26,7 @@
 
 // stl
 #include <list>
+#include <map>
 
 // wx
 #include "wx/wx.h"
@@ -37,83 +38,51 @@
 // app
 #include "utils.hpp"
 
-
 class LogAffectedList : public wxListView
 {
 public:
-  LogAffectedList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, 
-             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT, 
-             const wxValidator& validator = wxDefaultValidator, 
-             const wxString& name = wxT("LogAffectedList"))
-    : wxListView(parent, id, pos, size, style, validator, name)
-  {
-    InsertColumn(0, _("Action"));
-    InsertColumn(1, _("Path"));
-    InsertColumn(2, _("Copied from Path"));
-    InsertColumn(3, _("Copied from Rev"));
-  }
+  struct ColSortInfo {
+      wxListView* Parent;
+      long Column;
+      bool Ascending;
 
-  virtual ~LogAffectedList()
-  {
-    DeleteAllItems();
-  }
+      ColSortInfo(wxListView* parent, long column, bool ascending)
+          : Parent(parent), Column(column), Ascending(ascending)
+      {
+      }
+  };
+
+public:
+  LogAffectedList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
+             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT,
+             const wxValidator& validator = wxDefaultValidator,
+             const wxString& name = wxT("LogAffectedList"));
+
+  virtual ~LogAffectedList();
 
   void
-  DeleteAllItems()
-  {
-    // Delete the item data before deleting the items:
-    while (GetItemCount() > 0)
-      DeleteItem(0);
+  DeleteAllItems();
 
-    wxListCtrl::DeleteAllItems();
-  }
+  void
+  SetValue(const std::list<svn::LogChangePathEntry> & changedPaths);
 
-  void SetValue(const std::list<svn::LogChangePathEntry> & changedPaths)
-  {
-    Freeze();
+private:
+  static long COL_COUNT;
 
-    try
-    {
-      DeleteAllItems();
-      int i=0;
-      char actionBuffer [2];
-      actionBuffer [1] = 0;
+private:
+  void
+  OnColClick(wxListEvent& event);
+  void
+  SetColumnImages();
+  inline int
+  GetSortImageIndex(bool sortAscending);
 
-      std::list<svn::LogChangePathEntry>::const_iterator it;
+private:
+  ColSortInfo m_ColSortInfo;
+  wxImageList * m_ImageListSmall;
+  std::map<int,int> m_ImageIndexArray;
 
-      for (it=changedPaths.begin(); it!=changedPaths.end(); it++)
-      {
-        const svn::LogChangePathEntry & changedPath = *it;
-        actionBuffer [0] = changedPath.action;
-
-        wxString label(Utf8ToLocal(actionBuffer));
-        wxString copyFromRev(wxEmptyString);
-
-        if (changedPath.copyFromRevision != -1)
-          copyFromRev.Printf(wxT("%ld"), changedPath.copyFromRevision);
-
-        InsertItem(i, label);
-        SetItem(i, 1, Utf8ToLocal(changedPath.path.c_str()));
-        SetItem(i, 2, Utf8ToLocal(changedPath.copyFromPath.c_str()));
-        SetItem(i, 3, copyFromRev);
-
-        i++;
-      }
-
-      // now refresh the column width
-      i=GetColumnCount();
-      while (i-- > 0)
-        SetColumnWidth(i, (i == 0) ? wxLIST_AUTOSIZE_USEHEADER : wxLIST_AUTOSIZE);
-
-      Thaw();
-    }
-    catch (...)
-    {
-      Thaw();
-
-      throw;
-    }
-  }
+  DECLARE_EVENT_TABLE()
 };
 
 

@@ -35,24 +35,21 @@
 // app
 #include "utils.hpp"
 
-struct ColSortInfo {
-    wxListView* Parent;
-    long Column;
-    bool Ascending;
-
-    ColSortInfo(wxListView* parent, long column, bool ascending)
-        : Parent(parent), Column(column), Ascending(ascending)
-    {
-    }
-};
-
-int
-wxCALLBACK ColumnCompareFunction(long item1, long item2, long sortData);
-
 class LogRevList : public wxListView
 {
 public:
     static long COL_COUNT;
+
+  struct ColSortInfo {
+      wxListView* Parent;
+      long Column;
+      bool Ascending;
+
+      ColSortInfo(wxListView* parent, long column, bool ascending)
+          : Parent(parent), Column(column), Ascending(ascending)
+      {
+      }
+  };
 
 public:
   LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
@@ -130,7 +127,6 @@ private:
   OnColClick(wxListEvent& event);
   void
   SetColumnImages();
-
   inline int
   GetSortImageIndex(bool sortAscending);
 
