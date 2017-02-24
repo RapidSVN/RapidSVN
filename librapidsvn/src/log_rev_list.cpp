@@ -22,32 +22,105 @@
  * ====================================================================
  */
 
+// wxWidgets
+#include "wx/wx.h"
+#include "wx/imaglist.h"
+
 #include "log_rev_list.hpp"
+
+// Bitmaps
+#include "res/bitmaps/sort_down.png.h"
+#include "res/bitmaps/sort_up.png.h"
+
+
+/* static */ long LogRevList::COL_COUNT = 4;
+
+
+/**
+ * The index from where there will be only images
+ * not related to the status.
+ * See @a svn_wc_status_kind in @a svn_wc.h for more details.
+ */
+enum
+{
+  IMG_INDX_SORT_DOWN = 17,
+  IMG_INDX_SORT_UP,
+  IMG_INDX_COUNT
+};
+
+/**
+ * structure that maps a status entry to an
+ * according icon.
+ */
+struct MapItem
+{
+  int status;
+  const unsigned char * data;
+  size_t len;
+
+  MapItem(int status_, const unsigned char *data_, size_t len_)
+      : status(status_), data(data_), len(len_)
+  {
+  }
+};
+
+#define MAP_ITEM(status,data) MapItem(status, data, sizeof(data))
+
+/** array of icons and corresponding status */
+static const MapItem MAP_ICON_ARRAY [] =
+{
+  MAP_ITEM(IMG_INDX_SORT_DOWN,                  sort_down_png),
+  MAP_ITEM(IMG_INDX_SORT_UP,                    sort_up_png),
+};
+
+static const size_t MAP_ICON_COUNT =
+  sizeof(MAP_ICON_ARRAY) / sizeof(MAP_ICON_ARRAY [0]);
+
 
 BEGIN_EVENT_TABLE(LogRevList, wxListView)
   EVT_SIZE(LogRevList::OnSize)
+  EVT_LIST_COL_CLICK(-1, LogRevList::OnColClick)
 END_EVENT_TABLE()
 
 LogRevList::LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
            const wxSize& size, long style,
            const wxValidator& validator,
            const wxString& name)
-  : wxListView(parent, id, pos, size, style, validator, name)
+  : wxListView(parent, id, pos, size, style, validator, name),
+    m_ColSortInfo(this, 0, false)
 {
+  m_ImageListSmall = new wxImageList(16, 16, TRUE);
+
+  size_t i;
+  size_t lock_offset = 0;
+  for (i = 0; i < MAP_ICON_COUNT; i++)
+  {
+    const MapItem & item = MAP_ICON_ARRAY [i];
+
+    m_ImageIndexArray [item.status] = i;
+    m_ImageListSmall->Add(EmbeddedBitmap(item.data, item.len));
+  }
+
+  SetImageList(m_ImageListSmall, wxIMAGE_LIST_SMALL);
+
   InsertColumn(0, _("Revision"));
   InsertColumn(1, _("User"));
   InsertColumn(2, _("Date"));
-  InsertColumn(3, _("Log Message"));
+  InsertColumn(COL_COUNT - 1, _("Log Message"));
 
   SetColumnWidth(0, 65);
   SetColumnWidth(1, 100);
   SetColumnWidth(2, 150);
-  SetColumnWidth(3, 200);
+  SetColumnWidth(COL_COUNT - 1, 200);
+
+  SetColumnImages();
 }
 
 LogRevList::~LogRevList()
 {
   DeleteAllItems();
+
+  delete m_ImageListSmall;
 }
 
 void
@@ -83,7 +156,8 @@ LogRevList::AddEntriesToList(svn::LogEntries * entries)
     InsertItem(index, rev);
     SetItem(index, 1, Utf8ToLocal(entry.author.c_str()));
     SetItem(index, 2, dateStr);
-    SetItem(index, 3, NewLinesToSpaces(Utf8ToLocal(entry.message.c_str())));
+    SetItem(index, COL_COUNT - 1, NewLinesToSpaces(Utf8ToLocal(entry.message.c_str())));
+    SetItemData(index, index);
     index++;
   }
 }
@@ -297,5 +371,126 @@ LogRevList::AutoSizeLastColumn()
       SetColumnWidth(GetColumnCount() - 1, width);
     }
   }
+}
+
+void
+LogRevList::OnColClick(wxListEvent& event)
+{
+    int clickedColumn = event.GetColumn();
+
+    if(m_ColSortInfo.Column == clickedColumn)
+      m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
+    m_ColSortInfo.Column = clickedColumn;
+
+    SetColumnImages();
+    SortItems(ColumnCompareFunction, (long)&m_ColSortInfo);
+}
+
+void
+LogRevList::SetColumnImages()
+{
+  // Update the column titles to reflect the sort column.
+  for (int col = 0; col < COL_COUNT; col++)
+  {
+    wxListItem item;
+    item.m_mask = wxLIST_MASK_IMAGE;
+    if (col == m_ColSortInfo.Column)
+    {
+      item.m_image = GetSortImageIndex(m_ColSortInfo.Ascending);
+    }
+    else
+    {
+      item.m_image = -1;
+    }
+    SetColumn(col, item);
+  }
+}
+
+/**
+ * A safe wrapper for getting images for sorting.
+ */
+inline int
+LogRevList::GetSortImageIndex(bool sortAscending)
+{
+  if (sortAscending)
+    return m_ImageIndexArray[IMG_INDX_SORT_DOWN];
+
+  return m_ImageIndexArray[IMG_INDX_SORT_UP];
+}
+
+int
+wxCALLBACK ColumnCompareFunction(long item1, long item2, long sortData)
+{
+  if(item1 < 0 && item2 < 0)
+      return 0;
+
+  ColSortInfo* pColSortInfo = (ColSortInfo*)sortData;
+  if(pColSortInfo->Parent == NULL)
+    return 0;
+
+  long positionOfItem1 = pColSortInfo->Parent->FindItem(0L, item1);
+  long positionOfItem2 = pColSortInfo->Parent->FindItem(0L, item2);
+
+  wxListItem info1;
+  info1.SetColumn(pColSortInfo->Column);
+  info1.SetMask(wxLIST_MASK_TEXT);
+  info1.SetId(positionOfItem1);
+  if (!pColSortInfo->Parent->GetItem(info1))
+    return 0;
+  wxString itemText1 = info1.GetText();
+
+  wxListItem info2;
+  info2.SetColumn(pColSortInfo->Column);
+  info2.SetMask(wxLIST_MASK_TEXT);
+  info2.SetId(positionOfItem2);
+  if (!pColSortInfo->Parent->GetItem(info2))
+    return 0;
+  wxString itemText2 = info2.GetText();
+
+  long result = 0;
+
+  if(itemText1.IsNumber() && itemText2.IsNumber())
+  {
+  	long number1 = 0;
+  	itemText1.ToLong(&number1);
+  	long number2 = 0;
+  	itemText2.ToLong(&number2);
+    if(number1 < number2)
+      result = -1;
+    else if (number1 > number2)
+      result = 1;
+    else
+      result = 0;
+  }
+  else
+  {
+    wxString::const_iterator endFoundIter;
+    if(pColSortInfo->Column == 2)
+    {
+      wxDateTime dateTime1;
+      if(dateTime1.ParseFormat(itemText1, wxT("%x %X")) != NULL)
+      {
+        wxDateTime dateTime2;
+        if(dateTime2.ParseFormat(itemText2, wxT("%x %X")) != NULL)
+        {
+          if(dateTime1.IsEarlierThan(dateTime2))
+            result = -1;
+          else if (dateTime1.IsLaterThan(dateTime2))
+            result = 1;
+          else
+            result = 0;
+        }
+      }
+    }
+    else
+    {
+      result = itemText1.CmpNoCase(itemText2);
+    }
+  }
+
+  if(!pColSortInfo->Ascending)
+    result = result * -1;
+
+  return result;
 }
 

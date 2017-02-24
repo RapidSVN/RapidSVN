@@ -24,6 +24,8 @@
 #ifndef _LOG_REV_LIST_H_INCLUDED_
 #define _LOG_REV_LIST_H_INCLUDED_
 
+#include <map>
+
 // wx
 #include "wx/wx.h"
 
@@ -33,9 +35,25 @@
 // app
 #include "utils.hpp"
 
+struct ColSortInfo {
+    wxListView* Parent;
+    long Column;
+    bool Ascending;
+
+    ColSortInfo(wxListView* parent, long column, bool ascending)
+        : Parent(parent), Column(column), Ascending(ascending)
+    {
+    }
+};
+
+int
+wxCALLBACK ColumnCompareFunction(long item1, long item2, long sortData);
 
 class LogRevList : public wxListView
 {
+public:
+    static long COL_COUNT;
+
 public:
   LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
              const wxSize& size = wxDefaultSize, long style = wxLC_REPORT,
@@ -108,6 +126,18 @@ private:
   NewLinesToSpaces(const wxString& str);
   void
   OnSize(wxSizeEvent& event);
+  void
+  OnColClick(wxListEvent& event);
+  void
+  SetColumnImages();
+
+  inline int
+  GetSortImageIndex(bool sortAscending);
+
+private:
+  ColSortInfo m_ColSortInfo;
+  wxImageList * m_ImageListSmall;
+  std::map<int,int> m_ImageIndexArray;
 
   DECLARE_EVENT_TABLE()
 };
