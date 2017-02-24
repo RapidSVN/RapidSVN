@@ -32,6 +32,8 @@
 #include "res/bitmaps/sort_down.png.h"
 #include "res/bitmaps/sort_up.png.h"
 
+int
+wxCALLBACK LogRevListColumnCompareFunction(long item1, long item2, long sortData);
 
 /* static */ long LogRevList::COL_COUNT = 4;
 
@@ -92,7 +94,6 @@ LogRevList::LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
   m_ImageListSmall = new wxImageList(16, 16, TRUE);
 
   size_t i;
-  size_t lock_offset = 0;
   for (i = 0; i < MAP_ICON_COUNT; i++)
   {
     const MapItem & item = MAP_ICON_ARRAY [i];
@@ -383,7 +384,7 @@ LogRevList::OnColClick(wxListEvent& event)
     m_ColSortInfo.Column = clickedColumn;
 
     SetColumnImages();
-    SortItems(ColumnCompareFunction, (long)&m_ColSortInfo);
+    SortItems(LogRevListColumnCompareFunction, (long)&m_ColSortInfo);
 }
 
 void
@@ -419,12 +420,12 @@ LogRevList::GetSortImageIndex(bool sortAscending)
 }
 
 int
-wxCALLBACK ColumnCompareFunction(long item1, long item2, long sortData)
+wxCALLBACK LogRevListColumnCompareFunction(long item1, long item2, long sortData)
 {
   if(item1 < 0 && item2 < 0)
       return 0;
 
-  ColSortInfo* pColSortInfo = (ColSortInfo*)sortData;
+  LogRevList::ColSortInfo* pColSortInfo = (LogRevList::ColSortInfo*)sortData;
   if(pColSortInfo->Parent == NULL)
     return 0;
 
@@ -464,7 +465,6 @@ wxCALLBACK ColumnCompareFunction(long item1, long item2, long sortData)
   }
   else
   {
-    wxString::const_iterator endFoundIter;
     if(pColSortInfo->Column == 2)
     {
       wxDateTime dateTime1;
