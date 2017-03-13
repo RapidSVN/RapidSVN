@@ -133,6 +133,7 @@ void LogAffectedList::SetValue(const std::list<svn::LogChangePathEntry> & change
   {
     DeleteAllItems();
     int i=0;
+    int itemCount=0;
     char actionBuffer [2];
     actionBuffer [1] = 0;
 
@@ -157,6 +158,7 @@ void LogAffectedList::SetValue(const std::list<svn::LogChangePathEntry> & change
 
       i++;
     }
+    itemCount = i;
 
     // now refresh the column width
     i=GetColumnCount();
@@ -164,10 +166,22 @@ void LogAffectedList::SetValue(const std::list<svn::LogChangePathEntry> & change
       SetColumnWidth(i, (i == 0) ? wxLIST_AUTOSIZE_USEHEADER : wxLIST_AUTOSIZE);
 
     // Sort the data according to current column sorting
-    m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
-    wxListEvent colClickEvent;
-    colClickEvent.m_col = m_ColSortInfo.Column;
-    OnColClick(colClickEvent);
+    // Limit this automatic sorting to 1000 items, since it is quite slow. User can still sort by clicking on column headers.
+    const int AUTOMATICALLY_SORT_ITEMS_LIMIT = 1000;
+    if(itemCount <= AUTOMATICALLY_SORT_ITEMS_LIMIT)
+    {
+      m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
+      wxListEvent colClickEvent;
+      if(m_ColSortInfo.Column == -1)
+        m_ColSortInfo.Column = 1;
+      colClickEvent.m_col = m_ColSortInfo.Column;
+      OnColClick(colClickEvent);
+    }
+    else
+    {
+      m_ColSortInfo.Column = -1;
+      SetColumnImages();
+    }
 
     Thaw();
   }
@@ -187,9 +201,15 @@ LogAffectedList::OnColClick(wxListEvent& event)
   if(m_ColSortInfo.Column == clickedColumn)
     m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
   m_ColSortInfo.Column = clickedColumn;
+  m_ColSortInfo.SortIterations = 0;
 
   SetColumnImages();
-  SortItems(LogAffectedListColumnCompareFunction, (long)&m_ColSortInfo);
+
+  { // Busy cursor scope
+    wxBusyCursor busyCursor;
+
+    SortItems(LogAffectedListColumnCompareFunction, (long)&m_ColSortInfo);
+  }
 }
 
 void
@@ -233,6 +253,8 @@ wxCALLBACK LogAffectedListColumnCompareFunction(long item1, long item2, long sor
   LogAffectedList::ColSortInfo* pColSortInfo = (LogAffectedList::ColSortInfo*)sortData;
   if(pColSortInfo->Parent == NULL)
     return 0;
+
+  pColSortInfo->SortIterations++;
 
   long positionOfItem1 = pColSortInfo->Parent->FindItem(0L, item1);
   long positionOfItem2 = pColSortInfo->Parent->FindItem(0L, item2);

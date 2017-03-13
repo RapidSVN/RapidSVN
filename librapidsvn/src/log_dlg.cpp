@@ -302,6 +302,45 @@ LogDlg::OnAffectedFileOrDirRightClick(wxListEvent & event)
   wxMenu menu;
   AppendLogItemQueryMenu(&menu);
 
+  // Disable non-applicable menu items
+  wxListItem listItem;
+  listItem.SetColumn(0);
+  listItem.SetMask(wxLIST_MASK_DATA | wxLIST_MASK_TEXT);
+  listItem.SetId(focusedIdx);
+  if (!m_listFiles->GetItem(listItem))
+    return;
+
+  long originalAffectedFilesIndex = listItem.m_data;
+  if(originalAffectedFilesIndex < 0)
+    return;
+
+  wxString svnStatusAdded = _("A");
+  wxString svnStatusDeleted = _("D");
+
+  if(listItem.GetText() == svnStatusAdded)
+  {
+    wxMenuItem* pMenuItem = menu.FindItem(ID_Diff);
+    if(pMenuItem != NULL)
+      pMenuItem->Enable(false);
+    pMenuItem = menu.FindItem(ID_Annotate);
+    if(pMenuItem != NULL)
+      pMenuItem->Enable(false);
+  }
+  else if(listItem.GetText() == svnStatusDeleted)
+  {
+    wxMenuItem* pMenuItem = menu.FindItem(ID_Diff);
+    if(pMenuItem != NULL)
+      pMenuItem->Enable(false);
+    pMenuItem = menu.FindItem(ID_Annotate);
+    if(pMenuItem != NULL)
+      pMenuItem->Enable(false);
+    pMenuItem = menu.FindItem(ID_Edit);
+    if(pMenuItem != NULL)
+      pMenuItem->Enable(false);
+  }
+  // The Log menu item is never applicable within the Log Dialog
+  menu.Remove(ID_Log);
+
   m_listFiles->PopupMenu(&menu, event.GetPoint());
 }
 
@@ -312,25 +351,43 @@ LogDlg::OnAffectedFileOrDirCommand(wxCommandEvent & event)
 
   wxASSERT(focusedFileIdx != -1);
 
+  wxListItem listItem;
+  listItem.SetColumn(0);
+  listItem.SetMask(wxLIST_MASK_DATA | wxLIST_MASK_TEXT);
+  listItem.SetId(focusedFileIdx);
+  if (!m_listFiles->GetItem(listItem))
+    return;
+
+  long originalAffectedFilesIndex = listItem.m_data;
+  if(originalAffectedFilesIndex < 0)
+    return;
+
+
   std::list<svn::LogChangePathEntry>::const_iterator it = affectedFiles.begin();
-  std::advance(it, focusedFileIdx);
+  std::advance(it, originalAffectedFilesIndex);
   wxString file(Utf8ToLocal(m->repositoryPath.getRepositoryRoot() + it->path));
 
+  wxString svnStatusAdded = _("A");
+  wxString svnStatusDeleted = _("D");
 
   int id = event.GetId();
   switch (id)
   {
     case ID_Diff:
-      OnDiff(file, true);
+      if(listItem.GetText() != svnStatusAdded  && listItem.GetText() != svnStatusDeleted)
+        OnDiff(file, true);
       break;
     case ID_Edit:
-      OnView(file);
+      if(listItem.GetText() != svnStatusDeleted)
+        OnView(file);
       break;
     case ID_Log:
-      OnLog(file);
+      if(listItem.GetText() != svnStatusAdded  && listItem.GetText() != svnStatusDeleted)
+        OnLog(file);
       break;
     case ID_Annotate:
-      OnAnnotate(file);
+      if(listItem.GetText() != svnStatusDeleted)
+        OnAnnotate(file);
       break;
   }
 }
