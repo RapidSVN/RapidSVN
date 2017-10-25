@@ -45,9 +45,10 @@ public:
       wxListView* Parent;
       long Column;
       bool Ascending;
+      long SortIterations;
 
       ColSortInfo(wxListView* parent, long column, bool ascending)
-          : Parent(parent), Column(column), Ascending(ascending)
+          : Parent(parent), Column(column), Ascending(ascending), SortIterations(0)
       {
       }
   };
