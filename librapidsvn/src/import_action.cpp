@@ -35,7 +35,7 @@
 #include "utils.hpp"
 
 ImportAction::ImportAction(wxWindow * parent)
-    :Action(parent, _("Import"))
+  :Action(parent, _("Import"))
 {
 }
 

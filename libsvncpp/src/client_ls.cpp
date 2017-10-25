@@ -47,8 +47,8 @@ namespace svn
 {
   static svn_error_t*
   listEntriesFunc(void *baton, const char *path,
-        const svn_dirent_t *dirent, const svn_lock_t *lock,
-        const char *abs_path, apr_pool_t *pool)
+                  const svn_dirent_t *dirent, const svn_lock_t *lock,
+                  const char *abs_path, apr_pool_t *pool)
   {
     if (!isEmpty(path))
     {
@@ -91,14 +91,14 @@ namespace svn
 #include <algorithm>
 
 static svn_error_t* store_entry(
-        void *baton,
-        const char *path,
-        const svn_dirent_t *dirent,
-        const svn_lock_t *,
-        const char *abs_path,
-        const char *,
-        const char *,
-        apr_pool_t *scratch_pool)
+  void *baton,
+  const char *path,
+  const svn_dirent_t *dirent,
+  const svn_lock_t *,
+  const char *abs_path,
+  const char *,
+  const char *,
+  apr_pool_t *scratch_pool)
 {
   svn::DirEntries *entries = reinterpret_cast<svn::DirEntries*>(baton);
   if (path[0] == '\0') {

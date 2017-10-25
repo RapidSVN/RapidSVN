@@ -157,20 +157,20 @@ namespace svn
      * if not out of date.
      * @since New in 0.14
      */
-    svn_revnum_t 
+    svn_revnum_t
     oodLastCmtRev() const;
 
     /** Set to the most recent commit date, or @c 0 if not out of date.
      * @since New in 0.14
      */
-    apr_time_t 
+    apr_time_t
     oodLastCmtDate() const;
 
     /** Set to the node kind of the youngest commit, or @c svn_node_none
      * if not out of date.
      * @since New in 0.14
      */
-    svn_node_kind_t 
+    svn_node_kind_t
     oodKind() const;
 
     /** Set to the user name of the youngest commit, or @c NULL if not
@@ -180,7 +180,7 @@ namespace svn
      * the working copy is out of date.
      * @since New in 0.14
      */
-    const char * 
+    const char *
     oodLastCmtAuthor() const;
 
     /**

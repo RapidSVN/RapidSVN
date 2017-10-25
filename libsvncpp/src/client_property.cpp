@@ -321,7 +321,7 @@ namespace svn
     Pool pool;
 
     const svn_string_t * propval
-    = svn_string_create((const char *) propValue, pool);
+      = svn_string_create((const char *) propValue, pool);
 
     svn_revnum_t revnum;
     svn_error_t * error =

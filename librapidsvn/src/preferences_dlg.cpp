@@ -45,9 +45,9 @@ static const wxChar * EXECUTABLE_WILDCARD = _("All files|*");
 
 
 PreferencesDlg::PreferencesDlg(wxWindow* parent, Preferences * prefs)
-    : PreferencesDlgBase(parent, -1, _("Preferences"),
-                         wxDefaultPosition, wxDefaultSize,
-                         wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER), m_prefs(prefs)
+  : PreferencesDlgBase(parent, -1, _("Preferences"),
+                       wxDefaultPosition, wxDefaultSize,
+                       wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER), m_prefs(prefs)
 {
   CentreOnParent();
 }

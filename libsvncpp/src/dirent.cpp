@@ -32,7 +32,7 @@ namespace svn
 {
   struct DirEntry::Data
   {
-public:
+  public:
     std::string name;
     svn_node_kind_t kind;
     svn_filesize_t size;
@@ -46,14 +46,14 @@ public:
     std::string lockComment;
 
     Data()
-        : kind(svn_node_unknown), size(0), hasProps(false),
+      : kind(svn_node_unknown), size(0), hasProps(false),
 
-          createdRev(0), time(0)
+        createdRev(0), time(0)
     {
     }
 
     Data(const char * _name, const svn_dirent_t * dirEntry, const svn_lock_t * lock)
-        : name(_name), kind(dirEntry->kind), size(dirEntry->size),
+      : name(_name), kind(dirEntry->kind), size(dirEntry->size),
         hasProps(dirEntry->has_props != 0),
         createdRev(dirEntry->created_rev), time(dirEntry->time)
     {
@@ -89,7 +89,7 @@ public:
   };
 
   DirEntry::DirEntry()
-      : m(new Data())
+    : m(new Data())
   {
   }
 

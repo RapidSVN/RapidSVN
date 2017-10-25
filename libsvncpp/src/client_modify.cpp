@@ -513,7 +513,7 @@ namespace svn
     }
 
     std::string str = basename;
-    for (PathPropertiesMapList::const_iterator i=path_prop_map_list.begin(), ei=path_prop_map_list.end();i!=ei;++i)
+    for (PathPropertiesMapList::const_iterator i=path_prop_map_list.begin(), ei=path_prop_map_list.end(); i!=ei; ++i)
     {
       if (dirpath != i->first)
         continue;
@@ -542,7 +542,7 @@ namespace svn
   Client::ignore(const Targets & targets) throw(ClientException)
   {
     // it's slow, but simple
-    for (std::vector<Path>::const_iterator i=targets.targets().begin(), e=targets.targets().end();i!=e;++i)
+    for (std::vector<Path>::const_iterator i=targets.targets().begin(), e=targets.targets().end(); i!=e; ++i)
     {
       ignore(*i);
     }

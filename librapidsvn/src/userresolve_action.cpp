@@ -41,7 +41,7 @@
 #include "utils.hpp"
 
 UserResolveAction::UserResolveAction(wxWindow * parent)
-    : Action(parent, _("Resolve"))
+  : Action(parent, _("Resolve"))
 {
 }
 
@@ -78,7 +78,7 @@ UserResolveAction::Perform()
     wxFileName theirsPath(resultPath.GetPath(), Utf8ToLocal(entry.conflictNew()));
 
     if ((!resultPath.FileExists()) || (!minePath.FileExists()) ||
-        (!basePath.FileExists()) ||  (!theirsPath.FileExists()))
+        (!basePath.FileExists()) || (!theirsPath.FileExists()))
     {
       continue;
     }
@@ -93,7 +93,7 @@ UserResolveAction::Perform()
                   theirsPath.GetFullPath().c_str(),
                   minePath.GetFullPath().c_str(),
                   resultPath.GetFullPath().c_str());
-		else
+    else
     {
       args.Replace(wxT("%1"), basePath.GetFullPath().c_str(), true);
       args.Replace(wxT("%2"), theirsPath.GetFullPath().c_str(), true);

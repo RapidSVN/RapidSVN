@@ -37,7 +37,7 @@ namespace svn
 
     /** constructor (because of optional param */
     Data(const Path & path_, const svn_info_t * info_ = 0)
-        : info(0), path(path_)
+      : info(0), path(path_)
     {
       if (info_ != 0)
         info = svn_info_dup(info_, pool);
@@ -45,7 +45,7 @@ namespace svn
 
     /** copy constructor */
     Data(const Data * src)
-        : info(0), path(src->path)
+      : info(0), path(src->path)
     {
       if (src->info != 0)
         info = svn_info_dup(src->info, pool);
@@ -53,12 +53,12 @@ namespace svn
   };
 
   Info::Info(const Path & path, const svn_info_t * info)
-      : m(new Data(path, info))
+    : m(new Data(path, info))
   {
   }
 
   Info::Info(const Info & src)
-      : m(new Data(src.m))
+    : m(new Data(src.m))
   {
   }
 

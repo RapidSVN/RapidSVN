@@ -35,12 +35,12 @@ struct Column
   int id;
 
   Column()
-      : name(wxT("")), caption(wxT("")), id(0)
+    : name(wxT("")), caption(wxT("")), id(0)
   {
   }
 
   Column(const wxChar * name_, const wxChar * caption_, int id_)
-      : name(name_), caption(caption_), id(id_)
+    : name(name_), caption(caption_), id(id_)
   {
   }
 };

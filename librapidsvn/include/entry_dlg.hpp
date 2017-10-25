@@ -44,22 +44,22 @@ public:
    */
   EntryDlg(wxWindow * parent, const wxString & title);
 
-  void 
+  void
   SetNameCaption(const wxString & caption);
 
-  void 
+  void
   SetValueCaption(const wxString & caption);
 
-  void 
+  void
   SetReadOnly(bool value);
 
-  void 
+  void
   SetEditMode(EditMode mode);
 
-  virtual bool 
+  virtual bool
   TransferDataFromWindow();
-  
-  virtual bool 
+
+  virtual bool
   TransferDataToWindow();
 
   void

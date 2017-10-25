@@ -39,7 +39,7 @@ static void findAndReplace(std::string & source, const std::string & find, const
   {
     // search for the next occurrenc
     pos = source.find(find, pos);
-    
+
     // found?
     if (pos != std::string::npos)
     {
@@ -47,7 +47,7 @@ static void findAndReplace(std::string & source, const std::string & find, const
       source.replace(pos, findLength, replace);
 
       // Make sure we dont search from the beginning
-      // othwise replacing % with %25 would result 
+      // othwise replacing % with %25 would result
       // in an endless loop
       pos = pos + replaceLength;
     }

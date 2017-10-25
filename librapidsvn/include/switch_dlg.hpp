@@ -71,7 +71,7 @@ protected: // event handlers form SwitchDlgBase
 
   virtual void
   OnText(wxCommandEvent & event);
-  
+
 private:
   struct Data;
   Data * m;

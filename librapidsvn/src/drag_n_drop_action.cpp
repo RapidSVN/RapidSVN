@@ -89,7 +89,7 @@ private:
 
 DragAndDropAction::DragAndDropAction(wxWindow * parent,
                                      DragAndDropData & data)
-    : Action(parent, wxEmptyString, 0),
+  : Action(parent, wxEmptyString, 0),
     m_parent(parent)
 {
   m = new DragAndDropData();

@@ -110,7 +110,7 @@ public:
   bool indicateModifiedChildren;
 
   Bookmark(bool flatMode_=false, bool indicateModifiedChildren_=false)
-    : context(0), flatMode(flatMode_), 
+    : context(0), flatMode(flatMode_),
       indicateModifiedChildren(indicateModifiedChildren_)
   {
   }
@@ -156,7 +156,7 @@ public:
   svn::StatusSel statusSel;
 
   Data(wxTreeCtrl * treeCtrl_)
-      : singleContext(0), listener(0), useAuthCache(true), treeCtrl(treeCtrl_)
+    : singleContext(0), listener(0), useAuthCache(true), treeCtrl(treeCtrl_)
   {
     imageList = new wxImageList(16, 16, TRUE);
     imageList->Add(EMBEDDED_BITMAP(computer_png));
@@ -563,7 +563,7 @@ public:
     if (treeCtrl->IsExpanded(parentId))
       return;
 
-    wxFont fontBold (treeCtrl->GetFont());
+    wxFont fontBold(treeCtrl->GetFont());
     fontBold.SetWeight(wxFONTWEIGHT_BOLD);
     size_t parentLength = parentPath.Length() + 1; //+1 = path separator
 
@@ -594,7 +594,7 @@ public:
       modifiedFilter.showExternals = false;
       svn::StatusEntries modifiedEntries;
       client.status(parentPathUtf8.c_str(), modifiedFilter, true, false,
-        modifiedEntries);
+                    modifiedEntries);
       wxChar pathSeparator = wxFileName::GetPathSeparator();
 
       svn::StatusEntries::const_iterator it;
@@ -630,7 +630,7 @@ public:
           modifiedEntriesMap[path]++;
       }
     }
-    
+
 
     svn::StatusEntries::iterator it;
     for (it = entries.begin(); it != entries.end(); it++)
@@ -689,13 +689,13 @@ public:
           modified_count = modifiedEntriesMap[path.Mid(parentLength)];
 
         wxString label(basename);
-        if (modified_count > 0) 
+        if (modified_count > 0)
         {
           label = wxString::Format(
-            wxT("%s (%u) "), basename.c_str(), modified_count);
+                    wxT("%s (%u) "), basename.c_str(), modified_count);
         }
 
-        wxTreeItemId newId = 
+        wxTreeItemId newId =
           treeCtrl->AppendItem(parentId, label, image, image, data);
 
         if (modified_count != 0)
@@ -1025,11 +1025,11 @@ BEGIN_EVENT_TABLE(FolderBrowser, wxTreeCtrl)
   EVT_SET_FOCUS(FolderBrowser::OnSetFocus)
 END_EVENT_TABLE()
 
-FolderBrowser::FolderBrowser(wxWindow* parent, wxWindowID id, 
-                             const wxPoint& pos, const wxSize& size, 
+FolderBrowser::FolderBrowser(wxWindow* parent, wxWindowID id,
+                             const wxPoint& pos, const wxSize& size,
                              long style, const wxValidator& validator,
                              const wxString & name)
-: wxTreeCtrl(parent, id, pos, size, style, validator, name)
+  : wxTreeCtrl(parent, id, pos, size, style, validator, name)
 {
   m = new Data(this);
 }

@@ -27,7 +27,7 @@
 // forward declaration
 class wxFrame;
 
-void 
+void
 CreateMainToolBar(wxFrame * frame);
 
 

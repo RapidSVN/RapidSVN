@@ -65,7 +65,7 @@ bool RapidSvnApp::OnInit()
   m_locale.Init();
   m_locale.AddCatalogLookupPathPrefix(wxT("locale"));
 #ifdef __WXMAC__
-	wxSystemOptions::SetOption(wxT("mac.listctrl.always_use_generic"), true);
+  wxSystemOptions::SetOption(wxT("mac.listctrl.always_use_generic"), true);
   m_locale.AddCatalogLookupPathPrefix(
     wxStandardPaths::Get().GetResourcesDir() +
     wxFileName::GetPathSeparator() +
@@ -237,10 +237,10 @@ RapidSvnApp::MakeTipProvider(bool force)
 #endif
 
   wxString tipsfile = appPath + wxFileName::GetPathSeparator() + appName + wxT("_tips.txt");
-                      bool showTips = true;
-                                      wxConfigBase* cfg = wxConfigBase::Get();
-                                                          cfg->Read(TIPS_FILE, &tipsfile);
-                                                          if (!force)
+  bool showTips = true;
+  wxConfigBase* cfg = wxConfigBase::Get();
+  cfg->Read(TIPS_FILE, &tipsfile);
+  if (!force)
 {
   cfg->Read(TIPS_SHOW_AT_STARTUP, &showTips) ;
     if (tipsfile.IsEmpty() || !showTips)
@@ -250,10 +250,10 @@ RapidSvnApp::MakeTipProvider(bool force)
   }
 
   int tipIndex = 0;
-                 cfg->Read(TIPS_LAST_INDEX, &tipIndex);
-                 wxTipProvider* tipProvider = NULL;
+  cfg->Read(TIPS_LAST_INDEX, &tipIndex);
+  wxTipProvider* tipProvider = NULL;
 
-                                              while (!wxFileName(tipsfile).FileExists() || (tipProvider = wxCreateFileTipProvider(tipsfile, tipIndex)) == NULL)
+  while (!wxFileName(tipsfile).FileExists() || (tipProvider = wxCreateFileTipProvider(tipsfile, tipIndex)) == NULL)
   {
     wxFileDialog dlg(NULL, _("Locate tips file"), appPath, wxEmptyString, wxT("*.txt"), wxOPEN | wxFILE_MUST_EXIST);
     if (dlg.ShowModal() == wxID_OK)
@@ -280,10 +280,10 @@ RapidSvnApp::MakeTipProvider(bool force)
   }
 
   return tipProvider;
-       }
+}
 
-       void
-       RapidSvnApp::SaveTipsInfo(bool showAtStartup, int tipIndex)
+void
+RapidSvnApp::SaveTipsInfo(bool showAtStartup, int tipIndex)
 {
   wxConfigBase* cfg = wxConfigBase::Get();
   cfg->Write(TIPS_SHOW_AT_STARTUP, showAtStartup);

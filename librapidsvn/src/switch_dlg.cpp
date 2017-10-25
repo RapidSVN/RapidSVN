@@ -56,7 +56,7 @@ public:
 
 SwitchDlg::SwitchDlg(wxWindow* parent, const wxString & url,
                      bool recursive, bool relocate)
-: SwitchDlgBase(parent, -1)
+  : SwitchDlgBase(parent, -1)
 {
   m = new Data(url, recursive, relocate);
 
@@ -136,12 +136,12 @@ SwitchDlg::CheckControls()
   bool useLatest = m_checkUseLatest->IsChecked();
 
   EnableCtrl(m_textRevision, !useLatest);
-  
+
   bool ok = true;
-  
+
   if (!useLatest)
     ok = CheckRevision(m_textRevision->GetValue());
-  
+
   if (ok)
   {
     svn::Path UrlUtf8(PathUtf8(m_comboUrl->GetValue()));

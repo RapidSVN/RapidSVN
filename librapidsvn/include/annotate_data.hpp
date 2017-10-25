@@ -40,7 +40,7 @@ public:
 
   /** Constructor */
   AnnotateData()
-      : startRevision(svn::Revision::START),
+    : startRevision(svn::Revision::START),
       endRevision(svn::Revision::HEAD)
   {
   }

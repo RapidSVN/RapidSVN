@@ -22,7 +22,7 @@
  * ====================================================================
  */
 
- // stl
+// stl
 #include <exception>
 #include "svncpp/map_wrapper.hpp"
 #include <deque>
@@ -99,7 +99,7 @@
 #include "res/bitmaps/rep_locked_newer_file.png.h"
 #include "res/bitmaps/rep_locked_modified_newer_file.png.h"
 
-/** 
+/**
  * With the latest version of Subversion (tested with Subversion 1.6.5)
  * this workaround was not needed anymore
  */
@@ -573,7 +573,7 @@ struct MapItem
   size_t len;
 
   MapItem(int status_, const unsigned char *data_, size_t len_)
-      : status(status_), data(data_), len(len_)
+    : status(status_), data(data_), len(len_)
   {
   }
 };
@@ -718,13 +718,13 @@ public:
 
 /** default constructor */
 FileListCtrl::Data::Data()
-    : Context(0), SortColumn(COL_NAME),
+  : Context(0), SortColumn(COL_NAME),
     IncludePath(true), SortAscending(true),
     DirtyColumns(true), FlatMode(false),
     WithUpdate(false), ShowUnversioned(true),
     IgnoreExternals(false), ShowIgnored(false)
 #if WORKAROUND_ISSUE_324
-    ,IsRelative(false)
+  ,IsRelative(false)
 #endif
 {
   ImageListSmall = new wxImageList(16, 16, TRUE);
@@ -849,7 +849,7 @@ FileListCtrl::Data::GetImageIndex(const svn::Status & status)
       }
     }
   }
-  else // if (status.reposTextStatus() == 
+  else // if (status.reposTextStatus() ==
 
   {
     wxString wxFullPath = Utf8ToLocal(status.path());
@@ -1000,11 +1000,11 @@ BEGIN_EVENT_TABLE(FileListCtrl, wxListCtrl)
   EVT_SET_FOCUS(FileListCtrl::OnSetFocus)
 END_EVENT_TABLE()
 
-FileListCtrl::FileListCtrl(wxWindow* parent, wxWindowID id, 
-                           const wxPoint& pos, const wxSize& size, 
-                           long style, const wxValidator& validator, 
+FileListCtrl::FileListCtrl(wxWindow* parent, wxWindowID id,
+                           const wxPoint& pos, const wxSize& size,
+                           long style, const wxValidator& validator,
                            const wxString& name)
- : wxListView(parent, id, pos, size, style, validator, name)
+  : wxListView(parent, id, pos, size, style, validator, name)
 {
   m = new Data();
 
@@ -1211,7 +1211,7 @@ FileListCtrl::CreateLabels(const svn::Status & status, const svn::Path & basePat
   int imageIndex = m->GetImageIndex(status);
 
   // User want to see unversioned or outdated entries?
-  if (status.isVersioned() || m->ShowUnversioned || 
+  if (status.isVersioned() || m->ShowUnversioned ||
       (svn_node_none != status.oodKind()))
   {
     InsertItem(i, values[COL_NAME], imageIndex);

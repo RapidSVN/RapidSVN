@@ -31,7 +31,7 @@
 #include "tracer.hpp"
 
 EventTracer::EventTracer(wxFrame * fr)
-    : m_frame(fr)
+  : m_frame(fr)
 {
 }
 

@@ -35,7 +35,7 @@
 #include "utils.hpp"
 
 MoveAction::MoveAction(wxWindow * parent, int kind)
-    : Action(parent, wxEmptyString, UPDATE_TREE),
+  : Action(parent, wxEmptyString, UPDATE_TREE),
     m_kind(kind)
 {
   if (kind == MOVE_MOVE)

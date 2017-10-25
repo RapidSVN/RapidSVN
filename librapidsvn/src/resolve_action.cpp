@@ -34,7 +34,7 @@
 #include "resolve_action.hpp"
 
 ResolveAction::ResolveAction(wxWindow * parent)
-    : Action(parent, _("Resolve"))
+  : Action(parent, _("Resolve"))
 {
 }
 

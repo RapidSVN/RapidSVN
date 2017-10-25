@@ -43,7 +43,7 @@ public:
   TransferDataToWindow();
 
 protected: // inhertited event handlers
-  virtual void 
+  virtual void
   OnText(wxCommandEvent &);
 
   virtual void

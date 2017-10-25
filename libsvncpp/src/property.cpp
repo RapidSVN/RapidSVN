@@ -41,7 +41,7 @@ namespace svn
   }
 
   Property::Property(Context * context, const Path & path)
-      : m_context(context), m_path(path)
+    : m_context(context), m_path(path)
   {
     list();
   }

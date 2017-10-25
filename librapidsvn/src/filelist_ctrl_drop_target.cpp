@@ -39,7 +39,7 @@
 
 FileListCtrlDropTarget::FileListCtrlDropTarget(FolderBrowser * browser,
     FileListCtrl * parent)
-    : m_browser(browser), m_parent(parent)
+  : m_browser(browser), m_parent(parent)
 {
 }
 

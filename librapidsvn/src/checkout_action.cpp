@@ -37,7 +37,7 @@
 #include "utils.hpp"
 
 CheckoutAction::CheckoutAction(wxWindow * parent)
-    : Action(parent, _("Checkout"), 0)
+  : Action(parent, _("Checkout"), 0)
 {
 }
 

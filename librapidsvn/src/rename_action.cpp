@@ -34,7 +34,7 @@
 #include "utils.hpp"
 
 RenameAction::RenameAction(wxWindow * parent)
-    : Action(parent, wxEmptyString, UPDATE_TREE)
+  : Action(parent, wxEmptyString, UPDATE_TREE)
 {
   SetName(_("Rename"));
 

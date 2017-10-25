@@ -59,7 +59,7 @@ struct MapItem
   size_t len;
 
   MapItem(int status_, const unsigned char *data_, size_t len_)
-      : status(status_), data(data_), len(len_)
+    : status(status_), data(data_), len(len_)
   {
   }
 };
@@ -81,10 +81,10 @@ BEGIN_EVENT_TABLE(LogAffectedList, wxListView)
 END_EVENT_TABLE()
 
 LogAffectedList::LogAffectedList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
-             const wxSize& size, long style,
-             const wxValidator& validator,
-             const wxString& name)
-    : wxListView(parent, id, pos, size, style, validator, name),
+                                 const wxSize& size, long style,
+                                 const wxValidator& validator,
+                                 const wxString& name)
+  : wxListView(parent, id, pos, size, style, validator, name),
     m_ColSortInfo(this, 1, true)
 {
   m_ImageListSmall = new wxImageList(16, 16, TRUE);
@@ -168,11 +168,11 @@ void LogAffectedList::SetValue(const std::list<svn::LogChangePathEntry> & change
     // Sort the data according to current column sorting
     // Limit this automatic sorting to 1000 items, since it is quite slow. User can still sort by clicking on column headers.
     const int AUTOMATICALLY_SORT_ITEMS_LIMIT = 1000;
-    if(itemCount <= AUTOMATICALLY_SORT_ITEMS_LIMIT)
+    if (itemCount <= AUTOMATICALLY_SORT_ITEMS_LIMIT)
     {
       m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
       wxListEvent colClickEvent;
-      if(m_ColSortInfo.Column == -1)
+      if (m_ColSortInfo.Column == -1)
         m_ColSortInfo.Column = 1;
       colClickEvent.m_col = m_ColSortInfo.Column;
       OnColClick(colClickEvent);
@@ -198,7 +198,7 @@ LogAffectedList::OnColClick(wxListEvent& event)
 {
   int clickedColumn = event.GetColumn();
 
-  if(m_ColSortInfo.Column == clickedColumn)
+  if (m_ColSortInfo.Column == clickedColumn)
     m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
   m_ColSortInfo.Column = clickedColumn;
   m_ColSortInfo.SortIterations = 0;
@@ -247,11 +247,11 @@ LogAffectedList::GetSortImageIndex(bool sortAscending)
 int
 wxCALLBACK LogAffectedListColumnCompareFunction(long item1, long item2, long sortData)
 {
-  if(item1 < 0 && item2 < 0)
-      return 0;
+  if (item1 < 0 && item2 < 0)
+    return 0;
 
   LogAffectedList::ColSortInfo* pColSortInfo = (LogAffectedList::ColSortInfo*)sortData;
-  if(pColSortInfo->Parent == NULL)
+  if (pColSortInfo->Parent == NULL)
     return 0;
 
   pColSortInfo->SortIterations++;
@@ -277,13 +277,13 @@ wxCALLBACK LogAffectedListColumnCompareFunction(long item1, long item2, long sor
 
   long result = 0;
 
-  if(itemText1.IsNumber() && itemText2.IsNumber())
+  if (itemText1.IsNumber() && itemText2.IsNumber())
   {
-  	long number1 = 0;
-  	itemText1.ToLong(&number1);
-  	long number2 = 0;
-  	itemText2.ToLong(&number2);
-    if(number1 < number2)
+    long number1 = 0;
+    itemText1.ToLong(&number1);
+    long number2 = 0;
+    itemText2.ToLong(&number2);
+    if (number1 < number2)
       result = -1;
     else if (number1 > number2)
       result = 1;
@@ -295,7 +295,7 @@ wxCALLBACK LogAffectedListColumnCompareFunction(long item1, long item2, long sor
     result = itemText1.CmpNoCase(itemText2);
   }
 
-  if(!pColSortInfo->Ascending)
+  if (!pColSortInfo->Ascending)
     result = result * -1;
 
   return result;

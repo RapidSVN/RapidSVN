@@ -69,7 +69,7 @@ DestinationDlg::DestinationDlg(wxWindow* parent,
 
   if (!m->withForce)
     m_checkForce->Show(false);
-  
+
   m_mainSizer->SetSizeHints(this);
   m_mainSizer->Fit(this);
 
@@ -107,7 +107,7 @@ DestinationDlg::OnText(wxCommandEvent &)
 }
 
 
-void 
+void
 DestinationDlg::CheckControls()
 {
   bool ok = !m_comboDestination->GetValue().IsEmpty();

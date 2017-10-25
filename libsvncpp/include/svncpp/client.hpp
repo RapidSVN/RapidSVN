@@ -117,12 +117,12 @@ namespace svn
     CommitInfo(const svn_commit_info_t *info)
     {
       assert(0 != info);
-      
+
       revision = info->revision;
       date = info->date;
       author = info->author;
       if (0 != info->post_commit_err)
-    postCommitErr = info->post_commit_err;
+        postCommitErr = info->post_commit_err;
     }
   };
 
@@ -140,7 +140,7 @@ namespace svn
 
     virtual ~Client();
 
-    /** 
+    /**
      * @since 0.14
      */
     const CommitInfo& commitInfo() const

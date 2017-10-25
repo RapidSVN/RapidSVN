@@ -37,7 +37,7 @@
 #include "utils.hpp"
 
 DeleteAction::DeleteAction(wxWindow * parent)
-    : Action(parent, _("Delete"), UPDATE_TREE)
+  : Action(parent, _("Delete"), UPDATE_TREE)
 {
 }
 

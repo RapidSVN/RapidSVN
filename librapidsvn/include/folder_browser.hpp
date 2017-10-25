@@ -42,11 +42,11 @@ namespace svn
 class FolderBrowser : public wxTreeCtrl
 {
 public:
-  FolderBrowser(wxWindow* parent, wxWindowID id, 
-                const wxPoint& pos = wxDefaultPosition, 
-                const wxSize& size = wxDefaultSize, 
-                long style = wxTR_HAS_BUTTONS | wxTR_SINGLE, 
-                const wxValidator& validator = wxDefaultValidator, const 
+  FolderBrowser(wxWindow* parent, wxWindowID id,
+                const wxPoint& pos = wxDefaultPosition,
+                const wxSize& size = wxDefaultSize,
+                long style = wxTR_HAS_BUTTONS | wxTR_SINGLE,
+                const wxValidator& validator = wxDefaultValidator, const
                 wxString& name = wxT("FolderBrowser"));
 
   virtual ~FolderBrowser();
@@ -163,7 +163,7 @@ public:
   bool
   SetFlat(bool flatMode);
 
-  /** 
+  /**
    * checks whether indication of modified content is
    * switched on (for the selected bookmark)
    *

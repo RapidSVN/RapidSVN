@@ -36,7 +36,7 @@
 #include "utils.hpp"
 
 CleanupAction::CleanupAction(wxWindow * parent)
-    : Action(parent, _("Cleanup"), 0)
+  : Action(parent, _("Cleanup"), 0)
 {
 }
 

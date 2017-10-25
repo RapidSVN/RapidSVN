@@ -86,7 +86,7 @@ namespace svn
     ClientException(apr_status_t status) throw();
 
     ClientException(const char * message) throw()
-        : Exception(message)
+      : Exception(message)
     {
     }
 

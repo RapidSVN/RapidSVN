@@ -28,13 +28,13 @@
 namespace svn
 {
   Entry::Entry(const svn_wc_entry_t * src)
-      : m_entry(0), m_pool(0), m_valid(false)
+    : m_entry(0), m_pool(0), m_valid(false)
   {
     init(src);
   }
 
   Entry::Entry(const Entry & src)
-      : m_entry(0), m_pool(0), m_valid(false)
+    : m_entry(0), m_pool(0), m_valid(false)
   {
     init(src);
   }

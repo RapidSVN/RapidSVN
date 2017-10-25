@@ -34,7 +34,7 @@
 #include "add_action.hpp"
 
 AddAction::AddAction(wxWindow * parent)
-    : Action(parent, _("Add"), 0)
+  : Action(parent, _("Add"), 0)
 {
 }
 

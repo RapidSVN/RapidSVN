@@ -53,9 +53,9 @@ class ListCtrl : public wxListView
 {
 public:
   ListCtrl(wxWindow * parent)
-      : wxListView(parent, ID_List, wxDefaultPosition,
-                   wxSize(350, 150), wxLC_REPORT |
-                   wxLC_SINGLE_SEL)
+    : wxListView(parent, ID_List, wxDefaultPosition,
+                 wxSize(350, 150), wxLC_REPORT |
+                 wxLC_SINGLE_SEL)
   {
     wxListItem info;
 
@@ -231,7 +231,7 @@ public:
 
 ListEditorDlg::ListEditorDlg(wxWindow * parent,
                              const wxString & title)
-    : ListEditorDlgBase(parent, -1, title)
+  : ListEditorDlgBase(parent, -1, title)
 {
   m = new Data(this);
   m->listCtrl = new ListCtrl(this);
@@ -246,12 +246,12 @@ ListEditorDlg::ListEditorDlg(wxWindow * parent,
 
   CheckControls();
 
-  m->listCtrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(ListEditorDlg::OnSelected), NULL, this );
+  m->listCtrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(ListEditorDlg::OnSelected), NULL, this);
 }
 
 ListEditorDlg::~ListEditorDlg()
 {
-  m->listCtrl->Disconnect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(ListEditorDlg::OnSelected), NULL, this );
+  m->listCtrl->Disconnect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(ListEditorDlg::OnSelected), NULL, this);
 
   delete m;
 }

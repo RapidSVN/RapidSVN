@@ -57,7 +57,7 @@ public:
   void
   SetCaption(const wxString & caption);
 
-  /** 
+  /**
    * fills the entries in the combo box for
    * the names
    */

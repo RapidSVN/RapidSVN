@@ -59,7 +59,7 @@ public:
 public:
   Data(const svn::RepositoryPath & path_,
        svn::LogEntries * entries_)
-      : entries(entries_), path(Utf8ToLocal(path_.c_str())), repositoryPath(path_)
+    : entries(entries_), path(Utf8ToLocal(path_.c_str())), repositoryPath(path_)
   {
   }
 
@@ -68,8 +68,8 @@ public:
 LogDlg::LogDlg(wxWindow * parent,
                const svn::RepositoryPath & path,
                svn::LogEntries * entries)
-    : LogDlgBase(parent, -1, _("Log History"), wxDefaultPosition,
-                 parent->GetSize(), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
+  : LogDlgBase(parent, -1, _("Log History"), wxDefaultPosition,
+               parent->GetSize(), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMAXIMIZE_BOX)
 {
   m = std::auto_ptr<Data>(new Data(path, entries));
 
@@ -77,17 +77,17 @@ LogDlg::LogDlg(wxWindow * parent,
     wxString::Format(_("History: %d revisions"), entries->size()));
 
   // Remove the last log entry (only included so we know if more are available)
-  if(entries->size() > LogAction::LogLimit)
+  if (entries->size() > LogAction::LogLimit)
   {
-      svn::LogEntry & lastLogEntry = entries->back();
-      m_NextRevision = lastLogEntry.revision;
-      entries->pop_back();
-      m_buttonMore->Enable(true);
+    svn::LogEntry & lastLogEntry = entries->back();
+    m_NextRevision = lastLogEntry.revision;
+    entries->pop_back();
+    m_buttonMore->Enable(true);
   }
   else
   {
-      m_NextRevision = SVN_INVALID_REVNUM;
-      m_buttonMore->Enable(false);
+    m_NextRevision = SVN_INVALID_REVNUM;
+    m_buttonMore->Enable(false);
   }
 
   m_listRevisions->SetEntries(entries);
@@ -126,23 +126,23 @@ LogDlg::AddLogEntries(svn::LogEntries* logEntries)
 {
   // Remove the last log entry (only included so we know if more are available)
   m_buttonMore->Enable(false);
-  if(logEntries->size() > LogAction::LogLimit)
+  if (logEntries->size() > LogAction::LogLimit)
   {
-      svn::LogEntry & lastLogEntry = logEntries->back();
-      m_NextRevision = lastLogEntry.revision;
-      logEntries->pop_back();
-      m_buttonMore->Enable(true);
+    svn::LogEntry & lastLogEntry = logEntries->back();
+    m_NextRevision = lastLogEntry.revision;
+    logEntries->pop_back();
+    m_buttonMore->Enable(true);
   }
   else
   {
-      m_NextRevision = SVN_INVALID_REVNUM;
+    m_NextRevision = SVN_INVALID_REVNUM;
   }
 
   svn::LogEntries::iterator iter;
-  for(iter = logEntries->begin(); iter != logEntries->end(); ++iter)
+  for (iter = logEntries->begin(); iter != logEntries->end(); ++iter)
   {
-      const svn::LogEntry & entry = *iter;
-      m->entries->push_back(entry);
+    const svn::LogEntry & entry = *iter;
+    m->entries->push_back(entry);
   }
   m_listRevisions->AddEntriesToList(logEntries);
 }
@@ -209,7 +209,7 @@ LogDlg::OnDiff(wxString & path, bool singleItemDiff)
   else
   {
     svn_revnum_t revnumPrior = m_listRevisions->GetPriorRevision(array[0]);
-    if(revnumPrior != -1)
+    if (revnumPrior != -1)
     {
       data = new DiffData();
       data->path = path;
@@ -274,7 +274,7 @@ LogDlg::OnMore(wxCommandEvent & WXUNUSED(event))
 void
 LogDlg::OnMore(wxString & path)
 {
-  if(m_NextRevision == SVN_INVALID_REVNUM)
+  if (m_NextRevision == SVN_INVALID_REVNUM)
     return;
 
   m_buttonMore->Enable(false);
@@ -311,31 +311,31 @@ LogDlg::OnAffectedFileOrDirRightClick(wxListEvent & event)
     return;
 
   long originalAffectedFilesIndex = listItem.m_data;
-  if(originalAffectedFilesIndex < 0)
+  if (originalAffectedFilesIndex < 0)
     return;
 
   wxString svnStatusAdded = _("A");
   wxString svnStatusDeleted = _("D");
 
-  if(listItem.GetText() == svnStatusAdded)
+  if (listItem.GetText() == svnStatusAdded)
   {
     wxMenuItem* pMenuItem = menu.FindItem(ID_Diff);
-    if(pMenuItem != NULL)
+    if (pMenuItem != NULL)
       pMenuItem->Enable(false);
     pMenuItem = menu.FindItem(ID_Annotate);
-    if(pMenuItem != NULL)
+    if (pMenuItem != NULL)
       pMenuItem->Enable(false);
   }
-  else if(listItem.GetText() == svnStatusDeleted)
+  else if (listItem.GetText() == svnStatusDeleted)
   {
     wxMenuItem* pMenuItem = menu.FindItem(ID_Diff);
-    if(pMenuItem != NULL)
+    if (pMenuItem != NULL)
       pMenuItem->Enable(false);
     pMenuItem = menu.FindItem(ID_Annotate);
-    if(pMenuItem != NULL)
+    if (pMenuItem != NULL)
       pMenuItem->Enable(false);
     pMenuItem = menu.FindItem(ID_Edit);
-    if(pMenuItem != NULL)
+    if (pMenuItem != NULL)
       pMenuItem->Enable(false);
   }
   // The Log menu item is never applicable within the Log Dialog
@@ -359,7 +359,7 @@ LogDlg::OnAffectedFileOrDirCommand(wxCommandEvent & event)
     return;
 
   long originalAffectedFilesIndex = listItem.m_data;
-  if(originalAffectedFilesIndex < 0)
+  if (originalAffectedFilesIndex < 0)
     return;
 
 
@@ -373,22 +373,22 @@ LogDlg::OnAffectedFileOrDirCommand(wxCommandEvent & event)
   int id = event.GetId();
   switch (id)
   {
-    case ID_Diff:
-      if(listItem.GetText() != svnStatusAdded  && listItem.GetText() != svnStatusDeleted)
-        OnDiff(file, true);
-      break;
-    case ID_Edit:
-      if(listItem.GetText() != svnStatusDeleted)
-        OnView(file);
-      break;
-    case ID_Log:
-      if(listItem.GetText() != svnStatusAdded  && listItem.GetText() != svnStatusDeleted)
-        OnLog(file);
-      break;
-    case ID_Annotate:
-      if(listItem.GetText() != svnStatusDeleted)
-        OnAnnotate(file);
-      break;
+  case ID_Diff:
+    if (listItem.GetText() != svnStatusAdded  && listItem.GetText() != svnStatusDeleted)
+      OnDiff(file, true);
+    break;
+  case ID_Edit:
+    if (listItem.GetText() != svnStatusDeleted)
+      OnView(file);
+    break;
+  case ID_Log:
+    if (listItem.GetText() != svnStatusAdded  && listItem.GetText() != svnStatusDeleted)
+      OnLog(file);
+    break;
+  case ID_Annotate:
+    if (listItem.GetText() != svnStatusDeleted)
+      OnAnnotate(file);
+    break;
   }
 }
 
@@ -406,7 +406,7 @@ LogDlg::UpdateSelection()
   else
   {
     long itemIndex = m_listRevisions->GetFirstSelected();
-    if(itemIndex < 0 || itemIndex >= m->entries->size())
+    if (itemIndex < 0 || itemIndex >= m->entries->size())
     {
       return;
     }
@@ -521,8 +521,8 @@ LogDlg::GetIntersectionOfAffectedPaths()
     std::vector<std::string> intersection(affectedPaths.size());
 
     set_intersection(affectedPaths.begin(), affectedPaths.end(),
-        nextAffectedPaths.begin(), nextAffectedPaths.end(),
-        intersection.begin());
+                     nextAffectedPaths.begin(), nextAffectedPaths.end(),
+                     intersection.begin());
     affectedPaths = std::set<std::string>(intersection.begin(), intersection.end());
 
     nextSelectedItemIndex = m_listRevisions->GetNextSelected(nextSelectedItemIndex);
@@ -537,8 +537,8 @@ LogDlg::FilterAffectedPaths(std::list<svn::LogChangePathEntry> const & changedPa
   std::list<svn::LogChangePathEntry> result;
 
   for (std::list<svn::LogChangePathEntry>::const_iterator it = changedPaths.begin();
-      it != changedPaths.end();
-      ++it)
+       it != changedPaths.end();
+       ++it)
   {
     if (filter.find(it->path) != filter.end())
     {
@@ -561,8 +561,8 @@ LogDlg::GetAffectedPathsForItem(long itemIndex)
   const svn::LogEntry & entry = (*m->entries)[itemIndex];
 
   for (std::list<svn::LogChangePathEntry>::const_iterator it = entry.changedPaths.begin();
-      it != entry.changedPaths.end();
-      ++it)
+       it != entry.changedPaths.end();
+       ++it)
   {
     result.insert(it->path);
   }

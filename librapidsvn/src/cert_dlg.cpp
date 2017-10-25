@@ -38,7 +38,7 @@ CertDlg::CertDlg(wxWindow * parent,
 
   wxString failureStr;
 
-  const struct 
+  const struct
   {
     apr_uint32_t failure;
     wxString descr;
@@ -66,9 +66,9 @@ CertDlg::CertDlg(wxWindow * parent,
   wxString realm(Utf8ToLocal(trustData.realm));
   wxString failuresTitle;
   failuresTitle.Printf(_("Error validating server certificate for '%s':"),
-                      realm.c_str());
+                       realm.c_str());
   m_sizerFailures->GetStaticBox()->SetLabel(failuresTitle);
-  
+
   m_staticHostname->SetLabel(Utf8ToLocal(trustData.hostname.c_str()));
   m_staticIssuer->SetLabel(Utf8ToLocal(trustData.issuerDName.c_str()));
   m_staticValidFrom->SetLabel(Utf8ToLocal(trustData.validFrom.c_str()));

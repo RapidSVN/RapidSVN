@@ -55,12 +55,12 @@ public:
   wxWindow * parent;
 
   Data(Action * action_, wxWindow * parent_)
-      : action(action_), showDialog(true), parent(parent_)
+    : action(action_), showDialog(true), parent(parent_)
   {
   }
 
   Data(Action * action_, wxWindow * parent_, DiffData & data)
-      : action(action_), showDialog(false), diffData(data), parent(parent_)
+    : action(action_), showDialog(false), diffData(data), parent(parent_)
   {
   }
 
@@ -188,13 +188,13 @@ public:
 };
 
 DiffAction::DiffAction(wxWindow * parent)
-    : Action(parent, _("Diff"), DONT_UPDATE)
+  : Action(parent, _("Diff"), DONT_UPDATE)
 {
   m = new Data(this, parent);
 }
 
 DiffAction::DiffAction(wxWindow * parent, DiffData & data)
-    : Action(parent, _("Diff"), DONT_UPDATE)
+  : Action(parent, _("Diff"), DONT_UPDATE)
 {
   m = new Data(this, parent, data);
 }

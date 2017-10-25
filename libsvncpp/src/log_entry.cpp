@@ -40,7 +40,7 @@ namespace svn
     char action_,
     const char *copyFromPath_,
     const svn_revnum_t copyFromRevision_)
-      : path(path_), action(action_),
+    : path(path_), action(action_),
       copyFromPath(copyFromPath_ != NULL ? copyFromPath_ : ""),
       copyFromRevision(copyFromRevision_)
   {

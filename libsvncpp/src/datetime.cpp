@@ -32,17 +32,17 @@
 namespace svn
 {
   DateTime::DateTime()
-      : m_time(APR_DATE_BAD)
+    : m_time(APR_DATE_BAD)
   {
   }
 
   DateTime::DateTime(const apr_time_t time)
-      : m_time(time)
+    : m_time(time)
   {
   }
 
   DateTime::DateTime(const DateTime & dateTime)
-      : m_time(dateTime.m_time)
+    : m_time(dateTime.m_time)
   {
   }
 

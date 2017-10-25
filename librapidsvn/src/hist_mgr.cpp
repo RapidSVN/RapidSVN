@@ -71,7 +71,7 @@ public:
 
   /** default constructor; nothing to initialize */
   Data()
-      : clean(true)
+    : clean(true)
   {
   }
 
@@ -290,7 +290,7 @@ private:
 
 
 HistoryManager::HistoryManager()
-    : m(new Data())
+  : m(new Data())
 {
 }
 

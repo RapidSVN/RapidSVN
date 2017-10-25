@@ -39,7 +39,7 @@
 #include "utils.hpp"
 
 CommitAction::CommitAction(wxWindow * parent)
-    : Action(parent, _("Commit"), UPDATE_TREE)
+  : Action(parent, _("Commit"), UPDATE_TREE)
 {
 }
 
@@ -49,7 +49,7 @@ CommitAction::Prepare()
   if (!Action::Prepare())
     return false;
 
-  svn::Client client (GetContext());
+  svn::Client client(GetContext());
   const svn::StatusSel& statusSel = GetStatusSel();
   const svn::PathVector & selectedTargets = statusSel.targets();
   svn::PathVector targets;
@@ -118,7 +118,7 @@ CommitAction::Perform()
 
   svn::Pool pool;
 
-  svn_revnum_t revision = 
+  svn_revnum_t revision =
     client.commit(m_files, messageUtf8.c_str(),
                   m_recursive, m_keepLocks);
 
@@ -133,7 +133,7 @@ CommitAction::Perform()
   const std::string &postCommitErr = client.commitInfo().postCommitErr;
   if (postCommitErr.length() > 0)
     throw svn::ClientException(postCommitErr.c_str());
-    
+
   return true;
 }
 

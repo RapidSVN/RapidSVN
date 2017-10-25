@@ -37,7 +37,7 @@ public:
   {
     /** show dialog without "recursiv" checkbox */
     WITHOUT_RECURSIVE=0x1,
-    
+
     /** show dialog with URL line */
     WITH_URL=0x2,
 

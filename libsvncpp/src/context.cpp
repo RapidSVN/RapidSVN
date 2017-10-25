@@ -55,7 +55,7 @@ namespace svn
 {
   struct Context::Data
   {
-public:
+  public:
     /** The usage of Apr makes sure Apr is initialized
      * before any use of apr functions.
      */
@@ -101,7 +101,7 @@ public:
     }
 
     Data(const std::string & configDir_)
-        : listener(0), logIsSet(false),
+      : listener(0), logIsSet(false),
         promptCounter(0), configDir(configDir_)
     {
       const char * c_configDir = 0;
@@ -272,12 +272,12 @@ public:
     {
       Data * data = static_cast <Data *>(baton);
 
-      data->notify(action->path, 
-                   action->action, 
-                   action->kind, 
-                   action->mime_type, 
+      data->notify(action->path,
+                   action->action,
+                   action->kind,
+                   action->mime_type,
                    action->content_state,
-                   action->prop_state, 
+                   action->prop_state,
                    action->revision
                    /* TODO
                    , action->lock_state,
@@ -285,7 +285,7 @@ public:
                    action->merge_range
                    action->rev_props
                    */
-        );
+                  );
     }
 
 

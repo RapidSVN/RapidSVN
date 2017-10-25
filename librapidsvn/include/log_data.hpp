@@ -39,7 +39,7 @@ public:
   svn::RepositoryPath target;
 
   LogData(const svn::LogEntries * logEntries_, const svn::RepositoryPath & target_)
-      : logEntries(logEntries_), target(target_)
+    : logEntries(logEntries_), target(target_)
   {
   }
 };

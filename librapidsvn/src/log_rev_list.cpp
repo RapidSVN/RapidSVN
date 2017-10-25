@@ -61,7 +61,7 @@ struct MapItem
   size_t len;
 
   MapItem(int status_, const unsigned char *data_, size_t len_)
-      : status(status_), data(data_), len(len_)
+    : status(status_), data(data_), len(len_)
   {
   }
 };
@@ -85,9 +85,9 @@ BEGIN_EVENT_TABLE(LogRevList, wxListView)
 END_EVENT_TABLE()
 
 LogRevList::LogRevList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
-           const wxSize& size, long style,
-           const wxValidator& validator,
-           const wxString& name)
+                       const wxSize& size, long style,
+                       const wxValidator& validator,
+                       const wxString& name)
   : wxListView(parent, id, pos, size, style, validator, name),
     m_ColSortInfo(this, 0, false)
 {
@@ -142,8 +142,8 @@ LogRevList::AddEntriesToList(svn::LogEntries * entries)
     return;
 
   long index=0;
-  if(GetItemCount() > 0)
-      index = GetItemCount();
+  if (GetItemCount() > 0)
+    index = GetItemCount();
 
   svn::LogEntries::const_iterator it;
   for (it=entries->begin(); it != entries->end(); it++)
@@ -222,7 +222,7 @@ LogRevList::GetPriorRevision(const svn_revnum_t revnum) const
     if (item != -1)
     {
       svn_revnum_t revnumTemp(GetRevisionForItem(item));
-      if(revnum == revnumTemp)
+      if (revnum == revnumTemp)
       {
         item = GetNextItem(item, wxLIST_NEXT_BELOW,
                            wxLIST_STATE_DONTCARE);
@@ -280,8 +280,8 @@ svn_revnum_t
 LogRevList::GetLastRevision() const
 {
   int count = GetItemCount();
-  if(count == 0)
-      return -1;
+  if (count == 0)
+    return -1;
 
   long item = GetNextItem(count - 2, wxLIST_NEXT_BELOW,
                           wxLIST_STATE_DONTCARE);
@@ -377,14 +377,14 @@ LogRevList::AutoSizeLastColumn()
 void
 LogRevList::OnColClick(wxListEvent& event)
 {
-    int clickedColumn = event.GetColumn();
+  int clickedColumn = event.GetColumn();
 
-    if(m_ColSortInfo.Column == clickedColumn)
-      m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
-    m_ColSortInfo.Column = clickedColumn;
+  if (m_ColSortInfo.Column == clickedColumn)
+    m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
+  m_ColSortInfo.Column = clickedColumn;
 
-    SetColumnImages();
-    SortItems(LogRevListColumnCompareFunction, (long)&m_ColSortInfo);
+  SetColumnImages();
+  SortItems(LogRevListColumnCompareFunction, (long)&m_ColSortInfo);
 }
 
 void
@@ -422,11 +422,11 @@ LogRevList::GetSortImageIndex(bool sortAscending)
 int
 wxCALLBACK LogRevListColumnCompareFunction(long item1, long item2, long sortData)
 {
-  if(item1 < 0 && item2 < 0)
-      return 0;
+  if (item1 < 0 && item2 < 0)
+    return 0;
 
   LogRevList::ColSortInfo* pColSortInfo = (LogRevList::ColSortInfo*)sortData;
-  if(pColSortInfo->Parent == NULL)
+  if (pColSortInfo->Parent == NULL)
     return 0;
 
   long positionOfItem1 = pColSortInfo->Parent->FindItem(0L, item1);
@@ -450,13 +450,13 @@ wxCALLBACK LogRevListColumnCompareFunction(long item1, long item2, long sortData
 
   long result = 0;
 
-  if(itemText1.IsNumber() && itemText2.IsNumber())
+  if (itemText1.IsNumber() && itemText2.IsNumber())
   {
-  	long number1 = 0;
-  	itemText1.ToLong(&number1);
-  	long number2 = 0;
-  	itemText2.ToLong(&number2);
-    if(number1 < number2)
+    long number1 = 0;
+    itemText1.ToLong(&number1);
+    long number2 = 0;
+    itemText2.ToLong(&number2);
+    if (number1 < number2)
       result = -1;
     else if (number1 > number2)
       result = 1;
@@ -465,15 +465,15 @@ wxCALLBACK LogRevListColumnCompareFunction(long item1, long item2, long sortData
   }
   else
   {
-    if(pColSortInfo->Column == 2)
+    if (pColSortInfo->Column == 2)
     {
       wxDateTime dateTime1;
-      if(dateTime1.ParseFormat(itemText1, wxT("%x %X")) != NULL)
+      if (dateTime1.ParseFormat(itemText1, wxT("%x %X")) != NULL)
       {
         wxDateTime dateTime2;
-        if(dateTime2.ParseFormat(itemText2, wxT("%x %X")) != NULL)
+        if (dateTime2.ParseFormat(itemText2, wxT("%x %X")) != NULL)
         {
-          if(dateTime1.IsEarlierThan(dateTime2))
+          if (dateTime1.IsEarlierThan(dateTime2))
             result = -1;
           else if (dateTime1.IsLaterThan(dateTime2))
             result = 1;
@@ -488,7 +488,7 @@ wxCALLBACK LogRevListColumnCompareFunction(long item1, long item2, long sortData
     }
   }
 
-  if(!pColSortInfo->Ascending)
+  if (!pColSortInfo->Ascending)
     result = result * -1;
 
   return result;

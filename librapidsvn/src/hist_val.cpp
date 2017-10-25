@@ -42,14 +42,14 @@ HistoryValidator::HistoryValidator(const wxString & settingName,
                                    wxString * value,
                                    bool dontUpdate,
                                    bool useMostRecent)
-    :  wxValidator(), m_settingName(settingName), m_value(value),
-    m_dontUpdate(dontUpdate), m_useMostRecent(useMostRecent)
+  :  wxValidator(), m_settingName(settingName), m_value(value),
+     m_dontUpdate(dontUpdate), m_useMostRecent(useMostRecent)
 {
 }
 
 
 HistoryValidator::HistoryValidator(const HistoryValidator & src)
-:  wxValidator()
+  :  wxValidator()
 {
   Copy(src);
 }
@@ -142,7 +142,7 @@ HistoryValidator::TransferToWindow()
     }
 
     if (!m_useMostRecent)
-      control->SetSelection(-1); 
+      control->SetSelection(-1);
     else if (m_value != 0)
     {
       int i = control->FindString(*m_value);

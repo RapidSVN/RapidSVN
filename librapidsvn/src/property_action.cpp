@@ -34,7 +34,7 @@
  * right now this supports only one target
  */
 PropertyAction::PropertyAction(wxWindow * parent)
-    : Action(parent, _("Property"))
+  : Action(parent, _("Property"))
 {
 }
 

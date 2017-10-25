@@ -29,17 +29,17 @@
 
 // Platform specific constants.
 #ifdef __WXMSW__
-const static int SPLITTER_STYLE = wxSP_FULLSASH | wxSP_LIVE_UPDATE | 
+const static int SPLITTER_STYLE = wxSP_FULLSASH | wxSP_LIVE_UPDATE |
                                   wxCLIP_CHILDREN;
 #else
-const static int SPLITTER_STYLE = wxSP_3D | wxSP_LIVE_UPDATE | 
+const static int SPLITTER_STYLE = wxSP_3D | wxSP_LIVE_UPDATE |
                                   wxCLIP_CHILDREN;
 #endif
 
-SplitterWindow::SplitterWindow(wxWindow* parent, wxWindowID id, 
+SplitterWindow::SplitterWindow(wxWindow* parent, wxWindowID id,
                                const wxPoint& point, const wxSize& size,
                                long WXUNUSED(style), const wxString& name)
- : wxSplitterWindow(parent, id, point, size, SPLITTER_STYLE, name)
+  : wxSplitterWindow(parent, id, point, size, SPLITTER_STYLE, name)
 {
 }
 

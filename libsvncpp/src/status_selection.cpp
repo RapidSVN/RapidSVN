@@ -148,12 +148,12 @@ namespace svn
 
 
   StatusSel::StatusSel()
-      : m(new Data)
+    : m(new Data)
   {
   }
 
   StatusSel::StatusSel(const StatusSel & src)
-      : m(new Data)
+    : m(new Data)
   {
     // different instance?
     if (this != &src)

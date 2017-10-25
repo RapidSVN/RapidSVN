@@ -48,13 +48,13 @@ CommitLogDlg::CommitLogDlg(wxWindow* parent)
   HistoryValidator histVal(HISTORY_COMMIT_LOG, &m_message, false,
                            prefs.useLastCommitMessage);
   m_textMessage->SetValidator(histVal);
-  
+
   HistoryValidator valHistory(HISTORY_COMMIT_LOG, 0, true);
   m_comboHistory->SetValidator(valHistory);
 
   m_mainSizer->SetSizeHints(this);
   m_mainSizer->Fit(this);
-  
+
   Layout();
   CentreOnParent();
 }

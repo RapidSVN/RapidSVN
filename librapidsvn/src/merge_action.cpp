@@ -35,13 +35,13 @@
 #include "utils.hpp"
 
 MergeAction::MergeAction(wxWindow * parent)
-    : Action(parent, _("Merge"))
+  : Action(parent, _("Merge"))
 {
   m_data.calledByLogDlg = false;
 }
 
 MergeAction::MergeAction(wxWindow * parent, MergeData & data)
-    : Action(parent, _("Merge")), m_data(data)
+  : Action(parent, _("Merge")), m_data(data)
 {
   m_data.calledByLogDlg = true;
 }

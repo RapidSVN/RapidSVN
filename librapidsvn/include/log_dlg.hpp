@@ -51,7 +51,7 @@ public:
    * @param entries log entries
    */
   LogDlg(wxWindow * parent,
-         const svn::RepositoryPath & path, 
+         const svn::RepositoryPath & path,
          svn::LogEntries * entries);
 
   /**
@@ -67,19 +67,19 @@ public:
 
 
 protected:  // events inherited from LogDlgBase
-  void 
+  void
   OnGet(wxCommandEvent & event);
 
-  void 
+  void
   OnView(wxCommandEvent & event);
 
-  void 
+  void
   OnDiff(wxCommandEvent & event);
 
-  void 
+  void
   OnMerge(wxCommandEvent & event);
 
-  void 
+  void
   OnAnnotate(wxCommandEvent & event);
 
   void
@@ -98,7 +98,7 @@ private:
   /** hide implementation details */
   struct Data;
   std::auto_ptr<Data> m;
-    
+
   std::list<svn::LogChangePathEntry> affectedFiles;
   svn_revnum_t m_NextRevision;
 

@@ -35,18 +35,18 @@ namespace svn
 
   struct Exception::Data
   {
-public:
+  public:
     std::string message;
     apr_status_t apr_err;
 
     Data(const char * msg)
-        : message(msg)
+      : message(msg)
     {
     }
 
 
     Data(const Data& other)
-        : message(other.message), apr_err(other.apr_err)
+      : message(other.message), apr_err(other.apr_err)
     {
     }
   };
@@ -80,7 +80,7 @@ public:
 
 
   ClientException::ClientException(svn_error_t * error) throw()
-      : Exception("")
+    : Exception("")
   {
     if (error == 0)
       return;
@@ -114,7 +114,7 @@ public:
 
 
   ClientException::ClientException(apr_status_t status) throw()
-      : Exception("")
+    : Exception("")
   {
     m->apr_err = status;
   }
@@ -125,7 +125,7 @@ public:
   }
 
   ClientException::ClientException(const ClientException & src) throw()
-      : Exception(src.message())
+    : Exception(src.message())
   {
   }
 }

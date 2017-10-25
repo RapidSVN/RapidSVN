@@ -345,12 +345,12 @@ FullNativePath(const svn::Path & target, const wxString & base, bool flat);
 
 /**
   * Checks that folder on path contents a modified child/children.
-  * 
+  *
   * @param path path to folder
   * @param context pointer to current context
   *
-  * @return true if folder contents modified children, 
-  *         otherwise false 
+  * @return true if folder contents modified children,
+  *         otherwise false
   */
 bool
 HasModifiedChildren(const svn::Path & path, svn::Context * context);
@@ -359,7 +359,7 @@ HasModifiedChildren(const svn::Path & path, svn::Context * context);
  * Checks whether @a executable can be found path and returns the
  * absolute path
  */
-wxString 
+wxString
 FindExecutableInPath(const wxString & executable);
 
 
@@ -370,13 +370,13 @@ FindExecutableInPath(const wxString & executable);
  *
  * @param dir
  */
-bool 
+bool
 IsValidDir(const wxString & dir);
 
 
 /**
  * Helper function that enables/disables a control only if
- * the enable status differs. 
+ * the enable status differs.
  * This avoids flickering on some platforms.
  *
  * @param ctrl

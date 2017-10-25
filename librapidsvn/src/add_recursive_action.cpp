@@ -34,7 +34,7 @@
 #include "add_recursive_action.hpp"
 
 AddRecursiveAction::AddRecursiveAction(wxWindow * parent)
-    : Action(parent, _("Add"), 0)
+  : Action(parent, _("Add"), 0)
 {
 }
 
@@ -58,7 +58,7 @@ AddRecursiveAction::Perform()
   // and find unversioned subdirectories and add them
   svn::StatusFilter filter;
   filter.showUnversioned = true;
-  
+
   svn::PathVector paths = GetTargets().targets();
 
   do
@@ -69,12 +69,12 @@ AddRecursiveAction::Perform()
     for (it = paths.begin(); it != paths.end(); it++)
     {
       const svn::Path & path = *it;
-      
+
       svn::StatusEntries entries;
-      client.status (path.c_str(), filter, true, false, entries);
-      
+      client.status(path.c_str(), filter, true, false, entries);
+
       svn::StatusEntries::const_iterator itStatus;
-      
+
       for (itStatus = entries.begin(); itStatus != entries.end(); itStatus++)
       {
         const svn::Status & status = *itStatus;

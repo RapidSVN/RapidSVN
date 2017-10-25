@@ -36,7 +36,7 @@
 #include "utils.hpp"
 
 ExportAction::ExportAction(wxWindow * parent)
-    :Action(parent, _("Export"), DONT_UPDATE)
+  :Action(parent, _("Export"), DONT_UPDATE)
 {
 }
 

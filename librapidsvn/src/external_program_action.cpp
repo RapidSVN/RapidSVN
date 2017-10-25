@@ -42,7 +42,7 @@
 
 ExternalProgramAction::ExternalProgramAction(
   wxWindow * parent, long verb_id, bool treat_as_folder)
-    : Action(parent, _("Execute"), UPDATE_LATER),
+  : Action(parent, _("Execute"), UPDATE_LATER),
     m_verb_id(verb_id),
     m_treat_as_folder(treat_as_folder),
     m_parent(parent)

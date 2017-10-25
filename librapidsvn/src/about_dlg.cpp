@@ -33,7 +33,7 @@
 #include "utils.hpp"
 
 AboutDlg::AboutDlg(wxWindow * parent, const wxLocale & locale)
-    : AboutDlgBase(parent, -1, wxEmptyString, wxDefaultPosition)
+  : AboutDlgBase(parent, -1, wxEmptyString, wxDefaultPosition)
 {
   const wxString title(wxString::Format(
                          _("About %s"), APPLICATION_NAME));
@@ -41,7 +41,7 @@ AboutDlg::AboutDlg(wxWindow * parent, const wxLocale & locale)
 
   // format string
   wxString version;
-  
+
   if (0 == RAPIDSVN_VER_REVISION)
   {
     version = wxString::Format(_("%s Version %s"),
@@ -58,13 +58,13 @@ AboutDlg::AboutDlg(wxWindow * parent, const wxLocale & locale)
   const wxString strCopyrightMessage(Utf8ToLocal(RAPIDSVN_COPYRIGHT));
   const wxString strGpl(_("This program is licensed under the terms\nof the GNU General Public License version 3\n\nAvailable online under:"));
   const wxString strVerMilestone(Utf8ToLocal(RAPIDSVN_VER_MILESTONE));
-  
+
 #ifdef wxUSE_UNICODE
   wxString unicode(_("Unicode"));
 #else
   wxString unicode(_("ANSI"));
 #endif
-  
+
   const wxString copy(wxString::Format(
                         wxT("%s\n") // version
                         wxT("\n%s\n\n") // copyright

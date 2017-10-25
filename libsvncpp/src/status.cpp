@@ -38,7 +38,7 @@ namespace svn
     bool isVersioned;
 
     Data(const char * path_, const svn_wc_status2_t * status_)
-        : status(0), path("")
+      : status(0), path("")
     {
       if (path_ != 0)
         path = path_;
@@ -52,7 +52,7 @@ namespace svn
     }
 
     Data(const Data * src)
-        : status(0), path(src->path)
+      : status(0), path(src->path)
     {
       if (src->status != 0)
       {
@@ -76,12 +76,12 @@ namespace svn
   };
 
   Status::Status(const char * path, const svn_wc_status2_t * status)
-      : m(new Data(path, status))
+    : m(new Data(path, status))
   {
   }
 
   Status::Status(const Status & src)
-      : m(new Data(src.m))
+    : m(new Data(src.m))
   {
   }
 
@@ -231,25 +231,25 @@ namespace svn
     return m->path.length() > 0;
   }
 
-  svn_revnum_t 
+  svn_revnum_t
   Status::oodLastCmtRev() const
   {
     return m->status->ood_last_cmt_rev;
   }
 
-  apr_time_t 
+  apr_time_t
   Status::oodLastCmtDate() const
   {
     return m->status->ood_last_cmt_date;
   }
 
-  svn_node_kind_t 
+  svn_node_kind_t
   Status::oodKind() const
   {
     return m->status->ood_kind;
   }
 
-  const char * 
+  const char *
   Status::oodLastCmtAuthor() const
   {
     return m->status->ood_last_cmt_author;

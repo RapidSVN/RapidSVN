@@ -64,7 +64,7 @@ struct FileInfo::Data
   bool withUpdate;
 
   Data(svn::Context * ctx, bool update)
-      : context(ctx), withUpdate(update)
+    : context(ctx), withUpdate(update)
   {
   }
 

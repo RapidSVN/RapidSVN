@@ -35,7 +35,7 @@
 #include "utils.hpp"
 
 GetAction::GetAction(wxWindow * parent, const GetData & data)
-    : Action(parent, _("Update")),
+  : Action(parent, _("Update")),
     m_data(data)
 {
 }

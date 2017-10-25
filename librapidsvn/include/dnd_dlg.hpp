@@ -59,7 +59,7 @@ protected: // event handlers inherited from DragNDropDlgBase
   OnButtonCopy(wxCommandEvent & event);
 
 private:
-  struct Data; 
+  struct Data;
   Data * m;
 };
 

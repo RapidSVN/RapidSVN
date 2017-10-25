@@ -43,7 +43,7 @@ struct PropertyDlg::Data
 
 public:
   Data(wxWindow * wnd, svn::Context * context, const char * target)
-      : window(wnd), property(context, target)
+    : window(wnd), property(context, target)
   {
   }
 };
@@ -51,7 +51,7 @@ public:
 PropertyDlg::PropertyDlg(wxWindow * parent,
                          svn::Context * context,
                          const svn::Path & target)
-    : ListEditorDlg(parent, _("Property Editor"))
+  : ListEditorDlg(parent, _("Property Editor"))
 {
   const char * target_ = target.c_str();
   // the property list is read-only when working

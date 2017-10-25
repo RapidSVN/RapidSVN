@@ -122,12 +122,12 @@ CreateRepositoryAction::Prepare()
     return false;
   }
 
-  
+
   // now add a bookmark
   if (addBookmark)
   {
     // this works for simple bookmarks like "/foo/bar"
-    // or "c:/foo". 
+    // or "c:/foo".
     // TODO check and implement this for UNC paths on
     // windows as well, e.g. "\\server\foo\bar"
     wxString repoBookmark(wxT("file://"));

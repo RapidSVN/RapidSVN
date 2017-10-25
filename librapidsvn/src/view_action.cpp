@@ -50,20 +50,20 @@ public:
   wxWindow * parent;
 
   Data(Action * action_)
-      : action(action_)
+    : action(action_)
   {
   }
 
 
   Data(Action * action_, GetData & data_)
-      : action(action_), data(data_)
+    : action(action_), data(data_)
   {
   }
 };
 
 ViewAction::ViewAction(wxWindow * parent,
                        const GetData & data)
-    : Action(parent, _("View"), DONT_UPDATE)
+  : Action(parent, _("View"), DONT_UPDATE)
 {
   m = new Data(this);
   m->parent = parent;
@@ -73,7 +73,7 @@ ViewAction::ViewAction(wxWindow * parent,
 
 
 ViewAction::ViewAction(wxWindow * parent)
-    : Action(parent, _("Edit"), UPDATE_LATER)
+  : Action(parent, _("Edit"), UPDATE_LATER)
 {
   m = new Data(this);
   m->parent = parent;
@@ -103,8 +103,8 @@ ViewAction::Perform()
   {
     svn::Path pathUtf8(PathUtf8(m->data.path));
     path = Utf8ToLocal(
-      GetPathAsTempFile(pathUtf8.c_str(),
-                        m->data.revision).native().c_str());
+             GetPathAsTempFile(pathUtf8.c_str(),
+                               m->data.revision).native().c_str());
   }
 
   wxString args(prefs.editorArgs);

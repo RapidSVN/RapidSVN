@@ -31,7 +31,7 @@ class AnnotateDlg:public AnnotateDlgBase
 public:
   AnnotateDlg(wxWindow * parent,
               const wxString & caption);
-  
+
   void AddAnnotateLine(int revision, const wxString & author,
                        const wxString & line);
   void AutoSizeColumn();

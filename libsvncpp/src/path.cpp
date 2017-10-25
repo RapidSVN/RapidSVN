@@ -388,12 +388,12 @@ end:
       // http://foo/my%20location
       // to
       // http://foo/my location
-	    return Url::unescape(m_path.c_str());
+      return Url::unescape(m_path.c_str());
     }
     else
     {
       // On Windows, p://foo/bar will be converted to p:\foo\bar
-	    Pool pool;
+      Pool pool;
       return svn_path_local_style(m_path.c_str(), pool);
     }
   }

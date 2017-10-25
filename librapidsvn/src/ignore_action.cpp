@@ -37,7 +37,7 @@
 #include "utils.hpp"
 
 IgnoreAction::IgnoreAction(wxWindow * parent)
-    : Action(parent, _("Ignore"), UPDATE_TREE)
+  : Action(parent, _("Ignore"), UPDATE_TREE)
 {
 }
 

@@ -53,55 +53,55 @@ static void
 AddActionTools(wxToolBarBase *toolBar)
 {
   wxASSERT(toolBar);
-  
+
   toolBar->AddTool(ID_Add,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(add_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(add_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Add selected"),
-		   _("Put files and directories under revision control"));
-  
+                   _("Add selected"),
+                   _("Put files and directories under revision control"));
+
   toolBar->AddTool(ID_Delete,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(delete_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(delete_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Delete selected"),
-		   _("Delete files and directories from version control"));
-  
+                   _("Delete selected"),
+                   _("Delete files and directories from version control"));
+
   toolBar->AddTool(ID_Update,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(update_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(update_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Update selected"),
-		   _("Bring changes from the repository into the working copy"));
-  
+                   _("Update selected"),
+                   _("Bring changes from the repository into the working copy"));
+
   toolBar->AddTool(ID_Commit,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(commit_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(commit_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Commit selected"),
-		   _("Send changes from your working copy to the repository"));
-  
+                   _("Commit selected"),
+                   _("Send changes from your working copy to the repository"));
+
   toolBar->AddTool(ID_Revert,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(revert_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(revert_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Revert selected"),
-		   _("Restore pristine working copy file (undo all local edits)"));
-  
+                   _("Revert selected"),
+                   _("Restore pristine working copy file (undo all local edits)"));
+
   toolBar->AddTool(ID_Resolve,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(resolve_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(resolve_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Resolve selected"),
-		   _("Remove 'conflicted' state on working copy files or directories"));
-  
+                   _("Resolve selected"),
+                   _("Remove 'conflicted' state on working copy files or directories"));
+
   toolBar->AddSeparator();
 }
 
@@ -111,94 +111,94 @@ AddInfoTools(wxToolBarBase *toolBar)
 {
   toolBar->AddTool(ID_Info,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(info_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(info_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Info selected"),
-		   _("Display info about selected entries"));
-  
+                   _("Info selected"),
+                   _("Display info about selected entries"));
+
   toolBar->AddTool(ID_Log,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(log_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(log_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Log selected"),
-		   _("Show the log messages for the selected entries"));
-  
+                   _("Log selected"),
+                   _("Show the log messages for the selected entries"));
+
   toolBar->AddSeparator();
 }
 
 
-void 
+void
 CreateMainToolBar(wxFrame * frame)
 {
   wxASSERT(0 != frame);
-  
+
   // delete the old toolbar
   wxToolBarBase * toolBar = frame->GetToolBar();
   delete toolBar;
   frame->SetToolBar(NULL);
 
   // create the new toolbar
-  toolBar = frame->CreateToolBar(wxNO_BORDER | wxTB_FLAT | 
-				 wxTB_DOCKABLE | wxTB_HORIZONTAL);
+  toolBar = frame->CreateToolBar(wxNO_BORDER | wxTB_FLAT |
+                                 wxTB_DOCKABLE | wxTB_HORIZONTAL);
   toolBar->SetMargins(4, 4);
 
   AddActionTools(toolBar);
   AddInfoTools(toolBar);
-  
+
   toolBar->AddCheckTool(ID_Flat,
-			wxEmptyString,
-			EMBEDDED_BITMAP(flat_mode_png),
-			wxNullBitmap,
-			_("Show subdirectories"),
-			_("Show entries in subdirectories"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(flat_mode_png),
+                        wxNullBitmap,
+                        _("Show subdirectories"),
+                        _("Show entries in subdirectories"));
   toolBar->AddCheckTool(ID_ShowUnversioned,
-			wxEmptyString,
-			EMBEDDED_BITMAP(nonsvn_file_png),
-			wxNullBitmap,
-			_("Show unversioned entries"),
-			_("Display unversioned files/directories"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(nonsvn_file_png),
+                        wxNullBitmap,
+                        _("Show unversioned entries"),
+                        _("Display unversioned files/directories"));
   toolBar->AddCheckTool(ID_ShowUnmodified,
-			wxEmptyString,
-			EMBEDDED_BITMAP(normal_file_png),
-			wxNullBitmap,
-			_("Show unmodified entries"),
-			_("Display unmodified files/directories"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(normal_file_png),
+                        wxNullBitmap,
+                        _("Show unmodified entries"),
+                        _("Display unmodified files/directories"));
   toolBar->AddCheckTool(ID_ShowModified,
-			wxEmptyString,
-			EMBEDDED_BITMAP(modified_file_png),
-			wxNullBitmap,
-			_("Show modified entries"),
-			_("Display modified files/directories"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(modified_file_png),
+                        wxNullBitmap,
+                        _("Show modified entries"),
+                        _("Display modified files/directories"));
   toolBar->AddCheckTool(ID_ShowConflicted,
-			wxEmptyString,
-			EMBEDDED_BITMAP(conflicted_file_png),
-			wxNullBitmap,
-			_("Show conflicted entries"),
-			_("Display conflicted files/directories"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(conflicted_file_png),
+                        wxNullBitmap,
+                        _("Show conflicted entries"),
+                        _("Display conflicted files/directories"));
   toolBar->AddSeparator();
 
   // Set toolbar refresh button.
   toolBar->AddTool(ID_Refresh,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(refresh_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(refresh_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Refresh"),
-		   _("Refresh the file list"));
-  
+                   _("Refresh"),
+                   _("Refresh the file list"));
+
   toolBar->AddSeparator();
-  
+
   // STOP button
   toolBar->AddTool(ID_Stop,
                    wxEmptyString,
-		   EMBEDDED_BITMAP(stop_png),
-		   wxNullBitmap,
+                   EMBEDDED_BITMAP(stop_png),
+                   wxNullBitmap,
                    wxITEM_NORMAL,
-		   _("Stop"),
-		   _("Stop the current action"));
-  
+                   _("Stop"),
+                   _("Stop the current action"));
+
   // After adding the buttons to the toolbar,
   // must call Realize() to reflect the changes.
   toolBar->Realize();

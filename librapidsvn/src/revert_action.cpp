@@ -32,7 +32,7 @@
 #include "revert_dlg.hpp"
 
 RevertAction::RevertAction(wxWindow * parent)
-    : Action(parent, _("Revert"))
+  : Action(parent, _("Revert"))
 {
 }
 

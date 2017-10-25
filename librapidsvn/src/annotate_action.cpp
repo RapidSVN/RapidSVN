@@ -49,13 +49,13 @@ public:
   wxWindow * parent;
 
   Data(Action * action_)
-      : action(action_)
+    : action(action_)
   {
   }
 
 
   Data(Action * action_, AnnotateData & data_)
-      : action(action_), data(data_)
+    : action(action_), data(data_)
   {
   }
 
@@ -77,7 +77,7 @@ public:
 
 AnnotateAction::AnnotateAction(wxWindow * parent,
                                const AnnotateData & data)
-    : Action(parent, _("Annotate"), UPDATE_LATER),
+  : Action(parent, _("Annotate"), UPDATE_LATER),
     dlg(parent, _("Annotate"))
 {
   m = new Data(this);

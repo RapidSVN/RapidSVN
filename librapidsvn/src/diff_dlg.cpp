@@ -58,7 +58,7 @@ struct DiffDlg::Data
   wxComboBox * comboCompare;
 
   Data()
-      : enableUrl(true), compareTypesCount(0)
+    : enableUrl(true), compareTypesCount(0)
   {
   }
 
@@ -176,8 +176,8 @@ struct DiffDlg::Data
 };
 
 DiffDlg::DiffDlg(wxWindow * parent, const wxString & selectedUrl)
-    : DiffDlgBase(parent, -1, _("Diff"), wxDefaultPosition,
-                  wxDefaultSize, wxDEFAULT_DIALOG_STYLE),
+  : DiffDlgBase(parent, -1, _("Diff"), wxDefaultPosition,
+                wxDefaultSize, wxDEFAULT_DIALOG_STYLE),
     m(new Data())
 {
   // Create the control mapping for the use

@@ -96,7 +96,7 @@ public:
 
 
   Data(wxWindow * parent_)
-      : parent(parent_), tracer(NULL), ownTracer(false),
+    : parent(parent_), tracer(NULL), ownTracer(false),
       isCancelled(false), context(NULL), dataReceived(false)
   {
     parentDoneSignal = new wxCondition(mutex);

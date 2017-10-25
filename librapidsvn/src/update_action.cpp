@@ -36,7 +36,7 @@
 #include "utils.hpp"
 
 UpdateAction::UpdateAction(wxWindow * parent)
-    : Action(parent, _("Update"))
+  : Action(parent, _("Update"))
 {
 }
 

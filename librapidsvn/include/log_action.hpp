@@ -51,7 +51,7 @@ public:
 
   /** Constructor */
   LogNextData()
-      : startRevision(svn::Revision::START),
+    : startRevision(svn::Revision::START),
       endRevision(svn::Revision::HEAD),
       logdlg(NULL),
       logEntries(NULL)
@@ -61,7 +61,7 @@ public:
   LogNextData(wxString path_, svn::Revision startRevision_ = svn::Revision::START,
               svn::Revision endRevision_ = svn::Revision::HEAD,
               LogDlg* logdlg_ = NULL, svn::LogEntries* logEntries_ = NULL)
-      : path(path_),
+    : path(path_),
       startRevision(startRevision_),
       endRevision(endRevision_),
       logdlg(logdlg_),

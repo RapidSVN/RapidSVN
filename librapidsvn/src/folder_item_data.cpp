@@ -35,18 +35,18 @@ FolderItemData::FolderItemData(const int folderType,
                                const wxString & path,
                                const wxString & name,
                                bool hasChildren)
-    : wxTreeItemData()
+  : wxTreeItemData()
 {
   Create(folderType, path, name, hasChildren);
 }
 
 FolderItemData::FolderItemData()
-    : wxTreeItemData()
+  : wxTreeItemData()
 {
 }
 
 FolderItemData::FolderItemData(const FolderItemData& src)
-    : wxTreeItemData()
+  : wxTreeItemData()
 {
   Create(src.m_folderType, src.m_path, src.m_name, src.m_hasChildren);
 }

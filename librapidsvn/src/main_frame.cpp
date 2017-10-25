@@ -214,7 +214,7 @@ public:
       showModified(false), showConflicted(false), idleCount(0),
       m_running(false), m_parent(parent),
       m_isErrorDialogActive(false),
-      m_folderBrowser(folderBrowser), 
+      m_folderBrowser(folderBrowser),
       m_listCtrl(listCtrl), m_log(log)
   {
     InitializeMenu();
@@ -623,7 +623,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MENU(ID_HelpStartupTips, MainFrame::OnHelpStartupTips)
   EVT_MENU(ID_About, MainFrame::OnAbout)
 
-  #ifdef USE_DEBUG_TESTS
+#ifdef USE_DEBUG_TESTS
   EVT_MENU(ID_TestNewWxString, MainFrame::OnTestNewWxString)
   EVT_MENU(ID_TestListener, MainFrame::OnTestListener)
   EVT_MENU(ID_TestCheckout, MainFrame::OnTestCheckout)
@@ -631,7 +631,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MENU(ID_TestDestinationDlg, MainFrame::OnTestDestinationDlg)
   EVT_MENU(ID_TestDestinationDlgWithForce, MainFrame::OnTestDestinationDlg)
   EVT_MENU(ID_TestDndDlg, MainFrame::OnTestDndDlg)
-  #endif
+#endif
 
   EVT_MENU_RANGE(ID_File_Min, ID_File_Max, MainFrame::OnFileCommand)
   EVT_MENU_RANGE(ID_Verb_Min, ID_Verb_Max, MainFrame::OnFileCommand)
@@ -652,9 +652,9 @@ END_EVENT_TABLE()
 
 /** class implementation **/
 MainFrame::MainFrame(const wxString & title,
-                             const wxLocale & locale)
-    : MainFrameBase((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
-              wxDEFAULT_FRAME_STYLE),
+                     const wxLocale & locale)
+  : MainFrameBase((wxFrame *) NULL, -1, title, wxDefaultPosition, wxDefaultSize,
+                  wxDEFAULT_FRAME_STYLE),
     m_title(title), m_context(0)
 {
   m = new Data(this, m_folderBrowser, m_listCtrl, m_log, locale);
@@ -1489,7 +1489,7 @@ MainFrame::OnTestCheckout(wxCommandEvent & WXUNUSED(event))
   PrintTimeMeasurements(start, end, name);
 }
 
-void 
+void
 MainFrame::OnTestCertDlg(wxCommandEvent & WXUNUSED(event))
 {
   svn::ContextListener::SslServerTrustData data;
@@ -1500,7 +1500,7 @@ MainFrame::OnTestCertDlg(wxCommandEvent & WXUNUSED(event))
   data.validUntil = "Apr 31th 2015";
   data.issuerDName = "RapidSVN SSL Certificate Authority";
   data.realm = "RapidSVN Tests";
-  
+
   CertDlg dlg(this, data);
 
   int modalResult = dlg.ShowModal();
@@ -1535,8 +1535,8 @@ MainFrame::OnTestCertDlg(wxCommandEvent & WXUNUSED(event))
 
 
   wxString msg = wxString::Format(
-    wxT("Modal result:%s\nAccepted Failures: %08x\nAnswer: %s"),
-    modalDescr.c_str(), dlg.AcceptedFailures(), answer.c_str());
+                   wxT("Modal result:%s\nAccepted Failures: %08x\nAnswer: %s"),
+                   modalDescr.c_str(), dlg.AcceptedFailures(), answer.c_str());
   ::wxMessageBox(msg, wxT("Certificate Dlg Results"), wxOK);
 }
 
@@ -1575,9 +1575,9 @@ MainFrame::OnTestDestinationDlg(wxCommandEvent & event)
   int force = dlg.GetForce();
 
   wxString msg = wxString::Format(
-    wxT("Modal result:%s\nDestination: \"%s\"\nForce: %s"),
-    modalDescr.c_str(), dlg.GetDestination().c_str(), 
-    force ? wxT("true") : wxT("false"));
+                   wxT("Modal result:%s\nDestination: \"%s\"\nForce: %s"),
+                   modalDescr.c_str(), dlg.GetDestination().c_str(),
+                   force ? wxT("true") : wxT("false"));
   ::wxMessageBox(msg, wxT("DestinationDlg Results"), wxOK);
 }
 
@@ -1591,10 +1591,10 @@ MainFrame::OnTestDndDlg(wxCommandEvent &)
   else if (m->IsMenuChecked(ID_TestDndCopyMove))
     action = DragAndDropDlg::COPY_MOVE;
 
-  DragAndDropDlg dlg(this, wxT("/home/foo/src"), 
+  DragAndDropDlg dlg(this, wxT("/home/foo/src"),
                      wxT("/home/foo/dst"),
                      action);
-  
+
   int result = dlg.ShowModal();
   wxString resultStr;
   switch (result)
@@ -1616,7 +1616,7 @@ MainFrame::OnTestDndDlg(wxCommandEvent &)
   }
 
   wxString msg = wxString::Format(
-    wxT("Modal result:%s"), resultStr.c_str());
+                   wxT("Modal result:%s"), resultStr.c_str());
   ::wxMessageBox(msg, wxT("DndDlg Results"), wxOK);
 }
 #endif
@@ -1923,7 +1923,7 @@ MainFrame::OnActionEvent(wxCommandEvent & event)
       LogNextData data(*pData);
       delete pData;
 
-      if(data.logdlg != NULL && data.logEntries != NULL)
+      if (data.logdlg != NULL && data.logEntries != NULL)
       {
         data.logdlg->NextLogEntriesCallback(data.logEntries);
       }
@@ -1963,7 +1963,7 @@ MainFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
   {
     m->activePane = ACTIVEPANE_FOLDER_BROWSER;
 
-    // Update the menu and list control 
+    // Update the menu and list control
     bool flatMode = m_folderBrowser->IsFlat();
     m_listCtrl->SetFlat(flatMode);
     m->CheckMenu(ID_Flat, flatMode);
@@ -2308,14 +2308,14 @@ MainFrame::OnSize(wxSizeEvent & sizeEvent)
 }
 
 
-void 
+void
 MainFrame::OnFolderBrowserSetFocus(wxFocusEvent& WXUNUSED(event))
 {
   SetActivePane(ACTIVEPANE_FOLDER_BROWSER);
 }
 
 
-void 
+void
 MainFrame::OnListCtrlSetFocus(wxFocusEvent& WXUNUSED(event))
 {
   SetActivePane(ACTIVEPANE_FILELIST);
@@ -2327,7 +2327,7 @@ MainFrame::OnListCtrlSetFocus(wxFocusEvent& WXUNUSED(event))
  * So we have to wait just one call longer until we can set the
  * desired sash position
  */
-void 
+void
 MainFrame::OnIdle(wxIdleEvent & WXUNUSED(event))
 {
   m->idleCount++;

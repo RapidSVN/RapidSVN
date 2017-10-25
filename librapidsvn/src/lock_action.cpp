@@ -37,7 +37,7 @@
 
 
 LockAction::LockAction(wxWindow * parent)
-    : Action(parent, _("Lock"))
+  : Action(parent, _("Lock"))
 {
 }
 

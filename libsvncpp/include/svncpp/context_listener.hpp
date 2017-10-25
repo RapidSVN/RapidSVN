@@ -124,7 +124,7 @@ namespace svn
      */
     struct SslServerTrustData
     {
-public:
+    public:
       /** bit coded failures */
       apr_uint32_t failures;
 
@@ -138,14 +138,14 @@ public:
       bool maySave;
 
       SslServerTrustData(const apr_uint32_t failures_ = 0)
-          : failures(failures_), hostname(""), fingerprint(""),
+        : failures(failures_), hostname(""), fingerprint(""),
           validFrom(""), validUntil(""), issuerDName(""),
           realm(""), maySave(true)
       {
       }
 
       SslServerTrustData(const SslServerTrustData & src)
-          : failures(src.failures)
+        : failures(src.failures)
       {
         hostname = src.hostname;
         fingerprint = src.fingerprint;

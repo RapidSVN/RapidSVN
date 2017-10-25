@@ -632,7 +632,7 @@ HasModifiedChildren(const svn::Path & path, svn::Context * context)
     return false;
 
   svn::Client client(context);
-  svn::StatusEntries children = 
+  svn::StatusEntries children =
     client.status(path.c_str(),
                   true,   // Recursive
                   false); // Only get interesting entries
@@ -653,7 +653,7 @@ HasModifiedChildren(const svn::Path & path, svn::Context * context)
 }
 
 
-wxString 
+wxString
 FindExecutableInPath(const wxString & executable)
 {
   wxPathList pathList;
@@ -664,11 +664,11 @@ FindExecutableInPath(const wxString & executable)
 }
 
 
-bool 
+bool
 IsValidDir(const wxString & dir)
 {
   wxFileName filename(dir);
-  filename.Normalize(wxPATH_NORM_ENV_VARS | 
+  filename.Normalize(wxPATH_NORM_ENV_VARS |
                      wxPATH_NORM_DOTS |
                      wxPATH_NORM_ABSOLUTE |
                      wxPATH_NORM_LONG |

@@ -47,7 +47,7 @@ public:
 };
 
 SwitchAction::SwitchAction(wxWindow * parent)
-    : Action(parent, _("Switch URL"))
+  : Action(parent, _("Switch URL"))
 {
   m = new Data();
 }

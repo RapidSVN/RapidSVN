@@ -96,8 +96,8 @@ public:
   svn::StatusSel statusSel;
 
   Data(wxWindow * parnt, const wxString & nam, unsigned int flgs)
-      :  parent(parnt), name(nam), flags(flgs),
-      tracer(0), ownTracer(false)
+    :  parent(parnt), name(nam), flags(flgs),
+       tracer(0), ownTracer(false)
   {
   }
 

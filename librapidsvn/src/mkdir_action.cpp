@@ -34,7 +34,7 @@
 #include "utils.hpp"
 
 MkdirAction::MkdirAction(wxWindow * parent, const wxString & path)
-    : Action(parent, _("Mkdir"), UPDATE_TREE),
+  : Action(parent, _("Mkdir"), UPDATE_TREE),
     m_path(path)
 {
 }

@@ -86,7 +86,7 @@ into\n\
     m_buttonCopy->Show(true);
     m_buttonMove->Show(true);
   }
-             
+
   m_staticQuestion->SetLabel(wxString::Format(fmt, src.c_str(), dest.c_str()));
 
   m_mainSizer->SetSizeHints(this);

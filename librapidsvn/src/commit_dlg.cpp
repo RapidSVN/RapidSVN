@@ -62,27 +62,27 @@ CommitDlg::CommitDlg(wxWindow* parent, const svn::PathVector & filenames)
   else
   {
     m_checkListFiles->Clear();
-    
+
     svn::PathVector::const_iterator it;
-    
-    for(it=filenames.begin(); it!=filenames.end(); it++)
+
+    for (it=filenames.begin(); it!=filenames.end(); it++)
     {
       const svn::Path & path = *it;
       int i = m_checkListFiles->Append(PathToNative(path));
-      
+
       m_checkListFiles->Check(i, true);
     }
 
     CheckFilesButtons();
   }
-  
+
   wxGenericValidator valRecursive(&m_recursive);
   m_checkRecursive->SetValidator(valRecursive);
 
-  m_keepLocks = false;  
+  m_keepLocks = false;
   wxGenericValidator valKeepLocks(&m_keepLocks);
   m_checkKeepLocks->SetValidator(valKeepLocks);
-  
+
   m_mainSizer->SetSizeHints(this);
   m_mainSizer->Fit(this);
 
@@ -96,7 +96,7 @@ CommitDlg::~CommitDlg()
 }
 
 
-bool 
+bool
 CommitDlg::TransferDataFromWindow()
 {
   bool result = wxDialog::TransferDataFromWindow();
@@ -106,9 +106,9 @@ CommitDlg::TransferDataFromWindow()
   if (result && m_usesFilenames)
   {
     size_t count = m_checkListFiles->GetCount();
-    for(size_t i=0; i < count; i++)
+    for (size_t i=0; i < count; i++)
     {
-      if(m_checkListFiles->IsChecked(i))
+      if (m_checkListFiles->IsChecked(i))
         m_selectedFilenames.push_back(PathUtf8(m_checkListFiles->GetString(i)));
     }
   }
@@ -167,14 +167,14 @@ CommitDlg::OnCheckListFilesDClick(wxCommandEvent &event)
 }
 
 
-void 
+void
 CommitDlg::OnCheckListFiles(wxCommandEvent &)
 {
   CheckFilesButtons();
 }
 
 
-void 
+void
 CommitDlg::OnCheckListFilesToggle(wxCommandEvent & event)
 {
   OnButtonToggle(event);
@@ -196,7 +196,7 @@ CommitDlg::OnButtonDiff(wxCommandEvent &)
   {
     int item = *it;
 
-    DiffData *data = new DiffData ();
+    DiffData *data = new DiffData();
     data->path = m_checkListFiles->GetString((unsigned int)item);
     data->compareType = DiffData::WITH_BASE;
 
@@ -205,7 +205,7 @@ CommitDlg::OnButtonDiff(wxCommandEvent &)
 }
 
 
-void 
+void
 CommitDlg::OnButtonToggle(wxCommandEvent &)
 {
   wxArrayInt selection;

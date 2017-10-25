@@ -225,12 +225,12 @@ namespace svn
 
   struct StatusBaton
   {
-public:
+  public:
     const StatusFilter & filter;
     StatusEntries & entries;
 
     StatusBaton(const StatusFilter & filter_, StatusEntries & entries_)
-        : filter(filter_), entries(entries_)
+      : filter(filter_), entries(entries_)
     {
     }
   };

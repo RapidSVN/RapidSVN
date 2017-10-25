@@ -78,7 +78,7 @@ CheckoutDlg::CheckoutDlg(wxWindow * parent,
 #ifndef __WXMSW__
   m_buttonSizer->Add(new wxContextHelpButton(this), 0, wxALL, 10);
 #endif
-  
+
   // TODO: online help. Help button doesn't work yet, so hide it.
   m_buttonHelp->Show(false);
 
@@ -148,10 +148,10 @@ CheckoutDlg::CheckControls()
 {
   bool useLatest = m_checkUseLatest->IsChecked();
   bool notSpecified = m_checkPegNotSpecified->IsChecked();
-  
+
   m_textRevision->Enable(!useLatest);
   m_textPegRevision->Enable(!notSpecified);
-  
+
   bool ok = true;
   EnableCtrl(m_textRevision, !useLatest);
   if (!useLatest)
@@ -160,10 +160,10 @@ CheckoutDlg::CheckControls()
   EnableCtrl(m_textPegRevision, !notSpecified);
   if (!notSpecified)
     ok = CheckRevision(m_textPegRevision->GetValue());
-  
+
   if (m_comboDest->GetValue().Length() <= 0)
     ok = false;
-  
+
   if (m_comboUrl->GetValue().Length() <= 0)
     ok = false;
 

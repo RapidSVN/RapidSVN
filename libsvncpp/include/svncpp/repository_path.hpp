@@ -78,7 +78,7 @@ namespace svn
     {
       if (this == &path)
         return *this;
-      
+
       Path(*this) = path;
       m_repositoryRoot = path.getRepositoryRoot();
 

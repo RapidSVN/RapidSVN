@@ -52,7 +52,7 @@ EntryDlg::EntryDlg(wxWindow * parent, const wxString & title)
 
   m_comboName->SetValidator(wxGenericValidator(&m->name));
   m_textValue->SetValidator(wxGenericValidator(&m->value));
-  
+
   m_mainSizer->SetSizeHints(this);
   m_mainSizer->Fit(this);
 
@@ -85,9 +85,9 @@ EntryDlg::TransferDataFromWindow()
 }
 
 
-void 
-EntryDlg::SetNameValue(const wxString & name, 
-		       const wxString & value)
+void
+EntryDlg::SetNameValue(const wxString & name,
+                       const wxString & value)
 {
   m->name = name;
   m->value = value;
@@ -95,26 +95,26 @@ EntryDlg::SetNameValue(const wxString & name,
 
 void
 EntryDlg::GetNameValue(wxString & name,
-		       wxString & value) const
+                       wxString & value) const
 {
   name = m->name;
   value = m->value;
 }
-  
 
-void 
+
+void
 EntryDlg::SetNameCaption(const wxString & caption)
 {
   m_staticName->SetLabel(caption);
 }
 
-void 
+void
 EntryDlg::SetValueCaption(const wxString & caption)
 {
   m_staticValue->SetLabel(caption);
 }
 
-void 
+void
 EntryDlg::SetReadOnly(bool value)
 {
   m->readOnly = value;
@@ -122,7 +122,7 @@ EntryDlg::SetReadOnly(bool value)
   CheckControls();
 }
 
-void 
+void
 EntryDlg::SetEditMode(EditMode mode)
 {
   m->mode = mode;
@@ -155,7 +155,7 @@ EntryDlg::OnText(wxCommandEvent &)
 }
 
 
-void 
+void
 EntryDlg::SetNameTemplates(const wxArrayString & names)
 {
   m_comboName->Clear();

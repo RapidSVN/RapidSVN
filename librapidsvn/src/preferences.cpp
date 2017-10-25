@@ -74,7 +74,7 @@ static const wxChar CONF_RESET_FLAT_MODE_ON_START[] =
   wxT("/Preferences/ResetFlatModeOnStart");
 
 Preferences::Preferences()
-    : editor(DEFAULT_EDITOR), editorAlways(false), editorArgs(wxEmptyString),
+  : editor(DEFAULT_EDITOR), editorAlways(false), editorArgs(wxEmptyString),
     explorer(DEFAULT_EXPLORER), explorerAlways(false),
     explorerArgs(wxEmptyString), diffTool(DEFAULT_DIFF_TOOL),
     diffToolArgs(wxEmptyString), mergeTool(wxEmptyString),

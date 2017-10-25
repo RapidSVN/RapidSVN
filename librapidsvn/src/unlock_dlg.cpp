@@ -35,7 +35,7 @@ public:
   bool force;
 
   Data()
-      : force(false)
+    : force(false)
   {
   }
 };

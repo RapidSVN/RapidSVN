@@ -47,7 +47,7 @@ namespace svn
   }
 
   Pool::Pool(apr_pool_t * parent)
-      : m_parent(parent), m_pool(pool_create(parent))
+    : m_parent(parent), m_pool(pool_create(parent))
   {
   }
 

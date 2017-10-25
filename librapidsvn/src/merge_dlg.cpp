@@ -71,7 +71,7 @@ MergeDlg::~MergeDlg()
 }
 
 
-bool 
+bool
 MergeDlg::TransferDataFromWindow()
 {
   if (!MergeDlgBase::TransferDataFromWindow())
@@ -138,9 +138,9 @@ MergeDlg::CheckControls()
   TrimString(rev2);
   TrimString(dest);
 
-  bool ok = 
+  bool ok =
     !url1.IsEmpty() && !url1.IsEmpty() &&
-    !dest.IsEmpty() && CheckRevision(rev1) && 
+    !dest.IsEmpty() && CheckRevision(rev1) &&
     CheckRevision(rev2);
 
   bool readOnly = m->data.calledByLogDlg;

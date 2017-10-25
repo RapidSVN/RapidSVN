@@ -41,13 +41,13 @@ namespace svn
                  const char *author,
                  const char *date,
                  const char *line)
-        : m_line_no(line_no), m_revision(revision),
+      : m_line_no(line_no), m_revision(revision),
         m_author(author), m_date(date), m_line(line)
     {
     }
 
     AnnotateLine(const AnnotateLine &other)
-        : m_line_no(other.m_line_no), m_revision(other.m_revision),
+      : m_line_no(other.m_line_no), m_revision(other.m_revision),
         m_author(other.m_author), m_date(other.m_date),
         m_line(other.m_line)
     {

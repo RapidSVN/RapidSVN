@@ -38,17 +38,17 @@
 class LogRevList : public wxListView
 {
 public:
-    static long COL_COUNT;
+  static long COL_COUNT;
 
   struct ColSortInfo {
-      wxListView* Parent;
-      long Column;
-      bool Ascending;
+    wxListView* Parent;
+    long Column;
+    bool Ascending;
 
-      ColSortInfo(wxListView* parent, long column, bool ascending)
-          : Parent(parent), Column(column), Ascending(ascending)
-      {
-      }
+    ColSortInfo(wxListView* parent, long column, bool ascending)
+      : Parent(parent), Column(column), Ascending(ascending)
+    {
+    }
   };
 
 public:

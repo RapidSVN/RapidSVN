@@ -36,7 +36,7 @@
 #include "utils.hpp"
 
 UnlockAction::UnlockAction(wxWindow * parent)
-    : Action(parent, _("Unlock"))
+  : Action(parent, _("Unlock"))
 {
 }
 

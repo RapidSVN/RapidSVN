@@ -54,7 +54,7 @@ namespace svn
 
   struct LogEntry
   {
-public:
+  public:
     LogEntry();
 
     LogEntry(const svn_revnum_t revision,

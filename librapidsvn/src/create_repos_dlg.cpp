@@ -73,7 +73,7 @@ CreateReposDlg::CreateReposDlg(wxWindow * parent)
   // m_comboDirectory->SetMinSize(wxSize(GetCharWidth() * 60, GetCharHeight()));
   // m_rootSizer->SetSizeHints(this);
   // m_rootSizer->Fit(this);
-  // 
+  //
   // Layout();
   CentreOnParent();
 
@@ -87,7 +87,7 @@ CreateReposDlg::~CreateReposDlg()
 }
 
 
-void 
+void
 CreateReposDlg::CheckValues()
 {
   wxASSERT(0 != m_checkBdbLogKeep);
@@ -147,37 +147,37 @@ CreateReposDlg::CheckValues()
 }
 
 
-void 
+void
 CreateReposDlg::OnChoiceType(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
-void 
+void
 CreateReposDlg::OnComboDirText(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
-void 
+void
 CreateReposDlg::OnComboNameText(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
-void 
+void
 CreateReposDlg::OnChoiceCompat(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
-void 
+void
 CreateReposDlg::OnComboConfigDirText(wxCommandEvent & WXUNUSED(event))
 {
   CheckValues();
 }
 
-void 
+void
 CreateReposDlg::OnButtonBrowseDirClick(wxCommandEvent & WXUNUSED(event))
 {
   wxASSERT(0 != m_comboDir);
@@ -193,7 +193,7 @@ CreateReposDlg::OnButtonBrowseDirClick(wxCommandEvent & WXUNUSED(event))
   }
 }
 
-void 
+void
 CreateReposDlg::OnButtonBrowseConfigDirClick(wxCommandEvent & WXUNUSED(event))
 {
   wxASSERT(0 != m_comboConfigDir);
@@ -209,28 +209,28 @@ CreateReposDlg::OnButtonBrowseConfigDirClick(wxCommandEvent & WXUNUSED(event))
   }
 }
 
-bool 
+bool
 CreateReposDlg::TransferDataFromWindow()
 {
   // without wxWS_EX_VALIDATE_RECURSIVELY we need to make
   // sure the history gets saved. Settings this flasg doesnt work
   // since then the dialog gets shown in the taskbar (on Windows)
   return CreateReposDlgBase::TransferDataFromWindow() &&
-    m_panelGeneral->TransferDataFromWindow() &&
-    m_panelExtended->TransferDataFromWindow();
+         m_panelGeneral->TransferDataFromWindow() &&
+         m_panelExtended->TransferDataFromWindow();
 }
 
 
-bool 
+bool
 CreateReposDlg::TransferDataToWindow()
 {
   return CreateReposDlgBase::TransferDataToWindow() &&
-    m_panelGeneral->TransferDataToWindow() &&
-    m_panelExtended->TransferDataToWindow();
+         m_panelGeneral->TransferDataToWindow() &&
+         m_panelExtended->TransferDataToWindow();
 }
 
 
-wxString 
+wxString
 CreateReposDlg::GetDir() const
 {
   wxASSERT(0 != m_comboDir);
@@ -254,7 +254,7 @@ CreateReposDlg::GetName() const
 }
 
 
-wxString 
+wxString
 CreateReposDlg::GetFilename() const
 {
   wxString dir(GetDir());
@@ -265,7 +265,7 @@ CreateReposDlg::GetFilename() const
 
   wxFileName filename(GetDir(), GetName());
 
-  filename.Normalize(wxPATH_NORM_ENV_VARS | 
+  filename.Normalize(wxPATH_NORM_ENV_VARS |
                      wxPATH_NORM_DOTS |
                      wxPATH_NORM_ABSOLUTE |
                      wxPATH_NORM_LONG |
@@ -275,7 +275,7 @@ CreateReposDlg::GetFilename() const
 }
 
 
-wxString 
+wxString
 CreateReposDlg::GetConfigDir() const
 {
   wxASSERT(0 != m_comboConfigDir);
@@ -296,7 +296,7 @@ CreateReposDlg::GetType() const
 }
 
 
-int 
+int
 CreateReposDlg::GetCompat() const
 {
   wxASSERT(0 != m_choiceCompat);
@@ -314,7 +314,7 @@ CreateReposDlg::GetBdbLogKeep() const
 }
 
 
-bool 
+bool
 CreateReposDlg::GetBdbTxnNoSync() const
 {
   wxASSERT(0 != m_checkBdbTxnNoSync);
@@ -323,7 +323,7 @@ CreateReposDlg::GetBdbTxnNoSync() const
 }
 
 
-bool 
+bool
 CreateReposDlg::GetAddBookmark() const
 {
   wxASSERT(0 != m_checkAddBookmark);

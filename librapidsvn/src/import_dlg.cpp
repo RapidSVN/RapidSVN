@@ -82,7 +82,7 @@ ImportDlg::~ImportDlg()
 }
 
 
-void 
+void
 ImportDlg::CheckControls()
 {
   wxString url(m_comboUrl->GetValue());
@@ -129,7 +129,7 @@ ImportDlg::OnBrowse(wxCommandEvent & WXUNUSED(event))
     if (wxID_OK == dlg.ShowModal())
       UpdateValue(m_textPath, dlg.GetPath());
   }
-  else                   
+  else
   {
     wxFileDialog dlg(this,_("Select a file to import"), oldPath);
     if (wxID_OK == dlg.ShowModal())

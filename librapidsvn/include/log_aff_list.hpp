@@ -42,22 +42,22 @@ class LogAffectedList : public wxListView
 {
 public:
   struct ColSortInfo {
-      wxListView* Parent;
-      long Column;
-      bool Ascending;
-      long SortIterations;
+    wxListView* Parent;
+    long Column;
+    bool Ascending;
+    long SortIterations;
 
-      ColSortInfo(wxListView* parent, long column, bool ascending)
-          : Parent(parent), Column(column), Ascending(ascending), SortIterations(0)
-      {
-      }
+    ColSortInfo(wxListView* parent, long column, bool ascending)
+      : Parent(parent), Column(column), Ascending(ascending), SortIterations(0)
+    {
+    }
   };
 
 public:
   LogAffectedList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
-             const wxSize& size = wxDefaultSize, long style = wxLC_REPORT,
-             const wxValidator& validator = wxDefaultValidator,
-             const wxString& name = wxT("LogAffectedList"));
+                  const wxSize& size = wxDefaultSize, long style = wxLC_REPORT,
+                  const wxValidator& validator = wxDefaultValidator,
+                  const wxString& name = wxT("LogAffectedList"));
 
   virtual ~LogAffectedList();
 

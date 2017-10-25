@@ -40,7 +40,7 @@ public:
   void * data;
 
   Data(wxWindow * parent_, int eventId_) :
-      parent(parent_), eventId(eventId_)
+    parent(parent_), eventId(eventId_)
   {
     event = new wxCommandEvent(wxEVT_COMMAND_MENU_SELECTED, ACTION_EVENT);
     event->SetInt(eventId);
@@ -53,20 +53,20 @@ public:
 };
 
 ActionEvent::ActionEvent(wxWindow * parent, int eventId)
-    : m(NULL)
+  : m(NULL)
 {
   init(parent, eventId);
 }
 
 ActionEvent::ActionEvent(wxWindow * parent, int eventId, const wxString & msg)
-    : m(NULL)
+  : m(NULL)
 {
   init(parent, eventId, msg);
 //  m->event->SetString (msg);
 }
 
 ActionEvent::ActionEvent(wxWindow * parent, int eventId, void * data)
-    : m(NULL)
+  : m(NULL)
 {
   init(parent, eventId, data);
 //  m->event->SetClientData (data);

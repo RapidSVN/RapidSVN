@@ -28,7 +28,7 @@
 #include "folder_item_data.hpp"
 
 FolderBrowserDropTarget::FolderBrowserDropTarget(FolderBrowser * parent)
-    : m_parent(parent)
+  : m_parent(parent)
 {
 }
 
