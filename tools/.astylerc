@@ -1,5 +1,7 @@
 --indent-namespaces
---unpad=paren
+--unpad-paren
+--pad-header
 --convert-tabs
 --indent=spaces=2
 --mode=c
+--suffix=none
