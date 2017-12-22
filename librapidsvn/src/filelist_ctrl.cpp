@@ -1076,7 +1076,7 @@ FileListCtrl::RefreshFileList()
 #if WORKAROUND_ISSUE_324
     // Workaround for issue 324 (only local+non-flat+update):
     //   we chdir to the requested dir and pass "." to svn
-    if (!pathUtf8.isUrl() && m->WithUpdate && !m->FlatMode)
+    if (!pathUtf8.isUrl() && m->WithUpdate && !m->FlatMode && !m->Path.empty())
     {
       m->IsRelative = true;
       ::wxSetWorkingDirectory(m->Path);
@@ -1129,12 +1129,15 @@ FileListCtrl::RefreshFileList()
   // because under WinXP call to ScrollList sometimes ignored without
   // report about failure, mainly this related for relatively big lists
   // and only for positions closer to the end of it
-  wxRect ir, cr;
-  GetItemRect(topItem, ir);
-  GetItemRect(GetTopItem(), cr);
-  ScrollList(0, ir.GetTop() - cr.GetTop());
+  if(topItem < GetItemCount())
+  {
+    wxRect ir, cr;
+    GetItemRect(topItem, ir);
+    GetItemRect(GetTopItem(), cr);
+    ScrollList(0, ir.GetTop() - cr.GetTop());
+  }
 
-  if (focusedItem >= 0)
+  if (focusedItem >= 0 && focusedItem < GetItemCount())
     Focus(focusedItem);
 
   wxLogStatus(_("Ready"),"");
@@ -1677,7 +1680,7 @@ FileListCtrl::GetColumnVisible(const int col) const
   }
 }
 
-inline void
+bool
 FileListCtrl::SetColumnWidth(const int col, const int width)
 {
   m->ColumnWidth[col] = width;
@@ -1685,8 +1688,9 @@ FileListCtrl::SetColumnWidth(const int col, const int width)
   int index = m->ColumnIndex[col];
   if (index != -1)
   {
-    wxListCtrl::SetColumnWidth(index, width);
+    return wxListCtrl::SetColumnWidth(index, width);
   }
+  return false;
 }
 
 int

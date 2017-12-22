@@ -684,7 +684,9 @@ MainFrame::MainFrame(const wxString & title,
   m->SetRunning(false);
 
   // as much as the widget can stand
+#ifndef __WXGTK__
   m_log->SetMaxLength(0);
+#endif
 
   m->logTracer = new EventTracer(this);
   m->listener.SetTracer(m->logTracer, false);

@@ -71,7 +71,7 @@ VerbList::GetCount() const
 const wxString &
 VerbList::GetName(size_t /*index*/) const
 {
-  return wxT("");
+  return wxEmptyString;
 }
 
 

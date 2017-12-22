@@ -52,7 +52,9 @@ CleanupAction::Perform()
   svn::Client client(GetContext());
   const svn::Path & path = GetPath();
 
-  wxSetWorkingDirectory(Utf8ToLocal(path.c_str()));
+  const wxString & dir = Utf8ToLocal(path.c_str());
+  if (!dir.empty())
+    wxSetWorkingDirectory(dir);
   client.cleanup(path.c_str());
 
   return true;

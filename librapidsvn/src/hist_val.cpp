@@ -113,7 +113,7 @@ HistoryValidator::TransferToWindow()
       }
 
       // if we have an entry, select it
-      if (!comboBox->IsEmpty())
+      if (!comboBox->IsListEmpty())
         comboBox->SetSelection(0, 0);
     }
 

@@ -28,6 +28,7 @@
 
 // wx
 #include "wx/wx.h"
+#include "wx/listctrl.h"
 
 // svncpp
 #include "svncpp/client.hpp"

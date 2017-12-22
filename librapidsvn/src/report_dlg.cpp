@@ -30,7 +30,9 @@ ReportDlg::ReportDlg(wxWindow * parent,
                      const wxString & data, int type)
   : ReportDlgBase(parent, -1, caption)
 {
+#ifndef __WXGTK__
   m_text->SetMaxLength(0);
+#endif
 
   if (ERROR_REPORT == type)
     m_text->SetDefaultStyle(wxTextAttr(*wxRED));

@@ -218,7 +218,9 @@ Action::GetTargets() const
 bool
 Action::Prepare()
 {
-  wxSetWorkingDirectory(Utf8ToLocal(m->path.c_str()));
+  const wxString & dir = Utf8ToLocal(m->path.c_str());
+  if (!dir.empty())
+    wxSetWorkingDirectory(dir);
 
   return true;
 }

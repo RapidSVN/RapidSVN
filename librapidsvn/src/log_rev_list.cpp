@@ -348,7 +348,8 @@ LogRevList::OnSize(wxSizeEvent& event)
   AutoSizeLastColumn();
 
   // Layout();
-  wxListView::OnSize(event);
+  //wxListView::OnSize(event);
+  event.Skip();
 }
 
 /**

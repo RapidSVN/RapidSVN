@@ -122,7 +122,7 @@ public:
    * @param col column number
    * @param width
    */
-  void
+  bool
   SetColumnWidth(const int col, const int width);
 
   /**
