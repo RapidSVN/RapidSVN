@@ -123,7 +123,7 @@ public:
    * @param width
    */
   bool
-  SetColumnWidth(const int col, const int width);
+  SetColumnWidth(int col, int width);
 
   /**
    * get number of soring column

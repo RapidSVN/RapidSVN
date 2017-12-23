@@ -381,7 +381,7 @@ LogRevList::OnColClick(wxListEvent& event)
   int clickedColumn = event.GetColumn();
 
   if (m_ColSortInfo.Column == clickedColumn)
-    m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
+    m_ColSortInfo.Ascending = !m_ColSortInfo.Ascending;
   m_ColSortInfo.Column = clickedColumn;
 
   SetColumnImages();
