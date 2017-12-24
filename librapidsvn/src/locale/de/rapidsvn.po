@@ -5,16 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: RapidSVN 0.1.2\n"
+"Project-Id-Version: RapidSVN 0.13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-26 15:12+0000\n"
-"PO-Revision-Date: 2009-11-02 17:10+0100\n"
+"PO-Revision-Date: 2017-12-24 13:37+0100\n"
 "Last-Translator: Alexander Mueller <XelaRellum@web.de>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: ../exceptions.cpp:55
 #, c-format
@@ -101,9 +102,8 @@ msgid "&Diff to Head...\tCTRL+H"
 msgstr "Vergleiche mit Aktuellster...\tCTRL-H"
 
 #: ../utils.cpp:220
-#, fuzzy
 msgid "&Diff..."
-msgstr "&Vergleichen"
+msgstr "&Vergleichen..."
 
 #: ../utils.cpp:205
 msgid "&Diff...\tCTRL+D"
@@ -170,9 +170,8 @@ msgid "&Lock..."
 msgstr "&Sperren..."
 
 #: ../utils.cpp:222
-#, fuzzy
 msgid "&Log..."
-msgstr "&Log...\tCTRL-L"
+msgstr "&Log..."
 
 #: ../utils.cpp:209
 msgid "&Log...\tCTRL-L"
@@ -187,9 +186,8 @@ msgid "&Modify"
 msgstr "&Bearbeiten"
 
 #: ../rapidsvn_generated.cpp:897
-#, fuzzy
 msgid "&Name"
-msgstr "Name"
+msgstr "&Name"
 
 #: ../rapidsvn_generated.cpp:499
 msgid "&Name of the new repository:"
@@ -200,9 +198,8 @@ msgid "&New..."
 msgstr "&Neu..."
 
 #: ../rapidsvn_generated.cpp:96
-#, fuzzy
 msgid "&Password"
-msgstr "Kennwort"
+msgstr "&Kennwort"
 
 #: ../rapidsvn_generated.cpp:198
 msgid "&Permanently"
@@ -265,14 +262,12 @@ msgid "&Update...\tCTRL-U"
 msgstr "&Update...\tCTRL-U"
 
 #: ../rapidsvn_generated.cpp:89
-#, fuzzy
 msgid "&Username"
-msgstr "Umbenennen"
+msgstr "&Benutzername"
 
 #: ../rapidsvn_generated.cpp:904
-#, fuzzy
 msgid "&Value"
-msgstr "Wert"
+msgstr "&Wert"
 
 #: ../main_frame.cpp:359 ../rapidsvn_generated.cpp:1176
 msgid "&View"
@@ -299,8 +294,8 @@ msgid ""
 "- The certificate is not issued by a trusted authority.\n"
 "  Use the fingerprint to validate the certificate manually!"
 msgstr ""
-"- Das Zertifikat wurde von keiner anerkannten Autorität erstellt.\n"
-" Benutzen Sie den Fingerprint um das Zertifikat manuell zu validieren!"
+"- Das Zertifikat wurde von keiner anerkannten Ausgabestelle unterzeichnet.\n"
+" Benutzen Sie den Fingerprint um das Zertifikat manuell zu überprüfen!"
 
 #: ../cert_dlg.cpp:49
 msgid "- The certificate is not yet valid."
@@ -308,9 +303,8 @@ msgstr "- Das Zertifikat ist noch nicht gültig."
 
 #: ../rapidsvn_generated.cpp:246 ../rapidsvn_generated.cpp:958
 #: ../rapidsvn_generated.cpp:1284 ../rapidsvn_generated.cpp:1483
-#, fuzzy
 msgid "..."
-msgstr "&Neu..."
+msgstr "..."
 
 #: ../file_info.cpp:102 ../file_info.cpp:110 ../file_info.cpp:195
 msgid "<None>"
@@ -483,9 +477,8 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: ../rapidsvn_generated.cpp:144
-#, fuzzy
 msgid "Certificate information:"
-msgstr "Zertifikat Information:"
+msgstr "Zertifikats-Information:"
 
 #: ../main_frame.cpp:298
 msgid "Check&out...\tCTRL-O"
@@ -513,9 +506,8 @@ msgid "Cleanup"
 msgstr "Bereinigen"
 
 #: ../rapidsvn_generated.cpp:1173
-#, fuzzy
 msgid "Close"
-msgstr "&Schliessen"
+msgstr "Schließen"
 
 #: ../utils.cpp:297
 msgid "Co&mmit...\tCTRL-ENTER"
@@ -554,14 +546,14 @@ msgid "Compare:"
 msgstr "Vergleiche:"
 
 #: ../listener.cpp:496
-#, fuzzy, c-format
+#, c-format
 msgid "Completed %s at revision %d"
-msgstr "Committete Revision"
+msgstr "Fertiggestellt: %s bei Revision %d"
 
 #: ../listener.cpp:486
-#, fuzzy, c-format
+#, c-format
 msgid "Completed at revision %d"
-msgstr "Committete Revision"
+msgstr "Fertiggestellt bei Revision %d"
 
 #: ../columns.cpp:64
 msgid "Conflict BASE"
@@ -596,9 +588,8 @@ msgid "Conflict Working File: %s"
 msgstr "Konflikt Arbeitsdatei: %s"
 
 #: ../listener.cpp:307
-#, fuzzy
 msgid "Conflicted"
-msgstr "Konflikt"
+msgstr "Im Konflikt"
 
 #: ../columns.cpp:63
 msgid "Copied"
@@ -713,9 +704,8 @@ msgid "Different login for each bookmark in the bookmarks list"
 msgstr "Separate Anmeldung für jedes Lesezeichen"
 
 #: ../rapidsvn_generated.cpp:1296
-#, fuzzy
 msgid "Directory"
-msgstr "Verzeichnis:"
+msgstr "Verzeichnis"
 
 #: ../mkdir_action.cpp:51
 msgid "Directory:"
@@ -778,18 +768,16 @@ msgid "Edit Property"
 msgstr "Eigenschaft Bearbeiten"
 
 #: ../listed_dlg.cpp:355
-#, fuzzy
 msgid "Edit..."
-msgstr "&Bearbeiten..."
+msgstr "Bearbeiten..."
 
 #: ../rapidsvn_generated.cpp:1306
-#, fuzzy
 msgid "End &log message"
-msgstr "Geben Sie eine &Log Meldung ein"
+msgstr "&Log-Meldung beenden"
 
 #: ../rapidsvn_generated.cpp:988
 msgid "End of line characters"
-msgstr ""
+msgstr "Zeilenende-Zeichen"
 
 #: ../rapidsvn_generated.cpp:334
 msgid "Enter &log message"
@@ -833,11 +821,13 @@ msgid "Error setting the property values"
 msgstr "Fehler beim Setzen der Werte für Eigenschaften"
 
 #: ../property_dlg.cpp:132
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error setting the property values:\n"
 "%s"
-msgstr "Fehler beim Setzen der Werte für Eigenschaften"
+msgstr ""
+"Fehler beim Festlegen der Eigenschaften:\n"
+"%s"
 
 #: ../cert_dlg.cpp:68
 #, c-format
@@ -932,7 +922,6 @@ msgid "Extension"
 msgstr "Erweiterung"
 
 #: ../listener.cpp:405
-#, fuzzy
 msgid "External"
 msgstr "Extern"
 
@@ -1003,7 +992,7 @@ msgstr "&Hilfe"
 
 #: ../rapidsvn_generated.cpp:650
 msgid "Here comes the description"
-msgstr ""
+msgstr "Hier erscheint die Beschreibung"
 
 #: ../log_dlg.cpp:77 ../rapidsvn_generated.cpp:1158
 #, c-format
@@ -1047,9 +1036,8 @@ msgid "Import"
 msgstr "Importieren"
 
 #: ../rapidsvn_generated.cpp:1276
-#, fuzzy
 msgid "Import &Path"
-msgstr "Importieren"
+msgstr "Import-&Pfad"
 
 #: ../drag_n_drop_action.cpp:311
 #, c-format
@@ -1089,7 +1077,6 @@ msgid "Invalid revision number detected"
 msgstr "Ungültige Revisionsnummer entdeckt"
 
 #: ../rapidsvn_generated.cpp:159
-#, fuzzy
 msgid "Issuer:"
 msgstr "Aussteller:"
 
@@ -1234,9 +1221,8 @@ msgid "Merge..."
 msgstr "Zusammenführen..."
 
 #: ../listener.cpp:308
-#, fuzzy
 msgid "Merged"
-msgstr "Zusammenführen"
+msgstr "Zusammengeführt"
 
 #: ../mkdir_action.cpp:37
 msgid "Mkdir"
@@ -1270,7 +1256,7 @@ msgstr "Mehrere Dateien"
 #: ../rapidsvn_generated.cpp:171 ../rapidsvn_generated.cpp:179
 #: ../rapidsvn_generated.cpp:187
 msgid "MyLabel"
-msgstr ""
+msgstr "Beschriftung"
 
 #: ../columns.cpp:45 ../listed_dlg.cpp:65 ../listed_dlg.cpp:182
 msgid "Name"
@@ -1333,9 +1319,8 @@ msgid "Path"
 msgstr "Pfad"
 
 #: ../rapidsvn_generated.cpp:1292
-#, fuzzy
 msgid "Path &type"
-msgstr "Pfad Typ:"
+msgstr "Pfad-&Typ"
 
 #: ../rapidsvn_generated.cpp:263 ../rapidsvn_generated.cpp:975
 msgid "Peg Revision"
@@ -1403,7 +1388,7 @@ msgstr "Stelle Dateien und Verzeichnisse unter Versionskontrolle"
 
 #: ../rapidsvn_generated.cpp:844
 msgid "Question"
-msgstr ""
+msgstr "Frage"
 
 #: ../main_frame.cpp:528
 msgid "RapidSVN Error"
@@ -1486,9 +1471,8 @@ msgid "Repository"
 msgstr "Repository"
 
 #: ../rapidsvn_generated.cpp:1268
-#, fuzzy
 msgid "Repository &URL for import"
-msgstr "Repository URL wird für den Import erwartet!"
+msgstr "Repository-&URL für Import"
 
 #: ../main_frame.cpp:2079
 msgid "Repository URL"
@@ -1893,16 +1877,15 @@ msgid "View"
 msgstr "Ansehen"
 
 #: ../listed_dlg.cpp:355
-#, fuzzy
 msgid "View..."
-msgstr "An&sehen..."
+msgstr "Ansehen..."
 
 #: ../rapidsvn_generated.cpp:567
 msgid "WARNING"
 msgstr "WARNUNG"
 
 #: ../dnd_dlg.cpp:48
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Would you like to copy\n"
 "\n"
@@ -1912,7 +1895,15 @@ msgid ""
 "into\n"
 "\n"
 "  %s?"
-msgstr "Möchten Sie   %snach  %sVerschieben oder Kopieren?"
+msgstr ""
+"Möchten Sie\n"
+"\n"
+"  %s\n"
+"\n"
+"nach\n"
+"\n"
+"  %s\n"
+"kopieren?"
 
 #: ../dnd_dlg.cpp:39
 #, c-format
@@ -1925,7 +1916,14 @@ msgid ""
 "into\n"
 "\n"
 "  %s?"
-msgstr "Möchten Sie   %snach  %sVerschieben oder Kopieren?"
+msgstr ""
+"Möchten Sie\n"
+"\n"
+"  %s\n"
+"\n"
+"nach\n"
+"  %s\n"
+"verschieben oder kopieren?"
 
 #: ../main_frame.cpp:2051
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
@@ -1987,7 +1985,7 @@ msgstr "geändert"
 
 #: ../rapidsvn_generated.cpp:1165
 msgid "more"
-msgstr ""
+msgstr "Mehr"
 
 #: ../rapidsvn_generated.cpp:992
 msgid "native"
