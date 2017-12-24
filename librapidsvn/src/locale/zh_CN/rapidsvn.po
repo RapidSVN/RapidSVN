@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-26 15:12+0000\n"
+"POT-Creation-Date: 2017-12-24 14:02+0100\n"
 "PO-Revision-Date: 2011-11-07 09:56+0800\n"
 "Last-Translator: highbing <caohaibing@gmail.com>\n"
 "Language-Team: RapidSVN i18n\n"
@@ -325,6 +325,10 @@ msgstr "新建(&N)..."
 msgid "<None>"
 msgstr "<无>"
 
+#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
+msgid "A"
+msgstr ""
+
 #: ../create_repos_dlg.cpp:131
 msgid "A directory of this name exists already"
 msgstr ""
@@ -342,8 +346,12 @@ msgstr "ANSI"
 msgid "About %s"
 msgstr "关于 %s"
 
+#: ../log_aff_list.cpp:103
+msgid "Action"
+msgstr "动作"
+
 #: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listed_dlg.cpp:183
-#: ../listener.cpp:393 ../main_frame.cpp:1420
+#: ../listener.cpp:393 ../main_frame.cpp:1422
 msgid "Add"
 msgstr "添加"
 
@@ -368,7 +376,7 @@ msgid "Add to bookmarks"
 msgstr "添加到书签"
 
 #: ../listener.cpp:309 ../listener.cpp:402 ../listener.cpp:409
-#: ../main_frame.cpp:1429 ../main_frame.cpp:1436
+#: ../main_frame.cpp:1431 ../main_frame.cpp:1438
 msgid "Added"
 msgstr "已添加"
 
@@ -400,11 +408,11 @@ msgstr "受影响的文件/目录"
 msgid "All files|*"
 msgstr "所有文件|*"
 
-#: ../main_frame.cpp:1294 ../main_frame.cpp:1313
+#: ../main_frame.cpp:1296 ../main_frame.cpp:1315
 msgid "An error occured while launching the browser"
 msgstr ""
 
-#: ../main_frame.cpp:1281
+#: ../main_frame.cpp:1283
 msgid "An error occurred while checking valid actions"
 msgstr ""
 
@@ -432,7 +440,7 @@ msgstr "身份验证"
 msgid "Author"
 msgstr "作者"
 
-#: ../action.cpp:267
+#: ../action.cpp:269
 msgid "BASE"
 msgstr "基准(BASE)"
 
@@ -564,12 +572,12 @@ msgstr "比较:"
 
 #: ../listener.cpp:496
 #, fuzzy, c-format
-msgid "Completed %s at revision %d"
+msgid "Completed %s at revision %ld"
 msgstr "已提交版本"
 
 #: ../listener.cpp:486
 #, fuzzy, c-format
-msgid "Completed at revision %d"
+msgid "Completed at revision %ld"
 msgstr "已提交版本"
 
 #: ../columns.cpp:64
@@ -623,7 +631,15 @@ msgstr "已复制, 来自版本: %ld"
 msgid "Copied From URL: %s"
 msgstr "已复制, 来自 URL: %s"
 
-#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1421
+#: ../log_aff_list.cpp:105
+msgid "Copied from Path"
+msgstr "已复制, 来自 URL:"
+
+#: ../log_aff_list.cpp:106
+msgid "Copied from Rev"
+msgstr "已复制, 来自版本:"
+
+#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1423
 #: ../move_action.cpp:44 ../rapidsvn_generated.cpp:857
 msgid "Copy"
 msgstr "复制"
@@ -661,7 +677,11 @@ msgstr "新建文档库..."
 msgid "Create repository in &directory:"
 msgstr "选择目标目录"
 
-#: ../columns.cpp:54 ../log_rev_list.cpp:39
+#: ../log_dlg.cpp:318 ../log_dlg.cpp:371
+msgid "D"
+msgstr ""
+
+#: ../columns.cpp:54 ../log_rev_list.cpp:109
 msgid "Date"
 msgstr "日期"
 
@@ -674,7 +694,7 @@ msgstr "日期:"
 msgid "Default"
 msgstr "删除"
 
-#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1422
+#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1424
 msgid "Delete"
 msgstr "删除"
 
@@ -687,7 +707,7 @@ msgid "Delete selected"
 msgstr "删除选定项目"
 
 #: ../listener.cpp:310 ../listener.cpp:401 ../listener.cpp:410
-#: ../main_frame.cpp:1428 ../main_frame.cpp:1437
+#: ../main_frame.cpp:1430 ../main_frame.cpp:1439
 msgid "Deleted"
 msgstr "已删除"
 
@@ -881,11 +901,11 @@ msgstr "准备操作时出错: %s"
 msgid "Error while refreshing filelist (%s)"
 msgstr "刷新文件列表时出错 (%s)"
 
-#: ../main_frame.cpp:930
+#: ../main_frame.cpp:932
 msgid "Error while updating filelist"
 msgstr "更新文件列表时出错"
 
-#: ../main_frame.cpp:917
+#: ../main_frame.cpp:919
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "更新文件列表时出错 (%s)"
@@ -953,11 +973,11 @@ msgstr "外部"
 msgid "FSFS"
 msgstr ""
 
-#: ../listener.cpp:416 ../main_frame.cpp:1443
+#: ../listener.cpp:416 ../main_frame.cpp:1445
 msgid "Failed to lock"
 msgstr "锁定失败"
 
-#: ../listener.cpp:417 ../main_frame.cpp:1444
+#: ../listener.cpp:417 ../main_frame.cpp:1446
 msgid "Failed to unlock"
 msgstr "解除锁定失败"
 
@@ -999,12 +1019,12 @@ msgstr "强制解除锁定, 即使你不是锁定所有者"
 msgid "General"
 msgstr "常规"
 
-#: ../action.cpp:272
+#: ../action.cpp:274
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "获取文件 %s (版本 %s)"
 
-#: ../action.cpp:265
+#: ../action.cpp:267
 msgid "HEAD"
 msgstr "HEAD"
 
@@ -1017,9 +1037,14 @@ msgstr "帮助(&H)"
 msgid "Here comes the description"
 msgstr ""
 
-#: ../log_dlg.cpp:77 ../rapidsvn_generated.cpp:1158
+#: ../rapidsvn_generated.cpp:1158
 #, c-format
 msgid "History: %d revisions"
+msgstr "历史: %d 次版本更新"
+
+#: ../log_dlg.cpp:77
+#, fuzzy, c-format
+msgid "History: %zd revisions"
 msgstr "历史: %d 次版本更新"
 
 #: ../rapidsvn_generated.cpp:151
@@ -1085,7 +1110,7 @@ msgstr "选定项目的信息"
 msgid "Internal Error: There is another action running"
 msgstr "内部错误: 已有一个操作正在执行中"
 
-#: ../main_frame.cpp:1695
+#: ../main_frame.cpp:1697
 msgid "Internal Error: no client data for action event!"
 msgstr "内部错误: 没有符合操作事件的客户端数据!"
 
@@ -1186,11 +1211,11 @@ msgstr "锁定所有者: %s"
 msgid "Lock Token: %s"
 msgstr "锁定标识: %s"
 
-#: ../listener.cpp:414 ../main_frame.cpp:1441
+#: ../listener.cpp:414 ../main_frame.cpp:1443
 msgid "Locked"
 msgstr "已锁定"
 
-#: ../log_action.cpp:82 ../log_action.cpp:136
+#: ../log_action.cpp:82 ../log_action.cpp:130
 msgid "Log"
 msgstr "历史记录"
 
@@ -1198,7 +1223,7 @@ msgstr "历史记录"
 msgid "Log History"
 msgstr "历史记录"
 
-#: ../log_rev_list.cpp:40 ../rapidsvn_generated.cpp:1211
+#: ../log_rev_list.cpp:110 ../rapidsvn_generated.cpp:1211
 msgid "Log Message"
 msgstr "历史记录信息"
 
@@ -1252,7 +1277,7 @@ msgstr "合并"
 msgid "Mkdir"
 msgstr "Mkdir"
 
-#: ../listener.cpp:408 ../main_frame.cpp:1435
+#: ../listener.cpp:408 ../main_frame.cpp:1437
 msgid "Modified"
 msgstr "已修改"
 
@@ -1338,7 +1363,7 @@ msgstr "打开..."
 msgid "Overwrite"
 msgstr "覆盖"
 
-#: ../columns.cpp:46
+#: ../columns.cpp:46 ../log_aff_list.cpp:104
 msgid "Path"
 msgstr "路径"
 
@@ -1432,11 +1457,11 @@ msgstr "解决冲突(&s)\tCTRL-S"
 msgid "Re&vert\tCTRL-V"
 msgstr "复原(&v)\tCTRL-V"
 
-#: ../filelist_ctrl.cpp:1140
+#: ../filelist_ctrl.cpp:1143
 msgid "Ready"
 msgstr "就绪"
 
-#: ../main_frame.cpp:1675 ../main_frame.cpp:1719
+#: ../main_frame.cpp:1677 ../main_frame.cpp:1721
 msgid "Ready\n"
 msgstr "就绪\n"
 
@@ -1488,7 +1513,7 @@ msgstr "重命名"
 msgid "Rep. Rev."
 msgstr "文档库版本"
 
-#: ../listener.cpp:411 ../main_frame.cpp:1438
+#: ../listener.cpp:411 ../main_frame.cpp:1440
 msgid "Replaced"
 msgstr "已替换"
 
@@ -1531,11 +1556,11 @@ msgstr "解决冲突"
 msgid "Resolve selected"
 msgstr "解决选定项目的冲突"
 
-#: ../listener.cpp:399 ../main_frame.cpp:1426
+#: ../listener.cpp:399 ../main_frame.cpp:1428
 msgid "Resolved"
 msgstr "已解决冲突"
 
-#: ../listener.cpp:396 ../main_frame.cpp:1423
+#: ../listener.cpp:396 ../main_frame.cpp:1425
 msgid "Restore"
 msgstr "还原"
 
@@ -1547,7 +1572,7 @@ msgstr "恢复工作副本文件到最原始的状态(撤销所有本地修改).
 msgid "Resulting repository filename:"
 msgstr ""
 
-#: ../listener.cpp:397 ../main_frame.cpp:1424 ../revert_action.cpp:35
+#: ../listener.cpp:397 ../main_frame.cpp:1426 ../revert_action.cpp:35
 msgid "Revert"
 msgstr "复原"
 
@@ -1555,7 +1580,7 @@ msgstr "复原"
 msgid "Revert selected"
 msgstr "复原选定的项目"
 
-#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:37
+#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:107
 #: ../rapidsvn_generated.cpp:252 ../rapidsvn_generated.cpp:964
 #: ../rapidsvn_generated.cpp:1808 ../rapidsvn_generated.cpp:1906
 msgid "Revision"
@@ -1706,7 +1731,7 @@ msgstr "列出未修改的项目"
 msgid "Show unversioned entries"
 msgstr "列出不在版本控制中的项目"
 
-#: ../listener.cpp:400 ../main_frame.cpp:1427
+#: ../listener.cpp:400 ../main_frame.cpp:1429
 msgid "Skip"
 msgstr "跳过"
 
@@ -1754,15 +1779,15 @@ msgstr "切换 URL"
 msgid "Switch URL...\tCTRL-S"
 msgstr "切换 URL...\tCTRL-S"
 
-#: ../main_frame.cpp:1374
+#: ../main_frame.cpp:1376
 msgid "Test duration"
 msgstr "测试耗时"
 
-#: ../main_frame.cpp:1370
+#: ../main_frame.cpp:1372
 msgid "Test ended at"
 msgstr "测试结束于"
 
-#: ../main_frame.cpp:1367
+#: ../main_frame.cpp:1369
 msgid "Test started at"
 msgstr "测试开始于"
 
@@ -1822,7 +1847,7 @@ msgstr "UUID"
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../main_frame.cpp:1647
+#: ../main_frame.cpp:1649
 msgid "Unimplemented action!"
 msgstr "未实现的功能!"
 
@@ -1834,7 +1859,7 @@ msgstr "未知的目标路径"
 msgid "Unlock"
 msgstr "解除锁定"
 
-#: ../listener.cpp:415 ../main_frame.cpp:1442
+#: ../listener.cpp:415 ../main_frame.cpp:1444
 msgid "Unlocked"
 msgstr "已解除锁定"
 
@@ -1846,11 +1871,11 @@ msgstr "更新"
 msgid "Update selected"
 msgstr "更新选定项目"
 
-#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1430
+#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1432
 msgid "Updated"
 msgstr "已更新"
 
-#: ../main_frame.cpp:1709 ../main_frame.cpp:1714
+#: ../main_frame.cpp:1711 ../main_frame.cpp:1716
 msgid "Updating..."
 msgstr "更新中..."
 
@@ -1872,7 +1897,7 @@ msgstr "总是使用此程序"
 msgid "Use latest"
 msgstr "使用最新版本"
 
-#: ../log_rev_list.cpp:38
+#: ../log_rev_list.cpp:108
 msgid "User"
 msgstr "用户名"
 
@@ -1931,11 +1956,11 @@ msgstr ""
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "您不能把 Subversion 的管理目录添加到书签中!"
 
-#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1267
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1270
 msgid "add"
 msgstr "添加"
 
-#: ../filelist_ctrl.cpp:1232 ../utils.cpp:408
+#: ../filelist_ctrl.cpp:1235 ../utils.cpp:408
 msgid "added"
 msgstr "已添加"
 
@@ -1943,7 +1968,7 @@ msgstr "已添加"
 msgid "conflicted"
 msgstr "存在冲突"
 
-#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1270
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1273
 msgid "delete"
 msgstr "删除"
 
@@ -1979,7 +2004,7 @@ msgstr "已合并"
 msgid "missing"
 msgstr "丢失"
 
-#: ../filelist_ctrl.cpp:1235 ../utils.cpp:420
+#: ../filelist_ctrl.cpp:1238 ../utils.cpp:420
 msgid "modified"
 msgstr "已修改"
 
@@ -2003,7 +2028,7 @@ msgstr "常规"
 msgid "obstructed"
 msgstr "阻塞"
 
-#: ../filelist_ctrl.cpp:1300 ../filelist_ctrl.cpp:1314
+#: ../filelist_ctrl.cpp:1303 ../filelist_ctrl.cpp:1317
 msgid "outdated"
 msgstr "过时"
 
@@ -2019,7 +2044,7 @@ msgstr ""
 msgid "pre Subversion 1.6"
 msgstr ""
 
-#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1273
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1276
 msgid "replace"
 msgstr "替换"
 
@@ -2043,17 +2068,8 @@ msgstr "未知值"
 msgid "unversioned"
 msgstr "不在版本控制中"
 
-#~ msgid "Action"
-#~ msgstr "动作"
-
 #~ msgid "Checkout Test"
 #~ msgstr "签出测试"
-
-#~ msgid "Copied from Path"
-#~ msgstr "已复制, 来自 URL:"
-
-#~ msgid "Copied from Rev"
-#~ msgstr "已复制, 来自版本:"
 
 #~ msgid "Destination file"
 #~ msgstr "目标文件"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-26 15:12+0000\n"
+"POT-Creation-Date: 2017-12-24 14:02+0100\n"
 "PO-Revision-Date: 2009-11-16 00:51+0900\n"
 "Last-Translator: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
 "Language-Team: Hisateru Tanaka <tanakahisateru@gmail.com>\n"
@@ -317,6 +317,10 @@ msgstr "新規(&N)..."
 msgid "<None>"
 msgstr "<なし>"
 
+#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
+msgid "A"
+msgstr ""
+
 #: ../create_repos_dlg.cpp:131
 msgid "A directory of this name exists already"
 msgstr "この名前のディレクトリはすでに存在します"
@@ -334,8 +338,12 @@ msgstr "ANSI"
 msgid "About %s"
 msgstr "%s について"
 
+#: ../log_aff_list.cpp:103
+msgid "Action"
+msgstr "アクション"
+
 #: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listed_dlg.cpp:183
-#: ../listener.cpp:393 ../main_frame.cpp:1420
+#: ../listener.cpp:393 ../main_frame.cpp:1422
 msgid "Add"
 msgstr "追加"
 
@@ -360,7 +368,7 @@ msgid "Add to bookmarks"
 msgstr "ブックマークに追加"
 
 #: ../listener.cpp:309 ../listener.cpp:402 ../listener.cpp:409
-#: ../main_frame.cpp:1429 ../main_frame.cpp:1436
+#: ../main_frame.cpp:1431 ../main_frame.cpp:1438
 msgid "Added"
 msgstr "追加"
 
@@ -392,11 +400,11 @@ msgstr "影響を受けたファイル/ディレクトリ"
 msgid "All files|*"
 msgstr "全てのファイル|*"
 
-#: ../main_frame.cpp:1294 ../main_frame.cpp:1313
+#: ../main_frame.cpp:1296 ../main_frame.cpp:1315
 msgid "An error occured while launching the browser"
 msgstr "ブラウザの起動中にエラーが発生しました"
 
-#: ../main_frame.cpp:1281
+#: ../main_frame.cpp:1283
 msgid "An error occurred while checking valid actions"
 msgstr "アクションのチェック中にエラーが発生しました"
 
@@ -431,7 +439,7 @@ msgstr "認証"
 msgid "Author"
 msgstr "作者"
 
-#: ../action.cpp:267
+#: ../action.cpp:269
 msgid "BASE"
 msgstr "BASE"
 
@@ -563,12 +571,12 @@ msgstr "比較:"
 
 #: ../listener.cpp:496
 #, fuzzy, c-format
-msgid "Completed %s at revision %d"
+msgid "Completed %s at revision %ld"
 msgstr "コミットしたリビジョン"
 
 #: ../listener.cpp:486
 #, fuzzy, c-format
-msgid "Completed at revision %d"
+msgid "Completed at revision %ld"
 msgstr "コミットしたリビジョン"
 
 #: ../columns.cpp:64
@@ -622,7 +630,15 @@ msgstr "コピー元リビジョン: %ld"
 msgid "Copied From URL: %s"
 msgstr "コピー元URL: %s"
 
-#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1421
+#: ../log_aff_list.cpp:105
+msgid "Copied from Path"
+msgstr "コピー元パス"
+
+#: ../log_aff_list.cpp:106
+msgid "Copied from Rev"
+msgstr "コピー元リビジョン"
+
+#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1423
 #: ../move_action.cpp:44 ../rapidsvn_generated.cpp:857
 msgid "Copy"
 msgstr "コピー"
@@ -658,7 +674,11 @@ msgstr "リポジトリの新規作成"
 msgid "Create repository in &directory:"
 msgstr "リポジトリを作成するディレクトリ(&D):"
 
-#: ../columns.cpp:54 ../log_rev_list.cpp:39
+#: ../log_dlg.cpp:318 ../log_dlg.cpp:371
+msgid "D"
+msgstr ""
+
+#: ../columns.cpp:54 ../log_rev_list.cpp:109
 msgid "Date"
 msgstr "日付"
 
@@ -670,7 +690,7 @@ msgstr "日付:"
 msgid "Default"
 msgstr "デフォルト"
 
-#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1422
+#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1424
 msgid "Delete"
 msgstr "削除"
 
@@ -683,7 +703,7 @@ msgid "Delete selected"
 msgstr "削除"
 
 #: ../listener.cpp:310 ../listener.cpp:401 ../listener.cpp:410
-#: ../main_frame.cpp:1428 ../main_frame.cpp:1437
+#: ../main_frame.cpp:1430 ../main_frame.cpp:1439
 msgid "Deleted"
 msgstr "削除"
 
@@ -874,11 +894,11 @@ msgstr "アクション準備中にエラー: %s"
 msgid "Error while refreshing filelist (%s)"
 msgstr "ファイルリスのトリフレッシュ中にエラー (%s)"
 
-#: ../main_frame.cpp:930
+#: ../main_frame.cpp:932
 msgid "Error while updating filelist"
 msgstr "ファイルリスト更新中にエラー"
 
-#: ../main_frame.cpp:917
+#: ../main_frame.cpp:919
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "ファイルリスト更新中にエラー(%s)"
@@ -946,11 +966,11 @@ msgstr "外部参照"
 msgid "FSFS"
 msgstr "FSFS"
 
-#: ../listener.cpp:416 ../main_frame.cpp:1443
+#: ../listener.cpp:416 ../main_frame.cpp:1445
 msgid "Failed to lock"
 msgstr "ロックに失敗しました"
 
-#: ../listener.cpp:417 ../main_frame.cpp:1444
+#: ../listener.cpp:417 ../main_frame.cpp:1446
 msgid "Failed to unlock"
 msgstr "ロック解除に失敗しました"
 
@@ -994,12 +1014,12 @@ msgstr "自分がロック所有者でなくても強制的にロックを解除
 msgid "General"
 msgstr "一般"
 
-#: ../action.cpp:272
+#: ../action.cpp:274
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "ファイルを取得: %s リビジョン %s"
 
-#: ../action.cpp:265
+#: ../action.cpp:267
 msgid "HEAD"
 msgstr "HEAD"
 
@@ -1012,9 +1032,14 @@ msgstr "ヘルプ(&H)"
 msgid "Here comes the description"
 msgstr ""
 
-#: ../log_dlg.cpp:77 ../rapidsvn_generated.cpp:1158
+#: ../rapidsvn_generated.cpp:1158
 #, c-format
 msgid "History: %d revisions"
+msgstr "履歴: 計 %d リビジョン"
+
+#: ../log_dlg.cpp:77
+#, fuzzy, c-format
+msgid "History: %zd revisions"
 msgstr "履歴: 計 %d リビジョン"
 
 #: ../rapidsvn_generated.cpp:151
@@ -1083,7 +1108,7 @@ msgstr "情報"
 msgid "Internal Error: There is another action running"
 msgstr "内部エラー: 実行中の他アクションがあります"
 
-#: ../main_frame.cpp:1695
+#: ../main_frame.cpp:1697
 msgid "Internal Error: no client data for action event!"
 msgstr "内部エラー: アクションイベントのためのクライアントデータがありません!"
 
@@ -1183,11 +1208,11 @@ msgstr "ロック所有者: %s"
 msgid "Lock Token: %s"
 msgstr "ロックトークン: %s"
 
-#: ../listener.cpp:414 ../main_frame.cpp:1441
+#: ../listener.cpp:414 ../main_frame.cpp:1443
 msgid "Locked"
 msgstr "ロック"
 
-#: ../log_action.cpp:82 ../log_action.cpp:136
+#: ../log_action.cpp:82 ../log_action.cpp:130
 msgid "Log"
 msgstr "ログ"
 
@@ -1195,7 +1220,7 @@ msgstr "ログ"
 msgid "Log History"
 msgstr "ログ履歴"
 
-#: ../log_rev_list.cpp:40 ../rapidsvn_generated.cpp:1211
+#: ../log_rev_list.cpp:110 ../rapidsvn_generated.cpp:1211
 msgid "Log Message"
 msgstr "ログメッセージ"
 
@@ -1249,7 +1274,7 @@ msgstr "マージ"
 msgid "Mkdir"
 msgstr "Mkdir"
 
-#: ../listener.cpp:408 ../main_frame.cpp:1435
+#: ../listener.cpp:408 ../main_frame.cpp:1437
 msgid "Modified"
 msgstr "変更"
 
@@ -1335,7 +1360,7 @@ msgstr "開く..."
 msgid "Overwrite"
 msgstr "上書き"
 
-#: ../columns.cpp:46
+#: ../columns.cpp:46 ../log_aff_list.cpp:104
 msgid "Path"
 msgstr "パス"
 
@@ -1428,11 +1453,11 @@ msgstr "衝突の解消(&S)\tCtrl+S"
 msgid "Re&vert\tCTRL-V"
 msgstr "元に戻す(&V)\tCTRL-V"
 
-#: ../filelist_ctrl.cpp:1140
+#: ../filelist_ctrl.cpp:1143
 msgid "Ready"
 msgstr "レディ"
 
-#: ../main_frame.cpp:1675 ../main_frame.cpp:1719
+#: ../main_frame.cpp:1677 ../main_frame.cpp:1721
 msgid "Ready\n"
 msgstr "レディ\n"
 
@@ -1483,7 +1508,7 @@ msgstr "名前の変更"
 msgid "Rep. Rev."
 msgstr "リポジトリ リビジョン"
 
-#: ../listener.cpp:411 ../main_frame.cpp:1438
+#: ../listener.cpp:411 ../main_frame.cpp:1440
 msgid "Replaced"
 msgstr "置換"
 
@@ -1526,11 +1551,11 @@ msgstr "衝突の解消"
 msgid "Resolve selected"
 msgstr "衝突の解消"
 
-#: ../listener.cpp:399 ../main_frame.cpp:1426
+#: ../listener.cpp:399 ../main_frame.cpp:1428
 msgid "Resolved"
 msgstr "解消"
 
-#: ../listener.cpp:396 ../main_frame.cpp:1423
+#: ../listener.cpp:396 ../main_frame.cpp:1425
 msgid "Restore"
 msgstr "復元"
 
@@ -1542,7 +1567,7 @@ msgstr "初期作業コピーファイルを復元(すべてのローカル編�
 msgid "Resulting repository filename:"
 msgstr "結果リポジトリファイル名:"
 
-#: ../listener.cpp:397 ../main_frame.cpp:1424 ../revert_action.cpp:35
+#: ../listener.cpp:397 ../main_frame.cpp:1426 ../revert_action.cpp:35
 msgid "Revert"
 msgstr "元に戻す"
 
@@ -1550,7 +1575,7 @@ msgstr "元に戻す"
 msgid "Revert selected"
 msgstr "元に戻す"
 
-#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:37
+#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:107
 #: ../rapidsvn_generated.cpp:252 ../rapidsvn_generated.cpp:964
 #: ../rapidsvn_generated.cpp:1808 ../rapidsvn_generated.cpp:1906
 msgid "Revision"
@@ -1701,7 +1726,7 @@ msgstr "未変更エントリを表示"
 msgid "Show unversioned entries"
 msgstr "バージョン管理されていないエントリを表示"
 
-#: ../listener.cpp:400 ../main_frame.cpp:1427
+#: ../listener.cpp:400 ../main_frame.cpp:1429
 msgid "Skip"
 msgstr "スキップ"
 
@@ -1749,15 +1774,15 @@ msgstr "URLの切り替え"
 msgid "Switch URL...\tCTRL-S"
 msgstr "URLの切り替え...\tCTRL-S"
 
-#: ../main_frame.cpp:1374
+#: ../main_frame.cpp:1376
 msgid "Test duration"
 msgstr "テスト所要時間"
 
-#: ../main_frame.cpp:1370
+#: ../main_frame.cpp:1372
 msgid "Test ended at"
 msgstr "テスト終了時刻"
 
-#: ../main_frame.cpp:1367
+#: ../main_frame.cpp:1369
 msgid "Test started at"
 msgstr "テスト開始時刻"
 
@@ -1823,7 +1848,7 @@ msgstr "UUID"
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../main_frame.cpp:1647
+#: ../main_frame.cpp:1649
 msgid "Unimplemented action!"
 msgstr "未実装アクション!"
 
@@ -1835,7 +1860,7 @@ msgstr "未知の出力パス"
 msgid "Unlock"
 msgstr "ロック解除"
 
-#: ../listener.cpp:415 ../main_frame.cpp:1442
+#: ../listener.cpp:415 ../main_frame.cpp:1444
 msgid "Unlocked"
 msgstr "ロックが解除"
 
@@ -1847,11 +1872,11 @@ msgstr "更新"
 msgid "Update selected"
 msgstr "更新"
 
-#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1430
+#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1432
 msgid "Updated"
 msgstr "更新"
 
-#: ../main_frame.cpp:1709 ../main_frame.cpp:1714
+#: ../main_frame.cpp:1711 ../main_frame.cpp:1716
 msgid "Updating..."
 msgstr "更新しています..."
 
@@ -1873,7 +1898,7 @@ msgstr "常に使用"
 msgid "Use latest"
 msgstr "最新を使用"
 
-#: ../log_rev_list.cpp:38
+#: ../log_rev_list.cpp:108
 msgid "User"
 msgstr "ユーザ"
 
@@ -1948,11 +1973,11 @@ msgstr ""
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "Subversion管理ディレクトリをブックマークに追加することはできません!"
 
-#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1267
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1270
 msgid "add"
 msgstr "追加"
 
-#: ../filelist_ctrl.cpp:1232 ../utils.cpp:408
+#: ../filelist_ctrl.cpp:1235 ../utils.cpp:408
 msgid "added"
 msgstr "追加"
 
@@ -1960,7 +1985,7 @@ msgstr "追加"
 msgid "conflicted"
 msgstr "衝突"
 
-#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1270
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1273
 msgid "delete"
 msgstr "削除"
 
@@ -1996,7 +2021,7 @@ msgstr "マージ"
 msgid "missing"
 msgstr "紛失"
 
-#: ../filelist_ctrl.cpp:1235 ../utils.cpp:420
+#: ../filelist_ctrl.cpp:1238 ../utils.cpp:420
 msgid "modified"
 msgstr "変更"
 
@@ -2020,7 +2045,7 @@ msgstr "通常"
 msgid "obstructed"
 msgstr "妨害"
 
-#: ../filelist_ctrl.cpp:1300 ../filelist_ctrl.cpp:1314
+#: ../filelist_ctrl.cpp:1303 ../filelist_ctrl.cpp:1317
 msgid "outdated"
 msgstr "期限切れ"
 
@@ -2036,7 +2061,7 @@ msgstr "Subversion 1.5 以下"
 msgid "pre Subversion 1.6"
 msgstr "Subversion 1.6 以下"
 
-#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1273
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1276
 msgid "replace"
 msgstr "置換"
 
@@ -2060,17 +2085,8 @@ msgstr "不明な値"
 msgid "unversioned"
 msgstr "バージョン管理外"
 
-#~ msgid "Action"
-#~ msgstr "アクション"
-
 #~ msgid "Checkout Test"
 #~ msgstr "チェックアウトテスト"
-
-#~ msgid "Copied from Path"
-#~ msgstr "コピー元パス"
-
-#~ msgid "Copied from Rev"
-#~ msgstr "コピー元リビジョン"
 
 #~ msgid "Destination file"
 #~ msgstr "出力ファイル"
