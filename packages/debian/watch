@@ -1,0 +1,3 @@
+version=3
+opts=dversionmangle=s/dfsg// \
+http://www.rapidsvn.org/download/release/(\d+\.\d+(?<=0\.12)|\d.*)/rapidsvn-(\d.*)\.(?:tgz|tbz2|tar\.(?:gz|bz2|xz))

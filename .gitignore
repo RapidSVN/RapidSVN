@@ -9,6 +9,7 @@
 **/*.lai
 **/*.lo
 **/*.o
+/debian/
 /rapidsvn-0*/
 **/*~
 /compile

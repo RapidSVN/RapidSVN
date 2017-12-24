@@ -1,14 +1,28 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
 # Sample debian/rules that uses debhelper.
 # GNU copyright 1997 to 1999 by Joey Hess.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+# We've switched to the recommended hardening method
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all,-pie
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+INCLUDEDIR = "/usr/lib/$(DEB_HOST_MULTIARCH)"
 
+SHELL=/bin/bash
 
-CFLAGS = -Wall -g
+# We changed this since dpkg-buildflags sets the variable initially for us
+# and the typical '=' overwrites some important hardening options
+# CFLAGS = -Wall -g
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
@@ -19,52 +33,93 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	INSTALL_PROGRAM += -s
 endif
 
-configure: configure-stamp
+p	= rapidsvn
+p_lib	= libsvncpp3
+p_dev	= libsvncpp-dev
+#p_doc	= libsvncpp-doc
+
+d	= debian/$(p)
+d_lib	= debian/$(p_lib)
+d_dev	= debian/$(p_dev)
+#d_doc	= debian/$(p_doc)
+
 configure-stamp:
 	dh_testdir
-	# Add here commands to configure the package.
-	./autogen.sh
-	chmod +x ./configure
-	./configure --prefix=/usr --with-svn-include=/usr/include --with-svn-lib=/usr/lib --with-docbook-xsl=/usr/share/xml/docbook/stylesheet/nwalsh --mandir=/usr/share/man
+
+	cp -p /usr/share/misc/config.sub config.sub
+	cp -p /usr/share/misc/config.guess config.guess
+
+# configure using --disable-shared,
+# so we don't have to package the library as well ...
+# 
+# We changed CPPFLAGS so that hardening was included
+# i.e. $(CPPFLAGS) now included in the line
+	CFLAGS="$(CFLAGS)" \
+	CPPFLAGS="-DNDEBUG $(CPPFLAGS)" \
+	    ./configure \
+		--host=$(DEB_HOST_GNU_TYPE) \
+		--build=$(DEB_BUILD_GNU_TYPE) \
+		--prefix=/usr \
+		--mandir=\$${prefix}/share/man \
+		--infodir=\$${prefix}/share/info \
+		--with-docbook-xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh \
+		--with-svn-lib=$(INCLUDEDIR)
+
 	touch configure-stamp
 
 
-build: build-stamp
-
-build-stamp: configure-stamp 
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+build-stamp: configure-stamp
 	dh_testdir
-
-	# Add here commands to compile the package.
 	$(MAKE)
-	#/usr/bin/docbook-to-man debian/rapidsvn.sgml > rapidsvn.1
-
+	$(MAKE) -C doc/manpage manpage
+	cd doc/svncpp && doxygen svncpp.dox
 	touch build-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp config.cache config.log config.cache conftest conftest.o
-	rm -rf doc/svncpp
+	rm -f configure-stamp build-stamp 
+	[ ! -f Makefile ] || $(MAKE) distclean
+	rm -rf doc/svncpp/html/*
+	rm -f src/locale/Makefile doc/manpage/Makefile doc/svncpp/Makefile
 
-	# Add here commands to clean up after the build process.
-	-$(MAKE) clean
-	rm -f config.status
+	rm -f config.sub
+	rm -f config.guess
 
-	dh_clean
+	: # temporary fix until upstream fixes the clean targets
+	rm -f doc/svncpp/doxygen_sqlite3.db
+
+	dh_clean 
 
 install: build
 	dh_testdir
 	dh_testroot
-	dh_clean -k
-	dh_installdirs
-
-	# Add here commands to install the package into debian/rapidsvn.
+	dh_prep
+	dh_installdirs -p$(p) \
+		usr/share/pixmaps usr/share/locale usr/share/man/man1
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/rapidsvn
+	cp -p src/res/bitmaps/rapidsvn_32x32.xpm \
+		debian/rapidsvn/usr/share/pixmaps/rapidsvn.xpm
+	cp -p src/res/bitmaps/rapidsvn_32x32.png \
+		debian/rapidsvn/usr/share/pixmaps/rapidsvn.png
+	cp -p doc/manpage/rapidsvn.1 \
+		debian/rapidsvn/usr/share/man/man1/
+	dh_installdirs -p$(p_lib) usr/lib
+	mv $(d)/usr/lib/libsvncpp.so.* $(d_lib)/usr/lib/
 
-	# Install lintian override
-	cp $(CURDIR)/debian/rapidsvn.override $(CURDIR)/debian/rapidsvn/usr/share/lintian/overrides/rapidsvn
+	dh_installdirs -p$(p_dev) usr/lib
+	mv $(d)/usr/lib/libsvncpp.{a,so} $(d_dev)/usr/lib/
+	rm $(d)/usr/lib/libsvncpp.la*
+	rmdir $(d)/usr/lib/
+	: # doesn't work yet
+	: #$(MAKE) -C include install DESTDIR=$(CURDIR)/$(d_dev)
+	mv $(d)/usr/include $(d_dev)/usr/
 
-#	rm -f $(CURDIR)/debian/rapidsvn/usr/share/doc/rapidsvn/LICENSE.txt
+	install -d $(d)/usr/share/applications
+	install -m644 debian/rapidsvn.desktop $(d)/usr/share/applications
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -74,33 +129,33 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs ChangeLog
-	dh_installdocs
-	rm -f $(CURDIR)/debian/rapidsvn/usr/share/doc/rapidsvn/LICENSE.txt
+	dh_installchangelogs -k CHANGES
+	dh_installdocs README
+
+	rm -rf $(d_dev)/usr/share/doc/$(p_dev)
+	dh_link -p$(p_dev) /usr/share/doc/$(p_lib) /usr/share/doc/$(p_dev)
+	mkdir -p $(d_dev)/usr/share/doc/$(p_lib)
+	cp -a doc/svncpp/html $(d_dev)/usr/share/doc/$(p_lib)/
+
+	dh_lintian
 	dh_installexamples
-#	dh_install
-#	dh_installmenu
+	dh_installmenu
+	dh_icons
 #	dh_installdebconf	
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_installinit
-#	dh_installcron
 #	dh_installinfo
 	dh_installman
 	dh_link
-	dh_strip
+	dh_strip -v
 	dh_compress
 	dh_fixperms
-#	dh_perl
-#	dh_python
 	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps
+	dh_shlibdeps -L$(p_lib) -l$(d_lib)/usr/lib -- -v
+	-ldd debian/libsvncpp3/usr/lib/libsvncpp.so.3.0.0 | grep libsvn_subr-1.so.1
+	-objdump -T /usr/lib/libsvn_subr-1.so.1 | egrep 'svn_error__locate|svn_sort__hash'
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+.PHONY: build clean binary-indep binary-arch binary install

@@ -1,58 +1,346 @@
+rapidsvn (0.12.1dfsg-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add patch subversion1.9.patch to fix FTBFS (Closes:796450)
+
+ -- Tobias Frost <tobi@debian.org>  Wed, 13 Apr 2016 22:36:30 +0200
+
+rapidsvn (0.12.1dfsg-3) unstable; urgency=medium
+
+  * New maintainer upload.
+  * Bumped package standards version in debian/control to 3.9.6.
+  * Changed hardening implementation to follow recommended method,
+    dpkg-buildflags instead of hardening-wrapper; in debian/rules.
+  * Changed hardening options to exclude -fpie as it casues an
+    assert failed error specific to gtk + wxwidgets at application
+    startup.
+  * Updated Build-depends in debian/control to require dpkg-dev 
+    (>=1.17.0).
+  * Updated debian/control to explicitly include libsqlite3-0 in the
+    depends list. (Closes: #721888)
+  * Update debian/rules in order to fix distclean/clean targets 
+    with regards to doxygen_sqlite3.db; it is now removed and not
+    left in the source tarball for distribution as its generated 
+    during a build but not removed when the distclean/clean targets
+    are built.
+
+ -- Richard B Winters <rik@mmogp.com>  Sun, 08 Mar 2015 08:10:32 -0400
+
+rapidsvn (0.12.1dfsg-2) unstable; urgency=low
+
+  * QA upload.
+  * Rebuild to use wxwidgets3.0.
+    + Compile with -DNDEBUG to disable wxdebug mode.
+
+ -- Olly Betts <olly@survex.com>  Wed, 09 Apr 2014 17:59:20 +1200
+
+rapidsvn (0.12.1dfsg-1) unstable; urgency=low
+
+  * QA upload.
+  * New upstream version.
+  * Update watch file. Thanks Bart Martens!
+  * Update compatibility level to 9.
+  * Update debian/copyright to DEP-5.
+  * Enable security hardening build flags via hardening-wrapper.
+  * Bump to Standards-Version 3.9.4:
+    - Add build-arch and build-indep targets.
+  * Add more information to extended descriptions in debian/control.
+  * Change Section field from X11 to vcs in debian/control.
+  * Install upstream changelog file (named CHANGES).
+  * Replace deprecated dh_clean -k with dh_prep. 
+  * debian/patches:     
+    - Remove svn-1.7.patch, it is applied upstream.
+    - Add add-svncpp.dox.diff: add missing upstream svncpp.dox, this file is 
+      needed to generate documentation.
+    - link-libs.diff, locale-build.diff: add descriptions to these patches and
+      refresh them.
+  * Add debian/libsvncpp3.lintian-overrides: do not provide a symbols file.
+  * Add Keywords key to debian/rapidsvn.desktop.
+
+ -- MÃ²nica RamÃ­rez Arceda <monica@debian.org>  Sun, 07 Jul 2013 15:25:39 +0200
+
+rapidsvn (0.12.0dfsg-6) unstable; urgency=low
+
+  * QA upload.
+  * Fix "rapidsvn SEGV with Subversion 1.7": apply slightly modified upstream
+    patch, thanks Philip Martin.
+    Additionally make runtime dependency of rapidsvn on libsvncpp3 versioned
+    to make sure a fixed libsvncpp3 gets pulled in.
+    (Closes: #644409)
+  * Fix "please drop Build-Depends: libserf-0-0-dev": do as the bug report
+    requests, thanks Peter Samuelson.
+    (Closes: #678556)
+
+ -- gregor herrmann <gregoa@debian.org>  Sat, 23 Jun 2012 16:53:59 +0200
+
+rapidsvn (0.12.0dfsg-5) unstable; urgency=low
+
+  * QA upload.
+  * debian/rules: Add --with-svn option to ./configure with the new multiarch 
+    directory of libsvn-dev. (Closes: #642778)
+  * debian/control: Fix some spelling errors in long description. 
+    Thanks to Paul Stewart! (Closes: #643617)
+
+ -- MÃ²nica RamÃ­rez Arceda <monica@probeta.net>  Fri, 30 Sep 2011 09:45:52 +0200
+
+rapidsvn (0.12.0dfsg-4) unstable; urgency=low
+
+  * QA upload.
+  * Stop shipping .la file. Closes: #633187.
+  * Bump Standards-Version to 3.9.2.
+  * Fix some lintian warnings.
+    + Fix Subversion casing in debian/control.
+    + Drop leading article in rapidsvn short description.
+    + Break libsvncpp-dev (<< 0.7.0-2) instead of Conflictint with it.
+    + Drop obsolete Encoding from the desktop file.
+
+ -- Regis Boudin <regis@debian.org>  Tue, 16 Aug 2011 20:24:37 +0100
+
+rapidsvn (0.12.0dfsg-3) unstable; urgency=low
+
+  * Orphan the package.
+  * Resolve symbols in libsvncpp. Closes: #558953.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 19 Dec 2010 16:41:47 +0100
+
+rapidsvn (0.12.0dfsg-2) unstable; urgency=low
+
+  * Build-depend on python.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 04 Jan 2010 01:25:46 +0100
+
+rapidsvn (0.12.0dfsg-1) unstable; urgency=low
+
+  * New upstream version.
+    - Terminates with error message when disk is full. Closes: #249535.
+    - Assertion `...' failed messages not reproducible anymore with this
+      version. Closes: #429032.
+  * Bump libsvncpp soversion.
+  * Update watch file. Closes: #552543.
+  * Build using wxwidgets2.8. Closes: #561075, #561193.
+  * rapidsvn: Recommend ssh-askpass. Closes: #476688.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 03 Jan 2010 14:56:23 +0100
+
+rapidsvn (0.10.0dfsg-2) unstable; urgency=low
+
+  * Build-depend on libsasl2-dev. Closes: #546777.
+  * Update copyright, rapidsvn and libsvncpp are now GPLv3 or later.
+  * Fixed crasg in 0.10.0 apparently. Closes: #542364.
+  * Update package descriptions. Closes: #476555.
+  * Install locale files, fix taken from the trunk. Closes: #423018.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 27 Sep 2009 09:19:51 +0200
+
+rapidsvn (0.10.0dfsg-1) unstable; urgency=low
+
+  * Remove packages/win32/msvcp60.dll from the source tarball.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 13 Sep 2009 12:37:38 +0200
+
+rapidsvn (0.10.0-1) unstable; urgency=low
+
+  * New upstream version. Closes: #526955. LP: #410294.
+  * Bump soname of shared library.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 29 Aug 2009 12:54:42 +0200
+
+rapidsvn (0.9.6-1) unstable; urgency=low
+
+  * Explicitely build-depend on libneon27-gnutls-dev, some other -dev
+    package did drop this dependency. Closes: #489104.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 05 Jul 2008 11:14:17 +0200
+
+rapidsvn (0.9.6-0.2) unstable; urgency=low
+
+  * NMU. Rename libsvncpp0c2a to libsvncpp1 due to upstream SONAME change
+    (closes: #474039).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.hu>  Thu, 03 Apr 2008 23:51:51 +0200
+
+rapidsvn (0.9.6-0.1) unstable; urgency=low
+
+  * NMU to use neon27.
+  * New upstream release.
+  * Update to Standards-Version 3.7.3, no changes needed.
+  * Add homepage field to control and dh_icons need debhelper 5.0.51 or newer.
+  * Don't ignore distclean failures in rules.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.hu>  Tue, 01 Apr 2008 15:36:46 +0000
+
+rapidsvn (0.9.4-3) unstable; urgency=low
+
+  * Update desktop file.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 29 Jan 2008 17:20:31 +0100
+
+rapidsvn (0.9.4-2) unstable; urgency=low
+
+  * Use menu icons from the source package. Closes: #406439.
+  * Update watch file. Closes: #449698.
+  * Fix segfault when right clicking the details area. Closes: #388546.
+  * Install translations. Closes: #423018.
+  * Install the (incomplete) upstream manual page. Closes: #422942.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 28 Jan 2008 21:26:11 +0100
+
+rapidsvn (0.9.4-1) unstable; urgency=medium
+
+  * New upstream version (supporting subversion 1.4.2).
+
+ -- Matthias Klose <doko@debian.org>  Sun, 17 Dec 2006 13:22:36 +0100
+
+rapidsvn (0.9.3-2) unstable; urgency=low
+
+  * Build-depend on libsvn-dev instead of libsvn0-dev. Closes: #391236.
+  * Fix typo in desktop file. Closes: #383190.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 10 Oct 2006 02:44:47 +0200
+
+rapidsvn (0.9.3-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Fix help location in the doc-base file. Closes: #374759.
+
+ -- Matthias Klose <doko@debian.org>  Sun,  9 Jul 2006 15:01:16 +0000
+
+rapidsvn (0.9.2-1) unstable; urgency=low
+
+  * New upstream version.
+  * Update copyright, changed in version 0.9.0. Closes: #369334.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 16 Jun 2006 19:37:35 +0200
+
+rapidsvn (0.9.1-2) unstable; urgency=low
+
+  * Tighten shlib dependency to 0.9.1 (closes: #358324).
+  * Fix build errors with g++-4.1 (closes: #357967).
+  * Add checking for (and removal of) trailing slash in repository URL.
+    Closes: #235329, #320755.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 25 Mar 2006 21:46:41 +0000
+
+rapidsvn (0.9.1-1) unstable; urgency=low
+
+  * New upstream version.
+  * Do not link against neon libraries.
+
+ -- Matthias Klose <doko@debian.org>  Tue,  7 Mar 2006 13:53:52 +0000
+
+rapidsvn (0.9.0-2) unstable; urgency=low
+
+  * Fix typo in conflicts/replaces (closes: #342489).
+
+ -- Matthias Klose <doko@debian.org>  Thu,  8 Dec 2005 03:32:23 +0100
+
+rapidsvn (0.9.0-1) unstable; urgency=low
+
+  * New upstream version.
+  * Rename libsvncpp0c2 to libsvncpp0c2a (libstdc++ allocator change).
+    Closes: #339256.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 17 Nov 2005 19:07:23 +0100
+
+rapidsvn (0.8.0-3) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 23 Aug 2005 18:08:47 +0200
+
+rapidsvn (0.8.0-2) experimental; urgency=low
+
+  * New upstream version (closes: #308382).
+  * Fix wxgtk dependencies (closes: #321546).
+
+ -- Matthias Klose <doko@debian.org>  Sat, 13 Aug 2005 11:35:07 +0000
+
+rapidsvn (0.8.0-1ubuntu2) breezy; urgency=low
+
+  * Change libsvncpp0 to libsvncpp0c2 in debian/libsvncpp-dev.doc-base
+
+ -- Andrew Mitchell <ajmitch@gnu.org>  Wed,  8 Jun 2005 06:00:42 +0000
+
+rapidsvn (0.8.0-1ubuntu1) breezy; urgency=low
+
+  * New upstream version.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri,  3 Jun 2005 09:57:49 +0000
+
+rapidsvn (0.7.2-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 22 Jan 2005 22:33:14 +0100
+
+rapidsvn (0.7.0-2) unstable; urgency=low
+
+  * Don't include header files in the rapdisvn binary package.
+  * Link libsvncpp with dependent libraries. 
+
+ -- Matthias Klose <doko@debian.org>  Fri,  3 Dec 2004 20:00:51 +0100
+
+rapidsvn (0.7.0-1) unstable; urgency=low
+
+  * Fix crash when trying to expand a node in the tree view
+    Closes: #271702.
+  * Rename source package.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  6 Nov 2004 12:04:19 +0100
+
+rapidsvn (0.7-2) unstable; urgency=medium
+
+  * Build library packages.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  3 Sep 2004 00:25:53 +0200
+
+rapidsvn (0.7-1) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  3 Sep 2004 00:25:53 +0200
+
+rapidsvn (0.6.20040807-3) unstable; urgency=low
+
+  * Recompile reverting the apache LFS transition (closes: #267347).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 23 Aug 2004 08:26:48 +0200
+
+rapidsvn (0.6.20040807-2) unstable; urgency=medium
+
+  * Recompile after apache LFS transition (closes: #266199).
+
+ -- Matthias Klose <doko@debian.org>  Tue, 17 Aug 2004 23:13:56 +0200
+
+rapidsvn (0.6.20040807-1) unstable; urgency=low
+
+  * New upstream version from CVS (pre 0.7).
+
+ -- Matthias Klose <doko@debian.org>  Sat,  7 Aug 2004 06:09:20 +0200
+
+rapidsvn (0.6.0-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 25 May 2004 00:19:53 +0200
+
+rapidsvn (0.5.0-3) unstable; urgency=low
+
+  * Apply upstream patch (rev 7019) to fix build failure on 64bit targets.
+    Closes: #237733.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 30 Mar 2004 07:22:29 +0200
+
+rapidsvn (0.5.0-2) unstable; urgency=low
+
+  * Recompile for correct shlibs dependency (closes: #234696).
+
+ -- Matthias Klose <doko@debian.org>  Tue, 24 Feb 2004 23:03:53 +0100
+
 rapidsvn (0.5.0-1) unstable; urgency=low
 
-  * New upstream release 
-  * Add autoconf, automake and libtool to build-depends
-  * Build against libdb4.2, Apache 2.0.48 and Subversion 0.37.0
-  * Place manpage to the correct location as FHS suggests
-  * Really remove extra license file
-  * Install lintian override for non-dev-pkg-with-shlib-symlink
-  * Don't let config.status to slide into the source
-  * Bump Standards-Version to 3.6.1, no changes needed
-  * New maintainer
+  * Initial Release. Closes: #186212, #212808.
+  * Based on an incomplete packaging by Timothee Besset <ttimo@ttimo.net>
 
- -- László Böszörményi (GCS) <gcs@lsc.hu>  Tue,  3 Feb 2004 17:01:16 +0000
-
-rapidsvn (0.1.3.6496-1) unstable; urgency=low
-
-  * New upstream release - subversion 0.25
-  Debian package code is now checked in to the rapidsvn tree
-
- -- Timothee Besset <ttimo@ttimo.net>  Thu, 17 Jul 2003 11:42:36 +0200
-
-rapidsvn (0.1.3.pre2.6331-1) unstable; urgency=low
-
-  * New upstream release
-
- -- Timothee Besset <ttimo@ttimo.net>  Tue,  1 Jul 2003 10:35:48 +0200
-
-rapidsvn (0.1.3.6027-1) unstable; urgency=low
-
-  * New upstream release - 1.3
-
- -- Timothee Besset <ttimo@ttimo.net>  Fri, 23 May 2003 23:19:38 +0200
-
-rapidsvn (0.1.2.5732-1) unstable; urgency=low
-
-  * New upstream release
-
- -- Timothee Besset <ttimo@ttimo.net>  Fri, 25 Apr 2003 09:08:17 +0200
-
-rapidsvn (0.1.2.5718-1) unstable; urgency=low
-
-  * New upstream release - subversion 0.21
-
- -- Timothee Besset <ttimo@ttimo.net>  Thu, 24 Apr 2003 09:58:24 +0200
-
-rapidsvn (0.1.2.5561-2) unstable; urgency=low
-
-  * Package reviewed by David Kimdon - misc fixes
-
- -- Timothee Besset <ttimo@ttimo.net>  Sun,  6 Apr 2003 23:12:53 +0200
-
-rapidsvn (0.1.2.5561-1) unstable; urgency=low
-
-  * Initial Release.
-  * Taken from the svn repository, using repository revision numbers
-
- -- Timothee Besset <ttimo@ttimo.net>  Sat,  5 Apr 2003 19:22:28 +0200
+ -- Matthias Klose <doko@debian.org>  Sun,  8 Feb 2004 10:38:21 +0100
 

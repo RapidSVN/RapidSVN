@@ -1,0 +1,5 @@
+# Maintaining a symbols file for C++ libraries may be unsustainable. 
+# See: http://www.eyrie.org/~eagle/journal/2012-02/001.html
+# Moreover, right now (2013-07-05) libsvncpp3 is only used by rapidsvn 
+# in Debian.
+libsvncpp3: no-symbols-control-file usr/lib/libsvncpp.so.3.0.0

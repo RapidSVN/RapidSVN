@@ -1,13 +1,41 @@
 Source: rapidsvn
-Section: x11
+Section: vcs
 Priority: optional
-Maintainer: László Böszörményi (GCS) <gcs@lsc.hu>
-Build-Depends: autoconf, automake, libtool, debhelper (>= 4.1.52), libsvn0-dev (>= 0.37), libwxgtk2.4-dev (>= 2.4.2), xsltproc (>= 1.0.30), docbook-xsl (>= 1.64)
-Standards-Version: 3.6.1
+Maintainer: Richard B Winters <rik@mmogp.com>
+Build-Depends: debhelper (>= 9), libneon27-gnutls-dev, libsvn-dev (>= 1.4.4), libsasl2-dev, libwxgtk3.0-dev, xsltproc, docbook-xsl, doxygen, autotools-dev, python, dpkg-dev (>=1.17)
+Homepage: http://rapidsvn.tigris.org/
+Standards-Version: 3.9.6
 
 Package: rapidsvn
 Architecture: any
-Depends: ${shlib:Depends}, libsvn0 (>= 0.37), libwxgtk2.4 (>= 2.4.2)
-Description: GUI client for subversion
- Graphical client for the subversion revision control system.
- This client uses wxWindow for it's UI
+Depends: ${shlibs:Depends}, ${misc:Depends}, libsvncpp3 (= ${binary:Version}), libsqlite3-0 (>= 3.7.17)
+Recommends: ssh-askpass
+Breaks: libsvncpp-dev (<< 0.7.0-2)
+Description: GUI client for Subversion
+ Rapidsvn is a graphical client for the Subversion revision control system 
+ (svn) providing an easy to use interface for Subversion features. It aims 
+ to be simple for beginners but flexible enough to increase productivity for 
+ experienced Subversion users.
+
+Package: libsvncpp3
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libsvncpp0, libsvncpp0c2, libsvncpp0c2a
+Replaces: libsvncpp0, libsvncpp0c2, libsvncpp0c2a
+Description: Subversion C++ shared library
+ This package contains a runtime library with C++ bindings for Subversion.
+ libsvncpp3 is a C++ wrapper for the C Subversion client library which 
+ abstracts many parts of the C API and provides an object-oriented programming 
+ interface. 
+
+Package: libsvncpp-dev
+Section: libdevel
+Architecture: any
+Depends: libsvn-dev (>= 1.4.4), libsvncpp3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Subversion C++ library (development files)
+ This package contains the static library and headers for libsvncpp,
+ a library with C++ bindings for Subversion.
+ . 
+ Install this package if you want to develop an application that requires the 
+ libsvncpp library. 

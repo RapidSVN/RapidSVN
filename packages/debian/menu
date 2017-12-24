@@ -1,0 +1,6 @@
+?package(rapidsvn):\
+	needs="X11"\
+	section="Applications/Programming"\
+	title="RapidSVN"\
+	icon="/usr/share/pixmaps/rapidsvn.xpm"\
+	command="/usr/bin/rapidsvn"
