@@ -1,6 +1,5 @@
-SUBDIRS=src/locale
+SUBDIRS=src/locale src/res/bitmaps
 
-DIST_SUBDIRS=${SUBDIRS} src/res src/res/bitmaps
 
 include_HEADERS= \
 	include/about_dlg.hpp \
@@ -104,107 +103,18 @@ include_HEADERS= \
 	include/version.hpp \
 	include/view_action.hpp 
 
-EXTRA_DIST=rapidsvn.fbp \
-	src/res/bitmaps/added_file.png \
-	src/res/bitmaps/added_folder.png \
-	src/res/bitmaps/added_open_folder.png \
-	src/res/bitmaps/add.png \
-	src/res/bitmaps/annotate.png \
-	src/res/bitmaps/bookmark.png \
-	src/res/bitmaps/branch.png \
-	src/res/bitmaps/commit.png \
-	src/res/bitmaps/computer.png \
-	src/res/bitmaps/conflicted_file.png \
-	src/res/bitmaps/copy.png \
-	src/res/bitmaps/deleted_file.png \
-	src/res/bitmaps/deleted_folder.png \
-	src/res/bitmaps/deleted_open_folder.png \
-	src/res/bitmaps/delete.png \
-	src/res/bitmaps/externals_folder.png \
-	src/res/bitmaps/externals_open_folder.png \
-	src/res/bitmaps/flat_mode.png \
-	src/res/bitmaps/folder.png \
-	src/res/bitmaps/folderup.png \
-	src/res/bitmaps/info.png \
-	src/res/bitmaps/locked_conflicted_file.png \
-	src/res/bitmaps/locked_deleted_file.png \
-	src/res/bitmaps/locked_deleted_folder.png \
-	src/res/bitmaps/locked_deleted_open_folder.png \
-	src/res/bitmaps/locked_file.png \
-	src/res/bitmaps/locked_folder.png \
-	src/res/bitmaps/locked_merged_file.png \
-	src/res/bitmaps/locked_missing_file.png \
-	src/res/bitmaps/locked_missing_folder.png \
-	src/res/bitmaps/locked_modified_file.png \
-	src/res/bitmaps/locked_modified_folder.png \
-	src/res/bitmaps/locked_modified_newer_file.png \
-	src/res/bitmaps/locked_modified_open_folder.png \
-	src/res/bitmaps/locked_newer_file.png \
-	src/res/bitmaps/locked_newer_folder.png \
-	src/res/bitmaps/locked_newer_open_folder.png \
-	src/res/bitmaps/locked_open_folder.png \
-	src/res/bitmaps/locked_replaced_file.png \
-	src/res/bitmaps/locked_replaced_folder.png \
-	src/res/bitmaps/locked_replaced_open_folder.png \
-	src/res/bitmaps/logo_128x128.png \
-	src/res/bitmaps/logo.png \
-	src/res/bitmaps/log.png \
-	src/res/bitmaps/merged_file.png \
-	src/res/bitmaps/missing_file.png \
-	src/res/bitmaps/missing_folder.png \
-	src/res/bitmaps/modified_file.png \
-	src/res/bitmaps/modified_folder.png \
-	src/res/bitmaps/modified_newer_file.png \
-	src/res/bitmaps/modified_open_folder.png \
-	src/res/bitmaps/move.png \
-	src/res/bitmaps/newer_file.png \
-	src/res/bitmaps/newer_folder.png \
-	src/res/bitmaps/newer_open_folder.png \
-	src/res/bitmaps/nonsvn_file.png \
-	src/res/bitmaps/nonsvn_folder.png \
-	src/res/bitmaps/nonsvn_open_folder.png \
-	src/res/bitmaps/normal_file.png \
-	src/res/bitmaps/open_folder.png \
-	src/res/bitmaps/rapidsvn_128x128.png \
-	src/res/bitmaps/rapidsvn_16x16.png \
-	src/res/bitmaps/rapidsvn_32x32.png \
-	src/res/bitmaps/rapidsvn_48x48.png \
-	src/res/bitmaps/refresh.png \
-	src/res/bitmaps/remote_added_file.png \
-	src/res/bitmaps/remote_added_folder.png \
-	src/res/bitmaps/rename.png \
-	src/res/bitmaps/replaced_file.png \
-	src/res/bitmaps/replaced_folder.png \
-	src/res/bitmaps/replaced_open_folder.png \
-	src/res/bitmaps/rep_locked_conflicted_file.png \
-	src/res/bitmaps/rep_locked_deleted_file.png \
-	src/res/bitmaps/rep_locked_file.png \
-	src/res/bitmaps/rep_locked_merged_file.png \
-	src/res/bitmaps/rep_locked_missing_file.png \
-	src/res/bitmaps/rep_locked_modified_file.png \
-	src/res/bitmaps/rep_locked_modified_newer_file.png \
-	src/res/bitmaps/rep_locked_newer_file.png \
-	src/res/bitmaps/rep_locked_replaced_file.png \
-	src/res/bitmaps/repository_bookmark.png \
-	src/res/bitmaps/repository.png \
-	src/res/bitmaps/resolve.png \
-	src/res/bitmaps/revert.png \
-	src/res/bitmaps/sort_down.png \
-	src/res/bitmaps/sort_up.png \
-	src/res/bitmaps/stop.png \
-	src/res/bitmaps/update.png \
-	src/res/bitmaps/view.png \
-	src/res/bitmaps/workingcopy.png \
-	src/res/bitmaps/rapidsvn_16x16.xpm \
-	src/res/bitmaps/rapidsvn_32x32.xpm \
-	src/res/bitmaps/rapidsvn_48x48.xpm 
+EXTRA_DIST=src/rapidsvn.fbp 
 
 lib_LTLIBRARIES=librapidsvn.la
 
 librapidsvn_la_CPPFLAGS=-Iinclude -I$(SVNCPP_DIR)/include
 librapidsvn_la_DEPENDENCIES=$(SVNCPP_DIR)/libsvncpp.la
-librapidsvn_la_LDFLAGS=-version-info 0:0:0 \
+librapidsvn_la_LDFLAGS=-L$(SVNCPP_DIR) -version-info 0:0:0 \
 	$(WX_LIBS)
+librapidsvn_la_LIBADD= -lsvncpp \
+	$(SVN_LIBS) \
+	$(APR_LIBS) \
+	$(WX_LIBS)	
 librapidsvn_la_SOURCES= \
 	src/about_dlg.cpp \
 	src/action.cpp \

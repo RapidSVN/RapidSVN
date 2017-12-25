@@ -8,7 +8,7 @@ Standards-Version: 3.9.6
 
 Package: rapidsvn
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libsvncpp3 (= ${binary:Version}), libsqlite3-0 (>= 3.7.17)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libsvncpp4 (= ${binary:Version}), libsqlite3-0 (>= 3.7.17)
 Recommends: ssh-askpass
 Breaks: libsvncpp-dev (<< 0.7.0-2)
 Description: GUI client for Subversion
@@ -17,22 +17,22 @@ Description: GUI client for Subversion
  to be simple for beginners but flexible enough to increase productivity for 
  experienced Subversion users.
 
-Package: libsvncpp3
+Package: libsvncpp4
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: libsvncpp0, libsvncpp0c2, libsvncpp0c2a
-Replaces: libsvncpp0, libsvncpp0c2, libsvncpp0c2a
+Conflicts: libsvncpp0, libsvncpp0c2, libsvncpp0c2a, libsvncpp3
+Replaces: libsvncpp0, libsvncpp0c2, libsvncpp0c2a, libsvncpp3
 Description: Subversion C++ shared library
  This package contains a runtime library with C++ bindings for Subversion.
- libsvncpp3 is a C++ wrapper for the C Subversion client library which 
+ libsvncpp4 is a C++ wrapper for the C Subversion client library which 
  abstracts many parts of the C API and provides an object-oriented programming 
  interface. 
 
 Package: libsvncpp-dev
 Section: libdevel
 Architecture: any
-Depends: libsvn-dev (>= 1.4.4), libsvncpp3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: libsvn-dev (>= 1.4.4), libsvncpp4 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: Subversion C++ library (development files)
  This package contains the static library and headers for libsvncpp,
  a library with C++ bindings for Subversion.

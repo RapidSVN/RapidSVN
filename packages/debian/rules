@@ -16,6 +16,7 @@ include /usr/share/dpkg/buildflags.mk
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+DEB_TARGET_MULTIARCH ?= $(shell dpkg-architecture -qDEB_TARGET_MULTIARCH)
 INCLUDEDIR = "/usr/lib/$(DEB_HOST_MULTIARCH)"
 
 SHELL=/bin/bash
@@ -34,7 +35,7 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 endif
 
 p	= rapidsvn
-p_lib	= libsvncpp3
+p_lib	= libsvncpp4
 p_dev	= libsvncpp-dev
 #p_doc	= libsvncpp-doc
 
@@ -101,9 +102,9 @@ install: build
 	dh_installdirs -p$(p) \
 		usr/share/pixmaps usr/share/locale usr/share/man/man1
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/rapidsvn
-	cp -p src/res/bitmaps/rapidsvn_32x32.xpm \
+	cp -p librapidsvn/src/res/bitmaps/rapidsvn_32x32.xpm \
 		debian/rapidsvn/usr/share/pixmaps/rapidsvn.xpm
-	cp -p src/res/bitmaps/rapidsvn_32x32.png \
+	cp -p librapidsvn/src/res/bitmaps/rapidsvn_32x32.png \
 		debian/rapidsvn/usr/share/pixmaps/rapidsvn.png
 	cp -p doc/manpage/rapidsvn.1 \
 		debian/rapidsvn/usr/share/man/man1/
@@ -113,7 +114,8 @@ install: build
 	dh_installdirs -p$(p_dev) usr/lib
 	mv $(d)/usr/lib/libsvncpp.{a,so} $(d_dev)/usr/lib/
 	rm $(d)/usr/lib/libsvncpp.la*
-	rmdir $(d)/usr/lib/
+	: # rmdir $(d)/usr/lib/
+	rm $(d)/usr/lib/*.a $(d)/usr/lib/*.la
 	: # doesn't work yet
 	: #$(MAKE) -C include install DESTDIR=$(CURDIR)/$(d_dev)
 	mv $(d)/usr/include $(d_dev)/usr/
@@ -151,8 +153,8 @@ binary-arch: build install
 	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps -L$(p_lib) -l$(d_lib)/usr/lib -- -v
-	-ldd debian/libsvncpp3/usr/lib/libsvncpp.so.3.0.0 | grep libsvn_subr-1.so.1
-	-objdump -T /usr/lib/libsvn_subr-1.so.1 | egrep 'svn_error__locate|svn_sort__hash'
+	-ldd debian/libsvncpp4/usr/lib/libsvncpp.so.4.0.0 | grep libsvn_subr-1.so.1
+	-objdump -T /usr/lib/$(DEB_TARGET_MULTIARCH)/libsvn_subr-1.so.1 | egrep 'svn_error__locate|svn_sort__hash'
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

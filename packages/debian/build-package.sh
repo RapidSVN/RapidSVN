@@ -9,4 +9,4 @@ then
 fi
 rm -rf debian
 cp -R packages/debian .
-dpkg-buildpackage -rfakeroot
+dpkg-buildpackage -b -us -uc -rfakeroot

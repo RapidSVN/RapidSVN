@@ -24,3 +24,5 @@
 /ltmain.sh
 /missing
 /test-driver
+/build-stamp
+/configure-stamp
