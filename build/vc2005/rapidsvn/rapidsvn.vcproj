@@ -71,6 +71,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(SolutionDir)DeclareDPIAware.manifest"
 				EmbedManifest="true"
 				UpdateFileHashes="true"
 			/>
@@ -144,6 +145,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(SolutionDir)DeclareDPIAware.manifest"
 				EmbedManifest="true"
 				UpdateFileHashes="true"
 			/>
@@ -218,6 +220,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(SolutionDir)DeclareDPIAware.manifest"
 				EmbedManifest="true"
 				UpdateFileHashes="true"
 			/>
@@ -297,6 +300,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(SolutionDir)DeclareDPIAware.manifest"
 				EmbedManifest="true"
 				VerboseOutput="true"
 				UpdateFileHashes="true"
