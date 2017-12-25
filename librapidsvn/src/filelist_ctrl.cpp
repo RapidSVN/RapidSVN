@@ -1228,7 +1228,7 @@ FileListCtrl::CreateLabels(const svn::Status & status, const svn::Path & basePat
       values[COL_CMT_REV].Printf(wxT("%ld"), status.oodLastCmtRev());
       values[COL_AUTHOR] = Utf8ToLocal(status.oodLastCmtAuthor());
       values[COL_CMT_DATE] = FormatDateTime(status.oodLastCmtDate());
-
+      // Element is out of date. Show why.
       switch (status.reposTextStatus())
       {
       case svn_wc_status_added:
@@ -1236,6 +1236,9 @@ FileListCtrl::CreateLabels(const svn::Status & status, const svn::Path & basePat
         break;
       case svn_wc_status_modified:
         values[COL_TEXT_STATUS] = _("modified");
+        break;
+      default:
+        // Irrelevant case, but needed for switch completeness
         break;
       }
     }
