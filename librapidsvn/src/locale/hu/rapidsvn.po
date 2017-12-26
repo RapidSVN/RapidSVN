@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rapidsvn 0.12.0 v02\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-26 15:12+0000\n"
+"POT-Creation-Date: 2017-12-24 14:02+0100\n"
 "PO-Revision-Date: 2010-06-19 11:16+0100\n"
 "Last-Translator: csola48 <csola48@gmail.com>\n"
 "Language-Team: magyar <csola48@gmail.com>\n"
@@ -323,6 +323,10 @@ msgstr "Ú&j..."
 msgid "<None>"
 msgstr "<Egyik sem>"
 
+#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
+msgid "A"
+msgstr ""
+
 #: ../create_repos_dlg.cpp:131
 msgid "A directory of this name exists already"
 msgstr ""
@@ -340,8 +344,12 @@ msgstr "ANSI"
 msgid "About %s"
 msgstr "Névjegy %s"
 
+#: ../log_aff_list.cpp:103
+msgid "Action"
+msgstr "Akció"
+
 #: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listed_dlg.cpp:183
-#: ../listener.cpp:393 ../main_frame.cpp:1420
+#: ../listener.cpp:393 ../main_frame.cpp:1422
 msgid "Add"
 msgstr "Hozzáadás"
 
@@ -366,7 +374,7 @@ msgid "Add to bookmarks"
 msgstr "Hozzáadás könyvjelzőhöz"
 
 #: ../listener.cpp:309 ../listener.cpp:402 ../listener.cpp:409
-#: ../main_frame.cpp:1429 ../main_frame.cpp:1436
+#: ../main_frame.cpp:1431 ../main_frame.cpp:1438
 msgid "Added"
 msgstr "Hozzáadva"
 
@@ -398,11 +406,11 @@ msgstr "Érintett fájl/könyvtár"
 msgid "All files|*"
 msgstr "Összes fájl|*"
 
-#: ../main_frame.cpp:1294 ../main_frame.cpp:1313
+#: ../main_frame.cpp:1296 ../main_frame.cpp:1315
 msgid "An error occured while launching the browser"
 msgstr "Hiba a böngésző indulásakor"
 
-#: ../main_frame.cpp:1281
+#: ../main_frame.cpp:1283
 msgid "An error occurred while checking valid actions"
 msgstr "Hiba az érvényesség ellenőrzésekor"
 
@@ -437,7 +445,7 @@ msgstr "Hitelesítés"
 msgid "Author"
 msgstr "Szerző"
 
-#: ../action.cpp:267
+#: ../action.cpp:269
 msgid "BASE"
 msgstr "BASE"
 
@@ -569,12 +577,12 @@ msgstr "Összehasonlítás:"
 
 #: ../listener.cpp:496
 #, fuzzy, c-format
-msgid "Completed %s at revision %d"
+msgid "Completed %s at revision %ld"
 msgstr "Revízió beküldve"
 
 #: ../listener.cpp:486
 #, fuzzy, c-format
-msgid "Completed at revision %d"
+msgid "Completed at revision %ld"
 msgstr "Revízió beküldve"
 
 #: ../columns.cpp:64
@@ -628,7 +636,15 @@ msgstr "Másolva a revízióból: %ld"
 msgid "Copied From URL: %s"
 msgstr "Másolva az URL-ből: %s"
 
-#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1421
+#: ../log_aff_list.cpp:105
+msgid "Copied from Path"
+msgstr "Másolva az útvonalból"
+
+#: ../log_aff_list.cpp:106
+msgid "Copied from Rev"
+msgstr "Másolva a revízióból"
+
+#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1423
 #: ../move_action.cpp:44 ../rapidsvn_generated.cpp:857
 msgid "Copy"
 msgstr "Másolás"
@@ -666,7 +682,11 @@ msgstr "Új tároló létrehozása..."
 msgid "Create repository in &directory:"
 msgstr "Célkönyvtár kiválasztása"
 
-#: ../columns.cpp:54 ../log_rev_list.cpp:39
+#: ../log_dlg.cpp:318 ../log_dlg.cpp:371
+msgid "D"
+msgstr ""
+
+#: ../columns.cpp:54 ../log_rev_list.cpp:109
 msgid "Date"
 msgstr "Dátum"
 
@@ -678,7 +698,7 @@ msgstr "Dátum:"
 msgid "Default"
 msgstr ""
 
-#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1422
+#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1424
 msgid "Delete"
 msgstr "Törlés"
 
@@ -691,7 +711,7 @@ msgid "Delete selected"
 msgstr "Kiválasztottak törlése"
 
 #: ../listener.cpp:310 ../listener.cpp:401 ../listener.cpp:410
-#: ../main_frame.cpp:1428 ../main_frame.cpp:1437
+#: ../main_frame.cpp:1430 ../main_frame.cpp:1439
 msgid "Deleted"
 msgstr "Törölt"
 
@@ -883,11 +903,11 @@ msgstr "Hiba az előkészített akció közben: %s"
 msgid "Error while refreshing filelist (%s)"
 msgstr "Hiba a fájllista frissítése közben (%s)"
 
-#: ../main_frame.cpp:930
+#: ../main_frame.cpp:932
 msgid "Error while updating filelist"
 msgstr "Hiba a fájllista frissítése közben"
 
-#: ../main_frame.cpp:917
+#: ../main_frame.cpp:919
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "Hiba a fájllista frissítése közben (%s)"
@@ -955,11 +975,11 @@ msgstr "külső"
 msgid "FSFS"
 msgstr ""
 
-#: ../listener.cpp:416 ../main_frame.cpp:1443
+#: ../listener.cpp:416 ../main_frame.cpp:1445
 msgid "Failed to lock"
 msgstr "Sikertelen zárás"
 
-#: ../listener.cpp:417 ../main_frame.cpp:1444
+#: ../listener.cpp:417 ../main_frame.cpp:1446
 msgid "Failed to unlock"
 msgstr "Sikertelen nyitás"
 
@@ -1003,12 +1023,12 @@ msgstr "Kényszerített nyitás funkció, ha nem ön végezte a zárást."
 msgid "General"
 msgstr "Általános"
 
-#: ../action.cpp:272
+#: ../action.cpp:274
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "Fájl %s rev. %s"
 
-#: ../action.cpp:265
+#: ../action.cpp:267
 msgid "HEAD"
 msgstr "HEAD"
 
@@ -1021,9 +1041,14 @@ msgstr "&Súgó"
 msgid "Here comes the description"
 msgstr ""
 
-#: ../log_dlg.cpp:77 ../rapidsvn_generated.cpp:1158
+#: ../rapidsvn_generated.cpp:1158
 #, c-format
 msgid "History: %d revisions"
+msgstr "Előzmények: %d revíziók"
+
+#: ../log_dlg.cpp:77
+#, fuzzy, c-format
+msgid "History: %zd revisions"
 msgstr "Előzmények: %d revíziók"
 
 #: ../rapidsvn_generated.cpp:151
@@ -1092,7 +1117,7 @@ msgstr "Információ kiválasztása"
 msgid "Internal Error: There is another action running"
 msgstr "Belső hiba: egy másik akció is fut"
 
-#: ../main_frame.cpp:1695
+#: ../main_frame.cpp:1697
 msgid "Internal Error: no client data for action event!"
 msgstr "Belső hiba: nincs kliens adat az akcióhoz megadva!"
 
@@ -1192,11 +1217,11 @@ msgstr "Zárolt tulajdonos: %s"
 msgid "Lock Token: %s"
 msgstr "Zárolt token: %s"
 
-#: ../listener.cpp:414 ../main_frame.cpp:1441
+#: ../listener.cpp:414 ../main_frame.cpp:1443
 msgid "Locked"
 msgstr "Zárolt"
 
-#: ../log_action.cpp:82 ../log_action.cpp:136
+#: ../log_action.cpp:82 ../log_action.cpp:130
 msgid "Log"
 msgstr "Napló"
 
@@ -1204,7 +1229,7 @@ msgstr "Napló"
 msgid "Log History"
 msgstr "Napló előzmények"
 
-#: ../log_rev_list.cpp:40 ../rapidsvn_generated.cpp:1211
+#: ../log_rev_list.cpp:110 ../rapidsvn_generated.cpp:1211
 msgid "Log Message"
 msgstr "Napló bejegyzés"
 
@@ -1258,7 +1283,7 @@ msgstr "Összefűzés"
 msgid "Mkdir"
 msgstr "Mkdir"
 
-#: ../listener.cpp:408 ../main_frame.cpp:1435
+#: ../listener.cpp:408 ../main_frame.cpp:1437
 msgid "Modified"
 msgstr "Módosított"
 
@@ -1344,7 +1369,7 @@ msgstr "Megnyitás..."
 msgid "Overwrite"
 msgstr "Felülírás"
 
-#: ../columns.cpp:46
+#: ../columns.cpp:46 ../log_aff_list.cpp:104
 msgid "Path"
 msgstr "Útvonal"
 
@@ -1437,11 +1462,11 @@ msgstr "Döntés &ellentétek\tCTRL-S"
 msgid "Re&vert\tCTRL-V"
 msgstr "&Visszavon\tCTRL-V"
 
-#: ../filelist_ctrl.cpp:1140
+#: ../filelist_ctrl.cpp:1143
 msgid "Ready"
 msgstr "Kész"
 
-#: ../main_frame.cpp:1675 ../main_frame.cpp:1719
+#: ../main_frame.cpp:1677 ../main_frame.cpp:1721
 msgid "Ready\n"
 msgstr "Kész\n"
 
@@ -1493,7 +1518,7 @@ msgstr "Átnevezés"
 msgid "Rep. Rev."
 msgstr "Tároló revízió"
 
-#: ../listener.cpp:411 ../main_frame.cpp:1438
+#: ../listener.cpp:411 ../main_frame.cpp:1440
 msgid "Replaced"
 msgstr "Cserélt"
 
@@ -1536,11 +1561,11 @@ msgstr "Feloldás"
 msgid "Resolve selected"
 msgstr "Kiválasztás feloldása"
 
-#: ../listener.cpp:399 ../main_frame.cpp:1426
+#: ../listener.cpp:399 ../main_frame.cpp:1428
 msgid "Resolved"
 msgstr "Feloldott"
 
-#: ../listener.cpp:396 ../main_frame.cpp:1423
+#: ../listener.cpp:396 ../main_frame.cpp:1425
 msgid "Restore"
 msgstr "Visszaállít"
 
@@ -1554,7 +1579,7 @@ msgstr ""
 msgid "Resulting repository filename:"
 msgstr ""
 
-#: ../listener.cpp:397 ../main_frame.cpp:1424 ../revert_action.cpp:35
+#: ../listener.cpp:397 ../main_frame.cpp:1426 ../revert_action.cpp:35
 msgid "Revert"
 msgstr "Visszavon"
 
@@ -1562,7 +1587,7 @@ msgstr "Visszavon"
 msgid "Revert selected"
 msgstr "Kijelölés visszavonása"
 
-#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:37
+#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:107
 #: ../rapidsvn_generated.cpp:252 ../rapidsvn_generated.cpp:964
 #: ../rapidsvn_generated.cpp:1808 ../rapidsvn_generated.cpp:1906
 msgid "Revision"
@@ -1713,7 +1738,7 @@ msgstr "Nem módosított bejegyzések mutatása"
 msgid "Show unversioned entries"
 msgstr "Nem kategorizált bejegyzések mutatása"
 
-#: ../listener.cpp:400 ../main_frame.cpp:1427
+#: ../listener.cpp:400 ../main_frame.cpp:1429
 msgid "Skip"
 msgstr "Átugrás"
 
@@ -1761,15 +1786,15 @@ msgstr "URL kapcsoló"
 msgid "Switch URL...\tCTRL-S"
 msgstr "URL kapcsoló...\tCTRL-S"
 
-#: ../main_frame.cpp:1374
+#: ../main_frame.cpp:1376
 msgid "Test duration"
 msgstr "Kipróbálás időtartama"
 
-#: ../main_frame.cpp:1370
+#: ../main_frame.cpp:1372
 msgid "Test ended at"
 msgstr "Kipróbálás vége"
 
-#: ../main_frame.cpp:1367
+#: ../main_frame.cpp:1369
 msgid "Test started at"
 msgstr "Kipróbálás kezdete"
 
@@ -1836,7 +1861,7 @@ msgstr "UUID"
 msgid "Unicode"
 msgstr "Unikód"
 
-#: ../main_frame.cpp:1647
+#: ../main_frame.cpp:1649
 msgid "Unimplemented action!"
 msgstr "Eszköz nélküli akció!"
 
@@ -1848,7 +1873,7 @@ msgstr "Ismeretlen célútvonal"
 msgid "Unlock"
 msgstr "Nyitás"
 
-#: ../listener.cpp:415 ../main_frame.cpp:1442
+#: ../listener.cpp:415 ../main_frame.cpp:1444
 msgid "Unlocked"
 msgstr "Kinyitott"
 
@@ -1860,11 +1885,11 @@ msgstr "Frissítés"
 msgid "Update selected"
 msgstr "Kiválasztott frissítése"
 
-#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1430
+#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1432
 msgid "Updated"
 msgstr "Frissítve"
 
-#: ../main_frame.cpp:1709 ../main_frame.cpp:1714
+#: ../main_frame.cpp:1711 ../main_frame.cpp:1716
 msgid "Updating..."
 msgstr "Frissítés..."
 
@@ -1886,7 +1911,7 @@ msgstr "Már használt"
 msgid "Use latest"
 msgstr "Utolsó használata"
 
-#: ../log_rev_list.cpp:38
+#: ../log_rev_list.cpp:108
 msgid "User"
 msgstr "Felhasználó"
 
@@ -1962,11 +1987,11 @@ msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr ""
 "Nem tudta hozzáadni a subversion adminisztrációs könyvtárat a könyvjelzőhöz!"
 
-#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1267
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1270
 msgid "add"
 msgstr "hozzáadás"
 
-#: ../filelist_ctrl.cpp:1232 ../utils.cpp:408
+#: ../filelist_ctrl.cpp:1235 ../utils.cpp:408
 msgid "added"
 msgstr "hozzáadva"
 
@@ -1974,7 +1999,7 @@ msgstr "hozzáadva"
 msgid "conflicted"
 msgstr "ellentétes"
 
-#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1270
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1273
 msgid "delete"
 msgstr "törlés"
 
@@ -2010,7 +2035,7 @@ msgstr "összefűzött"
 msgid "missing"
 msgstr "elveszett"
 
-#: ../filelist_ctrl.cpp:1235 ../utils.cpp:420
+#: ../filelist_ctrl.cpp:1238 ../utils.cpp:420
 msgid "modified"
 msgstr "módosított"
 
@@ -2034,7 +2059,7 @@ msgstr "normál"
 msgid "obstructed"
 msgstr "akadályozott"
 
-#: ../filelist_ctrl.cpp:1300 ../filelist_ctrl.cpp:1314
+#: ../filelist_ctrl.cpp:1303 ../filelist_ctrl.cpp:1317
 msgid "outdated"
 msgstr "lejárt"
 
@@ -2050,7 +2075,7 @@ msgstr ""
 msgid "pre Subversion 1.6"
 msgstr ""
 
-#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1273
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1276
 msgid "replace"
 msgstr "cserél"
 
@@ -2074,17 +2099,8 @@ msgstr "ismeretlen érték"
 msgid "unversioned"
 msgstr "verzió nélküli"
 
-#~ msgid "Action"
-#~ msgstr "Akció"
-
 #~ msgid "Checkout Test"
 #~ msgstr "Ellenőrző teszt"
-
-#~ msgid "Copied from Path"
-#~ msgstr "Másolva az útvonalból"
-
-#~ msgid "Copied from Rev"
-#~ msgstr "Másolva a revízióból"
 
 #~ msgid "Destination file"
 #~ msgstr "Cél fájl"

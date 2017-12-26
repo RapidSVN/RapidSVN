@@ -483,7 +483,7 @@ Listener::contextNotify(const char *path,
   case svn_wc_notify_update_completed:
     if (updateCounter.externalCounter == 0)
     {
-      Trace(wxString::Format(_("Completed at revision %d"), revision));
+      Trace(wxString::Format(_("Completed at revision %ld"), revision));
       wxString info = updateCounter.GetMessage();
       if (!info.IsEmpty())
       {
@@ -493,7 +493,7 @@ Listener::contextNotify(const char *path,
     }
     else
     {
-      Trace(wxString::Format(_("Completed %s at revision %d"), Utf8ToLocal(path).c_str(), revision));
+      Trace(wxString::Format(_("Completed %s at revision %ld"), Utf8ToLocal(path).c_str(), revision));
       updateCounter.externalCounter--;
     }
     break;

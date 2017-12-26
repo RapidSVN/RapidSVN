@@ -33,6 +33,7 @@ noinst_HEADERS= \
 lib_LTLIBRARIES=libsvncpp.la
 
 libsvncpp_la_LDFLAGS=-version-info 4:0:0
+libsvncpp_la_LIBADD=$(SVN_LIBS) $(APR_LIBS)
 libsvncpp_la_SOURCES= \
 	src/apr.cpp \
 	src/client.cpp \

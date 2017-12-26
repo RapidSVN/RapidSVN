@@ -75,7 +75,9 @@ UpdateAction::Perform()
     }
   }
 
-  wxSetWorkingDirectory(Utf8ToLocal(GetPath().c_str()));
+  const wxString & dir = Utf8ToLocal(GetPath().c_str());
+  if (!dir.empty())
+    wxSetWorkingDirectory(dir);
   svn::Client client(GetContext());
 
   client.update(GetTargets(), revision, m_data.recursive,

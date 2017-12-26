@@ -74,7 +74,7 @@ LogDlg::LogDlg(wxWindow * parent,
   m = std::auto_ptr<Data>(new Data(path, entries));
 
   m_staticRevisions->SetLabel(
-    wxString::Format(_("History: %d revisions"), entries->size()));
+    wxString::Format(_("History: %zd revisions"), entries->size()));
 
   // Remove the last log entry (only included so we know if more are available)
   if (entries->size() > LogAction::LogLimit)

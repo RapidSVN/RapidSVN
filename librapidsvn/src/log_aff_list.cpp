@@ -170,7 +170,7 @@ void LogAffectedList::SetValue(const std::list<svn::LogChangePathEntry> & change
     const int AUTOMATICALLY_SORT_ITEMS_LIMIT = 1000;
     if (itemCount <= AUTOMATICALLY_SORT_ITEMS_LIMIT)
     {
-      m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
+      m_ColSortInfo.Ascending = !m_ColSortInfo.Ascending;
       wxListEvent colClickEvent;
       if (m_ColSortInfo.Column == -1)
         m_ColSortInfo.Column = 1;
@@ -199,7 +199,7 @@ LogAffectedList::OnColClick(wxListEvent& event)
   int clickedColumn = event.GetColumn();
 
   if (m_ColSortInfo.Column == clickedColumn)
-    m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
+    m_ColSortInfo.Ascending = !m_ColSortInfo.Ascending;
   m_ColSortInfo.Column = clickedColumn;
   m_ColSortInfo.SortIterations = 0;
 

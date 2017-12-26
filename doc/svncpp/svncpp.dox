@@ -55,7 +55,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../../include/svncpp
+INPUT                  = ../../libsvncpp/include/svncpp
 FILE_PATTERNS          = *.hpp
 RECURSIVE              = NO
 EXCLUDE                = 

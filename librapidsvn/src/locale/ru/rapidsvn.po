@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.12.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-26 15:12+0000\n"
+"POT-Creation-Date: 2017-12-24 14:02+0100\n"
 "PO-Revision-Date: 2012-09-11 23:20+0300\n"
 "Last-Translator: Alexey Reztsov <ariafan@mail.ru>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
@@ -322,6 +322,10 @@ msgstr "&Новый..."
 msgid "<None>"
 msgstr "<нет>"
 
+#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
+msgid "A"
+msgstr ""
+
 #: ../create_repos_dlg.cpp:131
 msgid "A directory of this name exists already"
 msgstr ""
@@ -339,8 +343,12 @@ msgstr "ANSI"
 msgid "About %s"
 msgstr "О программе %s"
 
+#: ../log_aff_list.cpp:103
+msgid "Action"
+msgstr "Операция"
+
 #: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listed_dlg.cpp:183
-#: ../listener.cpp:393 ../main_frame.cpp:1420
+#: ../listener.cpp:393 ../main_frame.cpp:1422
 msgid "Add"
 msgstr "Добавление"
 
@@ -365,7 +373,7 @@ msgid "Add to bookmarks"
 msgstr "Добавить в закладки"
 
 #: ../listener.cpp:309 ../listener.cpp:402 ../listener.cpp:409
-#: ../main_frame.cpp:1429 ../main_frame.cpp:1436
+#: ../main_frame.cpp:1431 ../main_frame.cpp:1438
 msgid "Added"
 msgstr "Добавлено"
 
@@ -397,11 +405,11 @@ msgstr "Файлы/каталоги"
 msgid "All files|*"
 msgstr "Все файлы|*"
 
-#: ../main_frame.cpp:1294 ../main_frame.cpp:1313
+#: ../main_frame.cpp:1296 ../main_frame.cpp:1315
 msgid "An error occured while launching the browser"
 msgstr "Возникла ошибка при запуске интернет-обозревателя"
 
-#: ../main_frame.cpp:1281
+#: ../main_frame.cpp:1283
 msgid "An error occurred while checking valid actions"
 msgstr "Возникла ошибка при проверке допустимых операций"
 
@@ -436,7 +444,7 @@ msgstr "Аутентификация"
 msgid "Author"
 msgstr "Автор"
 
-#: ../action.cpp:267
+#: ../action.cpp:269
 msgid "BASE"
 msgstr "BASE"
 
@@ -568,12 +576,12 @@ msgstr "Сравнить:"
 
 #: ../listener.cpp:496
 #, fuzzy, c-format
-msgid "Completed %s at revision %d"
+msgid "Completed %s at revision %ld"
 msgstr "Зафиксирована ревизия"
 
 #: ../listener.cpp:486
 #, fuzzy, c-format
-msgid "Completed at revision %d"
+msgid "Completed at revision %ld"
 msgstr "Зафиксирована ревизия"
 
 #: ../columns.cpp:64
@@ -627,7 +635,15 @@ msgstr "Скопировано из ревизии: %ld"
 msgid "Copied From URL: %s"
 msgstr "Скопировано из URL: %s"
 
-#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1421
+#: ../log_aff_list.cpp:105
+msgid "Copied from Path"
+msgstr "Скопировано из пути"
+
+#: ../log_aff_list.cpp:106
+msgid "Copied from Rev"
+msgstr "Скопировано из ревизии"
+
+#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1423
 #: ../move_action.cpp:44 ../rapidsvn_generated.cpp:857
 msgid "Copy"
 msgstr "Копирование"
@@ -665,7 +681,11 @@ msgstr "Создать новый репозиторий..."
 msgid "Create repository in &directory:"
 msgstr "Выберите целевой каталог"
 
-#: ../columns.cpp:54 ../log_rev_list.cpp:39
+#: ../log_dlg.cpp:318 ../log_dlg.cpp:371
+msgid "D"
+msgstr ""
+
+#: ../columns.cpp:54 ../log_rev_list.cpp:109
 msgid "Date"
 msgstr "Дата"
 
@@ -677,7 +697,7 @@ msgstr "Дата:"
 msgid "Default"
 msgstr ""
 
-#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1422
+#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1424
 msgid "Delete"
 msgstr "Удаление"
 
@@ -690,7 +710,7 @@ msgid "Delete selected"
 msgstr "Удалить выбранные"
 
 #: ../listener.cpp:310 ../listener.cpp:401 ../listener.cpp:410
-#: ../main_frame.cpp:1428 ../main_frame.cpp:1437
+#: ../main_frame.cpp:1430 ../main_frame.cpp:1439
 msgid "Deleted"
 msgstr "Удалён"
 
@@ -882,11 +902,11 @@ msgstr "Ошибка при подготовке операции: %s"
 msgid "Error while refreshing filelist (%s)"
 msgstr "Ошибка при обновлении списка файлов (%s)"
 
-#: ../main_frame.cpp:930
+#: ../main_frame.cpp:932
 msgid "Error while updating filelist"
 msgstr "Ошибка при обновлении списка файлов"
 
-#: ../main_frame.cpp:917
+#: ../main_frame.cpp:919
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "Ошибка при обновлении списка файлов (%s)"
@@ -954,11 +974,11 @@ msgstr "внешний"
 msgid "FSFS"
 msgstr ""
 
-#: ../listener.cpp:416 ../main_frame.cpp:1443
+#: ../listener.cpp:416 ../main_frame.cpp:1445
 msgid "Failed to lock"
 msgstr "Попытка блокировки не удалась"
 
-#: ../listener.cpp:417 ../main_frame.cpp:1444
+#: ../listener.cpp:417 ../main_frame.cpp:1446
 msgid "Failed to unlock"
 msgstr "Попытка разблокировки не удалась"
 
@@ -1003,12 +1023,12 @@ msgstr ""
 msgid "General"
 msgstr "Общие"
 
-#: ../action.cpp:272
+#: ../action.cpp:274
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "Чтение файла %s ревизии %s"
 
-#: ../action.cpp:265
+#: ../action.cpp:267
 msgid "HEAD"
 msgstr "HEAD"
 
@@ -1020,9 +1040,14 @@ msgstr "Справка"
 msgid "Here comes the description"
 msgstr ""
 
-#: ../log_dlg.cpp:77 ../rapidsvn_generated.cpp:1158
+#: ../rapidsvn_generated.cpp:1158
 #, c-format
 msgid "History: %d revisions"
+msgstr "История: %d ревизий"
+
+#: ../log_dlg.cpp:77
+#, fuzzy, c-format
+msgid "History: %zd revisions"
 msgstr "История: %d ревизий"
 
 #: ../rapidsvn_generated.cpp:151
@@ -1089,7 +1114,7 @@ msgstr "Информация о выбранных"
 msgid "Internal Error: There is another action running"
 msgstr "Внутренняя ошибка: выполняется другая операция"
 
-#: ../main_frame.cpp:1695
+#: ../main_frame.cpp:1697
 msgid "Internal Error: no client data for action event!"
 msgstr "Внутренняя ошибка: отсутствуют данные клиента для операции!"
 
@@ -1189,11 +1214,11 @@ msgstr "Обладатель блокировки: %s"
 msgid "Lock Token: %s"
 msgstr "Ключ блокировки: %s"
 
-#: ../listener.cpp:414 ../main_frame.cpp:1441
+#: ../listener.cpp:414 ../main_frame.cpp:1443
 msgid "Locked"
 msgstr "Заблокировано"
 
-#: ../log_action.cpp:82 ../log_action.cpp:136
+#: ../log_action.cpp:82 ../log_action.cpp:130
 msgid "Log"
 msgstr "Журнал"
 
@@ -1201,7 +1226,7 @@ msgstr "Журнал"
 msgid "Log History"
 msgstr "Журнал правок"
 
-#: ../log_rev_list.cpp:40 ../rapidsvn_generated.cpp:1211
+#: ../log_rev_list.cpp:110 ../rapidsvn_generated.cpp:1211
 msgid "Log Message"
 msgstr "Комментарий"
 
@@ -1255,7 +1280,7 @@ msgstr "Объединить"
 msgid "Mkdir"
 msgstr "Создание каталога"
 
-#: ../listener.cpp:408 ../main_frame.cpp:1435
+#: ../listener.cpp:408 ../main_frame.cpp:1437
 msgid "Modified"
 msgstr "Изменено"
 
@@ -1341,7 +1366,7 @@ msgstr "Открыть..."
 msgid "Overwrite"
 msgstr "Перезапись"
 
-#: ../columns.cpp:46
+#: ../columns.cpp:46 ../log_aff_list.cpp:104
 msgid "Path"
 msgstr "Путь"
 
@@ -1434,11 +1459,11 @@ msgstr "Ра&зрешить конфликты\tCTRL-S"
 msgid "Re&vert\tCTRL-V"
 msgstr "&Отменить изменения\tCTRL-V"
 
-#: ../filelist_ctrl.cpp:1140
+#: ../filelist_ctrl.cpp:1143
 msgid "Ready"
 msgstr "Готово"
 
-#: ../main_frame.cpp:1675 ../main_frame.cpp:1719
+#: ../main_frame.cpp:1677 ../main_frame.cpp:1721
 msgid "Ready\n"
 msgstr "Готово\n"
 
@@ -1489,7 +1514,7 @@ msgstr "Переименование"
 msgid "Rep. Rev."
 msgstr "Рев. реп."
 
-#: ../listener.cpp:411 ../main_frame.cpp:1438
+#: ../listener.cpp:411 ../main_frame.cpp:1440
 msgid "Replaced"
 msgstr "Заменено"
 
@@ -1532,11 +1557,11 @@ msgstr "Разрешение конфликтов"
 msgid "Resolve selected"
 msgstr "Разрешить конфликты у выбранных"
 
-#: ../listener.cpp:399 ../main_frame.cpp:1426
+#: ../listener.cpp:399 ../main_frame.cpp:1428
 msgid "Resolved"
 msgstr "Конфликт урегулирован"
 
-#: ../listener.cpp:396 ../main_frame.cpp:1423
+#: ../listener.cpp:396 ../main_frame.cpp:1425
 msgid "Restore"
 msgstr "Восстановление"
 
@@ -1550,7 +1575,7 @@ msgstr ""
 msgid "Resulting repository filename:"
 msgstr ""
 
-#: ../listener.cpp:397 ../main_frame.cpp:1424 ../revert_action.cpp:35
+#: ../listener.cpp:397 ../main_frame.cpp:1426 ../revert_action.cpp:35
 msgid "Revert"
 msgstr "Откат изменений"
 
@@ -1558,7 +1583,7 @@ msgstr "Откат изменений"
 msgid "Revert selected"
 msgstr "Откатить изменения"
 
-#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:37
+#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:107
 #: ../rapidsvn_generated.cpp:252 ../rapidsvn_generated.cpp:964
 #: ../rapidsvn_generated.cpp:1808 ../rapidsvn_generated.cpp:1906
 msgid "Revision"
@@ -1717,7 +1742,7 @@ msgstr "Показывать неизменённые файлы и катало
 msgid "Show unversioned entries"
 msgstr "Показывать неотслеживаемые файлы"
 
-#: ../listener.cpp:400 ../main_frame.cpp:1427
+#: ../listener.cpp:400 ../main_frame.cpp:1429
 msgid "Skip"
 msgstr "Пропуск"
 
@@ -1765,15 +1790,15 @@ msgstr "Смена URL"
 msgid "Switch URL...\tCTRL-S"
 msgstr "Изменить URL...\tCTRL-S"
 
-#: ../main_frame.cpp:1374
+#: ../main_frame.cpp:1376
 msgid "Test duration"
 msgstr "Длительность теста"
 
-#: ../main_frame.cpp:1370
+#: ../main_frame.cpp:1372
 msgid "Test ended at"
 msgstr "Тест закончен в"
 
-#: ../main_frame.cpp:1367
+#: ../main_frame.cpp:1369
 msgid "Test started at"
 msgstr "Тест начат в"
 
@@ -1839,7 +1864,7 @@ msgstr "UUID"
 msgid "Unicode"
 msgstr "Юникод"
 
-#: ../main_frame.cpp:1647
+#: ../main_frame.cpp:1649
 msgid "Unimplemented action!"
 msgstr "Неподдерживаемая операция!"
 
@@ -1851,7 +1876,7 @@ msgstr "Неизвестный целевой путь"
 msgid "Unlock"
 msgstr "Разблокировка"
 
-#: ../listener.cpp:415 ../main_frame.cpp:1442
+#: ../listener.cpp:415 ../main_frame.cpp:1444
 msgid "Unlocked"
 msgstr "Разблокировано"
 
@@ -1863,11 +1888,11 @@ msgstr "Обновление"
 msgid "Update selected"
 msgstr "Обновить выбранные"
 
-#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1430
+#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1432
 msgid "Updated"
 msgstr "Обновлено"
 
-#: ../main_frame.cpp:1709 ../main_frame.cpp:1714
+#: ../main_frame.cpp:1711 ../main_frame.cpp:1716
 msgid "Updating..."
 msgstr "Обновление..."
 
@@ -1889,7 +1914,7 @@ msgstr "Использовать всегда"
 msgid "Use latest"
 msgstr "Использовать последнюю"
 
-#: ../log_rev_list.cpp:38
+#: ../log_rev_list.cpp:108
 msgid "User"
 msgstr "Пользователь"
 
@@ -1964,11 +1989,11 @@ msgstr ""
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "Нельзя добавить в закладки административный каталог subversion!"
 
-#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1267
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1270
 msgid "add"
 msgstr "добавить"
 
-#: ../filelist_ctrl.cpp:1232 ../utils.cpp:408
+#: ../filelist_ctrl.cpp:1235 ../utils.cpp:408
 msgid "added"
 msgstr "добавлен"
 
@@ -1976,7 +2001,7 @@ msgstr "добавлен"
 msgid "conflicted"
 msgstr "конфликт"
 
-#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1270
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1273
 msgid "delete"
 msgstr "удалить"
 
@@ -2012,7 +2037,7 @@ msgstr "объединён"
 msgid "missing"
 msgstr "отсутствует"
 
-#: ../filelist_ctrl.cpp:1235 ../utils.cpp:420
+#: ../filelist_ctrl.cpp:1238 ../utils.cpp:420
 msgid "modified"
 msgstr "изменён"
 
@@ -2036,7 +2061,7 @@ msgstr "нормальный"
 msgid "obstructed"
 msgstr "заслоняет другой файл"
 
-#: ../filelist_ctrl.cpp:1300 ../filelist_ctrl.cpp:1314
+#: ../filelist_ctrl.cpp:1303 ../filelist_ctrl.cpp:1317
 msgid "outdated"
 msgstr "устарел"
 
@@ -2055,7 +2080,7 @@ msgstr "Subversion %d.%d.%d"
 msgid "pre Subversion 1.6"
 msgstr "Subversion %d.%d.%d"
 
-#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1273
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1276
 msgid "replace"
 msgstr "заменить"
 
@@ -2079,17 +2104,8 @@ msgstr "неизвестное значение"
 msgid "unversioned"
 msgstr "не отслеживается"
 
-#~ msgid "Action"
-#~ msgstr "Операция"
-
 #~ msgid "Checkout Test"
 #~ msgstr "Тест создания рабочей копии"
-
-#~ msgid "Copied from Path"
-#~ msgstr "Скопировано из пути"
-
-#~ msgid "Copied from Rev"
-#~ msgstr "Скопировано из ревизии"
 
 #~ msgid "Destination file"
 #~ msgstr "Целевой файл"

@@ -110,7 +110,8 @@ ExportAction::Perform()
       pegRevision = svn::Revision(revnum);
   }
 
-  wxSetWorkingDirectory(m_data.DestPath);
+  if (!m_data.DestPath.empty())
+    wxSetWorkingDirectory(m_data.DestPath);
 
   svn::Path srcPathUtf8(PathUtf8(m_data.SrcPath));
   svn::Path destPathUtf8(PathUtf8(m_data.DestPath));

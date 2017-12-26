@@ -1,5 +1,5 @@
 /* XPM */
-static char *rapidsvn_48x48_xpm[] = {
+static const char *rapidsvn_48x48_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 5 1",
 "  c black",

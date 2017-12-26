@@ -1,49 +1,82 @@
-This package was debianized by Timothee Besset <ttimo@ttimo.net> on
-Sat,  5 Apr 2003 19:22:28 +0200.
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstrem-Name: RapidSvn
+Upstream-Contact: Tim Kemp <kempus@tigris.org>
+		  Stefan Kueng <steveking@tigris.org>
+Source: http://rapidsvn.tigris.org/
+Comment: 
+ This software consists of voluntary contributions made by many
+ individuals on behalf of the RapidSvn Group.  For more
+ information on the RapidSvn Group, please see
+ <http://rapidsvn.tigris.org/>.
+ .
+ RapidSVN is licensed under the GNU General Public License.
+ Svncpp is licensed under the GNU Lesser General Public License.
+ All documentation included in this distribution and on the website
+ is licensed under the GNU Free Documentation License.
 
-It was downloaded from http://svn.collab.net/repos/rapidsvn/trunk/
+Files: *
+Copyright: Copyright (C) 2002-2006 The RapidSvn Group. All rights reserved.
+License: GPL-3+
 
-Upstream Authors: Tim Kemp <kempus@tigris.org>, Stefan Kueng <steveking@tigris.org>
+Files: src/svncpp/*
+Copyright: Copyright (C) 2002-2006 The RapidSvn Group. All rights reserved.
+License: LGPL-3
 
-Copyright:
+Files: doc/*
+Copyright: Copyright (C) 2002-2006 The RapidSvn Group. All rights reserved.
+License: GFDL
 
-=================================================================
-Copyright (C) 2002-2012 The RapidSVN Group. All rights reserved.
+Files: debian/*
+Copyright: Copyright (C) 2003 Matthias Klose <doko@debian.org> 
+License: GPL-3+
 
-=================================================================
+License: GPL-3+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program (in the file GPL.txt.
+ If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the full text of the GNU General Public
+ License version 3 can be found in the file
+ `/usr/share/common-licenses/GPL-3'.
 
-This software consists of voluntary contributions made by many
-individuals on behalf of the RapidSVN Group.  For more
-information on the RapidSVN Group, please see
-<http://rapidsvn.tigris.org/>.
+License: LGPL-3
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public License
+ along with this program (in the file GLPL.txt.
+ If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the full text of the GNU Lesser General Public 
+ License can be found in the file
+ `/usr/share/common-licenses/LGPL-3'.
 
-RapidSVN is licensed under the GNU General Public License.
-All documentation included in this distribution and on the website
-is licensed under the GNU Free Documentation License.
+License: GFDL
+ Permission is granted to copy, distribute and/or modify this document
+ under the terms of the GNU Free Documentation License, Version 1.2
+ or any later version published by the Free Software Foundation;
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+ A copy of the license is included in the section entitled "GNU
+ Free Documentation License".
+ .
+ On Debian systems, the full text of the GNU Free Documentation License 
+ version 1.2 can be found in the file
+ `/usr/share/common-licenses/GFDL-1.2'.
 
-
-=== Source Code: GNU General Public License ===
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program (in the file GPL.txt.
-If not, see <http://www.gnu.org/licenses/>.
-
-
-=== Documentation: GNU Free Documentation License ===
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.2
-or any later version published by the Free Software Foundation;
-with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-A copy of the license is included in the section entitled "GNU
-Free Documentation License".
-
-=================================================================

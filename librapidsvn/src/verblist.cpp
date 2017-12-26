@@ -71,7 +71,7 @@ VerbList::GetCount() const
 const wxString &
 VerbList::GetName(size_t /*index*/) const
 {
-  return wxT("");
+  return wxEmptyString;
 }
 
 
@@ -160,8 +160,8 @@ Verb::ReadFromRegistry(const wxRegKey & base, const wxString & verbName)
 
   wxRegKey commandKey(base, commandKeyName);
 
-  if (commandKey.HasValue(NULL))
-    commandKey.QueryValue(NULL, m_command);
+  if (commandKey.HasValue(wxEmptyString))
+    commandKey.QueryValue(wxEmptyString, m_command);
 
   // Attempt to read ddeexec key
   m_ddeCommand.Clear();
@@ -173,23 +173,23 @@ Verb::ReadFromRegistry(const wxRegKey & base, const wxString & verbName)
   if (m_usesDde)
   {
     wxRegKey ddeCommandKey(verbKey, ddeCommandKeyName);;
-    if (ddeCommandKey.HasValue(NULL))
-      ddeCommandKey.QueryValue(NULL, m_ddeCommand);
+    if (ddeCommandKey.HasValue(wxEmptyString))
+      ddeCommandKey.QueryValue(wxEmptyString, m_ddeCommand);
 
     const wxString ddeTopicName(wxT("Topic"));
     if (ddeCommandKey.HasSubKey(ddeTopicName))
     {
       wxRegKey ddeTopicKey(ddeCommandKey, ddeTopicName);
-      if (ddeTopicKey.HasValue(NULL))
-        ddeTopicKey.QueryValue(NULL, m_ddeTopic);
+      if (ddeTopicKey.HasValue(wxEmptyString))
+        ddeTopicKey.QueryValue(wxEmptyString, m_ddeTopic);
     }
 
     const wxString ddeApplicationName(wxT("Application"));
     if (ddeCommandKey.HasSubKey(ddeApplicationName))
     {
       wxRegKey ddeApplicationKey(ddeCommandKey, ddeApplicationName);
-      if (ddeApplicationKey.HasValue(NULL))
-        ddeApplicationKey.QueryValue(NULL, m_ddeApplication);
+      if (ddeApplicationKey.HasValue(wxEmptyString))
+        ddeApplicationKey.QueryValue(wxEmptyString, m_ddeApplication);
     }
   }
 
@@ -255,10 +255,10 @@ VerbList::InitFromDocument(const wxString & documentPath, bool isAFolder)
       return;
 
     wxRegKey ext_key(regKeyHKCR, extension_key_name);
-    if (!ext_key.HasValue(NULL))
+    if (!ext_key.HasValue(wxEmptyString))
       return;
 
-    ext_key.QueryValue(NULL, progid_key_name);
+    ext_key.QueryValue(wxEmptyString, progid_key_name);
   }
 
   // Get information on progid (name, verbs)
@@ -268,8 +268,8 @@ VerbList::InitFromDocument(const wxString & documentPath, bool isAFolder)
   wxRegKey progid_key(regKeyHKCR, progid_key_name);
 
   // Get long name of progid (ignored if not found)
-  if (progid_key.HasValue(NULL))
-    progid_key.QueryValue(NULL, m->document_type_name);
+  if (progid_key.HasValue(wxEmptyString))
+    progid_key.QueryValue(wxEmptyString, m->document_type_name);
 
   // Get verbs of progid
   const wxString progid_shell(wxT("shell"));
@@ -281,8 +281,8 @@ VerbList::InitFromDocument(const wxString & documentPath, bool isAFolder)
   // Get name of default verb (ignored if not found)
 
   wxString default_verbName;
-  if (verb_base_key.HasValue(NULL))
-    verb_base_key.QueryValue(NULL, default_verbName);
+  if (verb_base_key.HasValue(wxEmptyString))
+    verb_base_key.QueryValue(wxEmptyString, default_verbName);
 
   wxString verb_key_name;
   long index;

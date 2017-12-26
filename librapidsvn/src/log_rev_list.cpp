@@ -348,7 +348,8 @@ LogRevList::OnSize(wxSizeEvent& event)
   AutoSizeLastColumn();
 
   // Layout();
-  wxListView::OnSize(event);
+  //wxListView::OnSize(event);
+  event.Skip();
 }
 
 /**
@@ -380,7 +381,7 @@ LogRevList::OnColClick(wxListEvent& event)
   int clickedColumn = event.GetColumn();
 
   if (m_ColSortInfo.Column == clickedColumn)
-    m_ColSortInfo.Ascending = not m_ColSortInfo.Ascending;
+    m_ColSortInfo.Ascending = !m_ColSortInfo.Ascending;
   m_ColSortInfo.Column = clickedColumn;
 
   SetColumnImages();
@@ -468,10 +469,10 @@ wxCALLBACK LogRevListColumnCompareFunction(long item1, long item2, long sortData
     if (pColSortInfo->Column == 2)
     {
       wxDateTime dateTime1;
-      if (dateTime1.ParseFormat(itemText1, wxT("%x %X")) != NULL)
+      if (dateTime1.ParseFormat(itemText1, wxT("%x %X")))
       {
         wxDateTime dateTime2;
-        if (dateTime2.ParseFormat(itemText2, wxT("%x %X")) != NULL)
+        if (dateTime2.ParseFormat(itemText2, wxT("%x %X")))
         {
           if (dateTime1.IsEarlierThan(dateTime2))
             result = -1;

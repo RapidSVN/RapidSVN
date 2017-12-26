@@ -56,7 +56,9 @@ GetAction::Perform()
              m_data.revision.revnum());
   Trace(msg);
 
-  wxSetWorkingDirectory(Utf8ToLocal(GetPath().c_str()));
+  const wxString & dir = Utf8ToLocal(GetPath().c_str());
+  if (!dir.empty())
+    wxSetWorkingDirectory(dir);
   client.update(svn::Path(LocalToUtf8(m_data.path)),
                 m_data.revision,
                 true, false);

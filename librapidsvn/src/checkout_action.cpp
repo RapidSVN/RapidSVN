@@ -120,7 +120,8 @@ CheckoutAction::Perform()
       pegRevision = svn::Revision(revnum);
   }
 
-  wxSetWorkingDirectory(m_data.DestFolder);
+  if (!m_data.DestFolder.empty())
+    wxSetWorkingDirectory(m_data.DestFolder);
 
   svn::Path repUrlUtf8(PathUtf8(m_data.RepUrl));
   svn::Path destFolderUtf8(PathUtf8(dest_folder));

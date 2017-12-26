@@ -39,7 +39,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
-				PreprocessorDefinitions="__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
+				PreprocessorDefinitions="__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="3"
 				BrowseInformation="1"
 				DebugInformationFormat="3"
@@ -56,9 +56,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libsvncpp.lib librapidsvn.lib wxbase28d.lib wxmsw28d_core.lib wxmsw28d_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
+				AdditionalDependencies="libsvncpp.lib librapidsvn.lib wxbase30d.lib wxmsw30d_core.lib wxmsw30d_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_ansi_debug.exe"
-				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
+				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -71,6 +71,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(SolutionDir)DeclareDPIAware.manifest"
 				EmbedManifest="true"
 				UpdateFileHashes="true"
 			/>
@@ -118,7 +119,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/msw&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
-				PreprocessorDefinitions="__WXMSW__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
+				PreprocessorDefinitions="__WXMSW__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 			/>
 			<Tool
@@ -133,9 +134,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libsvncpp.lib librapidsvn.lib wxbase28.lib wxmsw28_core.lib wxmsw28_adv.lib wxpng.lib wxzlib.lib oldnames.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
+				AdditionalDependencies="libsvncpp.lib librapidsvn.lib wxbase30.lib wxmsw30_core.lib wxmsw30_adv.lib wxpng.lib wxzlib.lib oldnames.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_ansi.exe"
-				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
+				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				SubSystem="2"
 				TargetMachine="1"
 			/>
@@ -144,6 +145,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(SolutionDir)DeclareDPIAware.manifest"
 				EmbedManifest="true"
 				UpdateFileHashes="true"
 			/>
@@ -168,7 +170,7 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)..\..\..\dist"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="0"
@@ -191,8 +193,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/msw&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
-				PreprocessorDefinitions="wxUSE_UNICODE=1;__WXMSW__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
+				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/mswu&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				PreprocessorDefinitions="wxUSE_UNICODE=1;__WXMSW__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 			/>
 			<Tool
@@ -207,9 +209,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libsvncpp.lib librapidsvn.lib wxbase28u.lib wxmsw28u_core.lib wxmsw28u_adv.lib wxpng.lib wxzlib.lib oldnames.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
+				AdditionalDependencies="libsvncpp.lib librapidsvn.lib wxbase30u.lib wxmsw30u_core.lib wxmsw30u_adv.lib wxpng.lib wxzlib.lib oldnames.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs-1.lib libsvn_ra-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib libexpat.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
-				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
+				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				SubSystem="2"
 				TargetMachine="1"
 			/>
@@ -218,6 +220,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(SolutionDir)DeclareDPIAware.manifest"
 				EmbedManifest="true"
 				UpdateFileHashes="true"
 			/>
@@ -242,7 +245,7 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)..\..\..\dist"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
@@ -265,8 +268,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/mswd&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
-				PreprocessorDefinitions="wxUSE_UNICODE=1;__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;APU_HAVE_DB=1;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T"
+				AdditionalIncludeDirectories="../../../libsvncpp/include;../../../librapidsvn/include;&quot;$(WX)/lib/vc_lib/mswud&quot;;&quot;$(WX)/include&quot;;&quot;$(SUBVERSION)/include&quot;;&quot;$(SUBVERSION)/include/apr&quot;;&quot;$(SUBVERSION)/include/apr-util&quot;"
+				PreprocessorDefinitions="wxUSE_UNICODE=1;__WXMSW__;__WXDEBUG__;WIN32;_WINDOWS;alloca=_alloca;_CRT_SECURE_NO_DEPRECATE=;_CRT_NONSTDC_NO_DEPRECATE=;SVN_SQLITE_INLINE;snprintf=_snprintf;SVN_LIBSVN_FS_LINKS_FS_BASE=1;SVN_NEON_0_26=1;SVN_NEON_0_27=1;SVN_NEON_0_28=1;SVN_HAVE_NEON;SVN_LIBSVN_CLIENT_LINKS_RA_NEON;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="3"
 				DebugInformationFormat="3"
 			/>
@@ -282,9 +285,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libsvncpp.lib librapidsvn.lib wxbase28ud.lib wxmsw28ud_core.lib wxmsw28ud_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
+				AdditionalDependencies="libsvncpp.lib librapidsvn.lib wxbase30ud.lib wxmsw30ud_core.lib wxmsw30ud_adv.lib wxpngd.lib wxzlibd.lib oldnames.lib libsvn_client-1.lib libsvn_delta-1.lib libsvn_diff-1.lib libsvn_fs_base-1.lib libsvn_fs-1.lib libsvn_fs_fs-1.lib libsvn_fs_util-1.lib libsvn_ra-1.lib libsvn_ra_neon-1.lib libsvn_ra_local-1.lib libsvn_ra_svn-1.lib libsvn_repos-1.lib libsvn_subr-1.lib libsvn_wc-1.lib libapriconv-1.lib xml.lib libapr-1.lib libaprutil-1.lib ole32.lib rpcrt4.lib shell32.lib comdlg32.lib gdi32.lib user32.lib comctl32.lib ws2_32.lib mswsock.lib shfolder.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_debug.exe"
-				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)/lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
+				AdditionalLibraryDirectories="&quot;$(WX)/lib/vc_lib&quot;;&quot;$(SUBVERSION)/db4-win32/lib&quot;;&quot;$(SUBVERSION)/lib/apr&quot;;&quot;$(SUBVERSION)/lib/apr-util&quot;;&quot;$(SUBVERSION)/lib/apr-iconv&quot;;&quot;$(SUBVERSION)&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				IgnoreDefaultLibraryNames="msvcrt"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -297,6 +300,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(SolutionDir)DeclareDPIAware.manifest"
 				EmbedManifest="true"
 				VerboseOutput="true"
 				UpdateFileHashes="true"

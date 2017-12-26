@@ -29,7 +29,7 @@
 
 // Platform specific constants.
 #ifdef __WXMSW__
-const static int SPLITTER_STYLE = wxSP_FULLSASH | wxSP_LIVE_UPDATE |
+const static int SPLITTER_STYLE = wxSP_LIVE_UPDATE |
                                   wxCLIP_CHILDREN;
 #else
 const static int SPLITTER_STYLE = wxSP_3D | wxSP_LIVE_UPDATE |

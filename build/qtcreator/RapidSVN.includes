@@ -1,0 +1,5 @@
+../../librapidsvn/include
+../../librapidsvn/src/res/bitmaps
+/usr/include/wx-3.0
+../../libsvncpp/include
+/usr/include/subversion-1
