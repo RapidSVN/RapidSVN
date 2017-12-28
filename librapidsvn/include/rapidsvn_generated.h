@@ -1,20 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Dec 21 2009)
+// C++ code generated with wxFormBuilder (version Dec 21 2016)
 // http://www.wxformbuilder.org/
 //
-// PLEASE DO "NOT" EDIT THIS FILE!
+// PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __rapidsvn_generated__
-#define __rapidsvn_generated__
+#ifndef __RAPIDSVN_GENERATED_H__
+#define __RAPIDSVN_GENERATED_H__
 
+#include <wx/artprov.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
-
-class FileListCtrl;
-class FolderBrowser;
 class LogAffectedList;
-class LogRevList;
-class SplitterWindow;
 
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -68,7 +65,7 @@ class AboutDlgBase : public wxDialog
 	
 	public:
 		
-		AboutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About ..."), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		AboutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About ..."), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
 		~AboutDlgBase();
 	
 };
@@ -87,7 +84,7 @@ class AnnotateDlgBase : public wxDialog
 	
 	public:
 		
-		AnnotateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Annotate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 398,313 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		AnnotateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Annotate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 398,313 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~AnnotateDlgBase();
 	
 };
@@ -112,7 +109,7 @@ class AuthDlgBase : public wxDialog
 	
 	public:
 		
-		AuthDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		AuthDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~AuthDlgBase();
 	
 };
@@ -150,7 +147,7 @@ class CertDlgBase : public wxDialog
 	
 	public:
 		
-		CertDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("SSL Certificate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 394,339 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		CertDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("SSL Certificate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 394,339 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~CertDlgBase();
 	
 };
@@ -188,7 +185,7 @@ class CheckoutDlgBase : public wxDialog
 	
 	public:
 		
-		CheckoutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Checkout"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 389,333 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		CheckoutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Checkout"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 389,333 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~CheckoutDlgBase();
 	
 };
@@ -227,7 +224,7 @@ class CommitDlgBase : public wxDialog
 	
 	public:
 		
-		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 583,500 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxTAB_TRAVERSAL );
+		CommitDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 583,500 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxTAB_TRAVERSAL ); 
 		~CommitDlgBase();
 	
 };
@@ -255,7 +252,7 @@ class CommitLogDlgBase : public wxDialog
 	
 	public:
 		
-		CommitLogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 498,232 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		CommitLogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Commit Log Message"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 498,232 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~CommitLogDlgBase();
 	
 };
@@ -312,7 +309,7 @@ class CreateReposDlgBase : public wxDialog
 	
 	public:
 		
-		CreateReposDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Create Repository"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		CreateReposDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Create Repository"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~CreateReposDlgBase();
 	
 };
@@ -333,7 +330,7 @@ class DeleteDlgBase : public wxDialog
 	
 	public:
 		
-		DeleteDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Delete"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		DeleteDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Delete"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~DeleteDlgBase();
 	
 };
@@ -359,7 +356,7 @@ class DestinationDlgBase : public wxDialog
 	
 	public:
 		
-		DestinationDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Destination"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		DestinationDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Destination"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~DestinationDlgBase();
 	
 };
@@ -411,7 +408,7 @@ class DiffDlgBase : public wxDialog
 	
 	public:
 		
-		DiffDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Diff"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		DiffDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Diff"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
 		~DiffDlgBase();
 	
 };
@@ -439,7 +436,7 @@ class DragAndDropDlgBase : public wxDialog
 	
 	public:
 		
-		DragAndDropDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		DragAndDropDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~DragAndDropDlgBase();
 	
 };
@@ -467,7 +464,7 @@ class EntryDlgBase : public wxDialog
 	
 	public:
 		
-		EntryDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Edit"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 489,331 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		EntryDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Edit"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 489,331 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~EntryDlgBase();
 	
 };
@@ -507,7 +504,7 @@ class ExportDlgBase : public wxDialog
 	
 	public:
 		
-		ExportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Export"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		ExportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Export"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
 		~ExportDlgBase();
 	
 };
@@ -526,7 +523,6 @@ class ListEditorDlgBase : public wxDialog
 		wxButton* m_buttonNew;
 		wxButton* m_buttonEdit;
 		wxButton* m_buttonDelete;
-		
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		
@@ -538,7 +534,7 @@ class ListEditorDlgBase : public wxDialog
 	
 	public:
 		
-		ListEditorDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("ListEditor"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 602,372 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		ListEditorDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("ListEditor"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 602,372 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~ListEditorDlgBase();
 	
 };
@@ -560,7 +556,7 @@ class LockDlgBase : public wxDialog
 	
 	public:
 		
-		LockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Lock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		LockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Lock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~LockDlgBase();
 	
 };
@@ -606,14 +602,14 @@ class LogDlgBase : public wxDialog
 	
 	public:
 		
-		LogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Log History"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 709,456 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		LogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Log History"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 709,456 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~LogDlgBase();
+		
 		void m_splitterOnIdle( wxIdleEvent& )
 		{
-		m_splitter->SetSashPosition( 0 );
-		m_splitter->Disconnect( wxEVT_IDLE, wxIdleEventHandler( LogDlgBase::m_splitterOnIdle ), NULL, this );
+			m_splitter->SetSashPosition( 0 );
+			m_splitter->Disconnect( wxEVT_IDLE, wxIdleEventHandler( LogDlgBase::m_splitterOnIdle ), NULL, this );
 		}
-		
 	
 };
 
@@ -645,7 +641,7 @@ class ImportDlgBase : public wxDialog
 	
 	public:
 		
-		ImportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		ImportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~ImportDlgBase();
 	
 };
@@ -682,19 +678,14 @@ class MainFrameBase : public wxFrame
 	public:
 		
 		MainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 639,441 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		
 		~MainFrameBase();
-		void m_splitterHorizOnIdle( wxIdleEvent& )
-		{
-		m_splitterHoriz->SetSashPosition( -1 );
-		m_splitterHoriz->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterHorizOnIdle ), NULL, this );
-		}
 		
 		void m_splitterVertOnIdle( wxIdleEvent& )
 		{
-		m_splitterVert->SetSashPosition( 0 );
-		m_splitterVert->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterVertOnIdle ), NULL, this );
+			m_splitterVert->SetSashPosition( 0 );
+			m_splitterVert->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MainFrameBase::m_splitterVertOnIdle ), NULL, this );
 		}
-		
 	
 };
 
@@ -707,11 +698,9 @@ class MergeDlgBase : public wxDialog
 	
 	protected:
 		wxBoxSizer* m_mainSizer;
-		
 		wxStaticText* m_staticRevision1;
 		wxComboBox* m_comboUrl1;
 		wxTextCtrl* m_textRevision1;
-		
 		wxStaticText* m_staticRevision2;
 		wxComboBox* m_comboUrl2;
 		wxTextCtrl* m_textRevision2;
@@ -729,7 +718,7 @@ class MergeDlgBase : public wxDialog
 	
 	public:
 		
-		MergeDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Merge revisions"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 599,337 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		MergeDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Merge revisions"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 599,337 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~MergeDlgBase();
 	
 };
@@ -784,7 +773,7 @@ class PreferencesDlgBase : public wxDialog
 	
 	public:
 		
-		PreferencesDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		PreferencesDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
 		~PreferencesDlgBase();
 	
 };
@@ -803,7 +792,7 @@ class ReportDlgBase : public wxDialog
 	
 	public:
 		
-		ReportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Report"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 567,409 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		ReportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Report"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 567,409 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~ReportDlgBase();
 	
 };
@@ -824,7 +813,7 @@ class RevertDlgBase : public wxDialog
 	
 	public:
 		
-		RevertDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Revert"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		RevertDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Revert"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
 		~RevertDlgBase();
 	
 };
@@ -855,7 +844,7 @@ class SwitchDlgBase : public wxDialog
 	
 	public:
 		
-		SwitchDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Switch URL"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		SwitchDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Switch URL"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~SwitchDlgBase();
 	
 };
@@ -876,7 +865,7 @@ class UnlockDlgBase : public wxDialog
 	
 	public:
 		
-		UnlockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Unlock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 440,143 ), long style = wxDEFAULT_DIALOG_STYLE );
+		UnlockDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Unlock"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 440,143 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~UnlockDlgBase();
 	
 };
@@ -907,9 +896,9 @@ class UpdateDlgBase : public wxDialog
 	
 	public:
 		
-		UpdateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 440,309 ), long style = wxDEFAULT_DIALOG_STYLE );
+		UpdateDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 440,309 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~UpdateDlgBase();
 	
 };
 
-#endif //__rapidsvn_generated__
+#endif //__RAPIDSVN_GENERATED_H__

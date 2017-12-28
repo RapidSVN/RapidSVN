@@ -28,6 +28,7 @@
 #include "folder_browser.hpp"
 #include "filelist_ctrl.hpp"
 #include "splitter.hpp"
+#include "log_rev_list.hpp"
 
 #endif
 /* -----------------------------------------------------------------
