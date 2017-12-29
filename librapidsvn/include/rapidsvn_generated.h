@@ -31,8 +31,8 @@ class LogAffectedList;
 #include <wx/statbox.h>
 #include <wx/combobox.h>
 #include <wx/checkbox.h>
-#include <wx/checklst.h>
 #include <wx/choice.h>
+#include <wx/checklst.h>
 #include <wx/panel.h>
 #include <wx/notebook.h>
 #include <wx/radiobut.h>
@@ -168,9 +168,9 @@ class CheckoutDlgBase : public wxDialog
 		wxCheckBox* m_checkUseLatest;
 		wxTextCtrl* m_textPegRevision;
 		wxCheckBox* m_checkPegNotSpecified;
-		wxCheckBox* m_checkAddToBookmarks;
-		wxCheckBox* m_checkRecursive;
+		wxChoice* m_choiceDepth;
 		wxCheckBox* m_checkIgnoreExternals;
+		wxCheckBox* m_checkAddToBookmarks;
 		wxBoxSizer* m_buttonSizer;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
@@ -185,7 +185,7 @@ class CheckoutDlgBase : public wxDialog
 	
 	public:
 		
-		CheckoutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Checkout"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 389,333 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
+		CheckoutDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Checkout"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~CheckoutDlgBase();
 	
 };
@@ -485,11 +485,11 @@ class ExportDlgBase : public wxDialog
 		wxCheckBox* m_checkUseLatest;
 		wxTextCtrl* m_textPegRevision;
 		wxCheckBox* m_checkPegNotSpecified;
+		wxChoice* m_choiceDepth;
+		wxCheckBox* m_checkIgnoreExternals;
 		wxStaticText* m_staticEol;
 		wxChoice* m_choice3;
-		wxCheckBox* m_checkRecursive;
 		wxCheckBox* m_checkOverwrite;
-		wxCheckBox* m_checkIgnoreExternals;
 		wxBoxSizer* m_buttonSizer;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
@@ -504,7 +504,7 @@ class ExportDlgBase : public wxDialog
 	
 	public:
 		
-		ExportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Export"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
+		ExportDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Export"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 351,455 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~ExportDlgBase();
 	
 };
@@ -602,7 +602,7 @@ class LogDlgBase : public wxDialog
 	
 	public:
 		
-		LogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Log History"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 709,456 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
+		LogDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Log History"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 709,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~LogDlgBase();
 		
 		void m_splitterOnIdle( wxIdleEvent& )
@@ -884,7 +884,9 @@ class UpdateDlgBase : public wxDialog
 		wxStaticBoxSizer* m_revisionSizer;
 		wxTextCtrl* m_textRevision;
 		wxCheckBox* m_checkUseLatest;
-		wxCheckBox* m_checkRecursive;
+		wxStaticBoxSizer* m_depthSizer;
+		wxChoice* m_choiceDepth;
+		wxCheckBox* m_checkStickyDepth;
 		wxCheckBox* m_checkIgnoreExternals;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
@@ -892,6 +894,7 @@ class UpdateDlgBase : public wxDialog
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnText( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnUseLatest( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDepthChoice( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

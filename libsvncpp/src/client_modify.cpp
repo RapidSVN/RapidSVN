@@ -36,7 +36,7 @@ namespace svn
   Client::checkout(const char * url,
                    const Path & destPath,
                    const Revision & revision,
-                   bool recurse,
+                   svn_depth_t depth,
                    bool ignore_externals,
                    const Revision & peg_revision) throw(ClientException)
   {
@@ -45,13 +45,14 @@ namespace svn
     svn_revnum_t revnum = 0;
 
     svn_error_t * error =
-      svn_client_checkout2(&revnum,
+      svn_client_checkout3(&revnum,
                            url,
                            destPath.c_str(),
                            peg_revision.revision(),  // peg_revision
                            revision.revision(),  // revision
-                           recurse,
+                           depth,
                            ignore_externals,
+                           TRUE,
                            *m_context,
                            apr_pool);
 
@@ -165,18 +166,21 @@ namespace svn
   std::vector<svn_revnum_t>
   Client::update(const Targets & targets,
                  const Revision & revision,
-                 bool recurse,
+                 svn_depth_t depth,
+                 bool depth_is_sticky,
                  bool ignore_externals) throw(ClientException)
   {
     Pool pool;
     apr_array_header_t * result_revs;
 
     svn_error_t * error =
-      svn_client_update2(&result_revs,
+      svn_client_update3(&result_revs,
                          const_cast<apr_array_header_t*>(targets.array(pool)),
                          revision.revision(),
-                         recurse,
+                         depth,
+                         depth_is_sticky,
                          ignore_externals,
+                         TRUE,
                          *m_context,
                          pool);
     if (error != NULL)
@@ -197,12 +201,12 @@ namespace svn
 
   svn_revnum_t
   Client::update(const Path & path,
-                 const Revision & revision,
-                 bool recurse,
+                 const Revision & revision, svn_depth_t depth,
+                 bool depth_is_sticky,
                  bool ignore_externals) throw(ClientException)
   {
     Targets targets(path.c_str());
-    return update(targets, revision, recurse, ignore_externals)[0];
+    return update(targets, revision, depth, depth_is_sticky, ignore_externals)[0];
   }
 
   svn_revnum_t
@@ -350,21 +354,21 @@ namespace svn
                    bool overwrite,
                    const Revision & peg_revision,
                    bool ignore_externals,
-                   bool recurse,
+                   svn_depth_t depth,
                    const char * native_eol) throw(ClientException)
   {
     Pool pool;
     svn_revnum_t revnum = 0;
 
     svn_error_t * error =
-      svn_client_export3(&revnum,
+      svn_client_export4(&revnum,
                          from_path.c_str(),
                          to_path.c_str(),
                          peg_revision.revision(),
                          revision.revision(),
                          overwrite,
                          ignore_externals,
-                         recurse,
+                         depth,
                          native_eol,
                          *m_context,
                          pool);

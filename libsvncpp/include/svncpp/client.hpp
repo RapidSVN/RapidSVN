@@ -222,7 +222,7 @@ namespace svn
      * @param destPath destination directory for checkout.
      * @param revision the revision number to checkout. If the number is -1
      *                 then it will checkout the latest revision.
-     * @param recurse whether you want it to checkout files recursively.
+     * @param depth the checkout depth.
      * @param ignore_externals whether you want get external resources too.
      * @param peg_revision peg revision to checkout, by default current.
      * @exception ClientException
@@ -231,7 +231,7 @@ namespace svn
     checkout(const char * moduleName,
              const Path & destPath,
              const Revision & revision,
-             bool recurse,
+             svn_depth_t depth,
              bool ignore_externals = false,
              const Revision & peg_revision = Revision::UNSPECIFIED) throw(ClientException);
 
@@ -303,7 +303,9 @@ namespace svn
      * @param revision the revision number to checkout.
      *                 Revision::HEAD will checkout the
      *                 latest revision.
-     * @param recurse recursively update.
+     * @param depth the update depth.
+     *              The special value svn_depth_unknown fetches whatever was already there (the previous "sticky depth").
+     * @param depth_is_sticky If depth != svn_depth_unknown, makes the depth sticky (it will be saved permanently).
      * @param ignore_externals don't affect external destinations.
      * @exception ClientException
      *
@@ -312,13 +314,15 @@ namespace svn
     std::vector<svn_revnum_t>
     update(const Targets & targets,
            const Revision & revision,
-           bool recurse,
+           svn_depth_t depth,
+           bool depth_is_sticky,
            bool ignore_externals) throw(ClientException);
 
     svn_revnum_t
     update(const Path & path,
            const Revision & revision,
-           bool recurse,
+           svn_depth_t depth,
+           bool depth_is_sticky,
            bool ignore_externals) throw(ClientException);
 
     /**
@@ -452,7 +456,7 @@ namespace svn
      * @param peg_revision
      * @param overwrite overwrite existing files in to_path
      * @param ignore_externals whether to ignore external sources in from_path
-     * @param recurse
+     * @param depth recursion depth
      * @param native_eol which EOL to use when exporting, usually different for
      * different OSs
      * @exception ClientException
@@ -464,7 +468,7 @@ namespace svn
              bool overwrite = false,
              const Revision & peg_revision = Revision::UNSPECIFIED,
              bool ignore_externals = false,
-             bool recurse = true,
+             svn_depth_t depth = svn_depth_infinity,
              const char * native_eol = NULL) throw(ClientException);
 
     /**

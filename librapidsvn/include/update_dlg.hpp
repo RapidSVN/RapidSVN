@@ -35,8 +35,8 @@ class UpdateDlg:public UpdateDlgBase
 public:
   enum
   {
-    /** show dialog without "recursiv" checkbox */
-    WITHOUT_RECURSIVE=0x1,
+    /** show dialog without "depth" items */
+    WITHOUT_DEPTH=0x1,
 
     /** show dialog with URL line */
     WITH_URL=0x2,
@@ -53,10 +53,9 @@ public:
    *
    * @param parent parent window
    * @param flags flags for the window (@a WITH_URL)
-   * @param recursive default flag for the "recursive" check
    */
   UpdateDlg(wxWindow* parent, const wxString & title,
-            int flags = 0, bool recursive = true);
+            int flags = 0);
 
   /**
    * destructor
@@ -73,6 +72,8 @@ protected: // events inherited from UpdateDlgBase
   void
   OnText(wxCommandEvent & event);
 
+  void
+  OnDepthChoice(wxCommandEvent &);
 private:
   struct Data;
   Data * m;

@@ -1289,7 +1289,7 @@ MainFrame::OnHelpContents(wxCommandEvent & WXUNUSED(event))
 {
   try
   {
-    OpenURL(wxT("http://www.rapidsvn.org/help/index.php?id=OnlineHelp:Contents"));
+    OpenURL(wxT("http://www.rapidsvn.org/index.php?id=OnlineHelp:Contents"));
   }
   catch (...)
   {
@@ -1308,7 +1308,7 @@ MainFrame::OnHelpIndex(wxCommandEvent & WXUNUSED(event))
 {
   try
   {
-    OpenURL(wxT("http://www.rapidsvn.org/help/index.php?id=OnlineHelp:Index"));
+    OpenURL(wxT("http://www.rapidsvn.org/index.php?id=OnlineHelp:Index"));
   }
   catch (...)
   {
@@ -2073,7 +2073,7 @@ MainFrame::AddRepoBookmark()
 {
   const int flags =
     UpdateDlg::WITH_URL |
-    UpdateDlg::WITHOUT_RECURSIVE |
+    UpdateDlg::WITHOUT_DEPTH |
     UpdateDlg::WITHOUT_REVISION |
     UpdateDlg::WITHOUT_IGNORE_EXTERNALS;
   UpdateDlg dialog(this, _("Repository URL"), flags);

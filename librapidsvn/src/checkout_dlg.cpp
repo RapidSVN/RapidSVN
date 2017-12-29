@@ -67,12 +67,12 @@ CheckoutDlg::CheckoutDlg(wxWindow * parent,
   m_textPegRevision->SetHelpText(_("If the files were renamed or moved some time, specify which peg revision to use here."));
   m_checkPegNotSpecified->SetValidator(wxGenericValidator(&m->data.NotSpecified));
   m_checkPegNotSpecified->SetHelpText(_("Set this to use BASE/HEAD (current) peg revision of the files."));
-  m_checkRecursive->SetValidator(wxGenericValidator(&m->data.Recursive));
-  m_checkRecursive->SetHelpText(_("Set to get all subdirectories from the URL also."));
-  m_checkAddToBookmarks->SetValidator(wxGenericValidator(&m->data.Bookmarks));
-  m_checkAddToBookmarks->SetHelpText(_("Set to automatically create a new working copy bookmark."));
+  m_choiceDepth->SetValidator(wxGenericValidator(&m->data.Depth));
+  m_choiceDepth->SetHelpText(_("Select which files and subdirectories of the selected URL to get."));
   m_checkIgnoreExternals->SetValidator(wxGenericValidator(&m->data.IgnoreExternals));
   m_checkIgnoreExternals->SetHelpText(_("Set to ignore external definitions and the external working copies managed by them."));
+  m_checkAddToBookmarks->SetValidator(wxGenericValidator(&m->data.Bookmarks));
+  m_checkAddToBookmarks->SetHelpText(_("Set to automatically create a new working copy bookmark."));
 
   // Add explicit context-sensitive help button for non-MSW
 #ifndef __WXMSW__
