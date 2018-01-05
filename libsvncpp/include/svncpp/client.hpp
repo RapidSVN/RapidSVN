@@ -442,6 +442,39 @@ namespace svn
     cleanup(const Path & path) throw(ClientException);
 
     /**
+     * Recursively cleans up a local directory, finishing any
+     * incomplete operations, removing lockfiles, etc.
+     * New method for Subversion 1.9 and higher.
+     * @param path absolute path a local directory.
+     * @param breakLocks Break existing working copy locks at or below the @a path
+     * @param fixTimestamps Fix recorded timestamps for unmodified files
+     * @param vacuumPristines Remove unreferenced files in the pristine store
+     * @param includeExternals Recurse into externals and clean them up as well
+     * @exception ClientException
+     */
+    void
+    cleanup(const Path & path,
+            bool breakLocks, bool fixTimestamps, bool vacuumPristines,
+            bool includeExternals) throw(ClientException);
+
+    /**
+     * Recursively removes unversioned and/or ignored files from a local directory.
+     * New method for Subversion 1.9 and higher.
+     * @param path absolute path a local directory.
+     * @param removeUnversioned Remove all unversioned files.
+     * @param removeIgnored Remove all ignored files.
+     * @param fixTimestamps Fix recorded timestamps for unmodified files
+     * @param vacuumPristines Remove unreferenced files in the pristine store
+     * @param includeExternals Recurse into externals and clean them up as well
+     * @exception ClientException
+     */
+    void
+    vacuum(const Path &path,
+           bool removeUnversioned, bool removeIgnored,
+           bool fixTimestamps, bool vacuumPristines,
+           bool includeExternals) throw(ClientException);
+
+    /**
      * Removes the 'conflicted' state on a file.
      * @exception ClientException
      */

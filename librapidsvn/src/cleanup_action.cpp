@@ -31,6 +31,7 @@
 
 // app
 #include "cleanup_action.hpp"
+#include "cleanup_dlg.hpp"
 #include "ids.hpp"
 #include "tracer.hpp"
 #include "utils.hpp"
@@ -43,7 +44,23 @@ CleanupAction::CleanupAction(wxWindow * parent)
 bool
 CleanupAction::Prepare()
 {
-  return Action::Prepare();
+  if (!Action::Prepare())
+  {
+    return false;
+  }
+
+  svn::Path selectedPath(GetPath());
+
+  CleanupDlg dlg(GetParent(), selectedPath);
+
+  if (dlg.ShowModal() != wxID_OK)
+  {
+    return false;
+  }
+
+  m_data = dlg.GetData();
+
+  return true;
 }
 
 bool
@@ -55,7 +72,15 @@ CleanupAction::Perform()
   const wxString & dir = Utf8ToLocal(path.c_str());
   if (!dir.empty())
     wxSetWorkingDirectory(dir);
-  client.cleanup(path.c_str());
+
+  if(m_data.CleanupWCStatus)
+    client.cleanup(path.c_str(), m_data.BreakLocks, m_data.FixTimestamps,
+                   m_data.VacuumPristines, m_data.IncludeExternals);
+
+  if(m_data.DeleteIgnored || m_data.DeleteUnversioned)
+    client.vacuum(path.c_str(), m_data.DeleteUnversioned, m_data.DeleteIgnored,
+                  false, false,
+                  m_data.IncludeExternals);
 
   return true;
 }

@@ -21,41 +21,35 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _CLEANUP_ACTION_H_INCLUDED_
-#define _CLEANUP_ACTION_H_INCLUDED_
+#ifndef _CLEANUP_DATA_H_INCLUDED_
+#define _CLEANUP_DATA_H_INCLUDED_
 
-// svncpp
-#include "svncpp/path.hpp"
+// wxWidgets
+#include "wx/string.h"
 
-// app
-#include "action.hpp"
-#include "cleanup_data.hpp"
-
-// forward declarations
-namespace svn
+struct CleanupData
 {
-  class StatusSel;
-}
+  CleanupData()
+  {
+    CleanupWCStatus = true;
+    BreakLocks = true;
+    FixTimestamps = true;
+    VacuumPristines = false;
 
-class CleanupAction : public Action
-{
-public:
-  CleanupAction(wxWindow * parent);
+    DeleteUnversioned = false;
+    DeleteIgnored = false;
 
-  virtual bool
-  Perform();
+    IncludeExternals = true;
+  }
 
-  virtual bool
-  Prepare();
-
-  static bool
-  CheckStatusSel(const svn::StatusSel & statusSel);
-
-private:
-  // hide default and copy constructor
-  CleanupAction();
-  CleanupAction(const CleanupAction &);
-  CleanupData m_data;
+  wxString Path;
+  bool CleanupWCStatus;
+  bool BreakLocks;
+  bool FixTimestamps;
+  bool VacuumPristines;
+  bool DeleteUnversioned;
+  bool DeleteIgnored;
+  bool IncludeExternals;
 };
 
 #endif

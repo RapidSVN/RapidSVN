@@ -333,6 +333,41 @@ namespace svn
   }
 
   void
+  Client::cleanup(const Path & path, bool breakLocks,
+                  bool fixTimestamps, bool vacuumPristines,
+                  bool includeExternals
+                  ) throw(ClientException)
+  {
+    Pool subPool;
+    apr_pool_t * apr_pool = subPool.pool();
+
+    svn_error_t * error =
+      svn_client_cleanup2(path.c_str(), breakLocks, fixTimestamps, FALSE,
+                          vacuumPristines, includeExternals, *m_context, apr_pool);
+
+    if (error != NULL)
+      throw ClientException(error);
+  }
+
+  void
+  Client::vacuum(const Path & path,
+                 bool removeUnversioned, bool removeIgnored,
+                 bool fixTimestamps, bool vacuumPristines,
+                 bool includeExternals
+                 ) throw(ClientException)
+  {
+    Pool subPool;
+    apr_pool_t * apr_pool = subPool.pool();
+
+    svn_error_t * error =
+      svn_client_vacuum(path.c_str(), removeUnversioned, removeIgnored, fixTimestamps,
+                          vacuumPristines, includeExternals, *m_context, apr_pool);
+
+    if (error != NULL)
+      throw ClientException(error);
+  }
+
+  void
   Client::resolved(const Path & path,
                    bool recurse) throw(ClientException)
   {

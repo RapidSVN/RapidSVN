@@ -336,6 +336,40 @@ class DeleteDlgBase : public wxDialog
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Class CleanupDlgBase
+///////////////////////////////////////////////////////////////////////////////
+class CleanupDlgBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxBoxSizer* m_mainSizer;
+		wxStaticText* m_staticDesc;
+		wxStaticText* m_staticPath;
+		wxCheckBox* m_checkExternals;
+		wxCheckBox* m_checkWCStatus;
+		wxCheckBox* m_checkBreakLocks;
+		wxCheckBox* m_checkTimeStamps;
+		wxCheckBox* m_checkVacuum;
+		wxCheckBox* m_checkDeleteUnversioned;
+		wxCheckBox* m_checkDeleteIgnored;
+		wxBoxSizer* m_buttonSizer;
+		wxButton* m_buttonOK;
+		wxButton* m_buttonCancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnInitDialog( wxInitDialogEvent& event ) { event.Skip(); }
+		virtual void OnCleanupChecked( wxCommandEvent& event ) { event.Skip(); }
+		
+	
+	public:
+		
+		CleanupDlgBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Cleanup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 261,357 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
+		~CleanupDlgBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
 /// Class DestinationDlgBase
 ///////////////////////////////////////////////////////////////////////////////
 class DestinationDlgBase : public wxDialog 

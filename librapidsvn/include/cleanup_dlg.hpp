@@ -21,41 +21,57 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _CLEANUP_ACTION_H_INCLUDED_
-#define _CLEANUP_ACTION_H_INCLUDED_
-
-// svncpp
-#include "svncpp/path.hpp"
+#ifndef _CLEANUP_DLG_H_INCLUDED_
+#define _CLEANUP_DLG_H_INCLUDED_
 
 // app
-#include "action.hpp"
 #include "cleanup_data.hpp"
+#include "rapidsvn_generated.h"
 
-// forward declarations
+// svncpp
 namespace svn
 {
-  class StatusSel;
+  class Path;
 }
 
-class CleanupAction : public Action
+class CleanupDlg : public CleanupDlgBase
 {
 public:
-  CleanupAction(wxWindow * parent);
+  /**
+   * Constructor
+   *
+   * @param parent parent window
+   * @param selectedPath pre-fills the path field with
+   *                    this path
+   */
+  CleanupDlg(wxWindow * parent, const svn::Path & selectedPath);
 
-  virtual bool
-  Perform();
+  /**
+   * destructor
+   */
+  virtual ~CleanupDlg();
 
-  virtual bool
-  Prepare();
+  /**
+   * returns the cleanup data
+   */
+  const CleanupData &
+  GetData() const;
 
-  static bool
-  CheckStatusSel(const svn::StatusSel & statusSel);
+protected: // Events inherited from CleanupDlgBase
+  virtual void
+  OnInitDialog(wxInitDialogEvent & event);
+  virtual void
+  OnCleanupChecked(wxCommandEvent & event);
+
+  virtual void
+  OnHelp(wxCommandEvent & event);
 
 private:
-  // hide default and copy constructor
-  CleanupAction();
-  CleanupAction(const CleanupAction &);
-  CleanupData m_data;
+  /** hide implementation details */
+  struct Data;
+  Data * m;
+
+  void CheckControls();
 };
 
 #endif

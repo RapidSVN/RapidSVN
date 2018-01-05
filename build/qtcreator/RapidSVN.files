@@ -2,6 +2,7 @@
 ../../configure.in
 ../../librapidsvn/Makefile.am
 ../../librapidsvn/include/about_dlg.hpp
+../../librapidsvn/include/about_dlg.hpp
 ../../librapidsvn/include/action.hpp
 ../../librapidsvn/include/action_event.hpp
 ../../librapidsvn/include/action_factory.hpp
@@ -17,6 +18,8 @@
 ../../librapidsvn/include/checkout_data.hpp
 ../../librapidsvn/include/checkout_dlg.hpp
 ../../librapidsvn/include/cleanup_action.hpp
+../../librapidsvn/include/cleanup_data.hpp
+../../librapidsvn/include/cleanup_dlg.hpp
 ../../librapidsvn/include/columns.hpp
 ../../librapidsvn/include/commit_action.hpp
 ../../librapidsvn/include/commit_dlg.hpp
@@ -115,6 +118,8 @@
 ../../librapidsvn/src/checkout_action.cpp
 ../../librapidsvn/src/checkout_dlg.cpp
 ../../librapidsvn/src/cleanup_action.cpp
+../../librapidsvn/src/cleanup_dlg.cpp
+../../librapidsvn/src/cleanup_dlg.cpp
 ../../librapidsvn/src/columns.cpp
 ../../librapidsvn/src/commit_action.cpp
 ../../librapidsvn/src/commit_dlg.cpp

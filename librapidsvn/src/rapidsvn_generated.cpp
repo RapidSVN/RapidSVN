@@ -693,6 +693,88 @@ DeleteDlgBase::~DeleteDlgBase()
 {
 }
 
+CleanupDlgBase::CleanupDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	wxBoxSizer* m_pathSizer;
+	m_pathSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_staticDesc = new wxStaticText( this, wxID_ANY, _("Clean up in:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticDesc->Wrap( -1 );
+	m_pathSizer->Add( m_staticDesc, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticPath = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPath->Wrap( -1 );
+	m_pathSizer->Add( m_staticPath, 1, wxALL, 5 );
+	
+	
+	m_mainSizer->Add( m_pathSizer, 0, wxEXPAND, 5 );
+	
+	m_checkExternals = new wxCheckBox( this, wxID_ANY, _("Include externals"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_mainSizer->Add( m_checkExternals, 0, wxALL, 5 );
+	
+	wxStaticBoxSizer* m_sizerCleanupOptions;
+	m_sizerCleanupOptions = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Cleanup Options") ), wxVERTICAL );
+	
+	m_checkWCStatus = new wxCheckBox( this, wxID_ANY, _("Clean up working copy status"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerCleanupOptions->Add( m_checkWCStatus, 0, wxALIGN_LEFT|wxALL, 5 );
+	
+	m_checkBreakLocks = new wxCheckBox( this, wxID_ANY, _("Break locks"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerCleanupOptions->Add( m_checkBreakLocks, 0, wxALL, 5 );
+	
+	m_checkTimeStamps = new wxCheckBox( this, wxID_ANY, _("Fix time stamps"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerCleanupOptions->Add( m_checkTimeStamps, 0, wxALL, 5 );
+	
+	m_checkVacuum = new wxCheckBox( this, wxID_ANY, _("Vacuum pristine copies"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerCleanupOptions->Add( m_checkVacuum, 0, wxALL, 5 );
+	
+	
+	m_mainSizer->Add( m_sizerCleanupOptions, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* m_sizerVacuumOptions;
+	m_sizerVacuumOptions = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Vacuum Options") ), wxVERTICAL );
+	
+	m_checkDeleteUnversioned = new wxCheckBox( this, wxID_ANY, _("Delete all unversioned files"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerVacuumOptions->Add( m_checkDeleteUnversioned, 0, wxALIGN_LEFT|wxALL, 5 );
+	
+	m_checkDeleteIgnored = new wxCheckBox( this, wxID_ANY, _("Delete all ignored files"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerVacuumOptions->Add( m_checkDeleteIgnored, 0, wxALL, 5 );
+	
+	
+	m_mainSizer->Add( m_sizerVacuumOptions, 0, wxEXPAND, 5 );
+	
+	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	m_buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	
+	m_mainSizer->Add( m_buttonSizer, 0, wxALIGN_CENTER|wxLEFT|wxRIGHT, 5 );
+	
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	
+	// Connect Events
+	this->Connect( wxEVT_INIT_DIALOG, wxInitDialogEventHandler( CleanupDlgBase::OnInitDialog ) );
+	m_checkWCStatus->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( CleanupDlgBase::OnCleanupChecked ), NULL, this );
+}
+
+CleanupDlgBase::~CleanupDlgBase()
+{
+	// Disconnect Events
+	this->Disconnect( wxEVT_INIT_DIALOG, wxInitDialogEventHandler( CleanupDlgBase::OnInitDialog ) );
+	m_checkWCStatus->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( CleanupDlgBase::OnCleanupChecked ), NULL, this );
+	
+}
+
 DestinationDlgBase::DestinationDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );

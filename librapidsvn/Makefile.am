@@ -18,6 +18,8 @@ include_HEADERS= \
 	include/checkout_data.hpp \
 	include/checkout_dlg.hpp \
 	include/cleanup_action.hpp \
+	include/cleanup_data.hpp \
+	include/cleanup_dlg.hpp \
 	include/columns.hpp \
 	include/commit_action.hpp \
 	include/commit_dlg.hpp \
@@ -129,6 +131,7 @@ librapidsvn_la_SOURCES= \
 	src/checkout_action.cpp \
 	src/checkout_dlg.cpp \
 	src/cleanup_action.cpp \
+	src/cleanup_dlg.cpp \
 	src/columns.cpp \
 	src/commit_action.cpp \
 	src/commit_dlg.cpp \
