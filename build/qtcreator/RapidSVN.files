@@ -3,6 +3,7 @@
 ../../librapidsvn/Makefile.am
 ../../librapidsvn/include/about_dlg.hpp
 ../../librapidsvn/include/about_dlg.hpp
+../../librapidsvn/include/about_dlg.hpp
 ../../librapidsvn/include/action.hpp
 ../../librapidsvn/include/action_event.hpp
 ../../librapidsvn/include/action_factory.hpp
@@ -100,6 +101,7 @@
 ../../librapidsvn/include/update_action.hpp
 ../../librapidsvn/include/update_data.hpp
 ../../librapidsvn/include/update_dlg.hpp
+../../librapidsvn/include/upgrade_action.hpp
 ../../librapidsvn/include/userresolve_action.hpp
 ../../librapidsvn/include/utils.hpp
 ../../librapidsvn/include/verblist.hpp
@@ -277,6 +279,7 @@
 ../../librapidsvn/src/unlock_dlg.cpp
 ../../librapidsvn/src/update_action.cpp
 ../../librapidsvn/src/update_dlg.cpp
+../../librapidsvn/src/upgrade_action.cpp
 ../../librapidsvn/src/userresolve_action.cpp
 ../../librapidsvn/src/utils.cpp
 ../../librapidsvn/src/verblist.cpp

@@ -475,6 +475,16 @@ namespace svn
            bool includeExternals) throw(ClientException);
 
     /**
+     * Upgrades an entire working copy to the newest format supported
+     * by the used SVN library.
+     * It is necessary to upgrade working copies before performing any other
+     * operations on them, if they were checked out with an older SVN version.
+     * @param path Path to the working copy root directory.
+     */
+    void
+    upgrade(const Path &path) throw(ClientException);
+
+    /**
      * Removes the 'conflicted' state on a file.
      * @exception ClientException
      */

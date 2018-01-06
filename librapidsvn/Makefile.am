@@ -99,7 +99,8 @@ include_HEADERS= \
 	include/update_action.hpp \
 	include/update_data.hpp \
 	include/update_dlg.hpp \
-	include/userresolve_action.hpp \
+        include/upgrade_action.hpp \
+        include/userresolve_action.hpp \
 	include/utils.hpp \
 	include/verblist.hpp \
 	include/version.hpp \
@@ -198,7 +199,8 @@ librapidsvn_la_SOURCES= \
 	src/unlock_dlg.cpp \
 	src/update_action.cpp \
 	src/update_dlg.cpp \
-	src/userresolve_action.cpp \
+        src/upgrade_action.cpp \
+        src/userresolve_action.cpp \
 	src/utils.cpp \
 	src/verblist.cpp \
 	src/view_action.cpp \

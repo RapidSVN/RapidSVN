@@ -368,6 +368,22 @@ namespace svn
   }
 
   void
+  Client::upgrade(const Path &path
+                  ) throw(ClientException)
+  {
+      Pool subPool;
+      apr_pool_t * apr_pool = subPool.pool();
+
+      svn_error_t * error =
+        svn_client_upgrade(path.c_str(), *m_context, apr_pool);
+
+      if (error != NULL)
+        throw ClientException(error);
+
+  }
+
+
+  void
   Client::resolved(const Path & path,
                    bool recurse) throw(ClientException)
   {

@@ -318,6 +318,7 @@ public:
     // Extras menu
     wxMenu *menuExtras = new wxMenu;
     AppendMenuItem(*menuExtras, ID_Cleanup);
+    AppendMenuItem(*menuExtras, ID_Upgrade);
 
     // Help Menu
     wxMenu *menuHelp = new wxMenu;

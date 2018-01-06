@@ -101,6 +101,7 @@ enum
   ID_Revert,
   ID_Switch,
   ID_Update,
+  ID_Upgrade,
   ID_Unlock,
   ID_Edit,
   ID_Annotate,
