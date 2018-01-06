@@ -1584,10 +1584,15 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_panelTop->Layout();
 	sizerTop->Fit( m_panelTop );
 	panelBottom = new wxPanel( m_splitterHoriz, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	sizerBottom = new wxBoxSizer( wxVERTICAL );
+	sizerBottom = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_log = new wxTextCtrl( panelBottom, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH2|wxSUNKEN_BORDER );
-	sizerBottom->Add( m_log, 1, wxEXPAND, 5 );
+	m_logFilterBar = new wxToolBar( panelBottom, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_VERTICAL ); 
+	m_logFilterBar->Realize(); 
+	
+	sizerBottom->Add( m_logFilterBar, 0, wxEXPAND, 5 );
+	
+	m_log = new LogList( panelBottom, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_NO_HEADER|wxLC_REPORT|wxLC_VIRTUAL );
+	sizerBottom->Add( m_log, 1, wxALL, 5 );
 	
 	
 	panelBottom->SetSizer( sizerBottom );

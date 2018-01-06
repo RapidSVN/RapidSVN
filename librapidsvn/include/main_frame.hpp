@@ -140,6 +140,10 @@ private:
   // toolbar events
   void OnToolEnter(wxCommandEvent & event);
 
+  // log toolbar events
+  void OnLogClear(wxCommandEvent & event);
+  void OnLogToggle(wxCommandEvent & event);
+  void OnLogUpdate(wxUpdateUIEvent & event);
   // Events from action threads
   void OnActionEvent(wxCommandEvent & event);
   void OnListenerEvent(wxCommandEvent & event);

@@ -44,6 +44,8 @@
 
 #include "res/bitmaps/flat_mode.png.h"
 #include "res/bitmaps/nonsvn_file.png.h"
+#include "res/bitmaps/added_file.png.h"
+#include "res/bitmaps/deleted_file.png.h"
 #include "res/bitmaps/normal_file.png.h"
 #include "res/bitmaps/modified_file.png.h"
 #include "res/bitmaps/conflicted_file.png.h"
@@ -203,6 +205,53 @@ CreateMainToolBar(wxFrame * frame)
   // must call Realize() to reflect the changes.
   toolBar->Realize();
   toolBar->SetRows(1);
+}
+
+
+
+
+void
+CreateLogFilterBar(wxToolBarBase *toolBar)
+{
+  wxASSERT(toolBar);
+
+  toolBar->AddTool(ID_Log_Clear,
+                   wxEmptyString,
+                   EMBEDDED_BITMAP(delete_png),
+                   wxNullBitmap,
+                   wxITEM_NORMAL,
+                   _("Clear log"),
+                   _("Clear the list of performed actions"));
+
+  toolBar->AddCheckTool(ID_Log_Added,
+                   wxEmptyString,
+                   EMBEDDED_BITMAP(added_file_png),
+                   wxNullBitmap,
+                   _("Show added files"),
+                   _("Show added files in the log list"));
+
+  toolBar->AddCheckTool(ID_Log_Deleted,
+                   wxEmptyString,
+                   EMBEDDED_BITMAP(deleted_file_png),
+                   wxNullBitmap,
+                   _("Show deleted files"),
+                   _("Show deleted files in the log list"));
+
+  toolBar->AddCheckTool(ID_Log_Conflicted,
+                   wxEmptyString,
+                   EMBEDDED_BITMAP(conflicted_file_png),
+                   wxNullBitmap,
+                   _("Show conflicted files"),
+                   _("Show conflicted files in the log list"));
+
+  toolBar->AddCheckTool(ID_Log_Updated,
+                   wxEmptyString,
+                   EMBEDDED_BITMAP(normal_file_png),
+                   wxNullBitmap,
+                   _("Show updated files"),
+                   _("Show updated files in the log list"));
+
+  toolBar->Realize();
 }
 
 

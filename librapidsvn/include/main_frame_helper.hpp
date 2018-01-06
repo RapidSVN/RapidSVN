@@ -26,9 +26,13 @@
 
 // forward declaration
 class wxFrame;
+class wxToolBarBase;
 
 void
 CreateMainToolBar(wxFrame * frame);
+
+void
+CreateLogFilterBar(wxToolBarBase * tb);
 
 
 #endif

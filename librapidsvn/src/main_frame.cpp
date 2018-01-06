@@ -29,6 +29,7 @@
 #include "wx/wx.h"
 #include "wx/filename.h"
 #include "wx/stdpaths.h"
+#include "wx/listctrl.h"
 #include <wx/tipdlg.h>
 
 // svncpp
@@ -192,7 +193,7 @@ private:
   bool m_isErrorDialogActive;
   FolderBrowser * m_folderBrowser;
   FileListCtrl * m_listCtrl;
-  wxTextCtrl * m_log;
+  LogList * m_log;
 
 public:
 
@@ -202,7 +203,7 @@ public:
   svn::Apr apr;
 
   Data(wxFrame * parent, FolderBrowser * folderBrowser,
-       FileListCtrl * listCtrl, wxTextCtrl * log,
+       FileListCtrl * listCtrl, LogList * log,
        const wxLocale & locale_)
     : MenuColumns(0), MenuSorting(0), MenuBar(0),
       listener(parent),
@@ -541,8 +542,8 @@ public:
   {
     if (!m_log)
       return;
-
-    m_log->AppendText(msg + wxT('\n'));
+    m_log->AppendItem(LogItem_Normal, wxEmptyString, msg);
+    //m_log->AppendText(msg + wxT('\n'));
   }
 
   /**
@@ -558,9 +559,10 @@ public:
     if (!m_log)
       return;
 
-    m_log->SetDefaultStyle(wxTextAttr(*wxRED));
+    m_log->AppendItem(LogItem_Error, _("Error"), msg);
+    /*m_log->SetDefaultStyle(wxTextAttr(*wxRED));
     m_log->AppendText(wxString::Format(_("Error: %s\n"), msg.c_str()));
-    m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));
+    m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));*/
 
     if (showDialog)
       ShowErrorDialog(msg);
@@ -634,6 +636,10 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MENU(ID_TestDndDlg, MainFrame::OnTestDndDlg)
 #endif
 
+  EVT_MENU(ID_Log_Clear, MainFrame::OnLogClear)
+  EVT_MENU_RANGE(ID_Log_Min, ID_Log_Max, MainFrame::OnLogToggle)
+  EVT_UPDATE_UI_RANGE(ID_Log_Min, ID_Log_Max, MainFrame::OnLogUpdate)
+
   EVT_MENU_RANGE(ID_File_Min, ID_File_Max, MainFrame::OnFileCommand)
   EVT_MENU_RANGE(ID_Verb_Min, ID_Verb_Max, MainFrame::OnFileCommand)
 
@@ -684,10 +690,12 @@ MainFrame::MainFrame(const wxString & title,
   CreateMainToolBar(this);
   m->SetRunning(false);
 
-  // as much as the widget can stand
+  // Populate the logFilterBar
+  CreateLogFilterBar(m_logFilterBar);
+/*  // as much as the widget can stand
 #ifndef __WXGTK__
   m_log->SetMaxLength(0);
-#endif
+#endif */
 
   m->logTracer = new EventTracer(this);
   m->listener.SetTracer(m->logTracer, false);
@@ -1623,6 +1631,41 @@ MainFrame::OnTestDndDlg(wxCommandEvent &)
   ::wxMessageBox(msg, wxT("DndDlg Results"), wxOK);
 }
 #endif
+
+void
+MainFrame::OnLogClear(wxCommandEvent & event)
+{
+    m_log->DeleteAllItems();
+}
+
+static LogItemType
+GetLogItemType(int id)
+{
+    switch(id) {
+    case ID_Log_Added : return LogItem_Added;
+    case ID_Log_Conflicted: return LogItem_Conflicted;
+    case ID_Log_Deleted : return LogItem_Deleted;
+    case ID_Log_Updated: return LogItem_Updated;
+    default: return LogItem_Normal;
+    }
+}
+
+void
+MainFrame::OnLogToggle(wxCommandEvent & event)
+{
+    int id = event.GetId();
+    LogItemType t = GetLogItemType(id);
+    m_log->SetItemFilter(t, !m_log->GetItemFilter(t));
+}
+
+void
+MainFrame::OnLogUpdate(wxUpdateUIEvent & event)
+{
+    int id = event.GetId();
+    LogItemType t = GetLogItemType(id);
+    bool checked = m_log->GetItemFilter(t);
+    event.Check(checked);
+}
 
 void
 MainFrame::OnFileCommand(wxCommandEvent & event)

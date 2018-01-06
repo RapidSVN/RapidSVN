@@ -68,6 +68,7 @@
 ../../librapidsvn/include/log_aff_list.hpp
 ../../librapidsvn/include/log_data.hpp
 ../../librapidsvn/include/log_dlg.hpp
+../../librapidsvn/include/log_list.hpp
 ../../librapidsvn/include/log_rev_list.hpp
 ../../librapidsvn/include/main_frame.hpp
 ../../librapidsvn/include/main_frame_helper.hpp
@@ -161,6 +162,7 @@
 ../../librapidsvn/src/log_action.cpp
 ../../librapidsvn/src/log_aff_list.cpp
 ../../librapidsvn/src/log_dlg.cpp
+../../librapidsvn/src/log_list.cpp
 ../../librapidsvn/src/log_rev_list.cpp
 ../../librapidsvn/src/main_frame.cpp
 ../../librapidsvn/src/main_frame_helper.cpp

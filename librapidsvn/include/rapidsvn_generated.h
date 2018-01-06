@@ -40,6 +40,7 @@ class LogAffectedList;
 #include <wx/dateevt.h>
 #include <wx/splitter.h>
 #include <wx/treectrl.h>
+#include <wx/toolbar.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
 
@@ -699,7 +700,8 @@ class MainFrameBase : public wxFrame
 		SplitterWindow* m_splitterVert;
 		FolderBrowser* m_folderBrowser;
 		FileListCtrl* m_listCtrl;
-		wxTextCtrl* m_log;
+		wxToolBar* m_logFilterBar;
+		LogList* m_log;
 		wxStatusBar* m_statusBar;
 		
 		// Virtual event handlers, overide them in your derived class

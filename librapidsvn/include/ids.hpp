@@ -108,6 +108,15 @@ enum
   ID_Ignore,
   ID_File_Max,
 
+  // Log View Actions
+  ID_Log_Clear,
+  ID_Log_Min,
+  ID_Log_Added,
+  ID_Log_Deleted,
+  ID_Log_Conflicted,
+  ID_Log_Updated,
+  ID_Log_Max,
+
   // Reserve space for 16 file verbs (I've never seen any files with more)
   ID_Verb_Min,
   ID_Verb_Max = ID_Verb_Min + 16,

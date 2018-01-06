@@ -67,7 +67,8 @@ include_HEADERS= \
 	include/log_aff_list.hpp \
 	include/log_data.hpp \
 	include/log_dlg.hpp \
-	include/log_rev_list.hpp \
+        include/log_list.hpp \
+        include/log_rev_list.hpp \
 	include/main_frame_helper.hpp \
 	include/main_frame.hpp \
 	include/merge_action.hpp \
@@ -170,7 +171,8 @@ librapidsvn_la_SOURCES= \
 	src/lock_dlg.cpp \
 	src/log_action.cpp \
 	src/log_dlg.cpp \
-	src/log_aff_list.cpp \
+        src/log_list.cpp \
+        src/log_aff_list.cpp \
 	src/log_rev_list.cpp \
 	src/main_frame.cpp \
 	src/main_frame_helper.cpp \
