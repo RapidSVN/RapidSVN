@@ -213,7 +213,11 @@ enum
   SIG_SSL_SERVER_TRUST_PROMPT,
   SIG_SSL_CLIENT_CERT_PROMPT,
   SIG_SSL_CLIENT_CERT_PW_PROMPT,
-  LISTENER_MAX
+  LISTENER_MAX,
+
+  // log list
+  ID_LogList_SelectAll,
+  ID_LogList_Copy
 };
 
 #endif

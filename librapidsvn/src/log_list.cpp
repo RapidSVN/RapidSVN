@@ -24,14 +24,19 @@
 
 #include "log_list.hpp"
 
-// wxWidgets
+#include "ids.hpp"
 
+// wxWidgets
+#include "wx/clipbrd.h"
+#include "wx/accel.h"
 
 
 BEGIN_EVENT_TABLE(LogList, wxListView)
   EVT_SIZE(LogList::OnSize)
-  //EVT_LIST_COL_CLICK(-1, LogList::OnColClick)
+  EVT_CONTEXT_MENU(LogList::OnContextMenu)
+  EVT_MENU_RANGE(ID_LogList_SelectAll, ID_LogList_Copy, LogList::OnPopupClick)
 END_EVENT_TABLE()
+
 
 LogList::LogList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
                                  const wxSize& size, long style,
@@ -48,6 +53,13 @@ LogList::LogList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
 
   // Initialize the list attrs
   errorItemAttr.SetTextColour(*wxRED);
+
+  // Initialize accelerators
+  wxAcceleratorEntry entries[2];
+  entries[0].Set(wxACCEL_CTRL, (int) 'A', ID_LogList_SelectAll);
+  entries[1].Set(wxACCEL_CTRL, (int) 'C', ID_LogList_Copy);
+  wxAcceleratorTable accel(2, entries);
+  SetAcceleratorTable(accel);
 }
 
 /* virtual */ LogList::~LogList()
@@ -178,4 +190,47 @@ LogList::AutoSizeLastColumn()
       SetColumnWidth(GetColumnCount() - 1, width);
     }
   }
+}
+
+
+void LogList::OnPopupClick(wxCommandEvent &evt)
+{
+   //void *data=static_cast<wxMenu *>(evt.GetEventObject())->GetClientData();
+   switch(evt.GetId()) {
+       case ID_LogList_Copy:
+       {
+           wxString r;
+           for(long l = GetFirstSelected(); l != -1; l = GetNextSelected(l))
+               r << items[l].action << '\t' << items[l].message << '\n';
+           // Write some text to the clipboard
+           if (wxTheClipboard->Open())
+           {
+               // This data objects are held by the clipboard,
+               // so do not delete them in the app.
+               wxTheClipboard->SetData( new wxTextDataObject(r) );
+               wxTheClipboard->Close();
+           }
+           break;
+       }
+       case ID_LogList_SelectAll:
+       {
+           for(long i = 0; i < GetItemCount(); i++)
+               Select(i, true);
+
+       } break;
+   }
+}
+
+/*void LogList::OnListRightClick(wxListEvent &evt)
+{
+   void *data = reinterpret_cast<void *>(evt.GetItem().GetData());*/
+void LogList::OnContextMenu(wxContextMenuEvent &evt)
+{
+   //void *data = reinterpret_cast<void *>(evt.GetItem().GetData());
+   wxMenu mnu;
+   //mnu.SetClientData( data );
+   mnu.Append(ID_LogList_Copy, _("Copy selected\tCTRL-C"));
+   mnu.Append(ID_LogList_SelectAll, _("Select all\tCTRL-A"));
+   mnu.Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(LogList::OnPopupClick), NULL, this);
+   PopupMenu(&mnu);
 }

@@ -65,8 +65,9 @@ protected:
   virtual wxString 
   OnGetItemText(long item, long column) const;
 
-  void
-  OnSize(wxSizeEvent &event);
+  void OnSize(wxSizeEvent &event);
+  void OnPopupClick(wxCommandEvent &evt);
+  void OnContextMenu(wxContextMenuEvent &evt);
 
 private:
   struct ItemInfo {
