@@ -34,17 +34,6 @@
 // app
 #include "utils.hpp"
 
-enum LogItemType
-{
-	LogItem_Normal,
-	LogItem_Error,
-	LogItem_Added,
-	LogItem_Deleted,
-	LogItem_Conflicted,
-	LogItem_Updated,
-	LogItemTypeCount
-}; 
-
 class LogList : public wxListView
 {
 public:

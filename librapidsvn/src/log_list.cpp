@@ -92,8 +92,25 @@ LogList::AppendItem(LogItemType type, const wxString &action, const wxString &me
 
 void LogList::SetItemFilter(LogItemType type, bool enabled)
 {
-    categoryEnabled[type] = enabled;
-    // TODO rebuild displayed items and SetItemCount
+    if(enabled != categoryEnabled[type])
+    {
+        categoryEnabled[type] = enabled;
+        // check if need to scroll down later
+        bool autoscroll = false;
+        if(GetTopItem() >= GetItemCount() - GetCountPerPage())
+            autoscroll = true;
+        // rebuild displayed items
+        displayedItems.clear();
+        for(size_t i = 0; i < items.size(); i++)
+        {
+            if(categoryEnabled[items[i].type])
+                displayedItems.push_back(i);
+        }
+        // set list control item count and autoscroll, if desired
+        SetItemCount(displayedItems.size());
+        if(autoscroll)
+          EnsureVisible(displayedItems.size()-1);
+    }
 }
 
 bool LogList::GetItemFilter(LogItemType type) const

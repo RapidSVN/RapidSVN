@@ -1592,7 +1592,7 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	sizerBottom->Add( m_logFilterBar, 0, wxEXPAND, 5 );
 	
 	m_log = new LogList( panelBottom, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_NO_HEADER|wxLC_REPORT|wxLC_VIRTUAL );
-	sizerBottom->Add( m_log, 1, wxALL, 5 );
+	sizerBottom->Add( m_log, 1, wxALL|wxEXPAND, 5 );
 	
 	
 	panelBottom->SetSizer( sizerBottom );

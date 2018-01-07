@@ -29,6 +29,7 @@
 
 // forward declarations
 class wxWindow;
+#include "utils.hpp"
 
 class ActionEvent
 {
@@ -50,6 +51,9 @@ public:
    */
   ActionEvent(wxWindow * parent, int event_id, const wxString & msg);
 
+  ActionEvent(wxWindow * parent, int event_id, LogItemType type,
+              const wxString & action, const wxString & msg);
+
   /**
    * constructor
    *
@@ -69,6 +73,10 @@ public:
 
   void
   init(wxWindow * parent, int event_id, const wxString & msg);
+
+  void
+  init(wxWindow * parent, int event_id, LogItemType type,
+       const wxString & action, const wxString & msg);
 
   void
   init(wxWindow * parent, int event_id, void * data);
@@ -108,6 +116,10 @@ public:
 
   static void
   Post(wxWindow * parent, int event_id, const wxString & msg);
+
+  static void
+  Post(wxWindow * parent, int event_id, LogItemType type,
+       const wxString & action, const wxString & msg);
 
   static void
   Post(wxWindow * parent, int event_id, void * data);

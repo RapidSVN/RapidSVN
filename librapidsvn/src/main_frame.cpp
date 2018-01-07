@@ -538,11 +538,11 @@ public:
    * @param msg message to show
    */
   void
-  Trace(const wxString & msg)
+  Trace(LogItemType type, const wxString & action, const wxString & msg)
   {
     if (!m_log)
       return;
-    m_log->AppendItem(LogItem_Normal, wxEmptyString, msg);
+    m_log->AppendItem(type, action, msg);
     //m_log->AppendText(msg + wxT('\n'));
   }
 
@@ -1284,12 +1284,12 @@ MainFrame::OnUpdateCommand(wxUpdateUIEvent & updateUIEvent)
   }
   catch (svn::ClientException & e)
   {
-    m->Trace(Utf8ToLocal(e.message()));
+    m->Trace(LogItem_Error, _("Error"), Utf8ToLocal(e.message()));
     return;
   }
   catch (...)
   {
-    m->Trace(_("An error occurred while checking valid actions"));
+    m->Trace(LogItem_Error, _("Error"), _("An error occurred while checking valid actions"));
   }
 }
 
@@ -1302,7 +1302,7 @@ MainFrame::OnHelpContents(wxCommandEvent & WXUNUSED(event))
   }
   catch (...)
   {
-    m->Trace(_("An error occured while launching the browser"));
+    m->Trace(LogItem_Error, _("Error"), _("An error occured while launching the browser"));
   }
 
 // WE DONT USE THIS CODE NOW
@@ -1321,7 +1321,7 @@ MainFrame::OnHelpIndex(wxCommandEvent & WXUNUSED(event))
   }
   catch (...)
   {
-    m->Trace(_("An error occured while launching the browser"));
+    m->Trace(LogItem_Error, _("Error"), _("An error occured while launching the browser"));
   }
 
 //#ifdef  USE_HTML_HELP
@@ -1699,32 +1699,42 @@ void
 MainFrame::OnActionEvent(wxCommandEvent & event)
 {
   const int token = event.GetInt();
+  const long liType = event.GetExtraLong();
+  wxString action, message;
+  int splitPos = event.GetString().Find("|||");
+  if(splitPos != wxNOT_FOUND) {
+      action = event.GetString().Left(splitPos);
+      message = event.GetString().Mid(splitPos+3);
+  }
+  else {
+      message = event.GetString();
+  }
 
   switch (token)
   {
   case TOKEN_INFO:
-    m->Trace(event.GetString());
+    m->Trace((LogItemType)liType, action, message);
     break;
 
   case TOKEN_ERROR:
-    m->TraceError(event.GetString());
+    m->TraceError(message);
     break;
 
   case TOKEN_SVN_INTERNAL_ERROR:
   case TOKEN_INTERNAL_ERROR:
-    m->TraceError(event.GetString());
+    m->TraceError(message);
     // Action is interrupted, so cancel listener
     // (in order to enable filelist update)
     // and disable "Running" state
     m->listener.cancel(false);
     RefreshFileList();
-    m->Trace(_("Ready\n"));
+    m->Trace(LogItem_Normal, wxEmptyString, _("Ready\n"));
     m->SetRunning(false);
     break;
 
   case TOKEN_ACTION_START:
-    m->Trace(event.GetString());
-    wxLogStatus(event.GetString());
+    m->Trace(LogItem_Normal, action, message);
+    wxLogStatus(message);
     break;
 
   case TOKEN_ACTION_END:
@@ -1752,17 +1762,17 @@ MainFrame::OnActionEvent(wxCommandEvent & event)
     {
       if ((actionFlags & Action::UPDATE_TREE) != 0)
       {
-        m->Trace(_("Updating..."));
+        m->Trace(LogItem_Normal, wxEmptyString, _("Updating file list..."));
         RefreshFolderBrowser();
       }
       else if ((actionFlags & Action::DONT_UPDATE) == 0)
       {
-        m->Trace(_("Updating..."));
+        m->Trace(LogItem_Normal, wxEmptyString, _("Updating file list..."));
         RefreshFileList();
       }
     }
 
-    m->Trace(_("Ready\n"));
+    m->Trace(LogItem_Normal, wxEmptyString, _("Ready\n"));
     m->SetRunning(false);
   }
   break;
@@ -2028,7 +2038,7 @@ MainFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
   }
   catch (...)
   {
-    m->Trace(_("Exception occured during filelist update"));
+    m->Trace(LogItem_Error, wxEmptyString, _("Exception occured during filelist update"));
   }
 }
 
@@ -2219,7 +2229,7 @@ MainFrame::ShowInfo()
   }
   catch (svn::ClientException & e)
   {
-    m->Trace(Utf8ToLocal(e.message()));
+    m->Trace(LogItem_Error, wxEmptyString, Utf8ToLocal(e.message()));
     return;
   }
 

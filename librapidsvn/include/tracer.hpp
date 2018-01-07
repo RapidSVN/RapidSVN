@@ -30,6 +30,7 @@
 // forward declarations
 class wxFrame;
 class wxString;
+#include "utils.hpp"
 
 /**
 * The Tracer class is an interface used for
@@ -41,6 +42,7 @@ class Tracer
 {
 public:
   virtual void Trace(const wxString &) = 0;
+  virtual void Trace(LogItemType type, const wxString & action, const wxString & msg) = 0;
   virtual void TraceError(const wxString &) = 0;
   virtual ~Tracer() { }
 };
@@ -57,6 +59,7 @@ public:
   EventTracer(wxFrame * fr);
 
   void Trace(const wxString & msg);
+  void Trace(LogItemType type, const wxString & action, const wxString & msg);
   void TraceError(const wxString & msg);
 };
 
