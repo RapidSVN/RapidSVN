@@ -48,8 +48,11 @@ LogList::LogList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
     categoryEnabled[b] = true; 
     
   // Initialize the log widget
-  InsertColumn(0, _("Action"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE);
-  InsertColumn(1, _("Message"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE_USEHEADER);
+  InsertColumn(0, _("Action"), wxLIST_FORMAT_LEFT);
+  InsertColumn(1, _("Message"), wxLIST_FORMAT_LEFT);
+  // Set initial column widths (will be optimized in OnSize())
+  SetColumnWidth(0, GetTextExtent(wxString('n', 16)).GetWidth());
+  SetColumnWidth(1, GetTextExtent(wxString('n', 32)).GetWidth());
 
   // Initialize the list attrs
   errorItemAttr.SetTextColour(*wxRED);
