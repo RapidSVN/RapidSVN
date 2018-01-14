@@ -25,6 +25,7 @@
 // app
 #include "annotate_dlg.hpp"
 #include "utils.hpp"
+#include <math.h>
 
 #define ANNOTATE_RED wxColour(255, 220, 220)
 #define ANNOTATE_BLUE wxColour(220, 220, 255)
@@ -105,6 +106,11 @@ AnnotateDlg::SetRevisionRange(int revMin, int revMax)
     this->revMax = revMax;
 }
 
+static int DoRound(double v)
+{
+	return (int)floor(v + 0.5); 
+}
+
 wxColour
 AnnotateDlg::GetBackgroundColour(int rev)
 {
@@ -125,9 +131,9 @@ AnnotateDlg::GetBackgroundColour(int rev)
     }
     double fl = 1.0 - fac;
     // now perform interpolation
-    wxColour ret((unsigned char) round(fl * left.Red() + fac * right.Red()),
-                 (unsigned char) round(fl * left.Green() + fac * right.Green()),
-                 (unsigned char) round(fl * left.Blue() + fac * right.Blue())
+    wxColour ret((unsigned char) DoRound(fl * left.Red() + fac * right.Red()),
+                 (unsigned char) DoRound(fl * left.Green() + fac * right.Green()),
+                 (unsigned char) DoRound(fl * left.Blue() + fac * right.Blue())
                  );
     return ret;
 
