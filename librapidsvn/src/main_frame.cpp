@@ -655,6 +655,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_LIST_ITEM_SELECTED(-1, MainFrame::OnFileListSelected)
 
   EVT_MENU_RANGE(LISTENER_MIN, LISTENER_MAX, MainFrame::OnListenerEvent)
+
+  EVT_MENU(ID_LogList_BrowseTo, MainFrame::OnLogListBrowse)
 END_EVENT_TABLE()
 
 /** class implementation **/
@@ -2060,7 +2062,52 @@ MainFrame::OnFolderBrowserKeyDown(wxTreeEvent & event)
 void
 MainFrame::OnFileListSelected(wxListEvent & WXUNUSED(event))
 {
-  m->activePane = ACTIVEPANE_FILELIST;
+    m->activePane = ACTIVEPANE_FILELIST;
+}
+
+
+void MainFrame::OnLogListBrowse(wxCommandEvent &event)
+{
+  wxString selFile = m_log->GetSelectedFileOrDir();
+  if(selFile.IsEmpty())
+      return;
+
+  // find matching bookmark
+  wxString containingBkmk = m_folderBrowser->FindContainingBookmark(selFile);
+  if(containingBkmk.IsEmpty())
+      return;
+
+  // select that bookmark
+  if(!m_folderBrowser->SelectBookmark(containingBkmk))
+      return;
+  wxString selDir, selFileNameWithExt;
+  if(wxFileName::DirExists(selFile)) {
+      // it is a directory. the file name is empty
+      selDir = selFile;
+  }
+  else {
+      wxString selFileName, selFileExt;
+      wxFileName::SplitPath(selFile, &selDir, &selFileName, &selFileExt);
+      selFileNameWithExt = selFileName;
+      if(!selFileExt.IsEmpty())
+          selFileNameWithExt << '.' << selFileExt;
+  }
+  // select the folder within the bookmark
+  if(!m_folderBrowser->SelectFolder(selDir))
+      return;
+
+  // Select the file, if it's a file
+  if(!selFileNameWithExt.IsEmpty()) {
+      // Update our file list
+      UpdateCurrentPath();
+      RefreshFileList();
+      // Find the file and focus and select it
+      long i = m_listCtrl->FindItem(-1, selFileNameWithExt);
+      if(i >= 0) {
+          m_listCtrl->Focus(i);
+          m_listCtrl->Select(i);
+      }
+  }
 }
 
 

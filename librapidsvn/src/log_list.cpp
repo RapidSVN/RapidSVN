@@ -29,7 +29,7 @@
 // wxWidgets
 #include "wx/clipbrd.h"
 #include "wx/accel.h"
-
+#include "wx/filename.h"
 
 BEGIN_EVENT_TABLE(LogList, wxListView)
   EVT_SIZE(LogList::OnSize)
@@ -58,10 +58,11 @@ LogList::LogList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
   errorItemAttr.SetTextColour(*wxRED);
 
   // Initialize accelerators
-  wxAcceleratorEntry entries[2];
+  wxAcceleratorEntry entries[3];
   entries[0].Set(wxACCEL_CTRL, (int) 'A', ID_LogList_SelectAll);
+  entries[0].Set(wxACCEL_CTRL, (int) 'B', ID_LogList_BrowseTo);
   entries[1].Set(wxACCEL_CTRL, (int) 'C', ID_LogList_Copy);
-  wxAcceleratorTable accel(2, entries);
+  wxAcceleratorTable accel(3, entries);
   SetAcceleratorTable(accel);
 }
 
@@ -221,7 +222,22 @@ void LogList::OnPopupClick(wxCommandEvent &evt)
                Select(i, true);
 
        } break;
+
+       default:
+         evt.Skip();
+         break;
    }
+}
+
+wxString LogList::GetSelectedFileOrDir()
+{
+    if(GetSelectedItemCount() == 1) {
+        long selItem = GetFirstSelected();
+        wxString text = GetItemText(selItem, 1);
+        if(wxFileName::Exists(text))
+            return text;
+    }
+    return wxEmptyString;
 }
 
 /*void LogList::OnListRightClick(wxListEvent &evt)
@@ -234,6 +250,9 @@ void LogList::OnContextMenu(wxContextMenuEvent &evt)
    //mnu.SetClientData( data );
    mnu.Append(ID_LogList_Copy, _("Copy selected\tCTRL-C"));
    mnu.Append(ID_LogList_SelectAll, _("Select all\tCTRL-A"));
+   if(!GetSelectedFileOrDir().IsEmpty())
+     mnu.Append(ID_LogList_BrowseTo, _("Browse to\tCTRL-B"));
+
    mnu.Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(LogList::OnPopupClick), NULL, this);
    PopupMenu(&mnu);
 }

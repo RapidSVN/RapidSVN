@@ -162,9 +162,11 @@ private:
   void OnFolderBrowserSelChanged(wxTreeEvent & event);
   void OnFolderBrowserKeyDown(wxTreeEvent & event);
 
-  // File List event handles
+  // File List event handlers
   void OnFileListSelected(wxListEvent & event);
 
+  // Log list event handlers
+  void OnLogListBrowse(wxCommandEvent & event);
 
 
   /**

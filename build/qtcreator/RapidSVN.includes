@@ -1,5 +1,6 @@
 ../../librapidsvn/include
 ../../librapidsvn/src/res/bitmaps
+/usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0
 /usr/include/wx-3.0
 ../../libsvncpp/include
 /usr/include/subversion-1

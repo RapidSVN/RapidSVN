@@ -58,6 +58,13 @@ public:
   bool 
   GetItemFilter(LogItemType type) const; 
 
+  /**
+   * If exactly one file or directory has been selected,
+   * returns its name.
+   * Otherwise returns an empty string.
+   */
+  wxString
+  GetSelectedFileOrDir();
 protected:
   virtual wxListItemAttr*
   OnGetItemAttr(long item) const;
