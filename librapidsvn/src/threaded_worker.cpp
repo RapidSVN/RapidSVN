@@ -139,10 +139,7 @@ public:
     ActionEvent event(parent, TOKEN_ACTION_START);
 
     {
-      wxString msg;
-      msg.Printf(_("Execute: %s"), actionName.c_str());
-
-      event.init(parent, TOKEN_ACTION_START, msg);
+      event.init(parent, TOKEN_ACTION_START, LogItem_Normal, _("Execute:"), actionName);
       event.Post();
     }
 

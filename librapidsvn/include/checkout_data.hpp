@@ -33,7 +33,7 @@ struct CheckoutData
   {
     UseLatest = true;
     NotSpecified = true;
-    Recursive = true;
+    Depth = 0;
     Bookmarks = true;
     IgnoreExternals = false;
   }
@@ -42,11 +42,21 @@ struct CheckoutData
   wxString DestFolder;
   wxString Revision;
   wxString PegRevision;
-  bool Recursive;
+  int Depth; // note: according to the order in the wxChoice (see CheckoutDepth enum); doesn't correspond to the svn_depth values.
   bool UseLatest;
   bool NotSpecified;
   bool Bookmarks;
   bool IgnoreExternals;
+};
+
+// Possible values for the Depth item of the CheckoutData structure.
+// Keep this synchronized with the GUI's choice definition.
+enum CheckoutDepth
+{
+  CHECKOUT_FULLY_RECURSIVE = 0,
+  CHECKOUT_IMMEDIATES = 1,
+  CHECKOUT_FILES = 2,
+  CHECKOUT_EMPTY = 3
 };
 
 #endif

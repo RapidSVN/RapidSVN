@@ -65,6 +65,15 @@ ActionEvent::ActionEvent(wxWindow * parent, int eventId, const wxString & msg)
 //  m->event->SetString (msg);
 }
 
+ActionEvent::ActionEvent(wxWindow * parent, int eventId, LogItemType type,
+                         const wxString & action, const wxString & msg)
+  : m(NULL)
+{
+  init(parent, eventId, type, action, msg);
+//  m->event->SetString (msg);
+}
+
+
 ActionEvent::ActionEvent(wxWindow * parent, int eventId, void * data)
   : m(NULL)
 {
@@ -97,6 +106,17 @@ ActionEvent::init(wxWindow * parent, int eventId, const wxString & msg)
 {
   init(parent, eventId);
   m->event->SetString(msg);
+  m->event->SetClientData(NULL);
+}
+
+void
+ActionEvent::init(wxWindow * parent, int eventId, LogItemType type,
+                  const wxString & action, const wxString & msg)
+{
+  init(parent, eventId);
+  wxString cat; cat << action << "|||" << msg;
+  m->event->SetString(cat);
+  m->event->SetExtraLong(type);
   m->event->SetClientData(NULL);
 }
 
@@ -143,6 +163,13 @@ void
 ActionEvent::Post(wxWindow * parent, int event_id, const wxString & msg)
 {
   ActionEvent event(parent, event_id, msg);
+  event.Post();
+}
+
+void
+ActionEvent::Post(wxWindow * parent, int event_id, LogItemType type, const wxString & action, const wxString & msg)
+{
+  ActionEvent event(parent, event_id, type, action, msg);
   event.Post();
 }
 

@@ -21,60 +21,53 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _UPDATE_DLG_H_INCLUDED_
-#define _UPDATE_DLG_H_INCLUDED_
+#ifndef _CLEANUP_DLG_H_INCLUDED_
+#define _CLEANUP_DLG_H_INCLUDED_
 
 // app
+#include "cleanup_data.hpp"
 #include "rapidsvn_generated.h"
 
-// forward declarations
-struct UpdateData;
+// svncpp
+namespace svn
+{
+  class Path;
+}
 
-class UpdateDlg:public UpdateDlgBase
+class CleanupDlg : public CleanupDlgBase
 {
 public:
-  enum
-  {
-    /** show dialog without "depth" items */
-    WITHOUT_DEPTH=0x1,
-
-    /** show dialog with URL line */
-    WITH_URL=0x2,
-
-    /** show dialog without revision information */
-    WITHOUT_REVISION=0x4,
-
-    /** don't display the "ignore externals" checkbox */
-    WITHOUT_IGNORE_EXTERNALS=0x8
-  };
-
   /**
-   * constructor
+   * Constructor
    *
    * @param parent parent window
-   * @param flags flags for the window (@a WITH_URL)
+   * @param selectedPath pre-fills the path field with
+   *                    this path
    */
-  UpdateDlg(wxWindow* parent, const wxString & title,
-            int flags = 0);
+  CleanupDlg(wxWindow * parent, const svn::Path & selectedPath);
 
   /**
    * destructor
    */
-  virtual ~UpdateDlg();
+  virtual ~CleanupDlg();
 
-  UpdateData &
-  GetData();
+  /**
+   * returns the cleanup data
+   */
+  const CleanupData &
+  GetData() const;
 
-protected: // events inherited from UpdateDlgBase
-  void
-  OnUseLatest(wxCommandEvent &event);
+protected: // Events inherited from CleanupDlgBase
+  virtual void
+  OnInitDialog(wxInitDialogEvent & event);
+  virtual void
+  OnCleanupChecked(wxCommandEvent & event);
 
-  void
-  OnText(wxCommandEvent & event);
+  virtual void
+  OnHelp(wxCommandEvent & event);
 
-  void
-  OnDepthChoice(wxCommandEvent &);
 private:
+  /** hide implementation details */
   struct Data;
   Data * m;
 

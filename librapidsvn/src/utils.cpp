@@ -315,6 +315,10 @@ AppendMenuItem(wxMenu & menu, int id)
     caption = _("Cleanup");
     break;
 
+  case ID_Upgrade:
+    caption = _("Upgrade Working Copy");
+    break;
+
   case ID_Column_Reset:
     caption = _("Reset Columns");
     break;

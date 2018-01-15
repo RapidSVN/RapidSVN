@@ -1,3 +1,11 @@
+rapidsvn (0.13.0dfsg-2) unstable; urgency=medium
+
+  * Internal test release.
+  * Implements svn upgrade, svn cleanup and svn vacuum.
+  * New log message system.
+
+ -- Florian Fischer <florianfischer@gmx.de>  Mon, 08 Jan 2018 09:52:00 +0100
+
 rapidsvn (0.13.0dfsg-1) unstable; urgency=medium
 
   * Non-maintainer upload.

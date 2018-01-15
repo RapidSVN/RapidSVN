@@ -358,11 +358,11 @@ Listener::GetParent()
 }
 
 void
-Listener::Trace(const wxString & msg)
+Listener::Trace(LogItemType type, const wxString & action, const wxString & msg)
 {
   if (m->tracer)
   {
-    m->tracer->Trace(msg);
+    m->tracer->Trace(type, action, msg);
   }
 }
 
@@ -384,48 +384,111 @@ Listener::GetContext()
   return m->context;
 }
 
+static struct
+{
+  LogItemType type;
+  const char * name;
+}
+ACTION_NAMES [] =
+{
+  {LogItem_Added, N_("Add")},               // svn_wc_notify_add,
+  {LogItem_Normal, N_("Copy")},             // svn_wc_notify_copy,
+  {LogItem_Added, N_("Delete")},            // svn_wc_notify_delete,
+  {LogItem_Normal, N_("Restore")},          // svn_wc_notify_restore,
+  {LogItem_Normal, N_("Revert")},           // svn_wc_notify_revert,
+  {LogItem_Normal, NULL },                 // NOT USED HERE svn_wc_notify_failed_revert,
+  {LogItem_Normal, N_("Resolved")},         // svn_wc_notify_resolved,
+  {LogItem_Normal, N_("Skip")},             // svn_wc_notify_skip,
+  {LogItem_Deleted,N_("Deleted")},          // svn_wc_notify_update_delete,
+  {LogItem_Added,N_("Added")},              // svn_wc_notify_update_add,
+  {LogItem_Updated,N_("Updated")},          // svn_wc_notify_update_update,
+  {LogItem_Normal, NULL},                  // NOT USED HERE svn_wc_notify_update_completed,
+  {LogItem_Normal, N_("External")},         // svn_wc_notify_update_external,
+  {LogItem_Normal, NULL},                  // NOT USED HERE svn_wc_notify_status_completed
+  {LogItem_Normal, NULL},                  // NOT USED HERE svn_wc_notify_status_external
+  {LogItem_Updated,N_("Modified")},         // svn_wc_notify_commit_modified,
+  {LogItem_Added,N_("Added")},              // svn_wc_notify_commit_added,
+  {LogItem_Deleted,N_("Deleted")},          // svn_wc_notify_commit_deleted,
+  {LogItem_Normal, N_("Replaced")},         // svn_wc_notify_commit_replaced,
+  {LogItem_Normal, NULL},                  // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
+  {LogItem_Normal, NULL},                  // NOT USED HERE svn_wc_notify_blame_revision
+  {LogItem_Normal, N_("Locked")},           // svn_wc_notify_locked
+  {LogItem_Normal, N_("Unlocked")},         // svn_wc_notify_unlocked
+  {LogItem_Normal, N_("Failed to lock")},   // svn_wc_notify_failed_lock
+  {LogItem_Normal, N_("Failed to unlock")}, // svn_wc_notify_failed_unlock
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_exists
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_changelist_set
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_changelist_clear
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_changelist_moved
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_merge_begin
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_foreign_merge_begin
+  {LogItem_Updated, N_("Replaced")},        //   svn_wc_notify_update_replace
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_property_added
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_property_modified
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_property_deleted
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_property_deleted_nonexistent
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_revprop_set
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_revprop_deleted
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_merge_completed
+  {LogItem_Conflicted, N_("Tree conflict")},//   svn_wc_notify_tree_conflict
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_external
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_update_started
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_update_skip_obstruction
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_update_skip_working_only
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_update_skip_access_denied
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_update_external_removed
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_update_shadowed_add
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_update_shadowed_update
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_update_shadowed_delete
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_merge_record_info
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_upgraded_path
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_merge_record_info_begin
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_merge_elide_info
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_patch
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_patch_applied_hunk
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_patch_rejected_hunk
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_patch_hunk_already_applied
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_commit_copied
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_commit_copied_replaced
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_url_redirect
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_path_nonexistent
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_exclude
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_conflict
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_missing
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_out_of_date
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_no_parent
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_locked
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_forbidden_by_server
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_skip_conflicted
+  {LogItem_Updated, N_("Lock broken")},     //   svn_wc_notify_update_broken_lock
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_obstruction
+  {LogItem_Conflicted, N_("Conflicted")},   //   svn_wc_notify_conflict_resolver_starting
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_conflict_resolver_done
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_left_local_modifications
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_foreign_copy_begin
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_move_broken
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_cleanup_external
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_requires_target
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_info_external
+  {LogItem_Normal, NULL},                  //   svn_wc_notify_commit_finalizing
+};
 void
 Listener::TraceDefaultMessage(svn_wc_notify_action_t action, const char * path)
 {
-  static const wxChar *
-  ACTION_NAMES [] =
+
+
+  static const int MAX_ACTION = svn_wc_notify_commit_finalizing;
+
+  if (ACTION_NAMES[action].name != NULL && action >= 0 && action <= MAX_ACTION)
   {
-    _("Add"),              // svn_wc_notify_add,
-    _("Copy"),             // svn_wc_notify_copy,
-    _("Delete"),           // svn_wc_notify_delete,
-    _("Restore"),          // svn_wc_notify_restore,
-    _("Revert"),           // svn_wc_notify_revert,
-    NULL ,                 // NOT USED HERE svn_wc_notify_failed_revert,
-    _("Resolved"),         // svn_wc_notify_resolved,
-    _("Skip"),             // svn_wc_notify_skip,
-    _("Deleted"),          // svn_wc_notify_update_delete,
-    _("Added"),            // svn_wc_notify_update_add,
-    _("Updated"),          // svn_wc_notify_update_update,
-    NULL,                  // NOT USED HERE svn_wc_notify_update_completed,
-    _("External"),         // svn_wc_notify_update_external,
-    NULL,                  // NOT USED HERE svn_wc_notify_status_completed
-    NULL,                  // NOT USED HERE svn_wc_notify_status_external
-    _("Modified"),         // svn_wc_notify_commit_modified,
-    _("Added"),            // svn_wc_notify_commit_added,
-    _("Deleted"),          // svn_wc_notify_commit_deleted,
-    _("Replaced"),         // svn_wc_notify_commit_replaced,
-    NULL,                  // NOT USED HERE svn_wc_notify_commit_postfix_txdelta
-    NULL,                  // NOT USED HERE svn_wc_notify_blame_revision
-    _("Locked"),           // svn_wc_notify_locked
-    _("Unlocked"),         // svn_wc_notify_unlocked
-    _("Failed to lock"),   // svn_wc_notify_failed_lock
-    _("Failed to unlock")  // svn_wc_notify_failed_unlock
-  };
-
-  static const int MAX_ACTION = svn_wc_notify_failed_unlock;
-
-  if (ACTION_NAMES[action] != NULL && action >= 0 && action <= MAX_ACTION)
-  {
-    static wxString msg;
-    msg.Printf(wxT("%s: %s"), ACTION_NAMES[action], Utf8ToLocal(path).c_str());
-
-    Trace(msg);
+	Trace(ACTION_NAMES[action].type, wxGetTranslation(ACTION_NAMES[action].name), Utf8ToLocal(path).c_str());
   }
+#if 0 // TEST TEST TEST
+  else if(action > MAX_ACTION)
+  {
+    Trace(LogItem_Normal, wxString::Format("Action %d", action), Utf8ToLocal(path).c_str());
+  }
+#endif
 }
 
 void
@@ -483,17 +546,17 @@ Listener::contextNotify(const char *path,
   case svn_wc_notify_update_completed:
     if (updateCounter.externalCounter == 0)
     {
-      Trace(wxString::Format(_("Completed at revision %ld"), revision));
+      Trace(LogItem_Normal, _("Completed"), wxString::Format(_("At revision %ld"), revision));
       wxString info = updateCounter.GetMessage();
       if (!info.IsEmpty())
       {
-        Trace(info);
+        Trace(LogItem_Normal, wxEmptyString, info);
       }
       updateCounter.Reset();
     }
     else
     {
-      Trace(wxString::Format(_("Completed %s at revision %ld"), Utf8ToLocal(path).c_str(), revision));
+      Trace(LogItem_Normal, _("Completed"), wxString::Format(_("%s at revision %ld"), Utf8ToLocal(path).c_str(), revision));
       updateCounter.externalCounter--;
     }
     break;

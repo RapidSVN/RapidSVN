@@ -43,30 +43,29 @@ public:
   UpdateData data;
   bool hasUrl;
   bool hasRevision;
-  bool hasRecursive;
+  bool hasDepth;
   bool hasIgnoreExternals;
 
   Data(int flags)
   {
     hasUrl = 0 != (flags & WITH_URL);
     hasRevision = 0 == (flags & WITHOUT_REVISION);
-    hasRecursive = 0 == (flags & WITHOUT_RECURSIVE);
+    hasDepth = 0 == (flags & WITHOUT_DEPTH);
     hasIgnoreExternals = 0 == (flags & WITHOUT_IGNORE_EXTERNALS);
   }
 };
 
 
-UpdateDlg::UpdateDlg(wxWindow* parent, const wxString & title, int flags,
-                     bool recursive)
+UpdateDlg::UpdateDlg(wxWindow* parent, const wxString & title, int flags)
   : UpdateDlgBase(parent, -1, title)
 {
   m = new Data(flags);
-  m->data.recursive = recursive;
 
   m_comboUrl->SetValidator(HistoryValidator(HISTORY_REPOSITORY, &m->data.url));
   m_textRevision->SetValidator(wxTextValidator(wxFILTER_NUMERIC, &m->data.revision));
   m_checkUseLatest->SetValidator(wxGenericValidator(&m->data.useLatest));
-  m_checkRecursive->SetValidator(wxGenericValidator(&m->data.recursive));
+  m_choiceDepth->SetValidator(wxGenericValidator(&m->data.depth));
+  m_checkStickyDepth->SetValidator(wxGenericValidator(&m->data.stickyDepth));
   m_checkIgnoreExternals->SetValidator(wxGenericValidator(&m->data.ignoreExternals));
 
   if (!m->hasUrl)
@@ -75,7 +74,7 @@ UpdateDlg::UpdateDlg(wxWindow* parent, const wxString & title, int flags,
   if (!m->hasRevision)
     m_mainSizer->Show(m_revisionSizer, false);
 
-  m_checkRecursive->Show(m->hasRecursive);
+  m_depthSizer->Show(m->hasDepth);
   m_checkIgnoreExternals->Show(m->hasIgnoreExternals);
 
   m_mainSizer->SetSizeHints(this);
@@ -112,6 +111,12 @@ UpdateDlg::OnText(wxCommandEvent &)
 }
 
 void
+UpdateDlg::OnDepthChoice(wxCommandEvent &)
+{
+  CheckControls();
+}
+
+void
 UpdateDlg::CheckControls()
 {
   bool useLatest = m_checkUseLatest->IsChecked();
@@ -127,6 +132,8 @@ UpdateDlg::CheckControls()
     svn::Path UrlUtf8(PathUtf8(m_comboUrl->GetValue()));
     ok = UrlUtf8.isUrl();
   }
+
+  EnableCtrl(m_checkStickyDepth, m_choiceDepth->GetSelection() != UPDATE_WORKING_COPY);
 
   m_buttonOK->Enable(ok);
 }

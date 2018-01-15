@@ -304,6 +304,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\librapidsvn\src\cleanup_dlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\librapidsvn\src\columns.cpp"
 				>
 			</File>
@@ -456,6 +460,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\librapidsvn\src\log_list.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\librapidsvn\src\log_rev_list.cpp"
 				>
 			</File>
@@ -568,6 +576,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\librapidsvn\src\upgrade_action.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\librapidsvn\src\userresolve_action.cpp"
 				>
 			</File>
@@ -651,6 +663,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\librapidsvn\include\cleanup_action.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\librapidsvn\include\cleanup_data.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\librapidsvn\include\cleanup_dlg.hpp"
 				>
 			</File>
 			<File
@@ -842,6 +862,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\librapidsvn\include\log_list.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\librapidsvn\include\log_rev_list.hpp"
 				>
 			</File>
@@ -971,6 +995,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\librapidsvn\include\update_dlg.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\librapidsvn\include\upgrade_action.hpp"
 				>
 			</File>
 			<File

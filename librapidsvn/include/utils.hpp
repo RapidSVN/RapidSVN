@@ -49,6 +49,18 @@ namespace svn
   class Context;
 }
 
+/** Type of log items; also used for trace events */
+enum LogItemType
+{
+    LogItem_Normal,
+    LogItem_Error,
+    LogItem_Added,
+    LogItem_Deleted,
+    LogItem_Conflicted,
+    LogItem_Updated,
+    LogItemTypeCount
+};
+
 /**
  * declaration of an array with @a svn_revnum_t elements
  */

@@ -22,6 +22,9 @@
  * ====================================================================
  */
 
+//cpp
+#include <algorithm>
+
 // wxWidgets
 #include "wx/wx.h"
 
@@ -119,6 +122,17 @@ AnnotateAction::Prepare()
     }
     annotatedFile = m->GetAnnotatedFile(path);
     svn::AnnotatedFile::const_iterator it;
+    int revMin = INT_MAX, revMax = INT_MIN;
+    for (it=annotatedFile->begin(); it!=annotatedFile->end(); it++)
+    {
+        int rev = it->revision();
+        revMin = std::min(revMin, rev);
+        revMax = std::max(revMax, rev);
+    }
+    if(revMax > revMin)
+    {
+        dlg.SetRevisionRange(revMin, revMax);
+    }
     for (it=annotatedFile->begin(); it!=annotatedFile->end(); it++)
     {
       svn::AnnotateLine line(*it);

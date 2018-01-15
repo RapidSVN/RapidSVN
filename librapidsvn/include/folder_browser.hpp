@@ -135,6 +135,14 @@ public:
   SelectBookmark(const wxString & bookmarkPath);
 
   /**
+   * Find a bookmark which contains the given filesystem file or path.
+   * @param path directory or file path
+   * @return the bookmark path, if found. Empty string if none found.
+   */
+  wxString
+  FindContainingBookmark(const wxString &path);
+
+  /**
    * setting whether there will be one login for all the
    * bookmakrs
    *   or

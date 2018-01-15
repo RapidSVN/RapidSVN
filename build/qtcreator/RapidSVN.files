@@ -2,6 +2,8 @@
 ../../configure.in
 ../../librapidsvn/Makefile.am
 ../../librapidsvn/include/about_dlg.hpp
+../../librapidsvn/include/about_dlg.hpp
+../../librapidsvn/include/about_dlg.hpp
 ../../librapidsvn/include/action.hpp
 ../../librapidsvn/include/action_event.hpp
 ../../librapidsvn/include/action_factory.hpp
@@ -17,6 +19,8 @@
 ../../librapidsvn/include/checkout_data.hpp
 ../../librapidsvn/include/checkout_dlg.hpp
 ../../librapidsvn/include/cleanup_action.hpp
+../../librapidsvn/include/cleanup_data.hpp
+../../librapidsvn/include/cleanup_dlg.hpp
 ../../librapidsvn/include/columns.hpp
 ../../librapidsvn/include/commit_action.hpp
 ../../librapidsvn/include/commit_dlg.hpp
@@ -64,6 +68,7 @@
 ../../librapidsvn/include/log_aff_list.hpp
 ../../librapidsvn/include/log_data.hpp
 ../../librapidsvn/include/log_dlg.hpp
+../../librapidsvn/include/log_list.hpp
 ../../librapidsvn/include/log_rev_list.hpp
 ../../librapidsvn/include/main_frame.hpp
 ../../librapidsvn/include/main_frame_helper.hpp
@@ -97,6 +102,7 @@
 ../../librapidsvn/include/update_action.hpp
 ../../librapidsvn/include/update_data.hpp
 ../../librapidsvn/include/update_dlg.hpp
+../../librapidsvn/include/upgrade_action.hpp
 ../../librapidsvn/include/userresolve_action.hpp
 ../../librapidsvn/include/utils.hpp
 ../../librapidsvn/include/verblist.hpp
@@ -115,6 +121,8 @@
 ../../librapidsvn/src/checkout_action.cpp
 ../../librapidsvn/src/checkout_dlg.cpp
 ../../librapidsvn/src/cleanup_action.cpp
+../../librapidsvn/src/cleanup_dlg.cpp
+../../librapidsvn/src/cleanup_dlg.cpp
 ../../librapidsvn/src/columns.cpp
 ../../librapidsvn/src/commit_action.cpp
 ../../librapidsvn/src/commit_dlg.cpp
@@ -154,6 +162,7 @@
 ../../librapidsvn/src/log_action.cpp
 ../../librapidsvn/src/log_aff_list.cpp
 ../../librapidsvn/src/log_dlg.cpp
+../../librapidsvn/src/log_list.cpp
 ../../librapidsvn/src/log_rev_list.cpp
 ../../librapidsvn/src/main_frame.cpp
 ../../librapidsvn/src/main_frame_helper.cpp
@@ -272,6 +281,7 @@
 ../../librapidsvn/src/unlock_dlg.cpp
 ../../librapidsvn/src/update_action.cpp
 ../../librapidsvn/src/update_dlg.cpp
+../../librapidsvn/src/upgrade_action.cpp
 ../../librapidsvn/src/userresolve_action.cpp
 ../../librapidsvn/src/utils.cpp
 ../../librapidsvn/src/verblist.cpp

@@ -21,64 +21,39 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _UPDATE_DLG_H_INCLUDED_
-#define _UPDATE_DLG_H_INCLUDED_
+#ifndef _UPGRADE_ACTION_H_INCLUDED_
+#define _UPGRADE_ACTION_H_INCLUDED_
+
+// svncpp
+#include "svncpp/path.hpp"
 
 // app
-#include "rapidsvn_generated.h"
+#include "action.hpp"
 
 // forward declarations
-struct UpdateData;
+namespace svn
+{
+  class StatusSel;
+}
 
-class UpdateDlg:public UpdateDlgBase
+class UpgradeAction : public Action
 {
 public:
-  enum
-  {
-    /** show dialog without "depth" items */
-    WITHOUT_DEPTH=0x1,
+  UpgradeAction(wxWindow * parent);
 
-    /** show dialog with URL line */
-    WITH_URL=0x2,
+  virtual bool
+  Perform();
 
-    /** show dialog without revision information */
-    WITHOUT_REVISION=0x4,
+  virtual bool
+  Prepare();
 
-    /** don't display the "ignore externals" checkbox */
-    WITHOUT_IGNORE_EXTERNALS=0x8
-  };
+  static bool
+  CheckStatusSel(const svn::StatusSel & statusSel);
 
-  /**
-   * constructor
-   *
-   * @param parent parent window
-   * @param flags flags for the window (@a WITH_URL)
-   */
-  UpdateDlg(wxWindow* parent, const wxString & title,
-            int flags = 0);
-
-  /**
-   * destructor
-   */
-  virtual ~UpdateDlg();
-
-  UpdateData &
-  GetData();
-
-protected: // events inherited from UpdateDlgBase
-  void
-  OnUseLatest(wxCommandEvent &event);
-
-  void
-  OnText(wxCommandEvent & event);
-
-  void
-  OnDepthChoice(wxCommandEvent &);
 private:
-  struct Data;
-  Data * m;
-
-  void CheckControls();
+  // hide default and copy constructor
+  UpgradeAction();
+  UpgradeAction(const UpgradeAction &);
 };
 
 #endif

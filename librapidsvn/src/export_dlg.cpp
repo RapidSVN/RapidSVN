@@ -69,8 +69,8 @@ ExportDlg::ExportDlg(wxWindow * parent, const svn::Path & selectedUrl)
   m_textPegRevision->SetHelpText(_("If the files were renamed or moved some time, specify which peg revision to use here."));
   m_checkPegNotSpecified->SetValidator(wxGenericValidator(&m->data.NotSpecified));
   m_checkPegNotSpecified->SetHelpText(_("Set this to use BASE/HEAD (current) peg revision of the files."));
-  m_checkRecursive->SetValidator(wxGenericValidator(&m->data.Recursive));
-  m_checkRecursive->SetHelpText(_("Set to get all subdirectories from the URL also."));
+  m_choiceDepth->SetValidator(wxGenericValidator(&m->data.Depth));
+  m_choiceDepth->SetHelpText(_("Select which files and subdirectories of the selected URL to get."));
   m_checkOverwrite->SetValidator(wxGenericValidator(&m->data.Overwrite));
   m_checkOverwrite->SetHelpText(_("Force to execute even if destination directory not empty, causes overwriting of files with the same names."));
   m_checkIgnoreExternals->SetValidator(wxGenericValidator(&m->data.IgnoreExternals));

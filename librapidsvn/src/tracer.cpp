@@ -42,6 +42,12 @@ EventTracer::Trace(const wxString & msg)
 }
 
 void
+EventTracer::Trace(LogItemType item, const wxString & action, const wxString & msg)
+{
+  ActionEvent::Post(m_frame, TOKEN_INFO, item, action, msg);
+}
+
+void
 EventTracer::TraceError(const wxString & msg)
 {
   ActionEvent::Post(m_frame, TOKEN_ERROR, msg);

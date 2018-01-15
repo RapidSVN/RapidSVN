@@ -25,11 +25,14 @@
 // app
 #include "annotate_dlg.hpp"
 #include "utils.hpp"
+#include <math.h>
 
+#define ANNOTATE_RED wxColour(255, 220, 220)
+#define ANNOTATE_BLUE wxColour(220, 220, 255)
 
 AnnotateDlg::AnnotateDlg(wxWindow * parent,
                          const wxString & caption)
-  : AnnotateDlgBase(parent, -1, caption)
+  : AnnotateDlgBase(parent, -1, caption), revMin(-1), revMax(-1)
 {
   m_list->InsertColumn(0, _("Revision"), wxLIST_FORMAT_RIGHT);
   m_list->InsertColumn(1, _("Author"), wxLIST_FORMAT_RIGHT);
@@ -81,14 +84,59 @@ AnnotateDlg::AddAnnotateLine(int revision, const wxString & author,
   wxString formattedLine = line;
   formattedLine.Replace(wxT("\r"), wxT(""));
   formattedLine.Replace(wxT("\n"), wxT(""));
-  formattedLine.Replace(wxT("\t"), wxT(" "));
+  formattedLine.Replace(wxT("\t"), wxT("  "));
   m_list->SetItem(index, 4, formattedLine);
+
+  if(UsePalette()) {
+    wxColour bgCol = GetBackgroundColour(revision);
+    m_list->SetItemBackgroundColour(index, bgCol);
+  }
 }
 
 void
 AnnotateDlg::AutoSizeColumn()
 {
   m_list->SetColumnWidth(4, wxLIST_AUTOSIZE);
+}
+
+void
+AnnotateDlg::SetRevisionRange(int revMin, int revMax)
+{
+    this->revMin = revMin;
+    this->revMax = revMax;
+}
+
+static int DoRound(double v)
+{
+	return (int)floor(v + 0.5); 
+}
+
+wxColour
+AnnotateDlg::GetBackgroundColour(int rev)
+{
+    double fac = (rev - revMin) / ((double)(revMax - revMin));
+
+    wxColour left, right;
+    if(fac < 0.5) {
+        // relatively old item; interpolate from red to blue
+        left = ANNOTATE_RED;
+        right = ANNOTATE_BLUE;
+        fac *= 2.0; // now between 0 and 1
+    }
+    else {
+        // newer item, interpolate from blue to (bkgnd)
+        left = ANNOTATE_BLUE;
+        right = m_list->GetBackgroundColour();
+        fac = (fac - 0.5) * 2.0; // normalized between 0 and 1
+    }
+    double fl = 1.0 - fac;
+    // now perform interpolation
+    wxColour ret((unsigned char) DoRound(fl * left.Red() + fac * right.Red()),
+                 (unsigned char) DoRound(fl * left.Green() + fac * right.Green()),
+                 (unsigned char) DoRound(fl * left.Blue() + fac * right.Blue())
+                 );
+    return ret;
+
 }
 
 /* -----------------------------------------------------------------

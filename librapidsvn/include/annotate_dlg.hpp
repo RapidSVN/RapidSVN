@@ -35,6 +35,11 @@ public:
   void AddAnnotateLine(int revision, const wxString & author,
                        const wxString & line);
   void AutoSizeColumn();
+  void SetRevisionRange(int revMin, int revMax);
+private:
+  int revMin, revMax;
+  bool UsePalette() const { return revMax > revMin; }
+  wxColour GetBackgroundColour(int rev);
 };
 
 #endif

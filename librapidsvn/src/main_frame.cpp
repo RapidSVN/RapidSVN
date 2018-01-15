@@ -29,6 +29,7 @@
 #include "wx/wx.h"
 #include "wx/filename.h"
 #include "wx/stdpaths.h"
+#include "wx/listctrl.h"
 #include <wx/tipdlg.h>
 
 // svncpp
@@ -192,7 +193,7 @@ private:
   bool m_isErrorDialogActive;
   FolderBrowser * m_folderBrowser;
   FileListCtrl * m_listCtrl;
-  wxTextCtrl * m_log;
+  LogList * m_log;
 
 public:
 
@@ -202,7 +203,7 @@ public:
   svn::Apr apr;
 
   Data(wxFrame * parent, FolderBrowser * folderBrowser,
-       FileListCtrl * listCtrl, wxTextCtrl * log,
+       FileListCtrl * listCtrl, LogList * log,
        const wxLocale & locale_)
     : MenuColumns(0), MenuSorting(0), MenuBar(0),
       listener(parent),
@@ -318,6 +319,7 @@ public:
     // Extras menu
     wxMenu *menuExtras = new wxMenu;
     AppendMenuItem(*menuExtras, ID_Cleanup);
+    AppendMenuItem(*menuExtras, ID_Upgrade);
 
     // Help Menu
     wxMenu *menuHelp = new wxMenu;
@@ -536,12 +538,12 @@ public:
    * @param msg message to show
    */
   void
-  Trace(const wxString & msg)
+  Trace(LogItemType type, const wxString & action, const wxString & msg)
   {
     if (!m_log)
       return;
-
-    m_log->AppendText(msg + wxT('\n'));
+    m_log->AppendItem(type, action, msg);
+    //m_log->AppendText(msg + wxT('\n'));
   }
 
   /**
@@ -557,9 +559,10 @@ public:
     if (!m_log)
       return;
 
-    m_log->SetDefaultStyle(wxTextAttr(*wxRED));
+    m_log->AppendItem(LogItem_Error, _("Error"), msg);
+    /*m_log->SetDefaultStyle(wxTextAttr(*wxRED));
     m_log->AppendText(wxString::Format(_("Error: %s\n"), msg.c_str()));
-    m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));
+    m_log->SetDefaultStyle(wxTextAttr(*wxBLACK));*/
 
     if (showDialog)
       ShowErrorDialog(msg);
@@ -633,6 +636,10 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MENU(ID_TestDndDlg, MainFrame::OnTestDndDlg)
 #endif
 
+  EVT_MENU(ID_Log_Clear, MainFrame::OnLogClear)
+  EVT_MENU_RANGE(ID_Log_Min, ID_Log_Max, MainFrame::OnLogToggle)
+  EVT_UPDATE_UI_RANGE(ID_Log_Min, ID_Log_Max, MainFrame::OnLogUpdate)
+
   EVT_MENU_RANGE(ID_File_Min, ID_File_Max, MainFrame::OnFileCommand)
   EVT_MENU_RANGE(ID_Verb_Min, ID_Verb_Max, MainFrame::OnFileCommand)
 
@@ -648,6 +655,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_LIST_ITEM_SELECTED(-1, MainFrame::OnFileListSelected)
 
   EVT_MENU_RANGE(LISTENER_MIN, LISTENER_MAX, MainFrame::OnListenerEvent)
+
+  EVT_MENU(ID_LogList_BrowseTo, MainFrame::OnLogListBrowse)
 END_EVENT_TABLE()
 
 /** class implementation **/
@@ -683,10 +692,12 @@ MainFrame::MainFrame(const wxString & title,
   CreateMainToolBar(this);
   m->SetRunning(false);
 
-  // as much as the widget can stand
+  // Populate the logFilterBar
+  CreateLogFilterBar(m_logFilterBar);
+/*  // as much as the widget can stand
 #ifndef __WXGTK__
   m_log->SetMaxLength(0);
-#endif
+#endif */
 
   m->logTracer = new EventTracer(this);
   m->listener.SetTracer(m->logTracer, false);
@@ -1275,12 +1286,12 @@ MainFrame::OnUpdateCommand(wxUpdateUIEvent & updateUIEvent)
   }
   catch (svn::ClientException & e)
   {
-    m->Trace(Utf8ToLocal(e.message()));
+    m->Trace(LogItem_Error, _("Error"), Utf8ToLocal(e.message()));
     return;
   }
   catch (...)
   {
-    m->Trace(_("An error occurred while checking valid actions"));
+    m->Trace(LogItem_Error, _("Error"), _("An error occurred while checking valid actions"));
   }
 }
 
@@ -1289,11 +1300,11 @@ MainFrame::OnHelpContents(wxCommandEvent & WXUNUSED(event))
 {
   try
   {
-    OpenURL(wxT("http://www.rapidsvn.org/help/index.php?id=OnlineHelp:Contents"));
+    OpenURL(wxT("http://www.rapidsvn.org/index.php?id=OnlineHelp:Contents"));
   }
   catch (...)
   {
-    m->Trace(_("An error occured while launching the browser"));
+    m->Trace(LogItem_Error, _("Error"), _("An error occured while launching the browser"));
   }
 
 // WE DONT USE THIS CODE NOW
@@ -1308,11 +1319,11 @@ MainFrame::OnHelpIndex(wxCommandEvent & WXUNUSED(event))
 {
   try
   {
-    OpenURL(wxT("http://www.rapidsvn.org/help/index.php?id=OnlineHelp:Index"));
+    OpenURL(wxT("http://www.rapidsvn.org/index.php?id=OnlineHelp:Index"));
   }
   catch (...)
   {
-    m->Trace(_("An error occured while launching the browser"));
+    m->Trace(LogItem_Error, _("Error"), _("An error occured while launching the browser"));
   }
 
 //#ifdef  USE_HTML_HELP
@@ -1624,6 +1635,41 @@ MainFrame::OnTestDndDlg(wxCommandEvent &)
 #endif
 
 void
+MainFrame::OnLogClear(wxCommandEvent & event)
+{
+    m_log->DeleteAllItems();
+}
+
+static LogItemType
+GetLogItemType(int id)
+{
+    switch(id) {
+    case ID_Log_Added : return LogItem_Added;
+    case ID_Log_Conflicted: return LogItem_Conflicted;
+    case ID_Log_Deleted : return LogItem_Deleted;
+    case ID_Log_Updated: return LogItem_Updated;
+    default: return LogItem_Normal;
+    }
+}
+
+void
+MainFrame::OnLogToggle(wxCommandEvent & event)
+{
+    int id = event.GetId();
+    LogItemType t = GetLogItemType(id);
+    m_log->SetItemFilter(t, !m_log->GetItemFilter(t));
+}
+
+void
+MainFrame::OnLogUpdate(wxUpdateUIEvent & event)
+{
+    int id = event.GetId();
+    LogItemType t = GetLogItemType(id);
+    bool checked = m_log->GetItemFilter(t);
+    event.Check(checked);
+}
+
+void
 MainFrame::OnFileCommand(wxCommandEvent & event)
 {
   int id = event.GetId();
@@ -1655,32 +1701,42 @@ void
 MainFrame::OnActionEvent(wxCommandEvent & event)
 {
   const int token = event.GetInt();
+  const long liType = event.GetExtraLong();
+  wxString action, message;
+  int splitPos = event.GetString().Find("|||");
+  if(splitPos != wxNOT_FOUND) {
+      action = event.GetString().Left(splitPos);
+      message = event.GetString().Mid(splitPos+3);
+  }
+  else {
+      message = event.GetString();
+  }
 
   switch (token)
   {
   case TOKEN_INFO:
-    m->Trace(event.GetString());
+    m->Trace((LogItemType)liType, action, message);
     break;
 
   case TOKEN_ERROR:
-    m->TraceError(event.GetString());
+    m->TraceError(message);
     break;
 
   case TOKEN_SVN_INTERNAL_ERROR:
   case TOKEN_INTERNAL_ERROR:
-    m->TraceError(event.GetString());
+    m->TraceError(message);
     // Action is interrupted, so cancel listener
     // (in order to enable filelist update)
     // and disable "Running" state
     m->listener.cancel(false);
     RefreshFileList();
-    m->Trace(_("Ready\n"));
+    m->Trace(LogItem_Normal, wxEmptyString, _("Ready\n"));
     m->SetRunning(false);
     break;
 
   case TOKEN_ACTION_START:
-    m->Trace(event.GetString());
-    wxLogStatus(event.GetString());
+    m->Trace(LogItem_Normal, action, message);
+    wxLogStatus(message);
     break;
 
   case TOKEN_ACTION_END:
@@ -1708,17 +1764,17 @@ MainFrame::OnActionEvent(wxCommandEvent & event)
     {
       if ((actionFlags & Action::UPDATE_TREE) != 0)
       {
-        m->Trace(_("Updating..."));
+        m->Trace(LogItem_Normal, wxEmptyString, _("Updating file list..."));
         RefreshFolderBrowser();
       }
       else if ((actionFlags & Action::DONT_UPDATE) == 0)
       {
-        m->Trace(_("Updating..."));
+        m->Trace(LogItem_Normal, wxEmptyString, _("Updating file list..."));
         RefreshFileList();
       }
     }
 
-    m->Trace(_("Ready\n"));
+    m->Trace(LogItem_Normal, wxEmptyString, _("Ready\n"));
     m->SetRunning(false);
   }
   break;
@@ -1984,7 +2040,7 @@ MainFrame::OnFolderBrowserSelChanged(wxTreeEvent & WXUNUSED(event))
   }
   catch (...)
   {
-    m->Trace(_("Exception occured during filelist update"));
+    m->Trace(LogItem_Error, wxEmptyString, _("Exception occured during filelist update"));
   }
 }
 
@@ -2006,7 +2062,52 @@ MainFrame::OnFolderBrowserKeyDown(wxTreeEvent & event)
 void
 MainFrame::OnFileListSelected(wxListEvent & WXUNUSED(event))
 {
-  m->activePane = ACTIVEPANE_FILELIST;
+    m->activePane = ACTIVEPANE_FILELIST;
+}
+
+
+void MainFrame::OnLogListBrowse(wxCommandEvent &event)
+{
+  wxString selFile = m_log->GetSelectedFileOrDir();
+  if(selFile.IsEmpty())
+      return;
+
+  // find matching bookmark
+  wxString containingBkmk = m_folderBrowser->FindContainingBookmark(selFile);
+  if(containingBkmk.IsEmpty())
+      return;
+
+  // select that bookmark
+  if(!m_folderBrowser->SelectBookmark(containingBkmk))
+      return;
+  wxString selDir, selFileNameWithExt;
+  if(wxFileName::DirExists(selFile)) {
+      // it is a directory. the file name is empty
+      selDir = selFile;
+  }
+  else {
+      wxString selFileName, selFileExt;
+      wxFileName::SplitPath(selFile, &selDir, &selFileName, &selFileExt);
+      selFileNameWithExt = selFileName;
+      if(!selFileExt.IsEmpty())
+          selFileNameWithExt << '.' << selFileExt;
+  }
+  // select the folder within the bookmark
+  if(!m_folderBrowser->SelectFolder(selDir))
+      return;
+
+  // Select the file, if it's a file
+  if(!selFileNameWithExt.IsEmpty()) {
+      // Update our file list
+      UpdateCurrentPath();
+      RefreshFileList();
+      // Find the file and focus and select it
+      long i = m_listCtrl->FindItem(-1, selFileNameWithExt);
+      if(i >= 0) {
+          m_listCtrl->Focus(i);
+          m_listCtrl->Select(i);
+      }
+  }
 }
 
 
@@ -2073,7 +2174,7 @@ MainFrame::AddRepoBookmark()
 {
   const int flags =
     UpdateDlg::WITH_URL |
-    UpdateDlg::WITHOUT_RECURSIVE |
+    UpdateDlg::WITHOUT_DEPTH |
     UpdateDlg::WITHOUT_REVISION |
     UpdateDlg::WITHOUT_IGNORE_EXTERNALS;
   UpdateDlg dialog(this, _("Repository URL"), flags);
@@ -2175,7 +2276,7 @@ MainFrame::ShowInfo()
   }
   catch (svn::ClientException & e)
   {
-    m->Trace(Utf8ToLocal(e.message()));
+    m->Trace(LogItem_Error, wxEmptyString, Utf8ToLocal(e.message()));
     return;
   }
 

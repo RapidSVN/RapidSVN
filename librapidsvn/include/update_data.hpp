@@ -31,15 +31,27 @@ struct UpdateData
 {
   UpdateData()
     : revision(wxEmptyString), url(wxEmptyString),
-      useLatest(true), recursive(true), ignoreExternals(false)
+      useLatest(true), depth(0), stickyDepth(true), ignoreExternals(false)
   {
   }
 
   wxString revision;
   wxString url;
   bool useLatest;
-  bool recursive;
+  int depth;
+  bool stickyDepth;
   bool ignoreExternals;
+};
+
+// Possible values for the Depth item of the UpdateData structure.
+// Keep this synchronized with the GUI's choice definition.
+enum UpdateDepth
+{
+  UPDATE_WORKING_COPY = 0,
+  UPDATE_FULLY_RECURSIVE = 1,
+  UPDATE_IMMEDIATES = 2,
+  UPDATE_FILES = 3,
+  UPDATE_EMPTY = 4
 };
 
 #endif

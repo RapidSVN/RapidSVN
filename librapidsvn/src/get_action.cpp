@@ -61,7 +61,8 @@ GetAction::Perform()
     wxSetWorkingDirectory(dir);
   client.update(svn::Path(LocalToUtf8(m_data.path)),
                 m_data.revision,
-                true, false);
+                svn_depth_unknown, false,
+                false);
 
   return true;
 }

@@ -21,64 +21,35 @@
  * history and logs, available at http://rapidsvn.tigris.org/.
  * ====================================================================
  */
-#ifndef _UPDATE_DLG_H_INCLUDED_
-#define _UPDATE_DLG_H_INCLUDED_
+#ifndef _CLEANUP_DATA_H_INCLUDED_
+#define _CLEANUP_DATA_H_INCLUDED_
 
-// app
-#include "rapidsvn_generated.h"
+// wxWidgets
+#include "wx/string.h"
 
-// forward declarations
-struct UpdateData;
-
-class UpdateDlg:public UpdateDlgBase
+struct CleanupData
 {
-public:
-  enum
+  CleanupData()
   {
-    /** show dialog without "depth" items */
-    WITHOUT_DEPTH=0x1,
+    CleanupWCStatus = true;
+    BreakLocks = true;
+    FixTimestamps = true;
+    VacuumPristines = false;
 
-    /** show dialog with URL line */
-    WITH_URL=0x2,
+    DeleteUnversioned = false;
+    DeleteIgnored = false;
 
-    /** show dialog without revision information */
-    WITHOUT_REVISION=0x4,
+    IncludeExternals = true;
+  }
 
-    /** don't display the "ignore externals" checkbox */
-    WITHOUT_IGNORE_EXTERNALS=0x8
-  };
-
-  /**
-   * constructor
-   *
-   * @param parent parent window
-   * @param flags flags for the window (@a WITH_URL)
-   */
-  UpdateDlg(wxWindow* parent, const wxString & title,
-            int flags = 0);
-
-  /**
-   * destructor
-   */
-  virtual ~UpdateDlg();
-
-  UpdateData &
-  GetData();
-
-protected: // events inherited from UpdateDlgBase
-  void
-  OnUseLatest(wxCommandEvent &event);
-
-  void
-  OnText(wxCommandEvent & event);
-
-  void
-  OnDepthChoice(wxCommandEvent &);
-private:
-  struct Data;
-  Data * m;
-
-  void CheckControls();
+  wxString Path;
+  bool CleanupWCStatus;
+  bool BreakLocks;
+  bool FixTimestamps;
+  bool VacuumPristines;
+  bool DeleteUnversioned;
+  bool DeleteIgnored;
+  bool IncludeExternals;
 };
 
 #endif

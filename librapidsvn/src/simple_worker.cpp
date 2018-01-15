@@ -171,10 +171,7 @@ SimpleWorker::Perform(Action * action)
   ActionEvent event(m->parent, TOKEN_ACTION_START);
 
   {
-    wxString msg;
-    msg.Printf(_("Execute: %s"), action->GetName().c_str());
-
-    event.init(m->parent, TOKEN_ACTION_START, msg);
+    event.init(m->parent, TOKEN_ACTION_START, LogItem_Normal, _("Execute:"), action->GetName().c_str());
     event.Post();
   }
 

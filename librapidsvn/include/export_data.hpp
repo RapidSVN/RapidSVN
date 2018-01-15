@@ -36,7 +36,7 @@ struct ExportData
   {
     UseLatest = true;
     NotSpecified = true;
-    Recursive = true;
+    Depth = 0;
     Overwrite = false;
     IgnoreExternals = false;
   }
@@ -46,11 +46,21 @@ struct ExportData
   wxString Revision;
   wxString PegRevision;
   const char * Eol;
-  bool Recursive;
+  int Depth;
   bool UseLatest;
   bool NotSpecified;
   bool Overwrite;
   bool IgnoreExternals;
+};
+
+// Possible values for the Depth item of the ExportData structure.
+// Keep this synchronized with the GUI's choice definition.
+enum ExportDepth
+{
+  EXPORT_FULLY_RECURSIVE = 0,
+  EXPORT_IMMEDIATES = 1,
+  EXPORT_FILES = 2,
+  EXPORT_EMPTY = 3
 };
 
 #endif

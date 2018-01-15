@@ -670,7 +670,7 @@ public:
           open_image = FOLDER_IMAGE_OPEN_FOLDER;
         }
 
-        wxString basename = wxFileName::FileName(path).GetName();
+		wxString basename = wxFileName::FileName(path).GetFullName();
         FolderItemData * data = new FolderItemData(
           FOLDER_TYPE_NORMAL, path,
           basename,
@@ -852,6 +852,25 @@ public:
       return 0;
 
     return static_cast<FolderItemData *>(treeCtrl->GetItemData(id));
+  }
+
+
+  wxString
+  FindContainingBookmark(const wxString & path)
+  {
+      wxFileName filename(path);
+      wxString pathSearch = filename.GetFullPath(wxPATH_NATIVE);
+
+      for(BookmarkHashMap::iterator it = bookmarks.begin(); it != bookmarks.end(); it++) {
+        // match
+#ifdef __WXMSW__
+        if(pathSearch.Lower().StartsWith(it->first.Lower()))
+#else
+        if(pathSearch.StartsWith(it->first))
+#endif
+          return it->first;
+      }
+      return wxEmptyString;
   }
 
   bool
@@ -1164,6 +1183,12 @@ bool
 FolderBrowser::SelectBookmark(const wxString & bookmarkPath)
 {
   return m->SelectBookmark(bookmarkPath);
+}
+
+wxString
+FolderBrowser::FindContainingBookmark(const wxString & path)
+{
+  return m->FindContainingBookmark(path);
 }
 
 void

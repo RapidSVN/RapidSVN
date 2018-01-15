@@ -120,20 +120,49 @@ CheckoutAction::Perform()
       pegRevision = svn::Revision(revnum);
   }
 
-  if (!m_data.DestFolder.empty())
-    wxSetWorkingDirectory(m_data.DestFolder);
+  bool setWDLater = false;
+  if (!m_data.DestFolder.empty()) {
+    if(wxDirExists(m_data.DestFolder))
+      wxSetWorkingDirectory(m_data.DestFolder);
+    else {
+      // The destination folder doesn't exist yet.
+      // SVN will create it during the checkout.
+      setWDLater = true;
+    }
+  }
 
   svn::Path repUrlUtf8(PathUtf8(m_data.RepUrl));
   svn::Path destFolderUtf8(PathUtf8(dest_folder));
 
   bool ignoreExternals = m_data.IgnoreExternals;
 
+  svn_depth_t depth = svn_depth_infinity;
+  switch(m_data.Depth) {
+    default:
+    case CHECKOUT_FULLY_RECURSIVE:
+      depth = svn_depth_infinity;
+      break;
+    case CHECKOUT_IMMEDIATES:
+      depth = svn_depth_immediates;
+      break;
+    case CHECKOUT_FILES:
+      depth = svn_depth_files;
+      break;
+    case CHECKOUT_EMPTY:
+      depth = svn_depth_empty;
+      break;
+  }
+
   client.checkout(repUrlUtf8.c_str(),
                   destFolderUtf8,
                   revision,
-                  m_data.Recursive,
+                  depth,
                   ignoreExternals,
                   pegRevision);
+
+  // try again, in case the directory was created by the checkout
+  if (setWDLater)
+    wxSetWorkingDirectory(m_data.DestFolder);
 
   // now post event to add bookmark to bookmarks
   if (m_data.Bookmarks)

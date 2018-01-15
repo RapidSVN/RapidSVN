@@ -140,6 +140,10 @@ private:
   // toolbar events
   void OnToolEnter(wxCommandEvent & event);
 
+  // log toolbar events
+  void OnLogClear(wxCommandEvent & event);
+  void OnLogToggle(wxCommandEvent & event);
+  void OnLogUpdate(wxUpdateUIEvent & event);
   // Events from action threads
   void OnActionEvent(wxCommandEvent & event);
   void OnListenerEvent(wxCommandEvent & event);
@@ -158,9 +162,11 @@ private:
   void OnFolderBrowserSelChanged(wxTreeEvent & event);
   void OnFolderBrowserKeyDown(wxTreeEvent & event);
 
-  // File List event handles
+  // File List event handlers
   void OnFileListSelected(wxListEvent & event);
 
+  // Log list event handlers
+  void OnLogListBrowse(wxCommandEvent & event);
 
 
   /**

@@ -186,7 +186,7 @@ public:
 
 
 protected:
-  void Trace(const wxString & msg);
+  void Trace(LogItemType type, const wxString &action, const wxString & msg);
 
   void TraceDefaultMessage(svn_wc_notify_action_t action, const char * path);
 

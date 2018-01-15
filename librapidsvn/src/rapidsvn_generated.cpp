@@ -139,7 +139,7 @@ CertDlgBase::CertDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	
 	m_sizerFailures = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("MyLabel") ), wxVERTICAL );
 	
-	m_staticFailures = new wxStaticText( m_sizerFailures->GetStaticBox(), wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticFailures = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticFailures->Wrap( -1 );
 	m_sizerFailures->Add( m_staticFailures, 0, wxALL, 5 );
 	
@@ -154,43 +154,43 @@ CertDlgBase::CertDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizerFailures->SetFlexibleDirection( wxBOTH );
 	fgSizerFailures->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_labelHostname = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("Hostname:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelHostname = new wxStaticText( this, wxID_ANY, _("Hostname:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_labelHostname->Wrap( -1 );
 	fgSizerFailures->Add( m_labelHostname, 0, wxALL, 5 );
 	
-	m_staticHostname = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticHostname = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticHostname->Wrap( -1 );
 	fgSizerFailures->Add( m_staticHostname, 0, wxALL, 5 );
 	
-	m_labelIssuer = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("Issuer:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelIssuer = new wxStaticText( this, wxID_ANY, _("Issuer:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_labelIssuer->Wrap( -1 );
 	fgSizerFailures->Add( m_labelIssuer, 0, wxALL, 5 );
 	
-	m_staticIssuer = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticIssuer = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticIssuer->Wrap( -1 );
 	fgSizerFailures->Add( m_staticIssuer, 0, wxALL, 5 );
 	
-	m_labelValidFrom = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("Valid from:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelValidFrom = new wxStaticText( this, wxID_ANY, _("Valid from:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_labelValidFrom->Wrap( -1 );
 	fgSizerFailures->Add( m_labelValidFrom, 0, wxALL, 5 );
 	
-	m_staticValidFrom = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticValidFrom = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticValidFrom->Wrap( -1 );
 	fgSizerFailures->Add( m_staticValidFrom, 0, wxALL, 5 );
 	
-	m_labelValidUntil = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("Valid until:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelValidUntil = new wxStaticText( this, wxID_ANY, _("Valid until:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_labelValidUntil->Wrap( -1 );
 	fgSizerFailures->Add( m_labelValidUntil, 0, wxALL, 5 );
 	
-	m_staticValidUntil = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticValidUntil = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticValidUntil->Wrap( -1 );
 	fgSizerFailures->Add( m_staticValidUntil, 0, wxALL, 5 );
 	
-	m_labelFingerprint = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("Fingerprint:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_labelFingerprint = new wxStaticText( this, wxID_ANY, _("Fingerprint:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_labelFingerprint->Wrap( -1 );
 	fgSizerFailures->Add( m_labelFingerprint, 0, wxALL, 5 );
 	
-	m_staticFingerprint = new wxStaticText( sizerCert->GetStaticBox(), wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticFingerprint = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticFingerprint->Wrap( -1 );
 	fgSizerFailures->Add( m_staticFingerprint, 0, wxALL, 5 );
 	
@@ -243,7 +243,7 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	wxStaticBoxSizer* urlSizer;
 	urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("URL") ), wxVERTICAL );
 	
-	m_comboUrl = new wxComboBox( urlSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
 	urlSizer->Add( m_comboUrl, 0, wxALL|wxEXPAND, 5 );
 	
 	
@@ -252,10 +252,10 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	wxStaticBoxSizer* destSizer;
 	destSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Destination Directory") ), wxHORIZONTAL );
 	
-	m_comboDest = new wxComboBox( destSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 205,-1 ), 0, NULL, 0 ); 
+	m_comboDest = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 205,-1 ), 0, NULL, 0 ); 
 	destSizer->Add( m_comboDest, 1, wxALL, 5 );
 	
-	m_buttonBrowse = new wxButton( destSizer->GetStaticBox(), wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
+	m_buttonBrowse = new wxButton( this, wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
 	destSizer->Add( m_buttonBrowse, 0, wxALL, 5 );
 	
 	
@@ -264,10 +264,10 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	wxStaticBoxSizer* revisionSizer;
 	revisionSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision") ), wxHORIZONTAL );
 	
-	m_textRevision = new wxTextCtrl( revisionSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	m_textRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
 	revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_checkUseLatest = new wxCheckBox( revisionSizer->GetStaticBox(), wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
 	revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
@@ -276,14 +276,29 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	wxStaticBoxSizer* pegSizer;
 	pegSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Peg Revision") ), wxHORIZONTAL );
 	
-	m_textPegRevision = new wxTextCtrl( pegSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	m_textPegRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
 	pegSizer->Add( m_textPegRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_checkPegNotSpecified = new wxCheckBox( pegSizer->GetStaticBox(), wxID_ANY, _("Not specified"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkPegNotSpecified = new wxCheckBox( this, wxID_ANY, _("Not specified"), wxDefaultPosition, wxDefaultSize, 0 );
 	pegSizer->Add( m_checkPegNotSpecified, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
 	m_mainSizer->Add( pegSizer, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* depthSizer;
+	depthSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Checkout Depth") ), wxVERTICAL );
+	
+	wxString m_choiceDepthChoices[] = { _("Fully recursive (all files and subdirectories)"), _("Immediate children (files and empty subdirectories)"), _("Only file children (no subdirectories)"), _("Only this item") };
+	int m_choiceDepthNChoices = sizeof( m_choiceDepthChoices ) / sizeof( wxString );
+	m_choiceDepth = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceDepthNChoices, m_choiceDepthChoices, 0 );
+	m_choiceDepth->SetSelection( 0 );
+	depthSizer->Add( m_choiceDepth, 0, wxALL|wxEXPAND, 5 );
+	
+	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore externals"), wxDefaultPosition, wxDefaultSize, 0 );
+	depthSizer->Add( m_checkIgnoreExternals, 0, wxALL, 5 );
+	
+	
+	m_mainSizer->Add( depthSizer, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* extrasSizer;
 	extrasSizer = new wxBoxSizer( wxHORIZONTAL );
@@ -291,14 +306,8 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	m_checkAddToBookmarks = new wxCheckBox( this, wxID_ANY, _("Add to bookmarks"), wxDefaultPosition, wxDefaultSize, 0 );
 	extrasSizer->Add( m_checkAddToBookmarks, 0, wxALL, 5 );
 	
-	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	extrasSizer->Add( m_checkRecursive, 0, wxALL, 5 );
 	
-	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore externals"), wxDefaultPosition, wxDefaultSize, 0 );
-	extrasSizer->Add( m_checkIgnoreExternals, 0, wxALL, 5 );
-	
-	
-	m_mainSizer->Add( extrasSizer, 1, wxALIGN_CENTER, 5 );
+	m_mainSizer->Add( extrasSizer, 0, wxALIGN_LEFT|wxEXPAND, 5 );
 	
 	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
 	
@@ -318,6 +327,7 @@ CheckoutDlgBase::CheckoutDlgBase( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	this->SetSizer( m_mainSizer );
 	this->Layout();
+	m_mainSizer->Fit( this );
 	
 	// Connect Events
 	m_comboUrl->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( CheckoutDlgBase::OnText ), NULL, this );
@@ -352,7 +362,7 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Enter &log message") ), wxHORIZONTAL );
 	
-	m_textMessage = new wxTextCtrl( m_msgSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );
 	
 	
@@ -373,16 +383,16 @@ CommitDlgBase::CommitDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_filesSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("&Files to commit") ), wxVERTICAL );
 	
 	wxArrayString m_checkListFilesChoices;
-	m_checkListFiles = new wxCheckListBox( m_filesSizer->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListFilesChoices, wxLB_EXTENDED );
+	m_checkListFiles = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListFilesChoices, wxLB_EXTENDED );
 	m_filesSizer->Add( m_checkListFiles, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerFileButtons;
 	bSizerFileButtons = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_buttonToggle = new wxButton( m_filesSizer->GetStaticBox(), wxID_ANY, _("&Toggle"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonToggle = new wxButton( this, wxID_ANY, _("&Toggle"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizerFileButtons->Add( m_buttonToggle, 0, wxALL, 5 );
 	
-	m_buttonDiff = new wxButton( m_filesSizer->GetStaticBox(), wxID_ANY, _("&Diff"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonDiff = new wxButton( this, wxID_ANY, _("&Diff"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizerFileButtons->Add( m_buttonDiff, 0, wxALL, 5 );
 	
 	
@@ -443,7 +453,7 @@ CommitLogDlgBase::CommitLogDlgBase( wxWindow* parent, wxWindowID id, const wxStr
 	
 	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("This action has resulted in a commit - please enter a &log message") ), wxHORIZONTAL );
 	
-	m_textMessage = new wxTextCtrl( m_msgSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );
 	
 	
@@ -683,6 +693,88 @@ DeleteDlgBase::~DeleteDlgBase()
 {
 }
 
+CleanupDlgBase::CleanupDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	m_mainSizer = new wxBoxSizer( wxVERTICAL );
+	
+	wxBoxSizer* m_pathSizer;
+	m_pathSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_staticDesc = new wxStaticText( this, wxID_ANY, _("Clean up in:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticDesc->Wrap( -1 );
+	m_pathSizer->Add( m_staticDesc, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticPath = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPath->Wrap( -1 );
+	m_pathSizer->Add( m_staticPath, 1, wxALL, 5 );
+	
+	
+	m_mainSizer->Add( m_pathSizer, 0, wxEXPAND, 5 );
+	
+	m_checkExternals = new wxCheckBox( this, wxID_ANY, _("Include externals"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_mainSizer->Add( m_checkExternals, 0, wxALL, 5 );
+	
+	wxStaticBoxSizer* m_sizerCleanupOptions;
+	m_sizerCleanupOptions = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Cleanup Options") ), wxVERTICAL );
+	
+	m_checkWCStatus = new wxCheckBox( this, wxID_ANY, _("Clean up working copy status"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerCleanupOptions->Add( m_checkWCStatus, 0, wxALIGN_LEFT|wxALL, 5 );
+	
+	m_checkBreakLocks = new wxCheckBox( this, wxID_ANY, _("Break locks"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerCleanupOptions->Add( m_checkBreakLocks, 0, wxALL, 5 );
+	
+	m_checkTimeStamps = new wxCheckBox( this, wxID_ANY, _("Fix time stamps"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerCleanupOptions->Add( m_checkTimeStamps, 0, wxALL, 5 );
+	
+	m_checkVacuum = new wxCheckBox( this, wxID_ANY, _("Vacuum pristine copies"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerCleanupOptions->Add( m_checkVacuum, 0, wxALL, 5 );
+	
+	
+	m_mainSizer->Add( m_sizerCleanupOptions, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* m_sizerVacuumOptions;
+	m_sizerVacuumOptions = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Vacuum Options") ), wxVERTICAL );
+	
+	m_checkDeleteUnversioned = new wxCheckBox( this, wxID_ANY, _("Delete all unversioned files"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerVacuumOptions->Add( m_checkDeleteUnversioned, 0, wxALIGN_LEFT|wxALL, 5 );
+	
+	m_checkDeleteIgnored = new wxCheckBox( this, wxID_ANY, _("Delete all ignored files"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_sizerVacuumOptions->Add( m_checkDeleteIgnored, 0, wxALL, 5 );
+	
+	
+	m_mainSizer->Add( m_sizerVacuumOptions, 0, wxEXPAND, 5 );
+	
+	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_buttonOK = new wxButton( this, wxID_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK->SetDefault(); 
+	m_buttonSizer->Add( m_buttonOK, 0, wxALL, 10 );
+	
+	m_buttonCancel = new wxButton( this, wxID_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonSizer->Add( m_buttonCancel, 0, wxALL, 10 );
+	
+	
+	m_mainSizer->Add( m_buttonSizer, 0, wxALIGN_CENTER|wxLEFT|wxRIGHT, 5 );
+	
+	
+	this->SetSizer( m_mainSizer );
+	this->Layout();
+	
+	// Connect Events
+	this->Connect( wxEVT_INIT_DIALOG, wxInitDialogEventHandler( CleanupDlgBase::OnInitDialog ) );
+	m_checkWCStatus->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( CleanupDlgBase::OnCleanupChecked ), NULL, this );
+}
+
+CleanupDlgBase::~CleanupDlgBase()
+{
+	// Disconnect Events
+	this->Disconnect( wxEVT_INIT_DIALOG, wxInitDialogEventHandler( CleanupDlgBase::OnInitDialog ) );
+	m_checkWCStatus->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( CleanupDlgBase::OnCleanupChecked ), NULL, this );
+	
+}
+
 DestinationDlgBase::DestinationDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
@@ -757,31 +849,31 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizer1->SetFlexibleDirection( wxBOTH );
 	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_radioUseRevision1 = new wxRadioButton( sbSizer1->GetStaticBox(), wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP );
+	m_radioUseRevision1 = new wxRadioButton( this, wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP );
 	fgSizer1->Add( m_radioUseRevision1, 0, 0, 5 );
 	
 	wxBoxSizer* bSizer16;
 	bSizer16 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_textRevision1 = new wxTextCtrl( sbSizer1->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textRevision1 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer16->Add( m_textRevision1, 0, wxEXPAND, 5 );
 	
-	m_checkUseLatest1 = new wxCheckBox( sbSizer1->GetStaticBox(), wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUseLatest1 = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer16->Add( m_checkUseLatest1, 0, 0, 5 );
 	
 	
 	fgSizer1->Add( bSizer16, 1, wxEXPAND, 5 );
 	
-	m_radioUseDate1 = new wxRadioButton( sbSizer1->GetStaticBox(), wxID_ANY, _("Date:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_radioUseDate1 = new wxRadioButton( this, wxID_ANY, _("Date:"), wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer1->Add( m_radioUseDate1, 0, 0, 5 );
 	
-	m_datePicker1 = new wxDatePickerCtrl( sbSizer1->GetStaticBox(), wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT );
+	m_datePicker1 = new wxDatePickerCtrl( this, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT );
 	fgSizer1->Add( m_datePicker1, 0, wxEXPAND, 5 );
 	
-	m_checkUsePath1 = new wxCheckBox( sbSizer1->GetStaticBox(), wxID_ANY, _("Use URL/path:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUsePath1 = new wxCheckBox( this, wxID_ANY, _("Use URL/path:"), wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer1->Add( m_checkUsePath1, 0, 0, 5 );
 	
-	m_comboPath1 = new wxComboBox( sbSizer1->GetStaticBox(), wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_comboPath1 = new wxComboBox( this, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
 	fgSizer1->Add( m_comboPath1, 0, wxEXPAND, 5 );
 	
 	
@@ -798,31 +890,31 @@ DiffDlgBase::DiffDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizer2->SetFlexibleDirection( wxBOTH );
 	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_radioUseRevision2 = new wxRadioButton( sbSizer2->GetStaticBox(), wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP );
+	m_radioUseRevision2 = new wxRadioButton( this, wxID_ANY, _("Revision:"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP );
 	fgSizer2->Add( m_radioUseRevision2, 0, 0, 5 );
 	
 	wxBoxSizer* bSizer161;
 	bSizer161 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_textRevision2 = new wxTextCtrl( sbSizer2->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textRevision2 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer161->Add( m_textRevision2, 0, wxEXPAND, 5 );
 	
-	m_checkUseLatest2 = new wxCheckBox( sbSizer2->GetStaticBox(), wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUseLatest2 = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer161->Add( m_checkUseLatest2, 0, 0, 5 );
 	
 	
 	fgSizer2->Add( bSizer161, 1, wxEXPAND, 5 );
 	
-	m_radioUseDate2 = new wxRadioButton( sbSizer2->GetStaticBox(), wxID_ANY, _("Date:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_radioUseDate2 = new wxRadioButton( this, wxID_ANY, _("Date:"), wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer2->Add( m_radioUseDate2, 0, 0, 5 );
 	
-	m_datePicker2 = new wxDatePickerCtrl( sbSizer2->GetStaticBox(), wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT );
+	m_datePicker2 = new wxDatePickerCtrl( this, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT );
 	fgSizer2->Add( m_datePicker2, 0, wxEXPAND, 5 );
 	
-	m_checkUsePath2 = new wxCheckBox( sbSizer2->GetStaticBox(), wxID_ANY, _("Use URL/path:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUsePath2 = new wxCheckBox( this, wxID_ANY, _("Use URL/path:"), wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer2->Add( m_checkUsePath2, 0, 0, 5 );
 	
-	m_comboPath2 = new wxComboBox( sbSizer2->GetStaticBox(), wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_comboPath2 = new wxComboBox( this, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
 	fgSizer2->Add( m_comboPath2, 0, wxEXPAND, 5 );
 	
 	
@@ -1006,7 +1098,7 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxStaticBoxSizer* urlSizer;
 	urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("URL") ), wxVERTICAL );
 	
-	m_comboUrl = new wxComboBox( urlSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
 	urlSizer->Add( m_comboUrl, 0, wxALL|wxEXPAND, 5 );
 	
 	
@@ -1015,10 +1107,10 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxStaticBoxSizer* destSizer;
 	destSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Destination Directory") ), wxHORIZONTAL );
 	
-	m_comboDest = new wxComboBox( destSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 205,-1 ), 0, NULL, 0 ); 
+	m_comboDest = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 205,-1 ), 0, NULL, 0 ); 
 	destSizer->Add( m_comboDest, 1, wxALL, 5 );
 	
-	m_buttonBrowse = new wxButton( destSizer->GetStaticBox(), wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
+	m_buttonBrowse = new wxButton( this, wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
 	destSizer->Add( m_buttonBrowse, 0, wxALL, 5 );
 	
 	
@@ -1027,10 +1119,10 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxStaticBoxSizer* revisionSizer;
 	revisionSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision") ), wxHORIZONTAL );
 	
-	m_textRevision = new wxTextCtrl( revisionSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	m_textRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
 	revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_checkUseLatest = new wxCheckBox( revisionSizer->GetStaticBox(), wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
 	revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
@@ -1039,14 +1131,29 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxStaticBoxSizer* pegSizer;
 	pegSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Peg Revision") ), wxHORIZONTAL );
 	
-	m_textPegRevision = new wxTextCtrl( pegSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
+	m_textPegRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 50,-1 ), 0 );
 	pegSizer->Add( m_textPegRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_checkPegNotSpecified = new wxCheckBox( pegSizer->GetStaticBox(), wxID_ANY, _("Not specified"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkPegNotSpecified = new wxCheckBox( this, wxID_ANY, _("Not specified"), wxDefaultPosition, wxDefaultSize, 0 );
 	pegSizer->Add( m_checkPegNotSpecified, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
 	m_mainSizer->Add( pegSizer, 0, wxEXPAND, 5 );
+	
+	wxStaticBoxSizer* depthSizer;
+	depthSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Export Depth") ), wxVERTICAL );
+	
+	wxString m_choiceDepthChoices[] = { _("Fully recursive (all files and subdirectories)"), _("Immediate children (files and empty subdirectories)"), _("Only file children (no subdirectories)"), _("Only this item") };
+	int m_choiceDepthNChoices = sizeof( m_choiceDepthChoices ) / sizeof( wxString );
+	m_choiceDepth = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceDepthNChoices, m_choiceDepthChoices, 0 );
+	m_choiceDepth->SetSelection( 0 );
+	depthSizer->Add( m_choiceDepth, 0, wxALL|wxEXPAND, 5 );
+	
+	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore externals"), wxDefaultPosition, wxDefaultSize, 0 );
+	depthSizer->Add( m_checkIgnoreExternals, 0, wxALL, 5 );
+	
+	
+	m_mainSizer->Add( depthSizer, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* eolSizer;
 	eolSizer = new wxBoxSizer( wxHORIZONTAL );
@@ -1067,17 +1174,11 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxBoxSizer* extrasSizer;
 	extrasSizer = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	extrasSizer->Add( m_checkRecursive, 0, wxALL, 5 );
-	
 	m_checkOverwrite = new wxCheckBox( this, wxID_ANY, _("Overwrite"), wxDefaultPosition, wxDefaultSize, 0 );
 	extrasSizer->Add( m_checkOverwrite, 0, wxALL, 5 );
 	
-	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore externals"), wxDefaultPosition, wxDefaultSize, 0 );
-	extrasSizer->Add( m_checkIgnoreExternals, 0, wxALL, 5 );
 	
-	
-	m_mainSizer->Add( extrasSizer, 1, wxALIGN_CENTER, 5 );
+	m_mainSizer->Add( extrasSizer, 1, wxALIGN_LEFT|wxEXPAND, 5 );
 	
 	m_buttonSizer = new wxBoxSizer( wxHORIZONTAL );
 	
@@ -1097,7 +1198,6 @@ ExportDlgBase::ExportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	this->SetSizer( m_mainSizer );
 	this->Layout();
-	m_mainSizer->Fit( this );
 	
 	// Connect Events
 	m_comboUrl->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ExportDlgBase::OnText ), NULL, this );
@@ -1186,7 +1286,7 @@ LockDlgBase::LockDlgBase( wxWindow* parent, wxWindowID id, const wxString& title
 	
 	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Enter a comment for this lock") ), wxHORIZONTAL );
 	
-	m_textMessage = new wxTextCtrl( m_msgSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );
 	
 	
@@ -1279,7 +1379,7 @@ LogDlgBase::LogDlgBase( wxWindow* parent, wxWindowID id, const wxString& title, 
 	wxBoxSizer* lowerSizer;
 	lowerSizer = new wxBoxSizer( wxVERTICAL );
 	
-	m_notebook = new wxNotebook( m_lowerPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_notebook = new wxNotebook( m_lowerPanel, wxID_ANY, wxDefaultPosition, wxSize( -1,150 ), 0 );
 	m_panelLog = new wxPanel( m_notebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* logSizer;
 	logSizer = new wxBoxSizer( wxVERTICAL );
@@ -1354,7 +1454,7 @@ ImportDlgBase::ImportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxStaticBoxSizer* urlSizer;
 	urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Repository &URL for import") ), wxVERTICAL );
 	
-	m_comboUrl = new wxComboBox( urlSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, 0 ); 
 	urlSizer->Add( m_comboUrl, 0, wxALL|wxEXPAND, 5 );
 	
 	
@@ -1366,10 +1466,10 @@ ImportDlgBase::ImportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxBoxSizer* pathNameSizer;
 	pathNameSizer = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_textPath = new wxTextCtrl( pathSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textPath = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	pathNameSizer->Add( m_textPath, 1, wxALL, 5 );
 	
-	m_buttonBrowse = new wxButton( pathSizer->GetStaticBox(), wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
+	m_buttonBrowse = new wxButton( this, wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
 	pathNameSizer->Add( m_buttonBrowse, 0, wxALL, 5 );
 	
 	
@@ -1378,13 +1478,13 @@ ImportDlgBase::ImportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	wxBoxSizer* importTypeSizer;
 	importTypeSizer = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_staticPathType = new wxStaticText( pathSizer->GetStaticBox(), wxID_ANY, _("Path &type"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticPathType = new wxStaticText( this, wxID_ANY, _("Path &type"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticPathType->Wrap( -1 );
 	importTypeSizer->Add( m_staticPathType, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	wxString m_choicePathTypeChoices[] = { _("Directory"), _("File") };
 	int m_choicePathTypeNChoices = sizeof( m_choicePathTypeChoices ) / sizeof( wxString );
-	m_choicePathType = new wxChoice( pathSizer->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePathTypeNChoices, m_choicePathTypeChoices, 0 );
+	m_choicePathType = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePathTypeNChoices, m_choicePathTypeChoices, 0 );
 	m_choicePathType->SetSelection( 0 );
 	importTypeSizer->Add( m_choicePathType, 0, wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1396,7 +1496,7 @@ ImportDlgBase::ImportDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_msgSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("End &log message") ), wxHORIZONTAL );
 	
-	m_textMessage = new wxTextCtrl( m_msgSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	m_textMessage = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	m_msgSizer->Add( m_textMessage, 1, wxEXPAND, 5 );
 	
 	
@@ -1484,10 +1584,15 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_panelTop->Layout();
 	sizerTop->Fit( m_panelTop );
 	panelBottom = new wxPanel( m_splitterHoriz, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	sizerBottom = new wxBoxSizer( wxVERTICAL );
+	sizerBottom = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_log = new wxTextCtrl( panelBottom, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH2|wxSUNKEN_BORDER );
-	sizerBottom->Add( m_log, 1, wxEXPAND, 5 );
+	m_logFilterBar = new wxToolBar( panelBottom, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_VERTICAL ); 
+	m_logFilterBar->Realize(); 
+	
+	sizerBottom->Add( m_logFilterBar, 0, wxEXPAND, 5 );
+	
+	m_log = new LogList( panelBottom, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_NO_HEADER|wxLC_REPORT|wxLC_VIRTUAL );
+	sizerBottom->Add( m_log, 1, wxALL|wxEXPAND, 5 );
 	
 	
 	panelBottom->SetSizer( sizerBottom );
@@ -1536,14 +1641,14 @@ MergeDlgBase::MergeDlgBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	fgSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	m_staticRevision1 = new wxStaticText( sizer1->GetStaticBox(), wxID_ANY, _("&Revision"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticRevision1 = new wxStaticText( this, wxID_ANY, _("&Revision"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticRevision1->Wrap( -1 );
 	fgSizer1->Add( m_staticRevision1, 0, 0, 5 );
 	
-	m_comboUrl1 = new wxComboBox( sizer1->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
+	m_comboUrl1 = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
 	fgSizer1->Add( m_comboUrl1, 1, wxEXPAND, 5 );
 	
-	m_textRevision1 = new wxTextCtrl( sizer1->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textRevision1 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer1->Add( m_textRevision1, 0, wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
 	
 	
@@ -1564,14 +1669,14 @@ MergeDlgBase::MergeDlgBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	fgSizer2->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	m_staticRevision2 = new wxStaticText( sizer2->GetStaticBox(), wxID_ANY, _("&Revision"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticRevision2 = new wxStaticText( this, wxID_ANY, _("&Revision"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticRevision2->Wrap( -1 );
 	fgSizer2->Add( m_staticRevision2, 0, 0, 5 );
 	
-	m_comboUrl2 = new wxComboBox( sizer2->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
+	m_comboUrl2 = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
 	fgSizer2->Add( m_comboUrl2, 1, wxEXPAND, 5 );
 	
-	m_textRevision2 = new wxTextCtrl( sizer2->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textRevision2 = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer2->Add( m_textRevision2, 0, wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
 	
 	
@@ -1583,10 +1688,10 @@ MergeDlgBase::MergeDlgBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxStaticBoxSizer* destSizer;
 	destSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Destination Directory") ), wxHORIZONTAL );
 	
-	m_comboDest = new wxComboBox( destSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 205,-1 ), 0, NULL, 0 ); 
+	m_comboDest = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 205,-1 ), 0, NULL, 0 ); 
 	destSizer->Add( m_comboDest, 1, wxEXPAND, 5 );
 	
-	m_buttonBrowse = new wxButton( destSizer->GetStaticBox(), wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
+	m_buttonBrowse = new wxButton( this, wxID_ANY, _("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
 	destSizer->Add( m_buttonBrowse, 0, wxLEFT, 5 );
 	
 	
@@ -1929,7 +2034,7 @@ SwitchDlgBase::SwitchDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("URL") ), wxVERTICAL );
 	
-	m_comboUrl = new wxComboBox( m_urlSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
 	m_urlSizer->Add( m_comboUrl, 1, wxALL|wxEXPAND, 5 );
 	
 	
@@ -1937,10 +2042,10 @@ SwitchDlgBase::SwitchDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_revisionSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision") ), wxHORIZONTAL );
 	
-	m_textRevision = new wxTextCtrl( m_revisionSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
-	m_checkUseLatest = new wxCheckBox( m_revisionSizer->GetStaticBox(), wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_checkUseLatest->SetValue(true); 
 	m_revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 5 );
 	
@@ -2035,7 +2140,7 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_urlSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("URL") ), wxVERTICAL );
 	
-	m_comboUrl = new wxComboBox( m_urlSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
+	m_comboUrl = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 235,-1 ), 0, NULL, wxCB_DROPDOWN ); 
 	m_urlSizer->Add( m_comboUrl, 1, wxALL|wxEXPAND, 5 );
 	
 	
@@ -2043,27 +2148,32 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	
 	m_revisionSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Revision") ), wxHORIZONTAL );
 	
-	m_textRevision = new wxTextCtrl( m_revisionSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textRevision = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_revisionSizer->Add( m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
-	m_checkUseLatest = new wxCheckBox( m_revisionSizer->GetStaticBox(), wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkUseLatest = new wxCheckBox( this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_checkUseLatest->SetValue(true); 
 	m_revisionSizer->Add( m_checkUseLatest, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT, 5 );
 	
 	
 	m_mainSizer->Add( m_revisionSizer, 0, wxEXPAND, 5 );
 	
-	wxBoxSizer* optionSizer;
-	optionSizer = new wxBoxSizer( wxHORIZONTAL );
+	m_depthSizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Update Depth") ), wxVERTICAL );
 	
-	m_checkRecursive = new wxCheckBox( this, wxID_ANY, _("Recursive"), wxDefaultPosition, wxDefaultSize, 0 );
-	optionSizer->Add( m_checkRecursive, 0, 0, 5 );
+	wxString m_choiceDepthChoices[] = { _("Working copy (as before)"), _("Fully recursive (all files and subdirectories)"), _("Immediate children (files and empty subdirectories)"), _("Only file children (no subdirectories)"), _("Only this item") };
+	int m_choiceDepthNChoices = sizeof( m_choiceDepthChoices ) / sizeof( wxString );
+	m_choiceDepth = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceDepthNChoices, m_choiceDepthChoices, 0 );
+	m_choiceDepth->SetSelection( 0 );
+	m_depthSizer->Add( m_choiceDepth, 0, wxALL|wxEXPAND, 5 );
 	
-	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore Externals"), wxDefaultPosition, wxDefaultSize, 0 );
-	optionSizer->Add( m_checkIgnoreExternals, 0, 0, 5 );
+	m_checkStickyDepth = new wxCheckBox( this, wxID_ANY, _("Make depth sticky"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_depthSizer->Add( m_checkStickyDepth, 0, wxALL, 5 );
+	
+	m_checkIgnoreExternals = new wxCheckBox( this, wxID_ANY, _("Ignore externals"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_depthSizer->Add( m_checkIgnoreExternals, 0, wxALL, 5 );
 	
 	
-	m_mainSizer->Add( optionSizer, 1, wxALIGN_CENTER|wxBOTTOM|wxTOP, 5 );
+	m_mainSizer->Add( m_depthSizer, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* buttonSizer;
 	buttonSizer = new wxBoxSizer( wxHORIZONTAL );
@@ -2087,6 +2197,7 @@ UpdateDlgBase::UpdateDlgBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_comboUrl->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
 	m_textRevision->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
 	m_checkUseLatest->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( UpdateDlgBase::OnUseLatest ), NULL, this );
+	m_choiceDepth->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnDepthChoice ), NULL, this );
 }
 
 UpdateDlgBase::~UpdateDlgBase()
@@ -2096,5 +2207,6 @@ UpdateDlgBase::~UpdateDlgBase()
 	m_comboUrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
 	m_textRevision->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( UpdateDlgBase::OnText ), NULL, this );
 	m_checkUseLatest->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( UpdateDlgBase::OnUseLatest ), NULL, this );
+	m_choiceDepth->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( UpdateDlgBase::OnDepthChoice ), NULL, this );
 	
 }

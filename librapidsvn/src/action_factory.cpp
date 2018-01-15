@@ -62,6 +62,7 @@
 #include "switch_action.hpp"
 #include "unlock_action.hpp"
 #include "update_action.hpp"
+#include "upgrade_action.hpp"
 #include "view_action.hpp"
 #include "annotate_action.hpp"
 #include "drag_n_drop_action.hpp"
@@ -115,6 +116,10 @@ ActionFactory::CheckIdForStatusSel(int id, const svn::StatusSel & statusSel)
 
   case ID_Cleanup:
     result = CleanupAction::CheckStatusSel(statusSel);
+    break;
+
+  case ID_Upgrade:
+    result = UpgradeAction::CheckStatusSel(statusSel);
     break;
 
   case ID_Lock:
@@ -249,6 +254,10 @@ ActionFactory::CreateAction(wxWindow * parent, int id)
 
     case ID_Cleanup:
       action = new CleanupAction(parent);
+      break;
+
+    case ID_Upgrade:
+      action = new UpgradeAction(parent);
       break;
 
     case ID_Lock:

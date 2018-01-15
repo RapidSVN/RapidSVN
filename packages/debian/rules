@@ -104,7 +104,7 @@ install: build
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/rapidsvn
 	cp -p librapidsvn/src/res/bitmaps/rapidsvn_32x32.xpm \
 		debian/rapidsvn/usr/share/pixmaps/rapidsvn.xpm
-	cp -p librapidsvn/src/res/bitmaps/rapidsvn_32x32.png \
+	cp -p librapidsvn/src/res/bitmaps/rapidsvn_48x48.png \
 		debian/rapidsvn/usr/share/pixmaps/rapidsvn.png
 	cp -p doc/manpage/rapidsvn.1 \
 		debian/rapidsvn/usr/share/man/man1/

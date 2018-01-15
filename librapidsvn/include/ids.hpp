@@ -101,11 +101,21 @@ enum
   ID_Revert,
   ID_Switch,
   ID_Update,
+  ID_Upgrade,
   ID_Unlock,
   ID_Edit,
   ID_Annotate,
   ID_Ignore,
   ID_File_Max,
+
+  // Log View Actions
+  ID_Log_Clear,
+  ID_Log_Min,
+  ID_Log_Added,
+  ID_Log_Deleted,
+  ID_Log_Conflicted,
+  ID_Log_Updated,
+  ID_Log_Max,
 
   // Reserve space for 16 file verbs (I've never seen any files with more)
   ID_Verb_Min,
@@ -203,7 +213,12 @@ enum
   SIG_SSL_SERVER_TRUST_PROMPT,
   SIG_SSL_CLIENT_CERT_PROMPT,
   SIG_SSL_CLIENT_CERT_PW_PROMPT,
-  LISTENER_MAX
+  LISTENER_MAX,
+
+  // log list
+  ID_LogList_SelectAll,
+  ID_LogList_Copy,
+  ID_LogList_BrowseTo
 };
 
 #endif

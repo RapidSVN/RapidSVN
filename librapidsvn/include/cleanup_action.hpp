@@ -29,6 +29,7 @@
 
 // app
 #include "action.hpp"
+#include "cleanup_data.hpp"
 
 // forward declarations
 namespace svn
@@ -54,6 +55,7 @@ private:
   // hide default and copy constructor
   CleanupAction();
   CleanupAction(const CleanupAction &);
+  CleanupData m_data;
 };
 
 #endif

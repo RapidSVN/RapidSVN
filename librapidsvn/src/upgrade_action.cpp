@@ -30,19 +30,18 @@
 #include "svncpp/status_selection.hpp"
 
 // app
-#include "cleanup_action.hpp"
-#include "cleanup_dlg.hpp"
+#include "upgrade_action.hpp"
 #include "ids.hpp"
 #include "tracer.hpp"
 #include "utils.hpp"
 
-CleanupAction::CleanupAction(wxWindow * parent)
-  : Action(parent, _("Cleanup"), 0)
+UpgradeAction::UpgradeAction(wxWindow * parent)
+  : Action(parent, _("Upgrade"), 0)
 {
 }
 
 bool
-CleanupAction::Prepare()
+UpgradeAction::Prepare()
 {
   if (!Action::Prepare())
   {
@@ -50,21 +49,27 @@ CleanupAction::Prepare()
   }
 
   svn::Path selectedPath(GetPath());
-
-  CleanupDlg dlg(GetParent(), selectedPath);
-
-  if (dlg.ShowModal() != wxID_OK)
-  {
+  if(!selectedPath.length()) {
+    wxMessageBox(_("No path is selected. Cannot upgrade working copy."),
+                 _("Upgrade Working Copy"), wxOK);
     return false;
   }
 
-  m_data = dlg.GetData();
+  wxString pathMsg = wxString::Format(_("Path: %s\n"), selectedPath.c_str());
+  pathMsg.Append(_("Notice: if you upgrade your working copy, you won't be able to access the "
+                          "upgraded working copy with older SVN clients anymore!\n"
+                          "Do you really want to upgrade this working copy?"));
+  int id = wxMessageBox(pathMsg, _("Upgrade Working Copy"), wxYES_NO);
+  if(id != wxYES)
+  {
+    return false;
+  }
 
   return true;
 }
 
 bool
-CleanupAction::Perform()
+UpgradeAction::Perform()
 {
   svn::Client client(GetContext());
   const svn::Path & path = GetPath();
@@ -73,31 +78,29 @@ CleanupAction::Perform()
   if (!dir.empty())
     wxSetWorkingDirectory(dir);
 
-  if(m_data.CleanupWCStatus)
-    client.cleanup(path.c_str(), m_data.BreakLocks, m_data.FixTimestamps,
-                   m_data.VacuumPristines, m_data.IncludeExternals);
-
-  if(m_data.DeleteIgnored || m_data.DeleteUnversioned)
-    client.vacuum(path.c_str(), m_data.DeleteUnversioned, m_data.DeleteIgnored,
-                  false, false,
-                  m_data.IncludeExternals);
+  client.upgrade(path);
 
   return true;
 }
 
 bool
-CleanupAction::CheckStatusSel(const svn::StatusSel & statusSel)
+UpgradeAction::CheckStatusSel(const svn::StatusSel & statusSel)
 {
-  if (statusSel.size() != 1)
-    return false;
+  svn::Path path = statusSel.target();
+  /*printf("statussel s=%d url=%d n1=%s\n", (int)statusSel.size(),
+   * statusSel.hasUrl(), path.c_str()); */
 
-  if (statusSel.hasUnversioned())
-    return false;
+  if(statusSel.size() == 0) {
+    // an outdated working copy doesn't appear in the statusSel targets,
+    // therefore nothing will be selected
+    return true;
+  }
+  else if(statusSel.size() == 1 && !statusSel.hasUrl()) {
+    // single folder selected
+    return true;
+  }
 
-  if (statusSel.hasUrl())
-    return false;
-
-  return true;
+  return false;
 }
 
 /* -----------------------------------------------------------------
