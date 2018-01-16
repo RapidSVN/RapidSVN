@@ -44,11 +44,11 @@ CertDlg::CertDlg(wxWindow * parent,
     wxString descr;
   } CERT_FAILURES [] =
   {
-    {SVN_AUTH_SSL_UNKNOWNCA   , _("- The certificate is not issued by a trusted authority.\n  Use the fingerprint to validate the certificate manually!")},
-    {SVN_AUTH_SSL_CNMISMATCH  , _("- The certificate hostname does not match.")},
-    {SVN_AUTH_SSL_NOTYETVALID , _("- The certificate is not yet valid.")},
-    {SVN_AUTH_SSL_EXPIRED     , _("- The certificate has expired.")},
-    {SVN_AUTH_SSL_OTHER       , _("- The certificate has an unknown error.")}
+    {SVN_AUTH_SSL_UNKNOWNCA, _("- The certificate is not issued by a trusted authority.\n  Use the fingerprint to validate the certificate manually!")},
+    {SVN_AUTH_SSL_CNMISMATCH, _("- The certificate hostname does not match.")},
+    {SVN_AUTH_SSL_NOTYETVALID, _("- The certificate is not yet valid.")},
+    {SVN_AUTH_SSL_EXPIRED, _("- The certificate has expired.")},
+    {SVN_AUTH_SSL_OTHER, _("- The certificate has an unknown error.")}
   };
 
   const int count = sizeof(CERT_FAILURES)/sizeof(CERT_FAILURES[0]);

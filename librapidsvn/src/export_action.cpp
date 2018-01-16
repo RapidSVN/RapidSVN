@@ -112,7 +112,7 @@ ExportAction::Perform()
 
   bool setWDLater = false;
   if (!m_data.DestPath.empty()) {
-    if(wxDirExists(m_data.DestPath))
+    if (wxDirExists(m_data.DestPath))
       wxSetWorkingDirectory(m_data.DestPath);
     else
       setWDLater = true;
@@ -123,20 +123,20 @@ ExportAction::Perform()
 
 
   svn_depth_t depth = svn_depth_infinity;
-  switch(m_data.Depth) {
-    default:
-    case EXPORT_FULLY_RECURSIVE:
-      depth = svn_depth_infinity;
-      break;
-    case EXPORT_IMMEDIATES:
-      depth = svn_depth_immediates;
-      break;
-    case EXPORT_FILES:
-      depth = svn_depth_files;
-      break;
-    case EXPORT_EMPTY:
-      depth = svn_depth_empty;
-      break;
+  switch (m_data.Depth) {
+  default:
+  case EXPORT_FULLY_RECURSIVE:
+    depth = svn_depth_infinity;
+    break;
+  case EXPORT_IMMEDIATES:
+    depth = svn_depth_immediates;
+    break;
+  case EXPORT_FILES:
+    depth = svn_depth_files;
+    break;
+  case EXPORT_EMPTY:
+    depth = svn_depth_empty;
+    break;
   }
 
   client.doExport(srcPathUtf8.c_str(),
@@ -149,7 +149,7 @@ ExportAction::Perform()
                   m_data.Eol);
 
   // try again, in case the directory was created by the export operation
-  if(setWDLater)
+  if (setWDLater)
     wxSetWorkingDirectory(m_data.DestPath);
 
   return true;

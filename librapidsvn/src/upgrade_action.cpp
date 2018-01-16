@@ -49,7 +49,7 @@ UpgradeAction::Prepare()
   }
 
   svn::Path selectedPath(GetPath());
-  if(!selectedPath.length()) {
+  if (!selectedPath.length()) {
     wxMessageBox(_("No path is selected. Cannot upgrade working copy."),
                  _("Upgrade Working Copy"), wxOK);
     return false;
@@ -57,10 +57,10 @@ UpgradeAction::Prepare()
 
   wxString pathMsg = wxString::Format(_("Path: %s\n"), selectedPath.c_str());
   pathMsg.Append(_("Notice: if you upgrade your working copy, you won't be able to access the "
-                          "upgraded working copy with older SVN clients anymore!\n"
-                          "Do you really want to upgrade this working copy?"));
+                   "upgraded working copy with older SVN clients anymore!\n"
+                   "Do you really want to upgrade this working copy?"));
   int id = wxMessageBox(pathMsg, _("Upgrade Working Copy"), wxYES_NO);
-  if(id != wxYES)
+  if (id != wxYES)
   {
     return false;
   }
@@ -90,12 +90,12 @@ UpgradeAction::CheckStatusSel(const svn::StatusSel & statusSel)
   /*printf("statussel s=%d url=%d n1=%s\n", (int)statusSel.size(),
    * statusSel.hasUrl(), path.c_str()); */
 
-  if(statusSel.size() == 0) {
+  if (statusSel.size() == 0) {
     // an outdated working copy doesn't appear in the statusSel targets,
     // therefore nothing will be selected
     return true;
   }
-  else if(statusSel.size() == 1 && !statusSel.hasUrl()) {
+  else if (statusSel.size() == 1 && !statusSel.hasUrl()) {
     // single folder selected
     return true;
   }

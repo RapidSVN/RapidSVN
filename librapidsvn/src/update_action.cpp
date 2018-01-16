@@ -81,23 +81,23 @@ UpdateAction::Perform()
   svn::Client client(GetContext());
 
   svn_depth_t depth = svn_depth_unknown;
-  switch(m_data.depth) {
-    default:
-    case UPDATE_WORKING_COPY:
-      depth = svn_depth_unknown;
-      break;
-    case UPDATE_FULLY_RECURSIVE:
-      depth = svn_depth_infinity;
-      break;
-    case UPDATE_IMMEDIATES:
-      depth = svn_depth_immediates;
-      break;
-    case UPDATE_FILES:
-      depth = svn_depth_files;
-      break;
-    case UPDATE_EMPTY:
-      depth = svn_depth_empty;
-      break;
+  switch (m_data.depth) {
+  default:
+  case UPDATE_WORKING_COPY:
+    depth = svn_depth_unknown;
+    break;
+  case UPDATE_FULLY_RECURSIVE:
+    depth = svn_depth_infinity;
+    break;
+  case UPDATE_IMMEDIATES:
+    depth = svn_depth_immediates;
+    break;
+  case UPDATE_FILES:
+    depth = svn_depth_files;
+    break;
+  case UPDATE_EMPTY:
+    depth = svn_depth_empty;
+    break;
   }
 
   client.update(GetTargets(), revision,

@@ -73,11 +73,11 @@ CleanupAction::Perform()
   if (!dir.empty())
     wxSetWorkingDirectory(dir);
 
-  if(m_data.CleanupWCStatus)
+  if (m_data.CleanupWCStatus)
     client.cleanup(path.c_str(), m_data.BreakLocks, m_data.FixTimestamps,
                    m_data.VacuumPristines, m_data.IncludeExternals);
 
-  if(m_data.DeleteIgnored || m_data.DeleteUnversioned)
+  if (m_data.DeleteIgnored || m_data.DeleteUnversioned)
     client.vacuum(path.c_str(), m_data.DeleteUnversioned, m_data.DeleteIgnored,
                   false, false,
                   m_data.IncludeExternals);

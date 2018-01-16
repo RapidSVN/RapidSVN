@@ -52,13 +52,13 @@ namespace svn
 /** Type of log items; also used for trace events */
 enum LogItemType
 {
-    LogItem_Normal,
-    LogItem_Error,
-    LogItem_Added,
-    LogItem_Deleted,
-    LogItem_Conflicted,
-    LogItem_Updated,
-    LogItemTypeCount
+  LogItem_Normal,
+  LogItem_Error,
+  LogItem_Added,
+  LogItem_Deleted,
+  LogItem_Conflicted,
+  LogItem_Updated,
+  LogItemTypeCount
 };
 
 /**

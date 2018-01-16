@@ -150,7 +150,7 @@ namespace svn
       svn_error_t * error = svn_client_cat2(
                               stream,
                               path.c_str(),
-                              peg_revision.revision() ,
+                              peg_revision.revision(),
                               revision.revision(),
                               *m_context,
                               pool);

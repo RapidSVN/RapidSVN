@@ -40,9 +40,9 @@ public:
 
 public:
   LogList(wxWindow * parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
-                  const wxSize& size = wxDefaultSize, long style = wxLC_REPORT|wxLC_VIRTUAL,
-                  const wxValidator& validator = wxDefaultValidator,
-                  const wxString& name = wxT("LogList"));
+          const wxSize& size = wxDefaultSize, long style = wxLC_REPORT|wxLC_VIRTUAL,
+          const wxValidator& validator = wxDefaultValidator,
+          const wxString& name = wxT("LogList"));
 
   virtual ~LogList();
 
@@ -50,13 +50,13 @@ public:
   DeleteAllItems();
 
   void
-  AppendItem(LogItemType type, const wxString& action, const wxString& message); 
-  
-  void 
+  AppendItem(LogItemType type, const wxString& action, const wxString& message);
+
+  void
   SetItemFilter(LogItemType type, bool enabled);
-  
-  bool 
-  GetItemFilter(LogItemType type) const; 
+
+  bool
+  GetItemFilter(LogItemType type) const;
 
   /**
    * If exactly one file or directory has been selected,
@@ -68,8 +68,8 @@ public:
 protected:
   virtual wxListItemAttr*
   OnGetItemAttr(long item) const;
-  
-  virtual wxString 
+
+  virtual wxString
   OnGetItemText(long item, long column) const;
 
   void OnSize(wxSizeEvent &event);
@@ -78,13 +78,13 @@ protected:
 
 private:
   struct ItemInfo {
-	LogItemType type;
-	wxString action;
-	wxString message; 
+    LogItemType type;
+    wxString action;
+    wxString message;
   };
   std::vector<ItemInfo> items;
-  std::vector<size_t> displayedItems; 
-  bool categoryEnabled[LogItemTypeCount]; 
+  std::vector<size_t> displayedItems;
+  bool categoryEnabled[LogItemTypeCount];
   mutable wxListItemAttr errorItemAttr;
 
   void RebuildDisplayedItems();

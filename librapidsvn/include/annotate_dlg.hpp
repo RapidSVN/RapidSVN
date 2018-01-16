@@ -38,7 +38,9 @@ public:
   void SetRevisionRange(int revMin, int revMax);
 private:
   int revMin, revMax;
-  bool UsePalette() const { return revMax > revMin; }
+  bool UsePalette() const {
+    return revMax > revMin;
+  }
   wxColour GetBackgroundColour(int rev);
 };
 

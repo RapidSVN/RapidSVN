@@ -336,7 +336,7 @@ namespace svn
   Client::cleanup(const Path & path, bool breakLocks,
                   bool fixTimestamps, bool vacuumPristines,
                   bool includeExternals
-                  ) throw(ClientException)
+                 ) throw(ClientException)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool();
@@ -354,14 +354,14 @@ namespace svn
                  bool removeUnversioned, bool removeIgnored,
                  bool fixTimestamps, bool vacuumPristines,
                  bool includeExternals
-                 ) throw(ClientException)
+                ) throw(ClientException)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool();
 
     svn_error_t * error =
       svn_client_vacuum(path.c_str(), removeUnversioned, removeIgnored, fixTimestamps,
-                          vacuumPristines, includeExternals, *m_context, apr_pool);
+                        vacuumPristines, includeExternals, *m_context, apr_pool);
 
     if (error != NULL)
       throw ClientException(error);
@@ -369,16 +369,16 @@ namespace svn
 
   void
   Client::upgrade(const Path &path
-                  ) throw(ClientException)
+                 ) throw(ClientException)
   {
-      Pool subPool;
-      apr_pool_t * apr_pool = subPool.pool();
+    Pool subPool;
+    apr_pool_t * apr_pool = subPool.pool();
 
-      svn_error_t * error =
-        svn_client_upgrade(path.c_str(), *m_context, apr_pool);
+    svn_error_t * error =
+      svn_client_upgrade(path.c_str(), *m_context, apr_pool);
 
-      if (error != NULL)
-        throw ClientException(error);
+    if (error != NULL)
+      throw ClientException(error);
 
   }
 
