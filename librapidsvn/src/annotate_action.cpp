@@ -125,13 +125,13 @@ AnnotateAction::Prepare()
     int revMin = INT_MAX, revMax = INT_MIN;
     for (it=annotatedFile->begin(); it!=annotatedFile->end(); it++)
     {
-        int rev = it->revision();
-        revMin = std::min(revMin, rev);
-        revMax = std::max(revMax, rev);
+      int rev = it->revision();
+      revMin = std::min(revMin, rev);
+      revMax = std::max(revMax, rev);
     }
-    if(revMax > revMin)
+    if (revMax > revMin)
     {
-        dlg.SetRevisionRange(revMin, revMax);
+      dlg.SetRevisionRange(revMin, revMax);
     }
     for (it=annotatedFile->begin(); it!=annotatedFile->end(); it++)
     {

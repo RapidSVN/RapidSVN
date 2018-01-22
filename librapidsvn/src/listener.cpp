@@ -481,10 +481,10 @@ Listener::TraceDefaultMessage(svn_wc_notify_action_t action, const char * path)
 
   if (ACTION_NAMES[action].name != NULL && action >= 0 && action <= MAX_ACTION)
   {
-	Trace(ACTION_NAMES[action].type, wxGetTranslation(ACTION_NAMES[action].name), Utf8ToLocal(path).c_str());
+    Trace(ACTION_NAMES[action].type, wxGetTranslation(ACTION_NAMES[action].name), Utf8ToLocal(path).c_str());
   }
 #if 0 // TEST TEST TEST
-  else if(action > MAX_ACTION)
+  else if (action > MAX_ACTION)
   {
     Trace(LogItem_Normal, wxString::Format("Action %d", action), Utf8ToLocal(path).c_str());
   }

@@ -1129,7 +1129,7 @@ FileListCtrl::RefreshFileList()
   // because under WinXP call to ScrollList sometimes ignored without
   // report about failure, mainly this related for relatively big lists
   // and only for positions closer to the end of it
-  if(topItem < GetItemCount())
+  if (topItem < GetItemCount())
   {
     wxRect ir, cr;
     GetItemRect(topItem, ir);

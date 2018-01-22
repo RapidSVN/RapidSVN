@@ -694,10 +694,10 @@ MainFrame::MainFrame(const wxString & title,
 
   // Populate the logFilterBar
   CreateLogFilterBar(m_logFilterBar);
-/*  // as much as the widget can stand
-#ifndef __WXGTK__
-  m_log->SetMaxLength(0);
-#endif */
+  /*  // as much as the widget can stand
+  #ifndef __WXGTK__
+    m_log->SetMaxLength(0);
+  #endif */
 
   m->logTracer = new EventTracer(this);
   m->listener.SetTracer(m->logTracer, false);
@@ -1435,7 +1435,7 @@ MainFrame::OnTestListener(wxCommandEvent & WXUNUSED(event))
         _("Delete"),           // svn_wc_notify_delete,
         _("Restore"),          // svn_wc_notify_restore,
         _("Revert"),           // svn_wc_notify_revert,
-        NULL ,                 // NOT USED HERE svn_wc_notify_failed_revert,
+        NULL,                  // NOT USED HERE svn_wc_notify_failed_revert,
         _("Resolved"),         // svn_wc_notify_resolved,
         _("Skip"),             // NOT USED HERE svn_wc_notify_skip,
         _("Deleted"),          // svn_wc_notify_update_delete,
@@ -1637,36 +1637,41 @@ MainFrame::OnTestDndDlg(wxCommandEvent &)
 void
 MainFrame::OnLogClear(wxCommandEvent & event)
 {
-    m_log->DeleteAllItems();
+  m_log->DeleteAllItems();
 }
 
 static LogItemType
 GetLogItemType(int id)
 {
-    switch(id) {
-    case ID_Log_Added : return LogItem_Added;
-    case ID_Log_Conflicted: return LogItem_Conflicted;
-    case ID_Log_Deleted : return LogItem_Deleted;
-    case ID_Log_Updated: return LogItem_Updated;
-    default: return LogItem_Normal;
-    }
+  switch (id) {
+  case ID_Log_Added :
+    return LogItem_Added;
+  case ID_Log_Conflicted:
+    return LogItem_Conflicted;
+  case ID_Log_Deleted :
+    return LogItem_Deleted;
+  case ID_Log_Updated:
+    return LogItem_Updated;
+  default:
+    return LogItem_Normal;
+  }
 }
 
 void
 MainFrame::OnLogToggle(wxCommandEvent & event)
 {
-    int id = event.GetId();
-    LogItemType t = GetLogItemType(id);
-    m_log->SetItemFilter(t, !m_log->GetItemFilter(t));
+  int id = event.GetId();
+  LogItemType t = GetLogItemType(id);
+  m_log->SetItemFilter(t, !m_log->GetItemFilter(t));
 }
 
 void
 MainFrame::OnLogUpdate(wxUpdateUIEvent & event)
 {
-    int id = event.GetId();
-    LogItemType t = GetLogItemType(id);
-    bool checked = m_log->GetItemFilter(t);
-    event.Check(checked);
+  int id = event.GetId();
+  LogItemType t = GetLogItemType(id);
+  bool checked = m_log->GetItemFilter(t);
+  event.Check(checked);
 }
 
 void
@@ -1704,12 +1709,12 @@ MainFrame::OnActionEvent(wxCommandEvent & event)
   const long liType = event.GetExtraLong();
   wxString action, message;
   int splitPos = event.GetString().Find("|||");
-  if(splitPos != wxNOT_FOUND) {
-      action = event.GetString().Left(splitPos);
-      message = event.GetString().Mid(splitPos+3);
+  if (splitPos != wxNOT_FOUND) {
+    action = event.GetString().Left(splitPos);
+    message = event.GetString().Mid(splitPos+3);
   }
   else {
-      message = event.GetString();
+    message = event.GetString();
   }
 
   switch (token)
@@ -2062,51 +2067,51 @@ MainFrame::OnFolderBrowserKeyDown(wxTreeEvent & event)
 void
 MainFrame::OnFileListSelected(wxListEvent & WXUNUSED(event))
 {
-    m->activePane = ACTIVEPANE_FILELIST;
+  m->activePane = ACTIVEPANE_FILELIST;
 }
 
 
 void MainFrame::OnLogListBrowse(wxCommandEvent &event)
 {
   wxString selFile = m_log->GetSelectedFileOrDir();
-  if(selFile.IsEmpty())
-      return;
+  if (selFile.IsEmpty())
+    return;
 
   // find matching bookmark
   wxString containingBkmk = m_folderBrowser->FindContainingBookmark(selFile);
-  if(containingBkmk.IsEmpty())
-      return;
+  if (containingBkmk.IsEmpty())
+    return;
 
   // select that bookmark
-  if(!m_folderBrowser->SelectBookmark(containingBkmk))
-      return;
+  if (!m_folderBrowser->SelectBookmark(containingBkmk))
+    return;
   wxString selDir, selFileNameWithExt;
-  if(wxFileName::DirExists(selFile)) {
-      // it is a directory. the file name is empty
-      selDir = selFile;
+  if (wxFileName::DirExists(selFile)) {
+    // it is a directory. the file name is empty
+    selDir = selFile;
   }
   else {
-      wxString selFileName, selFileExt;
-      wxFileName::SplitPath(selFile, &selDir, &selFileName, &selFileExt);
-      selFileNameWithExt = selFileName;
-      if(!selFileExt.IsEmpty())
-          selFileNameWithExt << '.' << selFileExt;
+    wxString selFileName, selFileExt;
+    wxFileName::SplitPath(selFile, &selDir, &selFileName, &selFileExt);
+    selFileNameWithExt = selFileName;
+    if (!selFileExt.IsEmpty())
+      selFileNameWithExt << '.' << selFileExt;
   }
   // select the folder within the bookmark
-  if(!m_folderBrowser->SelectFolder(selDir))
-      return;
+  if (!m_folderBrowser->SelectFolder(selDir))
+    return;
 
   // Select the file, if it's a file
-  if(!selFileNameWithExt.IsEmpty()) {
-      // Update our file list
-      UpdateCurrentPath();
-      RefreshFileList();
-      // Find the file and focus and select it
-      long i = m_listCtrl->FindItem(-1, selFileNameWithExt);
-      if(i >= 0) {
-          m_listCtrl->Focus(i);
-          m_listCtrl->Select(i);
-      }
+  if (!selFileNameWithExt.IsEmpty()) {
+    // Update our file list
+    UpdateCurrentPath();
+    RefreshFileList();
+    // Find the file and focus and select it
+    long i = m_listCtrl->FindItem(-1, selFileNameWithExt);
+    if (i >= 0) {
+      m_listCtrl->Focus(i);
+      m_listCtrl->Select(i);
+    }
   }
 }
 

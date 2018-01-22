@@ -224,32 +224,32 @@ CreateLogFilterBar(wxToolBarBase *toolBar)
                    _("Clear the list of performed actions"));
 
   toolBar->AddCheckTool(ID_Log_Added,
-                   wxEmptyString,
-                   EMBEDDED_BITMAP(added_file_png),
-                   wxNullBitmap,
-                   _("Show added files"),
-                   _("Show added files in the log list"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(added_file_png),
+                        wxNullBitmap,
+                        _("Show added files"),
+                        _("Show added files in the log list"));
 
   toolBar->AddCheckTool(ID_Log_Deleted,
-                   wxEmptyString,
-                   EMBEDDED_BITMAP(deleted_file_png),
-                   wxNullBitmap,
-                   _("Show deleted files"),
-                   _("Show deleted files in the log list"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(deleted_file_png),
+                        wxNullBitmap,
+                        _("Show deleted files"),
+                        _("Show deleted files in the log list"));
 
   toolBar->AddCheckTool(ID_Log_Conflicted,
-                   wxEmptyString,
-                   EMBEDDED_BITMAP(conflicted_file_png),
-                   wxNullBitmap,
-                   _("Show conflicted files"),
-                   _("Show conflicted files in the log list"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(conflicted_file_png),
+                        wxNullBitmap,
+                        _("Show conflicted files"),
+                        _("Show conflicted files in the log list"));
 
   toolBar->AddCheckTool(ID_Log_Updated,
-                   wxEmptyString,
-                   EMBEDDED_BITMAP(normal_file_png),
-                   wxNullBitmap,
-                   _("Show updated files"),
-                   _("Show updated files in the log list"));
+                        wxEmptyString,
+                        EMBEDDED_BITMAP(normal_file_png),
+                        wxNullBitmap,
+                        _("Show updated files"),
+                        _("Show updated files in the log list"));
 
   toolBar->Realize();
 }

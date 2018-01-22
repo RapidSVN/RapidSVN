@@ -122,7 +122,7 @@ CheckoutAction::Perform()
 
   bool setWDLater = false;
   if (!m_data.DestFolder.empty()) {
-    if(wxDirExists(m_data.DestFolder))
+    if (wxDirExists(m_data.DestFolder))
       wxSetWorkingDirectory(m_data.DestFolder);
     else {
       // The destination folder doesn't exist yet.
@@ -137,20 +137,20 @@ CheckoutAction::Perform()
   bool ignoreExternals = m_data.IgnoreExternals;
 
   svn_depth_t depth = svn_depth_infinity;
-  switch(m_data.Depth) {
-    default:
-    case CHECKOUT_FULLY_RECURSIVE:
-      depth = svn_depth_infinity;
-      break;
-    case CHECKOUT_IMMEDIATES:
-      depth = svn_depth_immediates;
-      break;
-    case CHECKOUT_FILES:
-      depth = svn_depth_files;
-      break;
-    case CHECKOUT_EMPTY:
-      depth = svn_depth_empty;
-      break;
+  switch (m_data.Depth) {
+  default:
+  case CHECKOUT_FULLY_RECURSIVE:
+    depth = svn_depth_infinity;
+    break;
+  case CHECKOUT_IMMEDIATES:
+    depth = svn_depth_immediates;
+    break;
+  case CHECKOUT_FILES:
+    depth = svn_depth_files;
+    break;
+  case CHECKOUT_EMPTY:
+    depth = svn_depth_empty;
+    break;
   }
 
   client.checkout(repUrlUtf8.c_str(),

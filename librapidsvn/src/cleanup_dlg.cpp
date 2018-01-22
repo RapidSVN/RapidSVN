@@ -49,7 +49,7 @@ public:
 };
 
 CleanupDlg::CleanupDlg(wxWindow * parent,
-                         const svn::Path & selectedPath)
+                       const svn::Path & selectedPath)
   : CleanupDlgBase(parent)
 {
   m = new Data(selectedPath);

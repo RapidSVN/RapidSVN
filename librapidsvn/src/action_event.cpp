@@ -114,7 +114,8 @@ ActionEvent::init(wxWindow * parent, int eventId, LogItemType type,
                   const wxString & action, const wxString & msg)
 {
   init(parent, eventId);
-  wxString cat; cat << action << "|||" << msg;
+  wxString cat;
+  cat << action << "|||" << msg;
   m->event->SetString(cat);
   m->event->SetExtraLong(type);
   m->event->SetClientData(NULL);
