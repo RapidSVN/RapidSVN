@@ -84,7 +84,7 @@ LogList::DeleteAllItems()
 static void
 CleanupLogString(wxString& s)
 {
-  wxString repl = "\t"; 
+  wxString repl = "\t";
 #ifdef __WXMSW__
   repl = "  "; // the Windows version cannot handle tabs
 #endif
@@ -141,7 +141,7 @@ void LogList::SetItemFilter(LogItemType type, bool enabled)
     }
     // set list control item count and autoscroll, if desired
     SetItemCount(displayedItems.size());
-	RefreshItems(0, displayedItems.size()-1); 
+    RefreshItems(0, displayedItems.size()-1);
     if (autoscroll)
       EnsureVisible(displayedItems.size()-1);
   }
@@ -253,11 +253,11 @@ wxString LogList::GetSelectedFileOrDir()
   if (GetSelectedItemCount() == 1) {
     long selItem = GetFirstSelected();
     wxString text = GetItemText(selItem, 1);
-	if (wxFileName::Exists(text)) {
-	  // convert the text to a native file or dir name using wxFileName
-	  wxFileName temp(text);
-	  return temp.GetFullPath();
-	}
+    if (wxFileName::Exists(text)) {
+      // convert the text to a native file or dir name using wxFileName
+      wxFileName temp(text);
+      return temp.GetFullPath();
+    }
   }
   return wxEmptyString;
 }

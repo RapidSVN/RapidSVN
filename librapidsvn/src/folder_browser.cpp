@@ -646,7 +646,7 @@ public:
           (status.textStatus() != svn_wc_status_external))
         continue;
 
-	  if (PathIsSame(parentPath, path))
+      if (PathIsSame(parentPath, path))
       {
         // we update the information about the parent on
         // every occassion
@@ -891,7 +891,7 @@ public:
         break;
 
       // bookmark match?
-	  if(PathIsSame(data->getPath(), bookmarkPath))
+      if (PathIsSame(data->getPath(), bookmarkPath))
       {
         // select bookmark
         success = true;

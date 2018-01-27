@@ -628,10 +628,10 @@ FullNativePath(const svn::Path & target, const wxString & base, bool flat)
   }
 }
 
-bool 
+bool
 PathIsSame(const wxString& p1, const wxString& p2)
 {
-  return p1.IsSameAs(p2, wxFileName::IsCaseSensitive()); 
+  return p1.IsSameAs(p2, wxFileName::IsCaseSensitive());
 }
 
 
