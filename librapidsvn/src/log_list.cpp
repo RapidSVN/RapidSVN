@@ -81,6 +81,21 @@ LogList::DeleteAllItems()
   SetItemCount(0);
 }
 
+static void
+CleanupLogString(wxString& s)
+{
+  wxString repl = "\t"; 
+#ifdef __WXMSW__
+  repl = "  "; // the Windows version cannot handle tabs
+#endif
+
+  s.Replace("\r", repl); // newlines, in general, make no sense here
+  s.Replace("\n", repl);
+#ifdef __WXMSW__
+  s.Replace("\t", repl);
+#endif
+}
+
 void
 LogList::AppendItem(LogItemType type, const wxString &action, const wxString &message)
 {
@@ -92,7 +107,9 @@ LogList::AppendItem(LogItemType type, const wxString &action, const wxString &me
   ItemInfo info;
   info.type = type;
   info.action = action;
+  CleanupLogString(info.action);
   info.message = message;
+  CleanupLogString(info.message);
 
   items.push_back(info);
   size_t newIndex = items.size()-1;
@@ -124,6 +141,7 @@ void LogList::SetItemFilter(LogItemType type, bool enabled)
     }
     // set list control item count and autoscroll, if desired
     SetItemCount(displayedItems.size());
+	RefreshItems(0, displayedItems.size()-1); 
     if (autoscroll)
       EnsureVisible(displayedItems.size()-1);
   }
@@ -235,8 +253,11 @@ wxString LogList::GetSelectedFileOrDir()
   if (GetSelectedItemCount() == 1) {
     long selItem = GetFirstSelected();
     wxString text = GetItemText(selItem, 1);
-    if (wxFileName::Exists(text))
-      return text;
+	if (wxFileName::Exists(text)) {
+	  // convert the text to a native file or dir name using wxFileName
+	  wxFileName temp(text);
+	  return temp.GetFullPath();
+	}
   }
   return wxEmptyString;
 }

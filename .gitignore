@@ -26,4 +26,5 @@
 /test-driver
 /build-stamp
 /configure-stamp
-**/Unicode Release/
+**/[uU]nicode [rR]elease/
+**/[uU]nicode [dD]ebug/

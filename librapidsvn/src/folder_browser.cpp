@@ -646,7 +646,7 @@ public:
           (status.textStatus() != svn_wc_status_external))
         continue;
 
-      if (parentPath == path)
+	  if (PathIsSame(parentPath, path))
       {
         // we update the information about the parent on
         // every occassion
@@ -736,7 +736,7 @@ public:
         break;
 
       // first check: full match?
-      if (path == nodePath)
+      if (PathIsSame(path, nodePath))
       {
         childId = id;
         break;
@@ -746,7 +746,7 @@ public:
       wxString prefix(path.Left(nodePath.length()));
       wxString sep(path.Mid(nodePath.length(), 1));
 
-      if ((prefix == nodePath) && IsValidSeparator(sep))
+      if (PathIsSame(prefix, nodePath) && IsValidSeparator(sep))
       {
         childId = id;
         break;
@@ -812,7 +812,7 @@ public:
 
       // check if @a path and @a nodePath match already
       // in this case we are done
-      if (pathP == nodePath)
+      if (PathIsSame(pathP, nodePath))
       {
         success = true;
         break;
@@ -822,7 +822,7 @@ public:
       wxString prefix(pathP.Left(nodePath.length()));
       wxString sep(pathP.Mid(nodePath.length(), 1));
 
-      if ((prefix != nodePath) || !IsValidSeparator(sep))
+      if (!PathIsSame(prefix, nodePath) || !IsValidSeparator(sep))
         break;
 
       if (!data->hasChildren())
@@ -891,11 +891,7 @@ public:
         break;
 
       // bookmark match?
-#ifdef __WXMSW__
-      if (data->getPath().Lower() == bookmarkPath.Lower())
-#else
-      if (data->getPath() == bookmarkPath)
-#endif
+	  if(PathIsSame(data->getPath(), bookmarkPath))
       {
         // select bookmark
         success = true;
