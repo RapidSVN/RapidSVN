@@ -28,3 +28,4 @@
 /configure-stamp
 **/[uU]nicode [rR]elease/
 **/[uU]nicode [dD]ebug/
+/packages/win32/Output
