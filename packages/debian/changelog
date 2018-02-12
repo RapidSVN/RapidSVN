@@ -1,3 +1,18 @@
+rapidsvn (0.13.0dfsg-4) unstable; urgency=medium
+
+  * Internal test release.
+  * Updated icons. 
+
+ -- Florian Fischer <florianfischer@gmx.de>  Tue, 30 Jan 2018 14:52:00 +0100
+
+rapidsvn (0.13.0dfsg-3) unstable; urgency=medium
+
+  * Internal test release.
+  * Use Colour within blame dialog.
+  * Browse to updated file from within message log. 
+
+ -- Florian Fischer <florianfischer@gmx.de>  Mon, 15 Jan 2018 09:52:00 +0100
+
 rapidsvn (0.13.0dfsg-2) unstable; urgency=medium
 
   * Internal test release.

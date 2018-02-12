@@ -356,6 +356,15 @@ wxString
 FullNativePath(const svn::Path & target, const wxString & base, bool flat);
 
 /**
+ * Compares filenames.
+ * The comparison is performed according to the platform's rules,
+ * i.e. it is case insensitive on Windows, but case sensitive everywhere
+ * else.
+ */
+bool
+PathIsSame(const wxString& p1, const wxString& p2);
+
+/**
   * Checks that folder on path contents a modified child/children.
   *
   * @param path path to folder
