@@ -29,3 +29,5 @@
 **/[uU]nicode [rR]elease/
 **/[uU]nicode [dD]ebug/
 /packages/win32/Output
+*.swp
+*.pyc
