@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # ====================================================================
-# Copyright (c) 2002-2012 The RapidSVN Group.  All rights reserved.
+# Copyright (c) 2002-2018 The RapidSVN Group.  All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program (in the file GPL.txt.
+# along with this program (in the file GPL.txt).
 # If not, see <http://www.gnu.org/licenses/>.
 #
 # This software consists of voluntary contributions made by many
@@ -36,7 +36,6 @@
 import sys
 import re
 import os.path
-
 
 OLD_LICENSE_TXT = r'''\
 =======[=]+
@@ -71,7 +70,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program (in the file GPL.txt.
+along with this program (in the file GPL.txt).
 If not, see <http://www.gnu.org/licenses/>.
 
 This software consists of voluntary contributions made by many
@@ -93,8 +92,8 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program (in the file GPL.txt.
+You should have received a copy of the GNU Lesser General Public
+License along with this program (in the file LGPL.txt).
 If not, see <http://www.gnu.org/licenses/>.
 
 This software consists of voluntary contributions made by many
@@ -104,8 +103,8 @@ history and logs, available at http://rapidsvn.tigris.org/.
 
 NEW_LICENSE_CPP_GPL = '/*\n * ' + NEW_LICENSE_TXT_GPL.replace('\n', '\n * ').replace('* \n', '*\n') + '\n */'
 NEW_LICENSE_CPP_LGPL = '/*\n * ' + NEW_LICENSE_TXT_LGPL.replace('\n', '\n * ').replace('* \n', '*\n') + '\n */'
-NEW_LICENSE_SHELL_GPL = "# " + NEW_LICENSE_TXT_GPL.replace('\n', '\n# ')
-NEW_LICENSE_SHELL_LGPL = "# " + NEW_LICENSE_TXT_LGPL.replace('\n', '\n# ')
+NEW_LICENSE_SHELL_GPL = "\n# " + NEW_LICENSE_TXT_GPL.replace('\n', '\n# ').replace('# \n', '#\n')
+NEW_LICENSE_SHELL_LGPL = "\n# " + NEW_LICENSE_TXT_LGPL.replace('\n', '\n# ').replace('# \n', '#\n')
 
 converters = [
   (('.h', '.hpp', '.c', '.cpp', ), re.compile(OLD_LICENSE_CPP), NEW_LICENSE_CPP_GPL, NEW_LICENSE_CPP_LGPL),
@@ -161,7 +160,7 @@ def change_license(fname, license):
 if __name__ == '__main__':
   if sys.argv[1] in ('-GPL', '-LGPL'):
     license = sys.argv[1][1:]
-    print 'Changing license text to %s...'
+    print 'Changing license text to %s...' % license
     for f in sys.argv[2:]:
       change_license(f, license)
   else:
