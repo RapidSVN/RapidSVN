@@ -2,7 +2,7 @@
 // C++ code generated with wxFormBuilder (version Dec 21 2016)
 // http://www.wxformbuilder.org/
 //
-// PLEASE DO *NOT* EDIT THIS FILE!
+// PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
 #ifndef __RAPIDSVN_GENERATED_H__
@@ -11,7 +11,12 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
+class FileListCtrl;
+class FolderBrowser;
 class LogAffectedList;
+class LogList;
+class LogRevList;
+class SplitterWindow;
 
 #include <wx/bitmap.h>
 #include <wx/image.h>
