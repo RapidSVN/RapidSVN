@@ -5,7 +5,7 @@
 ; Assumes that the %RAPIDSVN\..\dist directory contains all
 ; the binary files and translations. 
 
-#define FullVersion "0.13.0.3"
+#define FullVersion "0.13.0.4"
 #define Version "0.13"
 
 [Setup]
