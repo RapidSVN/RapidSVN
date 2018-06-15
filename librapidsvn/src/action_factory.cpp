@@ -176,6 +176,7 @@ ActionFactory::CheckIdForStatusSel(int id, const svn::StatusSel & statusSel)
 
   case ID_Diff:
   case ID_DiffBase:
+  case ID_DiffPrevious:
   case ID_DiffHead:
     result = DiffAction::CheckStatusSel(statusSel);
     break;
@@ -322,6 +323,14 @@ ActionFactory::CreateAction(wxWindow * parent, int id)
     case ID_DiffBase:
     {
       DiffData data(svn::Revision::BASE);
+      action = new DiffAction(parent, data);
+      break;
+    }
+
+    case ID_DiffPrevious:
+    {
+      DiffData data(svn::Revision::PREVIOUS);
+      data.compareType = DiffData::WITH_PREVIOUS;
       action = new DiffAction(parent, data);
       break;
     }

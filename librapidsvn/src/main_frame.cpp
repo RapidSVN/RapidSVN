@@ -310,7 +310,7 @@ public:
 
     // Query menu
     wxMenu *menuQuery = new wxMenu;
-    AppendQueryMenu(menuQuery);
+    AppendQueryMenu(menuQuery, true);
 
     // Bookmarks menu
     wxMenu *menuBookmarks = new wxMenu;

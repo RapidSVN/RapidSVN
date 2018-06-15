@@ -125,9 +125,10 @@ AppendBookmarksMenu(wxMenu * parentMenu);
  * Append entries for the "Query" menu
  *
  * @param parentMenu menu that will receive the items
+ * @param modified Whether the item(s) to query are modified
  */
 void
-AppendQueryMenu(wxMenu * parentMenu);
+AppendQueryMenu(wxMenu * parentMenu, bool modified);
 
 /**
  * Append entries for the "Query" menu for log item.

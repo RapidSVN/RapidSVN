@@ -267,6 +267,8 @@ Action::GetPathAsTempFile(const svn::Path & path,
     revStr = _("HEAD");
   else if (revision.kind() == revision.BASE)
     revStr = _("BASE");
+  else if (revision.kind() == revision.PREVIOUS)
+    revStr = _("PREVIOUS");
   else
     revStr.Printf(wxT("%") wxT(SVN_REVNUM_T_FMT), revision.revnum());
 

@@ -200,10 +200,13 @@ AppendModifyMenu(wxMenu * parentMenu)
 }
 
 void
-AppendQueryMenu(wxMenu * parentMenu)
+AppendQueryMenu(wxMenu * parentMenu, bool modified)
 {
   AppendMenuItem(parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
-  AppendMenuItem(parentMenu, ID_DiffBase, _("&Diff to Base...\tCTRL+B"));
+  if(modified)
+    AppendMenuItem(parentMenu, ID_DiffBase, _("&Diff to Base...\tCTRL+B"));
+  else
+    AppendMenuItem(parentMenu, ID_DiffPrevious, _("&Diff to Previous...\tCTRL+B"));
   AppendMenuItem(parentMenu, ID_DiffHead, _("&Diff to Head...\tCTRL+H"));
   parentMenu->AppendSeparator();
   AppendMenuItem(parentMenu, ID_Log, _("&Log...\tCTRL-L"),

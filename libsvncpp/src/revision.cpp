@@ -33,7 +33,7 @@ namespace svn
   const Revision Revision::HEAD(svn_opt_revision_head);
   const Revision Revision::WORKING(svn_opt_revision_working);
   const Revision Revision::UNSPECIFIED(svn_opt_revision_unspecified);
-
+  const Revision Revision::PREVIOUS(svn_opt_revision_previous);
 
   Revision::Revision(const svn_opt_revision_t * revision)
   {

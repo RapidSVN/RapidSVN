@@ -84,6 +84,7 @@ enum
   ID_Delete,
   ID_Diff,
   ID_DiffBase,
+  ID_DiffPrevious,
   ID_DiffHead,
   ID_Explore,
   ID_Export,

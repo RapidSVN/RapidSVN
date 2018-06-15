@@ -1489,6 +1489,8 @@ FileListCtrl::ShowMenu(wxPoint & WXUNUSED(pt))
 {
   wxMenu menu;
 
+  bool modified = true;
+
   // if there is exactly one file selected, then
   // we are going to add filetype specific entries
   if (GetSelectedItemCount() == 1)
@@ -1496,13 +1498,14 @@ FileListCtrl::ShowMenu(wxPoint & WXUNUSED(pt))
     long item = GetNextItem(-1, wxLIST_NEXT_ALL,
                             wxLIST_STATE_SELECTED);
     svn::Status * status = (svn::Status*)GetItemData(item);
+    modified = (status->textStatus() != svn_wc_status_normal);
 
     AppendVerbMenu(&menu, status);
   }
 
   AppendModifyMenu(&menu);
   menu.AppendSeparator();
-  AppendQueryMenu(&menu);
+  AppendQueryMenu(&menu, modified);
 
   // Check for disabled items
   MainFrame* frame = (MainFrame*) wxGetApp().GetTopWindow();
