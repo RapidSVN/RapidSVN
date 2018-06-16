@@ -203,7 +203,7 @@ void
 AppendQueryMenu(wxMenu * parentMenu, bool modified)
 {
   AppendMenuItem(parentMenu, ID_Diff, _("&Diff...\tCTRL+D"));
-  if(modified)
+  if (modified)
     AppendMenuItem(parentMenu, ID_DiffBase, _("&Diff to Base...\tCTRL+B"));
   else
     AppendMenuItem(parentMenu, ID_DiffPrevious, _("&Diff to Previous...\tCTRL+B"));

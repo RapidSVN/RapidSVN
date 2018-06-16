@@ -626,7 +626,7 @@ Listener::contextSslServerTrustPrompt(
   m->sendSignalAndWait(SIG_SSL_SERVER_TRUST_PROMPT);
   m->dataReceived = false;
   // All failure types asked for have been handled
-  acceptedFailures = data.failures; 
+  acceptedFailures = data.failures;
   return m->sslServerTrustAnswer;
 }
 

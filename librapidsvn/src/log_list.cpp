@@ -58,11 +58,12 @@ LogList::LogList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
   errorItemAttr.SetTextColour(*wxRED);
 
   // Initialize accelerators
-  wxAcceleratorEntry entries[3];
+  wxAcceleratorEntry entries[4];
   entries[0].Set(wxACCEL_CTRL, (int) 'A', ID_LogList_SelectAll);
-  entries[0].Set(wxACCEL_CTRL, (int) 'B', ID_LogList_BrowseTo);
-  entries[1].Set(wxACCEL_CTRL, (int) 'C', ID_LogList_Copy);
-  wxAcceleratorTable accel(3, entries);
+  entries[1].Set(wxACCEL_CTRL, (int) 'B', ID_LogList_BrowseTo);
+  entries[2].Set(wxACCEL_CTRL, (int) 'C', ID_LogList_Copy);
+  entries[3].Set(wxACCEL_CTRL, (int) 'D', ID_LogList_Diff);
+  wxAcceleratorTable accel(4, entries);
   SetAcceleratorTable(accel);
 }
 
@@ -173,7 +174,7 @@ LogList::OnGetItemText(long item, long column) const
     return actItem.message;
 }
 
-LogList::ItemInfo
+const LogList::ItemInfo&
 LogList::GetActualItem(long item) const
 {
   return items[displayedItems[item]];
@@ -262,6 +263,16 @@ wxString LogList::GetSelectedFileOrDir()
   return wxEmptyString;
 }
 
+LogItemType LogList::GetSelectedItemType()
+{
+  if (GetSelectedItemCount() == 1) {
+    const ItemInfo& ii = GetActualItem(GetFirstSelected());
+    return ii.type;
+  }
+  // some default value...
+  return LogItem_Normal;
+}
+
 /*void LogList::OnListRightClick(wxListEvent &evt)
 {
    void *data = reinterpret_cast<void *>(evt.GetItem().GetData());*/
@@ -274,6 +285,11 @@ void LogList::OnContextMenu(wxContextMenuEvent &evt)
   mnu.Append(ID_LogList_SelectAll, _("Select all\tCTRL-A"));
   if (!GetSelectedFileOrDir().IsEmpty())
     mnu.Append(ID_LogList_BrowseTo, _("Browse to\tCTRL-B"));
+  if (GetSelectedItemCount() == 1) {
+    const ItemInfo& ii = GetActualItem(GetFirstSelected());
+    if (ii.type == LogItem_Updated || ii.type == LogItem_Conflicted)
+      mnu.Append(ID_LogList_Diff, _("Diff to Previous Version...\tCTRL-D"));
+  }
 
   mnu.Connect(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(LogList::OnPopupClick), NULL, this);
   PopupMenu(&mnu);

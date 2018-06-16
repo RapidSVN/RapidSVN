@@ -219,7 +219,8 @@ enum
   // log list
   ID_LogList_SelectAll,
   ID_LogList_Copy,
-  ID_LogList_BrowseTo
+  ID_LogList_BrowseTo,
+  ID_LogList_Diff
 };
 
 #endif
