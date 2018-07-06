@@ -2,7 +2,7 @@
 // C++ code generated with wxFormBuilder (version Dec 21 2016)
 // http://www.wxformbuilder.org/
 //
-// PLEASE DO *NOT* EDIT THIS FILE!
+// PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
 #include <wx/wx.h>
@@ -150,7 +150,7 @@ CertDlgBase::CertDlgBase(wxWindow* parent, wxWindowID id, const wxString& title,
   sizerCert = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("Certificate information:")), wxVERTICAL);
 
   wxFlexGridSizer* fgSizerFailures;
-  fgSizerFailures = new wxFlexGridSizer(2, 2, 0, 0);
+  fgSizerFailures = new wxFlexGridSizer(0, 2, 0, 0);
   fgSizerFailures->SetFlexibleDirection(wxBOTH);
   fgSizerFailures->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 

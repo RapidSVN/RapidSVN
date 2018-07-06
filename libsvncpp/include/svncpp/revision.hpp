@@ -53,6 +53,7 @@ namespace svn
     static const Revision HEAD;
     static const Revision WORKING;
     static const Revision UNSPECIFIED;
+    static const Revision PREVIOUS;
 
     /**
      * Constructor

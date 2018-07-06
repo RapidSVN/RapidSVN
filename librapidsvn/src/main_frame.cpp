@@ -310,7 +310,7 @@ public:
 
     // Query menu
     wxMenu *menuQuery = new wxMenu;
-    AppendQueryMenu(menuQuery);
+    AppendQueryMenu(menuQuery, true);
 
     // Bookmarks menu
     wxMenu *menuBookmarks = new wxMenu;
@@ -657,6 +657,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MENU_RANGE(LISTENER_MIN, LISTENER_MAX, MainFrame::OnListenerEvent)
 
   EVT_MENU(ID_LogList_BrowseTo, MainFrame::OnLogListBrowse)
+  EVT_MENU(ID_LogList_Diff, MainFrame::OnLogListDiff)
 END_EVENT_TABLE()
 
 /** class implementation **/
@@ -2113,6 +2114,25 @@ void MainFrame::OnLogListBrowse(wxCommandEvent &event)
       m_listCtrl->Select(i);
     }
   }
+}
+
+void MainFrame::OnLogListDiff(wxCommandEvent& event)
+{
+  // Check if exactly one updated or conflicted file is selected.
+  wxString selFile = m_log->GetSelectedFileOrDir();
+  if (selFile.IsEmpty())
+    return;
+  LogItemType type = m_log->GetSelectedItemType();
+  if (type != LogItem_Updated && type != LogItem_Conflicted)
+    return;
+
+  // OK have a valid file to diff.
+  // Run the diff (vs. previous revision).
+  DiffData data(svn::Revision::PREVIOUS);
+  data.compareType = DiffData::WITH_PREVIOUS;
+  data.path = selFile;
+  Action* action = new DiffAction(this, data);
+  Perform(action);
 }
 
 

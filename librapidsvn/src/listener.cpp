@@ -620,12 +620,13 @@ Listener::contextGetLogMessage(std::string & msg)
 svn::ContextListener::SslServerTrustAnswer
 Listener::contextSslServerTrustPrompt(
   const svn::ContextListener::SslServerTrustData & data,
-  apr_uint32_t & /*acceptedFailures*/)
+  apr_uint32_t & acceptedFailures)
 {
   m->sslServerTrustData = data;
   m->sendSignalAndWait(SIG_SSL_SERVER_TRUST_PROMPT);
   m->dataReceived = false;
-
+  // All failure types asked for have been handled
+  acceptedFailures = data.failures;
   return m->sslServerTrustAnswer;
 }
 

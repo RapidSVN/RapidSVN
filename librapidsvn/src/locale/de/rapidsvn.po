@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-27 17:41+0100\n"
-"PO-Revision-Date: 2018-01-27 17:42+0100\n"
+"POT-Creation-Date: 2018-06-16 16:53+0200\n"
+"PO-Revision-Date: 2018-06-16 16:57+0200\n"
 "Last-Translator: Alexander Mueller <XelaRellum@web.de>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
 "Language: de\n"
@@ -37,7 +37,7 @@ msgstr "%s Version %s Revision %d"
 msgid "%s at revision %ld"
 msgstr "%s bei Revision %ld"
 
-#: ../utils.cpp:374
+#: ../utils.cpp:377
 #, c-format
 msgid "%x %X"
 msgstr "%x %X"
@@ -50,7 +50,7 @@ msgstr "&Über..."
 msgid "&Add\tINS"
 msgstr "&Hinzufügen\tINS"
 
-#: ../utils.cpp:258
+#: ../utils.cpp:261
 msgid "&Add Existing Working Copy..."
 msgstr "Existierende Arbeitskopie hin&zufügen..."
 
@@ -58,7 +58,7 @@ msgstr "Existierende Arbeitskopie hin&zufügen..."
 msgid "&Annotate"
 msgstr "&Anmerken"
 
-#: ../utils.cpp:213 ../utils.cpp:223
+#: ../utils.cpp:216 ../utils.cpp:226
 msgid "&Annotate..."
 msgstr "&Anmerken..."
 
@@ -98,15 +98,19 @@ msgstr "&Löschen..."
 msgid "&Diff"
 msgstr "&Vergleichen"
 
-#: ../utils.cpp:206
+#: ../utils.cpp:207
 msgid "&Diff to Base...\tCTRL+B"
 msgstr "Vergleiche mit Basis...\tCTRL-B"
 
-#: ../utils.cpp:207
+#: ../utils.cpp:210
 msgid "&Diff to Head...\tCTRL+H"
 msgstr "Vergleiche mit Aktuellster...\tCTRL-H"
 
-#: ../utils.cpp:220
+#: ../utils.cpp:209
+msgid "&Diff to Previous...\tCTRL+B"
+msgstr "Vergleiche mit Vorversion...\tCTRL-B"
+
+#: ../utils.cpp:223
 msgid "&Diff..."
 msgstr "&Vergleichen..."
 
@@ -114,7 +118,7 @@ msgstr "&Vergleichen..."
 msgid "&Diff...\tCTRL+D"
 msgstr "&Vergleiche...\tCTRL-D"
 
-#: ../utils.cpp:276
+#: ../utils.cpp:279
 msgid "&Edit Bookmark..."
 msgstr "B&earbeite Lesezeichen..."
 
@@ -122,7 +126,7 @@ msgstr "B&earbeite Lesezeichen..."
 msgid "&Edit..."
 msgstr "&Bearbeiten..."
 
-#: ../utils.cpp:254
+#: ../utils.cpp:257
 msgid "&Edit...\tF3"
 msgstr "&Bearbeiten...\tF3"
 
@@ -162,7 +166,7 @@ msgstr "&Importieren...\tCTRL-I"
 msgid "&Index\tShift+F1"
 msgstr "Inde&x\tShift+F1"
 
-#: ../utils.cpp:211
+#: ../utils.cpp:214
 msgid "&Info..."
 msgstr "&Info..."
 
@@ -174,11 +178,11 @@ msgstr "&Lade Konfiguration aus Verzeichnis (optional):"
 msgid "&Lock..."
 msgstr "&Sperren..."
 
-#: ../utils.cpp:222
+#: ../utils.cpp:225
 msgid "&Log..."
 msgstr "&Log..."
 
-#: ../utils.cpp:209
+#: ../utils.cpp:212
 msgid "&Log...\tCTRL-L"
 msgstr "&Log...\tCTRL-L"
 
@@ -222,7 +226,7 @@ msgstr "Ab&frage"
 msgid "&Recent entries:"
 msgstr "Letzte Einträge:"
 
-#: ../utils.cpp:271
+#: ../utils.cpp:274
 msgid "&Remove Bookmark"
 msgstr "Lesezeichen entfernen..."
 
@@ -234,11 +238,11 @@ msgstr "Repository"
 msgid "&Revision"
 msgstr "&Revision"
 
-#: ../utils.cpp:327
+#: ../utils.cpp:330
 msgid "&Stop"
 msgstr "&Stop"
 
-#: ../utils.cpp:267
+#: ../utils.cpp:270
 msgid "&Switch Repository URL..."
 msgstr "Repository URL Umstellen..."
 
@@ -262,7 +266,7 @@ msgstr "&Typ:"
 msgid "&Unlock"
 msgstr "&Entsperren"
 
-#: ../utils.cpp:292
+#: ../utils.cpp:295
 msgid "&Update...\tCTRL-U"
 msgstr "&Update...\tCTRL-U"
 
@@ -278,7 +282,7 @@ msgstr "&Wert"
 msgid "&View"
 msgstr "&Ansicht"
 
-#: ../utils.cpp:221
+#: ../utils.cpp:224
 msgid "&View..."
 msgstr "An&sehen..."
 
@@ -336,7 +340,7 @@ msgstr "ANSI"
 msgid "About %s"
 msgstr "Über %s"
 
-#: ../../include/rapidsvn_generated.h:69
+#: ../../include/rapidsvn_generated.h:74
 msgid "About ..."
 msgstr "Über..."
 
@@ -345,11 +349,11 @@ msgid "Action"
 msgstr "Aktion"
 
 #: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listed_dlg.cpp:183
-#: ../main_frame.cpp:1433
+#: ../main_frame.cpp:1434
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: ../utils.cpp:263
+#: ../utils.cpp:266
 msgid "Add Existing &Repository..."
 msgstr "Existierendes &Repository hinzufügen..."
 
@@ -369,16 +373,16 @@ msgstr "Ausgewählte hinzufügen"
 msgid "Add to bookmarks"
 msgstr "Zu Lesezeichen hinzufügen"
 
-#: ../listener.cpp:309 ../main_frame.cpp:1442 ../main_frame.cpp:1449
+#: ../listener.cpp:309 ../main_frame.cpp:1443 ../main_frame.cpp:1450
 msgid "Added"
 msgstr "Hinzugefügt"
 
-#: ../main_frame.cpp:2194
+#: ../main_frame.cpp:2219
 #, c-format
 msgid "Added repository to bookmarks '%s'"
 msgstr "Repository '%s' zu Lesezeichen hinzugefügt"
 
-#: ../main_frame.cpp:2164
+#: ../main_frame.cpp:2189
 #, c-format
 msgid "Added working copy to bookmarks '%s'"
 msgstr "Repository '%s' zu Lesezeichen hinzugefügt"
@@ -407,16 +411,16 @@ msgid ""
 msgstr ""
 "Bereinige auch alle externen Links unterhalb des ausgewählten Verzeichnisses."
 
-#: ../main_frame.cpp:1307 ../main_frame.cpp:1326
+#: ../main_frame.cpp:1308 ../main_frame.cpp:1327
 msgid "An error occured while launching the browser"
 msgstr "Beim Starten des Browsers trat ein Fehler auf"
 
-#: ../main_frame.cpp:1294
+#: ../main_frame.cpp:1295
 msgid "An error occurred while checking valid actions"
 msgstr "Beim Prüfen der gültigen Aktionen trat ein Fehler auf"
 
 #: ../annotate_action.cpp:83 ../annotate_action.cpp:84
-#: ../../include/rapidsvn_generated.h:88
+#: ../../include/rapidsvn_generated.h:93
 msgid "Annotate"
 msgstr "Anmerken"
 
@@ -460,7 +464,7 @@ msgstr "BASIS"
 msgid "BerkeleyDB"
 msgstr "BerkeleyDB"
 
-#: ../main_frame.cpp:2231
+#: ../main_frame.cpp:2256
 msgid "Bookmark"
 msgstr "Lesezeichen"
 
@@ -482,7 +486,7 @@ msgstr "Übertrage Änderungen aus dem Repository in die Arbeitskopie"
 msgid "Browse"
 msgstr "Durchsuchen"
 
-#: ../log_list.cpp:254
+#: ../log_list.cpp:287
 msgid "Browse to\tCTRL-B"
 msgstr "Navigiere zu\tCTRL-B"
 
@@ -527,7 +531,7 @@ msgstr "Zertifikats-Information:"
 msgid "Check&out...\tCTRL-O"
 msgstr "Auschecken...\tCTRL-O"
 
-#: ../checkout_action.cpp:40 ../../include/rapidsvn_generated.h:189
+#: ../checkout_action.cpp:40 ../../include/rapidsvn_generated.h:194
 msgid "Checkout"
 msgstr "Auschecken"
 
@@ -535,7 +539,7 @@ msgstr "Auschecken"
 msgid "Checkout Depth"
 msgstr "Rekursion"
 
-#: ../utils.cpp:284
+#: ../utils.cpp:287
 msgid "Checkout New Working Copy..."
 msgstr "Neue Arbeits&kopie auschecken..."
 
@@ -564,8 +568,8 @@ msgstr ""
 msgid "Clean up working copy status"
 msgstr "Status der Arbeitskopie korrigieren"
 
-#: ../cleanup_action.cpp:40 ../utils.cpp:315
-#: ../../include/rapidsvn_generated.h:368
+#: ../cleanup_action.cpp:40 ../utils.cpp:318
+#: ../../include/rapidsvn_generated.h:373
 msgid "Cleanup"
 msgstr "Bereinigen"
 
@@ -585,7 +589,7 @@ msgstr "Leere die Nachrichtenliste"
 msgid "Close"
 msgstr "Schließen"
 
-#: ../utils.cpp:297
+#: ../utils.cpp:300
 msgid "Co&mmit...\tCTRL-ENTER"
 msgstr "Co&mmiten...\tCTRL-ENTER"
 
@@ -601,8 +605,8 @@ msgstr "Combo!"
 msgid "Commit"
 msgstr "Commiten"
 
-#: ../commit_log_dlg.cpp:40 ../../include/rapidsvn_generated.h:228
-#: ../../include/rapidsvn_generated.h:256
+#: ../commit_log_dlg.cpp:40 ../../include/rapidsvn_generated.h:233
+#: ../../include/rapidsvn_generated.h:261
 msgid "Commit Log Message"
 msgstr "Log Meldung"
 
@@ -684,12 +688,12 @@ msgstr "Kopiert von Pfad"
 msgid "Copied from Rev"
 msgstr "Kopiert von Revision"
 
-#: ../dnd_dlg.cpp:72 ../main_frame.cpp:1434 ../move_action.cpp:44
+#: ../dnd_dlg.cpp:72 ../main_frame.cpp:1435 ../move_action.cpp:44
 #: ../rapidsvn_generated.cpp:1004
 msgid "Copy"
 msgstr "Kopieren"
 
-#: ../log_list.cpp:251
+#: ../log_list.cpp:284
 msgid "Copy selected\tCTRL-C"
 msgstr "Ausgewählte kopieren\tCTRL-C"
 
@@ -712,11 +716,11 @@ msgstr "Kopiere Datei: %s"
 msgid "Could not set working directory to %s"
 msgstr "Konnte das Arbeitsverzeichnis %s nicht setzen"
 
-#: ../utils.cpp:280
+#: ../utils.cpp:283
 msgid "Create New Repository..."
 msgstr "Neues &Repository erzeugen..."
 
-#: ../create_repos_action.cpp:37 ../../include/rapidsvn_generated.h:313
+#: ../create_repos_action.cpp:37 ../../include/rapidsvn_generated.h:318
 msgid "Create Repository"
 msgstr "Repository Erzeugen"
 
@@ -740,8 +744,8 @@ msgstr "Datum:"
 msgid "Default"
 msgstr "Voreinstellung"
 
-#: ../delete_action.cpp:40 ../main_frame.cpp:1435
-#: ../../include/rapidsvn_generated.h:334
+#: ../delete_action.cpp:40 ../main_frame.cpp:1436
+#: ../../include/rapidsvn_generated.h:339
 msgid "Delete"
 msgstr "Löschen"
 
@@ -775,11 +779,11 @@ msgstr "Lösche Dateien und Verzeichnis aus Versionskontrolle"
 msgid "Delete selected"
 msgstr "Lösche ausgewählte"
 
-#: ../listener.cpp:310 ../main_frame.cpp:1441 ../main_frame.cpp:1450
+#: ../listener.cpp:310 ../main_frame.cpp:1442 ../main_frame.cpp:1451
 msgid "Deleted"
 msgstr "Gelöscht"
 
-#: ../../include/rapidsvn_generated.h:394
+#: ../../include/rapidsvn_generated.h:399
 msgid "Destination"
 msgstr "Ziel"
 
@@ -788,8 +792,8 @@ msgstr "Ziel"
 msgid "Destination Directory"
 msgstr "Zielverzeichnis"
 
-#: ../diff_action.cpp:191 ../diff_action.cpp:197 ../diff_dlg.cpp:179
-#: ../../include/rapidsvn_generated.h:446
+#: ../diff_action.cpp:197 ../diff_action.cpp:203 ../diff_dlg.cpp:179
+#: ../../include/rapidsvn_generated.h:451
 msgid "Diff"
 msgstr "Vergleichen"
 
@@ -804,6 +808,10 @@ msgstr "Vergleiche mit BASIS"
 #: ../diff_dlg.cpp:131
 msgid "Diff to HEAD"
 msgstr "Vergleiche mit AKTUELLSTER"
+
+#: ../log_list.cpp:291
+msgid "Diff to Previous Version...\tCTRL-D"
+msgstr "Vergleiche mit Vorversion...\tCTRL-D"
 
 #: ../diff_dlg.cpp:134
 msgid "Diff to another revision/date"
@@ -865,16 +873,16 @@ msgstr "Wollen Sie die lokalen Änderungen rückgängig machen?"
 msgid "Do you want to unlock the selected files/directories?"
 msgstr "Wollen Sie die gewählten Dateien/Verzeichnisse entsperren?"
 
-#: ../utils.cpp:302
+#: ../utils.cpp:305
 msgid "E&xit\tCTRL-Q"
 msgstr "&Beenden\tCTRL-Q"
 
 #: ../listed_dlg.cpp:184 ../view_action.cpp:76
-#: ../../include/rapidsvn_generated.h:502
+#: ../../include/rapidsvn_generated.h:507
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: ../main_frame.cpp:2231
+#: ../main_frame.cpp:2256
 msgid "Edit Bookmark"
 msgstr "Bearbeite Lesezeichen"
 
@@ -919,8 +927,8 @@ msgstr ""
 msgid "Enter the repository URL (not local path) here."
 msgstr "Geben Sie die Repository URL (nicht den lokalen Pfad) ein."
 
-#: ../main_frame.cpp:562 ../main_frame.cpp:1289 ../main_frame.cpp:1294
-#: ../main_frame.cpp:1307 ../main_frame.cpp:1326 ../main_frame.cpp:2154
+#: ../main_frame.cpp:562 ../main_frame.cpp:1290 ../main_frame.cpp:1295
+#: ../main_frame.cpp:1308 ../main_frame.cpp:1327 ../main_frame.cpp:2179
 #: ../property_dlg.cpp:138
 msgid "Error"
 msgstr "Fehler"
@@ -974,16 +982,16 @@ msgstr "Fehler beim Vorbereiten der Aktion: %s"
 msgid "Error while refreshing filelist (%s)"
 msgstr "Fehler beim Aktualisieren der Dateiliste (%s)"
 
-#: ../main_frame.cpp:943
+#: ../main_frame.cpp:944
 msgid "Error while updating filelist"
 msgstr "Fehler beim Aktualisieren der Dateiliste"
 
-#: ../main_frame.cpp:930
+#: ../main_frame.cpp:931
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "Fehler beim Aktualisieren der Dateiliste (%s)"
 
-#: ../main_frame.cpp:2043
+#: ../main_frame.cpp:2049
 msgid "Exception occured during filelist update"
 msgstr ""
 "Eine Ausnahme ist aufgetreten während die Dateiliste aktualisiert wurde"
@@ -996,7 +1004,7 @@ msgstr "Anwendungen|*.exe;*.com;*.bat|Alle Dateien (*.*)|*.*"
 msgid "Execute"
 msgstr "Ausführen"
 
-#: ../diff_action.cpp:183
+#: ../diff_action.cpp:189
 #, c-format
 msgid "Execute diff tool: %s"
 msgstr "Diff-Werkzeug ausführen: %s"
@@ -1020,11 +1028,11 @@ msgstr "3-Wege-Diff-Werkzeug ausführen: %s"
 msgid "Execute:"
 msgstr "Ausführen:"
 
-#: ../utils.cpp:332
+#: ../utils.cpp:335
 msgid "Explore...\tF2"
 msgstr "Explorer...\tF2"
 
-#: ../export_action.cpp:39 ../../include/rapidsvn_generated.h:542
+#: ../export_action.cpp:39 ../../include/rapidsvn_generated.h:547
 msgid "Export"
 msgstr "Exportieren"
 
@@ -1040,11 +1048,11 @@ msgstr "Erweiterung"
 msgid "FSFS"
 msgstr "FSFS"
 
-#: ../main_frame.cpp:1456
+#: ../main_frame.cpp:1457
 msgid "Failed to lock"
 msgstr "Sperren fehlgeschlagen"
 
-#: ../main_frame.cpp:1457
+#: ../main_frame.cpp:1458
 msgid "Failed to unlock"
 msgstr "Entsperren fehlgeschlagen"
 
@@ -1102,7 +1110,7 @@ msgstr "Unbegrenzte Rekursion (alle Dateien und Unterverzeichnisse)"
 msgid "General"
 msgstr "Allgemein"
 
-#: ../action.cpp:274
+#: ../action.cpp:276
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "Hole Datei %s rev. %s"
@@ -1168,8 +1176,8 @@ msgid "Immediate children (files and empty subdirectories)"
 msgstr "Direkt enthaltene Elemente (Dateien und leere Unterverzeichnisse)"
 
 #: ../dnd_dlg.cpp:63 ../import_action.cpp:38 ../rapidsvn_generated.cpp:998
-#: ../../include/rapidsvn_generated.h:474
-#: ../../include/rapidsvn_generated.h:679
+#: ../../include/rapidsvn_generated.h:479
+#: ../../include/rapidsvn_generated.h:684
 msgid "Import"
 msgstr "Importieren"
 
@@ -1194,7 +1202,7 @@ msgstr "Externe Links mit einbeziehen"
 msgid "Indicate modified children"
 msgstr "Zeige modifizierte Einträge"
 
-#: ../main_frame.cpp:2274
+#: ../main_frame.cpp:2299
 msgid "Info"
 msgstr "Info"
 
@@ -1206,7 +1214,7 @@ msgstr "Info über ausgewählte"
 msgid "Internal Error: There is another action running"
 msgstr "Interner Fehler: eine andere Aktion wird ausgeführt"
 
-#: ../main_frame.cpp:1753
+#: ../main_frame.cpp:1759
 msgid "Internal Error: no client data for action event!"
 msgstr "Interner Fehler: Keine Hilfsdaten im Action Event gespeichert!"
 
@@ -1252,7 +1260,7 @@ msgstr "Zuletzt geändert Rev: %ld"
 msgid "Line"
 msgstr "Zeile"
 
-#: ../../include/rapidsvn_generated.h:572
+#: ../../include/rapidsvn_generated.h:577
 msgid "ListEditor"
 msgstr "ListEditor"
 
@@ -1287,7 +1295,7 @@ msgstr "Lokalisiere Tipps-Datei"
 msgid "Locate tips file"
 msgstr "Lokalisiere Tipps-Datei"
 
-#: ../lock_action.cpp:40 ../../include/rapidsvn_generated.h:594
+#: ../lock_action.cpp:40 ../../include/rapidsvn_generated.h:599
 msgid "Lock"
 msgstr "Sperre"
 
@@ -1322,7 +1330,7 @@ msgstr "Besitzer der Sperre: %s"
 msgid "Lock Token: %s"
 msgstr "Token der Sperre: %s"
 
-#: ../main_frame.cpp:1454
+#: ../main_frame.cpp:1455
 msgid "Locked"
 msgstr "Gesperrt"
 
@@ -1330,7 +1338,7 @@ msgstr "Gesperrt"
 msgid "Log"
 msgstr "Log"
 
-#: ../log_dlg.cpp:71 ../../include/rapidsvn_generated.h:640
+#: ../log_dlg.cpp:71 ../../include/rapidsvn_generated.h:645
 msgid "Log History"
 msgstr "Log Historie"
 
@@ -1342,7 +1350,7 @@ msgstr "Log Meldung"
 msgid "Log selected"
 msgstr "Log für ausgewählte"
 
-#: ../utils.cpp:288
+#: ../utils.cpp:291
 msgid "Login..."
 msgstr "Anmelden..."
 
@@ -1379,7 +1387,7 @@ msgstr "Zusammenführen"
 msgid "Merge Tool"
 msgstr "Merge-Werkzeug"
 
-#: ../../include/rapidsvn_generated.h:757
+#: ../../include/rapidsvn_generated.h:762
 msgid "Merge revisions"
 msgstr "Revisionen zusammenführen"
 
@@ -1399,7 +1407,7 @@ msgstr "Nachricht"
 msgid "Mkdir"
 msgstr "Erzeuge Verzeichnis"
 
-#: ../main_frame.cpp:1448
+#: ../main_frame.cpp:1449
 msgid "Modified"
 msgstr "Geändert"
 
@@ -1442,7 +1450,7 @@ msgstr "Name: %s"
 msgid "New Property"
 msgstr "Neue Eigenschaft"
 
-#: ../diff_action.cpp:217
+#: ../diff_action.cpp:223
 msgid "No diff tool set in the preferences"
 msgstr "Kein Diff-Werkzeug eingestellt"
 
@@ -1520,13 +1528,17 @@ msgstr "Nur Dateien (keine Unterverzeichnisse)"
 msgid "Only this item"
 msgstr "Nur dieses Element"
 
-#: ../utils.cpp:565
+#: ../utils.cpp:568
 msgid "Open..."
 msgstr "Öffnen..."
 
 #: ../rapidsvn_generated.cpp:1177
 msgid "Overwrite"
 msgstr "Überschreiben"
+
+#: ../action.cpp:271
+msgid "PREVIOUS"
+msgstr "VORGÄNGER"
 
 #: ../columns.cpp:46 ../log_aff_list.cpp:104
 msgid "Path"
@@ -1545,11 +1557,11 @@ msgstr "Pfad: %s\n"
 msgid "Peg Revision"
 msgstr "\"Peg\" Revision"
 
-#: ../preferences_dlg.cpp:48 ../../include/rapidsvn_generated.h:812
+#: ../preferences_dlg.cpp:48 ../../include/rapidsvn_generated.h:817
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: ../utils.cpp:311
+#: ../utils.cpp:314
 msgid "Preferences..."
 msgstr "Einstellungen..."
 
@@ -1634,7 +1646,7 @@ msgstr "Rückgängig\tCTRL-V"
 msgid "Ready"
 msgstr "Bereit"
 
-#: ../main_frame.cpp:1733 ../main_frame.cpp:1777
+#: ../main_frame.cpp:1739 ../main_frame.cpp:1783
 msgid "Ready\n"
 msgstr "Bereit\n"
 
@@ -1652,7 +1664,7 @@ msgstr "Rekursiv"
 msgid "Refresh"
 msgstr "Aktualisieren"
 
-#: ../utils.cpp:306
+#: ../utils.cpp:309
 msgid "Refresh View\tCTRL-R"
 msgstr "Ansicht Aktualisieren\tCTRL-R"
 
@@ -1681,7 +1693,7 @@ msgstr ""
 "Alle Dateisystem-Sperren innerhalb der Arbeitskopie aufheben, die von "
 "vorherigen abgebrochenen Operationen übrig geblieben sind."
 
-#: ../main_frame.cpp:2208
+#: ../main_frame.cpp:2233
 msgid "Removed bookmark"
 msgstr "Lesezeichen entfernt"
 
@@ -1693,11 +1705,11 @@ msgstr "Umbenennen"
 msgid "Rep. Rev."
 msgstr "Rep. Rev."
 
-#: ../main_frame.cpp:1451
+#: ../main_frame.cpp:1452
 msgid "Replaced"
 msgstr "Ersetzt"
 
-#: ../../include/rapidsvn_generated.h:831
+#: ../../include/rapidsvn_generated.h:836
 msgid "Report"
 msgstr "Report"
 
@@ -1709,7 +1721,7 @@ msgstr "Repository"
 msgid "Repository &URL for import"
 msgstr "Repository-&URL für Import"
 
-#: ../main_frame.cpp:2180
+#: ../main_frame.cpp:2205
 msgid "Repository URL"
 msgstr "Repository URL"
 
@@ -1723,7 +1735,7 @@ msgstr "Repository UUID: %s"
 msgid "Repository: %s"
 msgstr "Repository: %s"
 
-#: ../utils.cpp:323
+#: ../utils.cpp:326
 msgid "Reset Columns"
 msgstr "Spalten zurücksetzen"
 
@@ -1739,11 +1751,11 @@ msgstr "Auflösen"
 msgid "Resolve selected"
 msgstr "Konflikte auflösen"
 
-#: ../main_frame.cpp:1439
+#: ../main_frame.cpp:1440
 msgid "Resolved"
 msgstr "Aufgelöst"
 
-#: ../main_frame.cpp:1436
+#: ../main_frame.cpp:1437
 msgid "Restore"
 msgstr "Wiederhergestellt..."
 
@@ -1755,8 +1767,8 @@ msgstr "Lokale Änderungen rückgängig machen"
 msgid "Resulting repository filename:"
 msgstr "Resultierender Repository Dateiname:"
 
-#: ../main_frame.cpp:1437 ../revert_action.cpp:35
-#: ../../include/rapidsvn_generated.h:852
+#: ../main_frame.cpp:1438 ../revert_action.cpp:35
+#: ../../include/rapidsvn_generated.h:857
 msgid "Revert"
 msgstr "Rückgängig"
 
@@ -1792,7 +1804,7 @@ msgstr "Revision: %ld"
 msgid "Running command %s:"
 msgstr "Führe das Kommando %s aus:"
 
-#: ../../include/rapidsvn_generated.h:151
+#: ../../include/rapidsvn_generated.h:156
 msgid "SSL Certificate"
 msgstr "SSL Zertifikat"
 
@@ -1818,7 +1830,7 @@ msgid "Select a destination folder to merge to"
 msgstr "Wählen Sie ein Verzeichnis in das zusammengeführt werden soll"
 
 #: ../create_repos_dlg.cpp:185 ../create_repos_dlg.cpp:201
-#: ../main_frame.cpp:2134
+#: ../main_frame.cpp:2159
 msgid "Select a directory"
 msgstr "Wähle ein Verzeichnis"
 
@@ -1830,7 +1842,7 @@ msgstr "Wählen Sie ein Verzeichnis für den Import"
 msgid "Select a file to import"
 msgstr "Wählen Sie eine Datei für den Import"
 
-#: ../log_list.cpp:252
+#: ../log_list.cpp:285
 msgid "Select all\tCTRL-A"
 msgstr "Alle auswählen\tCTRL-A"
 
@@ -1959,7 +1971,7 @@ msgstr "Zeige aktualisierte Einträge"
 msgid "Show updated files in the log list"
 msgstr "Aktualisierte Dateien in der Nachrichtenliste anzeigen"
 
-#: ../main_frame.cpp:1440
+#: ../main_frame.cpp:1441
 msgid "Skip"
 msgstr "Überspringen"
 
@@ -1999,7 +2011,7 @@ msgstr "Stoppt die laufende Aktion"
 msgid "Store authentication credentials on hard disk"
 msgstr "Authenfizierungs-Nachweise auf Festplatte ablegen"
 
-#: ../switch_action.cpp:50 ../../include/rapidsvn_generated.h:883
+#: ../switch_action.cpp:50 ../../include/rapidsvn_generated.h:888
 msgid "Switch URL"
 msgstr "URL Umstellen"
 
@@ -2007,15 +2019,15 @@ msgstr "URL Umstellen"
 msgid "Switch URL...\tCTRL-S"
 msgstr "URL Umstellen...\tCTRL-S"
 
-#: ../main_frame.cpp:1387
+#: ../main_frame.cpp:1388
 msgid "Test duration"
 msgstr "Test duration"
 
-#: ../main_frame.cpp:1383
+#: ../main_frame.cpp:1384
 msgid "Test ended at"
 msgstr "Test ended at"
 
-#: ../main_frame.cpp:1380
+#: ../main_frame.cpp:1381
 msgid "Test started at"
 msgstr "Test started at"
 
@@ -2082,7 +2094,7 @@ msgstr "UUID"
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../main_frame.cpp:1695
+#: ../main_frame.cpp:1701
 msgid "Unimplemented action!"
 msgstr "Nicht implementierte Aktion!"
 
@@ -2090,11 +2102,11 @@ msgstr "Nicht implementierte Aktion!"
 msgid "Unknown destination path"
 msgstr "Unbekanntes Zielverzeichnis"
 
-#: ../unlock_action.cpp:39 ../../include/rapidsvn_generated.h:904
+#: ../unlock_action.cpp:39 ../../include/rapidsvn_generated.h:909
 msgid "Unlock"
 msgstr "Entsperren"
 
-#: ../main_frame.cpp:1455
+#: ../main_frame.cpp:1456
 msgid "Unlocked"
 msgstr "Entsperrt"
 
@@ -2110,11 +2122,11 @@ msgstr "Rekursion"
 msgid "Update selected"
 msgstr "Ausgewählte updaten"
 
-#: ../listener.cpp:311 ../main_frame.cpp:1443
+#: ../listener.cpp:311 ../main_frame.cpp:1444
 msgid "Updated"
 msgstr "Aktualisiert"
 
-#: ../main_frame.cpp:1767 ../main_frame.cpp:1772
+#: ../main_frame.cpp:1773 ../main_frame.cpp:1778
 msgid "Updating file list..."
 msgstr "Dateiliste wird aktualisiert..."
 
@@ -2122,7 +2134,7 @@ msgstr "Dateiliste wird aktualisiert..."
 msgid "Upgrade"
 msgstr "Format aktualisieren"
 
-#: ../upgrade_action.cpp:54 ../upgrade_action.cpp:62 ../utils.cpp:319
+#: ../upgrade_action.cpp:54 ../upgrade_action.cpp:62 ../utils.cpp:322
 msgid "Upgrade Working Copy"
 msgstr "Format der Arbeitskopie aktualisieren"
 
@@ -2230,7 +2242,7 @@ msgstr ""
 "  %s\n"
 "verschieben oder kopieren?"
 
-#: ../main_frame.cpp:2152
+#: ../main_frame.cpp:2177
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr ""
 "Sie können kein administratives Verzeichnis von Subversion zu den "
@@ -2240,11 +2252,11 @@ msgstr ""
 msgid "add"
 msgstr "Hinzufügen"
 
-#: ../filelist_ctrl.cpp:1235 ../utils.cpp:412
+#: ../filelist_ctrl.cpp:1235 ../utils.cpp:415
 msgid "added"
 msgstr "hinzugefügt"
 
-#: ../utils.cpp:430
+#: ../utils.cpp:433
 msgid "conflicted"
 msgstr "Konflikt"
 
@@ -2252,7 +2264,7 @@ msgstr "Konflikt"
 msgid "delete"
 msgstr "Löschen"
 
-#: ../utils.cpp:418
+#: ../utils.cpp:421
 msgid "deleted"
 msgstr "gelöscht"
 
@@ -2260,7 +2272,7 @@ msgstr "gelöscht"
 msgid "directory"
 msgstr "Verzeichnis"
 
-#: ../utils.cpp:436
+#: ../utils.cpp:439
 msgid "external"
 msgstr "Extern"
 
@@ -2268,23 +2280,23 @@ msgstr "Extern"
 msgid "file"
 msgstr "Datei"
 
-#: ../utils.cpp:442
+#: ../utils.cpp:445
 msgid "ignored"
 msgstr "ignoriert"
 
-#: ../utils.cpp:439
+#: ../utils.cpp:442
 msgid "incomplete"
 msgstr "unvollständig"
 
-#: ../utils.cpp:427
+#: ../utils.cpp:430
 msgid "merged"
 msgstr "zusammengeführt"
 
-#: ../utils.cpp:415
+#: ../utils.cpp:418
 msgid "missing"
 msgstr "fehlt"
 
-#: ../filelist_ctrl.cpp:1238 ../utils.cpp:424
+#: ../filelist_ctrl.cpp:1238 ../utils.cpp:427
 msgid "modified"
 msgstr "geändert"
 
@@ -2296,15 +2308,15 @@ msgstr "Mehr"
 msgid "native"
 msgstr "Nativ"
 
-#: ../file_info.cpp:132 ../utils.cpp:403
+#: ../file_info.cpp:132 ../utils.cpp:406
 msgid "none"
 msgstr "kein"
 
-#: ../file_info.cpp:146 ../utils.cpp:409
+#: ../file_info.cpp:146 ../utils.cpp:412
 msgid "normal"
 msgstr "normal"
 
-#: ../utils.cpp:433
+#: ../utils.cpp:436
 msgid "obstructed"
 msgstr "versperrt"
 
@@ -2328,7 +2340,7 @@ msgstr "vor Subversion 1.6"
 msgid "replace"
 msgstr "ersetzen"
 
-#: ../utils.cpp:421
+#: ../utils.cpp:424
 msgid "replaced"
 msgstr "ersetzt"
 
@@ -2340,11 +2352,11 @@ msgstr "svnadmin konnte nicht gefunden werden"
 msgid "unknown"
 msgstr "unbekannt"
 
-#: ../utils.cpp:444
+#: ../utils.cpp:447
 msgid "unknown value"
 msgstr "Unbekannter Wert"
 
-#: ../utils.cpp:406
+#: ../utils.cpp:409
 msgid "unversioned"
 msgstr "unversioniert"
 

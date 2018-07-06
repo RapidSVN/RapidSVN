@@ -137,6 +137,12 @@ public:
 
       break;
 
+    case DiffData::WITH_PREVIOUS:
+      dstFile1 = path;
+      dstFile2 = action->GetPathAsTempFile(getPath1(path), svn::Revision::PREVIOUS);
+
+      break;
+
     case DiffData::WITH_HEAD:
       dstFile1 = path;
       dstFile2 = action->GetPathAsTempFile(getPath1(path), svn::Revision::HEAD);

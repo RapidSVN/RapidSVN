@@ -84,6 +84,7 @@ enum
   ID_Delete,
   ID_Diff,
   ID_DiffBase,
+  ID_DiffPrevious,
   ID_DiffHead,
   ID_Explore,
   ID_Export,
@@ -218,7 +219,8 @@ enum
   // log list
   ID_LogList_SelectAll,
   ID_LogList_Copy,
-  ID_LogList_BrowseTo
+  ID_LogList_BrowseTo,
+  ID_LogList_Diff
 };
 
 #endif

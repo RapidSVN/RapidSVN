@@ -65,6 +65,13 @@ public:
    */
   wxString
   GetSelectedFileOrDir();
+  /**
+   * If exactly one file or directory has been selected,
+   * returns its item type (status).
+   * Otherwise returns LogItem_Normal.
+   */
+  LogItemType
+  GetSelectedItemType();
 protected:
   virtual wxListItemAttr*
   OnGetItemAttr(long item) const;
@@ -88,7 +95,7 @@ private:
   mutable wxListItemAttr errorItemAttr;
 
   void RebuildDisplayedItems();
-  ItemInfo GetActualItem(long item) const;
+  const ItemInfo &GetActualItem(long item) const;
   void AutoSizeLastColumn();
 private:
 

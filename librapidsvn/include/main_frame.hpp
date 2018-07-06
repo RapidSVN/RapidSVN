@@ -167,6 +167,7 @@ private:
 
   // Log list event handlers
   void OnLogListBrowse(wxCommandEvent & event);
+  void OnLogListDiff(wxCommandEvent & event);
 
 
   /**
