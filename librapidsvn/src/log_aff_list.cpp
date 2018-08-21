@@ -150,7 +150,7 @@ void LogAffectedList::SetValue(const std::list<svn::LogChangePathEntry> & change
       if (changedPath.copyFromRevision != -1)
         copyFromRev.Printf(wxT("%ld"), changedPath.copyFromRevision);
 
-      InsertItem(i, label);
+      InsertItem(i, label, -1);
       SetItem(i, 1, Utf8ToLocal(changedPath.path.c_str()));
       SetItem(i, 2, Utf8ToLocal(changedPath.copyFromPath.c_str()));
       SetItem(i, COL_COUNT - 1, copyFromRev);
@@ -256,8 +256,8 @@ wxCALLBACK LogAffectedListColumnCompareFunction(long item1, long item2, long sor
 
   pColSortInfo->SortIterations++;
 
-  long positionOfItem1 = pColSortInfo->Parent->FindItem(0L, item1);
-  long positionOfItem2 = pColSortInfo->Parent->FindItem(0L, item2);
+  long positionOfItem1 = pColSortInfo->Parent->FindItem(-1L, item1);
+  long positionOfItem2 = pColSortInfo->Parent->FindItem(-1L, item2);
 
   wxListItem info1;
   info1.SetColumn(pColSortInfo->Column);

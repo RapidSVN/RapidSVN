@@ -154,7 +154,7 @@ LogRevList::AddEntriesToList(svn::LogEntries * entries)
 
     rev.Printf(wxT("%ld"), (long) entry.revision);
 
-    InsertItem(index, rev);
+    InsertItem(index, rev, -1);
     SetItem(index, 1, Utf8ToLocal(entry.author.c_str()));
     SetItem(index, 2, dateStr);
     SetItem(index, COL_COUNT - 1, NewLinesToSpaces(Utf8ToLocal(entry.message.c_str())));
@@ -430,8 +430,8 @@ wxCALLBACK LogRevListColumnCompareFunction(long item1, long item2, long sortData
   if (pColSortInfo->Parent == NULL)
     return 0;
 
-  long positionOfItem1 = pColSortInfo->Parent->FindItem(0L, item1);
-  long positionOfItem2 = pColSortInfo->Parent->FindItem(0L, item2);
+  long positionOfItem1 = pColSortInfo->Parent->FindItem(-1L, item1);
+  long positionOfItem2 = pColSortInfo->Parent->FindItem(-1L, item2);
 
   wxListItem info1;
   info1.SetColumn(pColSortInfo->Column);
