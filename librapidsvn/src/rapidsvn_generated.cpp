@@ -2149,7 +2149,7 @@ UpdateDlgBase::UpdateDlgBase(wxWindow* parent, wxWindowID id, const wxString& ti
   m_revisionSizer = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("Revision")), wxHORIZONTAL);
 
   m_textRevision = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-  m_revisionSizer->Add(m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+  m_revisionSizer->Add(m_textRevision, 1, wxALL|wxEXPAND, 5);
 
   m_checkUseLatest = new wxCheckBox(this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0);
   m_checkUseLatest->SetValue(true);
