@@ -373,10 +373,11 @@ public:
 
     wxDir dir(path);
 
+	if (!dir.IsOpened())
+		return false;
+
     bool ok = dir.GetFirst(&filename, wxEmptyString,
                            wxDIR_DIRS);
-    if (!dir.IsOpened())
-      return false;
 
     if (!ok)
       return false;
