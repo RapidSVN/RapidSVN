@@ -217,7 +217,7 @@ LogRevList::GetPriorRevision(const svn_revnum_t revnum) const
 
   do
   {
-    item = GetNextItem(item, wxLIST_NEXT_BELOW,
+    item = GetNextItem(item, wxLIST_NEXT_ALL,
                        wxLIST_STATE_DONTCARE);
     if (item != -1)
     {
