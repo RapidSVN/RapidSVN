@@ -182,6 +182,11 @@ public:
   ~Data()
   {
     DeleteAllItems();
+	  if (singleContext != 0)
+	  {
+		  delete singleContext;
+		  singleContext = 0;
+	  }
   }
 
   /**
