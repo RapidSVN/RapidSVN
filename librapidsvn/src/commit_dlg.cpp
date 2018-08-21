@@ -53,7 +53,7 @@ CommitDlg::CommitDlg(wxWindow* parent, const svn::PathVector & filenames)
                               prefs.useLastCommitMessage);
   m_textMessage->SetValidator(valMessage);
 
-  HistoryValidator valHistory(HISTORY_COMMIT_LOG, 0, true);
+  HistoryValidator valHistory(HISTORY_COMMIT_LOG, 0, true, prefs.useLastCommitMessage);
   m_comboHistory->SetValidator(valHistory);
 
   m_usesFilenames = filenames.size() > 0;
