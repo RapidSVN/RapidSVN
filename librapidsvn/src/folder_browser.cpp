@@ -182,11 +182,8 @@ public:
   ~Data()
   {
     DeleteAllItems();
-	  if (singleContext != 0)
-	  {
-		  delete singleContext;
-		  singleContext = 0;
-	  }
+    delete singleContext;
+    singleContext = 0;
   }
 
   /**
@@ -990,11 +987,8 @@ public:
     }
     else
     {
-      if (singleContext != 0)
-      {
-        delete singleContext;
-        singleContext = 0;
-      }
+      delete singleContext;
+      singleContext = 0;
 
       BookmarkHashMap::iterator it = bookmarks.begin();
 
