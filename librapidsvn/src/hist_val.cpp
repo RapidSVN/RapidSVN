@@ -114,7 +114,7 @@ HistoryValidator::TransferToWindow()
 
       // if we have an entry, select it
       if (!comboBox->IsListEmpty())
-        comboBox->SetSelection(0, 0);
+        comboBox->SetSelection(0);
     }
 
     return true;

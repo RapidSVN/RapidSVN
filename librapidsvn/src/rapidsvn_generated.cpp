@@ -93,14 +93,14 @@ AuthDlgBase::AuthDlgBase(wxWindow* parent, wxWindowID id, const wxString& title,
   authSizer->Add(m_staticUsername, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
   m_textUsername = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-  authSizer->Add(m_textUsername, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+  authSizer->Add(m_textUsername, 1, wxALL|wxEXPAND, 5);
 
   m_staticPassword = new wxStaticText(this, wxID_ANY, _("&Password"), wxDefaultPosition, wxDefaultSize, 0);
   m_staticPassword->Wrap(-1);
   authSizer->Add(m_staticPassword, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
   m_textPassword = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PASSWORD);
-  authSizer->Add(m_textPassword, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+  authSizer->Add(m_textPassword, 1, wxALL|wxEXPAND, 5);
 
 
   m_mainSizer->Add(authSizer, 0, wxEXPAND, 5);
@@ -2043,7 +2043,7 @@ SwitchDlgBase::SwitchDlgBase(wxWindow* parent, wxWindowID id, const wxString& ti
   m_revisionSizer = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("Revision")), wxHORIZONTAL);
 
   m_textRevision = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-  m_revisionSizer->Add(m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+  m_revisionSizer->Add(m_textRevision, 1, wxALL|wxEXPAND, 5);
 
   m_checkUseLatest = new wxCheckBox(this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0);
   m_checkUseLatest->SetValue(true);
@@ -2149,7 +2149,7 @@ UpdateDlgBase::UpdateDlgBase(wxWindow* parent, wxWindowID id, const wxString& ti
   m_revisionSizer = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("Revision")), wxHORIZONTAL);
 
   m_textRevision = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-  m_revisionSizer->Add(m_textRevision, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+  m_revisionSizer->Add(m_textRevision, 1, wxALL|wxEXPAND, 5);
 
   m_checkUseLatest = new wxCheckBox(this, wxID_ANY, _("Use latest"), wxDefaultPosition, wxDefaultSize, 0);
   m_checkUseLatest->SetValue(true);

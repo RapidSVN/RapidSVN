@@ -182,6 +182,8 @@ public:
   ~Data()
   {
     DeleteAllItems();
+    delete singleContext;
+    singleContext = 0;
   }
 
   /**
@@ -368,10 +370,11 @@ public:
 
     wxDir dir(path);
 
+	if (!dir.IsOpened())
+		return false;
+
     bool ok = dir.GetFirst(&filename, wxEmptyString,
                            wxDIR_DIRS);
-    if (!dir.IsOpened())
-      return false;
 
     if (!ok)
       return false;
@@ -984,11 +987,8 @@ public:
     }
     else
     {
-      if (singleContext != 0)
-      {
-        delete singleContext;
-        singleContext = 0;
-      }
+      delete singleContext;
+      singleContext = 0;
 
       BookmarkHashMap::iterator it = bookmarks.begin();
 

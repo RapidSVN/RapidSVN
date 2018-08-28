@@ -211,7 +211,6 @@ LogDlg::OnDiff(wxString & path, bool singleItemDiff)
     svn_revnum_t revnumPrior = m_listRevisions->GetPriorRevision(array[0]);
     if (revnumPrior != -1)
     {
-      data = new DiffData();
       data->path = path;
       data->compareType = DiffData::TWO_REVISIONS;
       data->revision1 = svn::Revision(array[0]);

@@ -219,8 +219,11 @@ bool
 Action::Prepare()
 {
   const wxString & dir = Utf8ToLocal(m->path.c_str());
-  if (!dir.empty())
-    wxSetWorkingDirectory(dir);
+  if (!dir.empty()) {
+    size_t index = dir.find("://");
+    if(index == wxNOT_FOUND)
+      wxSetWorkingDirectory(dir);
+  }
 
   return true;
 }
