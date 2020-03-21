@@ -1,3 +1,10 @@
+rapidsvn (0.13.0dfsg-6) unstable; urgency=medium
+
+  * Internal test release.
+  * Various assertions and null pointer cleanup fixes.
+
+ -- Florian Fischer <florianfischer@gmx.de>  Sat, 21 Mar 2020 17:18:00 +0100
+
 rapidsvn (0.13.0dfsg-5) unstable; urgency=medium
 
   * Internal test release.
