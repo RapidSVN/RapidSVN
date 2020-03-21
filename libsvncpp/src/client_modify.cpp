@@ -38,7 +38,7 @@ namespace svn
                    const Revision & revision,
                    svn_depth_t depth,
                    bool ignore_externals,
-                   const Revision & peg_revision) throw(ClientException)
+                   const Revision & peg_revision)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool();
@@ -64,7 +64,7 @@ namespace svn
 
   void
   Client::remove(const Path & path,
-                 bool force) throw(ClientException)
+                 bool force)
   {
     Pool pool;
     Targets targets(path.c_str());
@@ -82,7 +82,7 @@ namespace svn
 
   void
   Client::remove(const Targets & targets,
-                 bool force) throw(ClientException)
+                 bool force)
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
@@ -99,7 +99,7 @@ namespace svn
 
   void
   Client::lock(const Targets & targets, bool force,
-               const char * comment) throw(ClientException)
+               const char * comment)
   {
     Pool pool;
 
@@ -114,7 +114,7 @@ namespace svn
   }
 
   void
-  Client::unlock(const Targets & targets, bool force) throw(ClientException)
+  Client::unlock(const Targets & targets, bool force)
   {
     Pool pool;
 
@@ -129,7 +129,7 @@ namespace svn
 
   void
   Client::revert(const Targets & targets,
-                 bool recurse) throw(ClientException)
+                 bool recurse)
   {
     Pool pool;
 
@@ -145,7 +145,7 @@ namespace svn
 
   void
   Client::add(const Path & path,
-              bool recurse) throw(ClientException)
+              bool recurse)
   {
     Pool pool;
 
@@ -168,7 +168,7 @@ namespace svn
                  const Revision & revision,
                  svn_depth_t depth,
                  bool depth_is_sticky,
-                 bool ignore_externals) throw(ClientException)
+                 bool ignore_externals)
   {
     Pool pool;
     apr_array_header_t * result_revs;
@@ -203,7 +203,7 @@ namespace svn
   Client::update(const Path & path,
                  const Revision & revision, svn_depth_t depth,
                  bool depth_is_sticky,
-                 bool ignore_externals) throw(ClientException)
+                 bool ignore_externals)
   {
     Targets targets(path.c_str());
     return update(targets, revision, depth, depth_is_sticky, ignore_externals)[0];
@@ -213,7 +213,7 @@ namespace svn
   Client::commit(const Targets & targets,
                  const char * message,
                  bool recurse,
-                 bool keep_locks) throw(ClientException)
+                 bool keep_locks)
   {
     Pool pool;
 
@@ -249,7 +249,7 @@ namespace svn
   void
   Client::copy(const Path & srcPath,
                const Revision & srcRevision,
-               const Path & destPath) throw(ClientException)
+               const Path & destPath)
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
@@ -269,7 +269,7 @@ namespace svn
   Client::move(const Path & srcPath,
                const Revision & /*srcRevision*/,
                const Path & destPath,
-               bool force) throw(ClientException)
+               bool force)
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
@@ -287,7 +287,7 @@ namespace svn
   }
 
   void
-  Client::mkdir(const Path & path) throw(ClientException)
+  Client::mkdir(const Path & path)
   {
     Pool pool;
     Targets targets(path.c_str());
@@ -304,7 +304,7 @@ namespace svn
   }
 
   void
-  Client::mkdir(const Targets & targets) throw(ClientException)
+  Client::mkdir(const Targets & targets)
   {
     Pool pool;
 
@@ -320,7 +320,7 @@ namespace svn
   }
 
   void
-  Client::cleanup(const Path & path) throw(ClientException)
+  Client::cleanup(const Path & path)
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool();
@@ -336,7 +336,7 @@ namespace svn
   Client::cleanup(const Path & path, bool breakLocks,
                   bool fixTimestamps, bool vacuumPristines,
                   bool includeExternals
-                 ) throw(ClientException)
+                 )
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool();
@@ -354,7 +354,7 @@ namespace svn
                  bool removeUnversioned, bool removeIgnored,
                  bool fixTimestamps, bool vacuumPristines,
                  bool includeExternals
-                ) throw(ClientException)
+                )
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool();
@@ -369,7 +369,7 @@ namespace svn
 
   void
   Client::upgrade(const Path &path
-                 ) throw(ClientException)
+                 )
   {
     Pool subPool;
     apr_pool_t * apr_pool = subPool.pool();
@@ -385,7 +385,7 @@ namespace svn
 
   void
   Client::resolved(const Path & path,
-                   bool recurse) throw(ClientException)
+                   bool recurse)
   {
     Pool pool;
     svn_error_t * error =
@@ -406,7 +406,7 @@ namespace svn
                    const Revision & peg_revision,
                    bool ignore_externals,
                    svn_depth_t depth,
-                   const char * native_eol) throw(ClientException)
+                   const char * native_eol)
   {
     Pool pool;
     svn_revnum_t revnum = 0;
@@ -432,7 +432,7 @@ namespace svn
   Client::doSwitch(const Path & path,
                    const char * url,
                    const Revision & revision,
-                   bool recurse) throw(ClientException)
+                   bool recurse)
   {
     Pool pool;
     svn_revnum_t revnum = 0;
@@ -454,7 +454,7 @@ namespace svn
   Client::import(const Path & path,
                  const char * url,
                  const char * message,
-                 bool recurse) throw(ClientException)
+                 bool recurse)
   {
     Pool pool;
     svn_client_commit_info_t *commit_info = NULL;
@@ -477,7 +477,7 @@ namespace svn
   Client::import(const Path & path,
                  const Path & url,
                  const char * message,
-                 bool recurse) throw(ClientException)
+                 bool recurse)
   {
     import(path, url.c_str(), message, recurse);
   }
@@ -488,7 +488,7 @@ namespace svn
                 const Path & localPath, bool force,
                 bool recurse,
                 bool notice_ancestry,
-                bool dry_run) throw(ClientException)
+                bool dry_run)
   {
     Pool pool;
     svn_error_t * error =
@@ -512,7 +512,7 @@ namespace svn
   Client::relocate(const Path & path,
                    const char * from_url,
                    const char * to_url,
-                   bool recurse) throw(ClientException)
+                   bool recurse)
   {
     Pool pool;
     svn_error_t * error =
@@ -528,7 +528,7 @@ namespace svn
   }
 
   void
-  Client::ignore(const Path & path) throw(ClientException)
+  Client::ignore(const Path & path)
   {
     static const char s_svnIgnore[] = "svn:ignore";
     Pool pool;
@@ -594,7 +594,7 @@ namespace svn
   }
 
   void
-  Client::ignore(const Targets & targets) throw(ClientException)
+  Client::ignore(const Targets & targets)
   {
     // it's slow, but simple
     for (std::vector<Path>::const_iterator i=targets.targets().begin(), e=targets.targets().end(); i!=e; ++i)
