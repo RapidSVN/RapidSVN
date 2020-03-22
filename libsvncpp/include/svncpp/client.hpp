@@ -442,7 +442,7 @@ namespace svn
      * directory on disk and schedules it for addition. If <i>path</i>
      * is a URL then authentication is usually required, see Auth.
      *
-     * @param path
+     * @param path Directory to create
      * @exception ClientException If libsvn reports an error during the operation.
      */
     void
@@ -454,7 +454,7 @@ namespace svn
      * for addition. If <i>path</i>
      * is a URL then authentication is usually required, see Auth.
      *
-     * @param path
+     * @param targets Directories to create
      * @exception ClientException If libsvn reports an error during the operation.
      */
     void
