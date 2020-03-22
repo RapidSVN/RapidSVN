@@ -224,7 +224,12 @@ void LogList::OnPopupClick(wxCommandEvent &evt)
   {
     wxString r;
     for (long l = GetFirstSelected(); l != -1; l = GetNextSelected(l))
-      r << items[l].action << '\t' << items[l].message << '\n';
+    {
+      if (l < 0 || l >= (long)displayedItems.size())
+        continue;
+      long actualIdx = displayedItems[l];
+      r << items[actualIdx].action << '\t' << items[actualIdx].message << '\n';
+    }
     // Write some text to the clipboard
     if (wxTheClipboard->Open())
     {

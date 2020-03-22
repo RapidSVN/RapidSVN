@@ -77,7 +77,7 @@ namespace svn
   static apr_file_t *
   openTempFile(Path & dstPath, const Path & path,
                const Revision & revision, Pool & pool)
- 
+
   {
     apr_file_t * file = 0;
 

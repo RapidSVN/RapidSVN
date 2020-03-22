@@ -370,8 +370,8 @@ public:
 
     wxDir dir(path);
 
-	if (!dir.IsOpened())
-		return false;
+    if (!dir.IsOpened())
+      return false;
 
     bool ok = dir.GetFirst(&filename, wxEmptyString,
                            wxDIR_DIRS);

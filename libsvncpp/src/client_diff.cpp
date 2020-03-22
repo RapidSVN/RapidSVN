@@ -161,7 +161,7 @@ namespace svn
                const Path & path2, const Revision & revision1,
                const Revision & revision2, const bool recurse,
                const bool ignoreAncestry, const bool noDiffDeleted)
- 
+
   {
     Pool pool;
     svn_error_t * error;
