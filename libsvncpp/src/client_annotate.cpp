@@ -52,7 +52,7 @@ namespace svn
   AnnotatedFile *
   Client::annotate(const Path & path,
                    const Revision & revisionStart,
-                   const Revision & revisionEnd) throw(ClientException)
+                   const Revision & revisionEnd)
   {
     Pool pool;
     AnnotatedFile * entries = new AnnotatedFile;

@@ -181,6 +181,7 @@ namespace svn
      * @param update Query the repository for updates.
      * @param no_ignore Disregard default and svn:ignore property ignores.
      * @param ignore_externals Disregard external files.
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return vector with Status entries.
      */
     StatusEntries
@@ -189,7 +190,7 @@ namespace svn
            const bool get_all = true,
            const bool update = false,
            const bool no_ignore = false,
-           const bool ignore_externals = false) throw(ClientException);
+           const bool ignore_externals = false);
 
     /**
      * Enumerates all files/dirs matchin the parameter @a filter
@@ -205,6 +206,7 @@ namespace svn
      * @param descend Recurse into subdirectories if existant.
      * @param update Query the repository for updates.
      * @param entries vector with Status entries
+     * @exception ClientException If libsvn reports an error during the operation.
      *
      * @return current revnum
      */
@@ -213,7 +215,7 @@ namespace svn
            const StatusFilter & filter,
            const bool descend,
            const bool update,
-           StatusEntries & entries) throw(ClientException);
+           StatusEntries & entries);
 
 
     /**
@@ -225,7 +227,7 @@ namespace svn
      * @param depth the checkout depth.
      * @param ignore_externals whether you want get external resources too.
      * @param peg_revision peg revision to checkout, by default current.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     svn_revnum_t
     checkout(const char * moduleName,
@@ -233,33 +235,33 @@ namespace svn
              const Revision & revision,
              svn_depth_t depth,
              bool ignore_externals = false,
-             const Revision & peg_revision = Revision::UNSPECIFIED) throw(ClientException);
+             const Revision & peg_revision = Revision::UNSPECIFIED);
 
     /**
      * relocate wc @a from to @a to
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     relocate(const Path & path, const char *from_url,
-             const char *to_url, bool recurse) throw(ClientException);
+             const char *to_url, bool recurse);
 
     /**
      * Sets a single file for deletion.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
-    remove(const Path & path, bool force) throw(ClientException);
+    remove(const Path & path, bool force);
 
     /**
      * Sets files for deletion.
      *
      * @param targets targets to delete
      * @param force force if files are locally modified
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     remove(const Targets & targets,
-           bool force) throw(ClientException);
+           bool force);
 
     /**
      * Sets files to lock.
@@ -267,38 +269,38 @@ namespace svn
      * @param targets targets to lock
      * @param force force setting/stealing lock
      * @param comment writing comment about lock setting is neccessary
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     lock(const Targets & targets, bool force,
-         const char * comment) throw(ClientException);
+         const char * comment);
 
     /**
      * Sets files to unlock.
      *
      * @param targets targets to unlock
      * @param force force unlock even if lock belongs to another user
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
-    unlock(const Targets & targets, bool force) throw(ClientException);
+    unlock(const Targets & targets, bool force);
 
     /**
      * Reverts a couple of files to a pristiner state.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
-    revert(const Targets & targets, bool recurse) throw(ClientException);
+    revert(const Targets & targets, bool recurse);
 
     /**
      * Adds a file to the repository.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
-    add(const Path & path, bool recurse) throw(ClientException);
+    add(const Path & path, bool recurse);
 
     /**
-     * Updates the file or directory.
+     * Updates the files or directories.
      * @param targets target files.
      * @param revision the revision number to checkout.
      *                 Revision::HEAD will checkout the
@@ -307,7 +309,7 @@ namespace svn
      *              The special value svn_depth_unknown fetches whatever was already there (the previous "sticky depth").
      * @param depth_is_sticky If depth != svn_depth_unknown, makes the depth sticky (it will be saved permanently).
      * @param ignore_externals don't affect external destinations.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      *
      * @return a vector with resulting revisions
      */
@@ -316,14 +318,28 @@ namespace svn
            const Revision & revision,
            svn_depth_t depth,
            bool depth_is_sticky,
-           bool ignore_externals) throw(ClientException);
+           bool ignore_externals);
 
+    /**
+     * Updates the file or directory.
+     * @param path The single file or directory to update.
+     * @param revision the revision number to checkout.
+     *                 Revision::HEAD will checkout the
+     *                 latest revision.
+     * @param depth the update depth.
+     *              The special value svn_depth_unknown fetches whatever was already there (the previous "sticky depth").
+     * @param depth_is_sticky If depth != svn_depth_unknown, makes the depth sticky (it will be saved permanently).
+     * @param ignore_externals don't affect external destinations.
+     * @exception ClientException If libsvn reports an error during the operation.
+     *
+     * @return The resulting (new) revision of the file or directory.
+     */
     svn_revnum_t
     update(const Path & path,
            const Revision & revision,
            svn_depth_t depth,
            bool depth_is_sticky,
-           bool ignore_externals) throw(ClientException);
+           bool ignore_externals);
 
     /**
      * Retrieves the contents for a specific @a revision of
@@ -333,12 +349,13 @@ namespace svn
      * @param revision revision to retrieve
      * @param peg_revision peg revision to retrieve,
      *        by default is the latest one
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return contents of the file
      */
     std::string
     cat(const Path & path,
         const Revision & revision,
-        const Revision & peg_revision = Revision::UNSPECIFIED) throw(ClientException);
+        const Revision & peg_revision = Revision::UNSPECIFIED);
 
 
     /**
@@ -356,12 +373,13 @@ namespace svn
      * @param path path or url
      * @param revision
      * @param peg_revision peg revision to retrieve, by default is the latest one
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     get(Path & dstPath,
         const Path & path,
         const Revision & revision,
-        const Revision & peg_revision = Revision::UNSPECIFIED) throw(ClientException);
+        const Revision & peg_revision = Revision::UNSPECIFIED);
 
 
     /**
@@ -371,12 +389,13 @@ namespace svn
      * @param path path of file or directory
      * @param revisionStart revision to retrieve
      * @param revisionEnd revision to retrieve
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return contents of the file
      */
     AnnotatedFile *
     annotate(const Path & path,
              const Revision & revisionStart,
-             const Revision & revisionEnd) throw(ClientException);
+             const Revision & revisionEnd);
 
     /**
      * Commits changes to the repository. This usually requires
@@ -391,55 +410,64 @@ namespace svn
      * @param message log message.
      * @param recurse whether the operation should be done recursively.
      * @param keep_locks whether to preserve locks or to release them after commit
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     svn_revnum_t
     commit(const Targets & targets,
            const char * message,
            bool recurse,
-           bool keep_locks = false) throw(ClientException);
+           bool keep_locks = false);
 
     /**
      * Copies a versioned file with the history preserved.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     copy(const Path & srcPath,
          const Revision & srcRevision,
-         const Path & destPath) throw(ClientException);
+         const Path & destPath);
 
     /**
      * Moves or renames a file.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     move(const Path & srcPath,
          const Revision & srcRevision,
          const Path & destPath,
-         bool force) throw(ClientException);
+         bool force);
 
     /**
      * Creates a directory directly in a repository or creates a
      * directory on disk and schedules it for addition. If <i>path</i>
      * is a URL then authentication is usually required, see Auth.
      *
-     * @param path
-     * @exception ClientException
+     * @param path Directory to create
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
-    mkdir(const Path & path) throw(ClientException);
+    mkdir(const Path & path);
 
+    /**
+     * Creates one or several directories directly in a repository or
+     * creates one or several directories on disk and schedules them
+     * for addition. If <i>path</i>
+     * is a URL then authentication is usually required, see Auth.
+     *
+     * @param targets Directories to create
+     * @exception ClientException If libsvn reports an error during the operation.
+     */
     void
-    mkdir(const Targets & targets) throw(ClientException);
+    mkdir(const Targets & targets);
 
     /**
      * Recursively cleans up a local directory, finishing any
      * incomplete operations, removing lockfiles, etc.
      * @param path a local directory.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
-    cleanup(const Path & path) throw(ClientException);
+    cleanup(const Path & path);
 
     /**
      * Recursively cleans up a local directory, finishing any
@@ -450,12 +478,12 @@ namespace svn
      * @param fixTimestamps Fix recorded timestamps for unmodified files
      * @param vacuumPristines Remove unreferenced files in the pristine store
      * @param includeExternals Recurse into externals and clean them up as well
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     cleanup(const Path & path,
             bool breakLocks, bool fixTimestamps, bool vacuumPristines,
-            bool includeExternals) throw(ClientException);
+            bool includeExternals);
 
     /**
      * Recursively removes unversioned and/or ignored files from a local directory.
@@ -466,13 +494,13 @@ namespace svn
      * @param fixTimestamps Fix recorded timestamps for unmodified files
      * @param vacuumPristines Remove unreferenced files in the pristine store
      * @param includeExternals Recurse into externals and clean them up as well
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     vacuum(const Path &path,
            bool removeUnversioned, bool removeIgnored,
            bool fixTimestamps, bool vacuumPristines,
-           bool includeExternals) throw(ClientException);
+           bool includeExternals);
 
     /**
      * Upgrades an entire working copy to the newest format supported
@@ -480,16 +508,17 @@ namespace svn
      * It is necessary to upgrade working copies before performing any other
      * operations on them, if they were checked out with an older SVN version.
      * @param path Path to the working copy root directory.
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
-    upgrade(const Path &path) throw(ClientException);
+    upgrade(const Path &path);
 
     /**
      * Removes the 'conflicted' state on a file.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
-    resolved(const Path & path, bool recurse) throw(ClientException);
+    resolved(const Path & path, bool recurse);
 
     /**
      * Export into file or directory TO_PATH from local or remote FROM_PATH
@@ -502,7 +531,7 @@ namespace svn
      * @param depth recursion depth
      * @param native_eol which EOL to use when exporting, usually different for
      * different OSs
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     doExport(const Path & from_path,
@@ -512,17 +541,17 @@ namespace svn
              const Revision & peg_revision = Revision::UNSPECIFIED,
              bool ignore_externals = false,
              svn_depth_t depth = svn_depth_infinity,
-             const char * native_eol = NULL) throw(ClientException);
+             const char * native_eol = NULL);
 
     /**
      * Update local copy to mirror a new url. This excapsulates the
      * svn_client_switch() client method.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     svn_revnum_t
     doSwitch(const Path & path, const char * url,
              const Revision & revision,
-             bool recurse) throw(ClientException);
+             bool recurse);
 
     /**
      * Import file or directory PATH into repository directory URL at
@@ -531,23 +560,23 @@ namespace svn
      * @param url
      * @param message log message.
      * @param recurse
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     import(const Path & path,
            const char * url,
            const char * message,
-           bool recurse) throw(ClientException);
+           bool recurse);
     void
     import(const Path & path,
            const Path & url,
            const char * message,
-           bool recurse) throw(ClientException);
+           bool recurse);
 
 
     /**
      * Merge changes from two paths into a new local path.
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     merge(const Path & path1, const Revision & revision1,
@@ -555,7 +584,7 @@ namespace svn
           const Path & localPath, bool force,
           bool recurse,
           bool notice_ancestry = false,
-          bool dry_run = false) throw(ClientException);
+          bool dry_run = false);
 
 
     /**
@@ -569,12 +598,13 @@ namespace svn
      * @param pegRevision
      * @param revision
      * @param recurse
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     InfoVector
     info(const Path & pathOrUrl,
          bool recurse=false,
          const Revision & revision = Revision::UNSPECIFIED,
-         const Revision & pegRevision = Revision::UNSPECIFIED) throw(ClientException);
+         const Revision & pegRevision = Revision::UNSPECIFIED);
 
 
     /**
@@ -590,6 +620,7 @@ namespace svn
      * @param revisionEnd
      * @param discoverChangedPaths
      * @param strictNodeHistory
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return a vector with log entries
      */
     const LogEntries *
@@ -597,7 +628,7 @@ namespace svn
         const Revision & revisionStart,
         const Revision & revisionEnd,
         bool discoverChangedPaths = false,
-        bool strictNodeHistory = true) throw(ClientException);
+        bool strictNodeHistory = true);
 
     /**
      * Retrieve log information for the given path
@@ -614,6 +645,7 @@ namespace svn
      * @param limit
      * @param discoverChangedPaths
      * @param strictNodeHistory
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return a vector with log entries
      */
     const LogEntries *
@@ -622,7 +654,7 @@ namespace svn
         const Revision & revisionEnd,
         const int limit,
         bool discoverChangedPaths = false,
-        bool strictNodeHistory = true) throw(ClientException);
+        bool strictNodeHistory = true);
 
     /**
      * Produce diff output which describes the delta between
@@ -644,13 +676,13 @@ namespace svn
      * @param noDiffDeleted if true, no diff output will be generated
      * on deleted files.
      * @return delta between the files
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     std::string
     diff(const Path & tmpPath, const Path & path,
          const Revision & revision1, const Revision & revision2,
          const bool recurse, const bool ignoreAncestry,
-         const bool noDiffDeleted) throw(ClientException);
+         const bool noDiffDeleted);
 
     /**
      * Produce diff output which describes the delta between
@@ -673,13 +705,13 @@ namespace svn
      * @param noDiffDeleted if true, no diff output will be generated
      * on deleted files.
      * @return delta between the files
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     std::string
     diff(const Path & tmpPath, const Path & path1, const Path & path2,
          const Revision & revision1, const Revision & revision2,
          const bool recurse, const bool ignoreAncestry,
-         const bool noDiffDeleted) throw(ClientException);
+         const bool noDiffDeleted);
 
     /**
      * Produce diff output which describes the delta of
@@ -702,14 +734,13 @@ namespace svn
      * @param noDiffDeleted if true, no diff output will be generated
      * on deleted files.
      * @return delta between the files
-     * @exception ClientException
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     std::string
     diff(const Path & tmpPath, const Path & path,
          const Revision & pegRevision, const Revision & revision1,
          const Revision & revision2, const bool recurse,
-         const bool ignoreAncestry, const bool noDiffDeleted)
-    throw(ClientException);
+         const bool ignoreAncestry, const bool noDiffDeleted);
 
     /**
      * lists entries in @a pathOrUrl no matter whether local or
@@ -720,11 +751,12 @@ namespace svn
      * @param recurse
      * @return a vector of directory entries, each with
      *         a relative path (only filename)
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     DirEntries
     list(const char * pathOrUrl,
          svn_opt_revision_t * revision,
-         bool recurse) throw(ClientException);
+         bool recurse);
 
     /**
      * lists properties in @a path no matter whether local or
@@ -733,6 +765,7 @@ namespace svn
      * @param path
      * @param revision
      * @param recurse
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return PropertiesList
      */
     PathPropertiesMapList
@@ -748,6 +781,7 @@ namespace svn
      * @param path
      * @param revision
      * @param recurse
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return PathPropertiesMapList
      */
     PathPropertiesMapList
@@ -770,6 +804,7 @@ namespace svn
      * @param propValue
      * @param recurse
      * @param skip_checks
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return PropertiesList
      */
     void
@@ -788,6 +823,7 @@ namespace svn
      * @param path
      * @param revision
      * @param recurse
+     * @exception ClientException If libsvn reports an error during the operation.
      */
     void
     propdel(const char * propName,
@@ -802,6 +838,7 @@ namespace svn
      *
      * @param path
      * @param revision
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return PropertiesList
      */
     std::pair<svn_revnum_t,PropertiesMap>
@@ -815,6 +852,7 @@ namespace svn
      * @param propName
      * @param path
      * @param revision
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return PropertiesList
      */
     std::pair<svn_revnum_t,std::string>
@@ -831,6 +869,7 @@ namespace svn
      * @param path
      * @param revision
      * @param force
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return Revision
      */
     svn_revnum_t
@@ -848,6 +887,7 @@ namespace svn
      * @param path
      * @param revision
      * @param force
+     * @exception ClientException If libsvn reports an error during the operation.
      * @return Revision
      */
     svn_revnum_t
@@ -859,23 +899,23 @@ namespace svn
 
     /**
      * Add a single file into ignore list.
-    *
+     *
      * @param path path to the file
-     * @exception ClientException
-    * @see svn:ignore property description
+     * @exception ClientException If libsvn reports an error during the operation.
+     * @see svn:ignore property description
      */
     void
-    ignore(const Path & path) throw(ClientException);
+    ignore(const Path & path);
 
     /**
      * Add files into ignore list.
      *
      * @param targets targets to treat as ignored
-     * @exception ClientException
-    * @see svn:ignore property description
+     * @exception ClientException If libsvn reports an error during the operation.
+     * @see svn:ignore property description
      */
     void
-    ignore(const Targets & targets) throw(ClientException);
+    ignore(const Targets & targets);
   private:
     Context * m_context;
     CommitInfo m_commitInfo;

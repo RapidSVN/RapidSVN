@@ -61,6 +61,7 @@ configure-stamp:
 		--host=$(DEB_HOST_GNU_TYPE) \
 		--build=$(DEB_BUILD_GNU_TYPE) \
 		--prefix=/usr \
+		--libdir=/usr/lib/$(DEB_TARGET_MULTIARCH)
 		--mandir=\$${prefix}/share/man \
 		--infodir=\$${prefix}/share/info \
 		--with-docbook-xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh \
@@ -108,14 +109,14 @@ install: build
 		debian/rapidsvn/usr/share/pixmaps/rapidsvn.png
 	cp -p doc/manpage/rapidsvn.1 \
 		debian/rapidsvn/usr/share/man/man1/
-	dh_installdirs -p$(p_lib) usr/lib
-	mv $(d)/usr/lib/libsvncpp.so.* $(d_lib)/usr/lib/
+	dh_installdirs -p$(p_lib) usr/lib/$(DEB_TARGET_MULTIARCH)
+	mv $(d)/usr/lib/$(DEB_TARGET_MULTIARCH)/libsvncpp.so.* $(d_lib)/usr/lib/$(DEB_TARGET_MULTIARCH)/
 
-	dh_installdirs -p$(p_dev) usr/lib
-	mv $(d)/usr/lib/libsvncpp.{a,so} $(d_dev)/usr/lib/
-	rm $(d)/usr/lib/libsvncpp.la*
-	: # rmdir $(d)/usr/lib/
-	rm $(d)/usr/lib/*.a $(d)/usr/lib/*.la
+	dh_installdirs -p$(p_dev) usr/lib/$(DEB_TARGET_MULTIARCH)
+	mv $(d)/usr/lib/$(DEB_TARGET_MULTIARCH)/libsvncpp.{a,so} $(d_dev)/usr/lib/$(DEB_TARGET_MULTIARCH)/
+	rm $(d)/usr/lib/$(DEB_TARGET_MULTIARCH)/libsvncpp.la*
+	: # rmdir $(d)/usr/lib/$(DEB_TARGET_MULTIARCH)/
+	rm $(d)/usr/lib/$(DEB_TARGET_MULTIARCH)/*.a $(d)/usr/lib/$(DEB_TARGET_MULTIARCH)/*.la
 	: # doesn't work yet
 	: #$(MAKE) -C include install DESTDIR=$(CURDIR)/$(d_dev)
 	mv $(d)/usr/include $(d_dev)/usr/
@@ -152,9 +153,9 @@ binary-arch: build install
 	dh_fixperms
 	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps -L$(p_lib) -l$(d_lib)/usr/lib -- -v
-	-ldd debian/libsvncpp4/usr/lib/libsvncpp.so.4.0.0 | grep libsvn_subr-1.so.1
-	-objdump -T /usr/lib/$(DEB_TARGET_MULTIARCH)/libsvn_subr-1.so.1 | egrep 'svn_error__locate|svn_sort__hash'
+	dh_shlibdeps -L$(p_lib) -l$(d_lib)/usr/lib/$(DEB_TARGET_MULTIARCH) -- -v
+	-ldd debian/libsvncpp4/usr/lib/$(DEB_TARGET_MULTIARCH)/libsvncpp.so.4.0.0 | grep libsvn_subr-1.so.1
+	-objdump -T /usr/lib/$(DEB_TARGET_MULTIARCH)/$(DEB_TARGET_MULTIARCH)/libsvn_subr-1.so.1 | egrep 'svn_error__locate|svn_sort__hash'
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

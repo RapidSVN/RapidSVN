@@ -31,3 +31,4 @@
 /packages/win32/Output
 *.swp
 *.pyc
+/Makefile.am.user
