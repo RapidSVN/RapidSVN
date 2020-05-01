@@ -1,0 +1,39 @@
+add_library(svncpp1 STATIC
+    ${LIBSVNCPP_DIR}/src/apr.cpp
+    ${LIBSVNCPP_DIR}/src/client_annotate.cpp
+    ${LIBSVNCPP_DIR}/src/client_cat.cpp
+    ${LIBSVNCPP_DIR}/src/client.cpp
+    ${LIBSVNCPP_DIR}/src/client_diff.cpp
+    ${LIBSVNCPP_DIR}/src/client_ls.cpp
+    ${LIBSVNCPP_DIR}/src/client_modify.cpp
+    ${LIBSVNCPP_DIR}/src/client_property.cpp
+    ${LIBSVNCPP_DIR}/src/client_status.cpp
+    ${LIBSVNCPP_DIR}/src/context.cpp
+    ${LIBSVNCPP_DIR}/src/datetime.cpp
+    ${LIBSVNCPP_DIR}/src/dirent.cpp
+    ${LIBSVNCPP_DIR}/src/entry.cpp
+    ${LIBSVNCPP_DIR}/src/exception.cpp
+    ${LIBSVNCPP_DIR}/src/info.cpp
+    ${LIBSVNCPP_DIR}/src/log_entry.cpp
+    ${LIBSVNCPP_DIR}/src/m_is_empty.cpp
+    ${LIBSVNCPP_DIR}/src/path.cpp
+    ${LIBSVNCPP_DIR}/src/pool.cpp
+    ${LIBSVNCPP_DIR}/src/property.cpp
+    ${LIBSVNCPP_DIR}/src/revision.cpp
+    ${LIBSVNCPP_DIR}/src/status.cpp
+    ${LIBSVNCPP_DIR}/src/status_selection.cpp
+    ${LIBSVNCPP_DIR}/src/targets.cpp
+    ${LIBSVNCPP_DIR}/src/url.cpp
+    ${LIBSVNCPP_DIR}/src/wc.cpp
+)
+
+target_include_directories(svncpp1
+    PUBLIC
+    ${LIBSVNCPP_DIR}/include
+    ${APR_INCLUDE_DIR}
+    ${SVN_INCLUDE_DIR}
+)
+
+target_link_libraries(svncpp1
+    ${SVN_LIBRARY_NAMES}
+)

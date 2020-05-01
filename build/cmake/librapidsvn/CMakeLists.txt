@@ -1,0 +1,106 @@
+add_library(rapidsvn1
+    ${LIBRAPIDSVN_DIR}/src/about_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/action.cpp
+    ${LIBRAPIDSVN_DIR}/src/action_event.cpp
+    ${LIBRAPIDSVN_DIR}/src/action_factory.cpp
+    ${LIBRAPIDSVN_DIR}/src/add_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/add_recursive_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/annotate_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/annotate_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/auth_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/cert_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/checkout_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/checkout_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/cleanup_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/cleanup_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/columns.cpp
+    ${LIBRAPIDSVN_DIR}/src/commit_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/commit_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/commit_log_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/create_repos_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/create_repos_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/delete_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/delete_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/destination_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/diff_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/diff_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/dnd_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/drag_n_drop_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/entry_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/exceptions.cpp
+    ${LIBRAPIDSVN_DIR}/src/export_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/export_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/external_program_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/file_info.cpp
+    ${LIBRAPIDSVN_DIR}/src/filelist_ctrl.cpp
+    ${LIBRAPIDSVN_DIR}/src/filelist_ctrl_drop_target.cpp
+    ${LIBRAPIDSVN_DIR}/src/folder_browser.cpp
+    ${LIBRAPIDSVN_DIR}/src/folder_browser_drop_target.cpp
+    ${LIBRAPIDSVN_DIR}/src/folder_item_data.cpp
+    ${LIBRAPIDSVN_DIR}/src/get_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/hist_entries.cpp
+    ${LIBRAPIDSVN_DIR}/src/hist_mgr.cpp
+    ${LIBRAPIDSVN_DIR}/src/hist_val.cpp
+    ${LIBRAPIDSVN_DIR}/src/ignore_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/import_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/import_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/listed_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/listener.cpp
+    ${LIBRAPIDSVN_DIR}/src/lock_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/lock_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/log_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/log_aff_list.cpp
+    ${LIBRAPIDSVN_DIR}/src/log_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/log_list.cpp
+    ${LIBRAPIDSVN_DIR}/src/log_rev_list.cpp
+    ${LIBRAPIDSVN_DIR}/src/main_frame.cpp
+    ${LIBRAPIDSVN_DIR}/src/main_frame_helper.cpp
+    ${LIBRAPIDSVN_DIR}/src/merge_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/merge_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/mkdir_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/move_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/preferences.cpp
+    ${LIBRAPIDSVN_DIR}/src/preferences_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/property_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/property_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/rapidsvn_drop_target.cpp
+    ${LIBRAPIDSVN_DIR}/src/rapidsvn_generated.cpp
+    ${LIBRAPIDSVN_DIR}/src/rename_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/report_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/resolve_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/revert_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/revert_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/simple_worker.cpp
+    ${LIBRAPIDSVN_DIR}/src/splitter.cpp
+    ${LIBRAPIDSVN_DIR}/src/switch_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/switch_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/threaded_worker.cpp
+    ${LIBRAPIDSVN_DIR}/src/tracer.cpp
+    ${LIBRAPIDSVN_DIR}/src/unlock_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/unlock_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/update_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/update_dlg.cpp
+    ${LIBRAPIDSVN_DIR}/src/upgrade_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/userresolve_action.cpp
+    ${LIBRAPIDSVN_DIR}/src/utils.cpp
+    ${LIBRAPIDSVN_DIR}/src/verblist.cpp
+    ${LIBRAPIDSVN_DIR}/src/view_action.cpp
+)
+
+target_include_directories(rapidsvn1
+    PUBLIC
+    ${LIBRAPIDSVN_DIR}/include
+    ${WX_INCLUDE_DIRS}
+)
+
+target_compile_definitions(rapidsvn1
+    PUBLIC
+    ${WX_DEFINITIONS}
+)
+
+target_link_libraries(rapidsvn1
+    svncpp1
+)
+
+# TODO unit tests are work in progress
+# add_subdirectory(tests)
