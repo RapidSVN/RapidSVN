@@ -118,7 +118,8 @@ public:
                 const char *mime_type,
                 svn_wc_notify_state_t content_state,
                 svn_wc_notify_state_t prop_state,
-                svn_revnum_t revision);
+                svn_revnum_t revision,
+                const char *detail);
 
   /**
    * @see svn::ContextListener

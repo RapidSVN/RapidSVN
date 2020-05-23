@@ -56,6 +56,7 @@ LogList::LogList(wxWindow * parent, wxWindowID id, const wxPoint& pos,
 
   // Initialize the list attrs
   errorItemAttr.SetTextColour(*wxRED);
+  warningItemAttr.SetTextColour(wxColour(0x66, 0x33, 0x00));
 
   // Initialize accelerators
   wxAcceleratorEntry entries[4];
@@ -157,9 +158,11 @@ wxListItemAttr *
 LogList::OnGetItemAttr(long item) const
 {
   const ItemInfo& actItem = GetActualItem(item);
-  // error items use their own special style
+  // error and warning items use their own special style
   if (actItem.type == LogItem_Error)
     return &errorItemAttr;
+  else if (actItem.type == LogItem_Warning)
+    return &warningItemAttr;
   // all others use the default style
   return NULL;
 }
