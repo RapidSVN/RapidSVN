@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-16 16:53+0200\n"
-"PO-Revision-Date: 2018-06-16 16:57+0200\n"
+"POT-Creation-Date: 2020-05-24 09:28+0200\n"
+"PO-Revision-Date: 2020-05-24 09:28+0200\n"
 "Last-Translator: Alexander Mueller <XelaRellum@web.de>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: ../exceptions.cpp:55
 #, c-format
@@ -32,7 +32,7 @@ msgstr "%s Version %s"
 msgid "%s Version %s Revision %d"
 msgstr "%s Version %s Revision %d"
 
-#: ../listener.cpp:559
+#: ../listener.cpp:560
 #, c-format
 msgid "%s at revision %ld"
 msgstr "%s bei Revision %ld"
@@ -319,7 +319,7 @@ msgstr "..."
 msgid "<None>"
 msgstr "<kein>"
 
-#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
+#: ../log_dlg.cpp:316 ../log_dlg.cpp:369
 msgid "A"
 msgstr "A"
 
@@ -443,7 +443,7 @@ msgstr ""
 "\n"
 "importieren wollen?"
 
-#: ../listener.cpp:549
+#: ../listener.cpp:550
 #, c-format
 msgid "At revision %ld"
 msgstr "Bei Revision %ld"
@@ -456,7 +456,7 @@ msgstr "Anmeldung"
 msgid "Author"
 msgstr "Autor"
 
-#: ../action.cpp:269
+#: ../action.cpp:272
 msgid "BASE"
 msgstr "BASIS"
 
@@ -486,7 +486,7 @@ msgstr "Übertrage Änderungen aus dem Repository in die Arbeitskopie"
 msgid "Browse"
 msgstr "Durchsuchen"
 
-#: ../log_list.cpp:287
+#: ../log_list.cpp:295
 msgid "Browse to\tCTRL-B"
 msgstr "Navigiere zu\tCTRL-B"
 
@@ -626,7 +626,7 @@ msgstr "Committete Revision"
 msgid "Compare:"
 msgstr "Vergleiche:"
 
-#: ../listener.cpp:549 ../listener.cpp:559
+#: ../listener.cpp:550 ../listener.cpp:560
 msgid "Completed"
 msgstr "Fertiggestellt"
 
@@ -693,7 +693,7 @@ msgstr "Kopiert von Revision"
 msgid "Copy"
 msgstr "Kopieren"
 
-#: ../log_list.cpp:284
+#: ../log_list.cpp:292
 msgid "Copy selected\tCTRL-C"
 msgstr "Ausgewählte kopieren\tCTRL-C"
 
@@ -728,7 +728,7 @@ msgstr "Repository Erzeugen"
 msgid "Create repository in &directory:"
 msgstr "Erzeuge Repository in &Verzeichnis:"
 
-#: ../log_dlg.cpp:318 ../log_dlg.cpp:371
+#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
 msgid "D"
 msgstr "D"
 
@@ -809,7 +809,7 @@ msgstr "Vergleiche mit BASIS"
 msgid "Diff to HEAD"
 msgstr "Vergleiche mit AKTUELLSTER"
 
-#: ../log_list.cpp:291
+#: ../log_list.cpp:299
 msgid "Diff to Previous Version...\tCTRL-D"
 msgstr "Vergleiche mit Vorversion...\tCTRL-D"
 
@@ -977,7 +977,7 @@ msgstr "Fehler beim Vorbereiten der Aktion."
 msgid "Error while preparing action: %s"
 msgstr "Fehler beim Vorbereiten der Aktion: %s"
 
-#: ../folder_browser.cpp:531
+#: ../folder_browser.cpp:534
 #, c-format
 msgid "Error while refreshing filelist (%s)"
 msgstr "Fehler beim Aktualisieren der Dateiliste (%s)"
@@ -1110,12 +1110,12 @@ msgstr "Unbegrenzte Rekursion (alle Dateien und Unterverzeichnisse)"
 msgid "General"
 msgstr "Allgemein"
 
-#: ../action.cpp:276
+#: ../action.cpp:279
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "Hole Datei %s rev. %s"
 
-#: ../action.cpp:267
+#: ../action.cpp:270
 msgid "HEAD"
 msgstr "AKTUELLSTE"
 
@@ -1354,11 +1354,11 @@ msgstr "Log für ausgewählte"
 msgid "Login..."
 msgstr "Anmelden..."
 
-#: ../folder_browser.cpp:336
+#: ../folder_browser.cpp:338
 msgid "Logout"
 msgstr "Abmelden"
 
-#: ../folder_browser.cpp:341
+#: ../folder_browser.cpp:343
 #, c-format
 msgid "Logout '%s'"
 msgstr "'%s' abmelden"
@@ -1536,7 +1536,7 @@ msgstr "Öffnen..."
 msgid "Overwrite"
 msgstr "Überschreiben"
 
-#: ../action.cpp:271
+#: ../action.cpp:274
 msgid "PREVIOUS"
 msgstr "VORGÄNGER"
 
@@ -1842,7 +1842,7 @@ msgstr "Wählen Sie ein Verzeichnis für den Import"
 msgid "Select a file to import"
 msgstr "Wählen Sie eine Datei für den Import"
 
-#: ../log_list.cpp:285
+#: ../log_list.cpp:293
 msgid "Select all\tCTRL-A"
 msgstr "Alle auswählen\tCTRL-A"
 
@@ -2196,6 +2196,10 @@ msgstr "Ansehen..."
 #: ../rapidsvn_generated.cpp:614
 msgid "WARNING"
 msgstr "WARNUNG"
+
+#: ../listener.cpp:570
+msgid "Warning"
+msgstr "Warnung"
 
 #: ../rapidsvn_generated.cpp:2163
 msgid "Working copy (as before)"
