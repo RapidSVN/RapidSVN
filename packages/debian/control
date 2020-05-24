@@ -23,6 +23,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Conflicts: libsvncpp0, libsvncpp0c2, libsvncpp0c2a, libsvncpp3
 Replaces: libsvncpp0, libsvncpp0c2, libsvncpp0c2a, libsvncpp3
+Multi-Arch: same
 Description: Subversion C++ shared library
  This package contains a runtime library with C++ bindings for Subversion.
  libsvncpp4 is a C++ wrapper for the C Subversion client library which 

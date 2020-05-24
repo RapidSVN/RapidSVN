@@ -271,6 +271,9 @@ namespace svn
     onNotify2(void*baton,const svn_wc_notify_t *action,apr_pool_t *)
     {
       Data * data = static_cast <Data *>(baton);
+      const char* detail = NULL;
+      if(action->err)
+        detail = action->err->message;
 
       data->notify(action->path,
                    action->action,
@@ -278,7 +281,8 @@ namespace svn
                    action->mime_type,
                    action->content_state,
                    action->prop_state,
-                   action->revision
+                   action->revision,
+                   detail
                    /* TODO
                    , action->lock_state,
                    action->changelist_name,
@@ -546,12 +550,13 @@ namespace svn
            const char *mime_type,
            svn_wc_notify_state_t content_state,
            svn_wc_notify_state_t prop_state,
-           svn_revnum_t revision)
+           svn_revnum_t revision,
+           const char *detail)
     {
       if (listener != 0)
       {
         listener->contextNotify(path, action, kind, mime_type,
-                                content_state, prop_state, revision);
+                                content_state, prop_state, revision, detail);
       }
     }
 

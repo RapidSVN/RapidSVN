@@ -457,7 +457,7 @@ ACTION_NAMES [] =
   {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_missing
   {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_out_of_date
   {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_no_parent
-  {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_locked
+  {LogItem_Normal, N_("Locked")},          //   svn_wc_notify_failed_locked
   {LogItem_Normal, NULL},                  //   svn_wc_notify_failed_forbidden_by_server
   {LogItem_Normal, NULL},                  //   svn_wc_notify_skip_conflicted
   {LogItem_Updated, N_("Lock broken")},     //   svn_wc_notify_update_broken_lock
@@ -498,7 +498,8 @@ Listener::contextNotify(const char *path,
                         const char * WXUNUSED(mime_type),
                         svn_wc_notify_state_t content_state,
                         svn_wc_notify_state_t prop_state,
-                        svn_revnum_t revision)
+                        svn_revnum_t revision,
+                        const char* detail)
 {
   static UpdateCounter updateCounter;
 
@@ -564,6 +565,9 @@ Listener::contextNotify(const char *path,
   default:
     break;
   }
+
+  if(detail != NULL)
+    Trace(LogItem_Warning, _("Warning"), detail);
 
 #ifdef USE_SIMPLE_WORKER
   static apr_time_t last_access = apr_time_now();

@@ -47,6 +47,7 @@ namespace svn
      * a non-versioned entry. This can be checked
      * later with @a isValid ().
      *
+     * @param path Path of the entry
      * @param src another entry to copy from
      */
     Info(const Path & path, const svn_info_t * src = 0);

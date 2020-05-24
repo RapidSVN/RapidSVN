@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-16 16:54+0200\n"
+"POT-Creation-Date: 2020-05-24 09:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgstr ""
 msgid "%s Version %s Revision %d"
 msgstr ""
 
-#: ../listener.cpp:559
+#: ../listener.cpp:560
 #, c-format
 msgid "%s at revision %ld"
 msgstr ""
@@ -317,7 +317,7 @@ msgstr ""
 msgid "<None>"
 msgstr ""
 
-#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
+#: ../log_dlg.cpp:316 ../log_dlg.cpp:369
 msgid "A"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgid ""
 "  %s?"
 msgstr ""
 
-#: ../listener.cpp:549
+#: ../listener.cpp:550
 #, c-format
 msgid "At revision %ld"
 msgstr ""
@@ -446,7 +446,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: ../action.cpp:269
+#: ../action.cpp:272
 msgid "BASE"
 msgstr ""
 
@@ -476,7 +476,7 @@ msgstr ""
 msgid "Browse"
 msgstr ""
 
-#: ../log_list.cpp:287
+#: ../log_list.cpp:295
 msgid "Browse to\tCTRL-B"
 msgstr ""
 
@@ -611,7 +611,7 @@ msgstr ""
 msgid "Compare:"
 msgstr ""
 
-#: ../listener.cpp:549 ../listener.cpp:559
+#: ../listener.cpp:550 ../listener.cpp:560
 msgid "Completed"
 msgstr ""
 
@@ -678,7 +678,7 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: ../log_list.cpp:284
+#: ../log_list.cpp:292
 msgid "Copy selected\tCTRL-C"
 msgstr ""
 
@@ -713,7 +713,7 @@ msgstr ""
 msgid "Create repository in &directory:"
 msgstr ""
 
-#: ../log_dlg.cpp:318 ../log_dlg.cpp:371
+#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
 msgid "D"
 msgstr ""
 
@@ -790,7 +790,7 @@ msgstr ""
 msgid "Diff to HEAD"
 msgstr ""
 
-#: ../log_list.cpp:291
+#: ../log_list.cpp:299
 msgid "Diff to Previous Version...\tCTRL-D"
 msgstr ""
 
@@ -955,7 +955,7 @@ msgstr ""
 msgid "Error while preparing action: %s"
 msgstr ""
 
-#: ../folder_browser.cpp:531
+#: ../folder_browser.cpp:534
 #, c-format
 msgid "Error while refreshing filelist (%s)"
 msgstr ""
@@ -1084,12 +1084,12 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: ../action.cpp:276
+#: ../action.cpp:279
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr ""
 
-#: ../action.cpp:267
+#: ../action.cpp:270
 msgid "HEAD"
 msgstr ""
 
@@ -1318,11 +1318,11 @@ msgstr ""
 msgid "Login..."
 msgstr ""
 
-#: ../folder_browser.cpp:336
+#: ../folder_browser.cpp:338
 msgid "Logout"
 msgstr ""
 
-#: ../folder_browser.cpp:341
+#: ../folder_browser.cpp:343
 #, c-format
 msgid "Logout '%s'"
 msgstr ""
@@ -1491,7 +1491,7 @@ msgstr ""
 msgid "Overwrite"
 msgstr ""
 
-#: ../action.cpp:271
+#: ../action.cpp:274
 msgid "PREVIOUS"
 msgstr ""
 
@@ -1794,7 +1794,7 @@ msgstr ""
 msgid "Select a file to import"
 msgstr ""
 
-#: ../log_list.cpp:285
+#: ../log_list.cpp:293
 msgid "Select all\tCTRL-A"
 msgstr ""
 
@@ -2130,6 +2130,10 @@ msgstr ""
 
 #: ../rapidsvn_generated.cpp:614
 msgid "WARNING"
+msgstr ""
+
+#: ../listener.cpp:570
+msgid "Warning"
 msgstr ""
 
 #: ../rapidsvn_generated.cpp:2163
