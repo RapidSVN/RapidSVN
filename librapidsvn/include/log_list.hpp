@@ -93,6 +93,7 @@ private:
   std::vector<size_t> displayedItems;
   bool categoryEnabled[LogItemTypeCount];
   mutable wxListItemAttr errorItemAttr;
+  mutable wxListItemAttr warningItemAttr;
 
   void RebuildDisplayedItems();
   const ItemInfo &GetActualItem(long item) const;

@@ -17,7 +17,7 @@ DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 DEB_TARGET_MULTIARCH ?= $(shell dpkg-architecture -qDEB_TARGET_MULTIARCH)
-INCLUDEDIR = "/usr/lib/$(DEB_HOST_MULTIARCH)"
+INCLUDEDIR = /usr/lib/$(DEB_HOST_MULTIARCH)
 
 SHELL=/bin/bash
 
@@ -61,7 +61,7 @@ configure-stamp:
 		--host=$(DEB_HOST_GNU_TYPE) \
 		--build=$(DEB_BUILD_GNU_TYPE) \
 		--prefix=/usr \
-		--libdir=/usr/lib/$(DEB_TARGET_MULTIARCH)
+		--libdir=/usr/lib/$(DEB_TARGET_MULTIARCH) \
 		--mandir=\$${prefix}/share/man \
 		--infodir=\$${prefix}/share/info \
 		--with-docbook-xsl=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh \

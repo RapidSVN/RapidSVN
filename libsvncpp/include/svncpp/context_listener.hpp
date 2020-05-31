@@ -84,7 +84,8 @@ namespace svn
                   const char *mime_type,
                   svn_wc_notify_state_t content_state,
                   svn_wc_notify_state_t prop_state,
-                  svn_revnum_t revision) = 0;
+                  svn_revnum_t revision,
+                  const char *detail) = 0;
 
     /*
      * this method will be called periodically to allow

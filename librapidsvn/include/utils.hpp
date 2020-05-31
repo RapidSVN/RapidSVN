@@ -53,6 +53,7 @@ namespace svn
 enum LogItemType
 {
   LogItem_Normal,
+  LogItem_Warning,
   LogItem_Error,
   LogItem_Added,
   LogItem_Deleted,

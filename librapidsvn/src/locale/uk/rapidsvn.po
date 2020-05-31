@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RapidSVN 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 14:02+0100\n"
+"POT-Creation-Date: 2020-05-24 09:28+0200\n"
 "PO-Revision-Date: 2006-05-15 11:14+0100\n"
 "Last-Translator: Olha <sleepy@adam-i-eva.com>\n"
 "Language-Team: RapidSVN Developers <dev@rapidsvn.tigris.org>\n"
@@ -31,12 +31,17 @@ msgstr "%s версія %d.%d.%d"
 msgid "%s Version %s Revision %d"
 msgstr "%s версія %d.%d.%d"
 
-#: ../utils.cpp:370
+#: ../listener.cpp:560
+#, fuzzy, c-format
+msgid "%s at revision %ld"
+msgstr "Зафіксовано ревізію"
+
+#: ../utils.cpp:377
 #, c-format
 msgid "%x %X"
 msgstr ""
 
-#: ../main_frame.cpp:332
+#: ../main_frame.cpp:334
 msgid "&About..."
 msgstr "Про програму..."
 
@@ -44,33 +49,33 @@ msgstr "Про програму..."
 msgid "&Add\tINS"
 msgstr ""
 
-#: ../utils.cpp:258
+#: ../utils.cpp:261
 msgid "&Add Existing Working Copy..."
 msgstr "Додати існуючу робочу копію..."
 
-#: ../rapidsvn_generated.cpp:1188
+#: ../rapidsvn_generated.cpp:1368
 msgid "&Annotate"
 msgstr ""
 
-#: ../utils.cpp:213 ../utils.cpp:223
+#: ../utils.cpp:216 ../utils.cpp:226
 #, fuzzy
 msgid "&Annotate..."
 msgstr "Про програму..."
 
-#: ../main_frame.cpp:363
+#: ../main_frame.cpp:365
 msgid "&Bookmarks"
 msgstr "Закладки"
 
-#: ../rapidsvn_generated.cpp:549
+#: ../rapidsvn_generated.cpp:594
 #, fuzzy
 msgid "&Browse"
 msgstr "Закрити"
 
-#: ../rapidsvn_generated.cpp:528
+#: ../rapidsvn_generated.cpp:572
 msgid "&Compatible with:"
 msgstr ""
 
-#: ../main_frame.cpp:325
+#: ../main_frame.cpp:327
 msgid "&Contents\tF1"
 msgstr "Зміст\tF1"
 
@@ -78,7 +83,7 @@ msgstr "Зміст\tF1"
 msgid "&Copy...\tF5"
 msgstr "Копіювати...\tF5"
 
-#: ../main_frame.cpp:299
+#: ../main_frame.cpp:300
 msgid "&Create..."
 msgstr "Створити..."
 
@@ -86,24 +91,29 @@ msgstr "Створити..."
 msgid "&Delete\tDEL"
 msgstr "Видалити\tDEL"
 
-#: ../rapidsvn_generated.cpp:1074
+#: ../rapidsvn_generated.cpp:1246
 msgid "&Delete..."
 msgstr "Видалити..."
 
-#: ../rapidsvn_generated.cpp:364 ../rapidsvn_generated.cpp:1182
+#: ../rapidsvn_generated.cpp:395 ../rapidsvn_generated.cpp:1362
 #, fuzzy
 msgid "&Diff"
 msgstr "Порівняти"
 
-#: ../utils.cpp:206
+#: ../utils.cpp:207
 msgid "&Diff to Base...\tCTRL+B"
 msgstr "Порівняти з Base...\tCTRL+B"
 
-#: ../utils.cpp:207
+#: ../utils.cpp:210
 msgid "&Diff to Head...\tCTRL+H"
 msgstr "Порівняти з Head...\tCTRL+H"
 
-#: ../utils.cpp:220
+#: ../utils.cpp:209
+#, fuzzy
+msgid "&Diff to Previous...\tCTRL+B"
+msgstr "Порівняти з Base...\tCTRL+B"
+
+#: ../utils.cpp:223
 #, fuzzy
 msgid "&Diff..."
 msgstr "Порівняти"
@@ -112,41 +122,41 @@ msgstr "Порівняти"
 msgid "&Diff...\tCTRL+D"
 msgstr "Порівняти...\tCTRL+D"
 
-#: ../utils.cpp:276
+#: ../utils.cpp:279
 msgid "&Edit Bookmark..."
 msgstr "Редагувати закладку..."
 
-#: ../rapidsvn_generated.cpp:1071
+#: ../rapidsvn_generated.cpp:1243
 msgid "&Edit..."
 msgstr "Редагування..."
 
-#: ../utils.cpp:254
+#: ../utils.cpp:257
 msgid "&Edit...\tF3"
 msgstr "Редагувати...\tF3"
 
-#: ../main_frame.cpp:297
+#: ../main_frame.cpp:298
 msgid "&Export...\tCTRL-E"
 msgstr "Експорт...\tCTRL-E"
 
-#: ../main_frame.cpp:364
+#: ../main_frame.cpp:366
 msgid "&Extras"
 msgstr "Екстра"
 
-#: ../main_frame.cpp:358
+#: ../main_frame.cpp:360
 msgid "&File"
 msgstr "Файл"
 
-#: ../rapidsvn_generated.cpp:352
+#: ../rapidsvn_generated.cpp:383
 #, fuzzy
 msgid "&Files to commit"
 msgstr "Спроба блокування не вдалася"
 
-#: ../rapidsvn_generated.cpp:1179
+#: ../rapidsvn_generated.cpp:1359
 #, fuzzy
 msgid "&Get"
 msgstr "Отримати"
 
-#: ../main_frame.cpp:232 ../main_frame.cpp:365
+#: ../main_frame.cpp:233 ../main_frame.cpp:367
 msgid "&Help"
 msgstr "Допомога"
 
@@ -155,19 +165,19 @@ msgstr "Допомога"
 msgid "&Ignore\tCTRL-DEL"
 msgstr "Експорт...\tCTRL-E"
 
-#: ../main_frame.cpp:296
+#: ../main_frame.cpp:297
 msgid "&Import...\tCTRL-I"
 msgstr "Імпорт...\tCTRL-I"
 
-#: ../main_frame.cpp:326
+#: ../main_frame.cpp:328
 msgid "&Index\tShift+F1"
 msgstr "Індекс\tShift+F1"
 
-#: ../utils.cpp:211
+#: ../utils.cpp:214
 msgid "&Info..."
 msgstr "Інфо..."
 
-#: ../rapidsvn_generated.cpp:540
+#: ../rapidsvn_generated.cpp:585
 msgid "&Load configuration from directory (optional):"
 msgstr ""
 
@@ -175,44 +185,44 @@ msgstr ""
 msgid "&Lock..."
 msgstr "Заблокувати..."
 
-#: ../utils.cpp:222
+#: ../utils.cpp:225
 #, fuzzy
 msgid "&Log..."
 msgstr "Журнал...\tCTRL-L"
 
-#: ../utils.cpp:209
+#: ../utils.cpp:212
 msgid "&Log...\tCTRL-L"
 msgstr "Журнал...\tCTRL-L"
 
-#: ../rapidsvn_generated.cpp:1185
+#: ../rapidsvn_generated.cpp:1365
 #, fuzzy
 msgid "&Merge"
 msgstr "Об'єднати"
 
-#: ../main_frame.cpp:361
+#: ../main_frame.cpp:363
 msgid "&Modify"
 msgstr "Операції"
 
-#: ../rapidsvn_generated.cpp:897
+#: ../rapidsvn_generated.cpp:1047
 #, fuzzy
 msgid "&Name"
 msgstr "Ім'я"
 
-#: ../rapidsvn_generated.cpp:499
+#: ../rapidsvn_generated.cpp:542
 #, fuzzy
 msgid "&Name of the new repository:"
 msgstr "Створити новий репозиторій..."
 
-#: ../rapidsvn_generated.cpp:1068
+#: ../rapidsvn_generated.cpp:1240
 msgid "&New..."
 msgstr "Новий..."
 
-#: ../rapidsvn_generated.cpp:96
+#: ../rapidsvn_generated.cpp:98
 #, fuzzy
 msgid "&Password"
 msgstr "Пароль"
 
-#: ../rapidsvn_generated.cpp:198
+#: ../rapidsvn_generated.cpp:206
 msgid "&Permanently"
 msgstr "Постійно"
 
@@ -220,49 +230,49 @@ msgstr "Постійно"
 msgid "&Properties...\tCTRL-P"
 msgstr "Властивості...\tCTRL-P"
 
-#: ../main_frame.cpp:362
+#: ../main_frame.cpp:364
 msgid "&Query"
 msgstr "Запити"
 
-#: ../rapidsvn_generated.cpp:343
+#: ../rapidsvn_generated.cpp:373
 #, fuzzy
 msgid "&Recent entries:"
 msgstr "Нещодавні записи:"
 
-#: ../utils.cpp:271
+#: ../utils.cpp:274
 #, fuzzy
 msgid "&Remove Bookmark"
 msgstr "Видалити закладку..."
 
-#: ../main_frame.cpp:360
+#: ../main_frame.cpp:362
 msgid "&Repository"
 msgstr "Репозиторій"
 
-#: ../rapidsvn_generated.cpp:1437 ../rapidsvn_generated.cpp:1463
+#: ../rapidsvn_generated.cpp:1644 ../rapidsvn_generated.cpp:1672
 msgid "&Revision"
 msgstr "Ревізія"
 
-#: ../utils.cpp:323
+#: ../utils.cpp:330
 msgid "&Stop"
 msgstr "Стоп"
 
-#: ../utils.cpp:267
+#: ../utils.cpp:270
 msgid "&Switch Repository URL..."
 msgstr "Перемкнути URL репозиторію..."
 
-#: ../rapidsvn_generated.cpp:201
+#: ../rapidsvn_generated.cpp:209
 msgid "&Temporarily"
 msgstr "Тимчасово"
 
-#: ../main_frame.cpp:367
+#: ../main_frame.cpp:369
 msgid "&Tests"
 msgstr "Тести"
 
-#: ../rapidsvn_generated.cpp:361
+#: ../rapidsvn_generated.cpp:392
 msgid "&Toggle"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:473
+#: ../rapidsvn_generated.cpp:514
 msgid "&Type:"
 msgstr ""
 
@@ -270,25 +280,25 @@ msgstr ""
 msgid "&Unlock"
 msgstr "Розблокувати"
 
-#: ../utils.cpp:292
+#: ../utils.cpp:295
 msgid "&Update...\tCTRL-U"
 msgstr "Актуалізація (update)...\tCTRL-U"
 
-#: ../rapidsvn_generated.cpp:89
+#: ../rapidsvn_generated.cpp:91
 #, fuzzy
 msgid "&Username"
 msgstr "Перейменування"
 
-#: ../rapidsvn_generated.cpp:904
+#: ../rapidsvn_generated.cpp:1054
 #, fuzzy
 msgid "&Value"
 msgstr "Значення"
 
-#: ../main_frame.cpp:359 ../rapidsvn_generated.cpp:1176
+#: ../main_frame.cpp:361 ../rapidsvn_generated.cpp:1356
 msgid "&View"
 msgstr "Вигляд"
 
-#: ../utils.cpp:221
+#: ../utils.cpp:224
 msgid "&View..."
 msgstr "Перегляд..."
 
@@ -316,8 +326,8 @@ msgstr ""
 msgid "- The certificate is not yet valid."
 msgstr "- Сертифікат ще не дійсний."
 
-#: ../rapidsvn_generated.cpp:246 ../rapidsvn_generated.cpp:958
-#: ../rapidsvn_generated.cpp:1284 ../rapidsvn_generated.cpp:1483
+#: ../rapidsvn_generated.cpp:258 ../rapidsvn_generated.cpp:1113
+#: ../rapidsvn_generated.cpp:1472 ../rapidsvn_generated.cpp:1694
 #, fuzzy
 msgid "..."
 msgstr "Новий..."
@@ -326,7 +336,7 @@ msgstr "Новий..."
 msgid "<None>"
 msgstr "<немає>"
 
-#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
+#: ../log_dlg.cpp:316 ../log_dlg.cpp:369
 msgid "A"
 msgstr ""
 
@@ -347,21 +357,26 @@ msgstr "ANSI"
 msgid "About %s"
 msgstr "Про програму %s"
 
-#: ../log_aff_list.cpp:103
+#: ../../include/rapidsvn_generated.h:74
+#, fuzzy
+msgid "About ..."
+msgstr "Про програму..."
+
+#: ../log_aff_list.cpp:103 ../log_list.cpp:51
 #, fuzzy
 msgid "Action"
 msgstr "Аутентифікація"
 
 #: ../add_action.cpp:37 ../add_recursive_action.cpp:37 ../listed_dlg.cpp:183
-#: ../listener.cpp:393 ../main_frame.cpp:1422
+#: ../main_frame.cpp:1434
 msgid "Add"
 msgstr "Додати"
 
-#: ../utils.cpp:263
+#: ../utils.cpp:266
 msgid "Add Existing &Repository..."
 msgstr "Додати існуючий репозиторій..."
 
-#: ../rapidsvn_generated.cpp:516
+#: ../rapidsvn_generated.cpp:559
 msgid "Add a bookmark for the new repository"
 msgstr ""
 
@@ -369,25 +384,24 @@ msgstr ""
 msgid "Add r&ecursive"
 msgstr "Додати рекурсивно"
 
-#: ../main_frame_helper.cpp:62
+#: ../main_frame_helper.cpp:64
 msgid "Add selected"
 msgstr "Додати вибране"
 
-#: ../rapidsvn_generated.cpp:276
+#: ../rapidsvn_generated.cpp:306
 msgid "Add to bookmarks"
 msgstr "Додати до закладок"
 
-#: ../listener.cpp:309 ../listener.cpp:402 ../listener.cpp:409
-#: ../main_frame.cpp:1431 ../main_frame.cpp:1438
+#: ../listener.cpp:309 ../main_frame.cpp:1443 ../main_frame.cpp:1450
 msgid "Added"
 msgstr "Додано"
 
-#: ../main_frame.cpp:2093
+#: ../main_frame.cpp:2219
 #, c-format
 msgid "Added repository to bookmarks '%s'"
 msgstr "Репозиторій '%s' додано до закладок"
 
-#: ../main_frame.cpp:2063
+#: ../main_frame.cpp:2189
 #, c-format
 msgid "Added working copy to bookmarks '%s'"
 msgstr "Робочу копію '%s' додано до закладок"
@@ -402,7 +416,7 @@ msgstr ""
 msgid "Adding file to repository: %s"
 msgstr "Репозиторій: %s"
 
-#: ../rapidsvn_generated.cpp:1222
+#: ../rapidsvn_generated.cpp:1406
 msgid "Affected Files/Dirs"
 msgstr ""
 
@@ -410,15 +424,21 @@ msgstr ""
 msgid "All files|*"
 msgstr "Всі файли|*"
 
-#: ../main_frame.cpp:1296 ../main_frame.cpp:1315
+#: ../cleanup_dlg.cpp:59
+msgid ""
+"Also clean up any external items that are located below the selected path."
+msgstr ""
+
+#: ../main_frame.cpp:1308 ../main_frame.cpp:1327
 msgid "An error occured while launching the browser"
 msgstr ""
 
-#: ../main_frame.cpp:1283
+#: ../main_frame.cpp:1295
 msgid "An error occurred while checking valid actions"
 msgstr ""
 
-#: ../annotate_action.cpp:80 ../annotate_action.cpp:81
+#: ../annotate_action.cpp:83 ../annotate_action.cpp:84
+#: ../../include/rapidsvn_generated.h:93
 #, fuzzy
 msgid "Annotate"
 msgstr "застарів"
@@ -435,23 +455,28 @@ msgid ""
 "  %s?"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:1697
+#: ../listener.cpp:550
+#, fuzzy, c-format
+msgid "At revision %ld"
+msgstr "Ревізія: %ld"
+
+#: ../rapidsvn_generated.cpp:1924
 msgid "Authentication"
 msgstr "Аутентифікація"
 
-#: ../annotate_dlg.cpp:35 ../columns.cpp:49
+#: ../annotate_dlg.cpp:38 ../columns.cpp:49
 msgid "Author"
 msgstr "Автор"
 
-#: ../action.cpp:269
+#: ../action.cpp:272
 msgid "BASE"
 msgstr "BASE"
 
-#: ../rapidsvn_generated.cpp:477
+#: ../rapidsvn_generated.cpp:518
 msgid "BerkeleyDB"
 msgstr ""
 
-#: ../main_frame.cpp:2130
+#: ../main_frame.cpp:2256
 msgid "Bookmark"
 msgstr "Закладка"
 
@@ -459,14 +484,22 @@ msgstr "Закладка"
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: ../main_frame_helper.cpp:79
+#: ../rapidsvn_generated.cpp:725
+msgid "Break locks"
+msgstr ""
+
+#: ../main_frame_helper.cpp:81
 msgid "Bring changes from the repository into the working copy"
 msgstr "Занести в робочу копію зміни, знайдені у репозиторії."
 
-#: ../rapidsvn_generated.cpp:494 ../rapidsvn_generated.cpp:1574
-#: ../rapidsvn_generated.cpp:1604 ../rapidsvn_generated.cpp:1634
-#: ../rapidsvn_generated.cpp:1661
+#: ../rapidsvn_generated.cpp:536 ../rapidsvn_generated.cpp:1791
+#: ../rapidsvn_generated.cpp:1823 ../rapidsvn_generated.cpp:1855
+#: ../rapidsvn_generated.cpp:1884
 msgid "Browse"
+msgstr ""
+
+#: ../log_list.cpp:295
+msgid "Browse to\tCTRL-B"
 msgstr ""
 
 #: ../about_dlg.cpp:80
@@ -480,42 +513,47 @@ msgstr ""
 "wxWidgets %d.%d.%d (%s)\n"
 "Subversion %d.%d.%d\n"
 
-#: ../rapidsvn_generated.cpp:992
+#: ../rapidsvn_generated.cpp:1165
 msgid "CR (MacOS)"
 msgstr "CR (MacOS)"
 
-#: ../rapidsvn_generated.cpp:992
+#: ../rapidsvn_generated.cpp:1165
 msgid "CRLF (Windows)"
 msgstr "CRLF (Windows)"
 
-#: ../rapidsvn_generated.cpp:111 ../rapidsvn_generated.cpp:204
-#: ../rapidsvn_generated.cpp:293 ../rapidsvn_generated.cpp:384
-#: ../rapidsvn_generated.cpp:443 ../rapidsvn_generated.cpp:579
-#: ../rapidsvn_generated.cpp:630 ../rapidsvn_generated.cpp:667
-#: ../rapidsvn_generated.cpp:789 ../rapidsvn_generated.cpp:860
-#: ../rapidsvn_generated.cpp:919 ../rapidsvn_generated.cpp:1020
-#: ../rapidsvn_generated.cpp:1083 ../rapidsvn_generated.cpp:1129
-#: ../rapidsvn_generated.cpp:1322 ../rapidsvn_generated.cpp:1506
-#: ../rapidsvn_generated.cpp:1708 ../rapidsvn_generated.cpp:1781
-#: ../rapidsvn_generated.cpp:1837 ../rapidsvn_generated.cpp:1880
-#: ../rapidsvn_generated.cpp:1935
+#: ../rapidsvn_generated.cpp:114 ../rapidsvn_generated.cpp:212
+#: ../rapidsvn_generated.cpp:318 ../rapidsvn_generated.cpp:417
+#: ../rapidsvn_generated.cpp:481 ../rapidsvn_generated.cpp:626
+#: ../rapidsvn_generated.cpp:680 ../rapidsvn_generated.cpp:755
+#: ../rapidsvn_generated.cpp:801 ../rapidsvn_generated.cpp:933
+#: ../rapidsvn_generated.cpp:1007 ../rapidsvn_generated.cpp:1070
+#: ../rapidsvn_generated.cpp:1189 ../rapidsvn_generated.cpp:1255
+#: ../rapidsvn_generated.cpp:1305 ../rapidsvn_generated.cpp:1514
+#: ../rapidsvn_generated.cpp:1719 ../rapidsvn_generated.cpp:1935
+#: ../rapidsvn_generated.cpp:2013 ../rapidsvn_generated.cpp:2074
+#: ../rapidsvn_generated.cpp:2120 ../rapidsvn_generated.cpp:2185
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: ../rapidsvn_generated.cpp:144
+#: ../rapidsvn_generated.cpp:150
 #, fuzzy
 msgid "Certificate information:"
 msgstr "Інформація про сертифікат:"
 
-#: ../main_frame.cpp:298
+#: ../main_frame.cpp:299
 msgid "Check&out...\tCTRL-O"
 msgstr "Створити локальну копію (check&out)...\tCTRL-O"
 
-#: ../checkout_action.cpp:40
+#: ../checkout_action.cpp:40 ../../include/rapidsvn_generated.h:194
 msgid "Checkout"
 msgstr "Створення копії"
 
-#: ../utils.cpp:284
+#: ../rapidsvn_generated.cpp:289
+#, fuzzy
+msgid "Checkout Depth"
+msgstr "Тест Checkout"
+
+#: ../utils.cpp:287
 msgid "Checkout New Working Copy..."
 msgstr "Створити нову робочу копію..."
 
@@ -528,25 +566,54 @@ msgstr "Контрольна сума"
 msgid "Checksum: %s"
 msgstr "Контрольна сума: %s"
 
-#: ../cleanup_action.cpp:39 ../utils.cpp:315
+#: ../rapidsvn_generated.cpp:705
+#, fuzzy
+msgid "Clean up in:"
+msgstr "Прибирання"
+
+#: ../cleanup_dlg.cpp:62
+msgid ""
+"Clean up the working copy status, necessary if some operation couldn't be "
+"finished before."
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:722
+msgid "Clean up working copy status"
+msgstr ""
+
+#: ../cleanup_action.cpp:40 ../utils.cpp:318
+#: ../../include/rapidsvn_generated.h:373
 msgid "Cleanup"
 msgstr "Прибирання"
 
-#: ../rapidsvn_generated.cpp:1173
+#: ../rapidsvn_generated.cpp:720
+#, fuzzy
+msgid "Cleanup Options"
+msgstr "Прибирання"
+
+#: ../main_frame_helper.cpp:223
+msgid "Clear log"
+msgstr ""
+
+#: ../main_frame_helper.cpp:224
+msgid "Clear the list of performed actions"
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:1353
 #, fuzzy
 msgid "Close"
 msgstr "Закрити"
 
-#: ../utils.cpp:297
+#: ../utils.cpp:300
 #, fuzzy
 msgid "Co&mmit...\tCTRL-ENTER"
 msgstr "Фіксувати зміни (co&mmit)...\tCTRL-M"
 
-#: ../main_frame.cpp:274
+#: ../main_frame.cpp:275
 msgid "Columns"
 msgstr "Стовпці"
 
-#: ../rapidsvn_generated.cpp:737 ../rapidsvn_generated.cpp:775
+#: ../rapidsvn_generated.cpp:876 ../rapidsvn_generated.cpp:917
 msgid "Combo!"
 msgstr ""
 
@@ -554,15 +621,16 @@ msgstr ""
 msgid "Commit"
 msgstr "Фіксація змін"
 
-#: ../commit_log_dlg.cpp:40
+#: ../commit_log_dlg.cpp:40 ../../include/rapidsvn_generated.h:233
+#: ../../include/rapidsvn_generated.h:261
 msgid "Commit Log Message"
 msgstr "Повідомлення журналу"
 
-#: ../rapidsvn_generated.cpp:1549
+#: ../rapidsvn_generated.cpp:1765
 msgid "Commit log message: default to most recent"
 msgstr ""
 
-#: ../main_frame_helper.cpp:86
+#: ../main_frame_helper.cpp:88
 msgid "Commit selected"
 msgstr "Зафіксувати вибране (commit)"
 
@@ -570,19 +638,14 @@ msgstr "Зафіксувати вибране (commit)"
 msgid "Committed revision"
 msgstr "Зафіксовано ревізію"
 
-#: ../rapidsvn_generated.cpp:697
+#: ../rapidsvn_generated.cpp:834
 msgid "Compare:"
 msgstr "Порівняти:"
 
-#: ../listener.cpp:496
-#, fuzzy, c-format
-msgid "Completed %s at revision %ld"
-msgstr "Зафіксовано ревізію"
-
-#: ../listener.cpp:486
-#, fuzzy, c-format
-msgid "Completed at revision %ld"
-msgstr "Зафіксовано ревізію"
+#: ../listener.cpp:550 ../listener.cpp:560
+#, fuzzy
+msgid "Completed"
+msgstr "пошкоджений"
 
 #: ../columns.cpp:64
 msgid "Conflict BASE"
@@ -645,10 +708,15 @@ msgstr "Скопійовано з URL: %s"
 msgid "Copied from Rev"
 msgstr "Скопійовано з ревізії: %ld"
 
-#: ../dnd_dlg.cpp:72 ../listener.cpp:394 ../main_frame.cpp:1423
-#: ../move_action.cpp:44 ../rapidsvn_generated.cpp:857
+#: ../dnd_dlg.cpp:72 ../main_frame.cpp:1435 ../move_action.cpp:44
+#: ../rapidsvn_generated.cpp:1004
 msgid "Copy"
 msgstr "Копіювати"
+
+#: ../log_list.cpp:292
+#, fuzzy
+msgid "Copy selected\tCTRL-C"
+msgstr "Зафіксувати вибране (commit)"
 
 #: ../dnd_dlg.cpp:82
 #, fuzzy
@@ -670,21 +738,21 @@ msgstr "Робочий файл конфлікту: %s"
 msgid "Could not set working directory to %s"
 msgstr "Неможливо встановити робочий шлях %s"
 
-#: ../utils.cpp:280
+#: ../utils.cpp:283
 msgid "Create New Repository..."
 msgstr "Створити новий репозиторій..."
 
-#: ../create_repos_action.cpp:37
+#: ../create_repos_action.cpp:37 ../../include/rapidsvn_generated.h:318
 #, fuzzy
 msgid "Create Repository"
 msgstr "Створити новий репозиторій..."
 
-#: ../rapidsvn_generated.cpp:485
+#: ../rapidsvn_generated.cpp:527
 #, fuzzy
 msgid "Create repository in &directory:"
 msgstr "Оберіть цільовий каталог"
 
-#: ../log_dlg.cpp:318 ../log_dlg.cpp:371
+#: ../log_dlg.cpp:317 ../log_dlg.cpp:370
 msgid "D"
 msgstr ""
 
@@ -692,42 +760,68 @@ msgstr ""
 msgid "Date"
 msgstr "Дата"
 
-#: ../rapidsvn_generated.cpp:728 ../rapidsvn_generated.cpp:766
+#: ../rapidsvn_generated.cpp:867 ../rapidsvn_generated.cpp:908
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../rapidsvn_generated.cpp:532
+#: ../rapidsvn_generated.cpp:576
 #, fuzzy
 msgid "Default"
 msgstr "Видалення"
 
-#: ../delete_action.cpp:40 ../listener.cpp:395 ../main_frame.cpp:1424
+#: ../delete_action.cpp:40 ../main_frame.cpp:1436
+#: ../../include/rapidsvn_generated.h:339
 msgid "Delete"
 msgstr "Видалення"
 
-#: ../main_frame_helper.cpp:71
+#: ../rapidsvn_generated.cpp:743
+#, fuzzy
+msgid "Delete all ignored files"
+msgstr "Видаляю невідстежуваний файл: %s"
+
+#: ../cleanup_dlg.cpp:73
+msgid ""
+"Delete all unversioned and ignored files that are located within this "
+"working copy."
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:740
+#, fuzzy
+msgid "Delete all unversioned files"
+msgstr "Видаляю невідстежуваний файл: %s"
+
+#: ../cleanup_dlg.cpp:71
+msgid "Delete all unversioned files that are located within this working copy."
+msgstr ""
+
+#: ../main_frame_helper.cpp:73
 msgid "Delete files and directories from version control"
 msgstr "Винести файли та каталоги з-під контролю версій"
 
-#: ../main_frame_helper.cpp:70
+#: ../main_frame_helper.cpp:72
 msgid "Delete selected"
 msgstr "Видалити вибране"
 
-#: ../listener.cpp:310 ../listener.cpp:401 ../listener.cpp:410
-#: ../main_frame.cpp:1430 ../main_frame.cpp:1439
+#: ../listener.cpp:310 ../main_frame.cpp:1442 ../main_frame.cpp:1451
 msgid "Deleted"
 msgstr "Видалено"
 
-#: ../rapidsvn_generated.cpp:241 ../rapidsvn_generated.cpp:953
-#: ../rapidsvn_generated.cpp:1478
+#: ../../include/rapidsvn_generated.h:399
+#, fuzzy
+msgid "Destination"
+msgstr "Цільовий файл"
+
+#: ../rapidsvn_generated.cpp:253 ../rapidsvn_generated.cpp:1108
+#: ../rapidsvn_generated.cpp:1689
 msgid "Destination Directory"
 msgstr "Цільовий каталог"
 
-#: ../diff_action.cpp:191 ../diff_action.cpp:197 ../diff_dlg.cpp:179
+#: ../diff_action.cpp:197 ../diff_action.cpp:203 ../diff_dlg.cpp:179
+#: ../../include/rapidsvn_generated.h:451
 msgid "Diff"
 msgstr "Порівняти"
 
-#: ../rapidsvn_generated.cpp:1650
+#: ../rapidsvn_generated.cpp:1873
 #, fuzzy
 msgid "Diff Tool"
 msgstr "Програма для порівняння (diff):"
@@ -740,6 +834,11 @@ msgstr "Порівняти з BASE"
 msgid "Diff to HEAD"
 msgstr "Порівняти з HEAD"
 
+#: ../log_list.cpp:299
+#, fuzzy
+msgid "Diff to Previous Version...\tCTRL-D"
+msgstr "Порівняти з Base...\tCTRL+B"
+
 #: ../diff_dlg.cpp:134
 msgid "Diff to another revision/date"
 msgstr "Порівняти з іншою ревізією/датою"
@@ -748,11 +847,11 @@ msgstr "Порівняти з іншою ревізією/датою"
 msgid "Diff two revisions/dates"
 msgstr "Порівняти дві ревізії/дати"
 
-#: ../rapidsvn_generated.cpp:1688
+#: ../rapidsvn_generated.cpp:1914
 msgid "Different login for each bookmark in the bookmarks list"
 msgstr "Окремий вхід за паролем у кожену закладку вибраного"
 
-#: ../rapidsvn_generated.cpp:1296
+#: ../rapidsvn_generated.cpp:1485
 #, fuzzy
 msgid "Directory"
 msgstr "Ім'я каталогу:"
@@ -761,57 +860,58 @@ msgstr "Ім'я каталогу:"
 msgid "Directory:"
 msgstr "Ім'я каталогу:"
 
-#: ../rapidsvn_generated.cpp:554
+#: ../rapidsvn_generated.cpp:600
 msgid "Disable automatic Log removal"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:557
+#: ../rapidsvn_generated.cpp:603
 msgid "Disable fsync when committing database transactions"
 msgstr ""
 
-#: ../main_frame_helper.cpp:179
+#: ../main_frame_helper.cpp:181
 #, fuzzy
 msgid "Display conflicted files/directories"
 msgstr "Ви згодні розблокувати вибрані файли/каталоги?"
 
-#: ../main_frame_helper.cpp:118
+#: ../main_frame_helper.cpp:120
 msgid "Display info about selected entries"
 msgstr "Відобразити інформацію про вибрані елементи"
 
-#: ../main_frame_helper.cpp:173
+#: ../main_frame_helper.cpp:175
 msgid "Display modified files/directories"
 msgstr ""
 
-#: ../main_frame_helper.cpp:167
+#: ../main_frame_helper.cpp:169
 msgid "Display unmodified files/directories"
 msgstr ""
 
-#: ../main_frame_helper.cpp:161
+#: ../main_frame_helper.cpp:163
 #, fuzzy
 msgid "Display unversioned files/directories"
 msgstr "Пропускаю невідстежуваний каталог: %s"
 
-#: ../rapidsvn_generated.cpp:616
+#: ../rapidsvn_generated.cpp:666
 msgid "Do you want to delete the selected files/directories?"
 msgstr "Ви згодні видалити вибрані файли/каталоги?"
 
-#: ../rapidsvn_generated.cpp:1767
+#: ../rapidsvn_generated.cpp:1999
 msgid "Do you want to revert local changes?"
 msgstr "Підтверджуєте скасування локальних змін?"
 
-#: ../rapidsvn_generated.cpp:1866
+#: ../rapidsvn_generated.cpp:2106
 msgid "Do you want to unlock the selected files/directories?"
 msgstr "Ви згодні розблокувати вибрані файли/каталоги?"
 
-#: ../utils.cpp:302
+#: ../utils.cpp:305
 msgid "E&xit\tCTRL-Q"
 msgstr "Вихід\tCTRL-Q"
 
 #: ../listed_dlg.cpp:184 ../view_action.cpp:76
+#: ../../include/rapidsvn_generated.h:507
 msgid "Edit"
 msgstr "Редагування"
 
-#: ../main_frame.cpp:2130
+#: ../main_frame.cpp:2256
 msgid "Edit Bookmark"
 msgstr "Редагувати закладку"
 
@@ -824,21 +924,21 @@ msgstr "Редагувати властивість"
 msgid "Edit..."
 msgstr "Редагування..."
 
-#: ../rapidsvn_generated.cpp:1306
+#: ../rapidsvn_generated.cpp:1497
 #, fuzzy
 msgid "End &log message"
 msgstr "Введіть повідомлення для журналу"
 
-#: ../rapidsvn_generated.cpp:988
+#: ../rapidsvn_generated.cpp:1161
 msgid "End of line characters"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:334
+#: ../rapidsvn_generated.cpp:363
 #, fuzzy
 msgid "Enter &log message"
 msgstr "Введіть повідомлення для журналу"
 
-#: ../rapidsvn_generated.cpp:1112
+#: ../rapidsvn_generated.cpp:1287
 msgid "Enter a comment for this lock"
 msgstr "Введіть коментар для блокування"
 
@@ -859,7 +959,9 @@ msgstr "Введіть шлях, де Ви бажаєте створити ло�
 msgid "Enter the repository URL (not local path) here."
 msgstr "Введіть тут URL репозиторію (не локальний шлях)."
 
-#: ../main_frame.cpp:2053 ../property_dlg.cpp:138
+#: ../main_frame.cpp:562 ../main_frame.cpp:1290 ../main_frame.cpp:1295
+#: ../main_frame.cpp:1308 ../main_frame.cpp:1327 ../main_frame.cpp:2179
+#: ../property_dlg.cpp:138
 msgid "Error"
 msgstr "Помилка"
 
@@ -887,44 +989,39 @@ msgstr "Помилка при встановленні значень власт
 msgid "Error validating server certificate for '%s':"
 msgstr "Помилка при перевірці сертифіката сервера для '%s':"
 
-#: ../simple_worker.cpp:216 ../threaded_worker.cpp:178
+#: ../simple_worker.cpp:213 ../threaded_worker.cpp:175
 msgid "Error while performing action."
 msgstr "Помилка під час виконання операції."
 
-#: ../simple_worker.cpp:206 ../threaded_worker.cpp:165
+#: ../simple_worker.cpp:203 ../threaded_worker.cpp:162
 #, c-format
 msgid "Error while performing action: %s"
 msgstr "Помилка під час виконання операції: %s"
 
-#: ../simple_worker.cpp:167 ../threaded_worker.cpp:286
+#: ../simple_worker.cpp:167 ../threaded_worker.cpp:283
 msgid "Error while preparing action."
 msgstr "Помилка під час підготовки до виконання операції."
 
-#: ../simple_worker.cpp:161 ../threaded_worker.cpp:276
+#: ../simple_worker.cpp:161 ../threaded_worker.cpp:273
 #, c-format
 msgid "Error while preparing action: %s"
 msgstr "Помилка під час підготовки до виконання операції: %s"
 
-#: ../folder_browser.cpp:531
+#: ../folder_browser.cpp:534
 #, c-format
 msgid "Error while refreshing filelist (%s)"
 msgstr "Помилка під час оновлення переліку файлів (%s)"
 
-#: ../main_frame.cpp:932
+#: ../main_frame.cpp:944
 msgid "Error while updating filelist"
 msgstr "Помилка під час оновлення переліку файлів"
 
-#: ../main_frame.cpp:919
+#: ../main_frame.cpp:931
 #, c-format
 msgid "Error while updating filelist (%s)"
 msgstr "Помилка під час оновлення переліку файлів (%s)"
 
-#: ../main_frame.cpp:561
-#, fuzzy, c-format
-msgid "Error: %s\n"
-msgstr "Помилка"
-
-#: ../main_frame.cpp:1987
+#: ../main_frame.cpp:2049
 msgid "Exception occured during filelist update"
 msgstr "Виявлена виняткова ситуація під час оновлення переліку файлів"
 
@@ -936,7 +1033,7 @@ msgstr "Виконувані файли|*.exe;*.com;*.bat|Всі файли (*.*
 msgid "Execute"
 msgstr "Виконати"
 
-#: ../diff_action.cpp:183
+#: ../diff_action.cpp:189
 #, c-format
 msgid "Execute diff tool: %s"
 msgstr "Виконання програми порівняння: %s"
@@ -956,61 +1053,69 @@ msgstr "Виконання програми-оглядача: %s"
 msgid "Execute merge tool: %s"
 msgstr "Виконання програми порівняння: %s"
 
-#: ../simple_worker.cpp:175 ../threaded_worker.cpp:143
-#, c-format
-msgid "Execute: %s"
-msgstr "Виконати: %s"
+#: ../simple_worker.cpp:174 ../threaded_worker.cpp:142
+#, fuzzy
+msgid "Execute:"
+msgstr "Виконати"
 
-#: ../utils.cpp:328
+#: ../utils.cpp:335
 msgid "Explore...\tF2"
 msgstr "Перегляд...\tF2"
 
-#: ../export_action.cpp:39
+#: ../export_action.cpp:39 ../../include/rapidsvn_generated.h:547
 msgid "Export"
+msgstr "Експорт"
+
+#: ../rapidsvn_generated.cpp:1144
+#, fuzzy
+msgid "Export Depth"
 msgstr "Експорт"
 
 #: ../columns.cpp:53
 msgid "Extension"
 msgstr "Розширення"
 
-#: ../listener.cpp:405
-#, fuzzy
-msgid "External"
-msgstr "зовнішній"
-
-#: ../rapidsvn_generated.cpp:477
+#: ../rapidsvn_generated.cpp:518
 msgid "FSFS"
 msgstr ""
 
-#: ../listener.cpp:416 ../main_frame.cpp:1445
+#: ../main_frame.cpp:1457
 msgid "Failed to lock"
 msgstr "Спроба блокування не вдалася"
 
-#: ../listener.cpp:417 ../main_frame.cpp:1446
+#: ../main_frame.cpp:1458
 msgid "Failed to unlock"
 msgstr "Спроба розблокування не вдалася"
 
-#: ../rapidsvn_generated.cpp:1296
+#: ../rapidsvn_generated.cpp:1485
 msgid "File"
 msgstr "Файл"
 
-#: ../rapidsvn_generated.cpp:183
+#: ../rapidsvn_generated.cpp:189
 msgid "Fingerprint:"
 msgstr "Відбиток ключа:"
 
-#: ../rapidsvn_generated.cpp:1426 ../rapidsvn_generated.cpp:1452
+#: ../rapidsvn_generated.cpp:1633 ../rapidsvn_generated.cpp:1661
 msgid "First working copy or URL"
 msgstr "Перша робоча копія або URL"
+
+#: ../rapidsvn_generated.cpp:728
+msgid "Fix time stamps"
+msgstr ""
+
+#: ../cleanup_dlg.cpp:66
+msgid "Fix timestamps of all unmodified files in the working copy."
+msgstr ""
 
 #: ../about_dlg.cpp:77
 msgid "For more information see:"
 msgstr "Подальша інформація:"
 
-#: ../rapidsvn_generated.cpp:657 ../rapidsvn_generated.cpp:1494
+#: ../rapidsvn_generated.cpp:791 ../rapidsvn_generated.cpp:1706
 msgid "Force"
 msgstr "Примусово"
 
-#: ../rapidsvn_generated.cpp:620
+#: ../rapidsvn_generated.cpp:670
 msgid "Force removal"
 msgstr "Примусове видалення"
 
@@ -1022,33 +1127,39 @@ msgstr ""
 "Виконати операцію, перезаписуючи поверх існуючі файли у цільовому шляху. "
 "УВАГА! Може призвести до втрати даних!"
 
-#: ../rapidsvn_generated.cpp:1870
+#: ../rapidsvn_generated.cpp:2110
 msgid "Force unlocking even if you are not the lock owner"
 msgstr ""
 "Розблокувати примусово, навіть якщо файл було заблоковано іншим користувачем."
 
-#: ../rapidsvn_generated.cpp:522 ../rapidsvn_generated.cpp:1558
+#: ../rapidsvn_generated.cpp:291 ../rapidsvn_generated.cpp:1146
+#: ../rapidsvn_generated.cpp:2163
+#, fuzzy
+msgid "Fully recursive (all files and subdirectories)"
+msgstr "Показувати невідстежувані файли"
+
+#: ../rapidsvn_generated.cpp:566 ../rapidsvn_generated.cpp:1775
 msgid "General"
 msgstr "Загальні"
 
-#: ../action.cpp:274
+#: ../action.cpp:279
 #, c-format
 msgid "Get file %s rev. %s"
 msgstr "Читання файлу %s рев. %s"
 
-#: ../action.cpp:267
+#: ../action.cpp:270
 msgid "HEAD"
 msgstr "HEAD"
 
-#: ../rapidsvn_generated.cpp:296 ../rapidsvn_generated.cpp:1023
+#: ../rapidsvn_generated.cpp:321 ../rapidsvn_generated.cpp:1192
 msgid "Help"
 msgstr "Допомога"
 
-#: ../rapidsvn_generated.cpp:650
+#: ../rapidsvn_generated.cpp:784
 msgid "Here comes the description"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:1158
+#: ../rapidsvn_generated.cpp:1337
 #, c-format
 msgid "History: %d revisions"
 msgstr "Історія: %d ревізій"
@@ -1058,7 +1169,7 @@ msgstr "Історія: %d ревізій"
 msgid "History: %zd revisions"
 msgstr "Історія: %d ревізій"
 
-#: ../rapidsvn_generated.cpp:151
+#: ../rapidsvn_generated.cpp:157
 msgid "Hostname:"
 msgstr "Назва вузла:"
 
@@ -1081,19 +1192,27 @@ msgstr ""
 msgid "Ignore"
 msgstr "Інформація"
 
-#: ../main_frame.cpp:284 ../rapidsvn_generated.cpp:1923
+#: ../main_frame.cpp:285
 msgid "Ignore Externals"
 msgstr "Ігнорувати зовнішні залежності"
 
-#: ../rapidsvn_generated.cpp:282 ../rapidsvn_generated.cpp:1009
+#: ../rapidsvn_generated.cpp:297 ../rapidsvn_generated.cpp:1152
+#: ../rapidsvn_generated.cpp:2172
 msgid "Ignore externals"
 msgstr "Ігнорувати зовнішні залежності"
 
-#: ../dnd_dlg.cpp:63 ../import_action.cpp:38 ../rapidsvn_generated.cpp:851
+#: ../rapidsvn_generated.cpp:291 ../rapidsvn_generated.cpp:1146
+#: ../rapidsvn_generated.cpp:2163
+msgid "Immediate children (files and empty subdirectories)"
+msgstr ""
+
+#: ../dnd_dlg.cpp:63 ../import_action.cpp:38 ../rapidsvn_generated.cpp:998
+#: ../../include/rapidsvn_generated.h:479
+#: ../../include/rapidsvn_generated.h:684
 msgid "Import"
 msgstr "Імортувати"
 
-#: ../rapidsvn_generated.cpp:1276
+#: ../rapidsvn_generated.cpp:1464
 #, fuzzy
 msgid "Import &Path"
 msgstr "Імортувати"
@@ -1108,27 +1227,32 @@ msgstr ""
 msgid "In&teractive Resolve...\tCTRL-T"
 msgstr "Властивості...\tCTRL-P"
 
-#: ../main_frame.cpp:279
+#: ../rapidsvn_generated.cpp:716
+#, fuzzy
+msgid "Include externals"
+msgstr "Ігнорувати зовнішні залежності"
+
+#: ../main_frame.cpp:280
 msgid "Indicate modified children"
 msgstr ""
 
-#: ../main_frame.cpp:2173
+#: ../main_frame.cpp:2299
 msgid "Info"
 msgstr "Інформація"
 
-#: ../main_frame_helper.cpp:117
+#: ../main_frame_helper.cpp:119
 msgid "Info selected"
 msgstr "Інформація про файл"
 
-#: ../threaded_worker.cpp:245
+#: ../threaded_worker.cpp:242
 msgid "Internal Error: There is another action running"
 msgstr "Внутрішня помилка: зараз виконується інша операція"
 
-#: ../main_frame.cpp:1697
+#: ../main_frame.cpp:1759
 msgid "Internal Error: no client data for action event!"
 msgstr "Внутрішня помилка: відсутні дані клієнта для операції!"
 
-#: ../threaded_worker.cpp:252
+#: ../threaded_worker.cpp:249
 msgid "Internal Error: no context available"
 msgstr "Внутрішня помилка: не знайдений контекст"
 
@@ -1136,17 +1260,17 @@ msgstr "Внутрішня помилка: не знайдений контек�
 msgid "Invalid revision number detected"
 msgstr "Помічений неправильний номер ревізії"
 
-#: ../rapidsvn_generated.cpp:159
+#: ../rapidsvn_generated.cpp:165
 #, fuzzy
 msgid "Issuer:"
 msgstr "Виданий:"
 
-#: ../rapidsvn_generated.cpp:377
+#: ../rapidsvn_generated.cpp:410
 #, fuzzy
 msgid "Keep Locks"
 msgstr "Зберігати блокування"
 
-#: ../rapidsvn_generated.cpp:992
+#: ../rapidsvn_generated.cpp:1165
 msgid "LF (Unix)"
 msgstr "LF (Unix)"
 
@@ -1168,8 +1292,12 @@ msgstr "Дата останньої зміни"
 msgid "Last Changed Rev: %ld"
 msgstr "Ревізія останньої зміни: %ld"
 
-#: ../annotate_dlg.cpp:36
+#: ../annotate_dlg.cpp:39
 msgid "Line"
+msgstr ""
+
+#: ../../include/rapidsvn_generated.h:577
+msgid "ListEditor"
 msgstr ""
 
 #: ../filelist_ctrl.cpp:1064
@@ -1190,7 +1318,20 @@ msgstr ""
 "System Name: %s\n"
 "Canonical Name: %s\n"
 
-#: ../lock_action.cpp:40
+#: ../../../rapidsvn/rapidsvn_app.cpp:198
+#: ../../../rapidsvn/rapidsvn_app.cpp:206
+msgid "Locate help"
+msgstr "Встановити файл допомоги"
+
+#: ../../../rapidsvn/rapidsvn_app.cpp:266
+msgid "Locate tips"
+msgstr "Встановити підказки"
+
+#: ../../../rapidsvn/rapidsvn_app.cpp:258
+msgid "Locate tips file"
+msgstr "Встановити файл підказок"
+
+#: ../lock_action.cpp:40 ../../include/rapidsvn_generated.h:599
 msgid "Lock"
 msgstr "Блокування"
 
@@ -1225,7 +1366,7 @@ msgstr "Власник блокування: %s"
 msgid "Lock Token: %s"
 msgstr "Ключ блокування: %s"
 
-#: ../listener.cpp:414 ../main_frame.cpp:1443
+#: ../main_frame.cpp:1455
 msgid "Locked"
 msgstr "Заблоковано"
 
@@ -1233,27 +1374,27 @@ msgstr "Заблоковано"
 msgid "Log"
 msgstr "Журнал"
 
-#: ../log_dlg.cpp:71
+#: ../log_dlg.cpp:71 ../../include/rapidsvn_generated.h:645
 msgid "Log History"
 msgstr "Журнал повідомлень"
 
-#: ../log_rev_list.cpp:110 ../rapidsvn_generated.cpp:1211
+#: ../log_rev_list.cpp:110 ../rapidsvn_generated.cpp:1394
 msgid "Log Message"
 msgstr "Повідомлення журналу"
 
-#: ../main_frame_helper.cpp:125
+#: ../main_frame_helper.cpp:127
 msgid "Log selected"
 msgstr "Журнал файлу"
 
-#: ../utils.cpp:288
+#: ../utils.cpp:291
 msgid "Login..."
 msgstr "Вхід (login)..."
 
-#: ../folder_browser.cpp:336
+#: ../folder_browser.cpp:338
 msgid "Logout"
 msgstr "Вихід (logout)"
 
-#: ../folder_browser.cpp:341
+#: ../folder_browser.cpp:343
 #, c-format
 msgid "Logout '%s'"
 msgstr "Вихід '%s'"
@@ -1266,6 +1407,10 @@ msgstr "Перемістити...\tF6"
 msgid "Make &directory...\tF7"
 msgstr "Створити каталог...\tF7"
 
+#: ../rapidsvn_generated.cpp:2169
+msgid "Make depth sticky"
+msgstr ""
+
 #: ../mkdir_action.cpp:50
 msgid "Make directory"
 msgstr "Створення каталога"
@@ -1274,12 +1419,16 @@ msgstr "Створення каталога"
 msgid "Merge"
 msgstr "Об'єднати"
 
-#: ../rapidsvn_generated.cpp:1676
+#: ../rapidsvn_generated.cpp:1901
 #, fuzzy
 msgid "Merge Tool"
 msgstr "Об'єднати"
 
-#: ../main_frame.cpp:303
+#: ../../include/rapidsvn_generated.h:762
+msgid "Merge revisions"
+msgstr "Об'єднати ревізії"
+
+#: ../main_frame.cpp:304
 msgid "Merge..."
 msgstr "Об'єднати..."
 
@@ -1288,19 +1437,24 @@ msgstr "Об'єднати..."
 msgid "Merged"
 msgstr "Об'єднати"
 
+#: ../log_list.cpp:52
+#, fuzzy
+msgid "Message"
+msgstr "Повідомлення журналу"
+
 #: ../mkdir_action.cpp:37
 msgid "Mkdir"
 msgstr "Створення каталога"
 
-#: ../listener.cpp:408 ../main_frame.cpp:1437
+#: ../main_frame.cpp:1449
 msgid "Modified"
 msgstr "Змінено"
 
-#: ../rapidsvn_generated.cpp:563
+#: ../rapidsvn_generated.cpp:610
 msgid "More options"
 msgstr ""
 
-#: ../move_action.cpp:42 ../rapidsvn_generated.cpp:854
+#: ../move_action.cpp:42 ../rapidsvn_generated.cpp:1001
 msgid "Move"
 msgstr "Переміщення"
 
@@ -1313,12 +1467,12 @@ msgstr "Робочий файл конфлікту: %s"
 msgid "Multiple Files"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:30 ../rapidsvn_generated.cpp:34
-#: ../rapidsvn_generated.cpp:38 ../rapidsvn_generated.cpp:131
-#: ../rapidsvn_generated.cpp:135 ../rapidsvn_generated.cpp:137
-#: ../rapidsvn_generated.cpp:155 ../rapidsvn_generated.cpp:163
-#: ../rapidsvn_generated.cpp:171 ../rapidsvn_generated.cpp:179
-#: ../rapidsvn_generated.cpp:187
+#: ../rapidsvn_generated.cpp:29 ../rapidsvn_generated.cpp:33
+#: ../rapidsvn_generated.cpp:37 ../rapidsvn_generated.cpp:136
+#: ../rapidsvn_generated.cpp:140 ../rapidsvn_generated.cpp:142
+#: ../rapidsvn_generated.cpp:161 ../rapidsvn_generated.cpp:169
+#: ../rapidsvn_generated.cpp:177 ../rapidsvn_generated.cpp:185
+#: ../rapidsvn_generated.cpp:193
 msgid "MyLabel"
 msgstr ""
 
@@ -1335,20 +1489,40 @@ msgstr "Ім'я: %s"
 msgid "New Property"
 msgstr "Нова властивість"
 
-#: ../diff_action.cpp:217
+#: ../diff_action.cpp:223
 msgid "No diff tool set in the preferences"
 msgstr ""
+
+#: ../../../rapidsvn/rapidsvn_app.cpp:206
+msgid ""
+"No help file was chosen, would you like to be \n"
+"asked again after next application start?"
+msgstr ""
+"Файл допомоги не вказано, повторити\n"
+"запитання при наступному старті?"
 
 #: ../userresolve_action.cpp:62
 msgid "No merge tool set in the preferences"
 msgstr ""
+
+#: ../upgrade_action.cpp:53
+msgid "No path is selected. Cannot upgrade working copy."
+msgstr ""
+
+#: ../../../rapidsvn/rapidsvn_app.cpp:266
+msgid ""
+"No tips file was chosen, would you like to be \n"
+"asked again after next application start?"
+msgstr ""
+"Файл підказок не вказано, повторити\n"
+"запитання при наступному старті?"
 
 #: ../file_info.cpp:118
 #, c-format
 msgid "Node Kind: %s"
 msgstr "Тип: %s"
 
-#: ../rapidsvn_generated.cpp:268 ../rapidsvn_generated.cpp:980
+#: ../rapidsvn_generated.cpp:282 ../rapidsvn_generated.cpp:1137
 msgid "Not specified"
 msgstr "Не вказана"
 
@@ -1356,67 +1530,95 @@ msgstr "Не вказана"
 msgid "Not versioned"
 msgstr "невідстежуваний"
 
-#: ../rapidsvn_generated.cpp:44 ../rapidsvn_generated.cpp:66
-#: ../rapidsvn_generated.cpp:107 ../rapidsvn_generated.cpp:289
-#: ../rapidsvn_generated.cpp:380 ../rapidsvn_generated.cpp:439
-#: ../rapidsvn_generated.cpp:575 ../rapidsvn_generated.cpp:626
-#: ../rapidsvn_generated.cpp:663 ../rapidsvn_generated.cpp:785
-#: ../rapidsvn_generated.cpp:915 ../rapidsvn_generated.cpp:1016
-#: ../rapidsvn_generated.cpp:1080 ../rapidsvn_generated.cpp:1125
-#: ../rapidsvn_generated.cpp:1318 ../rapidsvn_generated.cpp:1502
-#: ../rapidsvn_generated.cpp:1704 ../rapidsvn_generated.cpp:1747
-#: ../rapidsvn_generated.cpp:1777 ../rapidsvn_generated.cpp:1833
-#: ../rapidsvn_generated.cpp:1876 ../rapidsvn_generated.cpp:1931
+#: ../upgrade_action.cpp:59
+msgid ""
+"Notice: if you upgrade your working copy, you won't be able to access the "
+"upgraded working copy with older SVN clients anymore!\n"
+"Do you really want to upgrade this working copy?"
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:44 ../rapidsvn_generated.cpp:67
+#: ../rapidsvn_generated.cpp:110 ../rapidsvn_generated.cpp:314
+#: ../rapidsvn_generated.cpp:413 ../rapidsvn_generated.cpp:477
+#: ../rapidsvn_generated.cpp:622 ../rapidsvn_generated.cpp:676
+#: ../rapidsvn_generated.cpp:751 ../rapidsvn_generated.cpp:797
+#: ../rapidsvn_generated.cpp:929 ../rapidsvn_generated.cpp:1066
+#: ../rapidsvn_generated.cpp:1185 ../rapidsvn_generated.cpp:1252
+#: ../rapidsvn_generated.cpp:1301 ../rapidsvn_generated.cpp:1510
+#: ../rapidsvn_generated.cpp:1715 ../rapidsvn_generated.cpp:1931
+#: ../rapidsvn_generated.cpp:1977 ../rapidsvn_generated.cpp:2009
+#: ../rapidsvn_generated.cpp:2070 ../rapidsvn_generated.cpp:2116
+#: ../rapidsvn_generated.cpp:2181
 msgid "OK"
 msgstr "OK"
 
-#: ../utils.cpp:561
+#: ../rapidsvn_generated.cpp:291 ../rapidsvn_generated.cpp:1146
+#: ../rapidsvn_generated.cpp:2163
+#, fuzzy
+msgid "Only file children (no subdirectories)"
+msgstr "Показувати невідстежувані файли"
+
+#: ../rapidsvn_generated.cpp:291 ../rapidsvn_generated.cpp:1146
+#: ../rapidsvn_generated.cpp:2163
+msgid "Only this item"
+msgstr ""
+
+#: ../utils.cpp:568
 msgid "Open..."
 msgstr "Відкрити..."
 
-#: ../rapidsvn_generated.cpp:1006
+#: ../rapidsvn_generated.cpp:1177
 msgid "Overwrite"
 msgstr "Перезапис"
+
+#: ../action.cpp:274
+msgid "PREVIOUS"
+msgstr ""
 
 #: ../columns.cpp:46 ../log_aff_list.cpp:104
 msgid "Path"
 msgstr "Шлях"
 
-#: ../rapidsvn_generated.cpp:1292
+#: ../rapidsvn_generated.cpp:1481
 #, fuzzy
 msgid "Path &type"
 msgstr "Цільовий шлях:"
 
-#: ../rapidsvn_generated.cpp:263 ../rapidsvn_generated.cpp:975
+#: ../upgrade_action.cpp:58
+#, fuzzy, c-format
+msgid "Path: %s\n"
+msgstr "Шлях"
+
+#: ../rapidsvn_generated.cpp:277 ../rapidsvn_generated.cpp:1132
 msgid "Peg Revision"
 msgstr "Пег-ревізія"
 
-#: ../preferences_dlg.cpp:48
+#: ../preferences_dlg.cpp:48 ../../include/rapidsvn_generated.h:817
 msgid "Preferences"
 msgstr "Налаштування"
 
-#: ../utils.cpp:311
+#: ../utils.cpp:314
 msgid "Preferences..."
 msgstr "Налаштування..."
 
-#: ../rapidsvn_generated.cpp:1666
+#: ../rapidsvn_generated.cpp:1890
 #, fuzzy
 msgid "Program arguments (%1=base, %2=theirs %3=mine %4=result):"
 msgstr "Аргументи програми (%1=файл1, %2=файл2):"
 
-#: ../rapidsvn_generated.cpp:1640
+#: ../rapidsvn_generated.cpp:1862
 msgid "Program arguments (%1=file1, %2=file2):"
 msgstr "Аргументи програми (%1=файл1, %2=файл2):"
 
-#: ../rapidsvn_generated.cpp:1610
+#: ../rapidsvn_generated.cpp:1830
 msgid "Program arguments (%1=selected directory):"
 msgstr "Аргументи програми (%1=вибраний каталог):"
 
-#: ../rapidsvn_generated.cpp:1580
+#: ../rapidsvn_generated.cpp:1798
 msgid "Program arguments (%1=selected file):"
 msgstr "Аргументи програми (%1=вибраний файл):"
 
-#: ../rapidsvn_generated.cpp:1683
+#: ../rapidsvn_generated.cpp:1909
 msgid "Programs"
 msgstr "Програми"
 
@@ -1444,21 +1646,26 @@ msgstr "Властивість"
 msgid "Property Editor"
 msgstr "Редактор властивостей"
 
-#: ../rapidsvn_generated.cpp:1546
+#: ../rapidsvn_generated.cpp:1762
 msgid "Purge temporary files on program exit"
 msgstr "Спорожнити тимчасові файли при виході з програми"
 
-#: ../main_frame_helper.cpp:63
+#: ../main_frame_helper.cpp:65
 msgid "Put files and directories under revision control"
 msgstr "Занести файли та каталоги під контроль версій"
 
-#: ../rapidsvn_generated.cpp:844
+#: ../rapidsvn_generated.cpp:991
 msgid "Question"
 msgstr ""
 
-#: ../main_frame.cpp:528
+#: ../main_frame.cpp:530
 msgid "RapidSVN Error"
 msgstr ""
+
+#: ../../../rapidsvn/rapidsvn_app.cpp:97
+#, c-format
+msgid "RapidSVN Help: %s"
+msgstr "Допомога RapidSVN: %s"
 
 #: ../utils.cpp:192
 msgid "Re&name...\tCTRL-N"
@@ -1476,47 +1683,52 @@ msgstr "Скасування локальних змін\tCTRL-V"
 msgid "Ready"
 msgstr "Готово"
 
-#: ../main_frame.cpp:1677 ../main_frame.cpp:1721
+#: ../main_frame.cpp:1739 ../main_frame.cpp:1783
 msgid "Ready\n"
 msgstr "Готово\n"
 
-#: ../rapidsvn_generated.cpp:427
+#: ../rapidsvn_generated.cpp:464
 msgid "Recent entries:"
 msgstr "Нещодавні записи:"
 
-#: ../rapidsvn_generated.cpp:279 ../rapidsvn_generated.cpp:374
-#: ../rapidsvn_generated.cpp:1003 ../rapidsvn_generated.cpp:1315
-#: ../rapidsvn_generated.cpp:1491 ../rapidsvn_generated.cpp:1771
-#: ../rapidsvn_generated.cpp:1822 ../rapidsvn_generated.cpp:1920
+#: ../rapidsvn_generated.cpp:407 ../rapidsvn_generated.cpp:1507
+#: ../rapidsvn_generated.cpp:1703 ../rapidsvn_generated.cpp:2003
+#: ../rapidsvn_generated.cpp:2058
 msgid "Recursive"
 msgstr "Рекурсивно"
 
-#: ../main_frame_helper.cpp:188
+#: ../main_frame_helper.cpp:190
 msgid "Refresh"
 msgstr "Оновити"
 
-#: ../utils.cpp:306
+#: ../utils.cpp:309
 msgid "Refresh View\tCTRL-R"
 msgstr "Оновити зображення\tCTRL-R"
 
-#: ../main_frame_helper.cpp:189
+#: ../main_frame_helper.cpp:191
 msgid "Refresh the file list"
 msgstr "Оновити перелік файлів"
 
-#: ../main_frame.cpp:277
+#: ../main_frame.cpp:278
 msgid "Refresh with Update"
 msgstr "Оновлювати повністю"
 
-#: ../rapidsvn_generated.cpp:1825
+#: ../rapidsvn_generated.cpp:2061
 #, fuzzy
 msgid "Relocate"
 msgstr "Замінено"
 
-#: ../main_frame_helper.cpp:103
+#: ../main_frame_helper.cpp:105
 msgid "Remove 'conflicted' state on working copy files or directories"
 msgstr "Зняти позначку 'конфліктує' з файлів чи каталогів робочої копії"
 
-#: ../main_frame.cpp:2107
+#: ../cleanup_dlg.cpp:64
+msgid ""
+"Remove any filesystem locks on the working copy left over by previous "
+"unfinished operations."
+msgstr ""
+
+#: ../main_frame.cpp:2233
 msgid "Removed bookmark"
 msgstr "Закладку видалено"
 
@@ -1528,20 +1740,25 @@ msgstr "Перейменування"
 msgid "Rep. Rev."
 msgstr "Рев. реп."
 
-#: ../listener.cpp:411 ../main_frame.cpp:1440
+#: ../main_frame.cpp:1452
 msgid "Replaced"
 msgstr "Замінено"
+
+#: ../../include/rapidsvn_generated.h:836
+#, fuzzy
+msgid "Report"
+msgstr "Експорт"
 
 #: ../columns.cpp:60
 msgid "Repository"
 msgstr "Репозиторій"
 
-#: ../rapidsvn_generated.cpp:1268
+#: ../rapidsvn_generated.cpp:1455
 #, fuzzy
 msgid "Repository &URL for import"
 msgstr "Для імпорту необхідний URL репозиторію!"
 
-#: ../main_frame.cpp:2079
+#: ../main_frame.cpp:2205
 msgid "Repository URL"
 msgstr "URL репозиторію"
 
@@ -1555,11 +1772,11 @@ msgstr "UUID репозиторію: %s"
 msgid "Repository: %s"
 msgstr "Репозиторій: %s"
 
-#: ../utils.cpp:319
+#: ../utils.cpp:326
 msgid "Reset Columns"
 msgstr "У початковий стан"
 
-#: ../rapidsvn_generated.cpp:1552
+#: ../rapidsvn_generated.cpp:1768
 msgid "Reset Flat Mode on every program start"
 msgstr ""
 
@@ -1567,51 +1784,52 @@ msgstr ""
 msgid "Resolve"
 msgstr "Вирішення конфліктів"
 
-#: ../main_frame_helper.cpp:102
+#: ../main_frame_helper.cpp:104
 msgid "Resolve selected"
 msgstr "Вирішити конфлікти"
 
-#: ../listener.cpp:399 ../main_frame.cpp:1428
+#: ../main_frame.cpp:1440
 msgid "Resolved"
 msgstr "Конфлікт вирішено"
 
-#: ../listener.cpp:396 ../main_frame.cpp:1425
+#: ../main_frame.cpp:1437
 msgid "Restore"
 msgstr "Відновити"
 
-#: ../main_frame_helper.cpp:95
+#: ../main_frame_helper.cpp:97
 msgid "Restore pristine working copy file (undo all local edits)"
 msgstr "Відновити початкову робочу копію файла (скасувати всі локальні зміни)"
 
-#: ../rapidsvn_generated.cpp:506
+#: ../rapidsvn_generated.cpp:549
 msgid "Resulting repository filename:"
 msgstr ""
 
-#: ../listener.cpp:397 ../main_frame.cpp:1426 ../revert_action.cpp:35
+#: ../main_frame.cpp:1438 ../revert_action.cpp:35
+#: ../../include/rapidsvn_generated.h:857
 msgid "Revert"
 msgstr "Скасування змін"
 
-#: ../main_frame_helper.cpp:94
+#: ../main_frame_helper.cpp:96
 msgid "Revert selected"
 msgstr "Скасування змін"
 
-#: ../annotate_dlg.cpp:34 ../columns.cpp:47 ../log_rev_list.cpp:107
-#: ../rapidsvn_generated.cpp:252 ../rapidsvn_generated.cpp:964
-#: ../rapidsvn_generated.cpp:1808 ../rapidsvn_generated.cpp:1906
+#: ../annotate_dlg.cpp:37 ../columns.cpp:47 ../log_rev_list.cpp:107
+#: ../rapidsvn_generated.cpp:265 ../rapidsvn_generated.cpp:1120
+#: ../rapidsvn_generated.cpp:2043 ../rapidsvn_generated.cpp:2149
 msgid "Revision"
 msgstr "Ревізія"
 
-#: ../rapidsvn_generated.cpp:707
+#: ../rapidsvn_generated.cpp:845
 #, fuzzy
 msgid "Revision or date #1:"
 msgstr "Ревізія або дата #&1:"
 
-#: ../rapidsvn_generated.cpp:745
+#: ../rapidsvn_generated.cpp:886
 #, fuzzy
 msgid "Revision or date #2:"
 msgstr "Ревізія або дата #&2:"
 
-#: ../rapidsvn_generated.cpp:714 ../rapidsvn_generated.cpp:752
+#: ../rapidsvn_generated.cpp:852 ../rapidsvn_generated.cpp:893
 msgid "Revision:"
 msgstr "Ревізія:"
 
@@ -1624,6 +1842,10 @@ msgstr "Ревізія: %ld"
 #, c-format
 msgid "Running command %s:"
 msgstr ""
+
+#: ../../include/rapidsvn_generated.h:156
+msgid "SSL Certificate"
+msgstr "Сертифікат SSL"
 
 #: ../columns.cpp:62
 msgid "Schedule"
@@ -1647,7 +1869,7 @@ msgid "Select a destination folder to merge to"
 msgstr "Вкажіть цільовий каталог для об'єднання"
 
 #: ../create_repos_dlg.cpp:185 ../create_repos_dlg.cpp:201
-#: ../main_frame.cpp:2033
+#: ../main_frame.cpp:2159
 msgid "Select a directory"
 msgstr "Вкажіть каталог"
 
@@ -1658,6 +1880,10 @@ msgstr "Оберіть каталог для імпорту."
 #: ../import_dlg.cpp:134
 msgid "Select a file to import"
 msgstr "Оберіть файл для імпорту"
+
+#: ../log_list.cpp:293
+msgid "Select all\tCTRL-A"
+msgstr ""
 
 #: ../create_repos_dlg.cpp:121
 #, fuzzy
@@ -1685,7 +1911,13 @@ msgstr "Оберіть стандартний редактор (виконува
 msgid "Select standard file explorer executable"
 msgstr "Оберіть програму перегляду (файл для виконання)"
 
-#: ../main_frame_helper.cpp:87
+#: ../checkout_dlg.cpp:71 ../export_dlg.cpp:73
+#, fuzzy
+msgid "Select which files and subdirectories of the selected URL to get."
+msgstr ""
+"Виберіть цей пункт, щоб отримати також рекурсивно всі підкаталоги цього URL."
+
+#: ../main_frame_helper.cpp:89
 msgid "Send changes from your working copy to the repository"
 msgstr "Відіслати зміни у локальнії копії до репозиторію."
 
@@ -1699,18 +1931,13 @@ msgstr ""
 "Виберіть цей пункт, аби використовувати останню (BASE/HEAD) пег-ревізію "
 "файлів."
 
-#: ../checkout_dlg.cpp:73
+#: ../checkout_dlg.cpp:75
 msgid "Set to automatically create a new working copy bookmark."
 msgstr ""
 "Встановіть цей прапорець для автоматичного створення лінка на нову робочу "
 "копію."
 
-#: ../checkout_dlg.cpp:71 ../export_dlg.cpp:73
-msgid "Set to get all subdirectories from the URL also."
-msgstr ""
-"Виберіть цей пункт, щоб отримати також рекурсивно всі підкаталоги цього URL."
-
-#: ../checkout_dlg.cpp:75 ../export_dlg.cpp:77
+#: ../checkout_dlg.cpp:73 ../export_dlg.cpp:77
 msgid ""
 "Set to ignore external definitions and the external working copies managed "
 "by them."
@@ -1718,66 +1945,103 @@ msgstr ""
 "Встановіть для ігнорування зовнішніх означень та ними керованих зовнішніх "
 "робочих копій."
 
-#: ../main_frame.cpp:329
+#: ../main_frame.cpp:331
 msgid "Show Startup Tips"
 msgstr "Показувати корисні підказки на старті"
 
-#: ../main_frame.cpp:283 ../main_frame_helper.cpp:178
+#: ../main_frame_helper.cpp:230
+#, fuzzy
+msgid "Show added files"
+msgstr "Показувати невідстежувані файли"
+
+#: ../main_frame_helper.cpp:231
+msgid "Show added files in the log list"
+msgstr ""
+
+#: ../main_frame.cpp:284 ../main_frame_helper.cpp:180
 #, fuzzy
 msgid "Show conflicted entries"
 msgstr "Показувати невідстежувані файли"
 
-#: ../main_frame_helper.cpp:155
+#: ../main_frame_helper.cpp:244
+#, fuzzy
+msgid "Show conflicted files"
+msgstr "Показувати невідстежувані файли"
+
+#: ../main_frame_helper.cpp:245
+#, fuzzy
+msgid "Show conflicted files in the log list"
+msgstr "Показувати невідстежувані файли"
+
+#: ../main_frame_helper.cpp:237
+#, fuzzy
+msgid "Show deleted files"
+msgstr "Показувати невідстежувані файли"
+
+#: ../main_frame_helper.cpp:238
+msgid "Show deleted files in the log list"
+msgstr ""
+
+#: ../main_frame_helper.cpp:157
 #, fuzzy
 msgid "Show entries in subdirectories"
 msgstr "Показувати невідстежувані файли"
 
-#: ../main_frame.cpp:285
+#: ../main_frame.cpp:286
 #, fuzzy
 msgid "Show ignored entries"
 msgstr "Показувати невідстежувані файли"
 
-#: ../main_frame.cpp:282 ../main_frame_helper.cpp:172
+#: ../main_frame.cpp:283 ../main_frame_helper.cpp:174
 #, fuzzy
 msgid "Show modified entries"
 msgstr "Показувати невідстежувані файли"
 
-#: ../main_frame.cpp:278 ../main_frame_helper.cpp:154
+#: ../main_frame.cpp:279 ../main_frame_helper.cpp:156
 #, fuzzy
 msgid "Show subdirectories"
 msgstr "Показувати невідстежувані файли"
 
-#: ../main_frame_helper.cpp:126
+#: ../main_frame_helper.cpp:128
 msgid "Show the log messages for the selected entries"
 msgstr "Показати повідомлення журналу для вибраних файлів"
 
-#: ../main_frame.cpp:281 ../main_frame_helper.cpp:166
+#: ../main_frame.cpp:282 ../main_frame_helper.cpp:168
 #, fuzzy
 msgid "Show unmodified entries"
 msgstr "Показувати невідстежувані файли"
 
-#: ../main_frame.cpp:280 ../main_frame_helper.cpp:160
+#: ../main_frame.cpp:281 ../main_frame_helper.cpp:162
 msgid "Show unversioned entries"
 msgstr "Показувати невідстежувані файли"
 
-#: ../listener.cpp:400 ../main_frame.cpp:1429
+#: ../main_frame_helper.cpp:251
+#, fuzzy
+msgid "Show updated files"
+msgstr "Показувати невідстежувані файли"
+
+#: ../main_frame_helper.cpp:252
+msgid "Show updated files in the log list"
+msgstr ""
+
+#: ../main_frame.cpp:1441
 msgid "Skip"
 msgstr "Пропуск"
 
-#: ../main_frame.cpp:275
+#: ../main_frame.cpp:276
 msgid "Sort"
 msgstr "Сортування"
 
-#: ../main_frame.cpp:251
+#: ../main_frame.cpp:252
 msgid "Sort Ascending"
 msgstr "за зростанням"
 
-#: ../rapidsvn_generated.cpp:1593
+#: ../rapidsvn_generated.cpp:1812
 #, fuzzy
 msgid "Standard Editor"
 msgstr "Стандартний редактор:"
 
-#: ../rapidsvn_generated.cpp:1623
+#: ../rapidsvn_generated.cpp:1844
 #, fuzzy
 msgid "Standard Explorer"
 msgstr "Стандартна програма перегляду:"
@@ -1786,39 +2050,39 @@ msgstr "Стандартна програма перегляду:"
 msgid "Status"
 msgstr "Статус"
 
-#: ../rapidsvn_generated.cpp:1122
+#: ../rapidsvn_generated.cpp:1298
 msgid "Steal lock if it belongs to another user"
 msgstr "Перехопити блокування, якщо воно належить іншому користувачеві"
 
-#: ../main_frame_helper.cpp:199
+#: ../main_frame_helper.cpp:201
 msgid "Stop"
 msgstr "Зупинити"
 
-#: ../main_frame_helper.cpp:200
+#: ../main_frame_helper.cpp:202
 msgid "Stop the current action"
 msgstr "Зупинити поточну операцію"
 
-#: ../rapidsvn_generated.cpp:1691
+#: ../rapidsvn_generated.cpp:1917
 msgid "Store authentication credentials on hard disk"
 msgstr "Зберігати аутентифікаційне посвідчення на диску"
 
-#: ../switch_action.cpp:50
+#: ../switch_action.cpp:50 ../../include/rapidsvn_generated.h:888
 msgid "Switch URL"
 msgstr "Перемикання URL"
 
-#: ../main_frame.cpp:304
+#: ../main_frame.cpp:305
 msgid "Switch URL...\tCTRL-S"
 msgstr "Перемкнути URL...\tCTRL-S"
 
-#: ../main_frame.cpp:1376
+#: ../main_frame.cpp:1388
 msgid "Test duration"
 msgstr "Тривалість тесту"
 
-#: ../main_frame.cpp:1372
+#: ../main_frame.cpp:1384
 msgid "Test ended at"
 msgstr "Тест закінчено о"
 
-#: ../main_frame.cpp:1369
+#: ../main_frame.cpp:1381
 msgid "Test started at"
 msgstr "Тест розпочато о"
 
@@ -1848,7 +2112,7 @@ msgstr ""
 "Знайдено помилки під час перевірки сертифіката.\n"
 "Прийняти цей сертифікат?"
 
-#: ../rapidsvn_generated.cpp:418
+#: ../rapidsvn_generated.cpp:454
 #, fuzzy
 msgid "This action has resulted in a commit - please enter a &log message"
 msgstr ""
@@ -1863,9 +2127,9 @@ msgid ""
 "Available online under:"
 msgstr ""
 
-#: ../columns.cpp:59 ../rapidsvn_generated.cpp:233
-#: ../rapidsvn_generated.cpp:945 ../rapidsvn_generated.cpp:1801
-#: ../rapidsvn_generated.cpp:1899
+#: ../columns.cpp:59 ../rapidsvn_generated.cpp:244
+#: ../rapidsvn_generated.cpp:1099 ../rapidsvn_generated.cpp:2035
+#: ../rapidsvn_generated.cpp:2141
 msgid "URL"
 msgstr "URL"
 
@@ -1882,7 +2146,7 @@ msgstr "UUID"
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../main_frame.cpp:1649
+#: ../main_frame.cpp:1701
 msgid "Unimplemented action!"
 msgstr "Непідтримувана операція!"
 
@@ -1891,11 +2155,11 @@ msgstr "Непідтримувана операція!"
 msgid "Unknown destination path"
 msgstr "Цільовий шлях"
 
-#: ../unlock_action.cpp:39
+#: ../unlock_action.cpp:39 ../../include/rapidsvn_generated.h:909
 msgid "Unlock"
 msgstr "Розблокування"
 
-#: ../listener.cpp:415 ../main_frame.cpp:1444
+#: ../main_frame.cpp:1456
 msgid "Unlocked"
 msgstr "Розблоковано"
 
@@ -1903,34 +2167,48 @@ msgstr "Розблоковано"
 msgid "Update"
 msgstr "Оновлення"
 
-#: ../main_frame_helper.cpp:78
+#: ../rapidsvn_generated.cpp:2161
+#, fuzzy
+msgid "Update Depth"
+msgstr "Оновити вибране повністю"
+
+#: ../main_frame_helper.cpp:80
 msgid "Update selected"
 msgstr "Оновити вибране повністю"
 
-#: ../listener.cpp:311 ../listener.cpp:403 ../main_frame.cpp:1432
+#: ../listener.cpp:311 ../main_frame.cpp:1444
 msgid "Updated"
 msgstr "Оновлено"
 
-#: ../main_frame.cpp:1711 ../main_frame.cpp:1716
-msgid "Updating..."
+#: ../main_frame.cpp:1773 ../main_frame.cpp:1778
+#, fuzzy
+msgid "Updating file list..."
 msgstr "Оновлення..."
 
-#: ../main_frame.cpp:250
+#: ../upgrade_action.cpp:39
+msgid "Upgrade"
+msgstr ""
+
+#: ../upgrade_action.cpp:54 ../upgrade_action.cpp:62 ../utils.cpp:322
+msgid "Upgrade Working Copy"
+msgstr ""
+
+#: ../main_frame.cpp:251
 msgid "Use Path for Sorting"
 msgstr "Використовувати шлях"
 
-#: ../rapidsvn_generated.cpp:734 ../rapidsvn_generated.cpp:772
+#: ../rapidsvn_generated.cpp:873 ../rapidsvn_generated.cpp:914
 #, fuzzy
 msgid "Use URL/path:"
 msgstr "Використовувати URL/шлях:"
 
-#: ../rapidsvn_generated.cpp:1587 ../rapidsvn_generated.cpp:1617
+#: ../rapidsvn_generated.cpp:1805 ../rapidsvn_generated.cpp:1837
 msgid "Use always"
 msgstr "Використовувати завжди"
 
-#: ../rapidsvn_generated.cpp:257 ../rapidsvn_generated.cpp:723
-#: ../rapidsvn_generated.cpp:761 ../rapidsvn_generated.cpp:969
-#: ../rapidsvn_generated.cpp:1813 ../rapidsvn_generated.cpp:1911
+#: ../rapidsvn_generated.cpp:270 ../rapidsvn_generated.cpp:861
+#: ../rapidsvn_generated.cpp:902 ../rapidsvn_generated.cpp:1125
+#: ../rapidsvn_generated.cpp:2048 ../rapidsvn_generated.cpp:2154
 msgid "Use latest"
 msgstr "Використовувати останню версію"
 
@@ -1938,11 +2216,24 @@ msgstr "Використовувати останню версію"
 msgid "User"
 msgstr "Користувач"
 
-#: ../rapidsvn_generated.cpp:167
+#: ../rapidsvn_generated.cpp:738
+msgid "Vacuum Options"
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:731
+msgid "Vacuum pristine copies"
+msgstr ""
+
+#: ../cleanup_dlg.cpp:68
+msgid ""
+"Vacuum pristine copies, removing unnecessary files from the .svn directory."
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:173
 msgid "Valid from:"
 msgstr "Дійсний з:"
 
-#: ../rapidsvn_generated.cpp:175
+#: ../rapidsvn_generated.cpp:181
 msgid "Valid until:"
 msgstr "Дійсний до:"
 
@@ -1959,8 +2250,16 @@ msgstr "Перегляд"
 msgid "View..."
 msgstr "Перегляд..."
 
-#: ../rapidsvn_generated.cpp:567
+#: ../rapidsvn_generated.cpp:614
 msgid "WARNING"
+msgstr ""
+
+#: ../listener.cpp:570
+msgid "Warning"
+msgstr ""
+
+#: ../rapidsvn_generated.cpp:2163
+msgid "Working copy (as before)"
 msgstr ""
 
 #: ../dnd_dlg.cpp:48
@@ -1989,27 +2288,27 @@ msgid ""
 "  %s?"
 msgstr ""
 
-#: ../main_frame.cpp:2051
+#: ../main_frame.cpp:2177
 msgid "You cannot add a subversion administrative directory to the bookmarks!"
 msgstr "Не можна додати до закладок адміністративний каталог subversion!"
 
-#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1270
+#: ../file_info.cpp:150 ../filelist_ctrl.cpp:1273
 msgid "add"
 msgstr "додати"
 
-#: ../filelist_ctrl.cpp:1235 ../utils.cpp:408
+#: ../filelist_ctrl.cpp:1235 ../utils.cpp:415
 msgid "added"
 msgstr "доданий"
 
-#: ../utils.cpp:426
+#: ../utils.cpp:433
 msgid "conflicted"
 msgstr "конфліктує"
 
-#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1273
+#: ../file_info.cpp:154 ../filelist_ctrl.cpp:1276
 msgid "delete"
 msgstr "видалити"
 
-#: ../utils.cpp:414
+#: ../utils.cpp:421
 msgid "deleted"
 msgstr "видалений"
 
@@ -2017,7 +2316,7 @@ msgstr "видалений"
 msgid "directory"
 msgstr "каталог"
 
-#: ../utils.cpp:432
+#: ../utils.cpp:439
 msgid "external"
 msgstr "зовнішній"
 
@@ -2025,70 +2324,70 @@ msgstr "зовнішній"
 msgid "file"
 msgstr "файл"
 
-#: ../utils.cpp:438
+#: ../utils.cpp:445
 msgid "ignored"
 msgstr ""
 
-#: ../utils.cpp:435
+#: ../utils.cpp:442
 msgid "incomplete"
 msgstr "пошкоджений"
 
-#: ../utils.cpp:423
+#: ../utils.cpp:430
 msgid "merged"
 msgstr "об'єднаний"
 
-#: ../utils.cpp:411
+#: ../utils.cpp:418
 msgid "missing"
 msgstr "відсутній"
 
-#: ../filelist_ctrl.cpp:1238 ../utils.cpp:420
+#: ../filelist_ctrl.cpp:1238 ../utils.cpp:427
 msgid "modified"
 msgstr "змінений"
 
-#: ../rapidsvn_generated.cpp:1165
+#: ../rapidsvn_generated.cpp:1344
 msgid "more"
 msgstr ""
 
-#: ../rapidsvn_generated.cpp:992
+#: ../rapidsvn_generated.cpp:1165
 msgid "native"
 msgstr "власний формат для ОС"
 
-#: ../file_info.cpp:132 ../utils.cpp:399
+#: ../file_info.cpp:132 ../utils.cpp:406
 msgid "none"
 msgstr "немає"
 
-#: ../file_info.cpp:146 ../utils.cpp:405
+#: ../file_info.cpp:146 ../utils.cpp:412
 msgid "normal"
 msgstr "нормальний"
 
-#: ../utils.cpp:429
+#: ../utils.cpp:436
 msgid "obstructed"
 msgstr "затуляє інший файл"
 
-#: ../filelist_ctrl.cpp:1303 ../filelist_ctrl.cpp:1317
+#: ../filelist_ctrl.cpp:1306 ../filelist_ctrl.cpp:1320
 msgid "outdated"
 msgstr "застарів"
 
-#: ../rapidsvn_generated.cpp:532
+#: ../rapidsvn_generated.cpp:576
 #, fuzzy
 msgid "pre Subversion 1.4"
 msgstr "Subversion %d.%d.%d"
 
-#: ../rapidsvn_generated.cpp:532
+#: ../rapidsvn_generated.cpp:576
 #, fuzzy
 msgid "pre Subversion 1.5"
 msgstr "Subversion %d.%d.%d"
 
-#: ../rapidsvn_generated.cpp:532
+#: ../rapidsvn_generated.cpp:576
 #, fuzzy
 msgid "pre Subversion 1.6"
 msgstr "Subversion %d.%d.%d"
 
-#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1276
+#: ../file_info.cpp:158 ../filelist_ctrl.cpp:1279
 msgid "replace"
 msgstr "замінити"
 
-#: ../utils.cpp:417
+#: ../utils.cpp:424
 msgid "replaced"
 msgstr "заміщений"
 
@@ -2100,19 +2399,28 @@ msgstr ""
 msgid "unknown"
 msgstr "невідомо"
 
-#: ../utils.cpp:440
+#: ../utils.cpp:447
 msgid "unknown value"
 msgstr "невідоме значення"
 
-#: ../utils.cpp:402
+#: ../utils.cpp:409
 msgid "unversioned"
 msgstr "невідстежуваний"
 
-#~ msgid "Checkout Test"
-#~ msgstr "Тест Checkout"
+#, fuzzy
+#~ msgid "Completed at revision %ld"
+#~ msgstr "Зафіксовано ревізію"
 
-#~ msgid "Destination file"
-#~ msgstr "Цільовий файл"
+#, fuzzy
+#~ msgid "Error: %s\n"
+#~ msgstr "Помилка"
+
+#~ msgid "Execute: %s"
+#~ msgstr "Виконати: %s"
+
+#, fuzzy
+#~ msgid "External"
+#~ msgstr "зовнішній"
 
 #~ msgid "Destination path"
 #~ msgstr "Цільовий шлях"
@@ -2155,43 +2463,11 @@ msgstr "невідстежуваний"
 #~ msgid "Listener Test"
 #~ msgstr "Тестування Listener"
 
-#~ msgid "Locate help"
-#~ msgstr "Встановити файл допомоги"
-
-#~ msgid "Locate tips"
-#~ msgstr "Встановити підказки"
-
-#~ msgid "Locate tips file"
-#~ msgstr "Встановити файл підказок"
-
 #~ msgid "Log Message:"
 #~ msgstr "Повідомлення журналу:"
 
-#~ msgid "Merge revisions"
-#~ msgstr "Об'єднати ревізії"
-
-#~ msgid ""
-#~ "No help file was chosen, would you like to be \n"
-#~ "asked again after next application start?"
-#~ msgstr ""
-#~ "Файл допомоги не вказано, повторити\n"
-#~ "запитання при наступному старті?"
-
-#~ msgid ""
-#~ "No tips file was chosen, would you like to be \n"
-#~ "asked again after next application start?"
-#~ msgstr ""
-#~ "Файл підказок не вказано, повторити\n"
-#~ "запитання при наступному старті?"
-
-#~ msgid "RapidSVN Help: %s"
-#~ msgstr "Допомога RapidSVN: %s"
-
 #~ msgid "Revision must be an unsigned number!"
 #~ msgstr "Номер ревізії являє собою невід'ємне число!"
-
-#~ msgid "SSL Certificate"
-#~ msgstr "Сертифікат SSL"
 
 #~ msgid "Second path or URL is required for merge!"
 #~ msgstr "Для операції об'єднання потрібен другий шлях або URL!"
@@ -2258,9 +2534,6 @@ msgstr "невідстежуваний"
 
 #~ msgid "&Status"
 #~ msgstr "Статус"
-
-#~ msgid "Deleting unversioned file: %s"
-#~ msgstr "Видаляю невідстежуваний файл: %s"
 
 #~ msgid "E&xtension"
 #~ msgstr "Розширення"
