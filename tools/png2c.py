@@ -30,7 +30,7 @@ USAGE="""png2c - Embed a PNG in a C header file (like XPM)
 Usage: png2c [file ..] Convert all the file <file.png> to <file.png.h>"""
 
 if len(sys.argv) < 2:
-  print USAGE
+  print(USAGE)
   os.exit(1)
 
 r=re.compile("^([a-zA-Z._][a-zA-Z._0-9]*)[.][pP][nN][gG]$")
@@ -40,7 +40,7 @@ for path in sys.argv[1:]:
   # Allow only filenames that make sense
   # as C variable names
   if not(m):
-    print "Skipped file (unsuitable filename): " + filename
+    print("Skipped file (unsuitable filename): " + filename)
     continue
 
   # Read PNG file as character array
