@@ -46,7 +46,7 @@ def run(cmd, args=[], silent=False):
   t=p.communicate()[0]
 
   if not silent:
-    print t
+    print(t)
   return t
 
 def getEnviron(key):
@@ -109,7 +109,7 @@ def patchVersionHeader(revision):
 
 def buildApplicationVc2005():
   out=open('vcbuild.log', 'w')
-  print "Rebuild rapidsvn (using Visual C++ 2005 vcbuild)"
+  print("Rebuild rapidsvn (using Visual C++ 2005 vcbuild)")
   out.write(run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Release|Win32'], silent=True))
   out.write(run('vcbuild', ['/useenv', '/rebuild', 'build\\vc2005\\rapidsvn.sln', 'Unicode Release|Win32'], silent=True))
 
@@ -127,12 +127,12 @@ def buildMessages():
     if os.path.isfile(po):
       # Clear dictionary that was used by msgfmt in previous conversion
       msgfmt.MESSAGES = {}
-      print "Compiling message catalog %s into %s" % (po, mo)
+      print("Compiling message catalog %s into %s" % (po, mo))
       msgfmt.make(po,mo)
 
 
 def buildInstaller(compiler, suffix):
-  print "Clean installer"
+  print("Clean installer")
   os.chdir("packages/win32")
   # Remove files
   x=glob.glob("tmp/*")
@@ -140,32 +140,32 @@ def buildInstaller(compiler, suffix):
   x=glob.glob("Output/*")
   for n in x: os.unlink(n)
 
-  print "Fetching files for installer"
+  print("Fetching files for installer")
   out=open('innosetup.log', 'w')
   if compiler=='vc2005':
     out.write(run('cmd.exe', ['/c', 'FetchFiles_vs2005.bat'], silent=True))
   innosetup="%s\iscc.exe" % getEnviron("INNOSETUP")
-  print "Build installer (using %s)" %innosetup
+  print("Build installer (using %s)" %innosetup)
   out.write(run(innosetup, ['rapidsvn.iss'], silent=True))
 
   #Get the name of the package and rename it
   n=glob.glob("Output/RapidSVN*exe")
   if not len(n):
-    print "Hm, seems like we have a build error: aborting"
+    print("Hm, seems like we have a build error: aborting")
     sys.exit(1)
   old=n[0]
   e=os.path.splitext(old)
-  print e
+  print(e)
   pkg="%s-%s%s%s" % (e[0],currentRevision,suffix,e[1])
   os.rename(old, pkg)
-  print "The new package is: %s" % (pkg)
+  print("The new package is: %s" % (pkg))
   os.chdir("../..")
   return "packages/win32/%s" % (pkg)
 
 def makeApplication():
-  print 'Rebuild rapidsvn (using make)'
+  print('Rebuild rapidsvn (using make)')
   if not os.path.isfile('config.status'):
-    print 'You have to run "configure" at least once!'
+    print('You have to run "configure" at least once!')
     sys.exit(1)
   run('./autogen.sh', silent=True)
   run('./config.status', silent=True)
@@ -174,26 +174,26 @@ def makeApplication():
 
   n=glob.glob('src/rapidsvn')
   if not len(n):
-    print "Hm, seems like we have a build error: aborting"
+    print("Hm, seems like we have a build error: aborting")
     sys.exit(1)
 
 
 def buildMacDiskImage(suffix):
-  print 'Build Mac Disk Image'
+  print('Build Mac Disk Image')
   os.chdir('packages/osx')
   run('./make_osx_bundle.sh', silent=True)
 
   #Get the name of the package and rename it
   n=glob.glob("RapidSVN*dmg")
   if not len(n):
-    print "Hm, seems like we have a build error: aborting"
+    print("Hm, seems like we have a build error: aborting")
     sys.exit(1)
   old=n[0]
   e=os.path.splitext(old)
-  print e
+  print(e)
   pkg="%s-%s%s%s" % (e[0],currentRevision,suffix,e[1])
   os.rename(old, pkg)
-  print "The new package is: %s" % (pkg)
+  print("The new package is: %s" % (pkg))
   os.chdir("../..")
   return "packages/osx/%s" % (pkg)
 
@@ -214,8 +214,8 @@ def uploadInstaller(pkg):
 
 
 def usage():
-  print "Usage: create_nightly.py [--compiler={vc2005}] [--suffix=<text>] [--force] [--skip-compile] [--skip-installer] [--skip-upload]"
-  print
+  print("Usage: create_nightly.py [--compiler={vc2005}] [--suffix=<text>] [--force] [--skip-compile] [--skip-installer] [--skip-upload]")
+  print()
 
 
 if __name__ == '__main__':
@@ -224,7 +224,7 @@ if __name__ == '__main__':
     os.chdir("..")
   # Check whether we are in the project dir
   if not os.path.exists("HACKING.txt"):
-    print "Wrong directory to start this script!"
+    print("Wrong directory to start this script!")
     sys.exit(1)
 
   # Parse the options
@@ -263,14 +263,14 @@ if __name__ == '__main__':
 
   system=platform.system()
   if system=='Windows':
-    print 'Nightly build for Windows'
+    print('Nightly build for Windows')
   elif system=='Darwin':
-    print 'Nightly build for Mac OS/X'
+    print('Nightly build for Mac OS/X')
   else:
-    print "Nighlty build not supported for %d" % system
+    print("Nighlty build not supported for %s" % system)
     sys.exit(1)
 
-  print "Update working copy"
+  print("Update working copy")
   run('svn', ['-q', 'up'])
 
   # Now decide whether or not we have to create a nightly build
@@ -279,11 +279,11 @@ if __name__ == '__main__':
   patchVersionHeader(currentRevision)
 
   if "" == lastSuccessfulRevision:
-    print "No successful previous build detected"
+    print("No successful previous build detected")
   elif force:
-    print "Forcing the build"
+    print("Forcing the build")
   elif currentRevision <= lastSuccessfulRevision:
-    print "No newer revision detected, aborting (last successful=%s, current=%s)" % (lastSuccessfulRevision, currentRevision)
+    print("No newer revision detected, aborting (last successful=%s, current=%s)" % (lastSuccessfulRevision, currentRevision))
     sys.exit(0)
 
   buildMessages()
@@ -303,4 +303,4 @@ if __name__ == '__main__':
   #remember revision
   open(FILENAME, "w").write(currentRevision)
 
-  print "Done"
+  print("Done")
