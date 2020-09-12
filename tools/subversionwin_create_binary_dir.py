@@ -25,7 +25,7 @@ def run(src, dst):
     raise InvalidParameter("source and destination are identical")
 
   m_src=rDIRNAME.match(src)
-  m_dst=rDIRNAME.match(src)
+  m_dst=rDIRNAME.match(dst)
 
   if not(m_src) or not(m_dst):
     raise InvalidParameter("source or destintation don't contain the version information")
