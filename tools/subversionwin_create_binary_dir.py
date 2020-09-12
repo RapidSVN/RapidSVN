@@ -12,7 +12,7 @@ Usage:
   The directories supplied have to be absolute and they have to end with the
   subversion version (e.g. -1.6.12).""".format(sys.argv[0])
 
-rDIRNAME=re.compile(r"-([0-9]+[.][0-9]+[.][0-9]+)$")
+rDIRNAME=re.compile(r".*-([0-9]+[.][0-9]+[.][0-9]+)$")
 
 class Error(Exception): pass
 class InvalidParameter(Exception): pass
