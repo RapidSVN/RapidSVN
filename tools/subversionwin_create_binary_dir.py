@@ -65,7 +65,7 @@ def run(src, dst):
   print "Checking source distribution in {src}...".format(src=src),
   for file in files_to_check:
     if not os.path.isfile(os.path.join(src, file)):
-      raise Error("can't find {file} in source".format(file=file)
+      raise Error("can't find {file} in source".format(file=file))
   print "OK"
   print "Preparing destination in {dst}...".format(dst=dst),
   os.makedirs(dst)
@@ -124,7 +124,7 @@ def run(src, dst):
     ["apr-util/Debug/*.lib", "Debug/lib"],
     ["db4-win32/lib/libdb44d.lib", "Debug/lib"],
     ["neon/libneond.lib", "Debug/lib"],
-
+  )
 
 
 if __name__=='__main__':
