@@ -62,12 +62,12 @@ def run(src, dst):
     "Debug/subversion/svn/svn.exe",
     "Debug/subversion/svnadmin/svnadmin.exe",
     )
-  print "Checking source distribution in {src}...".format(src=src),
+  print("Checking source distribution in {src}...".format(src=src), end=' ')
   for file in files_to_check:
     if not os.path.isfile(os.path.join(src, file)):
       raise Error("can't find {file} in source".format(file=file))
-  print "OK"
-  print "Preparing destination in {dst}...".format(dst=dst),
+  print("OK")
+  print("Preparing destination in {dst}...".format(dst=dst), end=' ')
   os.makedirs(dst)
   dirs_to_create = (
     "include",
@@ -76,8 +76,8 @@ def run(src, dst):
   )
   for dir in dirs_to_create:
     os.mkdir(os.path.join(dst, dir))
-  print "OK"
-  print "Copying files...",
+  print("OK")
+  print("Copying files...", end=' ')
   files_to_copy = (
     # headers
     ["subversion/include/*.h", "include"],
@@ -146,12 +146,12 @@ if __name__=='__main__':
     run(src, dst)
 
     sys.exit(0)
-  except InvalidParameter, e:
-    print USAGE
-    print "Error: {message}".format(message=str(e))
+  except InvalidParameter as e:
+    print(USAGE)
+    print("Error: {message}".format(message=str(e)))
     sys.exit(1)
-  except Error, e:
-    print "Error: {message}\nAborted.".format(message=str(e))
+  except Error as e:
+    print("Error: {message}\nAborted.".format(message=str(e)))
     sys.exit(1)
 
 
