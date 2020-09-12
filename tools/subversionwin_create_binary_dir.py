@@ -134,9 +134,9 @@ if __name__=='__main__':
     src=None
     dst=None
     for opt, value in opts:
-      if opt == 'src':
+      if opt == '--src':
         src=value
-      elif opt == 'dst':
+      elif opt == '--dst':
         dst=value
 
     # First check the validity of the parameters
