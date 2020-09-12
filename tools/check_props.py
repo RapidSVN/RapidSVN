@@ -29,7 +29,8 @@
 #
 # Usage:
 # python check_props.py
-from os.path import walk
+import os
+
 from subprocess import Popen
 
 def set_prop(filename, prop, value):
@@ -53,14 +54,12 @@ MIME_TYPES={
   '.xpm': 'image/x-xpm'
 }
 
-def walk_func(arg, dirname, fnames):
-  for fname in fnames:
-    fpath = dirname + '/' + fname
+for root, directories, files in os.walk('.'):
+  for fname in files:
+    fpath = root + '/' + fname
     if is_text(fname):
       set_prop(fpath, 'svn:eol-style', 'native')
 
     ext=fname[-4:].lower()
-    if MIME_TYPES.has_key(ext):
+    if ext in MIME_TYPES:
       set_prop(fpath, 'svn:mime-type', MIME_TYPES[ext])
-
-walk('.', walk_func, None)
