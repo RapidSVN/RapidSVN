@@ -51,7 +51,7 @@ re_OLD = re.compile(OLD_TEXT)
 def check_file(fname):
   s = open(fname).read()
   if not re_OLD.search(s):
-    print fname
+    print(fname)
 
 def new_text(path):
 
@@ -73,17 +73,17 @@ def change_text(fname,path):
   else:
     s = s[:m.start()] + new_text(path) + s[m.end():]
     open(fname, 'w').write(s)
-    print 'Changed:', fname
+    print('Changed:', fname)
 
 def insert_text(fname, path):
   s = open(fname).read()
   s = s + new_text(path)
   open(fname, 'w').write(s)
-  print 'Inserted:', fname
+  print('Inserted:', fname)
 
 if __name__ == '__main__':
   if sys.argv[1] == '-C':
-    print 'Changing...'
+    print('Changing...')
     for f in sys.argv[3:]:
       change_text(f,sys.argv[2])
   else:

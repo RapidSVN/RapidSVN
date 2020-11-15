@@ -12,7 +12,7 @@ Usage:
   The directories supplied have to be absolute and they have to end with the
   subversion version (e.g. -1.6.12).""".format(sys.argv[0])
 
-rDIRNAME=re.compile(r"-([0-9]+[.][0-9]+[.][0-9]+)$")
+rDIRNAME=re.compile(r".*-([0-9]+[.][0-9]+[.][0-9]+)$")
 
 class Error(Exception): pass
 class InvalidParameter(Exception): pass
@@ -25,7 +25,7 @@ def run(src, dst):
     raise InvalidParameter("source and destination are identical")
 
   m_src=rDIRNAME.match(src)
-  m_dst=rDIRNAME.match(src)
+  m_dst=rDIRNAME.match(dst)
 
   if not(m_src) or not(m_dst):
     raise InvalidParameter("source or destintation don't contain the version information")
@@ -62,12 +62,12 @@ def run(src, dst):
     "Debug/subversion/svn/svn.exe",
     "Debug/subversion/svnadmin/svnadmin.exe",
     )
-  print "Checking source distribution in {src}...".format(src=src),
+  print("Checking source distribution in {src}...".format(src=src), end=' ')
   for file in files_to_check:
     if not os.path.isfile(os.path.join(src, file)):
-      raise Error("can't find {file} in source".format(file=file)
-  print "OK"
-  print "Preparing destination in {dst}...".format(dst=dst),
+      raise Error("can't find {file} in source".format(file=file))
+  print("OK")
+  print("Preparing destination in {dst}...".format(dst=dst), end=' ')
   os.makedirs(dst)
   dirs_to_create = (
     "include",
@@ -76,8 +76,8 @@ def run(src, dst):
   )
   for dir in dirs_to_create:
     os.mkdir(os.path.join(dst, dir))
-  print "OK"
-  print "Copying files...",
+  print("OK")
+  print("Copying files...", end=' ')
   files_to_copy = (
     # headers
     ["subversion/include/*.h", "include"],
@@ -124,7 +124,7 @@ def run(src, dst):
     ["apr-util/Debug/*.lib", "Debug/lib"],
     ["db4-win32/lib/libdb44d.lib", "Debug/lib"],
     ["neon/libneond.lib", "Debug/lib"],
-
+  )
 
 
 if __name__=='__main__':
@@ -134,9 +134,9 @@ if __name__=='__main__':
     src=None
     dst=None
     for opt, value in opts:
-      if opt == 'src':
+      if opt == '--src':
         src=value
-      elif opt == 'dst':
+      elif opt == '--dst':
         dst=value
 
     # First check the validity of the parameters
@@ -146,12 +146,12 @@ if __name__=='__main__':
     run(src, dst)
 
     sys.exit(0)
-  except InvalidParameter, e:
-    print USAGE
-    print "Error: {message}".format(message=str(e))
+  except InvalidParameter as e:
+    print(USAGE)
+    print("Error: {message}".format(message=str(e)))
     sys.exit(1)
-  except Error, e:
-    print "Error: {message}\nAborted.".format(message=str(e))
+  except Error as e:
+    print("Error: {message}\nAborted.".format(message=str(e)))
     sys.exit(1)
 
 

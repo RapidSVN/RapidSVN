@@ -127,12 +127,12 @@ def check_file(fname):
   if not converter:
     return
   r, _, _ = converter
-  print fname,
+  print(fname, end=' ')
   s = open(fname).read()
   if r.search(s):
-    print "OK"
+    print("OK")
   else:
-    print "MISSING"
+    print("MISSING")
 
 def change_license(fname, license):
   converter = get_converter(fname)
@@ -150,17 +150,17 @@ def change_license(fname, license):
   s = open(fname).read()
   m = r.search(s)
   if not m:
-    print 'ERROR: missing old license:', fname
+    print('ERROR: missing old license:', fname)
   else:
     new_s = s[:m.start()] + new_license + s[m.end():]
     if s != new_s:
         open(fname, 'w').write(new_s)
-        print 'Changed:', fname
+        print('Changed:', fname)
 
 if __name__ == '__main__':
   if sys.argv[1] in ('-GPL', '-LGPL'):
     license = sys.argv[1][1:]
-    print 'Changing license text to %s...' % license
+    print('Changing license text to %s...' % license)
     for f in sys.argv[2:]:
       change_license(f, license)
   else:
