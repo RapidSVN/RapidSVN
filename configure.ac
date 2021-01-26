@@ -1,7 +1,7 @@
 AC_INIT(rapidsvn, 0.13.0)
 AC_CANONICAL_SYSTEM
 
-AM_INIT_AUTOMAKE(silent-rules)
+AM_INIT_AUTOMAKE(silent-rules subdir-objects)
 
 AC_PROG_CXX
 AC_PROG_INSTALL
