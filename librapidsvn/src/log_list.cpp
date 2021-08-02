@@ -143,9 +143,12 @@ void LogList::SetItemFilter(LogItemType type, bool enabled)
     }
     // set list control item count and autoscroll, if desired
     SetItemCount(displayedItems.size());
-    RefreshItems(0, displayedItems.size()-1);
-    if (autoscroll)
-      EnsureVisible(displayedItems.size()-1);
+    if (displayedItems.size() > 0)
+    {
+      RefreshItems(0, displayedItems.size()-1);
+      if (autoscroll)
+        EnsureVisible(displayedItems.size()-1);
+    }
   }
 }
 
